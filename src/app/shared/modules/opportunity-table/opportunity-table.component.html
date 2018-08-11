@@ -1,0 +1,81 @@
+<div class="d-flex mb-3">
+  <h5 class="mr-auto d-flex align-items-end">Các cơ hội</h5>
+  <button class="btn btn-outline-primary ml-2" *ngIf="isLeader" (click)="gotoCreateOpportunity()">
+      <i class="fa fa-plus" aria-hidden="true"></i>&nbsp; Thêm cơ hội
+  </button>
+</div>
+
+<div>
+  <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="table-selection stripe row-border hover">
+      <thead>
+          <tr>
+              <!-- <th class="text-center">
+                  <label class="custom-control custom-checkbox">
+                      <input type="checkbox" class="custom-control-input" [(ngModel)]="checkboxSeclectAll" (change)="onSelectAll($event.target.checked)">
+                      <span class="custom-control-indicator"></span>
+
+                  </label>
+
+
+              </th> -->
+              <th>Tên cơ hội</th>
+              <th>Khách hàng</th>
+              <th>Liên hệ</th>
+              <th>Phân loại</th>
+              <!-- <th>Nguồn tiềm năng</th> --> 
+              <th>Giá trị dự kiến</th>
+              <th>Giai đoạn</th>
+              <th>Xác suất</th>
+              <!-- <th>Chiến lược</th> -->
+              <th>Phân công cho</th>
+              <th class="table-action">Thao tác</th>
+          </tr>
+      </thead>
+      <tbody>
+          <tr *ngFor="let item of pagedResult.items">
+              <!-- <td class="text-center">
+                  <label class="custom-control custom-checkbox">
+                      <input type="checkbox" class="custom-control-input" [(ngModel)]="item.checkboxSelected">
+                      <span class="custom-control-indicator"></span>
+
+                  </label>
+              </td> -->
+              <td>
+                  <a [routerLink]="['/opportunity/detail', item.id]" [title]="item.opportunityName" >{{ item.opportunityName }}</a>
+              </td>
+              <td [title]="item.customerName">{{ item.customerName }}</td>
+              <td>
+                  <span *ngIf="item.contact" [title]="item.contact.firstName + ' ' + item.contact.lastName">
+                      {{item.contact.lastName + ' ' + item.contact.firstName}}
+                  </span>
+              </td>
+
+              <td>{{ item.category | translate }}</td>
+              <!-- <td>{{ item.source | translate }}</td> -->
+              <td>{{ item.expectedValue | vnCurrency }}</td>
+              <td>{{ item.phase | translate}}</td>
+              <td>{{ item.probability && item.probability + '%'}} </td>
+              <!-- <td>{{ item.campaign }}</td> -->
+              <td [title]="item.assignTo">{{ item.assignTo }}</td>
+              <td>
+                  <a [routerLink]="['/opportunity/detail', item.id]">
+                      <i class="fa fa-eye text-warning" aria-hidden="true"></i>
+                  </a>
+                  <a [routerLink]="['/opportunity/edit', item.id]" class=" text-success ml-3">
+                      <i class="fa fa-pencil  cursor-pointer" aria-hidden="true"> </i>
+                  </a>
+                  <!-- <a class="text-info ml-3" [href]="'mailto:' + item.email">
+                      <i class="fa fa-envelope-o " aria-hidden="true"></i>
+                  </a> -->
+                  <a (click)="delete(item.id)" class="text-dark ml-3">
+                      <i class="fa fa-trash-o" aria-hidden="true"></i>
+                  </a>
+              </td>
+          </tr>
+      </tbody>
+
+
+  </table>
+</div>
+
+<app-pagination [pagedResult]="pagedResult" (pagedResultChange)="pagedResultChange($event)"></app-pagination>

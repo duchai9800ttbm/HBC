@@ -1,0 +1,115 @@
+<div [@routerTransition] *ngIf="campaign$ | async as campaign">
+
+
+    <div class="card-collapse">
+        <div class="header" (click)="isCollapsedMain = !isCollapsedMain" [attr.aria-expanded]="!isCollapsedMain" aria-controls="info-main">
+            <i class="fa fa-caret-down mr-3"></i>Chi tiết chiến dịch</div>
+        <div class="body" id="info-main" [ngbCollapse]="isCollapsedMain">
+            <table class="w-100 table table-bordered">
+                <tbody>
+                    <tr>
+                        <td class="w-25 bg-light text-right label">Tên chiến dịch</td>
+                        <td class="w-25">{{campaign.name}}</td>
+                        <td class="w-25 bg-light text-right label">Ngày bắt đầu</td>
+                        <td class="w-25">{{campaign.campaignDateStart | date: 'dd/MM/yyyy'}}</td>
+                    </tr>
+                    <tr>
+                        <td class="w-25 bg-light text-right label">Trạng thái chiến dịch</td>
+                        <td class="w-25">
+                            <div class="mark-status" [class.status-plan]='campaign.status=="IsPlanning_Campaign"' [class.status-inprogess]='campaign.status=="Proceed_Campaign"'
+                                [class.status-complete]='campaign.status=="Finish_Campaign"' [class.status-cancel]='campaign.status=="Cancel"'
+                                [class.status-pending]='campaign.status=="DoNotProceed"'>
+                                {{ campaign.status | translate }}
+                            </div>
+                        </td>
+                        <td class="w-25 bg-light text-right label">Ngày xong dự kiến</td>
+                        <td class="w-25">{{campaign.campaignDateStop | date: 'dd/MM/yyyy'}}</td>
+                    </tr>
+                    <tr>
+                        <td class="w-25 bg-light text-right label">Loại chiến dịch</td>
+                        <td class="w-25">{{campaign.category | translate}}</td>
+                        <td class="w-25 bg-light text-right label">Nhà tài trợ</td>
+                        <td class="w-25">{{campaign.donors}}</td>
+                    </tr>
+                    <tr>
+                        <td class="w-25 bg-light text-right label">Đối tượng tiếp thị</td>
+                        <td class="w-25">{{campaign.marketingObject}}</td>
+                        <td class="w-25 bg-light text-right label">Mục tiêu chiến dịch</td>
+                        <td class="w-25">{{campaign.target}}</td>
+                    </tr>
+                    <tr>
+                        <td class="w-25 bg-light text-right label">Thời gian tạo</td>
+                        <td class="w-25">{{campaign.createdDate | date: 'dd/MM/yyyy HH:mm'}}</td>
+                        <td class="w-25 bg-light text-right label">Số lượng tham gia dự kiến</td>
+                        <td class="w-25">{{campaign.numberOfParticipants && campaign.numberOfParticipants + '%'}}</td>
+                    </tr>
+                    <tr>
+                        <td class="w-25 bg-light text-right label">Thời gian sửa đổi</td>
+                        <td class="w-25">{{campaign.updatedDate | date: 'dd/MM/yyyy HH:mm'}}</td>
+                        <td class="w-25 bg-light text-right label">Phân công cho</td>
+                        <td class="w-25">{{campaign.assignTo && campaign.assignTo.name}}</td>
+                    </tr>
+                </tbody>
+            </table>
+
+        </div>
+    </div>
+
+    <div class="card-collapse">
+        <div class="header" (click)="isCollapsedAddress = !isCollapsedAddress" [attr.aria-expanded]="!isCollapsedMain" aria-controls="info-main">
+            <i class="fa fa-caret-down mr-3"></i>Chi tiết dự kiến và thực tế</div>
+        <div class="body" id="info-main" [ngbCollapse]="isCollapsedAddress">
+            <table class="w-100 table table-bordered">
+                <tbody>
+                    <tr>
+                        <td class="w-25 bg-light text-right label">Ngân sách</td>
+                        <td class="w-25">{{campaign.budget | vnCurrency}}</td>
+                        <td class="w-25 bg-light text-right label">Chi phí thực tế</td>
+                        <td class="w-25">{{campaign.actualCost | vnCurrency}}</td>
+
+                    </tr>
+                    <tr>
+
+                        <td class="w-25 bg-light text-right label">Hiệu quả đầu tư dự kiến</td>
+                        <td class="w-25">{{campaign.expectedInvestmentEfficiency | vnCurrency}}</td>
+                        <td class="w-25 bg-light text-right label">Hiệu quả đầu tư thực tế</td>
+                        <td class="w-25">{{campaign.actualInvestmentEfficiency | vnCurrency}}</td>
+                    </tr>
+                    <tr>
+                        <td class="w-25 bg-light text-right label">Doanh thu dự kiến</td>
+                        <td class="w-25">{{campaign.expectedRevenue | vnCurrency}}</td>
+                        <td class="w-25 bg-light text-right label">Doanh thu thực tế</td>
+                        <td class="w-25">{{campaign.actualRevenue | vnCurrency}}</td>
+                    </tr>
+                </tbody>
+            </table>
+
+        </div>
+    </div>
+
+    <div class="card-collapse">
+        <div class="header" (click)="isCollapsedDesc = !isCollapsedDesc" [attr.aria-expanded]="!isCollapsedDesc" aria-controls="info-desc">
+            <i class="fa fa-caret-down mr-3"></i>Mô tả chi tiết</div>
+        <div class="body" id="info-desc" [ngbCollapse]="isCollapsedDesc">
+            <table class="w-100 table table-bordered">
+                <tbody>
+                    <tr>
+                        <td class="w-25 bg-light text-right label">Mô tả</td>
+                        <td class="w-75">{{campaign.description}}</td>
+                    </tr>
+
+                </tbody>
+            </table>
+
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-lg-6 col-sm-6">
+            <app-comments [moduleName]="'campaign'" [moduleItemId]="campaign.id" [viewMode]="'partial'"></app-comments>
+        </div>
+        <div class="col-lg-6 col-sm-6">
+            <app-audits [moduleName]="'campaign'" [moduleItemId]="campaign.id"></app-audits>
+        </div>
+    </div>
+</div>

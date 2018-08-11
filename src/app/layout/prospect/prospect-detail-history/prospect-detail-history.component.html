@@ -1,0 +1,38 @@
+<div *ngIf="prospect$ | async as prospect">
+    <div class="search-box d-flex">
+
+        <div class="media mr-auto">
+            <div class="media-header">
+                <a (click)="backDetail()">
+                    <i class="fa fa-chevron-left mr-3" aria-hidden="true"></i>
+                </a>
+                <i class="fa fa-address-card" aria-hidden="true"></i>
+            </div>
+
+            <div class="media-body ml-3">
+                <p class="last">
+                    <strong>{{(prospect.name | translate) + ' ' + (prospect.lastName || '') + ' ' + (prospect.firstName || '')}}</strong>
+                </p>
+                <span class="small text-muted">{{prospect.companyName || 'Chưa có công ty'}}</span>
+            </div>
+
+        </div>
+
+        <div class="action-bar">
+            
+        </div>
+
+    </div>
+    <hr>
+
+    <div class="d-flex row no-gutters">
+        <div class="col-md-10">
+            <router-outlet></router-outlet>
+        </div>
+
+        <div class="col-md-2">
+            <app-prospect-menu-history></app-prospect-menu-history>
+        </div>
+    </div>
+
+</div>

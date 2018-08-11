@@ -1,0 +1,5 @@
+<div class="mt-4">
+  <h5>
+      <img routerLink="/settings/construction-category" class="icon-back" src="assets/images/arrow-back.svg"> Chỉnh sửa hạng mục</h5>
+  <app-setting-construction-category-form *ngIf="constructionCategory$ | async as constructionCategory" [constructionCategory]="constructionCategory"></app-setting-construction-category-form>
+</div>

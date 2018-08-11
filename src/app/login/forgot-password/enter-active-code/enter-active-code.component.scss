@@ -1,0 +1,137 @@
+$topnav-background-color: lightgray;
+$color: rgba(255, 255, 255, 0.6);
+:host {
+    display: block;
+}
+.img-title{
+    width: 140px;
+    height: 120px;
+}
+.enter-active-code-page {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    overflow: auto;
+    background: $topnav-background-color;
+    text-align: center;
+    color: #000;
+    padding: 3em;
+    .underline{
+        text-decoration: underline;
+        color: #9c9c9c;
+        .bold{
+            font-weight: bold;
+        }
+    }
+    .back{
+        color: #297ef5;
+        font-weight: bold;
+    }
+    .col-lg-2 {
+        padding: 0;
+    }
+
+    h1 {
+        font-weight: 700;
+        margin-top: 20px;
+        margin-bottom: 10px;
+        font-size: 50px;
+        small {
+            color: rgba(255, 255, 255, 0.7);
+        }
+        color: #00a0e3;
+
+    }
+
+    .form-group {
+        //padding: 8px 0;
+        input::-webkit-input-placeholder {
+            color: $color;
+        }
+
+        input:-moz-placeholder {
+            /* Firefox 18- */
+            color: $color ;
+        }
+
+        input::-moz-placeholder {
+            /* Firefox 19+ */
+            color:  $color;
+        }
+
+        input:-ms-input-placeholder {
+            color: $color !important;
+        }
+    }
+    form {
+        position: relative;
+        padding: 20px 30px;
+        background-color: #fff;
+    //    border-radius: 5px;
+    }
+}
+
+
+.list-code{
+    input{
+        width: 80%;
+        height: 100%;
+        background-color: #ffa747;
+        text-align: center;
+        border-radius: 8%;
+        border: none;
+       // font-style:;
+        font-size: 170%;
+        margin: 0 auto;
+        font-weight: bold;
+    }
+}
+
+
+.row{
+    margin: 0 auto;
+}
+
+.footer-1{
+    margin-top: -20px;
+    span{
+        color: #737373;
+    }
+    
+}
+.footer-2{
+    margin-top: 0px;
+}
+.list-code{
+    margin-top: -20px;
+}
+
+.header{
+    margin-top: 2%;
+    font-weight: bold;
+    // font-size: 150%;
+}
+.messenger{
+    color: #9c9c9c;
+    // font-size: 110%;
+    margin-bottom: 7%;
+    width: 100%;
+}
+.panel{
+   // width: 430px;
+   height: 100%;
+}
+.is-invalid-2{
+    input{
+        background-color:rgba(231, 76, 60,0.3);
+    }
+}
+
+.form-wrapper{
+    // position: relative;
+}
+img{
+    zoom: 2;
+}

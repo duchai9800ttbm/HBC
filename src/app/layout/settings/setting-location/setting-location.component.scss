@@ -1,0 +1,21 @@
+input.placeholder-icon {
+    font-family: 'FontAwesome';
+    font-style: normal;
+    font-weight: normal;
+    text-decoration: inherit;
+}
+
+.custom-cb {
+    left: 0.5rem;
+    top: 0.9rem;
+}
+
+.ml--1 {
+    margin-left: -0.5rem;
+}
+
+input {
+    &:focus {
+        box-shadow: none;
+    }
+}

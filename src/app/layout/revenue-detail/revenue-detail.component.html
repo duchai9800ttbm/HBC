@@ -1,0 +1,113 @@
+<div [@routerTransition]>
+    <div class="card form-group">
+        <h6>
+            <strong class="title-color">THÔNG TIN KHÁCH HÀNG</strong>
+        </h6>
+        <div class="row form-group">
+            <div class="col-md-4 border-right">
+                <p>
+                    <strong>Mã khách hàng:</strong> {{currentCustomer.number}}
+                </p>
+                <p>
+                    <strong>Tên khách hàng:</strong> {{currentCustomer.name}}
+                </p>
+                <p>
+                    <strong>Mô tả:</strong> {{currentCustomer.desc}}
+                </p>
+                <p>
+                    <strong>Địa chỉ:</strong> {{currentCustomer.address}}
+                </p>
+            </div>
+            <div class="col-md-4 border-right">
+                <p>
+                    <strong>Loại khách hàng:</strong> {{currentCustomer.customerType === 'Individual' ? 'Cá nhân' : 'Công ty'}}
+                </p>
+                <p>
+                    <strong>Nhóm khách hàng:</strong> {{currentCustomer.customerGroup}}
+                </p>
+                <p>
+                    <strong>Tình trạng:</strong> {{currentCustomer.check ? 'Hoạt động' : 'Không hoạt động'}}
+                </p>
+            </div>
+            <div class="col-md-4">
+                <p>
+                    <strong>Hạn mức tín dụng:</strong> {{currentCustomer.creditLimit | vnCurrency}}
+                </p>
+                <p>
+                    <strong>Công nợ:</strong> {{currentCustomer.owing | vnCurrency}}
+                </p>
+                <p>
+                    <strong>Tín dụng còn lại:</strong> {{currentCustomer.creditLimit - currentCustomer.owing | vnCurrency}}
+                </p>
+            </div>
+        </div>
+    </div>
+    <div class="card">
+        <div class="d-flex justify-content-between form-group">
+            <h6 class="revenue-title">
+                <strong class="title-color">THÔNG TIN CHI TIẾT CÔNG NỢ</strong>
+            </h6>
+                <div class="d-flex">
+                    <div class="select_box mt-2  mr-2">Từ</div>
+                    <div class="input-group  calendarInput  mr-3">
+                        <owl-date-time [(ngModel)]="startDate" [dateFormat]="datePickerConfig.dateFormat" [placeHolder]="datePickerConfig.datePlaceHolder" [locale]="datePickerConfig.vi"
+                        pickerType="calendar" [type]="datePickerConfig.calendarType">
+                        </owl-date-time>
+                        <span class="input-group-addon">
+                            <i class="fa fa-calendar"></i>
+                        </span>
+                    </div>
+                    <div class="select_box mt-2"> đến</div>
+                    <div class="input-group  calendarInput ml-3">
+                        <owl-date-time [(ngModel)]="endDate" [dateFormat]="datePickerConfig.dateFormat" [placeHolder]="datePickerConfig.datePlaceHolder" [locale]="datePickerConfig.vi"
+                            pickerType="calendar" [type]="datePickerConfig.calendarType">
+                        </owl-date-time>
+                        <span class="input-group-addon">
+                            <i class="fa fa-calendar"></i>
+                        </span>
+                    </div>
+                    <button type="submit" class="btn btn-primary ml-3" (click)="search()">Xem</button>
+                </div>
+        </div>
+        <div class="table-responsive">
+            <table class="table table-bordered">
+                <thead class="text-nowrap">
+                    <tr class="grid-header-custom">
+                        <th>Ngày ghi sổ</th>
+                        <th>Chứng từ</th>
+                        <th>Ngày chứng từ</th>
+                        <th>Diễn giải</th>
+                        <th>Công nợ tăng</th>
+                        <th>Công nợ giảm</th>
+                        <th>Tín dụng còn lại</th>
+                    </tr>
+                    <tr>
+                        <th colspan="6" class="text-right">Số dư đầu kỳ:</th>
+                        <th *ngIf="pagedResult?.items?.length > 0">{{pagedResult.items[0].startBalance | vnNumber}}</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let debt of debtList">
+                        <td>{{debt.createdDate}}</td>
+                        <td *ngIf="debt.documentNo.startsWith('PG'); else ptContent" class="link-custom" [routerLink]="['/delivery/detail', customerId, debt.documentNo]">{{debt.documentNo}}</td>
+                        <ng-template #ptContent>
+                            <td>{{debt.documentNo}}</td>
+                        </ng-template>
+                        <td>{{debt.documentDate}}</td>
+                        <td>{{debt.documentDesc}}</td>
+                        <td>{{debt.debtIncrease | vnNumber}}</td>
+                        <td>{{debt.debtDecrease | vnNumber}}</td>
+                        <td>{{debt.remainingCredits | vnNumber}}</td>
+                    </tr>
+                </tbody>
+                <tfoot>
+                    <tr>
+                        <th colspan="6" class="text-right">Số dư cuối kỳ:</th>
+                        <th *ngIf="pagedResult?.items?.length > 0">{{pagedResult.items[0].endBalance | vnNumber}}</th>
+                    </tr>
+                </tfoot>
+            </table>
+        </div>
+        <app-pagination [pagedResult]="pagedResult" (pagedResultChange)="pagedResultChange($event)"></app-pagination>
+    </div>
+</div>

@@ -1,0 +1,25 @@
+$brand-special: #00a0e3;
+
+@mixin avatar($size) {
+    width: $size;
+    height: $size;
+    background-color: $brand-special;
+    text-align: center;
+    border-radius: 50%;
+    -webkit-border-radius: 50%;
+    -moz-border-radius: 50%;
+
+    .initials {
+      position: relative;
+      top: $size*0.25;
+      font-size: $size*0.4;
+      line-height: $size*0.5;
+      color: #fff;
+    //font-family: "Courier New", monospace;
+    //   font-weight: bold;
+    }
+}
+
+.avatar-circle      { @include avatar(100px); }
+.avatar-circle-sm   { @include avatar(35px); }
+.avatar-circle-lg   { @include avatar(250px); }

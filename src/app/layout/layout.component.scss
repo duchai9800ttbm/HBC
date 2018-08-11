@@ -1,0 +1,53 @@
+.main-container {
+    margin-top: 55px;
+  //  margin-left: 200px;
+  //  padding: 35px 25px;
+    -ms-overflow-x: hidden;
+    overflow-x: hidden; // overflow-y: scroll;
+    position: relative;
+    overflow: visible;
+    background-color: #f6f6f6;
+}
+
+@media screen and (max-width: 992px) {
+    .main-container {
+        margin-left: 55px !important;
+    }
+}
+
+
+@media screen and (max-width: 1100px) {
+
+}
+
+@media screen and (min-width: 991px) {
+    app-menu {
+        display: none!important;
+    }
+}
+
+#footer { position: fixed; bottom: 0; }
+
+
+.sectionIn {
+    margin-left: 200px;
+    // animation: sectionIn 0.4s ease-in-out;
+}
+
+.sectionOut {
+    margin-left: 55px;
+    // animation: sectionOut 0.8s ease-in-out;
+}
+
+@keyframes sectionIn {
+    0%   {margin-left: 0;}
+    100% {margin-left: 200px;}
+}
+
+@keyframes sectionOut {
+    0%   {margin-left: 200px;}
+    100% {margin-left: 0;}
+}
+:host{
+    background-color: #f6f6f6;
+}

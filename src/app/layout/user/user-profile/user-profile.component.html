@@ -1,0 +1,87 @@
+<div [@routerTransition]>
+  <form role="form" [formGroup]="userProfileForm" (ngSubmit)="submitForm()">
+
+    <div class="d-flex">
+      <div class="column1">
+        <div class="card">
+          <div class="card-header">
+            Hình đại diện
+          </div>
+          <div class="avatar-photo w-100">
+            <div class="user-info__photo">
+              <div class="user-info__photo-remove-btn">
+                <a (click)="clearAvatar()" title="Xóa hình">
+                  <i class="fa fa-times"></i>
+                </a>
+              </div>
+              <img class="w-100" [src]="avatarSrc" alt="Hình đại diện" />
+              <div class="user-info__photo-change-btn w-100">
+                <input class="w-100"  id="upload-photo" (click)="openAvatarModal()" accept="image/*" />
+                <label for="upload-photo">
+                  <a>
+                    <i class="fa fa-upload"></i>
+                    &nbsp;Thay đổi hình
+                  </a>
+                </label>
+              </div>
+            </div>
+         
+          </div>
+        </div>
+        <!-- <div class="w-100 mt-3 updateAvatar ">
+            <button type="button" class="btn btn-primary" (click)="uploadAvatar()">Cập nhật ảnh đại diện</button>
+        </div> -->
+      </div>
+      <div class="column2 pl-4  ml-auto">
+        <div class="card">
+          <div class="card-header">
+            THÔNG TIN CÁ NHÂN
+          </div>
+          <div #img class="card-body">
+            <div class="row mt-3">
+              <div class="col-md-6 col-lg-6">
+                <div class="group mb-5">
+                  <input type="text" readonly formControlName="lastName" tabindex="1">
+                  <span class="highlight"></span>
+                  <span class="bar"></span>
+                  <label class="">Họ</label>
+                </div>
+                <div class="group mb-5">
+                  <input type="text" readonly formControlName="phone" tabindex="3">
+                  <span class="highlight"></span>
+                  <span class="bar"></span>
+                  <label>Số điện thoại</label>
+                </div>
+                <div class="group mb-5">
+                  <input type="text" readonly required formControlName="address" tabindex="5">
+                  <span class="highlight"></span>
+                  <span class="bar"></span>
+                  <label>Địa chỉ</label>
+                </div>
+              </div>
+              <div class="col-md-6 col-lg-6">
+                <div class="group mb-5" [class.is-invalid-2]="formErrors.firstName">
+                  <input type="text" readonly required formControlName="firstName" tabindex="2">
+                  <span class="highlight"></span>
+                  <span class="bar"></span>
+                  <label class="">Tên</label>
+                </div>
+                <div class="group mb-5" [class.is-invalid-2]="formErrors.email">
+                  <input type="text" readonly formControlName="email" tabindex="4">
+                  <span class="highlight"></span>
+                  <span class="bar"></span>
+                  <label>Email</label>
+                </div>
+                <div class="group">
+
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </form>
+</div>

@@ -1,0 +1,125 @@
+import { Component, OnInit } from '@angular/core';
+import { routerTransition, slideToLeft } from '../../../router.animations';
+import { FormGroup, FormBuilder } from '@angular/forms';
+import ValidationHelper from '../../../shared/helpers/validation.helper';
+import CustomValidator from '../../../shared/helpers/custom-validator.helper';
+import { Validators } from '@angular/forms';
+import { UserService } from '../../../shared/services/user.service';
+import { Router, ActivatedRoute } from '@angular/router';
+import { Subscription } from 'rxjs/Subscription';
+import { AlertService } from '../../../shared/services/alert.service';
+import { OnDestroy } from '@angular/core/src/metadata/lifecycle_hooks';
+
+@Component({
+  selector: 'app-enter-active-code',
+  templateUrl: './enter-active-code.component.html',
+  styleUrls: ['./enter-active-code.component.scss'],
+  animations: [slideToLeft()],
+})
+export class EnterActiveCodeComponent implements OnInit, OnDestroy {
+    constructor(
+      private fb: FormBuilder,
+      private userService: UserService,
+      private router: Router,
+      private activatedRoute: ActivatedRoute,
+      private alertService: AlertService
+    ) { }
+  isSubmitted: boolean;
+  apiErrorCode: string;
+  enterActiveCodeForm: FormGroup;
+  invalidMessages: string[];
+  queryParamsSubsription: Subscription;
+  email: string;
+  isMessengerAlert = false;
+  messengerAlert: string;
+  formErrors = {
+    numberOne: '',
+    numberTwo: '',
+    numberThree: '',
+    numberFour: '',
+    numberFive: '',
+    numberSix: ''
+  };
+  ngOnInit() {
+    this.createForm();
+    this.queryParamsSubsription = this.activatedRoute.queryParams.subscribe(data => {
+      this.email = data.email;
+    });
+  }
+
+  createForm() {
+    this.enterActiveCodeForm = this.fb.group({
+      numberOne: ['', Validators.required],
+      numberTwo: ['', Validators.required],
+      numberThree: ['', Validators.required],
+      numberFour: ['', Validators.required],
+      numberFive: ['', Validators.required],
+      numberSix: ['', Validators.required],
+    });
+    this.enterActiveCodeForm.valueChanges
+      .subscribe(data => this.onFormValueChanged(data));
+  }
+  validateForm() {
+    this.invalidMessages = ValidationHelper.getInvalidMessages(this.enterActiveCodeForm, this.formErrors);
+    return this.invalidMessages.length === 0;
+  }
+  onFormValueChanged(data?: any) {
+    if (this.isSubmitted) {
+      this.validateForm();
+    }
+  }
+
+  submitForm() {
+    this.isSubmitted = true;
+    this.apiErrorCode = '';
+    if (this.validateForm()) {
+      const code = [
+        this.enterActiveCodeForm.value.numberOne,
+        this.enterActiveCodeForm.value.numberTwo,
+        this.enterActiveCodeForm.value.numberThree,
+        this.enterActiveCodeForm.value.numberFour,
+        this.enterActiveCodeForm.value.numberFive,
+        this.enterActiveCodeForm.value.numberSix,
+      ].join('');
+
+      this.userService
+        .validateActiveCode(code, this.email)
+        .subscribe(
+          data => {
+            console.log('token', data);
+            if (data) {
+              // this.userService.deleteEmail();
+              this.router.navigate(['/login/forgot-password/reset-password'], { queryParams: {
+                // activeCode: code
+                email: this.email,
+                token: data,
+              } });
+            } else {
+              this.apiErrorCode = 'Mã xác nhận không đúng.';
+            }
+          },
+          err => {
+            this.apiErrorCode = 'Đã có lỗi xảy ra, vui lòng thử lại sau!';
+          });
+      // this.router.navigate(['/login/forgot-password/reset-password'], { queryParams: { activeCode: code } });
+    }
+  }
+  sendCodeAgain() {
+    this.userService
+      .getActiveCode(this.email)
+      .subscribe(
+        data => {
+          this.isMessengerAlert = true;
+          this.messengerAlert = `Đã gửi lại mã xác nhận vào email ${this.email}!`;
+        },
+        err => {
+          this.apiErrorCode = 'Đã có lỗi xảy ra, vui lòng thử lại!';
+        });
+  }
+
+  ngOnDestroy() {
+    if (this.queryParamsSubsription) {
+      this.queryParamsSubsription.unsubscribe();
+    }
+  }
+}

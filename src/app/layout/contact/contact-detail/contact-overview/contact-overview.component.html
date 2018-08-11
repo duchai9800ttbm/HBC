@@ -1,0 +1,83 @@
+<div [@routerTransition] class="row no-gutters" *ngIf="contact$ | async as contact">
+    <div class="col-md-7">
+        <div class="card mb-3">
+            <div class="card-body" id="info-main" [ngbCollapse]="isCollapsedMain">
+                <table class="w-100 table table-bordered">
+                    <tbody>
+                        <tr>
+                            <td class="w-13 bg-light text-left label">Họ</td>
+                            <td class="w-23">{{contact.lastName}}</td>
+
+                        </tr>
+                        <tr>
+                            <td class="w-13 bg-light text-left label">Tên</td>
+                            <td class="w-23">{{contact.firstName}}</td>
+                        </tr>
+                        <tr>
+                            <td class="w-13 bg-light text-left label">Điện thoại chính</td>
+                            <td class="w-23">
+                                <span appPhoneNumberCallable>{{contact.companyPhone}}</span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="w-13 bg-light text-left label">Tên khách hàng</td>
+                            <td class="w-23 color">
+
+                                <a *ngFor="let customer of contact.customer" (click)="goToDeitalCustomer(customer.id)">
+                                    <p>{{customer.text}}</p>
+                                </a>
+
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="w-13 bg-light text-left label">Nguồn tiềm năng</td>
+                            <td class="w-23">{{contact.prospectSource | translate}}</td>
+                        </tr>
+                        <tr>
+                            <td class="w-13 bg-light text-left label">Email chính</td>
+                            <td class="w-23">
+                                <a [href]="'mailto:' + contact.email">{{contact.email}}</a>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="w-25 bg-light text-left label">Phân công cho</td>
+                            <td class="w-25">{{contact.assignTo && contact.assignTo.name}}</td>
+                        </tr>
+                        <tr>
+                            <td class="w-25 bg-light text-left label">Thành phố</td>
+                            <td class="w-25">{{contact.city}}</td>
+                        </tr>
+                        <tr>
+                            <td class="w-25 bg-light text-left label">Quốc gia</td>
+                            <td class="w-25">{{contact.country}}</td>
+                        </tr>
+
+
+                    </tbody>
+                </table>
+                <hr>
+                <div class="d-flex">
+                    <a [routerLink]="['../spec']" class="btn btn-primary mr-auto">
+                        Hiển thị đầy đủ
+                    </a>
+                    <div class="d-flex flex-column">
+                        <span class="metadata">Ngày tạo: {{contact.createdDate | date: 'dd/MM/yyyy HH:mm'}}</span>
+                        <span class="metadata">Ngày sửa: {{contact.updatedDate | date: 'dd/MM/yyyy HH:mm'}}</span>
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+
+        <app-comments [moduleName]="'contact'" [moduleItemId]="contact.id" [viewMode]="'partial'"></app-comments>
+
+    </div>
+
+    <div class="col-md-5 pl-3 pr-4">
+        <app-activities [moduleName]="'contact'" [moduleItemId]="contact.id" [moduleItemName]="contact.lastName+' '+contact.firstName"></app-activities>
+        <app-audits [moduleName]="'contact'" [moduleItemId]="contact.id"></app-audits>
+    </div>
+
+
+</div>

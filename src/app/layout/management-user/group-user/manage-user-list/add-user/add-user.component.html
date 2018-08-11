@@ -1,0 +1,139 @@
+<div class="boder-table">
+  <div class="table-body">
+    <form [formGroup]="formAddUser" (ngSubmit)="onSubmit()">
+    <div class="row">
+      <div class="col-7">
+        <h4 class="text-head-user">Tạo mới tài khoản người dùng</h4>
+      </div>
+      <div class="col-5 pull-right">
+        <button type="button" class="btn btn-default btn-rg w-80 pull-right" style="color: #FFF" [routerLink]="['/management-user/group-user/manage-user-list/manage-user']">
+          Hủy
+        </button>
+        <button type="submit" class="btn btn-primary btn-rg w-80 pull-right" [disabled]="loading">
+          Lưu
+        </button>
+      </div>
+    </div>
+
+    <div class="body-account">
+      <div class="account-content">
+        <h4 class="text-accout">Tài khoản</h4>
+        <div class="form-group row">
+          <label for="inputUserName" class="col-sm-2 col-form-label">Tên đăng nhập
+            <span style="color: red">*</span>
+          </label>
+          <div class="col-sm-4">
+            <input type="text" class="form-control form-input" id="inputUserName" formControlName="userName"
+             placeholder="" [ngClass]="{ 'is-invalid': submitted && addUser.userName.errors }">
+             <div *ngIf="submitted && addUser.userName.errors" class="invalid-feedback">
+                <div *ngIf="addUser.userName.errors.required">Tên đăng nhâp là bắt buộc</div>
+            </div>
+          </div>
+          <div class="col-sm-1" class="checkbox">
+            <input type="checkbox" id="optinosCheckbox1" value="" 
+            [checked]="isCheckbox" (click)="isCheckboxAction()">
+            <label for="optinosCheckbox1" >
+              Hoạt động
+            </label>
+          </div>
+        </div>
+        <div class="form-group row">
+          <label for="password" class="col-sm-2 col-form-label">Mật khẩu
+            <span style="color: red">*</span>
+          </label>
+          <div class="col-sm-4">
+            <input type="password" class="form-control form-input" id="password" formControlName="password" 
+            placeholder="" [ngClass]="{ 'is-invalid': submitted && addUser.password.errors }">
+            <div *ngIf="submitted && addUser.password.errors" class="invalid-feedback">
+                <div *ngIf="addUser.password.errors.required">Mật khẩu là bắt buộc</div>
+            </div>
+          </div>
+        </div>
+        <div class="form-group row">
+          <label for="Repassword" class="col-sm-2 col-form-label">Nhập lại mật khẩu
+            <span style="color: red">*</span>
+          </label>
+          <div class="col-sm-4">
+            <input type="password" class="form-control form-input" id="Repassword" [ngClass]="{ 'is-invalid': submitted && addUser.rePassword.errors }"  formControlName="rePassword"
+             placeholder="" >
+
+             <div *ngIf="submitted && addUser.rePassword.errors" class="invalid-feedback">
+                <div *ngIf="addUser.rePassword.errors.required">Nhập lại mật khẩu là bắt buộc</div>
+            </div>
+                    
+          </div>
+        </div>
+        <div class="form-group row">
+          <label for="group" class="col-sm-2 col-form-label">Nhóm người dùng</label>
+          <div class="col-sm-4">
+            <kendo-combobox class="w-100 form-input" formControlName="userGroupId" [data]="listGroups" textField="text" valueField="value" [valuePrimitive]="true" [value]="selectedGroup" >
+            </kendo-combobox>
+          </div>
+        </div>
+      </div>
+      <div class="info-content">
+        <h4 class="text-accout">Thông tín cá nhân</h4>
+
+        <div class="form-group row">
+          <label for="inputFirstName" class="col-sm-2 col-form-label">Họ
+            <span style="color: red">*</span>
+          </label>
+          <div class="col-sm-4">
+            <input type="text" class="form-control form-input" formControlName="firstName" id="inputFirstName"
+             placeholder="" [ngClass]="{ 'is-invalid': submitted && addUser.firstName.errors }">
+             <div *ngIf="submitted && addUser.firstName.errors" class="invalid-feedback">
+                <div *ngIf="addUser.firstName.errors.required">Họ là bắt buộc</div>
+            </div>
+          </div>
+        </div>
+        <div class="form-group row">
+          <label for="name" class="col-sm-2 col-form-label">Tên
+            <span style="color: red">*</span>
+          </label>
+          <div class="col-sm-4">
+            <input type="text" class="form-control form-input" id="name" formControlName="lastName" 
+            placeholder="" [ngClass]="{ 'is-invalid': submitted && addUser.lastName.errors }">
+            <div *ngIf="submitted && addUser.lastName.errors" class="invalid-feedback">
+                <div *ngIf="addUser.lastName.errors.required">Tên là bắt buộc</div>
+            </div>
+          </div>
+        </div>
+        <div class="form-group row">
+          <label for="email" class="col-sm-2 col-form-label">Email
+            <span style="color: red">*</span>
+          </label>
+          <div class="col-sm-4">
+            <input type="email" class="form-control form-input" formControlName="email" id="email"
+             placeholder="" [ngClass]="{ 'is-invalid': submitted && addUser.email.errors }">
+             <div *ngIf="submitted && addUser.email.errors" class="invalid-feedback">
+                <div *ngIf="addUser.email.errors.required">Email là bắt buộc</div>
+            </div>
+            <div *ngIf="addUser.touched && addUser.email.errors.email">Email không đúng định dạng</div>
+          </div>
+        </div>
+        <div class="form-group row">
+          <label for="department" class="col-sm-2 col-form-label">Phòng ban/Bộ phận
+            <span style="color: red">*</span>
+          </label>
+          <div class="col-sm-4">
+            <kendo-combobox class="w-100 form-input" [data]="departments" textField="name" formControlName="departmentId" valueField="id" 
+            [valuePrimitive]="true" [value]="selectedDepartmaent" [ngClass]="{ 'is-invalid': submitted && addUser.departmentId.errors }">
+            </kendo-combobox>
+            <div *ngIf="submitted && addUser.departmentId.errors" class="invalid-feedback">
+                <div *ngIf="addUser.departmentId.errors.required">Vui lòng chọn phòng ban/bộ phận</div>
+            </div>
+          </div>
+      </div>
+          <div class="form-group row">
+            <label for="position" class="col-sm-2 col-form-label">Vị trí/Chức vụ</label>
+            <div class="col-sm-4">
+                <kendo-combobox class="w-100 form-input" [data]="positions" textField="name" formControlName="levelId" valueField="id" [valuePrimitive]="true"
+                [value]="selectPosition">
+                  </kendo-combobox>
+            </div>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>      
+</div>

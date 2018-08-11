@@ -1,0 +1,48 @@
+@media only screen and (max-width: 1600px) {
+    table.dataTable {
+        zoom: 0.95;
+    }
+}
+
+@media only screen and (max-width: 1366px) {
+    table.dataTable {
+        zoom: 0.95;
+    }
+}
+
+@media only screen and (max-width: 1200px) {
+    table.dataTable {
+        zoom: 0.9;
+    }
+}
+
+@media only screen and (max-width: 1024px) {
+    .search-box,
+    .filter-bar {
+        zoom: 0.85;
+    }
+
+    .th-mark-status{
+        max-width: 150px !important;
+    }
+    table.dataTable {
+        zoom: 0.85;
+    }
+}
+
+@media screen and (max-width: 1200px) {
+    .push-right {
+        .sidebar {
+            left: 235px !important;
+        }
+    }
+}
+
+@media screen and (max-width: 992px) {
+    .navbar-brand {
+        width: auto !important;
+    }
+    .navbar {
+        justify-content: flex-start;
+    }
+}

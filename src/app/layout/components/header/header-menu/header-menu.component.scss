@@ -1,0 +1,38 @@
+.nav-menu-bar {
+    .nav-link {
+        color: #fff;
+        opacity: 0.5;
+        &:hover {
+            opacity: 1;
+        }
+    }
+    .nav-item{
+        margin-right: 2px;
+    }
+}
+.router-link-active {
+    opacity: 1;
+    background-color: #104b6d;
+}
+.set-heigt-div{
+    height: 56px;
+    cursor: pointer;
+    .color-menu{
+            &:hover {
+            background-color: #104b6d;
+            }
+        }
+    
+    .pad-content{
+        padding-top: 10px;
+        padding-right: 8px;
+        padding-left: 8px;
+        font-weight: bold;
+        a {
+            color: white;
+            text-decoration: none;
+            background-color: transparent;
+        }
+        
+    }
+}

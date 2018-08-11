@@ -1,0 +1,16 @@
+.close-popup{
+    font-size: 20px;
+    font-weight: bold;
+    cursor: pointer;
+}
+.center-parent {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    .bold-title{
+    font-weight: bold;    
+    }
+}
+.cus-but-cs{
+    width: 13%;
+}

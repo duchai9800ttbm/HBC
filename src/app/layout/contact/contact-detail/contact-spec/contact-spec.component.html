@@ -1,0 +1,173 @@
+<div [@routerTransition] *ngIf="contact$ | async as contact">
+
+    <div class="card-collapse">
+        <div class="header" (click)="isCollapsedMain = !isCollapsedMain" [attr.aria-expanded]="!isCollapsedMain" aria-controls="info-main">
+            <i class="fa fa-caret-down mr-3"></i>Chi tiết liên hệ</div>
+        <div class="body" id="info-main" [ngbCollapse]="isCollapsedMain">
+            <table class="w-100 table table-bordered">
+                <tbody>
+                    <tr>
+                        <td class="w-25 bg-light text-right label">Danh xưng</td>
+                        <td class="w-25">{{contact.salutation | translate}}</td>
+                        <td class="w-25 bg-light text-right label">Điện thoại phòng</td>
+                        <td class="w-25">
+                            <span appPhoneNumberCallable>{{contact.companyPhone}}</span>
+                        </td>
+                        <tr>
+                            <td class="w-25 bg-light text-right label">Họ</td>
+                            <td class="w-25">{{contact.lastName}}</td>
+
+                            <td class="w-25 bg-light text-right label">Điện thoại di động</td>
+                            <td class="w-25">
+                                <span appPhoneNumberCallable>{{contact.mobilePhone}}</span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="w-25 bg-light text-right label">Tên</td>
+                            <td class="w-25">{{contact.firstName}}</td>
+                            <td class="w-25 bg-light text-right label">Điện thoại nhà riêng</td>
+                            <td class="w-25">
+                                <span appPhoneNumberCallable>{{contact.homePhone}}</span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="w-25 bg-light text-right label">Ngày sinh</td>
+                            <td class="w-25">{{contact.dateOfBirth | date: 'dd/MM/yyyy'}}</td>
+                            <td class="w-25 bg-light text-right label">Điện thoại phụ</td>
+                            <td class="w-25">
+                                <span appPhoneNumberCallable>{{contact.extraPhone}}</span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="w-25 bg-light text-right label">Khách hàng</td>
+                            <td class="w-25 color">
+                                <a *ngFor="let customer of contact.customer" (click)="goToDeitalCustomer(customer.id)">
+                                    <p>{{customer.text}}</p>
+                                </a>
+
+                            </td>
+                            <td class="w-25 bg-light text-right label">Email</td>
+                            <td class="w-25">
+                                <a [href]="'mailto:' + contact.email">{{contact.email}}</a>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="w-25 bg-light text-right label">Chức danh</td>
+                            <td class="w-25">{{contact.jobTitle}}</td>
+                            <td class="w-25 bg-light text-right label">Nguồn tiềm năng</td>
+                            <td class="w-25">{{contact.prospectSource | translate}}</td>
+                        </tr>
+                        <tr>
+                            <td class="w-25 bg-light text-right label">Phòng ban</td>
+                            <td class="w-25">{{contact.department}}</td>
+                            <td class="w-25 bg-light text-right label">Trợ lý</td>
+                            <td class="w-25">{{contact.assistant}}</td>
+                        </tr>
+                        <tr>
+                            <td class="w-25 bg-light text-right label">Thời gian sửa đổi</td>
+                            <td class="w-25">{{contact.updatedDate | date: 'dd/MM/yyyy HH:mm'}}</td>
+                            <td class="w-25 bg-light text-right label">Điện thoại trợ lý</td>
+                            <td class="w-25">
+                                <span appPhoneNumberCallable>{{contact.assistantPhone}}</span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="w-25 bg-light text-right label">Được chuyển đổi từ tiềm năng</td>
+                            <td class="w-25">
+                                <a *ngIf="contact.prospect" [routerLink]="['/prospect/detail-history/',contact.prospect.id]">{{contact.prospect ? contact.prospect.fullName : ''}}</a>
+                                <span *ngIf="!contact.prospect">Không</span>
+                            </td>
+                            <td class="w-25 bg-light text-right label">Phân công cho</td>
+                            <td class="w-25">{{contact.assignTo && contact.assignTo.name}}</td>
+                        </tr>
+                        <tr>
+
+                            <td class="w-25 bg-light text-right label">Thời gian tạo </td>
+                            <td class="w-25">{{contact.createdDate| date: 'dd/MM/yyyy HH:mm'}}</td>
+                            <td class="w-25 bg-light text-right label"></td>
+                            <td class="w-25 color">
+
+
+                            </td>
+                        </tr>
+
+                </tbody>
+            </table>
+
+        </div>
+    </div>
+
+    <div class="card-collapse">
+        <div class="header" (click)="isCollapsedAddress = !isCollapsedAddress" [attr.aria-expanded]="!isCollapsedAddress" aria-controls="info-address">
+            <i class="fa fa-caret-down mr-3"></i>Chi tiết địa chỉ</div>
+        <div class="body" id="info-address" [ngbCollapse]="isCollapsedAddress">
+            <table class="w-100 table table-bordered">
+                <tbody>
+                    <tr>
+                        <td class="w-25 bg-light text-right label">Địa chỉ</td>
+                        <td class="w-25">{{contact.address}}</td>
+                        <td class="w-25 bg-light text-right label">Địa chỉ khác</td>
+                        <td class="w-25">{{contact.otherAddress}}</td>
+                    </tr>
+                    <tr>
+                        <td class="w-25 bg-light text-right label">Quận</td>
+                        <td class="w-25">{{contact.district}}</td>
+                        <td class="w-25 bg-light text-right label">Quận khác</td>
+                        <td class="w-25">{{contact.otherDistrict}}</td>
+                    </tr>
+                    <tr>
+                        <td class="w-25 bg-light text-right label">Thành phố</td>
+                        <td class="w-25">{{contact.city}}</td>
+                        <td class="w-25 bg-light text-right label">Thành phố khác</td>
+                        <td class="w-25">{{contact.otherCity}}</td>
+                    </tr>
+                    <tr>
+                        <td class="w-25 bg-light text-right label">Quốc gia</td>
+                        <td class="w-25">{{contact.country}}</td>
+                        <td class="w-25 bg-light text-right label">Quốc gia khác</td>
+                        <td class="w-25">{{contact.otherCountry}}</td>
+                    </tr>
+
+                </tbody>
+            </table>
+
+        </div>
+    </div>
+
+    <div class="card-collapse">
+        <div class="header" (click)="isCollapsedPic = !isCollapsedPic" [attr.aria-expanded]="!isCollapsedPic" aria-controls="info-desc">
+            <i class="fa fa-caret-down mr-3"></i>Mô tả chi tiết</div>
+        <div class="body" id="info-desc" [ngbCollapse]="isCollapsedPic">
+            <table class="w-100 table table-bordered">
+                <tbody>
+                    <tr>
+                        <td class="w-25 bg-light text-right label">Mô tả</td>
+                        <td class="w-75">{{contact.description}}</td>
+                    </tr>
+
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <div class="card-collapse">
+        <div class="header" (click)="isCollapsedDesc = !isCollapsedDesc" [attr.aria-expanded]="!isCollapsedDesc" aria-controls="info-desc">
+            <i class="fa fa-caret-down mr-3"></i>Hình ảnh</div>
+        <div class="body" id="info-desc" [ngbCollapse]="isCollapsedDesc">
+            <table class="w-100 table table-bordered">
+                <tbody>
+                    <tr>
+                        <td class="w-25 bg-light text-right label">Hình ảnh liên hệ</td>
+                        <td class="w-75">
+                            <img [src]="contact.image? contact.image : avatarSrc" width="120" height="120">
+                        </td>
+                    </tr>
+
+                </tbody>
+            </table>
+
+        </div>
+    </div>
+
+
+</div>

@@ -1,0 +1,301 @@
+<div>
+
+    <div class="search-box d-flex">
+        <div class="media mr-auto">
+            <div class="media-header">
+                <a [routerLink]='["/customer"]'>
+                    <i class="fa fa-chevron-left mr-3" aria-hidden="true"></i>
+                </a>
+                <i class="fa fa-building mr-3" aria-hidden="true"></i>
+                <h4 class="d-inline mb-0 text-dark">{{ customer.id > 0 ? 'Chỉnh sửa khách hàng' : 'Tạo mới khách hàng'}}</h4>
+            </div>
+        </div>
+        <div class="action-bar">
+            <button class="btn btn-primary ml-2" (click)="submitForm()">Lưu &nbsp;
+            </button>
+            <button class="btn btn-secondary ml-2" [routerLink]="['/customer']">Hủy &nbsp;
+            </button>
+        </div>
+    </div>
+    <hr>
+    <form [formGroup]="customerForm" novalidate>
+        <!-- <app-validation-summary [validationMessages]="invalidMessages"></app-validation-summary> -->
+        <div class="d-flex">
+            <div class="w-100  mr-auto">
+                <div class="card-collapse">
+                    <div class="header" (click)="isCollapsedMain = !isCollapsedMain" [attr.aria-expanded]="!isCollapsedMain" aria-controls="info-main">
+                        <i class="fa fa-caret-down mr-3"></i>Chi tiết khách hàng</div>
+                    <div class="body" id="info-main" [ngbCollapse]="isCollapsedMain">
+                        <table class="w-100 table table-bordered">
+                            <tbody>
+                                <tr>
+                                    <td class="w-25 bg-light text-right label required">Tên khách hàng</td>
+                                    <td class="w-25">
+                                        <input class="w-75 form-control" autofocus type="text" formControlName="name" [class.is-invalid]="formErrors.name" tabindex="1">
+                                        <div class="invalid-feedback" *ngIf="formErrors.name">
+                                            {{formErrors.name}}
+                                        </div>
+                                    </td>
+                                    <td class="w-25 bg-light text-right label">Email chính</td>
+                                    <td class="w-25">
+                                        <input class="w-75 form-control" type="text" formControlName="emailOfficial" [class.is-invalid]="formErrors.emailOfficial"
+                                            tabindex="10">
+                                        <div class="invalid-feedback" *ngIf="formErrors.emailOfficial">
+                                            {{formErrors.emailOfficial}}
+                                        </div>
+
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="w-25 bg-light text-right label">Website</td>
+                                    <td class="w-25">
+                                        <input class="w-75 form-control" type="text" [class.is-invalid]="formErrors.website" formControlName="website" tabindex="2">
+                                        <div class="invalid-feedback" *ngIf="formErrors.website">
+                                            {{formErrors.website}}
+                                        </div>
+
+                                    </td>
+                                    <td class="w-25 bg-light text-right label">Email phụ</td>
+                                    <td class="w-25">
+                                        <input class="w-75 form-control" type="text" formControlName="emailExtra" [class.is-invalid]="formErrors.emailExtra" tabindex="11">
+                                        <div class="invalid-feedback" *ngIf="formErrors.emailExtra">
+                                            {{formErrors.emailExtra}}
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="w-25 bg-light text-right label">Fax</td>
+                                    <td class="w-25">
+                                        <input appInputNumber class="w-75 form-control" type="text" [class.is-invalid]="formErrors.fax" formControlName="fax" tabindex="3">
+                                        <div class="invalid-feedback" *ngIf="formErrors.fax">
+                                            {{formErrors.fax}}
+                                        </div>
+                                    </td>
+                                    <td class="w-25 bg-light text-right label">Ngành nghề</td>
+                                    <td class="w-25">
+                                        <span class="custom-dropdown w-75 ">
+                                            <select class="form-control" formControlName="career" tabindex="12">
+                                                <option [ngValue]="null">--Lựa chọn--</option>
+                                                <option *ngFor="let item of businessList | async" [value]="item.id">{{item.text}}</option>
+                                            </select>
+                                        </span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="w-25 bg-light text-right label required">Điện thoại chính</td>
+                                    <td class="w-25">
+                                        <input appInputNumber class="w-75 form-control" type="text" [class.is-invalid]="formErrors.phoneNumberOfficial" formControlName="phoneNumberOfficial"
+                                            tabindex="4">
+                                        <div class="invalid-feedback" *ngIf="formErrors.phoneNumberOfficial">
+                                            {{formErrors.phoneNumberOfficial}}
+                                        </div>
+                                    </td>
+                                    <td class="w-25 bg-light text-right label">Nhóm</td>
+                                    <td class="w-25">
+                                        <span class="custom-dropdown w-75 ">
+                                            <select class="form-control" formControlName="group" tabindex="13">
+                                                <option [ngValue]="null">--Lựa chọn--</option>
+                                                <option *ngFor="let item of customerGroupList | async" [value]="item.id">{{item.text}}</option>
+                                            </select>
+                                        </span>
+                                    </td>
+                                </tr>
+
+                                <tr>
+                                    <td class="w-25 bg-light text-right label">Mã chứng khoán</td>
+                                    <td class="w-25">
+                                        <input class="w-75 form-control" type="text" formControlName="stockCode" tabindex="5">
+                                    </td>
+                                    <td class="w-25 bg-light text-right label">Đánh giá</td>
+                                    <td class="w-25">
+                                        <star-rating-comp [starType]="'svg'" [(rating)]="rating" (onRatingChange)="onRatingChange($event)"></star-rating-comp>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="w-25 bg-light text-right label">Mã số thuế</td>
+                                    <td class="w-25">
+                                        <input appInputNumber class="w-75 form-control" type="text" [class.is-invalid]="formErrors.taxCode" formControlName="taxCode"
+                                            tabindex="6">
+                                        <div class="invalid-feedback" *ngIf="formErrors.taxCode">
+                                            {{formErrors.taxCode}}
+                                        </div>
+                                    </td>
+                                    <td class="w-25 bg-light text-right label">Phân loại</td>
+                                    <td class="w-25">
+                                        <span class="custom-dropdown w-75 ">
+                                            <select class="form-control" formControlName="type" tabindex="15">
+                                                <option [ngValue]="null">--Lựa chọn--</option>
+                                                <option *ngFor="let item of customerClassifyList | async" [value]="item.id">{{item.text}}</option>
+                                            </select>
+                                        </span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="w-25 bg-light text-right label">Điện thoại phụ</td>
+                                    <td class="w-25">
+                                        <input appInputNumber class="w-75 form-control" [class.is-invalid]="formErrors.phoneNumberExtra" type="text" formControlName="phoneNumberExtra"
+                                            tabindex="7">
+                                        <div class="invalid-feedback" *ngIf="formErrors.phoneNumberExtra">
+                                            {{formErrors.phoneNumberExtra}}
+                                        </div>
+                                    </td>
+                                    <td class="w-25 bg-light text-right label">Doanh thu hàng năm</td>
+                                    <td class="w-25">
+                                        <input class="w-75 form-control text-right" appInputMoney formControlName="revenue" tabindex="16">
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="w-25 bg-light text-right label required">Phân công cho</td>
+                                    <td class="w-25">
+                                        <span class="custom-dropdown w-75 ">
+                                            <select class="form-control" formControlName="assignTo" tabindex="8">
+                                                <option class="font-weight-bold text-dark mt-2" value="" disabled>Nhân viên</option>
+                                                <option *ngFor="let item of employeeList | async" [ngValue]="'employee_' + item.id">{{item.text}}</option>
+                                                <option class="font-weight-bold text-dark mt-2" value="" disabled>Nhóm</option>
+                                                <option *ngFor="let item of employeeGroupList | async" [ngValue]="'group_' + item.id">{{item.text}}</option>
+                                            </select>
+                                        </span>
+                                    </td>
+                                    <td class="w-25 bg-light text-right label required">Loại khách hàng</td>
+                                    <td class="w-25">
+                                        <span class="custom-dropdown w-75 ">
+                                            <select [class.is-invalid]="formErrors.customerType" #type class="form-control" formControlName="customerType" tabindex="17">
+                                                <option value="Personal">Cá nhân</option>
+                                                <option value="Company">Công ty</option>
+                                            </select>
+                                        </span>
+                                        <div class="invalid-feedback" *ngIf="formErrors.customerType">
+                                            {{formErrors.customerType}}
+                                        </div>
+                                    </td>
+                                    <tr>
+                                        <td class="w-25 bg-light text-right label">Liên hệ</td>
+                                        <td class="w-25">
+                                            <div class=" w-75 autocomplete-wrapper-2 ui-fluid">
+                                                <p-autoComplete formControlName="contact" [suggestions]="contactsSearchResults" [forceSelection]="true" [delay]="'400'" [emptyMessage]="'Không có dữ liệu'"
+                                                    placeholder="Tìm theo tên" [immutable]="true" (completeMethod)="searchContacts($event.query)"
+                                                    [tabindex]="'9'" field="text" [multiple]="true">
+                                                </p-autoComplete>
+                                                <span class="input-group-addon">
+                                                    <i class="fa fa-search"></i>
+                                                </span>
+                                            </div>
+                                        </td>
+                                        <td *ngIf="type.value !=='Personal' && type.value !=='Company'" class="w-25 bg-light text-right label"></td>
+                                        <td *ngIf="type.value !=='Personal' && type.value !=='Company'" class="w-25">
+                                            <div class="input-group w-75">
+                                              
+                                            </div>
+                                        </td>
+
+                                        <td *ngIf="type.value ==='Personal'" class="w-25 bg-light text-right label">Ngày sinh nhật</td>
+                                        <td *ngIf="type.value ==='Personal'" class="w-25">
+                                            <div class="input-group w-75">
+                                                <owl-date-time [readonlyInput]="datePickerConfig.readonlyInput" [inputStyleClass]="formErrors.startDate ? 'is-invalid' : ''"
+                                                    [dateFormat]="datePickerConfig.dateFormat" [placeHolder]="datePickerConfig.datePlaceHolder"
+                                                    [locale]="datePickerConfig.vi" [type]="datePickerConfig.calendarType" formControlName="dob"
+                                                    tabindex="18">
+                                                </owl-date-time>
+                                                <span class="input-group-addon">
+                                                    <i class="fa fa-calendar"></i>
+                                                </span>
+                                            </div>
+                                        </td>
+
+                                        <td *ngIf="type.value ==='Company'" class="w-25 bg-light text-right label">Ngày thành lập công ty</td>
+                                        <td *ngIf="type.value ==='Company'" class="w-25">
+                                            <div class="input-group w-75">
+                                                <owl-date-time [readonlyInput]="datePickerConfig.readonlyInput" [inputStyleClass]="formErrors.startDate ? 'is-invalid' : ''"
+                                                    [dateFormat]="datePickerConfig.dateFormat" [placeHolder]="datePickerConfig.datePlaceHolder"
+                                                    [locale]="datePickerConfig.vi" [type]="datePickerConfig.calendarType" formControlName="companyEstablishmentDay"
+                                                    tabindex="18">
+                                                </owl-date-time>
+                                                <span class="input-group-addon">
+                                                    <i class="fa fa-calendar"></i>
+                                                </span>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr *ngIf="type.value ==='Personal'">
+                                        <td class="w-25 bg-light text-right label">Giới tính</td>
+                                        <td class="w-25">
+                                            <div class="form-check-inline">
+                                                <label class="form-check-label">
+                                                  <input type="radio" formControlName="gender" value="Male" class="form-check-input" name="gender" tabindex="6">Nam
+                                                </label>
+                                              </div>
+                                              <div class="form-check-inline">
+                                                <label class="form-check-label">
+                                                  <input type="radio" formControlName="gender" value="Female" class="form-check-input" name="gender" tabindex="6">Nữ
+                                                </label>
+                                              </div>    
+                                        </td>
+                                        <td class="w-25 bg-light text-right label">Năm sinh âm</td>
+                                        <td class="w-25">
+                                            <span class="custom-dropdown w-75 ">
+                                                <select class="form-control" formControlName="lunarBirthday" >
+                                                    <option class="font-weight-bold text-dark mt-2" value="" disabled></option>
+                                                    <option *ngFor="let item of lunarBirthdayList | async" [ngValue]="item.id">{{item.text}}</option>
+                                                </select>
+                                            </span>
+                                        </td>
+                                    </tr>
+                            </tbody>
+                        </table>
+
+                    </div>
+                </div>
+
+                <div class="card-collapse">
+                    <div class="header" (click)="isCollapsedAddress = !isCollapsedAddress" [attr.aria-expanded]="!isCollapsedAddress" aria-controls="info-address">
+                        <i class="fa fa-caret-down mr-3"></i>Chi tiết địa chỉ</div>
+                    <div class="body" id="info-address" [ngbCollapse]="isCollapsedAddress">
+                        <table class="w-100 table table-bordered">
+                            <tbody>
+                                <tr>
+                                    <td class="w-25 bg-light text-right label">Địa chỉ</td>
+                                    <td class="w-25">
+                                        <input class="w-75 form-control" type="text" formControlName="address" tabindex="19">
+                                    </td>
+                                    <td class="w-25 bg-light text-right label">Thành phố </td>
+                                    <td class="w-25">
+                                        <input class="w-75 form-control" type="text" formControlName="city" tabindex="21">
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="w-25 bg-light text-right label">Quận</td>
+                                    <td class="w-25">
+                                        <input class="w-75 form-control" type="text" formControlName="district" tabindex="20">
+                                    </td>
+                                    <td class="w-25 bg-light text-right label">Quốc gia</td>
+                                    <td class="w-25">
+                                        <input class="w-75 form-control" type="text" formControlName="country" tabindex="22">
+                                    </td>
+
+                                </tr>
+                            </tbody>
+                        </table>
+
+                    </div>
+                </div>
+
+                <div class="card-collapse">
+                    <div class="header" (click)="isCollapsedDesc = !isCollapsedDesc" [attr.aria-expanded]="!isCollapsedDesc" aria-controls="info-desc">
+                        <i class="fa fa-caret-down mr-3"></i>Mô tả chi tiết</div>
+                    <div class="body" id="info-desc" [ngbCollapse]="isCollapsedDesc">
+                        <table class="w-100 table table-bordered">
+                            <tbody>
+                                <tr>
+                                    <td class="w-25 bg-light text-right label">Mô tả</td>
+                                    <td class="">
+                                        <input class=" form-control" type="text" formControlName="description" tabindex="23">
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>

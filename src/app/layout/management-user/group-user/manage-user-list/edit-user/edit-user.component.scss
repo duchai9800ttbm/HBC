@@ -1,0 +1,149 @@
+.boder-table {
+  border: 1px solid #ebebeb;
+ // padding-bottom: 35px;
+  border-radius: 4px;
+  box-shadow: 0 0 10px 3px #f1f1f1;
+  height: 1009px;
+}
+
+.table-body {
+  padding: 20px 25px;
+  padding-bottom: 0px;
+}
+
+.btn-rg {
+  margin-right: 4px;
+}
+
+.text-head-user {
+  text-transform: uppercase;
+  color: #00a0e3;
+  font-size: 700;
+  font-weight: bold;
+}
+.w-80 {
+  width: 80px;
+}
+.body-account {
+  font-weight: bold;
+  padding: 0px 30px;
+  .account-content {
+      padding: 20px 0px 40px 0px;
+  }
+  .text-accout {
+      text-transform: uppercase;
+      font-weight: bold;
+      padding: 10px 0;
+  }
+}
+$font-size:13px;
+$theme-color: #00a0e3;
+.checkbox {
+  padding-top:5px;
+  position: relative;
+  display: block;
+
+  input {
+    opacity: 0;
+    position: absolute;
+    z-index: 1;
+    cursor: pointer;
+    margin-left: 20px;
+
+    &:checked {
+      + label {
+                &::before {
+          border-color: $theme-color;
+        }
+        &::after {
+          content: '';
+          display: inline-block;
+          position: absolute;
+          width: 13px;
+          height: 13px;
+          left: 2px;
+          top: 4px;
+          margin-left: 20px;
+          border: 1px solid $theme-color;
+          border-radius: 50%;
+          background-color: $theme-color;
+        }
+      }
+    }
+  }
+
+  label {
+    display: inline-block;
+    position: relative;
+    padding: 4px 0px 0px 40px;
+
+    &::before {
+      content: '';
+      display: inline-block;
+      position: absolute;
+      width: 17px;
+      height: 17px;
+      left: 0;
+      top: 2px;
+      margin-left:20px;
+      border: 1px solid black;
+      border-radius: 50%;
+      background-color: #fff;
+    }
+  }
+}
+
+.checkbox {
+  input {
+    &:checked {
+      + label {
+                &::before {
+          border-color: $theme-color;
+          background-color: $theme-color;
+        }
+        &::after {
+          content: "\f00c";
+          font-family: FontAwesome;
+                    font-size: $font-size;
+          color: #fff;
+          top: 0;
+          left: 1px;
+          border-color: transparent;
+          background-color: transparent;
+        }
+      }
+    }
+  }
+  label {
+    &::before {
+      border-radius: 2px;
+    }
+  }
+}
+
+.form-input {
+  border: 1px solid #00a0e3;
+  border-radius: 4px;
+}
+.w-100 {
+    width: 100%;
+}
+
+.is-invalid {
+  border: 1px solid red!important;
+}
+.no-boder-bottom {
+  border-bottom: none;
+  padding: 30px 0px 30px 0px;
+}
+.text-model {
+  font-size: 14px;
+}
+.pd-b20 {
+  padding-bottom: 20px;
+}
+.close {
+  font-size: 1.8rem !important;
+  padding-top: 10px!important;
+}
+

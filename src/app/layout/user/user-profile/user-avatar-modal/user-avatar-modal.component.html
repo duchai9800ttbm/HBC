@@ -1,0 +1,30 @@
+<div class="modal-header">
+  <h4 class="modal-title">Cập nhật ảnh đại diện :</h4>
+  <button type="button" class="close" aria-label="Close" (click)="activeModal.dismiss('Cross click')">
+      <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+<div class="fileUpload btn btn-primary">
+  <span>Tải ảnh lên</span>
+  <input type="file" class="upload"  (change)="fileChangeEvent($event)" />
+</div>
+<div class="avatar">
+  <div class="image">
+      <image-cropper
+      [imageChangedEvent]="imageChangedEvent"
+      [maintainAspectRatio]="true"
+      [resizeToWidth]="300"
+      format="png"
+      [aspectRatio]="1 / 1"
+      (imageCropped)="imageCropped($event)"
+    ></image-cropper>
+  </div>
+</div>
+
+<!-- <div class="crop-image">
+    <img [src]="croppedImage" />
+</div> -->
+<div class="modal-footer">
+    <button type="button" class="btn btn-primary" (click)="saveImage()" >Lưu</button>
+    <button type="button" class="btn btn-secondary" (click)="activeModal.close('Close click')">Hủy</button>
+</div>

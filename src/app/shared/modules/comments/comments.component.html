@@ -1,0 +1,47 @@
+<div class="card">
+    <div class="card-body">
+        <h5>Bình luận</h5>
+
+        <hr *ngIf="!readOnly">
+
+        <div *ngIf="!readOnly" class="p-3 comment-input">
+            <div>
+                <app-editor #editor (keyup.enter)="add($event)"></app-editor>
+            </div>
+            <div class="d-flex justify-content-end mt-3">
+                <button [disabled]="!editor.content" class="btn btn-primary" (click)="addNewComment()">Đăng</button>
+            </div>
+
+        </div>
+
+        <hr>
+
+        <div class="card">
+            <div *ngIf="comments?.length > 0; else emptyComment" class="card-body pt-0">
+                <div class="ui comments abc">
+                    <div *ngFor="let comment of comments; let i=index" class="comment">
+                        <app-comment [moduleName]="moduleName" [moduleItemId]="moduleItemId" [comment]="comment" [commentList]="comments" [index]="i"
+                            (commentEdited)="onCommentEdited(comment, $event)">
+                        </app-comment>
+                    </div>
+
+                    <div class="text-center cursor-pointer mt-2" *ngIf="showButtonViewAll">
+                        <a class="text-primary" (click)="onViewModeClick()">Xem tất cả</a>
+                    </div>
+                    <div class="text-center cursor-pointer mt-2" *ngIf="showButtonLoadMore">
+                        <a class="text-primary" (click)="onLoadMore()">Xem thêm</a>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<ng-template #emptyComment>
+    <div class="card-body text-center">
+        Không có bình luận nào !
+    </div>
+</ng-template>

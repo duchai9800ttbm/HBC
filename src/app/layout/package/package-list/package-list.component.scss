@@ -1,0 +1,358 @@
+.mark-status {
+    padding: 4px;
+    border-radius: 5px;
+    color: white;
+    width: 100%;
+    text-align: center;
+}
+.color{
+   a{
+    color: #19a3b9;
+   } 
+   a:hover{
+       color:#478993;
+   }
+}
+.custor-filter-bar{
+    padding: 0px;
+    .flex-pad{
+        padding: 0.7rem 0rem 1rem;
+    }
+}
+.flex-pad{
+  //  padding: 0.7rem 0rem 1rem;
+}
+.calendarInput{
+    //width: 170px;
+    margin-left: 10px !important;
+}
+span{
+    float: left;
+    text-align: center;
+ }
+
+ @media only screen and (max-width: 3000px) {
+    table.dataTable {
+        th,
+        td {
+            max-width: 130px!important;
+        }
+    }
+    .HSMT{
+        max-width: 300px;
+    }
+}
+
+@media only screen and (max-width: 1600px) {
+    table.dataTable {
+        th,
+        td {
+            max-width: 130px;
+        }
+    }
+  .custom-filter-bar{
+      zoom: 0.9;
+  }
+}
+
+
+@media only screen and (max-width: 1366px) {
+    table.dataTable {
+        th,
+        td {
+            max-width: 80px;
+        }
+    }
+    table.dataTable{
+        zoom: 0.8;
+    }
+    .custom-filter-bar{
+        zoom: 0.8;
+    }
+}
+
+@media only screen and (max-width: 1200px) {
+    table.dataTable {
+        th,
+        td {
+            max-width: 70px;
+        }
+    }
+    table.dataTable{
+        zoom: 0.7;
+    }
+    .custom-filter-bar{
+        zoom: 0.85;
+    }
+    .custom-filter-bar{
+        zoom: 0.7;
+    }
+}
+
+@media only screen and (max-width: 1150px) {
+    table.dataTable{
+        zoom: 0.72;
+    }
+ 
+    .status-filter{
+        zoom: 0.85;
+    }
+    .custom-filter-bar{
+        zoom: 0.65;
+    }
+}
+
+@media only screen and (max-width: 1024px) {
+    .btn-toolbar {
+        zoom: 0.85;
+    }
+    th,
+    td {
+        max-width: 60px;
+    }
+    table.dataTable{
+        zoom: 0.65;
+    }
+    .status-filter{
+        zoom: 0.75;
+    }
+    .custom-filter-bar{
+        zoom: 0.6;
+    }
+}
+
+@media only screen and (max-width: 1010px) {
+    table.dataTable{
+        zoom: 0.6;
+    }
+    .status-filter{
+        zoom: 0.65;
+    }
+    .custom-filter-bar{
+        zoom: 0.5;
+    }
+}
+
+@media only screen and (max-width: 997px) {
+    table.dataTable{
+        zoom: 0.55;
+    }
+    .status-filter{
+
+        
+        zoom: 0.45;
+    }
+    .custom-filter-bar{
+        zoom: 0.6;
+    }
+}
+
+@media only screen and (max-width: 993px) {
+    .title-list-package{
+        width: 100% !important;
+    }
+}
+
+.fileUpload {
+    position: relative;
+    overflow: hidden;
+}
+.fileUpload input.upload {
+    position: absolute;
+    top: 0;
+    right: 0;
+    margin: 0;
+    padding: 0;
+    font-size: 20px;
+    cursor: pointer;
+    opacity: 0;
+    filter: alpha(opacity=0);
+}
+
+a{
+    cursor: pointer;
+}
+.calendarInput{
+   
+}
+
+.type-task{
+    color:#ff6b81;
+}
+.type-event{
+    color:#2ed573;
+}
+.title-list-package{
+    box-shadow: 0 1pt 12pt rgba(0, 0, 0, .15);
+    min-height: 70px;
+    padding: 0 15px;
+    .list-package{
+        font-size: 120%;
+        font-weight: 400;
+    }
+    position: fixed;
+    width: calc(100% - 200px);
+  //  min-width: calc(100% - 70px);
+    background-color: #ffff;
+    z-index: 1500;
+}
+.main-table{
+    //padding: 15px 15px;
+    padding-left: 15px;
+    padding-right: 15px;
+    padding-top: 90px;
+}
+
+select.form-control:not([size]):not([multiple]){
+    height: auto!important;
+}
+
+.parent{
+    width: 100%;
+}
+.input-checkbox{
+    background-color: #ffff!important;
+}
+.custom-control-input{
+    background-color: #ffff!important;
+}
+.custom-checkbox{
+    //background-color: #ffff!important;
+}
+.range{
+    
+    .min{
+        float: left;
+    }
+    .max{
+        float: right;
+    }
+}
+
+.dropdown-menu-left{
+
+}
+
+.popup-dynamic-col{
+    padding: 10px 20px;
+
+    .wrapper {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        grid-column-gap: 10px;
+        grid-row-gap: 1em;
+        overflow: hide;
+        height: 160px;
+        overflow-y: scroll;
+        .form-check-label{
+            padding: 0;
+        }
+      }
+}
+::-webkit-scrollbar {
+    width: 12px;
+}
+ 
+::-webkit-scrollbar-track {
+    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3); 
+    border-radius: 10px;
+}
+ 
+::-webkit-scrollbar-thumb {
+    border-radius: 10px;
+    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.5); 
+}
+
+.tamgiac{
+    width: 0;
+    height: 0;
+    top: -50px;
+    border: 0 solid transparent;
+    border-right-width: 132px;
+    border-left-width: 132px;
+    border-bottom: 229px solid black;
+}
+.dropdown-menu::before {
+    position: absolute;
+    top: -12px;
+    left: 423px;
+    display: inline-block;
+    border-right: 12px solid transparent;
+    border-bottom: 12px solid #CCC;
+    border-left: 12px solid transparent;
+    border-bottom-color: rgba(0, 0, 0, 0.2);
+    content: '';
+  }
+  .dropdown-menu::after {
+    position: absolute;
+    top: -11px;
+    left: 423px;
+    display: inline-block;
+    border-right: 11px solid transparent;
+    border-bottom: 11px solid white;
+    border-left: 11px solid transparent;
+    content: '';
+  }
+
+  /**
+ * Checkbox Five
+ */
+.checkboxFive {
+    width: 25px;
+    margin: 20px 100px;
+    position: relative;
+}
+/**
+ * Create the box for the checkbox
+ */
+ .checkboxFive label {
+    cursor: pointer;
+    position: absolute;
+    width: 25px;
+    height: 25px;
+    top: 0;
+    left: 0;
+    background: #eee;
+    border:1px solid #ddd;
+}
+/**
+ * Display the tick inside the checkbox
+ */
+ .checkboxFive label:after {
+    opacity: 0.2;
+    content: '';
+    position: absolute;
+    width: 9px;
+    height: 5px;
+    background: transparent;
+    top: 6px;
+    left: 7px;
+    border: 3px solid #333;
+    border-top: none;
+    border-right: none;
+ 
+    -webkit-transform: rotate(-45deg);
+    -moz-transform: rotate(-45deg);
+    -o-transform: rotate(-45deg);
+    -ms-transform: rotate(-45deg);
+    transform: rotate(-45deg);
+}
+
+/**
+ * Create the hover event of the tick
+ */
+ .checkboxFive label:hover::after {
+    opacity: 0.5;
+}
+/**
+ * Create the checkbox state for the tick
+ */
+.checkboxFive input[type=checkbox]:checked + label:after {
+    opacity: 1;
+}
+
+// .dataTables_wrapper.no-footer .dataTables_scrollBody{
+//     border-bottom: none!important;
+// }
+
+

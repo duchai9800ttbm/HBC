@@ -1,0 +1,40 @@
+<div class="card mb-3">
+    <form [formGroup]="chartForm">
+        <div class="card-header d-flex flex-row">
+            <div class="select_box mr-auto mt-2">
+                <select id='module' #module formControlName="moduleName" (change)="onSelectType($event.target.value)">
+                    <option value="prospects">Tiềm năng</option>
+                    <option value="customers">Khách hàng</option>
+                    <option value="contacts">Liên hệ</option>
+                    <option value="opportunities">Cơ hội</option>
+                    <option value="campaigns">Chiến dịch</option>
+                </select>
+            </div>
+            <div class="select_box mt-2  mr-2">Từ</div>
+            <div class="input-group  calendarInput  mr-3">
+                <owl-date-time [readonlyInput]="datePickerConfig.readonlyInput" [inputStyleClass]="formErrors.startDate ? 'is-invalid' : ''" #startDate formControlName="startDate" [dateFormat]="datePickerConfig.dateFormat"
+                    [placeHolder]="datePickerConfig.datePlaceHolder" [locale]="datePickerConfig.vi" [max]="chartForm.get('endDate').value" [type]="datePickerConfig.calendarType">
+                </owl-date-time>
+                <span class="input-group-addon">
+                    <i class="fa fa-calendar"></i>
+                </span>
+            </div>
+            <div class="select_box mt-2"> đến</div>
+
+            <div class="input-group  calendarInput ml-3">
+                <owl-date-time [readonlyInput]="datePickerConfig.readonlyInput" [inputStyleClass]="formErrors.endDate ? 'is-invalid' : ''" #endDate formControlName="endDate" [dateFormat]="datePickerConfig.dateFormat"
+                    [placeHolder]="datePickerConfig.datePlaceHolder" [locale]="datePickerConfig.vi" [min]="chartForm.get('startDate').value" pickerType="calendar" [type]="datePickerConfig.calendarType">
+                </owl-date-time>
+                <span class="input-group-addon">
+                    <i class="fa fa-calendar"></i>
+                </span>
+            </div>
+            <button type="submit" class="btn btn-primary ml-3" (click)="onClick()">Xem</button>
+        </div>
+        <div class="card-body">
+            <canvas baseChart height="60vh" [datasets]="lineChartData" [labels]="lineChartLabels" [options]="lineChartOptions" [colors]="lineChartColors"
+                [legend]="lineChartLegend" [chartType]="lineChartType" (chartHover)="chartHovered($event)" (chartClick)="chartClicked($event)">
+            </canvas>
+        </div>
+    </form>
+</div>

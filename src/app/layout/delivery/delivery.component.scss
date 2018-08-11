@@ -1,0 +1,43 @@
+.search-bar {
+    select {
+        min-width: 150px;
+    }
+    .search-bar__title {
+        line-height: 32px;
+        margin-right: 16px;
+    }
+}
+
+.card {
+    padding: 15px;
+}
+
+.border-right {
+    border-right: 1px solid lightgray;
+}
+
+.link-custom {
+    text-decoration: underline;
+    color: #00a0e3;
+    cursor: pointer;
+}
+
+.title-color {
+    color: #346699;
+}
+
+.custom-search {
+    width: calc(100% - 765px);
+}
+
+@media screen and (max-width: 1170px) {
+    .custom-search {
+        width: calc(100% - 632px);
+    }
+
+    .search-bar {
+        select {
+            max-width: 150px;
+        }
+    }
+}

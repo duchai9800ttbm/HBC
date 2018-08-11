@@ -1,0 +1,61 @@
+<div class="login-page center-parent" [@routerTransition] style="background: url('assets/images/background2.jpg') no-repeat; background-size:cover;">
+    <div class="center-parent">
+        <div class="col-md-10 col-lg-8 col-sm-11 col-sx-11">
+            <div class="row no-gutters">
+                <div class="col-md-6 col-lg-6 col-sm-6">
+                    <img src="assets\images\Logo2.jpg" style="width:100%; height: 100%;">
+                </div>
+                <div class="col-md-6 col-lg-6 col-sm-6 center-parent">
+
+                    <form role="form" [formGroup]="authForm" (ngSubmit)="submitForm()" class="center-parent">
+                        <div class="center-parent h-100 w-100">
+                            <div class="w-100 h-100">
+                                <div class="center-parent title-login mb-4">
+                                    <div>ĐĂNG NHẬP</div>
+                                </div>
+                                <app-list-errors [errorCode]="apiErrorCode"></app-list-errors>
+                                <div class="form-content">
+                                    <div class="form-group text-left">
+                                        <label for="name" style="font-size: 14px; color: #3b3b3b; font-weight: 505;">Tài khoản</label>
+                                        <input type="text" class="form-control" name="email" formControlName="username" [class.is-invalid]="formErrors.username">
+                                        <div class="invalid-feedback" *ngIf="formErrors.username">
+                                            {{formErrors.username}}
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group text-left">
+                                        <label for="name" style="font-size: 14px; color: #3b3b3b; font-weight: 505;">Mật khẩu</label>
+                                        <input type="password" class="form-control" name="password" formControlName="password" [class.is-invalid]="formErrors.password">
+                                        <div class="invalid-feedback" *ngIf="formErrors.password">
+                                            {{formErrors.password}}
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <button type="submit" class="btn btn-primary w-100 mt-4 text-uppercase btn-action-login">Đăng nhập</button>
+
+                                <a class="btn  mt-3" [routerLink]="['/login/forgot-password']">Quên mật khẩu ?</a>
+                            </div>
+                        </div>
+
+
+                    </form>
+
+                </div>
+            </div>
+            <div class="row mt-5 center-parent">
+                <div class="copy-right">Copyright &copy; 2018. Bản quyền thuộc về BYS</div>
+
+            </div>
+            <!-- <h1 class="pb-3">BYS CRM</h1> -->
+            <!-- <img class="img-title" src="assets\images\Logo_quanlyduthau2.png"  alt=""> -->
+        </div>
+
+
+
+        <!-- <app-footer-copyright></app-footer-copyright> -->
+    </div>
+
+
+
+</div>

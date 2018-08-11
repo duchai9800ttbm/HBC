@@ -1,0 +1,27 @@
+<form [formGroup]="bidStatusForm" novalidate (ngSubmit)="submitForm()">
+  <div>
+      <div class="card p-3">
+          <div class="row form-group">
+              <div class="col-md-2 text-right required">Tên tình trạng gói thầu</div>
+              <div class="col-md-3">
+                  <input class="form-control" [class.is-invalid]="formErrors.statusName" tabindex="1" formControlName="statusName">
+                  <div class="invalid-feedback" *ngIf="formErrors.statusName">
+                      {{formErrors.statusName}}
+                  </div>
+              </div>
+          </div>
+          <div class="row form-group">
+              <div class="col-md-2 text-right">Mô tả</div>
+              <div class="col-md-3">
+                  <textarea class="form-control" tabindex="2" formControlName="statusDesc"></textarea>
+              </div>
+          </div>
+      </div>
+      <div class="text-right">
+          <button class="btn btn-secondary" type="button" [routerLink]="['/settings/bid-status']">Hủy
+          </button>
+          <button type="submit" class="btn btn-primary ml-2">Lưu
+          </button>
+      </div>
+  </div>
+</form>

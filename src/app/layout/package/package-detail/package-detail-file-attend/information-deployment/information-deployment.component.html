@@ -1,0 +1,304 @@
+<div class="boder-table">
+  <div class="row">
+    <ul class="progressbar">
+        <li class="triangle active" [routerLink]="['../infomation-deployment']">
+            <div style="width: 100%" class="center-parent">
+                <div class="arrow-down-active"></div>
+            </div>
+            <span class="text-color ">Triển khai &amp; phân công tiến độ</span>
+        </li>
+        <li class="triangle">
+            <div style="width: 100%" class="center-parent">
+                <div class="arrow-down"></div>
+            </div>
+            <span class="text-color ">Lập HSDT</span>
+        </li>
+        <li class="triangle" [routerLink]="['../price-review']">
+            <div style="width: 100%" class="center-parent">
+                <div class="arrow-down"></div>
+            </div>
+            <span class="text-color ">Trình duyệt giá</span>
+        </li>
+        <li class="triangle">
+            <div style="width: 100%" class="center-parent">
+                <div class="arrow-down"></div>
+            </div>
+            <span class="text-color ">Đơn báo giá dự thầu</span>
+        </li>
+        <li class="triangle">
+            <div style="width: 100%" class="center-parent">
+                <div class="arrow-down"></div>
+            </div>
+            <span>Hồ sơ dự thầu đã ký</span>
+        </li>
+        <li class="triangle">
+            <div style="width: 100%" class="center-parent">
+                <div class="arrow-down"></div>
+            </div>
+
+            <span>Quản lý phỏng vấn/thương thảo</span>
+        </li>
+    </ul>
+  </div>
+
+  <div class="row" [ngClass]="{ 'content-deployment': isSendInformation ===  false,'content-UploadFile': isSendInformation ===  true }">
+    <div [ngClass]="{ 'col-md-4': isSendInformation ===  true,'col-md-8': isSendInformation ===  false }" class="color-dep">
+      {{textInformation}}
+      <button type="button" class="btn btn-primary setHSDT" *ngIf="setHSDT" (click)="openModelViewListData(ViewListData)">
+        Xem danh sách phân công
+      </button>
+    </div>
+
+    <div [ngClass]="{ 'col-md-8': isSendInformation ===  true,'col-md-4': isSendInformation ===  false }" class="pd-left pull-right">
+
+
+      <button type="button" class="btn btn-primary pull-right">
+        <i class="fa fa-refresh" aria-hidden="true"></i>
+      </button>
+      <button type="button" *ngIf="!isconfirmProgress" class="btn btn-up pull-right btn-dep" (click)="openModalUpload(Upload)">Upload file</button>
+
+      <button type="button" *ngIf="isconfirmProgress" class="btn btn-up disable pull-right" (click)="openModalUpload(Upload)">Upload file</button>
+
+      <button type="button" *ngIf="isTeamPlate" [ngClass]="{ 'btn-dep': isSendInformation === true }" class="btn btn-up pull-right">Tải Template</button>
+
+      <button type="button" [ngClass]="{ 'btn-dep': isSendInformation ===  false,'disable': isSendInformation ===  true}" class="btn btn-up pull-right"
+        (click)="openModalDeployment(informationDeployment)">Thông báo triển khai</button>
+
+      <button type="button" *ngIf="isSendInformation" [ngClass]="{'btn-dep':showButtonAssignmet == true,'disable':showButtonAssignmet == false}"
+        class="btn btn-up pull-right" (click)="confirmProgress()">Xác nhận phân công tiến độ</button>
+
+      <button type="button" *ngIf="isconfirmProgress" [ngClass]="{'btn-dep':isconfirmProgress == true}" class="btn btn-up pull-right"
+        (click)="openModeSendAssignment(SendAssignment)">{{textConfirmProgress}}</button>
+
+      <button type="button" *ngIf="setHSDT" [ngClass]="{'btn-dep':setHSDT == true}" class="btn btn-up pull-right">Bắt đầu lập HSDT</button>
+
+
+
+    </div>
+    <div *ngIf="isSendInformation && !showTabelAssignment" class="col-md-4 offset-md-0 table-assignment">Bảng phân công tiến độ thực hiện</div>
+  </div>
+
+  <div class="row" *ngIf="!showTabelAssignment">
+    <div class="col-sm-12 col-sm-offset-0 hid">
+      <div class="row">
+        <div class="col-sm-12 col-sm-offset-0 text-center">
+          <img class="icon-filter" src="/assets/images/ic-file0.png" style="width: 116px;" alt="">
+        </div>
+        <div class="col-sm-12 col-sm-offset-0 text-center">
+          {{toggleTextUpFile}}
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <app-assignment-progress *ngIf="showTabelAssignment" [dataConfirm]="dataConfirm" [hideButon]="hideButon" [UploadItem]="uploadItem">
+  </app-assignment-progress>
+
+</div>
+<!-- Model Gửi thông báo -->
+<ng-template #informationDeployment>
+  <div class="modal-header no-boder-bottom">
+    <div class="pull-left ">
+      <div class="text-title icon-arrow">
+        <i class="fa fa-arrow-left color-arrow" aria-hidden="true"></i>
+        <h4 class="modal-title text-dark d-inline"> Gửi thư thông báo triển khai</h4>
+      </div>
+    </div>
+
+    <div class="pull-right">
+      <button type="button" class="btn btn-up" aria-label="Close" (click)="modalRef.hide()">Hủy</button>
+      <button type="button" class="btn btn-dep" aria-label="Close" (click)="SendInformation()">Gửi</button>
+    </div>
+  </div>
+  <div class="modal-body">
+    <div class="input-group mb-3">
+      <div class="input-group-prepend">
+        <span class="input-group-text" id="basic-addon1">To:</span>
+      </div>
+      <input type="text" class="form-control boder-left-none" placeholder="" aria-label="To" aria-describedby="basic-addon1" autofocus>
+    </div>
+
+    <div class="input-group mb-3">
+      <div class="input-group-prepend">
+        <span class="input-group-text" id="basic-addon1">Tiêu đề:</span>
+      </div>
+      <input type="text" class="form-control boder-left-none" placeholder="" aria-label="Tiede" aria-describedby="basic-addon1"
+        autofocus>
+    </div>
+
+    <ckeditor [(ngModel)]="ckeditorContent">
+      <ckbutton [name]="'saveButton'" [command]="'saveCmd'" (click)="save($event)" [icon]="'save.png'" [label]="'Save Document'"
+        [toolbar]="'clipboard,1'">
+      </ckbutton>
+    </ckeditor>
+  </div>
+</ng-template>
+<!-- Model Upload file -->
+<ng-template #Upload>
+  <form [formGroup]="formUpload" (ngSubmit)="onSubmit()">
+    <div class="modal-header no-boder-bottom">
+      <div class="col-md-10 offset-md-1 text-center">
+        <h4 class="modal-title text-title text-model">Upload file phân công tiến độ</h4>
+      </div>
+      <div class="col-md-1">
+        <button type="button" class="close pull-right" aria-label="Close" (click)="modelUp.hide()">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+    </div>
+    <div class="modal-body">
+      <div class="row pd-up">
+        <div class="col-md-3">Chọn file</div>
+        <div class="col-md-8 input-group">
+          <div class="custom-file form-control">
+            <input type="file" class="custom-file-input" id="inputGroupFile01">
+            <label class="custom-file-label" for="inputGroupFile01">--Choose file--</label>
+          </div>
+          <span class="input-group-addon">
+            <i class="fa fa-upload" aria-hidden="true"></i>
+          </span>
+        </div>
+      </div>
+      <div class="row pd-up">
+        <div class="col-md-3">Tên</div>
+        <div class="col-md-8">
+          <input type="text" class="form-control" placeholder="Tên" formControlName="name" [ngClass]="{ 'is-invalid': submitted && f.name.errors }">
+          <div *ngIf="submitted && f.name.errors" class="invalid-feedback">
+            <div *ngIf="f.name.errors.required">Vui lòng nhập tên file</div>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="row pd-up">
+        <div class="col-md-3">Version</div>
+        <div class="col-md-8">
+          <input type="text" class="form-control" value="1">
+        </div>
+      </div>
+
+      <div class="row pd-up">
+        <div class="col-md-3">Ngày Upload</div>
+        <div class="col-md-8 input-group">
+          <owl-date-time [readonlyInput]="datePickerConfig.readonlyInput" [locale]="datePickerConfig.vi" [placeHolder]="datePickerConfig.placeHolderVn">
+          </owl-date-time>
+          <span class="input-group-addon">
+            <i class="fa fa-calendar"></i>
+          </span>
+        </div>
+      </div>
+
+      <div class="row pd-up">
+        <div class="col-md-3">Mô tả</div>
+        <div class="col-md-8">
+          <textarea class="form-control textarea-content" name="" id="" cols="30" rows="3" placeholder=""></textarea>
+        </div>
+      </div>
+
+      <div class="text-center">
+        <button type="submit" class="btn btn-primary btn-default-w" [disabled]="loading">Upload</button>
+        <button type="button" class="btn btn-default btn-default-w" (click)="modelUp.hide()">Hủy</button>
+      </div>
+    </div>
+  </form>
+</ng-template>
+
+<!-- Gửi phân công tiến độ -->
+<ng-template #SendAssignment>
+  <div class="modal-header no-boder-bottom">
+    <div class="col-md-10 offset-md-1 text-center">
+      <h4 class="modal-title text-title text-model">{{textConfirmProgress}}</h4>
+    </div>
+    <div class="col-md-1">
+      <button type="button" class="close pull-right" aria-label="Close" (click)="modelSendAssignment.hide()">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+  </div>
+  <div class="modal-body">
+    <p class="text-model">Bảng phân công tiến độ sẽ được gửi đến</p>
+
+    <kendo-grid [data]="gridView" [kendoGridSelectBy]="'id'" [selectedKeys]="mySelection">
+      <kendo-grid-checkbox-column showSelectAll="true" [width]="50"></kendo-grid-checkbox-column>
+      <kendo-grid-column field="id" title="STT" [width]="50">
+        <ng-template kendoGridCellTemplate let-dataItem let-rowIndex="rowIndex">
+          <div class="text-center">
+            {{dataItem.id }}
+          </div>
+        </ng-template>
+      </kendo-grid-column>
+      <kendo-grid-column field="rom" title="Phòng ban"></kendo-grid-column>
+      <kendo-grid-column field="name" title="Nhân viên"></kendo-grid-column>
+      <kendo-grid-column field="email" title="Email"></kendo-grid-column>
+    </kendo-grid>
+    <div class="row pdOther">
+      <div class="col-md-1 text-model">Khác</div>
+      <div class="col">
+        <button type="button" class="btn btnOther">
+          <i class="fa fa-plus" aria-hidden="true"></i>
+        </button>
+      </div>
+    </div>
+
+    <div class="main-table">
+      <div class="d-flex flex-row flex-wrap filter-bar custom-filter-bar">
+        <div class="d-flex form-inline flex-pad">
+
+          <div class="form-group ml-sm-2">
+            <label for="" class="form-label">Phòng ban</label>
+            <span class="custom-dropdown mx-sm-2">
+              <select class="form-control">
+                <option value="">--Tất cả--</option>
+                <option *ngFor="let item of roms" [value]="item.id">{{item.name | translate}}</option>
+              </select>
+            </span>
+          </div>
+
+          <div class="form-group ml-sm-2">
+            <label for="" class="form-label">Nhân viên</label>
+            <span class="custom-dropdown mx-sm-2">
+              <select class="form-control">
+                <option value="">--Lựa chọn--</option>
+                <option *ngFor="let item of listUsers" [value]="item.id">{{item.name | translate}}</option>
+              </select>
+            </span>
+          </div>
+
+        </div>
+      </div>
+    </div>
+    <div class="text-center">
+      <button type="submit" class="btn btn-primary btn-default-w" (click)="sendConfirmAssignment()">Gửi phân công</button>
+      <button type="button" class="btn btn-default btn-default-w" (click)="modelSendAssignment.hide()">Hủy</button>
+    </div>
+  </div>
+</ng-template>
+
+<!-- ViewListData -->
+<ng-template #ViewListData>
+  <div class="modal-header no-boder-bottom">
+    <div class="col-md-10 offset-md-1 text-center">
+      <h4 class="modal-title text-title text-model">Danh sách gửi phân công tiến độ</h4>
+    </div>
+    <div class="col-md-1">
+      <button type="button" class="close pull-right" aria-label="Close" (click)="modalViewListData.hide()">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+  </div>
+  <div class="modal-body pd-body">
+
+    <kendo-grid [data]="gridView" [kendoGridSelectBy]="'id'" [selectedKeys]="mySelection">
+      <kendo-grid-column field="id" title="STT" [width]="50">
+        <ng-template kendoGridCellTemplate let-dataItem let-rowIndex="rowIndex">
+          <div class="text-center">
+            {{dataItem.id }}
+          </div>
+        </ng-template>
+      </kendo-grid-column>
+      <kendo-grid-column field="rom" title="Phòng ban"></kendo-grid-column>
+      <kendo-grid-column field="name" title="Nhân viên"></kendo-grid-column>
+      <kendo-grid-column field="email" title="Email"></kendo-grid-column>
+    </kendo-grid>
+  </div>
+</ng-template>

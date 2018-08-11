@@ -1,0 +1,32 @@
+<div class="example-wrapper">
+  <kendo-dialog (close)="close('cancel')" [minWidth]="250" [width]="650">
+    <div class="title-detail center-parent">
+      <div class="col-md-1">
+      </div>
+      <div class="mr-auto col-md-10">
+        <div class="media-header center-parent">
+          <h3 class="d-inline mb-0 text-dark bold-title">GỬI DUYỆT ĐỀ NGHỊ DỰ THẦU</h3>
+        </div>
+      </div>
+      <div class="col-md-1">
+        <span class="close-btn close-popup" (click)="close('cancel')">X</span>
+      </div>
+    </div>
+    <hr>
+    <div class="d-flex">
+      <div class="w-100  mr-auto">
+        <div class="mb-3">
+          <div class="header center-parent" style="background-color: white">
+            Bạn có muốn in Phiếu đề nghị dự thầu để gửi duyệt BGĐ không?
+          </div>
+        </div>
+        <div class="action-bar alignment-but center-parent">
+          <button type="submit" class="btn btn-primary ml-2 cus-but-cs" (click)="close('yes')">Có &nbsp;
+          </button>
+          <button class="btn btn-secondary ml-2 cus-but-cs" (click)="close('cancel')">Không &nbsp;
+          </button>
+        </div>
+      </div>
+    </div>
+  </kendo-dialog>
+</div>

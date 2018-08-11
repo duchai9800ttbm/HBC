@@ -1,0 +1,303 @@
+<!-- <div class="boder-table">
+  <div class="table-body">
+
+    <div class="row">
+      <div class="col-8">
+        <i>* Phân quyền thao tác cho việc quản lý gói thầu</i>
+      </div>
+      <div class="col-4">
+        <div> -->
+<!-- *ngIf="isQTV" -->
+<!-- <button type="button" class="btn btn-default btn-rg w-80 pull-right" style="color: #FFF">
+            Hủy
+          </button> -->
+<!-- <button type="submit" class="btn btn-primary btn-rg w-80 pull-right" [disabled]="loading">
+            Lưu
+          </button>
+        </div>
+        <button type="button" class="btn btn-primary btn-rg pull-right" (click)="openModalDelete(delete)">
+          <i class="fa fa-trash-o" aria-hidden="true"></i>
+        </button>
+        <button type="button" class="btn btn-primary btn-rg pull-right" (click)="refesh()">
+          <i class="fa fa-refresh" aria-hidden="true"></i>
+        </button>
+      </div>
+    </div> -->
+<!--Start Fake Data-->
+<!-- QUản trị viên -->
+<!-- <div *ngFor="let group of listGroupUser">
+      <div class="row" style="padding-top: 20px">
+        <div class="col-md-3 checkbox">
+          <input type="checkbox" [id]="group.id" [checked]="group.checkbox" value="" (click)="checkBox(group.id)">
+          <label [for]="group.id"></label>
+          <div class="icon-edit">
+            <div [ngClass]="{'no-color': idGroup == group.id}" (click)="editQTV(group.id)">
+              <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
+            </div>
+            <div class="form-active-edit">
+              <input type="text" *ngIf="idGroup == group.id" [(ngModel)]="group.name" [ngClass]="{ 'is-invalid': submitted && f.nameGroup.errors }"
+                class="form-control text-qt" id="usr" value="{{group.name}}">
+              <input type="text" *ngIf="idGroup != group.id" class="form-control text-qt no-border" id="usr" value="{{group.name}}">
+            </div>
+            <i *ngIf="true == group.isActive" class="fa fa-check-circle icon-active" aria-hidden="true"></i>
+            <i *ngIf="true != group.isActive" class="fa fa-times-circle icon-active no-color" aria-hidden="true" (click)="editQTV(group.id)"></i>
+          </div>
+        </div>
+
+        <div class="col-md-4 form-group">
+          <div class="title-action" for="exampleFormControlSelect2">Danh sách chức năng</div>
+          <select multiple class="form-control form-select" id="exampleFormControlSelect2" style="height: 150px;" (change)="selectEachFieldNotUser($event, group.id)">
+            <option [value]="notPrivilege.id" *ngFor="let notPrivilege of group.notPrivileges">
+              {{notPrivilege.text}}
+            </option>
+          </select>
+        </div>
+        <div class="col-md-1 group-button">
+          <button type="button" class="btn btn-default btn-next mg-b-2" (click)="selectAllPrivilegesUse(group.id)">
+            <i class="fa fa-angle-double-right" aria-hidden="true"></i>
+          </button>
+          <button type="button" class="btn btn-default btn-next mg-b-2" (click)="changePrivilegesNotUse(group.id)">
+            <i class="fa fa-angle-right" aria-hidden="true"></i>
+          </button>
+          <button type="button" class="btn btn-default btn-next mg-b-2" (click)="changePrivilegesUse(group.id)">
+            <i class="fa fa-angle-left" aria-hidden="true"></i>
+          </button>
+          <button type="button" class="btn btn-default btn-next mg-b-2" (click)="selectAllPrivilegesNotUse(group.id)">
+            <i class="fa fa-angle-double-left" aria-hidden="true"></i>
+          </button>
+        </div>
+
+        <div class="col-md-4 form-group">
+          <div class="title-action" for="exampleFormControlSelect2">Chức năng được sử dụng</div>
+          <select multiple class="form-control form-select" id="exampleFormControlSelect2" (change)="selectEachFieldUser($event, group.id)">
+            <option [value]="privilege.id" *ngFor="let privilege of group.privileges">
+              {{privilege.text}}
+            </option>
+          </select>
+        </div>
+      </div>
+    </div> -->
+<!-- End Nhóm-->
+<!-- NHosm moi -->
+<!-- <form [formGroup]="formAddGroupUser" (ngSubmit)="onSubmit()">
+      <div class="row" style="padding-top: 10px" *ngIf="isAddNewGroup">
+        <div class="col-md-3 ">
+          <div class="form-add-new col">
+            <input type="text" formControlName="nameGroup" [ngClass]="{ 'is-invalid': submitted && f.nameGroup.errors }" class="form-control text-qt"
+              id="add" placeholder="Thêm nhóm người dùng" autofocus>
+          </div>
+          <div class="checkbox">
+            <input type="checkbox" id="optinosCheckbox1" value="" [checked]="groupUserNew.userGroupActiveCheck" (click)="activeNewGroup()">
+            <label for="optinosCheckbox1">Hoạt động</label>
+          </div>
+        </div>
+
+        <div class="col-md-4 form-group">
+          <div class="title-action" for="exampleFormControlSelect2">Danh sách chức năng</div>
+          <select multiple class="form-control form-select" id="exampleFormControlSelect2" (change)="selectEachFieldNotNewUser($event)">
+            <option [value]="item.id" *ngFor="let item of groupUserNew.notPrivileges">{{item.text}}</option>
+          </select>
+        </div>
+        <div class="col-md-1 group-button">
+          <button type="button" class="btn btn-default btn-next mg-b-2" (click)="transferAllPrivilegesNewUser()">
+            <i class="fa fa-angle-double-right" aria-hidden="true"></i>
+          </button>
+          <button type="button" class="btn btn-default btn-next mg-b-2" (click)="transferNotPrivilegesNewUser()">
+            <i class="fa fa-angle-right" aria-hidden="true"></i>
+          </button>
+          <button type="button" class="btn btn-default btn-next mg-b-2" (click)="changePrivilegesNewUse()">
+            <i class="fa fa-angle-left" aria-hidden="true"></i>
+          </button>
+          <button type="button" class="btn btn-default btn-next mg-b-2" (click)="transferAllNotPrivilegesNewUser()">
+            <i class="fa fa-angle-double-left" aria-hidden="true"></i>
+          </button>
+        </div>
+
+        <div class="col-md-4 form-group">
+          <div class="title-action" for="exampleFormControlSelect2">Chức năng được sử dụng</div>
+          <select multiple class="form-control form-select" id="exampleFormControlSelect2" (change)="selectEachFieldNewUser($event)">
+            <option [value]="item.id" *ngFor="let item of groupUserNew.privileges">{{item.text}}</option>
+          </select>
+        </div>
+      </div> -->
+<!-- End add group -->
+<!-- <div class="pull-right" *ngIf="isAddNewGroup">
+        <button type="submit" class="btn btn-primary w-80" [disabled]="loading">Thêm</button>
+        <button type="button" class="btn btn-default w-80 cl-w" (click)="removeAdd()">Hủy</button>
+      </div>
+      <div class="col col-add-user" (click)="AddNewGroup()">
+        <i class="fa fa-plus" aria-hidden="true"></i>
+        <span class="point">Thêm mới nhóm người dùng</span>
+      </div>
+    </form>
+  </div>
+</div> -->
+
+<!-- Strat Model Xóa Group -->
+<!-- <ng-template #delete>
+  <div class="modal-header no-boder-bottom">
+    <div class="col-md-10 offset-md-1 text-center">
+      <p class="modal-title text-title text-model">Bạn có thực sự muốn xóa nhóm người dùng "{{textGroup}}" ra khỏi hệ thống? </p>
+    </div>
+    <div class="col-md-1">
+      <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+  </div>
+  <div class="text-center pd-b20">
+    <button type="submit" class="btn btn-primary w-80" (click)="onDeleteGroup();">Có</button>
+    <button type="button" class="btn btn-default w-80" (click)="modalRef.hide()">Không</button>
+  </div>
+</ng-template> -->
+<!-- End Xóa Group -->
+
+<div class="boder-table">
+  <div class="table-body">
+    <div class="row">
+      <div class="col-md-6">
+        <h4 class="text-head-user">
+          <i>* Danh sách nhóm người dùng</i>
+        </h4>
+      </div>
+      <div class="col-md-6">
+        <!-- <button type="submit" class="btn btn-primary btn-rg w-80 pull-right" [disabled]="loading">
+          Lưu
+        </button>
+        <button type="button" class="btn btn-primary btn-rg pull-right" (click)="openModalDelete(delete)">
+          <i class="fa fa-trash-o" aria-hidden="true"></i>
+        </button> -->
+        <button type="button" class="btn btn-primary btn-rg pull-right" (click)="refesh()">
+          <i class="fa fa-refresh" aria-hidden="true"></i>
+        </button>
+        <button type="submit" class="btn btn-primary btn-rg w-80 pull-right" [disabled]="loading" (click)="openModalCreate(edit)">
+          Tạo mới 
+        </button>
+      </div>
+    </div>
+    <div class="data-list" style="padding-top: 10px;">
+      <kendo-grid [data]="pagedResult.items" [selectable]="true" [loading]="gridLoading">
+        <kendo-grid-column [headerClass]="'custom-table-header'" field="firstname" title="Tên" [width]="100">
+          <ng-template kendoGridCellTemplate let-dataItem let-rowIndex="rowIndex">
+            <div class="">{{dataItem.name }}</div>
+          </ng-template>
+        </kendo-grid-column>
+        <kendo-grid-column [headerClass]="'custom-table-header'" field="isActive" title="Mô tả" [width]="90">
+          <ng-template kendoGridCellTemplate let-dataItem let-rowIndex="rowIndex">
+            <div class="">{{dataItem.desc }}</div>
+          </ng-template>
+        </kendo-grid-column>
+        <kendo-grid-column [headerClass]="'custom-table-header text-center'" field="firstname" title="Trình trạng" [width]="50">
+          <ng-template kendoGridCellTemplate let-dataItem let-rowIndex="rowIndex">
+            <!-- <div class="">{{dataItem.isActive ? 'Hoạt động' : 'Không hoạt động'}}</div> -->
+            <div>
+              <div class="text-center color-active" *ngIf="dataItem.isActive">
+                <i class="fa fa-check-circle" aria-hidden="true"></i>
+              </div>
+              <div class="text-center" *ngIf="!dataItem.isActive">
+                <i class="fa fa-times-circle" aria-hidden="true"></i>
+              </div>
+            </div>
+          </ng-template>
+        </kendo-grid-column>
+        <kendo-grid-column [headerClass]="'custom-table-header text-center'" field="" title="Thao tác" [width]="40">
+          <ng-template kendoGridCellTemplate let-dataItem let-rowIndex="rowIndex">
+            <div class="row">
+              <div class="col-md-4" (click)="openModalEdit(dataItem.id, edit)">
+                <i class="fa fa-pencil-square-o point" aria-hidden="true"></i>
+              </div>
+              <div class="col-md-4" >
+                <i class="fa fa-lock point" *ngIf="!dataItem.isActive" aria-hidden="true"(click)="activateGroup(dataItem.id)" ></i>
+                <i class="fa fa-unlock-alt point color-active" *ngIf="dataItem.isActive" aria-hidden="true" (click)="deactiveGroup(dataItem.id)"></i>
+              </div>
+              <div class="col-md-4" (click)="openModalDeleteGroupUser(dataItem.id, delete)">
+                <i class="fa fa-trash-o point" aria-hidden="true"></i>
+              </div>
+            </div>
+          </ng-template>
+        </kendo-grid-column>
+        <kendo-grid-messages noRecords="Không có dữ liệu"></kendo-grid-messages>
+      </kendo-grid>
+      <app-pagination [(pagedResult)]="pagedResult" (pagedResultChange)="pagedResultChange($event)"></app-pagination>
+    </div>
+  </div>
+</div>
+
+<!-- Strat Model Xóa Group -->
+<ng-template #delete>
+  <div class="modal-header no-boder-bottom">
+    <div class="col-md-10 offset-md-1 text-center">
+      <p class="modal-title text-title text-model">Bạn có thực sự muốn xóa nhóm người dùng "{{GroupDelete.name}}" ra khỏi hệ thống? </p>
+    </div>
+    <div class="col-md-1">
+      <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+  </div>
+  <div class="text-center pd-b20">
+    <button type="submit" class="btn btn-primary w-80" (click)="onDeleteGroup();">Có</button>
+    <button type="button" class="btn btn-default w-80" (click)="modalRef.hide()">Không</button>
+  </div>
+</ng-template>
+<!-- End Xóa Group -->
+
+<!-- Start Edit Group User-->
+<ng-template #edit>
+  <div class="custom-table-header d-flex justify-content-between padding-title">
+    <div class="center-parent" style="font-size: 150% !important; padding-left: 15px">
+      <i *ngIf="groupEditOrCreate.id">Cập nhật chức năng của nhóm {{groupEditOrCreate.name}}</i>
+      <i *ngIf="!groupEditOrCreate.id">Tạo mới nhóm</i>
+    </div>
+    <div class="col-md-1">
+        <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+          <span class="point" aria-hidden="true">&times;</span>
+        </button>
+      </div>
+  </div>
+  <div class="modal-header no-boder-bottom-title">
+    <div class="col-md-1 title-name">
+      Tên:
+    </div>
+    <div class="col-md-11">
+      <textarea class="content-textarea form-control" name="" id="" cols="30" rows="1" [(ngModel)]="groupEditOrCreate.name"></textarea>
+    </div>
+  </div>
+  <div class="modal-header no-boder-bottom">
+    <div class="col-md-5 form-group">
+      <div class="title-action" for="exampleFormControlSelect2">Danh sách chức năng</div>
+      <select multiple class="form-control form-select" id="exampleFormControlSelect2" style="height: 150px;" (change)="selectEachFieldEditNotUser($event)">
+        <option [value]="notPrivilege.id" *ngFor="let notPrivilege of groupEditOrCreate.notPrivileges">
+          {{notPrivilege.text}}
+        </option>
+      </select>
+    </div>
+    <div class="col-md-2 group-button">
+      <button type="button" class="btn btn-default btn-next mg-b-2" (click)="selectAllPrivilegesEditUse()">
+        <i class="fa fa-angle-double-right" aria-hidden="true"></i>
+      </button>
+      <button type="button" class="btn btn-default btn-next mg-b-2" (click)="changePrivilegesEditNotUse()">
+        <i class="fa fa-angle-right" aria-hidden="true"></i>
+      </button>
+      <button type="button" class="btn btn-default btn-next mg-b-2" (click)="changePrivilegesEditUse()">
+        <i class="fa fa-angle-left" aria-hidden="true"></i>
+      </button>
+      <button type="button" class="btn btn-default btn-next mg-b-2" (click)="selectAllPrivilegesEditNotUse()">
+        <i class="fa fa-angle-double-left" aria-hidden="true"></i>
+      </button>
+    </div>
+    <div class="col-md-5 form-group">
+      <div class="title-action" for="exampleFormControlSelect2">Chức năng được sử dụng</div>
+      <select multiple class="form-control form-select" id="exampleFormControlSelect2" (change)="selectEachFieldEditUser($event)">
+        <option [value]="privilege.id" *ngFor="let privilege of groupEditOrCreate.privileges">
+          {{privilege.text}}
+        </option>
+      </select>
+    </div>
+  </div>
+  <div class="pd-b20 d-flex justify-content-end">
+    <button type="submit" class="btn btn-primary w-80" (click)="ediGroupUser();" style="margin-right: 8px">Lưu</button>
+    <button type="button" class="btn btn-default w-80" (click)="modalRef.hide()" style="margin-right: 15px">Hủy</button>
+  </div>
+</ng-template>
+<!-- End Edit Group User-->

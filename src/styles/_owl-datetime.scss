@@ -1,0 +1,19 @@
+owl-date-time{
+    width: 100% ;
+    
+}
+.owl-dateTime-dialog {
+    width: 22em !important;
+}
+.owl-dateTime {
+    .owl-datetime-main-input {
+        padding: 0.375rem 0.75rem !important;
+        height: 34px !important;
+        border-right: none !important;
+        border-top-right-radius: 0 !important;
+        border-bottom-right-radius: 0 !important;
+    }
+}
+.is-invalid{
+    border-color: #dc3545 !important;
+}

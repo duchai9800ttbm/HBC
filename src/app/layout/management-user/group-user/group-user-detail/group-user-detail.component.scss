@@ -1,0 +1,248 @@
+.k-widget{
+    line-height: 0px !important;
+}
+.no-boder-bottom-title{
+    border-bottom: none;
+    padding: 20px 0px 0px 0px;
+}
+.title-name{
+    font-size: 120%;
+    font-weight: bold;
+}
+.content-textarea{
+    height: auto;
+    resize: none;
+}
+.color-active {
+    color: #00a0e3;
+}
+// customers css
+td, #customers th {
+    border: 1px solid #ddd;
+    padding: 8px;
+}
+tr:nth-child(even){background-color: #f2f2f2;}
+tr:hover {background-color: #ddd;}
+th {
+    padding-top: 12px;
+    padding-bottom: 12px;
+    text-align: left;
+    background-color: #f68e56;
+    color: white;
+}
+// customers css
+.point{
+    cursor: pointer;
+}
+.boder-table{
+    border: 1px solid #ebebeb;
+   padding-bottom: 35px;
+    border-radius: 4px;
+    box-shadow: 0 0 10px 3px #f1f1f1;
+    height: 1009px;
+    background: #fff;
+    overflow: auto;
+}
+.table-body {
+    padding:20px 25px
+}
+.btn-rg {
+    margin-right: 4px;
+}
+$font-size:13px;
+$theme-color: #00a0e3;
+.checkbox {
+  padding-top:5px;
+  position: relative;
+  display: block;  
+   
+  input {
+    opacity: 0;
+    position: absolute;
+    z-index: 1;
+    cursor: pointer;
+    margin-left: 20px;
+
+    &:checked {
+      + label {
+                &::before {
+          border-color: $theme-color;
+        }
+        &::after {
+          content: '';
+          display: inline-block;
+          position: absolute;
+          width: 13px;
+          height: 13px;
+          left: 2px;
+          top: 4px;
+          margin-left: 20px;
+          border: 1px solid $theme-color;
+          border-radius: 50%;
+          background-color: $theme-color;
+        }
+      }
+    }
+  }
+
+  label {
+    display: inline-block;
+    position: relative;
+    padding: 4px 0px 0px 40px;
+
+    &::before {
+      content: '';
+      display: inline-block;
+      position: absolute;
+      width: 17px;
+      height: 17px;
+      left: 0;
+      top: 2px;
+      margin-left:20px;
+      border: 1px solid black;
+      border-radius: 50%;
+      background-color: #fff;
+    }
+  }
+}
+
+.checkbox {
+  input {
+    &:checked {
+      + label {
+                &::before {
+          border-color: $theme-color;
+          background-color: $theme-color;
+        }
+        &::after {
+          content: "\f00c";
+          font-family: FontAwesome;
+                    font-size: $font-size;
+          color: #fff;
+          top: 0;
+          left: 1px;
+          border-color: transparent;
+          background-color: transparent;
+        }
+      }
+    }
+  }
+  label {
+    &::before {
+      border-radius: 2px;
+    }
+  }
+}
+.aH {
+    border: 1px solid black;
+    height: 100px;
+    }
+// Scroll
+::-webkit-scrollbar-thumb {
+    border-radius: 3px;
+    -webkit-box-shadow: inset 0 0 3px white;
+    background: #cccccc!important;
+    }
+
+
+.btn-next {
+    background: #fff;
+    border: 1px solid #dadee3;
+    width: 50px;
+    height: 25px;
+    line-height: 10px;
+}
+
+.group-button {
+    padding: 40px 0px 0px 30px;
+}
+.title-action {
+    background-color: #00a0e3 !important;
+    color: #fff !important;
+    font-size: 120% !important;
+    font-weight: 700!important;
+    height: 30px;
+    line-height: 30px;
+    padding-left: 10px;
+}
+.form-select {
+    height: 150px;
+    border-radius: 0!important;
+}
+.icon-edit {
+    position: absolute;
+    top: 2px;
+    font-size: 1.35rem;
+    left: 67px;
+    color: #00a0e3;
+    .text-qt {
+        font-size: 1rem;
+        text-transform: uppercase;
+        color: black;
+        font-weight: bold;
+        position: relative;
+        // top: -2px;
+    }
+}
+.mg-b-2 {
+    margin-bottom: 4px;
+}
+.col-add-user {
+    text-decoration: underline;
+    font-style: italic;
+    color: #00a0e3;
+}
+input#usr {
+    opacity: 1;
+    padding-left: 0px;
+
+}
+.form-active-edit {
+    width: 60%;
+    position: relative;
+    top: -32px;
+    left: 8px;
+    
+}
+.icon-active {
+    left: 178px;
+    position: absolute;
+    top: 10px;
+ }
+ .no-border {
+     border: none;
+ }
+ .no-color {
+     color:#8e8b8b;
+ }
+ .w-80 {
+     width: 80px;
+ }
+ .form-add-new {
+     padding-left: 20px;
+     input#add{
+        opacity: 1;
+       
+    }
+ }
+ 
+ .cl-w {
+     color: #fff;
+ }
+ .no-boder-bottom {
+    border-bottom: none;
+    padding: 30px 0px 30px 0px;
+  }
+  .text-model {
+    font-size: 14px;
+  }
+  .pd-b20 {
+    padding-bottom: 20px;
+  }
+  .close {
+    font-size: 1.8rem !important;
+    // padding-top: 10px!important;
+  }
+  .padding-title{
+      padding: 4px 0px 6px 0px;
+  }

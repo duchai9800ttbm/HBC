@@ -1,0 +1,9 @@
+<app-header></app-header>
+<app-sidebar [state]="menuState" (toggleMenuFromSidebar)="toggleMenu()" (emitPhoneCall)="receive($event)" (emitPhoneStatus)="receive2($event)" (listPhoneCall)="receiveListPhone($event)"></app-sidebar>
+<app-menu></app-menu>
+<section id="main-container" class="main-container sectionIn" [ngStyle]="{'min-height': clientHeight + 'px'}">
+    <router-outlet></router-outlet>
+</section>
+<app-footer></app-footer>
+<div kendoDialogContainer></div>
+

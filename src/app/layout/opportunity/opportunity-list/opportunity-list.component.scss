@@ -1,0 +1,39 @@
+@media only screen and (max-width: 1600px) {
+    table.dataTable {
+        th{
+            max-width: 120px;
+        }
+    }
+}
+
+@media only screen and (max-width: 1366px) {
+    table.dataTable {
+        th,
+        td {
+            max-width: 80px;
+        }
+    }
+}
+
+@media only screen and (max-width: 1200px) {
+    table.dataTable {
+        th,
+        td {
+            max-width: 60px !important;
+        }
+    }
+}
+
+@media only screen and (max-width: 1024px) {
+
+    table.dataTable {
+        th,
+        td {
+            max-width: 30px;
+        }
+    }
+}
+
+a{
+    cursor: pointer;
+}

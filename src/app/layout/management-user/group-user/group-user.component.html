@@ -1,0 +1,17 @@
+<div [@routerTransition]>
+    <div class="main-detail">
+        <div class="d-flex justify-content-between menu">
+            <div class="center-parent action" style="width: calc(20% - 3px)" [routerLinkActive]="['router-link-active']" [routerLink]="['./group-user-detail']">
+                <div>Nhóm người dùng</div>
+            </div>
+            <div class="center-parent action" style="width: calc(20% - 3px)" [routerLinkActive]="['router-link-active']" [routerLink]="['./manage-user-list']">
+                <div>Quản lý người dùng</div>
+            </div>
+            <div class="" style="width: calc(60% - 3px)"></div>
+        </div>
+        <div>
+            <router-outlet></router-outlet>
+        </div>
+
+    </div>
+</div>

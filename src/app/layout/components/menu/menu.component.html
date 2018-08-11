@@ -1,0 +1,48 @@
+<nav class="sidebar">
+  <ul class="list-group">
+    <li>
+      <a class="navbar-brand user" href="javascript:void(0)" class=" ">
+        <img [src]="avatarSrc" width="30" height="30" class="d-inline-block ml-2" alt="">
+        <span>{{userInfo && userInfo.fullName}}</span>
+      </a>
+    </li>
+    <div class="dropdown-divider"></div>
+    <li>
+      <a class=" list-group-item  item" [routerLinkActive]="['router-link-active']" [routerLink]="['/dashboard']">Trang chủ</a>
+    </li>
+    <li>
+      <a class="list-group-item  item" [routerLinkActive]="['router-link-active']" [routerLink]="['/prospect']">Tiềm năng</a>
+    </li>
+    <li>
+      <a class="list-group-item  item" [routerLinkActive]="['router-link-active']" [routerLink]="['/customer']">Khách hàng</a>
+    </li>
+    <li>
+      <a class="list-group-item  item" [routerLinkActive]="['router-link-active']" [routerLink]="['/contact']">Liên hệ</a>
+    </li>
+    <li>
+      <a class="list-group-item  item" [routerLinkActive]="['router-link-active']" [routerLink]="['/opportunity']">Cơ hội</a>
+    </li>
+    <li>
+      <a class="list-group-item  item" [routerLinkActive]="['router-link-active']" [routerLink]="['/campaign']">Chiến dịch</a>
+    </li>
+    <li>
+      <a class="list-group-item  item" [routerLinkActive]="['router-link-active']" [routerLink]="['/activity']">Hoạt động</a>
+    </li>
+    <div class="dropdown-divider"></div>
+    <li>
+        <a class="list-group-item item" [routerLink]="['/change-list']">Thay đổi gần đây</a>
+      </li>
+    <li>
+      <a class="list-group-item item" [routerLink]="['/notification-list']">Thông báo</a>
+    </li>
+    <li>
+      <a class="list-group-item item" [routerLink]="['/user']">Thông tin người dùng</a>
+    </li>
+    <li>
+      <a class=" list-group-item item" (click)="openChangePasswordModal()">Thay đổi mật khẩu</a>
+    </li>
+    <li>
+      <a class=" list-group-item item" [routerLink]="['/login']" (click)="onLoggedout()">Đăng xuất</a>
+    </li>
+  </ul>
+</nav>

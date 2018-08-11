@@ -1,0 +1,203 @@
+<!-- <div *ngIf="packageData">
+  <hr>
+  <div class="d-flex">
+    <div class="w-5 mr-auto"></div>
+    <div class="w-80  mr-auto">
+      <div class="card-collapse">
+        <div class="header" (click)="isCollapsedMain = !isCollapsedMain" [attr.aria-expanded]="!isCollapsedMain" aria-controls="info-main">
+          <i class="fa fa-caret-down mr-3"></i>Thông tin chi tiết
+        </div>
+        <div class="body" id="info-main" [ngbCollapse]="isCollapsedMain">
+          <table class="w-100 table table-bordered">
+            <tbody>
+              <tr>
+                <td class="w-15 bg-light text-right label required no-boder">Tên dự án</td>
+                <td class="w-35 no-boder">
+                  <div class="w-75 form-control">{{packageData.nameProject}}</div>
+                </td>
+                <td class="w-15 bg-light text-right label no-boder">Diện tích sàn (m2)</td>
+                <td class="w-35 no-boder">
+                  <div class="w-75 form-control">{{packageData.acreageFloor}}</div>
+                </td>
+              </tr>
+              <tr>
+                <td class="w-15 bg-light text-right label no-boder">Mã số dự án</td>
+                <td class="w-35 no-boder">
+                  <div class="w-75 form-control">{{packageData.codePackage}}</div>
+                </td>
+                <td class="w-15 bg-light text-right label no-boder">Quy mô</td>
+                <td class="w-35 no-boder">
+                  <div class="w-75 form-control">{{packageData.scale}}</div>
+                </td>
+              </tr>
+              <tr>
+                <td class="w-15 bg-light text-right label required no-boder">Tên gói thầu</td>
+                <td class="w-35 no-boder">
+                  <div class="w-75 form-control">{{packageData.name}}</div>
+                </td>
+                <td class="w-15 bg-light text-right label no-boder">Loại công trình</td>
+                <td class="w-35 no-boder">
+                  <div class="w-75 form-control">{{packageData.buildingProjectType.text}}</div>
+                </td>
+              </tr>
+              <tr>
+                <td class="w-15 bg-light text-right label no-boder">Công việc</td>
+                <td class="w-35 no-boder">
+                  <div class="w-75 form-control">{{packageData.task}}</div>
+                </td>
+                <td class="w-15 bg-light text-right label no-boder">Hạng mục thi công chính</td>
+                <td class="w-35 no-boder">
+                  <div class=" w-75">{{packageData.mainBuildingCategory.text}}</div>
+                </td>
+              </tr>
+              <tr>
+                <td class="w-15 bg-light text-right label no-boder">Địa điểm</td>
+                <td class="w-35 no-boder">
+                  <div class="w-75 form-control">{{packageData.address}}</div>
+                </td>
+                <td class="w-15 bg-light text-right label no-boder">Vai trò của nhà thầu</td>
+                <td class="w-35 no-boder">
+                  <div class="w-75 form-control">{{packageData.roleContractors.text}}</div>
+                </td>
+              </tr>
+              <tr>
+                <td class="w-15 bg-light text-right label no-boder">Khu vực</td>
+                <td class="w-35 no-boder">
+                  <div class="w-75 form-control">{{packageData.zone.text}}</div>
+                </td>
+                <td class="w-15 bg-light text-right label no-boder">Vai trò của HBC</td>
+                <td class="w-35 no-boder">
+                  <div class="w-75 form-control">{{packageData.roleHBC.text}}</div>
+                </td>
+              </tr>
+              <tr>
+                <td class="w-15 bg-light text-right label no-boder">Quý</td>
+                <td class="w-35 no-boder">
+                  <div class="w-75 form-control">{{packageData.quarterOfYear.text}}</div>
+                </td>
+                <td class="w-15 bg-light text-right label no-boder">Link tài liệu</td>
+                <td class="w-35 no-boder">
+                  <div class="w-75 form-control">{{packageData.linkDocument}}</div>
+                </td>
+              </tr>
+              <tr>
+                <td class="w-15 bg-light text-right label no-boder">Tên khách hàng</td>
+                <td class="w-35 no-boder">
+                  <div class="w-75 form-control">{{packageData.customer.text}}</div>
+                </td>
+                <td class="w-15 bg-light text-right label no-boder">Chủ trì HBC</td>
+                <td class="w-35 no-boder">
+                  <div class="w-75 form-control">{{packageData.presideHBC.text}}</div>
+                </td>
+              </tr>
+              <tr>
+                <td class="w-15 bg-light text-right label no-boder">Loại khách hàng</td>
+                <td class="w-35 no-boder">
+                  <div class="w-75 form-control">{{packageData.customerType.text}}</div>
+                </td>
+                <td class="w-15 bg-light text-right label no-boder">Tình trạng</td>
+                <td class="w-35 no-boder">
+                  <div class="w-75 form-control">{{packageData.status.text}}</div>
+                </td>
+              </tr>
+              <tr>
+                <td class="w-15 bg-light text-right label no-boder">Liên hệ</td>
+                <td class="w-35 no-boder">
+                  <div class="w-75 form-control">{{packageData.contact.text}}</div>
+                </td>
+                <td class="w-15 bg-light text-right label no-boder">Tổng giá trị</td>
+                <td class="w-35 no-boder">
+                  <div class="w-75 form-control">{{packageData.totalValue}}</div>
+                </td>
+              </tr>
+              <tr>
+                <td class="w-15 bg-light text-right label no-boder">Đơn vị tư vấn</td>
+                <td class="w-35 no-boder">
+                  <div class="w-75 form-control">{{packageData.consultingUnit}}</div>
+                </td>
+                <td class="w-15 bg-light text-right label no-boder">Đánh giá dự án</td>
+                <td class="w-35 no-boder">
+                  <div class="w-75 form-control">{{packageData.ratingProject}}</div>
+                </td>
+              </tr>
+              <tr>
+                <td class="w-15 bg-light text-right label no-boder">Địa chỉ ĐVTV</td>
+                <td class="w-35 no-boder">
+                  <div class="w-75 form-control">{{packageData.addressConsultingUnit}}</div>
+                </td>
+                <td class="w-15 bg-light text-right label no-boder"></td>
+                <td class="w-35 no-boder">
+                </td>
+              </tr>
+              <tr>
+                <td class="w-15 bg-light text-right label" style="border-top: none;border-right: none;">Số điện thoại ĐVTV</td>
+                <td class="w-35" style="border-top: none;border-right: none;border-left: none;">
+                  <div class="w-75 form-control">{{packageData.phoneConsultingUnit}}</div>
+                </td>
+                <td class="w-15 bg-light text-right label" style="border-top: none;border-right: none;border-left: none;"></td>
+                <td class="w-35" style="border-top: none;border-right: none;border-left: none;">
+                </td>
+              </tr>
+              <tr>
+                <td class="w-15 bg-light text-right label no-boder">Ngày bắt đầu theo dõi</td>
+                <td class="w-35 no-boder">
+                  <div class="w-75 form-control">{{packageData.trackingeStartDate}}</div>
+                </td>
+                <td class="w-15 bg-light text-right label no-boder">Ngày khởi công dự án</td>
+                <td class="w-35 no-boder">
+                  <div class="w-75 form-control">{{packageData.startDateProject}}</div>
+                </td>
+              </tr>
+              <tr>
+                <td class="w-15 bg-light text-right label required no-boder">Ngày nộp hồ sơ mời thầu</td>
+                <td class="w-35 no-boder">
+                  <div class="w-75 form-control">{{packageData.submitPackageDate}}</div>
+                </td>
+                <td class="w-15 bg-light text-right label no-boder">Ngày kết thúc dự án</td>
+                <td class="w-35 no-boder">
+                  <div class="w-75 form-control">{{packageData.endDateProject}}</div>
+                </td>
+              </tr>
+              <tr>
+                <td class="w-15 bg-light text-right label required no-boder">Ngày dự kiến kết quả thầu</td>
+                <td class="w-35 no-boder">
+                  <div class="w-75 form-control">{{packageData.expectedResultPackageDate}}</div>
+                </td>
+                <td class="w-15 bg-light text-right label no-boder">Tổng thời gian</td>
+                <td class="w-35 no-boder">
+                  <div class="w-75 form-control">{{packageData.totalTimeProject}}</div>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <div class="mr-auto card-collapse">
+        <div class="header" (click)="isCollapsedDesc = !isCollapsedDesc" [attr.aria-expanded]="!isCollapsedDesc" aria-controls="info-desc">
+          <i class="fa fa-caret-down mr-3"></i>Mô tả chi tiết</div>
+        <div class="body" id="info-desc" [ngbCollapse]="isCollapsedDesc">
+          <table class="w-100 table table-bordered">
+            <tbody>
+              <tr>
+                <td class="w-15 bg-light text-right label">Mô tả</td>
+                <td class="w-85 no-boder">
+                    <pre class="form-control">https://www.google.com.vn/search?rlz=1C1CHBF_enVN805VN805&ei=i41VW_XQOMG4rQHwgYXIDA&q=pre+css+no+enter+line&oq=pre+css+no+enter+line&gs_l=psy-ab.3...2229.2791.0.4072.2.2.0.0.0.0.151.284.0j2.2.0....0...1c.1.64.psy-ab..0.0.0....0.Rz8gLZcCofs</pre>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+    <div class="w-15  mr-auto">
+      <div class="media-header" style="float: right">
+        <span class="action-bar alignment-but">
+          <button type="submit" class="btn btn-primary" [routerLink]="['/package/detail',packageData.id,'edit']">Chỉnh sửa &nbsp;
+          </button>
+        </span>
+      </div>
+    </div>
+  </div>
+</div> -->
+                  
+<router-outlet></router-outlet>

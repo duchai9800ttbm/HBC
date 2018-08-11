@@ -1,0 +1,210 @@
+.border-title-mail{
+    background: white;
+    color: #5c6373;
+    border-top: 1px solid #ced4da;
+    border-bottom: 1px solid #ced4da;
+    border-left: 1px solid #ced4da;
+    border-right: none;
+}
+.width-for-to{
+    width: 32px !important;
+}
+.cke_chrome{
+    border-top: 2px solid #d1d1d1 !important;
+}
+.border-left-input{
+    border-left: none;
+}
+.table-small{
+    box-shadow: 0 16px 38px -12px rgb(204, 202, 202), 0 4px 25px 0 rgb(204, 202, 202), 0 8px 10px -5px rgb(204, 202, 202);
+    border-radius: 10px;
+    padding: 0 25px;
+    padding-top: 20px;
+    padding-bottom: 25px;
+}
+.pad-top-table{
+    padding-top: 13px;
+}
+.mark-status {
+    padding: 4px;
+    border-radius: 5px;
+    color: white;
+    width: 100%;
+    text-align: center;
+}
+.color{
+   a{
+    color: #19a3b9;
+   } 
+   a:hover{
+       color:#478993;
+   }
+}
+.custor-filter-bar{
+    padding: 0px;
+    .flex-pad{
+        padding: 0.7rem 0rem 1rem;
+    }
+}
+.flex-pad{
+    padding: 0.7rem 0rem 1rem;
+}
+.calendarInput{
+    //width: 170px;
+    margin-left: 10px !important;
+}
+span{
+    float: left;
+    text-align: center;
+ }
+
+ @media only screen and (max-width: 3000px) {
+    table.dataTable {
+        th,
+        td {
+            max-width: 130px!important;
+        }
+    }
+    .custom-filter-bar{
+
+    }
+}
+
+@media only screen and (max-width: 1600px) {
+    table.dataTable {
+        th,
+        td {
+            max-width: 130px;
+        }
+    }
+    .custom-filter-bar{
+        zoom: 0.8;
+    }
+}
+
+
+@media only screen and (max-width: 1366px) {
+    table.dataTable {
+        th,
+        td {
+            max-width: 80px;
+        }
+    }
+    .custom-filter-bar{
+
+    }
+}
+
+@media only screen and (max-width: 1200px) {
+    table.dataTable {
+        th,
+        td {
+            max-width: 70px;
+        }
+    }
+    .custom-filter-bar{
+
+    }
+}
+@media only screen and (max-width: 1124px) {
+    .btn-toolbar {
+        zoom: 0.85;
+    }
+    th,
+    td {
+        max-width: 60px;
+    }
+    .custom-filter-bar{
+        
+    }
+}
+@media only screen and (max-width: 1024px) {
+    .btn-toolbar {
+        zoom: 0.85;
+    }
+    th,
+    td {
+        max-width: 60px;
+    }
+    .custom-filter-bar{
+
+    }
+}
+
+.fileUpload {
+    position: relative;
+    overflow: hidden;
+}
+.fileUpload input.upload {
+    position: absolute;
+    top: 0;
+    right: 0;
+    margin: 0;
+    padding: 0;
+    font-size: 20px;
+    cursor: pointer;
+    opacity: 0;
+    filter: alpha(opacity=0);
+}
+
+a{
+    cursor: pointer;
+}
+.calendarInput{
+   
+}
+
+.type-task{
+    color:#ff6b81;
+}
+.type-event{
+    color:#2ed573;
+}
+.title-list-package{
+    height: 70px;
+    padding: 0 25px;
+    .list-package{
+        font-size: 120%;
+        font-weight: 400;
+    }
+}
+.main-table{
+    padding: 0px 25px;
+}
+.table-small{
+    box-shadow: 0 16px 38px -12px #F5F5F5, 0 4px 25px 0 #F5F5F5, 0 8px 10px -5px #F5F5F5;
+
+}
+.alert{
+    margin-bottom: 0px!important;
+    background-color: #f06eaa;
+    border: none;
+    color: #ffff;
+    padding: 0.4rem 1.25rem;
+}
+.status-package::before{
+    content: '';
+    position: absolute;
+    width: 0;
+    height: 0;
+    left: -7px;
+    border-top: 7px solid transparent;
+    border-bottom: 7px solid transparent;
+    border-right: 7px solid #f06eaa;
+}
+.rule{
+    border-right: 5px solid #f06eaa;  
+    content: '';
+    margin: 10px 0;
+  //  padding: 0.3rem 1.25rem
+}
+
+.title-mail{
+    width: 80px;
+}
+
+.form-control:focus {
+    border-color: #ced4da;
+    -webkit-box-shadow: none;
+    box-shadow: none;
+  }

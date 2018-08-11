@@ -1,0 +1,5 @@
+<div class="mt-4">
+  <h5>
+      <img routerLink="/settings/location" class="icon-back" src="assets/images/arrow-back.svg"> Chỉnh sửa khu vực</h5>
+  <app-setting-location-form *ngIf="location$ | async as location" [location]="location"></app-setting-location-form>
+</div>

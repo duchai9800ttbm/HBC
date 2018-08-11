@@ -1,0 +1,21 @@
+<app-comment-item 
+[moduleName]="moduleName" 
+[moduleItemId]="moduleItemId"
+    [comment]="comment" 
+    [parentId]="comment.id"
+    [commentList]="commentList" 
+    [index]="index">
+</app-comment-item>
+
+<div class="comments" *ngIf="comment.replyComments?.length > 0">
+    <div *ngFor="let replyComment of comment.replyComments; let i=index">
+            <app-comment-item
+            [moduleName]="moduleName" 
+            [moduleItemId]="moduleItemId"
+            [parentId]="comment.id"
+            [isReplyComment]="true" 
+            [comment]="replyComment" 
+            [commentList]="comment.replyComments" 
+            [index]="i"></app-comment-item>
+    </div>
+</div>

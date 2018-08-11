@@ -1,0 +1,12 @@
+<div class="mt-1">
+    <p>Tiềm năng : <span class="font-weight-bold">{{prospects[0].objectName}}</span></p>
+    <p *ngIf="prospects[0].objectAddress">Địa chỉ : {{prospects[0].objectAddress}}</p>
+    <p *ngIf="prospects[0].objectEmail">Email: {{prospects[0].objectEmail}}</p>
+    <p *ngIf="prospects[0].objectCompany">Công ty: {{prospects[0].objectCompany}}</p>
+</div>
+
+
+<div class="mt-3 d-flex justify-content-around">
+    <button kendoButton (click)="detailProspect()" [primary]="true">Xem chi tiết</button>
+    <button kendoButton (click)="convertProspect(prospects[0].objectId)" [primary]="true">Chuyển đổi tiềm năng</button>
+</div>

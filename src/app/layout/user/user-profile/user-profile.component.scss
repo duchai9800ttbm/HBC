@@ -1,0 +1,231 @@
+
+.column2{
+   
+    .messenger{
+        position: absolute;
+    }
+    .card-body{
+        height: 300px
+    }
+    width: 100%;
+    height: 300px;
+    .group  { 
+        position:relative; 
+        margin-bottom:40px; 
+      }
+      input[readonly] 				
+      {
+        padding:6px 6px 6px 5px;
+        display:block;
+        width:100%;
+        border:none;
+        border-bottom:1px solid #c4c2c2;
+      }
+      input[readonly]		
+      { outline:none; border-bottom: none; }
+      
+      /* LABEL ======================================= */
+      label 				 {
+        color:#999; 
+        font-weight:bold;
+        position:absolute;
+        pointer-events:none;
+        left:5px;
+        top:10px;
+        transition:0.2s ease all; 
+        -moz-transition:0.2s ease all; 
+        -webkit-transition:0.2s ease all;
+      }
+      
+      /* active state */
+      input[readonly] ~ label, input[readonly] ~ label 		{
+        top:-15px;
+        color:black;
+      }
+      
+      /* BOTTOM BARS ================================= */
+      .bar 	{ margin: 0 auto;
+         position:relative; display:block; width:70%;}
+      .bar:before, .bar:after 	{
+        content:'';
+        height:2px; 
+        width:0;
+        bottom:1px; 
+        position:absolute;
+        background:#dde0e0;; 
+        transition:0.2s ease all; 
+        -moz-transition:0.2s ease all; 
+        -webkit-transition:0.2s ease all;
+      }
+      .bar:before {
+        left:50%;
+      }
+      .bar:after {
+        right:50%; 
+      }
+      
+      /* active state */
+      input[readonly] ~ .bar:before, input[readonly] ~ .bar:after {
+        width:70%;
+      }
+      
+      /* HIGHLIGHTER ================================== */
+      .highlight {
+        position:absolute;
+        height:60%; 
+        width:100px; 
+        top:25%; 
+        left:0;
+        pointer-events:none;
+        opacity:0.5;
+      }
+    
+}
+
+
+
+
+
+.avatar-photo {
+  position: relative;
+ background: #fff;
+border: 1px solid #DAE5EC;
+ img {
+     height: 300px;
+                }
+                #upload-photo {
+                    opacity: 0;
+                    position: absolute;
+                    z-index: -1;
+                    display: none;
+                }
+            }
+    
+.user-info__photo {
+  //  margin-bottom: 1.5em;
+    img {
+        opacity: 1;
+    }
+}
+
+.user-info__photo-remove-btn {
+    cursor: pointer;
+    display: none;
+    z-index: 2;
+    position: absolute;
+    top: 11px;
+    right: 11px;
+    background-color: rgba(0, 0, 0, .3);
+    .user-info__photo:hover & {
+        display: block;
+    }
+    a {
+        display: block;
+        padding: .15em .3em;
+    }
+    .icon {
+        color: #fff;
+    }
+    .icon:before {
+        font-size: 12px;
+    }
+}
+
+.user-info__photo-change-btn {
+    position: absolute;
+    bottom: 0px;
+    width: 196px;
+    height: 0;
+    text-align: center;
+    background-color: rgba(0, 0, 0, .4);
+    -webkit-transition: height .1s;
+    /* For Safari 3.1 to 6.0 */
+    transition: height .1s;
+    .user-info__photo:hover & {
+        height: 40px;
+    }
+    a {
+        display: block;
+        padding-bottom: 7px;
+        color: #fff;
+        text-decoration: none;
+    }
+    label {
+        width: 196px;
+        margin: 0 auto;
+        margin-top: 10px;
+        cursor: pointer;
+    }
+    .icon {
+        margin-right: 1em;
+        color: #fff;
+    }
+
+}
+
+.column1{
+   width: 400px;
+   height: 400px;
+   .card-body{
+    height: 300px
+}
+}
+
+.card-header{
+    font-weight: bold;
+}
+
+
+.is-invalid-2{
+/* BOTTOM BARS ================================= */
+.bar { 
+    margin: 0 auto;
+    position: relative;
+    display:block; 
+    width:70%;
+
+}
+input{
+    border-bottom: none;
+}
+ .bar:before, .bar:after  	{
+   content:'';
+   height:2px; 
+   width:0;
+   bottom:1px; 
+   position:absolute;
+   background:red;
+   transition:0.2s ease all; 
+   -moz-transition:0.2s ease all; 
+   -webkit-transition:0.2s ease all;
+ }
+ .bar:before {
+   left:50%;
+ }
+ .bar:after {
+   right:50%; 
+ }
+ 
+ /* active state */
+ input:focus ~ .bar:before, input:focus ~ .bar:after {
+   width:70%;
+ }
+ input:not(:focus) ~ .bar:before, input:not(:focus) ~ .bar:after {
+    width:70%;
+  }
+}
+
+.invalid-feedback{
+    margin-top: 0 !important;
+}
+
+
+.updateAvatar{
+    position: relative;
+    z-index: 20;
+    width: 100%;
+    text-align: center;
+    button{
+        width: 100%;
+    }
+}

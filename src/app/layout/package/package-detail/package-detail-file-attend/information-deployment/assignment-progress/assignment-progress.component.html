@@ -1,0 +1,134 @@
+<div [@routerTransition] style="padding: 0px 36px 0px 36px">
+    <div class="search-box  title-list-package center-parent status-filter">
+        <div class="d-inline mb-0 mr-auto text-dark">BẢNG PHÂN CÔNG TIẾN ĐỘ THỰC HIỆN</div>
+
+        <div class="btn-toolbar" *ngIf="!hideButon">
+            <div class="input-group">
+                <span class="input-group-addon">Tìm kiếm theo</span>
+                <input type="text" class="form-control" placeholder="Tên tài liệu">
+            </div>
+            <button class="btn btn-primary ml-2">
+                &nbsp;&nbsp; Tải tài liệu
+            </button>
+            <button class="btn btn-primary ml-2">
+                &nbsp;&nbsp; Xóa
+            </button>
+            <button class="btn btn-primary ml-2">
+                In
+            </button>
+        </div>
+        <div class="btn-toolbar" *ngIf="hideButon">
+            <div class="input-group">
+                <span class="input-group-addon">Tìm kiếm theo</span>
+                <input type="text" class="form-control" placeholder="Tên tài liệu">
+            </div>
+        </div>
+    </div>
+
+    <div class="main-table">
+        <div class="d-flex flex-row flex-wrap filter-bar custom-filter-bar">
+            <div class="d-flex form-inline flex-pad">
+
+                <div class="form-group ml-sm-2">
+                    <label for="" class="form-label">Tình trạng</label>
+                    <span class="custom-dropdown mx-sm-2">
+                        <select class="form-control">
+                            <option value="">--Tất cả--</option>
+                            <option *ngFor="let item of status" [value]="item.id">{{item.name | translate}}</option>
+                        </select>
+                    </span>
+                </div>
+                <div class="form-group ml-sm-2">
+                    <label for="" class="form-label">Người upload</label>
+                    <span class="custom-dropdown mx-sm-2">
+                        <select class="form-control">
+                            <option value="">--Lựa chọn--</option>
+                            <option *ngFor="let item of listUsers" [value]="item.id">{{item.name | translate}}</option>
+                        </select>
+                    </span>
+                </div>
+                <div class="form-group ml-sm-2">
+                    <label for="" class="form-label">Ngày upload</label>
+                    <span class="custom-dropdown mx-sm-2">
+                        <select class="form-control">
+                            <option value="">--Lựa chọn--</option>
+                            <option *ngFor="let item of dateUploads" [value]="item.id">{{item.date}}</option>
+                        </select>
+                    </span>
+                </div>
+
+                <button type="submit" class="btn btn-primary ml-sm-2" (click)="filter(true)">
+                    <i class="fa fa-filter" aria-hidden="true"></i>&nbsp;&nbsp; Lọc
+                </button>
+                <button class="btn btn-secondary ml-sm-2" (click)="clearFilter()">
+                    <i class="fa fa-times"></i>&nbsp;&nbsp; Xóa lọc
+                </button>
+            </div>
+        </div>
+
+        <kendo-grid [data]="hideButon==false ? gridView : gridViewSelect" [kendoGridSelectBy]="'id'" [selectedKeys]="mySelection"
+            [sortable]="{
+            allowUnsort: allowUnsort,
+            mode: multiple ? 'multiple' : 'multiple'
+            }" [sort]="sort" (sortChange)="sortChange($event)" (selectedKeysChange)="onSelectedKeysChange($event)">
+
+
+            <kendo-grid-checkbox-column showSelectAll="true" [width]="50">
+                <ng-template kendoGridHeaderTemplate>
+                    <div class="text-center">
+                        <input class="k-checkbox" id="selectAllCheckboxId" kendoGridSelectAllCheckbox [checked]="checked" [state]="selectAllState"
+                            (selectAllChange)="onSelectAllChange($event)">
+                        <label class="k-checkbox-label" for="selectAllCheckboxId"></label>
+                    </div>
+                </ng-template>
+            </kendo-grid-checkbox-column>
+            <kendo-grid-column field="id" title="STT" [width]="50">
+                <ng-template kendoGridCellTemplate let-dataItem let-rowIndex="rowIndex">
+                    <div class="text-center">{{dataItem.id }}</div>
+                </ng-template>
+            </kendo-grid-column>
+            <kendo-grid-column field="name" title="Tên tài liệu" [width]="300"></kendo-grid-column>
+            <kendo-grid-column field="version" title="Phiên bản" [width]="120"></kendo-grid-column>
+            <kendo-grid-column field="description" title="Mô tả"></kendo-grid-column>
+            <kendo-grid-column field="status" title="Tình trạng">
+                <ng-template kendoGridCellTemplate let-dataItem let-rowIndex="rowIndex">
+                    <div class="cell-user">
+                        {{dataItem.status ==1 ? 'Bảng nháp' : 'Chính thức'}}
+                        <span class="checkboxStatus">
+                            <input type="checkbox" [checked]="dataItem.status ==2" />
+                        </span>
+                    </div>
+                </ng-template>
+            </kendo-grid-column>
+            <kendo-grid-column field="userId" title="Người upload" [width]="120">
+                <ng-template kendoGridCellTemplate let-dataItem let-rowIndex="rowIndex">
+                    <div class="cell-user">{{dataItem.userId ==1 ? 'Oliver Dinh' : 'Phuong VD'}}</div>
+                </ng-template>
+            </kendo-grid-column>
+            <kendo-grid-column field="createDate" title="Ngày upload" [width]="120"></kendo-grid-column>
+            <kendo-grid-column field="" title="Thao tác" [width]="120">
+                <ng-template kendoGridCellTemplate let-dataItem let-rowIndex="rowIndex">
+                    <div class="row">
+                        <div class="text-center" [ngClass]="{ 'col-md-4': hideButon ===  false,'col-md-6': hideButon ===  true}">
+                            <i class="fa fa-download" [ngStyle]="{'color':'#1baf5c'}" aria-hidden="true"></i>
+                        </div>
+                        <div class="col-md-4 text-center" *ngIf="!hideButon">
+                            <i class="fa fa-trash-o" aria-hidden="true"></i>
+                        </div>
+                        <div class="text-center" [ngClass]="{ 'col-md-4': hideButon ===  false,'col-md-6': hideButon ===  true}">
+                            <i class="fa fa-print" [ngStyle]="{'color':'#ff0044'}" aria-hidden="true"></i>
+                        </div>
+                    </div>
+                </ng-template>
+            </kendo-grid-column>
+        </kendo-grid>
+
+        <div>
+        </div>
+    </div>
+    <div class="row row-pd">
+        <div class="col-md-3" *ngIf="!hideButon">Hiển thị {{total? 1 : 0}}-{{total?total:0}} của {{total ?total:0}}</div>
+        <div class="col-md-3" *ngIf="hideButon">Hiển thị {{totalSelect? 1 : 0}}-{{totalSelect?totalSelect:0}} của {{totalSelect ?totalSelect:0}}</div>
+    </div>
+
+</div>

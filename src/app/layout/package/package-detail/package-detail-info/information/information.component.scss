@@ -1,0 +1,27 @@
+.no-boder{
+    border: none;
+}
+.textarea-content{
+    resize: none;
+    width: 90%;
+    background-color: white;
+}
+.pre-content{
+    width: 90%;
+    background-color: white;
+}
+.boder-table{
+    border: 1px solid #dadada;
+    padding: 20px 0px 35px 30px;
+    border-top: none;
+    background-color: #ffff;
+}
+.layout-table{
+    table-layout: fixed;
+}
+.form-control{
+    min-height: 33px;
+}
+.text-right-m2{
+    float: right;
+}

@@ -1,0 +1,5 @@
+<div class="mt-4">
+  <h5>
+      <img routerLink="/settings/bid-status" class="icon-back" src="assets/images/arrow-back.svg"> Chỉnh sửa tình trạng gói thầu</h5>
+  <app-setting-bid-status-form *ngIf="bidStatus$ | async as bidStatus" [bidStatus]="bidStatus"></app-setting-bid-status-form>
+</div>

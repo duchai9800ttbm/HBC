@@ -1,0 +1,165 @@
+<div [@routerTransition] *ngIf="customer$ | async as customer">
+    <div class="card-collapse">
+        <div class="header" (click)="isCollapsedMain = !isCollapsedMain" [attr.aria-expanded]="!isCollapsedMain" aria-controls="info-main">
+            <i class="fa fa-caret-down mr-3"></i>Chi tiết khách hàng</div>
+        <div class="body" id="info-main" [ngbCollapse]="isCollapsedMain">
+            <table class="w-100 table table-bordered">
+                <tbody>
+                    <tr>
+                        <td class="w-25 bg-light text-right label">Tên khách hàng</td>
+                        <td class="w-25">{{customer.name}}</td>
+                        <td class="w-25 bg-light text-right label">Email chính</td>
+                        <td class="w-25">
+                            <a [href]="'mailto:' + customer.emailOfficial">{{customer.emailOfficial}}</a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="w-25 bg-light text-right label">Website</td>
+                        <td class="w-25">
+                            <a [href]="'http://' + customer.website" target="_blank">{{customer.website}}</a>
+                        </td>
+                        <td class="w-25 bg-light text-right label">Email phụ</td>
+                        <td class="w-25">
+                            <a [href]="'mailto:' + customer.emailExtra">{{customer.emailExtra}}</a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="w-25 bg-light text-right label">Fax</td>
+                        <td class="w-25">{{customer.fax}}</td>
+                        <td class="w-25 bg-light text-right label">Ngành nghề</td>
+                        <td class="w-25">{{customer.career | translate}}</td>
+                    </tr>
+                    <tr>
+                        <td class="w-25 bg-light text-right label">Điện thoại chính</td>
+                        <td class="w-25">
+                            <span appPhoneNumberCallable>{{customer.phoneNumberOfficial}}</span>
+                        </td>
+                        <td class="w-25 bg-light text-right label">Nhóm</td>
+                        <td class="w-25">{{customer.group | translate}}</td>
+                    </tr>
+                    <tr>
+                        <td class="w-25 bg-light text-right label">Mã chứng khoán</td>
+                        <td class="w-25">{{customer.stockCode}}</td>
+                        <td class="w-25 bg-light text-right label">Đánh giá</td>
+                        <td class="w-25">
+                            <star-rating-comp [starType]="'svg'" [rating]="customer.rating" [readOnly]="true"></star-rating-comp>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="w-25 bg-light text-right label">Mã số thuế</td>
+                        <td class="w-25">{{customer.taxCode}}</td>
+                        <td class="w-25 bg-light text-right label">Phân loại</td>
+                        <td class="w-25">{{customer.type | translate}}</td>
+                    </tr>
+                    <tr>
+                        <td class="w-25 bg-light text-right label">Điện thoại phụ</td>
+                        <td class="w-25">
+                            <span appPhoneNumberCallable>{{customer.phoneNumberExtra}}</span>
+                        </td>
+                        <td class="w-25 bg-light text-right label">Doanh thu hàng năm</td>
+                        <td class="w-25">{{customer.revenue | vnCurrency}}</td>
+                    </tr>
+                    <tr>
+                        <td class="w-25 bg-light text-right label">Được chuyển đổi từ tiềm năng</td>
+                        <td class="w-25 color">
+                            <a *ngIf="customer.prospect" (click)="goToHistotyProspectDetail(customer.prospect.id, customer.id)">{{customer.prospect ? customer.prospect.fullName : ''}}</a>
+                            <span *ngIf="!customer.prospect">Không</span>
+                        </td>
+                        <td class="w-25 bg-light text-right label">Phân công cho</td>
+                        <td class="w-25">{{customer.assignTo && customer.assignTo.name}}</td>
+                    </tr>
+                    <tr>
+                        <td class="w-25 bg-light text-right label">Loại khách hàng</td>
+                        <td class="w-25">{{customer.customerType | translate}}</td>
+                        <td class="w-25 bg-light text-right label">Liên hệ</td>
+                        <td class="w-25 color">
+                            <a *ngFor="let contact of customer.contact" (click)="goToDeitalContact(contact.id)">
+                                <p>{{contact.text}}</p>
+                            </a>
+                        </td>
+
+                    </tr>
+                    <tr>
+                        <td class="w-25 bg-light text-right label" *ngIf="customer.customerType !== 'Company' && customer.customerType !== 'Personal'"></td>
+                        <td class="w-25" *ngIf="customer.customerType !== 'Company' && customer.customerType !== 'Personal'"></td>
+                        <td *ngIf="customer.customerType == 'Company'" class="w-25 bg-light text-right label">
+                            <span></span>Ngày thành lập công ty</td>
+                        <td *ngIf="customer.customerType == 'Company'" class="w-25">{{customer.companyEstablishmentDay | date: 'dd/MM/yyyy'}}</td>
+                        <td *ngIf="customer.customerType == 'Personal'" class="w-25 bg-light text-right label">Ngày sinh nhật</td>
+                        <td *ngIf="customer.customerType == 'Personal'" class="w-25">{{customer.dob | date: 'dd/MM/yyyy'}}</td>
+                        <td class="w-25 bg-light text-right label">
+                            <span *ngIf="customer.customerType == 'Personal'">Năm sinh âm</span>
+                        </td>
+                        <td class="w-25" *ngIf="customer.customerType == 'Personal'">
+                                <div class="d-flex" *ngIf="customer.lunarBirthday">
+                                        <div class="p-1">
+                                            <span class="ml-auto">{{customer.lunarBirthday}}</span>
+                                        </div>
+                                        <div class="p-1">
+                                            -
+                                        </div>
+                                        <div class="p-1">
+                                            <span *ngIf="fengShuisInforModel && fengShuisInforModel.fengShuisGenaralDto && fengShuisInforModel.fengShuisGenaralDto.fengShuisGenaralFiveBasicElements"> Mạng {{fengShuisInforModel.fengShuisGenaralDto.fengShuisGenaralFiveBasicElements}}
+                                                </span>
+                                        </div>
+                                        <div class="ml-auto">
+                                            <i class="fa fa-info-circle fa-2x" (click)="showDialog()" style="color:#00a0e3; right: 0px;"></i>
+                                        </div>
+                                    </div>
+                        </td>
+                    </tr>
+                    <tr *ngIf="customer.customerType == 'Personal'">
+                        <td class="w-25 bg-light text-right label">Giới tính</td>
+                        <td class="w-25">Nam</td>
+                        <td class="w-25 bg-light text-right label"></td>
+                        <td class="w-25"></td>
+                    </tr>
+                </tbody>
+            </table>
+
+        </div>
+    </div>
+
+    <div class="card-collapse">
+        <div class="header" (click)="isCollapsedAddress = !isCollapsedAddress" [attr.aria-expanded]="!isCollapsedAddress" aria-controls="info-address">
+            <i class="fa fa-caret-down mr-3"></i>Chi tiết địa chỉ</div>
+        <div class="body" id="info-address" [ngbCollapse]="isCollapsedAddress">
+            <table class="w-100 table table-bordered">
+                <tbody>
+                    <tr>
+                        <td class="w-25 bg-light text-right label">Địa chỉ</td>
+                        <td class="w-25">{{customer.address}}</td>
+                        <td class="w-25 bg-light text-right label">Thành phố </td>
+                        <td class="w-25">{{customer.city}}</td>
+                    </tr>
+                    <tr>
+
+                        <td class="w-25 bg-light text-right label">Quận</td>
+                        <td class="w-25">{{customer.district}}</td>
+                        <td class="w-25 bg-light text-right label">Quốc gia</td>
+                        <td class="w-25">{{customer.country}}</td>
+                    </tr>
+
+                </tbody>
+            </table>
+
+        </div>
+    </div>
+
+    <div class="card-collapse">
+        <div class="header" (click)="isCollapsedDesc = !isCollapsedDesc" [attr.aria-expanded]="!isCollapsedDesc" aria-controls="info-desc">
+            <i class="fa fa-caret-down mr-3"></i>Mô tả chi tiết</div>
+        <div class="body" id="info-desc" [ngbCollapse]="isCollapsedDesc">
+            <table class="w-100 table table-bordered">
+                <tbody>
+                    <tr>
+                        <td class="w-25 bg-light text-right label">Mô tả</td>
+                        <td class="w-75">{{customer.description}}</td>
+                    </tr>
+
+                </tbody>
+            </table>
+
+        </div>
+    </div>
+</div>

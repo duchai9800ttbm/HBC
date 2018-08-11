@@ -1,0 +1,24 @@
+<div [@routerTransition] class="container-fluid" *ngIf="audits">
+  <div class="page-header">
+    <h1 id="timeline">THAY ĐỔI GẦN ĐÂY</h1>
+    <hr>
+  </div>
+    <ul class="timeline" *ngFor="let audit of audits; let i = index">
+      <li class= "timeline-inverted" >
+        <div class="timeline-badge audit"><i class="fa" [class.fa-cogs]="audit.actionName=='đã cập nhật'" [class.fa-pencil-square-o]="audit.actionName=='đã tạo'" [class.fa-trash]="audit.actionName=='đã xóa'"></i></div>
+        <div class="timeline-panel" (click)="gotoItem(audit.moduleName, audit.moduleItemId, audit.objectType)">
+      
+          <div class="timeline-body">
+            <p class="last mb-1">
+              <strong>{{audit.user}} </strong>{{audit.actionName}} {{audit.moduleName | translate}}<strong>&nbsp;{{audit.moduleItemName}}</strong></p> 
+          </div>
+          <div class="timeline-heading">
+            <p><small class="text-muted"><i class="fa fa-clock-o"></i>&nbsp; {{audit.date | amCalendar}}</small></p>
+          </div>
+        </div>
+      </li>
+    </ul>
+    <div  class="text-center cursor-pointer mt-2" *ngIf="showButton">
+      <a class="text-primary" (click)="onLoadMore()">Xem thêm</a>
+    </div>
+</div>

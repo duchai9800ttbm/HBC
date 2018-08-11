@@ -1,0 +1,268 @@
+<div>
+
+    <div class="search-box d-flex">
+        <div class="media mr-auto">
+            <div class="media-header">
+                <a [routerLink]='["/prospect"]'>
+                    <i class="fa fa-chevron-left mr-3" aria-hidden="true"></i>
+                </a>
+                <i class="fa fa-address-card mr-3" aria-hidden="true"></i>
+                <h4 class="d-inline mb-0 text-dark">{{ prospect.id > 0 ? 'Chỉnh sửa tiềm năng' : 'Tạo mới tiềm năng'}}</h4>
+            </div>
+
+        </div>
+
+        <div class="action-bar">
+            <button type="submit" class="btn btn-primary ml-2" (click)="submitForm()">Lưu &nbsp;
+
+            </button>
+            <a class="btn btn-secondary ml-2" [routerLink]="['/prospect']">Hủy &nbsp;
+
+            </a>
+        </div>
+
+    </div>
+    <hr>
+
+    <form [formGroup]="prospectForm" novalidate>
+        <div class="d-flex">
+            <div class="w-100  mr-auto">
+                <div class="card-collapse">
+                    <div class="header" (click)="isCollapsedMain = !isCollapsedMain" [attr.aria-expanded]="!isCollapsedMain" aria-controls="info-main">
+                        <i class="fa fa-caret-down mr-3"></i>Chi tiết tiềm năng</div>
+                    <div class="body" id="info-main" [ngbCollapse]="isCollapsedMain">
+                        <table class="w-100 table table-bordered">
+                            <tbody>
+                                <tr>
+                                    <td class="w-25 bg-light text-right label">Danh xưng</td>
+                                    <td class="w-25">
+                                        <span class="custom-dropdown w-75 ">
+                                            <select class="form-control" autofocus formControlName="name" tabindex="1">
+                                                <option [ngValue]="null">--Lựa chọn--</option>
+                                                <option *ngFor="let item of salutationList | async" [ngValue]="item.id">{{item.text}}</option>
+                                            </select>
+                                        </span>
+                                    </td>
+                                    <td class="w-25 bg-light text-right label">Doanh thu hằng năm</td>
+                                    <td class="w-25">
+                                        <input class="w-75 form-control text-right" appInputMoney formControlName="revenue" tabindex="10">
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="w-25 bg-light text-right label required">Họ</td>
+                                    <td class="w-25">
+                                        <input class="w-75 form-control" type="text" formControlName="lastName" [class.is-invalid]="formErrors.lastName" tabindex="2">
+                                        <div class="invalid-feedback" *ngIf="formErrors.lastName">
+                                            {{formErrors.lastName}}
+                                        </div>
+                                    </td>
+                                    <td class="w-25 bg-light text-right label required">Điện thoại chính</td>
+                                    <td class="w-25">
+                                        <input class="w-75 form-control" type="text" appInputNumber [class.is-invalid]="formErrors.phoneNumberCustomer" formControlName="phoneNumberCustomer"
+                                            tabindex="11">
+                                        <div class="invalid-feedback" *ngIf="formErrors.phoneNumberCustomer">
+                                            {{formErrors.phoneNumberCustomer}}
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="w-25 bg-light text-right label required">Tên</td>
+                                    <td class="w-25">
+                                        <input class="w-75 form-control" type="text" formControlName="firstName" [class.is-invalid]="formErrors.firstName" tabindex="3">
+                                        <div class="invalid-feedback" *ngIf="formErrors.firstName">
+                                            {{formErrors.firstName}}
+                                        </div>
+                                    </td>
+
+                                    <td class="w-25 bg-light text-right label">Điện thoại di động</td>
+                                    <td class="w-25">
+                                        <input appInputNumber class="w-75 form-control" type="text" [class.is-invalid]="formErrors.phoneNumberpersonal" formControlName="phoneNumberpersonal"
+                                            tabindex="12">
+                                        <div class="invalid-feedback" *ngIf="formErrors.phoneNumberpersonal">
+                                            {{formErrors.phoneNumberpersonal}}
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="w-25 bg-light text-right label">Đánh giá</td>
+                                    <td class="w-25">
+                                        <span class="custom-dropdown w-75 ">
+                                            <select class="form-control" formControlName="comment" tabindex="4">
+                                                <option [ngValue]="null">--Lựa chọn--</option>
+                                                <option *ngFor="let item of evaluationList | async" [value]="item.id">{{item.text}}</option>
+                                            </select>
+                                        </span>
+                                    </td>
+                                    <td class="w-25 bg-light text-right label">Email</td>
+                                    <td class="w-25">
+                                        <input class="w-75 form-control" type="text" formControlName="email" [class.is-invalid]="formErrors.email" tabindex="13">
+                                        <div class="invalid-feedback" *ngIf="formErrors.email">
+                                            {{formErrors.email}}
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="w-25 bg-light text-right label">Tên công ty</td>
+                                    <td class="w-25">
+                                        <input class="w-75 form-control" type="text" formControlName="companyName" tabindex="5">
+                                    </td>
+                                    <td class="w-25 bg-light text-right label">Website</td>
+                                    <td class="w-25">
+                                        <input class="w-75 form-control" type="text" formControlName="website" [class.is-invalid]="formErrors.website" tabindex="14">
+                                        <div class="invalid-feedback" *ngIf="formErrors.website">
+                                            {{formErrors.website}}
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="w-25 bg-light text-right label">Nguồn tiềm năng</td>
+                                    <td class="w-25">
+                                        <span class="custom-dropdown w-75 ">
+                                            <select class="form-control" formControlName="source" tabindex="6">
+                                                <option [ngValue]="null">--Lựa chọn--</option>
+                                                <option *ngFor="let item of prospectSourceList | async" [value]="item.id">{{item.text}}</option>
+                                            </select>
+                                        </span>
+                                    </td>
+                                    <td class="w-25 bg-light text-right label">Trạng thái của tiềm năng</td>
+                                    <td class="w-25">
+                                        <span class="custom-dropdown w-75">
+                                            <select class="form-control" formControlName="statusSource" tabindex="15">
+                                                <option [ngValue]="null">--Lựa chọn--</option>
+                                                <option *ngFor="let item of statusList | async" [value]="item.id">{{item.text}}</option>
+                                            </select>
+                                        </span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="w-25 bg-light text-right label">Lĩnh vực hoạt động</td>
+                                    <td class="w-25">
+                                        <span class="custom-dropdown w-75 ">
+                                            <select class="form-control" formControlName="fieldOfAction" tabindex="7">
+                                                <option [ngValue]="null">--Lựa chọn--</option>
+                                                <option *ngFor="let item of businessList | async" [value]="item.id">{{item.text}}</option>
+                                            </select>
+                                        </span>
+                                    </td>
+                                    <td class="w-25 bg-light text-right label required">Phân công cho</td>
+                                    <td class="w-25">
+                                        <span class="custom-dropdown w-75 ">
+                                            <select class="form-control" formControlName="assignTo" tabindex="16">
+                                                <option class="font-weight-bold text-dark mt-2" value="" disabled>Nhân viên</option>
+                                                <option *ngFor="let item of employeeList | async" [ngValue]="'employee_' + item.id">{{item.text}}</option>
+                                                <option class="font-weight-bold text-dark mt-2" value="" disabled>Nhóm</option>
+                                                <option *ngFor="let item of employeeGroupList | async" [ngValue]="'group_' + item.id">{{item.text}}</option>
+                                            </select>
+                                        </span>
+
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="w-25 bg-light text-right label">Chiến dịch</td>
+                                    <td class="w-25">
+                                        <div class=" w-75 autocomplete-wrapper">
+                                            <p-autoComplete formControlName="campaign" [suggestions]="campaignsSearchResults" [forceSelection]="true" [delay]="'400'"
+                                                [emptyMessage]="'Không có dữ liệu'" placeholder="Tìm theo tên" [immutable]="true"
+                                                (completeMethod)="searchCampaigns($event.query)" [tabindex]="'8'" field="text"
+                                                dataKey="id">
+                                            </p-autoComplete>
+                                            <span class="input-group-addon">
+                                                <i class="fa fa-search"></i>
+                                            </span>
+                                        </div>
+                                    </td>
+                                    <td class="w-25 bg-light text-right label">Năm sinh âm</td>
+                                    <td class="w-25">
+
+                                        <span class="custom-dropdown w-75 ">
+                                            <select class="form-control" formControlName="lunarBirthday" tabindex="17">
+                                                <option class="font-weight-bold text-dark mt-2" value="" disabled></option>
+                                                <option *ngFor="let item of lunarBirthdayList | async" [ngValue]="item.id">{{item.text}}</option>
+                                            </select>
+                                        </span>
+
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="w-25 bg-light text-right label">Giới tính</td>
+                                    <td class="w-25">
+                                        <div class="form-check-inline">
+                                            <label class="form-check-label">
+                                                <input type="radio" formControlName="gender" value="Male" class="form-check-input" name="gender" tabindex="9">Nam
+                                            </label>
+                                        </div>
+                                        <div class="form-check-inline">
+                                            <label class="form-check-label">
+                                                <input type="radio" formControlName="gender" value="Female" class="form-check-input" name="gender" tabindex="9">Nữ
+                                            </label>
+                                        </div>
+                                    </td>
+                                    <td class="w-25 bg-light text-right label"></td>
+                                    <td class="w-25">
+
+
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+
+                    </div>
+                </div>
+
+                <div class="card-collapse">
+                    <div class="header" (click)="isCollapsedAddress = !isCollapsedAddress" [attr.aria-expanded]="!isCollapsedAddress" aria-controls="info-address">
+                        <i class="fa fa-caret-down mr-3"></i>Chi tiết địa chỉ</div>
+                    <div class="body" id="info-address" [ngbCollapse]="isCollapsedAddress">
+                        <table class="w-100 table table-bordered">
+                            <tbody>
+                                <tr>
+                                    <td class="w-25 bg-light text-right label">Địa chỉ</td>
+                                    <td class="w-25">
+                                        <input class="w-75 form-control" type="text" formControlName="address" tabindex="20">
+                                    </td>
+                                    <td class="w-25 bg-light text-right label">Thành phố </td>
+                                    <td class="w-25">
+                                        <input class="w-75 form-control" type="text" formControlName="city" tabindex="22">
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="w-25 bg-light text-right label">Quận</td>
+                                    <td class="w-25">
+                                        <input class="w-75 form-control" type="text" formControlName="district" tabindex="21">
+                                    </td>
+                                    <td class="w-25 bg-light text-right label">Quốc gia</td>
+                                    <td class="w-25">
+                                        <input class="w-75 form-control" type="text" formControlName="country" tabindex="23">
+                                    </td>
+                                </tr>
+
+                            </tbody>
+                        </table>
+
+                    </div>
+                </div>
+
+                <div class="card-collapse">
+                    <div class="header" (click)="isCollapsedDesc = !isCollapsedDesc" [attr.aria-expanded]="!isCollapsedDesc" aria-controls="info-desc">
+                        <i class="fa fa-caret-down mr-3"></i>Mô tả chi tiết</div>
+                    <div class="body" id="info-desc" [ngbCollapse]="isCollapsedDesc">
+                        <table class="w-100 table table-bordered">
+                            <tbody>
+                                <tr>
+                                    <td class="w-25 bg-light text-right label">Mô tả</td>
+                                    <td class="w-75">
+                                        <input class="w-75 form-control" type="text" formControlName="description" tabindex="24">
+                                    </td>
+                                </tr>
+
+                            </tbody>
+                        </table>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+
+
+</div>

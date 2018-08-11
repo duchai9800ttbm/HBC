@@ -1,0 +1,30 @@
+<div [@routerTransition] class="wrapper">
+  <div class="page-header">
+    <h1 id="timeline">THÔNG BÁO</h1>
+    <hr>
+  </div>
+  <div *ngIf="notificationItems">
+    <ul *ngFor="let item of notificationItems">
+      <li (click)="read(item)"  [class.unread]="item.unread" class="cursor-pointer">
+        <div>
+          <div class="title">Bạn có 1 {{item.moduleName | translate}} :  <strong>{{item.moduleItemName}}</strong></div>
+          <div class="info">{{item.moduleName | translate}} bắt đầu:&nbsp;
+              <strong>{{item.startDate | fromNow}}</strong>
+            </div>
+          <div class="type">Thời gian diễn ra:&nbsp;
+            <strong>{{item.startDate | date: 'dd/MM/yyyy HH:mm'}}</strong>
+            đến ngày
+            <strong>{{item.endDate | date: 'dd/MM/yyyy HH:mm'}}</strong>.
+          </div>
+        </div>
+        <span class="number">
+          <span>{{item.startDate | date: 'dd/MM/yyyy HH:mm'}}</span>
+          <span>{{item.endDate | date: 'dd/MM/yyyy HH:mm'}}</span>
+        </span>
+      </li>
+    </ul>
+    <div  class="text-center cursor-pointer mt-5" *ngIf="showButton">
+      <a class="text-primary" (click)="onLoadMore()">Xem thêm</a>
+    </div>
+  </div>
+</div>

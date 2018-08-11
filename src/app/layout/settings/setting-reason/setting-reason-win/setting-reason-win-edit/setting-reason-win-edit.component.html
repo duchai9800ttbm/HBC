@@ -1,0 +1,5 @@
+<div class="mt-4">
+  <h5>
+      <img routerLink="/settings/reason/win" class="icon-back" src="assets/images/arrow-back.svg"> Chỉnh sửa lý do trúng thầu</h5>
+  <app-setting-reason-win-form *ngIf="reasonWin$ | async as reasonWin" [reasonWin]="reasonWin"></app-setting-reason-win-form>
+</div>

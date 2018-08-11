@@ -1,0 +1,202 @@
+<div [@routerTransition]>
+    <div class="search-box d-flex">
+        <h5 class="mr-auto d-flex align-items-end">Danh sách khách hàng</h5>
+
+        <div class="btn-toolbar">
+            <div class="btn-group">
+                <div class="input-group">
+                    <span class="input-group-addon">Tìm kiếm theo</span>
+                    <input type="text" class="form-control" placeholder="Tên, sđt, email, website" (keyup)="searchTerm$.next($event.target.value)">
+                </div>
+            </div>
+            <div class="btn-group ml-2" ngbDropdown>
+                <button type="button" class="btn btn-primary" ngbDropdownToggle data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    Công cụ &nbsp;
+                </button>
+                <div class="dropdown-menu" ngbDropdownMenu>
+                    <a class="dropdown-item" (click)="multiDelete()">Xóa</a>
+                    <div class="dropdown-divider"></div>
+                    <div class="fileUpload dropdown-item">
+                        <a>Nhập file</a>
+                        <input type="file" class="upload" (change)="fileChange($event)" />
+                    </div>
+                    <a class="dropdown-item" (click)="exportFileExcel()">Xuất file</a>
+                    <div class="dropdown-divider"></div>
+                    <a class="dropdown-item" (click)="downTemplate()">Tải template</a>
+
+                </div>
+            </div>
+            <div class="btn-group">
+                <button class="btn btn-primary ml-2" [routerLink]="['/customer/create']">
+                    <i class="fa fa-plus" aria-hidden="true"></i>&nbsp; Thêm khách hàng
+                </button>
+            </div>
+            <div class="btn-group">
+                <button class="btn btn-primary ml-2" (click)="refresh(true)">
+                    <i class="fa fa-refresh" aria-hidden="true"></i>
+                </button>
+
+            </div>
+        </div>
+
+
+    </div>
+
+    <hr>
+
+    <div class="filter-bar">
+        <div class="form-inline">
+            <div class="form-group">
+                <label for="business" class="form-label">Ngành nghề</label>
+                <span class="custom-dropdown mx-sm-2">
+                    <select class="form-control" [(ngModel)]="filterModel.business">
+                        <option [ngValue]="null">--Lựa chọn--</option>
+                        <option *ngFor="let item of businessList | async" [value]="item.id">{{item.text}}</option>
+                    </select>
+                </span>
+            </div>
+            <div class="form-group ml-sm-2">
+                <label for="business" class="form-label">Nhóm</label>
+                <span class="custom-dropdown mx-sm-2">
+                    <select class="form-control" [(ngModel)]="filterModel.group">
+                        <option [ngValue]="null">--Lựa chọn--</option>
+                        <option *ngFor="let item of customerGroupList | async" [value]="item.id">{{item.text}}</option>
+                    </select>
+                </span>
+            </div>
+            <div class="form-group ml-sm-2 ">
+                <label for="business" class="form-label">Đánh giá</label>
+                <span class="custom-dropdown mx-sm-2 ">
+                    <select [class.text-warning]="filterModel?.evaluate != null" class="form-control " [(ngModel)]="filterModel.evaluate" [ngModelOptions]="{standalone: true}">
+                        <option [ngValue]="null" class="text-dark">--Lựa chọn--</option>
+                        <option class="text-warning" [value]="1">
+                            <div class="rating rating-3" data-rate="rate">
+                                <i class="star-1">★</i>
+
+                            </div>
+                        </option>
+                        <option class="text-warning" [value]="2">
+                            <div class="rating rating-3" data-rate="rate">
+                                <i class="star-1">★</i>
+                                <i class="star-2">★</i>
+
+                            </div>
+                        </option>
+                        <option class="text-warning" [value]="3">
+                            <div class="rating rating-3" data-rate="rate">
+                                <i class="star-1">★</i>
+                                <i class="star-2">★</i>
+                                <i class="star-3">★</i>
+
+                            </div>
+                        </option>
+                        <option class="text-warning" [value]="4">
+                            <div class="rating rating-3" data-rate="rate">
+                                <i class="star-1">★</i>
+                                <i class="star-2">★</i>
+                                <i class="star-3">★</i>
+                                <i class="star-4">★</i>
+
+                            </div>
+                        </option>
+                        <option class="text-warning" [value]="5">
+                            <div class="rating rating-3" data-rate="rate">
+                                <i class="star-1">★</i>
+                                <i class="star-2">★</i>
+                                <i class="star-3">★</i>
+                                <i class="star-4">★</i>
+                                <i class="star-5">★</i>
+                            </div>
+                        </option>
+                    </select>
+                </span>
+            </div>
+            <button type="submit" class="btn btn-primary ml-sm-3" (click)="filter()">
+                <i class="fa fa-filter" aria-hidden="true"></i>&nbsp; Lọc
+            </button>
+            <button class="btn btn-secondary ml-sm-3" (click)="clearFilter()">
+                <i class="fa fa-times"></i>&nbsp; Xóa lọc
+            </button>
+        </div>
+    </div>
+
+    <div>
+        <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="table-selection stripe row-border hover">
+            <thead>
+                <tr>
+                    <th class="text-center no-sort">
+                        <label class="custom-control custom-checkbox">
+                            <input type="checkbox" class="custom-control-input" [(ngModel)]="checkboxSeclectAll" (change)="onSelectAll($event.target.checked)">
+                            <span class="custom-control-indicator"></span>
+                        </label>
+                    </th>
+                    <th>Tên khách hàng</th>
+                    <th>ĐT chính</th>
+                    <th>Website</th>
+                    <!-- <th>Fax</th> -->
+
+                    <!-- <th>Mã số thuế</th> -->
+                    <th>Email chính</th>
+                    <!-- <th>Ngành nghề</th> -->
+                    <th>Nhóm</th>
+                    <th class="align-middle text-center">Đánh giá</th>
+                    <th>Doanh thu/năm</th>
+                    <th>Phân công cho</th>
+                    <th class="table-action">Thao tác</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let item of pagedResult.items">
+                    <td class="text-center">
+                        <label class="custom-control custom-checkbox">
+                            <input type="checkbox" class="custom-control-input" [(ngModel)]="item.checkboxSelected">
+                            <span class="custom-control-indicator"></span>
+
+                        </label>
+                    </td>
+                    <td>
+                        <a [routerLink]="['../detail', item.id]" [title]="item.customerName">{{ item.customerName }}</a>
+                    </td>
+                    <td>
+                        <span appPhoneNumberCallable>{{ item.customerPhone }}</span>
+                    </td>
+                    <td [title]="item.website ? item.website : ''">{{ item.website }}</td>
+                    <!-- <td>{{ item.fax }}</td> -->
+
+                    <!-- <td>{{ item.taxNo }}</td> -->
+                    <td>
+                        <a [href]="'mailto:' + item.email" [title]="item.email">{{ item.email }}</a>
+                    </td>
+                    <!-- <td>{{ item.business | translate}}</td> -->
+                    <td>{{ item.group | translate }}</td>
+                    <td>
+                        <star-rating-comp [starType]="'svg'" [rating]="item.rating" [readOnly]="true"></star-rating-comp>
+
+                    </td>
+                    <td>{{ item.revenue |vnCurrency}}</td>
+                    <td [title]="item.assignTo">{{ item.assignTo }}</td>
+                    <td>
+                        <a [routerLink]="['/customer/detail', item.id]">
+                            <i class="fa fa-eye text-warning" aria-hidden="true"></i>
+                        </a>
+                        <a [routerLink]="['/customer/edit', item.id]" class=" text-success ml-3">
+                            <i class="fa fa-pencil  cursor-pointer" aria-hidden="true"> </i>
+                        </a>
+
+                        <a class="text-info ml-3" [href]="'mailto:' + item.email">
+                            <i class="fa fa-envelope-o " aria-hidden="true"></i>
+                        </a>
+                        <a (click)="delete(item.id)" class="text-dark ml-3">
+                            <i class="fa fa-trash-o cursor-pointer" aria-hidden="true"></i>
+                        </a>
+                    </td>
+                </tr>
+            </tbody>
+
+
+        </table>
+    </div>
+
+    <app-pagination [pagedResult]="pagedResult" (pagedResultChange)="pagedResultChange($event)"></app-pagination>
+</div>
+<ngx-spinner bdColor="rgba(51, 51, 51, 0.7)" size="medium" color="#fff" type="ball-clip-rotate-multiple"></ngx-spinner>

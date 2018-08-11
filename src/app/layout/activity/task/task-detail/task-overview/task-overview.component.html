@@ -1,0 +1,233 @@
+<div [@routerTransition] class="row no-gutters">
+    <div class="col-md-7">
+        <div class="card mb-3">
+            <div class="card-body" id="info-main" [ngbCollapse]="isCollapsedMain">
+                <table class="w-100 table table-bordered">
+                    <tbody>
+                        <tr>
+                            <td class="w-13 bg-light text-left label">Tên</td>
+                            <td class="w-23">An</td>
+                        </tr>
+                        <tr>
+                            <td class="w-13 bg-light text-left label">Họ</td>
+                            <td class="w-23">Lê</td>
+                        </tr>
+                        <tr>
+                            <td class="w-13 bg-light text-left label">Đánh giá</td>
+                            <td class="w-23">Tiềm năng</td>
+                        </tr>
+                        <tr>
+                            <td class="w-13 bg-light text-left label">Điện thoại chính</td>
+                            <td class="w-23">0902123456</td>
+                        </tr>
+                        <tr>
+                            <td class="w-13 bg-light text-left label">Tên Công ty / Tổ chức</td>
+                            <td class="w-23">Công ty An Bình</td>
+                        </tr>
+                        <tr>
+                            <td class="w-13 bg-light text-left label">Email chính</td>
+                            <td class="w-23"><a href="mailto:anie@gmail.com">anie@gmail.com</a></td>
+                        </tr>
+                        <tr>
+                            <td class="w-13 bg-light text-left label">Website</td>
+                            <td class="w-23"><a href="http://www.anbinh.com" target="_blank">www.anbinh.com</a></td>
+
+                        </tr>
+                        <tr>
+                            <td class="w-25 bg-light text-left label">Phân công cho</td>
+                            <td class="w-25">ABC</td>
+                        </tr>
+                        <tr>
+                            <td class="w-25 bg-light text-left label">Thành phố</td>
+                            <td class="w-25">Hồ Chí Minh</td>
+                        </tr>
+                        <tr>
+                            <td class="w-25 bg-light text-left label">Quốc gia</td>
+                            <td class="w-25">Việt Nam</td>
+                        </tr>
+
+
+                    </tbody>
+                </table>
+                <hr>
+                <div class="d-flex">
+                    <a [routerLink]="['/task/detail/spec']" class="btn btn-primary mr-auto">
+                        Hiển thị đầy đủ
+                    </a>
+                    <div class="d-flex flex-column">
+                        <span class="metadata">Ngày tạo: 19/05/2017: 09:06 AM</span>
+                        <span class="metadata">Ngày sửa: 19/05/2017: 09:06 AM</span>
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+        <div class="card">
+            <div class="card-body">
+                <h5>Bình luận</h5>
+
+                <hr>
+
+                <div class="p-3 comment-input">
+                    <div>
+                        <textarea class="form-control w-100 p-2 mb-2" name="" id="" rows="4" placeholder="Thêm bình luận tại đây..."></textarea>
+                    </div>
+                    <div class="d-flex justify-content-end">
+                        <button class="btn btn-primary">
+                            Đăng
+                        </button>
+                    </div>
+
+                </div>
+
+                <hr>
+
+                <!-- //////////// -->
+                <div class="card">
+                    <div class="card-body">
+                        <div class="ui comments">
+                            <div class="comment">
+                                <a class="avatar">
+                                    <div class="avatar-circle-sm">
+                                        <span class="initials">
+                                            AL
+                                        </span>
+                                    </div>
+                                </a>
+                                <div class="content">
+                                    <a class="author">An Lê</a>
+                                    <div class="metadata">
+                                        <span class="date">Hôm nay 5:42 PM</span>
+                                    </div>
+                                    <div class="text">
+                                        Khách hàng tiềm năng cần chăm sóc
+                                    </div>
+                                    <div class="actions">
+                                        <a class="reply">Trả lời</a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="comment">
+                                <a class="avatar">
+                                    <div class="avatar-circle-sm">
+                                        <span class="initials">
+                                            NT
+                                        </span>
+                                    </div>
+                                </a>
+                                <div class="content">
+                                    <a class="author">Nam Trân</a>
+                                    <div class="metadata">
+                                        <span class="date">Hôm qua 12:30 AM</span>
+                                    </div>
+                                    <div class="text">
+                                        Đã gặp khách hàng
+                                    </div>
+                                    <div class="actions">
+                                        <a class="reply">Trả lời - Sửa - Xóa</a>
+                                    </div>
+                                </div>
+                                <div class="comments">
+                                    <div class="comment">
+                                        <a class="avatar">
+                                            <div class="avatar-circle-sm">
+                                                <span class="initials">
+                                                    AL
+                                                </span>
+                                            </div>
+                                            <!-- <img src="/images/avatar/small/jenny.jpg"> -->
+                                        </a>
+                                        <div class="content">
+                                            <a class="author">An Lê</a>
+                                            <div class="metadata">
+                                                <span class="date">Vừa xong</span>
+                                            </div>
+                                            <div class="text">
+                                                Khách hàng thế nào ?
+                                            </div>
+                                            <div class="actions">
+                                                <a class="reply">Trả lời</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <!-- //////////// -->
+
+
+
+
+            </div>
+
+        </div>
+    </div>
+
+    <div class="col-md-5 pl-3 pr-3">
+        <div class="card">
+            <div class="card-body">
+                <div class="d-flex">
+                    <h5 class="mr-auto  d-flex align-items-end">Các hoạt động</h5>
+                    <button class="btn btn-primary">Thêm vào</button>
+                </div>
+                <hr>
+                <div class="d-flex">
+                    <p class="mr-auto">
+                        <strong>23/10/2017, 10:00 AM</strong>
+                    </p>
+                    <span>Hoàn thành</span>
+                </div>
+                <p>Cuộc họp - Marketing đầu tháng</p>
+
+                <hr>
+                <div class="d-flex">
+                    <p class="mr-auto">
+                        <strong>23/10/2017, 10:00 AM</strong>
+                    </p>
+                    <span>Lên kế hoạch</span>
+                </div>
+                <p>Cuộc gọi- Đối tác chiến lược công ty</p>
+                <hr>
+
+            </div>
+        </div>
+        <div class="card mt-3">
+            <div class="card-body">
+
+                <h5 class="mr-auto">Các cập nhật</h5>
+
+                <hr>
+                <div class="d-flex">
+                    <p class="mr-auto">
+                        <strong>An Lê</strong> đã cập nhật
+                    </p>
+                    <span class="metadata">Hôm qua</span>
+                </div>
+                <p>
+                    <em>Điện thoại chính: từ
+                        <strong>0909123345</strong> thành
+                        <strong>0901235435</strong>
+                    </em>
+                </p>
+                <p>
+                    <em>Tên Họ: từ
+                        <strong>An Le</strong> thành
+                        <strong>An Lê</strong>
+                    </em>
+                </p>
+                <div class="d-flex">
+                    <p class="mr-auto">
+                        <strong>An Lê</strong> đã tạo
+                    </p>
+                    <span class="metadata">1 tháng trước</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>

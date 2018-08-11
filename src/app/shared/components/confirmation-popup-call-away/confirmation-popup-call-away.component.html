@@ -1,0 +1,37 @@
+<div *ngIf="message" class="confirmation-popup">
+
+    <div class="modal-header">
+        <h4 class="modal-title"></h4>
+        <button type="button" class="close" aria-label="Close" (click)="activeModal.dismiss('Cross click')">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+
+    <div class="d-flex justify-content-start warning-text-2">
+        <div class="">
+            <p class="text-left">{{message.text}}</p>
+        </div>
+    </div>
+    <div class="row no-gutters warning-text">
+        <div class="col-md-1 col-sx-1" style="text-align: center;">
+            <div class="align-self-center mt-2 p-2">
+                <img src="assets/images/warn.png" width="40" height="40" alt="">
+            </div>
+        </div>
+        <div class="col-md-11 col-sx-11">
+            <div class="align-self-center ml-4 mt-2 p-2">
+                <p class="text-left">
+                    <em>Để cuộc gọi được thực hiện bạn vui lòng nhấc máy bàn, sau đó bấm nút <strong>[Trả lời]</strong> để cuộc gọi được chuyển
+                        tới số thuê bao.
+                    </em>
+                </p>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="modal-footer">
+        <button type="button" class="btn btn-primary" (click)="activeModal.close('Close click'); message.siFn();  ">Đồng ý</button>
+        <button type="button" class="btn btn-secondary" (click)="activeModal.close('Close click')">Hủy</button>
+    </div>
+</div>

@@ -1,0 +1,119 @@
+.layout-table{
+    table-layout: fixed;
+}
+.no-boder{
+    border: none;
+}
+.textarea-content{
+    resize: none;
+    width: 90%;
+    background-color: white;
+}
+.boder-table{
+    border: 1px solid #dadada;
+    padding: 20px 0px 35px 30px;
+    border-top: none;
+    background-color: #ffff;
+
+}
+.mar-add{
+    margin-left: 1px;
+    border-radius: 0.25rem;
+    cursor: pointer;
+}
+.form-control{
+    min-height: 33px;
+}
+.fix-m2-floor-area{
+    position: relative;
+    .cus-input{
+        padding-right: 34px;
+    }
+    .span-m2{
+        position: absolute;
+        right: 12px;
+        top: 7px;
+    }
+}
+@media only screen and (max-width: 1366px) {
+    // table.dataTable {
+    //     th,
+    //     td {
+    //         max-width: 80px;
+    //     }
+      
+    // }
+    .status-filter{
+        zoom: 0.6;
+        font-size: 120%;
+    }
+    .custom-filter-bar{
+        zoom: 0.7!important;
+    }
+}
+
+@media only screen and (max-width: 1270px) {
+    // table.dataTable {
+    //     th,
+    //     td {
+    //         max-width: 80px;
+    //     }
+    
+    // }
+    .status-filter{
+        zoom: 0.7;
+        font-size: 120%;
+    }
+    .custom-filter-bar{
+        zoom: 0.65
+    }
+}
+
+@media only screen and (max-width: 1200px) {
+    // table.dataTable {
+    //     th,
+    //     td {
+    //         max-width: 75px;
+    //     }
+    
+    // }
+    .status-filter{
+        zoom: 0.6;
+        font-size: 120%;
+    }
+      .custom-filter-bar{
+        zoom: 0.6!important;
+    }
+}
+@media only screen and (max-width: 1024px) {
+    // th,
+    // td {
+    //     max-width: 65px;
+    // }
+    .status-filter{
+        zoom: 0.6;
+        font-size: 120%;
+    }
+    .custom-filter-bar{
+        zoom: 0.6;
+    }
+    .zoom-button{
+        zoom: 0.8;
+    }
+}
+@media only screen and (max-width: 1100px) {
+    // th,
+    // td {
+    //     max-width: 65px;
+    // }
+    .status-filter{
+        zoom: 0.5;
+        font-size: 120%;
+    }
+    .custom-filter-bar{
+        zoom: 0.7;
+    }
+    .zoom-button{
+        zoom: 0.8;
+    }
+}

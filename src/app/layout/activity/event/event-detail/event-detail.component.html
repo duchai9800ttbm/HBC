@@ -1,0 +1,47 @@
+<div *ngIf="event$ | async as event">
+    <div class="search-box d-flex">
+
+        <div class="media mr-auto">
+            <div class="media-header">
+                <a [routerLink]='["/activity"]'>
+                    <i class="fa fa-chevron-left mr-3" aria-hidden="true"></i>
+                </a>
+                <i class="fa fa-calendar mr-2" aria-hidden="true"></i>
+                <h4 class="d-inline mb-0 text-dark">{{event.name}}</h4>
+            </div>
+
+        </div>
+
+        <div class="action-bar">
+            <a class="btn btn-primary ml-2" [routerLink]="['/activity/event/edit', event.id]">Sửa &nbsp;
+                <i class="fa fa-pencil" aria-hidden="true"></i>
+            </a>
+            <button class="btn btn-primary ml-2" (click)="delete(event.id)">Xóa &nbsp;
+                <i class="fa fa-trash" aria-hidden="true"></i>
+            </button>
+            <button (click)="refresh(event.id)" class="btn btn-primary ml-2">
+                <i class="fa fa-refresh" aria-hidden="true"></i>
+            </button>
+        </div>
+
+    </div>
+    <hr>
+
+    <div class="row no-gutters">
+        <div class="col-md-10 pr-3">
+            <router-outlet></router-outlet>
+        </div>
+
+        <div class="col-md-2">
+            <app-event-menu></app-event-menu>
+        </div>
+    </div>
+
+</div>
+<div *ngIf="isNotExist">
+    <div class="text-center">
+        <div class="alert alert-warning" role="alert">
+            Sự kiện không tồn tại hoặc đã bị xóa !
+        </div>
+    </div>
+</div>

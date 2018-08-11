@@ -1,0 +1,59 @@
+.layout-table{
+    table-layout: fixed;
+}
+.cus-but{
+    float: right;
+}
+.textarea-content{
+    resize: none;
+    width: 88%;
+}
+.boder-table{
+    border: 1px solid #dadada;
+    padding: 20px 15px 35px 15px;
+}
+.no-boder{
+    border: none;
+}
+.form-control{
+    min-height: 33px;
+}
+@media only screen and (max-width: 1600px) {
+    .zoom-form{
+        zoom: 0.9;
+    }
+}
+
+@media only screen and (max-width: 1366px) {
+    .zoom-form{
+        zoom: 0.9;
+    }
+}
+
+@media only screen and (max-width: 1270px) {
+    .zoom-form{
+        zoom: 0.8;
+    }
+}
+
+@media only screen and (max-width: 1200px) {
+    .zoom-form{
+        zoom: 0.75;
+    }
+}
+@media only screen and (max-width: 1024px) {
+    .zoom-form{
+        zoom: 0.7;
+        // width: 500px !important;
+    }
+}
+@media only screen and (max-width: 1100px) {
+    .zoom-form{
+        zoom: 0.7;
+    }
+}
+@media only screen and (max-width: 993) {
+    .zoom-form{
+        zoom: 0.7;
+    }
+}

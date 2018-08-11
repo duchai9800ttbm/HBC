@@ -1,0 +1,46 @@
+<div class="mt-4">
+    <div class="d-flex form-group">
+        <h5 class="d-inline mb-0 mr-auto text-dark text-uppercase">danh sách lý do trật thầu</h5>
+        <div class="btn-toolbar">
+            <div class="input-group">
+                <span class="input-group-addon">Tìm kiếm theo</span>
+                <input type="text" class="form-control" placeholder="Từ khóa">
+            </div>
+            <button class="btn btn-primary ml-2" [routerLink]="['/settings/reason/lose/create']">
+                &nbsp;&nbsp; Thêm mới
+            </button>
+            <button class="btn btn-primary ml-2">
+                <i class="fa fa-trash-o" aria-hidden="true"></i>
+              </button>
+        </div>
+    </div>
+    <div>
+        <kendo-grid [data]="pagedResult.items" [loading]="gridLoading" [selectable]="{enabled: true, mode: 'multiple', checkboxOnly: true}" [kendoGridSelectBy]="'id'" [selectedKeys]="mySelection"
+        (selectedKeysChange)="onSelectedKeysChange($event)">
+            <kendo-grid-checkbox-column [headerClass]="'custom-table-header'" width="40" showSelectAll="true">
+            </kendo-grid-checkbox-column>
+            <kendo-grid-column headerClass="custom-table-header" field="reasonName" title="Tên lý do">
+            </kendo-grid-column>
+            <kendo-grid-column headerClass="custom-table-header" field="reasonNo" title="Mã lý do">
+            </kendo-grid-column>
+            <kendo-grid-column headerClass="custom-table-header" field="reasonDesc" title="Mô tả">
+           </kendo-grid-column>
+            <kendo-grid-column headerClass="custom-table-header" title="Thao tác" width="150">
+                <ng-template kendoGridCellTemplate let-dataItem>
+                        <!-- <a [routerLink]="['/package/detail',dataItem.bidOpportunityId]">
+                            <i class="fa fa-eye text-warning" aria-hidden="true"></i>
+                        </a> -->
+                        <a [routerLink]="['/settings/reason/lose/edit',dataItem.id]" class=" text-success ml-3">
+                            <i class="fa fa-pencil  cursor-pointer" aria-hidden="true"> </i>
+                        </a>
+                        <a class=" text-dark ml-3">
+                            <i (click)="deleteReasonLose(dataItem.id)" class="fa fa-trash-o pointer" aria-hidden="true"></i>
+                        </a>
+                </ng-template>
+            </kendo-grid-column>
+            <kendo-grid-messages noRecords="Không có dữ liệu"
+            ></kendo-grid-messages>
+        </kendo-grid>
+        <app-pagination [(pagedResult)]="pagedResult" (pagedResultChange)="pagedResultChange($event)"></app-pagination>
+    </div>
+</div>

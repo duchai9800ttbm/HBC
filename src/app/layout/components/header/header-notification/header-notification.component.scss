@@ -1,0 +1,61 @@
+$primary: #00a0e3;
+$topnav-background-color: $primary;
+.notification {
+    .dropdown-menu {
+        width: 450px;
+    }
+    .main-badge {
+        position: absolute;
+        top: -4px;
+        border-radius: 15px;
+        right: 10px;
+        line-height: inherit;
+        width: 20px;
+    }
+    .last {
+        white-space: initial;
+    }
+    a.dropdown-toggle {
+        margin-top: 0.65rem;
+    }
+}
+
+h5 {
+    font-size: 13px;
+    font-weight: 600;
+}
+
+.small {
+    margin: 0;
+}
+
+.last {
+    font-size: 97%;
+    margin: 0;
+}
+
+.dropdown-no-icon::after {
+    display: none;
+}
+
+.notification-item {
+    border-bottom: 1px solid #cccccc;
+}
+
+.unread {
+    background-color: #dfeaea94;
+}
+
+a {
+    cursor: pointer;
+}
+
+.dropdown-menu-header {
+    display: block;
+    width: 100%;
+    padding: 0.25rem 1.5rem;
+    text-align: inherit;
+    white-space: nowrap;
+    background: none;
+    border: 0;
+}

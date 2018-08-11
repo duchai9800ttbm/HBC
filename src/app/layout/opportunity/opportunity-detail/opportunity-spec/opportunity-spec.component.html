@@ -1,0 +1,72 @@
+<div [@routerTransition] *ngIf="opportunity$ | async as opportunity">
+    <div class="card-collapse">
+        <div class="header" (click)="isCollapsedMain = !isCollapsedMain" [attr.aria-expanded]="!isCollapsedMain" aria-controls="info-main">
+            <i class="fa fa-caret-down mr-3"></i>Chi tiết cơ hội</div>
+        <div class="body" id="info-main" [ngbCollapse]="isCollapsedMain">
+            <table class="w-100 table table-bordered">
+                <tbody>
+                    <tr>
+                        <td class="w-25 bg-light text-right label">Tên cơ hội</td>
+                        <td class="w-25">{{opportunity.name}}</td>
+                        <td class="w-25 bg-light text-right label">Ngày dự kiến xong</td>
+                        <td class="w-25">{{opportunity.opportunityDateStop | date: 'dd/MM/yyyy'}}</td>
+                    </tr>
+                    <tr>
+                        <td class="w-25 bg-light text-right label">Khách hàng</td>
+                        <td class="w-25">
+                            <a *ngIf="opportunity.customer" [routerLink]="['/customer/detail', opportunity.customer.id]">
+                                {{opportunity.customer.name}}
+                            </a>
+                        </td>
+                        <td class="w-25 bg-light text-right label">Giai đoạn</td>
+                        <td class="w-25">{{opportunity.phase | translate}}</td>
+                    </tr>
+                    <tr>
+                        <td class="w-25 bg-light text-right label">Liên hệ</td>
+                        <td class="w-25 color">
+                            <a *ngFor="let contact of opportunity.contacts" (click)="goToDeitalContact(contact.id)"><p>{{contact.text}}</p></a>
+                        </td>
+                        <td class="w-25 bg-light text-right label">Xác suất</td>
+                        <td class="w-25">{{opportunity.probability && opportunity.probability + '%'}}</td>
+                    </tr>
+                    <tr>
+                        <td class="w-25 bg-light text-right label">Phân loại</td>
+                        <td class="w-25">{{opportunity.category | translate}}</td>
+                        <td class="w-25 bg-light text-right label">Chiến dịch</td>
+                        <td class="w-25" *ngIf="opportunity.campaign">{{opportunity.campaign.name}}</td>
+                    </tr>
+                    <tr>
+                        <td class="w-25 bg-light text-right label">Nguồn tiềm năng</td>
+                        <td class="w-25">{{opportunity.prospectSource | translate}}</td>
+                        <td class="w-25 bg-light text-right label">Giá trị dự kiến</td>
+                        <td class="w-25">{{opportunity.expectedValue | vnCurrency}}</td>
+                    </tr>
+                    <tr>
+                        <!-- <td class="w-25 bg-light text-right label">Số tiền</td>
+                        <td class="w-25">{{opportunity.amount | vnCurrency}}</td>
+                        <td class="w-25 bg-light text-right label">Phân công cho</td>
+                        <td class="w-25">{{opportunity.assignTo && opportunity.assignTo.name || ''}}</td> -->
+                    </tr>
+                </tbody>
+            </table>
+
+        </div>
+    </div>
+
+    <div class="card-collapse">
+        <div class="header" (click)="isCollapsedDesc = !isCollapsedDesc" [attr.aria-expanded]="!isCollapsedDesc" aria-controls="info-desc">
+            <i class="fa fa-caret-down mr-3"></i>Mô tả chi tiết</div>
+        <div class="body" id="info-desc" [ngbCollapse]="isCollapsedDesc">
+            <table class="w-100 table table-bordered">
+                <tbody>
+                    <tr>
+                        <td class="w-25 bg-light text-right label">Mô tả</td>
+                        <td class="w-75">{{opportunity.description}}</td>
+                    </tr>
+
+                </tbody>
+            </table>
+
+        </div>
+    </div>
+</div>

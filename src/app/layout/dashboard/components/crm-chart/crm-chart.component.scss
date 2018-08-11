@@ -1,0 +1,20 @@
+select {
+    // width: 130px;
+    font-size: 0.8rem;
+    line-height: 1.5;
+    color: #495057;
+    background-color: initial;
+    background-image: none;
+    background-clip: padding-box;
+    border: none;
+    border-radius: 0.25rem;
+    transition: border-color ease-in-out 0.15s, box-shadow ease-in-out 0.15s;
+}
+span{
+   float: left;
+   text-align: center;
+}
+.calendarInput{
+    width: 170px;
+    margin-left: 10px !important;
+}

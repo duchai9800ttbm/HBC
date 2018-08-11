@@ -1,0 +1,17 @@
+.nav {
+    margin-left: -1rem;
+    .nav-link {
+        border-bottom: 2px solid transparent;
+        &.active-link {
+            border-color: orange !important;
+        }
+    }
+}
+
+.k-menu-custom {
+    margin-top: 2px;
+    border-bottom: 2px solid transparent;
+    &.active-link {
+        border-color: orange !important;
+    }
+}

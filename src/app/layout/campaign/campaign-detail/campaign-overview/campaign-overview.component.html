@@ -1,0 +1,76 @@
+<div [@routerTransition] class="row no-gutters">
+    <div class="col-md-7">
+        <div class="card mb-3">
+            <div class="card-body" id="info-main" [ngbCollapse]="isCollapsedMain">
+                <table class="w-100 table table-bordered">
+                    <tbody>
+                        <tr>
+                            <td class="w-13 bg-light text-left label">Tên</td>
+                            <td class="w-23">An</td>
+                        </tr>
+                        <tr>
+                            <td class="w-13 bg-light text-left label">Họ</td>
+                            <td class="w-23">Lê</td>
+                        </tr>
+                        <tr>
+                            <td class="w-13 bg-light text-left label">Đánh giá</td>
+                            <td class="w-23">Tiềm năng</td>
+                        </tr>
+                        <tr>
+                            <td class="w-13 bg-light text-left label">Điện thoại chính</td>
+                            <td class="w-23">0902123456</td>
+                        </tr>
+                        <tr>
+                            <td class="w-13 bg-light text-left label">Tên Công ty / Tổ chức</td>
+                            <td class="w-23">Công ty An Bình</td>
+                        </tr>
+                        <tr>
+                            <td class="w-13 bg-light text-left label">Email chính</td>
+                            <td class="w-23"><a href="mailto:anie@gmail.com">anie@gmail.com</a></td>
+                        </tr>
+                        <tr>
+                            <td class="w-13 bg-light text-left label">Website</td>
+                            <td class="w-23"><a href="http://www.anbinh.com" target="_blank">www.anbinh.com</a></td>
+
+                        </tr>
+                        <tr>
+                            <td class="w-25 bg-light text-left label">Phân công cho</td>
+                            <td class="w-25">ABC</td>
+                        </tr>
+                        <tr>
+                            <td class="w-25 bg-light text-left label">Thành phố</td>
+                            <td class="w-25">Hồ Chí Minh</td>
+                        </tr>
+                        <tr>
+                            <td class="w-25 bg-light text-left label">Quốc gia</td>
+                            <td class="w-25">Việt Nam</td>
+                        </tr>
+
+
+                    </tbody>
+                </table>
+                <hr>
+                <div class="d-flex">
+                    <a [routerLink]="['/campaign/detail/spec']" class="btn btn-primary mr-auto">
+                        Hiển thị đầy đủ
+                    </a>
+                    <div class="d-flex flex-column">
+                        <span class="metadata">Ngày tạo: 19/05/2017: 09:06 AM</span>
+                        <span class="metadata">Ngày sửa: 19/05/2017: 09:06 AM</span>
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+
+        <!-- <app-comments [moduleName]="'customer'" [moduleItemId]="customer.id" ></app-comments> -->
+    </div>
+
+    <!-- <div class="col-md-5 pl-3 pr-4">
+            <app-activities [moduleName]="'customer'" [moduleItemId]="customer.id" ></app-activities>
+            <app-audits [moduleName]="'customer'" [moduleItemId]="customer.id" ></app-audits>
+        </div> -->
+
+
+</div>

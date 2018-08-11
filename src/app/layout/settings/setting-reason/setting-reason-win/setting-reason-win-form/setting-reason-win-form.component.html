@@ -1,0 +1,33 @@
+<form [formGroup]="reasonWinForm" novalidate (ngSubmit)="submitForm()">
+  <div>
+      <div class="card p-3">
+          <div class="row form-group">
+              <div class="col-md-2 text-right required">Tên khu vực</div>
+              <div class="col-md-3">
+                  <input class="form-control" [class.is-invalid]="formErrors.bidOpportunityReasonName" tabindex="1" formControlName="bidOpportunityReasonName">
+                  <div class="invalid-feedback" *ngIf="formErrors.bidOpportunityReasonName">
+                      {{formErrors.bidOpportunityReasonName}}
+                  </div>
+              </div>
+          </div>
+          <!-- <div class="row form-group">
+              <div class="col-md-2 text-right">Mã khu vực</div>
+              <div class="col-md-3">
+                  <input class="form-control" tabindex="2" formControlName="locationNo">
+              </div>
+          </div> -->
+          <div class="row form-group">
+              <div class="col-md-2 text-right">Mô tả</div>
+              <div class="col-md-3">
+                  <textarea class="form-control" tabindex="3" formControlName="bidOpportunityReasonDesc"></textarea>
+              </div>
+          </div>
+      </div>
+      <div class="text-right">
+          <button class="btn btn-secondary" type="button" [routerLink]="['/settings/reason/win']">Hủy
+          </button>
+          <button type="submit" class="btn btn-primary ml-2">Lưu
+          </button>
+      </div>
+  </div>
+</form>

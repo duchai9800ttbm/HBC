@@ -1,0 +1,34 @@
+<div class="row mt-3">
+    <div class="d-flex align-self-start ml-2 mt-1">
+        <img *ngIf="comment.avatar" [src]="comment.avatar" width="35" height="35">
+
+        <div *ngIf="!comment.avatar" class="avatar-circle-sm icon">
+            <span class="initials">
+                {{comment.user.userName | shortenedName}}
+            </span>
+        </div>
+    </div>
+
+    <div class="content w-80">
+        <div class="author"> {{comment.user.userName}}</div>
+        <div class="metadata">
+            <span class="date right">{{comment.time | amCalendar}}</span>
+        </div>
+        <div class="text">
+            {{comment.content}}
+        </div>
+        <div class="actions">
+            <a class="reply" (click)="reply();">Trả lời</a>
+            <span>&nbsp;</span>
+        </div>
+
+      
+    </div>
+    <div class="reply-box mt-2 mb-2 p-3 comment-input rep" [hidden]="!showReplyBox">
+            <app-editor #editor (keyup.enter)="submitComment()"></app-editor>
+            <div class="d-flex flex-row justify-content-end align-items-center mt-3">
+                <button [disabled]="!editor.content" class="btn btn-primary mr-3" (click)="submitComment()">Đăng</button>
+                <a class="" (click)="showReplyBox=false">Hủy bỏ</a>
+            </div>
+        </div>
+</div>

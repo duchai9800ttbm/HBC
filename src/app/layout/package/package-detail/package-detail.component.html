@@ -1,0 +1,32 @@
+<div [@routerTransition]>
+  <div class="title-detail center-parent" *ngIf="packageData">
+    <div class="mr-auto col-md-12">
+      <div class="media-header header-title">
+        <a [routerLink]='["/package/list"]' style="cursor: pointer;">
+          <i class="fa fa-chevron-left mr-3" aria-hidden="true"></i>
+        </a>
+        <h4 class="d-inline mb-0 text-dark">CHI TIẾT GÓI THẦU "{{packageData.opportunityName | uppercase}}"</h4>
+      </div>
+    </div>
+  </div>
+  <div class="main-detail">
+      <div class="menu">
+          <div class="action" style="width: calc(25% - 10px)" [routerLinkActive]="['router-link-active']" [routerLink]="['/package/detail', packageId ,'info']">
+            THÔNG TIN CHI TIẾT
+          </div>
+          <div class="action" style="width: calc(25% - 10px)" [routerLinkActive]="['router-link-active']" [routerLink]="['/package/detail', packageId ,'invitation']">
+            HỒ SƠ MỜI THẦU
+          </div>
+          <div class="action" style="width: calc(25% - 10px)" [routerLinkActive]="['router-link-active']" [routerLink]="['/package/detail', packageId ,'attend']">
+            HỒ SƠ DỰ THẦU
+          </div>
+          <div class="action" [class.un-active]="status.Disabledresult" style="width: calc(25% - 10px)" [routerLinkActive]="['router-link-active']">
+            KẾT QUẢ DỰ THẦU
+          </div>
+        </div>
+    <div>
+      <router-outlet></router-outlet>
+    </div>
+
+  </div>
+</div>

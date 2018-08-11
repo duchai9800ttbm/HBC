@@ -1,0 +1,150 @@
+<!-- <nav class="sidebar" [ngClass]="{sidebarPushRight: isActive}">
+
+    <div class="list-group change-event phone-number" *ngIf="listPhoneNumberHistory.length">
+        <span class="list-group-item text-uppercase pointer" (click)="toggleCol1()">Danh sách cuộc gọi&nbsp;&nbsp;
+            <i class="fa fa-caret-down "></i>
+        </span>
+        <div [ngbCollapse]="isCollapsedCall">
+            <div class="pointer form-group padding-phone" *ngFor="let phoneNumber of listPhoneNumberHistory">
+                <div class="mr-2 mt-1 d-flex justify-content-between padding-phone" *ngIf="phoneNumber.callernumber">
+                    <div class="media-big d-flex justify-content-between text-center" (click)="sendCallNumber(phoneNumber.callernumber,phoneNumber.callStatus, phoneNumber.starttime)">
+                        <div class="text-center phone-color">
+                            <p>0{{phoneNumber.callernumber}}</p>
+                        </div>
+                    </div>
+                    <div *ngIf="phoneNumber.callStatus != 'DialAnswer' && phoneNumber.callStatus != 'Start'" class="ml-auto" [appPhoneNumberCallable]="'0'+phoneNumber.callernumber">
+                        <img src="assets/images/phone.png" width="15" height="15" alt="">
+                    </div>
+                    <div [title]="phoneNumber.title" class="ht-icon mt-1 ml-4" [class.status-cancel]="phoneNumber.callStatus != 'DialAnswer' && phoneNumber.callStatus != 'Start'"
+                        [class.status-complete]="phoneNumber.callStatus == 'DialAnswer'" [class.status-inprogess]="phoneNumber.callStatus == 'Start'"
+                        [class.offline]="phoneNumber.callStatus == 'DialAnswer' || phoneNumber.callStatus == 'Start'">
+                    </div>
+
+                </div>
+                <div class="d-flex ml-2" *ngIf="phoneNumber.starttime">
+                    <div class="mr-auto">
+                        <span class="text-muted metadata mr-5">{{phoneNumber.starttime | amCalendar}}</span>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+
+    <div class="list-group change-event phone-number" *ngIf="listPhoneNumberHistoryAway.length">
+        <span class="list-group-item text-uppercase pointer" (click)="toggleCol2()">Lịch sử cuộc gọi đi&nbsp;&nbsp;
+            <i class="fa fa-caret-down "></i>
+        </span>
+        <div [ngbCollapse]="isCollapsedCallAway">
+            <div class="pointer form-group padding-phone" *ngFor="let phoneNumber of listPhoneNumberHistoryAway">
+                <div class="mr-2 mt-1 d-flex justify-content-between padding-phone" *ngIf="phoneNumber.callernumber">
+                    <div class="media-big d-flex justify-content-between text-center" (click)="sendCallNumber(phoneNumber.callernumber,phoneNumber.callStatus, phoneNumber.starttime)">
+                        <div class="text-center phone-color">
+                            <p>0{{phoneNumber.callernumber}}</p>
+                        </div>
+                    </div>
+                    <div *ngIf="phoneNumber.callStatus != 'DialAnswer' && phoneNumber.callStatus != 'Start'" class="ml-auto" [appPhoneNumberCallable]="'0'+phoneNumber.callernumber">
+                        <img src="assets/images/phone.png" width="15" height="15" alt="">
+                    </div>
+                    <div [title]="phoneNumber.title" class="ht-icon mt-1 ml-4" [class.status-cancel]="phoneNumber.callStatus != 'DialAnswer' && phoneNumber.callStatus != 'Start'"
+                        [class.status-complete]="phoneNumber.callStatus == 'DialAnswer'" [class.status-inprogess]="phoneNumber.callStatus == 'Start'"
+                        [class.offline]="phoneNumber.callStatus == 'DialAnswer' || phoneNumber.callStatus == 'Start'">
+                    </div>
+
+                </div>
+                <div class="d-flex ml-2" *ngIf="phoneNumber.starttime">
+                    <div class="mr-auto">
+                        <span class="text-muted metadata mr-5">{{phoneNumber.starttime | amCalendar}}</span>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+
+
+    <ul class="list-group change-event">
+        <li class="list-group-item text-uppercase pointer card-header" (click)="toggleCol3()">Thay đổi gần đây&nbsp;&nbsp;
+            <i class="fa fa-caret-down mr-3"></i>
+        </li>
+
+        <span *ngIf="audits" [ngbCollapse]="isCollapsedAudit">
+            <li *ngFor="let audit of audits" class="list-group-item detail">
+                <a class="media">
+                    <div class="avatar d-flex align-self-start mr-2">
+                        <div *ngIf="!audit.avatar" class="avatar-circle-sm">
+                            <span class="initials">
+                                {{audit.user | shortenedName}}
+                            </span>
+                        </div>
+                        <img *ngIf="audit.avatar" [src]="audit.avatar" width="35" height="35" class="d-inline-block mt-2" alt="">
+                    </div>
+                    <div class="media-body">
+                        <p class="last mb-1">
+                            <strong>{{audit.user}} </strong>{{audit.actionName}} {{audit.moduleName | translate}}</p>
+                        <span class="text-muted metadata">{{audit.date | amCalendar}}</span>
+                    </div>
+                </a>
+            </li>
+
+            <li class="text-center mt-3" *ngIf="audits && audits.length > 0">
+                <a [routerLink]="['/change-list']">Xem tất cả</a>
+            </li>
+        </span>
+
+
+    </ul>
+</nav>  -->
+<nav class="sidebar" [@slideInOut]="state">
+    <div class="d-flex flex-row-reverse">
+        <div class="action center-parent" width="">
+            <div class="center-parent">
+                    <img src="assets/images/zoom.png" width="16" height="16" style="cursor: pointer;">
+            </div>
+        </div>
+
+    </div>
+    <div class="font-weight-bold mb-3">Thay đổi gần đây</div>
+    <div class="mt-2">
+        <div style="display: flex" class="row">
+            <div class="col-sm-2">
+                <img src="assets/images/no-avatar.png" width="30" height="30" alt="">
+            </div>
+            <div class="col-sm-10">
+                <!-- <div style="display: flex">
+                    <div style="font-weight: bold;padding-right: 2px;">Admin</div>
+                    <div>mới tạo mới</div>
+                </div>
+                <div>gói thầu xây dựng</div> -->
+                <p class="last mb-1">
+                    <strong>Admin </strong>mới tạo mới gói thầu xây dưng</p>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-2"></div>
+            <div class="col-sm-10" style="font-style: italic; color: grey; font-size: 10px;">Hôm qua</div>
+        </div>
+    </div>
+    <div class="mt-2">
+        <div style="display: flex" class="row">
+            <div class="col-sm-2">
+                <img src="assets/images/no-avatar.png" width="30" height="30" alt="">
+            </div>
+            <div class="col-sm-10">
+                <!-- <div style="display: flex">
+                    <div style="font-weight: bold;padding-right: 2px;">Admin</div>
+                    <div>mới tạo mới</div>
+                </div>
+                <div>gói thầu xây dựng</div> -->
+                <p class="last mb-1">
+                    <strong>Admin </strong>mới tạo mới gói thầu xây dưng</p>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-2"></div>
+            <div class="col-sm-10" style="font-style: italic; color: #a8b9bf; font-size: 10px;">Hôm qua</div>
+        </div>
+    </div>
+</nav>

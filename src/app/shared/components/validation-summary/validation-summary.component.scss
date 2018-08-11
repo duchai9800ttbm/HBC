@@ -1,0 +1,31 @@
+.validation-summary {
+    text-align: left;
+    margin-bottom: 1em;
+    background-color: #ffd7db;
+    border-color: #ea9a9a;
+    border-radius: 3px;
+    border: 1px #ea9a9a solid;
+    color: #985c5c;
+    margin-bottom: 20px;
+    padding: .5em 1em;
+    font-size: 85%;
+    .validation-summary-errors{
+        margin: 0;
+    }
+}
+
+
+.success-message {
+    margin-bottom: 1em;
+    background-color: #dff0d8;
+    border-color: #ea9a9a;
+    border-radius: 3px;
+    border: 1px #d6e9c6 solid;
+    color: #3c763d;
+    margin-bottom: 20px;
+    padding: .5em 1em;
+    font-size: 85%;
+    .validation-summary-errors{
+        margin: 0;
+    }
+}

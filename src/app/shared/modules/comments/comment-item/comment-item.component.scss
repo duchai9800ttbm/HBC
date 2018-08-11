@@ -1,0 +1,30 @@
+a:hover{
+    text-decoration: underline !important;
+    cursor: pointer;
+}
+
+img {
+    border-radius:50% !important;
+    -moz-border-radius:50%;
+    -webkit-border-radius:50%;
+    height: 35px !important;
+    width: 35px !important;
+    }
+    
+.content{
+    margin-left: 10px;
+}
+
+.icon{
+    width: 35px !important;
+    height: 35px !important;
+}
+.right{
+    right: 0px;
+    top: 17px;
+    
+}
+.rep{
+    width: 100%;
+    float: right;
+}
