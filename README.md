@@ -1,7 +1,6 @@
-# BYS CRM for Trang tr� #
+# HBC Số hóa dự thầu website
 
-#http://115.79.35.119:9090/crm/#
+#http://115.79.35.119:9090/hbc
+##Account login : admin/1
 
-##Account login : TT/tt123
-
-###API Endpoint: http://115.79.35.119:7878/trangtris-crm/
+###API Endpoint: http://115.79.35.119:9004/api/hbc
