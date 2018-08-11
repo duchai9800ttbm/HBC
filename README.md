@@ -3,4 +3,4 @@
 ## http://demo.bys.vn/hbc
 ### Account login : admin/1
 
-### API Endpoint: http://115.79.35.119:9004/api/hbc
+### API Endpoint: http://115.79.35.119:9004/swagger
