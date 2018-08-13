@@ -38,8 +38,8 @@ export class SettingReasonLoseFormComponent implements OnInit {
   createForm() {
     this.reasonLoseForm = this.fb.group({
       id: this.reasonLose.id,
-      bidOpportunityReasonName: [this.reasonLose.bidOpportunityReasonName, CustomValidator.required],
-      bidOpportunityReasonDesc: this.reasonLose.bidOpportunityReasonDesc
+      bidOpportunityReasonName: [this.reasonLose.reasonName, CustomValidator.required],
+      bidOpportunityReasonDesc: this.reasonLose.reasonDesc
     });
     this.reasonLoseForm.valueChanges
       .subscribe(data => this.onFormValueChanged(data));

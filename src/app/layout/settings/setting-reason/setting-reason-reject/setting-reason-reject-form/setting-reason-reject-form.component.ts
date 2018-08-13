@@ -37,8 +37,8 @@ export class SettingReasonRejectFormComponent implements OnInit {
   createForm() {
     this.reasonRejectForm = this.fb.group({
       id: this.reasonReject.id,
-      bidOpportunityReasonName: [this.reasonReject.bidOpportunityReasonName, CustomValidator.required],
-      bidOpportunityReasonDesc: this.reasonReject.bidOpportunityReasonDesc
+      bidOpportunityReasonName: [this.reasonReject.reasonName, CustomValidator.required],
+      bidOpportunityReasonDesc: this.reasonReject.reasonDesc
     });
     this.reasonRejectForm.valueChanges
       .subscribe(data => this.onFormValueChanged(data));

@@ -37,8 +37,8 @@ export class SettingReasonWinFormComponent implements OnInit {
   createForm() {
     this.reasonWinForm = this.fb.group({
       id: this.reasonWin.id,
-      bidOpportunityReasonName: [this.reasonWin.bidOpportunityReasonName, CustomValidator.required],
-      bidOpportunityReasonDesc: this.reasonWin.bidOpportunityReasonDesc
+      bidOpportunityReasonName: [this.reasonWin.reasonName, CustomValidator.required],
+      bidOpportunityReasonDesc: this.reasonWin.reasonDesc
     });
     this.reasonWinForm.valueChanges
       .subscribe(data => this.onFormValueChanged(data));

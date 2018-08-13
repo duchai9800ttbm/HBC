@@ -199,11 +199,13 @@ export class SettingService {
 
     // get danh sách loại công trình
     readConstruction(
+        searchTerm: string,
         page: number | string,
         pageSize: number | string,
     ): Observable<PagedResult<ConstructionTypeListItem[]>> {
+        const urlParam = Utils.createSearchParam(searchTerm);
         return this.apiService
-            .get(`bidconstructiontype/getall/${page}/${pageSize}`)
+            .get(`bidconstructiontype/filter/${page}/${pageSize}`, urlParam)
             .map(response => {
                 return {
                     currentPage: response.result.pageIndex,
@@ -218,11 +220,13 @@ export class SettingService {
 
     // get danh sách hạng mục thi công công trình
     readConstructionCategory(
+        searchTerm: string,
         page: number | string,
         pageSize: number | string,
     ): Observable<PagedResult<ConstructionCategoryListItem[]>> {
+        const urlParam = Utils.createSearchParam(searchTerm);
         return this.apiService
-            .get(`bidconstructioncategory/getall/${page}/${pageSize}`)
+            .get(`bidconstructioncategory/filter/${page}/${pageSize}`, urlParam)
             .map(response => {
                 return {
                     currentPage: response.result.pageIndex,
@@ -237,11 +241,13 @@ export class SettingService {
 
     // get danh sách tình trạng gói thầu
     readBidStatus(
+        searchTerm: string,
         page: number | string,
         pageSize: number | string,
     ): Observable<PagedResult<BidStatusListItem[]>> {
+        const urlParam = Utils.createSearchParam(searchTerm);
         return this.apiService
-            .get(`bidstatus/getall/${page}/${pageSize}`)
+            .get(`bidstatus/filter/${page}/${pageSize}`, urlParam)
             .map(response => {
                 return {
                     currentPage: response.result.pageIndex,

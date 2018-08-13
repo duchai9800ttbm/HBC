@@ -3,14 +3,15 @@ import { PagedResult } from '../../../../shared/models';
 import { SettingService } from '../../../../shared/services/setting.service';
 import { ConfirmationService, AlertService } from '../../../../shared/services';
 import { BidStatusListItem } from '../../../../shared/models/setting/bid-status-list-item';
-
+import { BehaviorSubject } from '../../../../../../node_modules/rxjs';
+import { COMMON_CONSTANTS } from '../../../../shared/configs/common.config';
 @Component({
     selector: 'app-setting-bid-status-list',
     templateUrl: './setting-bid-status-list.component.html',
     styleUrls: ['./setting-bid-status-list.component.scss']
 })
 export class SettingBidStatusListComponent implements OnInit {
-
+    searchTerm$ = new BehaviorSubject<string>('');
     gridLoading = true;
     pagedResult: PagedResult<BidStatusListItem[]> = new PagedResult<
         BidStatusListItem[]
@@ -23,7 +24,12 @@ export class SettingBidStatusListComponent implements OnInit {
     ) { }
 
     ngOnInit() {
-        this.refresh(0, 10);
+        this.searchTerm$
+            .debounceTime(COMMON_CONSTANTS.SearchDelayTimeInMs)
+            .distinctUntilChanged()
+            .subscribe(term =>
+                this.refresh(0, this.pagedResult.pageSize)
+            );
     }
 
     public onSelectedKeysChange(e) {
@@ -55,7 +61,7 @@ export class SettingBidStatusListComponent implements OnInit {
 
     refresh(page: string | number, pageSize: string | number) {
         this.gridLoading = true;
-        this.settingService.readBidStatus(page, pageSize).subscribe(data => {
+        this.settingService.readBidStatus(this.searchTerm$.value, page, pageSize).subscribe(data => {
             this.pagedResult = data;
             console.log(this.pagedResult);
             this.gridLoading = false;

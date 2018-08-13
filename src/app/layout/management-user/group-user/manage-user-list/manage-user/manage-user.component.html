@@ -81,7 +81,7 @@
           <ng-template kendoGridCellTemplate let-dataItem let-rowIndex="rowIndex">
             <div class="row">
               <div class="col-md-4">
-                <i class="fa fa-users pointer" aria-hidden="true" (click)="showPopupSelect(dataItem.id, selectGroup)"></i>
+                <i class="fa fa-users pointer color-active" aria-hidden="true" (click)="showPopupSelect(dataItem.id, selectGroup)"></i>
               </div>
               <div class="col-md-4" [routerLink]="['../edit-user/',dataItem.id]">
                 <i class="fa fa-pencil-square-o pointer" aria-hidden="true"></i>
@@ -132,7 +132,7 @@
       </button>
     </div>
   </div>
-  <div class="modal-header no-boder-bottom-title">
+  <div class="modal-header no-boder-bottom-title no-border">
     <div class="form-group col-md-12">
       <label for="" class="form-label col-md-2">Nhóm</label>
       <span class="custom-dropdown col-md-9">
