@@ -89,6 +89,10 @@ input.icon {
 .pointer {
     cursor: pointer;
 }
-.k-widget{
-    line-height: 0px !important;
-}
+.no-boder-bottom {
+    border-bottom: none;
+    padding: 30px 0px 30px 0px;
+  }
+  .text-model {
+    font-size: 14px;
+  }

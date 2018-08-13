@@ -1,104 +1,106 @@
 <div class="boder-table back-ground-table">
   <div class="table-body">
-      <div class="row">
-        <div class="col-md-6">
-          <h4 class="text-head-user">Chọn người dùng để thay đổi</h4>
-        </div>
-        <div class="col-md-6">
-          <div class="btn-toolbar pull-right">
-            <div class="input-group btn-rg">
-              <span class="input-group-addon">Tìm kiếm</span>
-              <input type="text" class="form-control icon" placeholder="&#xf002; Nhập tên, email,..." (keyup)="searchTerm$.next($event.target.value)">
-            </div>
-            <button type="button" class="btn btn-primary btn-rg pull-right" [routerLink]="['../add-user']">
-              <i class="fa fa-plus" aria-hidden="true"></i> Thêm mới người dùng
-            </button>
-            <button type="button" class="btn btn-primary btn-rg pull-right" (click)="loadPage()">
-              <i class="fa fa-refresh" aria-hidden="true"></i>
-            </button>
-            <button type="submit" class="btn btn-primary pull-right">
-              <i class="fa fa-trash-o" aria-hidden="true"></i>
-            </button>
+    <div class="row">
+      <div class="col-md-6">
+        <h4 class="text-head-user">Chọn người dùng để thay đổi</h4>
+      </div>
+      <div class="col-md-6">
+        <div class="btn-toolbar pull-right">
+          <div class="input-group btn-rg">
+            <span class="input-group-addon">Tìm kiếm</span>
+            <input type="text" class="form-control icon" placeholder="&#xf002; Nhập tên, email,..." (keyup)="searchTerm$.next($event.target.value)">
           </div>
+          <button type="button" class="btn btn-primary btn-rg pull-right" [routerLink]="['../add-user']">
+            <i class="fa fa-plus" aria-hidden="true"></i> Thêm mới người dùng
+          </button>
+          <button type="button" class="btn btn-primary btn-rg pull-right" (click)="loadPage()">
+            <i class="fa fa-refresh" aria-hidden="true"></i>
+          </button>
+          <button type="submit" class="btn btn-primary pull-right">
+            <i class="fa fa-trash-o" aria-hidden="true"></i>
+          </button>
         </div>
       </div>
-      <div class="data-list">
-        <kendo-grid [data]="pagedResult.items" [selectable]="true" [loading]="gridLoading">
-          <kendo-grid-checkbox-column [headerClass]="'custom-table-header'" [width]="40">
-            <ng-template kendoGridHeaderTemplate let-dataItem let-rowIndex="rowIndex">
-              <input class="k-checkbox" id="selectAllCheckboxId" kendoGridSelectAllCheckbox (click)="isCheckbox = !isCheckbox;"
-                [checked]="isCheckbox">
-              <label class="k-checkbox-label" for="selectAllCheckboxId"></label>
-            </ng-template>
-           
-          </kendo-grid-checkbox-column>
-          <kendo-grid-column [headerClass]="'custom-table-header'" field="userName" title="Tên đăng nhập" [width]="150">
-            <ng-template kendoGridCellTemplate let-dataItem let-rowIndex="rowIndex">
-              <div class="cell-username pointer"  [routerLink]="['../edit-user/',dataItem.id]">{{dataItem.userName }}</div>
-            </ng-template>
-          </kendo-grid-column>
-          <kendo-grid-column [headerClass]="'custom-table-header'" field="email" title="Email" [width]="200">
-            <ng-template kendoGridCellTemplate let-dataItem let-rowIndex="rowIndex">
-              <div class="cell-user">{{dataItem.email }}</div>
-            </ng-template>
-          </kendo-grid-column>
-          <kendo-grid-column [headerClass]="'custom-table-header'" title="Phòng ban/Bộ Phận" [width]="150">
-            <ng-template kendoGridCellTemplate let-dataItem let-rowIndex="rowIndex">
-              <div class="cell-user" >{{dataItem.department?.value }}</div>
-            </ng-template>
-          </kendo-grid-column>
-          <kendo-grid-column [headerClass]="'custom-table-header'" field="level.value" title="Vị trí/Chức vụ" [width]="120">
-            <ng-template kendoGridCellTemplate let-dataItem let-rowIndex="rowIndex">
-              <div class="cell-user">{{dataItem.level?.value }}</div>
-            </ng-template>
-          </kendo-grid-column>
-          <kendo-grid-column [headerClass]="'custom-table-header'" field="lastName" title="Tên" [width]="100">
-            <ng-template kendoGridCellTemplate let-dataItem let-rowIndex="rowIndex">
-              <div class="cell-user">{{dataItem.lastName }}</div>
-            </ng-template>
-          </kendo-grid-column>
-          <kendo-grid-column [headerClass]="'custom-table-header'" field="firstname" title="Họ" [width]="100">
-            <ng-template kendoGridCellTemplate let-dataItem let-rowIndex="rowIndex">
-              <div class="cell-user">{{dataItem.firstName }}</div>
-            </ng-template>
-          </kendo-grid-column>
-          <kendo-grid-column [headerClass]="'custom-table-header'" field="userGroup.name" title="Nhóm" [width]="150">
-            <ng-template kendoGridCellTemplate let-dataItem let-rowIndex="rowIndex">
-                <div class="cell-user">{{dataItem.userGroup?.name }}</div>              
-            </ng-template>
+    </div>
+    <div class="data-list">
+      <kendo-grid [data]="pagedResult.items" [selectable]="true" [loading]="gridLoading">
+        <kendo-grid-checkbox-column [headerClass]="'custom-table-header'" [width]="40">
+          <ng-template kendoGridHeaderTemplate let-dataItem let-rowIndex="rowIndex">
+            <input class="k-checkbox" id="selectAllCheckboxId" kendoGridSelectAllCheckbox (click)="isCheckbox = !isCheckbox;" [checked]="isCheckbox">
+            <label class="k-checkbox-label" for="selectAllCheckboxId"></label>
+          </ng-template>
 
-          </kendo-grid-column>
-          <kendo-grid-column [headerClass]="'custom-table-header'" field="isActive" title="Tình trạng" [width]="90">
-            <ng-template kendoGridCellTemplate let-dataItem let-rowIndex="rowIndex">
-              <div class="text-center color-active" *ngIf="dataItem.isActive">
-                <i class="fa fa-check-circle" aria-hidden="true"></i>
+        </kendo-grid-checkbox-column>
+        <kendo-grid-column [headerClass]="'custom-table-header'" field="userName" title="Tên đăng nhập" [width]="150">
+          <ng-template kendoGridCellTemplate let-dataItem let-rowIndex="rowIndex">
+            <div class="cell-username pointer" [routerLink]="['../edit-user/',dataItem.id]">{{dataItem.userName }}</div>
+          </ng-template>
+        </kendo-grid-column>
+        <kendo-grid-column [headerClass]="'custom-table-header'" field="email" title="Email" [width]="200">
+          <ng-template kendoGridCellTemplate let-dataItem let-rowIndex="rowIndex">
+            <div class="cell-user">{{dataItem.email }}</div>
+          </ng-template>
+        </kendo-grid-column>
+        <kendo-grid-column [headerClass]="'custom-table-header'" title="Phòng ban/Bộ Phận" [width]="150">
+          <ng-template kendoGridCellTemplate let-dataItem let-rowIndex="rowIndex">
+            <div class="cell-user">{{dataItem.department?.value }}</div>
+          </ng-template>
+        </kendo-grid-column>
+        <kendo-grid-column [headerClass]="'custom-table-header'" field="level.value" title="Vị trí/Chức vụ" [width]="120">
+          <ng-template kendoGridCellTemplate let-dataItem let-rowIndex="rowIndex">
+            <div class="cell-user">{{dataItem.level?.value }}</div>
+          </ng-template>
+        </kendo-grid-column>
+        <kendo-grid-column [headerClass]="'custom-table-header'" field="lastName" title="Tên" [width]="100">
+          <ng-template kendoGridCellTemplate let-dataItem let-rowIndex="rowIndex">
+            <div class="cell-user">{{dataItem.lastName }}</div>
+          </ng-template>
+        </kendo-grid-column>
+        <kendo-grid-column [headerClass]="'custom-table-header'" field="firstname" title="Họ" [width]="100">
+          <ng-template kendoGridCellTemplate let-dataItem let-rowIndex="rowIndex">
+            <div class="cell-user">{{dataItem.firstName }}</div>
+          </ng-template>
+        </kendo-grid-column>
+        <kendo-grid-column [headerClass]="'custom-table-header'" field="userGroup.name" title="Nhóm" [width]="150">
+          <ng-template kendoGridCellTemplate let-dataItem let-rowIndex="rowIndex">
+            <div class="cell-user">{{dataItem.userGroup?.name }}</div>
+          </ng-template>
+
+        </kendo-grid-column>
+        <kendo-grid-column [headerClass]="'custom-table-header'" field="isActive" title="Tình trạng" [width]="90">
+          <ng-template kendoGridCellTemplate let-dataItem let-rowIndex="rowIndex">
+            <div class="text-center color-active" *ngIf="dataItem.isActive">
+              <i class="fa fa-check-circle" aria-hidden="true"></i>
+            </div>
+            <div class="text-center" *ngIf="!dataItem.isActive">
+              <i class="fa fa-times-circle" aria-hidden="true"></i>
+            </div>
+          </ng-template>
+        </kendo-grid-column>
+        <kendo-grid-column [headerClass]="'custom-table-header'" field="" title="" [width]="90">
+          <ng-template kendoGridCellTemplate let-dataItem let-rowIndex="rowIndex">
+            <div class="row">
+              <div class="col-md-4">
+                <i class="fa fa-users pointer" aria-hidden="true" (click)="showPopupSelect(dataItem.id, selectGroup)"></i>
               </div>
-              <div class="text-center" *ngIf="!dataItem.isActive">
-                <i class="fa fa-times-circle" aria-hidden="true"></i>
+              <div class="col-md-4" [routerLink]="['../edit-user/',dataItem.id]">
+                <i class="fa fa-pencil-square-o pointer" aria-hidden="true"></i>
               </div>
-            </ng-template>
-          </kendo-grid-column>
-          <kendo-grid-column [headerClass]="'custom-table-header'" field="" title="" [width]="70">
-            <ng-template kendoGridCellTemplate let-dataItem let-rowIndex="rowIndex">
-              <div class="row">
-                <div class="col-md-6" [routerLink]="['../edit-user/',dataItem.id]">
-                  <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
-                </div>
-                <div class="col-md-6" (click)="openModalDeactive(dataItem.id,dataItem.isActive,deactive)">
-                  <i class="fa fa-lock" *ngIf="!dataItem.isActive" aria-hidden="true"></i>
-                  <i class="fa fa-unlock-alt" *ngIf="dataItem.isActive" aria-hidden="true"></i>
-                </div>
+              <div class="col-md-4" (click)="openModalDeactive(dataItem.id,dataItem.isActive,deactive)">
+                <i class="fa fa-lock pointer" *ngIf="!dataItem.isActive" aria-hidden="true"></i>
+                <i class="fa fa-unlock-alt pointer" *ngIf="dataItem.isActive" aria-hidden="true"></i>
               </div>
-            </ng-template>
-          </kendo-grid-column>
-          <kendo-grid-messages noRecords="Không có dữ liệu"></kendo-grid-messages>
-        </kendo-grid>
-        <app-pagination [(pagedResult)]="pagedResult" (pagedResultChange)="pagedResultChange($event)"></app-pagination>
-      </div>     
-      <!-- <div class="pull-right">
+            </div>
+          </ng-template>
+        </kendo-grid-column>
+        <kendo-grid-messages noRecords="Không có dữ liệu"></kendo-grid-messages>
+      </kendo-grid>
+      <app-pagination [(pagedResult)]="pagedResult" (pagedResultChange)="pagedResultChange($event)"></app-pagination>
+    </div>
+    <!-- <div class="pull-right">
         <button type="button" class="btn btn-primary w-80">Lưu</button>
         <button type="button" class="btn btn-default w-80">Hủy</button>
-      </div> -->   
+      </div> -->
   </div>
 </div>
 <!-- Model Xóa user -->
@@ -112,10 +114,38 @@
         <span aria-hidden="true">&times;</span>
       </button>
     </div>
-
   </div>
   <div class="text-center pd-b20">
     <button type="submit" class="btn btn-primary w-80" (click)="onDeactiveUserGroup(userId,isActive);">Có</button>
     <button type="button" class="btn btn-default w-80" (click)="modalRef.hide()">Không</button>
   </div>
 </ng-template>
+<!--Start chọn nhóm cho người dùng-->
+<ng-template #selectGroup>
+  <div class="custom-table-header d-flex justify-content-between padding-title">
+    <div class="center-parent" style="font-size: 150% !important; padding-left: 15px">
+      <i>Chọn nhóm cho người dùng</i>
+    </div>
+    <div class="col-md-1">
+      <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+        <span class="pointer" aria-hidden="true">&times;</span>
+      </button>
+    </div>
+  </div>
+  <div class="modal-header no-boder-bottom-title">
+    <div class="form-group col-md-12">
+      <label for="" class="form-label col-md-2">Nhóm</label>
+      <span class="custom-dropdown col-md-9">
+        <select class="form-control">
+          <option value="">--Tất cả--</option>
+          <option *ngFor="let item of dataGroupUser" [value]="item.id">{{item.text}}</option>
+        </select>
+      </span>
+    </div>
+  </div>
+  <div class="pd-b20 d-flex justify-content-end">
+    <button type="submit" class="btn btn-primary w-80" (click)="ediGroupUser();" style="margin-right: 8px">Lưu</button>
+    <button type="button" class="btn btn-default w-80" (click)="modalRef.hide()" style="margin-right: 15px">Hủy</button>
+  </div>
+</ng-template>
+<!--End chọn nhóm cho người dùng-->

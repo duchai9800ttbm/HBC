@@ -9,6 +9,7 @@ import { GroupUserResponse } from '../models/api-response/user/group-user/group-
 import { GroupUserRequest } from '../models/api-request/user/group-user/group-user-request.model';
 import { GroupUserPrivilegesRequest } from '../models/api-request/user/group-user/group-user-privileges-request.model';
 import { GroupUserList } from '../models/user/group-user-list-item';
+import { ListAllGroupUser } from '../models/user/list-all-groupuser';
 @Injectable()
 export class GroupUserService implements OnInit {
   // User
@@ -191,7 +192,29 @@ export class GroupUserService implements OnInit {
 
 
   // User group
-  // Danh sách nhóm người dùng
+  // Danh sách tất cả các nhóm người dùng
+  getListAllGroupUser(): Observable<ListAllGroupUser[]> {
+    const url = `usergroup/getall`;
+    return this.apiService.get(url)
+      .map( response => {
+        const result = response.result;
+        return result.map( item => {
+          return {
+            id: item.id,
+            name: item.name,
+            desc: item.desc,
+            isActive: item.isActive,
+            privileges: item.privileges.map( e => {
+              return {
+                id: e.key,
+                text: e.value,
+              };
+            })
+          };
+        });
+      });
+  }
+  // Danh sách nhóm người dùng phân trang
   listGroupUser(page: number | string, pageSize: number | string): Observable<PagedResult<GroupUserList[]>> {
     const url = `usergroup/getall/${page}/${pageSize}`;
     return this.apiService.get(url)

@@ -202,14 +202,14 @@
         <kendo-grid-column [headerClass]="'custom-table-header text-center'" field="" title="Thao tác" [width]="40">
           <ng-template kendoGridCellTemplate let-dataItem let-rowIndex="rowIndex">
             <div class="row">
-              <div class="col-md-4" (click)="openModalEdit(dataItem.id, edit)">
+              <div class="col-md-6 center-parent" (click)="openModalEdit(dataItem.id, edit)">
                 <i class="fa fa-pencil-square-o point" aria-hidden="true"></i>
               </div>
-              <div class="col-md-4">
+              <!-- <div class="col-md-4">
                 <i class="fa fa-lock point" *ngIf="!dataItem.isActive" aria-hidden="true" (click)="activateGroup(dataItem.id)"></i>
                 <i class="fa fa-unlock-alt point color-active" *ngIf="dataItem.isActive" aria-hidden="true" (click)="deactiveGroup(dataItem.id)"></i>
-              </div>
-              <div class="col-md-4" (click)="openModalDeleteGroupUser(dataItem.id, delete)">
+              </div> -->
+              <div class="col-md-6 center-parent" (click)="openModalDeleteGroupUser(dataItem.id, delete)">
                 <i class="fa fa-trash-o point" aria-hidden="true"></i>
               </div>
             </div>
