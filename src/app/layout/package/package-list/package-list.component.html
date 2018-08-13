@@ -39,15 +39,17 @@
                     <span class="custom-dropdown mx-sm-2">
                         <select class="form-control" [(ngModel)]="filterModel.stage">
                             <option value="">--Tất cả--</option>
-                            <option *ngFor="let item of listPhasePackage | async" [value]="item.id">{{item.text | translate}}</option>
+                            <option *ngFor="let item of listPhasePackage | async" [value]="item.id">{{item.text }}</option>
                         </select>
                     </span>
                 </div>
                 <div class="form-group ml-sm-2">
-                    <label for="" class="form-label">Chủ trì HBC</label>
+                    <label for="" class="form-label">Chủ trì</label>
                     <span class="custom-dropdown mx-sm-2">
                         <select class="form-control" [(ngModel)]="filterModel.hbcChair">
                             <option value="">--Tất cả--</option>
+                            <option *ngFor="let item of userListItem" [value]="item.employeeId">{{item.employeeName}}</option>
+
                             <!-- <option *ngFor="let item of listPresideHBC" [value]="item.id">{{item.text | translate}}</option> -->
                         </select>
                     </span>
@@ -439,7 +441,7 @@
                                 {{ item.opportunityName}}
                             </a>
                         </td>
-                        <td class="text-truncate">{{ item.hbcRole ? item.hbcRole : '' | translate }}</td>
+                        <td class="text-truncate">{{ item.hbcRole?.text }}</td>
                         <td class="text-truncate">{{ item.hbcChair }}</td>
                         <td class="text-truncate">{{ item.classify | translate }}</td>
                         <td class="text-truncate">{{ item.amount | vnCurrency }}</td>

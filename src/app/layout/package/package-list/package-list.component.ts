@@ -8,7 +8,7 @@ import { PagedResult } from '../../../shared/models';
 import { ActivityListItem } from '../../../shared/models/activity/activity-list-item.model';
 import { DATETIME_PICKER_CONFIG } from '../../../shared/configs/datepicker.config';
 import { FormGroup, FormBuilder, Validators } from '../../../../../node_modules/@angular/forms';
-import { ActivityService, AlertService, DataService, ConfirmationService } from '../../../shared/services';
+import { ActivityService, AlertService, DataService, ConfirmationService, UserService } from '../../../shared/services';
 import { Router } from '../../../../../node_modules/@angular/router';
 import { ExcelService } from '../../../shared/services/excel.service';
 import { TranslateService } from '../../../../../node_modules/@ngx-translate/core';
@@ -27,6 +27,7 @@ import { NameProjectListPackage } from '../../../shared/fake-data/nameProject-li
 import { PackageService } from '../../../shared/services/package.service';
 import { PackageFilter } from '../../../shared/models/package/package-filter.model';
 import { ObjectInforPackage } from '../../../shared/models/package/object-infoPackage';
+import { UserItemModel } from '../../../shared/models/user/user-item.model';
 @Component({
     selector: 'app-package-list',
     templateUrl: './package-list.component.html',
@@ -58,6 +59,8 @@ export class PackageListComponent implements OnInit, AfterViewChecked {
     listPhasePackage: Observable<DictionaryItem[]>;
     listPresideHBC = PresideHBC;
     listNameProjectListPackage = NameProjectListPackage;
+    userListItem: UserItemModel[];
+
     constructor(
         private activityService: ActivityService,
         private alertService: AlertService,
@@ -70,6 +73,7 @@ export class PackageListComponent implements OnInit, AfterViewChecked {
         private fb: FormBuilder,
         private spinner: NgxSpinnerService,
         private packageService: PackageService,
+        private userService: UserService,
     ) { }
     someRange = [1000000, 10000000000];
     someKeyboardConfig: any = {
@@ -107,41 +111,23 @@ export class PackageListComponent implements OnInit, AfterViewChecked {
         window.scrollTo(0, 0);
         this.listClassifyCustomer = this.dataService.getListOpportunityClassifies();
         this.listPhasePackage = this.dataService.getListBidOpportunityStages();
-        // this.dataService.getListBidOpportunityStages().subscribe( result => {
-        //     this.listPhasePackage = result;
-        //     this.listPhasePackage.map( i => {
-        //         if (i.id === 'HSMT') {
-        //             i.text = 'Chưa quyết định tham gia dự thầu';
-        //         }
-        //         if (i.id === 'HSDT') {
-        //             i.text = 'Chưa có kết quả dự thầu';
-        //         }
-        //         if (i.id === 'KQDT') {
-        //             i.text = 'Đã có kết quả dự thầu';
-        //         }
-        //     });
-        // });
+        this.userService.getAllUser('').subscribe(data => {
+            this.userListItem = data;
+        });
         this.filterModel.opportunityClassify = '';
         this.filterModel.stage = '';
         this.filterModel.hbcChair = '';
         this.dtOptions = DATATABLE_CONFIG;
         this.createForm();
-        // this.activityStatusList = this.dataService.getActivityStatus();
-        // this.spinner.show();
+        this.spinner.show();
         this.packageService
             .instantSearchWithFilter(this.searchTerm$, this.filterModel, 0, 10)
             .subscribe(result => {
-                console.log('this.filterModel', this.filterModel);
                 this.rerender(result);
                 this.spinner.hide();
             }, err => {
                 this.spinner.hide();
             });
-        this.spinner.show();
-        setTimeout(() => {
-            this.dtTrigger.next();
-            this.spinner.hide();
-        }, 1000);
     }
     ngAfterViewChecked() {
 
@@ -197,24 +183,12 @@ export class PackageListComponent implements OnInit, AfterViewChecked {
         const deleteIds = {
             id: ids,
         };
-        // if (!(ids instanceof Array)) {
-        //     deleteIds = [{ id: ids, activityType: activityType }];
-        // } else {
-        //     deleteIds = ids;
-        // }
 
         this.confirmationService.confirm(
             'Bạn có chắc chắn muốn xóa gói thầu này?',
             () => {
                 this.packageService.deleteOpportunity(deleteIds).subscribe(result => {
-                    // if (
-                    //     this.pagedResult.items.length === deleteIds.length &&
-                    //     +this.pagedResult.currentPage > 0
-                    // ) {
-                    //     this.pagedResult.currentPage =
-                    //         +this.pagedResult.currentPage - 1;
-                    // }
-                    console.log('result');
+             
                     that.alertService.success('Đã xóa gói thầu!');
                     that.refresh();
                 },
