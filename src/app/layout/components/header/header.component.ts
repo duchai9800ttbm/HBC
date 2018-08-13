@@ -22,15 +22,15 @@ export class HeaderComponent implements OnInit {
         private router: Router,
         private sessionService: SessionService) {
 
-        this.router.events.subscribe(val => {
-            if (
-                val instanceof NavigationEnd &&
-                window.innerWidth <= 992 &&
-                this.isToggled()
-            ) {
-                this.toggleSidebar();
-            }
-        });
+        // this.router.events.subscribe(val => {
+        //     if (
+        //         val instanceof NavigationEnd &&
+        //         window.innerWidth <= 992 &&
+        //         this.isToggled()
+        //     ) {
+        //         this.toggleSidebar();
+        //     }
+        // });
     }
 
     ngOnInit() {

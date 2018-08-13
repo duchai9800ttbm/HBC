@@ -5,6 +5,7 @@ import { PackageDetailResultRoutingModule } from './package-detail-result-routin
 import { PackageDetailResultComponent } from './package-detail-result.component';
 import { WaitResultComponent } from './wait-result/wait-result.component';
 import { PackageFailedComponent } from './package-failed/package-failed.component';
+
 @NgModule({
   imports: [
     CommonModule,
@@ -14,7 +15,7 @@ import { PackageFailedComponent } from './package-failed/package-failed.componen
   declarations: [
       PackageDetailResultComponent,
       WaitResultComponent,
-      PackageFailedComponent,
+      PackageFailedComponent
   ]
 })
 export class PackageDetailResultModule { }

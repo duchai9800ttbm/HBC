@@ -133,7 +133,6 @@ export class ApiService {
             .map((res: Response) => res.json());
     }
 
-        
     postFile(path: string, formData: FormData): Observable<any> {
         return this.http
             .post(`${environment.api_endpoint}${path}`, formData, {

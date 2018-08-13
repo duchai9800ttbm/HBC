@@ -43,7 +43,10 @@ export class PackageService {
       opportunityName: result.opportunityName,
       projectName: result.projectName,
       projectType: result.projectType,
-      hbcRole: result.hbcRole,
+      hbcRole: result.hbcRole && {
+        id: result.hbcRole.key,
+        text: result.hbcRole.name
+      },
       hbcChair: result.hbcChair,
       trimester: result.trimester,
       magnitude: result.magnitude,

@@ -19,7 +19,7 @@ export class SendMailRejectComponent implements OnInit {
   packageId;
   items = ['nghia.nguyen@bys.vn'];
   subject = '';
-  @ViewChild("myckeditor") ckeditor: any;
+  @ViewChild('myckeditor') ckeditor: any;
   constructor(
     private router: Router,
     private spinner: NgxSpinnerService,

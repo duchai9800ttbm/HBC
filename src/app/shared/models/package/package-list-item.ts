@@ -7,7 +7,10 @@ export class PackageListItem {
     opportunityName: string;
     projectName: string;
     projectType: string;
-    hbcRole: string;
+    hbcRole: {
+        id: string;
+        text: string;
+    };
     hbcChair: string;
     trimester: string;
     magnitude: string;
