@@ -260,7 +260,9 @@
       Tên:
     </div>
     <div class="col-md-11">
-      <textarea class="content-textarea form-control" name="" id="" cols="30" rows="1" [(ngModel)]="groupEditOrCreate.name"></textarea>
+      <textarea class="content-textarea form-control" name="" id="" cols="30" rows="1" [(ngModel)]="groupEditOrCreate.name"
+      [ngClass]="{ 'is-invalid': submitted && !groupEditOrCreate.name }"></textarea>
+      <div class="cus-validate" *ngIf="submitted && !groupEditOrCreate.name">Trường này là bắt buộc nhập</div>
     </div>
   </div>
   <div class="modal-header no-boder-bottom">

@@ -247,7 +247,7 @@ export class GroupUserDetailComponent implements OnInit {
   }
 
   openModalEdit(idGroupUser: number, template: TemplateRef<any>) {
-    this.groupEditOrCreate = {...this.listGroupUser.filter(x => x.id === idGroupUser)[0]};
+    this.groupEditOrCreate = { ...this.listGroupUser.filter(x => x.id === idGroupUser)[0] };
     // this.groupEditOrCreate = JSON.parse(JSON.stringify(this.listGroupUserData.filter(x => x.id === idGroupUser)[0]));
     const toStringElement = this.groupEditOrCreate.privileges.map(i => JSON.stringify(i));
     const toStringListPrivilegesData = this.listPrivilegesData.map(i => JSON.stringify(i));
@@ -590,11 +590,13 @@ export class GroupUserDetailComponent implements OnInit {
     // if ( this.groupUserService.id )
     // this.groupUserService.changePrivilegesGroupUser
     if (this.groupEditOrCreate.id) {
+      console.log('this.groupEditOrCreate.name', this.groupEditOrCreate.name);
       const resquestModel = {
-        userGroupId: this.groupEditOrCreate.id,
+        id: this.groupEditOrCreate.id,
+        name: this.groupEditOrCreate.name,
         privilegeIds: this.groupEditOrCreate.privileges.map(i => Number(i.id)),
       };
-      this.groupUserService.changePrivilegesGroupUser(resquestModel).subscribe(response => {
+      this.groupUserService.editGroupUser(resquestModel).subscribe(response => {
         this.groupUserService.listGroupUser(this.pagedResult.currentPage, this.pagedResult.pageSize)
           .subscribe(responsepageResultUserGroup => {
             this.pagedResult = responsepageResultUserGroup;
@@ -609,20 +611,23 @@ export class GroupUserDetailComponent implements OnInit {
         });
       this.groupEditOrCreate.id = null;
     } else {
-      this.groupEditOrCreate.userGroupName = this.groupEditOrCreate.name;
-      this.groupUserService.createGroupUser(this.groupEditOrCreate).subscribe(response => {
-        this.groupUserService.listGroupUser(this.pagedResult.currentPage, this.pagedResult.pageSize)
-          .subscribe(responsepageResultUserGroup => {
-            this.pagedResult = responsepageResultUserGroup;
-            this.listGroupUser = this.pagedResult.items.map(i => i);
+      this.submitted = true;
+      if (this.groupEditOrCreate.name) {
+        this.groupEditOrCreate.userGroupName = this.groupEditOrCreate.name;
+        this.groupUserService.createGroupUser(this.groupEditOrCreate).subscribe(response => {
+          this.groupUserService.listGroupUser(this.pagedResult.currentPage, this.pagedResult.pageSize)
+            .subscribe(responsepageResultUserGroup => {
+              this.pagedResult = responsepageResultUserGroup;
+              this.listGroupUser = this.pagedResult.items.map(i => i);
+              this.modalRef.hide();
+              this.alertService.success('Thêm nhóm người dùng thành công!');
+            });
+        },
+          err => {
             this.modalRef.hide();
-            this.alertService.success('Thêm nhóm người dùng thành công!');
+            this.alertService.success('Đã xảy ra lỗi. Thêm nhóm người dùng không thành công!');
           });
-      },
-        err => {
-          this.modalRef.hide();
-          this.alertService.success('Đã xảy ra lỗi. Thêm nhóm người dùng không thành công!');
-        });
+      }
     }
   }
 

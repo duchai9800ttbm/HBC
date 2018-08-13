@@ -8,6 +8,7 @@ import { PriceReportCreateComponent } from './price-report-create/price-report-c
 import { HsdtPendingComponent } from './hsdt-pending/hsdt-pending.component';
 import { HsdtSignedComponent } from './hsdt-signed/hsdt-signed.component';
 import { HsdtSubmittedComponent } from './hsdt-submitted/hsdt-submitted.component';
+import { HsdtInterviewNegotiationComponent } from './hsdt-interview-negotiation/hsdt-interview-negotiation.component';
 const routes: Routes = [
   {
    path: '',
@@ -20,7 +21,8 @@ const routes: Routes = [
    { path: 'price-report-create', component: PriceReportCreateComponent},
    { path: 'pending', component: HsdtPendingComponent},
    { path: 'signed', component: HsdtSignedComponent},
-   { path: 'submited', component: HsdtSubmittedComponent}
+   { path: 'submited', component: HsdtSubmittedComponent},
+   { path: 'interview-negotiation', component: HsdtInterviewNegotiationComponent},
    ]
 }
 ];

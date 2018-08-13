@@ -9,6 +9,8 @@ import "rxjs/add/operator/catch";
 import { ApiService } from "./api.service";
 import { SessionService } from "./index";
 import { SelectItemWithType } from "../models/select-item-with-type";
+import { DepartmentsFormBranches } from "../models/user/departments-from-branches";
+import { Levels } from "../models/user/levels";
 
 const MODULE_NAMES = {
     prospect: "prospect",
@@ -866,5 +868,35 @@ export class DataService {
                         text: `${x.value}`,
                     };
                 }));
+    }
+    // Danh sách phòng ban theo chi nhánh
+    getListDepartmentsFromBranches(): Observable<DepartmentsFormBranches[]> {
+        const url = `data/branches/1/departments`;
+        return this.apiService.get(url)
+            .map( response => {
+                const result = response.result;
+                return result.map( item => {
+                    return {
+                        id: item.id,
+                        departmentNo: item.departmentNo,
+                        departmentName: item.departmentName
+                    };
+                });
+            });
+    }
+    // Danh sách chức vụ
+    getListLevels(): Observable<Levels[]> {
+        const url = `data/levels`;
+        return this.apiService.get(url)
+            .map( response => {
+                const result = response.result;
+                return result.map( item => {
+                    return {
+                        id: item.id,
+                        levelNo: item.levelNo,
+                        levelName: item.levelName
+                    };
+                });
+            });
     }
 }

@@ -1,0 +1,17 @@
+.boder-table {
+    border: 1px solid #ebebeb;
+    padding-bottom: 35px;
+    margin-top: 10px;
+    border-radius: 4px;
+    box-shadow: 0 0 10px 3px #f1f1f1;
+    height: 1009px;
+    background-color: #fff;
+}
+.progressbar {
+    width: 100% !important;
+    counter-reset: step;
+    padding: 20px 0px 10px 30px;
+}
+.progressbar li.active .text-color {
+    color: #00a0e3 !important;
+}

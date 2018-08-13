@@ -102,7 +102,7 @@ export class GroupUserService implements OnInit {
     const url = `user/${id}`;
     return this.apiService.get(url)
       .map(data => {
-        const result = data.result;      
+        const result = data.result;
         return {
           id: result.id,
           userName: result.userName,
@@ -128,10 +128,10 @@ export class GroupUserService implements OnInit {
             }]
           },
           isActive: result.isActive
-  }
+  };
       });
   }
- 
+
 
   // active/deactive user
   activeOrDeactiveUser(id: number, active: boolean): Observable<any> {
@@ -148,7 +148,7 @@ export class GroupUserService implements OnInit {
         return data.result;
       });
   }
-  // xóa 1 user  
+  // xóa 1 user
   deleteUser(id: number | string) {
     const url = `user/delete`;
     return this.apiService
@@ -158,14 +158,13 @@ export class GroupUserService implements OnInit {
       .map(data => data.result);
   }
 
-  
 
-  createOrUpdateUser(data): Observable<any> {       
-    console.log('tạo mới/update',data);
+  createOrUpdateUser(data): Observable<any> {
+    console.log('tạo mới/update', data);
     const url = data.id ? `user/edit` : `user/create`;
-    console.log('url',url);
+    console.log('url', url);
     return this.apiService.post(url, data)
-      .map(data => data.result);
+      .map( data => data.result);
   }
 
   // Search
@@ -189,6 +188,7 @@ export class GroupUserService implements OnInit {
         };
       });
   }
+
 
   // User group
   // Danh sách nhóm người dùng
@@ -252,6 +252,11 @@ export class GroupUserService implements OnInit {
     const url = `usergroup/${idGroupUser}/deactive`;
     return  this.apiService.post(url);
   }
-
+  // Chỉnh sửa nhóm người dùng
+  editGroupUser(groupUser: any): Observable<any> {
+    console.log('groupUser', groupUser);
+    const url = `usergroup/edit`;
+    return this.apiService.post(url, groupUser);
+  }
 }
 
