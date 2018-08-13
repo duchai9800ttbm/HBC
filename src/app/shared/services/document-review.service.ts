@@ -92,6 +92,10 @@ export class DocumentReviewService {
         });
     }
 
+    delete(bidDocumentId: number) {
+        const url = `biddocument/${bidDocumentId}/delete `;
+        return this.apiService.post(url).map(response => response);
+    }
     downloadTemplate() {
         const url = `bidreviewdocument/template/downoad`;
         return this.apiService.getFile(url).map(response => {
