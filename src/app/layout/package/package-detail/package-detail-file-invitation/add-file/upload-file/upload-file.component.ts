@@ -4,6 +4,7 @@ import { AlertService } from '../../../../../../shared/services/alert.service';
 import { FormGroup, FormBuilder } from '../../../../../../../../node_modules/@angular/forms';
 import { DocumentService } from '../../../../../../shared/services/document.service';
 import { DocumentReviewService } from '../../../../../../shared/services/document-review.service';
+import { DATETIME_PICKER_CONFIG } from '../../../../../../shared/configs/datepicker.config';
 
 @Component({
   selector: 'app-upload-file',
@@ -15,6 +16,7 @@ export class UploadFileComponent implements OnInit {
   @Output() closed = new EventEmitter<boolean>();
   @Input() typeFile;
   @Input() packageId;
+  datePickerConfig = DATETIME_PICKER_CONFIG;
   listTypeFile = [
     {
       id: 'Drawing',
