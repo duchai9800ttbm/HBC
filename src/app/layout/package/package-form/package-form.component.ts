@@ -3,7 +3,7 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { PackageModel } from '../../../shared/models/package/package.model';
 import ValidationHelper from '../../../shared/helpers/validation.helper';
 import DateTimeConvertHelper from '../../../shared/helpers/datetime-convert-helper';
-import { AlertService, DataService } from '../../../shared/services';
+import { AlertService, DataService, UserService } from '../../../shared/services';
 import { ActivatedRoute, Router } from '../../../../../node_modules/@angular/router';
 import { DATETIME_PICKER_CONFIG } from '../../../shared/configs/datepicker.config';
 import { FakePackageData } from '../../../shared/fake-data/package-data';
@@ -23,6 +23,10 @@ import { ScrollToTopService } from '../../../shared/services/scroll-to-top.servi
 import { Spinner } from '../../../../../node_modules/primeng/primeng';
 import { NgxSpinnerService } from '../../../../../node_modules/ngx-spinner';
 import CustomValidator from '../../../shared/helpers/custom-validator.helper';
+import { UserItemModel } from '../../../shared/models/user/user-item.model';
+import { DialogService } from '@progress/kendo-angular-dialog';
+import { PopupCreateAssignerComponent } from '../../../shared/components/popup-create-assigner/popup-create-assigner.component';
+import { PopupCreateChairComponent } from '../../../shared/components/popup-create-chair/popup-create-chair.component';
 @Component({
   selector: 'app-package-form',
   templateUrl: './package-form.component.html',
@@ -38,6 +42,9 @@ export class PackageFormComponent implements OnInit {
     resultEstimatedDate: '',
     consultantPhone: ''
   };
+  dialogChair;
+  dialogAssigner;
+
   isSubmitted: boolean;
   invalidMessages: string[];
   // listZone: ObjectInforPackage[];
@@ -54,6 +61,9 @@ export class PackageFormComponent implements OnInit {
   showPopupAdd = false;
   customersSearchResults: any[];
   contactsSearchResults: DictionaryItem[];
+  assignSearchResults: DictionaryItem[];
+  userListItem: UserItemModel[];
+
   constructor(
     private fb: FormBuilder,
     private alertService: AlertService,
@@ -63,9 +73,14 @@ export class PackageFormComponent implements OnInit {
     private dataService: DataService,
     private scrollToTopService: ScrollToTopService,
     private spinner: NgxSpinnerService,
+    private userService: UserService,
+    private dialogService: DialogService
   ) { }
 
   ngOnInit() {
+    this.userService.getAllUser('').subscribe(data => {
+      this.userListItem = data;
+    });
     this.listZone = this.dataService.getListRegionTypes();
     this.listQuarterOfYear = this.dataService.getListQuatersOfYear();
     this.listCustomerType = this.dataService.getListOpportunityClassifies();
@@ -111,7 +126,7 @@ export class PackageFormComponent implements OnInit {
       description: this.package.description,
     });
     this.packageForm.valueChanges.subscribe(data => {
-     this.onFormValueChanged(data);
+      this.onFormValueChanged(data);
     });
   }
 
@@ -168,5 +183,29 @@ export class PackageFormComponent implements OnInit {
       .subscribe(result => {
         this.customersSearchResults = result;
       });
+  }
+
+  searchAssigns(query) {
+    this.userService.searchListUser(query)
+      .subscribe(result => this.assignSearchResults = result);
+  }
+  openPopupCreateAssigner() {
+    this.dialogAssigner = this.dialogService.open({
+      title: 'TẠO MỚI USER',
+      content: PopupCreateAssignerComponent,
+      width: 600,
+      minWidth: 250
+    });
+    // const saleOrder = this.dialog2.content.instance;
+    // saleOrder.saleOrder = this.saleOrder;  
+  }
+
+  openPopupCreateChair() {
+    this.dialogChair = this.dialogService.open({
+      title: 'TẠO MỚI USER',
+      content: PopupCreateChairComponent,
+      width: 600,
+      minWidth: 250
+    });
   }
 }
