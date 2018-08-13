@@ -157,7 +157,7 @@
     <div class="row">
       <div class="col-md-6">
         <h4 class="text-head-user">
-          <i>* Danh sách nhóm người dùng</i>
+          CHỌN NHÓM NGƯỜI DÙNG ĐỂ THAY ĐỔI
         </h4>
       </div>
       <div class="col-md-6">
@@ -171,7 +171,7 @@
           <i class="fa fa-refresh" aria-hidden="true"></i>
         </button>
         <button type="submit" class="btn btn-primary btn-rg w-80 pull-right" [disabled]="loading" (click)="openModalCreate(edit)">
-          Tạo mới 
+          Tạo mới
         </button>
       </div>
     </div>
@@ -187,9 +187,8 @@
             <div class="">{{dataItem.desc }}</div>
           </ng-template>
         </kendo-grid-column>
-        <kendo-grid-column [headerClass]="'custom-table-header text-center'" field="firstname" title="Trình trạng" [width]="50">
+        <!-- <kendo-grid-column [headerClass]="'custom-table-header text-center'" field="firstname" title="Tình trạng" [width]="50">
           <ng-template kendoGridCellTemplate let-dataItem let-rowIndex="rowIndex">
-            <!-- <div class="">{{dataItem.isActive ? 'Hoạt động' : 'Không hoạt động'}}</div> -->
             <div>
               <div class="text-center color-active" *ngIf="dataItem.isActive">
                 <i class="fa fa-check-circle" aria-hidden="true"></i>
@@ -199,15 +198,15 @@
               </div>
             </div>
           </ng-template>
-        </kendo-grid-column>
+        </kendo-grid-column> -->
         <kendo-grid-column [headerClass]="'custom-table-header text-center'" field="" title="Thao tác" [width]="40">
           <ng-template kendoGridCellTemplate let-dataItem let-rowIndex="rowIndex">
             <div class="row">
               <div class="col-md-4" (click)="openModalEdit(dataItem.id, edit)">
                 <i class="fa fa-pencil-square-o point" aria-hidden="true"></i>
               </div>
-              <div class="col-md-4" >
-                <i class="fa fa-lock point" *ngIf="!dataItem.isActive" aria-hidden="true"(click)="activateGroup(dataItem.id)" ></i>
+              <div class="col-md-4">
+                <i class="fa fa-lock point" *ngIf="!dataItem.isActive" aria-hidden="true" (click)="activateGroup(dataItem.id)"></i>
                 <i class="fa fa-unlock-alt point color-active" *ngIf="dataItem.isActive" aria-hidden="true" (click)="deactiveGroup(dataItem.id)"></i>
               </div>
               <div class="col-md-4" (click)="openModalDeleteGroupUser(dataItem.id, delete)">
@@ -250,17 +249,18 @@
       <i *ngIf="!groupEditOrCreate.id">Tạo mới nhóm</i>
     </div>
     <div class="col-md-1">
-        <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
-          <span class="point" aria-hidden="true">&times;</span>
-        </button>
-      </div>
+      <button type="button" class="close pull-right" aria-label="Close" (click)="closedPopup()">
+        <span class="point" aria-hidden="true">&times;</span>
+      </button>
+    </div>
   </div>
   <div class="modal-header no-boder-bottom-title">
     <div class="col-md-1 title-name">
       Tên:
     </div>
     <div class="col-md-11">
-      <textarea class="content-textarea form-control" name="" id="" cols="30" rows="1" [(ngModel)]="groupEditOrCreate.name"></textarea>
+      <textarea class="content-textarea form-control" name="" id="" cols="30" rows="1" [(ngModel)]="groupEditOrCreate.name" [ngClass]="{ 'is-invalid': submitted && !groupEditOrCreate.name }"></textarea>
+      <div class="cus-validate" *ngIf="submitted && !groupEditOrCreate.name">Trường này là bắt buộc nhập</div>
     </div>
   </div>
   <div class="modal-header no-boder-bottom">
@@ -297,7 +297,7 @@
   </div>
   <div class="pd-b20 d-flex justify-content-end">
     <button type="submit" class="btn btn-primary w-80" (click)="ediGroupUser();" style="margin-right: 8px">Lưu</button>
-    <button type="button" class="btn btn-default w-80" (click)="modalRef.hide()" style="margin-right: 15px">Hủy</button>
+    <button type="button" class="btn btn-default w-80" (click)="closedPopup()" style="margin-right: 15px">Hủy</button>
   </div>
 </ng-template>
 <!-- End Edit Group User-->
