@@ -257,3 +257,41 @@ input#usr {
     font-size: 700;
     font-weight: bold;
 }
+@media only screen and (max-width: 3000px) {
+    .menu{
+        zoom: 0.85;
+     }
+}
+@media only screen and (max-width: 1600px) {
+    .menu{
+        zoom: 0.8;
+     }
+}
+
+@media only screen and (max-width: 1366px) {
+    .menu{
+        zoom: 0.8;
+     }
+}
+
+@media only screen and (max-width: 1270px) {
+    .menu{
+        zoom: 0.75;
+     }
+}
+
+@media only screen and (max-width: 1200px) {
+    .menu{
+        zoom: 0.68;
+     }
+}
+@media only screen and (max-width: 1100px) {
+    .menu{
+        zoom: 0.65;
+     }
+}
+@media only screen and (max-width: 1024px) {
+    .menu{
+       zoom: 0.6;
+    }
+}
