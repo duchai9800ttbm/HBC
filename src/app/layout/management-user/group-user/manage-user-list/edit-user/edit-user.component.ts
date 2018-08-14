@@ -12,14 +12,15 @@ import { DictionaryItem } from '../../../../../shared/models';
 import { Observable } from '../../../../../../../node_modules/rxjs';
 import { DepartmentsFormBranches } from '../../../../../shared/models/user/departments-from-branches';
 import { Levels } from '../../../../../shared/models/user/levels';
-
+import ValidationHelper from '../../../../../shared/helpers/validation.helper';
+import CustomValidator from '../../../../../shared/helpers/custom-validator.helper';
 @Component({
   selector: 'app-edit-user',
   templateUrl: './edit-user.component.html',
   styleUrls: ['./edit-user.component.scss']
 })
 export class EditUserComponent implements OnInit {
-
+  invalidMessages: string[];
   // public departments: Array<{ name: string; id: number }> = [
   //   { id: 7, name: 'Ban giám đốc' },
   //   { id: 2, name: 'Phòng mời thầu' }
@@ -39,6 +40,13 @@ export class EditUserComponent implements OnInit {
   public selectedGroup = 1;
   public selectedDepartmaent: number;
   groupUserModel: ListUserItem;
+  formErrors = {
+    userName: '',
+    email: '',
+    firstName: '',
+    lastName: '',
+    department: '',
+  };
   seft = this;
   formEditUser: FormGroup;
   submitted = false;
@@ -58,7 +66,7 @@ export class EditUserComponent implements OnInit {
     private confirmationService: ConfirmationService,
     private formBuilder: FormBuilder,
     private dataService: DataService,
-  ) {}
+  ) { }
 
   ngOnInit() {
     this.departments = this.dataService.getListDepartmentsFromBranches();
@@ -66,26 +74,26 @@ export class EditUserComponent implements OnInit {
     this.route.paramMap.subscribe((params: ParamMap) => {
       const id = params.get('id');
       this.idString = id;
-      console.log('this.idString - this.idString', this.idString);
     });
 
     this.groupUserService.getIdUser(this.idString).subscribe(
       sucess => {
         this.groupUserModel = sucess;
-        console.log('this.groupUserModel', this.groupUserModel);
-        // this.selectedDepartmaent = Number(this.groupUserModel.department.key);
         this.checkboxTrue = this.groupUserModel.isActive;
         this.formEditUser = this.formBuilder.group({
-          userName: [this.groupUserModel.userName ? this.groupUserModel.userName : '', Validators.required],
-          email: [this.groupUserModel.email ? this.groupUserModel.email : '', Validators.required],
+          userName: [this.groupUserModel.userName ? this.groupUserModel.userName : '', [Validators.required, CustomValidator.loginName]],
+          email: [this.groupUserModel.email ? this.groupUserModel.email : '', [Validators.required, Validators.email]],
           firstName: [this.groupUserModel.firstName ? this.groupUserModel.firstName : '', Validators.required],
           lastName: [this.groupUserModel.lastName ? this.groupUserModel.lastName : '', Validators.required],
           levelId: [this.groupUserModel.level ? this.groupUserModel.level.key : null],
           userGroupId: [this.groupUserModel.userGroup ? this.groupUserModel.userGroup.id : null, Validators.required],
-          department: [this.groupUserModel.department ? this.groupUserModel.department.key : null, Validators.required],
+          department: [this.groupUserModel.department ? Number(this.groupUserModel.department.key) : null, Validators.required],
           isActive: [this.checkboxTrue ? this.checkboxTrue : true],
-          password: [''],
-          rePassword: ['']
+          password: ['', [CustomValidator.password]],
+          rePassword: ['', [CustomValidator.password]]
+        });
+        this.formEditUser.valueChanges.subscribe(data => {
+          this.onFormValueChanged(data);
         });
       },
       err => {
@@ -114,32 +122,30 @@ export class EditUserComponent implements OnInit {
 
   onSubmit() {
     this.submitted = true;
-    console.log('onsubmit');
-    if (this.formEditUser.invalid) {
-      console.log('Lỗi');
-      return;
+    console.log('this.validateForm', this.validateForm(), this.formErrors, this.formEditUser);
+    if (this.validateForm()) {
+      const dataUser = {
+        id: this.idString,
+        userName: this.formEditUser.value.userName,
+        email: this.formEditUser.value.email,
+        lastName: this.formEditUser.value.lastName,
+        firstName: this.formEditUser.value.firstName,
+        password: this.formEditUser.value.password,
+        departmentId: this.formEditUser.value.department,
+        levelId: this.formEditUser.value.levelId,
+        userGroupId: this.formEditUser.value.userGroupId ? this.formEditUser.value.userGroupId : 0,
+        isActive: this.checkboxTrue
+      };
+      console.log('Edit', dataUser);
+      this.groupUserService.createOrUpdateUser(dataUser).subscribe(data => {
+        const message = 'Chỉnh sửa người dùng thành công!';
+        this.router.navigate([`/management-user/group-user/manage-user-list/manage-user`]);
+        this.alertService.success(message);
+      },
+        err => {
+          console.log(err);
+        });
     }
-    const dataUser = {
-      id: this.idString,
-      userName: this.formEditUser.value.userName,
-      email: this.formEditUser.value.email,
-      lastName: this.formEditUser.value.lastName,
-      firstName: this.formEditUser.value.firstName,
-      password: this.formEditUser.value.password,
-      departmentId: this.formEditUser.value.department,
-      levelId: this.formEditUser.value.levelId,
-      userGroupId: this.formEditUser.value.userGroupId,
-      isActive: this.checkboxTrue
-    };
-    console.log('Edit', dataUser);
-    this.groupUserService.createOrUpdateUser(dataUser).subscribe(data => {
-      const message = 'Chỉnh sửa người dùng thành công!';
-      this.router.navigate([`/management-user/group-user/manage-user-list/manage-user`]);
-      this.alertService.success(message);
-    },
-      err => {
-        console.log(err);
-      });
   }
 
   deleteLocation(id: string | number) {
@@ -161,4 +167,19 @@ export class EditUserComponent implements OnInit {
       }
     );
   }
+
+  validateForm() {
+    this.invalidMessages = ValidationHelper.getInvalidMessages(
+      this.formEditUser,
+      this.formErrors,
+    );
+    return this.invalidMessages.length === 0;
+  }
+
+  onFormValueChanged(data?: any) {
+    if (this.submitted) {
+      this.validateForm();
+    }
+  }
+
 }

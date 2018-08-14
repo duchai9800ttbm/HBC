@@ -27,20 +27,29 @@
               <span style="color: red">*</span>
             </label>
             <div class="col-sm-4">
-              <input type="text" class="form-control form-input" required id="inputUserName" formControlName="userName" placeholder="" [ngClass]="{ 'is-invalid': submitted && addUser?.userName.errors }"
-                value="{{groupUserModel?.userName}}">
-              <div *ngIf="submitted && addUser.userName.errors" class="invalid-feedback">
+              <input type="text" class="form-control form-input" required id="inputUserName" formControlName="userName" placeholder=""
+                [class.is-invalid]="formErrors.userName" value="{{groupUserModel?.userName}}">
+              <!-- <div *ngIf="submitted && addUser.userName.errors" class="invalid-feedback">
                 <div *ngIf="addUser.userName.errors.required">Tên đăng nhâp là bắt buộc</div>
-              </div>
+              </div> -->
+              <div *ngIf="formErrors.userName" class="invalid-feedback">{{formErrors.userName}}</div>
             </div>
-            <div class="col-sm-1" class="checkbox">
+            <!-- <div class="col-sm-1" class="checkbox">
               <input type="checkbox" id="optinosCheckbox1" (click)="clickCheckboxAction()" [checked]="checkboxTrue" value="{{groupUserModel.isActive}}">
               <label for="optinosCheckbox1">
                 Hoạt động
               </label>
-            </div>
+            </div> -->
           </div>
-                    
+          <!-- <div class="form-group row">
+            <label for="password" class="col-sm-2 col-form-label">Mật khẩu
+              <span style="color: red">*</span>
+            </label>
+            <div class="col-sm-4">
+              <input type="password" class="form-control form-input" id="password" formControlName="password" placeholder="" [ngClass]="{ 'is-invalid': submitted && addUser.password.errors }">
+              <div class="invalid-feedback" *ngIf="formErrors.password">{{formErrors.password}}</div>
+            </div>
+          </div> -->
           <div class="form-group row">
             <label for="group" class="col-sm-2 col-form-label">Nhóm người dùng</label>
             <div class="col-sm-4">
@@ -60,9 +69,10 @@
             <div class="col-sm-4">
               <input type="text" class="form-control form-input" formControlName="firstName" id="inputFirstName" placeholder="" [ngClass]="{ 'is-invalid': submitted && addUser.firstName.errors }"
                 value="{{groupUserModel.firstName}}">
-              <div *ngIf="submitted && addUser.firstName.errors" class="invalid-feedback">
+              <!-- <div *ngIf="submitted && addUser.firstName.errors" class="invalid-feedback">
                 <div *ngIf="addUser.firstName.errors.required">Họ là bắt buộc</div>
-              </div>
+              </div> -->
+              <div *ngIf="formErrors.firstName" class="invalid-feedback">{{formErrors.lastName}}</div>
             </div>
           </div>
           <div class="form-group row">
@@ -72,9 +82,10 @@
             <div class="col-sm-4">
               <input type="text" class="form-control form-input" id="name" formControlName="lastName" placeholder="" [ngClass]="{ 'is-invalid': submitted && addUser.lastName.errors }"
                 value="{{groupUserModel.lastName}}">
-              <div *ngIf="submitted && addUser.lastName.errors" class="invalid-feedback">
+              <!-- <div *ngIf="submitted && addUser.lastName.errors" class="invalid-feedback">
                 <div *ngIf="addUser.lastName.errors.required">Tên là bắt buộc</div>
-              </div>
+              </div> -->
+              <div *ngIf="formErrors.lastName" class="invalid-feedback">{{formErrors.lastName}}</div>
             </div>
           </div>
           <div class="form-group row">
@@ -84,10 +95,14 @@
             <div class="col-sm-4">
               <input type="email" class="form-control form-input" formControlName="email" id="email" placeholder="" [ngClass]="{ 'is-invalid': submitted && addUser.email?.errors }"
                 value="{{groupUserModel.email}}">
-              <div *ngIf="submitted && addUser.email?.errors" class="invalid-feedback">
+              <!-- <div *ngIf="submitted && addUser.email?.errors" class="invalid-feedback">
                 <div *ngIf="addUser.email?.errors.required">Email là bắt buộc</div>
               </div>
-              <div *ngIf="addUser.touched && addUser.email.errors.email">Email không đúng định dạng</div>
+              <div *ngIf="addUser.touched && addUser.email.errors.email">Email không đúng định dạng</div> -->
+              <div *ngIf="submitted && addUser.email.errors" class="invalid-feedback">
+                <div *ngIf="addUser.email.errors.required">Trường này là bắt buộc nhập</div>
+                <div *ngIf="addUser.email.errors && !addUser.email.errors.required && submitted && addUser.email.errors.email">Email không đúng định dạng</div>
+              </div>
             </div>
           </div>
           <div class="form-group row">
@@ -95,8 +110,8 @@
               <span style="color: red">*</span>
             </label>
             <div class="col-sm-4">
-              <kendo-combobox class="w-100 form-input" [data]="departments | async" textField="departmentName" formControlName="department" valueField="id"
-                [valuePrimitive]="true" [value]="selectedDepartmaent" [ngClass]="{ 'is-invalid': submitted && addUser.department.errors }">
+              <kendo-combobox class="w-100 form-input" [data]="departments | async" textField="departmentName" formControlName="department"
+                valueField="id" [valuePrimitive]="true" [value]="selectedDepartmaent" [ngClass]="{ 'is-invalid': submitted && addUser.department.errors }">
               </kendo-combobox>
               <div *ngIf="submitted && addUser.department.errors" class="invalid-feedback">
                 <div *ngIf="addUser.department.errors.required">Vui lòng chọn phòng ban/bộ phận</div>
@@ -106,7 +121,8 @@
           <div class="form-group row">
             <label for="position" class="col-sm-2 col-form-label">Vị trí/Chức vụ</label>
             <div class="col-sm-4">
-              <kendo-combobox class="w-100 form-input" [data]="positions | async" textField="levelName" formControlName="department" valueField="id" [valuePrimitive]="true" [value]="selectPosition">
+              <kendo-combobox class="w-100 form-input" [data]="positions | async" textField="levelName" formControlName="department" valueField="id"
+                [valuePrimitive]="true" [value]="selectPosition">
               </kendo-combobox>
             </div>
           </div>

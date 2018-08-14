@@ -8,14 +8,15 @@ import {
 } from '../../../../../shared/services';
 import { SettingService } from '../../../../../shared/services/setting.service';
 import { OpportunityReasonListItem } from '../../../../../shared/models/setting/opportunity-reason-list-item';
-import { SETTING_REASON } from '../../../../../shared/configs/common.config';
-
+import { SETTING_REASON, COMMON_CONSTANTS } from '../../../../../shared/configs/common.config';
+import { BehaviorSubject } from '../../../../../../../node_modules/rxjs';
 @Component({
     selector: 'app-setting-reason-lose-list',
     templateUrl: './setting-reason-lose-list.component.html',
     styleUrls: ['./setting-reason-lose-list.component.scss']
 })
 export class SettingReasonLoseListComponent implements OnInit {
+    searchTerm$ = new BehaviorSubject<string>('');
     gridLoading = true;
     pagedResult: PagedResult<OpportunityReasonListItem[]> = new PagedResult<
         OpportunityReasonListItem[]
@@ -28,7 +29,12 @@ export class SettingReasonLoseListComponent implements OnInit {
     ) {}
 
     ngOnInit() {
-        this.refresh(0, 10);
+        this.searchTerm$
+        .debounceTime(COMMON_CONSTANTS.SearchDelayTimeInMs)
+        .distinctUntilChanged()
+        .subscribe(term =>
+          this.refresh(0, this.pagedResult.pageSize)
+        );
     }
 
     public onSelectedKeysChange(e) {
@@ -61,7 +67,7 @@ export class SettingReasonLoseListComponent implements OnInit {
     refresh(page: string | number, pageSize: string | number) {
         this.gridLoading = true;
         this.settingService
-            .readOpportunityReason(page, pageSize, SETTING_REASON.Lose)
+            .readOpportunityReason(this.searchTerm$.value, page, pageSize, SETTING_REASON.Lose)
             .subscribe(data => {
                 this.pagedResult = data;
                 console.log(this.pagedResult);

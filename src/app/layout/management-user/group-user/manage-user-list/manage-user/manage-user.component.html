@@ -61,7 +61,7 @@
             <div class="cell-user">{{dataItem.firstName }}</div>
           </ng-template>
         </kendo-grid-column>
-        <kendo-grid-column [headerClass]="'custom-table-header'" field="userGroup.name" title="Nhóm" [width]="150">
+        <kendo-grid-column [headerClass]="'custom-table-header'" field="userGroup.name" title="Nhóm" [width]="100">
           <ng-template kendoGridCellTemplate let-dataItem let-rowIndex="rowIndex">
             <div class="cell-user">{{dataItem.userGroup?.name }}</div>
           </ng-template>
@@ -135,7 +135,7 @@
   <div class="modal-header no-boder-bottom-title no-border">
     <div class="form-group col-md-12">
       <label for="" class="form-label col-md-2">Nhóm</label>
-      <span class="custom-dropdown col-md-9">
+      <span class="custom-dropdown col-md-9 no-padding-right">
         <select class="form-control">
           <option value="">--Tất cả--</option>
           <option *ngFor="let item of dataGroupUser" [value]="item.id">{{item.text}}</option>
