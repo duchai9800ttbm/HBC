@@ -273,13 +273,13 @@
                                     [class.type-KQDT-child]="item.stageStatus == 'KẾT QUẢ DỰ THẦU'">
                                     <div>{{item.stageStatus ? item.stageStatus : ''}}</div>
                                 </div> -->
-                                <div class="center-parent" [class.type-HSMT]="item.stage == 'HSMT'" [class.type-HSDT]="item.stage == 'HSDT'" [class.type-KQDT]="item.stage == 'KQDT'">
-                                    <div *ngIf="item.stage === 'HSMT'">HỒ SƠ MỜI THẦU</div>
-                                    <div *ngIf="item.stage === 'HSDT'">HỒ SƠ DỰ THẦU</div>
-                                    <div *ngIf="item.stage === 'KQDT'">KẾT QUẢ DỰ THẦU</div>
+                                <div class="center-parent" [class.type-HSMT]="item.stage?.id == 'HSMT'" [class.type-HSDT]="item.stage?.id == 'HSDT'" [class.type-KQDT]="item.stage?.id == 'KQDT'">
+                                    <div *ngIf="item.stage?.id === 'HSMT'">HỒ SƠ MỜI THẦU</div>
+                                    <div *ngIf="item.stage?.id === 'HSDT'">HỒ SƠ DỰ THẦU</div>
+                                    <div *ngIf="item.stage?.id === 'KQDT'">KẾT QUẢ DỰ THẦU</div>
                                 </div>
-                                <div class="center-parent" [class.type-HSMT-child]="item.stage == 'HSMT'" [class.type-HSDT-child]="item.stage == 'HSDT'"
-                                    [class.type-KQDT-child]="item.stage == 'KQDT'">
+                                <div class="center-parent" [class.type-HSMT-child]="item.stage?.id == 'HSMT'" [class.type-HSDT-child]="item.stage?.id == 'HSDT'"
+                                    [class.type-KQDT-child]="item.stage?.id == 'KQDT'">
                                     <div>{{item.stageStatus | translate}}</div>
                                 </div>
 
