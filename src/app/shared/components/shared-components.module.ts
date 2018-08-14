@@ -14,6 +14,8 @@ import { NgbDropdownModule, NgbAlertModule, NgbModalModule, NgbCollapseModule } 
 import { ConfirmationPopupCallAwayComponent } from './confirmation-popup-call-away/confirmation-popup-call-away.component';
 import { FengShuisInforComponent } from './feng-shuis-infor/feng-shuis-infor.component';
 import { PoupRejectPackageComponent } from './poup-reject-package/poup-reject-package.component';
+import { PopupCreateAssignerComponent } from './popup-create-assigner/popup-create-assigner.component';
+import { PopupCreateChairComponent } from './popup-create-chair/popup-create-chair.component';
 
 @NgModule({
     imports: [
@@ -38,6 +40,8 @@ import { PoupRejectPackageComponent } from './poup-reject-package/poup-reject-pa
         ConfirmationPopupCallAwayComponent,
         FengShuisInforComponent,
         PoupRejectPackageComponent,
+        PopupCreateAssignerComponent,
+        PopupCreateChairComponent,
     ],
     exports: [
         // AlertComponent,
@@ -48,14 +52,18 @@ import { PoupRejectPackageComponent } from './poup-reject-package/poup-reject-pa
         FooterCopyrightComponent,
         ConvertProspect2Component,
         ConfirmationPopupCallAwayComponent,
-        PoupRejectPackageComponent
+        PoupRejectPackageComponent,
+        PopupCreateAssignerComponent,
+        PopupCreateChairComponent
     ],
     entryComponents: [
         ConfirmationPopupComponent,
         ConvertProspect2Component,
         ConfirmationPopupCallAwayComponent,
         FengShuisInforComponent,
-        PoupRejectPackageComponent
+        PoupRejectPackageComponent,
+        PopupCreateAssignerComponent,
+        PopupCreateChairComponent
     ]
 })
 export class SharedComponentsModule { }

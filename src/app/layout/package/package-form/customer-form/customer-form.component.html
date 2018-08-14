@@ -46,12 +46,7 @@
                                     </td>
                                     <td class="w-15 bg-light text-right label no-boder">Doanh thu hàng năm</td>
                                     <td class="w-35 no-boder">
-                                        <span class="custom-dropdown w-75">
-                                            <select class="form-control" tabindex="5" formControlName="annualTurnover">
-                                                <option [ngValue]="null">--Number--</option>
-                                                <option *ngFor="let item of listAnnualTurnover" [value]="item.id">{{item.text }}</option>
-                                            </select>
-                                        </span>
+                                        <input class="w-75 form-control" tabindex="1" type="text" formControlName="listing">
                                     </td>
                                 </tr>
                                 <tr>
@@ -64,6 +59,7 @@
                                         <div style="display: flex; justify-content: flex-start; align-items: start">
                                             <input style="zoom: 1.5;" tabindex="1" type="checkbox" formControlName="listing">
                                         </div>
+
                                     </td>
                                 </tr>
                                 <tr>
@@ -80,7 +76,7 @@
                                             <owl-date-time [readonlyInput]="datePickerConfig.readonlyInput" [locale]="datePickerConfig.vi" formControlName="startDateWithHBC"
                                                 [placeHolder]="datePickerConfig.placeHolderVn">
                                             </owl-date-time>
-                                            <span class="input-group-addon">
+                                            <span class="input-group-addon center-parent" style="min-width: 40.5px!important;">
                                                 <i class="fa fa-calendar"></i>
                                             </span>
                                         </div>
@@ -124,7 +120,7 @@
                                             <owl-date-time [readonlyInput]="datePickerConfig.readonlyInput" [locale]="datePickerConfig.vi" formControlName="foundingDate"
                                                 [placeHolder]="datePickerConfig.placeHolderVn">
                                             </owl-date-time>
-                                            <span class="input-group-addon">
+                                            <span class="input-group-addon center-parent" style="min-width: 40.5px!important;">
                                                 <i class="fa fa-calendar"></i>
                                             </span>
                                         </div>
@@ -155,14 +151,14 @@
                                 </tr>
                                 <tr>
                                     <td class="w-15 bg-light text-right label no-boder">Liên hệ</td>
-                                    <td class="w-35 no-boder">
-                                        <div class=" w-75 autocomplete-wrapper-2 ui-fluid">
+                                    <td class="w-75 no-boder">
+                                        <div class="w-75 autocomplete-wrapper-2 ui-fluid">
                                             <p-autoComplete formControlName="contact" [suggestions]="contactsSearchResults" [forceSelection]="true" [delay]="'400'" [emptyMessage]="'Không có dữ liệu'"
                                                 placeholder="---Chọn---" [immutable]="true" (completeMethod)="searchContacts($event.query)"
                                                 field="text" dataKey="id" [multiple]="false" [tabindex]="'5'">
 
                                             </p-autoComplete>
-                                            <span class="input-group-addon">
+                                            <span class="input-group-addon center-parent" style="min-width: 40.5px!important;">
                                                 <i class="fa fa-search"></i>
                                             </span>
                                         </div>
