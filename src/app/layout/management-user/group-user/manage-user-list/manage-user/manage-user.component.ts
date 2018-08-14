@@ -67,6 +67,7 @@ export class ManageUserComponent implements OnInit {
 
   rerender(pagedResult: any) {
     this.pagedResult = pagedResult;
+    this.dtTrigger.next();
   }
 
   loadPage() {
