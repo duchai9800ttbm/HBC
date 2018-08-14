@@ -126,7 +126,7 @@ export class PackageListComponent implements OnInit, AfterViewChecked {
         });
         this.filterModel.opportunityClassify = '';
         this.filterModel.stage = '';
-        this.filterModel.hbcChair = '';
+        this.filterModel.chairEmployeeId = '';
         this.dtOptions = DATATABLE_CONFIG;
         this.createForm();
         this.packageService
@@ -253,7 +253,7 @@ export class PackageListComponent implements OnInit, AfterViewChecked {
         this.filterModel = new PackageFilter();
         this.filterModel.opportunityClassify = '';
         this.filterModel.stage = '';
-        this.filterModel.hbcChair = '';
+        this.filterModel.chairEmployeeId = '';
         this.filterModel.minCost = null;
         this.filterModel.maxCost = null;
         this.someRange = [0, 10000000000];
