@@ -174,7 +174,7 @@ export class GroupUserService implements OnInit {
     page: number | string,
     pageSize: number | string
   ): Observable<PagedResult<ListUserItem>> {
-    const searchUrl = `user/search/${page}/${pageSize}?searchTerm=`;
+    const searchUrl = `user/${page}/${pageSize}?searchTerm=`;
     return this.instantSearchService.search(
       searchUrl,
       terms
@@ -292,6 +292,25 @@ export class GroupUserService implements OnInit {
     return this.apiService.post(url, groupUser);
   }
   // Tìm kiếm nhóm người dung theo tên
-  // searchGroupUser()
+  searchGroupUser(
+    terms: Observable<string>,
+    page: number | string,
+    pageSize: number | string
+  ): Observable<PagedResult<ListUserItem>> {
+    const searchUrl = `usergroup/filter/${page}/${pageSize}?searchTerm=`;
+    return this.instantSearchService.search(
+      searchUrl,
+      terms
+    )
+      .map(result => {
+        return {
+          currentPage: result.pageIndex,
+          pageSize: result.pageSize,
+          pageCount: result.totalPages,
+          total: result.totalCount,
+          items: result.items,
+        };
+      });
+  }
 }
 

@@ -10,7 +10,7 @@ import { GroupUserRequest } from '../../../../shared/models/api-request/user/gro
 import { GroupUserList } from '../../../../shared/models/user/group-user-list-item';
 import { DictionaryItem, DictionaryItemIdString, PagedResult } from '../../../../shared/models';
 import { LocationListItem } from '../../../../shared/models/setting/location-list-item';
-import { Observable } from '../../../../../../node_modules/rxjs';
+import { Observable, BehaviorSubject, Subject } from '../../../../../../node_modules/rxjs';
 import { NgxSpinnerService } from '../../../../../../node_modules/ngx-spinner';
 @Component({
   selector: 'app-group-user-detail',
@@ -18,9 +18,11 @@ import { NgxSpinnerService } from '../../../../../../node_modules/ngx-spinner';
   styleUrls: ['./group-user-detail.component.scss']
 })
 export class GroupUserDetailComponent implements OnInit {
+  dtTrigger: Subject<any> = new Subject();
   pagedResult: PagedResult<GroupUserList[]> = new PagedResult<
     GroupUserList[]
     >();
+  searchTerm$ = new BehaviorSubject<string>('');
   groupItem: GroupModel;
   formAddGroupUser: FormGroup;
   submitted = false;
@@ -73,6 +75,12 @@ export class GroupUserDetailComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+    // this.groupUserService
+    //   .searchGroupUser(this.searchTerm$, 0, 10)
+    //   .subscribe(result => {
+    //     this.rerender(result);
+    //   }, err => {
+    //   });
     this.isQTV = false;
     this.hideInput = false;
     this.isAddNewGroup = false;
@@ -488,6 +496,11 @@ export class GroupUserDetailComponent implements OnInit {
   //       this.spinner.hide();
   //     }, err => this.spinner.hide());
   // }
+
+  rerender(pagedResult: any) {
+    this.pagedResult = pagedResult;
+    this.dtTrigger.next();
+  }
 
   selectAllPrivilegesEditUse() {
     this.groupEditOrCreate.notPrivileges = [];

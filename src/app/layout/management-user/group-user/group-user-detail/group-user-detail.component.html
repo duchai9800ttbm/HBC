@@ -161,12 +161,6 @@
         </h4>
       </div>
       <div class="col-md-6">
-        <!-- <button type="submit" class="btn btn-primary btn-rg w-80 pull-right" [disabled]="loading">
-          Lưu
-        </button>
-        <button type="button" class="btn btn-primary btn-rg pull-right" (click)="openModalDelete(delete)">
-          <i class="fa fa-trash-o" aria-hidden="true"></i>
-        </button> -->
         <div class="btn-toolbar pull-right menu">
           <div class="input-group btn-rg">
             <span class="input-group-addon">Tìm kiếm</span>
@@ -181,7 +175,7 @@
         </div>
       </div>
     </div>
-    <div class="data-list menu" style="padding-top: 10px;">
+    <!-- <div class="data-list menu" style="padding-top: 10px;">
       <kendo-grid [data]="pagedResult.items" [selectable]="true" [loading]="gridLoading">
         <kendo-grid-column [headerClass]="'custom-table-header'" field="firstname" title="Tên" [width]="100">
           <ng-template kendoGridCellTemplate let-dataItem let-rowIndex="rowIndex">
@@ -193,28 +187,12 @@
             <div class="">{{dataItem.desc }}</div>
           </ng-template>
         </kendo-grid-column>
-        <!-- <kendo-grid-column [headerClass]="'custom-table-header text-center'" field="firstname" title="Tình trạng" [width]="50">
-          <ng-template kendoGridCellTemplate let-dataItem let-rowIndex="rowIndex">
-            <div>
-              <div class="text-center color-active" *ngIf="dataItem.isActive">
-                <i class="fa fa-check-circle" aria-hidden="true"></i>
-              </div>
-              <div class="text-center" *ngIf="!dataItem.isActive">
-                <i class="fa fa-times-circle" aria-hidden="true"></i>
-              </div>
-            </div>
-          </ng-template>
-        </kendo-grid-column> -->
         <kendo-grid-column [headerClass]="'custom-table-header text-center'" field="" title="Thao tác" [width]="40">
           <ng-template kendoGridCellTemplate let-dataItem let-rowIndex="rowIndex">
             <div class="row">
               <div class="col-md-6 center-parent" (click)="openModalEdit(dataItem.id, edit)">
                 <i class="fa fa-pencil-square-o point" aria-hidden="true"></i>
               </div>
-              <!-- <div class="col-md-4">
-                <i class="fa fa-lock point" *ngIf="!dataItem.isActive" aria-hidden="true" (click)="activateGroup(dataItem.id)"></i>
-                <i class="fa fa-unlock-alt point color-active" *ngIf="dataItem.isActive" aria-hidden="true" (click)="deactiveGroup(dataItem.id)"></i>
-              </div> -->
               <div class="col-md-6 center-parent" (click)="openModalDeleteGroupUser(dataItem.id, delete)">
                 <i class="fa fa-trash-o point" aria-hidden="true"></i>
               </div>
@@ -224,6 +202,39 @@
         <kendo-grid-messages noRecords="Không có dữ liệu"></kendo-grid-messages>
       </kendo-grid>
       <app-pagination [(pagedResult)]="pagedResult" (pagedResultChange)="pagedResultChange($event)"></app-pagination>
+    </div> -->
+
+    <div class="data-list menu" style="padding-top: 10px;">
+      <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="table-selection stripe hover col-md-12">
+        <thead>
+          <tr style="width: 100%">
+            <th class="text-center" style="width: 15px; padding-left: 7px;">
+              <label class="custom-control custom-checkbox">
+                <input type="checkbox" class="custom-control-input input-checkbox" [(ngModel)]="checkboxSeclectAll" (change)="onSelectAll($event.target.checked)">
+                <span class="custom-control-indicator"></span>
+              </label>
+            </th>
+            <th style="width: 30%">
+              <div class="d-flex justify-content-start">
+                <div style="margin-right: 10px">Tên</div>
+              </div>
+            </th>
+            <th style="width: 30%">
+              <div class="d-flex justify-content-start">
+                <div style="margin-right: 10px">Mô tả</div>
+              </div>
+            </th>
+            <th style="width: calc(40% - 10px); min-width: 50px!important;">
+              <div class="d-flex justify-content-start">
+                <div style="margin-right: 10px">Thao tác</div>
+              </div>
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr></tr>
+        </tbody>
+      </table>
     </div>
   </div>
 </div>

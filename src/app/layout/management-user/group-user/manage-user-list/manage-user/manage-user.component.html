@@ -177,7 +177,7 @@
             <td class="text-truncate">
               <div class="d-flex justify-content-between">
                 <div>
-                  {{item.userGroup?.name}}
+                  {{(item.userGroup &&  item.userGroup.name)? item.userGroup.name : 'Chưa có'}}
                 </div>
                 <div class="text-center">
                   <i class="fa fa-pencil color-active" aria-hidden="true" (click)="showPopupSelect(item.id, selectGroup)"></i>
