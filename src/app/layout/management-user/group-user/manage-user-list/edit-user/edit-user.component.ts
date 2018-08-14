@@ -131,8 +131,8 @@ export class EditUserComponent implements OnInit {
         lastName: this.formEditUser.value.lastName,
         firstName: this.formEditUser.value.firstName,
         password: this.formEditUser.value.password,
-        departmentId: this.formEditUser.value.department,
-        levelId: this.formEditUser.value.levelId,
+        departmentId: this.formEditUser.value.department ? this.formEditUser.value.department : 0,
+        levelId: this.formEditUser.value.levelId ? this.formEditUser.value.levelId : 0,
         userGroupId: this.formEditUser.value.userGroupId ? this.formEditUser.value.userGroupId : 0,
         isActive: this.checkboxTrue
       };
