@@ -99,7 +99,7 @@ export class EnterActiveCodeComponent implements OnInit, OnDestroy {
             }
           },
           err => {
-            this.apiErrorCode = 'Đã có lỗi xảy ra, vui lòng thử lại sau!';
+            this.apiErrorCode = 'Mã xác nhận chưa đúng. Vui lòng kiểm tra lại email đã nhận!';
           });
       // this.router.navigate(['/login/forgot-password/reset-password'], { queryParams: { activeCode: code } });
     }
