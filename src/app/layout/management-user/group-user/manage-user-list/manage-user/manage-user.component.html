@@ -24,25 +24,24 @@
       </div>
     </div>
     <div class="data-list menu">
-      <kendo-grid [data]="pagedResult.items" [selectable]="true" [loading]="gridLoading">
+      <!-- <kendo-grid [data]="pagedResult.items" [selectable]="true" [loading]="gridLoading">
         <kendo-grid-checkbox-column [headerClass]="'custom-table-header'" [width]="40">
           <ng-template kendoGridHeaderTemplate let-dataItem let-rowIndex="rowIndex">
             <input class="k-checkbox" id="selectAllCheckboxId" kendoGridSelectAllCheckbox (click)="isCheckbox = !isCheckbox;" [checked]="isCheckbox">
             <label class="k-checkbox-label" for="selectAllCheckboxId"></label>
           </ng-template>
-
         </kendo-grid-checkbox-column>
-        <kendo-grid-column [headerClass]="'custom-table-header'" field="userName" title="Tên đăng nhập" [width]="150">
+        <kendo-grid-column [headerClass]="'custom-table-header'" field="userName" title="Tên đăng nhập" [width]="50">
           <ng-template kendoGridCellTemplate let-dataItem let-rowIndex="rowIndex">
             <div class="cell-username pointer" [routerLink]="['../edit-user/',dataItem.id]">{{dataItem.userName }}</div>
           </ng-template>
         </kendo-grid-column>
-        <kendo-grid-column [headerClass]="'custom-table-header'" field="email" title="Email" [width]="200">
+        <kendo-grid-column [headerClass]="'custom-table-header'" field="email" title="Email" [width]="100">
           <ng-template kendoGridCellTemplate let-dataItem let-rowIndex="rowIndex">
             <div class="cell-user">{{dataItem.email }}</div>
           </ng-template>
         </kendo-grid-column>
-        <kendo-grid-column [headerClass]="'custom-table-header'" title="Phòng ban/Bộ Phận" [width]="150">
+        <kendo-grid-column [headerClass]="'custom-table-header'" title="Phòng ban/Bộ Phận" [width]="100">
           <ng-template kendoGridCellTemplate let-dataItem let-rowIndex="rowIndex">
             <div class="cell-user">{{dataItem.department?.value }}</div>
           </ng-template>
@@ -96,12 +95,96 @@
         </kendo-grid-column>
         <kendo-grid-messages noRecords="Không có dữ liệu"></kendo-grid-messages>
       </kendo-grid>
-      <app-pagination [(pagedResult)]="pagedResult" (pagedResultChange)="pagedResultChange($event)"></app-pagination>
+      <app-pagination [(pagedResult)]="pagedResult" (pagedResultChange)="pagedResultChange($event)"></app-pagination> -->
+
+      <table class="table-selection stripe hover col-md-12">
+        <thead>
+          <tr>
+            <th class="text-center" style="width: 10%;">
+              1
+            </th>
+            <th class="text-center" style="width: 10%;">
+              Tên đăng nhập
+            </th>
+            <th class="text-center" style="width: 10%;">
+              Email
+            </th>
+            <th class="text-center" style="width: 10%;">
+              Phòng ban/Bộ Phận
+            </th>
+            <th class="text-center" style="width: 10%;">
+              Vị trí/Chức vụ
+            </th>
+            <th class="text-center" style="width: 10%;">
+              Tên
+            </th>
+            <th class="text-center" style="width: 10%;">
+              Họ
+            </th>
+            <th class="text-center" style="width: 10%;">
+              Nhóm
+            </th>
+            <th class="text-center" style="width: 10%;">
+              Tình trạng
+            </th>
+            <th class="text-center" style="width: 10%;">
+              Thao tác
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let item of pagedResult.items">
+            <td class="truncate">
+              <input class="k-checkbox" (click)="isCheckbox = !isCheckbox;" [checked]="isCheckbox">
+              <label class="k-checkbox-label" for="selectAllCheckboxId"></label>
+            </td>
+            <td class="truncate">
+              {{item.userName}}
+            </td>
+            <td class="truncate">
+              {{item.email}}
+            </td>
+            <td class="truncate"> 
+              {{item.department?.value}}
+            </td>
+            <td class="truncate">
+              {{item.level?.value}}
+            </td>
+            <td class="truncate">
+              {{item.lastName}}
+            </td>
+            <td>
+              {{item.firstName}}
+            </td>
+            <td>
+              {{item.userGroup?.name}}
+            </td>
+            <td>
+              <div class="text-center color-active" *ngIf="item.isActive">
+                <i class="fa fa-check-circle" aria-hidden="true"></i>
+              </div>
+              <div class="text-center" *ngIf="!item.isActive">
+                <i class="fa fa-times-circle" aria-hidden="true"></i>
+              </div>
+            </td>
+            <td>
+              <div class="row">
+                <div class="col-md-4">
+                  <i class="fa fa-users pointer color-active" aria-hidden="true" (click)="showPopupSelect(item.id, selectGroup)"></i>
+                </div>
+                <div class="col-md-4" [routerLink]="['../edit-user/',item.id]">
+                  <i class="fa fa-pencil-square-o pointer" aria-hidden="true"></i>
+                </div>
+                <div class="col-md-4" (click)="openModalDeactive(item.id,item.isActive,deactive)">
+                  <i class="fa fa-lock pointer" *ngIf="!item.isActive" aria-hidden="true"></i>
+                  <i class="fa fa-unlock-alt pointer" *ngIf="item.isActive" aria-hidden="true"></i>
+                </div>
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
     </div>
-    <!-- <div class="pull-right">
-        <button type="button" class="btn btn-primary w-80">Lưu</button>
-        <button type="button" class="btn btn-default w-80">Hủy</button>
-      </div> -->
   </div>
 </div>
 <!-- Model Xóa user -->
