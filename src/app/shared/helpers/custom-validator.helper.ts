@@ -7,6 +7,7 @@ const FAX_NUMBER_MAX_LENGTH = 20;
 const PASSWORD_MIN_LENGTH = 6;
 const TAX_NUMBER_MIN_LENGTH = 10;
 const TAX_NUMBER_MAX_LENGTH = 13;
+const USERNAME_LOGIN_MIN_LENGTH = 6;
 
 export default class CustomValidator {
 
@@ -88,6 +89,17 @@ export default class CustomValidator {
 
     private static isNullOrEmpty(value) {
         return value === undefined || value === null || value === '';
+    }
+
+    static loginName(control: AbstractControl): ValidationErrors | null {
+        return (CustomValidator.isNullOrEmpty(control.value)
+            || (control.value.length >= USERNAME_LOGIN_MIN_LENGTH))
+            ? null
+            : {
+                userName: {
+                    valid: false
+                }
+            };
     }
 
 }

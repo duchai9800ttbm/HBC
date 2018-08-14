@@ -7,15 +7,16 @@ import {
     AlertService
 } from '../../../../../shared/services';
 import { SettingService } from '../../../../../shared/services/setting.service';
-import { SETTING_REASON } from '../../../../../shared/configs/common.config';
+import { SETTING_REASON, COMMON_CONSTANTS } from '../../../../../shared/configs/common.config';
 import { OpportunityReasonListItem } from '../../../../../shared/models/setting/opportunity-reason-list-item';
-
+import { BehaviorSubject } from '../../../../../../../node_modules/rxjs';
 @Component({
     selector: 'app-setting-reason-win-list',
     templateUrl: './setting-reason-win-list.component.html',
     styleUrls: ['./setting-reason-win-list.component.scss']
 })
 export class SettingReasonWinListComponent implements OnInit {
+    searchTerm$ = new BehaviorSubject<string>('');
     filterModel = new PackageFilter();
     gridLoading = true;
     pagedResult: PagedResult<OpportunityReasonListItem[]> = new PagedResult<
@@ -29,7 +30,13 @@ export class SettingReasonWinListComponent implements OnInit {
     ) {}
 
     ngOnInit() {
-        this.refresh(0, 10);
+        // this.refresh(0, 10);
+        this.searchTerm$
+        .debounceTime(COMMON_CONSTANTS.SearchDelayTimeInMs)
+        .distinctUntilChanged()
+        .subscribe(term =>
+          this.refresh(0, this.pagedResult.pageSize)
+        );
     }
     public onSelectedKeysChange(e) {
         console.log(this.mySelection);
@@ -63,7 +70,7 @@ export class SettingReasonWinListComponent implements OnInit {
     refresh(page: string | number, pageSize: string | number) {
         this.gridLoading = true;
         this.settingService
-            .readOpportunityReason(page, pageSize, SETTING_REASON.Win)
+            .readOpportunityReason(this.searchTerm$.value, page, pageSize, SETTING_REASON.Win)
             .subscribe(data => {
                 this.pagedResult = data;
                 console.log(this.pagedResult);

@@ -10,7 +10,8 @@ export default class ValidationHelper {
         phoneNumber: 'Số điện thoại phải có ít nhất 10 chữ số',
         faxNumber: 'Fax phải có ít nhất 10 chữ số',
         password: 'Mật khẩu phải có ít nhất 6 kí tự',
-        taxNumber: 'Mã số thuế từ 10 đến 13 chữ số'
+        taxNumber: 'Mã số thuế từ 10 đến 13 chữ số',
+        userName: 'Tên đăng nhập phải có ít nhất 6 kí tự',
     };
 
     static getInvalidMessages(

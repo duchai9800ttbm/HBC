@@ -8,7 +8,7 @@ import { PagedResult } from '../../../shared/models';
 import { ActivityListItem } from '../../../shared/models/activity/activity-list-item.model';
 import { DATETIME_PICKER_CONFIG } from '../../../shared/configs/datepicker.config';
 import { FormGroup, FormBuilder, Validators } from '../../../../../node_modules/@angular/forms';
-import { ActivityService, AlertService, DataService, ConfirmationService, UserService } from '../../../shared/services';
+import { ActivityService, AlertService, DataService, ConfirmationService, UserService, SessionService } from '../../../shared/services';
 import { Router } from '../../../../../node_modules/@angular/router';
 import { ExcelService } from '../../../shared/services/excel.service';
 import { TranslateService } from '../../../../../node_modules/@ngx-translate/core';
@@ -28,6 +28,8 @@ import { PackageService } from '../../../shared/services/package.service';
 import { PackageFilter } from '../../../shared/models/package/package-filter.model';
 import { ObjectInforPackage } from '../../../shared/models/package/object-infoPackage';
 import { UserItemModel } from '../../../shared/models/user/user-item.model';
+import { UserModel } from '../../../shared/models/user/user.model';
+import { FieldModel } from '../../../shared/models/package/field.model';
 @Component({
     selector: 'app-package-list',
     templateUrl: './package-list.component.html',
@@ -60,7 +62,8 @@ export class PackageListComponent implements OnInit, AfterViewChecked {
     listPresideHBC = PresideHBC;
     listNameProjectListPackage = NameProjectListPackage;
     userListItem: UserItemModel[];
-
+    user: UserModel;
+    listField: FieldModel[];
     constructor(
         private activityService: ActivityService,
         private alertService: AlertService,
@@ -74,6 +77,7 @@ export class PackageListComponent implements OnInit, AfterViewChecked {
         private spinner: NgxSpinnerService,
         private packageService: PackageService,
         private userService: UserService,
+        private sessionService: SessionService
     ) { }
     someRange = [1000000, 10000000000];
     someKeyboardConfig: any = {
@@ -107,8 +111,16 @@ export class PackageListComponent implements OnInit, AfterViewChecked {
     };
     searchTerm$ = new BehaviorSubject<string>('');
     listPackage = [];
+    get getUserId() {
+        return this.sessionService.currentUser.userId;
+
+    }
     ngOnInit() {
         window.scrollTo(0, 0);
+        this.packageService.getListFields(this.getUserId).subscribe(data => {
+            this.listField = data;
+            console.log( this.listField);
+        });
         this.listClassifyCustomer = this.dataService.getListOpportunityClassifies();
         this.listPhasePackage = this.dataService.getListBidOpportunityStages();
         this.userService.getAllUser('').subscribe(data => {
@@ -119,15 +131,16 @@ export class PackageListComponent implements OnInit, AfterViewChecked {
         this.filterModel.hbcChair = '';
         this.dtOptions = DATATABLE_CONFIG;
         this.createForm();
-        this.spinner.show();
-        this.packageService
-            .instantSearchWithFilter(this.searchTerm$, this.filterModel, 0, 10)
-            .subscribe(result => {
-                this.rerender(result);
-                this.spinner.hide();
-            }, err => {
-                this.spinner.hide();
-            });
+        // this.spinner.show();
+        // this.packageService
+        //     .instantSearchWithFilter(this.searchTerm$, this.filterModel, 0, 10)
+        //     .subscribe(result => {
+        //         this.rerender(result);
+        //         this.spinner.hide();
+        //     }, err => {
+        //         this.spinner.hide();
+        //     });
+
     }
     ngAfterViewChecked() {
 

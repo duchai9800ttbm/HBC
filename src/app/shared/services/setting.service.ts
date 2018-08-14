@@ -166,6 +166,7 @@ export class SettingService {
 
     // get danh sách lý do theo loại
     readOpportunityReason(
+        searchTerm: string,
         page: number | string,
         pageSize: number | string,
         type: string
@@ -182,9 +183,10 @@ export class SettingService {
             typeUrl = 'bidopportunitycancelreason';
                 break;
         }
-        const url = `${typeUrl}/getall/${page}/${pageSize}`;
+        const urlParam = Utils.createSearchParam(searchTerm);
+        const url = `${typeUrl}/filter/${page}/${pageSize}`;
         return this.apiService
-            .get(url)
+            .get(url, urlParam)
             .map(response => {
                 return {
                     currentPage: response.result.pageIndex,
