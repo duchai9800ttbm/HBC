@@ -93,7 +93,7 @@
                                 <div class="form-check-inline" *ngFor="let item of listField">
                                     <div class="d-flex">
                                         <div style="margin-top: 2px;">
-                                            <input type="checkbox" [(ngModel)]="item.hidden">
+                                            <input type="checkbox" [(ngModel)]="item.hidden" style="cursor: pointer;">
                                         </div>
                                         <div class=""> &nbsp;{{item.fieldCaption}}</div>
                                     </div>
@@ -101,7 +101,12 @@
                               
                             </div>
                         </div>
-           
+                        <!-- <perfect-scrollbar style="max-height: 160px;" [config]="config">
+                                <div>Scrollable content</div>
+                              </perfect-scrollbar> -->
+                        <!-- <div slimScroll width="auto" height="160px" size="7px">
+                            Lorem ipsum dolor sit amet...
+                        </div> -->
                         <hr>
                         <div>
                             <div class="d-flex">

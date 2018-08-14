@@ -118,10 +118,7 @@ export class PackageListComponent implements OnInit, AfterViewChecked {
     }
     ngOnInit() {
         window.scrollTo(0, 0);
-        this.packageService.getListFields(this.getUserId).subscribe(data => {
-            this.listField = data;
-            this.sum = [...this.listField].filter(x => x.hidden === true).length;
-        });
+        this.refreshPopupConfig();
         this.listClassifyCustomer = this.dataService.getListOpportunityClassifies();
         this.listPhasePackage = this.dataService.getListBidOpportunityStages();
         this.userService.getAllUser('').subscribe(data => {
@@ -132,10 +129,24 @@ export class PackageListComponent implements OnInit, AfterViewChecked {
         this.filterModel.hbcChair = '';
         this.dtOptions = DATATABLE_CONFIG;
         this.createForm();
-
+        this.packageService
+            .instantSearchWithFilter(this.searchTerm$, this.filterModel, 0, 10)
+            .subscribe(result => {
+                this.rerender(result);
+                this.spinner.hide();
+            }, err => {
+                this.spinner.hide();
+            });
     }
     ngAfterViewChecked() {
 
+    }
+
+    refreshPopupConfig() {
+        this.packageService.getListFields(this.getUserId).subscribe(data => {
+            this.listField = data;
+            this.sum = [...this.listField].filter(x => x.hidden === true).length;
+        });
     }
 
     changeValueRange(newValue) {
@@ -293,7 +304,6 @@ export class PackageListComponent implements OnInit, AfterViewChecked {
     rerender(pagedResult: any) {
         this.checkboxSeclectAll = false;
         this.pagedResult = pagedResult;
-        console.log('this.pagedResult', this.pagedResult);
         this.dtTrigger.next();
     }
 
@@ -345,10 +355,20 @@ export class PackageListComponent implements OnInit, AfterViewChecked {
     }
 
     cancel(myDrop) {
+        this.refreshPopupConfig();
         myDrop.close();
     }
 
     apply(myDrop) {
-        myDrop.close();
+        this.packageService.updateFieldConfigs(this.listField, this.getUserId)
+            .subscribe(result => {
+                this.alertService.success('Đã cập nhật cấu hình thành công!');
+                this.refreshPopupConfig();
+                myDrop.close();
+            }, err => {
+                this.alertService.error('Cập nhật cấu hình thất bại, xin vui lòng thử lại!');
+                this.refreshPopupConfig();
+                myDrop.close();
+            });
     }
 }

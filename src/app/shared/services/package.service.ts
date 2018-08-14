@@ -206,7 +206,7 @@ export class PackageService {
     page: number | string,
     pageSize: number | string
   ): Observable<PagedResult<PackageListItem>> {
-    const searchUrl = `bidopportunity/${page}/${pageSize}?searchTerm=`;
+    const searchUrl = `bidopportunity/filter/${page}/${pageSize}?searchTerm=`;
     return this.instantSearchService.searchWithFilter(
       searchUrl,
       terms,
@@ -552,39 +552,52 @@ export class PackageService {
       .share();
   }
 
+  // Lưu cấu hình màn hình hiển thị danh sách gói thầu
+  updateFieldConfigs(listField: FieldModel[], userId: number) {
+    const url = `bidopportunity/fieldconfigs/update`;
+    const model = {
+      userId: userId,
+      entityFields: listField,
+    };
+    return this.apiService.post(url, model)
+      .map(response => response.result);
+  }
+
   // Create New Customer
   createCustomer(customer: any) {
     const url = `customer/create`;
     const model = {
-        name: customer.name,
-        website: customer.website,
-        email: customer.email,
-        phone: customer.phone,
-        taxNumber: customer.taxNumber,
-        stockCode: customer.stockCode,
-        startWorkingFromDate: moment(customer.startWorkingFromDate).unix(),
-        type: customer.type,
-        address: customer.address,
-        assignedEmployeeID: customer.assignedEmployeeID,
-        customerContactId: customer.customerContactId && customer.customerContactId.id,
-        business: customer.business,
-        customerGroup: customer.customerGroup,
-        classify: customer.classify,
-        evaluate: customer.evaluate,
-        revenueDueYear: customer.revenueDueYear,
-        establishmentDate: moment(customer.establishmentDate).unix(),
-        description: customer.description,
-        isPosted: customer.isPosted,
-        role: customer.role,
-        manageDepartmentName: customer.manageDepartmentName,
-        manageDepartmentPhone: customer.manageDepartmentPhone,
-        district: customer.district,
-        city: customer.city,
-        country: customer.country
+      name: customer.name,
+      website: customer.website,
+      email: customer.email,
+      phone: customer.phone,
+      taxNumber: customer.taxNumber,
+      stockCode: customer.stockCode,
+      startWorkingFromDate: moment(customer.startWorkingFromDate).unix(),
+      type: customer.type,
+      address: customer.address,
+      assignedEmployeeID: customer.assignedEmployeeID,
+      customerContactId: customer.customerContactId && customer.customerContactId.id,
+      business: customer.business,
+      customerGroup: customer.customerGroup,
+      classify: customer.classify,
+      evaluate: customer.evaluate,
+      revenueDueYear: customer.revenueDueYear,
+      establishmentDate: moment(customer.establishmentDate).unix(),
+      description: customer.description,
+      isPosted: customer.isPosted,
+      role: customer.role,
+      manageDepartmentName: customer.manageDepartmentName,
+      manageDepartmentPhone: customer.manageDepartmentPhone,
+      district: customer.district,
+      city: customer.city,
+      country: customer.country
     };
     return this.apiService
-        .post(url, model)
-        .map( response => response.result);
+      .post(url, model)
+      .map(response => response.result);
 
-}
+  }
+
+
 }
