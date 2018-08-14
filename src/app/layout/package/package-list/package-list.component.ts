@@ -64,6 +64,7 @@ export class PackageListComponent implements OnInit, AfterViewChecked {
     userListItem: UserItemModel[];
     user: UserModel;
     listField: FieldModel[];
+    sum;
     constructor(
         private activityService: ActivityService,
         private alertService: AlertService,
@@ -119,6 +120,7 @@ export class PackageListComponent implements OnInit, AfterViewChecked {
         window.scrollTo(0, 0);
         this.packageService.getListFields(this.getUserId).subscribe(data => {
             this.listField = data;
+            this.sum = [...this.listField].filter(x => x.hidden === true).length;
             console.log( this.listField);
         });
         this.listClassifyCustomer = this.dataService.getListOpportunityClassifies();
