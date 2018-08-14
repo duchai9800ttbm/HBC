@@ -27,7 +27,7 @@ export class PackageService {
     urlFilterParams.append('projectName', filter.projectName);
     urlFilterParams.append('opportunityClassify', filter.opportunityClassify);
     urlFilterParams.append('stage', filter.stage);
-    urlFilterParams.append('hbcChair', filter.hbcChair);
+    urlFilterParams.append('chairEmployeeId', filter.chairEmployeeId);
     urlFilterParams.append('minCost', filter.minCost ? filter.minCost.toString() : '');
     urlFilterParams.append('maxCost', filter.maxCost ? filter.maxCost.toString() : '');
     urlFilterParams.append('sorting', filter.sorting);
@@ -103,7 +103,7 @@ export class PackageService {
     page: number | string,
     pageSize: number | string
   ): Observable<PagedResult<PackageListItem>> {
-    const filterUrl = `bidopportunity/${page}/${pageSize}?searchTerm=`;
+    const filterUrl = `bidopportunity/filter/${page}/${pageSize}?searchTerm=`;
     const urlParams = PackageService.createFilterParams(filter);
     urlParams.append('search', searchTerm);
     console.log('urlParams', urlParams);
