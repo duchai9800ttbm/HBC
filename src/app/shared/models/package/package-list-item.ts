@@ -14,7 +14,10 @@ export class PackageListItem {
     hbcChair: string;
     trimester: string;
     magnitude: string;
-    stage: string;
+    stage: {
+        id: string;
+        text: string;
+    };
     stageStatus: string;
     location: string;
     projectNo: string;

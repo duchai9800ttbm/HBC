@@ -51,7 +51,10 @@ export class PackageService {
       hbcChair: result.hbcChair,
       trimester: result.trimester,
       magnitude: result.magnitude,
-      stage: result.stage,
+      stage: result.stage && {
+        id: result.stage.key,
+        text: result.stage.value
+      },
       stageStatus: result.stageStatus,
       location: result.location,
       projectNo: result.projectNo,
