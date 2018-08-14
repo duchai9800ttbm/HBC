@@ -23,7 +23,7 @@ export class AddUserComponent implements OnInit {
     firstName: '',
     lastName: '',
     userGroupId: '',
-    department: '',
+    departmentId: '',
     password: '',
     rePassword: '',
   };
@@ -121,9 +121,9 @@ export class AddUserComponent implements OnInit {
         lastName: this.formAddUser.value.lastName,
         firstName: this.formAddUser.value.firstName,
         password: this.formAddUser.value.password,
-        departmentId: this.formAddUser.value.departmentId,
-        levelId: this.formAddUser.value.levelId,
-        userGroupId: this.formAddUser.value.userGroupId,
+        departmentId: this.formAddUser.value.departmentId ? this.formAddUser.value.departmentId : 0,
+        levelId: this.formAddUser.value.levelId ? this.formAddUser.value.levelId : 0,
+        userGroupId: this.formAddUser.value.userGroupId ? this.formAddUser.value.userGroupId : 0,
         isActive: this.isCheckbox
       };
       console.log('AddUser', dataUser);
@@ -148,6 +148,7 @@ export class AddUserComponent implements OnInit {
       this.formAddUser,
       this.formErrors,
     );
+    console.log('this.invalidMessages', this.invalidMessages);
     return this.invalidMessages.length === 0;
   }
 

@@ -45,7 +45,7 @@ export class EditUserComponent implements OnInit {
     email: '',
     firstName: '',
     lastName: '',
-    department: '',
+    departmentId: '',
   };
   seft = this;
   formEditUser: FormGroup;
