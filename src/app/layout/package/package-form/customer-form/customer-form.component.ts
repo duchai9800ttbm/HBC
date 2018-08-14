@@ -26,7 +26,8 @@ export class CustomerFormComponent implements OnInit {
         manageDepartmentPhone: '',
         email: '',
         taxNumber: '',
-
+        type: '',
+        customerContactId: ''
     };
     customer = new CustomerModel();
     rating = 0;
@@ -84,7 +85,7 @@ export class CustomerFormComponent implements OnInit {
             customerContactId: [this.customer.customerContactId],
             business: [this.customer.business],
             customerGroup: this.customer.customerGroup,
-            classify: [this.customer.classify],
+            // classify: [this.customer.classify],
             evaluate: [this.customer.evaluate],
             revenueDueYear: [this.customer.revenueDueYear],
             establishmentDate: this.customer.establishmentDate,
@@ -108,13 +109,15 @@ export class CustomerFormComponent implements OnInit {
     }
     submitForm() {
         this.isSubmitted = true;
-
+       // rating component cannot using with reactive form, so manually set value
+       this.customerForm.get('evaluate').patchValue(this.rating);
         if (this.validateForm()) {
             this.packageService
                 .createCustomer(this.customerForm.value)
                 .subscribe(result => {
-                    const message = 'Khách hàng đã được tạo.';
-                    this.alertService.success(message);
+                    // const message = 'Khách hàng đã được tạo.';
+                    this.closed.emit(true);
+                    // this.alertService.success(message);
                 });
         }
 

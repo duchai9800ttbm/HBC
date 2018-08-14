@@ -507,7 +507,7 @@ export class PackageService {
   }
   // Liên hệ khách hàng - Màn hình tạo mới gói thầu
   getListCustomercontact(searchTerm: string): Observable<any> {
-    const url = `customercontact/1/10/?searchTerm=${searchTerm}`;
+    const url = `customercontact/0/10/?searchTerm=${searchTerm}`;
     return this.apiService.get(url)
       .map(response => {
         return response.result.items.map(x => {
@@ -522,7 +522,7 @@ export class PackageService {
 
   //
   getListCustomer(searchTerm: string): Observable<any> {
-    const url = `customer/search/1/10/?searchTerm=${searchTerm}`;
+    const url = `customer/search/0/10/?searchTerm=${searchTerm}`;
     return this.apiService.get(url)
       .map(response => {
         return response.result.items.map(x => {
@@ -551,4 +551,40 @@ export class PackageService {
       })
       .share();
   }
+
+  // Create New Customer
+  createCustomer(customer: any) {
+    const url = `customer/create`;
+    const model = {
+        name: customer.name,
+        website: customer.website,
+        email: customer.email,
+        phone: customer.phone,
+        taxNumber: customer.taxNumber,
+        stockCode: customer.stockCode,
+        startWorkingFromDate: moment(customer.startWorkingFromDate).unix(),
+        type: customer.type,
+        address: customer.address,
+        assignedEmployeeID: customer.assignedEmployeeID,
+        customerContactId: customer.customerContactId && customer.customerContactId.id,
+        business: customer.business,
+        customerGroup: customer.customerGroup,
+        classify: customer.classify,
+        evaluate: customer.evaluate,
+        revenueDueYear: customer.revenueDueYear,
+        establishmentDate: moment(customer.establishmentDate).unix(),
+        description: customer.description,
+        isPosted: customer.isPosted,
+        role: customer.role,
+        manageDepartmentName: customer.manageDepartmentName,
+        manageDepartmentPhone: customer.manageDepartmentPhone,
+        district: customer.district,
+        city: customer.city,
+        country: customer.country
+    };
+    return this.apiService
+        .post(url, model)
+        .map( response => response.result);
+
+}
 }
