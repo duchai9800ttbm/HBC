@@ -188,7 +188,7 @@ export class PackageListComponent implements OnInit, AfterViewChecked {
             'Bạn có chắc chắn muốn xóa gói thầu này?',
             () => {
                 this.packageService.deleteOpportunity(deleteIds).subscribe(result => {
-             
+
                     that.alertService.success('Đã xóa gói thầu!');
                     that.refresh();
                 },
