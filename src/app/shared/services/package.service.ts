@@ -11,6 +11,7 @@ import { InstantSearchService } from './instant-search.service';
 import { PagedResult } from '../models/paging-result.model';
 import { ApiService } from './api.service';
 import { PackageModel } from '../models/package/package.model';
+import { FieldModel } from '../models/package/field.model';
 @Injectable()
 export class PackageService {
 
@@ -535,7 +536,7 @@ export class PackageService {
   }
 
   // Lấy cấu hình màn hình hiển thị danh sách gói thầu
-  getListFields(userId: number): Observable<any> {
+  getListFields(userId: number): Observable<FieldModel[]> {
     const url = `bidopportunity/user/${userId}/fields`;
     return this.apiService.get(url)
       .map(response => {

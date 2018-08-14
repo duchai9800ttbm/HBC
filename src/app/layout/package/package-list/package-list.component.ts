@@ -29,6 +29,7 @@ import { PackageFilter } from '../../../shared/models/package/package-filter.mod
 import { ObjectInforPackage } from '../../../shared/models/package/object-infoPackage';
 import { UserItemModel } from '../../../shared/models/user/user-item.model';
 import { UserModel } from '../../../shared/models/user/user.model';
+import { FieldModel } from '../../../shared/models/package/field.model';
 @Component({
     selector: 'app-package-list',
     templateUrl: './package-list.component.html',
@@ -62,6 +63,7 @@ export class PackageListComponent implements OnInit, AfterViewChecked {
     listNameProjectListPackage = NameProjectListPackage;
     userListItem: UserItemModel[];
     user: UserModel;
+    listField: FieldModel[];
     constructor(
         private activityService: ActivityService,
         private alertService: AlertService,
@@ -116,7 +118,8 @@ export class PackageListComponent implements OnInit, AfterViewChecked {
     ngOnInit() {
         window.scrollTo(0, 0);
         this.packageService.getListFields(this.getUserId).subscribe(data => {
-            console.log(data);
+            this.listField = data;
+            console.log( this.listField);
         });
         this.listClassifyCustomer = this.dataService.getListOpportunityClassifies();
         this.listPhasePackage = this.dataService.getListBidOpportunityStages();
