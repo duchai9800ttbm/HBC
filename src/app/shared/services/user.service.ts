@@ -19,6 +19,11 @@ export class UserService {
         return this.sessionService.currentUser.userId;
     }
 
+    get getUserId() {
+        return this.sessionService.currentUser.userId;
+
+    }
+
     private static toUserModel(result: any): UserModel {
         return {
             id: result.id,
@@ -221,16 +226,16 @@ export class UserService {
     searchListUser(searchTerm: string): Observable<any> {
         const url = `user/search/?searchTerm=${searchTerm}`;
         return this.apiService.get(url)
-          .map(response => {
-            return response.result.map(x => {
-              return {
-                id: x.employeeId,
-                text: x.employeeName,
-              };
-            });
-          })
-          .share();
-      }
+            .map(response => {
+                return response.result.map(x => {
+                    return {
+                        id: x.employeeId,
+                        text: x.employeeName,
+                    };
+                });
+            })
+            .share();
+    }
     // Lọc người dùng (theo vai trò)
     getListUser(
         roles: string,

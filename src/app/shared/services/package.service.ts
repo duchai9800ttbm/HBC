@@ -533,4 +533,21 @@ export class PackageService {
       })
       .share();
   }
+
+  // Lấy cấu hình màn hình hiển thị danh sách gói thầu
+  getListFields(userId: number): Observable<any> {
+    const url = `bidopportunity/user/${userId}/fields`;
+    return this.apiService.get(url)
+      .map(response => {
+        return response.result.map(x => {
+          return {
+            id: x.id,
+            fieldName: x.fieldName,
+            fieldCaption: x.fieldCaption,
+            hidden: x.hidden
+          };
+        });
+      })
+      .share();
+  }
 }
