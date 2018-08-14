@@ -121,7 +121,6 @@ export class PackageListComponent implements OnInit, AfterViewChecked {
         this.packageService.getListFields(this.getUserId).subscribe(data => {
             this.listField = data;
             this.sum = [...this.listField].filter(x => x.hidden === true).length;
-            console.log( this.listField);
         });
         this.listClassifyCustomer = this.dataService.getListOpportunityClassifies();
         this.listPhasePackage = this.dataService.getListBidOpportunityStages();
@@ -133,15 +132,6 @@ export class PackageListComponent implements OnInit, AfterViewChecked {
         this.filterModel.hbcChair = '';
         this.dtOptions = DATATABLE_CONFIG;
         this.createForm();
-        // this.spinner.show();
-        // this.packageService
-        //     .instantSearchWithFilter(this.searchTerm$, this.filterModel, 0, 10)
-        //     .subscribe(result => {
-        //         this.rerender(result);
-        //         this.spinner.hide();
-        //     }, err => {
-        //         this.spinner.hide();
-        //     });
 
     }
     ngAfterViewChecked() {
