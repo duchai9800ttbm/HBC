@@ -1,17 +1,18 @@
 <div class="boder-table back-ground-table">
   <div class="table-body">
-    <div class="row">
+    <div class="row menu">
       <div class="col-md-6">
-        <h4 class="text-head-user">Chọn người dùng để thay đổi</h4>
+        <h4 class="text-head-user">Danh sách người dùng</h4>
       </div>
       <div class="col-md-6">
         <div class="btn-toolbar pull-right">
-          <div class="input-group btn-rg">
+          <!-- <div class="input-group btn-rg">
             <span class="input-group-addon">Tìm kiếm</span>
             <input type="text" class="form-control icon" placeholder="&#xf002; Nhập tên, email,..." (keyup)="searchTerm$.next($event.target.value)">
-          </div>
+          </div> -->
           <button type="button" class="btn btn-primary btn-rg pull-right" [routerLink]="['../add-user']">
-            <i class="fa fa-plus" aria-hidden="true"></i> Thêm mới người dùng
+            <!-- <i class="fa fa-plus" aria-hidden="true"></i>  -->
+            Tạo mới
           </button>
           <button type="button" class="btn btn-primary btn-rg pull-right" (click)="loadPage()">
             <i class="fa fa-refresh" aria-hidden="true"></i>
@@ -22,7 +23,7 @@
         </div>
       </div>
     </div>
-    <div class="data-list">
+    <div class="data-list menu">
       <kendo-grid [data]="pagedResult.items" [selectable]="true" [loading]="gridLoading">
         <kendo-grid-checkbox-column [headerClass]="'custom-table-header'" [width]="40">
           <ng-template kendoGridHeaderTemplate let-dataItem let-rowIndex="rowIndex">
