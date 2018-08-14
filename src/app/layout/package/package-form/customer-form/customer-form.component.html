@@ -26,15 +26,15 @@
                                 <tr>
                                     <td class="w-15 bg-light text-right label required no-boder">Tên khách hàng</td>
                                     <td class="w-35 no-boder">
-                                        <input class="w-75 form-control" tabindex="1" type="text" formControlName="nameCustomer" [class.is-invalid]="formErrors.nameCustomer">
-                                        <div class="invalid-feedback" *ngIf="formErrors.nameCustomer">
-                                            {{formErrors.nameCustomer}}
+                                        <input class="w-75 form-control" tabindex="1" type="text" formControlName="name" [class.is-invalid]="formErrors.name">
+                                        <div class="invalid-feedback" *ngIf="formErrors.name">
+                                            {{formErrors.name}}
                                         </div>
                                     </td>
                                     <td class="w-15 bg-light text-right label no-boder">Đánh giá</td>
                                     <td class="w-35 no-boder">
                                         <div style="display: flex; justify-content: flex-start; align-items: start">
-                                            <star-rating-comp class="w-75" [starType]="'svg'" [(rating)]="rating" (onRatingChange)="onRatingChange($event)"></star-rating-comp>
+                                            <star-rating-comp class="w-75" [starType]="'svg'" [(rating)]="evaluate" (onRatingChange)="onRatingChange($event)"></star-rating-comp>
                                         </div>
                                         <!-- <input class="w-75 form-control" autofocus tabindex="1"  type="text" formControlName="rating"> -->
                                     </td>
@@ -42,38 +42,44 @@
                                 <tr>
                                     <td class="w-15 bg-light text-right label no-boder">Website</td>
                                     <td class="w-35 no-boder">
-                                        <input class="w-75 form-control" tabindex="1" type="text" formControlName="website">
+                                        <input class="w-75 form-control" tabindex="1" type="text" formControlName="website" [class.is-invalid]="formErrors.website">
+                                        <div class="invalid-feedback" *ngIf="formErrors.website">
+                                            {{formErrors.website}}
+                                        </div>
                                     </td>
                                     <td class="w-15 bg-light text-right label no-boder">Doanh thu hàng năm</td>
                                     <td class="w-35 no-boder">
-                                        <input class="w-75 form-control" tabindex="1" type="text" formControlName="listing">
+                                        <input class="w-75 form-control" tabindex="1" type="text" formControlName="revenueDueYear">
                                     </td>
                                 </tr>
                                 <tr>
                                     <td class="w-15 bg-light text-right label no-boder">Email</td>
                                     <td class="w-35 no-boder">
-                                        <input class="w-75 form-control" tabindex="1" type="text" formControlName="email">
+                                        <input class="w-75 form-control" tabindex="1" type="text" formControlName="email" [class.is-invalid]="formErrors.email">
+                                        <div class="invalid-feedback" *ngIf="formErrors.email">
+                                            {{formErrors.email}}
+                                        </div>
                                     </td>
                                     <td class="w-15 bg-light text-right label no-boder">Đã niêm yết</td>
                                     <td class="w-35 no-boder">
                                         <div style="display: flex; justify-content: flex-start; align-items: start">
-                                            <input style="zoom: 1.5;" tabindex="1" type="checkbox" formControlName="listing">
+                                            <input style="zoom: 1.5;" tabindex="1" type="checkbox" formControlName="isPosted">
                                         </div>
 
                                     </td>
                                 </tr>
                                 <tr>
-                                    <td class="w-15 bg-light text-right label no-boder">Điện thoại chính</td>
+                                    <td class="w-15 bg-light text-right required label no-boder">Điện thoại chính</td>
                                     <td class="w-35 no-boder">
-                                        <input class="w-75 form-control" [class.is-invalid]="formErrors.mainPhone" tabindex="1" type="text" formControlName="mainPhone">
-                                        <div class="invalid-feedback" *ngIf="formErrors.mainPhone">
-                                            {{formErrors.mainPhone}}
+                                        <input appInputNumber class="w-75 form-control" [class.is-invalid]="formErrors.phone" tabindex="1" type="text" formControlName="phone">
+                                        <div class="invalid-feedback" *ngIf="formErrors.phone">
+                                            {{formErrors.phone}}
                                         </div>
                                     </td>
                                     <td class="w-15 bg-light text-right label no-boder">Làm việc với HBC từ</td>
                                     <td class="w-35 no-boder">
                                         <div class="input-group w-75">
-                                            <owl-date-time [readonlyInput]="datePickerConfig.readonlyInput" [locale]="datePickerConfig.vi" formControlName="startDateWithHBC"
+                                            <owl-date-time [readonlyInput]="datePickerConfig.readonlyInput" [locale]="datePickerConfig.vi" formControlName="startWorkingFromDate"
                                                 [placeHolder]="datePickerConfig.placeHolderVn">
                                             </owl-date-time>
                                             <span class="input-group-addon center-parent" style="min-width: 40.5px!important;">
@@ -85,14 +91,17 @@
                                 <tr>
                                     <td class="w-15 bg-light text-right label no-boder">Mã số thuế</td>
                                     <td class="w-35 no-boder">
-                                        <input class="w-75 form-control" tabindex="1" type="text" formControlName="taxCode">
+                                        <input class="w-75 form-control" tabindex="1" type="text" formControlName="taxNumber" [class.is-invalid]="formErrors.taxNumber">
+                                        <div class="invalid-feedback" *ngIf="formErrors.taxNumber">
+                                            {{formErrors.taxNumber}}
+                                        </div>
                                     </td>
                                     <td class="w-15 bg-light text-right label no-boder">Vai trò với HBC</td>
                                     <td class="w-35 no-boder">
                                         <span class="custom-dropdown w-75">
-                                            <select class="form-control" tabindex="5" formControlName="roleWithHBC">
+                                            <select class="form-control" tabindex="5" formControlName="role">
                                                 <option [ngValue]="null">--Chọn--</option>
-                                                <option *ngFor="let item of listRoleWithHBC" [value]="item.id">{{item.text }}</option>
+                                                <option *ngFor="let item of listRoleWithHBC | async" [value]="item.id">{{item.text }}</option>
                                             </select>
                                         </span>
                                     </td>
@@ -110,14 +119,14 @@
                                     </td>
                                     <td class="w-15 bg-light text-right label no-boder">Phòng ban quản lý</td>
                                     <td class="w-35 no-boder">
-                                        <input class="w-75 form-control" tabindex="1" type="text" formControlName="managementDepartment">
+                                        <input class="w-75 form-control" tabindex="1" type="text" formControlName="manageDepartmentName">
                                     </td>
                                 </tr>
                                 <tr>
                                     <td class="w-15 bg-light text-right label no-boder">Ngày thành lập</td>
                                     <td class="w-35 no-boder">
                                         <div class="input-group w-75">
-                                            <owl-date-time [readonlyInput]="datePickerConfig.readonlyInput" [locale]="datePickerConfig.vi" formControlName="foundingDate"
+                                            <owl-date-time [readonlyInput]="datePickerConfig.readonlyInput" [locale]="datePickerConfig.vi" formControlName="establishmentDate"
                                                 [placeHolder]="datePickerConfig.placeHolderVn">
                                             </owl-date-time>
                                             <span class="input-group-addon center-parent" style="min-width: 40.5px!important;">
@@ -127,10 +136,10 @@
                                     </td>
                                     <td class="w-15 bg-light text-right label no-boder">Số điện thoại PBQL</td>
                                     <td class="w-35 no-boder">
-                                        <input class="w-75 form-control" [class.is-invalid]="formErrors.phoneManagementBoard" appInputNumber tabindex="1" type="text"
-                                            formControlName="phoneManagementBoard">
-                                        <div class="invalid-feedback" *ngIf="formErrors.phoneManagementBoard">
-                                            {{formErrors.phoneManagementBoard}}
+                                        <input appInputNumber class="w-75 form-control" [class.is-invalid]="formErrors.manageDepartmentPhone"  tabindex="1" type="text"
+                                            formControlName="manageDepartmentPhone">
+                                        <div class="invalid-feedback" *ngIf="formErrors.manageDepartmentPhone">
+                                            {{formErrors.manageDepartmentPhone}}
                                         </div>
                                     </td>
                                 </tr>
@@ -138,9 +147,9 @@
                                     <td class="w-15 bg-light text-right label no-boder">Phân công cho</td>
                                     <td class="w-35 no-boder">
                                         <span class="custom-dropdown w-75">
-                                            <select class="form-control" tabindex="5" formControlName="assignedTo">
+                                            <select class="form-control" tabindex="5" formControlName="assignedEmployeeID">
                                                 <option [ngValue]="null">--Chọn--</option>
-                                                <option *ngFor="let item of listAssignedTo" [value]="item.id">{{item.text }}</option>
+                                                <option *ngFor="let item of userListItem" [value]="item.employeeId">{{ item.employeeName }}</option>
                                             </select>
                                         </span>
                                     </td>
@@ -150,10 +159,10 @@
                                     </td>
                                 </tr>
                                 <tr>
-                                    <td class="w-15 bg-light text-right label no-boder">Liên hệ</td>
+                                    <td class="w-15 bg-light text-right required label no-boder">Liên hệ</td>
                                     <td class="w-75 no-boder">
                                         <div class="w-75 autocomplete-wrapper-2 ui-fluid">
-                                            <p-autoComplete formControlName="contact" [suggestions]="contactsSearchResults" [forceSelection]="true" [delay]="'400'" [emptyMessage]="'Không có dữ liệu'"
+                                            <p-autoComplete formControlName="customerContactId" [suggestions]="contactsSearchResults" [forceSelection]="true" [delay]="'400'" [emptyMessage]="'Không có dữ liệu'"
                                                 placeholder="---Chọn---" [immutable]="true" (completeMethod)="searchContacts($event.query)"
                                                 field="text" dataKey="id" [multiple]="false" [tabindex]="'5'">
 
@@ -165,14 +174,14 @@
                                     </td>
                                     <td class="w-15 bg-light text-right label no-boder">Quận</td>
                                     <td class="w-35 no-boder">
-                                        <input class="w-75 form-control" tabindex="1" type="text" formControlName="county">
+                                        <input class="w-75 form-control" tabindex="1" type="text" formControlName="district">
                                     </td>
                                 </tr>
                                 <tr>
                                     <td class="w-15 bg-light text-right label no-boder">Ngành nghề</td>
                                     <td class="w-35 no-boder">
                                         <span class="custom-dropdown w-75">
-                                            <select class="form-control" tabindex="5" formControlName="career">
+                                            <select class="form-control" tabindex="5" formControlName="business">
                                                 <option value="">--Chọn--</option>
                                                 <option *ngFor="let item of listCareer | async" [value]="item.id">{{item.text }}</option>
                                             </select>
@@ -187,7 +196,7 @@
                                     <td class="w-15 bg-light text-right label no-boder">Nhóm</td>
                                     <td class="w-35 no-boder">
                                         <span class="custom-dropdown w-75">
-                                            <select class="form-control" tabindex="5" formControlName="group">
+                                            <select class="form-control" tabindex="5" formControlName="customerGroup">
                                                 <option value="">--Chọn--</option>
                                                 <option *ngFor="let item of listGroup | async" [value]="item.id">{{item.text }}</option>
                                             </select>
@@ -195,14 +204,14 @@
                                     </td>
                                     <td class="w-15 bg-light text-right label no-boder">Quốc gia</td>
                                     <td class="w-35 no-boder">
-                                        <input class="w-75 form-control" tabindex="1" type="text" formControlName="nation">
+                                        <input class="w-75 form-control" tabindex="1" type="text" formControlName="country">
                                     </td>
                                 </tr>
                                 <tr>
-                                    <td class="w-15 bg-light text-right label no-boder">Phân loại</td>
+                                    <td class="w-15 bg-light text-right required label no-boder">Phân loại</td>
                                     <td class="w-35 no-boder">
                                         <span class="custom-dropdown w-75">
-                                            <select class="form-control" tabindex="5" formControlName="classify">
+                                            <select class="form-control" tabindex="5" formControlName="type" [class.is-invalid]="formErrors.type">
                                                 <option value="">--Chọn--</option>
                                                 <option *ngFor="let item of listClassify | async" [value]="item.id">{{item.text }}</option>
                                             </select>

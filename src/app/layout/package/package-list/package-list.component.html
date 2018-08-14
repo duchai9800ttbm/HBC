@@ -85,211 +85,23 @@
                     <div>Cột</div>
                 </div>
                 <div class="dropdown-menu" style="" ngbDropdownMenu (click)="$event.stopPropagation();" (blur)="resetDefaultState()">
-                    <div class="popup-dynamic-col" style="min-width: 450px; min-height: 300px;">
-                        <div class="">10/20 cột được chọn</div>
+                    <div class="popup-dynamic-col" style="min-width: 600px; min-height: 300px;">
+                        <div class="">{{sum}}/{{listField?.length}} cột được chọn</div>
                         <hr>
                         <div style="height: 160px;">
                             <div class="wrapper">
-                                <div class="form-check-inline">
+                                <div class="form-check-inline" *ngFor="let item of listField">
                                     <div class="d-flex">
                                         <div style="margin-top: 2px;">
-                                            <input type="checkbox" value="">
+                                            <input type="checkbox" [(ngModel)]="item.hidden">
                                         </div>
-                                        <div class=""> &nbsp;Tên dự án</div>
+                                        <div class=""> &nbsp;{{item.fieldCaption}}</div>
                                     </div>
                                 </div>
-                                <div class="form-check-inline">
-                                    <div class="d-flex">
-                                        <div style="margin-top: 2px;">
-                                            <input type="checkbox" value="">
-                                        </div>
-                                        <div class=""> &nbsp;Gói thầu</div>
-                                    </div>
-                                </div>
-                                <div class="form-check-inline">
-                                    <div class="d-flex">
-                                        <div style="margin-top: 2px;">
-                                            <input type="checkbox" value="">
-                                        </div>
-                                        <div class=""> &nbsp;Vai trò HBC</div>
-                                    </div>
-                                </div>
-                                <div class="form-check-inline">
-                                    <div class="d-flex">
-                                        <div style="margin-top: 2px;">
-                                            <input type="checkbox" value="">
-                                        </div>
-                                        <div class=""> &nbsp;Tên dự án</div>
-                                    </div>
-                                </div>
-                                <div class="form-check-inline">
-                                    <div class="d-flex">
-                                        <div style="margin-top: 2px;">
-                                            <input type="checkbox" value="">
-                                        </div>
-                                        <div class=""> &nbsp;Gói thầu</div>
-                                    </div>
-                                </div>
-                                <div class="form-check-inline">
-                                    <div class="d-flex">
-                                        <div style="margin-top: 2px;">
-                                            <input type="checkbox" value="">
-                                        </div>
-                                        <div class=""> &nbsp;Vai trò HBC</div>
-                                    </div>
-                                </div>
-                                <div class="form-check-inline">
-                                    <div class="d-flex">
-                                        <div style="margin-top: 2px;">
-                                            <input type="checkbox" value="">
-                                        </div>
-                                        <div class=""> &nbsp;Tên dự án</div>
-                                    </div>
-                                </div>
-                                <div class="form-check-inline">
-                                    <div class="d-flex">
-                                        <div style="margin-top: 2px;">
-                                            <input type="checkbox" value="">
-                                        </div>
-                                        <div class=""> &nbsp;Gói thầu</div>
-                                    </div>
-                                </div>
-                                <div class="form-check-inline">
-                                    <div class="d-flex">
-                                        <div style="margin-top: 2px;">
-                                            <input type="checkbox" value="">
-                                        </div>
-                                        <div class=""> &nbsp;Vai trò HBC</div>
-                                    </div>
-                                </div>
-                                <div class="form-check-inline">
-                                    <div class="d-flex">
-                                        <div style="margin-top: 2px;">
-                                            <input type="checkbox" value="">
-                                        </div>
-                                        <div class=""> &nbsp;Tên dự án</div>
-                                    </div>
-                                </div>
-                                <div class="form-check-inline">
-                                    <div class="d-flex">
-                                        <div style="margin-top: 2px;">
-                                            <input type="checkbox" value="">
-                                        </div>
-                                        <div class=""> &nbsp;Gói thầu</div>
-                                    </div>
-                                </div>
-                                <div class="form-check-inline">
-                                    <div class="d-flex">
-                                        <div style="margin-top: 2px;">
-                                            <input type="checkbox" value="">
-                                        </div>
-                                        <div class=""> &nbsp;Vai trò HBC</div>
-                                    </div>
-                                </div>
-                                <div class="form-check-inline">
-                                    <div class="d-flex">
-                                        <div style="margin-top: 2px;">
-                                            <input type="checkbox" value="">
-                                        </div>
-                                        <div class=""> &nbsp;Tên dự án</div>
-                                    </div>
-                                </div>
-                                <div class="form-check-inline">
-                                    <div class="d-flex">
-                                        <div style="margin-top: 2px;">
-                                            <input type="checkbox" value="">
-                                        </div>
-                                        <div class=""> &nbsp;Gói thầu</div>
-                                    </div>
-                                </div>
-                                <div class="form-check-inline">
-                                    <div class="d-flex">
-                                        <div style="margin-top: 2px;">
-                                            <input type="checkbox" value="">
-                                        </div>
-                                        <div class=""> &nbsp;Vai trò HBC</div>
-                                    </div>
-                                </div>
-                                <div class="form-check-inline">
-                                    <div class="d-flex">
-                                        <div style="margin-top: 2px;">
-                                            <input type="checkbox" value="">
-                                        </div>
-                                        <div class=""> &nbsp;Tên dự án</div>
-                                    </div>
-                                </div>
-                                <div class="form-check-inline">
-                                    <div class="d-flex">
-                                        <div style="margin-top: 2px;">
-                                            <input type="checkbox" value="">
-                                        </div>
-                                        <div class=""> &nbsp;Gói thầu</div>
-                                    </div>
-                                </div>
-                                <div class="form-check-inline">
-                                    <div class="d-flex">
-                                        <div style="margin-top: 2px;">
-                                            <input type="checkbox" value="">
-                                        </div>
-                                        <div class=""> &nbsp;Vai trò HBC</div>
-                                    </div>
-                                </div>
-                                <div class="form-check-inline">
-                                    <div class="d-flex">
-                                        <div style="margin-top: 2px;">
-                                            <input type="checkbox" value="">
-                                        </div>
-                                        <div class=""> &nbsp;Tên dự án</div>
-                                    </div>
-                                </div>
-                                <div class="form-check-inline">
-                                    <div class="d-flex">
-                                        <div style="margin-top: 2px;">
-                                            <input type="checkbox" value="">
-                                        </div>
-                                        <div class=""> &nbsp;Gói thầu</div>
-                                    </div>
-                                </div>
-                                <div class="form-check-inline">
-                                    <div class="d-flex">
-                                        <div style="margin-top: 2px;">
-                                            <input type="checkbox" value="">
-                                        </div>
-                                        <div class=""> &nbsp;Vai trò HBC</div>
-                                    </div>
-                                </div>
-                                <div class="form-check-inline">
-                                    <div class="d-flex">
-                                        <div style="margin-top: 2px;">
-                                            <input type="checkbox" value="">
-                                        </div>
-                                        <div class=""> &nbsp;Tên dự án</div>
-                                    </div>
-                                </div>
-                                <div class="form-check-inline">
-                                    <div class="d-flex">
-                                        <div style="margin-top: 2px;">
-                                            <input type="checkbox" value="">
-                                        </div>
-                                        <div class=""> &nbsp;Gói thầu</div>
-                                    </div>
-                                </div>
-                                <div class="form-check-inline">
-                                    <div class="d-flex">
-                                        <div style="margin-top: 2px;">
-                                            <input type="checkbox" value="">
-                                        </div>
-                                        <div class=""> &nbsp;Vai trò HBC</div>
-                                    </div>
-                                </div>
+                              
                             </div>
                         </div>
-                        <!-- <perfect-scrollbar style="max-height: 160px;" [config]="config">
-                                <div>Scrollable content</div>
-                              </perfect-scrollbar> -->
-                        <!-- <div slimScroll width="auto" height="160px" size="7px">
-                            Lorem ipsum dolor sit amet...
-                        </div> -->
+           
                         <hr>
                         <div>
                             <div class="d-flex">
