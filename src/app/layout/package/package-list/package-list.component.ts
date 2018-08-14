@@ -351,7 +351,10 @@ export class PackageListComponent implements OnInit, AfterViewChecked {
 
 
     resetDefaultState() {
-        console.log('nghia kute');
+        this.packageService.getListFieldsDefault()
+        .subscribe(data => {
+            this.listField = data;
+        });
     }
 
     cancel(myDrop) {

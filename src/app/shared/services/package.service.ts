@@ -563,6 +563,25 @@ export class PackageService {
       .map(response => response.result);
   }
 
+  // default config
+  getListFieldsDefault(): Observable<FieldModel[]> {
+    const url = `bidopportunity/defaultfields`;
+    return this.apiService.get(url)
+      .map(response => {
+        return response.result.map(x => {
+          return {
+            id: x.id,
+            fieldName: x.fieldName,
+            fieldCaption: x.fieldCaption,
+            hidden: x.hidden
+          };
+        });
+      })
+      .share();
+  }
+
+
+
   // Create New Customer
   createCustomer(customer: any) {
     const url = `customer/create`;

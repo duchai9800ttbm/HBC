@@ -32,7 +32,7 @@
           </ng-template>
 
         </kendo-grid-checkbox-column>
-        <kendo-grid-column [headerClass]="'custom-table-header'" field="userName" title="Tên đăng nhập" [width]="150">
+        <kendo-grid-column [headerClass]="'custom-table-header'" field="userName" title="Tên đăng nhập" media="(min-width: 80px)" [width]="150">
           <ng-template kendoGridCellTemplate let-dataItem let-rowIndex="rowIndex">
             <div class="cell-username pointer" [routerLink]="['../edit-user/',dataItem.id]">{{dataItem.userName }}</div>
           </ng-template>
@@ -78,7 +78,7 @@
             </div>
           </ng-template>
         </kendo-grid-column>
-        <kendo-grid-column [headerClass]="'custom-table-header'" field="" title="" [width]="90">
+        <kendo-grid-column [headerClass]="'custom-table-header text-center'" field="" title="Thao tác" [width]="90">
           <ng-template kendoGridCellTemplate let-dataItem let-rowIndex="rowIndex">
             <div class="row">
               <div class="col-md-4">
