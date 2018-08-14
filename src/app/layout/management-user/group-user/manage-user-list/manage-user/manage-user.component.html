@@ -98,9 +98,9 @@
       </kendo-grid>
       <app-pagination [(pagedResult)]="pagedResult" (pagedResultChange)="pagedResultChange($event)"></app-pagination> -->
 
-      <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="table-selection stripe hover col-md-12">
+      <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="table-selection stripe hover">
         <thead>
-          <tr>
+          <tr style="width: 100%">
             <th class="text-center" style="width: 15px; padding-left: 7px;">
               <label class="custom-control custom-checkbox">
                 <input type="checkbox" class="custom-control-input input-checkbox" [(ngModel)]="checkboxSeclectAll" (change)="onSelectAll($event.target.checked)">
@@ -112,12 +112,12 @@
                 <div style="margin-right: 10px">Tên đăng nhập</div>
               </div>
             </th>
-            <th style="width: 12%">
+            <th style="width: 14%">
               <div class="d-flex justify-content-start">
                 <div style="margin-right: 10px">Email</div>
               </div>
             </th>
-            <th style="width: 12%">
+            <th style="width: 13%">
               <div class="d-flex justify-content-start">
                 <div style="margin-right: 10px">Phòng ban/Bộ Phận</div>
               </div>
@@ -127,7 +127,7 @@
                 <div style="margin-right: 10px">Vị trí/Chức vụ</div>
               </div>
             </th>
-            <th style="width: 7%">
+            <th style="width: 8%">
               <div class="d-flex justify-content-start">
                 <div style="margin-right: 10px">Tên</div>
               </div>
@@ -143,7 +143,7 @@
             <th style="width: 10%" class="text-center">
               Tình trạng
             </th>
-            <th class="text-center" style="width: calc(18% - 10px);">
+            <th class="text-center" style="width: calc(14% - 10px); min-width: 50px!important;">
               Thao tác
             </th>
           </tr>
