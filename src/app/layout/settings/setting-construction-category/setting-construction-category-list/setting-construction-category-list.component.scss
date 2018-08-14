@@ -13,3 +13,9 @@ input.placeholder-icon {
 .ml--1 {
     margin-left: -0.5rem;
 }
+@media only screen and (max-width: 1024px) {
+    .menu-search{
+       zoom: 0.95;
+    }
+}
+

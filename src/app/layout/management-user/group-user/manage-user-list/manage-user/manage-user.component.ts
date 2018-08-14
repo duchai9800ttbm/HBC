@@ -7,16 +7,18 @@ import { ListUserItem } from '../../../../../shared/models/user/user-list-item.m
 import { AlertService } from '../../../../../shared/services';
 import { PagedResult } from '../../../../../shared/models/paging-result.model';
 import { FormBuilder, FormGroup, FormArray, FormControl, Validators } from '@angular/forms';
-import { BehaviorSubject, Observable } from '../../../../../../../node_modules/rxjs';
+import { BehaviorSubject, Observable, Subject } from '../../../../../../../node_modules/rxjs';
 import 'rxjs/add/operator/map';
 import { DictionaryItem } from '../../../../../shared/models';
-
+import { DATATABLE_CONFIG } from '../../../../../shared/configs';
 @Component({
   selector: 'app-manage-user',
   templateUrl: './manage-user.component.html',
   styleUrls: ['./manage-user.component.scss']
 })
 export class ManageUserComponent implements OnInit {
+  dtOptions: any = DATATABLE_CONFIG;
+  dtTrigger: Subject<any> = new Subject();
   searchTerm$ = new BehaviorSubject<string>('');
   gridLoading = true;
   listUserItem: ListUserItem;
@@ -68,7 +70,14 @@ export class ManageUserComponent implements OnInit {
   }
 
   loadPage() {
-    this.refresh(0, 10);
+    // this.refresh(0, 10);
+    this.gridLoading = true;
+    this.groupUserService.getdataGroupUser(0, 10).subscribe(data => {
+      this.pagedResult = data;
+      this.gridLoading = false;
+      this.alertService.success('Dữ liệu được cập nhật mới nhất!');
+    },
+      err => this.alertService.error('Đã xảy ra lỗi, dữ liệu không được cập nhật'));
   }
 
   pagedResultChange(pagedResult: any) {
@@ -118,4 +127,28 @@ export class ManageUserComponent implements OnInit {
       this.modalRef = this.modalService.show(template);
     });
   }
+
+  onSelectAll(value: boolean) {
+    this.pagedResult.items.forEach(x => (x.checkboxSelected = value));
+  }
+
+  multiDelete() {
+    const deleteIds = this.pagedResult.items
+        .filter(x => x.checkboxSelected)
+        .map(x => x.id);
+    if (deleteIds.length === 0) {
+        this.alertService.error(
+            'Bạn phải chọn ít nhất một đối tượng để xóa!'
+        );
+    } else {
+        console.log('deleteIds', deleteIds);
+        this.groupUserService.deleteMulti({ids: deleteIds}).subscribe( response => {
+          this.refresh(0, 10);
+          this.alertService.success('Xóa nhiều người dùng thành công!');
+        },
+      err => {
+        this.alertService.success('Đã xảy ra lỗi! Xóa nhiều người dùng không thành công!');
+      })
+    }
+}
 }

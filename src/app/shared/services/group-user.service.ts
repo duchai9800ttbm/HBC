@@ -189,6 +189,11 @@ export class GroupUserService implements OnInit {
         };
       });
   }
+  // Xóa nhiều người dùng
+  deleteMulti(arrayIdUser: any): Observable<any> {
+    const url = `user/delete-multi`;
+    return this.apiService.post( url, arrayIdUser);
+  }
 
 
   // User group
