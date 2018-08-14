@@ -194,6 +194,11 @@ export class GroupUserService implements OnInit {
     const url = `user/delete-multi`;
     return this.apiService.post( url, arrayIdUser);
   }
+  // Thay đổi nhóm của User
+  changeGroupUser(userId: number, groupId: number): Observable<any> {
+    const url = `user/${userId}/groups/${groupId}`;
+    return this.apiService.post(url);
+  }
 
 
   // User group
@@ -286,5 +291,7 @@ export class GroupUserService implements OnInit {
     const url = `usergroup/edit`;
     return this.apiService.post(url, groupUser);
   }
+  // Tìm kiếm nhóm người dung theo tên
+  // searchGroupUser()
 }
 

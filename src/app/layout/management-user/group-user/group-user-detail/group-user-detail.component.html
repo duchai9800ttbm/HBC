@@ -167,12 +167,18 @@
         <button type="button" class="btn btn-primary btn-rg pull-right" (click)="openModalDelete(delete)">
           <i class="fa fa-trash-o" aria-hidden="true"></i>
         </button> -->
-        <button type="button" class="btn btn-primary btn-rg pull-right" (click)="refesh()">
-          <i class="fa fa-refresh" aria-hidden="true"></i>
-        </button>
-        <button type="submit" class="btn btn-primary btn-rg w-80 pull-right" [disabled]="loading" (click)="openModalCreate(edit)">
-          Tạo mới
-        </button>
+        <div class="btn-toolbar pull-right">
+          <div class="input-group btn-rg">
+            <span class="input-group-addon">Tìm kiếm</span>
+            <input type="text" class="form-control icon" placeholder="&#xf002; Nhập tên, email,..." (keyup)="searchTerm$.next($event.target.value)">
+          </div>
+          <button type="button" class="btn btn-primary btn-rg pull-right" (click)="refesh()">
+            <i class="fa fa-refresh" aria-hidden="true"></i>
+          </button>
+          <button type="submit" class="btn btn-primary btn-rg w-80 pull-right" [disabled]="loading" (click)="openModalCreate(edit)">
+            Tạo mới
+          </button>
+        </div>
       </div>
     </div>
     <div class="data-list menu" style="padding-top: 10px;">
