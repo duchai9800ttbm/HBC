@@ -9,9 +9,9 @@ import { API_URL } from "../configs";
 import { CustomerListItem, CustomerModel, PagedResult } from "../models";
 import { ApiService, SessionService, InstantSearchService } from "../services";
 import { CustomerFilter } from "../models/customer/customer-filter.model";
-import { ResourceLoader } from "@angular/compiler";
-import DateTimeConvertHelper from "../helpers/datetime-convert-helper";
-import { InvoiceInfo } from "../models/invoice/invoice-info";
+import { ResourceLoader } from '@angular/compiler';
+import DateTimeConvertHelper from '../helpers/datetime-convert-helper';
+import { InvoiceInfo } from '../models/invoice/invoice-info';
 
 @Injectable()
 export class CustomerService {
@@ -45,7 +45,7 @@ export class CustomerService {
 
     createOrUpdate(customer: any) {
         let url = `/employee/${this.employeeId}/customer`;
-        url = customer.id ? url + "/edit" : url;
+        url = customer.id ? url + '/edit' : url;
         const assignTo = Utils.parseAssignTo(customer.assignTo);
 
         const model = {
@@ -81,13 +81,13 @@ export class CustomerService {
             gender: customer.gender,
             lunarBirthday: customer.lunarBirthday,
             employee:
-                assignTo.assignToType === "employee"
+                assignTo.assignToType === 'employee'
                     ? {
                           id: assignTo.assignToId
                       }
                     : null,
             employeeGroup:
-                assignTo.assignToType === "group"
+                assignTo.assignToType === 'group'
                     ? {
                           id: assignTo.assignToId
                       }
@@ -227,7 +227,7 @@ export class CustomerService {
         }/customers/filter/${page}/${pageSize}/`;
 
         const urlParams = CustomerService.createFilterParams(filter);
-        urlParams.append("search", searchTerm);
+        urlParams.append('search', searchTerm);
 
         return this.apiService.get(filterUrl, urlParams).map(response => {
             const result = response.result;
@@ -244,9 +244,9 @@ export class CustomerService {
     // tslint:disable-next-line:member-ordering
     private static createFilterParams(filter: CustomerFilter): URLSearchParams {
         const urlFilterParams = new URLSearchParams();
-        urlFilterParams.append("business", filter.business);
-        urlFilterParams.append("group", filter.group);
-        urlFilterParams.append("evaluate", filter.evaluate);
+        urlFilterParams.append('business', filter.business);
+        urlFilterParams.append('group', filter.group);
+        urlFilterParams.append('evaluate', filter.evaluate);
         return urlFilterParams;
     }
 
@@ -294,7 +294,7 @@ export class CustomerService {
     importFile(file: File) {
         const url = `/employee/${this.employeeId}/customers`;
         const formData = new FormData();
-        formData.append("filePath", file);
+        formData.append('filePath', file);
         return this.apiService
             .postFile(url, formData)
             .map(response => {

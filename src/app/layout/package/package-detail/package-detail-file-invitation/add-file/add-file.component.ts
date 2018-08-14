@@ -42,7 +42,7 @@ export class AddFileComponent implements OnInit {
         text: 'Bản vẽ',
     };
     userListItem: UserItemModel[];
-    bidDocumentListItem: BidDocumentModel[];
+    ListItem: BidDocumentModel[];
     bidDocumentGroupListItem: BidDocumentGroupModel[];
     bidDocumentGroupListItemSearchResult: BidDocumentGroupModel[];
     packageData: PackageModel;
@@ -93,7 +93,7 @@ export class AddFileComponent implements OnInit {
                     break;
                 }
                 default: {
-                    //statements; 
+                    // statements;
                     break;
                 }
             }
@@ -230,10 +230,13 @@ export class AddFileComponent implements OnInit {
     onSelectAll(value: boolean) {
         //    this.pagedResult.items.forEach(x => (x.checkboxSelected = value));
     }
+    sendPending() {
+
+    }
 
     sendEvaluate() {
         if (!this.checkSendEvaluate()) {
-            this.alertService.error('Vui lòng chọn đủ 5 loại tài liệu chính thức');
+            this.alertService.error('Vui lòng chọn một loại tài liệu chính thức');
         } else {
             const that = this;
             this.confirmationService.confirm(
@@ -256,8 +259,8 @@ export class AddFileComponent implements OnInit {
 
     checkSendEvaluate(): boolean {
         const check = this.bidDocumentGroupListItem
-            .every(documentType => documentType.items.some(item => item.status === 'Official'))
-            && this.bidDocumentGroupListItem.length === 5;
+            .some(documentType => documentType.items.some(item => item.status === 'Official'))
+            && this.bidDocumentGroupListItem.length <= 5;
         return check;
     }
 

@@ -291,7 +291,7 @@
                     <div class="center-parent  mr-4">
                         <div>&nbsp; Danh sách bảng xem xét HSMT</div>
                     </div>
-                    <div class="alert alert-danger alert-trim status-package" style="background-color: #00D174;">
+                    <div class="alert alert-danger alert-trim status-package customColor" style="background-color: #00D174;">
                         Cần lập đề nghị dự thầu
                     </div>
                 </div>
@@ -312,7 +312,7 @@
                     <button class="btn btn-primary ml-2">
                         Upload bảng xem xét
                     </button>
-                    <button class="btn btn-primary ml-2">
+                    <button class="btn btn-primary ml-2" (click)="sendPending()">
                         Gửi duyệt đề nghị dự thầu
                     </button>
                     <button class="btn btn-primary ml-2" (click)="refresh(true)">
@@ -384,15 +384,6 @@
 
                                 </div>
                             </th>
-                            <th style="width: 16%; background-color: #f68e56!important;">
-                                <div class="d-flex justify-content-center">
-
-                                    <div class="center-parent" style="white-space: pre-line!important;">
-                                        <div>Loại tài liệu</div>
-                                    </div>
-
-                                </div>
-                            </th>
                             <th style="width: 20%; background-color: #f68e56!important;">
                                 <div class="d-flex justify-content-center">
 
@@ -408,6 +399,15 @@
 
                                     <div class="center-parent">
                                         <div>Phiên bản</div>
+                                    </div>
+
+                                </div>
+
+                            </th><th style="background-color: #f68e56!important;">
+                                <div class="d-flex justify-content-center">
+
+                                    <div class="center-parent">
+                                        <div>Mô tả</div>
                                     </div>
 
                                 </div>
@@ -455,70 +455,6 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <ng-container *ngFor="let bidDocumentGroup of bidDocumentGroupListItemSearchResult; let i = index;">
-                            <ng-container *ngFor="let item of bidDocumentGroup.items; let k = index;">
-                                <tr>
-                                    <td class=" stt d-flex justify-content-around">
-                                        <div style="width: 35%;">
-                                            <label class="custom-control custom-checkbox">
-                                                <input type="checkbox" class="custom-control-input" [(ngModel)]="item.checkboxSelected">
-                                                <span class="custom-control-indicator"></span>
-                                            </label>
-                                        </div>
-                                        <div style="width: 35%;" class="center-parent">
-                                            <div>{{renderIndex(i , k)}}</div>
-                                        </div>
-                                    </td>
-                                    <td valign="baseline" [attr.rowspan]="bidDocumentGroup.items.length" *ngIf="k == 0" class="td-group">
-                                        <div class="d-flex  document-type center-parent">
-                                            <div style="width: calc(100% - 25px);"> {{ item.documentType | translate }}</div>
-                                            <div style="width: 25px;" (click)="uploadFileItem(item.documentType)" style="cursor: pointer" title="Upload tài liệu">
-                                                <img width="25" height="25" src="assets\images\document.png">
-                                            </div>
-                                        </div>
-
-                                    </td>
-                                    <td *ngIf="k != 0" style="display: none">
-
-                                    </td>
-                                    <td>
-                                        <span [title]="item.documentName">{{ item.documentName }}</span>
-                                    </td>
-                                    <td class="text-center">{{ item.version }}</td>
-                                    <td class="td-mark-status">
-                                        <div class="d-flex justify-content-between">
-                                            <div class="text-truncate text-right" [title]="item.status">
-                                                {{ item.status | translate }}
-                                            </div>
-                                            <div (click)="changeStatus(item.id, item.status, item.documentType)" [title]="item.status">
-                                                <i class="fa fa-check-square color-item-down" style="cursor: pointer;" aria-hidden="true" *ngIf="item.status === 'Official'"></i>
-                                                <i class="fa fa-check-square color-item-test" style="cursor: pointer;" aria-hidden="true" *ngIf="item.status === 'Draft'"></i>
-                                            </div>
-                                        </div>
-
-
-                                    </td>
-                                    <td class="text-center">{{ item.uploadedBy?.employeeName }}</td>
-                                    <td class="text-center">{{ item.createdDate*1000 | date:'dd/MM/yyyy HH:mm': '+0000'}}</td>
-                                    <td>
-                                        <div class="d-flex justify-content-around">
-                                            <div style="cursor: pointer;" title="Tải file" (click)="dowloadDocument(item.id)">
-                                                <a>
-                                                    <i class="fa fa-download color-item-down" aria-hidden="true"></i>
-                                                </a>
-                                            </div>
-                                            <div (click)="deleteDocument(item.id)" style="cursor: pointer;" title="Xóa">
-                                                <a class="text-success ml-3">
-                                                    <i class="fa fa-trash-o" aria-hidden="true"></i>
-                                                </a>
-                                            </div>
-                                        </div>
-                                    </td>
-                                </tr>
-                            </ng-container>
-
-                        </ng-container>
-
                     </tbody>
                 </table>
             </div>

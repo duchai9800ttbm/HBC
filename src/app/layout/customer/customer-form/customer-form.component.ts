@@ -1,24 +1,24 @@
-import { Component, OnInit, Input, ChangeDetectorRef } from "@angular/core";
-import { routerTransition } from "../../../router.animations";
-import { FormBuilder, FormGroup, Validators } from "@angular/forms";
-import { Observable } from "rxjs/Observable";
-import { DictionaryItem, CustomerModel } from "../../../shared/models/index";
+import { Component, OnInit, Input, ChangeDetectorRef } from '@angular/core';
+import { routerTransition } from '../../../router.animations';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Observable } from 'rxjs/Observable';
+import { DictionaryItem, CustomerModel } from '../../../shared/models/index';
 import {
     AlertService,
     DataService,
     CustomerService,
     SessionService
-} from "../../../shared/services/index";
-import { Router } from "@angular/router";
-import ValidationHelper from "../../../shared/helpers/validation.helper";
-import CustomValidator from "../../../shared/helpers/custom-validator.helper";
-import { DATETIME_PICKER_CONFIG } from "../../../shared/configs/datepicker.config";
-import DateTimeConvertHelper from "../../../shared/helpers/datetime-convert-helper";
+} from '../../../shared/services/index';
+import { Router } from '@angular/router';
+import ValidationHelper from '../../../shared/helpers/validation.helper';
+import CustomValidator from '../../../shared/helpers/custom-validator.helper';
+import { DATETIME_PICKER_CONFIG } from '../../../shared/configs/datepicker.config';
+import DateTimeConvertHelper from '../../../shared/helpers/datetime-convert-helper';
 
 @Component({
-    selector: "app-customer-form",
-    templateUrl: "./customer-form.component.html",
-    styleUrls: ["./customer-form.component.scss"]
+    selector: 'app-customer-form',
+    templateUrl: './customer-form.component.html',
+    styleUrls: ['./customer-form.component.scss']
 })
 export class CustomerFormComponent implements OnInit {
     isCollapsedMain = false;
@@ -42,15 +42,15 @@ export class CustomerFormComponent implements OnInit {
 
     invalidMessages: string[];
     formErrors = {
-        name: "",
-        emailOfficial: "",
-        emailExtra: "",
-        website: "",
-        fax: "",
-        phoneNumberOfficial: "",
-        phoneNumberExtra: "",
-        taxCode: "",
-        customerType: ""
+        name: '',
+        emailOfficial: '',
+        emailExtra: '',
+        website: '',
+        fax: '',
+        phoneNumberOfficial: '',
+        phoneNumberExtra: '',
+        taxCode: '',
+        customerType: ''
     };
 
     constructor(
@@ -73,7 +73,7 @@ export class CustomerFormComponent implements OnInit {
         this.customerClassifyList = this.dataService.getCustomerClassifies();
         this.employeeList = this.dataService.getEmployees();
         this.employeeGroupList = this.dataService.getEmployeeGroups();
-        this.customerForm.get("contact").patchValue(this.customer.contact);
+        this.customerForm.get('contact').patchValue(this.customer.contact);
     }
 
     createForm() {
@@ -155,7 +155,7 @@ export class CustomerFormComponent implements OnInit {
 
     submitForm() {
         // rating component cannot using with reactive form, so manually set value
-        this.customerForm.get("rating").patchValue(this.rating);
+        this.customerForm.get('rating').patchValue(this.rating);
         this.isSubmitted = true;
 
         if (this.validateForm()) {
@@ -163,8 +163,8 @@ export class CustomerFormComponent implements OnInit {
                 .createOrUpdate(this.customerForm.value)
                 .subscribe(result => {
                     const message = this.customer.id
-                        ? "Khách hàng đã được chỉnh sửa."
-                        : "Khách hàng đã được tạo.";
+                        ? 'Khách hàng đã được chỉnh sửa.'
+                        : 'Khách hàng đã được tạo.';
                     this.router.navigate([`/customer/detail/${result.id}`]);
                     this.alertService.success(message);
                 });
