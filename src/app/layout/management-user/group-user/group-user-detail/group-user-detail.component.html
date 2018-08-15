@@ -152,7 +152,7 @@
 </ng-template> -->
 <!-- End Xóa Group -->
 
-<div class="boder-table">
+<div class="border-table">
   <div class="table-body">
     <div class="row menu">
       <div class="col-md-6">
@@ -175,37 +175,9 @@
         </div>
       </div>
     </div>
-    <!-- <div class="data-list menu" style="padding-top: 10px;">
-      <kendo-grid [data]="pagedResult.items" [selectable]="true" [loading]="gridLoading">
-        <kendo-grid-column [headerClass]="'custom-table-header'" field="firstname" title="Tên" [width]="100">
-          <ng-template kendoGridCellTemplate let-dataItem let-rowIndex="rowIndex">
-            <div class="">{{dataItem.name }}</div>
-          </ng-template>
-        </kendo-grid-column>
-        <kendo-grid-column [headerClass]="'custom-table-header'" field="isActive" title="Mô tả" [width]="90">
-          <ng-template kendoGridCellTemplate let-dataItem let-rowIndex="rowIndex">
-            <div class="">{{dataItem.desc }}</div>
-          </ng-template>
-        </kendo-grid-column>
-        <kendo-grid-column [headerClass]="'custom-table-header text-center'" field="" title="Thao tác" [width]="40">
-          <ng-template kendoGridCellTemplate let-dataItem let-rowIndex="rowIndex">
-            <div class="row">
-              <div class="col-md-6 center-parent" (click)="openModalEdit(dataItem.id, edit)">
-                <i class="fa fa-pencil-square-o point" aria-hidden="true"></i>
-              </div>
-              <div class="col-md-6 center-parent" (click)="openModalDeleteGroupUser(dataItem.id, delete)">
-                <i class="fa fa-trash-o point" aria-hidden="true"></i>
-              </div>
-            </div>
-          </ng-template>
-        </kendo-grid-column>
-        <kendo-grid-messages noRecords="Không có dữ liệu"></kendo-grid-messages>
-      </kendo-grid>
-      <app-pagination [(pagedResult)]="pagedResult" (pagedResultChange)="pagedResultChange($event)"></app-pagination>
-    </div> -->
 
     <div class="data-list menu" style="padding-top: 10px;">
-      <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="table-selection stripe">
+      <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="table-selection stripe hover">
         <thead>
           <tr style="width: 100%">
             <th class="text-center" style="width: 15px; padding-left: 7px;">

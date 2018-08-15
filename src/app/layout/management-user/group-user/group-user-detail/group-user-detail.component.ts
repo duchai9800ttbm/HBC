@@ -392,8 +392,10 @@ export class GroupUserDetailComponent implements OnInit {
     this.dataService.getListPrivileges().subscribe(response => {
       this.listPrivilegesData = response;
       // Danh sách nhóm người dùng
+      this.spinner.show();
       this.groupUserService.listGroupUser(0, 10).subscribe(responsepageResultUserGroup => {
         this.pagedResult = responsepageResultUserGroup;
+        this.spinner.hide();
         this.listGroupUser = this.pagedResult.items.map(i => i);
         const toStringListPrivilegesData = this.listPrivilegesData.map(i => JSON.stringify(i));
         this.listGroupUser.map(element => {
@@ -404,6 +406,7 @@ export class GroupUserDetailComponent implements OnInit {
         this.alertService.success('Dữ liệu được cập nhật mới nhất!');
       },
         err => {
+          this.spinner.hide();
           this.alertService.error('Đã xảy ra lỗi, dữ liệu không được cập nhật');
         });
     },
