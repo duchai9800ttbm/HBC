@@ -8,96 +8,22 @@
         <div class="btn-toolbar pull-right">
           <div class="input-group btn-rg">
             <span class="input-group-addon">Tìm kiếm</span>
-            <input type="text" class="form-control icon" placeholder="&#xf002; Nhập tên, email,..." (keyup)="searchTerm$.next($event.target.value)">
+            <input type="text" class="form-control icon" placeholder="&#xf002; Nhập tên, email" (keyup)="searchTerm$.next($event.target.value)">
           </div>
           <button type="button" class="btn btn-primary btn-rg pull-right" [routerLink]="['../add-user']">
-            <!-- <i class="fa fa-plus" aria-hidden="true"></i>  -->
             Tạo mới
           </button>
-          <button type="button" class="btn btn-primary btn-rg pull-right" (click)="loadPage()">
-            <i class="fa fa-refresh" aria-hidden="true"></i>
+          <button type="submit" class="btn btn-primary btn-rg pull-right" (click)="multiDelete()">
+            <!-- <i class="fa fa-trash-o" aria-hidden="true"></i> -->
+            Xóa
           </button>
-          <button type="submit" class="btn btn-primary pull-right" (click)="multiDelete()">
-            <i class="fa fa-trash-o" aria-hidden="true"></i>
+          <button type="button" class="btn btn-primary pull-right" (click)="loadPage()">
+            <i class="fa fa-refresh" aria-hidden="true"></i>
           </button>
         </div>
       </div>
     </div>
     <div class="data-list menu">
-      <!-- <kendo-grid [data]="pagedResult.items" [selectable]="true" [loading]="gridLoading">
-        <kendo-grid-checkbox-column [headerClass]="'custom-table-header'" [width]="40">
-          <ng-template kendoGridHeaderTemplate let-dataItem let-rowIndex="rowIndex">
-            <input class="k-checkbox" id="selectAllCheckboxId" kendoGridSelectAllCheckbox (click)="isCheckbox = !isCheckbox;" [checked]="isCheckbox">
-            <label class="k-checkbox-label" for="selectAllCheckboxId"></label>
-          </ng-template>
-        </kendo-grid-checkbox-column>
-
-        <kendo-grid-column [headerClass]="'custom-table-header'" field="userName" title="Tên đăng nhập" [width]="50">
-          <ng-template kendoGridCellTemplate let-dataItem let-rowIndex="rowIndex">
-            <div class="cell-username pointer" [routerLink]="['../edit-user/',dataItem.id]">{{dataItem.userName }}</div>
-          </ng-template>
-        </kendo-grid-column>
-        <kendo-grid-column [headerClass]="'custom-table-header'" field="email" title="Email" [width]="100">
-          <ng-template kendoGridCellTemplate let-dataItem let-rowIndex="rowIndex">
-            <div class="cell-user">{{dataItem.email }}</div>
-          </ng-template>
-        </kendo-grid-column>
-        <kendo-grid-column [headerClass]="'custom-table-header'" title="Phòng ban/Bộ Phận" [width]="100">
-          <ng-template kendoGridCellTemplate let-dataItem let-rowIndex="rowIndex">
-            <div class="cell-user">{{dataItem.department?.value }}</div>
-          </ng-template>
-        </kendo-grid-column>
-        <kendo-grid-column [headerClass]="'custom-table-header'" field="level.value" title="Vị trí/Chức vụ" [width]="120">
-          <ng-template kendoGridCellTemplate let-dataItem let-rowIndex="rowIndex">
-            <div class="cell-user">{{dataItem.level?.value }}</div>
-          </ng-template>
-        </kendo-grid-column>
-        <kendo-grid-column [headerClass]="'custom-table-header'" field="lastName" title="Tên" [width]="100">
-          <ng-template kendoGridCellTemplate let-dataItem let-rowIndex="rowIndex">
-            <div class="cell-user">{{dataItem.lastName }}</div>
-          </ng-template>
-        </kendo-grid-column>
-        <kendo-grid-column [headerClass]="'custom-table-header'" field="firstname" title="Họ" [width]="100">
-          <ng-template kendoGridCellTemplate let-dataItem let-rowIndex="rowIndex">
-            <div class="cell-user">{{dataItem.firstName }}</div>
-          </ng-template>
-        </kendo-grid-column>
-        <kendo-grid-column [headerClass]="'custom-table-header'" field="userGroup.name" title="Nhóm" [width]="100">
-          <ng-template kendoGridCellTemplate let-dataItem let-rowIndex="rowIndex">
-            <div class="cell-user">{{dataItem.userGroup?.name }}</div>
-          </ng-template>
-
-        </kendo-grid-column>
-        <kendo-grid-column [headerClass]="'custom-table-header'" field="isActive" title="Tình trạng" [width]="90">
-          <ng-template kendoGridCellTemplate let-dataItem let-rowIndex="rowIndex">
-            <div class="text-center color-active" *ngIf="dataItem.isActive">
-              <i class="fa fa-check-circle" aria-hidden="true"></i>
-            </div>
-            <div class="text-center" *ngIf="!dataItem.isActive">
-              <i class="fa fa-times-circle" aria-hidden="true"></i>
-            </div>
-          </ng-template>
-        </kendo-grid-column>
-        <kendo-grid-column [headerClass]="'custom-table-header text-center'" field="" title="Thao tác" [width]="90">
-          <ng-template kendoGridCellTemplate let-dataItem let-rowIndex="rowIndex">
-            <div class="row">
-              <div class="col-md-4">
-                <i class="fa fa-users pointer color-active" aria-hidden="true" (click)="showPopupSelect(dataItem.id, selectGroup)"></i>
-              </div>
-              <div class="col-md-4" [routerLink]="['../edit-user/',dataItem.id]">
-                <i class="fa fa-pencil-square-o pointer" aria-hidden="true"></i>
-              </div>
-              <div class="col-md-4" (click)="openModalDeactive(dataItem.id,dataItem.isActive,deactive)">
-                <i class="fa fa-lock pointer" *ngIf="!dataItem.isActive" aria-hidden="true"></i>
-                <i class="fa fa-unlock-alt pointer" *ngIf="dataItem.isActive" aria-hidden="true"></i>
-              </div>
-            </div>
-          </ng-template>
-        </kendo-grid-column>
-        <kendo-grid-messages noRecords="Không có dữ liệu"></kendo-grid-messages>
-      </kendo-grid>
-      <app-pagination [(pagedResult)]="pagedResult" (pagedResultChange)="pagedResultChange($event)"></app-pagination> -->
-
       <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="table-selection stripe hover">
         <thead>
           <tr style="width: 100%">
@@ -110,38 +36,78 @@
             <th style="width: 12%">
               <div class="d-flex justify-content-start">
                 <div style="margin-right: 10px">Tên đăng nhập</div>
+                <div class="center-parent">
+                  <div>
+                    <i class="fa fa-caret-down" style="color: #ffff;"></i>
+                  </div>
+                </div>
               </div>
             </th>
             <th style="width: 14%">
               <div class="d-flex justify-content-start">
                 <div style="margin-right: 10px">Email</div>
+                <div class="center-parent">
+                  <div>
+                    <i class="fa fa-caret-down" style="color: #ffff;"></i>
+                  </div>
+                </div>
               </div>
             </th>
             <th style="width: 13%">
               <div class="d-flex justify-content-start">
                 <div style="margin-right: 10px">Phòng ban/Bộ Phận</div>
+                <div class="center-parent">
+                  <div>
+                    <i class="fa fa-caret-down" style="color: #ffff;"></i>
+                  </div>
+                </div>
               </div>
             </th>
             <th style="width: 12%">
               <div class="d-flex justify-content-start">
                 <div style="margin-right: 10px">Vị trí/Chức vụ</div>
+                <div class="center-parent">
+                  <div>
+                    <i class="fa fa-caret-down" style="color: #ffff;"></i>
+                  </div>
+                </div>
               </div>
             </th>
             <th style="width: 8%">
               <div class="d-flex justify-content-start">
                 <div style="margin-right: 10px">Tên</div>
+                <div class="center-parent">
+                  <div>
+                    <i class="fa fa-caret-down" style="color: #ffff;"></i>
+                  </div>
+                </div>
               </div>
             </th>
             <th style="width: 7%">
               <div class="d-flex justify-content-start">
                 <div style="margin-right: 10px">Họ</div>
+                <div class="center-parent">
+                  <div>
+                    <i class="fa fa-caret-down" style="color: #ffff;"></i>
+                  </div>
+                </div>
               </div>
             </th>
             <th style="width: 10%" class="text-center">
-              Nhóm
+              <div class="center-parent">
+                <div style="margin-right: 10px">Nhóm</div>
+                <div>
+                  <i class="fa fa-caret-down" style="color: #ffff;"></i>
+                </div>
+              </div>
             </th>
             <th style="width: 10%" class="text-center">
-              Tình trạng
+              <div class="center-parent">
+                <div style="margin-right: 10px">Tình trạng</div>
+                <div>
+                  <i class="fa fa-caret-down" style="color: #ffff;"></i>
+                </div>
+              </div>
             </th>
             <th class="text-center" style="width: calc(14% - 10px); min-width: 50px!important;">
               Thao tác
@@ -176,31 +142,49 @@
             </td>
             <td class="text-truncate">
               <div class="d-flex justify-content-between">
-                <div>
-                  {{(item.userGroup &&  item.userGroup.name)? item.userGroup.name : 'Chưa có'}}
+                <div class="text-truncate">
+                  {{(item.userGroup && item.userGroup.value)? item.userGroup.value : '/'}}
                 </div>
-                <div class="text-center">
-                  <i class="fa fa-pencil color-active" aria-hidden="true" (click)="showPopupSelect(item.id, selectGroup)"></i>
+                <div class="text-center" style="padding-left: 2px;">
+                  <i class="fa fa-random color-random pointer" [title]="'Thay đổi nhóm'" aria-hidden="true" (click)="showPopupSelect(item.id, selectGroup)"></i>
                 </div>
               </div>
             </td>
-            <td class="text-truncate">
-              <div class="text-center color-active" *ngIf="item.isActive">
+            <td class="text-truncate text-center">
+              <!-- <div class="text-center color-active" *ngIf="item.isActive">
                 <i class="fa fa-check-circle" aria-hidden="true"></i>
               </div>
-              <div class="text-center" *ngIf="!item.isActive">
+              <div class="text-center"*ngIf="!item.isActive" >
                 <i class="fa fa-times-circle" aria-hidden="true"></i>
+              </div> -->
+              <!-- <button type="button" class="btn btn-primary">
+                Active
+              </button> -->
+              <div style="padding-right: 8px;padding-left: 8px;">
+                <div *ngIf="item.isActive" class="color-active-show" style="color: white; padding: 0.1rem 0.1rem; border: 1px solid transparent; border-radius: 0.25rem;">
+                  Active
+                </div>
+              </div>
+              <div style="padding-right: 8px;padding-left: 8px;">
+                <div *ngIf="!item.isActive" class="color-deactive-show" style="color: white; padding: 0.1rem 0.1rem; border: 1px solid transparent; border-radius: 0.25rem;">
+                  Deactive
+                </div>
               </div>
             </td>
             <td class="text-truncate">
               <div class="d-flex justify-content-around">
                 <div class="text-center" [routerLink]="['../edit-user/',item.id]">
-                  <i class="fa fa-pencil-square-o pointer" aria-hidden="true"></i>
+                  <i class="fa fa-pencil color-edit pointer" aria-hidden="true" [title]="'Chỉnh sửa'"></i>
                 </div>
-                <div class="text-center" (click)="openModalDeactive(item.id,item.isActive,deactive)">
-                  <i class="fa fa-lock pointer" *ngIf="!item.isActive" aria-hidden="true"></i>
-                  <i class="fa fa-unlock-alt pointer" *ngIf="item.isActive" aria-hidden="true"></i>
+                <div style="zoom: 0.5;">
+                  <label class="switch" style="margin: 0px">
+                    <input type="checkbox" [checked]="item.isActive">
+                    <span class="slider round" (click)="changeActive(item.id, item.isActive)"></span>
+                  </label>
                 </div>
+                <div class="text-center">
+                    <i class="fa fa-trash-o point" aria-hidden="true" (click)="deleteUser(item.id)"></i>
+                  </div>
               </div>
             </td>
           </tr>
@@ -231,19 +215,19 @@
 <ng-template #selectGroup>
   <div class="custom-table-header d-flex justify-content-between padding-title">
     <div class="center-parent" style="font-size: 150% !important; padding-left: 15px">
-      <i>Chọn nhóm cho người dùng</i>
+      Chọn nhóm cho người dùng
     </div>
     <div class="col-md-1">
-      <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
-        <span class="pointer" aria-hidden="true">&times;</span>
-      </button>
+      <a class="close pull-right" (click)="modalRef.hide()">
+        <span class="point point-delete" aria-hidden="true">&times;</span>
+      </a>
     </div>
   </div>
   <div class="modal-header no-boder-bottom-title no-border">
     <div class="form-group col-md-12">
       <label for="" class="form-label col-md-2">Nhóm</label>
       <span class="custom-dropdown col-md-9 no-padding-right">
-        <select class="form-control">
+        <select class="form-control" [(ngModel)]="changeUser.userGroup.key">
           <option value="">--Tất cả--</option>
           <option *ngFor="let item of dataGroupUser" [value]="item.id">{{item.text}}</option>
         </select>
@@ -251,8 +235,10 @@
     </div>
   </div>
   <div class="pd-b20 d-flex justify-content-end">
-    <button type="submit" class="btn btn-primary w-80" (click)="ediGroupUser();" style="margin-right: 8px">Lưu</button>
+    <button type="submit" class="btn btn-primary w-80" (click)="changeGroupUser();" style="margin-right: 8px">Lưu</button>
     <button type="button" class="btn btn-default w-80" (click)="modalRef.hide()" style="margin-right: 15px">Hủy</button>
   </div>
 </ng-template>
 <!--End chọn nhóm cho người dùng-->
+
+<ngx-spinner bdColor="rgba(51, 51, 51, 0.7)" size="medium" color="#fff" type="ball-clip-rotate-multiple"></ngx-spinner>

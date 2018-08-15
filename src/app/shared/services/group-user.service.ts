@@ -129,7 +129,7 @@ export class GroupUserService implements OnInit {
             }]
           },
           isActive: result.isActive
-  };
+        };
       });
   }
 
@@ -165,7 +165,7 @@ export class GroupUserService implements OnInit {
     const url = data.id ? `user/edit` : `user/create`;
     console.log('url', url);
     return this.apiService.post(url, data)
-      .map( data => data.result);
+      .map(data => data.result);
   }
 
   // Search
@@ -192,7 +192,7 @@ export class GroupUserService implements OnInit {
   // Xóa nhiều người dùng
   deleteMulti(arrayIdUser: any): Observable<any> {
     const url = `user/delete-multi`;
-    return this.apiService.post( url, arrayIdUser);
+    return this.apiService.post(url, arrayIdUser);
   }
   // Thay đổi nhóm của User
   changeGroupUser(userId: number, groupId: number): Observable<any> {
@@ -206,15 +206,15 @@ export class GroupUserService implements OnInit {
   getListAllGroupUser(): Observable<ListAllGroupUser[]> {
     const url = `usergroup/getall`;
     return this.apiService.get(url)
-      .map( response => {
+      .map(response => {
         const result = response.result;
-        return result.map( item => {
+        return result.map(item => {
           return {
             id: item.id,
             name: item.name,
             desc: item.desc,
             isActive: item.isActive,
-            privileges: item.privileges.map( e => {
+            privileges: item.privileges.map(e => {
               return {
                 id: e.key,
                 text: e.value,
@@ -238,6 +238,36 @@ export class GroupUserService implements OnInit {
           items: (result.items || []).map(GroupUserService.toListGroupUserItem),
         };
       });
+  }
+  // Tìm kiềm nhóm người dùng
+  searchGroupUser(searchTerm: string,
+    page: number | string, pageSize: number | string): Observable<PagedResult<GroupUserList[]>> {
+    const filterUrl = `usergroup/filter/${page}/${pageSize}?searchTerm=${searchTerm}`;
+    return this.apiService.get(filterUrl).map(response => {
+      const result = response.result;
+      return {
+        currentPage: result.pageIndex,
+        pageSize: result.pageSize,
+        pageCount: result.totalPages,
+        total: result.totalCount,
+        items: (result.items || []).map(GroupUserService.toListGroupUserItem),
+      };
+    });
+  }
+  // Tìm kiềm nhóm người dùng (Observable)
+  instantSearchGroupUser(searchTerms: Observable<string>,
+    page: number | string, pageSize: number | string): Observable<PagedResult<GroupUserList[]>> {
+    const searchUrl = `usergroup/filter/${page}/${pageSize}?searchTerm=`;
+    return this.instantSearchService.search(searchUrl, searchTerms).map(response => {
+      const result = response;
+      return {
+        currentPage: result.pageIndex,
+        pageSize: result.pageSize,
+        pageCount: result.totalPages,
+        total: result.totalCount,
+        items: (result.items || []).map(GroupUserService.toListGroupUserItem),
+      };
+    });
   }
   // Thêm mới nhóm người dùng
   createGroupUser(inforGroupUser: GroupUserRequest): Observable<GroupUserResponse> {
@@ -278,12 +308,12 @@ export class GroupUserService implements OnInit {
   // Kích hoạt nhóm người dùng
   activateUser(idGroupUser: number): Observable<any> {
     const url = `usergroup/${idGroupUser}/activate`;
-    return  this.apiService.post(url);
+    return this.apiService.post(url);
   }
   // Khóa nhóm người dung
   deactiveUser(idGroupUser: number): Observable<any> {
     const url = `usergroup/${idGroupUser}/deactive`;
-    return  this.apiService.post(url);
+    return this.apiService.post(url);
   }
   // Chỉnh sửa nhóm người dùng
   editGroupUser(groupUser: any): Observable<any> {
@@ -291,26 +321,26 @@ export class GroupUserService implements OnInit {
     const url = `usergroup/edit`;
     return this.apiService.post(url, groupUser);
   }
-  // Tìm kiếm nhóm người dung theo tên
-  searchGroupUser(
-    terms: Observable<string>,
-    page: number | string,
-    pageSize: number | string
-  ): Observable<PagedResult<ListUserItem>> {
-    const searchUrl = `usergroup/filter/${page}/${pageSize}?searchTerm=`;
-    return this.instantSearchService.search(
-      searchUrl,
-      terms
-    )
-      .map(result => {
-        return {
-          currentPage: result.pageIndex,
-          pageSize: result.pageSize,
-          pageCount: result.totalPages,
-          total: result.totalCount,
-          items: result.items,
-        };
-      });
-  }
+  // // Tìm kiếm nhóm người dung theo tên
+  // searchGroupUser(
+  //   terms: Observable<string>,
+  //   page: number | string,
+  //   pageSize: number | string
+  // ): Observable<PagedResult<ListUserItem>> {
+  //   const searchUrl = `usergroup/filter/${page}/${pageSize}?searchTerm=`;
+  //   return this.instantSearchService.search(
+  //     searchUrl,
+  //     terms
+  //   )
+  //     .map(result => {
+  //       return {
+  //         currentPage: result.pageIndex,
+  //         pageSize: result.pageSize,
+  //         pageCount: result.totalPages,
+  //         total: result.totalCount,
+  //         items: result.items,
+  //       };
+  //     });
+  // }
 }
 
