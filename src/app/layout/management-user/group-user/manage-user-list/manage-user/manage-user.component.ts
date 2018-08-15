@@ -49,7 +49,7 @@ export class ManageUserComponent implements OnInit {
     private groupUserService: GroupUserService,
     private modalService: BsModalService,
     private spinner: NgxSpinnerService,
-) {
+  ) {
 
   }
 
@@ -137,21 +137,25 @@ export class ManageUserComponent implements OnInit {
 
   multiDelete() {
     const deleteIds = this.pagedResult.items
-        .filter(x => x.checkboxSelected)
-        .map(x => x.id);
+      .filter(x => x.checkboxSelected)
+      .map(x => x.id);
     if (deleteIds.length === 0) {
-        this.alertService.error(
-            'Bạn phải chọn ít nhất một đối tượng để xóa!'
-        );
+      this.alertService.error(
+        'Bạn phải chọn ít nhất một đối tượng để xóa!'
+      );
     } else {
-        console.log('deleteIds', deleteIds);
-        this.groupUserService.deleteMulti({ids: deleteIds}).subscribe( response => {
-          this.refresh(0, 10);
-          this.alertService.success('Xóa nhiều người dùng thành công!');
-        },
-      err => {
-        this.alertService.success('Đã xảy ra lỗi! Xóa nhiều người dùng không thành công!');
-      })
+      console.log('deleteIds', deleteIds);
+      this.groupUserService.deleteMulti({ ids: deleteIds }).subscribe(response => {
+        this.refresh(0, 10);
+        this.alertService.success('Xóa nhiều người dùng thành công!');
+      },
+        err => {
+          this.alertService.success('Đã xảy ra lỗi! Xóa nhiều người dùng không thành công!');
+        });
     }
-}
+  }
+
+  changeActive() {
+    console.log('aaa');
+  }
 }

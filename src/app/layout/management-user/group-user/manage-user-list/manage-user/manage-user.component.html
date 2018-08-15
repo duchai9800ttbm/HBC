@@ -11,7 +11,6 @@
             <input type="text" class="form-control icon" placeholder="&#xf002; Nhập tên, email,..." (keyup)="searchTerm$.next($event.target.value)">
           </div>
           <button type="button" class="btn btn-primary btn-rg pull-right" [routerLink]="['../add-user']">
-            <!-- <i class="fa fa-plus" aria-hidden="true"></i>  -->
             Tạo mới
           </button>
           <button type="button" class="btn btn-primary btn-rg pull-right" (click)="loadPage()">
@@ -217,29 +216,57 @@
             <td class="text-truncate">
               <div class="d-flex justify-content-between">
                 <div>
-                  {{(item.userGroup && item.userGroup.name)? item.userGroup.name : 'Chưa có'}}
+                  {{(item.userGroup && item.userGroup.name)? item.userGroup.name : '/'}}
                 </div>
                 <div class="text-center">
-                  <i class="fa fa-pencil color-active pointer" aria-hidden="true" (click)="showPopupSelect(item.id, selectGroup)"></i>
+                  <i class="fa fa-random color-random pointer" aria-hidden="true" (click)="showPopupSelect(item.id, selectGroup)"></i>
                 </div>
               </div>
             </td>
-            <td class="text-truncate">
-              <div class="text-center color-active" *ngIf="item.isActive">
+            <td class="text-truncate text-center">
+              <!-- <div class="text-center color-active" *ngIf="item.isActive">
                 <i class="fa fa-check-circle" aria-hidden="true"></i>
               </div>
-              <div class="text-center" *ngIf="!item.isActive">
+              <div class="text-center"*ngIf="!item.isActive" >
                 <i class="fa fa-times-circle" aria-hidden="true"></i>
+              </div> -->
+              <!-- <button type="button" class="btn btn-primary">
+                Active
+              </button> -->
+              <div style="padding-right: 8px;padding-left: 8px;">
+                <div *ngIf="item.isActive" class="color-active-show" style="color: white; padding: 0.1rem 0.1rem; border: 1px solid transparent; border-radius: 0.25rem;">
+                  Active
+                </div>
               </div>
+              <div style="padding-right: 8px;padding-left: 8px;">
+                <div *ngIf="!item.isActive" class="color-deactive-show" style="color: white; padding: 0.1rem 0.1rem; border: 1px solid transparent; border-radius: 0.25rem;">
+                  Deactive
+                </div>
+              </div>
+              <!-- <div *ngIf="!item.isActive" class="color-deactive-show" style="padding: 0.375rem 0.75rem; border: 1px solid transparent; border-radius: 0.25rem;">
+                Deactive
+              </div> -->
             </td>
             <td class="text-truncate">
               <div class="d-flex justify-content-around">
                 <div class="text-center" [routerLink]="['../edit-user/',item.id]">
-                  <i class="fa fa-pencil-square-o pointer" aria-hidden="true"></i>
+                  <i class="fa fa-pencil color-edit pointer" aria-hidden="true"></i>
                 </div>
-                <div class="text-center" (click)="openModalDeactive(item.id,item.isActive,deactive)">
-                  <i class="fa fa-lock pointer" *ngIf="!item.isActive" aria-hidden="true"></i>
-                  <i class="fa fa-unlock-alt pointer" *ngIf="item.isActive" aria-hidden="true"></i>
+                <!-- <div class="text-center" (click)="openModalDeactive(item.id,item.isActive,deactive)">
+                  <i class="fa fa-toggle-off pointer color-edit-active" *ngIf="!item.isActive" aria-hidden="true"></i>
+                  <i class="fa fa-toggle-on pointer color-edit-active" *ngIf="item.isActive" aria-hidden="true"></i>
+                </div> -->
+                <!-- <div style="zoom: 0.5;">
+                  <label class="switch" style="margin: 0px">
+                    <input type="checkbox" checked (click)="item.isActive = !item.isActive">
+                    <span class="slider round"></span>
+                  </label>
+                </div> -->
+                <div style="zoom: 0.5;">
+                  <label class="switch" style="margin: 0px">
+                    <input type="checkbox">
+                    <span class="slider round" (click)="changeActive()"></span>
+                  </label>
                 </div>
               </div>
             </td>
