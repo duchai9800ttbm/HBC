@@ -129,6 +129,7 @@ export class PackageListComponent implements OnInit, AfterViewChecked {
         this.filterModel.chairEmployeeId = '';
         this.dtOptions = DATATABLE_CONFIG;
         this.createForm();
+        this.spinner.show();
         this.packageService
             .instantSearchWithFilter(this.searchTerm$, this.filterModel, 0, 10)
             .subscribe(result => {
