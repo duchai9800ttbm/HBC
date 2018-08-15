@@ -11,6 +11,7 @@ import { BehaviorSubject, Observable, Subject } from '../../../../../../../node_
 import 'rxjs/add/operator/map';
 import { DictionaryItem } from '../../../../../shared/models';
 import { DATATABLE_CONFIG } from '../../../../../shared/configs';
+import { NgxSpinnerService } from '../../../../../../../node_modules/ngx-spinner';
 @Component({
   selector: 'app-manage-user',
   templateUrl: './manage-user.component.html',
@@ -46,28 +47,30 @@ export class ManageUserComponent implements OnInit {
     private formBuilder: FormBuilder,
     private alertService: AlertService,
     private groupUserService: GroupUserService,
-    private modalService: BsModalService) {
+    private modalService: BsModalService,
+    private spinner: NgxSpinnerService,
+) {
 
   }
 
   ngOnInit() {
-    this.refresh(0, 10);
-    // this.form = this.formBuilder.group({
-    //   id: ['', Validators.required],
-    // });
-
+    // this.refresh(0, 10);
+    this.spinner.show();
     this.groupUserService
       .searchKeyWord(this.searchTerm$, 0, 10)
       .subscribe(result => {
         console.log('result', result);
         this.rerender(result);
+        this.spinner.hide();
       }, err => {
+        this.spinner.hide();
       });
   }
 
   rerender(pagedResult: any) {
     this.pagedResult = pagedResult;
     this.dtTrigger.next();
+
   }
 
   loadPage() {
@@ -86,10 +89,9 @@ export class ManageUserComponent implements OnInit {
   }
 
   refresh(page: string | number, pageSize: string | number) {
-    this.gridLoading = true;
     this.groupUserService.getdataGroupUser(page, pageSize).subscribe(data => {
       this.pagedResult = data;
-      this.gridLoading = false;
+      this.dtTrigger.next();
     });
   }
 
