@@ -296,5 +296,8 @@
     "TongThau": "Tổng thầu",
     "LienDanh": "Liên danh",
     "ThauDvaB": "Thầu D&B",
-    "ThauPhu": "Thầu phụ"
+    "ThauPhu": "Thầu phụ",
+
+    "Active":"Hoạt động",
+    "Deactive": "Không hoạt động"
 }
