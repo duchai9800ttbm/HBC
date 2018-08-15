@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { SessionService } from '../../../../shared/services/index';
+import { SessionService, ConfirmationService } from '../../../../shared/services/index';
 import { UserModel } from '../../../../shared/models/user/user.model';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ChangePasswordModalComponent } from '../../change-password-modal/change-password-modal.component';
 import { OnChanges } from '@angular/core/src/metadata/lifecycle_hooks';
+import { Router } from '../../../../../../node_modules/@angular/router';
 const defaultAvatarSrc = 'assets/images/no-avatar.png';
 @Component({
   selector: 'app-header-user-menu',
@@ -15,13 +16,15 @@ export class HeaderUserMenuComponent implements OnInit {
   constructor(
     private sessionService: SessionService,
     private modalService: NgbModal,
+    private confirmationService: ConfirmationService,
+    private router: Router
   ) { }
 
   avatarSrc: string;
   ngOnInit() {
     this.avatarSrc = this.sessionService.userInfo.avatarUrl ? `data:image/jpeg;base64,${this.sessionService.userInfo.avatarUrl}`
-     : defaultAvatarSrc;
- //   this.userInfo = this.sessionService.userInfo;
+      : defaultAvatarSrc;
+    //   this.userInfo = this.sessionService.userInfo;
     const that = this;
     // this.sessionService
     //   .getUserInfo()
@@ -33,7 +36,13 @@ export class HeaderUserMenuComponent implements OnInit {
   }
 
   onLoggedout() {
-    this.sessionService.destroySession();
+    this.confirmationService.confirm(
+      'Bạn có chắc chắn muốn đăng xuất?',
+      () => {
+        this.sessionService.destroySession();
+        this.router.navigate(['/login']);
+      }
+    );
   }
 
   openChangePasswordModal() {
