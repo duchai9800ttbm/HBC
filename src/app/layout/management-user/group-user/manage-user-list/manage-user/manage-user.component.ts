@@ -75,13 +75,16 @@ export class ManageUserComponent implements OnInit {
 
   loadPage() {
     // this.refresh(0, 10);
-    this.gridLoading = true;
+    this.spinner.show();
     this.groupUserService.getdataGroupUser(0, 10).subscribe(data => {
       this.pagedResult = data;
-      this.gridLoading = false;
+      this.spinner.hide();
       this.alertService.success('Dữ liệu được cập nhật mới nhất!');
     },
-      err => this.alertService.error('Đã xảy ra lỗi, dữ liệu không được cập nhật'));
+      err => {
+        this.spinner.hide();
+        this.alertService.error('Đã xảy ra lỗi, dữ liệu không được cập nhật');
+      });
   }
 
   pagedResultChange(pagedResult: any) {
@@ -89,9 +92,10 @@ export class ManageUserComponent implements OnInit {
   }
 
   refresh(page: string | number, pageSize: string | number) {
+    this.spinner.show();
     this.groupUserService.getdataGroupUser(page, pageSize).subscribe(data => {
       this.pagedResult = data;
-      this.dtTrigger.next();
+      this.spinner.hide();
     });
   }
 
@@ -158,4 +162,5 @@ export class ManageUserComponent implements OnInit {
   changeActive() {
     console.log('aaa');
   }
+
 }

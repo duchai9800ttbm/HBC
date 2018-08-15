@@ -21,8 +21,8 @@ td, #customers th {
     border: 1px solid #ddd;
     padding: 8px;
 }
-tr:nth-child(even){background-color: #f2f2f2;}
-tr:hover {background-color: #ddd;}
+// tr:nth-child(even){background-color: #f2f2f2;}
+// tr:hover {background-color: #ddd;}
 th {
     padding-top: 12px;
     padding-bottom: 12px;
@@ -33,10 +33,17 @@ th {
 // customers css
 .point{
     cursor: pointer;
+    outline: none;
+   // background-color: #fff;
+    //color: #fff;
 }
-.boder-table{
+.point-delete{
+    color: #eeeeee;
+    outline: none;
+}
+.border-table{
     border: 1px solid #ebebeb;
-   padding-bottom: 35px;
+    padding-bottom: 35px;
     border-radius: 4px;
     box-shadow: 0 0 10px 3px #f1f1f1;
     height: 1009px;
@@ -240,8 +247,13 @@ input#usr {
     padding-bottom: 20px;
   }
   .close {
+      outline: none;
     font-size: 1.8rem !important;
+    opacity: 1!important;
     // padding-top: 10px!important;
+    &:hover{
+        font-size: 2rem;
+    }
   }
   .padding-title{
       padding: 4px 0px 6px 0px;
@@ -389,7 +401,7 @@ table {
     border-bottom: none !important;
     margin: 0 0 40px 0;
     width: 100%;
-  //  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2); //display: table;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2); //display: table;
     th {
         border-bottom: 1px solid #f68e56 !important;
         background-color: #f68e56;
@@ -400,6 +412,7 @@ table {
         white-space: nowrap;
         overflow: hidden;
         text-overflow: ellipsis;
+        border: none;
     }
     .th-mark-status,
     .td-mark-status {
