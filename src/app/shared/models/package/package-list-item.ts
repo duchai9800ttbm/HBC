@@ -11,7 +11,10 @@ export class PackageListItem {
         id: string;
         text: string;
     };
-    hbcChair: string;
+    chairEmployee: {
+        id: string;
+        text: string;
+    };
     trimester: string;
     magnitude: string;
     stage: {
