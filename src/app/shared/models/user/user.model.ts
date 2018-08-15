@@ -11,4 +11,18 @@ export class UserModel {
     address: string;
     role: string;
     isActive: boolean;
+    userGroup: {
+        id: string;
+        text: string;
+    };
+    level: {
+        id: string;
+        text: string;
+    };
+    department: {
+        id: string;
+        text: string;
+    };
+    firstName: string;
+    lastName: string;
 }
