@@ -12,6 +12,7 @@ import { DictionaryItem, DictionaryItemIdString, PagedResult } from '../../../..
 import { LocationListItem } from '../../../../shared/models/setting/location-list-item';
 import { Observable, BehaviorSubject, Subject } from '../../../../../../node_modules/rxjs';
 import { NgxSpinnerService } from '../../../../../../node_modules/ngx-spinner';
+import { DATATABLE_CONFIG } from '../../../../shared/configs';
 @Component({
   selector: 'app-group-user-detail',
   templateUrl: './group-user-detail.component.html',
@@ -19,6 +20,8 @@ import { NgxSpinnerService } from '../../../../../../node_modules/ngx-spinner';
 })
 export class GroupUserDetailComponent implements OnInit {
   dtTrigger: Subject<any> = new Subject();
+  dtOptions: any = DATATABLE_CONFIG;
+
   pagedResult: PagedResult<GroupUserList[]> = new PagedResult<
     GroupUserList[]
     >();
@@ -97,8 +100,11 @@ export class GroupUserDetailComponent implements OnInit {
     this.dataService.getListPrivileges().subscribe(response => {
       this.listPrivilegesData = response;
       // Danh sách nhóm người dùng
+      this.spinner.show();
       this.groupUserService.listGroupUser(0, 10).subscribe(responsepageResultUserGroup => {
         this.pagedResult = responsepageResultUserGroup;
+        this.dtTrigger.next();
+        this.spinner.hide();
         this.listGroupUser = this.pagedResult.items.map(i => i);
         // this.listGroupUser = responseUserGroup;
         // const toStringListPrivilegesData = this.listPrivilegesData.map(i => JSON.stringify(i));
