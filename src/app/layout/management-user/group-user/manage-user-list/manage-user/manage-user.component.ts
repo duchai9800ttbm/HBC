@@ -4,7 +4,7 @@ import { BsModalRef } from 'ngx-bootstrap/modal/bs-modal-ref.service';
 import { GridDataResult, PageChangeEvent, SelectAllCheckboxState } from '@progress/kendo-angular-grid';
 import { GroupUserService } from '../../../../../shared/services/group-user.service';
 import { ListUserItem } from '../../../../../shared/models/user/user-list-item.model';
-import { AlertService } from '../../../../../shared/services';
+import { AlertService, ConfirmationService } from '../../../../../shared/services';
 import { PagedResult } from '../../../../../shared/models/paging-result.model';
 import { FormBuilder, FormGroup, FormArray, FormControl, Validators } from '@angular/forms';
 import { BehaviorSubject, Observable, Subject } from '../../../../../../../node_modules/rxjs';
@@ -50,6 +50,7 @@ export class ManageUserComponent implements OnInit {
     private groupUserService: GroupUserService,
     private modalService: BsModalService,
     private spinner: NgxSpinnerService,
+    private confirmationService: ConfirmationService,
   ) {
 
   }
@@ -134,7 +135,7 @@ export class ManageUserComponent implements OnInit {
       });
       this.changeUser = { ...this.pagedResult.items.filter(i => i.id === idUser)[0] };
       console.log('this.changeUser.userGroup', this.changeUser.userGroup);
-      if ( !this.changeUser.userGroup ||  !this.changeUser.userGroup.key ) {
+      if (!this.changeUser.userGroup || !this.changeUser.userGroup.key) {
         this.changeUser.userGroup = {
           key: 0,
           value: '',
@@ -158,14 +159,18 @@ export class ManageUserComponent implements OnInit {
         'Bạn phải chọn ít nhất một đối tượng để xóa!'
       );
     } else {
-      console.log('deleteIds', deleteIds);
-      this.groupUserService.deleteMulti({ ids: deleteIds }).subscribe(response => {
-        this.refresh(0, 10);
-        this.alertService.success('Xóa nhiều người dùng thành công!');
-      },
-        err => {
-          this.alertService.error('Đã xảy ra lỗi! Xóa nhiều người dùng không thành công!');
-        });
+      this.confirmationService.confirm(
+        'Bạn có chắc chắn xóa những người dùng được chọn?',
+        () => {
+          this.groupUserService.deleteMulti({ ids: deleteIds }).subscribe(response => {
+            this.refresh(0, 10);
+            this.alertService.success('Xóa nhiều người dùng thành công!');
+          },
+            err => {
+              this.alertService.error('Đã xảy ra lỗi! Xóa nhiều người dùng không thành công!');
+            });
+        }
+      );
     }
   }
 
