@@ -190,8 +190,8 @@
                 </div> -->
                 <div style="zoom: 0.5;">
                   <label class="switch" style="margin: 0px">
-                    <input type="checkbox">
-                    <span class="slider round" (click)="changeActive()"></span>
+                    <input type="checkbox" [checked]="item.isActive">
+                    <span class="slider round" (click)="changeActive(item.id, item.isActive)"></span>
                   </label>
                 </div>
               </div>

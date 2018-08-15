@@ -154,13 +154,27 @@ export class ManageUserComponent implements OnInit {
         this.alertService.success('Xóa nhiều người dùng thành công!');
       },
         err => {
-          this.alertService.success('Đã xảy ra lỗi! Xóa nhiều người dùng không thành công!');
+          this.alertService.error('Đã xảy ra lỗi! Xóa nhiều người dùng không thành công!');
         });
     }
   }
 
-  changeActive() {
-    console.log('aaa');
+  changeActive(idUser: number, isActive: boolean) {
+    console.log('aaa', idUser, isActive, this.pagedResult);
+    this.groupUserService.activeOrDeactiveUser(idUser, isActive).subscribe(response => {
+      // this.spinner.show();
+      this.groupUserService.getdataGroupUser(this.pagedResult.currentPage, this.pagedResult.pageSize).subscribe(data => {
+        this.pagedResult = data;
+        // this.spinner.hide();
+      });
+      this.alertService.success('Thay đổi tình trạng người dùng thành công!');
+    },
+      err => {
+        const error = err.json();
+        if (error.errorCode === 'BusinessException') {
+          this.alertService.error(`${error.errorMessage}`);
+        }
+      });
   }
 
 }
