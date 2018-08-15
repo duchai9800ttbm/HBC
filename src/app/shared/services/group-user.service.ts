@@ -128,7 +128,9 @@ export class GroupUserService implements OnInit {
               value: result.userGroup.privileges.value
             }]
           },
-          isActive: result.isActive
+          isActive: result.isActive,
+          phoneNumber: result.phoneNumber,
+          address: result.address,
         };
       });
   }

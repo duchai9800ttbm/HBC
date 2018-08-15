@@ -79,6 +79,7 @@ export class EditUserComponent implements OnInit {
     this.groupUserService.getIdUser(this.idString).subscribe(
       sucess => {
         this.groupUserModel = sucess;
+        console.log('this.success', sucess);
         this.checkboxTrue = this.groupUserModel.isActive;
         this.formEditUser = this.formBuilder.group({
           userName: [this.groupUserModel.userName ? this.groupUserModel.userName : '', [Validators.required, CustomValidator.loginName]],
@@ -90,7 +91,9 @@ export class EditUserComponent implements OnInit {
           department: [this.groupUserModel.department ? Number(this.groupUserModel.department.key) : null, Validators.required],
           isActive: [this.checkboxTrue ? this.checkboxTrue : true],
           password: ['', [CustomValidator.password]],
-          rePassword: ['', [CustomValidator.password]]
+          rePassword: ['', [CustomValidator.password]],
+          phoneNumber: [this.groupUserModel.phoneNumber, [CustomValidator.phoneNumber]],
+          address: this.groupUserModel.address,
         });
         this.formEditUser.valueChanges.subscribe(data => {
           this.onFormValueChanged(data);
@@ -107,6 +110,7 @@ export class EditUserComponent implements OnInit {
           text: i.name,
         };
       });
+      console.log('element-element', element);
     });
   }
 

@@ -25,4 +25,6 @@ export class ListUserItem {
         ]
     };
     isActive: true;
+    phoneNumber: number;
+    address: string;
 }
