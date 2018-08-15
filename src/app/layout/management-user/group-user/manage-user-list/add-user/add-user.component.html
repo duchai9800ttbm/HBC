@@ -124,7 +124,7 @@
             </div>
           </div>
           <div class="form-group row">
-            <label for="" class="form-label col-sm-2 ">Phòng ban/Bộ phận</label>
+            <!-- <label for="" class="form-label col-sm-2 ">Phòng ban/Bộ phận</label>
             <span class="custom-dropdown col-sm-4">
               <select class="form-control" formControlName="departmentId">
                 <option *ngFor="let item of departments" [value]="item.id">{{item.text}}</option>
@@ -132,8 +132,9 @@
             </span>
             <div *ngIf="submitted && addUser.departmentId.errors" class="invalid-feedback">
               <div *ngIf="addUser.departmentId.errors.required">Vui lòng chọn phòng ban/bộ phận</div>
-            </div>
-            <!-- <label for="department" class="col-sm-2 col-form-label">Phòng ban/Bộ phận
+            </div> -->
+
+            <label for="department" class="col-sm-2 col-form-label">Phòng ban/Bộ phận
               <span style="color: red">*</span>
             </label>
             <div class="col-sm-4">
@@ -143,21 +144,22 @@
               <div *ngIf="submitted && addUser.departmentId.errors" class="invalid-feedback">
                 <div *ngIf="addUser.departmentId.errors.required">Vui lòng chọn phòng ban/bộ phận</div>
               </div>
-            </div> -->
+            </div>
           </div>
           <div class="form-group row">
-            <label for="" class="form-label col-sm-2 ">Vị trí/Chức vụ</label>
+            <!-- <label for="" class="form-label col-sm-2 ">Vị trí/Chức vụ</label>
             <span class="custom-dropdown col-sm-4">
               <select class="form-control" formControlName="levelId">
                 <option *ngFor="let item of positions" [value]="item.id">{{item.text}}</option>
               </select>
-            </span>
-            <!-- <label for="position" class="col-sm-2 col-form-label">Vị trí/Chức vụ</label>
+            </span> -->
+
+            <label for="position" class="col-sm-2 col-form-label">Vị trí/Chức vụ</label>
             <div class="col-sm-4">
               <kendo-combobox class="w-100 form-input" [data]="positions | async" textField="levelName" formControlName="levelId" valueField="id"
                 [valuePrimitive]="true" [value]="selectPosition">
               </kendo-combobox>
-            </div> -->
+            </div>
           </div>
         </div>
       </div>
