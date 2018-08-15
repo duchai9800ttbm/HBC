@@ -33,6 +33,13 @@ th {
 // customers css
 .point{
     cursor: pointer;
+    outline: none;
+   // background-color: #fff;
+    //color: #fff;
+}
+.point-delete{
+    color: #eeeeee;
+    outline: none;
 }
 .border-table{
     border: 1px solid #ebebeb;
@@ -240,8 +247,13 @@ input#usr {
     padding-bottom: 20px;
   }
   .close {
+      outline: none;
     font-size: 1.8rem !important;
+    opacity: 1!important;
     // padding-top: 10px!important;
+    &:hover{
+        font-size: 2rem;
+    }
   }
   .padding-title{
       padding: 4px 0px 6px 0px;
