@@ -137,3 +137,28 @@ $theme-color: #00a0e3;
 .color-title{
   color: #0f2231;
 }
+.pointer{
+  cursor: pointer;
+}
+.checkbox[_ngcontent-c11] input[_ngcontent-c11]:checked + label[_ngcontent-c11]::before {
+  background-color: #03c109 !important;
+  border-color: 0.5px solid #03c109 !important;
+  top: -3px;
+    margin-left: 0;
+}
+.checkbox[_ngcontent-c11] label[_ngcontent-c11]::before {
+  border: 1px solid #ced4da;
+}
+#optinosCheckbox1, #labelcheckbox{
+  margin-left: 0px!important;
+}
+.checkbox[_ngcontent-c11] input[_ngcontent-c11]{
+  margin-left: 0px!important;
+
+}
+.padding-table{
+  padding-top: 15px;
+}
+.no-boder{
+  border: none;
+}

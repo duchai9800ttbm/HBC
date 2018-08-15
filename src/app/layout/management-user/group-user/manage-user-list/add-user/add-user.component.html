@@ -120,7 +120,7 @@
         </div>
       </div> -->
 
-      <div class="main-form" style="margin-top: 5px;">
+      <div class="main-form padding-table" style="margin-top: 5px;width: 85%">
         <div class="d-flex boder-table zoom-form">
           <div class="w-100  mr-auto">
             <div class="card-collapse" style="margin-bottom: 0px;">
@@ -130,7 +130,7 @@
               <div class="body" id="info-main" [ngbCollapse]="isCollapsedMain">
                 <table class="w-100 table table-bordered">
                   <tr>
-                    <td class="w-15 bg-light text-right label required no-boder">Tên đăng nhập</td>
+                    <td class="w-15 text-right label required no-boder">Tên đăng nhập</td>
                     <td class="w-35 no-boder">
                       <input class="w-75 form-control" tabindex="1" type="text" formControlName="userName" [class.is-invalid]="formErrors.userName">
                       <div class="invalid-feedback" *ngIf="formErrors.userName">
@@ -139,7 +139,7 @@
                     </td>
                   </tr>
                   <tr>
-                    <td class="w-15 bg-light text-right label required no-boder">Mật khẩu</td>
+                    <td class="w-15 text-right label required no-boder">Mật khẩu</td>
                     <td class="w-35 no-boder">
                       <input class="w-75 form-control" tabindex="1" type="text" formControlName="password" [class.is-invalid]="formErrors.password">
                       <div class="invalid-feedback" *ngIf="formErrors.password">
@@ -148,7 +148,7 @@
                     </td>
                   </tr>
                   <tr>
-                    <td class="w-15 bg-light text-right label required no-boder">Nhập lại mật khẩu</td>
+                    <td class="w-15 text-right label required no-boder">Nhập lại mật khẩu</td>
                     <td class="w-35 no-boder">
                       <input class="w-75 form-control" tabindex="1" type="text" formControlName="rePassword" [class.is-invalid]="formErrors.rePassword">
                       <div class="invalid-feedback" *ngIf="formErrors.rePassword">
@@ -157,7 +157,7 @@
                     </td>
                   </tr>
                   <tr>
-                    <td class="w-15 bg-light text-right label no-boder">Nhóm người dùng</td>
+                    <td class="w-15 text-right label no-boder">Nhóm người dùng</td>
                     <td class="no-boder d-flex">
                       <span class="custom-dropdown" style="width: 75%; margin-right: 2px;">
                         <select class="form-control" tabindex="5" formControlName="userGroupId">
@@ -165,20 +165,22 @@
                           <option *ngFor="let item of dataGroupUser" [value]="item.id">{{item.text }}</option>
                         </select>
                       </span>
-                      <span class="input-group-addon mar-add" style="border-radius: 3px;">
+                      <span class="input-group-addon mar-add pointer" style="border-radius: 3px;">
                         <i class="fa fa-plus"> </i>
                       </span>
                     </td>
                   </tr>
                   <tr>
-                    <td class="w-15 bg-light text-right label no-boder">Hoạt động</td>
+                    <td class="w-15 text-right label no-boder">Hoạt động</td>
                     <td class="w-35 no-boder">
-                      <div class="col-sm-1" class="checkbox">
-                        <input type="checkbox" id="optinosCheckbox1" value="" [checked]="isCheckbox" (click)="isCheckboxAction()">
-                        <label for="optinosCheckbox1">
-                          Hoạt động
-                        </label>
+                      <div class="center-parent" class="">
+                          <label class="ckb_container">
+                              <input type="checkbox">
+                              <span class="checkmark"></span>
+                            </label>
+                        
                       </div>
+                      <!-- <input type="checkbox"> -->
                     </td>
                   </tr>
                 </table>
@@ -187,7 +189,7 @@
           </div>
         </div>
       </div>
-      <div class="main-form" style="margin-top: 5px;">
+      <div class="main-form padding-table" style="margin-top: 8px;width: 85%; padding-bottom: 25px;">
         <div class="d-flex boder-table zoom-form">
           <div class="w-100  mr-auto">
             <div class="card-collapse" style="margin-bottom: 0px;">
@@ -197,7 +199,7 @@
               <div class="body" id="info-main" [ngbCollapse]="isCollapsedMain">
                 <table class="w-100 table table-bordered">
                   <tr>
-                    <td class="w-15 bg-light text-right label required no-boder">Họ</td>
+                    <td class="w-15 text-right label required no-boder">Họ</td>
                     <td class="w-35 no-boder">
                       <input class="w-75 form-control" tabindex="1" type="text" formControlName="firstName" [class.is-invalid]="formErrors.firstName">
                       <div class="invalid-feedback" *ngIf="formErrors.firstName">
@@ -206,7 +208,7 @@
                     </td>
                   </tr>
                   <tr>
-                    <td class="w-15 bg-light text-right label required no-boder">Tên</td>
+                    <td class="w-15 text-right label required no-boder">Tên</td>
                     <td class="w-35 no-boder">
                       <input class="w-75 form-control" tabindex="1" type="text" formControlName="lastName" [class.is-invalid]="formErrors.lastName">
                       <div class="invalid-feedback" *ngIf="formErrors.lastName">
@@ -215,7 +217,7 @@
                     </td>
                   </tr>
                   <tr>
-                    <td class="w-15 bg-light text-right label required no-boder">Email</td>
+                    <td class="w-15 text-right label required no-boder">Email</td>
                     <td class="w-35 no-boder">
                       <input class="w-75 form-control" tabindex="1" type="text" formControlName="email" [class.is-invalid]="formErrors.email">
                       <div class="invalid-feedback" *ngIf="formErrors.email">
@@ -224,23 +226,23 @@
                     </td>
                   </tr>
                   <tr>
-                    <td class="w-15 bg-light text-right label no-boder">Phòng ban/Bộ phận</td>
+                    <td class="w-15 text-right label no-boder">Phòng ban/Bộ phận</td>
                     <td class="w-35 no-boder">
                       <span class="custom-dropdown w-75">
                         <select class="form-control" tabindex="5" formControlName="departmentId">
                           <option [ngValue]="null">---Chọn---</option>
-                          <option *ngFor="let item of departments | async" [value]="item.id">{{item.text }}</option>
+                          <option *ngFor="let item of departments | async" [value]="item.id">{{item.departmentName }}</option>
                         </select>
                       </span>
                     </td>
                   </tr>
                   <tr>
-                    <td class="w-15 bg-light text-right label no-boder">Vị trí/Chức vụ</td>
+                    <td class="w-15 text-right label no-boder">Vị trí/Chức vụ</td>
                     <td class="w-35 no-boder">
                       <span class="custom-dropdown w-75">
                         <select class="form-control" tabindex="5" formControlName="levelId">
                           <option [ngValue]="null">---Chọn---</option>
-                          <option *ngFor="let item of positions | async" [value]="item.id">{{item.text }}</option>
+                          <option *ngFor="let item of positions | async" [value]="item.id">{{item.levelName }}</option>
                         </select>
                       </span>
                     </td>
