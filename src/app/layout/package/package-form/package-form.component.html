@@ -48,7 +48,7 @@
                                         <td class="w-35 no-boder">
                                             <span class="custom-dropdown w-75">
                                                 <select class="form-control" tabindex="5" formControlName="projectType">
-                                                    <option value="" disabled selected>---Chọn---</option>
+                                                    <option [ngValue]="null">---Chọn---</option>
                                                     <option *ngFor="let item of listBuildingProjectType | async" [value]="item.id">{{item.text }}</option>
                                                 </select>
                                             </span>
@@ -67,7 +67,7 @@
                                         <td class="w-35 no-boder">
                                             <span class="custom-dropdown w-75">
                                                 <select class="form-control" tabindex="5" formControlName="mainBuildingCategory">
-                                                    <option value="" [disabled]="true" [selected]="true">---Chọn---</option>
+                                                    <option [ngValue]="null">---Chọn---</option>
                                                     <option *ngFor="let item of listMainBuildingCategory | async" [value]="item.id">{{item.text }}</option>
                                                 </select>
                                             </span>
@@ -82,7 +82,7 @@
                                         <td class="w-35 no-boder">
                                             <span class="custom-dropdown w-75">
                                                 <select class="form-control" tabindex="5" formControlName="hbcRole">
-                                                    <option value="" [disabled]="true" [selected]="true">---Chọn---</option>
+                                                    <option [ngValue]="null">---Chọn---</option>
                                                     <option *ngFor="let item of listRoleContractors | async" [value]="item.id">{{item.text }}</option>
                                                 </select>
                                             </span>
@@ -103,7 +103,7 @@
                                         <td class="w-35 no-boder">
                                             <span class="custom-dropdown w-75">
                                                 <select class="form-control" tabindex="5" formControlName="location">
-                                                    <option value="" [disabled]="true" [selected]="true">---Chọn---</option>
+                                                    <option [ngValue]="null">---Chọn---</option>
                                                     <option *ngFor="let item of listZone | async" [value]="item.id">{{item.text }}</option>
                                                 </select>
                                             </span>
@@ -112,7 +112,7 @@
                                         <td class="w-100 no-boder d-flex">
                                             <span class="custom-dropdown w-75">
                                                 <select class="form-control" tabindex="5" formControlName="hbcChair">
-                                                    <option value="" [disabled]="true" [selected]="true">---Chọn---</option>
+                                                    <option [ngValue]="null">---Chọn---</option>
                                                     <option *ngFor="let item of userListItem" [value]="item.employeeId">{{item.employeeName}}</option>
                                                   </select>
                                             </span>
@@ -126,7 +126,7 @@
                                         <td class="w-35 no-boder">
                                             <span class="custom-dropdown w-75">
                                                 <select class="form-control" tabindex="5" formControlName="trimester">
-                                                    <option value="" [disabled]="true" [selected]="true">---Chọn---</option>
+                                                    <option [ngValue]="null">---Chọn---</option>
                                                     <option *ngFor="let item of listQuarterOfYear | async" [value]="item.id">{{item.text }}</option>
                                                 </select>
                                             </span>
@@ -136,7 +136,7 @@
                                             <!-- <input class="w-75 form-control" autofocus tabindex="1" placeholder="Text" type="text" formControlName="status"> -->
                                             <span class="custom-dropdown w-75">
                                                 <select class="form-control" tabindex="5" formControlName="status">
-                                                    <option value="" [disabled]="true" [selected]="true">---Chọn---</option>
+                                                    <option [ngValue]="null">---Chọn---</option>
                                                     <option *ngFor="let item of listStatus | async" [value]="item.id">{{item.text }}</option>
                                                 </select>
                                             </span>
@@ -171,7 +171,7 @@
                                         <td class="w-35 no-boder">
                                             <span class="custom-dropdown w-75">
                                                 <select class="form-control" tabindex="5" formControlName="classify">
-                                                    <option value="" [disabled]="true" [selected]="true">---Chọn---</option>
+                                                    <option [ngValue]="null">---Chọn---</option>
                                                     <option *ngFor="let item of listCustomerType | async" [value]="item.id">{{item.text }}</option>
                                                 </select>
                                             </span>
@@ -253,7 +253,7 @@
                                         <td class="w-35" style="border-top: none;border-right: none;border-left: none;">
                                             <div class=" w-75 autocomplete-wrapper-2 ui-fluid fix-m2-floor-area">
 
-                                                <input appInputNumber class="form-control cus-input text-right" appInputNumber formControlName="floorArea">
+                                                <input appInputNumber class="form-control cus-input text-right" placeholder="Number" formControlName="floorArea">
                                                 <span class="span-m2">m2</span>
                                             </div>
                                         </td>
