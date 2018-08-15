@@ -38,6 +38,20 @@ export class UserService {
             address: result.address,
             role: result.role,
             isActive: result.isActive,
+            lastName: result.lastName,
+            firstName: result.firstName,
+            department: result.department && {
+                id: result.department.key,
+                text: result.department.value,
+            },
+            level: result.level && {
+                id: result.level.key,
+                text: result.level.value
+            },
+            userGroup: result.userGroup && {
+                id: result.userGroup.key,
+                text: result.userGroup.value
+            }
         };
     }
 
