@@ -210,4 +210,21 @@ export class ManageUserComponent implements OnInit {
         }
       });
   }
+  deleteUser(idUser: number) {
+    this.confirmationService.confirm(
+      'Bạn có chắc chắn xóa người dùng được chọn?',
+      () => {
+        this.groupUserService.deleteUser(idUser).subscribe(response => {
+          this.refresh(0, 10);
+          this.alertService.success('Xóa người dùng thành công!');
+        },
+          err => {
+            const error = err.json();
+            if (error.errorCode === 'BusinessException') {
+              this.alertService.error(`${error.errorMessage}`);
+            }
+          });
+      }
+    );
+  }
 }
