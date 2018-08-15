@@ -55,7 +55,10 @@ export class PackageService {
         id: result.stage.key,
         text: result.stage.value
       },
-      stageStatus: result.stageStatus,
+      stageStatus: result.stageStatus && {
+        id: result.stageStatus.key,
+        text: result.stageStatus.value
+      },
       location: result.location,
       projectNo: result.projectNo,
       job: result.job,

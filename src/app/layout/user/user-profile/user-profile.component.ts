@@ -62,6 +62,8 @@ export class UserProfileComponent implements OnInit {
       dob: '',
       gender: this.userProfile.gender,
       address: this.userProfile.address,
+      departmant: this.userProfile.department.text,
+      level: this.userProfile.level.text
     });
     this.userProfileForm.valueChanges
       .subscribe(data => this.onFormValueChanged(data));
