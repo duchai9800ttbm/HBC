@@ -78,12 +78,6 @@ export class GroupUserDetailComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    // this.groupUserService
-    //   .searchGroupUser(this.searchTerm$, 0, 10)
-    //   .subscribe(result => {
-    //     this.rerender(result);
-    //   }, err => {
-    //   });
     this.isQTV = false;
     this.hideInput = false;
     this.isAddNewGroup = false;
@@ -101,43 +95,13 @@ export class GroupUserDetailComponent implements OnInit {
       this.listPrivilegesData = response;
       // Danh sách nhóm người dùng
       this.spinner.show();
-      this.groupUserService.listGroupUser(0, 10).subscribe(responsepageResultUserGroup => {
+      this.groupUserService.instantSearchGroupUser(this.searchTerm$, 0, 10).subscribe(responsepageResultUserGroup => {
         this.pagedResult = responsepageResultUserGroup;
         this.dtTrigger.next();
         this.spinner.hide();
-        this.listGroupUser = this.pagedResult.items.map(i => i);
-        // this.listGroupUser = responseUserGroup;
-        // const toStringListPrivilegesData = this.listPrivilegesData.map(i => JSON.stringify(i));
-        // this.listGroupUser.map(element => {
-        //   const toStringElement = element.privileges.map(i => JSON.stringify(i));
-        //   const stringFilter = toStringListPrivilegesData.filter(i => !toStringElement.includes(i));
-        //   element['notPrivileges'] = stringFilter.map(i => JSON.parse(i));
-        // });
+        this.listGroupUser = this.pagedResult.items;
       });
     });
-
-    // tạo mới nhóm người dùng
-    // let requestCreateModel = new GroupUserRequest();
-    // requestCreateModel = {
-    //   userGroupName: 'Phòng tài chính',
-    //   userGroupId: null,
-    //   privileges: [
-    //     1, 2, 4
-    //   ],
-    //   userGroupActiveCheck: true
-    // };
-    // this.groupUserService.createGroupUser(requestCreateModel).subscribe( response => console.log('tạo mới nhóm người dùng', response));
-
-    // Xóa nhóm người dùng
-    // let requestDeleteModel = new GroupUserRequest();
-    // requestDeleteModel = {
-    //   userGroupName: '',
-    //   privileges: [
-    //     87
-    //   ],
-    //   userGroupActiveCheck: true
-    // };
-    // this.groupUserService.createGroupUser(requestDeleteModel).subscribe( response => console.log('Xóa nhóm người dùng', response));
   }
 
   checkBox(id: number) {
@@ -486,25 +450,15 @@ export class GroupUserDetailComponent implements OnInit {
   }
 
   pagedResultChange(pagedResult: any) {
-    console.log('pagedResult', pagedResult);
-    this.groupUserService.listGroupUser(pagedResult.currentPage, pagedResult.pageSize).subscribe(responsepageResultUserGroup => {
-      this.pagedResult = responsepageResultUserGroup;
-      this.listGroupUser = this.pagedResult.items.map(i => i);
-    });
+    this.spinner.show();
+    this.groupUserService.searchGroupUser(this.searchTerm$.value,
+      pagedResult.currentPage, pagedResult.pageSize).subscribe(responsepageResultUserGroup => {
+        this.pagedResult = responsepageResultUserGroup;
+        this.listGroupUser = this.pagedResult.items;
+        console.log('nghia', this.pagedResult);
+        this.spinner.hide();
+      }, err => this.spinner.hide());
   }
-
-  // refresh(displayAlert: boolean = false): void {
-  //   this.spinner.show();
-  //   this.campaignService
-  //     .search(this.searchTerm$.value, this.pagedResult.currentPage, this.pagedResult.pageSize)
-  //     .subscribe(result => {
-  //       this.rerender(result);
-  //       if (displayAlert) {
-  //         this.alertService.success('Dữ liệu đã được cập nhật mới nhất!');
-  //       }
-  //       this.spinner.hide();
-  //     }, err => this.spinner.hide());
-  // }
 
   rerender(pagedResult: any) {
     this.pagedResult = pagedResult;
@@ -514,13 +468,11 @@ export class GroupUserDetailComponent implements OnInit {
   selectAllPrivilegesEditUse() {
     this.groupEditOrCreate.notPrivileges = [];
     this.groupEditOrCreate.privileges = this.listPrivilegesData.filter(x => x);
-    console.log('this.', this.listGroupUser);
   }
 
   selectAllPrivilegesEditNotUse() {
     this.groupEditOrCreate.privileges = [];
     this.groupEditOrCreate.notPrivileges = this.listPrivilegesData.filter(x => x);
-    console.log('this.Not', this.listGroupUser);
   }
 
   selectEachFieldEditUser(event) {
@@ -552,11 +504,9 @@ export class GroupUserDetailComponent implements OnInit {
     }
     this.arayChangeprivilegesTemp.point = true;
     this.arayChangeprivilegesTempNot.point = false;
-    console.log(this.arayChangeprivilegesTempNot, this.arayChangeprivilegesTemp);
   }
 
   changePrivilegesEditNotUse() {
-    console.log(this.arayChangeprivilegesTempNot, this.arayChangeprivilegesTemp);
     if (this.arayChangeprivilegesTemp.point === true) {
       this.arayChangeprivilegesTemp.arayChangeprivileges.forEach(i => this.groupEditOrCreate.privileges.push(i));
       const toStringElement = this.groupEditOrCreate.privileges.map(i => JSON.stringify(i));
@@ -573,7 +523,6 @@ export class GroupUserDetailComponent implements OnInit {
   }
 
   changePrivilegesEditUse() {
-    console.log(this.arayChangeprivilegesTempNot, this.arayChangeprivilegesTemp);
     if (this.arayChangeprivilegesTempNot.point === true) {
       this.arayChangeprivilegesTempNot.arayChangeprivileges.forEach(i => this.groupEditOrCreate.notPrivileges.push(i));
       const toStringElement = this.groupEditOrCreate.notPrivileges.map(i => JSON.stringify(i));
@@ -601,17 +550,17 @@ export class GroupUserDetailComponent implements OnInit {
   }
 
   refeshPage() {
+    this.spinner.show();
     this.groupUserService.listGroupUser(this.pagedResult.currentPage, this.pagedResult.pageSize)
       .subscribe(responsepageResultUserGroup => {
         this.pagedResult = responsepageResultUserGroup;
-        this.listGroupUser = this.pagedResult.items.map(i => i);
-      });
+        this.listGroupUser = this.pagedResult.items;
+        this.spinner.hide();
+      }, err => this.spinner.hide());
   }
 
   ediGroupUser() {
     this.submitted = true;
-    // if ( this.groupUserService.id )
-    // this.groupUserService.changePrivilegesGroupUser
     if (this.groupEditOrCreate.id) {
       if (this.groupEditOrCreate.name) {
         const resquestModel = {

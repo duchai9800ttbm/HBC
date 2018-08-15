@@ -218,7 +218,7 @@
             <td>
               <div class="row">
                 <div class="col-md-6 center-parent" (click)="openModalEdit(dataItem.id, edit)">
-                  <i class="fa fa-pencil-square-o point" aria-hidden="true"></i>
+                  <i class="fa fa-pencil cursor-pointer" aria-hidden="true"></i>
                 </div>
                 <div class="col-md-6 center-parent" (click)="openModalDeleteGroupUser(dataItem.id, delete)">
                   <i class="fa fa-trash-o point" aria-hidden="true"></i>
@@ -229,6 +229,8 @@
         </tbody>
       </table>
     </div>
+    <app-pagination [(pagedResult)]="pagedResult" (pagedResultChange)="pagedResultChange($event)"></app-pagination>
+
   </div>
 </div>
 
