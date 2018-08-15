@@ -2,11 +2,13 @@
   <div class="table-body">
     <form [formGroup]="formAddUser" (ngSubmit)="onSubmit()">
       <div class="row">
-        <img width="25" height="25" src="assets\images\icon-back.png">
-        <div class="col-7">
+        <div>
+            <img width="25" height="25" src="assets\images\icon-back.png">
+        </div>
+        <div style="padding-left: 5%; width: 70%">
           <h4 class="text-head-user color-title">TẠO MỚI NGƯỜI DÙNG</h4>
         </div>
-        <div class="col-5 pull-right">
+        <div class="col-5 pull-right" style="width: 28%">
           <button type="button" class="btn btn-default btn-rg w-80 pull-right" style="color: #FFF" [routerLink]="['/management-user/group-user/manage-user-list/manage-user']">
             Hủy
           </button>
@@ -122,7 +124,7 @@
         </div>
       </div> -->
 
-      <div class="main-form" style="margin-top: 5px;">
+      <div class="main-form" style="margin-top: 5px; padding-left: 2%;">
         <div class="d-flex boder-table zoom-form">
           <div class="w-100  mr-auto">
             <div class="card-collapse">
