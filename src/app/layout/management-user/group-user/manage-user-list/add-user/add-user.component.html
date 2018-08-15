@@ -2,11 +2,13 @@
   <div class="table-body">
     <form [formGroup]="formAddUser" (ngSubmit)="onSubmit()">
       <div class="row">
-        <img width="25" height="25" src="assets\images\icon-back.png">
-        <div class="col-7">
+        <div>
+            <img width="25" height="25" src="assets\images\icon-back.png">
+        </div>
+        <div style="padding-left: 5%; width: 70%">
           <h4 class="text-head-user color-title">TẠO MỚI NGƯỜI DÙNG</h4>
         </div>
-        <div class="col-5 pull-right">
+        <div class="col-5 pull-right" style="width: 28%">
           <button type="button" class="btn btn-default btn-rg w-80 pull-right" style="color: #FFF" [routerLink]="['/management-user/group-user/manage-user-list/manage-user']">
             Hủy
           </button>
@@ -122,7 +124,7 @@
         </div>
       </div> -->
 
-      <div class="main-form">
+      <div class="main-form" style="margin-top: 5px; padding-left: 2%;">
         <div class="d-flex boder-table zoom-form">
           <div class="w-100  mr-auto">
             <div class="card-collapse">
@@ -131,6 +133,116 @@
               </div>
               <div class="body" id="info-main" [ngbCollapse]="isCollapsedMain">
                 <table class="w-100 table table-bordered">
+                  <tr>
+                    <td class="w-15 bg-light text-right label required no-boder">Tên đăng nhập</td>
+                    <td class="w-35 no-boder">
+                      <input class="w-75 form-control" tabindex="1" type="text" formControlName="userName" [class.is-invalid]="formErrors.userName">
+                      <div class="invalid-feedback" *ngIf="formErrors.userName">
+                        {{formErrors.userName}}
+                      </div>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td class="w-15 bg-light text-right label required no-boder">Mật khẩu</td>
+                    <td class="w-35 no-boder">
+                      <input class="w-75 form-control" tabindex="1" type="text" formControlName="password" [class.is-invalid]="formErrors.password">
+                      <div class="invalid-feedback" *ngIf="formErrors.password">
+                        {{formErrors.password}}
+                      </div>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td class="w-15 bg-light text-right label required no-boder">Nhập lại mật khẩu</td>
+                    <td class="w-35 no-boder">
+                      <input class="w-75 form-control" tabindex="1" type="text" formControlName="rePassword" [class.is-invalid]="formErrors.rePassword">
+                      <div class="invalid-feedback" *ngIf="formErrors.rePassword">
+                        {{formErrors.rePassword}}
+                      </div>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td class="w-15 bg-light text-right label no-boder">Nhóm người dùng</td>
+                    <td class="no-boder d-flex">
+                      <span class="custom-dropdown" style="width: 75%; margin-right: 2px;">
+                        <select class="form-control" tabindex="5" formControlName="userGroupId">
+                          <option [ngValue]="null">---Chọn---</option>
+                          <option *ngFor="let item of dataGroupUser" [value]="item.id">{{item.text }}</option>
+                        </select>
+                      </span>
+                      <span class="input-group-addon mar-add" style="border-radius: 3px;">
+                        <i class="fa fa-plus"> </i>
+                      </span>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td class="w-15 bg-light text-right label no-boder">Hoạt động</td>
+                    <td class="w-35 no-boder">
+                      <div class="col-sm-1" class="checkbox">
+                        <input type="checkbox" id="optinosCheckbox1" value="" [checked]="isCheckbox" (click)="isCheckboxAction()">
+                        <label for="optinosCheckbox1">
+                          Hoạt động
+                        </label>
+                      </div>
+                    </td>
+                  </tr>
+                </table>
+              </div>
+            </div>
+            <div class="card-collapse">
+              <div class="header" (click)="isCollapsedMain = !isCollapsedMain" [attr.aria-expanded]="!isCollapsedMain" aria-controls="info-main">
+                <i class="fa fa-caret-down mr-3"></i>Thông tin cá nhân
+              </div>
+              <div class="body" id="info-main" [ngbCollapse]="isCollapsedMain">
+                <table class="w-100 table table-bordered">
+                  <tr>
+                    <td class="w-15 bg-light text-right label required no-boder">Họ</td>
+                    <td class="w-35 no-boder">
+                      <input class="w-75 form-control" tabindex="1" type="text" formControlName="firstName" [class.is-invalid]="formErrors.firstName">
+                      <div class="invalid-feedback" *ngIf="formErrors.firstName">
+                        {{formErrors.firstName}}
+                      </div>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td class="w-15 bg-light text-right label required no-boder">Tên</td>
+                    <td class="w-35 no-boder">
+                      <input class="w-75 form-control" tabindex="1" type="text" formControlName="lastName" [class.is-invalid]="formErrors.lastName">
+                      <div class="invalid-feedback" *ngIf="formErrors.lastName">
+                        {{formErrors.lastName}}
+                      </div>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td class="w-15 bg-light text-right label required no-boder">Email</td>
+                    <td class="w-35 no-boder">
+                      <input class="w-75 form-control" tabindex="1" type="text" formControlName="email" [class.is-invalid]="formErrors.email">
+                      <div class="invalid-feedback" *ngIf="formErrors.email">
+                        {{formErrors.email}}
+                      </div>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td class="w-15 bg-light text-right label no-boder">Phòng ban/Bộ phận</td>
+                    <td class="w-35 no-boder">
+                      <span class="custom-dropdown w-75">
+                        <select class="form-control" tabindex="5" formControlName="departmentId">
+                          <option [ngValue]="null">---Chọn---</option>
+                          <option *ngFor="let item of departments | async" [value]="item.id">{{item.text }}</option>
+                        </select>
+                      </span>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td class="w-15 bg-light text-right label no-boder">Vị trí/Chức vụ</td>
+                    <td class="w-35 no-boder">
+                      <span class="custom-dropdown w-75">
+                        <select class="form-control" tabindex="5" formControlName="levelId">
+                          <option [ngValue]="null">---Chọn---</option>
+                          <option *ngFor="let item of positions | async" [value]="item.id">{{item.text }}</option>
+                        </select>
+                      </span>
+                    </td>
+                  </tr>
                 </table>
               </div>
             </div>
