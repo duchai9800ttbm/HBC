@@ -1,23 +1,23 @@
-import { API_URL } from "../configs/api-url.config";
-import { DictionaryItem, DictionaryItemIdString } from "../models/dictionary-item.model";
-import { Injectable } from "@angular/core";
-import { URLSearchParams } from "@angular/http";
+import { API_URL } from '../configs/api-url.config';
+import { DictionaryItem, DictionaryItemIdString } from '../models/dictionary-item.model';
+import { Injectable } from '@angular/core';
+import { URLSearchParams } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
-import "rxjs/add/operator/map";
-import "rxjs/add/operator/catch";
+import 'rxjs/add/operator/map';
+import 'rxjs/add/operator/catch';
 
-import { ApiService } from "./api.service";
-import { SessionService } from "./index";
-import { SelectItemWithType } from "../models/select-item-with-type";
-import { DepartmentsFormBranches } from "../models/user/departments-from-branches";
-import { Levels } from "../models/user/levels";
+import { ApiService } from './api.service';
+import { SessionService } from './index';
+import { SelectItemWithType } from '../models/select-item-with-type';
+import { DepartmentsFormBranches } from '../models/user/departments-from-branches';
+import { Levels } from '../models/user/levels';
 
 const MODULE_NAMES = {
-    prospect: "prospect",
-    customer: "customer",
-    contact: "contact",
-    opportunity: "opportunity",
-    campaign: "campaign"
+    prospect: 'prospect',
+    customer: 'customer',
+    contact: 'contact',
+    opportunity: 'opportunity',
+    campaign: 'campaign'
 };
 
 @Injectable()
@@ -647,7 +647,7 @@ export class DataService {
     }
     // Danh sách khu vực
     getListRegionTypes(): Observable<DictionaryItem[]> {
-        const url = `data/regiontypes`;
+        const url = `bidlocation/locations`;
         return this.apiService
             .get(url)
             .map(response =>
@@ -677,7 +677,7 @@ export class DataService {
     }
     // Danh sách loại công trình
     getListConstructonTypes(): Observable<DictionaryItem[]> {
-        const url = `data/constructiontypes`;
+        const url = `bidconstructiontype/constructiontypes`;
         return this.apiService
             .get(url)
             .map(response =>
@@ -692,7 +692,7 @@ export class DataService {
     }
     // Danh sách hạng mục thi công chính
     getListMainConstructionComponents(): Observable<DictionaryItem[]> {
-        const url = `data/mainconstructioncomponents`;
+        const url = `bidconstructioncategory/constructionCategories`;
         return this.apiService
             .get(url)
             .map(response =>
@@ -827,7 +827,7 @@ export class DataService {
     }
     // Danh sách tình trạng gói thầu
     getListBidOpportunityStatuses(): Observable<DictionaryItem[]> {
-        const url = `data/bidopportunitystatuses`;
+        const url = `bidstatus/statuses`;
         return this.apiService
             .get(url)
             .map(response =>
