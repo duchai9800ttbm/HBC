@@ -4,7 +4,7 @@ import { BsModalRef } from 'ngx-bootstrap/modal/bs-modal-ref.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { GroupModel } from '../../../../shared/models/group/group-item.model';
 import { Router } from '@angular/router';
-import { AlertService, DataService } from '../../../../shared/services';
+import { AlertService, DataService, ConfirmationService } from '../../../../shared/services';
 import { GroupUserService } from '../../../../shared/services/group-user.service';
 import { GroupUserRequest } from '../../../../shared/models/api-request/user/group-user/group-user-request.model';
 import { GroupUserList } from '../../../../shared/models/user/group-user-list-item';
@@ -21,7 +21,8 @@ import { DATATABLE_CONFIG } from '../../../../shared/configs';
 export class GroupUserDetailComponent implements OnInit {
   dtTrigger: Subject<any> = new Subject();
   dtOptions: any = DATATABLE_CONFIG;
-
+  errorMessageBusiness;
+  isError;
   pagedResult: PagedResult<GroupUserList[]> = new PagedResult<
     GroupUserList[]
     >();
@@ -75,6 +76,7 @@ export class GroupUserDetailComponent implements OnInit {
     private groupUserService: GroupUserService,
     private dataService: DataService,
     private spinner: NgxSpinnerService,
+    private confirmationService: ConfirmationService
   ) { }
 
   ngOnInit() {
@@ -145,34 +147,10 @@ export class GroupUserDetailComponent implements OnInit {
     this.groupUserService.createGroupUser(this.groupUserNew).subscribe(response => {
       this.alertService.success('Thêm mới nhóm người dùng thành công!');
       this.isAddNewGroup = false;
-      // this.groupUserService.listGroupUser().subscribe(responseUserGroup => {
-      //   this.listGroupUser = responseUserGroup;
-      //   const toStringListPrivilegesData = this.listPrivilegesData.map(i => JSON.stringify(i));
-      //   this.listGroupUser.map(element => {
-      //     const toStringElement = element.privileges.map(i => JSON.stringify(i));
-      //     const stringFilter = toStringListPrivilegesData.filter(i => !toStringElement.includes(i));
-      //     element['notPrivileges'] = stringFilter.map(i => JSON.parse(i));
-      //   });
-      // });
     },
       err => {
         this.alertService.success('Đã gặp sự cố! Thêm mới không thành công!');
       });
-
-    // if (!this.isQTV) {
-    //   this.arrGroupUser.push({
-    //     id: this.arrGroupUser.length + 1,
-    //     name: this.formAddGroupUser.value.nameGroup
-    //   });
-    //   this.alertService.success('Thêm mới nhóm người dùng thành công!');
-    //   this.nameGroup = '';
-    //   this.isAddNewGroup = !this.isAddNewGroup;
-    // } else {
-    //   this.groupItem.name = this.formAddGroupUser.value.nameGroup;
-    //   this.isQTV = false;
-    //   this.groupItem = this.arrGroupUser.find(group => group.id === this.idGroup);
-    //   this.alertService.success('Cập nhật thành công!');
-    // }
   }
 
   loadItem() {
@@ -237,14 +215,6 @@ export class GroupUserDetailComponent implements OnInit {
   }
 
   onDeleteGroup() {
-    // const index = this.arrGroupUser.findIndex(group => group.id === this.idGroup);
-    // this.arrGroupUser.splice(index, 1);
-    // const arrayIdDelete = [];
-    // this.listGroupUser.forEach(i => {
-    //   if (i.checkbox === true) {
-    //     arrayIdDelete.push(i.id);
-    //   }
-    // });
     const request = {
       ids: [Number(this.GroupDelete.id)]
     };
@@ -285,7 +255,6 @@ export class GroupUserDetailComponent implements OnInit {
   }
 
   selectEachFieldNotUser(event, idGroupUser: number) {
-    console.log('event', event);
     this.arayChangeprivilegesTemp.idGroupCurrent = idGroupUser;
     this.arayChangeprivilegesTemp.arayChangeprivileges = [];
     for (let i = 1; i <= event.target.length; i++) {
@@ -566,6 +535,7 @@ export class GroupUserDetailComponent implements OnInit {
         const resquestModel = {
           id: this.groupEditOrCreate.id,
           name: this.groupEditOrCreate.name,
+          description: this.groupEditOrCreate.desc,
           privilegeIds: this.groupEditOrCreate.privileges.map(i => Number(i.id)),
         };
         this.groupUserService.editGroupUser(resquestModel).subscribe(response => {
@@ -579,7 +549,7 @@ export class GroupUserDetailComponent implements OnInit {
         },
           err => {
             this.modalRef.hide();
-            this.alertService.success('Đã xảy ra lỗi. Sửa nhóm người dùng không thành công!');
+            this.alertService.error('Đã xảy ra lỗi. Sửa nhóm người dùng không thành công!');
           });
         this.submitted = false;
         this.groupEditOrCreate.id = null;
@@ -597,8 +567,15 @@ export class GroupUserDetailComponent implements OnInit {
             });
         },
           err => {
-            this.modalRef.hide();
-            this.alertService.success('Đã xảy ra lỗi. Thêm nhóm người dùng không thành công!');
+            const error = err.json();
+            if (error.errorCode === 'BusinessException') {
+              this.isError = true;
+              //  this.alertService.error(`${error.errorMessage}`);
+            } else {
+              this.modalRef.hide();
+              this.alertService.error('Đã xảy ra lỗi. Thêm nhóm người dùng không thành công!');
+            }
+
           });
         this.submitted = false;
       }
@@ -606,6 +583,7 @@ export class GroupUserDetailComponent implements OnInit {
   }
 
   openModalCreate(template: TemplateRef<any>) {
+    this.isError = false;
     this.modalRef = this.modalService.show(template, {
       class: 'gray modal-lg'
     });
@@ -631,8 +609,55 @@ export class GroupUserDetailComponent implements OnInit {
     this.modalRef = this.modalService.show(template);
   }
 
+  delete(ids: any | any[]) {
+    const that = this;
+    let deleteIds = {};
+    if (ids.length > 0) {
+      deleteIds = {
+        ids: ids.map(x => x.id),
+      };
+    } else {
+      deleteIds = {
+        ids: [ids],
+      };
+
+    }
+
+    this.confirmationService.confirm(
+      'Bạn có chắc chắn muốn xóa nhóm người dùng này?',
+      () => {
+        this.groupUserService.deleteListGroupUser(deleteIds).subscribe(response => {
+          this.alertService.success('Xóa nhóm người dùng thành công!');
+          this.refesh();
+        },
+          err => {
+            this.alertService.success('Đã gặp sự cố. Xóa nhóm người dùng thất bại!');
+          });
+        this.modalRef.hide();
+      }
+    );
+  }
+
   closedPopup() {
     this.submitted = false;
     this.modalRef.hide();
+  }
+
+  multiDelete() {
+    console.log(this.listGroupUser);
+    const deleteIds = this.listGroupUser
+      .filter(x => x.checkboxSelected)
+      .map(x => {
+        return {
+          id: +x.id,
+        };
+      });
+    if (deleteIds.length === 0) {
+      this.alertService.error(
+        'Bạn phải chọn ít nhất một đối tượng để xóa!'
+      );
+    } else {
+      this.delete(deleteIds);
+    }
   }
 }
