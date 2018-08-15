@@ -610,25 +610,32 @@ export class GroupUserDetailComponent implements OnInit {
   }
 
   delete(ids: any | any[]) {
-    console.log('ids', ids);
-    // const that = this;
-    // const deleteIds = {
-    //   ids: ids,
-    // };
+    const that = this;
+    let deleteIds = {};
+    if (ids.length > 0) {
+      deleteIds = {
+        ids: ids.map(x => x.id),
+      };
+    } else {
+      deleteIds = {
+        ids: [ids],
+      };
 
-    // this.confirmationService.confirm(
-    //   'Bạn có chắc chắn muốn xóa nhóm người dùng này?',
-    //   () => {
-    //     this.groupUserService.deleteListGroupUser(deleteIds).subscribe(response => {
-    //       this.alertService.success('Xóa nhóm người dùng thành công!');
-    //       this.refesh();
-    //     },
-    //       err => {
-    //         this.alertService.success('Đã gặp sự cố. Xóa nhóm người dùng thất bại!');
-    //       });
-    //     this.modalRef.hide();
-    //   }
-    // );
+    }
+
+    this.confirmationService.confirm(
+      'Bạn có chắc chắn muốn xóa nhóm người dùng này?',
+      () => {
+        this.groupUserService.deleteListGroupUser(deleteIds).subscribe(response => {
+          this.alertService.success('Xóa nhóm người dùng thành công!');
+          this.refesh();
+        },
+          err => {
+            this.alertService.success('Đã gặp sự cố. Xóa nhóm người dùng thất bại!');
+          });
+        this.modalRef.hide();
+      }
+    );
   }
 
   closedPopup() {
@@ -637,8 +644,9 @@ export class GroupUserDetailComponent implements OnInit {
   }
 
   multiDelete() {
+    console.log(this.listGroupUser);
     const deleteIds = this.listGroupUser
-      .filter(x => x.checkbox)
+      .filter(x => x.checkboxSelected)
       .map(x => {
         return {
           id: +x.id,

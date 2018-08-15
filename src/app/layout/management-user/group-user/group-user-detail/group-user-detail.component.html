@@ -222,11 +222,11 @@
             </td>
             <td>
               <div class="row">
-                <div [title]="'Sửa'" class="col-md-6 center-parent cursor-pointer" (click)="openModalEdit(item.id, edit)">
-                  <i class="fa fa-pencil cursor-pointer"></i>
+                <div class="col-md-6 center-parent cursor-pointer" (click)="openModalEdit(item.id, edit)">
+                  <i [title]="'Sửa'" class="fa fa-pencil cursor-pointer" style="color: #1e7e34"></i>
                 </div>
-                <div [title]="'Xóa'" class="col-md-6 center-parent cursor-pointer" (click)="delete(item.id)">
-                  <i class="fa fa-trash-o point cursor-pointer"></i>
+                <div class="col-md-6 center-parent cursor-pointer" (click)="delete(item.id)">
+                  <i [title]="'Xóa'" class="fa fa-trash-o point cursor-pointer"></i>
                 </div>
               </div>
             </td>
@@ -240,7 +240,7 @@
 </div>
 
 <!-- Strat Model Xóa Group -->
-<ng-template #delete>
+<ng-template>
   <div class="modal-header no-boder-bottom">
     <div class="col-md-10 offset-md-1 text-center">
       <p class="modal-title text-title text-model">Bạn có thực sự muốn xóa nhóm người dùng "{{GroupDelete.name}}" ra khỏi hệ thống? </p>
