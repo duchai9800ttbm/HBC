@@ -110,38 +110,78 @@
             <th style="width: 12%">
               <div class="d-flex justify-content-start">
                 <div style="margin-right: 10px">Tên đăng nhập</div>
+                <div class="center-parent">
+                  <div>
+                    <i class="fa fa-caret-down" style="color: #ffff;"></i>
+                  </div>
+                </div>
               </div>
             </th>
             <th style="width: 14%">
               <div class="d-flex justify-content-start">
                 <div style="margin-right: 10px">Email</div>
+                <div class="center-parent">
+                  <div>
+                    <i class="fa fa-caret-down" style="color: #ffff;"></i>
+                  </div>
+                </div>
               </div>
             </th>
             <th style="width: 13%">
               <div class="d-flex justify-content-start">
                 <div style="margin-right: 10px">Phòng ban/Bộ Phận</div>
+                <div class="center-parent">
+                  <div>
+                    <i class="fa fa-caret-down" style="color: #ffff;"></i>
+                  </div>
+                </div>
               </div>
             </th>
             <th style="width: 12%">
               <div class="d-flex justify-content-start">
                 <div style="margin-right: 10px">Vị trí/Chức vụ</div>
+                <div class="center-parent">
+                  <div>
+                    <i class="fa fa-caret-down" style="color: #ffff;"></i>
+                  </div>
+                </div>
               </div>
             </th>
             <th style="width: 8%">
               <div class="d-flex justify-content-start">
                 <div style="margin-right: 10px">Tên</div>
+                <div class="center-parent">
+                  <div>
+                    <i class="fa fa-caret-down" style="color: #ffff;"></i>
+                  </div>
+                </div>
               </div>
             </th>
             <th style="width: 7%">
               <div class="d-flex justify-content-start">
                 <div style="margin-right: 10px">Họ</div>
+                <div class="center-parent">
+                  <div>
+                    <i class="fa fa-caret-down" style="color: #ffff;"></i>
+                  </div>
+                </div>
               </div>
             </th>
             <th style="width: 10%" class="text-center">
-              Nhóm
+              <div class="center-parent">
+                <div style="margin-right: 10px">Nhóm</div>
+                <div>
+                  <i class="fa fa-caret-down" style="color: #ffff;"></i>
+                </div>
+              </div>
             </th>
             <th style="width: 10%" class="text-center">
-              Tình trạng
+              <div class="center-parent">
+                <div style="margin-right: 10px">Tình trạng</div>
+                <div>
+                  <i class="fa fa-caret-down" style="color: #ffff;"></i>
+                </div>
+              </div>
             </th>
             <th class="text-center" style="width: calc(14% - 10px); min-width: 50px!important;">
               Thao tác
@@ -177,10 +217,10 @@
             <td class="text-truncate">
               <div class="d-flex justify-content-between">
                 <div>
-                  {{(item.userGroup &&  item.userGroup.name)? item.userGroup.name : 'Chưa có'}}
+                  {{(item.userGroup && item.userGroup.name)? item.userGroup.name : 'Chưa có'}}
                 </div>
                 <div class="text-center">
-                  <i class="fa fa-pencil color-active" aria-hidden="true" (click)="showPopupSelect(item.id, selectGroup)"></i>
+                  <i class="fa fa-pencil color-active pointer" aria-hidden="true" (click)="showPopupSelect(item.id, selectGroup)"></i>
                 </div>
               </div>
             </td>
