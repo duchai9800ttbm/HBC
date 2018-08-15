@@ -86,10 +86,27 @@ input.icon {
     padding-bottom: 20px;
   }
   .close {
-    font-size: 1.8rem !important;
-    padding-top: 10px!important;
+    outline: none;
+  font-size: 1.8rem !important;
+  opacity: 1!important;
+  // padding-top: 10px!important;
+  &:hover{
+      font-size: 2rem;
   }
-  
+}
+.padding-title{
+    padding: 4px 0px 6px 0px;
+}
+.point-delete{
+    color: #eeeeee;
+    outline: none;
+}
+.point{
+    cursor: pointer;
+    outline: none;
+   // background-color: #fff;
+    //color: #fff;
+}
   .form-select {
     border: none;
     padding-left: 0

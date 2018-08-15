@@ -13,11 +13,11 @@
           <button type="button" class="btn btn-primary btn-rg pull-right" [routerLink]="['../add-user']">
             Tạo mới
           </button>
-          <button type="button" class="btn btn-primary btn-rg pull-right" (click)="loadPage()">
-            <i class="fa fa-refresh" aria-hidden="true"></i>
-          </button>
-          <button type="submit" class="btn btn-primary pull-right" (click)="multiDelete()">
+          <button type="submit" class="btn btn-primary btn-rg pull-right" (click)="multiDelete()">
             <i class="fa fa-trash-o" aria-hidden="true"></i>
+          </button>
+          <button type="button" class="btn btn-primary pull-right" (click)="loadPage()">
+            <i class="fa fa-refresh" aria-hidden="true"></i>
           </button>
         </div>
       </div>
@@ -142,7 +142,7 @@
             <td class="text-truncate">
               <div class="d-flex justify-content-between">
                 <div>
-                  {{(item.userGroup && item.userGroup.name)? item.userGroup.name : '/'}}
+                  {{(item.userGroup && item.userGroup.value)? item.userGroup.value : '/'}}
                 </div>
                 <div class="text-center">
                   <i class="fa fa-random color-random pointer" aria-hidden="true" (click)="showPopupSelect(item.id, selectGroup)"></i>
@@ -169,25 +169,12 @@
                   Deactive
                 </div>
               </div>
-              <!-- <div *ngIf="!item.isActive" class="color-deactive-show" style="padding: 0.375rem 0.75rem; border: 1px solid transparent; border-radius: 0.25rem;">
-                Deactive
-              </div> -->
             </td>
             <td class="text-truncate">
               <div class="d-flex justify-content-around">
                 <div class="text-center" [routerLink]="['../edit-user/',item.id]">
                   <i class="fa fa-pencil color-edit pointer" aria-hidden="true"></i>
                 </div>
-                <!-- <div class="text-center" (click)="openModalDeactive(item.id,item.isActive,deactive)">
-                  <i class="fa fa-toggle-off pointer color-edit-active" *ngIf="!item.isActive" aria-hidden="true"></i>
-                  <i class="fa fa-toggle-on pointer color-edit-active" *ngIf="item.isActive" aria-hidden="true"></i>
-                </div> -->
-                <!-- <div style="zoom: 0.5;">
-                  <label class="switch" style="margin: 0px">
-                    <input type="checkbox" checked (click)="item.isActive = !item.isActive">
-                    <span class="slider round"></span>
-                  </label>
-                </div> -->
                 <div style="zoom: 0.5;">
                   <label class="switch" style="margin: 0px">
                     <input type="checkbox" [checked]="item.isActive">
@@ -224,19 +211,19 @@
 <ng-template #selectGroup>
   <div class="custom-table-header d-flex justify-content-between padding-title">
     <div class="center-parent" style="font-size: 150% !important; padding-left: 15px">
-      <i>Chọn nhóm cho người dùng</i>
+      Chọn nhóm cho người dùng
     </div>
     <div class="col-md-1">
-      <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
-        <span class="pointer" aria-hidden="true">&times;</span>
-      </button>
+      <a class="close pull-right" (click)="modalRef.hide()">
+        <span class="point point-delete" aria-hidden="true">&times;</span>
+      </a>
     </div>
   </div>
   <div class="modal-header no-boder-bottom-title no-border">
     <div class="form-group col-md-12">
       <label for="" class="form-label col-md-2">Nhóm</label>
       <span class="custom-dropdown col-md-9 no-padding-right">
-        <select class="form-control">
+        <select class="form-control" [(ngModel)]="changeUser.userGroup.key">
           <option value="">--Tất cả--</option>
           <option *ngFor="let item of dataGroupUser" [value]="item.id">{{item.text}}</option>
         </select>
@@ -244,7 +231,7 @@
     </div>
   </div>
   <div class="pd-b20 d-flex justify-content-end">
-    <button type="submit" class="btn btn-primary w-80" (click)="ediGroupUser();" style="margin-right: 8px">Lưu</button>
+    <button type="submit" class="btn btn-primary w-80" (click)="changeGroupUser();" style="margin-right: 8px">Lưu</button>
     <button type="button" class="btn btn-default w-80" (click)="modalRef.hide()" style="margin-right: 15px">Hủy</button>
   </div>
 </ng-template>

@@ -43,6 +43,7 @@ export class ManageUserComponent implements OnInit {
     { id: 45, name: 'Admin' },
     { id: 50, name: 'Nhân viên kinh doanh' }
   ];
+  changeUser;
   constructor(
     private formBuilder: FormBuilder,
     private alertService: AlertService,
@@ -59,7 +60,6 @@ export class ManageUserComponent implements OnInit {
     this.groupUserService
       .searchKeyWord(this.searchTerm$, 0, 10)
       .subscribe(result => {
-        console.log('result', result);
         this.rerender(result);
         this.spinner.hide();
       }, err => {
@@ -69,6 +69,7 @@ export class ManageUserComponent implements OnInit {
 
   rerender(pagedResult: any) {
     this.pagedResult = pagedResult;
+    console.log('this.pagedResult,', this.pagedResult);
     this.dtTrigger.next();
 
   }
@@ -131,6 +132,15 @@ export class ManageUserComponent implements OnInit {
           text: i.name,
         };
       });
+      this.changeUser = { ...this.pagedResult.items.filter(i => i.id === idUser)[0] };
+      console.log('this.changeUser.userGroup', this.changeUser.userGroup);
+      if ( !this.changeUser.userGroup ||  !this.changeUser.userGroup.key ) {
+        this.changeUser.userGroup = {
+          key: 0,
+          value: '',
+        };
+      }
+      console.log('this.changeUser', this.changeUser);
       this.modalRef = this.modalService.show(template);
     });
   }
@@ -160,14 +170,13 @@ export class ManageUserComponent implements OnInit {
   }
 
   changeActive(idUser: number, isActive: boolean) {
-    console.log('aaa', idUser, isActive, this.pagedResult);
     this.groupUserService.activeOrDeactiveUser(idUser, isActive).subscribe(response => {
       // this.spinner.show();
       this.groupUserService.getdataGroupUser(this.pagedResult.currentPage, this.pagedResult.pageSize).subscribe(data => {
         this.pagedResult = data;
         // this.spinner.hide();
+        this.alertService.success('Thay đổi tình trạng người dùng thành công!');
       });
-      this.alertService.success('Thay đổi tình trạng người dùng thành công!');
     },
       err => {
         const error = err.json();
@@ -177,4 +186,23 @@ export class ManageUserComponent implements OnInit {
       });
   }
 
+  changeGroupUser() {
+    this.spinner.show();
+    this.groupUserService.changeGroupUser(this.changeUser.id, this.changeUser.userGroup.key).subscribe(response => {
+      this.groupUserService.getdataGroupUser(this.pagedResult.currentPage, this.pagedResult.pageSize).subscribe(data => {
+        this.pagedResult = data;
+        this.spinner.hide();
+        this.modalRef.hide();
+        this.alertService.success('Thay đổi nhóm cho người dùng thành công!');
+      });
+    },
+      err => {
+        this.spinner.hide();
+        this.modalRef.hide();
+        const error = err.json();
+        if (error.errorCode === 'BusinessException') {
+          this.alertService.error(`${error.errorMessage}`);
+        }
+      });
+  }
 }
