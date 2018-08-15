@@ -16,7 +16,7 @@
               </div>
               <img class="w-100" [src]="avatarSrc" alt="Hình đại diện" />
               <div class="user-info__photo-change-btn w-100">
-                <input class="w-100"  id="upload-photo" (click)="openAvatarModal()" accept="image/*" />
+                <input class="w-100" id="upload-photo" (click)="openAvatarModal()" accept="image/*" />
                 <label for="upload-photo">
                   <a>
                     <i class="fa fa-upload"></i>
@@ -25,7 +25,7 @@
                 </label>
               </div>
             </div>
-         
+
           </div>
         </div>
         <!-- <div class="w-100 mt-3 updateAvatar ">
@@ -58,6 +58,12 @@
                   <span class="bar"></span>
                   <label>Địa chỉ</label>
                 </div>
+                <div class="group mb-5">
+                  <input type="text" readonly required formControlName="level" tabindex="5">
+                  <span class="highlight"></span>
+                  <span class="bar"></span>
+                  <label>Vị trí</label>
+                </div>
               </div>
               <div class="col-md-6 col-lg-6">
                 <div class="group mb-5" [class.is-invalid-2]="formErrors.firstName">
@@ -73,7 +79,10 @@
                   <label>Email</label>
                 </div>
                 <div class="group">
-
+                  <input type="text" readonly formControlName="departmant" tabindex="4">
+                  <span class="highlight"></span>
+                  <span class="bar"></span>
+                  <label>Phòng ban</label>
                 </div>
               </div>
 

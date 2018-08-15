@@ -18,7 +18,10 @@ export class PackageListItem {
         id: string;
         text: string;
     };
-    stageStatus: string;
+    stageStatus: {
+        id: string;
+        text: string;
+    };
     location: string;
     projectNo: string;
     job: string;

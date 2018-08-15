@@ -195,7 +195,7 @@
                         </th>
                         <th style="width: 10%">
                             <div class="d-flex justify-content-start">
-                                <div style="margin-right: 10px"> Giá trị</div>
+                                <div style="margin-right: 10px" class="text-center">Tổng giá trị</div>
                                 <div class="center-parent">
                                     <div>
                                         <i class="fa fa-caret-down" style="color: #ffff;"></i>
@@ -259,7 +259,7 @@
                         <td class="text-truncate">{{ item.hbcRole?.text }}</td>
                         <td class="text-truncate">{{ item.hbcChair }}</td>
                         <td class="text-truncate">{{ item.classify | translate }}</td>
-                        <td class="text-truncate">{{ item.amount | vnCurrency }}</td>
+                        <td class="text-truncate text-right">{{ item.amount | vnCurrency }}</td>
                         <td class="color" class="text-center">
                             {{item.magnitude ? item.magnitude : ''}}
                         </td>
@@ -274,13 +274,11 @@
                                     <div>{{item.stageStatus ? item.stageStatus : ''}}</div>
                                 </div> -->
                                 <div class="center-parent" [class.type-HSMT]="item.stage?.id == 'HSMT'" [class.type-HSDT]="item.stage?.id == 'HSDT'" [class.type-KQDT]="item.stage?.id == 'KQDT'">
-                                    <div *ngIf="item.stage?.id === 'HSMT'">HỒ SƠ MỜI THẦU</div>
-                                    <div *ngIf="item.stage?.id === 'HSDT'">HỒ SƠ DỰ THẦU</div>
-                                    <div *ngIf="item.stage?.id === 'KQDT'">KẾT QUẢ DỰ THẦU</div>
+                                    <div>{{item.stage?.text | uppercase}}</div>
                                 </div>
                                 <div class="center-parent" [class.type-HSMT-child]="item.stage?.id == 'HSMT'" [class.type-HSDT-child]="item.stage?.id == 'HSDT'"
                                     [class.type-KQDT-child]="item.stage?.id == 'KQDT'">
-                                    <div>{{item.stageStatus | translate}}</div>
+                                    <div>{{item.stageStatus?.text }}</div>
                                 </div>
 
                             </div>
