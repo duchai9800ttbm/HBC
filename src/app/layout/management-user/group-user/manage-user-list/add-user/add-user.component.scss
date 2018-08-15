@@ -18,6 +18,7 @@
 .text-head-user {
     text-transform: uppercase;
     color: #00a0e3;
+    // color: #001124;
     font-size: 700;
     font-weight: bold;
 }
@@ -161,4 +162,7 @@ $theme-color: #00a0e3;
 }
 .no-boder{
   border: none;
+}
+.margin-bottom-table{
+  margin-bottom: 9px!important;
 }

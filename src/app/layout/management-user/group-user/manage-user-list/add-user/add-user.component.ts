@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, TemplateRef } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { GroupUserModel } from '../../../../../shared/models/user/group-user.model';
 import { Router } from '@angular/router';
@@ -11,10 +11,11 @@ import { Levels } from '../../../../../shared/models/user/levels';
 import { DictionaryItem } from '../../../../../shared/models';
 import CustomValidator from '../../../../../shared/helpers/custom-validator.helper';
 import ValidationHelper from '../../../../../shared/helpers/validation.helper';
+import { BsModalRef, BsModalService } from '../../../../../../../node_modules/ngx-bootstrap';
 @Component({
   selector: 'app-add-user',
   templateUrl: './add-user.component.html',
-  styleUrls: ['./add-user.component.scss']
+  styleUrls: ['./add-user.component.scss'],
 })
 export class AddUserComponent implements OnInit {
   formErrors = {
@@ -26,6 +27,7 @@ export class AddUserComponent implements OnInit {
     departmentId: '',
     password: '',
     rePassword: '',
+    phoneNumber: ''
   };
   invalidMessages: string[];
   // public departments: Array<{ name: string; id: number }> = [
@@ -58,12 +60,15 @@ export class AddUserComponent implements OnInit {
   departments: Observable<DepartmentsFormBranches[]>;
   positions: Observable<Levels[]>;
   dataGroupUser: DictionaryItem[];
+  modalRef: BsModalRef;
+  GroupCreate;
   constructor(
     private groupUserService: GroupUserService,
     private router: Router,
     private formBuilder: FormBuilder,
     private alertService: AlertService,
     private dataService: DataService,
+    private modalService: BsModalService,
   ) { }
 
   ngOnInit() {
@@ -80,7 +85,9 @@ export class AddUserComponent implements OnInit {
       departmentId: '',
       levelId: '',
       userGroupId: '',
-      isActive: null
+      isActive: null,
+      phoneNumber: null,
+      address: '',
     };
 
     this.formAddUser = this.formBuilder.group({
@@ -94,6 +101,8 @@ export class AddUserComponent implements OnInit {
       userGroupId: [''],
       departmentId: ['', Validators.required],
       isActive: [null],
+      phoneNumber: ['', [CustomValidator.phoneNumber]],
+      address: '',
     });
     this.formAddUser.valueChanges
       .subscribe(data => this.onFormValueChanged(data));
@@ -124,7 +133,9 @@ export class AddUserComponent implements OnInit {
         departmentId: this.formAddUser.value.departmentId ? this.formAddUser.value.departmentId : 0,
         levelId: this.formAddUser.value.levelId ? this.formAddUser.value.levelId : 0,
         userGroupId: this.formAddUser.value.userGroupId ? this.formAddUser.value.userGroupId : 0,
-        isActive: this.isCheckbox
+        isActive: this.isCheckbox,
+        phoneNumber: this.formAddUser.value.phoneNumber,
+        address: this.formAddUser.value.address,
       };
       console.log('AddUser', dataUser);
       this.groupUserService.createOrUpdateUser(dataUser).subscribe(data => {
@@ -162,5 +173,17 @@ export class AddUserComponent implements OnInit {
     if (this.submitted) {
       this.validateForm();
     }
+  }
+
+  openModalCreateUser(template: TemplateRef<any>) {
+    this.GroupCreate = {
+      name: null,
+      description: '',
+      privilegeIds: [],
+      isActive: true,
+    };
+    this.modalRef = this.modalService.show(template, {
+      class: 'gray modal-lg'
+    });
   }
 }

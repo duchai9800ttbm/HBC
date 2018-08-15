@@ -193,7 +193,7 @@
 
             <th style="width: 45%">
               <div class="d-flex justify-content-start">
-                <div style="margin-right: 10px" class="required">Tên</div>
+                <div style="margin-right: 10px">Tên</div>
               </div>
             </th>
             <th style="width: 45%">
@@ -260,7 +260,6 @@
 
 <!-- Start Edit Group User-->
 <ng-template #edit>
-
   <div class="custom-table-header d-flex justify-content-between padding-title">
     <div class="center-parent" style="font-size: 150% !important; padding-left: 15px">
       <span *ngIf="groupEditOrCreate.id">Cập nhật chức năng của nhóm {{groupEditOrCreate.name}}</span>
@@ -280,8 +279,8 @@
   </div>
 
   <div class="modal-header no-boder-bottom-title">
-    <div class="col-md-2 title-name">
-      Tên:
+    <div class="col-md-2 title-name required">
+      Tên
     </div>
     <div class="col-md-10">
       <textarea class="content-textarea form-control" name="" id="" cols="30" rows="1" [(ngModel)]="groupEditOrCreate.name" [ngClass]="{ 'is-invalid': submitted && !groupEditOrCreate.name }"></textarea>
@@ -290,7 +289,7 @@
   </div>
   <div class="modal-header no-boder-bottom-title">
     <div class="col-md-2 title-name">
-      Mô tả:
+      Mô tả
     </div>
     <div class="col-md-10">
       <textarea class="content-textarea form-control" name="" id="" cols="30" rows="1" [(ngModel)]="groupEditOrCreate.desc"></textarea>
