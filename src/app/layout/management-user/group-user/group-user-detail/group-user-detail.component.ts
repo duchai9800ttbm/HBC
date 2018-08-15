@@ -660,4 +660,8 @@ export class GroupUserDetailComponent implements OnInit {
       this.delete(deleteIds);
     }
   }
+
+  onSelectAll(value: boolean) {
+    this.pagedResult.items.forEach(x => (x['checkboxSelected'] = value));
+  }
 }
