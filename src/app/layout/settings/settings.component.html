@@ -1,5 +1,29 @@
 <div class="p-3" [@routerTransition]>
     <h4 class="text-uppercase">cấu hình</h4>
+    <div class="main-detail">
+        <div class="d-flex justify-content-between menu">
+            <div class="center-parent action" style="width: calc(20%)">
+                <div class="text-uppercase">lý do</div>
+            </div>
+            <div class="center-parent action" style="width: calc(20%)" [routerLinkActive]="['router-link-active']" [routerLink]="['./location']">
+                <div class="text-uppercase">khu vực</div>
+            </div>
+            <div class="center-parent action" style="width: calc(20%)" [routerLinkActive]="['router-link-active']" [routerLink]="['./construction']">
+                <div class="text-uppercase">loại công trình</div>
+            </div>
+            <div class="center-parent action" style="width: calc(20%)" [routerLinkActive]="['router-link-active']" [routerLink]="['./construction-category']">
+                <div class="text-uppercase">hạng mục thi công công trình</div>
+            </div>
+            <div class="center-parent action" style="width: calc(20%)" [routerLinkActive]="['router-link-active']" [routerLink]="['./bid-status']">
+                <div class="text-uppercase">tình trạng gói thầu</div>
+            </div>
+        </div>
+        <div>
+            <router-outlet></router-outlet>
+        </div>
+    </div>
+</div>
+<!-- <div>
     <ul class="nav">
         <li class="nav-item k-menu-custom" routerLink="reason">
                 <kendo-menu [items]="reasonList" #kMenuLink>
@@ -26,4 +50,4 @@
     </ul>
     <hr class="mt-0">
     <router-outlet></router-outlet>
-</div>
+</div> -->
