@@ -166,11 +166,15 @@
             <span class="input-group-addon">Tìm kiếm</span>
             <input type="text" class="form-control icon" placeholder="&#xf002; Nhập tên" (keyup)="searchTerm$.next($event.target.value)">
           </div>
-          <button type="button" class="btn btn-primary btn-rg pull-right" (click)="refesh()">
-            <i class="fa fa-refresh" aria-hidden="true"></i>
-          </button>
           <button type="submit" class="btn btn-primary btn-rg w-80 pull-right" [disabled]="loading" (click)="openModalCreate(edit)">
             Tạo mới
+          </button>
+          <button class="btn btn-primary btn-rg pull-right" (click)="multiDelete()">
+            Xóa
+          </button>
+
+          <button type="button" class="btn btn-primary btn-rg pull-right" (click)="refesh()">
+            <i class="fa fa-refresh" aria-hidden="true"></i>
           </button>
         </div>
       </div>
@@ -217,11 +221,11 @@
             </td>
             <td>
               <div class="row">
-                <div class="col-md-6 center-parent" (click)="openModalEdit(item.id, edit)">
-                  <i class="fa fa-pencil cursor-pointer" aria-hidden="true"></i>
+                <div [title]="'Sửa'" class="col-md-6 center-parent cursor-pointer" (click)="openModalEdit(item.id, edit)">
+                  <i class="fa fa-pencil cursor-pointer"></i>
                 </div>
-                <div class="col-md-6 center-parent" (click)="openModalDeleteGroupUser(item.id, delete)">
-                  <i class="fa fa-trash-o point" aria-hidden="true"></i>
+                <div [title]="'Xóa'" class="col-md-6 center-parent cursor-pointer" (click)="delete(item.id)">
+                  <i class="fa fa-trash-o point cursor-pointer"></i>
                 </div>
               </div>
             </td>
@@ -255,24 +259,40 @@
 
 <!-- Start Edit Group User-->
 <ng-template #edit>
+
   <div class="custom-table-header d-flex justify-content-between padding-title">
     <div class="center-parent" style="font-size: 150% !important; padding-left: 15px">
       <span *ngIf="groupEditOrCreate.id">Cập nhật chức năng của nhóm {{groupEditOrCreate.name}}</span>
       <span *ngIf="!groupEditOrCreate.id">Tạo mới nhóm</span>
     </div>
     <div class="col-md-1">
-      <a  class="close pull-right" (click)="closedPopup()">
+      <a class="close pull-right" (click)="closedPopup()">
         <span class="point point-delete" aria-hidden="true">&times;</span>
       </a>
     </div>
   </div>
+  <div class="col-md-12 col-sx-12 ">
+    <div class="alert alert-danger mt-2 col-md-12" role="alert" *ngIf="isError">
+      Tên nhóm đã tồn tại trọng hệ thống!
+    </div>
+
+  </div>
+
   <div class="modal-header no-boder-bottom-title">
-    <div class="col-md-1 title-name">
+    <div class="col-md-2 title-name">
       Tên:
     </div>
-    <div class="col-md-11">
+    <div class="col-md-10">
       <textarea class="content-textarea form-control" name="" id="" cols="30" rows="1" [(ngModel)]="groupEditOrCreate.name" [ngClass]="{ 'is-invalid': submitted && !groupEditOrCreate.name }"></textarea>
       <div class="cus-validate" *ngIf="submitted && !groupEditOrCreate.name">Trường này là bắt buộc nhập</div>
+    </div>
+  </div>
+  <div class="modal-header no-boder-bottom-title">
+    <div class="col-md-2 title-name">
+      Mô tả:
+    </div>
+    <div class="col-md-10">
+      <textarea class="content-textarea form-control" name="" id="" cols="30" rows="1" [(ngModel)]="groupEditOrCreate.desc"></textarea>
     </div>
   </div>
   <div class="modal-header no-boder-bottom">

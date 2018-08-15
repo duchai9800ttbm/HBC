@@ -148,14 +148,13 @@ export class ManageUserComponent implements OnInit {
         'Bạn phải chọn ít nhất một đối tượng để xóa!'
       );
     } else {
-      console.log('deleteIds', deleteIds);
       this.groupUserService.deleteMulti({ ids: deleteIds }).subscribe(response => {
         this.refresh(0, 10);
         this.alertService.success('Xóa nhiều người dùng thành công!');
       },
         err => {
           this.alertService.success('Đã xảy ra lỗi! Xóa nhiều người dùng không thành công!');
-        })
+        });
     }
   }
 }
