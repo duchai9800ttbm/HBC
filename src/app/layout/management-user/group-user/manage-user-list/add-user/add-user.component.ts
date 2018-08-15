@@ -8,7 +8,7 @@ import { ManageUserComponent } from '../manage-user/manage-user.component';
 import { DepartmentsFormBranches } from '../../../../../shared/models/user/departments-from-branches';
 import { Observable } from '../../../../../../../node_modules/rxjs';
 import { Levels } from '../../../../../shared/models/user/levels';
-import { DictionaryItem } from '../../../../../shared/models';
+import { DictionaryItem, DictionaryItemIdString } from '../../../../../shared/models';
 import CustomValidator from '../../../../../shared/helpers/custom-validator.helper';
 import ValidationHelper from '../../../../../shared/helpers/validation.helper';
 import { BsModalRef, BsModalService } from '../../../../../../../node_modules/ngx-bootstrap';
@@ -62,6 +62,8 @@ export class AddUserComponent implements OnInit {
   dataGroupUser: DictionaryItem[];
   modalRef: BsModalRef;
   GroupCreate;
+  submittedCreateGroup: boolean;
+  listPrivilegesData: DictionaryItemIdString[];
   constructor(
     private groupUserService: GroupUserService,
     private router: Router,
@@ -74,6 +76,9 @@ export class AddUserComponent implements OnInit {
   ngOnInit() {
     this.departments = this.dataService.getListDepartmentsFromBranches();
     this.positions = this.dataService.getListLevels();
+    this.dataService.getListPrivileges().subscribe(response => {
+      this.listPrivilegesData = response;
+    });
     this.groupUserModel = {
       id: null,
       userName: '',
@@ -179,11 +184,27 @@ export class AddUserComponent implements OnInit {
     this.GroupCreate = {
       name: null,
       description: '',
-      privilegeIds: [],
+      privileges: [],
       isActive: true,
+      notPrivileges: this.listPrivilegesData,
     };
     this.modalRef = this.modalService.show(template, {
       class: 'gray modal-lg'
     });
+  }
+
+  closedPopup() {
+    this.submittedCreateGroup = false;
+    this.modalRef.hide();
+  }
+
+  selectAllPrivilegesEditUse() {
+    this.GroupCreate.notPrivileges = [];
+    this.GroupCreate.privileges = this.listPrivilegesData.filter(x => x);
+  }
+
+  selectAllPrivilegesEditNotUse() {
+    this.GroupCreate.privileges = [];
+    this.GroupCreate.notPrivileges = this.listPrivilegesData.filter(x => x);
   }
 }

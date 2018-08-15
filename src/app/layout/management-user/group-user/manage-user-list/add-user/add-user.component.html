@@ -166,7 +166,7 @@
                           <option *ngFor="let item of dataGroupUser" [value]="item.id">{{item.text }}</option>
                         </select>
                       </span>
-                      <span class="input-group-addon mar-add pointer" style="border-radius: 3px;" (click)="openModalCreateUser()">
+                      <span class="input-group-addon mar-add pointer" style="border-radius: 3px;" (click)="openModalCreateUser(create)">
                         <i class="fa fa-plus"> </i>
                       </span>
                     </td>
@@ -284,8 +284,7 @@
 <ng-template #create>
   <div class="custom-table-header d-flex justify-content-between padding-title">
     <div class="center-parent" style="font-size: 150% !important; padding-left: 15px">
-      <span *ngIf="groupEditOrCreate.id">Cập nhật chức năng của nhóm {{groupEditOrCreate.name}}</span>
-      <span *ngIf="!groupEditOrCreate.id">Tạo mới nhóm</span>
+      <span>Tạo mới nhóm</span>
     </div>
     <div class="col-md-1">
       <a class="close pull-right" (click)="closedPopup()">
@@ -303,8 +302,8 @@
       Tên
     </div>
     <div class="col-md-10">
-      <textarea class="content-textarea form-control" name="" id="" cols="30" rows="1" [(ngModel)]="groupEditOrCreate.name" [ngClass]="{ 'is-invalid': submitted && !groupEditOrCreate.name }"></textarea>
-      <div class="cus-validate" *ngIf="submitted && !groupEditOrCreate.name">Trường này là bắt buộc nhập</div>
+      <textarea class="content-textarea form-control" name="" id="" cols="30" rows="1" [(ngModel)]="GroupCreate.name" [ngClass]="{ 'is-invalid': submitted && !GroupCreate.name }"></textarea>
+      <div class="cus-validate" *ngIf="submitted && !GroupCreate.name">Trường này là bắt buộc nhập</div>
     </div>
   </div>
   <div class="modal-header no-boder-bottom-title">
@@ -312,14 +311,14 @@
       Mô tả
     </div>
     <div class="col-md-10">
-      <textarea class="content-textarea form-control" name="" id="" cols="30" rows="1" [(ngModel)]="groupEditOrCreate.desc"></textarea>
+      <textarea class="content-textarea form-control" name="" id="" cols="30" rows="1" [(ngModel)]="GroupCreate.desc"></textarea>
     </div>
   </div>
   <div class="modal-header no-boder-bottom">
     <div class="col-md-5 form-group">
       <div class="title-action" for="exampleFormControlSelect2">Danh sách chức năng</div>
       <select multiple class="form-control form-select" id="exampleFormControlSelect2" style="height: 150px;" (change)="selectEachFieldEditNotUser($event)">
-        <option [value]="notPrivilege.id" *ngFor="let notPrivilege of groupEditOrCreate.notPrivileges">
+        <option [value]="notPrivilege.id" *ngFor="let notPrivilege of GroupCreate.notPrivileges">
           {{notPrivilege.text}}
         </option>
       </select>
@@ -341,7 +340,7 @@
     <div class="col-md-5 form-group">
       <div class="title-action" for="exampleFormControlSelect2">Chức năng được sử dụng</div>
       <select multiple class="form-control form-select" id="exampleFormControlSelect2" (change)="selectEachFieldEditUser($event)">
-        <option [value]="privilege.id" *ngFor="let privilege of groupEditOrCreate.privileges">
+        <option [value]="privilege.id" *ngFor="let privilege of GroupCreate.privileges">
           {{privilege.text}}
         </option>
       </select>
