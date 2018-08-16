@@ -23,15 +23,21 @@ export class HeaderMenuComponent implements OnInit {
 
       }
       this.listPrivileges = this.userModel.privileges;
-      this.isManageBidOpportunitys = this.listPrivileges.some(x => x === 'ManageBidOpportunitys');
-      this.isManageUsers = this.listPrivileges.some(x => x === 'ManageUsers');
-      this.isManageSettings = this.listPrivileges.some(x => x === 'ManageSettings');
+      if (this.listPrivileges) {
+        this.isManageBidOpportunitys = this.listPrivileges.some(x => x === 'ManageBidOpportunitys');
+        this.isManageUsers = this.listPrivileges.some(x => x === 'ManageUsers');
+        this.isManageSettings = this.listPrivileges.some(x => x === 'ManageSettings');
+      }
+
     });
     this.userModel = this.sessionService.userInfo;
     this.listPrivileges = this.userModel.privileges;
-    this.isManageBidOpportunitys = this.listPrivileges.some(x => x === 'ManageBidOpportunitys');
-    this.isManageUsers = this.listPrivileges.some(x => x === 'ManageUsers');
-    this.isManageSettings = this.listPrivileges.some(x => x === 'ManageSettings');
+    if (this.listPrivileges) {
+      this.isManageBidOpportunitys = this.listPrivileges.some(x => x === 'ManageBidOpportunitys');
+      this.isManageUsers = this.listPrivileges.some(x => x === 'ManageUsers');
+      this.isManageSettings = this.listPrivileges.some(x => x === 'ManageSettings');
+    }
+
   }
 
 }

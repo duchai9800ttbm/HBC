@@ -75,7 +75,7 @@ export class ChangePasswordModalComponent implements OnInit {
       const oldPassword = this.changePasswordForm.value.oldPassword;
       const newPassword = this.changePasswordForm.value.newPassword;
       this.userService
-        .changePassword(JSON.parse(window.localStorage['session']).userName, oldPassword, newPassword)
+        .changePassword(oldPassword, newPassword)
         .subscribe(data => {
           this.activeModal.close('Close click');
           this.alertService.success('Đặt lại mật khẩu thành công!', true);
