@@ -36,11 +36,10 @@ export class PackageFormComponent implements OnInit {
     @Input() package: PackageModel;
     packageForm: FormGroup;
     formErrors = {
-        projectName: '',
-        opportunityName: '',
-        submissionDate: '',
-        resultEstimatedDate: '',
-        consultantPhone: ''
+        locationId: '',
+        constructionCategoryId: '',
+        constructionTypeId: '',
+        bidStatusId: ''
     };
     dialogChair;
     dialogAssigner;
@@ -94,36 +93,36 @@ export class PackageFormComponent implements OnInit {
 
     createForm() {
         this.packageForm = this.fb.group({
-            projectName: [this.package.projectName, Validators.required],
-            projectNo: [this.package.projectNo, Validators.required],
-            opportunityName: [this.package.opportunityName, Validators.required],
-            job: this.package.job,
-            place: this.package.place,
-            location: this.package.location,
-            trimester: this.package.trimester,
-            customer: this.package.customer,
-            classify: this.package.classify,
-            customerContact: this.package.customerContact,
-            consultantUnit: this.package.consultantUnit,
-            consultantAddress: this.package.consultantAddress,
-            consultantPhone: [this.package.consultantPhone, CustomValidator.phoneNumber],
-            startTrackingDate: DateTimeConvertHelper.fromTimestampToDtObject(this.package.startTrackingDate),
-            submissionDate: [DateTimeConvertHelper.fromTimestampToDtObject(this.package.submissionDate), Validators.required],
-            resultEstimatedDate: [DateTimeConvertHelper.fromTimestampToDtObject(this.package.resultEstimatedDate), Validators.required],
-            floorArea: this.package.floorArea,
-            magnitude: this.package.magnitude,
-            projectType: this.package.projectType,
-            mainBuildingCategory: this.package.mainBuildingCategory,
-            hbcRole: this.package.hbcRole,
-            documentLink: this.package.documentLink,
-            hbcChair: this.package.hbcChair,
-            status: this.package.status,
-            amount: this.package.amount,
-            evaluation: this.package.evaluation,
-            estimatedProjectStartDate: DateTimeConvertHelper.fromTimestampToDtObject(this.package.estimatedProjectStartDate),
-            estimatedProjectEndDate: DateTimeConvertHelper.fromTimestampToDtObject(this.package.estimatedProjectEndDate),
-            totalTime: this.package.totalTime,
-            description: this.package.description,
+            projectName: [this.package.projectName],
+            projectNo: [this.package.projectNo],
+            opportunityName: [this.package.opportunityName],
+            job: [this.package.job],
+            place: [this.package.place],
+            locationId: [this.package.locationId, Validators.required],
+            quarter: [this.package.quarter],
+            customerId: [this.package.customerId],
+            classify: [this.package.classify],
+            customerContactId: [this.package.customerContactId],
+            consultantUnit: [this.package.consultantUnit],
+            consultantAddress: [this.package.consultantAddress],
+            consultantPhone: [this.package.consultantPhone],
+            floorArea: [this.package.floorArea],
+            magnitude: [this.package.magnitude],
+            constructionTypeId: [this.package.constructionTypeId, Validators.required],
+            constructionCategoryId: [this.package.constructionCategoryId, Validators.required],
+            hbcRole: [this.package.hbcRole],
+            documentLink: [this.package.documentLink],
+            chairEmployeeId: [this.package.chairEmployeeId],
+            bidStatusId: [this.package.bidStatusId, Validators.required],
+            amount: [this.package.amount],
+            evaluation: [this.package.evaluation],
+            startTrackingDate: [this.package.startTrackingDate],
+            submissionDate: [this.package.submissionDate],
+            resultEstimatedDate: [this.package.resultEstimatedDate],
+            projectEstimatedStartDate: [this.package.projectEstimatedStartDate],
+            projectEstimatedEndDate: [this.package.projectEstimatedEndDate],
+            totalTime: [this.package.totalTime],
+            description: [this.package.description]
         });
         this.packageForm.valueChanges.subscribe(data => {
             this.onFormValueChanged(data);
@@ -135,17 +134,19 @@ export class PackageFormComponent implements OnInit {
         console.log(this.packageForm.value);
         if (this.validateForm()) {
             this.spinner.show();
-            this.packageService.createOpportunity(this.packageForm.value).subscribe(response => {
-                this.spinner.hide();
-                this.router.navigate([`/package/detail/${response.result.bidOpportunityId}`]);
-                const message = 'Gói thầu đã được tạo.';
-                this.alertService.success(message);
-            },
-                err => {
+            this.packageService
+                .createOpportunity(this.packageForm.value)
+                .subscribe(response => {
                     this.spinner.hide();
-                    const message = 'Đã xảy ra lỗi. Gói thầu không được tạo.';
+                    this.router.navigate([`/package/detail/${response.result.bidOpportunityId}`]);
+                    const message = 'Gói thầu đã được tạo.';
                     this.alertService.success(message);
-                });
+                },
+                    err => {
+                        this.spinner.hide();
+                        const message = 'Đã xảy ra lỗi. Gói thầu không được tạo.';
+                        this.alertService.success(message);
+                    });
         }
     }
 
