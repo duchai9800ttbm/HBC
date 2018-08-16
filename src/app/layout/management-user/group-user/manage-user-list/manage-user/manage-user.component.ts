@@ -253,7 +253,14 @@ export class ManageUserComponent implements OnInit {
       );
     }
   }
-  resetPassword() {
-    this.confirmationService.openResetpassword('Đặt lại mật khẩu');
+  resetPassword(id: number, name: string) {
+    this.confirmationService.confirm(
+      `Bạn có chắc chắn muốn đặt lại mật khẩu cho người dùng ${name} không?`,
+      () => {
+        this.groupUserService.resetPassword(id).subscribe( response => {
+          console.log('responsesssss', response);
+          this.confirmationService.openResetpassword('Mật khẩu được đặt lại là:', response);
+        });
+      });
   }
 }

@@ -214,6 +214,11 @@ export class GroupUserService implements OnInit {
     const url = `user/deactive`;
     return this.apiService.post(url, arrayIdUser);
   }
+  // Thay đổi mật khẩu
+  resetPassword(idUser: number) {
+    const url = `user/${idUser}/setnewpassword`;
+    return this.apiService.post(url);
+  }
 
 
   // User group

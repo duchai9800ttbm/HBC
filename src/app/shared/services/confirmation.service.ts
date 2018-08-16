@@ -44,11 +44,12 @@ export class ConfirmationService {
         modalRef.componentInstance.message = message;
     }
 
-    openResetpassword(message) {
+    openResetpassword(message, passreset) {
         const modalRef = this.modalService.open(
             ResetPasswordComponent
         );
         modalRef.componentInstance.message = message;
+        modalRef.componentInstance.message = passreset;
     }
 
 }
