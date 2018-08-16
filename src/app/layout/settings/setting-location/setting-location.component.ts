@@ -23,25 +23,25 @@ export class SettingLocationComponent implements OnInit {
     gridLoading = true;
     pagedResult: PagedResult<LocationListItem[]> = new PagedResult<
         LocationListItem[]
-    >();
+        >();
     mySelection: number[] = [];
     constructor(
         private settingService: SettingService,
         private confirmationService: ConfirmationService,
         private alertService: AlertService
-    ) {}
+    ) { }
 
     ngOnInit() {
         this.searchTerm$
-      .debounceTime(COMMON_CONSTANTS.SearchDelayTimeInMs)
-      .distinctUntilChanged()
-      .subscribe(term =>
-        // this.prospectService
-        //   .filter(term, this.filterModel, 0, 10)
-        //   .subscribe(result => this.rerender(result)));
-        this.refresh(0, this.pagedResult.pageSize)
-      );
-    //   this.refresh(0, this.pagedResult.pageSize);
+            .debounceTime(COMMON_CONSTANTS.SearchDelayTimeInMs)
+            .distinctUntilChanged()
+            .subscribe(term =>
+                // this.prospectService
+                //   .filter(term, this.filterModel, 0, 10)
+                //   .subscribe(result => this.rerender(result)));
+                this.refresh(0, this.pagedResult.pageSize)
+            );
+        //   this.refresh(0, this.pagedResult.pageSize);
     }
 
     public onSelectedKeysChange(e) {
@@ -80,7 +80,16 @@ export class SettingLocationComponent implements OnInit {
     }
 
     deleteMultiple() {
-        if (this.mySelection.length) {
+        console.log('this.pagedResult', this.pagedResult);
+        const listDeleteLocation = [];
+        this.pagedResult.items.map( i  => {
+            console.log('iii', listDeleteLocation,  i);
+            // if ( i['checkboxSelected'] === true) {
+            //     listDeleteLocation.push(i.id);
+            // }
+        });
+        console.log('this.pagedResult', listDeleteLocation);
+        if (false) {
             this.confirmationService.confirm(
                 'Bạn có chắc chắn muốn xóa những khu vực được chọn?',
                 () => {
@@ -101,5 +110,26 @@ export class SettingLocationComponent implements OnInit {
             this.alertService.error('Bạn chưa chọn những khu vực cần xóa');
         }
     }
+
+    onSelectAll(value: boolean) {
+        this.pagedResult.items.forEach(x => (x['checkboxSelected'] = value));
+    }
+
+    // multiDelete() {
+    //     const deleteIds = this.pagedResult.items
+    //         .filter(x => x.checkboxSelected)
+    //         .map(x => {
+    //             return {
+    //                 id: +x.id,
+    //             };
+    //         });
+    //     if (deleteIds.length === 0) {
+    //         this.alertService.error(
+    //             'Bạn phải chọn ít nhất một đối tượng để xóa!'
+    //         );
+    //     } else {
+    //         this.delete(deleteIds);
+    //     }
+    // }
 
 }
