@@ -56,7 +56,8 @@ import { ResetPasswordComponent } from './reset-password/reset-password.componen
         ConfirmationPopupCallAwayComponent,
         PoupRejectPackageComponent,
         PopupCreateAssignerComponent,
-        PopupCreateChairComponent
+        PopupCreateChairComponent,
+        ResetPasswordComponent
     ],
     entryComponents: [
         ConfirmationPopupComponent,
@@ -65,7 +66,8 @@ import { ResetPasswordComponent } from './reset-password/reset-password.componen
         FengShuisInforComponent,
         PoupRejectPackageComponent,
         PopupCreateAssignerComponent,
-        PopupCreateChairComponent
+        PopupCreateChairComponent,
+        ResetPasswordComponent
     ]
 })
 export class SharedComponentsModule { }
