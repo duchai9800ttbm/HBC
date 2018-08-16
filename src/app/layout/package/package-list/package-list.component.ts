@@ -128,7 +128,7 @@ export class PackageListComponent implements OnInit, AfterViewChecked {
         window.scrollTo(0, 0);
 
         // Authen
-      
+
 
 
 
@@ -203,17 +203,13 @@ export class PackageListComponent implements OnInit, AfterViewChecked {
         this.refresh(false);
     }
 
-    delete(ids: any | any[], activityType?: string) {
-        console.log('ids', ids);
+    delete(id: number) {
+        console.log('sdasd',id);
         const that = this;
-        const deleteIds = {
-            id: ids,
-        };
-
         this.confirmationService.confirm(
             'Bạn có chắc chắn muốn xóa gói thầu này?',
             () => {
-                this.packageService.deleteOpportunity(deleteIds).subscribe(result => {
+                this.packageService.deleteOpportunity(id).subscribe(result => {
 
                     that.alertService.success('Đã xóa gói thầu!');
                     that.refresh();
