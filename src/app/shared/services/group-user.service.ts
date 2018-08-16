@@ -57,7 +57,8 @@ export class GroupUserService implements OnInit {
           id: itemPrivilege.key,
           text: itemPrivilege.value,
         };
-      })
+      }),
+      isUsing: result.isUsing,
     };
   }
   constructor(
@@ -174,7 +175,7 @@ export class GroupUserService implements OnInit {
     const url = data.id ? `user/edit` : `user/create`;
     console.log('url', url);
     return this.apiService.post(url, data)
-      .map(data => data.result);
+      .map( data => data.result);
   }
 
   // Search
@@ -207,6 +208,11 @@ export class GroupUserService implements OnInit {
   changeGroupUser(userId: number, groupId: number): Observable<any> {
     const url = `user/${userId}/groups/${groupId}`;
     return this.apiService.post(url);
+  }
+  // Vô hiệu hóa nhiều người dùng
+  disableMultipleUser(arrayIdUser: any): Observable<any> {
+    const url = `user/deactive`;
+    return this.apiService.post(url, arrayIdUser);
   }
 
 

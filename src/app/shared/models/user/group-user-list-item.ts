@@ -9,4 +9,5 @@ export class GroupUserList {
         id: string;
         text: string;
     }[];
+    isUsing: boolean;
 }

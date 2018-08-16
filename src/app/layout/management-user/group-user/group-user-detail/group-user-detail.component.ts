@@ -69,6 +69,7 @@ export class GroupUserDetailComponent implements OnInit {
     idGroupCurrent: null,
     arayChangeprivileges: [],
   };
+  groupSlected =  null;
   constructor(
     private alertService: AlertService,
     private modalService: BsModalService,
@@ -99,9 +100,9 @@ export class GroupUserDetailComponent implements OnInit {
       this.spinner.show();
       this.groupUserService.instantSearchGroupUser(this.searchTerm$, 0, 10).subscribe(responsepageResultUserGroup => {
         this.pagedResult = responsepageResultUserGroup;
+        this.listGroupUser = this.pagedResult.items;
         this.dtTrigger.next();
         this.spinner.hide();
-        this.listGroupUser = this.pagedResult.items;
       });
     });
   }
@@ -622,11 +623,14 @@ export class GroupUserDetailComponent implements OnInit {
       };
 
     }
-
+    this.groupSlected = this.listGroupUser.filter( elemnt => elemnt.id ===  ids)[0];
+    console.log('this.listGroupUser', this.listGroupUser, this.groupSlected);
+    console.log('(this.groupSlected.isUsing === true)', this.groupSlected.isUsing , (this.groupSlected.isUsing === true) ? 'a' : 'b');
     this.confirmationService.confirm(
       // console.log(this.pagedResult.items.filter( i => i.id === ids));
       // this.pagedResult.items ? 'Bạn có chắc chắn muốn xóa nhóm người dùng này?' : 'Nhóm người dùng $'
-      'Bạn có chắc chắn muốn xóa nhóm người dùng này?',
+      (this.groupSlected.isUsing === true) ? `Nhóm người dùng "${this.groupSlected.name}" đã được sử dụng, bạn có chắc chắn muốn xóa?`
+        : 'Bạn có chắc chắn muốn xóa nhóm người dùng này?',
       () => {
         this.groupUserService.deleteListGroupUser(deleteIds).subscribe(response => {
           // this.alertService.success('Xóa nhóm người dùng thành công!');
