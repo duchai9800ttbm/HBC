@@ -22,6 +22,7 @@ export class UserAvatarModalComponent implements OnInit {
   ngOnInit() {
   }
 
+
   fileChangeEvent(event: any): void {
     this.imageChangedEvent = event;
   }
@@ -31,10 +32,15 @@ export class UserAvatarModalComponent implements OnInit {
 
   saveImage() {
     const imageBase64 = this.croppedImage.split(',')[1];
-    this.userService.upLoadAvatar(imageBase64).subscribe(result => {
-      this.sessionService.saveUserInfo(result);
-      this.activeModal.close();
-      this.alertService.success('Cập nhật ảnh đại diện thành công!');
+    const imageFile = fetch(this.croppedImage).then(res => res.blob()).then(blob => {
+      const file = new File([blob], 'avatar');
+      this.userService.upLoadAvatar(file).subscribe(res => {
+        this.sessionService.saveUserInfo(res);
+        this.activeModal.close();
+        this.alertService.success('Cập nhật ảnh đại diện thành công!');
+      });
     });
+
   }
+
 }

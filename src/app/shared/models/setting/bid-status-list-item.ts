@@ -3,4 +3,5 @@ export class BidStatusListItem {
     statusName: string;
     statusNo: string;
     statusDesc: string;
+    checkboxSelected: boolean;
 }

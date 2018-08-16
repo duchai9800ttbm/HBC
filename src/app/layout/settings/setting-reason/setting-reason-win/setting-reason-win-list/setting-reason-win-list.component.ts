@@ -9,28 +9,33 @@ import {
 import { SettingService } from '../../../../../shared/services/setting.service';
 import { SETTING_REASON, COMMON_CONSTANTS } from '../../../../../shared/configs/common.config';
 import { OpportunityReasonListItem } from '../../../../../shared/models/setting/opportunity-reason-list-item';
-import { BehaviorSubject } from '../../../../../../../node_modules/rxjs';
+import { BehaviorSubject, Subject } from '../../../../../../../node_modules/rxjs';
+import { DATATABLE_CONFIG } from '../../../../../shared/configs';
+import { NgxSpinnerService } from '../../../../../../../node_modules/ngx-spinner';
 @Component({
     selector: 'app-setting-reason-win-list',
     templateUrl: './setting-reason-win-list.component.html',
     styleUrls: ['./setting-reason-win-list.component.scss']
 })
 export class SettingReasonWinListComponent implements OnInit {
+    dtTrigger: Subject<any> = new Subject();
     searchTerm$ = new BehaviorSubject<string>('');
-    filterModel = new PackageFilter();
-    gridLoading = true;
-    pagedResult: PagedResult<OpportunityReasonListItem[]> = new PagedResult<
-        OpportunityReasonListItem[]
+    dtOptions: any = DATATABLE_CONFIG;
+    checkboxSeclectAll: boolean;
+    pagedResult: PagedResult<OpportunityReasonListItem> = new PagedResult<
+        OpportunityReasonListItem
     >();
     mySelection: number[] = [];
     constructor(
         private confirmationService: ConfirmationService,
         private settingService: SettingService,
-        private alertService: AlertService
+        private alertService: AlertService,
+        private spinner: NgxSpinnerService
     ) {}
 
     ngOnInit() {
         // this.refresh(0, 10);
+        this.spinner.show();
         this.searchTerm$
         .debounceTime(COMMON_CONSTANTS.SearchDelayTimeInMs)
         .distinctUntilChanged()
@@ -44,13 +49,13 @@ export class SettingReasonWinListComponent implements OnInit {
 
     deleteReasonWin(id: number) {
         this.confirmationService.confirm(
-            'Bạn có chắc chắn muốn xóa lý do này?',
+            'Bạn có chắc chắn muốn xóa lý do trúng thầu này?',
             () => {
                 this.settingService
                     .deleteOpportunityReason(id, SETTING_REASON.Win)
                     .subscribe(
                         result => {
-                            this.alertService.success('Đã xóa lý do!');
+                            this.alertService.success('Đã xóa thành công lý do trúng thầu!');
                             this.refresh(0, this.pagedResult.pageSize);
                         },
                         err => {
@@ -68,13 +73,40 @@ export class SettingReasonWinListComponent implements OnInit {
     }
 
     refresh(page: string | number, pageSize: string | number) {
-        this.gridLoading = true;
         this.settingService
             .readOpportunityReason(this.searchTerm$.value, page, pageSize, SETTING_REASON.Win)
             .subscribe(data => {
                 this.pagedResult = data;
-                console.log(this.pagedResult);
-                this.gridLoading = false;
+                this.dtTrigger.next();
+                this.spinner.hide();
             });
+    }
+
+    onSelectAll(value: boolean) {
+        this.pagedResult.items.forEach(x => (x['checkboxSelected'] = value));
+    }
+
+    deleteMultiple() {
+        const listSelected = this.pagedResult.items.filter(i => i.checkboxSelected);
+        if (listSelected.length > 0) {
+            this.confirmationService.confirm(
+                'Bạn có chắc chắn muốn xóa những lý do được chọn?',
+                () => {
+                    this.settingService.deleteMultipleOpportunityReason(listSelected.map(i => i.id), SETTING_REASON.Win).subscribe(
+                        _ => {
+                            this.alertService.success('Đã xóa thành công các lý do được chọn!');
+                            this.refresh(0, this.pagedResult.pageSize);
+                        },
+                        _ => {
+                            this.alertService.error(
+                                'Đã gặp lỗi, chưa xóa được các lý do!'
+                            );
+                        }
+                    );
+                }
+            );
+        } else {
+            this.alertService.error('Bạn cần chọn ít nhất 1 lý do cần xóa');
+        }
     }
 }

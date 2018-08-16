@@ -11,6 +11,7 @@ import { SettingService } from '../../../shared/services/setting.service';
 import { LocationListItem } from '../../../shared/models/setting/location-list-item';
 import { COMMON_CONSTANTS } from '../../../shared/configs/common.config';
 import { DATATABLE_CONFIG } from '../../../shared/configs';
+import { NgxSpinnerService } from '../../../../../node_modules/ngx-spinner';
 @Component({
     selector: 'app-setting-location',
     templateUrl: './setting-location.component.html',
@@ -20,6 +21,7 @@ export class SettingLocationComponent implements OnInit {
     dtTrigger: Subject<any> = new Subject();
     searchTerm$ = new BehaviorSubject<string>('');
     dtOptions: any = DATATABLE_CONFIG;
+    checkboxSeclectAll: boolean;
     gridLoading = true;
     pagedResult: PagedResult<LocationListItem> = new PagedResult<
         LocationListItem
@@ -28,10 +30,12 @@ export class SettingLocationComponent implements OnInit {
     constructor(
         private settingService: SettingService,
         private confirmationService: ConfirmationService,
-        private alertService: AlertService
+        private alertService: AlertService,
+        private spinner: NgxSpinnerService,
     ) { }
 
     ngOnInit() {
+        this.spinner.show();
         this.searchTerm$
             .debounceTime(COMMON_CONSTANTS.SearchDelayTimeInMs)
             .distinctUntilChanged()
@@ -54,7 +58,7 @@ export class SettingLocationComponent implements OnInit {
             () => {
                 this.settingService.deleteLocation(id).subscribe(
                     result => {
-                        this.alertService.success('Đã xóa khu vực!');
+                        this.alertService.success('Đã xóa thành công khu vực!');
                         this.refresh(0, this.pagedResult.pageSize);
                     },
                     err => {
@@ -72,10 +76,10 @@ export class SettingLocationComponent implements OnInit {
     }
 
     refresh(page: string | number, pageSize: string | number) {
-        this.gridLoading = true;
         this.settingService.readLocation(this.searchTerm$.value, page, pageSize).subscribe(data => {
             this.pagedResult = data;
-            this.gridLoading = false;
+            this.dtTrigger.next();
+            this.spinner.hide();
         });
     }
 
@@ -87,19 +91,19 @@ export class SettingLocationComponent implements OnInit {
                 () => {
                     this.settingService.deleteMultipleLocation(listSelected.map(i => i.id)).subscribe(
                         result => {
-                            this.alertService.success('Đã xóa các khu vực!');
+                            this.alertService.success('Đã xóa thành công các khu vực được chọn!');
                             this.refresh(0, this.pagedResult.pageSize);
                         },
                         err => {
                             this.alertService.error(
-                                'Đã gặp lỗi, chưa xóa được các khu vực!'
+                                'Đã gặp lỗi, chưa xóa được các khu vực được chọn!'
                             );
                         }
                     );
                 }
             );
         } else {
-            this.alertService.error('Bạn chưa chọn những khu vực cần xóa');
+            this.alertService.error('Bạn cần chọn ít nhất 1 khu vực cần xóa');
         }
     }
 

@@ -107,16 +107,16 @@ export class UserProfileComponent implements OnInit {
   }
   clearAvatar() {
     this.avatarSrc = defaultAvatarSrc;
-    this.uploadAvatar();
+ //   this.uploadAvatar();
   }
 
-  uploadAvatar() {
-    const imageBase64 = this.avatarSrc.split(',')[1];
-    this.userService.upLoadAvatar(imageBase64).subscribe(result => {
-      this.sessionService.saveUserInfo(result);
-      this.alertService.success('Cập nhật ảnh đại diện thành công!');
-    });
-  }
+  // uploadAvatar() {
+  //   const imageBase64 = this.avatarSrc.split(',')[1];
+  //   this.userService.upLoadAvatar(imageBase64).subscribe(result => {
+  //     //this.sessionService.saveUserInfo(result);
+  //     this.alertService.success('Cập nhật ảnh đại diện thành công!');
+  //   });
+  // }
 
 
   // resize(img, MAX_WIDTH: number, MAX_HEIGHT: number, callback) {

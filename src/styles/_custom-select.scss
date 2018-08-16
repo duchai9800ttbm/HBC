@@ -39,14 +39,13 @@
   pointer-events: none;
 }
 
-.custom-dropdown::after { /*  Custom dropdown arrow */
-  content: "\25BC";
-  height: 1em;
-  font-size: .625em;
-  line-height: 1;
-  right: 1.9em;
-  top: 50%;
-  margin-top: -.5em;
+.custom-dropdown::after {
+    /*  Custom dropdown arrow */
+    content: '\25BC';
+    height: 1em;
+    position: absolute;
+    right: 1em;
+    top: 25%;
 }
 
 .custom-dropdown::before { /*  Custom dropdown arrow cover */

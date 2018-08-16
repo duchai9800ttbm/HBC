@@ -5,6 +5,9 @@ import { PackageModel } from '../../../shared/models/package/package.model';
 import { FakePackageData } from '../../../shared/fake-data/package-data';
 import { PackageService } from '../../../shared/services/package.service';
 import { NgxSpinnerService } from '../../../../../node_modules/ngx-spinner';
+import { UserModel } from '../../../shared/models/user/user.model';
+import { SessionService } from '../../../shared/services/session.service';
+import { PackageInfoModel } from '../../../shared/models/package/package-info.model';
 
 @Component({
   selector: 'app-package-detail',
@@ -20,15 +23,44 @@ export class PackageDetailComponent implements OnInit {
     private activetedRoute: ActivatedRoute,
     private packageService: PackageService,
     private spinner: NgxSpinnerService,
+    private sessionService: SessionService,
   ) { }
   static packageId;
   public packageId: number;
-  packageData = new PackageModel();
+  packageData = new PackageInfoModel();
   status = {
     DisabledfileAttend: true,
     Disabledresult: true
   };
+  userModel: UserModel;
+  listPrivileges = [];
+  isManageBidOpportunitys;
+  isEditBidOpportunity;
+  isViewBidOpportunityDetail;
   ngOnInit() {
+    this.sessionService.getUserInfo().subscribe(result => {
+      this.userModel = result;
+      this.listPrivileges = this.userModel.privileges;
+      if (this.listPrivileges) {
+        this.isManageBidOpportunitys = this.listPrivileges.some(x => x === 'ManageBidOpportunitys');
+        this.isEditBidOpportunity = this.listPrivileges.some(x => x === 'EditBidOpportunity');
+        this.isViewBidOpportunityDetail = this.listPrivileges.some(x => x === 'ViewBidOpportunityDetail');
+        if (!this.isEditBidOpportunity && !this.isViewBidOpportunityDetail) {
+          this.router.navigate(['/not-found']);
+        }
+      }
+    });
+    this.userModel = this.sessionService.userInfo;
+    this.listPrivileges = this.userModel.privileges;
+    if (this.listPrivileges) {
+      this.isManageBidOpportunitys = this.listPrivileges.some(x => x === 'ManageBidOpportunitys');
+      this.isEditBidOpportunity = this.listPrivileges.some(x => x === 'EditBidOpportunity');
+      this.isViewBidOpportunityDetail = this.listPrivileges.some(x => x === 'ViewBidOpportunityDetail');
+      if (!this.isEditBidOpportunity && !this.isViewBidOpportunityDetail) {
+        this.router.navigate(['/not-found']);
+      }
+    }
+
     this.activetedRoute.params.subscribe(result => {
       this.packageId = +result.id;
       PackageDetailComponent.packageId = this.packageId;

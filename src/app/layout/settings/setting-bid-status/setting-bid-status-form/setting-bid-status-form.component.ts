@@ -49,8 +49,8 @@ export class SettingBidStatusFormComponent implements OnInit {
     if (valid) {
       this.settingService.createOrUpdateBidStatus(this.bidStatusForm.value).subscribe(data => {
         const message = this.bidStatus.id
-          ? 'Tình trạng gói thầu đã được chỉnh sửa.'
-          : 'Tình trạng gói thầu đã được tạo.';
+          ? 'Tình trạng gói thầu đã được cập nhật thành công.'
+          : 'Tình trạng gói thầu đã được tạo mới thành công.';
         this.router.navigate([`/settings/bid-status`]);
         this.alertService.success(message);
       });

@@ -15,7 +15,7 @@
         </div>
     </div>
     <div>
-        <kendo-grid [data]="pagedResult.items" [loading]="gridLoading" [selectable]="{enabled: true, mode: 'multiple', checkboxOnly: true}"
+        <!-- <kendo-grid [data]="pagedResult.items" [loading]="gridLoading" [selectable]="{enabled: true, mode: 'multiple', checkboxOnly: true}"
             [kendoGridSelectBy]="'id'" [selectedKeys]="mySelection" (selectedKeysChange)="onSelectedKeysChange($event)">
             <kendo-grid-checkbox-column [headerClass]="'custom-table-header'" width="40" showSelectAll="true">
             </kendo-grid-checkbox-column>
@@ -27,9 +27,6 @@
             </kendo-grid-column>
             <kendo-grid-column headerClass="custom-table-header" title="Thao tác" width="150">
                 <ng-template kendoGridCellTemplate let-dataItem>
-                    <!-- <a [routerLink]="['/package/detail',dataItem.bidOpportunityId]">
-                          <i class="fa fa-eye text-warning" aria-hidden="true"></i>
-                      </a> -->
                     <a [routerLink]="['/settings/construction-category/edit',dataItem.id]" class=" text-success ml-3">
                         <i class="fa fa-pencil  cursor-pointer" aria-hidden="true"> </i>
                     </a>
@@ -39,7 +36,57 @@
                 </ng-template>
             </kendo-grid-column>
             <kendo-grid-messages noRecords="Không có dữ liệu"></kendo-grid-messages>
-        </kendo-grid>
+        </kendo-grid> -->
+        <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="table-selection stripe hover">
+            <thead>
+                <tr style="width: 100%">
+                    <th class="text-center" style="width: 15px; padding-left: 7px;">
+                        <label class="custom-control custom-checkbox">
+                            <input type="checkbox" class="custom-control-input input-checkbox" [(ngModel)]="checkboxSeclectAll" (change)="onSelectAll($event.target.checked)">
+                            <span class="custom-control-indicator"></span>
+                        </label>
+                    </th>
+                    <th style="width: 50%">
+                        <div class="d-flex justify-content-start">
+                            <div style="margin-right: 10px">Tên hạng mục</div>
+                        </div>
+                    </th>
+                    <th style="width: 50%">
+                        <div class="d-flex justify-content-start">
+                            <div style="margin-right: 10px">Mô tả</div>
+                        </div>
+                    </th>
+                    <th class="text-center" style="width: calc(10% - 7px); min-width: 55px!important;">
+                        Thao tác
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let item of pagedResult.items">
+                    <td class="text-center" style="width: 15px; padding-left: 7px;">
+                        <label class="custom-control custom-checkbox">
+                            <input type="checkbox" class="custom-control-input" [(ngModel)]="item.checkboxSelected">
+                            <span class="custom-control-indicator"></span>
+                        </label>
+                    </td>
+                    <td class="text-truncate">
+                        {{item.constructionCategoryName}}
+                    </td>
+                    <td class="text-truncate">
+                        {{item.constructionCategoryDesc}}
+                    </td>
+                    <td class="row">
+                        <a [routerLink]="['/settings/construction-category/edit',item.id]" class=" text-success ml-3">
+                            <i class="fa fa-pencil  cursor-pointer" aria-hidden="true"> </i>
+                        </a>
+                        <a class=" text-dark ml-3">
+                            <i (click)="deleteConstructionCategory(item.id)" class="fa fa-trash-o pointer" aria-hidden="true"></i>
+                        </a>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
         <app-pagination [(pagedResult)]="pagedResult" (pagedResultChange)="pagedResultChange($event)"></app-pagination>
     </div>
 </div>
+<ngx-spinner bdColor="rgba(51, 51, 51, 0.7)" size="medium" color="#fff" type="ball-clip-rotate-multiple"></ngx-spinner>

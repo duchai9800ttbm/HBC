@@ -1,13 +1,15 @@
 <div [@routerTransition]>
     <div class="main-detail">
         <div class="d-flex justify-content-between menu">
-            <div class="center-parent action" style="width: calc(20% - 3px)" [routerLinkActive]="['router-link-active']" [routerLink]="['./group-user-detail']">
-                <div class="text-uppercase">NHÓM NGƯỜI DÙNG</div>
+            <!-- <div> -->
+            <div class="center-parent action cus-menu" [routerLinkActive]="['router-link-active']" [routerLink]="['./group-user-detail']">
+                <div class="text-uppercase custom-filter-bar" style="padding-left: 2px; padding-right: 2px">NHÓM NGƯỜI DÙNG</div>
             </div>
-            <div class="center-parent action" style="width: calc(20% - 3px)" [routerLinkActive]="['router-link-active']" [routerLink]="['./manage-user-list']">
-                <div class="text-uppercase">QUẢN LÝ NGƯỜI DÙNG</div>
+            <div class="center-parent action cus-menu" [routerLinkActive]="['router-link-active']" [routerLink]="['./manage-user-list']">
+                <div class="text-uppercase custom-filter-bar" style="padding-left: 2px; padding-right: 2px">QUẢN LÝ NGƯỜI DÙNG</div>
             </div>
-            <div class="" style="width: calc(60% - 3px)"></div>
+            <!-- </div> -->
+            <div class="cus-menu-space"></div>
         </div>
         <div>
             <router-outlet></router-outlet>

@@ -19,6 +19,7 @@ import { BidDocumentReviewModel } from '../../../../../shared/models/document/bi
 import { Router } from '@angular/router';
 import { PackageService } from '../../../../../shared/services/package.service';
 import { PackageModel } from '../../../../../shared/models/package/package.model';
+import { PackageInfoModel } from '../../../../../shared/models/package/package-info.model';
 @Component({
   selector: 'app-approved',
   templateUrl: './approved.component.html',
@@ -47,7 +48,7 @@ export class ApprovedComponent implements OnInit {
   bidDocumentListItem: BidDocumentModel[];
   bidDocumentGroupListItem: BidDocumentGroupModel[];
   bidDocumentGroupListItemSearchResult: BidDocumentGroupModel[];
-  packageData: PackageModel;
+  packageData: PackageInfoModel;
 
   constructor(
     private alertService: AlertService,
@@ -65,7 +66,7 @@ export class ApprovedComponent implements OnInit {
     this.packageId = +PackageDetailComponent.packageId;
         this.packageService.getInforPackageID(this.packageId).subscribe(result => {
             this.packageData = result;
-            switch (this.packageData.stageStatus) {
+            switch (this.packageData.stageStatus.id) {
                 case 'CanBoSungHSMT': {
                   this.router.navigate([`/package/detail/${this.packageId}/invitation/add-file`]);
                     break;

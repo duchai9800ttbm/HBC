@@ -16,6 +16,7 @@ import { FengShuisInforComponent } from './feng-shuis-infor/feng-shuis-infor.com
 import { PoupRejectPackageComponent } from './poup-reject-package/poup-reject-package.component';
 import { PopupCreateAssignerComponent } from './popup-create-assigner/popup-create-assigner.component';
 import { PopupCreateChairComponent } from './popup-create-chair/popup-create-chair.component';
+import { ResetPasswordComponent } from './reset-password/reset-password.component';
 
 @NgModule({
     imports: [
@@ -42,6 +43,7 @@ import { PopupCreateChairComponent } from './popup-create-chair/popup-create-cha
         PoupRejectPackageComponent,
         PopupCreateAssignerComponent,
         PopupCreateChairComponent,
+        ResetPasswordComponent,
     ],
     exports: [
         // AlertComponent,
@@ -54,7 +56,8 @@ import { PopupCreateChairComponent } from './popup-create-chair/popup-create-cha
         ConfirmationPopupCallAwayComponent,
         PoupRejectPackageComponent,
         PopupCreateAssignerComponent,
-        PopupCreateChairComponent
+        PopupCreateChairComponent,
+        ResetPasswordComponent
     ],
     entryComponents: [
         ConfirmationPopupComponent,
@@ -63,7 +66,8 @@ import { PopupCreateChairComponent } from './popup-create-chair/popup-create-cha
         FengShuisInforComponent,
         PoupRejectPackageComponent,
         PopupCreateAssignerComponent,
-        PopupCreateChairComponent
+        PopupCreateChairComponent,
+        ResetPasswordComponent
     ]
 })
 export class SharedComponentsModule { }

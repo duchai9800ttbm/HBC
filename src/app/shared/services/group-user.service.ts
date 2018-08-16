@@ -57,7 +57,8 @@ export class GroupUserService implements OnInit {
           id: itemPrivilege.key,
           text: itemPrivilege.value,
         };
-      })
+      }),
+      isUsing: result.isUsing,
     };
   }
   constructor(
@@ -106,6 +107,7 @@ export class GroupUserService implements OnInit {
     return this.apiService.get(url)
       .map(data => {
         const result = data.result;
+        console.log('result', result);
         return {
           id: result.id,
           userName: result.userName,
@@ -120,17 +122,23 @@ export class GroupUserService implements OnInit {
           },
           firstName: result.firstName,
           lastName: result.lastName,
-          userGroup: result.userGroup && {
-            id: result.userGroup.id,
-            name: result.userGroup.name,
-            desc: result.userGroup.desc,
-            isActive: result.userGroup.isActive,
-            privileges: result.userGroup.privileges && [{
-              key: result.userGroup.privileges.key,
-              value: result.userGroup.privileges.value
-            }]
-          },
-          isActive: result.isActive
+          // userGroup: result.userGroup && {
+          //   id: result.userGroup.id,
+          //   name: result.userGroup.name,
+          //   desc: result.userGroup.desc,
+          //   isActive: result.userGroup.isActive,
+          //   privileges: result.userGroup.privileges && [{
+          //     key: result.userGroup.privileges.key,
+          //     value: result.userGroup.privileges.value
+          //   }]
+          // },
+          userGroup: result.userGroup ? {
+            id: result.userGroup.key,
+            value: result.userGroup.key,
+          } : null ,
+          isActive: result.isActive,
+          phoneNumber: result.phoneNumber,
+          address: result.address,
         };
       });
   }
@@ -167,7 +175,7 @@ export class GroupUserService implements OnInit {
     const url = data.id ? `user/edit` : `user/create`;
     console.log('url', url);
     return this.apiService.post(url, data)
-      .map(data => data.result);
+      .map( data => data.result);
   }
 
   // Search
@@ -199,6 +207,16 @@ export class GroupUserService implements OnInit {
   // Thay đổi nhóm của User
   changeGroupUser(userId: number, groupId: number): Observable<any> {
     const url = `user/${userId}/groups/${groupId}`;
+    return this.apiService.post(url);
+  }
+  // Vô hiệu hóa nhiều người dùng
+  disableMultipleUser(arrayIdUser: any): Observable<any> {
+    const url = `user/deactive`;
+    return this.apiService.post(url, arrayIdUser);
+  }
+  // Thay đổi mật khẩu
+  resetPassword(idUser: number) {
+    const url = `user/${idUser}/setnewpassword`;
     return this.apiService.post(url);
   }
 

@@ -3,27 +3,33 @@ import { PagedResult } from '../../../../shared/models';
 import { SettingService } from '../../../../shared/services/setting.service';
 import { ConfirmationService, AlertService } from '../../../../shared/services';
 import { BidStatusListItem } from '../../../../shared/models/setting/bid-status-list-item';
-import { BehaviorSubject } from '../../../../../../node_modules/rxjs';
+import { BehaviorSubject, Subject } from '../../../../../../node_modules/rxjs';
 import { COMMON_CONSTANTS } from '../../../../shared/configs/common.config';
+import { DATATABLE_CONFIG } from '../../../../shared/configs';
+import { NgxSpinnerService } from '../../../../../../node_modules/ngx-spinner';
 @Component({
     selector: 'app-setting-bid-status-list',
     templateUrl: './setting-bid-status-list.component.html',
     styleUrls: ['./setting-bid-status-list.component.scss']
 })
 export class SettingBidStatusListComponent implements OnInit {
+    dtTrigger: Subject<any> = new Subject();
     searchTerm$ = new BehaviorSubject<string>('');
-    gridLoading = true;
-    pagedResult: PagedResult<BidStatusListItem[]> = new PagedResult<
-        BidStatusListItem[]
+    dtOptions: any = DATATABLE_CONFIG;
+    checkboxSeclectAll: boolean;
+    pagedResult: PagedResult<BidStatusListItem> = new PagedResult<
+        BidStatusListItem
         >();
     mySelection: number[] = [];
     constructor(
         private settingService: SettingService,
         private confirmationService: ConfirmationService,
-        private alertService: AlertService
+        private alertService: AlertService,
+        private spinner: NgxSpinnerService,
     ) { }
 
     ngOnInit() {
+        this.spinner.show();
         this.searchTerm$
             .debounceTime(COMMON_CONSTANTS.SearchDelayTimeInMs)
             .distinctUntilChanged()
@@ -42,7 +48,7 @@ export class SettingBidStatusListComponent implements OnInit {
             () => {
                 this.settingService.deleteBidStatus(id).subscribe(
                     result => {
-                        this.alertService.success('Đã xóa tình trạng gói thầu!');
+                        this.alertService.success('Đã xóa thành công tình trạng gói thầu!');
                         this.refresh(0, this.pagedResult.pageSize);
                     },
                     err => {
@@ -60,22 +66,22 @@ export class SettingBidStatusListComponent implements OnInit {
     }
 
     refresh(page: string | number, pageSize: string | number) {
-        this.gridLoading = true;
         this.settingService.readBidStatus(this.searchTerm$.value, page, pageSize).subscribe(data => {
             this.pagedResult = data;
-            console.log(this.pagedResult);
-            this.gridLoading = false;
+            this.dtTrigger.next();
+            this.spinner.hide();
         });
     }
 
     deleteMultiple() {
-        if (this.mySelection.length) {
+        const listSelected = this.pagedResult.items.filter(i => i.checkboxSelected);
+        if (listSelected.length > 0) {
             this.confirmationService.confirm(
                 'Bạn có chắc chắn muốn xóa những tình trạng gói thầu được chọn?',
                 () => {
-                    this.settingService.deleteMultipleBidStatus(this.mySelection).subscribe(
+                    this.settingService.deleteMultipleBidStatus(listSelected.map(i => i.id)).subscribe(
                         result => {
-                            this.alertService.success('Đã xóa các tình trạng gói thầu!');
+                            this.alertService.success('Đã xóa thành công các tình trạng gói thầu được chọn!');
                             this.refresh(0, this.pagedResult.pageSize);
                         },
                         err => {
@@ -87,8 +93,13 @@ export class SettingBidStatusListComponent implements OnInit {
                 }
             );
         } else {
-            this.alertService.error('Bạn chưa chọn những tình trạng gói thầu cần xóa');
+            this.alertService.error('Bạn cần chọn ít nhất 1 tình trạng gói thầu cần xóa');
         }
 
     }
+
+    onSelectAll(value: boolean) {
+        this.pagedResult.items.forEach(x => (x['checkboxSelected'] = value));
+    }
+
 }

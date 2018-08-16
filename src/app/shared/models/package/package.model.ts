@@ -1,49 +1,33 @@
 export class PackageModel {
-    id: number;
     projectName: string;
     projectNo: string;
     opportunityName: string;
     job: string;
     place: string;
-    location: string;
-    trimester: string;
-    customer: {
-        id: number;
-        text: string;
-    };
+    locationId: number;
+    quarter: string;
+    customerId: number;
     classify: string;
-    customerContact: {
-        id: number;
-        text: string;
-    };
+    customerContactId: number;
     consultantUnit: string;
     consultantAddress: string;
     consultantPhone: string;
     floorArea: number;
     magnitude: string;
-    projectType: string;
-    mainBuildingCategory: string;
+    constructionTypeId: number;
+    constructionCategoryId: number;
     hbcRole: string;
     documentLink: string;
-    hbcChair: {
-        id: number;
-        text: string;
-    };
-    status: string;
+    chairEmployeeId: number;
+    bidStatusId: number;
     amount: number;
     evaluation: string;
     startTrackingDate: number;
     submissionDate: number;
     resultEstimatedDate: number;
-    estimatedProjectStartDate: number;
-    estimatedProjectEndDate: number;
-    totalTime: number;
+    projectEstimatedStartDate: number;
+    projectEstimatedEndDate: number;
+    totalTime: string;
     description: string;
-    quarter: string;
-    stage: string;
-    stageStatus: string;
-    progress: number;
-    acceptanceReason: string;
-    unacceptanceReason: string;
-}
+  }
 
