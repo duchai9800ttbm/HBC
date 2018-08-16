@@ -100,6 +100,7 @@ span.k-icon.k-clear-value.k-i-close.ng-star-inserted {
 
 .k-grid {
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+  font-size: 0.8rem;
 }
 
 .k-grid-header {
@@ -132,8 +133,8 @@ span.k-icon.k-clear-value.k-i-close.ng-star-inserted {
 .k-state-selected {
   background: #fff!important;
 }
-.k-grid td {
-  background: #fff!important;  
+.k-grid tr.k-alt {
+  background-color: #fafbfc !important;
 }
 // select.form-control.ng-star-inserted:focus {
 //   box-shadow: inset 0 0 0 1px #fff!important;
@@ -142,7 +143,7 @@ th.k-header.ng-star-inserted {
   padding-left: 10px;
 }
 .k-grid th {
-  padding: 20px 12px;
+  padding: 15px 8px;
 }
 .k-input {  
   font-weight: initial!important;  
