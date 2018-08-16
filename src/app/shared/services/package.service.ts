@@ -234,85 +234,85 @@ export class PackageService {
             });
     }
 
-      getInforPackageID(bidOpportunityId: number | string): Observable<PackageInfoModel> {
+    getInforPackageID(bidOpportunityId: number | string): Observable<PackageInfoModel> {
         const searchUrl = `bidopportunity/${bidOpportunityId}`;
         return this.apiService.get(searchUrl).map(response => {
-          const result = response.result;
-          return {
-            id: result.bidOpportunityId,
-            classify: result.classify,
-            amount: result.amount,
-            opportunityName: result.opportunityName,
-            projectName: result.projectName,
-            projectType: result.projectType && {
-                id: result.projectType.key,
-                text: result.projectType.value
-            },
-            hbcRole: result.hbcRole && {
-                id: result.hbcRole.type,
-                text: result.hbcRole.name
-            },
-            chairEmployee: result.chairEmployee && {
-              id: result.chairEmployee.employeeId,
-              text: result.chairEmployee.employeeName
-            },
-            quarter: result.quarter && {
-                id: result.quarter.type,
-                text: result.quarter.name
-            },
-            magnitude: result.magnitude,
-            stage: result.stage && {
-                id: result.stage.key,
-                text: result.stage.value
-            },
-            stageStatus: result.stageStatus && {
-                id: result.stageStatus.key,
-                text: result.stageStatus.value
-            },
-            location: result.location && {
-                id: result.location.key,
-                text: result.location.value
-            },
-            projectNo: result.projectNo,
-            job: result.job,
-            place: result.place,
-            region: result.region,
-            customer: result.customer && {
-              id: result.customer.customerId,
-              text: result.customer.customerName
-            },
-            customerContact: result.customerContact && {
-              id: result.customerContact.id,
-              text: result.customerContact.name,
-            },
-            consultantUnit: result.consultantUnit,
-            consultantAddress: result.consultantAddress,
-            consultantPhone: result.consultantPhone,
-            floorArea: result.floorArea,
-            mainBuildingCategory: result.mainBuildingCategory && {
-                id: result.mainBuildingCategory.key,
-                text: result.mainBuildingCategory.value
-            },
-            documentLink: result.documentLink,
-            status: result.status && {
-                id: result.status.key,
-                text: result.status.value
-            },
-            progress: result.progress,
-            acceptanceReason: result.acceptanceReason,
-            unacceptanceReason: result.unacceptanceReason,
-            cancelReason: result.cancelReason,
-            evaluation: result.evaluation,
-            startTrackingDate: result.startTrackingDate,
-            submissionDate: result.submissionDate,
-            resultEstimatedDate: result.resultEstimatedDate,
-            projectEstimatedStartDate: result.projectEstimatedStartDate,
-            projectEstimatedEndDate: result.projectEstimatedEndDate,
-            totalTime: result.totalTime,
-            description: result.description
-          };
+            const result = response.result;
+            return {
+                id: result.bidOpportunityId,
+                classify: result.classify,
+                amount: result.amount,
+                opportunityName: result.opportunityName,
+                projectName: result.projectName,
+                projectType: result.projectType && {
+                    id: result.projectType.key,
+                    text: result.projectType.value
+                },
+                hbcRole: result.hbcRole && {
+                    id: result.hbcRole.type,
+                    text: result.hbcRole.name
+                },
+                chairEmployee: result.chairEmployee && {
+                    id: result.chairEmployee.employeeId,
+                    text: result.chairEmployee.employeeName
+                },
+                quarter: result.quarter && {
+                    id: result.quarter.type,
+                    text: result.quarter.name
+                },
+                magnitude: result.magnitude,
+                stage: result.stage && {
+                    id: result.stage.key,
+                    text: result.stage.value
+                },
+                stageStatus: result.stageStatus && {
+                    id: result.stageStatus.key,
+                    text: result.stageStatus.value
+                },
+                location: result.location && {
+                    id: result.location.key,
+                    text: result.location.value
+                },
+                projectNo: result.projectNo,
+                job: result.job,
+                place: result.place,
+                region: result.region,
+                customer: result.customer && {
+                    id: result.customer.customerId,
+                    text: result.customer.customerName
+                },
+                customerContact: result.customerContact && {
+                    id: result.customerContact.id,
+                    text: result.customerContact.name,
+                },
+                consultantUnit: result.consultantUnit,
+                consultantAddress: result.consultantAddress,
+                consultantPhone: result.consultantPhone,
+                floorArea: result.floorArea,
+                mainBuildingCategory: result.mainBuildingCategory && {
+                    id: result.mainBuildingCategory.key,
+                    text: result.mainBuildingCategory.value
+                },
+                documentLink: result.documentLink,
+                status: result.status && {
+                    id: result.status.key,
+                    text: result.status.value
+                },
+                progress: result.progress,
+                acceptanceReason: result.acceptanceReason,
+                unacceptanceReason: result.unacceptanceReason,
+                cancelReason: result.cancelReason,
+                evaluation: result.evaluation,
+                startTrackingDate: result.startTrackingDate,
+                submissionDate: result.submissionDate,
+                resultEstimatedDate: result.resultEstimatedDate,
+                projectEstimatedStartDate: result.projectEstimatedStartDate,
+                projectEstimatedEndDate: result.projectEstimatedEndDate,
+                totalTime: result.totalTime,
+                description: result.description
+            };
         });
-      }
+    }
 
 
     getRegiontypesPackage(): Observable<any> {
@@ -521,7 +521,6 @@ export class PackageService {
             totalTime: formValue.totalTime,
             description: formValue.description,
         };
-        console.log('inforPackage', inforPackage);
         return this.apiService.post(url, inforPackage)
             .map(response => {
                 return response;
@@ -531,7 +530,9 @@ export class PackageService {
     // Xóa gói thầu
     deleteOpportunity(id: any): Observable<any> {
         const url = `bidopportunity/delete`;
-        return this.apiService.post(url, id)
+        return this.apiService.post(url, {
+            id: id
+        })
             .map(response => {
                 return response;
             })

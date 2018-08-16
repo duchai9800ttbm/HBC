@@ -161,7 +161,7 @@
         </h4>
       </div>
       <div class="col-md-6">
-        <div class="btn-toolbar pull-right menu">
+        <div class="btn-toolbar pull-right menu" style="flex-wrap: nowrap;">
           <div class="input-group btn-rg">
             <span class="input-group-addon">Tìm kiếm</span>
             <input type="text" class="form-control icon" placeholder="&#xf002; Nhập tên" (keyup)="searchTerm$.next($event.target.value)">
@@ -181,10 +181,10 @@
     </div>
 
     <div class="data-list menu" style="padding-top: 10px;">
-      <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="table-selection stripe hover">
+      <table *ngIf="pagedResult.items" datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="table-selection stripe hover">
         <thead>
           <tr style="width: 100%">
-            <th class="text-center" style="width: 15px; padding-left: 7px;">
+            <th class="text-center" style="width: 15px;">
               <label class="custom-control custom-checkbox">
                 <input type="checkbox" class="custom-control-input input-checkbox" [(ngModel)]="checkboxSeclectAll" (change)="onSelectAll($event.target.checked)">
                 <span class="custom-control-indicator"></span>
@@ -225,7 +225,7 @@
               {{item.desc}}
             </td>
             <td class="text-truncate">
-              {{item.isActive === true ? 'Đã sử dụng' : 'Chưa sử dụng'}}
+              {{item.isUsing === true ? 'Đã sử dụng' : 'Chưa sử dụng'}}
             </td>
             <td>
               <div class="row">

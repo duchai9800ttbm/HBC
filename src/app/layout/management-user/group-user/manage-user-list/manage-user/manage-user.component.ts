@@ -171,7 +171,6 @@ export class ManageUserComponent implements OnInit {
             });
         }
       );
-
     }
   }
 
@@ -227,5 +226,31 @@ export class ManageUserComponent implements OnInit {
           });
       }
     );
+  }
+
+  disableMultiple() {
+    const deleteIds = this.pagedResult.items
+      .filter(x => x.checkboxSelected)
+      .map(x => x.id);
+    if (deleteIds.length === 0) {
+      this.alertService.error(
+        'Bạn phải chọn ít nhất một đối tượng để vô hiệu hóa!'
+      );
+    } else {
+      this.confirmationService.confirm(
+        'Bạn có chắc chắn vô hiệu hóa những người dùng được chọn?',
+        () => {
+          this.groupUserService.disableMultipleUser({ ids: deleteIds }).subscribe(response => {
+            // this.refresh(0, 10);
+            // this.rerender(this.pagedResult);
+            this.refresh(this.pagedResult.currentPage, this.pagedResult.pageSize);
+            this.alertService.success('Vô hiệu hóa nhiều người dùng thành công!');
+          },
+            err => {
+              this.alertService.error('Đã xảy ra lỗi! Vô hiệu hóa nhiều người dùng không thành công!');
+            });
+        }
+      );
+    }
   }
 }
