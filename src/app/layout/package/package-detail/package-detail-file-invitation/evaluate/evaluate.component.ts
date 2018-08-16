@@ -32,6 +32,7 @@ import { UserModel } from '../../../../../shared/models/user/user.model';
 import { BidDocumentModel } from '../../../../../shared/models/document/bid-document.model';
 import { UserItemModel } from '../../../../../shared/models/user/user-item.model';
 import { PackageModel } from '../../../../../shared/models/package/package.model';
+import { PackageInfoModel } from '../../../../../shared/models/package/package-info.model';
 @Component({
     selector: 'app-evaluate',
     templateUrl: './evaluate.component.html',
@@ -58,7 +59,7 @@ export class EvaluateComponent implements OnInit {
     bidDocumentListItem: BidDocumentModel[];
     bidDocumentGroupListItem: BidDocumentGroupModel[];
     bidDocumentGroupListItemSearchResult: BidDocumentGroupModel[];
-    packageData: PackageModel;
+    packageData: PackageInfoModel;
     constructor(
         private activityService: ActivityService,
         private alertService: AlertService,
@@ -85,7 +86,7 @@ export class EvaluateComponent implements OnInit {
         this.packageId = +PackageDetailComponent.packageId;
         this.packageService.getInforPackageID(this.packageId).subscribe(result => {
             this.packageData = result;
-            switch (this.packageData.stageStatus) {
+            switch (this.packageData.stageStatus.id) {
                 case 'CanBoSungHSMT': {
                   this.router.navigate([`/package/detail/${this.packageId}/invitation/add-file`]);
                     break;
