@@ -624,16 +624,45 @@ export class GroupUserDetailComponent implements OnInit {
     }
 
     this.confirmationService.confirm(
+      // console.log(this.pagedResult.items.filter( i => i.id === ids));
+      // this.pagedResult.items ? 'Bạn có chắc chắn muốn xóa nhóm người dùng này?' : 'Nhóm người dùng $'
       'Bạn có chắc chắn muốn xóa nhóm người dùng này?',
       () => {
         this.groupUserService.deleteListGroupUser(deleteIds).subscribe(response => {
-          this.alertService.success('Xóa nhóm người dùng thành công!');
-          this.refesh();
+          // this.alertService.success('Xóa nhóm người dùng thành công!');
+          // Danh sách quyền
+          this.dataService.getListPrivileges().subscribe( j => {
+            this.listPrivilegesData = j;
+            // Danh sách nhóm người dùng
+            this.spinner.show();
+            this.groupUserService.listGroupUser(this.pagedResult.currentPage, this.pagedResult.pageSize)
+              .subscribe(responsepageResultUserGroup => {
+              this.pagedResult = responsepageResultUserGroup;
+              this.spinner.hide();
+              this.listGroupUser = this.pagedResult.items.map(i => i);
+              const toStringListPrivilegesData = this.listPrivilegesData.map(i => JSON.stringify(i));
+              this.listGroupUser.map(element => {
+                const toStringElement = element.privileges.map(i => JSON.stringify(i));
+                const stringFilter = toStringListPrivilegesData.filter(i => !toStringElement.includes(i));
+                element['notPrivileges'] = stringFilter.map(i => JSON.parse(i));
+              });
+              this.rerender(this.pagedResult);
+              this.alertService.success('Xóa nhóm người dùng thành công!');
+            },
+              err => {
+                this.spinner.hide();
+                this.alertService.error('Đã xảy ra lỗi. Xóa nhóm người dùng không thành công!');
+              });
+          },
+            err => {
+              this.alertService.error('Đã xảy ra lỗi. Xóa nhóm người dùng không thành công!');
+            });
+
         },
           err => {
-            this.alertService.success('Đã gặp sự cố. Xóa nhóm người dùng thất bại!');
+            this.alertService.success('Đã xảy ra lỗi. Xóa nhóm người dùng không thành công!');
           });
-        this.modalRef.hide();
+        // this.modalRef.hide();
       }
     );
   }

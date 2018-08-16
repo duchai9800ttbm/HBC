@@ -115,10 +115,10 @@ export class AddUserComponent implements OnInit {
       rePassword: ['', Validators.required],
       firstName: ['', Validators.required],
       lastName: ['', Validators.required],
-      levelId: 0,
-      userGroupId: 0,
-      departmentId: [0 , Validators.required],
-      isActive: [null],
+      levelId: null,
+      userGroupId: null,
+      departmentId: [null , Validators.required],
+      isActive: [false],
       phoneNumber: ['', [CustomValidator.phoneNumber]],
       address: '',
     });
@@ -132,6 +132,7 @@ export class AddUserComponent implements OnInit {
         };
       });
     });
+    console.log('this.formAddUser', this.formAddUser);
   }
 
   get addUser() { return this.formAddUser.controls; }
@@ -151,7 +152,7 @@ export class AddUserComponent implements OnInit {
         departmentId: this.formAddUser.value.departmentId ? this.formAddUser.value.departmentId : 0,
         levelId: this.formAddUser.value.levelId ? this.formAddUser.value.levelId : 0,
         userGroupId: this.formAddUser.value.userGroupId ? this.formAddUser.value.userGroupId : 0,
-        isActive: this.isCheckbox,
+        isActive: this.formAddUser.value.isActive,
         phoneNumber: this.formAddUser.value.phoneNumber,
         address: this.formAddUser.value.address,
       };
@@ -202,6 +203,7 @@ export class AddUserComponent implements OnInit {
       isActive: true,
       notPrivileges: this.listPrivilegesData,
     };
+    console.log('this.listPrivilegesData', this.listPrivilegesData);
     this.modalRef = this.modalService.show(template, {
       class: 'gray modal-lg'
     });

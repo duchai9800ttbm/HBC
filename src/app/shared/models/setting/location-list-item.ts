@@ -3,4 +3,5 @@ export class LocationListItem {
     locationName: string;
     locationNo: string;
     locationDesc: string;
+    checkboxSelected: boolean;
 }

@@ -21,8 +21,8 @@ export class SettingLocationComponent implements OnInit {
     searchTerm$ = new BehaviorSubject<string>('');
     dtOptions: any = DATATABLE_CONFIG;
     gridLoading = true;
-    pagedResult: PagedResult<LocationListItem[]> = new PagedResult<
-        LocationListItem[]
+    pagedResult: PagedResult<LocationListItem> = new PagedResult<
+        LocationListItem
         >();
     mySelection: number[] = [];
     constructor(
@@ -72,28 +72,20 @@ export class SettingLocationComponent implements OnInit {
     }
 
     refresh(page: string | number, pageSize: string | number) {
-        this.gridLoading = true;
-        this.settingService.readLocation(this.searchTerm$.value, page, pageSize).subscribe(data => {
-            this.pagedResult = data;
-            this.gridLoading = false;
-        });
+        // this.gridLoading = true;
+        // this.settingService.readLocation(this.searchTerm$.value, page, pageSize).subscribe(data => {
+        //     this.pagedResult = data;
+        //     this.gridLoading = false;
+        // });
     }
 
     deleteMultiple() {
-        console.log('this.pagedResult', this.pagedResult);
-        const listDeleteLocation = [];
-        this.pagedResult.items.map( i  => {
-            console.log('iii', listDeleteLocation,  i);
-            // if ( i['checkboxSelected'] === true) {
-            //     listDeleteLocation.push(i.id);
-            // }
-        });
-        console.log('this.pagedResult', listDeleteLocation);
-        // if ( true ) {
+        // const listSelected = this.pagedResult.items.filter(i => i.checkboxSelected);
+        // if (listSelected.length > 0) {
         //     this.confirmationService.confirm(
         //         'Bạn có chắc chắn muốn xóa những khu vực được chọn?',
         //         () => {
-        //             this.settingService.deleteMultipleLocation(this.mySelection).subscribe(
+        //             this.settingService.deleteMultipleLocation(listSelected.map(i => i.id)).subscribe(
         //                 result => {
         //                     this.alertService.success('Đã xóa các khu vực!');
         //                     this.refresh(0, this.pagedResult.pageSize);

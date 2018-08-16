@@ -29,7 +29,7 @@ export class SettingService {
         searchTerm: string,
         page: number | string,
         pageSize: number | string
-    ): Observable<PagedResult<LocationListItem[]>> {
+    ): Observable<PagedResult<LocationListItem>> {
         // const that = this;
         const urlParam = Utils.createSearchParam(searchTerm);
         return this.apiService

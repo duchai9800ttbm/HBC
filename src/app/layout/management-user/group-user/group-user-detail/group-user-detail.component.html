@@ -190,13 +190,17 @@
                 <span class="custom-control-indicator"></span>
               </label>
             </th>
-
-            <th style="width: 45%">
+            <th style="width: 30%">
               <div class="d-flex justify-content-start">
                 <div style="margin-right: 10px">Tên</div>
               </div>
             </th>
-            <th style="width: 45%">
+            <th style="width: 30%">
+              <div class="d-flex justify-content-start">
+                <div style="margin-right: 10px">Mô tả</div>
+              </div>
+            </th>
+            <th style="width: 30%">
               <div class="d-flex justify-content-start">
                 <div style="margin-right: 10px">Mô tả</div>
               </div>
@@ -219,6 +223,9 @@
             </td>
             <td class="text-truncate">
               {{item.desc}}
+            </td>
+            <td class="text-truncate">
+              {{item.isActive === true ? 'Đã sử dụng' : 'Chưa sử dụng'}}
             </td>
             <td>
               <div class="row">
@@ -300,7 +307,7 @@
       <div class="title-action" for="exampleFormControlSelect2">Danh sách chức năng</div>
       <select multiple class="form-control form-select" id="exampleFormControlSelect2" style="height: 150px;" (change)="selectEachFieldEditNotUser($event)">
         <option [value]="notPrivilege.id" *ngFor="let notPrivilege of groupEditOrCreate.notPrivileges">
-          {{notPrivilege.text}}
+          {{notPrivilege.text | translate}}
         </option>
       </select>
     </div>
@@ -322,7 +329,7 @@
       <div class="title-action" for="exampleFormControlSelect2">Chức năng được sử dụng</div>
       <select multiple class="form-control form-select" id="exampleFormControlSelect2" (change)="selectEachFieldEditUser($event)">
         <option [value]="privilege.id" *ngFor="let privilege of groupEditOrCreate.privileges">
-          {{privilege.text}}
+          {{privilege.text | translate}}
         </option>
       </select>
     </div>

@@ -106,6 +106,7 @@ export class GroupUserService implements OnInit {
     return this.apiService.get(url)
       .map(data => {
         const result = data.result;
+        console.log('result', result);
         return {
           id: result.id,
           userName: result.userName,
@@ -120,17 +121,23 @@ export class GroupUserService implements OnInit {
           },
           firstName: result.firstName,
           lastName: result.lastName,
-          userGroup: result.userGroup && {
-            id: result.userGroup.id,
-            name: result.userGroup.name,
-            desc: result.userGroup.desc,
-            isActive: result.userGroup.isActive,
-            privileges: result.userGroup.privileges && [{
-              key: result.userGroup.privileges.key,
-              value: result.userGroup.privileges.value
-            }]
+          // userGroup: result.userGroup && {
+          //   id: result.userGroup.id,
+          //   name: result.userGroup.name,
+          //   desc: result.userGroup.desc,
+          //   isActive: result.userGroup.isActive,
+          //   privileges: result.userGroup.privileges && [{
+          //     key: result.userGroup.privileges.key,
+          //     value: result.userGroup.privileges.value
+          //   }]
+          // },
+          userGroup: {
+            id: result.userGroup.key,
+            value: result.userGroup.key,
           },
-          isActive: result.isActive
+          isActive: result.isActive,
+          phoneNumber: result.phoneNumber,
+          address: result.address,
         };
       });
   }
