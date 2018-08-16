@@ -5,17 +5,21 @@ import { PackageDetailResultRoutingModule } from './package-detail-result-routin
 import { PackageDetailResultComponent } from './package-detail-result.component';
 import { WaitResultComponent } from './wait-result/wait-result.component';
 import { PackageFailedComponent } from './package-failed/package-failed.component';
+import { ModalModule } from 'ngx-bootstrap/modal';
+import { PackgeCancelComponent } from './packge-cancel/packge-cancel.component';
 
 @NgModule({
   imports: [
     CommonModule,
     SharedModule,
     PackageDetailResultRoutingModule,
+    // ModalModule
   ],
   declarations: [
       PackageDetailResultComponent,
       WaitResultComponent,
-      PackageFailedComponent
+      PackageFailedComponent,
+      PackgeCancelComponent
   ]
 })
 export class PackageDetailResultModule { }

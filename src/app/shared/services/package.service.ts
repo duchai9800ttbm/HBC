@@ -456,9 +456,9 @@ export class PackageService {
             place: formValue.place,
             locationId: formValue.locationId,
             quarter: formValue.quarter,
-            customerId: formValue.customerId ? formValue.customerId.id : 0,
+            customerId: formValue.customerId ? formValue.customerId.id : null,
             classify: formValue.classify,
-            customerContactId: formValue.customerContactId ? formValue.customerContactId.id : 0,
+            customerContactId: formValue.customerContactId ? formValue.customerContactId.id : null,
             consultantUnit: formValue.consultantUnit ? formValue.consultantUnit.id : 0,
             consultantAddress: formValue.consultantAddress,
             consultantPhone: formValue.consultantPhone,
@@ -468,7 +468,7 @@ export class PackageService {
             constructionCategoryId: formValue.constructionCategoryId,
             hbcRole: formValue.hbcRole,
             documentLink: formValue.documentLink,
-            chairEmployeeId: formValue.chairEmployeeId,
+            chairEmployeeId: formValue.chairEmployeeId ? +formValue.chairEmployeeId : 0,
             bidStatusId: formValue.bidStatusId,
             amount: formValue.amount,
             evaluation: formValue.evaluation,
@@ -482,7 +482,7 @@ export class PackageService {
         };
         console.log('inforPackage', inforPackage);
         return this.apiService.post(url, inforPackage)
-            .map(response => response.result)
+            .map(response => response)
             .share();
     }
     // Edit goi thau

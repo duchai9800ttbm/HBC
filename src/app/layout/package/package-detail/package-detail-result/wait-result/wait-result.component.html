@@ -18,11 +18,120 @@
         </div>
     </div>
     <div id="outer-img">
-        <img src="../../../../../../assets/images/kqdt-img0.png" alt="">
+        <img src="../../../../../../assets/images/icon-wailt.png" alt="">
         <h5>bạn đã nhận kết quả dự thầu từ khách hàng?</h5>
         <div class="confirm-button">
-            <button class="btn btn-primary" id="success">trúng thầu</button>
-            <button class="btn btn-primary" id="fail">trật thầu</button>
+            <button class="btn btn-primary" id="success" (click)="modalTrungThau(trungthau)">trúng thầu</button>
+            <button class="btn btn-primary" id="fail" (click)="modalTratThau(trungthau)">trật thầu</button>
+            <button class="btn btn-primary" id="cancel" (click)="modalHuyThau(trungthau)">hủy thầu</button>
         </div>
     </div>
 </div>
+<!-- Model Lý do -->
+<ng-template #trungthau>
+    <div class="modal-header no-boder-bottom">
+        <div class="col-md-10 offset-md-1 text-center">
+            <h4 class="modal-title text-model" *ngIf="btnTrungThau">Kết quả dự thầu: {{textTrungThau}} thầu</h4>
+            <h4 class="modal-title text-model" *ngIf="btnTratThau">Kết quả dự thầu: {{textTratThau}} thầu</h4>
+            <h4 class="modal-title text-model" *ngIf="btnHuyThau">Kết quả dự thầu: {{textHuyThau}} thầu</h4>
+        </div>
+        <div class="col-md-1">
+            <button type="button" class="close pull-right" aria-label="Close" (click)="closeModel()">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+    </div>
+    <div class="modal-body">
+        <div class="row" style="padding-bottom: 40px">
+            <div class="col-md-3 offset-md-1" *ngIf="btnTrungThau">Lý do {{textTrungThau}} thầu</div>
+            <div class="col-md-3 offset-md-1" *ngIf="btnTratThau">Lý do {{textTratThau}} thầu</div>
+            <div class="col-md-3 offset-md-1" *ngIf="btnHuyThau">Lý do {{textHuyThau}} thầu</div>
+            <div class="col-md-6 custom-dropdown">
+                <select class="form-control ">
+                    <option value="">--Chọn--</option>
+                    <option *ngFor="let item of reasons" [value]="item.id">{{item.name | translate}}</option>
+                </select>
+            </div>
+        </div>
+        <div class="text-center">
+            <button type="submit" class="btn btn-primary w-80" (click)="btnOk(uploadFile)">OK</button>
+            <button type="button" class="btn btn-default w-80 bg-cancle" (click)="closeModel()">Hủy</button>
+        </div>
+    </div>
+</ng-template>
+<!-- Modal upladfile -->
+
+<ng-template #uploadFile>
+    <form [formGroup]="formUpload" (ngSubmit)="onSubmit()">
+        <div class="modal-header no-boder-bottom">
+            <div class="col-md-10 offset-md-1 text-center">
+                <h4 class="modal-title text-title text-model">Upload kết quả dự thầu</h4>
+            </div>
+            <div class="col-md-1">
+                <button type="button" class="close pull-right" aria-label="Close" (click)="modalUpload.hide()">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+        </div>
+        <div class="modal-body fg-w">
+            <div class="row pd-up">
+                <div class="col-md-4">Chọn file</div>
+                <div class="col-md-7 input-group">
+                    <div class="custom-file form-control">
+                        <input type="file" class="custom-file-input" id="inputGroupFile01">
+                        <label class="custom-file-label" for="inputGroupFile01">--Choose file--</label>
+                    </div>
+                    <span class="input-group-addon">
+                        <i class="fa fa-upload" aria-hidden="true"></i>
+                    </span>
+                </div>
+            </div>
+            <div class="row pd-up">
+                <div class="col-md-4">Tên</div>
+                <div class="col-md-7">
+                    <input type="text" class="form-control" placeholder="Tên" formControlName="name" [ngClass]="{ 'is-invalid': submitted && f.name.errors }">
+                    <div *ngIf="submitted && f.name.errors" class="invalid-feedback">
+                        <div *ngIf="f.name.errors.required">Vui lòng nhập tên file</div>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="row pd-up">
+                <div class="col-md-4">Version</div>
+                <div class="col-md-7">
+                    <input type="text" class="form-control" value="1">
+                </div>
+            </div>
+            <div class="row pd-up">
+                    <div class="col-md-4">Lần phỏng vấn</div>
+                    <div class="col-md-7">
+                        <input type="number" placeholder=Number class="form-control" value="">
+                    </div>
+                </div>
+
+            <div class="row pd-up">
+                <div class="col-md-4">Ngày nhận kết quả</div>
+                <div class="col-md-7 input-group">
+                    <owl-date-time [readonlyInput]="datePickerConfig.readonlyInput" [locale]="datePickerConfig.vi" [placeHolder]="datePickerConfig.placeHolderVn">
+                    </owl-date-time>
+                    <span class="input-group-addon">
+                        <i class="fa fa-calendar"></i>
+                    </span>
+                </div>
+            </div>
+
+            <div class="row pd-up">
+                <div class="col-md-4">Mô tả/Nội dung cập nhật</div>
+                <div class="col-md-7">
+                    <textarea class="form-control textarea-content" name="" id="" cols="30" rows="3" placeholder=""></textarea>
+                </div>
+            </div>
+
+            <div class="text-center">
+                <button type="submit" class="btn btn-primary w-80" [disabled]="loading">Upload</button>
+                <button type="button" class="btn btn-default w-80" (click)="modalUpload.hide()">Hủy</button>
+            </div>
+        </div>
+    </form>
+</ng-template>
