@@ -255,7 +255,7 @@ export class ManageUserComponent implements OnInit {
   }
   resetPassword(id: number, name: string) {
     this.confirmationService.confirm(
-      `Bạn có chắc chắn muốn đặt lại mật khẩu cho người dùng ${name} không?`,
+      `Bạn có chắc chắn muốn đặt lại mật khẩu cho người dùng "${name}" không?`,
       () => {
         this.groupUserService.resetPassword(id).subscribe( response => {
           console.log('responsesssss', response);

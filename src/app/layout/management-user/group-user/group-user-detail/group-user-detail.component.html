@@ -181,7 +181,7 @@
     </div>
 
     <div class="data-list menu" style="padding-top: 10px;">
-      <table *ngIf="pagedResult.items" datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="table-selection stripe hover">
+      <!-- <table *ngIf="pagedResult.items" datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="table-selection stripe hover">
         <thead>
           <tr style="width: 100%">
             <th class="text-center" style="width: 15px;">
@@ -202,7 +202,7 @@
             </th>
             <th style="width: 30%">
               <div class="d-flex justify-content-start">
-                <div style="margin-right: 10px">Mô tả</div>
+                <div style="margin-right: 10px">Trạng thái</div>
               </div>
             </th>
             <th class="text-center" style="width: calc(10% - 7px); min-width: 50px!important;">
@@ -235,6 +235,64 @@
                 <div class="col-md-6 center-parent cursor-pointer" (click)="delete(item.id)">
                   <i [title]="'Xóa'" class="fa fa-trash-o point cursor-pointer"></i>
                 </div>
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table> -->
+
+      <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="table-selection stripe hover">
+        <thead *ngIf="pagedResult.items">
+          <tr style="width: 100%">
+            <th class="text-center" style="width: 15px; padding-left: 7px;">
+              <label class="custom-control custom-checkbox">
+                <input type="checkbox" class="custom-control-input input-checkbox" [(ngModel)]="checkboxSeclectAll" (change)="onSelectAll($event.target.checked)">
+                <span class="custom-control-indicator"></span>
+              </label>
+            </th>
+            <th style="width: 33%">
+              <div class="d-flex justify-content-start">
+                <div style="margin-right: 10px">Tên</div>
+              </div>
+            </th>
+            <th style="width: 33%">
+              <div class="d-flex justify-content-start">
+                <div style="margin-right: 10px">Mô tả</div>
+              </div>
+            </th>
+            <th style="width: 33%">
+              <div class="d-flex justify-content-start">
+                <div style="margin-right: 10px">Trạng thái</div>
+              </div>
+            </th>
+            <th class="text-center" style="width: calc(10% - 7px); min-width: 55px!important;">
+              Thao tác
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let item of pagedResult.items">
+            <td class="text-center" style="width: 15px; padding-left: 7px;">
+              <label class="custom-control custom-checkbox">
+                <input type="checkbox" class="custom-control-input" [(ngModel)]="item.checkboxSelected">
+                <span class="custom-control-indicator"></span>
+              </label>
+            </td>
+            <td class="text-truncate">
+              {{item.name}}
+            </td>
+            <td class="text-truncate">
+              {{item.desc}}
+            </td>
+            <td class="text-truncate">
+              {{item.isUsing === true ? 'Đã sử dụng' : 'Chưa sử dụng'}}
+            </td>
+            <td class="row">
+              <div class="col-md-6 center-parent cursor-pointer" (click)="openModalEdit(item.id, edit)">
+                <i [title]="'Sửa'" class="fa fa-pencil cursor-pointer" style="color: #1e7e34"></i>
+              </div>
+              <div class="col-md-6 center-parent cursor-pointer" (click)="delete(item.id)">
+                <i [title]="'Xóa'" class="fa fa-trash-o point cursor-pointer"></i>
               </div>
             </td>
           </tr>

@@ -25,7 +25,7 @@
       </div>
     </div>
     <div class="data-list menu">
-      <table *ngIf="pagedResult.items" datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="fix-layout-table table-selection stripe hover">
+      <!-- <table *ngIf="pagedResult.items" datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="fix-layout-table table-selection stripe hover">
         <thead>
           <tr style="width: 100%">
             <th class="text-center" style="width: 35px; padding-left: 7px;">
@@ -152,15 +152,6 @@
               </div>
             </td>
             <td class="text-truncate text-center">
-              <!-- <div class="text-center color-active" *ngIf="item.isActive">
-                <i class="fa fa-check-circle" aria-hidden="true"></i>
-              </div>
-              <div class="text-center"*ngIf="!item.isActive" >
-                <i class="fa fa-times-circle" aria-hidden="true"></i>
-              </div> -->
-              <!-- <button type="button" class="btn btn-primary">
-                Active
-              </button> -->
               <div style="padding-right: 8px;padding-left: 8px;">
                 <div *ngIf="item.isActive" class="color-active-show" style="color: white; padding: 0.1rem 0.1rem; border: 1px solid transparent; border-radius: 0.25rem;">
                   Active
@@ -186,9 +177,127 @@
                     <span class="slider round" (click)="changeActive(item.id, item.isActive)"></span>
                   </label>
                 </div>
-                <!-- <div class="text-center">
-                  <i class="fa fa-trash-o point" aria-hidden="true" (click)="deleteUser(item.id)"></i>
-                </div> -->
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table> -->
+      <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="table-selection stripe hover">
+        <thead *ngIf="pagedResult.items">
+          <tr style="width: 100%">
+            <th class="text-center" style="width: 15px; padding-left: 7px;">
+              <label class="custom-control custom-checkbox">
+                <input type="checkbox" class="custom-control-input input-checkbox" [(ngModel)]="checkboxSeclectAll" (change)="onSelectAll($event.target.checked)">
+                <span class="custom-control-indicator"></span>
+              </label>
+            </th>
+            <th style="width: 12%">
+              <div class="d-flex justify-content-start">
+                <div style="margin-right: 10px">Tên đăng nhập</div>
+              </div>
+            </th>
+            <th style="width: 10%">
+              <div class="d-flex justify-content-start">
+                <div style="margin-right: 10px">Email</div>
+              </div>
+            </th>
+            <th style="width: 13%">
+              <div class="d-flex justify-content-start">
+                <div style="margin-right: 10px">Phòng ban/Bộ Phận</div>
+              </div>
+            </th>
+            <th style="width: 12%">
+              <div class="d-flex justify-content-start">
+                <div style="margin-right: 10px">Vị trí/Chức vụ</div>
+              </div>
+            </th>
+            <th style="width: 8%">
+              <div class="d-flex justify-content-start">
+                <div style="margin-right: 10px">Tên</div>
+              </div>
+            </th>
+            <th style="width: 7%">
+              <div class="d-flex justify-content-start">
+                <div style="margin-right: 10px">Họ</div>
+              </div>
+            </th>
+            <th style="width: 10%" class="text-center">
+              <div class="d-flex justify-content-start">
+                <div style="margin-right: 10px">Nhóm</div>
+              </div>
+            </th>
+            <th style="width: 10%" class="text-center">
+              <div class="d-flex justify-content-start">
+                <div style="margin-right: 10px">Tình trạng</div>
+              </div>
+            </th>
+            <th class="text-center" style="width: calc(18% - 42px); min-width: 70px!important;">
+              Thao tác
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let item of pagedResult.items">
+            <td class="text-center" style="width: 15px; padding-left: 7px;">
+              <label class="custom-control custom-checkbox">
+                <input type="checkbox" class="custom-control-input" [(ngModel)]="item.checkboxSelected">
+                <span class="custom-control-indicator"></span>
+              </label>
+            </td>
+            <td class="text-truncate">
+              {{item.userName}}
+            </td>
+            <td class="text-truncate">
+              {{item.email}}
+            </td>
+            <td class="text-truncate">
+              {{item.department?.value}}
+            </td>
+            <td class="text-truncate">
+              {{item.level?.value}}
+            </td>
+            <td class="text-truncate">
+              {{item.lastName}}
+            </td>
+            <td class="text-truncate">
+              {{item.firstName}}
+            </td>
+            <td class="text-truncate">
+              <div class="d-flex justify-content-between">
+                <div class="text-truncate">
+                  {{(item.userGroup && item.userGroup.value)? item.userGroup.value : '/'}}
+                </div>
+                <div class="text-center" style="padding-left: 2px;">
+                  <i class="fa fa-random color-random pointer" [title]="'Thay đổi nhóm'" aria-hidden="true" (click)="showPopupSelect(item.id, selectGroup)"></i>
+                </div>
+              </div>
+            </td>
+            <td class="text-truncate text-center">
+              <div style="padding-right: 8px;padding-left: 8px;">
+                <div *ngIf="item.isActive" class="color-active-show" style="color: white; padding: 0.1rem 0.1rem; border: 1px solid transparent; border-radius: 0.25rem;">
+                  Active
+                </div>
+              </div>
+              <div style="padding-right: 8px;padding-left: 8px;">
+                <div *ngIf="!item.isActive" class="color-deactive-show" style="color: white; padding: 0.1rem 0.1rem; border: 1px solid transparent; border-radius: 0.25rem;">
+                  Deactive
+                </div>
+              </div>
+            </td>
+            <td class="text-truncate">
+              <div class="d-flex justify-content-around">
+                <div class="text-center" [routerLink]="['../edit-user/',item.id]">
+                  <i class="fa fa-pencil color-edit pointer" aria-hidden="true" [title]="'Chỉnh sửa'"></i>
+                </div>
+                <div class="text-center">
+                  <i class="fa fa-key color-edit pointer" aria-hidden="true" [title]="'Đặt lại mật khẩu'" (click)="resetPassword(item.id, item.userName)"></i>
+                </div>
+                <div style="zoom: 0.5;">
+                  <label class="switch" style="margin: 0px">
+                    <input type="checkbox" [checked]="item.isActive">
+                    <span class="slider round" (click)="changeActive(item.id, item.isActive)"></span>
+                  </label>
+                </div>
               </div>
             </td>
           </tr>
@@ -273,6 +382,6 @@
       <button type="button" class="btn btn-default w-80" (click)="modalRef.hide()" style="margin-right: 15px">Hủy</button>
     </div>
   </ng-template> -->
-  <!--End thay đổi mật khẩu-->
+<!--End thay đổi mật khẩu-->
 
 <ngx-spinner bdColor="rgba(51, 51, 51, 0.7)" size="medium" color="#fff" type="ball-clip-rotate-multiple"></ngx-spinner>

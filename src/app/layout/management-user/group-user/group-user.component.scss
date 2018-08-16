@@ -143,6 +143,12 @@
     .title-detail {
         width: 100% !important;
     }
+    .cus-menu{
+        width: calc(30% - 3px) !important;
+    }
+    .cus-menu-space{
+        width: calc(40% - 3px) !important;
+    }
 }
 
 :host {

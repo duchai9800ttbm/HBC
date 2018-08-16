@@ -139,12 +139,12 @@ input.icon {
 }
 
 @media only screen and (max-width: 3000px) {
-    // table.dataTable {
-    //     th,
-    //     td {
-    //         max-width: 130px!important;
-    //     }
-    // }
+    table.dataTable {
+        th,
+        td {
+            max-width: 130px!important;
+        }
+    }
     .HSMT{
         max-width: 300px;
     }
@@ -170,9 +170,9 @@ input.icon {
     //         max-width: 80px;
     //     }
     // }
-    table.dataTable{
-        zoom: 0.8;
-    }
+    // table.dataTable{
+    //     zoom: 0.8;
+    // }
     .custom-filter-bar{
         zoom: 0.8;
     }
@@ -185,9 +185,9 @@ input.icon {
     //         max-width: 70px;
     //     }
     // }
-    table.dataTable{
-        zoom: 0.7;
-    }
+    // table.dataTable{
+    //     zoom: 0.7;
+    // }
     .custom-filter-bar{
         zoom: 0.85;
     }
@@ -197,9 +197,9 @@ input.icon {
 }
 
 @media only screen and (max-width: 1150px) {
-    table.dataTable{
-        zoom: 0.72;
-    }
+    // table.dataTable{
+    //     zoom: 0.72;
+    // }
 
     .status-filter{
         zoom: 0.85;
@@ -229,9 +229,9 @@ input.icon {
 }
 
 @media only screen and (max-width: 1010px) {
-    table.dataTable{
-        zoom: 0.6;
-    }
+    // table.dataTable{
+    //     zoom: 0.6;
+    // }
     .status-filter{
         zoom: 0.65;
     }
@@ -241,9 +241,9 @@ input.icon {
 }
 
 @media only screen and (max-width: 997px) {
-    table.dataTable{
-        zoom: 0.55;
-    }
+    // table.dataTable{
+    //     zoom: 0.55;
+    // }
     .status-filter{
 
 
