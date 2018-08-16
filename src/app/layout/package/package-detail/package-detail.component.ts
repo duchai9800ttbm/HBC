@@ -7,6 +7,7 @@ import { PackageService } from '../../../shared/services/package.service';
 import { NgxSpinnerService } from '../../../../../node_modules/ngx-spinner';
 import { UserModel } from '../../../shared/models/user/user.model';
 import { SessionService } from '../../../shared/services/session.service';
+import { PackageInfoModel } from '../../../shared/models/package/package-info.model';
 
 @Component({
   selector: 'app-package-detail',
@@ -26,7 +27,7 @@ export class PackageDetailComponent implements OnInit {
   ) { }
   static packageId;
   public packageId: number;
-  packageData = new PackageModel();
+  packageData = new PackageInfoModel();
   status = {
     DisabledfileAttend: true,
     Disabledresult: true

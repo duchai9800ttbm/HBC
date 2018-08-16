@@ -20,6 +20,7 @@ import { BidDocumentReviewFilter } from '../../../../../shared/models/document/b
 import { BidDocumentReviewModel } from '../../../../../shared/models/document/bid-document-review.model';
 import { PackageService } from '../../../../../shared/services/package.service';
 import { PackageModel } from '../../../../../shared/models/package/package.model';
+import { PackageInfoModel } from '../../../../../shared/models/package/package-info.model';
 @Component({
     selector: 'app-suggest',
     templateUrl: './suggest.component.html',
@@ -52,7 +53,7 @@ export class SuggestComponent implements OnInit {
     bidDocumentListItem: BidDocumentModel[];
     bidDocumentGroupListItem: BidDocumentGroupModel[];
     bidDocumentGroupListItemSearchResult: BidDocumentGroupModel[];
-    packageData: PackageModel;
+    packageData: PackageInfoModel;
     constructor(
         private alertService: AlertService,
         private confirmationService: ConfirmationService,
@@ -70,7 +71,7 @@ export class SuggestComponent implements OnInit {
         this.packageId = +PackageDetailComponent.packageId;
         this.packageService.getInforPackageID(this.packageId).subscribe(result => {
             this.packageData = result;
-            switch (this.packageData.stageStatus) {
+            switch (this.packageData.stageStatus.id) {
                 case 'CanBoSungHSMT': {
                     this.router.navigate([`/package/detail/${this.packageId}/invitation/add-file`]);
                     break;
