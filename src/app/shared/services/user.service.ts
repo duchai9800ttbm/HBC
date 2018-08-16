@@ -52,6 +52,7 @@ export class UserService {
                 id: result.userGroup.key,
                 text: result.userGroup.value
             },
+            avatar: result.avatar,
             privileges: result.privileges.map(x => x.value)
         };
     }
@@ -214,11 +215,20 @@ export class UserService {
             .share();
     }
     // Cập nhật avatar
-    upLoadAvatar(avatar: string): Observable<any> {
+    // upLoadAvatar(avatar: string): Observable<any> {
+    //     const url = `user/me/updateavatar`;
+    //     return this.apiService
+    //         .post(url, { avatar: avatar })
+    //         .map(response => UserService.toUserModel(response.result))
+    //         .share();
+    // }
+
+    upLoadAvatar(avatar: File): Observable<any> {
         const url = `user/me/updateavatar`;
-        return this.apiService
-            .post(url, { avatar: avatar })
-            .map(response => UserService.toUserModel(response.result))
+        const formData = new FormData();
+        formData.append('ImageFiles', avatar);
+        return this.apiService.postFile(url, formData)
+            .map(response => response)
             .share();
     }
 
