@@ -1,7 +1,7 @@
 <div class="boder-table">
-  <div class="table-body">
+  <div class="table-body background-color-table">
     <form *ngIf="groupUserModel" [formGroup]="formEditUser" (ngSubmit)="onSubmit()">
-      <div class="row">
+      <!-- <div class="row">
         <div class="col-7">
           <h4 class="text-head-user">Thay đổi thông tin tài khoản</h4>
         </div>
@@ -15,11 +15,27 @@
           <button type="button" class="btn btn-primary btn-rg pull-right" (click)="deleteLocation(idString)">
             <i class="fa fa-trash-o" aria-hidden="true"></i>
           </button>
-
         </div>
-      </div>
+      </div> -->
 
-      <div class="body-account">
+      <div class="d-flex">
+        <img width="15" height="15" class="pointer" src="assets\images\nghia.png" style="margin-top: 4px;" [routerLink]="['/management-user/group-user/manage-user-list/manage-user']">
+        <span style="width: 70%">
+          <h4 class="text-head-user color-title" style="padding-left: 10px;">Thay đổi thông tin tài khoản</h4>
+        </span>
+        <span class="col-5 pull-right" style="width: 30%; padding-right: 0px">
+          <button type="button" class="btn btn-default btn-rg w-80 pull-right" style="color: #FFF" [routerLink]="['/management-user/group-user/manage-user-list/manage-user']">
+            Hủy
+          </button>
+          <button type="submit" class="btn btn-primary btn-rg w-80 pull-right" [disabled]="loading">
+            Lưu
+          </button>
+          <button type="button" class="btn btn-primary btn-rg pull-right" (click)="deleteLocation(idString)">
+            <i class="fa fa-trash-o" aria-hidden="true"></i>
+          </button>
+        </span>
+      </div>
+      <!-- <div class="body-account">
         <div class="account-content">
           <h4 class="text-accout">Tài khoản</h4>
           <div class="form-group row">
@@ -29,27 +45,9 @@
             <div class="col-sm-4">
               <input type="text" class="form-control form-input" required id="inputUserName" formControlName="userName" placeholder=""
                 [class.is-invalid]="formErrors.userName" value="{{groupUserModel?.userName}}">
-              <!-- <div *ngIf="submitted && addUser.userName.errors" class="invalid-feedback">
-                <div *ngIf="addUser.userName.errors.required">Tên đăng nhâp là bắt buộc</div>
-              </div> -->
               <div *ngIf="formErrors.userName" class="invalid-feedback">{{formErrors.userName}}</div>
             </div>
-            <!-- <div class="col-sm-1" class="checkbox">
-              <input type="checkbox" id="optinosCheckbox1" (click)="clickCheckboxAction()" [checked]="checkboxTrue" value="{{groupUserModel.isActive}}">
-              <label for="optinosCheckbox1">
-                Hoạt động
-              </label>
-            </div> -->
           </div>
-          <!-- <div class="form-group row">
-            <label for="password" class="col-sm-2 col-form-label">Mật khẩu
-              <span style="color: red">*</span>
-            </label>
-            <div class="col-sm-4">
-              <input type="password" class="form-control form-input" id="password" formControlName="password" placeholder="" [ngClass]="{ 'is-invalid': submitted && addUser.password.errors }">
-              <div class="invalid-feedback" *ngIf="formErrors.password">{{formErrors.password}}</div>
-            </div>
-          </div> -->
           <div class="form-group row">
             <label for="group" class="col-sm-2 col-form-label">Nhóm người dùng</label>
             <div class="col-sm-4">
@@ -69,9 +67,6 @@
             <div class="col-sm-4">
               <input type="text" class="form-control form-input" formControlName="firstName" id="inputFirstName" placeholder="" [ngClass]="{ 'is-invalid': submitted && addUser.firstName.errors }"
                 value="{{groupUserModel.firstName}}">
-              <!-- <div *ngIf="submitted && addUser.firstName.errors" class="invalid-feedback">
-                <div *ngIf="addUser.firstName.errors.required">Họ là bắt buộc</div>
-              </div> -->
               <div *ngIf="formErrors.firstName" class="invalid-feedback">{{formErrors.lastName}}</div>
             </div>
           </div>
@@ -82,9 +77,6 @@
             <div class="col-sm-4">
               <input type="text" class="form-control form-input" id="name" formControlName="lastName" placeholder="" [ngClass]="{ 'is-invalid': submitted && addUser.lastName.errors }"
                 value="{{groupUserModel.lastName}}">
-              <!-- <div *ngIf="submitted && addUser.lastName.errors" class="invalid-feedback">
-                <div *ngIf="addUser.lastName.errors.required">Tên là bắt buộc</div>
-              </div> -->
               <div *ngIf="formErrors.lastName" class="invalid-feedback">{{formErrors.lastName}}</div>
             </div>
           </div>
@@ -95,10 +87,6 @@
             <div class="col-sm-4">
               <input type="email" class="form-control form-input" formControlName="email" id="email" placeholder="" [ngClass]="{ 'is-invalid': submitted && addUser.email?.errors }"
                 value="{{groupUserModel.email}}">
-              <!-- <div *ngIf="submitted && addUser.email?.errors" class="invalid-feedback">
-                <div *ngIf="addUser.email?.errors.required">Email là bắt buộc</div>
-              </div>
-              <div *ngIf="addUser.touched && addUser.email.errors.email">Email không đúng định dạng</div> -->
               <div *ngIf="submitted && addUser.email.errors" class="invalid-feedback">
                 <div *ngIf="addUser.email.errors.required">Trường này là bắt buộc nhập</div>
                 <div *ngIf="addUser.email.errors && !addUser.email.errors.required && submitted && addUser.email.errors.email">Email không đúng định dạng</div>
@@ -127,7 +115,160 @@
             </div>
           </div>
         </div>
+      </div> -->
+
+      <div class="main-form padding-table" style="margin-top: 5px;width: 85%;padding-left: 25px">
+        <div class="d-flex boder-table zoom-form">
+          <div class="w-100  mr-auto">
+            <div class="card-collapse" style="margin-bottom: 0px;">
+              <div class="header" (click)="isCollapsedMain = !isCollapsedMain" [attr.aria-expanded]="!isCollapsedMain" aria-controls="info-main">
+                <i class="fa fa-caret-down mr-3"></i>Thông tin tài khoản
+              </div>
+              <div class="body" id="info-main" [ngbCollapse]="isCollapsedMain">
+                <table class="w-100 table table-bordered my-3 no-boder margin-bottom-table">
+                  <tr>
+                    <td class="w-15 text-right label required no-boder">Tên đăng nhập</td>
+                    <td class="w-35 no-boder">
+                      <input class="w-75 form-control" tabindex="1" type="text" formControlName="userName" [class.is-invalid]="formErrors.userName">
+                      <div class="invalid-feedback" *ngIf="formErrors.userName">
+                        {{formErrors.userName}}
+                      </div>
+                    </td>
+                  </tr>
+                  <!-- <tr>
+                    <td class="w-15 text-right label required no-boder">Mật khẩu</td>
+                    <td class="w-35 no-boder">
+                      <input class="w-75 form-control" tabindex="1" type="password" formControlName="password" [class.is-invalid]="formErrors.password">
+                      <div class="invalid-feedback" *ngIf="formErrors.password">
+                        {{formErrors.password}}
+                      </div>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td class="w-15 text-right label required no-boder">Nhập lại mật khẩu</td>
+                    <td class="w-35 no-boder">
+                      <input class="w-75 form-control" tabindex="1" type="password" formControlName="rePassword" [class.is-invalid]="formErrors.rePassword">
+                      <div class="invalid-feedback" *ngIf="formErrors.rePassword">
+                        {{formErrors.rePassword}}
+                      </div>
+                    </td>
+                  </tr> -->
+                  <tr>
+                    <td class="w-15 text-right label no-boder">Nhóm người dùng</td>
+                    <td class="no-boder d-flex">
+                      <span class="custom-dropdown" style="width: 75%; margin-right: 2px;">
+                        <select class="form-control" tabindex="5" formControlName="userGroupId">
+                          <option value="null || 0">---Chọn---</option>
+                          <option *ngFor="let item of dataGroupUser" [value]="item.id">{{item.text }}</option>
+                        </select>
+                      </span>
+                      <span class="input-group-addon mar-add pointer" style="border-radius: 3px;" (click)="openModalCreateUser(create)">
+                        <i class="fa fa-plus"> </i>
+                      </span>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td class="w-15 text-right label no-boder">Hoạt động</td>
+                    <td class="w-35 no-boder">
+                      <div class="center-parent" class="">
+                        <label class="ckb_container">
+                          <input type="checkbox">
+                          <span class="checkmark"></span>
+                        </label>
+                      </div>
+                    </td>
+                  </tr>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
+
+      <div class="main-form padding-table" style="margin-top: 8px;width: 85%; padding-bottom: 25px; padding-left: 25px">
+        <div class="d-flex boder-table zoom-form">
+          <div class="w-100  mr-auto">
+            <div class="card-collapse" style="margin-bottom: 0px;">
+              <div class="header" (click)="isCollapsedMain = !isCollapsedMain" [attr.aria-expanded]="!isCollapsedMain" aria-controls="info-main">
+                <i class="fa fa-caret-down mr-3"></i>Thông tin cá nhân
+              </div>
+              <div class="body" id="info-main" [ngbCollapse]="isCollapsedMain">
+                <table class="w-100 table table-bordered my-3 no-boder margin-bottom-table">
+                  <tr>
+                    <td class="w-15 text-right label required no-boder">Họ</td>
+                    <td class="w-35 no-boder">
+                      <input class="w-75 form-control" tabindex="1" type="text" formControlName="firstName" [class.is-invalid]="formErrors.firstName">
+                      <div class="invalid-feedback" *ngIf="formErrors.firstName">
+                        {{formErrors.firstName}}
+                      </div>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td class="w-15 text-right label required no-boder">Tên</td>
+                    <td class="w-35 no-boder">
+                      <input class="w-75 form-control" tabindex="1" type="text" formControlName="lastName" [class.is-invalid]="formErrors.lastName">
+                      <div class="invalid-feedback" *ngIf="formErrors.lastName">
+                        {{formErrors.lastName}}
+                      </div>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td class="w-15 text-right label required no-boder">Email</td>
+                    <td class="w-35 no-boder">
+                      <input class="w-75 form-control" tabindex="1" type="text" formControlName="email" [class.is-invalid]="formErrors.email">
+                      <div *ngIf="submitted && addUser.email.errors" class="invalid-feedback">
+                        <div *ngIf="addUser.email.errors.required">Trường này là bắt buộc nhập</div>
+                        <div *ngIf="addUser.email.errors && !addUser.email.errors.required && submitted && addUser.email.errors.email">Email không đúng định dạng</div>
+                      </div>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td class="w-15 text-right label no-boder">Số điện thoại</td>
+                    <td class="w-35 no-boder">
+                      <input appInputNumber class="w-75 form-control" tabindex="1" type="text" formControlName="phoneNumber" [class.is-invalid]="formErrors.phoneNumber">
+                      <div class="invalid-feedback" *ngIf="formErrors.phoneNumber">
+                        {{formErrors.phoneNumber}}
+                      </div>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td class="w-15 text-right label no-boder">Địa chỉ</td>
+                    <td class="w-35 no-boder">
+                      <input class="w-75 form-control" tabindex="1" type="text" formControlName="address" [class.is-invalid]="formErrors.address">
+                      <div class="invalid-feedback" *ngIf="formErrors.address">
+                        {{formErrors.address}}
+                      </div>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td class="w-15 text-right label no-boder">Phòng ban/Bộ phận</td>
+                    <td class="w-35 no-boder">
+                      <span class="custom-dropdown w-75">
+                        <select class="form-control" tabindex="5" formControlName="department">
+                          <option value="null || 0">---Chọn---</option>
+                          <option *ngFor="let item of departments | async" [value]="item.id">{{item.departmentName }}</option>
+                        </select>
+                      </span>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td class="w-15 text-right label no-boder">Vị trí/Chức vụ</td>
+                    <td class="w-35 no-boder">
+                      <span class="custom-dropdown w-75">
+                        <select class="form-control" tabindex="5" formControlName="levelId">
+                          <option value="null || 0">---Chọn---</option>
+                          <option *ngFor="let item of positions | async" [value]="item.id">{{item.levelName }}</option>
+                        </select>
+                      </span>
+                    </td>
+                  </tr>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
     </form>
   </div>
 </div>

@@ -6,18 +6,20 @@ import {
     ConfirmationService,
     AlertService
 } from '../../../shared/services';
-import { Observable, BehaviorSubject } from '../../../../../node_modules/rxjs';
+import { Observable, BehaviorSubject, Subject } from '../../../../../node_modules/rxjs';
 import { SettingService } from '../../../shared/services/setting.service';
 import { LocationListItem } from '../../../shared/models/setting/location-list-item';
 import { COMMON_CONSTANTS } from '../../../shared/configs/common.config';
-
+import { DATATABLE_CONFIG } from '../../../shared/configs';
 @Component({
     selector: 'app-setting-location',
     templateUrl: './setting-location.component.html',
     styleUrls: ['./setting-location.component.scss']
 })
 export class SettingLocationComponent implements OnInit {
+    dtTrigger: Subject<any> = new Subject();
     searchTerm$ = new BehaviorSubject<string>('');
+    dtOptions: any = DATATABLE_CONFIG;
     gridLoading = true;
     pagedResult: PagedResult<LocationListItem[]> = new PagedResult<
         LocationListItem[]

@@ -162,7 +162,7 @@
                     <td class="no-boder d-flex">
                       <span class="custom-dropdown" style="width: 75%; margin-right: 2px;">
                         <select class="form-control" tabindex="5" formControlName="userGroupId">
-                          <option [ngValue]="null">---Chọn---</option>
+                          <option value="null || 0">---Chọn---</option>
                           <option *ngFor="let item of dataGroupUser" [value]="item.id">{{item.text }}</option>
                         </select>
                       </span>
@@ -253,7 +253,7 @@
                     <td class="w-35 no-boder">
                       <span class="custom-dropdown w-75">
                         <select class="form-control" tabindex="5" formControlName="departmentId">
-                          <option [ngValue]="null">---Chọn---</option>
+                          <option value="null || 0">---Chọn---</option>
                           <option *ngFor="let item of departments | async" [value]="item.id">{{item.departmentName }}</option>
                         </select>
                       </span>
@@ -264,7 +264,7 @@
                     <td class="w-35 no-boder">
                       <span class="custom-dropdown w-75">
                         <select class="form-control" tabindex="5" formControlName="levelId">
-                          <option [ngValue]="null">---Chọn---</option>
+                          <option value="null || 0">---Chọn---</option>
                           <option *ngFor="let item of positions | async" [value]="item.id">{{item.levelName }}</option>
                         </select>
                       </span>
@@ -302,8 +302,8 @@
       Tên
     </div>
     <div class="col-md-10">
-      <textarea class="content-textarea form-control" name="" id="" cols="30" rows="1" [(ngModel)]="GroupCreate.name" [ngClass]="{ 'is-invalid': submitted && !GroupCreate.name }"></textarea>
-      <div class="cus-validate" *ngIf="submitted && !GroupCreate.name">Trường này là bắt buộc nhập</div>
+      <textarea class="content-textarea form-control" name="" id="" cols="30" rows="1" [(ngModel)]="GroupCreate.name" [ngClass]="{ 'is-invalid': submittedCreateGroup && !GroupCreate.name }"></textarea>
+      <div class="cus-validate" *ngIf="submittedCreateGroup && !GroupCreate.name">Trường này là bắt buộc nhập</div>
     </div>
   </div>
   <div class="modal-header no-boder-bottom-title">
@@ -347,7 +347,7 @@
     </div>
   </div>
   <div class="pd-b20 d-flex justify-content-end">
-    <button type="submit" class="btn btn-primary w-80" (click)="ediGroupUser();" style="margin-right: 8px">Lưu</button>
+    <button type="submit" class="btn btn-primary w-80" (click)="addGroupUser();" style="margin-right: 8px">Lưu</button>
     <button type="button" class="btn btn-default w-80" (click)="closedPopup()" style="margin-right: 15px">Hủy</button>
   </div>
 </ng-template>
