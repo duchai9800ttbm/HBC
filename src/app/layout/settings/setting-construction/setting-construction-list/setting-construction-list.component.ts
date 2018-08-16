@@ -3,27 +3,33 @@ import { PagedResult } from '../../../../shared/models';
 import { SettingService } from '../../../../shared/services/setting.service';
 import { ConfirmationService, AlertService } from '../../../../shared/services';
 import { ConstructionTypeListItem } from '../../../../shared/models/setting/construction-type-list-item';
-import { BehaviorSubject } from '../../../../../../node_modules/rxjs';
+import { BehaviorSubject, Subject } from '../../../../../../node_modules/rxjs';
 import { COMMON_CONSTANTS } from '../../../../shared/configs/common.config';
+import { DATATABLE_CONFIG } from '../../../../shared/configs';
+import { NgxSpinnerService } from '../../../../../../node_modules/ngx-spinner';
 @Component({
     selector: 'app-setting-construction-list',
     templateUrl: './setting-construction-list.component.html',
     styleUrls: ['./setting-construction-list.component.scss']
 })
 export class SettingConstructionListComponent implements OnInit {
+    dtTrigger: Subject<any> = new Subject();
     searchTerm$ = new BehaviorSubject<string>('');
-    gridLoading = true;
-    pagedResult: PagedResult<ConstructionTypeListItem[]> = new PagedResult<
-        ConstructionTypeListItem[]
+    dtOptions: any = DATATABLE_CONFIG;
+    checkboxSeclectAll: boolean;
+    pagedResult: PagedResult<ConstructionTypeListItem> = new PagedResult<
+        ConstructionTypeListItem
         >();
     mySelection: number[] = [];
     constructor(
         private settingService: SettingService,
         private confirmationService: ConfirmationService,
-        private alertService: AlertService
+        private alertService: AlertService,
+        private spinner: NgxSpinnerService,
     ) { }
 
     ngOnInit() {
+        this.spinner.show();
         this.searchTerm$
         .debounceTime(COMMON_CONSTANTS.SearchDelayTimeInMs)
         .distinctUntilChanged()
@@ -42,7 +48,7 @@ export class SettingConstructionListComponent implements OnInit {
             () => {
                 this.settingService.deleteConstruction(id).subscribe(
                     _ => {
-                        this.alertService.success('Đã xóa loại công trình!');
+                        this.alertService.success('Đã xóa thành công loại công trình!');
                         this.refresh(0, this.pagedResult.pageSize);
                     },
                     _ => {
@@ -60,22 +66,22 @@ export class SettingConstructionListComponent implements OnInit {
     }
 
     refresh(page: string | number, pageSize: string | number) {
-        this.gridLoading = true;
         this.settingService.readConstruction(this.searchTerm$.value, page, pageSize).subscribe(data => {
             this.pagedResult = data;
-            console.log(this.pagedResult);
-            this.gridLoading = false;
+            this.dtTrigger.next();
+            this.spinner.hide();
         });
     }
 
     deleteMultiple() {
-        if (this.mySelection.length) {
+        const listSelected = this.pagedResult.items.filter(i => i.checkboxSelected);
+        if (listSelected.length > 0) {
             this.confirmationService.confirm(
                 'Bạn có chắc chắn muốn xóa những loại công trình được chọn?',
                 () => {
-                    this.settingService.deleteMultipleConstructionType(this.mySelection).subscribe(
+                    this.settingService.deleteMultipleConstructionType(listSelected.map(i => i.id)).subscribe(
                         _ => {
-                            this.alertService.success('Đã xóa các loại công trình!');
+                            this.alertService.success('Đã xóa thành công các loại công trình được chọn!');
                             this.refresh(0, this.pagedResult.pageSize);
                         },
                         _ => {
@@ -87,8 +93,12 @@ export class SettingConstructionListComponent implements OnInit {
                 }
             );
         } else {
-            this.alertService.error('Bạn chưa chọn những loại công trình cần xóa');
+            this.alertService.error('Bạn cần chọn ít nhất 1 loại công trình cần xóa');
         }
+    }
+
+    onSelectAll(value: boolean) {
+        this.pagedResult.items.forEach(x => (x['checkboxSelected'] = value));
     }
 
 }

@@ -1,0 +1,20 @@
+<div [@routerTransition]>
+  <div class="main-detail">
+      <div class="d-flex justify-content-between menu">
+          <div class="center-parent action" style="width: calc(20% - 3px)" [routerLinkActive]="['router-link-active']" [routerLink]="['./win']">
+              <div class="text-uppercase">Lý do trúng thầu</div>
+          </div>
+          <div class="center-parent action" style="width: calc(20% - 3px)" [routerLinkActive]="['router-link-active']" [routerLink]="['./lose']">
+              <div class="text-uppercase">Lý do trật thầu</div>
+          </div>
+          <div class="center-parent action" style="width: calc(20% - 3px)" [routerLinkActive]="['router-link-active']" [routerLink]="['./reject']">
+            <div class="text-uppercase">Lý do hủy thầu</div>
+        </div>
+          <div class="" style="width: calc(40% - 3px)"></div>
+      </div>
+      <div>
+          <router-outlet></router-outlet>
+      </div>
+
+  </div>
+</div>
