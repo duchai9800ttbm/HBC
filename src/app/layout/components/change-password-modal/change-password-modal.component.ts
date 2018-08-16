@@ -15,7 +15,7 @@ import { ApiErrorCodes } from '../../../shared/configs/api-error-codes';
   styleUrls: ['./change-password-modal.component.scss']
 })
 export class ChangePasswordModalComponent implements OnInit {
-
+  isError;
   constructor(
     private fb: FormBuilder,
     private userService: UserService,
@@ -80,10 +80,16 @@ export class ChangePasswordModalComponent implements OnInit {
           this.activeModal.close('Close click');
           this.alertService.success('Đặt lại mật khẩu thành công!', true);
         }, err => {
-          if (err.status === 400) {
-            if (JSON.parse(err.text()).error_code === ApiErrorCodes.WRONG_PASSWORD) {
-              this.formErrors.oldPassword = 'Mật khẩu cũ không đúng!';
-            }
+          // if (err.status === 400) {
+          //   if (JSON.parse(err.text()).error_code === ApiErrorCodes.WRONG_PASSWORD) {
+          //     this.formErrors.oldPassword = 'Mật khẩu cũ không đúng!';
+          //   }
+          // }
+          const error = err.json();
+          if (error.errorCode === 'BusinessException') {
+            this.isError = true;
+          } else {
+            this.alertService.error('Đã xảy ra lỗi. Thêm nhóm người dùng không thành công!');
           }
         });
     }

@@ -141,8 +141,10 @@ border: 1px solid #DAE5EC;
     -webkit-transition: height .1s;
     /* For Safari 3.1 to 6.0 */
     transition: height .1s;
+    display: none;
     .user-info__photo:hover & {
         height: 40px;
+        display: inline;
     }
     a {
         display: block;

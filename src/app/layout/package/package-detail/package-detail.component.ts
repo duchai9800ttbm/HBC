@@ -35,6 +35,7 @@ export class PackageDetailComponent implements OnInit {
   listPrivileges = [];
   isManageBidOpportunitys;
   isEditBidOpportunity;
+  isViewBidOpportunityDetail;
   ngOnInit() {
     this.sessionService.getUserInfo().subscribe(result => {
       this.userModel = result;
@@ -42,7 +43,8 @@ export class PackageDetailComponent implements OnInit {
       if (this.listPrivileges) {
         this.isManageBidOpportunitys = this.listPrivileges.some(x => x === 'ManageBidOpportunitys');
         this.isEditBidOpportunity = this.listPrivileges.some(x => x === 'EditBidOpportunity');
-        if (!this.isManageBidOpportunitys || !this.isEditBidOpportunity) {
+        this.isViewBidOpportunityDetail = this.listPrivileges.some(x => x === 'ViewBidOpportunityDetail');
+        if (!this.isEditBidOpportunity && !this.isViewBidOpportunityDetail) {
           this.router.navigate(['/not-found']);
         }
       }
@@ -52,7 +54,8 @@ export class PackageDetailComponent implements OnInit {
     if (this.listPrivileges) {
       this.isManageBidOpportunitys = this.listPrivileges.some(x => x === 'ManageBidOpportunitys');
       this.isEditBidOpportunity = this.listPrivileges.some(x => x === 'EditBidOpportunity');
-      if (!this.isManageBidOpportunitys || !this.isEditBidOpportunity) {
+      this.isViewBidOpportunityDetail = this.listPrivileges.some(x => x === 'ViewBidOpportunityDetail');
+      if (!this.isEditBidOpportunity && !this.isViewBidOpportunityDetail) {
         this.router.navigate(['/not-found']);
       }
     }

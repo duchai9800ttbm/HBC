@@ -30,7 +30,7 @@ export class PackageCreateComponent implements OnInit {
             if (this.listPrivileges) {
                 this.isManageBidOpportunitys = this.listPrivileges.some(x => x === 'ManageBidOpportunitys');
                 this.isCreateBidOpportunity = this.listPrivileges.some(x => x === 'CreateBidOpportunity');
-                if (!this.isManageBidOpportunitys || !this.isCreateBidOpportunity) {
+                if (!this.isCreateBidOpportunity) {
                     this.router.navigate(['/not-found']);
                 }
             }
@@ -40,7 +40,7 @@ export class PackageCreateComponent implements OnInit {
         if (this.listPrivileges) {
             this.isManageBidOpportunitys = this.listPrivileges.some(x => x === 'ManageBidOpportunitys');
             this.isCreateBidOpportunity = this.listPrivileges.some(x => x === 'CreateBidOpportunity');
-            if (!this.isManageBidOpportunitys || !this.isCreateBidOpportunity) {
+            if (!this.isCreateBidOpportunity) {
                 this.router.navigate(['/not-found']);
             }
         }

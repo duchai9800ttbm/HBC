@@ -426,7 +426,6 @@ export class GroupUserDetailComponent implements OnInit {
       pagedResult.currentPage, pagedResult.pageSize).subscribe(responsepageResultUserGroup => {
         this.pagedResult = responsepageResultUserGroup;
         this.listGroupUser = this.pagedResult.items;
-        console.log('nghia', this.pagedResult);
         this.spinner.hide();
       }, err => this.spinner.hide());
   }
