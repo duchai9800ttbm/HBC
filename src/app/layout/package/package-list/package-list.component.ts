@@ -235,7 +235,7 @@ export class PackageListComponent implements OnInit, AfterViewChecked {
                 'Bạn phải chọn ít nhất một đối tượng để xóa!'
             );
         } else {
-            this.delete(deleteIds);
+          //  this.delete(deleteIds);
         }
     }
 
