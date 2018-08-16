@@ -25,7 +25,7 @@
                                 </td>
                                 <td class="w-15 bg-light text-right label no-boder">Loại công trình</td>
                                 <td class="w-35 no-boder">
-                                    <div class="w-75 form-control">{{package.projectType.text}}</div>
+                                    <div class="w-75 form-control">{{package.projectType?.text}}</div>
                                 </td>
                             </tr>
                             <tr>
@@ -35,7 +35,7 @@
                                 </td>
                                 <td class="w-15 bg-light text-right label no-boder">Hạng mục thi công chính</td>
                                 <td class="w-35 no-boder">
-                                    <div class=" w-75 form-control">{{package.mainBuildingCategory.text}}</div>
+                                    <div class=" w-75 form-control">{{package.mainBuildingCategory?.text}}</div>
                                 </td>
                             </tr>
                             <tr>
@@ -45,7 +45,7 @@
                                 </td>
                                 <td class="w-15 bg-light text-right label no-boder">Vai trò</td>
                                 <td class="w-35 no-boder">
-                                    <div class="w-75 form-control">{{ package.hbcRole.text | translate}}</div>
+                                    <div class="w-75 form-control">{{ package.hbcRole?.text | translate}}</div>
                                 </td>
                             </tr>
                             <tr>
@@ -61,21 +61,21 @@
                             <tr>
                                 <td class="w-15 bg-light text-right label no-boder">Khu vực</td>
                                 <td class="w-35 no-boder">
-                                    <div class="w-75 form-control">{{package.location.text}}</div>
+                                    <div class="w-75 form-control">{{package.location?.text}}</div>
                                 </td>
                                 <td class="w-15 bg-light text-right label no-boder">Chủ trì HBC</td>
                                 <td class="w-35 no-boder">
-                                    <div class="w-75 form-control">{{package.chairEmployee.text}}</div>
+                                    <div class="w-75 form-control">{{package.chairEmployee?.text}}</div>
                                 </td>
                             </tr>
                             <tr>
                                 <td class="w-15 bg-light text-right label no-boder">Quý</td>
                                 <td class="w-35 no-boder">
-                                    <div class="w-75 form-control">{{package.quarter.text}}</div>
+                                    <div class="w-75 form-control">{{package.quarter?.text}}</div>
                                 </td>
                                 <td class="w-15 bg-light text-right label no-boder">Tình trạng</td>
                                 <td class="w-35 no-boder">
-                                    <div class="w-75 form-control">{{package.status.text | translate}}</div>
+                                    <div class="w-75 form-control">{{package.status?.text | translate}}</div>
                                 </td>
                             </tr>
                             <tr>
