@@ -36,6 +36,7 @@ export class PackageFormComponent implements OnInit {
     @Input() package: PackageModel;
     packageForm: FormGroup;
     formErrors = {
+        opportunityName: '',
         locationId: '',
         constructionCategoryId: '',
         constructionTypeId: '',
@@ -95,7 +96,7 @@ export class PackageFormComponent implements OnInit {
         this.packageForm = this.fb.group({
             projectName: [this.package.projectName],
             projectNo: [this.package.projectNo],
-            opportunityName: [this.package.opportunityName],
+            opportunityName: [this.package.opportunityName, Validators.required],
             job: [this.package.job],
             place: [this.package.place],
             locationId: [this.package.locationId, Validators.required],
