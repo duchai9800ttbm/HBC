@@ -146,7 +146,7 @@ export class PackageFormComponent implements OnInit {
                     err => {
                         this.spinner.hide();
                         const message = 'Đã xảy ra lỗi. Gói thầu không được tạo.';
-                        this.alertService.success(message);
+                        this.alertService.error(message);
                     });
         }
     }
