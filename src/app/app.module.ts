@@ -16,7 +16,7 @@ import { AlertComponent } from './shared/components/alert/alert.component';
 import { NgxSpinnerModule } from 'ngx-spinner';
 import { StarRatingModule } from 'angular-star-rating';
 import { DataUploadService } from './shared/services/data-upload.service';
-import { GroupUserService } from './shared/services/group-user.service'
+import { GroupUserService } from './shared/services/group-user.service';
 // AoT requires an exported function for factories
 export function createTranslateLoader(http: HttpClient) {
     // for development
