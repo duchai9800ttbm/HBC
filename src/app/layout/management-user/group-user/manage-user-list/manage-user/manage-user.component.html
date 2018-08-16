@@ -5,7 +5,7 @@
         <h4 class="text-head-user">Danh sách người dùng</h4>
       </div>
       <div class="col-md-6">
-        <div class="btn-toolbar pull-right">
+        <div class="btn-toolbar pull-right" style="flex-wrap: nowrap;">
           <div class="input-group btn-rg">
             <span class="input-group-addon">Tìm kiếm</span>
             <input type="text" class="form-control icon" placeholder="&#xf002; Nhập tên, email" (keyup)="searchTerm$.next($event.target.value)">
@@ -13,7 +13,7 @@
           <button type="button" class="btn btn-primary btn-rg pull-right" [routerLink]="['../add-user']">
             Tạo mới
           </button>
-          <button type="submit" class="btn btn-primary btn-rg pull-right" (click)="multiDelete()">
+          <button type="submit" class="btn btn-primary btn-rg pull-right" (click)="disableMultiple()">
             <!-- <i class="fa fa-trash-o" aria-hidden="true"></i> -->
             <!-- Xóa -->
             Vô hiệu hóa
@@ -25,10 +25,10 @@
       </div>
     </div>
     <div class="data-list menu">
-      <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="table-selection stripe hover">
+      <table *ngIf="pagedResult.items" datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="fix-layout-table table-selection stripe hover">
         <thead>
           <tr style="width: 100%">
-            <th class="text-center" style="width: 15px; padding-left: 7px;">
+            <th class="text-center" style="width: 35px; padding-left: 7px;">
               <label class="custom-control custom-checkbox">
                 <input type="checkbox" class="custom-control-input input-checkbox" [(ngModel)]="checkboxSeclectAll" (change)="onSelectAll($event.target.checked)">
                 <span class="custom-control-indicator"></span>
@@ -44,7 +44,7 @@
                 </div>
               </div>
             </th>
-            <th style="width: 14%">
+            <th style="width: 10%">
               <div class="d-flex justify-content-start">
                 <div style="margin-right: 10px">Email</div>
                 <div class="center-parent">
@@ -110,7 +110,7 @@
                 </div>
               </div>
             </th>
-            <th class="text-center" style="width: calc(14% - 10px); min-width: 50px!important;">
+            <th class="text-center" style="width: calc(18% - 42px); min-width: 70px!important;">
               Thao tác
             </th>
           </tr>
@@ -176,6 +176,9 @@
               <div class="d-flex justify-content-around">
                 <div class="text-center" [routerLink]="['../edit-user/',item.id]">
                   <i class="fa fa-pencil color-edit pointer" aria-hidden="true" [title]="'Chỉnh sửa'"></i>
+                </div>
+                <div class="text-center">
+                  <i class="fa fa-key color-edit pointer" aria-hidden="true" [title]="'Thay đổi mật khẩu'"></i>
                 </div>
                 <div style="zoom: 0.5;">
                   <label class="switch" style="margin: 0px">
