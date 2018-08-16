@@ -41,10 +41,6 @@ export class GroupUserService implements OnInit {
       isActive: result.isActive,
       phoneNumber: result.phoneNumber,
       address: result.address,
-<<<<<<< HEAD
-=======
-
->>>>>>> 28bb2dbf6266912c8aa8be45ea5228caba80ff08
     };
   }
   // GroupUser
