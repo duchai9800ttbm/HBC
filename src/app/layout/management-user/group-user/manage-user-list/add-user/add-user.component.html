@@ -125,10 +125,10 @@
         <div class="d-flex boder-table zoom-form">
           <div class="w-100  mr-auto">
             <div class="card-collapse" style="margin-bottom: 0px;">
-              <div class="header" (click)="isCollapsedMain = !isCollapsedMain" [attr.aria-expanded]="!isCollapsedMain" aria-controls="info-main">
+              <div class="header" (click)="isCollapsedMainInfo = !isCollapsedMainInfo" [attr.aria-expanded]="!isCollapsedMainInfo" aria-controls="info-main">
                 <i class="fa fa-caret-down mr-3"></i>Thông tin tài khoản
               </div>
-              <div class="body" id="info-main" [ngbCollapse]="isCollapsedMain">
+              <div class="body" id="info-main" [ngbCollapse]="isCollapsedMainInfo">
                 <table class="w-100 table table-bordered my-3 no-boder margin-bottom-table">
                   <tr>
                     <td class="w-15 text-right label required no-boder">Tên đăng nhập</td>
@@ -162,7 +162,7 @@
                     <td class="no-boder d-flex">
                       <span class="custom-dropdown" style="width: 75%; margin-right: 2px;">
                         <select class="form-control" tabindex="5" formControlName="userGroupId">
-                          <option value="null || 0">---Chọn---</option>
+                          <option [ngValue]="null">---Chọn---</option>
                           <option *ngFor="let item of dataGroupUser" [value]="item.id">{{item.text }}</option>
                         </select>
                       </span>
@@ -176,7 +176,7 @@
                     <td class="w-35 no-boder">
                       <div class="center-parent" class="">
                         <label class="ckb_container">
-                          <input type="checkbox">
+                          <input type="checkbox" [checked]="formAddUser.get('isActive').value" formControlName="isActive">
                           <span class="checkmark"></span>
                         </label>
 
@@ -252,11 +252,14 @@
                     <td class="w-15 text-right label no-boder">Phòng ban/Bộ phận</td>
                     <td class="w-35 no-boder">
                       <span class="custom-dropdown w-75">
-                        <select class="form-control" tabindex="5" formControlName="departmentId">
-                          <option value="null || 0">---Chọn---</option>
+                        <select class="form-control" tabindex="5" formControlName="departmentId" [class.is-invalid]="formErrors.departmentId">
+                          <option [ngValue]="null">---Chọn---</option>
                           <option *ngFor="let item of departments | async" [value]="item.id">{{item.departmentName }}</option>
                         </select>
                       </span>
+                      <div class="invalid-feedback" *ngIf="formErrors.departmentId">
+                        {{formErrors.departmentId}}
+                      </div>
                     </td>
                   </tr>
                   <tr>
@@ -264,7 +267,7 @@
                     <td class="w-35 no-boder">
                       <span class="custom-dropdown w-75">
                         <select class="form-control" tabindex="5" formControlName="levelId">
-                          <option value="null || 0">---Chọn---</option>
+                          <option [ngValue]="null">---Chọn---</option>
                           <option *ngFor="let item of positions | async" [value]="item.id">{{item.levelName }}</option>
                         </select>
                       </span>
@@ -319,7 +322,7 @@
       <div class="title-action" for="exampleFormControlSelect2">Danh sách chức năng</div>
       <select multiple class="form-control form-select" id="exampleFormControlSelect2" style="height: 150px;" (change)="selectEachFieldEditNotUser($event)">
         <option [value]="notPrivilege.id" *ngFor="let notPrivilege of GroupCreate.notPrivileges">
-          {{notPrivilege.text}}
+          {{notPrivilege.text | translate}}
         </option>
       </select>
     </div>
@@ -341,7 +344,7 @@
       <div class="title-action" for="exampleFormControlSelect2">Chức năng được sử dụng</div>
       <select multiple class="form-control form-select" id="exampleFormControlSelect2" (change)="selectEachFieldEditUser($event)">
         <option [value]="privilege.id" *ngFor="let privilege of GroupCreate.privileges">
-          {{privilege.text}}
+          {{privilege.text | translate}}
         </option>
       </select>
     </div>

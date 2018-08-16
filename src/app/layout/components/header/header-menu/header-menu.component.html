@@ -24,19 +24,19 @@
 
 </ul> -->
 <div class="d-flex flex-row set-heigt-div">
-    <div class="p-2 color-menu" [routerLinkActive]="['router-link-active']" [routerLink]="['/package']">
+    <div class="p-2 color-menu" *ngIf="isManageBidOpportunitys" [routerLinkActive]="['router-link-active']" [routerLink]="['/package']">
         <div class="pad-content">
-            <a >QUẢN LÝ GÓI THẦU</a>
+            <a>QUẢN LÝ GÓI THẦU</a>
         </div>
     </div>
-    <div class="p-2 color-menu" [routerLinkActive]="['router-link-active']" [routerLink]="['/management-user']">
+    <div class="p-2 color-menu"  [routerLinkActive]="['router-link-active']" [routerLink]="['/management-user']">
         <div class="pad-content">
-            <a >QUẢN LÝ NGƯỜI DÙNG</a>
+            <a>QUẢN LÝ NGƯỜI DÙNG</a>
         </div>
     </div>
-    <div class="p-2 color-menu">
+    <div class="p-2 color-menu"  [routerLinkActive]="['router-link-active']" [routerLink]="['/settings']">
         <div class="pad-content">
-            <a [routerLinkActive]="['router-link-active']" [routerLink]="['/settings']">CÀI ĐẶT</a>
+            <a>CÀI ĐẶT</a>
         </div>
     </div>
 </div>

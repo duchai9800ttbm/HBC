@@ -65,6 +65,14 @@ export class PackageListComponent implements OnInit, AfterViewChecked {
     user: UserModel;
     listField: FieldModel[];
     sum;
+    isManageBidOpportunitys;
+    isViewBidOpportunitys;
+    isCreateBidOpportunity;
+    isDeleteBidOpportunity;
+    isEditBidOpportunity;
+    isViewBidOpportunityDetail;
+    userModel: UserModel;
+    listPrivileges = [];
     constructor(
         private activityService: ActivityService,
         private alertService: AlertService,
@@ -118,6 +126,13 @@ export class PackageListComponent implements OnInit, AfterViewChecked {
     }
     ngOnInit() {
         window.scrollTo(0, 0);
+
+        // Authen
+      
+
+
+
+        //
         this.refreshPopupConfig();
         this.listClassifyCustomer = this.dataService.getListOpportunityClassifies();
         this.listPhasePackage = this.dataService.getListBidOpportunityStages();
@@ -128,7 +143,35 @@ export class PackageListComponent implements OnInit, AfterViewChecked {
         this.filterModel.stage = '';
         this.filterModel.chairEmployeeId = '';
         this.dtOptions = DATATABLE_CONFIG;
-        this.createForm();
+
+        this.sessionService.getUserInfo().subscribe(result => {
+            this.userModel = result;
+            this.listPrivileges = this.userModel.privileges;
+            if (this.listPrivileges) {
+                this.isManageBidOpportunitys = this.listPrivileges.some(x => x === 'ManageBidOpportunitys');
+                this.isViewBidOpportunitys = this.listPrivileges.some(x => x === 'ViewBidOpportunitys');
+                this.isCreateBidOpportunity = this.listPrivileges.some(x => x === 'CreateBidOpportunity');
+                this.isDeleteBidOpportunity = this.listPrivileges.some(x => x === 'DeleteBidOpportunity');
+                this.isEditBidOpportunity = this.listPrivileges.some(x => x === 'EditBidOpportunity');
+                this.isViewBidOpportunityDetail = this.listPrivileges.some(x => x === 'ViewBidOpportunityDetail');
+                if (!this.isManageBidOpportunitys) {
+                    this.router.navigate(['/not-found']);
+                }
+            }
+        });
+        this.userModel = this.sessionService.userInfo;
+        this.listPrivileges = this.userModel.privileges;
+        if (this.listPrivileges) {
+            this.isManageBidOpportunitys = this.listPrivileges.some(x => x === 'ManageBidOpportunitys');
+            this.isViewBidOpportunitys = this.listPrivileges.some(x => x === 'ViewBidOpportunitys');
+            this.isCreateBidOpportunity = this.listPrivileges.some(x => x === 'CreateBidOpportunity');
+            this.isDeleteBidOpportunity = this.listPrivileges.some(x => x === 'DeleteBidOpportunity');
+            this.isEditBidOpportunity = this.listPrivileges.some(x => x === 'EditBidOpportunity');
+            this.isViewBidOpportunityDetail = this.listPrivileges.some(x => x === 'ViewBidOpportunityDetail');
+            if (!this.isManageBidOpportunitys) {
+                this.router.navigate(['/not-found']);
+            }
+        }
         this.spinner.show();
         this.packageService
             .instantSearchWithFilter(this.searchTerm$, this.filterModel, 0, 10)
@@ -155,41 +198,7 @@ export class PackageListComponent implements OnInit, AfterViewChecked {
         this.filterModel.maxCost = newValue[1];
     }
 
-    createForm() {
-        this.activityForm = this.fb.group({
-            startDate: [
-                DateTimeConvertHelper.fromTimestampToDtObject(
-                    moment().valueOf()
-                ),
-                Validators.required
-            ],
-            endDate: ['']
-        });
-        this.activityForm.valueChanges.subscribe(data =>
-            this.onFormValueChanged(data)
-        );
-    }
 
-
-    onFormValueChanged(data?: any) {
-        if (this.isSubmitted) {
-            this.validateForm();
-        }
-    }
-
-    validateForm() {
-        this.invalidMessages = ValidationHelper.getInvalidMessages(
-            this.activityForm,
-            this.formErrors
-        );
-        return this.invalidMessages.length === 0;
-    }
-
-    onClick(moduleName, moduleItemId) {
-        this.router.navigate([
-            `/${moduleName.toLowerCase()}/detail/${moduleItemId}`
-        ]);
-    }
     pagedResultChange(pagedResult: any) {
         this.refresh(false);
     }
@@ -312,31 +321,6 @@ export class PackageListComponent implements OnInit, AfterViewChecked {
         this.pagedResult.items.forEach(x => (x.checkboxSelected = value));
     }
 
-    exportFileExcel() {
-        const exportItems = this.pagedResult.items.map(x => {
-            return {
-                'Tiêu đề': x.name ? x.name : '',
-                Loại: this.translateService.instant(x.activityType || 'null'),
-                'Ngày giờ bắt đầu': `${moment(x.startDate).format(
-                    'L'
-                )} ${moment(x.startDate).format('LT')}`,
-                'Ngày giờ kết thúc': `${moment(x.endDate).format('L')} ${moment(
-                    x.endDate
-                ).format('LT')}`,
-                'Trạng thái': this.translateService.instant(x.status || 'null'),
-                'Vị trí': x.address ? x.address : '',
-                'Liên quan đến loại': this.translateService.instant(
-                    x.relatedToType || 'null'
-                ),
-                'Cụ thể liên quan': x.specificRelated
-                    ? `${x.specificRelated.name ? x.specificRelated.name : ''}`
-                    : '',
-                'Phân công cho': x.assignTo ? x.assignTo : ''
-            };
-        });
-        this.excelService.exportAsExcelFile(exportItems, 'HoatDong');
-    }
-
     downTemplate() {
         this.downloadTemplate
             .downloadTemplate('activity')
@@ -353,9 +337,9 @@ export class PackageListComponent implements OnInit, AfterViewChecked {
 
     resetDefaultState() {
         this.packageService.getListFieldsDefault()
-        .subscribe(data => {
-            this.listField = data;
-        });
+            .subscribe(data => {
+                this.listField = data;
+            });
     }
 
     cancel(myDrop) {

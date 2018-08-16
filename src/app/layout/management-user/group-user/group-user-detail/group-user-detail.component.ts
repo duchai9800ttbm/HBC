@@ -4,7 +4,7 @@ import { BsModalRef } from 'ngx-bootstrap/modal/bs-modal-ref.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { GroupModel } from '../../../../shared/models/group/group-item.model';
 import { Router } from '@angular/router';
-import { AlertService, DataService, ConfirmationService } from '../../../../shared/services';
+import { AlertService, DataService, ConfirmationService, UserService, SessionService } from '../../../../shared/services';
 import { GroupUserService } from '../../../../shared/services/group-user.service';
 import { GroupUserRequest } from '../../../../shared/models/api-request/user/group-user/group-user-request.model';
 import { GroupUserList } from '../../../../shared/models/user/group-user-list-item';
@@ -76,7 +76,9 @@ export class GroupUserDetailComponent implements OnInit {
     private groupUserService: GroupUserService,
     private dataService: DataService,
     private spinner: NgxSpinnerService,
-    private confirmationService: ConfirmationService
+    private confirmationService: ConfirmationService,
+    private userService: UserService,
+    private sessionService: SessionService
   ) { }
 
   ngOnInit() {
@@ -424,7 +426,6 @@ export class GroupUserDetailComponent implements OnInit {
       pagedResult.currentPage, pagedResult.pageSize).subscribe(responsepageResultUserGroup => {
         this.pagedResult = responsepageResultUserGroup;
         this.listGroupUser = this.pagedResult.items;
-        console.log('nghia', this.pagedResult);
         this.spinner.hide();
       }, err => this.spinner.hide());
   }
@@ -545,6 +546,9 @@ export class GroupUserDetailComponent implements OnInit {
               this.listGroupUser = this.pagedResult.items.map(i => i);
               this.modalRef.hide();
               this.alertService.success('Sửa nhóm người dùng thành công!');
+              this.userService.getUserProfile().subscribe(result =>
+                this.sessionService.saveUserInfo(result)
+              );
             });
         },
           err => {
@@ -563,6 +567,9 @@ export class GroupUserDetailComponent implements OnInit {
               this.pagedResult = responsepageResultUserGroup;
               this.listGroupUser = this.pagedResult.items.map(i => i);
               this.modalRef.hide();
+              this.userService.getUserProfile().subscribe(result =>
+                this.sessionService.saveUserInfo(result)
+              );
               this.alertService.success('Thêm nhóm người dùng thành công!');
             });
         },
@@ -624,16 +631,45 @@ export class GroupUserDetailComponent implements OnInit {
     }
 
     this.confirmationService.confirm(
+      // console.log(this.pagedResult.items.filter( i => i.id === ids));
+      // this.pagedResult.items ? 'Bạn có chắc chắn muốn xóa nhóm người dùng này?' : 'Nhóm người dùng $'
       'Bạn có chắc chắn muốn xóa nhóm người dùng này?',
       () => {
         this.groupUserService.deleteListGroupUser(deleteIds).subscribe(response => {
-          this.alertService.success('Xóa nhóm người dùng thành công!');
-          this.refesh();
+          // this.alertService.success('Xóa nhóm người dùng thành công!');
+          // Danh sách quyền
+          this.dataService.getListPrivileges().subscribe(j => {
+            this.listPrivilegesData = j;
+            // Danh sách nhóm người dùng
+            this.spinner.show();
+            this.groupUserService.listGroupUser(this.pagedResult.currentPage, this.pagedResult.pageSize)
+              .subscribe(responsepageResultUserGroup => {
+                this.pagedResult = responsepageResultUserGroup;
+                this.spinner.hide();
+                this.listGroupUser = this.pagedResult.items.map(i => i);
+                const toStringListPrivilegesData = this.listPrivilegesData.map(i => JSON.stringify(i));
+                this.listGroupUser.map(element => {
+                  const toStringElement = element.privileges.map(i => JSON.stringify(i));
+                  const stringFilter = toStringListPrivilegesData.filter(i => !toStringElement.includes(i));
+                  element['notPrivileges'] = stringFilter.map(i => JSON.parse(i));
+                });
+                this.rerender(this.pagedResult);
+                this.alertService.success('Xóa nhóm người dùng thành công!');
+              },
+                err => {
+                  this.spinner.hide();
+                  this.alertService.error('Đã xảy ra lỗi. Xóa nhóm người dùng không thành công!');
+                });
+          },
+            err => {
+              this.alertService.error('Đã xảy ra lỗi. Xóa nhóm người dùng không thành công!');
+            });
+
         },
           err => {
-            this.alertService.success('Đã gặp sự cố. Xóa nhóm người dùng thất bại!');
+            this.alertService.success('Đã xảy ra lỗi. Xóa nhóm người dùng không thành công!');
           });
-        this.modalRef.hide();
+        // this.modalRef.hide();
       }
     );
   }

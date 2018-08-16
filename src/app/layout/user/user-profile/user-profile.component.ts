@@ -113,7 +113,7 @@ export class UserProfileComponent implements OnInit {
   uploadAvatar() {
     const imageBase64 = this.avatarSrc.split(',')[1];
     this.userService.upLoadAvatar(imageBase64).subscribe(result => {
-      this.sessionService.saveUserInfo(result);
+      //this.sessionService.saveUserInfo(result);
       this.alertService.success('Cập nhật ảnh đại diện thành công!');
     });
   }
