@@ -246,7 +246,7 @@ export class PackageService {
             projectName: result.projectName,
             projectType: result.projectType && {
                 id: result.projectType.key,
-                text: result.projectType.displayText
+                text: result.projectType.value
             },
             hbcRole: result.hbcRole && {
                 id: result.hbcRole.type,
@@ -263,15 +263,15 @@ export class PackageService {
             magnitude: result.magnitude,
             stage: result.stage && {
                 id: result.stage.key,
-                text: result.stage.displayText
+                text: result.stage.value
             },
             stageStatus: result.stageStatus && {
                 id: result.stageStatus.key,
-                text: result.stageStatus.displayText
+                text: result.stageStatus.value
             },
             location: result.location && {
                 id: result.location.key,
-                text: result.location.displayText
+                text: result.location.value
             },
             projectNo: result.projectNo,
             job: result.job,
@@ -291,12 +291,12 @@ export class PackageService {
             floorArea: result.floorArea,
             mainBuildingCategory: result.mainBuildingCategory && {
                 id: result.mainBuildingCategory.key,
-                text: result.mainBuildingCategory.displayText
+                text: result.mainBuildingCategory.value
             },
             documentLink: result.documentLink,
             status: result.status && {
                 id: result.status.key,
-                text: result.status.displayText
+                text: result.status.value
             },
             progress: result.progress,
             acceptanceReason: result.acceptanceReason,
