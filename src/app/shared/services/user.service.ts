@@ -51,7 +51,8 @@ export class UserService {
             userGroup: result.userGroup && {
                 id: result.userGroup.key,
                 text: result.userGroup.value
-            }
+            },
+            privileges: result.privileges.map(x => x.value)
         };
     }
 

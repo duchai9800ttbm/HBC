@@ -89,26 +89,26 @@ export class SettingLocationComponent implements OnInit {
             // }
         });
         console.log('this.pagedResult', listDeleteLocation);
-        if (false) {
-            this.confirmationService.confirm(
-                'Bạn có chắc chắn muốn xóa những khu vực được chọn?',
-                () => {
-                    this.settingService.deleteMultipleLocation(this.mySelection).subscribe(
-                        result => {
-                            this.alertService.success('Đã xóa các khu vực!');
-                            this.refresh(0, this.pagedResult.pageSize);
-                        },
-                        err => {
-                            this.alertService.error(
-                                'Đã gặp lỗi, chưa xóa được các khu vực!'
-                            );
-                        }
-                    );
-                }
-            );
-        } else {
-            this.alertService.error('Bạn chưa chọn những khu vực cần xóa');
-        }
+        // if ( true ) {
+        //     this.confirmationService.confirm(
+        //         'Bạn có chắc chắn muốn xóa những khu vực được chọn?',
+        //         () => {
+        //             this.settingService.deleteMultipleLocation(this.mySelection).subscribe(
+        //                 result => {
+        //                     this.alertService.success('Đã xóa các khu vực!');
+        //                     this.refresh(0, this.pagedResult.pageSize);
+        //                 },
+        //                 err => {
+        //                     this.alertService.error(
+        //                         'Đã gặp lỗi, chưa xóa được các khu vực!'
+        //                     );
+        //                 }
+        //             );
+        //         }
+        //     );
+        // } else {
+        //     this.alertService.error('Bạn chưa chọn những khu vực cần xóa');
+        // }
     }
 
     onSelectAll(value: boolean) {
