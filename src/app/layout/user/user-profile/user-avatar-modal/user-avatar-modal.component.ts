@@ -32,7 +32,7 @@ export class UserAvatarModalComponent implements OnInit {
   saveImage() {
     const imageBase64 = this.croppedImage.split(',')[1];
     this.userService.upLoadAvatar(imageBase64).subscribe(result => {
-      this.sessionService.saveUserInfo(result);
+     // this.sessionService.saveUserInfo(result);
       this.activeModal.close();
       this.alertService.success('Cập nhật ảnh đại diện thành công!');
     });

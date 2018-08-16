@@ -51,7 +51,8 @@ export class UserService {
             userGroup: result.userGroup && {
                 id: result.userGroup.key,
                 text: result.userGroup.value
-            }
+            },
+            privileges: result.privileges.map(x => x.value)
         };
     }
 
@@ -80,14 +81,12 @@ export class UserService {
     }
 
     changePassword(
-        email: string,
         oldPassword: string,
         newPassword: string
     ): Observable<any> {
         return this.apiService
-            .post('/users/password/change', {
-                username: email,
-                oldPassword: oldPassword,
+            .post('/user/password/change', {
+                currentPassword: oldPassword,
                 newPassword: newPassword
             })
             .map(data => {

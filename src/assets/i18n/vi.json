@@ -299,5 +299,11 @@
     "ThauPhu": "Thầu phụ",
 
     "Active":"Hoạt động",
-    "Deactive": "Không hoạt động"
+    "Deactive": "Không hoạt động",
+    "ViewBidOpportunitys": "Xem gói danh sách gói thầu",
+    "ViewBidOpportunityDetail": "Xem chi tiết gói thầu",
+    "CreateBidOpportunity": "Tạo mới gói thầu",
+    "EditBidOpportunity": "Sửa gói thầu",
+    "DeleteBidOpportunity": "Xóa gói thầu",
+    "ManageBidOpportunitys": "Quản lý gói thầu"
 }

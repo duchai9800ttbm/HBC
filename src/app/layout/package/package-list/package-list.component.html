@@ -12,8 +12,8 @@
                     Công cụ &nbsp;&nbsp;
                 </button>
             </div>
-            <button class="btn btn-primary ml-2" [routerLink]="['/package/create']">
-                &nbsp;&nbsp; Thêm gói thầu
+            <button *ngIf="isCreateBidOpportunity" class="btn btn-primary ml-2" [routerLink]="['/package/create']">
+                Thêm gói thầu
             </button>
             <button class="btn btn-primary ml-2" (click)="refresh(true)">
                 <i class="fa fa-refresh" aria-hidden="true"></i>
@@ -99,12 +99,7 @@
 
                             </div>
                         </div>
-                        <!-- <perfect-scrollbar style="max-height: 160px;" [config]="config">
-                                <div>Scrollable content</div>
-                              </perfect-scrollbar> -->
-                        <!-- <div slimScroll width="auto" height="160px" size="7px">
-                            Lorem ipsum dolor sit amet...
-                        </div> -->
+
                         <hr>
                         <div>
                             <div class="d-flex">
@@ -279,7 +274,7 @@
                                 </div>
                                 <div class="center-parent" [class.type-HSMT-child]="item.stage?.id == 'HSMT'" [class.type-HSDT-child]="item.stage?.id == 'HSDT'"
                                     [class.type-KQDT-child]="item.stage?.id == 'KQDT'">
-                                    <div>{{item.stageStatus?.text }}</div>
+                                    <div class="text-truncate">{{item.stageStatus?.text }}</div>
                                 </div>
 
                             </div>
@@ -287,13 +282,13 @@
                         <td>{{item.region | translate}}</td>
                         <!-- <td class="select-filter" [title]="item.assignTo">{{ item.assignTo}}</td> -->
                         <td>
-                            <a [routerLink]="['/package/detail',item.bidOpportunityId]">
+                            <a *ngIf="isViewBidOpportunityDetail" [routerLink]="['/package/detail',item.bidOpportunityId]">
                                 <i class="fa fa-eye text-warning" aria-hidden="true"></i>
                             </a>
-                            <a [routerLink]="['/package/detail',item.bidOpportunityId,'edit']" class=" text-success ml-3">
+                            <a *ngIf="isEditBidOpportunity" [routerLink]="['/package/detail',item.bidOpportunityId,'edit']" class=" text-success ml-3">
                                 <i class="fa fa-pencil cursor-pointer" aria-hidden="true"> </i>
                             </a>
-                            <a class=" text-dark ml-3">
+                            <a *ngIf="isDeleteBidOpportunity" class=" text-dark ml-3">
                                 <i (click)="delete(item.id, item.activityType)" class="fa fa-trash-o" aria-hidden="true"></i>
                             </a>
                         </td>

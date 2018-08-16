@@ -8,12 +8,13 @@ import { Router } from '@angular/router';
 import { GroupUserService } from '../../../../../shared/services/group-user.service';
 import { AlertService, ConfirmationService, DataService } from '../../../../../shared/services';
 import { ListUserItem } from '../../../../../shared/models/user/user-list-item.model';
-import { DictionaryItem } from '../../../../../shared/models';
+import { DictionaryItem, DictionaryItemIdString } from '../../../../../shared/models';
 import { Observable } from '../../../../../../../node_modules/rxjs';
 import { DepartmentsFormBranches } from '../../../../../shared/models/user/departments-from-branches';
 import { Levels } from '../../../../../shared/models/user/levels';
 import ValidationHelper from '../../../../../shared/helpers/validation.helper';
 import CustomValidator from '../../../../../shared/helpers/custom-validator.helper';
+import { NgxSpinnerService } from '../../../../../../../node_modules/ngx-spinner';
 @Component({
   selector: 'app-edit-user',
   templateUrl: './edit-user.component.html',
@@ -45,7 +46,9 @@ export class EditUserComponent implements OnInit {
     email: '',
     firstName: '',
     lastName: '',
-    departmentId: '',
+    // departmentId: '',
+    phoneNumber: '',
+    department: '',
   };
   seft = this;
   formEditUser: FormGroup;
@@ -57,6 +60,20 @@ export class EditUserComponent implements OnInit {
   dataGroupUser: DictionaryItem[];
   departments: Observable<DepartmentsFormBranches[]>;
   positions: Observable<Levels[]>;
+  GroupCreate;
+  isError;
+  listPrivilegesData: DictionaryItemIdString[];
+  arayChangeprivilegesTemp = {
+    point: false,
+    idGroupCurrent: null,
+    arayChangeprivileges: [],
+  };
+  arayChangeprivilegesTempNot = {
+    point: false,
+    idGroupCurrent: null,
+    arayChangeprivileges: [],
+  };
+  submittedCreateGroup: boolean;
   constructor(
     private alertService: AlertService,
     private groupUserService: GroupUserService,
@@ -66,16 +83,19 @@ export class EditUserComponent implements OnInit {
     private confirmationService: ConfirmationService,
     private formBuilder: FormBuilder,
     private dataService: DataService,
+    private spinner: NgxSpinnerService,
   ) { }
 
   ngOnInit() {
     this.departments = this.dataService.getListDepartmentsFromBranches();
     this.positions = this.dataService.getListLevels();
+    this.dataService.getListPrivileges().subscribe(response => {
+      this.listPrivilegesData = response;
+    });
     this.route.paramMap.subscribe((params: ParamMap) => {
       const id = params.get('id');
       this.idString = id;
     });
-
     this.groupUserService.getIdUser(this.idString).subscribe(
       sucess => {
         this.groupUserModel = sucess;
@@ -89,7 +109,7 @@ export class EditUserComponent implements OnInit {
           levelId: [this.groupUserModel.level ? this.groupUserModel.level.key : null],
           userGroupId: [this.groupUserModel.userGroup ? this.groupUserModel.userGroup.id : null, Validators.required],
           department: [this.groupUserModel.department ? Number(this.groupUserModel.department.key) : null, Validators.required],
-          isActive: [this.checkboxTrue ? this.checkboxTrue : true],
+          isActive: [this.groupUserModel.isActive],
           password: ['', [CustomValidator.password]],
           rePassword: ['', [CustomValidator.password]],
           phoneNumber: [this.groupUserModel.phoneNumber, [CustomValidator.phoneNumber]],
@@ -138,7 +158,9 @@ export class EditUserComponent implements OnInit {
         departmentId: this.formEditUser.value.department ? this.formEditUser.value.department : 0,
         levelId: this.formEditUser.value.levelId ? this.formEditUser.value.levelId : 0,
         userGroupId: this.formEditUser.value.userGroupId ? this.formEditUser.value.userGroupId : 0,
-        isActive: this.checkboxTrue
+        isActive: this.formEditUser.value.isActive,
+        phoneNumber: this.formEditUser.value.phoneNumber,
+        address: this.formEditUser.value.address,
       };
       console.log('Edit', dataUser);
       this.groupUserService.createOrUpdateUser(dataUser).subscribe(data => {
@@ -173,6 +195,7 @@ export class EditUserComponent implements OnInit {
   }
 
   validateForm() {
+    console.log('this.formEditUser.value', this.formEditUser.value);
     this.invalidMessages = ValidationHelper.getInvalidMessages(
       this.formEditUser,
       this.formErrors,
@@ -186,4 +209,139 @@ export class EditUserComponent implements OnInit {
     }
   }
 
+  changeActiveUser(idUser: number) {
+    console.log('idUser', idUser);
+  }
+
+  openModalCreateUser(template: TemplateRef<any>) {
+    this.isError = false;
+    this.GroupCreate = {
+      name: null,
+      description: '',
+      privileges: [],
+      isActive: true,
+      notPrivileges: this.listPrivilegesData,
+    };
+    this.modalRef = this.modalService.show(template, {
+      class: 'gray modal-lg'
+    });
+  }
+
+  selectAllPrivilegesEditUse() {
+    this.GroupCreate.notPrivileges = [];
+    this.GroupCreate.privileges = this.listPrivilegesData.filter(x => x);
+  }
+
+  selectAllPrivilegesEditNotUse() {
+    this.GroupCreate.privileges = [];
+    this.GroupCreate.notPrivileges = this.listPrivilegesData.filter(x => x);
+  }
+
+  selectEachFieldEditNotUser(event) {
+    this.arayChangeprivilegesTemp.arayChangeprivileges = [];
+    for (let i = 1; i <= event.target.length; i++) {
+      if (event.target[i - 1].selected === true) {
+        const object = {
+          id: event.target[i - 1].value,
+          text: event.target[i - 1].text,
+        };
+        this.arayChangeprivilegesTemp.arayChangeprivileges.push(object);
+      }
+    }
+    this.arayChangeprivilegesTemp.point = true;
+    this.arayChangeprivilegesTempNot.point = false;
+  }
+
+  selectEachFieldEditUser(event) {
+    this.arayChangeprivilegesTempNot.arayChangeprivileges = [];
+    for (let i = 1; i <= event.target.length; i++) {
+      if (event.target[i - 1].selected === true) {
+        const object = {
+          id: event.target[i - 1].value,
+          text: event.target[i - 1].text,
+        };
+        this.arayChangeprivilegesTempNot.arayChangeprivileges.push(object);
+      }
+    }
+    this.arayChangeprivilegesTempNot.point = true;
+    this.arayChangeprivilegesTemp.point = false;
+  }
+
+  changePrivilegesEditNotUse() {
+    if (this.arayChangeprivilegesTemp.point === true) {
+      this.arayChangeprivilegesTemp.arayChangeprivileges.forEach(i => this.GroupCreate.privileges.push(i));
+      const toStringElement = this.GroupCreate.privileges.map(i => JSON.stringify(i));
+      const toStringListPrivilegesData = this.listPrivilegesData.map(i => JSON.stringify(i));
+      const stringFilter = toStringListPrivilegesData.filter(i => !toStringElement.includes(i));
+      this.GroupCreate.notPrivileges = stringFilter.map(i => JSON.parse(i));
+      this.arayChangeprivilegesTemp = {
+        point: false,
+        idGroupCurrent: null,
+        arayChangeprivileges: [],
+      };
+    }
+  }
+
+  changePrivilegesEditUse() {
+    if (this.arayChangeprivilegesTempNot.point === true) {
+      this.arayChangeprivilegesTempNot.arayChangeprivileges.forEach(i => this.GroupCreate.notPrivileges.push(i));
+      const toStringElement = this.GroupCreate.notPrivileges.map(i => JSON.stringify(i));
+      const toStringListPrivilegesData = this.listPrivilegesData.map(i => JSON.stringify(i));
+      const stringFilter = toStringListPrivilegesData.filter(i => !toStringElement.includes(i));
+      this.GroupCreate.privileges = stringFilter.map(i => JSON.parse(i));
+      this.arayChangeprivilegesTempNot = {
+        point: false,
+        idGroupCurrent: null,
+        arayChangeprivileges: [],
+      };
+    }
+  }
+
+  addGroupUser() {
+    this.submittedCreateGroup = true;
+    if (this.GroupCreate.name) {
+      this.GroupCreate.userGroupName = this.GroupCreate.name;
+      this.spinner.show();
+      this.groupUserService.createGroupUser(this.GroupCreate).subscribe(response => {
+        // this.groupUserService.listGroupUser(this.pagedResult.currentPage, this.pagedResult.pageSize)
+        //   .subscribe(responsepageResultUserGroup => {
+        //     this.pagedResult = responsepageResultUserGroup;
+        //     this.listGroupUser = this.pagedResult.items.map(i => i);
+        //     this.modalRef.hide();
+        //     this.alertService.success('Thêm nhóm người dùng thành công!');
+        //   });
+        this.modalRef.hide();
+        this.alertService.success('Thêm nhóm người dùng thành công!');
+        this.groupUserService.getListAllGroupUser().subscribe(element => {
+          this.dataGroupUser = element.map(i => {
+            return {
+              id: i.id,
+              text: i.name,
+            };
+          });
+        });
+        this.groupUserService.getListAllGroupUser().subscribe(e => {
+          const groupnew = e.filter(k => k.name === this.GroupCreate.name)[0];
+          this.formEditUser.get('userGroupId').patchValue(groupnew.id);
+          this.spinner.hide();
+        });
+      },
+        err => {
+          const error = err.json();
+          if (error.errorCode === 'BusinessException') {
+            this.isError = true;
+          } else {
+            this.modalRef.hide();
+            this.alertService.error('Đã xảy ra lỗi. Thêm nhóm người dùng không thành công!');
+          }
+
+        });
+      this.submitted = false;
+    }
+  }
+
+  closedPopup() {
+    this.submittedCreateGroup = false;
+    this.modalRef.hide();
+  }
 }
