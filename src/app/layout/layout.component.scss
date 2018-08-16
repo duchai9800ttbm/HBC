@@ -5,13 +5,13 @@
     -ms-overflow-x: hidden;
     overflow-x: hidden; // overflow-y: scroll;
     position: relative;
-    overflow: visible;
+   // overflow: visible;
     background-color: #f6f6f6;
 }
 
 @media screen and (max-width: 992px) {
     .main-container {
-        margin-left: 55px !important;
+        margin-left: 0px !important;
     }
 }
 

@@ -170,7 +170,7 @@ export class SettingService {
         page: number | string,
         pageSize: number | string,
         type: string
-    ): Observable<PagedResult<OpportunityReasonListItem[]>> {
+    ): Observable<PagedResult<OpportunityReasonListItem>> {
         let typeUrl;
         switch (type) {
             case SETTING_REASON.Win:
@@ -204,7 +204,7 @@ export class SettingService {
         searchTerm: string,
         page: number | string,
         pageSize: number | string,
-    ): Observable<PagedResult<ConstructionTypeListItem[]>> {
+    ): Observable<PagedResult<ConstructionTypeListItem>> {
         const urlParam = Utils.createSearchParam(searchTerm);
         return this.apiService
             .get(`bidconstructiontype/filter/${page}/${pageSize}`, urlParam)
@@ -225,7 +225,7 @@ export class SettingService {
         searchTerm: string,
         page: number | string,
         pageSize: number | string,
-    ): Observable<PagedResult<ConstructionCategoryListItem[]>> {
+    ): Observable<PagedResult<ConstructionCategoryListItem>> {
         const urlParam = Utils.createSearchParam(searchTerm);
         return this.apiService
             .get(`bidconstructioncategory/filter/${page}/${pageSize}`, urlParam)
@@ -246,7 +246,7 @@ export class SettingService {
         searchTerm: string,
         page: number | string,
         pageSize: number | string,
-    ): Observable<PagedResult<BidStatusListItem[]>> {
+    ): Observable<PagedResult<BidStatusListItem>> {
         const urlParam = Utils.createSearchParam(searchTerm);
         return this.apiService
             .get(`bidstatus/filter/${page}/${pageSize}`, urlParam)
@@ -343,5 +343,27 @@ export class SettingService {
             ids: arrayId,
         };
         return this.apiService.post(url, requestModel);
+    }
+
+    // Xóa nhiều lý do theo loại
+    deleteMultipleOpportunityReason(arrayId: any, type: string) {
+        let typeUrl;
+        switch (type) {
+            case SETTING_REASON.Win:
+                typeUrl = 'bidopportunitywinreason';
+                break;
+            case SETTING_REASON.Lose:
+            typeUrl = 'bidopportunitylosereason';
+                break;
+            case SETTING_REASON.Cancel:
+            typeUrl = 'bidopportunitycancelreason';
+                break;
+        }
+        const url = `${typeUrl}/deletemultiple`;
+        const requestModel = {
+            ids: arrayId,
+        };
+        return this.apiService.post(url, requestModel)
+            .map(data => data.result);
     }
 }

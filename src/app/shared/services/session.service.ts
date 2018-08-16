@@ -20,6 +20,7 @@ export class SessionService {
             userId: this.currentSession.userId,
             employeeId: this.currentSession.objectId,
             userName: this.currentSession.userName
+
         };
     }
 
@@ -29,6 +30,14 @@ export class SessionService {
         }
 
         return JSON.parse(window.localStorage['session']);
+    }
+
+    get currentUserInfo() {
+        if (!window.localStorage['userInfo']) {
+            return null;
+        }
+
+        return JSON.parse(window.localStorage['userInfo']);
     }
 
     saveSession(session: any) {

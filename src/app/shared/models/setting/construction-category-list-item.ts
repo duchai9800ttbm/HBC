@@ -3,4 +3,5 @@ export class ConstructionCategoryListItem {
     constructionCategoryName: string;
     constructionCategoryNo: string;
     constructionCategoryDesc: string;
+    checkboxSelected: boolean;
 }

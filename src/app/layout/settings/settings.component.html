@@ -1,7 +1,7 @@
 <div class="p-3" [@routerTransition]>
     <h4 class="text-uppercase">cấu hình</h4>
     <ul class="nav">
-        <li class="nav-item k-menu-custom" routerLink="reason">
+        <!-- <li class="nav-item k-menu-custom" routerLink="reason">
                 <kendo-menu [items]="reasonList" #kMenuLink>
                         <ng-template kendoMenuItemLinkTemplate let-item="item" let-index="index">
                                 <a [kendoMenuItemLink]="index" routerLinkActive="active-link" [routerLink]="item.path">
@@ -10,6 +10,9 @@
                                 </a>
                             </ng-template>
                     </kendo-menu>
+        </li> -->
+        <li class="nav-item">
+            <a class="nav-link" routerLink="reason" routerLinkActive="active-link">Lý do</a>
         </li>
         <li class="nav-item">
             <a class="nav-link" routerLink="location" routerLinkActive="active-link">Khu vực</a>

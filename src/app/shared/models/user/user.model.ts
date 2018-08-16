@@ -1,5 +1,6 @@
 export class UserModel {
     id: number;
+    avatar: string;
     userName: string;
     employeeId: number;
     fullName: string;
@@ -25,4 +26,5 @@ export class UserModel {
     };
     firstName: string;
     lastName: string;
+    privileges: any[];
 }

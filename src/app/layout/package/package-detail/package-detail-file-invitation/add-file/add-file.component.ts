@@ -20,6 +20,7 @@ import { UserItemModel } from '../../../../../shared/models/user/user-item.model
 import { DocumentReviewService } from '../../../../../shared/services/document-review.service';
 import { PackageService } from '../../../../../shared/services/package.service';
 import { PackageModel } from '../../../../../shared/models/package/package.model';
+import { PackageInfoModel } from '../../../../../shared/models/package/package-info.model';
 @Component({
     selector: 'app-add-file',
     templateUrl: './add-file.component.html',
@@ -45,7 +46,7 @@ export class AddFileComponent implements OnInit {
     ListItem: BidDocumentModel[];
     bidDocumentGroupListItem: BidDocumentGroupModel[];
     bidDocumentGroupListItemSearchResult: BidDocumentGroupModel[];
-    packageData: PackageModel;
+    packageData: PackageInfoModel;
     constructor(
         private alertService: AlertService,
         private dataService: DataService,
@@ -64,7 +65,7 @@ export class AddFileComponent implements OnInit {
         this.packageId = +PackageDetailComponent.packageId;
         this.packageService.getInforPackageID(this.packageId).subscribe(result => {
             this.packageData = result;
-            switch (this.packageData.stageStatus) {
+            switch (this.packageData.stageStatus.id) {
                 case 'CanBoSungHSMT': {
                     break;
                 }
