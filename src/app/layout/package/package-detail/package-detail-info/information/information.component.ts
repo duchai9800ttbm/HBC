@@ -8,6 +8,7 @@ import { PackageListItem } from '../../../../../shared/models/package/package-li
 import { NgxSpinnerService } from '../../../../../../../node_modules/ngx-spinner';
 import { Subject } from '../../../../../../../node_modules/rxjs';
 import { DATATABLE_CONFIG } from '../../../../../shared/configs';
+import { PackageInfoModel } from '../../../../../shared/models/package/package-info.model';
 
 @Component({
   selector: 'app-package-detail-info',
@@ -16,7 +17,7 @@ import { DATATABLE_CONFIG } from '../../../../../shared/configs';
 })
 export class InformationComponent implements OnInit {
   currentPackageId: number;
-  package = new PackageModel();
+  package = new PackageInfoModel();
   dtTrigger: Subject<any> = new Subject();
   dtOptions: any = DATATABLE_CONFIG;
   constructor(

@@ -90,58 +90,58 @@ export class EditComponent implements OnInit {
     }
 
     createForm() {
-        console.log(this.package);
-        this.packageForm = this.fb.group({
-            id: this.package.id,
-            nameProject: [this.package.projectName, Validators.required],
-            codePackage: [this.package.projectNo, Validators.required],
-            name: [this.package.opportunityName, Validators.required],
-            task: [this.package.job, Validators.required],
-            address: [this.package.place, Validators.required],
-            zone: [this.package.location],
-            quarterOfYear: [this.package.quarter, Validators.required],
-            customer: [this.package.customer],
-            customerType: this.package.classify,
-            contact: [this.package.customerContact],
-            consultingUnit: this.package.consultantUnit,
-            addressConsultingUnit: this.package.consultantAddress,
-            phoneConsultingUnit: this.package.consultantPhone,
-            trackingeStartDate: DateTimeConvertHelper
-                .fromTimestampToDtObject(this.package.startTrackingDate ? this.package.startTrackingDate * 1000 : 0),
-            submitPackageDate: [DateTimeConvertHelper
-                .fromTimestampToDtObject(this.package.submissionDate ? this.package.submissionDate * 1000 : 0), Validators.required],
-            expectedResultPackageDate: [DateTimeConvertHelper
-                .fromTimestampToDtObject(this.package.resultEstimatedDate ? this.package.resultEstimatedDate * 1000 : 0),
-            Validators.required],
+        // console.log(this.package);
+        // this.packageForm = this.fb.group({
+        //     id: this.package.id,
+        //     nameProject: [this.package.projectName, Validators.required],
+        //     codePackage: [this.package.projectNo, Validators.required],
+        //     name: [this.package.opportunityName, Validators.required],
+        //     task: [this.package.job, Validators.required],
+        //     address: [this.package.place, Validators.required],
+        //     zone: [this.package.location],
+        //     quarterOfYear: [this.package.quarter, Validators.required],
+        //     customer: [this.package.customer],
+        //     customerType: this.package.classify,
+        //     contact: [this.package.customerContact],
+        //     consultingUnit: this.package.consultantUnit,
+        //     addressConsultingUnit: this.package.consultantAddress,
+        //     phoneConsultingUnit: this.package.consultantPhone,
+        //     trackingeStartDate: DateTimeConvertHelper
+        //         .fromTimestampToDtObject(this.package.startTrackingDate ? this.package.startTrackingDate * 1000 : 0),
+        //     submitPackageDate: [DateTimeConvertHelper
+        //         .fromTimestampToDtObject(this.package.submissionDate ? this.package.submissionDate * 1000 : 0), Validators.required],
+        //     expectedResultPackageDate: [DateTimeConvertHelper
+        //         .fromTimestampToDtObject(this.package.resultEstimatedDate ? this.package.resultEstimatedDate * 1000 : 0),
+        //     Validators.required],
 
-            acreageFloor: this.package.floorArea,
+        //     acreageFloor: this.package.floorArea,
 
-            scale: this.package.magnitude,
-            buildingProjectType: this.package.projectType,
-            mainBuildingCategory: this.package.mainBuildingCategory,
-            roleContractors: this.package.hbcRole,
-            roleHBC: this.package.hbcRole,
-            linkDocument: this.package.documentLink,
-            presideHBC: this.package.hbcChair,
-            status: this.package.status,
-            progressMade: this.package.progress,
-            reasonWinPackage: this.package.acceptanceReason,
-            reasonLostPackage: this.package.unacceptanceReason,
-            totalValue: this.package.amount,
-            // totalTime: this.package.totalTime,
-            // ratingProject: this.package.ratingProject,
-            ratingProject: this.package.evaluation,
-            // note: this.package.note,
-            startDateProject: DateTimeConvertHelper
-                .fromTimestampToDtObject(this.package.estimatedProjectStartDate ? this.package.estimatedProjectStartDate * 1000 : 0),
-            endDateProject: DateTimeConvertHelper
-                .fromTimestampToDtObject(this.package.estimatedProjectEndDate ? this.package.estimatedProjectEndDate * 1000 : 0),
-            totalTimeProject: this.package.totalTime,
-            description: this.package.description,
-        });
-        this.packageForm.valueChanges.subscribe(data =>
-            this.onFormValueChanged(data)
-        );
+        //     scale: this.package.magnitude,
+        //     buildingProjectType: this.package.projectType,
+        //     mainBuildingCategory: this.package.mainBuildingCategory,
+        //     roleContractors: this.package.hbcRole,
+        //     roleHBC: this.package.hbcRole,
+        //     linkDocument: this.package.documentLink,
+        //     presideHBC: this.package.hbcChair,
+        //     status: this.package.status,
+        //     progressMade: this.package.progress,
+        //     reasonWinPackage: this.package.acceptanceReason,
+        //     reasonLostPackage: this.package.unacceptanceReason,
+        //     totalValue: this.package.amount,
+        //     // totalTime: this.package.totalTime,
+        //     // ratingProject: this.package.ratingProject,
+        //     ratingProject: this.package.evaluation,
+        //     // note: this.package.note,
+        //     startDateProject: DateTimeConvertHelper
+        //         .fromTimestampToDtObject(this.package.estimatedProjectStartDate ? this.package.estimatedProjectStartDate * 1000 : 0),
+        //     endDateProject: DateTimeConvertHelper
+        //         .fromTimestampToDtObject(this.package.estimatedProjectEndDate ? this.package.estimatedProjectEndDate * 1000 : 0),
+        //     totalTimeProject: this.package.totalTime,
+        //     description: this.package.description,
+        // });
+        // this.packageForm.valueChanges.subscribe(data =>
+        //     this.onFormValueChanged(data)
+        // );
         // console.log(this.packageForm);
         // this.onFormValueChanged(data);
     }

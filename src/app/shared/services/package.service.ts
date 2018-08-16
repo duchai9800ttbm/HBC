@@ -12,6 +12,7 @@ import { PagedResult } from '../models/paging-result.model';
 import { ApiService } from './api.service';
 import { PackageModel } from '../models/package/package.model';
 import { FieldModel } from '../models/package/field.model';
+import { PackageInfoModel } from '../models/package/package-info.model';
 @Injectable()
 export class PackageService {
 
@@ -233,61 +234,85 @@ export class PackageService {
             });
     }
 
-    //   getInforPackageID(id: number | string): Observable<PackageModel> {
-    //     const searchUrl = `bidopportunity/${id}`;
-    //     return this.apiService.get(searchUrl).map(response => {
-    //       const result = response.result;
-    //       return {
-    //         id: result.bidOpportunityId,
-    //         classify: result.classify,
-    //         amount: result.amount,
-    //         opportunityName: result.opportunityName,
-    //         projectName: result.projectName,
-    //         projectType: result.projectType,
-    //         hbcRole: result.hbcRole,
-    //         hbcChair: result.hbcChair && {
-    //           id: result.hbcChair.id,
-    //           text: result.hbcChair.text
-    //         },
-    //         magnitude: result.magnitude,
-    //         stage: result.stage,
-    //         stageStatus: result.stageStatus,
-    //         location: result.location,
-    //         projectNo: result.projectNo,
-    //         job: result.job,
-    //         place: result.place,
-    //         region: result.region,
-    //         customer: result.customer && {
-    //           id: result.customer.customerId,
-    //           text: result.customer.customerName
-    //         },
-    //         customerContact: result.customerContact && {
-    //           id: result.customerContact.id,
-    //           text: result.customerContact.name,
-    //         },
-    //         consultantUnit: result.consultantUnit,
-    //         consultantAddress: result.consultantAddress,
-    //         consultantPhone: result.consultantPhone,
-    //         floorArea: result.floorArea,
-    //         mainBuildingCategory: result.mainBuildingCategory,
-    //         documentLink: result.documentLink,
-    //         status: result.status,
-    //         progress: result.progress,
-    //         acceptanceReason: result.acceptanceReason,
-    //         unacceptanceReason: result.unacceptanceReason,
-    //         evaluation: result.evaluation,
-    //         startTrackingDate: result.startTrackingDate,
-    //         submissionDate: result.submissionDate,
-    //         resultEstimatedDate: result.resultEstimatedDate,
-    //         estimatedProjectStartDate: result.projectEstimatedStartDate,
-    //         estimatedProjectEndDate: result.projectEstimatedEndDate,
-    //         totalTime: result.totalTime,
-    //         description: result.description,
-    //         trimester: '',
-    //         quarter: result.quarter
-    //       };
-    //     });
-    //   }
+      getInforPackageID(bidOpportunityId: number | string): Observable<PackageInfoModel> {
+        const searchUrl = `bidopportunity/${bidOpportunityId}`;
+        return this.apiService.get(searchUrl).map(response => {
+          const result = response.result;
+          return {
+            id: result.bidOpportunityId,
+            classify: result.classify,
+            amount: result.amount,
+            opportunityName: result.opportunityName,
+            projectName: result.projectName,
+            projectType: result.projectType && {
+                id: result.projectType.key,
+                text: result.projectType.displayText
+            },
+            hbcRole: result.hbcRole && {
+                id: result.hbcRole.type,
+                text: result.hbcRole.name
+            },
+            chairEmployee: result.chairEmployee && {
+              id: result.chairEmployee.employeeId,
+              text: result.chairEmployee.employeeName
+            },
+            quarter: result.quarter && {
+                id: result.quarter.type,
+                text: result.quarter.name
+            },
+            magnitude: result.magnitude,
+            stage: result.stage && {
+                id: result.stage.key,
+                text: result.stage.displayText
+            },
+            stageStatus: result.stageStatus && {
+                id: result.stageStatus.key,
+                text: result.stageStatus.displayText
+            },
+            location: result.location && {
+                id: result.location.key,
+                text: result.location.displayText
+            },
+            projectNo: result.projectNo,
+            job: result.job,
+            place: result.place,
+            region: result.region,
+            customer: result.customer && {
+              id: result.customer.customerId,
+              text: result.customer.customerName
+            },
+            customerContact: result.customerContact && {
+              id: result.customerContact.id,
+              text: result.customerContact.name,
+            },
+            consultantUnit: result.consultantUnit,
+            consultantAddress: result.consultantAddress,
+            consultantPhone: result.consultantPhone,
+            floorArea: result.floorArea,
+            mainBuildingCategory: result.mainBuildingCategory && {
+                id: result.mainBuildingCategory.key,
+                text: result.mainBuildingCategory.displayText
+            },
+            documentLink: result.documentLink,
+            status: result.status && {
+                id: result.status.key,
+                text: result.status.displayText
+            },
+            progress: result.progress,
+            acceptanceReason: result.acceptanceReason,
+            unacceptanceReason: result.unacceptanceReason,
+            cancelReason: result.cancelReason,
+            evaluation: result.evaluation,
+            startTrackingDate: result.startTrackingDate,
+            submissionDate: result.submissionDate,
+            resultEstimatedDate: result.resultEstimatedDate,
+            projectEstimatedStartDate: result.projectEstimatedStartDate,
+            projectEstimatedEndDate: result.projectEstimatedEndDate,
+            totalTime: result.totalTime,
+            description: result.description
+          };
+        });
+      }
 
 
     getRegiontypesPackage(): Observable<any> {
