@@ -132,10 +132,10 @@ export class GroupUserService implements OnInit {
           //     value: result.userGroup.privileges.value
           //   }]
           // },
-          userGroup: {
+          userGroup: result.userGroup ? {
             id: result.userGroup.key,
             value: result.userGroup.key,
-          },
+          } : null ,
           isActive: result.isActive,
           phoneNumber: result.phoneNumber,
           address: result.address,

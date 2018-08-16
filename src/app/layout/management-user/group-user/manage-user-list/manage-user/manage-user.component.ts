@@ -253,4 +253,7 @@ export class ManageUserComponent implements OnInit {
       );
     }
   }
+  resetPassword() {
+    this.confirmationService.openResetpassword('Đặt lại mật khẩu');
+  }
 }

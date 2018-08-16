@@ -96,6 +96,7 @@ export class EditUserComponent implements OnInit {
       const id = params.get('id');
       this.idString = id;
     });
+    console.log('this.idString', this.idString);
     this.groupUserService.getIdUser(this.idString).subscribe(
       sucess => {
         this.groupUserModel = sucess;
