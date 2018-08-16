@@ -50,8 +50,8 @@ export class SettingReasonWinFormComponent implements OnInit {
     if (valid) {
       this.settingService.createOrUpdateOpportunityReason(this.reasonWinForm.value, SETTING_REASON.Win).subscribe(data => {
         const message = this.reasonWin.id
-          ? 'Lý do đã được chỉnh sửa.'
-          : 'Lý do đã được tạo.';
+          ? 'Lý do trúng thầu đã được cập nhật thành công.'
+          : 'Lý do trúng thầu đã được tạo mới thành công.';
         this.router.navigate([`/settings/reason/win`]);
         this.alertService.success(message);
       });

@@ -3,4 +3,6 @@ export class ConstructionTypeListItem {
     constructionTypeName: string;
     constructionTypeNo: string;
     constructionTypeDesc: string;
+    constructionTypeNameEng: string;
+    checkboxSelected: boolean;
 }

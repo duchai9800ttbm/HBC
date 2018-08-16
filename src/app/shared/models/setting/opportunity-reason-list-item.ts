@@ -3,4 +3,5 @@ export class OpportunityReasonListItem {
     reasonName: string;
     reasonNo: string;
     reasonDesc: string;
+    checkboxSelected: boolean;
 }
