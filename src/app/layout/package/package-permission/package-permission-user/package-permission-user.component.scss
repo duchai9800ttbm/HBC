@@ -1,0 +1,103 @@
+.no-boder{
+    border: none;
+}
+.textarea-content{
+    resize: none;
+    width: 90%;
+    background-color: white;
+}
+.pre-content{
+    width: 90%;
+    background-color: white;
+}
+.boder-table{
+    // border: 1px solid #dadada;
+    padding: 20px 0px 35px 30px;
+    // border-top: none;
+    box-shadow: 0 4px 6px 0 hsla(0, 0%, 0%, 0.2);
+    background-color: #ffff;
+}
+.layout-table{
+    table-layout: fixed;
+}
+.form-control{
+    min-height: 33px;
+}
+.text-right-m2{
+    float: right;
+}
+
+.grid-container-4 {
+    display: grid;
+    grid-template-columns: 12rem auto auto 5rem;
+    background-color: #F4F4F4;
+    padding: 4px 0;
+    margin-bottom: 4px;
+    margin-right: 4rem;
+    
+    .form-title {
+        background-color: #f68e56;
+        color: white;
+        margin-top: -4px;
+        margin-bottom: -4px;
+        line-height: 41px;
+        width: 100%;
+    }
+
+    .form-title-blank {
+        background-color: white;
+        color: white;
+        margin-top: -4px;
+        margin-bottom: -4px;
+        line-height: 41px;
+        width: 100%;
+    }
+
+    label {
+        margin-bottom: 0;
+        line-height: 33px;
+        padding-left: 16px;
+    }
+
+    .form-btn-group {
+        background-color: white;
+        margin-top: -4px;
+        margin-bottom: -4px;
+        margin-left: 16px;
+        line-height: 41px;
+        display: flex;
+        align-items: center;
+    }
+
+    .btn-icon-plus {
+        background-color: #00a0e3;
+        color: white;
+        width: 20px;
+        height: 20px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 50%;
+        margin-left: 12px;
+        cursor: pointer;
+    }
+
+    .btn-icon-minus {
+        background-color: #EA5552;
+        color: white;
+        width: 20px;
+        height: 20px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 50%;
+        margin-left: 12px;
+        cursor: pointer;
+    }
+}
+
+.grid-container-2 {
+    display: grid;
+    grid-template-columns: 100px auto;
+    
+}
