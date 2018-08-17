@@ -114,7 +114,7 @@ export class EditComponent implements OnInit {
             magnitude: [this.package.magnitude],
             constructionTypeId: [this.package.projectType && this.package.projectType.id, Validators.required],
             constructionCategoryId: [this.package.mainBuildingCategory && this.package.mainBuildingCategory.id, Validators.required],
-            hbcRole: [this.package.hbcRole.id],
+            hbcRole: [this.package.hbcRole ? this.package.hbcRole.id : ''],
             documentLink: [this.package.documentLink],
             chairEmployeeId: [this.package.chairEmployee && this.package.chairEmployee.text],
             bidStatusId: [this.package.status && this.package.status.id, Validators.required],

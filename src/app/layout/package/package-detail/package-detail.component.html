@@ -1,16 +1,17 @@
 <div [@routerTransition]>
   <div class="title-detail center-parent" *ngIf="packageData">
     <div class="mr-auto col-md-12">
-      <div class="media-header header-title">
+      <div class="media-header header-title" style="padding: 0px">
         <a [routerLink]='["/package/list"]' style="cursor: pointer;">
-          <i class="fa fa-chevron-left mr-3" aria-hidden="true"></i>
+          <!-- <i class="fa fa-chevron-left mr-3" aria-hidden="true"></i> -->
+          <img width="12" height="12" class="pointer not-outline" src="assets\images\nghia.png" style="margin-bottom: 1px;">
         </a>
         <h4 class="d-inline mb-0 text-dark">CHI TIẾT GÓI THẦU "{{packageData.opportunityName | uppercase}}"</h4>
       </div>
     </div>
   </div>
   <div class="main-detail">
-      <div class="menu">
+      <div class="menu" style="margin-left: 20px; margin-right: 20px;margin-bottom: 5px;">
           <div class="action" style="width: calc(25% - 10px)" [routerLinkActive]="['router-link-active']" [routerLink]="['/package/detail', packageId ,'info']">
             THÔNG TIN CHI TIẾT
           </div>
