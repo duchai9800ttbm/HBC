@@ -125,7 +125,7 @@
                                                     <option *ngFor="let item of userListItem" [value]="item.employeeId">{{item.employeeName}}</option>
                                                 </select>
                                             </span>
-                                            <span class="input-group-addon mar-add" (click)="openPopupCreateAssigner()">
+                                            <span class="input-group-addon mar-add" (click)="createUser()">
                                                 <i class="fa fa-plus"> </i>
                                             </span>
                                         </td>
@@ -390,6 +390,7 @@
 
     </form>
     <app-customer-form *ngIf="showPopupAdd" (closed)="closePopup($event)"></app-customer-form>
+    <app-user-form *ngIf="showPopupAddUser" (closed)="closePopupAddUser($event)"></app-user-form>
 </div>
 
 <div class="main">

@@ -36,6 +36,7 @@ import { DropDownsModule } from '@progress/kendo-angular-dropdowns';
 import { SettingService } from './services/setting.service';
 import { MenuModule } from '@progress/kendo-angular-menu';
 import { ModalModule } from 'ngx-bootstrap/modal';
+import { CKEditorModule } from 'ng2-ckeditor'
 @NgModule({
     imports: [
         TagInputModule,
@@ -70,7 +71,8 @@ import { ModalModule } from 'ngx-bootstrap/modal';
         GridModule,
         DropDownsModule,
         MenuModule,
-        ModalModule.forRoot()
+        ModalModule.forRoot(),
+        CKEditorModule
         // ScrollToTopService
     ],
     exports: [

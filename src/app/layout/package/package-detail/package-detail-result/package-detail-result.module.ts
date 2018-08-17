@@ -7,12 +7,13 @@ import { WaitResultComponent } from './wait-result/wait-result.component';
 import { PackageFailedComponent } from './package-failed/package-failed.component';
 import { ModalModule } from 'ngx-bootstrap/modal';
 import { PackgeCancelComponent } from './packge-cancel/packge-cancel.component';
-
+import { CKEditorModule } from 'ng2-ckeditor';
 @NgModule({
   imports: [
     CommonModule,
     SharedModule,
-    PackageDetailResultRoutingModule,
+    PackageDetailResultRoutingModule,    
+    CKEditorModule
     // ModalModule
   ],
   declarations: [
