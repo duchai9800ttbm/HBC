@@ -13,7 +13,7 @@ const routes: Routes = [
     },
     {
         path: 'email', loadChildren: './package-email/package-email.module#PackageEmailModule',
-    }
+    },
     {
         path: 'permission',
         loadChildren: './package-permission/package-permission.module#PackagePermissionModule'
