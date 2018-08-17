@@ -13,6 +13,8 @@ import { ApiService } from './api.service';
 import { PackageModel } from '../models/package/package.model';
 import { FieldModel } from '../models/package/field.model';
 import { PackageInfoModel } from '../models/package/package-info.model';
+import { Subject } from '../../../../node_modules/rxjs';
+
 @Injectable()
 export class PackageService {
 
@@ -22,7 +24,11 @@ export class PackageService {
         private apiService: ApiService,
     ) { }
 
-
+    private userIdSub = new Subject<any>();
+    userId$ = this.userIdSub.asObservable();
+    setUserId(data:boolean) {
+        this.userIdSub.next(data);
+      }
     private static createFilterParams(filter: PackageFilter): URLSearchParams {
         const urlFilterParams = new URLSearchParams();
         urlFilterParams.append('projectName', filter.projectName);
@@ -34,7 +40,7 @@ export class PackageService {
         urlFilterParams.append('sorting', filter.sorting);
         return urlFilterParams;
     }
-
+    
     private static toPackageListItem(result: any): PackageListItem {
         return {
             id: result.id,

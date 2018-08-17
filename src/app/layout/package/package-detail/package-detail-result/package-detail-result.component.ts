@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { PackageService } from '../../../../shared/services/package.service';
 
 @Component({
   selector: 'app-package-detail-result',
@@ -9,7 +10,8 @@ import { ActivatedRoute } from '@angular/router';
 export class PackageDetailResultComponent implements OnInit {
     public packageId;
   constructor(
-      private activatedRoute: ActivatedRoute
+      private activatedRoute: ActivatedRoute,
+      private packageService: PackageService
   ) { }
 
   ngOnInit() {

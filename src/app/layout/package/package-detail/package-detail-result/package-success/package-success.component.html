@@ -1,6 +1,13 @@
 <div class="header">
-    <button type="button" class="btn btn-primary"><p>Large button</p></button>
-    <button type="button" class="btn btn-primary"><p>Large button</p></button>
-    <button type="button" class="btn btn-primary"><p>Large button</p></button>
+    <div class="row">
+        <ul class="progressbar">
+            <li class="triangle active" [routerLink]="['../infomation-deployment']">                
+            </li>
+            <li class="triangle2" [ngClass]="{ 'active' : isActive === true }" [routerLink]="['../infomation-deployment']">                
+            </li>
+            <li class="triangle3" [routerLink]="['../infomation-deployment']">                
+            </li>
+        </ul>
+    </div>
 </div>
 <router-outlet></router-outlet>

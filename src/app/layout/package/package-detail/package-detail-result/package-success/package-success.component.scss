@@ -1,5 +1,5 @@
 .header {
-    margin-top: 30px;
+    margin-top: 34px;
 
     button.btn.btn-primary {
         margin-right: 50px;
@@ -9,4 +9,83 @@
             margin: 0; padding: 0;
         }
     }
+}
+
+
+//step process
+
+.progressbar {
+    width: 100% !important;
+    counter-reset: step;
+    padding: 0px 0px 0px 15px;
+}
+
+.progressbar li {
+    list-style-type: none;
+    width: 16%;
+    float: left;
+    font-size: 12px;
+    position: relative;
+    text-align: center;
+    color: black;
+    z-index: 20;
+    outline: none;
+    font-weight: bold;
+}
+
+.progressbar li.triangle:before {  
+    content:'1 Kết quả dự thầu' ;  
+}
+.progressbar li.triangle2:before {   
+    content:'2 Hợp đồng ký kết' ;   
+}
+.progressbar li.triangle3:before {   
+    content:'3 Họp kick-off' ;   
+}
+
+
+.progressbar li:before {
+    width: 150px;
+    height: 36px;
+    line-height: 35px;
+    display: block;
+    text-align: center;
+    background-color: #fff;
+    z-index: 30;
+    cursor: pointer;
+    box-shadow: 0 1pt 12pt rgba(0, 0, 0, 0.15)
+}
+
+.progressbar li:after {
+    width: calc(100% - 150px);
+    height: 3px;
+    content: '';
+    position: absolute;
+    background-color: #fff;
+    box-shadow: 0 1pt 12pt rgba(0, 0, 0, 0.15);
+    top: 15px;
+    left: calc(-50% + 45px);
+    z-index: 1;
+}
+
+.progressbar li:first-child:after {
+    content: none;
+}
+
+.progressbar li.active {
+    color: white;
+}
+
+.progressbar li.active .text-color {
+    color: #00a0e3 !important;
+}
+
+.progressbar li.active:before {
+    border-color: #00a0e3;
+    background-color: #00a0e3;    
+}
+
+.progressbar li.active:after {
+   border-top: 3px solid #00a0e3!important;
+
 }
