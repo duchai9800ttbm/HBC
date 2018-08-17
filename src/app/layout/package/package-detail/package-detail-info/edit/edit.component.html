@@ -1,5 +1,5 @@
 <div class="main-form" *ngIf="packageForm" class="boder-table">
-  <form [formGroup]="packageForm">
+  <form [formGroup]="editForm">
     <div class="d-flex">
       <div class="w-80  mr-auto">
         <div class="card-collapse">
@@ -90,7 +90,7 @@
                       </select>
                     </span>
                   </td>
-                  <td class="w-15 bg-light text-right label no-boder">Chủ trì HBC</td>
+                  <td class="w-15 bg-light text-right label no-boder">Chủ trì</td>
                   <td class="w-35 no-boder">
                     <span class="custom-dropdown w-75">
                       <select class="form-control" tabindex="5" formControlName="presideHBC">
@@ -193,9 +193,9 @@
                   <td class="w-35 no-boder">
                     <input class="w-75 form-control" tabindex="1" placeholder="" type="text" formControlName="addressConsultingUnit">
                   </td>
-                  <td class="w-15 bg-light text-right label no-boder">Đánh giá dự án</td>
+                  <td class="w-15 bg-light text-right label no-boder">Lý do hủy thầu</td>
                   <td class="w-35 no-boder">
-                    <input class="w-75 form-control" tabindex="1" type="text" formControlName="ratingProject">
+                    <input class="w-75 form-control" tabindex="1" type="text" formControlName="">
                   </td>
                 </tr>
                 <tr>
@@ -203,8 +203,9 @@
                   <td class="w-35 no-boder">
                     <input class="w-75 form-control" tabindex="1" placeholder="" type="text" formControlName="phoneConsultingUnit">
                   </td>
-                  <td class="w-15 bg-light text-right label no-boder" style="border-top: none;border-right: none;border-left: none;"></td>
+                  <td class="w-15 bg-light text-right label no-boder">Đánh giá dự án</td>
                   <td class="w-35 no-boder">
+                    <input class="w-75 form-control" tabindex="1" type="text" formControlName="ratingProject">
                   </td>
                 </tr>
                 <tr>
@@ -220,7 +221,7 @@
                   </td>
                 </tr>
                 <tr>
-                  <td class="w-15 bg-light text-right label no-boder">Ngày bắt đầu theo dõi</td>
+                  <td class="w-15 bg-light text-right label no-boder">Ngày bắt đầu</td>
                   <td class="w-35 no-boder">
                     <div class="input-group w-75">
                       <owl-date-time [readonlyInput]="datePickerConfig.readonlyInput" [locale]="datePickerConfig.vi" formControlName="trackingeStartDate"
