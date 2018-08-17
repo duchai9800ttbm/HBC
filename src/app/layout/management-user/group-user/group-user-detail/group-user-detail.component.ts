@@ -70,6 +70,10 @@ export class GroupUserDetailComponent implements OnInit {
     arayChangeprivileges: [],
   };
   groupSlected =  null;
+  changeTemp = {
+    id: 0,
+    text: null,
+  };
   constructor(
     private alertService: AlertService,
     private modalService: BsModalService,
@@ -96,17 +100,18 @@ export class GroupUserDetailComponent implements OnInit {
 
     // Test API GroupUser
     // Danh sách quyền
+    this.spinner.show();
+
     this.dataService.getListPrivileges().subscribe(response => {
       this.listPrivilegesData = response;
       // Danh sách nhóm người dùng
-      this.spinner.show();
       this.groupUserService.instantSearchGroupUser(this.searchTerm$, 0, 10).subscribe(responsepageResultUserGroup => {
         this.pagedResult = responsepageResultUserGroup;
         this.listGroupUser = this.pagedResult.items;
         this.dtTrigger.next();
         this.spinner.hide();
       });
-    });
+    }, err => this.spinner.hide());
   }
 
   checkBox(id: number) {
@@ -206,6 +211,10 @@ export class GroupUserDetailComponent implements OnInit {
   }
 
   openModalEdit(idGroupUser: number, template: TemplateRef<any>) {
+    this.changeTemp = {
+      id: 0,
+      text: null,
+    };
     this.groupEditOrCreate = { ...this.listGroupUser.filter(x => x.id === idGroupUser)[0] };
     // this.groupEditOrCreate = JSON.parse(JSON.stringify(this.listGroupUserData.filter(x => x.id === idGroupUser)[0]));
     const toStringElement = this.groupEditOrCreate.privileges.map(i => JSON.stringify(i));
@@ -448,31 +457,34 @@ export class GroupUserDetailComponent implements OnInit {
 
   selectEachFieldEditUser(event) {
     this.arayChangeprivilegesTempNot.arayChangeprivileges = [];
-    for (let i = 1; i <= event.target.length; i++) {
-      if (event.target[i - 1].selected === true) {
-        const object = {
-          id: event.target[i - 1].value,
-          text: event.target[i - 1].text,
-        };
-        this.arayChangeprivilegesTempNot.arayChangeprivileges.push(object);
-      }
-    }
+
+    // for (let i = 1; i <= event.target.length; i++) {
+    //   if (event.target[i - 1].selected === true) {
+    //     const object = {
+    //       id: event.target[i - 1].value,
+    //       text: event.target[i - 1].text,
+    //     };
+    //     this.arayChangeprivilegesTempNot.arayChangeprivileges.push(object);
+    //   }
+    // }
+
+    event.forEach( i => this.arayChangeprivilegesTempNot.arayChangeprivileges.push(i) );
     this.arayChangeprivilegesTempNot.point = true;
     this.arayChangeprivilegesTemp.point = false;
-    console.log(this.arayChangeprivilegesTempNot, this.arayChangeprivilegesTemp);
   }
 
   selectEachFieldEditNotUser(event) {
     this.arayChangeprivilegesTemp.arayChangeprivileges = [];
-    for (let i = 1; i <= event.target.length; i++) {
-      if (event.target[i - 1].selected === true) {
-        const object = {
-          id: event.target[i - 1].value,
-          text: event.target[i - 1].text,
-        };
-        this.arayChangeprivilegesTemp.arayChangeprivileges.push(object);
-      }
-    }
+    // for (let i = 1; i <= event.target.length; i++) {
+    //   if (event.target[i - 1].selected === true) {
+    //     const object = {
+    //       id: event.target[i - 1].value,
+    //       text: event.target[i - 1].text,
+    //     };
+    //     this.arayChangeprivilegesTemp.arayChangeprivileges.push(object);
+    //   }
+    // }
+    event.forEach( i => this.arayChangeprivilegesTemp.arayChangeprivileges.push(i) );
     this.arayChangeprivilegesTemp.point = true;
     this.arayChangeprivilegesTempNot.point = false;
   }
@@ -500,6 +512,9 @@ export class GroupUserDetailComponent implements OnInit {
       const toStringListPrivilegesData = this.listPrivilegesData.map(i => JSON.stringify(i));
       const stringFilter = toStringListPrivilegesData.filter(i => !toStringElement.includes(i));
       this.groupEditOrCreate.privileges = stringFilter.map(i => JSON.parse(i));
+      // const a = ['1', '2', '3'];
+      // const b = ['1', '2'];
+      // console.log('TEST', a.filter(i => !b.includes(i)) );
       this.arayChangeprivilegesTempNot = {
         point: false,
         idGroupCurrent: null,
