@@ -1,3 +1,93 @@
-<p>
-  package-email works!
-</p>
+<div [@routerTransition]>
+  <div class="title-detail center-parent">
+    <div class="mr-auto col-md-12">
+      <div class="media-header header-title">
+        <a [routerLink]='["/package/list"]' style="cursor: pointer;">
+          <i class="fa fa-chevron-left mr-3" aria-hidden="true"></i>
+        </a>
+        <h4 class="d-inline mb-0 text-dark">QUẢN LÝ EMAIL ĐÃ GỬI</h4>
+      </div>
+    </div>
+  </div>
+  <div class="main-detail">
+    <div class="d-flex">
+      <div class="" style="width: 270px;">
+        <div class=" menu-vertical">
+          <div class="action d-flex align-content-between" [routerLinkActive]="['router-link-active-2']" [routerLink]="['/package/email/give-up']">
+            <div class="center-parent mg">
+              <div>Từ chối</div>
+            </div>
+          </div>
+          <div class="action d-flex align-content-between" [routerLinkActive]="['router-link-active-2']" [routerLink]="['/package/email/assign']">
+            <div class="center-parent mg">
+              <div> Phân công (03)</div>
+            </div>
+          </div>
+          <div class="action d-flex align-content-between" [routerLinkActive]="['router-link-active-2']" [routerLink]="['/package/email/transfer']">
+            <div class="center-parent mg">
+              <div> Chuyển giao tài liệu (03)</div>
+            </div>
+          </div>
+          <div class="action d-flex align-content-between" [routerLinkActive]="['router-link-active-2']" [routerLink]="['/package/email/deploy']">
+            <div class="center-parent mg">
+              <div> Thông báo triển khai (03)</div>
+            </div>
+          </div>
+          <div class="action d-flex align-content-between" [routerLinkActive]="['router-link-active-2']" [routerLink]="['/package/email/interview']">
+            <div class="center-parent mg">
+              <div> Thông báo phỏng vấn (03)</div>
+            </div>
+          </div>
+          <div class="action d-flex align-content-between" [routerLinkActive]="['router-link-active-2']" [routerLink]="['/package/email/win']">
+            <div class="center-parent mg">
+              <div> Thông báo trúng thầu (03)</div>
+            </div>
+          </div>
+          <div class="action d-flex align-content-between" [routerLinkActive]="['router-link-active-2']" [routerLink]="['/package/email/miss']">
+            <div class="center-parent mg">
+              <div> Thông báo trật thầu (03)</div>
+            </div>
+          </div>
+          <div class="action d-flex align-content-between" [routerLinkActive]="['router-link-active-2']" [routerLink]="['/package/email/kick-off']">
+            <div class="center-parent mg">
+              <div> Kick-off (03)
+              </div>
+            </div>
+          </div>
+          <div class="action d-flex align-content-between" [routerLinkActive]="['router-link-active-2']" [routerLink]="['/package/email/important']">
+            <div class="center-parent mg w-100">
+              <div class="d-flex justify-content-between w-100">
+                <div class="mr-auto">
+                  Thư quan trọng
+                </div>
+                <div class="center-parent">
+                  <div class="center-parent mail-important">
+                    <div>9</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="action d-flex align-content-between" [routerLinkActive]="['router-link-active-2']" [routerLink]="['/package/email/trash']">
+            <div class="center-parent mg w-100">
+              <div class="d-flex justify-content-between w-100">
+                <div class="mr-auto">
+                  Thùng rác
+                </div>
+                <div class="center-parent">
+                  <div class="center-parent number-trash">
+                    <div>9</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="content-email" style="width: calc(100% - 230px);">
+        <router-outlet></router-outlet>
+      </div>
+    </div>
+
+  </div>
+</div>

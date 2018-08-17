@@ -1,3 +1,101 @@
-<p>
-  give-up works!
-</p>
+<div class="title">
+  <div class="content d-flex justify-content-between h-100">
+    <div class="center-parent">
+      <span class="font-weight-bold reject">Từ chối</span>
+    </div>
+    <div class="center-parent">
+      <div style="width: 280px;">
+        <label class="sr-only " for="inlineFormInputGroup">Username</label>
+        <div class="input-group group-search">
+          <input type="text" class="form-control input-search" id="inlineFormInputGroup" placeholder="Tìm theo chủ đề, người nhận">
+          <div class="input-group-addon label-search">
+            <i class="fa fa-search icon-search" aria-hidden="true"></i>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="content">
+  <div>
+    <div class="d-flex justify-content-between h-100 action-bar">
+      <div>
+        <button class="custom-btn">
+          <i class="fa fa-square-o" aria-hidden="true"></i>
+        </button>
+        <button class="custom-btn">
+          <i class="fa fa-trash" aria-hidden="true"></i>
+        </button>
+        <button class="custom-btn">
+          <i class="fa fa-refresh" aria-hidden="true"></i>
+        </button>
+      </div>
+      <div class="paging">
+        <span>Mới nhất</span>
+        <span style="padding: 0 5px">
+          <span class="font-weight-bold">1</span>
+          -
+          <span class="font-weight-bold">6</span>
+          trong tổng
+          <span class="font-weight-bold">14</span>
+        </span>
+        <button class="custom-btn">
+          <i class="fa fa-chevron-left" aria-hidden="true"></i>
+        </button>
+        <button class="custom-btn">
+          <i class="fa fa-chevron-right" aria-hidden="true"></i>
+        </button>
+      </div>
+    </div>
+
+    <div class="bot-table" *ngIf="dtOptions">
+      <table class="table-selection stripe row-border hover cell-border dataTable">
+        <thead>
+
+        </thead>
+        <tbody>
+          <tr>
+            <td>Firstname</td>
+            <td>Email</td>
+            <td>Oliver Dinh (3)</td>
+            <td>Mail xin nghi phep</td>
+            <td>Đính kèm</td>
+            <td>12/06/2018</td>
+          </tr>
+          <tr>
+            <td>Firstname</td>
+            <td>Email</td>
+            <td>Oliver Dinh (3)</td>
+            <td>Mail xin nghi phep</td>
+            <td>Đính kèm</td>
+            <td>12/06/2018</td>
+          </tr>
+          <tr>
+            <td>Firstname</td>
+            <td>Email</td>
+            <td>Oliver Dinh (3)</td>
+            <td>Mail xin nghi phep</td>
+            <td>Đính kèm</td>
+            <td>12/06/2018</td>
+          </tr>
+          <tr>
+            <td>Firstname</td>
+            <td>Email</td>
+            <td>Oliver Dinh (3)</td>
+            <td>Mail xin nghi phep</td>
+            <td>Đính kèm</td>
+            <td>12/06/2018</td>
+          </tr>
+          <tr>
+            <td>Firstname</td>
+            <td>Email</td>
+            <td>Oliver Dinh (3)</td>
+            <td>Mail xin nghi phep</td>
+            <td>Đính kèm</td>
+            <td>12/06/2018</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

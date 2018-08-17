@@ -10,6 +10,9 @@ const routes: Routes = [
     { path: 'create', component: PackageCreateComponent },
     {
         path: 'detail/:id', loadChildren: './package-detail/package-detail.module#PackageDetailModule',
+    },
+    {
+        path: 'email', loadChildren: './package-email/package-email.module#PackageEmailModule',
     }
 ];
 

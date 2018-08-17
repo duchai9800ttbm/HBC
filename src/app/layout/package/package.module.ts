@@ -18,7 +18,6 @@ import { StarRatingModule } from '../../../../node_modules/angular-star-rating/d
 import { PerfectScrollbarModule } from 'ngx-perfect-scrollbar';
 import { PERFECT_SCROLLBAR_CONFIG } from 'ngx-perfect-scrollbar';
 import { PerfectScrollbarConfigInterface } from 'ngx-perfect-scrollbar';
-import { PackageEmailComponent } from './package-email/package-email.component';
 
 const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
   wheelPropagation: true
@@ -39,7 +38,6 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     PackageListComponent,
     PackageComponent,
     CustomerFormComponent,
-    PackageEmailComponent
   ],
   providers: [
     ActivityService,
