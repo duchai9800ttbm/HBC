@@ -55,13 +55,13 @@
                 <div class="form-group ml-sm-2">
                     <label for="" class="form-label">Tổng giá trị</label>
                 </div>
-                <div style="width: 220px; margin-left: 10px; margin-right: 50px; zoom: 0.8;padding: 5px;">
+                <div style="width: 280px; margin-left: 10px; margin-right: 60px; zoom: 0.8;padding: 5px; ">
 
                     <nouislider [config]="someKeyboardConfig" [step]="1000" [min]="0" [max]="10000000000" (ngModelChange)="changeValueRange($event)"
                         [(ngModel)]="someRange"></nouislider>
-                    <div class="d-flex justify-content-between range">
+                    <div class="d-flex justify-content-between range text-truncate">
                         <div class="min">{{ someRange[0] | vnCurrency }}</div>
-                        <div class="max">{{ someRange[1] | vnCurrency}}</div>
+                        <div class="max" style="z-index: 6; left: -20px; float: left; clear: both;">{{ someRange[1] | vnCurrency}}</div>
                     </div>
 
                 </div>
