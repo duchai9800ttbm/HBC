@@ -29,7 +29,9 @@
 .modal-lg{    
    max-width: 800px!important;
 }
-
+.modal-lg-max {
+  max-width: 90%!important;
+}
 .confirmation-popup {
     .modal-header {
         border-bottom: none;

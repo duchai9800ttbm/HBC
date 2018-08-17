@@ -108,9 +108,14 @@ export class WaitResultComponent implements OnInit {
     if (this.formUpload.invalid) {
       return;
     }
+    if(this.btnTrungThau) {
+      this.router.navigate([`/package/detail/${this.currentPackageId}/result/package-success`]);
+    }
     if (this.btnTratThau) {
-      this.modalUpload.hide();
       this.router.navigate([`/package/detail/${this.currentPackageId}/result/package-failed`]);
     }
+    
+    this.modalUpload.hide();
+
   }
 }
