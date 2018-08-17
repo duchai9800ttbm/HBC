@@ -46,7 +46,7 @@ export class PackageDetailComponent implements OnInit {
         this.isEditBidOpportunity = this.listPrivileges.some(x => x === 'EditBidOpportunity');
         this.isViewBidOpportunityDetail = this.listPrivileges.some(x => x === 'ViewBidOpportunityDetail');
         if (!this.isEditBidOpportunity && !this.isViewBidOpportunityDetail) {
-          this.router.navigate(['/not-found']);
+          this.router.navigate(['/no-permission']);
         }
       }
     });
@@ -57,7 +57,7 @@ export class PackageDetailComponent implements OnInit {
       this.isEditBidOpportunity = this.listPrivileges.some(x => x === 'EditBidOpportunity');
       this.isViewBidOpportunityDetail = this.listPrivileges.some(x => x === 'ViewBidOpportunityDetail');
       if (!this.isEditBidOpportunity && !this.isViewBidOpportunityDetail) {
-        this.router.navigate(['/not-found']);
+        this.router.navigate(['/no-permission']);
       }
     }
 

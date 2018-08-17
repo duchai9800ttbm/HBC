@@ -155,7 +155,7 @@ export class PackageListComponent implements OnInit, AfterViewChecked {
                 this.isEditBidOpportunity = this.listPrivileges.some(x => x === 'EditBidOpportunity');
                 this.isViewBidOpportunityDetail = this.listPrivileges.some(x => x === 'ViewBidOpportunityDetail');
                 if (!this.isManageBidOpportunitys) {
-                    this.router.navigate(['/not-found']);
+                    this.router.navigate(['/no-permission']);
                 }
             }
         });
@@ -169,7 +169,7 @@ export class PackageListComponent implements OnInit, AfterViewChecked {
             this.isEditBidOpportunity = this.listPrivileges.some(x => x === 'EditBidOpportunity');
             this.isViewBidOpportunityDetail = this.listPrivileges.some(x => x === 'ViewBidOpportunityDetail');
             if (!this.isManageBidOpportunitys) {
-                this.router.navigate(['/not-found']);
+                this.router.navigate(['/no-permission']);
             }
         }
         this.spinner.show();

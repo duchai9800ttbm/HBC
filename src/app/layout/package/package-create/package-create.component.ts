@@ -31,7 +31,7 @@ export class PackageCreateComponent implements OnInit {
                 this.isManageBidOpportunitys = this.listPrivileges.some(x => x === 'ManageBidOpportunitys');
                 this.isCreateBidOpportunity = this.listPrivileges.some(x => x === 'CreateBidOpportunity');
                 if (!this.isCreateBidOpportunity) {
-                    this.router.navigate(['/not-found']);
+                    this.router.navigate(['/no-permission']);
                 }
             }
         });
@@ -41,7 +41,7 @@ export class PackageCreateComponent implements OnInit {
             this.isManageBidOpportunitys = this.listPrivileges.some(x => x === 'ManageBidOpportunitys');
             this.isCreateBidOpportunity = this.listPrivileges.some(x => x === 'CreateBidOpportunity');
             if (!this.isCreateBidOpportunity) {
-                this.router.navigate(['/not-found']);
+                this.router.navigate(['/no-permission']);
             }
         }
 
