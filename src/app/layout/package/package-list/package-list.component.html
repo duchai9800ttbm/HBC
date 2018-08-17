@@ -47,8 +47,6 @@
                         <select class="form-control" [(ngModel)]="filterModel.chairEmployeeId">
                             <option value="">--Tất cả--</option>
                             <option *ngFor="let item of userListItem" [value]="item.employeeId">{{item.employeeName}}</option>
-
-                            <!-- <option *ngFor="let item of listPresideHBC" [value]="item.id">{{item.text | translate}}</option> -->
                         </select>
                     </span>
                 </div>
