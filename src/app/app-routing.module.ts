@@ -12,9 +12,9 @@ const routes: Routes = [
     { path: 'signup', loadChildren: './signup/signup.module#SignupModule' },
     { path: 'error', loadChildren: './server-error/server-error.module#ServerErrorModule' },
     { path: 'access-denied', loadChildren: './access-denied/access-denied.module#AccessDeniedModule' },
+    { path: 'no-permission', loadChildren: './no-permission/no-permission.module#NoPermissionModule' },
     { path: 'not-found', loadChildren: './not-found/not-found.module#NotFoundModule' },
     { path: '**', redirectTo: 'not-found' },
-
 ];
 
 @NgModule({
