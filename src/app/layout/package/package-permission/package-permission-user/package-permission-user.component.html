@@ -1,0 +1,625 @@
+<form [formGroup]="packagePermissionUserForm" *ngIf="packagePermissionUserForm">
+    <div class="boder-table mt-3">
+        <div class="">
+            <div class="media-header" style="text-align: right; padding-right: 1rem; margin-top: -0.75rem;">
+                <span class="action-bar alignment-but">
+                    <button type="submit" class="btn btn-primary" [routerLink]="['/package/detail']">Lưu
+                    </button>
+                    <button type="submit" class="btn btn-secondary" [routerLink]="['/package/detail']">Hủy
+                    </button>
+                </span>
+            </div>
+        </div>
+        <div style="margin-top: -1rem;">
+            <p class="mb-3">Phân công người đảm nhận cho từng vị trí trong gói thầu</p>
+            <div formArrayName="chuTri">
+                <div class="grid-container-4" *ngFor="let item of packagePermissionUserForm.get('chuTri').controls; let i = index;" [formGroupName]="i">
+                    <div [class.form-title-blank]="i != 0">
+                        <label class="form-title" *ngIf="i == 0">
+                            Chủ trì dự án
+                        </label>
+                    </div>
+                    <div class="grid-container-2">
+                        <label>Họ tên</label>
+                        <span class="custom-dropdown">
+                            <select class="form-control">
+                                <option value="">Tất cả</option>
+                                <option value="Official">Chính thức</option>
+                                <option value="Draft">Bản nháp</option>
+                            </select>
+                        </span>
+                    </div>
+                    <div class="grid-container-2">
+                        <label>Phòng ban</label>
+                        <span class="custom-dropdown">
+                            <select class="form-control">
+                                <option value="">Tất cả</option>
+                                <option value="Official">Chính thức</option>
+                                <option value="Draft">Bản nháp</option>
+                            </select>
+                        </span>
+                    </div>
+                    <div class="form-btn-group">
+                        <div class="btn-icon-plus" (click)="addFormItem('chuTri')">
+                            <i class="fa fa-plus" style="margin-top: 2px" aria-hidden="true"></i>
+                        </div>
+                        <div class="btn-icon-minus" (click)="removeFormItem('chuTri', i)" *ngIf="i != 0">
+                            <i class="fa fa-minus" style="margin-top: 2px" aria-hidden="true"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div formArrayName="phanPhoiHoSo">
+                <div class="grid-container-4" *ngFor="let item of packagePermissionUserForm.get('phanPhoiHoSo').controls; let i = index;" [formGroupName]="i">
+                    <div [class.form-title-blank]="i != 0">
+                        <label class="form-title" *ngIf="i == 0">
+                            Người phân phối hồ sơ
+                        </label>
+                    </div>
+                    <div class="grid-container-2">
+                        <label>Họ tên</label>
+                        <span class="custom-dropdown">
+                            <select class="form-control">
+                                <option value="">Tất cả</option>
+                                <option value="Official">Chính thức</option>
+                                <option value="Draft">Bản nháp</option>
+                            </select>
+                        </span>
+                    </div>
+                    <div class="grid-container-2">
+                        <label>Phòng ban</label>
+                        <span class="custom-dropdown">
+                            <select class="form-control">
+                                <option value="">Tất cả</option>
+                                <option value="Official">Chính thức</option>
+                                <option value="Draft">Bản nháp</option>
+                            </select>
+                        </span>
+                    </div>
+                    <div class="form-btn-group">
+                        <div class="btn-icon-plus" (click)="addFormItem('phanPhoiHoSo')">
+                            <i class="fa fa-plus" style="margin-top: 2px" aria-hidden="true"></i>
+                        </div>
+                        <div class="btn-icon-minus" (click)="removeFormItem('phanPhoiHoSo', i)" *ngIf="i != 0">
+                            <i class="fa fa-minus" style="margin-top: 2px" aria-hidden="true"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div formArrayName="chuTriKhoiLuong">
+                <div class="grid-container-4" *ngFor="let item of packagePermissionUserForm.get('chuTriKhoiLuong').controls; let i = index;" [formGroupName]="i">
+                    <div [class.form-title-blank]="i != 0">
+                        <label class="form-title" *ngIf="i == 0">
+                            Chủ trì khối lượng
+                        </label>
+                    </div>
+                    <div class="grid-container-2">
+                        <label>Họ tên</label>
+                        <span class="custom-dropdown">
+                            <select class="form-control">
+                                <option value="">Tất cả</option>
+                                <option value="Official">Chính thức</option>
+                                <option value="Draft">Bản nháp</option>
+                            </select>
+                        </span>
+                    </div>
+                    <div class="grid-container-2">
+                        <label>Phòng ban</label>
+                        <span class="custom-dropdown">
+                            <select class="form-control">
+                                <option value="">Tất cả</option>
+                                <option value="Official">Chính thức</option>
+                                <option value="Draft">Bản nháp</option>
+                            </select>
+                        </span>
+                    </div>
+                    <div class="form-btn-group">
+                        <div class="btn-icon-plus" (click)="addFormItem('chuTriKhoiLuong')">
+                            <i class="fa fa-plus" style="margin-top: 2px" aria-hidden="true"></i>
+                        </div>
+                        <div class="btn-icon-minus" (click)="removeFormItem('chuTriKhoiLuong', i)" *ngIf="i != 0">
+                            <i class="fa fa-minus" style="margin-top: 2px" aria-hidden="true"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div formArrayName="chuyenVienGoiGia">
+                <div class="grid-container-4" *ngFor="let item of packagePermissionUserForm.get('chuyenVienGoiGia').controls; let i = index;" [formGroupName]="i">
+                    <div [class.form-title-blank]="i != 0">
+                        <label class="form-title" *ngIf="i == 0">
+                            Chuyên viên gọi giá
+                        </label>
+                    </div>
+                    <div class="grid-container-2">
+                        <label>Họ tên</label>
+                        <span class="custom-dropdown">
+                            <select class="form-control">
+                                <option value="">Tất cả</option>
+                                <option value="Official">Chính thức</option>
+                                <option value="Draft">Bản nháp</option>
+                            </select>
+                        </span>
+                    </div>
+                    <div class="grid-container-2">
+                        <label>Phòng ban</label>
+                        <span class="custom-dropdown">
+                            <select class="form-control">
+                                <option value="">Tất cả</option>
+                                <option value="Official">Chính thức</option>
+                                <option value="Draft">Bản nháp</option>
+                            </select>
+                        </span>
+                    </div>
+                    <div class="form-btn-group">
+                        <div class="btn-icon-plus" (click)="addFormItem('chuyenVienGoiGia')">
+                            <i class="fa fa-plus" style="margin-top: 2px" aria-hidden="true"></i>
+                        </div>
+                        <div class="btn-icon-minus" (click)="removeFormItem('chuyenVienGoiGia', i)" *ngIf="i != 0">
+                            <i class="fa fa-minus" style="margin-top: 2px" aria-hidden="true"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div formArrayName="chuTriMEP">
+                <div class="grid-container-4" *ngFor="let item of packagePermissionUserForm.get('chuTriMEP').controls; let i = index;" [formGroupName]="i">
+                    <div [class.form-title-blank]="i != 0">
+                        <label class="form-title" *ngIf="i == 0">
+                            Chủ trì MEP
+                        </label>
+                    </div>
+                    <div class="grid-container-2">
+                        <label>Họ tên</label>
+                        <span class="custom-dropdown">
+                            <select class="form-control">
+                                <option value="">Tất cả</option>
+                                <option value="Official">Chính thức</option>
+                                <option value="Draft">Bản nháp</option>
+                            </select>
+                        </span>
+                    </div>
+                    <div class="grid-container-2">
+                        <label>Phòng ban</label>
+                        <span class="custom-dropdown">
+                            <select class="form-control">
+                                <option value="">Tất cả</option>
+                                <option value="Official">Chính thức</option>
+                                <option value="Draft">Bản nháp</option>
+                            </select>
+                        </span>
+                    </div>
+                    <div class="form-btn-group">
+                        <div class="btn-icon-plus" (click)="addFormItem('chuTriMEP')">
+                            <i class="fa fa-plus" style="margin-top: 2px" aria-hidden="true"></i>
+                        </div>
+                        <div class="btn-icon-minus" (click)="removeFormItem('chuTriMEP', i)" *ngIf="i != 0">
+                            <i class="fa fa-minus" style="margin-top: 2px" aria-hidden="true"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div formArrayName="chuNhiemGoiPrelims">
+                <div class="grid-container-4" *ngFor="let item of packagePermissionUserForm.get('chuNhiemGoiPrelims').controls; let i = index;" [formGroupName]="i">
+                    <div [class.form-title-blank]="i != 0">
+                        <label class="form-title" *ngIf="i == 0">
+                            Chủ nhiệm gói Prelims
+                        </label>
+                    </div>
+                    <div class="grid-container-2">
+                        <label>Họ tên</label>
+                        <span class="custom-dropdown">
+                            <select class="form-control">
+                                <option value="">Tất cả</option>
+                                <option value="Official">Chính thức</option>
+                                <option value="Draft">Bản nháp</option>
+                            </select>
+                        </span>
+                    </div>
+                    <div class="grid-container-2">
+                        <label>Phòng ban</label>
+                        <span class="custom-dropdown">
+                            <select class="form-control">
+                                <option value="">Tất cả</option>
+                                <option value="Official">Chính thức</option>
+                                <option value="Draft">Bản nháp</option>
+                            </select>
+                        </span>
+                    </div>
+                    <div class="form-btn-group">
+                        <div class="btn-icon-plus" (click)="addFormItem('chuNhiemGoiPrelims')">
+                            <i class="fa fa-plus" style="margin-top: 2px" aria-hidden="true"></i>
+                        </div>
+                        <div class="btn-icon-minus" (click)="removeFormItem('chuNhiemGoiPrelims', i)" *ngIf="i != 0">
+                            <i class="fa fa-minus" style="margin-top: 2px" aria-hidden="true"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div formArrayName="chuNhiemKyThuat">
+                <div class="grid-container-4" *ngFor="let item of packagePermissionUserForm.get('chuNhiemKyThuat').controls; let i = index;" [formGroupName]="i">
+                    <div [class.form-title-blank]="i != 0">
+                        <label class="form-title" *ngIf="i == 0">
+                            Chủ nhiệm phần kỹ thuật
+                        </label>
+                    </div>
+                    <div class="grid-container-2">
+                        <label>Họ tên</label>
+                        <span class="custom-dropdown">
+                            <select class="form-control">
+                                <option value="">Tất cả</option>
+                                <option value="Official">Chính thức</option>
+                                <option value="Draft">Bản nháp</option>
+                            </select>
+                        </span>
+                    </div>
+                    <div class="grid-container-2">
+                        <label>Phòng ban</label>
+                        <span class="custom-dropdown">
+                            <select class="form-control">
+                                <option value="">Tất cả</option>
+                                <option value="Official">Chính thức</option>
+                                <option value="Draft">Bản nháp</option>
+                            </select>
+                        </span>
+                    </div>
+                    <div class="form-btn-group">
+                        <div class="btn-icon-plus" (click)="addFormItem('chuNhiemKyThuat')">
+                            <i class="fa fa-plus" style="margin-top: 2px" aria-hidden="true"></i>
+                        </div>
+                        <div class="btn-icon-minus" (click)="removeFormItem('chuNhiemKyThuat', i)" *ngIf="i != 0">
+                            <i class="fa fa-minus" style="margin-top: 2px" aria-hidden="true"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div formArrayName="chuNhiemHoSo">
+                <div class="grid-container-4" *ngFor="let item of packagePermissionUserForm.get('chuNhiemHoSo').controls; let i = index;" [formGroupName]="i">
+                    <div [class.form-title-blank]="i != 0">
+                        <label class="form-title" *ngIf="i == 0">
+                            Chủ nhiệm tổ hồ sơ
+                        </label>
+                    </div>
+                    <div class="grid-container-2">
+                        <label>Họ tên</label>
+                        <span class="custom-dropdown">
+                            <select class="form-control">
+                                <option value="">Tất cả</option>
+                                <option value="Official">Chính thức</option>
+                                <option value="Draft">Bản nháp</option>
+                            </select>
+                        </span>
+                    </div>
+                    <div class="grid-container-2">
+                        <label>Phòng ban</label>
+                        <span class="custom-dropdown">
+                            <select class="form-control">
+                                <option value="">Tất cả</option>
+                                <option value="Official">Chính thức</option>
+                                <option value="Draft">Bản nháp</option>
+                            </select>
+                        </span>
+                    </div>
+                    <div class="form-btn-group">
+                        <div class="btn-icon-plus" (click)="addFormItem('chuNhiemHoSo')">
+                            <i class="fa fa-plus" style="margin-top: 2px" aria-hidden="true"></i>
+                        </div>
+                        <div class="btn-icon-minus" (click)="removeFormItem('chuNhiemHoSo', i)" *ngIf="i != 0">
+                            <i class="fa fa-minus" style="margin-top: 2px" aria-hidden="true"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div formArrayName="chuNhiemPhapLy">
+                <div class="grid-container-4" *ngFor="let item of packagePermissionUserForm.get('chuNhiemPhapLy').controls; let i = index;" [formGroupName]="i">
+                    <div [class.form-title-blank]="i != 0">
+                        <label class="form-title" *ngIf="i == 0">
+                            Chủ nhiệm pháp lý
+                        </label>
+                    </div>
+                    <div class="grid-container-2">
+                        <label>Họ tên</label>
+                        <span class="custom-dropdown">
+                            <select class="form-control">
+                                <option value="">Tất cả</option>
+                                <option value="Official">Chính thức</option>
+                                <option value="Draft">Bản nháp</option>
+                            </select>
+                        </span>
+                    </div>
+                    <div class="grid-container-2">
+                        <label>Phòng ban</label>
+                        <span class="custom-dropdown">
+                            <select class="form-control">
+                                <option value="">Tất cả</option>
+                                <option value="Official">Chính thức</option>
+                                <option value="Draft">Bản nháp</option>
+                            </select>
+                        </span>
+                    </div>
+                    <div class="form-btn-group">
+                        <div class="btn-icon-plus" (click)="addFormItem('chuNhiemPhapLy')">
+                            <i class="fa fa-plus" style="margin-top: 2px" aria-hidden="true"></i>
+                        </div>
+                        <div class="btn-icon-minus" (click)="removeFormItem('chuNhiemPhapLy', i)" *ngIf="i != 0">
+                            <i class="fa fa-minus" style="margin-top: 2px" aria-hidden="true"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="boder-table mt-3">
+        <div class="">
+            <div class="media-header" style="text-align: right; padding-right: 1rem; margin-top: -0.75rem;">
+                <span class="action-bar alignment-but">
+                    <button type="submit" class="btn btn-primary" [routerLink]="['/package/detail']">Lưu
+                    </button>
+                    <button type="submit" class="btn btn-secondary" [routerLink]="['/package/detail']">Hủy
+                    </button>
+                </span>
+            </div>
+        </div>
+        <div style="margin-top: -1rem;">
+            <p class="mb-3">Các bên liên quan/ Stakeholders</p>
+            <div formArrayName="chuDauTu">
+                <div class="grid-container-4" *ngFor="let item of packagePermissionUserForm.get('chuDauTu').controls; let i = index;" [formGroupName]="i">
+                    <div [class.form-title-blank]="i != 0">
+                        <label class="form-title" *ngIf="i == 0">
+                            Chủ đầu tư
+                        </label>
+                    </div>
+                    <div class="grid-container-2">
+                        <label>Họ tên</label>
+                        <span class="custom-dropdown">
+                            <select class="form-control">
+                                <option value="">Tất cả</option>
+                                <option value="Official">Chính thức</option>
+                                <option value="Draft">Bản nháp</option>
+                            </select>
+                        </span>
+                    </div>
+                    <div class="grid-container-2">
+                        <label>Phòng ban</label>
+                        <span class="custom-dropdown">
+                            <select class="form-control">
+                                <option value="">Tất cả</option>
+                                <option value="Official">Chính thức</option>
+                                <option value="Draft">Bản nháp</option>
+                            </select>
+                        </span>
+                    </div>
+                    <div class="form-btn-group">
+                        <div class="btn-icon-plus" (click)="addFormItem('chuDauTu')">
+                            <i class="fa fa-plus" style="margin-top: 2px" aria-hidden="true"></i>
+                        </div>
+                        <div class="btn-icon-minus" (click)="removeFormItem('chuDauTu', i)" *ngIf="i != 0">
+                            <i class="fa fa-minus" style="margin-top: 2px" aria-hidden="true"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div formArrayName="quanLyDuAn">
+                <div class="grid-container-4" *ngFor="let item of packagePermissionUserForm.get('quanLyDuAn').controls; let i = index;" [formGroupName]="i">
+                    <div [class.form-title-blank]="i != 0">
+                        <label class="form-title" *ngIf="i == 0">
+                            Quản lý dự án
+                        </label>
+                    </div>
+                    <div class="grid-container-2">
+                        <label>Họ tên</label>
+                        <span class="custom-dropdown">
+                            <select class="form-control">
+                                <option value="">Tất cả</option>
+                                <option value="Official">Chính thức</option>
+                                <option value="Draft">Bản nháp</option>
+                            </select>
+                        </span>
+                    </div>
+                    <div class="grid-container-2">
+                        <label>Phòng ban</label>
+                        <span class="custom-dropdown">
+                            <select class="form-control">
+                                <option value="">Tất cả</option>
+                                <option value="Official">Chính thức</option>
+                                <option value="Draft">Bản nháp</option>
+                            </select>
+                        </span>
+                    </div>
+                    <div class="form-btn-group">
+                        <div class="btn-icon-plus" (click)="addFormItem('quanLyDuAn')">
+                            <i class="fa fa-plus" style="margin-top: 2px" aria-hidden="true"></i>
+                        </div>
+                        <div class="btn-icon-minus" (click)="removeFormItem('quanLyDuAn', i)" *ngIf="i != 0">
+                            <i class="fa fa-minus" style="margin-top: 2px" aria-hidden="true"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div formArrayName="quanLyChiPhi">
+                <div class="grid-container-4" *ngFor="let item of packagePermissionUserForm.get('quanLyChiPhi').controls; let i = index;" [formGroupName]="i">
+                    <div [class.form-title-blank]="i != 0">
+                        <label class="form-title" *ngIf="i == 0">
+                            Quản lý chi phí
+                        </label>
+                    </div>
+                    <div class="grid-container-2">
+                        <label>Họ tên</label>
+                        <span class="custom-dropdown">
+                            <select class="form-control">
+                                <option value="">Tất cả</option>
+                                <option value="Official">Chính thức</option>
+                                <option value="Draft">Bản nháp</option>
+                            </select>
+                        </span>
+                    </div>
+                    <div class="grid-container-2">
+                        <label>Phòng ban</label>
+                        <span class="custom-dropdown">
+                            <select class="form-control">
+                                <option value="">Tất cả</option>
+                                <option value="Official">Chính thức</option>
+                                <option value="Draft">Bản nháp</option>
+                            </select>
+                        </span>
+                    </div>
+                    <div class="form-btn-group">
+                        <div class="btn-icon-plus" (click)="addFormItem('quanLyChiPhi')">
+                            <i class="fa fa-plus" style="margin-top: 2px" aria-hidden="true"></i>
+                        </div>
+                        <div class="btn-icon-minus" (click)="removeFormItem('quanLyChiPhi', i)" *ngIf="i != 0">
+                            <i class="fa fa-minus" style="margin-top: 2px" aria-hidden="true"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div formArrayName="thietKeKienTruc">
+                <div class="grid-container-4" *ngFor="let item of packagePermissionUserForm.get('thietKeKienTruc').controls; let i = index;" [formGroupName]="i">
+                    <div [class.form-title-blank]="i != 0">
+                        <label class="form-title" *ngIf="i == 0">
+                            Thiết kế kiến trúc
+                        </label>
+                    </div>
+                    <div class="grid-container-2">
+                        <label>Họ tên</label>
+                        <span class="custom-dropdown">
+                            <select class="form-control">
+                                <option value="">Tất cả</option>
+                                <option value="Official">Chính thức</option>
+                                <option value="Draft">Bản nháp</option>
+                            </select>
+                        </span>
+                    </div>
+                    <div class="grid-container-2">
+                        <label>Phòng ban</label>
+                        <span class="custom-dropdown">
+                            <select class="form-control">
+                                <option value="">Tất cả</option>
+                                <option value="Official">Chính thức</option>
+                                <option value="Draft">Bản nháp</option>
+                            </select>
+                        </span>
+                    </div>
+                    <div class="form-btn-group">
+                        <div class="btn-icon-plus" (click)="addFormItem('thietKeKienTruc')">
+                            <i class="fa fa-plus" style="margin-top: 2px" aria-hidden="true"></i>
+                        </div>
+                        <div class="btn-icon-minus" (click)="removeFormItem('thietKeKienTruc', i)" *ngIf="i != 0">
+                            <i class="fa fa-minus" style="margin-top: 2px" aria-hidden="true"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div formArrayName="thietKeKetCau">
+                <div class="grid-container-4" *ngFor="let item of packagePermissionUserForm.get('thietKeKetCau').controls; let i = index;" [formGroupName]="i">
+                    <div [class.form-title-blank]="i != 0">
+                        <label class="form-title" *ngIf="i == 0">
+                            Thiết kế kết cấu
+                        </label>
+                    </div>
+                    <div class="grid-container-2">
+                        <label>Họ tên</label>
+                        <span class="custom-dropdown">
+                            <select class="form-control">
+                                <option value="">Tất cả</option>
+                                <option value="Official">Chính thức</option>
+                                <option value="Draft">Bản nháp</option>
+                            </select>
+                        </span>
+                    </div>
+                    <div class="grid-container-2">
+                        <label>Phòng ban</label>
+                        <span class="custom-dropdown">
+                            <select class="form-control">
+                                <option value="">Tất cả</option>
+                                <option value="Official">Chính thức</option>
+                                <option value="Draft">Bản nháp</option>
+                            </select>
+                        </span>
+                    </div>
+                    <div class="form-btn-group">
+                        <div class="btn-icon-plus" (click)="addFormItem('thietKeKetCau')">
+                            <i class="fa fa-plus" style="margin-top: 2px" aria-hidden="true"></i>
+                        </div>
+                        <div class="btn-icon-minus" (click)="removeFormItem('thietKeKetCau', i)" *ngIf="i != 0">
+                            <i class="fa fa-minus" style="margin-top: 2px" aria-hidden="true"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div formArrayName="thietKeCoDien">
+                <div class="grid-container-4" *ngFor="let item of packagePermissionUserForm.get('thietKeCoDien').controls; let i = index;" [formGroupName]="i">
+                    <div [class.form-title-blank]="i != 0">
+                        <label class="form-title" *ngIf="i == 0">
+                            Thiết kế cơ điện
+                        </label>
+                    </div>
+                    <div class="grid-container-2">
+                        <label>Họ tên</label>
+                        <span class="custom-dropdown">
+                            <select class="form-control">
+                                <option value="">Tất cả</option>
+                                <option value="Official">Chính thức</option>
+                                <option value="Draft">Bản nháp</option>
+                            </select>
+                        </span>
+                    </div>
+                    <div class="grid-container-2">
+                        <label>Phòng ban</label>
+                        <span class="custom-dropdown">
+                            <select class="form-control">
+                                <option value="">Tất cả</option>
+                                <option value="Official">Chính thức</option>
+                                <option value="Draft">Bản nháp</option>
+                            </select>
+                        </span>
+                    </div>
+                    <div class="form-btn-group">
+                        <div class="btn-icon-plus" (click)="addFormItem('thietKeCoDien')">
+                            <i class="fa fa-plus" style="margin-top: 2px" aria-hidden="true"></i>
+                        </div>
+                        <div class="btn-icon-minus" (click)="removeFormItem('thietKeCoDien', i)" *ngIf="i != 0">
+                            <i class="fa fa-minus" style="margin-top: 2px" aria-hidden="true"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div formArrayName="khac">
+                <div class="grid-container-4" *ngFor="let item of packagePermissionUserForm.get('khac').controls; let i = index;" [formGroupName]="i">
+                    <div [class.form-title-blank]="i != 0">
+                        <label class="form-title" *ngIf="i == 0">
+                            Khác
+                        </label>
+                    </div>
+                    <div class="grid-container-2">
+                        <label>Họ tên</label>
+                        <span class="custom-dropdown">
+                            <select class="form-control">
+                                <option value="">Tất cả</option>
+                                <option value="Official">Chính thức</option>
+                                <option value="Draft">Bản nháp</option>
+                            </select>
+                        </span>
+                    </div>
+                    <div class="grid-container-2">
+                        <label>Phòng ban</label>
+                        <span class="custom-dropdown">
+                            <select class="form-control">
+                                <option value="">Tất cả</option>
+                                <option value="Official">Chính thức</option>
+                                <option value="Draft">Bản nháp</option>
+                            </select>
+                        </span>
+                    </div>
+                    <div class="form-btn-group">
+                        <div class="btn-icon-plus" (click)="addFormItem('khac')">
+                            <i class="fa fa-plus" style="margin-top: 2px" aria-hidden="true"></i>
+                        </div>
+                        <div class="btn-icon-minus" (click)="removeFormItem('khac', i)" *ngIf="i != 0">
+                            <i class="fa fa-minus" style="margin-top: 2px" aria-hidden="true"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>

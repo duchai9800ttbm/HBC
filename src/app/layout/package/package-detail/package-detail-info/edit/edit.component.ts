@@ -22,6 +22,9 @@ import { NgxSpinnerService } from '../../../../../../../node_modules/ngx-spinner
 import { PackageListItem } from '../../../../../shared/models/package/package-list-item';
 import { ObjectInforPackage } from '../../../../../shared/models/package/object-infoPackage';
 import { DictionaryItem } from '../../../../../shared/models';
+import { PackageEditModel } from '../../../../../shared/models/package/package-edit.model';
+import { PackageInfoModel } from '../../../../../shared/models/package/package-info.model';
+import { DISABLED } from '@angular/forms/src/model';
 @Component({
     selector: 'app-edit',
     templateUrl: './edit.component.html',
@@ -29,15 +32,17 @@ import { DictionaryItem } from '../../../../../shared/models';
 })
 export class EditComponent implements OnInit {
 
-    package = new PackageModel();
+    package = new PackageInfoModel();
     packageForm: FormGroup;
     formErrors = {
-        nameProject: '',
-        name: '',
-        submitPackageDate: '',
-        expectedResultPackageDate: '',
+        opportunityName: '',
+        locationId: '',
+        constructionCategoryId: '',
+        constructionTypeId: '',
+        bidStatusId: ''
     };
     dtTrigger: Subject<any> = new Subject();
+
     isSubmitted: boolean;
     invalidMessages: string[];
     listZone: Observable<DictionaryItem[]>;
@@ -90,60 +95,56 @@ export class EditComponent implements OnInit {
     }
 
     createForm() {
-        // console.log(this.package);
-        // this.packageForm = this.fb.group({
-        //     id: this.package.id,
-        //     nameProject: [this.package.projectName, Validators.required],
-        //     codePackage: [this.package.projectNo, Validators.required],
-        //     name: [this.package.opportunityName, Validators.required],
-        //     task: [this.package.job, Validators.required],
-        //     address: [this.package.place, Validators.required],
-        //     zone: [this.package.location],
-        //     quarterOfYear: [this.package.quarter, Validators.required],
-        //     customer: [this.package.customer],
-        //     customerType: this.package.classify,
-        //     contact: [this.package.customerContact],
-        //     consultingUnit: this.package.consultantUnit,
-        //     addressConsultingUnit: this.package.consultantAddress,
-        //     phoneConsultingUnit: this.package.consultantPhone,
-        //     trackingeStartDate: DateTimeConvertHelper
-        //         .fromTimestampToDtObject(this.package.startTrackingDate ? this.package.startTrackingDate * 1000 : 0),
-        //     submitPackageDate: [DateTimeConvertHelper
-        //         .fromTimestampToDtObject(this.package.submissionDate ? this.package.submissionDate * 1000 : 0), Validators.required],
-        //     expectedResultPackageDate: [DateTimeConvertHelper
-        //         .fromTimestampToDtObject(this.package.resultEstimatedDate ? this.package.resultEstimatedDate * 1000 : 0),
-        //     Validators.required],
-
-        //     acreageFloor: this.package.floorArea,
-
-        //     scale: this.package.magnitude,
-        //     buildingProjectType: this.package.projectType,
-        //     mainBuildingCategory: this.package.mainBuildingCategory,
-        //     roleContractors: this.package.hbcRole,
-        //     roleHBC: this.package.hbcRole,
-        //     linkDocument: this.package.documentLink,
-        //     presideHBC: this.package.hbcChair,
-        //     status: this.package.status,
-        //     progressMade: this.package.progress,
-        //     reasonWinPackage: this.package.acceptanceReason,
-        //     reasonLostPackage: this.package.unacceptanceReason,
-        //     totalValue: this.package.amount,
-        //     // totalTime: this.package.totalTime,
-        //     // ratingProject: this.package.ratingProject,
-        //     ratingProject: this.package.evaluation,
-        //     // note: this.package.note,
-        //     startDateProject: DateTimeConvertHelper
-        //         .fromTimestampToDtObject(this.package.estimatedProjectStartDate ? this.package.estimatedProjectStartDate * 1000 : 0),
-        //     endDateProject: DateTimeConvertHelper
-        //         .fromTimestampToDtObject(this.package.estimatedProjectEndDate ? this.package.estimatedProjectEndDate * 1000 : 0),
-        //     totalTimeProject: this.package.totalTime,
-        //     description: this.package.description,
-        // });
-        // this.packageForm.valueChanges.subscribe(data =>
-        //     this.onFormValueChanged(data)
-        // );
-        // console.log(this.packageForm);
-        // this.onFormValueChanged(data);
+        this.packageForm = this.fb.group({
+            id: this.package.id,
+            projectName: [this.package.projectName],
+            projectNo: [this.package.projectNo],
+            opportunityName: [this.package.opportunityName, Validators.required],
+            job: [this.package.job],
+            place: [this.package.place],
+            locationId: [this.package.location && this.package.location.id, Validators.required],
+            quarter: [this.package.quarter && this.package.quarter.id],
+            customerId: [this.package.customer && this.package.customer.id],
+            classify: [this.package.classify],
+            customerContactId: [this.package.customerContact && this.package.customerContact.id],
+            consultantUnit: [this.package.consultantUnit],
+            consultantAddress: [this.package.consultantAddress],
+            consultantPhone: [this.package.consultantPhone],
+            floorArea: [this.package.floorArea],
+            magnitude: [this.package.magnitude],
+            constructionTypeId: [this.package.projectType && this.package.projectType.id, Validators.required],
+            constructionCategoryId: [this.package.mainBuildingCategory && this.package.mainBuildingCategory.id, Validators.required],
+            hbcRole: [this.package.hbcRole.id],
+            documentLink: [this.package.documentLink],
+            chairEmployeeId: [this.package.chairEmployee && this.package.chairEmployee.text],
+            bidStatusId: [this.package.status && this.package.status.id, Validators.required],
+            amount: [this.package.amount],
+            evaluation: [this.package.evaluation],
+            startTrackingDate: [DateTimeConvertHelper.fromTimestampToDtObject(
+                this.package.startTrackingDate
+            )],
+            submissionDate: [DateTimeConvertHelper.fromTimestampToDtObject(
+                this.package.submissionDate
+            )],
+            resultEstimatedDate: [DateTimeConvertHelper.fromTimestampToDtObject(
+                this.package.resultEstimatedDate
+            )],
+            projectEstimatedStartDate: [DateTimeConvertHelper.fromTimestampToDtObject(
+                this.package.projectEstimatedStartDate
+            )],
+            projectEstimatedEndDate: [DateTimeConvertHelper.fromTimestampToDtObject(
+                this.package.projectEstimatedEndDate
+            )],
+            totalTime: [this.package.totalTime],
+            description: [this.package.description],
+            acceptanceReason: [this.package.acceptanceReason],
+            unacceptanceReason: this.package.unacceptanceReason,
+            cancelReason: [this.package.cancelReason],
+            progress: this.package.progress
+        });
+        this.packageForm.valueChanges.subscribe(data => {
+            this.onFormValueChanged(data);
+        });
     }
 
     submitForm() {
@@ -152,9 +153,9 @@ export class EditComponent implements OnInit {
             this.packageService
                 .EditOpportunity(this.packageForm.value)
                 .subscribe(result => {
-                    // const message = 'Khách hàng đã được tạo.';
-                    // this.closed.emit(true);
-                    // this.alertService.success(message);
+                    const message = 'Gói thầu đã chỉnh sửa thành công';
+                    this.router.navigate([`/package/detail/${this.package.id}/infomation`]);
+                    this.alertService.success(message);
                 });
         }
     }

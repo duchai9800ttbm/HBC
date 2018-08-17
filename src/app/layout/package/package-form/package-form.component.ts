@@ -27,6 +27,7 @@ import { UserItemModel } from '../../../shared/models/user/user-item.model';
 import { DialogService } from '@progress/kendo-angular-dialog';
 import { PopupCreateAssignerComponent } from '../../../shared/components/popup-create-assigner/popup-create-assigner.component';
 import { PopupCreateChairComponent } from '../../../shared/components/popup-create-chair/popup-create-chair.component';
+import { UserFormComponent } from './user-form/user-form.component';
 @Component({
     selector: 'app-package-form',
     templateUrl: './package-form.component.html',
@@ -59,6 +60,7 @@ export class PackageFormComponent implements OnInit {
     listStatus: Observable<DictionaryItem[]>;
     datePickerConfig = DATETIME_PICKER_CONFIG;
     showPopupAdd = false;
+    showPopupAddUser = false;
     customersSearchResults: any[];
     contactsSearchResults: DictionaryItem[];
     assignSearchResults: DictionaryItem[];
@@ -178,6 +180,19 @@ export class PackageFormComponent implements OnInit {
         }
     }
 
+    createUser() {
+        this.showPopupAddUser = true;
+    }
+
+    closePopupAddUser(agreed: boolean) {
+        this.showPopupAddUser = false;
+        if (agreed) {
+            const message = 'Người dùng đã được tạo.';
+            this.alertService.success(message);
+
+        }
+    }
+
     searchContacts(query) {
         this.packageService.getListCustomercontact(query)
             .subscribe(result => {
@@ -196,23 +211,23 @@ export class PackageFormComponent implements OnInit {
         this.userService.searchListUser(query)
             .subscribe(result => this.assignSearchResults = result);
     }
-    openPopupCreateAssigner() {
-        this.dialogAssigner = this.dialogService.open({
-            title: 'TẠO MỚI USER',
-            content: PopupCreateAssignerComponent,
-            width: 600,
-            minWidth: 250
-        });
-        // const saleOrder = this.dialog2.content.instance;
-        // saleOrder.saleOrder = this.saleOrder;
-    }
+    // openPopupCreateAssigner() {
+    //     this.dialogAssigner = this.dialogService.open({
+    //         title: 'TẠO MỚI USER',
+    //         content: PopupCreateAssignerComponent,
+    //         width: 600,
+    //         minWidth: 250
+    //     });
+    //     // const saleOrder = this.dialog2.content.instance;
+    //     // saleOrder.saleOrder = this.saleOrder;
+    // }
 
-    openPopupCreateChair() {
-        this.dialogChair = this.dialogService.open({
-            title: 'TẠO MỚI USER',
-            content: PopupCreateChairComponent,
-            width: 600,
-            minWidth: 250
-        });
-    }
+    // openPopupCreateChair() {
+    //     this.dialogChair = this.dialogService.open({
+    //         title: 'TẠO MỚI USER',
+    //         content: PopupCreateChairComponent,
+    //         width: 600,
+    //         minWidth: 250
+    //     });
+    // }
 }

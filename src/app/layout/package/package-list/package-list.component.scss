@@ -55,6 +55,18 @@ span{
   }
 }
 
+@media only screen and (max-width: 1400px) {
+    table.dataTable {
+        th,
+        td {
+            max-width: 130px;
+        }
+    }
+    .custom-filter-bar{
+        zoom: 0.8;
+    }
+}
+
 
 @media only screen and (max-width: 1366px) {
     table.dataTable {
