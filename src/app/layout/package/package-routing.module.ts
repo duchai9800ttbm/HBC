@@ -12,7 +12,10 @@ const routes: Routes = [
         path: 'detail/:id', loadChildren: './package-detail/package-detail.module#PackageDetailModule',
     },
     {
-        path: 'permission/:id',
+        path: 'email', loadChildren: './package-email/package-email.module#PackageEmailModule',
+    }
+    {
+        path: 'permission',
         loadChildren: './package-permission/package-permission.module#PackagePermissionModule'
     }
 ];
