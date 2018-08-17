@@ -24,6 +24,7 @@ import { ObjectInforPackage } from '../../../../../shared/models/package/object-
 import { DictionaryItem } from '../../../../../shared/models';
 import { PackageEditModel } from '../../../../../shared/models/package/package-edit.model';
 import { PackageInfoModel } from '../../../../../shared/models/package/package-info.model';
+import { DISABLED } from '@angular/forms/src/model';
 @Component({
     selector: 'app-edit',
     templateUrl: './edit.component.html',
@@ -80,7 +81,7 @@ export class EditComponent implements OnInit {
         this.listStatus = this.dataService.getListBidOpportunityStatuses();
         this.packageService.getInforPackageID(this.packageId).subscribe(result => {
             this.rerender(result);
-            this.editForm();
+            this.createForm();
             this.spinner.hide();
         }, err => {
             this.spinner.hide();
@@ -93,42 +94,57 @@ export class EditComponent implements OnInit {
         this.dtTrigger.next();
     }
 
-    editForm() {
-        // this.packageForm = this.fb.group({
-        //     projectName: [this.package.projectName],
-        //     projectNo: [this.package.projectNo],
-        //     opportunityName: [this.package.opportunityName, Validators.required],
-        //     job: [this.package.job],
-        //     place: [this.package.place],
-        //     locationId: [this.package.locationId, Validators.required],
-        //     quarter: [this.package.quarter],
-        //     customerId: [this.package.customerId],
-        //     classify: [this.package.classify],
-        //     customerContactId: [this.package.customerContact.],
-        //     consultantUnit: [this.package.consultantUnit],customerContactId
-        //     consultantAddress: [this.package.consultantAddress],
-        //     consultantPhone: [this.package.consultantPhone],
-        //     floorArea: [this.package.floorArea],
-        //     magnitude: [this.package.magnitude],
-        //     constructionTypeId: [this.package.constructionType.id, Validators.required],
-        //     constructionCategoryId: [this.package.constructionCategoryId, Validators.required],
-        //     hbcRole: [this.package.hbcRole],
-        //     documentLink: [this.package.documentLink],
-        //     chairEmployeeId: [this.package.chairEmployeeId],
-        //     bidStatusId: [this.package.bidStatusId, Validators.required],
-        //     amount: [this.package.amount],
-        //     evaluation: [this.package.evaluation],
-        //     startTrackingDate: [this.package.startTrackingDate],
-        //     submissionDate: [this.package.submissionDate],
-        //     resultEstimatedDate: [this.package.resultEstimatedDate],
-        //     projectEstimatedStartDate: [this.package.projectEstimatedStartDate],
-        //     projectEstimatedEndDate: [this.package.projectEstimatedEndDate],
-        //     totalTime: [this.package.totalTime],
-        //     description: [this.package.description]
-        // });
-        // this.packageForm.valueChanges.subscribe(data => {
-        //     this.onFormValueChanged(data);
-        // });
+    createForm() {
+        this.packageForm = this.fb.group({
+            id: this.package.id,
+            projectName: [this.package.projectName],
+            projectNo: [this.package.projectNo],
+            opportunityName: [this.package.opportunityName, Validators.required],
+            job: [this.package.job],
+            place: [this.package.place],
+            locationId: [this.package.location && this.package.location.id, Validators.required],
+            quarter: [this.package.quarter && this.package.quarter.id],
+            customerId: [this.package.customer && this.package.customer.id],
+            classify: [this.package.classify],
+            customerContactId: [this.package.customerContact && this.package.customerContact.id],
+            consultantUnit: [this.package.consultantUnit],
+            consultantAddress: [this.package.consultantAddress],
+            consultantPhone: [this.package.consultantPhone],
+            floorArea: [this.package.floorArea],
+            magnitude: [this.package.magnitude],
+            constructionTypeId: [this.package.projectType && this.package.projectType.id, Validators.required],
+            constructionCategoryId: [this.package.mainBuildingCategory && this.package.mainBuildingCategory.id, Validators.required],
+            hbcRole: [this.package.hbcRole.id],
+            documentLink: [this.package.documentLink],
+            chairEmployeeId: [this.package.chairEmployee && this.package.chairEmployee.text],
+            bidStatusId: [this.package.status && this.package.status.id, Validators.required],
+            amount: [this.package.amount],
+            evaluation: [this.package.evaluation],
+            startTrackingDate: [DateTimeConvertHelper.fromTimestampToDtObject(
+                this.package.startTrackingDate
+            )],
+            submissionDate: [DateTimeConvertHelper.fromTimestampToDtObject(
+                this.package.submissionDate
+            )],
+            resultEstimatedDate: [DateTimeConvertHelper.fromTimestampToDtObject(
+                this.package.resultEstimatedDate
+            )],
+            projectEstimatedStartDate: [DateTimeConvertHelper.fromTimestampToDtObject(
+                this.package.projectEstimatedStartDate
+            )],
+            projectEstimatedEndDate: [DateTimeConvertHelper.fromTimestampToDtObject(
+                this.package.projectEstimatedEndDate
+            )],
+            totalTime: [this.package.totalTime],
+            description: [this.package.description],
+            acceptanceReason: [this.package.acceptanceReason],
+            unacceptanceReason: this.package.unacceptanceReason,
+            cancelReason: [this.package.cancelReason],
+            progress: this.package.progress
+        });
+        this.packageForm.valueChanges.subscribe(data => {
+            this.onFormValueChanged(data);
+        });
     }
 
     submitForm() {
@@ -137,9 +153,9 @@ export class EditComponent implements OnInit {
             this.packageService
                 .EditOpportunity(this.packageForm.value)
                 .subscribe(result => {
-                    // const message = 'Khách hàng đã được tạo.';
-                    // this.closed.emit(true);
-                    // this.alertService.success(message);
+                    const message = 'Gói thầu đã chỉnh sửa thành công';
+                    this.router.navigate([`/package/detail/${this.package.id}/infomation`]);
+                    this.alertService.success(message);
                 });
         }
     }
