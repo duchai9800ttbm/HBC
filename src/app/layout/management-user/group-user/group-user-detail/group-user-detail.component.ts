@@ -96,17 +96,18 @@ export class GroupUserDetailComponent implements OnInit {
 
     // Test API GroupUser
     // Danh sách quyền
+    this.spinner.show();
+
     this.dataService.getListPrivileges().subscribe(response => {
       this.listPrivilegesData = response;
       // Danh sách nhóm người dùng
-      this.spinner.show();
       this.groupUserService.instantSearchGroupUser(this.searchTerm$, 0, 10).subscribe(responsepageResultUserGroup => {
         this.pagedResult = responsepageResultUserGroup;
         this.listGroupUser = this.pagedResult.items;
         this.dtTrigger.next();
         this.spinner.hide();
       });
-    });
+    }, err => this.spinner.hide());
   }
 
   checkBox(id: number) {
