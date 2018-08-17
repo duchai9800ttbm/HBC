@@ -150,8 +150,8 @@
   <div class="modal-header no-boder-bottom">
     <div class="col-md-5 form-group">
       <div class="title-action" for="exampleFormControlSelect2">Danh sách chức năng</div>
-      <select multiple class="form-control form-select" id="exampleFormControlSelect2" style="height: 150px;" (change)="selectEachFieldEditNotUser($event)">
-        <option [value]="notPrivilege.id" *ngFor="let notPrivilege of groupEditOrCreate.notPrivileges">
+      <select multiple class="form-control form-select" id="exampleFormControlSelect2" style="height: 150px;" [(ngModel)]="changeTemp" (ngModelChange)="selectEachFieldEditNotUser($event)">
+        <option [ngValue]="notPrivilege" *ngFor="let notPrivilege of groupEditOrCreate.notPrivileges">
           {{notPrivilege.text | translate}}
         </option>
       </select>
@@ -172,8 +172,8 @@
     </div>
     <div class="col-md-5 form-group">
       <div class="title-action" for="exampleFormControlSelect2">Chức năng được sử dụng</div>
-      <select multiple class="form-control form-select" id="exampleFormControlSelect2" (change)="selectEachFieldEditUser($event)">
-        <option [value]="privilege.id" *ngFor="let privilege of groupEditOrCreate.privileges">
+      <select multiple class="form-control form-select" id="exampleFormControlSelect2" [(ngModel)]="changeTemp" (ngModelChange)="selectEachFieldEditUser($event)">
+        <option [ngValue]="privilege" *ngFor="let privilege of groupEditOrCreate.privileges">
           {{privilege.text | translate}}
         </option>
       </select>
