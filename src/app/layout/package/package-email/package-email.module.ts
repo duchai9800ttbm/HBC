@@ -18,6 +18,17 @@ import { TrashComponent } from './trash/trash.component';
     CommonModule,
     PackageEmailRoutingModule
   ],
-  declarations: [GiveUpComponent, AssignComponent, TransferDocumentComponent, DeployNoticeComponent, InterviewNoticeComponent, WinPackageNoticeComponent, MissPackageNoticeComponent, KickOffComponent, ImportantComponent, TrashComponent]
+  declarations: [
+    GiveUpComponent,
+    AssignComponent,
+    TransferDocumentComponent,
+    DeployNoticeComponent,
+    InterviewNoticeComponent,
+    WinPackageNoticeComponent,
+    MissPackageNoticeComponent,
+    KickOffComponent,
+    ImportantComponent,
+    TrashComponent
+  ]
 })
 export class PackageEmailModule { }
