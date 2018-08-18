@@ -1,4 +1,4 @@
-import { Component, OnInit, EventEmitter, Output } from '@angular/core';
+import { Component, OnInit, EventEmitter, Output, TemplateRef } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { UserModel } from '../../../../shared/models/user/user.model';
 import { PackageService } from '../../../../shared/services/package.service';
@@ -11,9 +11,10 @@ import { Observable } from 'rxjs';
 import { DepartmentsFormBranches } from '../../../../shared/models/user/departments-from-branches';
 import { Levels } from '../../../../shared/models/user/levels';
 import { GroupUserModel } from '../../../../shared/models/user/group-user.model';
-import { BsModalRef } from 'ngx-bootstrap';
+import { BsModalRef, BsModalService } from 'ngx-bootstrap';
 import CustomValidator from '../../../../shared/helpers/custom-validator.helper';
 import { Router } from '@angular/router';
+import { NgxSpinnerService } from 'ngx-spinner';
 
 @Component({
     selector: 'app-user-form',
@@ -25,15 +26,19 @@ export class UserFormComponent implements OnInit {
     userForm: FormGroup;
     formErrors = {
         userName: '',
+        email: '',
+        firstName: '',
+        lastName: '',
+        userGroupId: '',
+        departmentId: '',
         password: '',
         rePassword: '',
-        lastName: '',
-        firstName: '',
-        email: '',
+        phoneNumber: ''
     };
+    invalidMessages: string[];
+    isError;
     user = new UserModel();
     submitted = false;
-    invalidMessages: string[];
     isCollapsedUser = false;
     isCollapsedUserInfo = false;
     dataGroupUser: DictionaryItem[];
@@ -43,20 +48,30 @@ export class UserFormComponent implements OnInit {
     public selectedGroup: number = null;
     public selectedDepartmaent: number = null;
     groupUserModel: GroupUserModel;
-    formAddUser: FormGroup;
     userId: number;
     password: string;
     confirmPass: string;
     isValid = false;
     apiError: string;
-    isCheckbox = true;
     modalRef: BsModalRef;
     GroupCreate;
     submittedCreateGroup: boolean;
     listPrivilegesData: DictionaryItemIdString[];
+    arayChangeprivilegesTemp = {
+        point: false,
+        idGroupCurrent: null,
+        arayChangeprivileges: [],
+    };
+    arayChangeprivilegesTempNot = {
+        point: false,
+        idGroupCurrent: null,
+        arayChangeprivileges: [],
+    };
+    showPopupAddGroupUser = false;
     public close() {
         this.closed.emit(false);
     }
+
     constructor(
         private groupUserService: GroupUserService,
         private fb: FormBuilder,
@@ -64,20 +79,32 @@ export class UserFormComponent implements OnInit {
         private packageService: PackageService,
         private dataService: DataService,
         private userService: UserService,
-        private alertService: AlertService
+        private alertService: AlertService,
+        private spinner: NgxSpinnerService,
+        private modalService: BsModalService,
     ) { }
 
     ngOnInit() {
         this.createForm();
         this.positions = this.dataService.getListLevels();
         this.departments = this.dataService.getListDepartmentsFromBranches();
-        this.groupUserService.getListAllGroupUser().subscribe(element => {
-            this.dataGroupUser = element.map(i => {
-                return {
-                    id: i.id,
-                    text: i.name,
-                };
-            });
+        this.groupUserModel = {
+            id: null,
+            userName: '',
+            email: '',
+            lastName: '',
+            firstName: '',
+            rePassword: '',
+            password: '',
+            departmentId: '',
+            levelId: '',
+            userGroupId: '',
+            isActive: null,
+            phoneNumber: null,
+            address: '',
+        };
+        this.dataService.getListPrivileges().subscribe(response => {
+            this.listPrivilegesData = response;
         });
     }
 
@@ -99,7 +126,16 @@ export class UserFormComponent implements OnInit {
         this.userForm.valueChanges.subscribe(data =>
             this.onFormValueChanged(data)
         );
+        this.groupUserService.getListAllGroupUser().subscribe(element => {
+            this.dataGroupUser = element.map(i => {
+                return {
+                    id: i.id,
+                    text: i.name,
+                };
+            });
+        });
     }
+    get addUser() { return this.userForm.controls; }
     onFormValueChanged(data?: any) {
         if (this.submitted) {
             this.validateForm();
@@ -113,17 +149,17 @@ export class UserFormComponent implements OnInit {
                 return;
             }
             const dataUser = {
-                userName: this.formAddUser.value.userName,
-                email: this.formAddUser.value.email,
-                lastName: this.formAddUser.value.lastName,
-                firstName: this.formAddUser.value.firstName,
-                password: this.formAddUser.value.password,
-                departmentId: this.formAddUser.value.departmentId ? this.formAddUser.value.departmentId : 0,
-                levelId: this.formAddUser.value.levelId ? this.formAddUser.value.levelId : 0,
-                userGroupId: this.formAddUser.value.userGroupId ? this.formAddUser.value.userGroupId : 0,
-                isActive: this.formAddUser.value.isActive,
-                phoneNumber: this.formAddUser.value.phoneNumber,
-                address: this.formAddUser.value.address,
+                userName: this.userForm.value.userName,
+                email: this.userForm.value.email,
+                lastName: this.userForm.value.lastName,
+                firstName: this.userForm.value.firstName,
+                password: this.userForm.value.password,
+                departmentId: this.userForm.value.departmentId ? this.userForm.value.departmentId : 0,
+                levelId: this.userForm.value.levelId ? this.userForm.value.levelId : 0,
+                userGroupId: this.userForm.value.userGroupId ? this.userForm.value.userGroupId : 0,
+                isActive: this.userForm.value.isActive,
+                phoneNumber: this.userForm.value.phoneNumber,
+                address: this.userForm.value.address,
             };
             console.log('AddUser', dataUser);
             this.groupUserService.createOrUpdateUser(dataUser).subscribe(data => {
@@ -143,14 +179,141 @@ export class UserFormComponent implements OnInit {
     validateForm() {
         this.invalidMessages = ValidationHelper.getInvalidMessages(
             this.userForm,
-            this.formErrors,
+            this.formErrors
         );
         return this.invalidMessages.length === 0;
     }
     matchPassword() {
-        const newPassword = this.formAddUser.get('password').value;
-        const confirmPassword = this.formAddUser.get('rePassword').value;
+        const newPassword = this.userForm.get('password').value;
+        const confirmPassword = this.userForm.get('rePassword').value;
         return newPassword === confirmPassword;
     }
+    openModalCreateGroupUser(template: TemplateRef<any>) {
+        this.isError = false;
+        this.GroupCreate = {
+            name: null,
+            description: '',
+            privileges: [],
+            isActive: true,
+            notPrivileges: this.listPrivilegesData,
+        };
+        console.log('this.listPrivilegesData', this.listPrivilegesData);
+        this.modalRef = this.modalService.show(template, {
+            class: 'gray modal-lg'
+        });
+    }
+    selectAllPrivilegesEditUse() {
+        this.GroupCreate.notPrivileges = [];
+        this.GroupCreate.privileges = this.listPrivilegesData.filter(x => x);
+    }
 
+    selectAllPrivilegesEditNotUse() {
+        this.GroupCreate.privileges = [];
+        this.GroupCreate.notPrivileges = this.listPrivilegesData.filter(x => x);
+    }
+    changePrivilegesEditNotUse() {
+        if (this.arayChangeprivilegesTemp.point === true) {
+            this.arayChangeprivilegesTemp.arayChangeprivileges.forEach(i => this.GroupCreate.privileges.push(i));
+            const toStringElement = this.GroupCreate.privileges.map(i => JSON.stringify(i));
+            const toStringListPrivilegesData = this.listPrivilegesData.map(i => JSON.stringify(i));
+            const stringFilter = toStringListPrivilegesData.filter(i => !toStringElement.includes(i));
+            this.GroupCreate.notPrivileges = stringFilter.map(i => JSON.parse(i));
+            this.arayChangeprivilegesTemp = {
+                point: false,
+                idGroupCurrent: null,
+                arayChangeprivileges: [],
+            };
+        }
+    }
+    selectEachFieldEditNotUser(event) {
+        this.arayChangeprivilegesTemp.arayChangeprivileges = [];
+        for (let i = 1; i <= event.target.length; i++) {
+            if (event.target[i - 1].selected === true) {
+                const object = {
+                    id: event.target[i - 1].value,
+                    text: event.target[i - 1].text,
+                };
+                this.arayChangeprivilegesTemp.arayChangeprivileges.push(object);
+            }
+        }
+        this.arayChangeprivilegesTemp.point = true;
+        this.arayChangeprivilegesTempNot.point = false;
+    }
+
+    selectEachFieldEditUser(event) {
+        this.arayChangeprivilegesTempNot.arayChangeprivileges = [];
+        for (let i = 1; i <= event.target.length; i++) {
+            if (event.target[i - 1].selected === true) {
+                const object = {
+                    id: event.target[i - 1].value,
+                    text: event.target[i - 1].text,
+                };
+                this.arayChangeprivilegesTempNot.arayChangeprivileges.push(object);
+            }
+        }
+        this.arayChangeprivilegesTempNot.point = true;
+        this.arayChangeprivilegesTemp.point = false;
+    }
+
+    changePrivilegesEditUse() {
+        if (this.arayChangeprivilegesTempNot.point === true) {
+            this.arayChangeprivilegesTempNot.arayChangeprivileges.forEach(i => this.GroupCreate.notPrivileges.push(i));
+            const toStringElement = this.GroupCreate.notPrivileges.map(i => JSON.stringify(i));
+            const toStringListPrivilegesData = this.listPrivilegesData.map(i => JSON.stringify(i));
+            const stringFilter = toStringListPrivilegesData.filter(i => !toStringElement.includes(i));
+            this.GroupCreate.privileges = stringFilter.map(i => JSON.parse(i));
+            this.arayChangeprivilegesTempNot = {
+                point: false,
+                idGroupCurrent: null,
+                arayChangeprivileges: [],
+            };
+        }
+    }
+    closedPopupGroupUser() {
+        this.submittedCreateGroup = false;
+        this.modalRef.hide();
+    }
+
+    addGroupUser() {
+        this.submittedCreateGroup = true;
+        if (this.GroupCreate.name) {
+            this.GroupCreate.userGroupName = this.GroupCreate.name;
+            this.spinner.show();
+            this.groupUserService.createGroupUser(this.GroupCreate).subscribe(response => {
+                // this.groupUserService.listGroupUser(this.pagedResult.currentPage, this.pagedResult.pageSize)
+                //   .subscribe(responsepageResultUserGroup => {
+                //     this.pagedResult = responsepageResultUserGroup;
+                //     this.listGroupUser = this.pagedResult.items.map(i => i);
+                //     this.modalRef.hide();
+                //     this.alertService.success('Thêm nhóm người dùng thành công!');
+                //   });
+                this.modalRef.hide();
+                this.alertService.success('Thêm nhóm người dùng thành công!');
+                this.groupUserService.getListAllGroupUser().subscribe(element => {
+                    this.dataGroupUser = element.map(i => {
+                        return {
+                            id: i.id,
+                            text: i.name,
+                        };
+                    });
+                });
+                this.groupUserService.getListAllGroupUser().subscribe(e => {
+                    const groupnew = e.filter(k => k.name === this.GroupCreate.name)[0];
+                    this.userForm.get('userGroupId').patchValue(groupnew.id);
+                    this.spinner.hide();
+                });
+            },
+                err => {
+                    const error = err.json();
+                    if (error.errorCode === 'BusinessException') {
+                        this.isError = true;
+                    } else {
+                        this.modalRef.hide();
+                        this.alertService.error('Đã xảy ra lỗi. Thêm nhóm người dùng không thành công!');
+                    }
+
+                });
+            this.submitted = false;
+        }
+    }
 }
