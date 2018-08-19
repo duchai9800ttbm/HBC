@@ -5,6 +5,7 @@ import { UserService, AlertService, DataService, SessionService, UserNotificatio
 import { FormBuilder, Validators, FormGroup } from '@angular/forms';
 import ValidationHelper from '../../shared/helpers/validation.helper';
 import { UserModel } from '../../shared/models/user/user.model';
+import { NgxSpinnerComponent, NgxSpinnerService } from 'ngx-spinner';
 
 @Component({
     selector: 'app-login-form',
@@ -35,7 +36,8 @@ export class LoginFormComponent implements OnInit {
         private dataService: DataService,
         private sessionService: SessionService,
         private fb: FormBuilder,
-        private userNotificationService: UserNotificationService
+        private userNotificationService: UserNotificationService,
+        private spinner: NgxSpinnerService
     ) {
         this.authForm = this.fb.group({
             username: ['', Validators.required],
@@ -66,32 +68,45 @@ export class LoginFormComponent implements OnInit {
                 .attemptAuth('login', credentials.username, credentials.password)
                 .subscribe(
                     data => {
-                        this.userModel = this.sessionService.userInfo;
-                        this.listPrivileges = this.userModel.privileges;
-                        if (this.listPrivileges) {
-                            this.isManageBidOpportunitys = this.listPrivileges.some(x => x === 'ManageBidOpportunitys');
-                            this.isManageUsers = this.listPrivileges.some(x => x === 'ManagerUsers');
-                            this.isManageSettings = this.listPrivileges.some(x => x === 'ManageSettings');
-                            this.isManageUserGroups = this.listPrivileges.some(x => x === 'ManageUserGroups');
-                            console.log(this.isManageBidOpportunitys);
-                            console.log(this.isManageUsers);
-
-                            console.log(this.isManageSettings);
-
-                            console.log(this.isManageUserGroups);
-
-                            if (this.isManageBidOpportunitys) {
-                                this.router.navigate(['/package']);
-                            } else if (this.isManageUserGroups) {
-                                this.router.navigate(['/management-user']);
-                            } else if (this.isManageUsers) {
-                                this.router.navigate(['/management-user/group-user/manage-user-list/manage-user']);
-                            } else if (this.isManageSettings) {
-                                this.router.navigate(['/settings']);
-                            } else {
-                                this.router.navigate(['/package']);
+                        this.spinner.show();
+                        setTimeout(() => {
+                            this.userModel = this.sessionService.userInfo;
+                            this.listPrivileges = this.userModel.privileges;
+                            if (this.listPrivileges) {
+                                this.isManageBidOpportunitys = this.listPrivileges.some(x => x === 'ManageBidOpportunitys');
+                                this.isManageUsers = this.listPrivileges.some(x => x === 'ManagerUsers');
+                                this.isManageSettings = this.listPrivileges.some(x => x === 'ManageSettings');
+                                this.isManageUserGroups = this.listPrivileges.some(x => x === 'ManageUserGroups');
+                                console.log(this.isManageBidOpportunitys);
+                                console.log(this.isManageUsers);
+    
+                                console.log(this.isManageSettings);
+    
+                                console.log(this.isManageUserGroups);
+    
+                                if (this.isManageBidOpportunitys) {
+                                    this.router.navigate(['/package']);
+                                    this.spinner.hide();
+                                } else if (this.isManageUserGroups) {
+                                    this.router.navigate(['/management-user']);
+                                    this.spinner.hide();
+    
+                                } else if (this.isManageUsers) {
+                                    this.router.navigate(['/management-user/group-user/manage-user-list/manage-user']);
+                                    this.spinner.hide();
+    
+                                } else if (this.isManageSettings) {
+                                    this.router.navigate(['/settings']);
+                                    this.spinner.hide();
+    
+                                } else {
+                                    this.router.navigate(['/package']);
+                                    this.spinner.hide();
+    
+                                }
                             }
-                        }
+                        }, 300);
+                       
                     },
                     err => {
                         this.apiErrorCode = 'Nhập sai tên người dùng hoặc mật khẩu!';
