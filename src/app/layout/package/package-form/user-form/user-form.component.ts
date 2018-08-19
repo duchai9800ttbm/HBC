@@ -88,6 +88,17 @@ export class UserFormComponent implements OnInit {
         this.createForm();
         this.positions = this.dataService.getListLevels();
         this.departments = this.dataService.getListDepartmentsFromBranches();
+        this.groupUserService.getListAllGroupUser().subscribe(element => {
+            this.dataGroupUser = element.map(i => {
+                return {
+                    id: i.id,
+                    text: i.name,
+                };
+            });
+        });
+        this.dataService.getListPrivileges().subscribe(response => {
+            this.listPrivilegesData = response;
+        });
         this.groupUserModel = {
             id: null,
             userName: '',
@@ -103,9 +114,7 @@ export class UserFormComponent implements OnInit {
             phoneNumber: null,
             address: '',
         };
-        this.dataService.getListPrivileges().subscribe(response => {
-            this.listPrivilegesData = response;
-        });
+
     }
 
     createForm() {
@@ -126,14 +135,7 @@ export class UserFormComponent implements OnInit {
         this.userForm.valueChanges.subscribe(data =>
             this.onFormValueChanged(data)
         );
-        this.groupUserService.getListAllGroupUser().subscribe(element => {
-            this.dataGroupUser = element.map(i => {
-                return {
-                    id: i.id,
-                    text: i.name,
-                };
-            });
-        });
+
     }
     get addUser() { return this.userForm.controls; }
     onFormValueChanged(data?: any) {
@@ -315,5 +317,32 @@ export class UserFormComponent implements OnInit {
                 });
             this.submitted = false;
         }
+    }
+
+    //
+    createGroupUser() {
+        console.log('open popupCreatuser');
+        this.showPopupAddGroupUser = true;
+    }
+
+    closePopupGroupUser(agreed: boolean) {
+        console.log('Dong popupGroupUser');
+        this.showPopupAddGroupUser = false;
+        // if (agreed) {
+        //     const message = 'Nhóm người dùng đã được tạo.';
+        //     this.alertService.success(message);
+
+        // }
+    }
+    mapNewGroup(id) {
+        this.groupUserService.getListAllGroupUser().subscribe(element => {
+            this.dataGroupUser = element.map(i => {
+                return {
+                    id: i.id,
+                    text: i.name,
+                };
+            });
+            this.userForm.get('userGroupId').patchValue(id);
+        });
     }
 }
