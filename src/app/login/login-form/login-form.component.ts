@@ -77,36 +77,25 @@ export class LoginFormComponent implements OnInit {
                                 this.isManageUsers = this.listPrivileges.some(x => x === 'ManagerUsers');
                                 this.isManageSettings = this.listPrivileges.some(x => x === 'ManageSettings');
                                 this.isManageUserGroups = this.listPrivileges.some(x => x === 'ManageUserGroups');
-                                console.log(this.isManageBidOpportunitys);
-                                console.log(this.isManageUsers);
-    
-                                console.log(this.isManageSettings);
-    
-                                console.log(this.isManageUserGroups);
-    
                                 if (this.isManageBidOpportunitys) {
                                     this.router.navigate(['/package']);
                                     this.spinner.hide();
                                 } else if (this.isManageUserGroups) {
                                     this.router.navigate(['/management-user']);
                                     this.spinner.hide();
-    
                                 } else if (this.isManageUsers) {
                                     this.router.navigate(['/management-user/group-user/manage-user-list/manage-user']);
                                     this.spinner.hide();
-    
                                 } else if (this.isManageSettings) {
                                     this.router.navigate(['/settings']);
                                     this.spinner.hide();
-    
                                 } else {
                                     this.router.navigate(['/package']);
                                     this.spinner.hide();
-    
                                 }
                             }
                         }, 300);
-                       
+
                     },
                     err => {
                         this.apiErrorCode = 'Nhập sai tên người dùng hoặc mật khẩu!';
