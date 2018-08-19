@@ -43,7 +43,6 @@ export class SessionService {
 
     saveSession(session: any) {
         window.localStorage['session'] = JSON.stringify(session);
-        console.log('saveSession', session);
     }
 
     saveUserInfo(userInfo: UserModel) {

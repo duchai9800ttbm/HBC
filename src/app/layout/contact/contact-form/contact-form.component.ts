@@ -89,7 +89,6 @@ export class ContactFormComponent implements OnInit, OnDestroy {
       .subscribe(result => {
         that.avatarSrc = result ? `data:image/jpeg;base64,${result}` : defaultAvatarSrc;
       });
-    console.log(this.contactForm.value.lunarBirthday);
   }
   ngOnDestroy() {
     window.localStorage['avatarContact'] = null;

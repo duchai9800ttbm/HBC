@@ -70,7 +70,6 @@ export class ManageUserComponent implements OnInit {
 
   rerender(pagedResult: any) {
     this.pagedResult = pagedResult;
-    console.log('this.pagedResult,', this.pagedResult);
     this.dtTrigger.next();
 
   }
@@ -122,7 +121,6 @@ export class ManageUserComponent implements OnInit {
 
 
   submit() {
-    console.log('this.Edit.value', this.isCheckbox);
   }
 
   showPopupSelect(idUser: number, template: TemplateRef<any>) {
@@ -134,14 +132,12 @@ export class ManageUserComponent implements OnInit {
         };
       });
       this.changeUser = { ...this.pagedResult.items.filter(i => i.id === idUser)[0] };
-      console.log('this.changeUser.userGroup', this.changeUser.userGroup);
       if (!this.changeUser.userGroup || !this.changeUser.userGroup.key) {
         this.changeUser.userGroup = {
           key: 0,
           value: '',
         };
       }
-      console.log('this.changeUser', this.changeUser);
       this.modalRef = this.modalService.show(template);
     });
   }
@@ -258,7 +254,6 @@ export class ManageUserComponent implements OnInit {
       `Bạn có chắc chắn muốn đặt lại mật khẩu cho người dùng "${name}" không?`,
       () => {
         this.groupUserService.resetPassword(id).subscribe( response => {
-          console.log('responsesssss', response);
           this.confirmationService.openResetpassword('Mật khẩu được đặt lại là:', response);
         });
       });

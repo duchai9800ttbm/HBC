@@ -79,7 +79,6 @@ export class ResetPasswordComponent implements OnInit {
         this.formErrors.confirmPassword = 'Mật khẩu không khớp';
         return;
       }
-      // console.log('this.token', this.token);
       const newPassword = this.resetPasswordForm.value.newPassword;
       this.userService
         .resetPassword(this.email, this.token, newPassword)

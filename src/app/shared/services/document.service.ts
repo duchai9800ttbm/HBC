@@ -91,7 +91,6 @@ export class DocumentService {
     download(bidDocumentId: number) {
         const url = `biddocument/${bidDocumentId}/download `;
         return this.apiService.getFile(url).map(response => {
-            console.log(response.file);
             return FileSaver.saveAs(
                 new Blob([response.file], {
                     type: `${response.file.type}`,

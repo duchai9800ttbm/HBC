@@ -204,7 +204,6 @@ export class PackageListComponent implements OnInit, AfterViewChecked {
     }
 
     delete(id: number) {
-        console.log('sdasd',id);
         const that = this;
         this.confirmationService.confirm(
             'Bạn có chắc chắn muốn xóa gói thầu này?',
@@ -240,7 +239,6 @@ export class PackageListComponent implements OnInit, AfterViewChecked {
     }
 
     filter(clear: boolean = false) {
-        console.log('this.filterModel', this.filterModel);
         this.spinner.show();
         this.packageService
             .filterList(

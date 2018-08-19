@@ -130,7 +130,6 @@ export class UserService {
 
     resetPassword(email: string, recoverCode: string, newPassword: string): Observable<any> {
         const url = `password/reset`;
-        // console.log('this.email', this.email);
         return this.apiService
             .post(url, {
                 email: email,

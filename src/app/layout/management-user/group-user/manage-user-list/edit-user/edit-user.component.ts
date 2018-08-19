@@ -96,11 +96,9 @@ export class EditUserComponent implements OnInit {
       const id = params.get('id');
       this.idString = id;
     });
-    console.log('this.idString', this.idString);
     this.groupUserService.getIdUser(this.idString).subscribe(
       sucess => {
         this.groupUserModel = sucess;
-        console.log('this.success', sucess);
         this.checkboxTrue = this.groupUserModel.isActive;
         this.formEditUser = this.formBuilder.group({
           userName: [this.groupUserModel.userName ? this.groupUserModel.userName : '', [Validators.required, CustomValidator.loginName]],
@@ -121,7 +119,6 @@ export class EditUserComponent implements OnInit {
         });
       },
       err => {
-        console.log(err);
       }
     );
     this.groupUserService.getListAllGroupUser().subscribe(element => {
@@ -131,7 +128,6 @@ export class EditUserComponent implements OnInit {
           text: i.name,
         };
       });
-      console.log('element-element', element);
     });
   }
 
@@ -147,7 +143,6 @@ export class EditUserComponent implements OnInit {
 
   onSubmit() {
     this.submitted = true;
-    console.log('this.validateForm', this.validateForm(), this.formErrors, this.formEditUser);
     if (this.validateForm()) {
       const dataUser = {
         id: this.idString,
@@ -163,14 +158,12 @@ export class EditUserComponent implements OnInit {
         phoneNumber: this.formEditUser.value.phoneNumber,
         address: this.formEditUser.value.address,
       };
-      console.log('Edit', dataUser);
       this.groupUserService.createOrUpdateUser(dataUser).subscribe(data => {
         const message = 'Chỉnh sửa người dùng thành công!';
         this.router.navigate([`/management-user/group-user/manage-user-list/manage-user`]);
         this.alertService.success(message);
       },
         err => {
-          console.log(err);
         });
     }
   }
@@ -196,7 +189,6 @@ export class EditUserComponent implements OnInit {
   }
 
   validateForm() {
-    console.log('this.formEditUser.value', this.formEditUser.value);
     this.invalidMessages = ValidationHelper.getInvalidMessages(
       this.formEditUser,
       this.formErrors,
@@ -211,7 +203,6 @@ export class EditUserComponent implements OnInit {
   }
 
   changeActiveUser(idUser: number) {
-    console.log('idUser', idUser);
   }
 
   openModalCreateUser(template: TemplateRef<any>) {

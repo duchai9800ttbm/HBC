@@ -4,6 +4,7 @@ import { routerTransition } from '../../router.animations';
 import { UserService, AlertService, DataService, SessionService, UserNotificationService } from '../../shared/services/index';
 import { FormBuilder, Validators, FormGroup } from '@angular/forms';
 import ValidationHelper from '../../shared/helpers/validation.helper';
+import { UserModel } from '../../shared/models/user/user.model';
 
 @Component({
     selector: 'app-login-form',
@@ -13,6 +14,12 @@ import ValidationHelper from '../../shared/helpers/validation.helper';
     providers: [UserService]
 })
 export class LoginFormComponent implements OnInit {
+    userModel: UserModel;
+    listPrivileges = [];
+    isManageBidOpportunitys;
+    isManageUsers;
+    isManageUserGroups;
+    isManageSettings;
     isSubmitted: boolean;
     authForm: FormGroup;
     invalidMessages: string[];
@@ -59,20 +66,32 @@ export class LoginFormComponent implements OnInit {
                 .attemptAuth('login', credentials.username, credentials.password)
                 .subscribe(
                     data => {
-                        // this.userNotificationService.listNoticationsReminder(0, 100)
-                        //     .subscribe(result => {
-                        //         this.sessionService.saveNotificationList(result.items);
-                        //     });
-                        // this.dataService.getBranches().subscribe(branches => {
-                        //     if (branches && branches.length === 1) {
-                        //         this.sessionService.branchId = branches[0].id;
-                        //         this.router.navigate(['/dashboard']);
-                        //     } else {
-                        //         this.router.navigate(['/branch']);
-                        //     }
-                        // });
-                        //this.sessionService.branchId = 1;
-                        this.router.navigate(['/package']);
+                        this.userModel = this.sessionService.userInfo;
+                        this.listPrivileges = this.userModel.privileges;
+                        if (this.listPrivileges) {
+                            this.isManageBidOpportunitys = this.listPrivileges.some(x => x === 'ManageBidOpportunitys');
+                            this.isManageUsers = this.listPrivileges.some(x => x === 'ManagerUsers');
+                            this.isManageSettings = this.listPrivileges.some(x => x === 'ManageSettings');
+                            this.isManageUserGroups = this.listPrivileges.some(x => x === 'ManageUserGroups');
+                            console.log(this.isManageBidOpportunitys);
+                            console.log(this.isManageUsers);
+
+                            console.log(this.isManageSettings);
+
+                            console.log(this.isManageUserGroups);
+
+                            if (this.isManageBidOpportunitys) {
+                                this.router.navigate(['/package']);
+                            } else if (this.isManageUserGroups) {
+                                this.router.navigate(['/management-user']);
+                            } else if (this.isManageUsers) {
+                                this.router.navigate(['/management-user/group-user/manage-user-list/manage-user']);
+                            } else if (this.isManageSettings) {
+                                this.router.navigate(['/settings']);
+                            } else {
+                                this.router.navigate(['/package']);
+                            }
+                        }
                     },
                     err => {
                         this.apiErrorCode = 'Nhập sai tên người dùng hoặc mật khẩu!';

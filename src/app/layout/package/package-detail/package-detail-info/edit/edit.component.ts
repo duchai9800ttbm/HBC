@@ -171,7 +171,6 @@ export class EditComponent implements OnInit {
             this.packageForm,
             this.formErrors,
         );
-        console.log('this.invalidMessages', this.invalidMessages);
         return this.invalidMessages.length === 0;
     }
 

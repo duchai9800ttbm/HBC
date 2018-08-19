@@ -19,6 +19,9 @@ import { ModalModule } from 'ngx-bootstrap/modal';
     SharedModule,
     ModalModule.forRoot()
   ],
-  declarations: [GroupUserDetailComponent, GroupUserComponent],
+  declarations: [
+    GroupUserDetailComponent,
+    GroupUserComponent
+  ],
 })
 export class GroupUserModule { }

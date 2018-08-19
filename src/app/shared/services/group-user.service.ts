@@ -108,7 +108,6 @@ export class GroupUserService implements OnInit {
     return this.apiService.get(url)
       .map(data => {
         const result = data.result;
-        console.log('result', result);
         return {
           id: result.id,
           userName: result.userName,
@@ -172,9 +171,7 @@ export class GroupUserService implements OnInit {
 
 
   createOrUpdateUser(data): Observable<any> {
-    console.log('tạo mới/update', data);
     const url = data.id ? `user/edit` : `user/create`;
-    console.log('url', url);
     return this.apiService.post(url, data)
       .map( res => res.result);
   }
@@ -299,7 +296,6 @@ export class GroupUserService implements OnInit {
       privilegeIds: inforGroupUser.privileges.map(i => Number(i.id)),
       isActive: true,
     };
-    console.log('requestModel', requestModel);
     return this.apiService.post(url, requestModel)
       .map(response => {
         const result = response.result;
@@ -339,7 +335,6 @@ export class GroupUserService implements OnInit {
   }
   // Chỉnh sửa nhóm người dùng
   editGroupUser(groupUser: any): Observable<any> {
-    console.log('groupUser', groupUser);
     const url = `usergroup/edit`;
     return this.apiService.post(url, groupUser);
   }

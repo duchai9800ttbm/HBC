@@ -44,7 +44,6 @@ export class SettingReasonWinListComponent implements OnInit {
         );
     }
     public onSelectedKeysChange(e) {
-        console.log(this.mySelection);
     }
 
     deleteReasonWin(id: number) {

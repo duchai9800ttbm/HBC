@@ -15,7 +15,6 @@ export class PackageDetailFileInvitationComponent implements OnInit {
   ngOnInit() {
     this.activetedRoute.params.subscribe(result => {
       this.packageId = +result.id;
-      console.log(result);
     });
   }
 

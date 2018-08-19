@@ -8,7 +8,7 @@ import { routerTransition } from '../../../../../../router.animations';
 import { AlertService, DataService } from '../../../../../../shared/services';
 import { SelectableSettings } from '@progress/kendo-angular-grid';
 import { DataUploadService } from '../../../../../../shared/services/data-upload.service';
-import { GridDataResult, PageChangeEvent,SelectAllCheckboxState } from '@progress/kendo-angular-grid';
+import { GridDataResult, PageChangeEvent, SelectAllCheckboxState } from '@progress/kendo-angular-grid';
 import { SortDescriptor, orderBy } from '@progress/kendo-data-query';
 @Component({
   selector: 'app-assignment-progress',
@@ -30,11 +30,11 @@ export class AssignmentProgressComponent implements OnInit {
   public pageSize = 10;
   public skip = 0;
   total: number;
-  totalSelect:number;
+  totalSelect: number;
   public multiple = false;
   public allowUnsort = true;
   public sort: SortDescriptor[] = [
-    
+
     {
       field: 'name',
       dir: 'asc'
@@ -85,9 +85,8 @@ export class AssignmentProgressComponent implements OnInit {
   checkboxSeclectAll: boolean;
 
   ngOnInit() {
-    console.log('hideButon', this.hideButon);
-    this.total =this.items.length;
-    this.totalSelect =this.itemSelect.length;
+    this.total = this.items.length;
+    this.totalSelect = this.itemSelect.length;
 
   }
   public sortChange(sort: SortDescriptor[]): void {
@@ -97,28 +96,27 @@ export class AssignmentProgressComponent implements OnInit {
   public onSelectedKeysChange(e) {
     const len = this.mySelection.length;
     if (len === 0) {
-        this.selectAllState = 'unchecked';
+      this.selectAllState = 'unchecked';
     } else if (len > 0 && len < this.items.length) {
-        this.selectAllState = 'indeterminate';
+      this.selectAllState = 'indeterminate';
     } else {
-        this.selectAllState = 'checked';
+      this.selectAllState = 'checked';
     }
-}
+  }
 
   public onSelectAllChange(checkedState: SelectAllCheckboxState) {
 
-    console.log('this.mySelection.length',checkedState);
     if (checkedState === 'checked') {
-        this.mySelection = this.items.map((item) => item.id);
-        this.selectAllState = 'checked';
+      this.mySelection = this.items.map((item) => item.id);
+      this.selectAllState = 'checked';
     } else {
-        this.mySelection = [];
-        this.selectAllState = 'unchecked';
+      this.mySelection = [];
+      this.selectAllState = 'unchecked';
     }
-}
+  }
   private loadItems(): void {
     this.items = orderBy(this.items, this.sort);
-      this.gridView = {      
+    this.gridView = {
       data: this.items.slice(this.skip, this.skip + this.pageSize),
       total: this.items.length
     };

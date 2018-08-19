@@ -98,7 +98,6 @@ export class WaitResultComponent implements OnInit {
       this.modalUpload = this.modalService.show(template);
     } else {
       this.modalhuyThau.hide();
-      console.log('this.packageId', this.packageId);
       this.router.navigate([`/package/detail/${this.currentPackageId}/result/package-cancel`]);
     }
   }

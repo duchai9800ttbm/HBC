@@ -163,14 +163,12 @@ export class UserFormComponent implements OnInit {
                 phoneNumber: this.userForm.value.phoneNumber,
                 address: this.userForm.value.address,
             };
-            console.log('AddUser', dataUser);
             this.groupUserService.createOrUpdateUser(dataUser).subscribe(data => {
                 const message = 'Thêm người dùng thành công';
                 this.router.navigate([`/management-user/group-user/manage-user-list/manage-user`]);
                 this.alertService.success(message);
             },
                 err => {
-                    console.log('massage-massage-massage', JSON.parse(err._body).errorMessage);
                     if (JSON.parse(err._body).errorMessage === 'Tên đăng nhập của bạn trùng với tên đăng nhập của nhân viên khác!') {
                         this.formErrors.userName = 'Tên đăng nhập trùng với tên đăng nhập của nhân viên khác!';
                     }
@@ -199,7 +197,6 @@ export class UserFormComponent implements OnInit {
             isActive: true,
             notPrivileges: this.listPrivilegesData,
         };
-        console.log('this.listPrivilegesData', this.listPrivilegesData);
         this.modalRef = this.modalService.show(template, {
             class: 'gray modal-lg'
         });
@@ -321,12 +318,10 @@ export class UserFormComponent implements OnInit {
 
     //
     createGroupUser() {
-        console.log('open popupCreatuser');
         this.showPopupAddGroupUser = true;
     }
 
     closePopupGroupUser(agreed: boolean) {
-        console.log('Dong popupGroupUser');
         this.showPopupAddGroupUser = false;
         // if (agreed) {
         //     const message = 'Nhóm người dùng đã được tạo.';

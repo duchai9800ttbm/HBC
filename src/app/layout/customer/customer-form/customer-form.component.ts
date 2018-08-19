@@ -67,7 +67,7 @@ export class CustomerFormComponent implements OnInit {
         window.scrollTo(0, 0);
         this.createForm();
         this.lunarBirthdayList = this.dataService.getlunarBirthday();
-        this.dataService.getlunarBirthday().subscribe(result => console.log(result));
+        this.dataService.getlunarBirthday().subscribe(result => result);
         this.customerGroupList = this.dataService.getCustomerGroups();
         this.businessList = this.dataService.getBusiness();
         this.customerClassifyList = this.dataService.getCustomerClassifies();

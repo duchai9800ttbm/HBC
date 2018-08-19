@@ -351,7 +351,6 @@ export class EvaluateComponent implements OnInit {
 
     dowloadDocument(id) {
         this.documentService.download(id).subscribe(data => {
-            console.log(data);
         });
     }
 

@@ -13,6 +13,7 @@ import { LocationListItem } from '../../../../shared/models/setting/location-lis
 import { Observable, BehaviorSubject, Subject } from '../../../../../../node_modules/rxjs';
 import { NgxSpinnerService } from '../../../../../../node_modules/ngx-spinner';
 import { DATATABLE_CONFIG } from '../../../../shared/configs';
+import { UserModel } from '../../../../shared/models/user/user.model';
 @Component({
   selector: 'app-group-user-detail',
   templateUrl: './group-user-detail.component.html',
@@ -69,11 +70,14 @@ export class GroupUserDetailComponent implements OnInit {
     idGroupCurrent: null,
     arayChangeprivileges: [],
   };
-  groupSlected =  null;
+  groupSlected = null;
   changeTemp = {
     id: 0,
     text: null,
   };
+  userModel: UserModel;
+  listPrivileges = [];
+  isManageUserGroups;
   constructor(
     private alertService: AlertService,
     private modalService: BsModalService,
@@ -83,10 +87,19 @@ export class GroupUserDetailComponent implements OnInit {
     private spinner: NgxSpinnerService,
     private confirmationService: ConfirmationService,
     private userService: UserService,
-    private sessionService: SessionService
+    private sessionService: SessionService,
+    private router: Router
   ) { }
 
   ngOnInit() {
+    this.userModel = this.sessionService.userInfo;
+    this.listPrivileges = this.userModel.privileges;
+    if (this.listPrivileges) {
+      this.isManageUserGroups = this.listPrivileges.some(x => x === 'ManageUserGroups');
+    }
+    if (!this.isManageUserGroups) {
+      this.router.navigate(['/no-permission']);
+    }
     this.isQTV = false;
     this.hideInput = false;
     this.isAddNewGroup = false;
@@ -202,7 +215,6 @@ export class GroupUserDetailComponent implements OnInit {
   }
 
   openModalDelete(idGroupUser: number, template: TemplateRef<any>) {
-    console.log('idGroupUser', idGroupUser);
     if (this.listGroupUser.some(i => i.checkbox && (i.checkbox === true))) {
       this.modalRef = this.modalService.show(template);
     } else {
@@ -382,7 +394,6 @@ export class GroupUserDetailComponent implements OnInit {
         this.arayChangeprivilegesTempNot.arayChangeprivileges.push(object);
       }
     }
-    console.log('this.arayChangeprivilegesTempNot', this.arayChangeprivilegesTempNot);
   }
 
   selectEachFieldNotNewUser(event) {
@@ -412,7 +423,6 @@ export class GroupUserDetailComponent implements OnInit {
         arayChangeprivileges: [],
       };
     }
-    console.log('this.arayChangeprivilegesTemp', this.arayChangeprivilegesTemp, this.groupUserNew);
   }
 
   changePrivilegesNewUse() {
@@ -468,7 +478,7 @@ export class GroupUserDetailComponent implements OnInit {
     //   }
     // }
 
-    event.forEach( i => this.arayChangeprivilegesTempNot.arayChangeprivileges.push(i) );
+    event.forEach(i => this.arayChangeprivilegesTempNot.arayChangeprivileges.push(i));
     this.arayChangeprivilegesTempNot.point = true;
     this.arayChangeprivilegesTemp.point = false;
   }
@@ -484,7 +494,7 @@ export class GroupUserDetailComponent implements OnInit {
     //     this.arayChangeprivilegesTemp.arayChangeprivileges.push(object);
     //   }
     // }
-    event.forEach( i => this.arayChangeprivilegesTemp.arayChangeprivileges.push(i) );
+    event.forEach(i => this.arayChangeprivilegesTemp.arayChangeprivileges.push(i));
     this.arayChangeprivilegesTemp.point = true;
     this.arayChangeprivilegesTempNot.point = false;
   }
@@ -514,7 +524,6 @@ export class GroupUserDetailComponent implements OnInit {
       this.groupEditOrCreate.privileges = stringFilter.map(i => JSON.parse(i));
       // const a = ['1', '2', '3'];
       // const b = ['1', '2'];
-      // console.log('TEST', a.filter(i => !b.includes(i)) );
       this.arayChangeprivilegesTempNot = {
         point: false,
         idGroupCurrent: null,
@@ -645,11 +654,8 @@ export class GroupUserDetailComponent implements OnInit {
       };
 
     }
-    this.groupSlected = this.listGroupUser.filter( elemnt => elemnt.id ===  ids)[0];
-    console.log('this.listGroupUser', this.listGroupUser, this.groupSlected);
-    console.log('(this.groupSlected.isUsing === true)', this.groupSlected.isUsing , (this.groupSlected.isUsing === true) ? 'a' : 'b');
+    this.groupSlected = this.listGroupUser.filter(elemnt => elemnt.id === ids)[0];
     this.confirmationService.confirm(
-      // console.log(this.pagedResult.items.filter( i => i.id === ids));
       // this.pagedResult.items ? 'Bạn có chắc chắn muốn xóa nhóm người dùng này?' : 'Nhóm người dùng $'
       (this.groupSlected.isUsing === true) ? `Nhóm người dùng "${this.groupSlected.name}" đã được sử dụng, bạn có chắc chắn muốn xóa?`
         : 'Bạn có chắc chắn muốn xóa nhóm người dùng này?',
@@ -699,7 +705,6 @@ export class GroupUserDetailComponent implements OnInit {
   }
 
   multiDelete() {
-    console.log(this.listGroupUser);
     const deleteIds = this.listGroupUser
       .filter(x => x.checkboxSelected)
       .map(x => {
