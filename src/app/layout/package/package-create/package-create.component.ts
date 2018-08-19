@@ -24,26 +24,17 @@ export class PackageCreateComponent implements OnInit {
     }
 
     ngOnInit() {
-        // this.sessionService.getUserInfo().subscribe(result => {
-        //     this.userModel = result;
-        //     this.listPrivileges = this.userModel.privileges;
-        //     if (this.listPrivileges) {
-        //         this.isManageBidOpportunitys = this.listPrivileges.some(x => x === 'ManageBidOpportunitys');
-        //         this.isCreateBidOpportunity = this.listPrivileges.some(x => x === 'CreateBidOpportunity');
-        //         if (!this.isCreateBidOpportunity) {
-        //             this.router.navigate(['/no-permission']);
-        //         }
-        //     }
-        // });
-        this.userModel = this.sessionService.userInfo;
-        this.listPrivileges = this.userModel.privileges;
-        if (this.listPrivileges) {
-            this.isManageBidOpportunitys = this.listPrivileges.some(x => x === 'ManageBidOpportunitys');
-            this.isCreateBidOpportunity = this.listPrivileges.some(x => x === 'CreateBidOpportunity');
-            if (!this.isCreateBidOpportunity) {
-                this.router.navigate(['/no-permission']);
+        setTimeout(() => {
+            this.userModel = this.sessionService.userInfo;
+            this.listPrivileges = this.userModel.privileges;
+            if (this.listPrivileges) {
+                this.isManageBidOpportunitys = this.listPrivileges.some(x => x === 'ManageBidOpportunitys');
+                this.isCreateBidOpportunity = this.listPrivileges.some(x => x === 'CreateBidOpportunity');
+                if (!this.isCreateBidOpportunity) {
+                    this.router.navigate(['/no-permission']);
+                }
             }
-        }
+        }, 300);
 
     }
 
