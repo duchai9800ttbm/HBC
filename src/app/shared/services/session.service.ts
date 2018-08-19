@@ -7,6 +7,7 @@ import { NotificationItem } from "../models/index";
 export class SessionService {
     private userSubject = new Subject<UserModel>();
     private avatarSubject = new Subject<string>();
+    private avatarUserSubject = new Subject<UserModel>();
     getToken(): String {
         return this.currentSession && `${this.currentSession.tokenType} ${this.currentSession.accessToken}`;
     }
@@ -48,6 +49,14 @@ export class SessionService {
     saveUserInfo(userInfo: UserModel) {
         this.userSubject.next(userInfo);
         window.localStorage['userInfo'] = JSON.stringify(userInfo);
+    }
+
+    saveAvatarUser(userInfo: UserModel) {
+        this.avatarUserSubject.next(userInfo);
+        window.localStorage['userInfo'] = JSON.stringify(userInfo);
+    }
+    watchAvatarUser(): Observable<UserModel> {
+        return this.avatarUserSubject;
     }
 
     saveAvatarContact(avatarString: string) {

@@ -305,5 +305,7 @@
     "CreateBidOpportunity": "Tạo mới gói thầu",
     "EditBidOpportunity": "Sửa gói thầu",
     "DeleteBidOpportunity": "Xóa gói thầu",
-    "ManageBidOpportunitys": "Quản lý gói thầu"
+    "ManageBidOpportunitys": "Quản lý gói thầu",
+    "ManagerUsers": "Quản lý người dùng",
+    "ManageUserGroups": "Quản lý nhóm người dùng"
 }

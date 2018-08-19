@@ -35,7 +35,7 @@ export class UserAvatarModalComponent implements OnInit {
     const imageFile = fetch(this.croppedImage).then(res => res.blob()).then(blob => {
       const file = new File([blob], 'avatar');
       this.userService.upLoadAvatar(file).subscribe(res => {
-        this.sessionService.saveUserInfo(res);
+        this.sessionService.saveAvatarUser(res.result);
         this.activeModal.close();
         this.alertService.success('Cập nhật ảnh đại diện thành công!');
       });

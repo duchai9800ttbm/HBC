@@ -144,21 +144,21 @@ export class PackageListComponent implements OnInit, AfterViewChecked {
         this.filterModel.chairEmployeeId = '';
         this.dtOptions = DATATABLE_CONFIG;
 
-        this.sessionService.getUserInfo().subscribe(result => {
-            this.userModel = result;
-            this.listPrivileges = this.userModel.privileges;
-            if (this.listPrivileges) {
-                this.isManageBidOpportunitys = this.listPrivileges.some(x => x === 'ManageBidOpportunitys');
-                this.isViewBidOpportunitys = this.listPrivileges.some(x => x === 'ViewBidOpportunitys');
-                this.isCreateBidOpportunity = this.listPrivileges.some(x => x === 'CreateBidOpportunity');
-                this.isDeleteBidOpportunity = this.listPrivileges.some(x => x === 'DeleteBidOpportunity');
-                this.isEditBidOpportunity = this.listPrivileges.some(x => x === 'EditBidOpportunity');
-                this.isViewBidOpportunityDetail = this.listPrivileges.some(x => x === 'ViewBidOpportunityDetail');
-                if (!this.isManageBidOpportunitys) {
-                    this.router.navigate(['/no-permission']);
-                }
-            }
-        });
+        // this.sessionService.getUserInfo().subscribe(result => {
+        //     this.userModel = result;
+        //     this.listPrivileges = this.userModel.privileges;
+        //     if (this.listPrivileges) {
+        //         this.isManageBidOpportunitys = this.listPrivileges.some(x => x === 'ManageBidOpportunitys');
+        //         this.isViewBidOpportunitys = this.listPrivileges.some(x => x === 'ViewBidOpportunitys');
+        //         this.isCreateBidOpportunity = this.listPrivileges.some(x => x === 'CreateBidOpportunity');
+        //         this.isDeleteBidOpportunity = this.listPrivileges.some(x => x === 'DeleteBidOpportunity');
+        //         this.isEditBidOpportunity = this.listPrivileges.some(x => x === 'EditBidOpportunity');
+        //         this.isViewBidOpportunityDetail = this.listPrivileges.some(x => x === 'ViewBidOpportunityDetail');
+        //         if (!this.isManageBidOpportunitys) {
+        //             this.router.navigate(['/no-permission']);
+        //         }
+        //     }
+        // });
         this.userModel = this.sessionService.userInfo;
         this.listPrivileges = this.userModel.privileges;
         if (this.listPrivileges) {
