@@ -2,9 +2,8 @@
   <div class="table-body">
     <div class="row menu">
       <div class="col-md-6">
-        <h4 class="text-head-user">
-          Danh sách nhóm người dùng
-        </h4>
+          <h5 class="d-inline mb-0 mr-auto text-dark text-uppercase">danh sách nhóm người dùng </h5>
+
       </div>
       <div class="col-md-6">
         <div class="btn-toolbar pull-right menu" style="flex-wrap: nowrap;">
@@ -74,13 +73,16 @@
             <td class="text-truncate">
               {{item.isUsing === true ? 'Đã sử dụng' : 'Chưa sử dụng'}}
             </td>
-            <td class="row">
-              <div class="col-md-6 center-parent cursor-pointer" (click)="openModalEdit(item.id, edit)">
-                <i [title]="'Sửa'" class="fa fa-pencil cursor-pointer" style="color: #1e7e34"></i>
+            <td class="text-truncate">
+              <div class="center-parent w-100 h-100">
+                  <div class="col-md-6 center-parent cursor-pointer" (click)="openModalEdit(item.id, edit)">
+                      <i [title]="'Sửa'" class="fa fa-pencil cursor-pointer" style="color: #1e7e34"></i>
+                    </div>
+                    <div class="col-md-6 center-parent cursor-pointer" (click)="delete(item.id)">
+                      <i [title]="'Xóa'" class="fa fa-trash-o point cursor-pointer"></i>
+                    </div>
               </div>
-              <div class="col-md-6 center-parent cursor-pointer" (click)="delete(item.id)">
-                <i [title]="'Xóa'" class="fa fa-trash-o point cursor-pointer"></i>
-              </div>
+             
             </td>
           </tr>
         </tbody>

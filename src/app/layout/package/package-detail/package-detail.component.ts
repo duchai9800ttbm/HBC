@@ -38,18 +38,18 @@ export class PackageDetailComponent implements OnInit {
   isEditBidOpportunity;
   isViewBidOpportunityDetail;
   ngOnInit() {
-    this.sessionService.getUserInfo().subscribe(result => {
-      this.userModel = result;
-      this.listPrivileges = this.userModel.privileges;
-      if (this.listPrivileges) {
-        this.isManageBidOpportunitys = this.listPrivileges.some(x => x === 'ManageBidOpportunitys');
-        this.isEditBidOpportunity = this.listPrivileges.some(x => x === 'EditBidOpportunity');
-        this.isViewBidOpportunityDetail = this.listPrivileges.some(x => x === 'ViewBidOpportunityDetail');
-        if (!this.isEditBidOpportunity && !this.isViewBidOpportunityDetail) {
-          this.router.navigate(['/no-permission']);
-        }
-      }
-    });
+    // this.sessionService.getUserInfo().subscribe(result => {
+    //   this.userModel = result;
+    //   this.listPrivileges = this.userModel.privileges;
+    //   if (this.listPrivileges) {
+    //     this.isManageBidOpportunitys = this.listPrivileges.some(x => x === 'ManageBidOpportunitys');
+    //     this.isEditBidOpportunity = this.listPrivileges.some(x => x === 'EditBidOpportunity');
+    //     this.isViewBidOpportunityDetail = this.listPrivileges.some(x => x === 'ViewBidOpportunityDetail');
+    //     if (!this.isEditBidOpportunity && !this.isViewBidOpportunityDetail) {
+    //       this.router.navigate(['/no-permission']);
+    //     }
+    //   }
+    // });
     this.userModel = this.sessionService.userInfo;
     this.listPrivileges = this.userModel.privileges;
     if (this.listPrivileges) {
