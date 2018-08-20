@@ -42,7 +42,6 @@ export class UserProfileComponent implements OnInit {
     this.userProfile = this.sessionService.userInfo;
     this.createForm();
     const that = this;
-    console.log(this.userProfile);
     this.avatarSrc = this.userProfile.avatar ? this.userProfile.avatar : defaultAvatarSrc;
     this.sessionService
       .watchAvatarUser()
@@ -55,8 +54,8 @@ export class UserProfileComponent implements OnInit {
 
   createForm() {
     this.userProfileForm = this.fb.group({
-      lastName: [this.userProfile.userName, Validators.required],
-      firstName: [this.userProfile.userName, Validators.required],
+      lastName: [this.userProfile.lastName, Validators.required],
+      firstName: [this.userProfile.firstName, Validators.required],
       phone: [this.userProfile.phoneNumber, CustomValidator.phoneNumber],
       email: [this.userProfile.email, CustomValidator.emailOrEmpty],
       // dob: this.userProfile.dob,

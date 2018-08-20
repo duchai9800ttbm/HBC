@@ -66,8 +66,6 @@ export class DocumentReviewService {
             month = moment(filterModel.createDate).get('month') + 1;
             year = moment(filterModel.createDate).get('year');
         }
-        console.log(filterModel);
-        console.log(source);
         return this.filterService
             .transform(source,
                 {
@@ -83,7 +81,6 @@ export class DocumentReviewService {
     download(bidReviewDocumentId: number) {
         const url = `bidreviewdocument/${bidReviewDocumentId}/download`;
         return this.apiService.getFile(url).map(response => {
-            console.log(response.file);
             return FileSaver.saveAs(
                 new Blob([response.file], {
                     type: `${response.file.type}`,
@@ -99,7 +96,6 @@ export class DocumentReviewService {
     downloadTemplate() {
         const url = `bidreviewdocument/template/downoad`;
         return this.apiService.getFile(url).map(response => {
-            console.log(response.file);
             return FileSaver.saveAs(
                 new Blob([response.file], {
                     type: `${response.file.type}`,

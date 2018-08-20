@@ -124,7 +124,6 @@ export class ApiService {
     }
 
     post(path: string, body: Object = {}): Observable<any> {
-        console.log('`${environment.api_endpoint}${path}`', `${environment.api_endpoint}${path}`);
         return this.http
             .post(`${environment.api_endpoint}${path}`, JSON.stringify(body), {
                 headers: this.setHeaders(),

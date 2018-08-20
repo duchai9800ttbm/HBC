@@ -86,7 +86,6 @@ export class EnterActiveCodeComponent implements OnInit, OnDestroy {
         .validateActiveCode(code, this.email)
         .subscribe(
           data => {
-            console.log('token', data);
             if (data) {
               // this.userService.deleteEmail();
               this.router.navigate(['/login/forgot-password/reset-password'], { queryParams: {

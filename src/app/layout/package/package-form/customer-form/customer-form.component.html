@@ -136,7 +136,7 @@
                                     </td>
                                     <td class="w-15 bg-light text-right label no-boder">Số điện thoại PBQL</td>
                                     <td class="w-35 no-boder">
-                                        <input appInputNumber class="w-75 form-control" [class.is-invalid]="formErrors.manageDepartmentPhone"  tabindex="1" type="text"
+                                        <input appInputNumber class="w-75 form-control" [class.is-invalid]="formErrors.manageDepartmentPhone" tabindex="1" type="text"
                                             formControlName="manageDepartmentPhone">
                                         <div class="invalid-feedback" *ngIf="formErrors.manageDepartmentPhone">
                                             {{formErrors.manageDepartmentPhone}}
@@ -159,17 +159,21 @@
                                     </td>
                                 </tr>
                                 <tr>
-                                    <td class="w-15 bg-light text-right required label no-boder">Liên hệ</td>
+                                    <td class="w-15 bg-light text-right label no-boder">Liên hệ</td>
                                     <td class="w-75 no-boder">
                                         <div class="w-75 autocomplete-wrapper-2 ui-fluid">
-                                            <p-autoComplete formControlName="customerContactId" [suggestions]="contactsSearchResults" [forceSelection]="true" [delay]="'400'" [emptyMessage]="'Không có dữ liệu'"
-                                                placeholder="---Chọn---" [immutable]="true" (completeMethod)="searchContacts($event.query)"
-                                                field="text" dataKey="id" [multiple]="false" [tabindex]="'5'">
+                                            <p-autoComplete formControlName="customerContactId" [suggestions]="contactsSearchResults" [forceSelection]="true" [delay]="'400'"
+                                                [emptyMessage]="'Không có dữ liệu'" placeholder="---Chọn---" [immutable]="true"
+                                                (completeMethod)="searchContacts($event.query)" field="text" dataKey="id" [multiple]="false"
+                                                [tabindex]="'5'">
 
                                             </p-autoComplete>
                                             <span class="input-group-addon center-parent" style="min-width: 40.5px!important;">
                                                 <i class="fa fa-search"></i>
                                             </span>
+                                        </div>
+                                        <div class="invalid-feedback" *ngIf="formErrors.customerContactId">
+                                            {{formErrors.customerContactId}}
                                         </div>
                                     </td>
                                     <td class="w-15 bg-light text-right label no-boder">Quận</td>
@@ -216,6 +220,9 @@
                                                 <option *ngFor="let item of listClassify | async" [value]="item.id">{{item.text }}</option>
                                             </select>
                                         </span>
+                                        <div class="invalid-feedback" *ngIf="formErrors.type">
+                                            {{formErrors.type}}
+                                        </div>
                                     </td>
                                     <td class="w-15 bg-light text-right label no-boder"></td>
                                     <td class="w-35 no-boder"></td>

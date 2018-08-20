@@ -1,6 +1,8 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { routerTransition } from '../../router.animations';
 import { Router } from '../../../../node_modules/@angular/router';
+import { UserModel } from '../../shared/models/user/user.model';
+import { SessionService } from '../../shared/services/session.service';
 
 @Component({
     selector: 'app-settings',
@@ -9,6 +11,9 @@ import { Router } from '../../../../node_modules/@angular/router';
     animations: [routerTransition()]
 })
 export class SettingsComponent implements OnInit {
+    isManageSettings;
+    userModel: UserModel;
+    listPrivileges = [];
     @ViewChild('kMenuLink') menu: any;
     reasonList: any[] = [
         {
@@ -21,11 +26,19 @@ export class SettingsComponent implements OnInit {
         }
     ];
     constructor(
-        private router: Router
+        private router: Router,
+        private sessionService: SessionService
     ) {}
 
     ngOnInit() {
+        this.userModel = this.sessionService.userInfo;
+        this.listPrivileges = this.userModel.privileges;
+        if (this.listPrivileges) {
+          this.isManageSettings = this.listPrivileges.some(x => x === 'ManageSettings');
+        }
+        if (!this.isManageSettings) {
+            this.router.navigate(['/no-permission']);
+        }
         // this.router.
-        console.log(this.menu);
     }
 }

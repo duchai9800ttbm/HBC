@@ -171,7 +171,6 @@ export class CallCenterComponent implements OnInit, OnChanges {
           this.currentPhoneTwo = e.callernumber.toString();
           this.phoneNumber = e.callernumber;
           this.callCenterService.getObjectInfoByCallNumber(`0${e.callernumber}`).subscribe(res => {
-            console.log(res);
             if (res && res.length) {
               res.forEach(element => {
                 switch (element.objectType) {

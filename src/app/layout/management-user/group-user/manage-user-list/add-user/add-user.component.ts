@@ -132,7 +132,6 @@ export class AddUserComponent implements OnInit {
         };
       });
     });
-    console.log('this.formAddUser', this.formAddUser);
   }
 
   get addUser() { return this.formAddUser.controls; }
@@ -156,14 +155,12 @@ export class AddUserComponent implements OnInit {
         phoneNumber: this.formAddUser.value.phoneNumber,
         address: this.formAddUser.value.address,
       };
-      console.log('AddUser', dataUser);
       this.groupUserService.createOrUpdateUser(dataUser).subscribe(data => {
         const message = 'Thêm người dùng thành công';
         this.router.navigate([`/management-user/group-user/manage-user-list/manage-user`]);
         this.alertService.success(message);
       },
         err => {
-          console.log('massage-massage-massage', JSON.parse(err._body).errorMessage);
           if (JSON.parse(err._body).errorMessage === 'Tên đăng nhập của bạn trùng với tên đăng nhập của nhân viên khác!') {
             this.formErrors.userName = 'Tên đăng nhập trùng với tên đăng nhập của nhân viên khác!';
           }
@@ -178,7 +175,6 @@ export class AddUserComponent implements OnInit {
       this.formAddUser,
       this.formErrors,
     );
-    console.log('this.invalidMessages', this.invalidMessages);
     return this.invalidMessages.length === 0;
   }
 
@@ -203,7 +199,6 @@ export class AddUserComponent implements OnInit {
       isActive: true,
       notPrivileges: this.listPrivilegesData,
     };
-    console.log('this.listPrivilegesData', this.listPrivilegesData);
     this.modalRef = this.modalService.show(template, {
       class: 'gray modal-lg'
     });

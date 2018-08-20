@@ -1,19 +1,22 @@
-.boder-table{
-    border: 1px solid #dadada;
-    padding: 20px 15px 35px 15px;
+.layout-table{
+    table-layout: fixed;
+}
+.cus-but{
+    float: right;
 }
 .textarea-content{
     resize: none;
     width: 88%;
 }
-.cus-but{
-    float: right;
+.boder-table{
+    border: 1px solid #dadada;
+    padding: 20px 15px 35px 15px;
 }
 .no-boder{
     border: none;
 }
-.layout-table{
-    table-layout: fixed;
+.form-control{
+    min-height: 33px;
 }
 @media only screen and (max-width: 1600px) {
     .zoom-form{

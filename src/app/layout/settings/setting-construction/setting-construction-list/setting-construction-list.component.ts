@@ -39,7 +39,6 @@ export class SettingConstructionListComponent implements OnInit {
     }
 
     public onSelectedKeysChange(e) {
-        console.log(this.mySelection);
     }
 
     deleteLocation(id: number) {

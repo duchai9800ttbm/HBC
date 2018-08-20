@@ -16,7 +16,6 @@ export class FengShuisInforComponent implements OnInit {
   ngOnInit() {
     this.fengShuisInforService.getFengShuisInfo(this.lunarBirthday, this.gender).subscribe(result => {
       this.fengShuisInforModel = result;
-      console.log(result);
     });
   }
 

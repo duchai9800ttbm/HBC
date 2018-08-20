@@ -86,7 +86,6 @@ export class LayoutComponent implements OnInit {
         dom.classList.add('sectionOut');
     }
     toggleMenu() {
-        console.log('togle');
         // 1-line if statement that toggles the value:
         const dom: Element = document.getElementById('main-container');
         this.menuState = this.menuState === 'out' ? 'in' : 'out';

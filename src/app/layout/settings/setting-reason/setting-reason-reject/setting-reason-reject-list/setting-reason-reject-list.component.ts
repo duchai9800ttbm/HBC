@@ -44,7 +44,6 @@ export class SettingReasonRejectListComponent implements OnInit {
     }
 
     public onSelectedKeysChange(e) {
-        console.log(this.mySelection);
     }
 
     deleteReasonCancel(id: number) {

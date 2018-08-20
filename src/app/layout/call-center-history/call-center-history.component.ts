@@ -29,7 +29,6 @@ export class CallCenterHistoryComponent implements OnInit {
   ngOnInit() {
     this.callCenterHistoryService.currentCall.subscribe(result => {
       this.callModel = result;
-      console.log(result);
       if (this.callModel.phoneStatus !== 'Start' && this.callModel.phoneStatus !== 'DialAnswer') {
         this.phoneNumber = this.callModel.phoneNumber;
         this.showInfoCallHistory(this.callModel);

@@ -18,6 +18,7 @@ import { UserItemModel } from '../../../../shared/models/user/user-item.model';
 })
 export class CustomerFormComponent implements OnInit {
     @Output() closed = new EventEmitter<boolean>();
+    @Output() returnCustomer = new EventEmitter<DictionaryItem>();
     customerForm: FormGroup;
     // validate
     formErrors = {
@@ -44,7 +45,6 @@ export class CustomerFormComponent implements OnInit {
     isSubmitted: boolean;
 
     public close(status) {
-        console.log('status', status);
         this.closed.emit(false);
     }
 
@@ -75,11 +75,11 @@ export class CustomerFormComponent implements OnInit {
             name: [this.customer.name, Validators.required],
             website: this.customer.website,
             email: [this.customer.email, CustomValidator.emailOrEmpty],
-            phone: [this.customer.phone, CustomValidator.phoneNumber],
+            phone: [this.customer.phone, [Validators.required, CustomValidator.phoneNumber]],
             taxNumber: [this.customer.taxNumber, CustomValidator.taxNumber],
             stockCode: [this.customer.stockCode],
             startWorkingFromDate: [this.customer.startWorkingFromDate],
-            type: [this.customer.type],
+            type: [this.customer.type, Validators.required],
             address: [this.customer.address],
             assignedEmployeeID: [this.customer.assignedEmployeeID],
             customerContactId: [this.customer.customerContactId],
@@ -109,13 +109,18 @@ export class CustomerFormComponent implements OnInit {
     }
     submitForm() {
         this.isSubmitted = true;
-       // rating component cannot using with reactive form, so manually set value
-       this.customerForm.get('evaluate').patchValue(this.rating);
+        // rating component cannot using with reactive form, so manually set value
+        this.customerForm.get('evaluate').patchValue(this.rating);
         if (this.validateForm()) {
             this.packageService
                 .createCustomer(this.customerForm.value)
-                .subscribe(result => {
+                .subscribe(res => {
                     // const message = 'Khách hàng đã được tạo.';
+                    const obj = {
+                        id: res.customerId,
+                        text: res.customerName
+                    };
+                    this.returnCustomer.emit(obj);
                     this.closed.emit(true);
                     // this.alertService.success(message);
                 });

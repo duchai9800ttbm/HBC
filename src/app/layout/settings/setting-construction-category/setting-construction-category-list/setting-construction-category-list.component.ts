@@ -39,7 +39,6 @@ export class SettingConstructionCategoryListComponent implements OnInit {
     }
 
     public onSelectedKeysChange(e) {
-        console.log(this.mySelection);
     }
 
     deleteConstructionCategory(id: number) {

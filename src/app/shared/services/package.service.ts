@@ -17,18 +17,8 @@ import { Subject } from '../../../../node_modules/rxjs';
 
 @Injectable()
 export class PackageService {
-
-    constructor(
-        private filterService: FilterPipe,
-        private instantSearchService: InstantSearchService,
-        private apiService: ApiService,
-    ) { }
-
     private userIdSub = new Subject<any>();
     userId$ = this.userIdSub.asObservable();
-    setUserId(data:boolean) {
-        this.userIdSub.next(data);
-      }
     private static createFilterParams(filter: PackageFilter): URLSearchParams {
         const urlFilterParams = new URLSearchParams();
         urlFilterParams.append('projectName', filter.projectName);
@@ -40,7 +30,7 @@ export class PackageService {
         urlFilterParams.append('sorting', filter.sorting);
         return urlFilterParams;
     }
-    
+
     private static toPackageListItem(result: any): PackageListItem {
         return {
             id: result.id,
@@ -103,6 +93,18 @@ export class PackageService {
         };
     }
 
+    constructor(
+        private filterService: FilterPipe,
+        private instantSearchService: InstantSearchService,
+        private apiService: ApiService,
+    ) { }
+
+    setUserId(data: boolean) {
+        this.userIdSub.next(data);
+    }
+
+
+
 
     filter(terms: string, status: string, uploader: string, uploadDate: number, source: any[]): any[] {
         const list = this.convertNestedJson(source);
@@ -119,10 +121,8 @@ export class PackageService {
         const filterUrl = `bidopportunity/filter/${page}/${pageSize}?searchTerm=`;
         const urlParams = PackageService.createFilterParams(filter);
         urlParams.append('search', searchTerm);
-        console.log('urlParams', urlParams);
         return this.apiService.get(filterUrl, urlParams).map(response => {
             const result = response.result;
-            console.log('filterList-result', result);
             return {
                 currentPage: result.pageIndex,
                 pageSize: result.pageSize,
@@ -229,7 +229,6 @@ export class PackageService {
             PackageService.createFilterParams(filter),
         )
             .map(result => {
-                console.log('result', result);
                 return {
                     currentPage: result.pageIndex,
                     pageSize: result.pageSize,
@@ -486,7 +485,6 @@ export class PackageService {
             totalTime: formValue.totalTime,
             description: formValue.description
         };
-        console.log('inforPackage', inforPackage);
         return this.apiService.post(url, inforPackage)
             .map(response => response)
             .share();

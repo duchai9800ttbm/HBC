@@ -4,8 +4,8 @@ import { AppComponent } from './app.component';
 import { AuthGuard } from './shared/services';
 
 const routes: Routes = [
-    // { path: '', loadChildren: './layout/layout.module#LayoutModule', canActivate: [AuthGuard] },
-    { path: '', loadChildren: './layout/layout.module#LayoutModule' },
+    { path: '', loadChildren: './layout/layout.module#LayoutModule', canActivate: [AuthGuard] },
+    //  { path: '', loadChildren: './layout/layout.module#LayoutModule' },
     { path: 'login', loadChildren: './login/login.module#LoginModule' },
     //  { path: 'forgot-password', loadChildren: './forgot-password/forgot-password.module#ForgotPasswordModule' },
     { path: 'branch', loadChildren: './branch-selection/branch-selection.module#BranchSelectionModule' },

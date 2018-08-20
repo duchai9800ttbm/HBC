@@ -25,7 +25,6 @@ export class HeaderUserMenuComponent implements OnInit {
   ngOnInit() {
     this.avatarSrc = this.sessionService.userInfo.avatar ? this.sessionService.userInfo.avatar : defaultAvatarSrc;
     this.userInfo = this.sessionService.userInfo;
-    console.log('header', this.userInfo);
     const that = this;
     this.sessionService.getUserInfo().subscribe(user => {
       this.userInfo = user;
