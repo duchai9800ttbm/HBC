@@ -119,7 +119,6 @@ export class CustomerFormComponent implements OnInit {
   listClassify: Observable<DictionaryItem[]>;
   contactsSearchResults: DictionaryItem[];
   public close(status) {
-    console.log('status', status);
     this.closed.emit(false);
   }
 

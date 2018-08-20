@@ -22,7 +22,6 @@ export class PackageDetailInfoComponent implements OnInit {
     //     this.packageData = i;
     //   }
     // });
-    // console.log(this.packageData);
   }
 
 }

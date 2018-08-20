@@ -13,7 +13,6 @@ export class ResetPasswordComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    console.log('message-messagemessagemessage', this.message);
   }
 
 }

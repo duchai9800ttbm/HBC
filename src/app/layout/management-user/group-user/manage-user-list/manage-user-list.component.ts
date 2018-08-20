@@ -2,6 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { GroupUserModel } from '../../../../shared/models/user/group-user.model';
 import { GridDataResult, PageChangeEvent } from '@progress/kendo-angular-grid';
 import { GroupUserService } from '../../../../shared/services/group-user.service'
+import { Router } from '@angular/router';
+import { UserModel } from '../../../../shared/models/user/user.model';
+import { SessionService } from '../../../../shared/services';
 
 @Component({
   selector: 'app-manage-user-list',
@@ -10,21 +13,26 @@ import { GroupUserService } from '../../../../shared/services/group-user.service
 })
 export class ManageUserListComponent implements OnInit {
 
-  public mySelection: number[] = [];
-  public pageSize = 10;
-  public skip = 0;
-  total: number;
-  groups: Array<{ name: string; id: number }> = [
-    { id: 1, name: 'Admin' },
-    { id: 2, name: 'Nhóm lưu trữ' }
-  ];
-  constructor(private groupUserService: GroupUserService) {
+  userModel: UserModel;
+  listPrivileges = [];
+  isManageUsers;
+  constructor(
+    private router: Router,
+    private sessionService: SessionService,
+  ) {
 
   }
 
   ngOnInit() {
-
-  };
+    this.userModel = this.sessionService.userInfo;
+    this.listPrivileges = this.userModel.privileges;
+    if (this.listPrivileges) {
+      this.isManageUsers = this.listPrivileges.some(x => x === 'ManagerUsers');
+    }
+    if (!this.isManageUsers) {
+      this.router.navigate(['/no-permission']);
+    }
+  }
 
 
 

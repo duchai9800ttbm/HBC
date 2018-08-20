@@ -44,7 +44,6 @@ export class SettingReasonLoseListComponent implements OnInit {
     }
 
     public onSelectedKeysChange(e) {
-        console.log(this.mySelection);
     }
 
     deleteReasonLose(id: number) {

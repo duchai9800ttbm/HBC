@@ -126,13 +126,6 @@ export class PackageListComponent implements OnInit, AfterViewChecked {
     }
     ngOnInit() {
         window.scrollTo(0, 0);
-
-        // Authen
-
-
-
-
-        //
         this.refreshPopupConfig();
         this.listClassifyCustomer = this.dataService.getListOpportunityClassifies();
         this.listPhasePackage = this.dataService.getListBidOpportunityStages();
@@ -144,8 +137,8 @@ export class PackageListComponent implements OnInit, AfterViewChecked {
         this.filterModel.chairEmployeeId = '';
         this.dtOptions = DATATABLE_CONFIG;
 
-        this.sessionService.getUserInfo().subscribe(result => {
-            this.userModel = result;
+        setTimeout(() => {
+            this.userModel = this.sessionService.userInfo;
             this.listPrivileges = this.userModel.privileges;
             if (this.listPrivileges) {
                 this.isManageBidOpportunitys = this.listPrivileges.some(x => x === 'ManageBidOpportunitys');
@@ -155,23 +148,10 @@ export class PackageListComponent implements OnInit, AfterViewChecked {
                 this.isEditBidOpportunity = this.listPrivileges.some(x => x === 'EditBidOpportunity');
                 this.isViewBidOpportunityDetail = this.listPrivileges.some(x => x === 'ViewBidOpportunityDetail');
                 if (!this.isManageBidOpportunitys) {
-                    this.router.navigate(['/not-found']);
+                    this.router.navigate(['/no-permission']);
                 }
             }
-        });
-        this.userModel = this.sessionService.userInfo;
-        this.listPrivileges = this.userModel.privileges;
-        if (this.listPrivileges) {
-            this.isManageBidOpportunitys = this.listPrivileges.some(x => x === 'ManageBidOpportunitys');
-            this.isViewBidOpportunitys = this.listPrivileges.some(x => x === 'ViewBidOpportunitys');
-            this.isCreateBidOpportunity = this.listPrivileges.some(x => x === 'CreateBidOpportunity');
-            this.isDeleteBidOpportunity = this.listPrivileges.some(x => x === 'DeleteBidOpportunity');
-            this.isEditBidOpportunity = this.listPrivileges.some(x => x === 'EditBidOpportunity');
-            this.isViewBidOpportunityDetail = this.listPrivileges.some(x => x === 'ViewBidOpportunityDetail');
-            if (!this.isManageBidOpportunitys) {
-                this.router.navigate(['/not-found']);
-            }
-        }
+        }, 300);
         this.spinner.show();
         this.packageService
             .instantSearchWithFilter(this.searchTerm$, this.filterModel, 0, 10)
@@ -204,7 +184,6 @@ export class PackageListComponent implements OnInit, AfterViewChecked {
     }
 
     delete(id: number) {
-        console.log('sdasd',id);
         const that = this;
         this.confirmationService.confirm(
             'Bạn có chắc chắn muốn xóa gói thầu này?',
@@ -235,12 +214,11 @@ export class PackageListComponent implements OnInit, AfterViewChecked {
                 'Bạn phải chọn ít nhất một đối tượng để xóa!'
             );
         } else {
-          //  this.delete(deleteIds);
+            //  this.delete(deleteIds);
         }
     }
 
     filter(clear: boolean = false) {
-        console.log('this.filterModel', this.filterModel);
         this.spinner.show();
         this.packageService
             .filterList(

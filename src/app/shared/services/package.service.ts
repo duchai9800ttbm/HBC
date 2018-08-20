@@ -119,10 +119,8 @@ export class PackageService {
         const filterUrl = `bidopportunity/filter/${page}/${pageSize}?searchTerm=`;
         const urlParams = PackageService.createFilterParams(filter);
         urlParams.append('search', searchTerm);
-        console.log('urlParams', urlParams);
         return this.apiService.get(filterUrl, urlParams).map(response => {
             const result = response.result;
-            console.log('filterList-result', result);
             return {
                 currentPage: result.pageIndex,
                 pageSize: result.pageSize,
@@ -229,7 +227,6 @@ export class PackageService {
             PackageService.createFilterParams(filter),
         )
             .map(result => {
-                console.log('result', result);
                 return {
                     currentPage: result.pageIndex,
                     pageSize: result.pageSize,
@@ -486,7 +483,6 @@ export class PackageService {
             totalTime: formValue.totalTime,
             description: formValue.description
         };
-        console.log('inforPackage', inforPackage);
         return this.apiService.post(url, inforPackage)
             .map(response => response)
             .share();

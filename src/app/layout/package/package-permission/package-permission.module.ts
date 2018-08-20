@@ -5,7 +5,7 @@ import { PackagePermissionRoutingModule } from './package-permission-routing.mod
 import { PackagePermissionComponent } from './package-permission.component';
 import { PackagePermissionUserComponent } from './package-permission-user/package-permission-user.component';
 import { SharedModule } from '../../../shared/shared.module';
-import { PackagePermissionAppreciationComponent } from './package-permission-appreciation/package-permission-appreciation.component';
+import { PackagePermissionReviewComponent } from './package-permission-review/package-permission-review.component';
 
 @NgModule({
   imports: [
@@ -13,6 +13,6 @@ import { PackagePermissionAppreciationComponent } from './package-permission-app
     SharedModule,
     PackagePermissionRoutingModule
   ],
-  declarations: [PackagePermissionComponent, PackagePermissionUserComponent, PackagePermissionAppreciationComponent]
+  declarations: [PackagePermissionComponent, PackagePermissionUserComponent, PackagePermissionReviewComponent]
 })
 export class PackagePermissionModule { }

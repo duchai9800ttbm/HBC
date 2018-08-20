@@ -12,13 +12,18 @@ import { MissPackageNoticeComponent } from './miss-package-notice/miss-package-n
 import { KickOffComponent } from './kick-off/kick-off.component';
 import { ImportantComponent } from './important/important.component';
 import { TrashComponent } from './trash/trash.component';
+import { PackageEmailComponent } from './package-email.component';
+import { SharedModule } from '../../../shared/shared.module';
 
 @NgModule({
   imports: [
     CommonModule,
-    PackageEmailRoutingModule
+    PackageEmailRoutingModule,
+    SharedModule,
+
   ],
   declarations: [
+    PackageEmailComponent,
     GiveUpComponent,
     AssignComponent,
     TransferDocumentComponent,

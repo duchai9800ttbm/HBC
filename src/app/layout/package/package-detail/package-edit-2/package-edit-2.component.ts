@@ -55,71 +55,9 @@ export class PackageEdit2Component implements OnInit {
     this.packageId = +PackageDetailComponent.packageId;
     window.scrollTo(0, 0);
     // this.createForm();
-    // console.log('this.datePickerConfig', this.datePickerConfig);
   }
 
-//   createForm() {
-//     this.packageForm = this.fb.group({
-//       projectName: [this.package.projectName, Validators.required],
-//       projectNo: [this.package.projectNo, Validators.required],
-//       opportunityName: [this.package.opportunityName, Validators.required],
-//       job: this.package.job,
-//       place: this.package.place,
-//       location: this.package.location,
-//       trimester: this.package.trimester,
-//       customer: this.package.customer,
-//       classify: this.package.classify,
-//       customerContact: this.package.customerContact,
-//       consultantUnit: this.package.consultantUnit,
-//       consultantAddress: this.package.consultantAddress,
-//       consultantPhone: this.package.consultantPhone,
 
-//       startTrackingDate: DateTimeConvertHelper.fromTimestampToDtObject(this.package.startTrackingDate),
-//       submissionDate: [DateTimeConvertHelper.fromTimestampToDtObject(this.package.submissionDate), Validators.required],
-//       resultEstimatedDate: [DateTimeConvertHelper.fromTimestampToDtObject(this.package.resultEstimatedDate), Validators.required],
-
-//       floorArea: this.package.floorArea,
-//       magnitude: this.package.magnitude,
-//       projectType: this.package.projectType,
-//       mainBuildingCategory: this.package.mainBuildingCategory,
-//       hbcRole: this.package.hbcRole,
-//       documentLink: this.package.documentLink,
-//       hbcChair: this.package.hbcChair,
-//       status: this.package.status,
-//       amount: this.package.amount,
-//       evaluation: this.package.evaluation,
-
-//       estimatedProjectStartDate: DateTimeConvertHelper.fromTimestampToDtObject(this.package.estimatedProjectStartDate),
-//       estimatedProjectEndDate: DateTimeConvertHelper.fromTimestampToDtObject(this.package.estimatedProjectEndDate),
-//       totalTime: this.package.totalTime,
-//       description: this.package.description,
-//     });
-//     console.log(this.packageForm);
-//     // this.onFormValueChanged(data);
-//   }
-
-//   submitForm() {
-//     this.isSubmitted = true;
-//     if (this.validateForm()) {
-//       const message = this.package.id
-//         ? 'Sự kiện đã được chỉnh sửa.'
-//         : 'Sự kiện đã được tạo.';
-//       this.alertService.success(message);
-//       console.log('TEST this.package.id', this.package.id);
-//       // this.activatedRoute.params.subscribe(params => console.log('params', params.id, this.package.id));
-//       if (this.package.id) {
-//         this.router.navigate([`/package/detail/${this.package.id}`]);
-//       } else {
-//         let maxID = FakePackageData[0].id;
-//         FakePackageData.forEach(i => {
-//           if (i.id > maxID) {
-//             maxID = i.id;
-//           }
-//         });
-//         this.router.navigate([`/package/detail/${maxID + 1}`]);
-//       }
-//     }
-//   }
 
   onFormValueChanged(data?: any) {
     if (this.isSubmitted) {
@@ -132,7 +70,6 @@ export class PackageEdit2Component implements OnInit {
       this.packageForm,
       this.formErrors,
     );
-    console.log('this.invalidMessages', this.invalidMessages);
     return this.invalidMessages.length === 0;
   }
 

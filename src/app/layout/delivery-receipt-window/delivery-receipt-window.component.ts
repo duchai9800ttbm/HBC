@@ -75,7 +75,6 @@ export class DeliveryReceiptWindowComponent implements OnInit {
                 i => i.id + '' === item.invoiceStatus
             ).text;
         });
-        console.log(this.deliveryReceiptPageData.items);
         this.gridView = process(this.deliveryReceiptPageData.items, { group: this.groups });
     }
 

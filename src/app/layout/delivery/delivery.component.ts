@@ -47,7 +47,6 @@ export class DeliveryComponent implements OnInit {
     ngOnInit() {
         this.route.params.subscribe(data => {
             this.customerService.view(data.id).subscribe(customer => {
-                console.log(customer);
                 this.currentCustomer = customer;
             });
             this.dataService.getListInvoiceStatus().subscribe(invoiceStatus => {
@@ -98,7 +97,6 @@ export class DeliveryComponent implements OnInit {
                 i => i.id + '' === item.invoiceStatus
             ).text;
         });
-        console.log(this.deliveryReceiptPageData.items);
         this.gridView = process(this.deliveryReceiptPageData.items, { group: this.groups });
     }
 

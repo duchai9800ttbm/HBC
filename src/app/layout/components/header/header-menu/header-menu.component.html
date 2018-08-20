@@ -29,12 +29,12 @@
             <a>QUẢN LÝ GÓI THẦU</a>
         </div>
     </div>
-    <div class="p-2 color-menu"  [routerLinkActive]="['router-link-active']" [routerLink]="['/management-user']">
+    <div class="p-2 color-menu" *ngIf="isManageUserGroups || isManageUsers" [routerLinkActive]="['router-link-active']" [routerLink]="['/management-user']">
         <div class="pad-content">
             <a>QUẢN LÝ NGƯỜI DÙNG</a>
         </div>
     </div>
-    <div class="p-2 color-menu"  [routerLinkActive]="['router-link-active']" [routerLink]="['/settings']">
+    <div class="p-2 color-menu" *ngIf="isManageSettings" [routerLinkActive]="['router-link-active']" [routerLink]="['/settings']">
         <div class="pad-content">
             <a>CÀI ĐẶT</a>
         </div>

@@ -2,9 +2,10 @@
     <form [formGroup]="packageForm" novalidate>
         <div class="title-detail center-parent">
             <div class="mr-auto col-md-12">
-                <div class="media-header header-title">
+                <div class="media-header header-title" style="padding-left: 0px;">
                     <a [routerLink]='["/package/list"]'>
-                        <i class="fa fa-chevron-left mr-3" aria-hidden="true"></i>
+                        <!-- <i class="fa fa-chevron-left mr-3" aria-hidden="true"></i> -->
+                        <img width="12" height="12" class="pointer not-outline" src="assets\images\nghia.png" style="margin-bottom: 1px;">
                     </a>
                     <h4 class="d-inline mb-0 text-dark">{{ package.id ? 'CHỈNH SỬA THÔNG TIN GÓI THẦU' : 'TẠO MỚI GÓI THẦU'}}</h4>
                     <span class="action-bar alignment-but">

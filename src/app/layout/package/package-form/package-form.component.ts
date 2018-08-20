@@ -134,7 +134,6 @@ export class PackageFormComponent implements OnInit {
 
     submitForm() {
         this.isSubmitted = true;
-        console.log(this.packageForm.value);
         if (this.validateForm()) {
             this.spinner.show();
             this.packageService

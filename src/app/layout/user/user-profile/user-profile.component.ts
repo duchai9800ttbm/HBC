@@ -42,28 +42,28 @@ export class UserProfileComponent implements OnInit {
     this.userProfile = this.sessionService.userInfo;
     this.createForm();
     const that = this;
-    this.avatarSrc = this.userProfile.avatarUrl ? `data:image/jpeg;base64,${this.userProfile.avatarUrl}` : defaultAvatarSrc;
+    this.avatarSrc = this.userProfile.avatar ? this.userProfile.avatar : defaultAvatarSrc;
     this.sessionService
-      .getUserInfo()
+      .watchAvatarUser()
       .subscribe(user => {
         that.userProfile = user;
-        that.avatarSrc = user.avatarUrl ? `data:image/jpeg;base64,${user.avatarUrl}` : defaultAvatarSrc;
+        this.avatarSrc = this.userProfile.avatar ? this.userProfile.avatar : defaultAvatarSrc;
       }
       );
   }
 
   createForm() {
     this.userProfileForm = this.fb.group({
-      lastName: [this.userProfile.userName, Validators.required],
-      firstName: [this.userProfile.userName, Validators.required],
+      lastName: [this.userProfile.lastName, Validators.required],
+      firstName: [this.userProfile.firstName, Validators.required],
       phone: [this.userProfile.phoneNumber, CustomValidator.phoneNumber],
       email: [this.userProfile.email, CustomValidator.emailOrEmpty],
       // dob: this.userProfile.dob,
       dob: '',
       gender: this.userProfile.gender,
       address: this.userProfile.address,
-      departmant: this.userProfile.department.text,
-      level: this.userProfile.level.text
+      departmant: this.userProfile.department ? this.userProfile.department.text : '',
+      level: this.userProfile.level ? this.userProfile.level.text : ''
     });
     this.userProfileForm.valueChanges
       .subscribe(data => this.onFormValueChanged(data));

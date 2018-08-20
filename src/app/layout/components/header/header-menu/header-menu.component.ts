@@ -15,29 +15,27 @@ export class HeaderMenuComponent implements OnInit {
   ) { }
   isManageBidOpportunitys;
   isManageUsers;
+  isManageUserGroups;
   isManageSettings;
   ngOnInit() {
-    this.sessionService.getUserInfo().subscribe(result => {
-      this.userModel = result;
-      if (!this.userModel) {
-
-      }
-      this.listPrivileges = this.userModel.privileges;
-      if (this.listPrivileges) {
-        this.isManageBidOpportunitys = this.listPrivileges.some(x => x === 'ManageBidOpportunitys');
-        this.isManageUsers = this.listPrivileges.some(x => x === 'ManageUsers');
-        this.isManageSettings = this.listPrivileges.some(x => x === 'ManageSettings');
-      }
-
-    });
     this.userModel = this.sessionService.userInfo;
     this.listPrivileges = this.userModel.privileges;
     if (this.listPrivileges) {
       this.isManageBidOpportunitys = this.listPrivileges.some(x => x === 'ManageBidOpportunitys');
-      this.isManageUsers = this.listPrivileges.some(x => x === 'ManageUsers');
+      this.isManageUsers = this.listPrivileges.some(x => x === 'ManagerUsers');
       this.isManageSettings = this.listPrivileges.some(x => x === 'ManageSettings');
+      this.isManageUserGroups = this.listPrivileges.some(x => x === 'ManageUserGroups');
     }
-
+    this.sessionService.getUserInfo().subscribe(result => {
+      this.userModel = result;
+      this.listPrivileges = this.userModel.privileges;
+      if (this.listPrivileges) {
+        this.isManageBidOpportunitys = this.listPrivileges.some(x => x === 'ManageBidOpportunitys');
+        this.isManageUsers = this.listPrivileges.some(x => x === 'ManagerUsers');
+        this.isManageSettings = this.listPrivileges.some(x => x === 'ManageSettings');
+        this.isManageUserGroups = this.listPrivileges.some(x => x === 'ManageUserGroups');
+      }
+    });
   }
 
 }

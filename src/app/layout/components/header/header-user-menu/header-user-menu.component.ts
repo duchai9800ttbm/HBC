@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { SessionService, ConfirmationService } from '../../../../shared/services/index';
+import { SessionService, ConfirmationService, UserService } from '../../../../shared/services/index';
 import { UserModel } from '../../../../shared/models/user/user.model';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ChangePasswordModalComponent } from '../../change-password-modal/change-password-modal.component';
@@ -17,22 +17,22 @@ export class HeaderUserMenuComponent implements OnInit {
     private sessionService: SessionService,
     private modalService: NgbModal,
     private confirmationService: ConfirmationService,
-    private router: Router
+    private router: Router,
+    private userService: UserService
   ) { }
 
   avatarSrc: string;
   ngOnInit() {
-    this.avatarSrc = this.sessionService.userInfo.avatarUrl ? `data:image/jpeg;base64,${this.sessionService.userInfo.avatarUrl}`
-      : defaultAvatarSrc;
-    //   this.userInfo = this.sessionService.userInfo;
+    this.avatarSrc = this.sessionService.userInfo.avatar ? this.sessionService.userInfo.avatar : defaultAvatarSrc;
+    this.userInfo = this.sessionService.userInfo;
     const that = this;
-    // this.sessionService
-    //   .getUserInfo()
-    //   .subscribe(user => {
-    //     that.userInfo = user;
-    //     that.avatarSrc = user.avatar ? `data:image/jpeg;base64,${user.avatar}` : defaultAvatarSrc;
-    //   }
-    //   );
+    this.sessionService.getUserInfo().subscribe(user => {
+      this.userInfo = user;
+      this.avatarSrc =  user.avatar ? user.avatar : defaultAvatarSrc;
+    });
+    this.sessionService.watchAvatarUser().subscribe(user => {
+      this.avatarSrc =  user.avatar ? user.avatar : defaultAvatarSrc;
+    });
   }
 
   onLoggedout() {

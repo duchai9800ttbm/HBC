@@ -1,6 +1,7 @@
 import { ListUserItem } from '../../shared/models/user/user-list-item.model';
 import { Injectable, OnInit } from '@angular/core';
 // import { Subject } from 'rxjs';
+// tslint:disable-next-line:import-blacklist
 import { Observable, BehaviorSubject } from 'rxjs';
 import { PagedResult } from '../models/paging-result.model';
 import { ApiService, SessionService } from '.';
@@ -107,7 +108,6 @@ export class GroupUserService implements OnInit {
     return this.apiService.get(url)
       .map(data => {
         const result = data.result;
-        console.log('result', result);
         return {
           id: result.id,
           userName: result.userName,
@@ -171,11 +171,9 @@ export class GroupUserService implements OnInit {
 
 
   createOrUpdateUser(data): Observable<any> {
-    console.log('tạo mới/update', data);
     const url = data.id ? `user/edit` : `user/create`;
-    console.log('url', url);
     return this.apiService.post(url, data)
-      .map( data => data.result);
+      .map( res => res.result);
   }
 
   // Search
@@ -290,14 +288,14 @@ export class GroupUserService implements OnInit {
     });
   }
   // Thêm mới nhóm người dùng
-  createGroupUser(inforGroupUser: GroupUserRequest): Observable<GroupUserResponse> {
+  createGroupUser(inforGroupUser: any): Observable<GroupUserResponse> {
     const url = `usergroup/create`;
     const requestModel = {
-      name: inforGroupUser.userGroupName,
+      name: inforGroupUser.userGroupName || inforGroupUser.name,
+      description: inforGroupUser.description,
       privilegeIds: inforGroupUser.privileges.map(i => Number(i.id)),
       isActive: true,
     };
-    console.log('requestModel', requestModel);
     return this.apiService.post(url, requestModel)
       .map(response => {
         const result = response.result;
@@ -337,7 +335,6 @@ export class GroupUserService implements OnInit {
   }
   // Chỉnh sửa nhóm người dùng
   editGroupUser(groupUser: any): Observable<any> {
-    console.log('groupUser', groupUser);
     const url = `usergroup/edit`;
     return this.apiService.post(url, groupUser);
   }

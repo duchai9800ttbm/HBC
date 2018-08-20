@@ -44,7 +44,6 @@ export class CustomerFormComponent implements OnInit {
     isSubmitted: boolean;
 
     public close(status) {
-        console.log('status', status);
         this.closed.emit(false);
     }
 

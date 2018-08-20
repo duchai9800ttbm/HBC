@@ -27,7 +27,6 @@ export class InformationComponent implements OnInit {
   ) { }
   ngOnInit() {
     this.currentPackageId = +PackageDetailComponent.packageId;
-    console.log('this.currentPackageId', this.currentPackageId);
     this.spinner.show();
     this.packageService.getInforPackageID(this.currentPackageId).subscribe(result => {
       this.package = result;
