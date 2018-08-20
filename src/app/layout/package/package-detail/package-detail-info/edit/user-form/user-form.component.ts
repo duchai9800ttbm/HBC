@@ -1,20 +1,20 @@
 import { Component, OnInit, EventEmitter, Output, TemplateRef } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { UserModel } from '../../../../shared/models/user/user.model';
-import { PackageService } from '../../../../shared/services/package.service';
-import { DataService, UserService, AlertService } from '../../../../shared/services';
-import ValidationHelper from '../../../../shared/helpers/validation.helper';
-import { DictionaryItem, DictionaryItemIdString } from '../../../../shared/models';
-import { GroupUserService } from '../../../../shared/services/group-user.service';
+import { UserModel } from '../../../../../../shared/models/user/user.model';
+import { DictionaryItem, DictionaryItemIdString } from '../../../../../../shared/models';
 // tslint:disable-next-line:import-blacklist
 import { Observable } from 'rxjs';
-import { DepartmentsFormBranches } from '../../../../shared/models/user/departments-from-branches';
-import { Levels } from '../../../../shared/models/user/levels';
-import { GroupUserModel } from '../../../../shared/models/user/group-user.model';
+import { DepartmentsFormBranches } from '../../../../../../shared/models/user/departments-from-branches';
+import { Levels } from '../../../../../../shared/models/user/levels';
+import { GroupUserModel } from '../../../../../../shared/models/user/group-user.model';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap';
-import CustomValidator from '../../../../shared/helpers/custom-validator.helper';
+import { GroupUserService } from '../../../../../../shared/services/group-user.service';
 import { Router } from '@angular/router';
+import { PackageService } from '../../../../../../shared/services/package.service';
+import { DataService, UserService, AlertService } from '../../../../../../shared/services';
 import { NgxSpinnerService } from 'ngx-spinner';
+import CustomValidator from '../../../../../../shared/helpers/custom-validator.helper';
+import ValidationHelper from '../../../../../../shared/helpers/validation.helper';
 
 @Component({
     selector: 'app-user-form',

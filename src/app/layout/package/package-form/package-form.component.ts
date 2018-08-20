@@ -188,8 +188,17 @@ export class PackageFormComponent implements OnInit {
         if (agreed) {
             const message = 'Người dùng đã được tạo.';
             this.alertService.success(message);
-
         }
+    }
+    mapNewUser(employeeId) {
+        this.userService.getAllUser('').subscribe(data => {
+            this.userListItem = data;
+            this.packageForm.get('chairEmployeeId').patchValue(employeeId);
+        });
+    }
+
+    mapNewCustomer(obj) {
+        this.packageForm.get('customerId').patchValue(obj);
     }
 
     searchContacts(query) {
