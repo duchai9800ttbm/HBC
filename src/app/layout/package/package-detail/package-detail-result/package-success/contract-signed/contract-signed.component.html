@@ -5,14 +5,14 @@
                 <div class="rule mr-2">
                 </div>
                 <div class="center-parent  mr-4">
-                    <div> Đã phản hồi đến phòng hợp đồng</div>
+                    <div>Chưa chuyển giao tài liệu</div>
                 </div>
             </div>
         </div>
         <div>
             <div class="btn-toolbar mt-2 mb-2">
                 <button class="btn btn-primary ml-2">
-                    Thông báo cho các bên liên quan
+                    Chuyển giao tài liệu
                 </button>
                 <button class="btn btn-primary ml-2">
                     Tải Template
@@ -29,5 +29,230 @@
             </div>
         </div>
     </div>
-    <h5 style="text-transform: uppercase">kết quả dự thầu</h5>
-</div>
+    <h5 style="text-transform: uppercase">Tài liệu cần chuyển giao</h5>
+
+    <div class="main-table">
+        <div class="d-flex flex-row flex-wrap filter-bar custom-filter-bar" style="background-color: #fafbfc!important">
+            <div class="d-flex form-inline flex-pad">
+                <div class="form-group ml-sm-2">
+                    <label for="" class="form-label">Loại tài liệu</label>
+                    <span class="custom-dropdown mx-sm-2">
+                        <select class="form-control">
+                            <option value="">Tất cả</option>
+                            <option value="Official">Chính thức</option>
+                            <option value="Draft">Bản nháp</option>
+                        </select>
+                    </span>
+                </div>
+                <div class="form-group ml-sm-2">
+                    <label for="" class="form-label">Chuyển giao cho</label>
+                    <span class="custom-dropdown mx-sm-2">
+                        <select class="form-control">
+                            <option value="">--Lựa chọn--</option>
+                            <option value="Official">Ban GD</option>
+                            <option value="Draft">Trưởng phòng</option>
+                        </select>
+                    </span>
+                </div>
+                <div class="form-group ml-sm-2">
+                    <label for="" class="form-label">Số ngày sử dụng</label>
+                    <span class="custom-dropdown mx-sm-2">
+                        <select class="form-control">
+                            <option value="">--Lựa chọn--</option>
+                            <option value="Official">10</option>
+                            <option value="Draft">20</option>
+                        </select>
+                    </span>
+                </div>
+                <div class="form-group ml-sm-2">
+                    <label for="" class="form-label">Lần phỏng vấn</label>
+                    <span class="custom-dropdown mx-sm-2">
+                        <select class="form-control">
+                            <option value="">--Lựa chọn--</option>
+                            <option value="Official">1</option>
+                            <option value="Draft">2</option>
+                            <option value="Official">3</option>
+                            <option value="Draft">4</option>
+                        </select>
+                    </span>
+                </div>
+
+                <div class="form-group ml-sm-2">
+
+                    <button type="submit" class="btn btn-primary ml-sm-2" (click)="filter()">
+                        <i class="fa fa-filter" aria-hidden="true"></i>
+                        <span class="filter-pd">Lọc </span>
+                    </button>
+                    <button class="btn btn-secondary ml-sm-2" (click)="clearFilter()">
+                        <i class="fa fa-times"></i>
+                        <span class="filter-pd">Xóa lọc </span>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <div class="main-table">
+            <div class="bot-table">
+                <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="table-selection stripe row-border hover cell-border dataTable">
+                    <thead>
+                        <th class="stt" style="width: 5%; min-width: 20px;" class="bg-default">
+                            <div class="d-flex justify-content-around">
+                                <div style="width: 40%;">
+                                    <div class="center-parent">
+                                        <label class="custom-control custom-checkbox">
+                                            <input type="checkbox" class="custom-control-input" [(ngModel)]="checkboxSeclectAll" (change)="onSelectAll($event.target.checked)">
+                                            <span class="custom-control-indicator"></span>
+                                        </label>
+                                    </div>
+                                </div>
+
+                                <div style="width: 35%;" class="center-parent">
+                                    <div>STT</div>
+                                </div>
+                            </div>
+                        </th>
+                        <th style="width: 15%;" class="bg-default">
+                            <div class="d-flex justify-content-center">
+                                <div class="center-parent">
+                                    <div>Loại tài liệu</div>
+                                </div>
+                            </div>
+                        </th>
+                        <th style="width: 15%;" class="bg-default">
+                            <div class="d-flex justify-content-center">
+                                <div class="center-parent">
+                                    <div></div>
+                                </div>
+                            </div>
+                        </th>
+                        <th style="width: 15%;" class="bg-default">
+                            <div class="d-flex justify-content-center">
+                                <div class="center-parent">
+                                    <div>Tên tài liệu</div>
+                                </div>
+                            </div>
+                        </th>
+                        <th style="width: 15%;" class="bg-default">
+                            <div class="d-flex justify-content-center">
+                                <div class="center-parent">
+                                    <div>Chuyển giao cho</div>
+                                </div>
+                            </div>
+                        </th>
+                        <th style="width: 10%;" class="bg-default">
+                            <div class="d-flex justify-content-center">
+                                <div class="center-parent">
+                                    <div>Số ngày sử dụng</div>
+                                </div>
+                            </div>
+                        </th>
+                        <th style="width: 10%;" class="bg-default">
+                            <div class="d-flex justify-content-center">
+                                <div class="center-parent">
+                                    <div>Lần phỏng vấn</div>
+                                </div>
+                            </div>
+                        </th>
+                        <th style="width: 10%;" class="bg-default">
+                            <div class="d-flex justify-content-center">
+                                <div class="center-parent">
+                                    <div>thao tác</div>
+                                </div>
+                            </div>
+                        </th>
+                    </thead>
+                </table>
+                <!-- <div class="hsmt-head" (click)="showhsmt()">
+                    <!-- <div class="" style="width:50%">Hồ sơ mời thầu
+                        <i class="fa fa-caret-down mr-3"></i>
+                    </div> -->
+                <!-- <div class="form-group ml-sm-2">
+                        <label for="" class="form-label">Lần phỏng vấn</label>
+                        <span class="custom-dropdown mx-sm-2">
+                            <select class="form-control">
+                                <option value="">--Lựa chọn--</option>
+                                <option value="Official">1</option>
+                                <option value="Draft">2</option>
+                                <option value="Official">3</option>
+                                <option value="Draft">4</option>
+                            </select>
+                        </span>
+                    </div> -->
+
+                <!-- </div> -->
+                <div class="main-table">
+                    <div class="d-flex flex-row flex-wrap hsmt-head custom-filter-bar">
+                        <div class="d-flex form-inline flex-pad">
+                            <div class="form-group ml-sm-2">
+                                Hồ sơ mời thầu
+                                <i class="fa fa-caret-down mr-l3"></i>
+                            </div>
+                            <div class="form-group ml-sm-2">
+                                <label for="" class="form-label"></label>
+                                <span class="custom-dropdown mx-sm-2">
+                                    <select class="form-control">
+                                        <option value="">--Lựa chọn--</option>
+                                        <option value="Official">Ban GD</option>
+                                        <option value="Draft">Trưởng phòng</option>
+                                    </select>
+                                </span>
+                            </div>
+
+                            <div class="form-group ml-sm-2">
+                                <label for="" class="form-label"></label>
+                                <span class="custom-dropdown mx-sm-2">
+                                    <select class="form-control">
+                                        <option value="">--Lựa chọn--</option>
+                                        <option value="Official">1</option>
+                                        <option value="Draft">2</option>
+                                        <option value="Official">3</option>
+                                        <option value="Draft">4</option>
+                                    </select>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                    <table *ngIf="!isDataHsmt" datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="table-selection stripe row-border hover cell-border dataTable">
+                        <tbody>
+                            <tr *ngFor="let item of resultData; let i = index">
+                                <td class="stt" style="width: 5%; min-width: 20px;" class="bg-default">
+                                    <div class="d-flex justify-content-around">
+                                        <div style="width: 40%;">
+                                            <div class="center-parent">
+                                                <label class="custom-control custom-checkbox">
+                                                    <input type="checkbox" class="custom-control-input" [(ngModel)]="item.checkboxSelected">
+                                                    <span class="custom-control-indicator"></span>
+                                                </label>
+                                            </div>
+                                        </div>
+
+                                        <div style="width: 35%;" class="center-parent">
+                                            <div>{{i+1}}</div>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td style="width: 15%;">{{ item.typeData }}</td>
+                                <td style="width: 15%;">{{ item.typeData2 }}</td>
+                                <td style="width: 15%;">{{ item.namedata }}</td>
+                                <td style="width: 15%;" class="select-filter">
+                                    {{ item.romdata}}</td>
+                                <td style="width: 10%;" class="select-filter text-center">{{ item.noDate}}</td>
+                                <td style="width: 10%;" class="select-filter text-center">{{ item.interview}}</td>
+                                <td class="text-center" style="width: 10%;">
+                                    <div class="row ">
+                                        <div class="col-md-5 center-parent cursor-pointer">
+                                            <i [title]="'tải file'" class="fa fa-download color-item-down"></i>
+                                        </div>
+
+                                        <div class="col-md-5 center-parent cursor-pointer" style="color:#e92121;">
+                                            <i [title]="'In'" class="fa fa-print "></i>
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+        </div>

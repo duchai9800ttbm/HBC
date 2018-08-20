@@ -173,7 +173,9 @@
 
         <div class="pull-right">
             <button type="button" class="btn btn-cancel" aria-label="Close" (click)="modalRef.hide()">Hủy</button>
-            <button type="button" class="btn btn-send" aria-label="Close" (click)="SendMail()">Gửi</button>
+            <button type="button" *ngIf="!showBtnNotification" class="btn btn-send" aria-label="Close" (click)="SendMailHD()">Gửi</button>
+            <button type="button" *ngIf="showBtnNotification" class="btn btn-send" aria-label="Close" (click)="SendMailOther()">Gửi</button>
+
         </div>
     </div>
     <div class="modal-body">
@@ -221,3 +223,5 @@
 
     </div>
 </ng-template>
+<!-- Hop dong da ky -->
+<app-contract-signed *ngIf="showTableSigned"></app-contract-signed>
