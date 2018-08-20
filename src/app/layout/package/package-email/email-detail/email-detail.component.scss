@@ -5,8 +5,9 @@
 .title{
     height: 60px;
     border-bottom: 2px solid #f1f1f1;
+    margin: 0 10px;
     .content{
-        margin: 0 20px;
+        margin: 0 10px;
         .reject{
             color: #44505e;
             font-size: 18px;
@@ -44,17 +45,25 @@
     padding: 20px 0px;
 
 }
-.file-item{
-    box-sizing: border-box;
-    width: 172px;
-    height: 172px;
-    border: 2px solid #f1f1f1;
-}
-.file-name{
-    background-color: #f4f4f4!important;
-    height: 40px;
-    width: 88px;
-}
+
 .attach-file{
-    padding: 10px 10px;
+    padding: 0px 10px;
+    padding-bottom: 20px;
+    .file-item{
+        box-sizing: border-box;
+        width: 152px;
+        height: 182px;
+        border: 2px solid #f1f1f1;
+        .file-name{
+            background-color: #f4f4f4!important;
+            height: 50px;
+            width: 88px;
+        }
+    }
+    
+}
+
+.attach{
+    border-top: 2px solid #f1f1f1;
+    margin: 0 10px;
 }
