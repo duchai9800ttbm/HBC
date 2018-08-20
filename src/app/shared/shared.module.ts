@@ -36,7 +36,8 @@ import { DropDownsModule } from '@progress/kendo-angular-dropdowns';
 import { SettingService } from './services/setting.service';
 import { MenuModule } from '@progress/kendo-angular-menu';
 import { ModalModule } from 'ngx-bootstrap/modal';
-import { CKEditorModule } from 'ng2-ckeditor'
+import { CKEditorModule } from 'ng2-ckeditor';
+import { PackageSuccessService } from './services/package-success.service';
 @NgModule({
     imports: [
         TagInputModule,
@@ -121,7 +122,8 @@ import { CKEditorModule } from 'ng2-ckeditor'
         ScrollToTopService,
         OpportunityHsmtService,
         DocumentReviewService,
-        SettingService
+        SettingService,
+        PackageSuccessService
     ],
 })
 export class SharedModule { }
