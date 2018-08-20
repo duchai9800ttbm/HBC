@@ -14,6 +14,7 @@ import { ImportantComponent } from './important/important.component';
 import { TrashComponent } from './trash/trash.component';
 import { PackageEmailComponent } from './package-email.component';
 import { SharedModule } from '../../../shared/shared.module';
+import { EmailDetailComponent } from './email-detail/email-detail.component';
 
 @NgModule({
   imports: [
@@ -33,7 +34,8 @@ import { SharedModule } from '../../../shared/shared.module';
     MissPackageNoticeComponent,
     KickOffComponent,
     ImportantComponent,
-    TrashComponent
+    TrashComponent,
+    EmailDetailComponent
   ]
 })
 export class PackageEmailModule { }

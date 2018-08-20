@@ -1,0 +1,60 @@
+:host(){
+    color: #495b69;
+    font-weight: 550;
+}
+.title{
+    height: 60px;
+    border-bottom: 2px solid #f1f1f1;
+    .content{
+        margin: 0 20px;
+        .reject{
+            color: #44505e;
+            font-size: 18px;
+        }
+    }
+    .icon{
+        cursor: pointer;
+    }
+}
+.title-item{
+    margin: 0 20px;
+    min-height: 50px;
+    border-bottom: 2px solid #f1f1f1;
+}
+.custom-btn{
+    background-color: #fff;
+    border: 2px solid #f1f1f1;
+    width: 30px;
+    height: 30px;
+    border-radius: 3px;
+    color: #44505e;
+    cursor: pointer;
+    &:hover{
+        background-color: #00a0e3;
+        color: #fff;
+        border: 2px solid #00a0e3;
+    }
+}
+
+.action-bar{
+    padding: 20px 0px;
+}
+.content-email{
+    margin: 0 20px;
+    padding: 20px 0px;
+
+}
+.file-item{
+    box-sizing: border-box;
+    width: 172px;
+    height: 172px;
+    border: 2px solid #f1f1f1;
+}
+.file-name{
+    background-color: #f4f4f4!important;
+    height: 40px;
+    width: 88px;
+}
+.attach-file{
+    padding: 10px 10px;
+}

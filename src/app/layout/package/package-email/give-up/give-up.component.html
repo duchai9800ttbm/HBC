@@ -54,7 +54,40 @@
 
         </thead>
         <tbody>
-          <tr>
+          <tr *ngFor="let item of listEmail">
+
+            <td class="text-center" style="width: 30px;">
+              <label class="custom-control custom-checkbox">
+                <input type="checkbox" class="custom-control-input" [(ngModel)]="item.checkboxSelected">
+                <span class="custom-control-indicator"></span>
+              </label>
+            </td>
+
+            <td class="star-color">
+              <div class="center-parent">
+                <div click="changeImportant(item.id)">
+                  <a *ngIf="item.isImportant">
+                    <i class="fa fa-star" aria-hidden="true"></i>
+                  </a>
+                  <a *ngIf="!item.isImportant">
+                    <i class="fa fa-star-o" aria-hidden="true"></i>
+                  </a>
+                </div>
+              </div>
+
+            </td>
+            <td> Tới: {{item.to}}</td>
+            <td> {{item.subject}}</td>
+            <td>
+              <div class="center-parent">
+                <div>
+                  <i *ngIf="item.emailAttatchments.length" class="fa fa-paperclip" aria-hidden="true"></i>
+                </div>
+              </div>
+            </td>
+            <td class="text-center">{{item.sentDate*1000 | date:'dd/MM/yyyy HH:mm': '+0000'}}</td>
+          </tr>
+          <!-- <tr>
             <td>Firstname</td>
             <td>Email</td>
             <td>Oliver Dinh (3)</td>
@@ -85,15 +118,7 @@
             <td>Mail xin nghi phep</td>
             <td>Đính kèm</td>
             <td>12/06/2018</td>
-          </tr>
-          <tr>
-            <td>Firstname</td>
-            <td>Email</td>
-            <td>Oliver Dinh (3)</td>
-            <td>Mail xin nghi phep</td>
-            <td>Đính kèm</td>
-            <td>12/06/2018</td>
-          </tr>
+          </tr> -->
         </tbody>
       </table>
     </div>

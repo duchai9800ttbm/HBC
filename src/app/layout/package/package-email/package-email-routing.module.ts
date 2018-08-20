@@ -11,6 +11,7 @@ import { MissPackageNoticeComponent } from './miss-package-notice/miss-package-n
 import { TransferDocumentComponent } from './transfer-document/transfer-document.component';
 import { WinPackageNoticeComponent } from './win-package-notice/win-package-notice.component';
 import { TrashComponent } from './trash/trash.component';
+import { EmailDetailComponent } from './email-detail/email-detail.component';
 
 const routes: Routes = [
   {
@@ -28,7 +29,7 @@ const routes: Routes = [
       { path: 'transfer', component: TransferDocumentComponent },
       { path: 'trash', component: TrashComponent },
       { path: 'win', component: WinPackageNoticeComponent },
-
+      { path: 'detail/:id', component: EmailDetailComponent },
     ]
   }
 ];
