@@ -2,7 +2,7 @@
   <div class="title-detail center-parent">
     <div class="mr-auto col-md-12">
       <div class="media-header header-title">
-        <a [routerLink]='["/package/list"]' style="cursor: pointer;">
+        <a [routerLink]='["/package/detail/", packageId, "info"]' style="cursor: pointer;">
           <i class="fa fa-chevron-left mr-3" aria-hidden="true"></i>
         </a>
         <h4 class="d-inline mb-0 text-dark text-uppercase">quản lý phân quyền sử dụng gói thầu</h4>
@@ -11,16 +11,16 @@
   </div>
   <div class="main-detail">
       <div class="menu">
-          <div class="action text-uppercase" style="width: calc(25% - 10px)" [routerLinkActive]="['router-link-active']" [routerLink]="['/package/permission//99/user']">
+          <div class="action text-uppercase" style="width: calc(25% - 10px)" [routerLinkActive]="['router-link-active']" [routerLink]="['/package/permission/', packageId, 'user']">
             người sử dụng
           </div>
-          <div class="action text-uppercase" style="width: calc(25% - 10px)" [routerLinkActive]="['router-link-active']" [routerLink]="['/package/permission/99/review']">
+          <div class="action text-uppercase" style="width: calc(25% - 10px)" [routerLinkActive]="['router-link-active']" [routerLink]="['/package/permission/', packageId, 'review']">
             đánh giá hsmt
           </div>
-          <div class="action text-uppercase" style="width: calc(25% - 10px)" [routerLinkActive]="['router-link-active']" [routerLink]="['/package/detail']">
+          <div class="action text-uppercase" style="width: calc(25% - 10px)" [routerLinkActive]="['router-link-active']" [routerLink]="['/package/permission/', packageId, 'bid']">
             dự thầu
           </div>
-          <div class="action text-uppercase" style="width: calc(25% - 10px)" [routerLinkActive]="['router-link-active']" [routerLink]="['/package/detail']">
+          <div class="action text-uppercase" style="width: calc(25% - 10px)" [routerLinkActive]="['router-link-active']" [routerLink]="['/package/permission/', packageId, 'result']">
             kết quả dự thầu
           </div>
         </div>
