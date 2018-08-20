@@ -11,28 +11,43 @@
             </div>
         </div>
         <div style="margin-top: -1rem; margin-right: 1rem">
-            <h5 class="mb-3 text-uppercase">Quản lý hồ sơ mời thầu</h5>
+            <h5 class="mb-3 text-uppercase">Quản lý kết quả dự thầu</h5>
             <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="table-selection stripe hover">
                 <thead>
                     <tr style="width: 100%">
                         <th>
-                            <div class="text-center">Hồ sơ mời thầu</div>
+                            <div class="text-center">Kết quả dự thầu</div>
                         </th>
                         <th></th>
                         <th>
-                            <div class="text-center">Upload HSMT</div>
+                            <div class="text-center">Chọn kết quả DT</div>
+                        </th>
+                        <th>
+                            <div class="text-center">Upload KQDT</div>
+                        </th>
+                        <th>
+                            <div class="text-center">Xóa</div>
+                        </th>
+                        <th>
+                            <div class="text-center">In</div>
                         </th>
                         <th>
                             <div class="text-center">Tải xuống tệp tin</div>
                         </th>
                         <th>
-                            <div class="text-center">Xóa file</div>
+                            <div class="text-center">Tải template</div>
                         </th>
                         <th>
-                            <div class="text-center">Chuyển đánh giá HSMT</div>
+                            <div class="text-center">Thông báo KQDT</div>
                         </th>
                         <th>
-                            <div class="text-center">Đánh giá HSMT</div>
+                            <div class="text-center">Thông báo phòng giám đốc</div>
+                        </th>
+                        <th>
+                            <div class="text-center">Chuyển giao tài liệu</div>
+                        </th>
+                        <th>
+                            <div class="text-center">Nhận tài liệu chuyển giao</div>
                         </th>
 
                     </tr>
@@ -93,6 +108,36 @@
                                     <span class="custom-control-indicator"></span>
                                 </label>
                             </td>
+                            <td class="text-center">
+                                <label class="custom-control custom-checkbox">
+                                    <input type="checkbox" class="custom-control-input">
+                                    <span class="custom-control-indicator"></span>
+                                </label>
+                            </td>
+                            <td class="text-center">
+                                <label class="custom-control custom-checkbox">
+                                    <input type="checkbox" class="custom-control-input">
+                                    <span class="custom-control-indicator"></span>
+                                </label>
+                            </td>
+                            <td class="text-center">
+                                <label class="custom-control custom-checkbox">
+                                    <input type="checkbox" class="custom-control-input">
+                                    <span class="custom-control-indicator"></span>
+                                </label>
+                            </td>
+                            <td class="text-center">
+                                <label class="custom-control custom-checkbox">
+                                    <input type="checkbox" class="custom-control-input">
+                                    <span class="custom-control-indicator"></span>
+                                </label>
+                            </td>
+                            <td class="text-center">
+                                <label class="custom-control custom-checkbox">
+                                    <input type="checkbox" class="custom-control-input">
+                                    <span class="custom-control-indicator"></span>
+                                </label>
+                            </td>
                         </tr>
                     </ng-container>
                 </tbody>
@@ -102,29 +147,29 @@
                 <thead>
                     <tr style="width: 100%">
                         <th>
-                            <div class="text-center">Phiếu đề nghị dự thầu</div>
+                            <div class="text-center">Hợp đồng ký kết & họp kick-off</div>
                         </th>
                         <th></th>
                         <th>
-                            <div class="text-center">Upload file</div>
+                            <div class="text-center">Upload hợp đồng ký kết</div>
+                        </th>
+                        <th>
+                            <div class="text-center">Xóa</div>
+                        </th>
+                        <th>
+                            <div class="text-center">In</div>
                         </th>
                         <th>
                             <div class="text-center">Tải xuống tệp tin</div>
                         </th>
                         <th>
-                            <div class="text-center">Xóa file</div>
-                        </th>
-                        <th>
                             <div class="text-center">Tải template</div>
                         </th>
                         <th>
-                            <div class="text-center">Gửi duyệt đề nghị dự thầu</div>
+                            <div class="text-center">Thông báo kí kết hợp đồng</div>
                         </th>
                         <th>
-                            <div class="text-center">Tham gia/ Từ chối dự thầu</div>
-                        </th>
-                        <th>
-                            <div class="text-center">Gửi thư từ chối dự thầu</div>
+                            <div class="text-center">Thông báo họp kick-off</div>
                         </th>
                     </tr>
                 </thead>

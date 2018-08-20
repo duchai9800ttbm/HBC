@@ -17,18 +17,8 @@ import { Subject } from '../../../../node_modules/rxjs';
 
 @Injectable()
 export class PackageService {
-
-    constructor(
-        private filterService: FilterPipe,
-        private instantSearchService: InstantSearchService,
-        private apiService: ApiService,
-    ) { }
-
     private userIdSub = new Subject<any>();
     userId$ = this.userIdSub.asObservable();
-    setUserId(data:boolean) {
-        this.userIdSub.next(data);
-      }
     private static createFilterParams(filter: PackageFilter): URLSearchParams {
         const urlFilterParams = new URLSearchParams();
         urlFilterParams.append('projectName', filter.projectName);
@@ -40,7 +30,7 @@ export class PackageService {
         urlFilterParams.append('sorting', filter.sorting);
         return urlFilterParams;
     }
-    
+
     private static toPackageListItem(result: any): PackageListItem {
         return {
             id: result.id,
@@ -102,6 +92,18 @@ export class PackageService {
             totalTime: result.totalTime,
         };
     }
+
+    constructor(
+        private filterService: FilterPipe,
+        private instantSearchService: InstantSearchService,
+        private apiService: ApiService,
+    ) { }
+
+    setUserId(data: boolean) {
+        this.userIdSub.next(data);
+    }
+
+
 
 
     filter(terms: string, status: string, uploader: string, uploadDate: number, source: any[]): any[] {

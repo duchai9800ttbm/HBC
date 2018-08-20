@@ -389,8 +389,8 @@
         </div>
 
     </form>
-    <app-customer-form *ngIf="showPopupAdd" (closed)="closePopup($event)"></app-customer-form>
-    <app-user-form *ngIf="showPopupAddUser" (closed)="closePopupAddUser($event)"></app-user-form>
+    <app-customer-form *ngIf="showPopupAdd" (closed)="closePopup($event)" (returnCustomer)="mapNewCustomer($event)"></app-customer-form>
+    <app-user-form *ngIf="showPopupAddUser" (closed)="closePopupAddUser($event)" (returnNewUserId)="mapNewUser($event)"></app-user-form>
 </div>
 
 <div class="main">

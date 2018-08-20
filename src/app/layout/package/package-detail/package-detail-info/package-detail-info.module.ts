@@ -7,6 +7,8 @@ import { PackageDetailInfoRoutingModule } from './package-detail-info-routing.mo
 import { PackageDetailInfoComponent } from './package-detail-info.component';
 import { CustomerFormComponent } from './edit/customer-form/customer-form.component';
 import { StarRatingModule } from '../../../../../../node_modules/angular-star-rating/dist';
+import { UserFormComponent } from './edit/user-form/user-form.component';
+import { GroupUserFormComponent } from './edit/user-form/group-user-form/group-user-form.component';
 @NgModule({
   imports: [
     StarRatingModule,
@@ -19,7 +21,9 @@ import { StarRatingModule } from '../../../../../../node_modules/angular-star-ra
     InformationComponent,
     EditComponent,
     PackageDetailInfoComponent,
-    CustomerFormComponent
+    CustomerFormComponent,
+    UserFormComponent,
+    GroupUserFormComponent
     ]
 })
 export class PackageDetailInfoModule { }
