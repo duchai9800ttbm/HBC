@@ -9,7 +9,7 @@ export class PackageModel {
     customerId: number;
     classify: string;
     customerContactId: number;
-    consultantUnit: string;
+    consultantUnitCustomerId: number;
     consultantAddress: string;
     consultantPhone: string;
     floorArea: number;
@@ -29,5 +29,4 @@ export class PackageModel {
     projectEstimatedEndDate: number;
     totalTime: string;
     description: string;
-  }
-
+}
