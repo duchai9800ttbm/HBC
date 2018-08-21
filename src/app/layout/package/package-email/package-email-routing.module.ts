@@ -22,8 +22,14 @@ const routes: Routes = [
         path: 'give-up',
         loadChildren: './give-up/give-up.module#GiveUpModule'
       },
-      { path: 'assign', component: AssignComponent },
-      { path: 'deploy', component: DeployNoticeComponent },
+      {
+        path: 'assign',
+        loadChildren: './assign/assign.module#AssignModule'
+      },
+      {
+        path: 'deploy',
+        loadChildren: './deploy-notice/deploy-notice.module#DeployNoticeModule'
+      },
       { path: 'important', component: ImportantComponent },
       { path: 'interview', component: InterviewNoticeComponent },
       { path: 'kick-off', component: KickOffComponent },

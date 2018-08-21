@@ -23,9 +23,7 @@ import { PackageEmailComponent } from './package-email.component';
 
   ],
   declarations: [
-    AssignComponent,
     TransferDocumentComponent,
-    DeployNoticeComponent,
     InterviewNoticeComponent,
     WinPackageNoticeComponent,
     MissPackageNoticeComponent,
