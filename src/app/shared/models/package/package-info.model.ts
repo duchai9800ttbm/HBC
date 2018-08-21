@@ -40,12 +40,16 @@ export class PackageInfoModel {
     customer: {
         id: number;
         text: string;
+        customerNewOldType: string;
     };
     customerContact: {
         id: number;
         text: string
     };
-    consultantUnit: string;
+    consultantUnitCustomer: {
+        id: number;
+        text: string;
+    };
     consultantAddress: string;
     consultantPhone: string;
     floorArea: number;

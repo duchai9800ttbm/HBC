@@ -3,7 +3,7 @@ import { BsModalService } from 'ngx-bootstrap/modal';
 import { BsModalRef } from 'ngx-bootstrap/modal/bs-modal-ref.service';
 import { PackageDetailComponent } from '../../package-detail.component';
 import { DATETIME_PICKER_CONFIG } from '../../../../../shared/configs/datepicker.config';
-import { UploadItem } from '../../../../../shared/models/upload/upload-item.model'
+import { UploadItem } from '../../../../../shared/models/upload/upload-item.model';
 import { from } from 'rxjs/observable/from';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { GridDataResult, PageChangeEvent, } from '@progress/kendo-angular-grid';
@@ -17,7 +17,7 @@ import { SortDescriptor, orderBy } from '@progress/kendo-data-query';
 })
 export class InformationDeploymentComponent implements OnInit {
   public gridView: GridDataResult;
-  public items: any[] = listUsers
+  public items: any[] = listUsers;
   public mySelection: number[] = [];
 
   formUpload: FormGroup;
