@@ -45,7 +45,7 @@
                                     <div class="btn-icon btn-icon-plus" (click)="addFormItem('profiles')">
                                         <i class="fa fa-plus" style="margin-top: 2px" aria-hidden="true"></i>
                                     </div>
-                                    <div [class.btn-icon]="i != 0" [class.btn-icon-minus]="i != 0" [class.invisible]="i == 0" (click)="removeFormItem('profiles', i)">
+                                    <div class="btn-icon btn-icon-minus" [class.invisible]="i == 0" (click)="removeFormItem('profiles', i)">
                                         <i class="fa fa-minus" style="margin-top: 2px" aria-hidden="true" *ngIf="i != 0"></i>
                                     </div>
                                     <div>
@@ -136,7 +136,7 @@
                                     <div class="btn-icon btn-icon-plus" (click)="addFormItem('formOfBids')">
                                         <i class="fa fa-plus" style="margin-top: 2px" aria-hidden="true"></i>
                                     </div>
-                                    <div [class.btn-icon]="i != 0" [class.btn-icon-minus]="i != 0" [class.invisible]="i == 0" (click)="removeFormItem('formOfBids', i)">
+                                    <div class="btn-icon btn-icon-minus" [class.invisible]="i == 0" (click)="removeFormItem('formOfBids', i)">
                                         <i class="fa fa-minus" style="margin-top: 2px" aria-hidden="true" *ngIf="i != 0"></i>
                                     </div>
                                     <div>

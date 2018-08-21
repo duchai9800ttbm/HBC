@@ -4,6 +4,7 @@ import { InputNumberDirective } from './input-number.directive';
 import { InputMoneyDirective } from './input-money.directive';
 import { VnCurrencyPipe } from '../pipes/vn-currency-pipe.module';
 import { PhoneNumberCallableDirective } from './phone-number-callable.directive';
+import { SameWidthDirective } from './same-width.directive';
 
 @NgModule({
     imports: [
@@ -13,11 +14,13 @@ import { PhoneNumberCallableDirective } from './phone-number-callable.directive'
         InputNumberDirective,
         InputMoneyDirective,
         PhoneNumberCallableDirective,
+        SameWidthDirective,
     ],
     exports: [
         InputNumberDirective,
         InputMoneyDirective,
-        PhoneNumberCallableDirective,        
+        PhoneNumberCallableDirective,
+        SameWidthDirective
     ],
     providers: [
         VnCurrencyPipe,

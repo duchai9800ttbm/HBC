@@ -6,7 +6,7 @@ export const DATATABLE_CONFIG = {
         infoEmpty: 'Không có dữ liệu',
         sProcessing: 'Đang xử lý...',
         sLengthMenu: 'Số dòng/trang: _MENU_',
-        // emptyTable: 'Không có dữ liệu',
+        emptyTable: 'Không có dữ liệu',
         zeroRecords: 'Không có dữ liệu',
         sZeroRecord: 'Hiển thị 0 dòng',
         sInfo: 'Hiển thị _START_ - _END_ của _TOTAL_',
@@ -28,7 +28,7 @@ export const DATATABLE_CONFIG = {
     ordering: false,
     paging: false,
     searching: false,
-    lengthChange: false,
+    lengthChange: true,
     processing: false,
     select: {
         style: 'os',

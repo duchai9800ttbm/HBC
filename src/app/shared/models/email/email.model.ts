@@ -4,3 +4,4 @@ export class EmailModel {
     recipientEmails: string[];
     content: string;
 }
+

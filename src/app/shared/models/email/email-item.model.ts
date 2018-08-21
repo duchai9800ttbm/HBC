@@ -1,24 +1,24 @@
 export class EmailItemModel {
     id: number;
     senderEmployee: {
-        // id: number;
-         employeeId: number;
-        // employeeNo: string;
-         employeeName: string;
-        // employeeAddress: string;
-        // employeeDob: number;
-        // employeeTel: string;
-        // employeeTel1: string;
-        // departmentName: string;
-        // levelName: string;
-        // employeeAvatar: string;
-        // departmentRoomName: string;
-        // branchName: string;
-        // employeeBirthPlace: string;
-        // employeeIDNumber: string;
-        // employeeGender: string;
-        // employeeTaxNumber: string;
-        // employeeBankAccount: string
+        id: number;
+        employeeId: number;
+        employeeNo: string;
+        employeeName: string;
+        employeeAddress: string;
+        employeeDob: number;
+        employeeTel: string;
+        employeeTel1: string;
+        departmentName: string;
+        levelName: string;
+        employeeAvatar: string;
+        departmentRoomName: string;
+        branchName: string;
+        employeeBirthPlace: string;
+        employeeIDNumber: string;
+        employeeGender: string;
+        employeeTaxNumber: string;
+        employeeBankAccount: string
     };
     from: string;
     to: string;
@@ -28,9 +28,28 @@ export class EmailItemModel {
     isSuccess: boolean;
     isImportant: boolean;
     emailAttatchments: EmailAttachment[];
+    checkboxSelected?: boolean;
 }
 
-class EmailAttachment {
+export class EmailAttachment {
     id: number;
     fileName: string;
+}
+
+
+export class EmailFilter {
+    category: string;
+}
+
+export class EmailCategory {
+    category: {
+        key: string;
+        value: string;
+        displayText: string;
+    };
+    count: number;
+}
+
+export class MultipeDelete {
+    ids: number[];
 }

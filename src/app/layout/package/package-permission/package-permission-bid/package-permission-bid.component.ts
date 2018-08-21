@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { Subject } from 'rxjs';
 import { DATATABLE_CONFIG } from '../../../../shared/configs';
 import { FormGroup, FormBuilder, FormArray } from '@angular/forms';
@@ -13,7 +13,11 @@ export class PackagePermissionBidComponent implements OnInit {
     dtOptions: any = DATATABLE_CONFIG;
     packagePermissionReviewForm: FormGroup;
 
-    constructor(private fb: FormBuilder) {}
+    arr1 = [1, 2, 3];
+    arr2 = [4, 5, 6];
+
+    constructor(private fb: FormBuilder,
+        private cdr: ChangeDetectorRef) {}
 
     ngOnInit() {
         setTimeout(() => {
@@ -37,8 +41,12 @@ export class PackagePermissionBidComponent implements OnInit {
                 this.addFormItem(control);
             }
         }
+        this.addGroupCreateBidFormItem(0);
+    }
+
+    addGroupCreateBidFormItem(index: number) {
         this.addCreateBidFormItem();
-        this.addCreateBidItemFormItem(0);
+        this.addCreateBidItemFormItem(index);
     }
 
     addCreateBidFormItem() {
@@ -47,6 +55,7 @@ export class PackagePermissionBidComponent implements OnInit {
             types: this.fb.array([])
         });
         itemArr.push(item);
+        this.packagePermissionReviewForm.reset();
     }
 
     addCreateBidItemFormItem(i: number) {
@@ -57,6 +66,12 @@ export class PackagePermissionBidComponent implements OnInit {
             item: ''
         });
         bidArr.push(item);
+    }
+
+    removeCreateBidItemFormItem(i: number, j: number) {
+        const itemArr = this.packagePermissionReviewForm.get('createBid') as FormArray;
+        const bidArr = itemArr.controls[i].get('types') as FormArray;
+        bidArr.removeAt(j);
     }
 
     addFormItem(name: string): void {

@@ -115,7 +115,7 @@
 
 
             <div class="bot-table">
-                <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class=" row-border cell-border ">
+                <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="table-selection row-border cell-border ">
                     <thead>
                         <tr>
 
@@ -268,7 +268,9 @@
                             </ng-container>
 
                         </ng-container>
-
+                        <tr *ngIf="tableEmpty">
+                            <td colspan="8">Không có dữ liệu</td>
+                        </tr>
                     </tbody>
                 </table>
             </div>
@@ -403,7 +405,8 @@
 
                                 </div>
 
-                            </th><th style="background-color: #f68e56!important;">
+                            </th>
+                            <th style="background-color: #f68e56!important;">
                                 <div class="d-flex justify-content-center">
 
                                     <div class="center-parent">
