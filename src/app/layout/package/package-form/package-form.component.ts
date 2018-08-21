@@ -104,9 +104,9 @@ export class PackageFormComponent implements OnInit {
             locationId: [this.package.locationId, Validators.required],
             quarter: [this.package.quarter],
             customerId: [this.package.customerId],
-            classify: [this.package.classify],
+            customerNewOldType: '',
             customerContactId: [this.package.customerContactId],
-            consultantUnit: [this.package.consultantUnit],
+            consultantUnitCustomerId: [this.package.consultantUnitCustomerId],
             consultantAddress: [this.package.consultantAddress],
             consultantPhone: [this.package.consultantPhone],
             floorArea: [this.package.floorArea],
@@ -213,6 +213,15 @@ export class PackageFormComponent implements OnInit {
             .subscribe(result => {
                 this.customersSearchResults = result;
             });
+    }
+
+    customerSelectedChange(e) {
+        console.log(e);
+        this.packageForm.get('customerNewOldType').patchValue(e.customerNewOldType);
+    }
+    changeConsultant(e) {
+        this.packageForm.get('consultantAddress').patchValue(e.customerAddress);
+        this.packageForm.get('consultantPhone').patchValue(e.customerPhone);
     }
 
     searchAssigns(query) {

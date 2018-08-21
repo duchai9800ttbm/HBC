@@ -111,10 +111,10 @@ export class EditComponent implements OnInit {
             place: [this.package.place],
             locationId: [this.package.location && this.package.location.id, Validators.required],
             quarter: [this.package.quarter && this.package.quarter.id],
-            customerId: [this.package.customer && this.package.customer.id],
-            classify: [this.package.classify],
-            customerContactId: [this.package.customerContact && this.package.customerContact.id],
-            consultantUnit: [this.package.consultantUnit],
+            customerId: this.package.customer,
+            customerNewOldType: [this.package.customer && this.package.customer.customerNewOldType],
+            customerContactId: [this.package.customerContact],
+            consultantUnitCustomerId: [this.package.consultantUnitCustomer  ],
             consultantAddress: [this.package.consultantAddress],
             consultantPhone: [this.package.consultantPhone],
             floorArea: [this.package.floorArea],
@@ -206,6 +206,13 @@ export class EditComponent implements OnInit {
             .subscribe(result => {
                 this.customersSearchResults = result;
             });
+    }
+    customerSelectedChange(e) {
+        this.packageForm.get('customerNewOldType').patchValue(e.customerNewOldType);
+    }
+    changeConsultant(e) {
+        this.packageForm.get('consultantAddress').patchValue(e.customerAddress);
+        this.packageForm.get('consultantPhone').patchValue(e.customerPhone);
     }
 
     searchAssigns(query) {

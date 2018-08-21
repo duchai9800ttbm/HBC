@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { InformationDeploymentComponent} from './information-deployment/information-deployment.component';
+import { InformationDeploymentComponent } from './information-deployment/information-deployment.component';
 import { Routes, RouterModule } from '@angular/router';
 import { PackageDetailFileAttendComponent } from './package-detail-file-attend.component';
 import { PriceReviewComponent } from './price-review/price-review.component';
@@ -10,25 +10,29 @@ import { HsdtSignedComponent } from './hsdt-signed/hsdt-signed.component';
 import { HsdtSubmittedComponent } from './hsdt-submitted/hsdt-submitted.component';
 import { HsdtInterviewNegotiationComponent } from './hsdt-interview-negotiation/hsdt-interview-negotiation.component';
 const routes: Routes = [
-  {
-   path: '',
-   component: PackageDetailFileAttendComponent,
-   children: [
-   { path: '', redirectTo: 'infomation-deployment' },
-   { path: 'infomation-deployment', component: InformationDeploymentComponent },
-   { path: 'price-review', component: PriceReviewComponent },
-   { path: 'price-report', component: PriceReportSubmitedComponent },
-   { path: 'price-report-create', component: PriceReportCreateComponent},
-   { path: 'pending', component: HsdtPendingComponent},
-   { path: 'signed', component: HsdtSignedComponent},
-   { path: 'submited', component: HsdtSubmittedComponent},
-   { path: 'interview-negotiation', component: HsdtInterviewNegotiationComponent},
-   ]
-}
+    {
+        path: '',
+        component: PackageDetailFileAttendComponent,
+        children: [
+            { path: '', redirectTo: 'infomation-deployment' },
+            { path: 'infomation-deployment', component: InformationDeploymentComponent },
+            {
+                path: 'build',
+                loadChildren: './hsdt-build/hsdt-build.module#HsdtBuildModule'
+            },
+            { path: 'price-review', component: PriceReviewComponent },
+            { path: 'price-report', component: PriceReportSubmitedComponent },
+            { path: 'price-report-create', component: PriceReportCreateComponent },
+            { path: 'pending', component: HsdtPendingComponent },
+            { path: 'signed', component: HsdtSignedComponent },
+            { path: 'submited', component: HsdtSubmittedComponent },
+            { path: 'interview-negotiation', component: HsdtInterviewNegotiationComponent },
+        ]
+    }
 ];
 
 @NgModule({
-  imports: [RouterModule.forChild(routes)],
-  exports: [RouterModule]
+    imports: [RouterModule.forChild(routes)],
+    exports: [RouterModule]
 })
 export class PackageDetailFileAttendRoutingModule { }
