@@ -1,84 +1,77 @@
 <div class="title">
-  <div class="content d-flex justify-content-between h-100">
-    <div class="center-parent">
-      <img width="12" height="12" class="pointer not-outline" src="assets\images\nghia.png" style="margin-right: 6px;">
-      <span class="font-weight-bold reject">Nội dung thư</span>
+    <div class="content d-flex justify-content-between h-100">
+        <div class="center-parent">
+            <img width="12" height="12" class="pointer not-outline" src="assets\images\nghia.png" style="margin-right: 6px;" (click)="back()">
+            <span class="font-weight-bold reject">Nội dung thư</span>
+        </div>
+        <div class="center-parent">
+            <div>
+                <i class="fa fa-chevron-left mr-2 icon" aria-hidden="true"></i>
+                <i class="fa fa-chevron-right ml-2 icon" aria-hidden="true"></i>
+            </div>
+        </div>
     </div>
-    <div class="center-parent">
-      <div>
-        <i class="fa fa-chevron-left mr-2 icon" aria-hidden="true"></i>
-        <i class="fa fa-chevron-right ml-2 icon" aria-hidden="true"></i>
-      </div>
-    </div>
-  </div>
 </div>
 <div class="title-item d-flex align-items-center">
-  <div>[Chủ đề]</div>
+    <div>{{email?.subject}}</div>
 </div>
 <div class="title-item d-flex align-items-center">
-  <div>To: Oliver Dinh</div>
+    <div>To: {{email?.to}}</div>
 </div>
 <div class="title-item d-flex align-items-center">
-  <div class="d-flex justify-content-between align-items-center w-100">
-    <div>Cc:
-      <span>Hieu Nguyen,</span>&nbsp; Bcc: thanh02@gmail.com
+    <div class="d-flex justify-content-between align-items-center w-100">
+        <div>Cc:
+            <span>Hieu Nguyen,</span>&nbsp; Bcc: thanh02@gmail.com
+        </div>
+        <div class="action-bar">
+            <span>
+                {{email?.sentDate*1000 | date:'dd/MM/yyyy HH:mm': '+0000'}}&nbsp;
+            </span>
+            <button class="custom-btn" (click)="print()" [title]="'In'">
+                <i class="fa fa-print" aria-hidden="true"></i>
+            </button>
+            <button class="custom-btn" (click)="delete()" [title]="'Xóa'">
+                <i class="fa fa-trash" aria-hidden="true"></i>
+            </button>
+        </div>
     </div>
-    <div class="action-bar">
-      <span>
-        12/06/2018, 08:03 AM
-      </span>
-      <button class="custom-btn">
-        <i class="fa fa-print" aria-hidden="true"></i>
-      </button>
-      <button class="custom-btn">
-        <i class="fa fa-trash" aria-hidden="true"></i>
-      </button>
-    </div>
-  </div>
 </div>
 <div class="content-email">
-  <pre>
-    Dear Oanh, Thank you very much for your letter which arrived a few days ago. It was lovely to hear from you. I think the
-    restaurant which you told me in the letter is very interesting. I also like to eat out and I usually go to a restaurant
-    for dinner with my family twice a month. Our favorite restaurant is a traditional restaurant in Hang Bong street. It
-    is not big but it is always busy. There are only a few tables in the restaurant and on each table is a vase with lovely
-    flowers. There are plants in the room corners. I usually order the traditional dishes and eat them with rice. For example,
-    fish cooked with sauce, spring roll,...and vegetable and so on. The food is delicious so we enjoy it very much. The service
-    is also quick and friendly . My family always have pleasant evening at our favorite restaurant. Shall we go there when
-    you come to visit my family next time? See you next time. Mai
+    <pre>
+    {{email?.content}}
   </pre>
 </div>
 <div class="attach">
-  <div style="margin: 5px 20px; margin-top: 20px;">
-    <span>
-      <i class="fa fa-paperclip" aria-hidden="true"></i>
-    </span>
-    <span>
-      Attachments (3)
-    </span>
-  </div>
-  <div class="attach-file d-flex flex-wrap">
-    <div class="file-item">
-      <div style="width: 150px; height: 130px;" class="center-parent">
-        <div>
-          <img width="50" height="50" class="pointer not-outline" src="assets\images\file.png">
-        </div>
-      </div>
-      <div class="file-name d-flex" style="width: 150px; padding: 5px 5px;">
-        <div style="width: calc(100% - 30px);" class="d-flex align-items-center">
-          <div class="w-100">
-            <div>Mag.pdf</div>
-            <div>5,214 KB</div>
-          </div>
-        </div>
-        <div style="width: 30px;" class="d-flex align-items-end">
-          <div>
-            <button class="custom-btn">
-              <i class="fa fa-cloud-download" aria-hidden="true"></i>
-            </button>
-          </div>
-        </div>
-      </div>
+    <div style="margin: 5px 20px; margin-top: 20px;">
+        <span>
+            <i class="fa fa-paperclip" aria-hidden="true"></i>
+        </span>
+        <span>
+            Attachments ({{email?.emailAttatchments?.length}})
+        </span>
     </div>
-  </div>
+    <div class="attach-file d-flex flex-wrap">
+        <div class="file-item mr-1" *ngFor="let item of email?.emailAttatchments">
+            <div style="width: 150px; height: 130px;" class="center-parent">
+                <div>
+                    <img width="50" height="50" class="not-outline" src="assets\images\file.png">
+                </div>
+            </div>
+            <div class="file-name d-flex" style="width: 150px; padding: 5px 5px;">
+                <div style="width: calc(100% - 30px);" class="d-flex align-items-center">
+                    <div class="w-100">
+                        <div>{{item.fileName}}</div>
+                        <div>5,214 KB</div>
+                    </div>
+                </div>
+                <div style="width: 30px;" class="d-flex align-items-end">
+                    <div>
+                        <button class="custom-btn" (click)="download(item.id)" [title]="'Tải file'">
+                            <i class="fa fa-cloud-download" aria-hidden="true"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>

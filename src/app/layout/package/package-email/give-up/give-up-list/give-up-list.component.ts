@@ -140,7 +140,7 @@ export class GiveUpListComponent implements OnInit {
   }
 
   goToDetail(id) {
-    this.router.navigate([`package/email/${id}/give-up/detail`], { queryParams: { page: 'give-up' } });
+    this.router.navigate([`package/email/${this.packageId}/give-up/detail`], { queryParams: { page: 'give-up', itemId: id } });
   }
 
 }
