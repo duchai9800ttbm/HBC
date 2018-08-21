@@ -11,7 +11,6 @@ import { MissPackageNoticeComponent } from './miss-package-notice/miss-package-n
 import { TransferDocumentComponent } from './transfer-document/transfer-document.component';
 import { WinPackageNoticeComponent } from './win-package-notice/win-package-notice.component';
 import { TrashComponent } from './trash/trash.component';
-import { EmailDetailComponent } from './email-detail/email-detail.component';
 
 const routes: Routes = [
   {
@@ -19,7 +18,10 @@ const routes: Routes = [
     component: PackageEmailComponent,
     children: [
       { path: '', redirectTo: 'give-up' },
-      { path: 'give-up', component: GiveUpComponent },
+      {
+        path: 'give-up',
+        loadChildren: './give-up/give-up.module#GiveUpModule'
+      },
       { path: 'assign', component: AssignComponent },
       { path: 'deploy', component: DeployNoticeComponent },
       { path: 'important', component: ImportantComponent },
@@ -29,7 +31,6 @@ const routes: Routes = [
       { path: 'transfer', component: TransferDocumentComponent },
       { path: 'trash', component: TrashComponent },
       { path: 'win', component: WinPackageNoticeComponent },
-      { path: 'detail', component: EmailDetailComponent },
     ]
   }
 ];

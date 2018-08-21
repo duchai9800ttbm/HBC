@@ -12,9 +12,8 @@ import { MissPackageNoticeComponent } from './miss-package-notice/miss-package-n
 import { KickOffComponent } from './kick-off/kick-off.component';
 import { ImportantComponent } from './important/important.component';
 import { TrashComponent } from './trash/trash.component';
-import { PackageEmailComponent } from './package-email.component';
 import { SharedModule } from '../../../shared/shared.module';
-import { EmailDetailComponent } from './email-detail/email-detail.component';
+import { PackageEmailComponent } from './package-email.component';
 
 @NgModule({
   imports: [
@@ -24,8 +23,6 @@ import { EmailDetailComponent } from './email-detail/email-detail.component';
 
   ],
   declarations: [
-    PackageEmailComponent,
-    GiveUpComponent,
     AssignComponent,
     TransferDocumentComponent,
     DeployNoticeComponent,
@@ -35,7 +32,7 @@ import { EmailDetailComponent } from './email-detail/email-detail.component';
     KickOffComponent,
     ImportantComponent,
     TrashComponent,
-    EmailDetailComponent
+    PackageEmailComponent
   ]
 })
 export class PackageEmailModule { }
