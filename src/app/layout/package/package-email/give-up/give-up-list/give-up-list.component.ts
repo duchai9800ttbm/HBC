@@ -23,6 +23,7 @@ export class GiveUpListComponent implements OnInit {
   packageId;
   isShowButtonUp: boolean;
   isShowButtonDown: boolean;
+  isShowEmpty = false;
   constructor(
     private emailService: EmailService,
     private alertService: AlertService,
@@ -114,6 +115,7 @@ export class GiveUpListComponent implements OnInit {
   checkButtonUpDown() {
     this.isShowButtonUp = +this.pagedResult.pageCount > (+this.pagedResult.currentPage + 1);
     this.isShowButtonDown = +this.pagedResult.currentPage > 0;
+    this.isShowEmpty = !(this.pagedResult.total > 0);
   }
 
   delete() {

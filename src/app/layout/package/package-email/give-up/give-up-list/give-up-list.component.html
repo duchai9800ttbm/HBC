@@ -44,7 +44,7 @@
           <button [disabled]="!isShowButtonDown" class="custom-btn" (click)="down()">
             <i class="fa fa-chevron-left" aria-hidden="true"></i>
           </button>
-          <button [disabled]="isShowButtonUp" class="custom-btn" (click)="up()">
+          <button [disabled]="!isShowButtonUp" class="custom-btn" (click)="up()">
             <i class="fa fa-chevron-right" aria-hidden="true"></i>
           </button>
         </div>
@@ -95,6 +95,9 @@
   
           </tbody>
         </table>
+      </div>
+      <div class="center-parent" *ngIf="isShowEmpty">
+        <div>Không có dữ liệu!</div>
       </div>
     </div>
   </div>
