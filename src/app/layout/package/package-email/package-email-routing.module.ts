@@ -29,7 +29,7 @@ const routes: Routes = [
       { path: 'transfer', component: TransferDocumentComponent },
       { path: 'trash', component: TrashComponent },
       { path: 'win', component: WinPackageNoticeComponent },
-      { path: 'detail/:id', component: EmailDetailComponent },
+      { path: 'detail', component: EmailDetailComponent },
     ]
   }
 ];

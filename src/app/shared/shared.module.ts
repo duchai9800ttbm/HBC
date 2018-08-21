@@ -38,8 +38,15 @@ import { MenuModule } from '@progress/kendo-angular-menu';
 import { ModalModule } from 'ngx-bootstrap/modal';
 import { CKEditorModule } from 'ng2-ckeditor';
 import { PackageSuccessService } from './services/package-success.service';
+import { DateInputsModule } from '@progress/kendo-angular-dateinputs';
+// Imports the ComboBox module
+import { ComboBoxModule } from '@progress/kendo-angular-dropdowns';
+import { EmailService } from './services/email.service';
+
 @NgModule({
     imports: [
+        DateInputsModule,
+        ComboBoxModule,
         TagInputModule,
         FilterPipeModule,
         NgxSpinnerModule,
@@ -77,6 +84,8 @@ import { PackageSuccessService } from './services/package-success.service';
         // ScrollToTopService
     ],
     exports: [
+        ComboBoxModule,
+        DateInputsModule,
         FilterPipeModule,
         NgxSpinnerModule,
         CommonModule,
@@ -123,7 +132,8 @@ import { PackageSuccessService } from './services/package-success.service';
         OpportunityHsmtService,
         DocumentReviewService,
         SettingService,
-        PackageSuccessService
+        PackageSuccessService,
+        EmailService
     ],
 })
 export class SharedModule { }
