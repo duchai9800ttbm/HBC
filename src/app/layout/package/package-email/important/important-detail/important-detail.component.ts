@@ -2,11 +2,11 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '../../../../../../../node_modules/@angular/router';
 
 @Component({
-  selector: 'app-transfer-document-detail',
-  templateUrl: './transfer-document-detail.component.html',
-  styleUrls: ['./transfer-document-detail.component.scss']
+  selector: 'app-important-detail',
+  templateUrl: './important-detail.component.html',
+  styleUrls: ['./important-detail.component.scss']
 })
-export class TransferDocumentDetailComponent implements OnInit {
+export class ImportantDetailComponent implements OnInit {
 
   constructor(
     private activetedRoute: ActivatedRoute,
@@ -19,4 +19,6 @@ export class TransferDocumentDetailComponent implements OnInit {
       this.itemId = result.itemId;
     });
   }
+
+
 }

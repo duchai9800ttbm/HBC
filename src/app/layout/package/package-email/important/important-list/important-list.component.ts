@@ -9,11 +9,11 @@ import { Router } from '../../../../../../../node_modules/@angular/router';
 import { PackageEmailComponent } from '../../package-email.component';
 
 @Component({
-  selector: 'app-win-package-notice-list',
-  templateUrl: './win-package-notice-list.component.html',
-  styleUrls: ['./win-package-notice-list.component.scss']
+  selector: 'app-important-list',
+  templateUrl: './important-list.component.html',
+  styleUrls: ['./important-list.component.scss']
 })
-export class WinPackageNoticeListComponent implements OnInit {
+export class ImportantListComponent implements OnInit {
 
   pagedResult: PagedResult<EmailItemModel> = new PagedResult<EmailItemModel>();
   searchTerm$ = new BehaviorSubject<string>('');
@@ -141,6 +141,8 @@ export class WinPackageNoticeListComponent implements OnInit {
   }
 
   goToDetail(id) {
-    this.router.navigate([`package/email/${this.packageId}/win/detail`], { queryParams: { page: 'win', itemId: id } });
+    this.router.navigate([`package/email/${this.packageId}/important/detail`], { queryParams: { page: 'important', itemId: id } });
   }
+
+
 }

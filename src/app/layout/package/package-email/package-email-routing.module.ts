@@ -30,13 +30,34 @@ const routes: Routes = [
         path: 'deploy',
         loadChildren: './deploy-notice/deploy-notice.module#DeployNoticeModule'
       },
-      { path: 'important', component: ImportantComponent },
-      { path: 'interview', component: InterviewNoticeComponent },
-      { path: 'kick-off', component: KickOffComponent },
-      { path: 'miss', component: MissPackageNoticeComponent },
-      { path: 'transfer', component: TransferDocumentComponent },
-      { path: 'trash', component: TrashComponent },
-      { path: 'win', component: WinPackageNoticeComponent },
+      {
+        path: 'interview',
+        loadChildren: './interview-notice/interview-notice.module#InterviewNoticeModule'
+      },
+      {
+        path: 'important',
+        loadChildren: './important/important.module#ImportantModule'
+      },
+      {
+        path: 'kick-off',
+        loadChildren: './kick-off/kick-off.module#KickOffModule'
+      },
+      {
+        path: 'miss',
+        loadChildren: './miss-package-notice/miss-package-notice.module#MissPackageNoticeModule'
+      },
+      {
+        path: 'transfer',
+        loadChildren: './transfer-document/transfer-document.module#TransferDocumentModule'
+      },
+      {
+        path: 'trash',
+        loadChildren: './trash/trash.module#TrashModule'
+      },
+      {
+        path: 'win',
+        loadChildren: './win-package-notice/win-package-notice.module#WinPackageNoticeModule'
+      },
     ]
   }
 ];
