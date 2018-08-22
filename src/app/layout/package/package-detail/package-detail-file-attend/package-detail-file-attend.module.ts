@@ -2,8 +2,8 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { SharedModule } from '../../../../shared/shared.module';
 import { PackageDetailFileAttendRoutingModule } from './package-detail-file-attend-routing.module';
-import { PackageDetailFileAttendComponent } from './package-detail-file-attend.component'
-import { InformationDeploymentComponent } from './information-deployment/information-deployment.component'
+import { PackageDetailFileAttendComponent } from './package-detail-file-attend.component';
+import { InformationDeploymentComponent } from './information-deployment/information-deployment.component';
 import { ModalModule } from 'ngx-bootstrap';
 import { CKEditorModule } from 'ng2-ckeditor';
 import { AssignmentProgressComponent } from './information-deployment/assignment-progress/assignment-progress.component';

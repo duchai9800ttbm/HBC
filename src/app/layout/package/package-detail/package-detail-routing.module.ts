@@ -1,12 +1,12 @@
-import { NgModule } from "../../../../../node_modules/@angular/core";
-import { Routes, RouterModule } from "../../../../../node_modules/@angular/router";
-import { PackageDetailInfoComponent } from "./package-detail-info/package-detail-info.component";
-import { PackageDetailComponent } from "./package-detail.component";
-import { PackageDetailFileInvitationComponent } from "./package-detail-file-invitation/package-detail-file-invitation.component";
-import { PackageDetailResultComponent } from "./package-detail-result/package-detail-result.component";
-import { PackageEdit2Component } from "./package-edit-2/package-edit-2.component";
-import { InformationComponent } from "./package-detail-info/information/information.component";
-import { InformationDeploymentComponent} from "./package-detail-file-attend/information-deployment/information-deployment.component"
+import { NgModule } from '../../../../../node_modules/@angular/core';
+import { Routes, RouterModule } from '../../../../../node_modules/@angular/router';
+import { PackageDetailInfoComponent } from './package-detail-info/package-detail-info.component';
+import { PackageDetailComponent } from './package-detail.component';
+import { PackageDetailFileInvitationComponent } from './package-detail-file-invitation/package-detail-file-invitation.component';
+import { PackageDetailResultComponent } from './package-detail-result/package-detail-result.component';
+import { PackageEdit2Component } from './package-edit-2/package-edit-2.component';
+import { InformationComponent } from './package-detail-info/information/information.component';
+import { InformationDeploymentComponent} from './package-detail-file-attend/information-deployment/information-deployment.component';
 const routes: Routes = [
     {
         path: '',

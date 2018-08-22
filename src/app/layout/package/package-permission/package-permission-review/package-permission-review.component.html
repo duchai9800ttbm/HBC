@@ -18,6 +18,7 @@
                         <th>
                             <div class="text-center">Hồ sơ mời thầu</div>
                         </th>
+                        <th></th>
                         <th>
                             <div class="text-center">Upload HSMT</div>
                         </th>
@@ -40,21 +41,27 @@
                     <ng-container formArrayName="profiles">
                         <tr *ngFor="let item of packagePermissionReviewForm.get('profiles').controls; let i = index;" [formGroupName]="i" [class.odd]="i % 2 == 0">
                             <td>
-                              <div class="grid-container-3">
-                                  <div class="btn-icon btn-icon-plus" (click)="addFormItem('profiles')">
-                                      <i class="fa fa-plus" style="margin-top: 2px" aria-hidden="true"></i>
-                                  </div>
-                                  <div [class.btn-icon]="i != 0" [class.btn-icon-minus]="i != 0" (click)="removeFormItem('profiles', i)" >
-                                      <i class="fa fa-minus" style="margin-top: 2px" aria-hidden="true" *ngIf="i != 0"></i>
-                                  </div>
-                                  <div>
-                                      <span style="padding-left: 12px" class="custom-dropdown w-100">
-                                          <select class="form-control">
-                                              <option [ngValue]="null">--Chọn--</option>
-                                          </select>
-                                      </span>
-                                  </div>
-                              </div>
+                                <div class="grid-container-3">
+                                    <div class="btn-icon btn-icon-plus" (click)="addFormItem('profiles')">
+                                        <i class="fa fa-plus" style="margin-top: 2px" aria-hidden="true"></i>
+                                    </div>
+                                    <div class="btn-icon btn-icon-minus" [class.invisible]="i == 0" (click)="removeFormItem('profiles', i)">
+                                        <i class="fa fa-minus" style="margin-top: 2px" aria-hidden="true" *ngIf="i != 0"></i>
+                                    </div>
+                                    <div>
+                                        <span style="padding-left: 12px" class="custom-dropdown w-100">
+                                            <select class="form-control">
+                                                <option [ngValue]="null">--Chọn--</option>
+                                            </select>
+                                        </span>
+                                    </div>
+                                </div>
+                            </td>
+                            <td class="text-center">
+                                <label class="custom-control custom-checkbox">
+                                    <input type="checkbox" class="custom-control-input">
+                                    <span class="custom-control-indicator"></span>
+                                </label>
                             </td>
                             <td class="text-center">
                                 <label class="custom-control custom-checkbox">
@@ -97,6 +104,7 @@
                         <th>
                             <div class="text-center">Phiếu đề nghị dự thầu</div>
                         </th>
+                        <th></th>
                         <th>
                             <div class="text-center">Upload file</div>
                         </th>
@@ -124,21 +132,27 @@
                     <ng-container formArrayName="formOfBids">
                         <tr *ngFor="let item of packagePermissionReviewForm.get('formOfBids').controls; let i = index;" [formGroupName]="i" [class.odd]="i % 2 == 0">
                             <td>
-                              <div class="grid-container-3">
-                                  <div class="btn-icon btn-icon-plus" (click)="addFormItem('formOfBids')">
-                                      <i class="fa fa-plus" style="margin-top: 2px" aria-hidden="true"></i>
-                                  </div>
-                                  <div [class.btn-icon]="i != 0" [class.btn-icon-minus]="i != 0" (click)="removeFormItem('formOfBids', i)" >
-                                      <i class="fa fa-minus" style="margin-top: 2px" aria-hidden="true" *ngIf="i != 0"></i>
-                                  </div>
-                                  <div>
-                                      <span style="padding-left: 12px" class="custom-dropdown w-100">
-                                          <select class="form-control">
-                                              <option [ngValue]="null">--Chọn--</option>
-                                          </select>
-                                      </span>
-                                  </div>
-                              </div>
+                                <div class="grid-container-3">
+                                    <div class="btn-icon btn-icon-plus" (click)="addFormItem('formOfBids')">
+                                        <i class="fa fa-plus" style="margin-top: 2px" aria-hidden="true"></i>
+                                    </div>
+                                    <div class="btn-icon btn-icon-minus" [class.invisible]="i == 0" (click)="removeFormItem('formOfBids', i)">
+                                        <i class="fa fa-minus" style="margin-top: 2px" aria-hidden="true" *ngIf="i != 0"></i>
+                                    </div>
+                                    <div>
+                                        <span style="padding-left: 12px" class="custom-dropdown w-100">
+                                            <select class="form-control">
+                                                <option [ngValue]="null">--Chọn--</option>
+                                            </select>
+                                        </span>
+                                    </div>
+                                </div>
+                            </td>
+                            <td class="text-center">
+                                <label class="custom-control custom-checkbox">
+                                    <input type="checkbox" class="custom-control-input">
+                                    <span class="custom-control-indicator"></span>
+                                </label>
                             </td>
                             <td class="text-center">
                                 <label class="custom-control custom-checkbox">

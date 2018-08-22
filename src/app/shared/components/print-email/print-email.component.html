@@ -1,0 +1,17 @@
+<div class="mb-2">
+  <button kendoButton [primary]="true" [icon]="'save'" (click)="pdf.saveAs('pos.pdf')">
+    Lưu
+  </button>
+  <button kendoButton [primary]="true" [icon]="'print'" (click)="printToCart('printSectionId')">
+    In
+  </button>
+</div>
+<div class="d-flex justify-content-around">
+  <div>
+    <kendo-pdf-export #pdf paperSize="A4">
+      <div class="A4-landscape" id="printSectionId">
+
+      </div>
+    </kendo-pdf-export>
+  </div>
+</div>

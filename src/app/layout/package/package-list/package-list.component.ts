@@ -194,7 +194,7 @@ export class PackageListComponent implements OnInit, AfterViewChecked {
                     that.refresh();
                 },
                     err => {
-                        that.alertService.success('Đã gặp lỗi, chưa xóa được gói thầu!');
+                        that.alertService.error('Đã gặp lỗi, chưa xóa được gói thầu!');
                     });
             }
         );

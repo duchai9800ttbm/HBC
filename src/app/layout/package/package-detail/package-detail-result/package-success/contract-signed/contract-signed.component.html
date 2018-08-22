@@ -162,97 +162,140 @@
                         </th>
                     </thead>
                 </table>
-                <!-- <div class="hsmt-head" (click)="showhsmt()">
-                    <!-- <div class="" style="width:50%">Hồ sơ mời thầu
-                        <i class="fa fa-caret-down mr-3"></i>
-                    </div> -->
-                <!-- <div class="form-group ml-sm-2">
-                        <label for="" class="form-label">Lần phỏng vấn</label>
-                        <span class="custom-dropdown mx-sm-2">
-                            <select class="form-control">
-                                <option value="">--Lựa chọn--</option>
-                                <option value="Official">1</option>
-                                <option value="Draft">2</option>
-                                <option value="Official">3</option>
-                                <option value="Draft">4</option>
-                            </select>
-                        </span>
-                    </div> -->
-
-                <!-- </div> -->
-                <div class="main-table">
-                    <div class="d-flex flex-row flex-wrap hsmt-head custom-filter-bar">
-                        <div class="d-flex form-inline flex-pad">
-                            <div class="form-group ml-sm-2">
-                                Hồ sơ mời thầu
-                                <i class="fa fa-caret-down mr-l3"></i>
+                <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="table-selection stripe row-border hover cell-border dataTable">
+                    <thead>
+                        <th class="stt hsmt-head th" style="width: 50%; min-width: 100px;">
+                            <div class="mgl-hs"> Hồ sơ mời thầu
+                                <i class="fa fa-caret-down mr-l3" (click)="showhsmt()"></i>
                             </div>
-                            <div class="form-group ml-sm-2">
+                        </th>
+                        <th style="width: 15%;" class="hsmt-head th">
+                            <div class="ml-sm-2">
                                 <label for="" class="form-label"></label>
-                                <span class="custom-dropdown mx-sm-2">
-                                    <select class="form-control">
-                                        <option value="">--Lựa chọn--</option>
-                                        <option value="Official">Ban GD</option>
-                                        <option value="Draft">Trưởng phòng</option>
-                                    </select>
+                                <span class="custom-dropdown custom-dropdown-v2 mx-sm-2">
+                                    <select class="form-control w-rom">
+                                        <option value="">--Chọn phòng ban--</option>
+                                        <option value="Official">Phòng hành chính</option>
+                                        <option value="Draft">Phòng lưu trữ</option>
+                                    </select>>
                                 </span>
                             </div>
-
-                            <div class="form-group ml-sm-2">
-                                <label for="" class="form-label"></label>
-                                <span class="custom-dropdown mx-sm-2">
-                                    <select class="form-control">
-                                        <option value="">--Lựa chọn--</option>
-                                        <option value="Official">1</option>
-                                        <option value="Draft">2</option>
-                                        <option value="Official">3</option>
-                                        <option value="Draft">4</option>
-                                    </select>
-                                </span>
-                            </div>
-                        </div>
-                    </div>
-                    <table *ngIf="!isDataHsmt" datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="table-selection stripe row-border hover cell-border dataTable">
-                        <tbody>
-                            <tr *ngFor="let item of resultData; let i = index">
-                                <td class="stt" style="width: 5%; min-width: 20px;" class="bg-default">
-                                    <div class="d-flex justify-content-around">
-                                        <div style="width: 40%;">
-                                            <div class="center-parent">
-                                                <label class="custom-control custom-checkbox">
-                                                    <input type="checkbox" class="custom-control-input" [(ngModel)]="item.checkboxSelected">
-                                                    <span class="custom-control-indicator"></span>
-                                                </label>
-                                            </div>
-                                        </div>
-
-                                        <div style="width: 35%;" class="center-parent">
-                                            <div>{{i+1}}</div>
+                        </th>
+                        <th style="width: 10%;" class="hsmt-head th">
+                            <input type="number" class="form-control" placeholder="Number">
+                        </th>
+                        <th style="width: 10%;" class="hsmt-head th"></th>
+                        <th style="width: 10%;" class="hsmt-head th"></th>
+                    </thead>
+                </table>               
+                <table *ngIf="!isDataHsmt" datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="table-selection stripe row-border hover cell-border dataTable">
+                    <tbody>
+                        <tr *ngFor="let item of resultData; let i = index">
+                            <td class="stt" style="width: 5%; min-width: 20px;" class="bg-default">
+                                <div class="d-flex justify-content-around">
+                                    <div style="width: 40%;">
+                                        <div class="center-parent">
+                                            <label class="custom-control custom-checkbox">
+                                                <input type="checkbox" class="custom-control-input" [(ngModel)]="item.checkboxSelected">
+                                                <span class="custom-control-indicator"></span>
+                                            </label>
                                         </div>
                                     </div>
-                                </td>
-                                <td style="width: 15%;">{{ item.typeData }}</td>
-                                <td style="width: 15%;">{{ item.typeData2 }}</td>
-                                <td style="width: 15%;">{{ item.namedata }}</td>
-                                <td style="width: 15%;" class="select-filter">
-                                    {{ item.romdata}}</td>
-                                <td style="width: 10%;" class="select-filter text-center">{{ item.noDate}}</td>
-                                <td style="width: 10%;" class="select-filter text-center">{{ item.interview}}</td>
-                                <td class="text-center" style="width: 10%;">
-                                    <div class="row ">
-                                        <div class="col-md-5 center-parent cursor-pointer">
-                                            <i [title]="'tải file'" class="fa fa-download color-item-down"></i>
-                                        </div>
 
-                                        <div class="col-md-5 center-parent cursor-pointer" style="color:#e92121;">
-                                            <i [title]="'In'" class="fa fa-print "></i>
-                                        </div>
+                                    <div style="width: 35%;" class="center-parent">
+                                        <div>{{i+1}}</div>
                                     </div>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
+                                </div>
+                            </td>
+                            <td style="width: 15%;">{{ item.documentType }}</td>
+                            <td style="width: 15%;">{{ item.documentData }}</td>
+                            <td style="width: 15%;">{{ item.documentName }}</td>
+                            <td style="width: 15%;" class="select-filter">
+                                {{ item.documentRom}}</td>
+                            <td style="width: 10%;" class="select-filter text-center">{{ item.dateNo}}</td>
+                            <td style="width: 10%;" class="select-filter text-center">{{ item.interviewNo}}</td>
+                            <td class="text-center" style="width: 10%;">
+                                <div class="row ">
+                                    <div class="col-md-5 center-parent cursor-pointer">
+                                        <i [title]="'tải file'" class="fa fa-download color-item-down"></i>
+                                    </div>
+
+                                    <div class="col-md-5 center-parent cursor-pointer" style="color:#e92121;">
+                                        <i [title]="'In'" class="fa fa-print "></i>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="table-selection stripe row-border hover cell-border dataTable">
+                        <thead>
+                            <th class="stt hsmt-head th" style="width: 50%; min-width: 100px;">
+                                <div class="mgl-hs"> Hồ sơ dự thầu
+                                    <i class="fa fa-caret-down mr-l3" (click)="showhsdt()"></i>
+                                </div>
+                            </th>
+                            <th style="width: 15%;" class="hsmt-head th">
+                                <div class="ml-sm-2">
+                                    <label for="" class="form-label"></label>
+                                    <span class="custom-dropdown custom-dropdown-v2 mx-sm-2">
+                                        <select class="form-control w-rom">
+                                            <option value="">--Chọn phòng ban--</option>
+                                            <option value="Official">Phòng hành chính</option>
+                                            <option value="Draft">Phòng lưu trữ</option>
+                                        </select>>
+                                    </span>
+                                </div>
+                            </th>
+                            <th style="width: 10%;" class="hsmt-head th">
+                                <input type="number" class="form-control" placeholder="Number">
+                            </th>
+                            <th style="width: 10%;" class="hsmt-head th"></th>
+                            <th style="width: 10%;" class="hsmt-head th"></th>
+                        </thead>
+                    </table>     
+                    <!-- isDataHsdt -->
+                    <table *ngIf="!isDataHsdt" datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="table-selection stripe row-border hover cell-border dataTable">
+                            <tbody>
+                                    <tr *ngFor="let item of resultData; let i = index">
+                                            <td class="stt" style="width: 5%; min-width: 20px;" class="bg-default">
+                                                <div class="d-flex justify-content-around">
+                                                    <div style="width: 40%;">
+                                                        <div class="center-parent">
+                                                            <label class="custom-control custom-checkbox">
+                                                                <input type="checkbox" class="custom-control-input" [(ngModel)]="item.checkboxSelected">
+                                                                <span class="custom-control-indicator"></span>
+                                                            </label>
+                                                        </div>
+                                                    </div>
+                
+                                                    <div style="width: 35%;" class="center-parent">
+                                                        <div>{{i+1}}</div>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                            <td style="width: 15%;">{{ item.documentType }}</td>
+                                            <td style="width: 15%;">{{ item.documentData }}</td>
+                                            <td style="width: 15%;">{{ item.documentName }}</td>
+                                            <td style="width: 15%;" class="select-filter">
+                                                {{ item.documentRom}}</td>
+                                            <td style="width: 10%;" class="select-filter text-center">{{ item.dateNo}}</td>
+                                            <td style="width: 10%;" class="select-filter text-center">{{ item.interviewNo}}</td>
+                                            <td class="text-center" style="width: 10%;">
+                                                <div class="row ">
+                                                    <div class="col-md-5 center-parent cursor-pointer">
+                                                        <i [title]="'tải file'" class="fa fa-download color-item-down"></i>
+                                                    </div>
+                
+                                                    <div class="col-md-5 center-parent cursor-pointer" style="color:#e92121;">
+                                                        <i [title]="'In'" class="fa fa-print "></i>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                        </tr>
+                            </tbody>
+                        </table>
             </div>
-
         </div>
+
+    </div>

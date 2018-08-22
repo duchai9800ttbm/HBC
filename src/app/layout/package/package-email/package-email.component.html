@@ -3,7 +3,7 @@
     <div class="mr-auto col-md-12">
       <div class="media-header header-title">
         <a [routerLink]='["/package/list"]' style="cursor: pointer;">
-          <i class="fa fa-chevron-left mr-3" aria-hidden="true"></i>
+          <img width="12" height="12" class="pointer not-outline" src="assets\images\nghia.png" style="margin-bottom: 1px;">
         </a>
         <h4 class="d-inline mb-0 text-dark">QUẢN LÝ EMAIL ĐÃ GỬI</h4>
       </div>
@@ -13,48 +13,48 @@
     <div class="d-flex">
       <div class="" style="width: 270px;">
         <div class=" menu-vertical">
-          <div class="action d-flex align-content-between" [routerLinkActive]="['router-link-active-2']" [routerLink]="['/package/email/give-up']">
+          <div class="action d-flex align-content-between" [routerLinkActive]="['router-link-active-2']" [routerLink]="['/package/email', packageId ,'give-up']">
             <div class="center-parent mg">
-              <div>Từ chối</div>
+              <div>Từ chối ({{giveUp?.count}})</div>
             </div>
           </div>
-          <div class="action d-flex align-content-between" [routerLinkActive]="['router-link-active-2']" [routerLink]="['/package/email/assign']">
+          <div class="action d-flex align-content-between" [routerLinkActive]="['router-link-active-2']" [routerLink]="['/package/email', packageId ,'assign']">
             <div class="center-parent mg">
-              <div> Phân công (03)</div>
+              <div> Phân công ({{assign?.count}})</div>
             </div>
           </div>
-          <div class="action d-flex align-content-between" [routerLinkActive]="['router-link-active-2']" [routerLink]="['/package/email/transfer']">
+          <div class="action d-flex align-content-between" [routerLinkActive]="['router-link-active-2']" [routerLink]="['/package/email', packageId ,'transfer']">
             <div class="center-parent mg">
-              <div> Chuyển giao tài liệu (03)</div>
+              <div> Chuyển giao tài liệu ({{transfer?.count}})</div>
             </div>
           </div>
-          <div class="action d-flex align-content-between" [routerLinkActive]="['router-link-active-2']" [routerLink]="['/package/email/deploy']">
+          <div class="action d-flex align-content-between" [routerLinkActive]="['router-link-active-2']" [routerLink]="['/package/email', packageId ,'deploy']">
             <div class="center-parent mg">
-              <div> Thông báo triển khai (03)</div>
+              <div> Thông báo triển khai ({{deploy?.count}})</div>
             </div>
           </div>
-          <div class="action d-flex align-content-between" [routerLinkActive]="['router-link-active-2']" [routerLink]="['/package/email/interview']">
+          <div class="action d-flex align-content-between" [routerLinkActive]="['router-link-active-2']" [routerLink]="['/package/email', packageId ,'interview']">
             <div class="center-parent mg">
-              <div> Thông báo phỏng vấn (03)</div>
+              <div> Thông báo phỏng vấn ({{interview?.count}})</div>
             </div>
           </div>
-          <div class="action d-flex align-content-between" [routerLinkActive]="['router-link-active-2']" [routerLink]="['/package/email/win']">
+          <div class="action d-flex align-content-between" [routerLinkActive]="['router-link-active-2']" [routerLink]="['/package/email', packageId ,'win']">
             <div class="center-parent mg">
-              <div> Thông báo trúng thầu (03)</div>
+              <div> Thông báo trúng thầu ({{win?.count}})</div>
             </div>
           </div>
-          <div class="action d-flex align-content-between" [routerLinkActive]="['router-link-active-2']" [routerLink]="['/package/email/miss']">
+          <div class="action d-flex align-content-between" [routerLinkActive]="['router-link-active-2']" [routerLink]="['/package/email', packageId ,'miss']">
             <div class="center-parent mg">
-              <div> Thông báo trật thầu (03)</div>
+              <div> Thông báo trật thầu ({{miss?.count}})</div>
             </div>
           </div>
-          <div class="action d-flex align-content-between" [routerLinkActive]="['router-link-active-2']" [routerLink]="['/package/email/kick-off']">
+          <div class="action d-flex align-content-between" [routerLinkActive]="['router-link-active-2']" [routerLink]="['/package/email', packageId , 'kick-off']">
             <div class="center-parent mg">
-              <div> Kick-off (03)
+              <div> Kick-off ({{kickOff?.count}})
               </div>
             </div>
           </div>
-          <div class="action d-flex align-content-between" [routerLinkActive]="['router-link-active-2']" [routerLink]="['/package/email/important']">
+          <div class="action d-flex align-content-between" [routerLinkActive]="['router-link-active-2']" [routerLink]="['/package/email', packageId, 'important']">
             <div class="center-parent mg w-100">
               <div class="d-flex justify-content-between w-100">
                 <div class="mr-auto">
@@ -62,13 +62,13 @@
                 </div>
                 <div class="center-parent">
                   <div class="center-parent mail-important">
-                    <div>9</div>
+                    <div>{{important?.count}}</div>
                   </div>
                 </div>
               </div>
             </div>
           </div>
-          <div class="action d-flex align-content-between" [routerLinkActive]="['router-link-active-2']" [routerLink]="['/package/email/trash']">
+          <div class="action d-flex align-content-between" [routerLinkActive]="['router-link-active-2']" [routerLink]="['/package/email', packageId , 'trash']">
             <div class="center-parent mg w-100">
               <div class="d-flex justify-content-between w-100">
                 <div class="mr-auto">
@@ -76,7 +76,7 @@
                 </div>
                 <div class="center-parent">
                   <div class="center-parent number-trash">
-                    <div>9</div>
+                    <div>{{trash?.count}}</div>
                   </div>
                 </div>
               </div>

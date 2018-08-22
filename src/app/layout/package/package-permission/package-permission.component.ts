@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { routerTransition } from '../../../router.animations';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-package-permission',
@@ -9,9 +10,15 @@ import { routerTransition } from '../../../router.animations';
 })
 export class PackagePermissionComponent implements OnInit {
 
-  constructor() { }
+  packageId;
+  constructor(
+    private activetedRoute: ActivatedRoute,
+  ) { }
 
   ngOnInit() {
+    this.activetedRoute.params.subscribe(result => {
+      this.packageId = result.id;
+    });
   }
 
 }

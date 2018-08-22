@@ -37,11 +37,13 @@
                                     <tr>
                                         <td class="w-20 label no-boder bold-title">Loại</td>
                                         <td class="no-boder d-flex">
-                                            <span class="w-100 custom-dropdown">
+                                            <!-- <span class="w-100 custom-dropdown">
                                                 <select class="form-control" tabindex="5" formControlName="type">
                                                     <option *ngFor="let item of listTypeFile" [value]="item.id">{{item.text }}</option>
                                                 </select>
-                                            </span>
+                                            </span> -->
+                                            <kendo-dropdownlist class="w-100" [data]="listItems"></kendo-dropdownlist>
+
                                         </td>
                                     </tr>
                                     <tr>
@@ -53,11 +55,15 @@
                                     <tr>
                                         <td class="w-20 label no-boder bold-title">Ngày nhận HSMT</td>
                                         <td class="no-boder d-flex">
-                                            <owl-date-time [readonlyInput]="datePickerConfig.readonlyInput" [locale]="datePickerConfig.vi" [placeHolder]="datePickerConfig.placeHolderVn">
-                                            </owl-date-time>
-                                            <span class="input-group-addon">
+                                            <!-- <owl-date-time [readonlyInput]="datePickerConfig.readonlyInput" [locale]="datePickerConfig.vi" [placeHolder]="datePickerConfig.placeHolderVn">
+                                            </owl-date-time> -->
+                                            <div style="width: 100%;">
+                                                <kendo-datepicker class="w-100"></kendo-datepicker>
+
+                                            </div>
+                                            <!-- <span class="input-group-addon">
                                                 <i class="fa fa-calendar"></i>
-                                            </span>
+                                            </span> -->
                                         </td>
                                     </tr>
                                     <tr>
