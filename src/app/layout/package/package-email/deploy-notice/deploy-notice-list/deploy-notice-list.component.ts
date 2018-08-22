@@ -34,7 +34,7 @@ export class DeployNoticeListComponent implements OnInit {
   }
   ngOnInit() {
     this.packageId = +PackageEmailComponent.packageId;
-    this.filterModel.category = 'RejectOpportunity';
+    this.filterModel.category = 'AnnounceDeployment';
     this.spinner.show();
     this.emailService.instantSearchWithFilter(this.packageId, this.searchTerm$, this.filterModel, 0, 5)
       .subscribe(result => {
@@ -71,7 +71,7 @@ export class DeployNoticeListComponent implements OnInit {
   }
 
   refresh() {
-    this.filterModel.category = 'RejectOpportunity';
+    this.filterModel.category = 'AnnounceDeployment';
     this.spinner.show();
     this.emailService.instantSearchWithFilter(this.packageId, this.searchTerm$,
       this.filterModel, this.pagedResult.currentPage, this.pagedResult.pageSize)

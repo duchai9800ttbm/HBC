@@ -1,16 +1,6 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { PackageEmailComponent } from './package-email.component';
-import { GiveUpComponent } from './give-up/give-up.component';
-import { AssignComponent } from './assign/assign.component';
-import { DeployNoticeComponent } from './deploy-notice/deploy-notice.component';
-import { ImportantComponent } from './important/important.component';
-import { InterviewNoticeComponent } from './interview-notice/interview-notice.component';
-import { KickOffComponent } from './kick-off/kick-off.component';
-import { MissPackageNoticeComponent } from './miss-package-notice/miss-package-notice.component';
-import { TransferDocumentComponent } from './transfer-document/transfer-document.component';
-import { WinPackageNoticeComponent } from './win-package-notice/win-package-notice.component';
-import { TrashComponent } from './trash/trash.component';
 
 const routes: Routes = [
   {
