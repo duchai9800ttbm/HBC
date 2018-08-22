@@ -323,12 +323,11 @@ table.dataTable th {
 
 #main-content {
     display: flex;
-
     #toggle-menu {
         // box-shadow: ;
         display: flex;
         flex-direction: column;
-        padding-top:  30px;
+        padding-top: 30px;
         .toggle-menu-item {
             color: #FFFFFF;
             background-color: #009CE2;
@@ -341,9 +340,11 @@ table.dataTable th {
             justify-content: start;
             align-items: center;
             font-size: 0.95em;
+            transition: width 2s;
         }
         .button-click {
             display: flex;
+            flex-direction: column;
             align-items: center;
             justify-content: center;
             font-size: 15px;
@@ -354,13 +355,43 @@ table.dataTable th {
             align-self: flex-end;
         }
     }
-
     #table-content {
         padding: 0 20px;
     }
 }
 
 .hidden {
-    display: none!important;
+    display: none !important;
+}
+.resize {
+    transition: width 2s;
+    width: 0px!important;
+    color: transparent!important;
+    background-color: transparent!important;
+
 }
 
+.iconButton {
+    width: 19px;
+    height: 3px;
+    background-color: #fff;
+    border: none;
+    border-radius: 10px;
+}
+
+.iconN01 {
+    width: 25px;
+    transform: rotate(45deg) translate(5px, 5px);
+    transition-duration: 1.5s;
+}
+
+.iconN03 {
+    width: 25px;
+    transform: rotate(-45deg) translate(4px, -4px);
+    transition-duration: 1.5s;
+}
+
+.iconN02 {
+    transform: rotateY(90deg);
+    transition-duration: 1.5s;
+}

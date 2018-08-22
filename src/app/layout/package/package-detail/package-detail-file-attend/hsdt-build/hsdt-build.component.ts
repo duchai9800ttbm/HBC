@@ -6,14 +6,16 @@ import { Component, OnInit } from '@angular/core';
     styleUrls: ['./hsdt-build.component.scss']
 })
 export class HsdtBuildComponent implements OnInit {
-    isChangeIcon = true;
-    isHidden = false;
     constructor() { }
 
     ngOnInit() {
     }
+
     toggleClick() {
-        this.isChangeIcon = !this.isChangeIcon;
-        this.isHidden = !this.isHidden;
+        $('.toggle-menu-item').toggleClass('resize');
+        $('.iconN1').toggleClass('iconN01');
+        $('.iconN2').toggleClass('iconN02');
+        $('.iconN3').toggleClass('iconN03');
+        console.log('ok');
     }
 }
