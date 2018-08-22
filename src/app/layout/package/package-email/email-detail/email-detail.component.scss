@@ -4,7 +4,7 @@
 }
 .title{
     height: 60px;
-    border-bottom: 2px solid #f1f1f1;
+    border-bottom: 1px solid #f1f1f1;
     margin: 0 10px;
     .content{
         margin: 0 10px;
@@ -20,11 +20,11 @@
 .title-item{
     margin: 0 20px;
     min-height: 50px;
-    border-bottom: 2px solid #f1f1f1;
+    border-bottom: 1px solid #f1f1f1;
 }
 .custom-btn{
     background-color: #fff;
-    border: 2px solid #f1f1f1;
+    border: 1px solid #f1f1f1;
     width: 30px;
     height: 30px;
     border-radius: 3px;
@@ -33,7 +33,7 @@
     &:hover{
         background-color: #00a0e3;
         color: #fff;
-        border: 2px solid #00a0e3;
+        border: 1px solid #00a0e3;
     }
 }
 
@@ -51,9 +51,9 @@
     padding-bottom: 20px;
     .file-item{
         box-sizing: border-box;
-        width: 152px;
-        height: 182px;
-        border: 2px solid #f1f1f1;
+        width: 151px;
+        height: 181px;
+        border: 1px solid #f1f1f1;
         .file-name{
             background-color: #f4f4f4!important;
             height: 50px;
@@ -64,6 +64,6 @@
 }
 
 .attach{
-    border-top: 2px solid #f1f1f1;
+    border-top: 1px solid #f1f1f1;
     margin: 0 10px;
 }

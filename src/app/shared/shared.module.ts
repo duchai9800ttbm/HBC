@@ -42,9 +42,18 @@ import { DateInputsModule } from '@progress/kendo-angular-dateinputs';
 // Imports the ComboBox module
 import { ComboBoxModule } from '@progress/kendo-angular-dropdowns';
 import { EmailService } from './services/email.service';
+// Imports the Button module
+import { ButtonModule } from '@progress/kendo-angular-buttons';
+
+// Imports the ButtonGroup module
+import { ButtonGroupModule } from '@progress/kendo-angular-buttons';
+import { PDFExportModule } from '@progress/kendo-angular-pdf-export';
 
 @NgModule({
     imports: [
+        PDFExportModule,
+        ButtonModule,
+        ButtonGroupModule,
         DateInputsModule,
         ComboBoxModule,
         TagInputModule,
@@ -84,6 +93,9 @@ import { EmailService } from './services/email.service';
         // ScrollToTopService
     ],
     exports: [
+        PDFExportModule,
+        ButtonModule,
+        ButtonGroupModule,
         ComboBoxModule,
         DateInputsModule,
         FilterPipeModule,

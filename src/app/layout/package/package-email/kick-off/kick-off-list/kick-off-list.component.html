@@ -1,0 +1,104 @@
+<div class="title">
+    <div class="content d-flex justify-content-between h-100">
+      <div class="center-parent">
+        <span class="font-weight-bold reject">Kick-off</span>
+      </div>
+      <div class="center-parent">
+        <div style="width: 280px;">
+          <label class="sr-only " for="inlineFormInputGroup">Username</label>
+          <div class="input-group group-search">
+            <input type="text" class="form-control input-search" id="inlineFormInputGroup" placeholder="Tìm theo chủ đề, người nhận"
+              (keyup)="searchTerm$.next($event.target.value)">
+            <div class="input-group-addon label-search">
+              <i class="fa fa-search icon-search" aria-hidden="true"></i>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="content">
+    <div>
+      <div class="d-flex justify-content-between h-100 action-bar">
+        <div>
+          <button class="custom-btn" (click)="onSelectAll(!checkboxSeclectAll)">
+            <i *ngIf="!checkboxSeclectAll" class="fa fa-square-o" aria-hidden="true"></i>
+            <i *ngIf="checkboxSeclectAll" class="fa fa-check-square-o" aria-hidden="true"></i>
+          </button>
+          <button class="custom-btn" (click)="delete()">
+            <i class="fa fa-trash" aria-hidden="true"></i>
+          </button>
+          <button class="custom-btn" (click)="refresh()">
+            <i class="fa fa-refresh" aria-hidden="true"></i>
+          </button>
+        </div>
+        <div class="paging">
+          <span>Mới nhất</span>
+          <span style="padding: 0 5px">
+            <span class="font-weight-bold">{{ (+pagedResult?.total > 0) ? (pagedResult?.currentPage*pagedResult?.pageSize + 1) : 0}}</span>
+            -
+            <span class="font-weight-bold">{{pagedResult?.currentPage*pagedResult?.pageSize + pagedResult?.items?.length}}</span>
+            trong tổng
+            <span class="font-weight-bold">{{pagedResult?.total}}</span>
+          </span>
+          <button [disabled]="!isShowButtonDown" class="custom-btn" (click)="down()">
+            <i class="fa fa-chevron-left" aria-hidden="true"></i>
+          </button>
+          <button [disabled]="!isShowButtonUp" class="custom-btn" (click)="up()">
+            <i class="fa fa-chevron-right" aria-hidden="true"></i>
+          </button>
+        </div>
+      </div>
+  
+      <div class="bot-table">
+        <table class="table-selection stripe row-border hover  dataTable">
+          <thead>
+  
+          </thead>
+          <tbody>
+            <ng-container *ngFor="let item of pagedResult.items">
+              <tr (click)="goToDetail(item.id)" class="cursor-pointer">
+  
+                <td class="text-center" style="width: 30px;">
+                  <label class="custom-control custom-checkbox">
+                    <input type="checkbox" class="custom-control-input" [(ngModel)]="item.checkboxSelected">
+                    <span class="custom-control-indicator"></span>
+                  </label>
+                </td>
+  
+                <td class="star-color">
+                  <div class="center-parent">
+                    <div click="changeImportant(item.id)">
+                      <a *ngIf="item.isImportant">
+                        <i class="fa fa-star" aria-hidden="true"></i>
+                      </a>
+                      <a *ngIf="!item.isImportant">
+                        <i class="fa fa-star-o" aria-hidden="true"></i>
+                      </a>
+                    </div>
+                  </div>
+  
+                </td>
+                <td> Tới: {{item.to}}</td>
+                <td> {{item.subject}}</td>
+                <td>
+                  <div class="center-parent">
+                    <div>
+                      <i *ngIf="item.emailAttatchments.length" class="fa fa-paperclip" aria-hidden="true"></i>
+                    </div>
+                  </div>
+                </td>
+                <td class="text-center">{{item.sentDate*1000 | date:'dd/MM/yyyy HH:mm': '+0000'}}</td>
+              </tr>
+  
+            </ng-container>
+  
+          </tbody>
+        </table>
+      </div>
+      <div class="center-parent" *ngIf="isShowEmpty">
+        <div>Không có dữ liệu!</div>
+      </div>
+    </div>
+  </div>
+  <ngx-spinner bdColor="rgba(51, 51, 51, 0.7)" size="medium" color="#fff" type="ball-clip-rotate-multiple"></ngx-spinner>

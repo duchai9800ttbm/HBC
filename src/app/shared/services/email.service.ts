@@ -4,9 +4,12 @@ import { EmailItemModel, MultipeDelete, EmailFilter, EmailCategory } from '../mo
 import { Observable } from '../../../../node_modules/rxjs/Observable';
 import { URLSearchParams } from '@angular/http';
 import { PagedResult } from '../models';
+import * as FileSaver from 'file-saver';
+import { Subject } from 'rxjs/Subject';
 
 @Injectable()
 export class EmailService {
+  static emailSubject = new Subject();
 
   private static createFilterParams(filter: EmailFilter): URLSearchParams {
     const urlFilterParams = new URLSearchParams();
@@ -59,6 +62,12 @@ export class EmailService {
     private sessionService: SessionService,
   ) { }
 
+  watchEmailSubject(): Observable<any> {
+    return EmailService.emailSubject;
+  }
+  emitEvent() {
+    EmailService.emailSubject.next();
+  }
   searchWithFilter(
     bidOpportunityId: number,
     terms: string,
@@ -133,8 +142,13 @@ export class EmailService {
 
   download(bidEmailAttachmentId: number) {
     const url = `emails/attachments/${bidEmailAttachmentId}`;
-    return this.apiService.get(url)
-      .map(response => response);
+    return this.apiService.getFile(url).map(response => {
+      return FileSaver.saveAs(
+        new Blob([response.file], {
+          type: `${response.file.type}`,
+        }), response.fileName
+      );
+    });
   }
 
   delete(listEmailId: MultipeDelete) {
