@@ -7,4 +7,7 @@ export class DocumentItem {
     documentType: string;
     documentData: string;
     dateNo: string;
+    timeTransfer:string;
+    status:string;
+    type:number;
 }

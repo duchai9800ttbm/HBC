@@ -7,6 +7,9 @@ import { MeetingKickoffComponent } from './meeting-kickoff/meeting-kickoff.compo
 import { PackageSuccessRoutingModule } from './package-success-routing.module';
 import { PackageSuccessComponent } from './package-success.component';
 import { CKEditorModule } from 'ng2-ckeditor';
+import { PackageDocumentComponent } from './package-list/package-document/package-document.component';
+import { PackageDocumentSenderComponent } from './package-list/package-document/package-document-sender/package-document-sender.component';
+import { PackageDocumentReceiverComponent } from './package-list/package-document/package-document-receiver/package-document-receiver.component';
 @NgModule({
     imports: [
         CommonModule,
@@ -18,7 +21,10 @@ import { CKEditorModule } from 'ng2-ckeditor';
         PackageListComponent,
         ContractSignedComponent,
         MeetingKickoffComponent,
-        PackageSuccessComponent
+        PackageSuccessComponent,
+        PackageDocumentComponent,
+        PackageDocumentSenderComponent,
+        PackageDocumentReceiverComponent
     ]
 })
 export class PackageSuccessModule { }

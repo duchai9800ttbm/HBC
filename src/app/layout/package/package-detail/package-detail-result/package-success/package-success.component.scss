@@ -17,12 +17,12 @@
 .progressbar {
     width: 100% !important;
     counter-reset: step;
-    padding: 0px 0px 0px 15px;
+    padding: 0px 0px 0px 0px;
 }
 
 .progressbar li {
     list-style-type: none;
-    width: 16%;
+    width: 14%;
     float: left;
     font-size: 12px;
     position: relative;
@@ -33,28 +33,59 @@
     font-weight: bold;
 }
 
+.arrow-down {
+    width: 0;
+    height: 0;
+    border-left: 6px solid transparent;
+    border-right: 6px solid transparent;
+    border-top: 8px solid #ebebeb;
+    position: relative;
+    top: -10px;
+    z-index: 3;
+}
+.arrow-down-active {
+    width: 0;
+    height: 0;
+    border-left: 6px solid transparent;
+    border-right: 6px solid transparent;
+    border-top: 8px solid #00a0e3;
+    position: relative;
+    top: -10px;
+    z-index: 3;
+}
+
+.progressbar li:before {
+    width: 150px;
+    height: 36px;
+    // content: counter(step);
+    counter-increment: step;
+    line-height: 35px;
+    display: block;
+    text-align: center;
+    margin: 0 auto 10px auto;
+    background-color: #fff;
+    z-index: 30;
+    cursor: pointer;    
+    box-shadow: 0 1pt 12pt rgba(0, 0, 0, 0.15)
+}
+
+
 .progressbar li.triangle:before {  
     content:'1 Kết quả dự thầu' ;  
 }
 .progressbar li.triangle2:before {   
-    content:'2 Hợp đồng ký kết' ;   
+    content:'2 Hợp đồng ký kết' ;  
+   
 }
 .progressbar li.triangle3:before {   
     content:'3 Họp kick-off' ;   
 }
 
-
-.progressbar li:before {
-    width: 150px;
-    height: 36px;
-    line-height: 35px;
-    display: block;
-    text-align: center;
-    background-color: #fff;
-    z-index: 30;
-    cursor: pointer;
-    box-shadow: 0 1pt 12pt rgba(0, 0, 0, 0.15)
-}
+// .progressbar li.triangle2::before {
+//     color: currentColor;
+//     cursor: not-allowed;
+//     text-decoration: none;
+//   }
 
 .progressbar li:after {
     width: calc(100% - 150px);
@@ -64,7 +95,7 @@
     background-color: #fff;
     box-shadow: 0 1pt 12pt rgba(0, 0, 0, 0.15);
     top: 15px;
-    left: calc(-50% + 45px);
+    left: calc(-50% + 75px);
     z-index: 1;
 }
 
@@ -82,10 +113,47 @@
 
 .progressbar li.active:before {
     border-color: #00a0e3;
-    background-color: #00a0e3;    
+    background-color: #00a0e3;
+    .arrow-down {
+        width: 0;
+        height: 0;
+        border-left: 6px solid transparent;
+        border-right: 6px solid transparent;
+        border-top: 8px solid #00a0e3!important;
+        position: relative;
+        top: -10px;
+        z-index: 3;
+      }
 }
 
 .progressbar li.active:after {
-   border-top: 3px solid #00a0e3!important;
+    border-top: 3px solid #00a0e3!important;
 
+}
+
+.router-link-active{
+    background-color: #00a0e3!important;
+    color: #fff!important;
+    font-size: 140%!important;
+    font-weight: 400!important;  
+
+}
+.disable {
+    cursor: not-allowed;
+    pointer-events: none;
+}
+
+
+.active{
+    // css active, co phia tren ak N
+    .arrow-down{
+        width: 0;
+        height: 0;
+        border-left: 6px solid transparent;
+        border-right: 6px solid transparent;
+        border-top: 8px solid #00a0e3;
+        position: relative;
+        top: -10px;
+        z-index: 3;
+    } 
 }

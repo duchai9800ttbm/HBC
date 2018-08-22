@@ -9,6 +9,9 @@ import { PackageDetailComponent } from '../../package-detail.component';
 export class PackageSuccessComponent implements OnInit {
   packageId: number;
   isActive: boolean;
+  arrow:boolean;
+  arrowSuccess:boolean =true;
+  showArrow:boolean;
   constructor(private PackageService: PackageService) {
    
    }
@@ -18,7 +21,22 @@ export class PackageSuccessComponent implements OnInit {
     this.isActive = false;
     this.PackageService.userId$.subscribe(result => {
     this.isActive = result
+    this.arrow = false;
+    this.arrowSuccess = false;
+    this.showArrow = false;
   });
+  }
+ 
+  onClickContract() {
+    this.isActive = true
+    this.arrow =true;
+    this.arrowSuccess = true;
+    this.showArrow = true;
+  }
+  onClickList () {
+    this.isActive = false
+    this.arrow =false;
+    this.arrowSuccess = false;
   }
 
 }
