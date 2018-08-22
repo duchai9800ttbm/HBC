@@ -1,0 +1,356 @@
+<div class="table-small mt-3">
+    <div class=" title-list-package d-flex flex-wrap align-items-center status-filter">
+        <div class="mr-auto d-flex align-items-end list-package mt-2 mb-2">
+            <div class="d-flex justify-content-start" style="height: 40px;">
+                <div class="rule mr-2">
+                </div>
+                <div class="center-parent  mr-4">
+                    <div>{{textmovedata}}</div>
+                </div>
+            </div>
+        </div>
+        <div>
+            <div class="btn-toolbar mt-2 mb-2">
+                <button *ngIf="!bntConfirm" class="btn btn-primary ml-2" (click)="confirmGot()">
+                    Xác nhận đã nhận
+                </button>
+                <button class="btn btn-primary ml-2">
+                    Tải Template
+                </button>
+                <button class="btn btn-primary ml-2">
+                    Tải xuống tài liệu
+                </button>
+                <button class="btn btn-primary ml-2">
+                    In
+                </button>
+                <button class="btn btn-primary ml-2">
+                    <i class="fa fa-refresh" aria-hidden="true"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <div class="d-flex form-group">
+        <h5 class="d-inline mb-0 mr-auto text-dark text-uppercase">Tài liệu được chuyển giao từ {{userInfo.firstName}}</h5>
+        <div class="btn-toolbar">
+            <div class="input-group btn-rg">
+                <span class="input-group-addon">Tìm kiếm theo</span>
+                <input type="text" class="form-control icon" placeholder="&#xf002; Nhập tên" (keyup)="searchTerm$.next($event.target.value)">
+            </div>
+        </div>
+    </div>
+
+    <div class="main-table">
+        <div class="d-flex flex-row flex-wrap filter-bar custom-filter-bar" style="background-color: #fafbfc!important">
+            <div class="d-flex form-inline flex-pad">
+                <div class="form-group ml-sm-2">
+                    <label for="" class="form-label">Loại tài liệu</label>
+                    <span class="custom-dropdown mx-sm-2">
+                        <select class="form-control">
+                            <option value="">Tất cả</option>
+                            <option value="Official">Chính thức</option>
+                            <option value="Draft">Bản nháp</option>
+                        </select>
+                    </span>
+                </div>
+                <div class="form-group ml-sm-2">
+                    <label for="" class="form-label">Trạng thái</label>
+                    <span class="custom-dropdown mx-sm-2">
+                        <select class="form-control">
+                            <option value="">--Lựa chọn--</option>
+                            <option value="Official">Đang sử dụng</option>
+                            <option value="Draft">Quá hạn sử dụng</option>
+                        </select>
+                    </span>
+                </div>
+
+                <div class="form-group ml-sm-2">
+                    <button type="submit" class="btn btn-primary ml-sm-2" (click)="filter()">
+                        <i class="fa fa-filter" aria-hidden="true"></i>
+                        <span class="filter-pd">Lọc </span>
+                    </button>
+                    <button class="btn btn-secondary ml-sm-2" (click)="clearFilter()">
+                        <i class="fa fa-times"></i>
+                        <span class="filter-pd">Xóa lọc </span>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <div class="main-table">
+            <div class="bot-table">
+                <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="table-selection stripe row-border hover cell-border dataTable">
+                    <thead>
+                        <th class="stt bg-default w5" style="background-color: #f68e56!important;">
+                            <div class="d-flex justify-content-around">
+                                <div style="width: 40%;">
+                                    <div class="center-parent">
+                                        <label class="custom-control custom-checkbox">
+                                            <input type="checkbox" class="custom-control-input" [(ngModel)]="checkboxSeclectAll" (change)="onSelectAll($event.target.checked)">
+                                            <span class="custom-control-indicator"></span>
+                                        </label>
+                                    </div>
+                                </div>
+
+                                <div style="width: 35%;background-color: #f68e56!important;" class="center-parent">
+                                    <div>STT</div>
+                                </div>
+                            </div>
+                        </th>
+                        <th class="bg-default" style="width: 17%;background-color: #f68e56!important;">
+                            <div class="d-flex justify-content-center">
+                                <div class="center-parent">
+                                    <div>Loại tài liệu</div>
+                                </div>
+                            </div>
+                        </th>
+
+                        <th class="bg-default w15" style="background-color: #f68e56!important;">
+                            <div class="d-flex justify-content-center">
+                                <div class="center-parent">
+                                    <div>Tên tài liệu</div>
+                                </div>
+                            </div>
+                        </th>
+                        <th class="bg-default w15" style="background-color: #f68e56!important;">
+                            <div class="d-flex justify-content-center">
+                                <div class="center-parent">
+                                    <div>Thời gian chuyển giao</div>
+                                </div>
+                            </div>
+                        </th>
+                        <th class="bg-default w15" style="background-color: #f68e56!important;">
+                            <div class="d-flex justify-content-center">
+                                <div class="center-parent">
+                                    <div>Được sử dụng đến ngày</div>
+                                </div>
+                            </div>
+                        </th>
+                        <th class="bg-default w12" style="background-color: #f68e56!important;">
+                            <div class="d-flex justify-content-center">
+                                <div class="center-parent">
+                                    <div>Trạng thái </div>
+                                </div>
+                            </div>
+                        </th>
+
+                        <th class="bg-default w10" style="background-color: #f68e56!important;">
+                            <div class="d-flex justify-content-center">
+                                <div class="center-parent">
+                                    <div>Thao tác</div>
+                                </div>
+                            </div>
+                        </th>
+                    </thead>
+                </table>
+                <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="table-selection stripe row-border hover cell-border" style="width: 100%">
+                    <thead>
+                        <th class="stt hsmt-head th">
+                            <div class="mgl-hs"> Hồ sơ mời thầu
+                                <i class="fa fa-caret-down mr-l3" (click)="showhsmt()"></i>
+                            </div>
+                        </th>
+                    </thead>
+                </table>
+                <table *ngIf="!isDataHsmt" datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="table-selection stripe row-border hover cell-border dataTable table-input">
+                    <tbody>
+                        <tr *ngFor="let item of data; let i = index">
+                            <td class="stt w5 bg-default" *ngIf="item.type==1">
+                                <div class="d-flex justify-content-around">
+                                    <div style="width: 40%;">
+                                        <div class="center-parent">
+                                            <label class="custom-control custom-checkbox">
+                                                <input type="checkbox" class="custom-control-input" [(ngModel)]="item.checkboxSelected">
+                                                <span class="custom-control-indicator"></span>
+                                            </label>
+                                        </div>
+                                    </div>
+
+                                    <div style="width: 35%;" class="center-parent">
+                                        <div>{{i+1}}</div>
+                                    </div>
+                                </div>
+                            </td>
+                            <td *ngIf="item.type==1" style="width:17%">{{ item.documentType }}</td>
+                            <td *ngIf="item.type==1" class="w15 text-center">{{ item.documentName }}</td>
+                            <td *ngIf="item.type==1" class="w15 text-center">{{ item.timeTransfer }}</td>
+                            <td *ngIf="item.type==1" class="select-filter w15 text-center">{{ item.documentNumber}}</td>
+                            <td *ngIf="item.type==1" class="select-filter text-center w12">{{ item.status ===1?'Được sử dụng' :'Quá hạn sử dụng'}}</td>
+                            <td *ngIf="item.type==1" class="text-center w10">
+                                <div class="row ">
+                                    <div class="col-md-4 offset-md-2 center-parent cursor-pointer">
+                                        <i [title]="'tải file'" class="fa fa-download color-item-down"></i>
+                                    </div>
+
+                                    <div class="col-md-3 center-parent cursor-pointer color-item-print">
+                                        <i [title]="'In'" class="fa fa-print "></i>
+                                    </div>
+                                    <div *ngIf="item.status==2" class="col-md-3 center-parent cursor-pointer" style="color:#673AB7;">
+                                        <i class="fa fa-undo" aria-hidden="true"></i>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="table-selection stripe row-border hover cell-border"style="width: 100%">
+                    <thead>
+                        <th class="stt hsmt-head th" >
+                            <div class="mgl-hs"> Hồ sơ dự thầu
+                                <i class="fa fa-caret-down mr-l3" (click)="showhsdt()"></i>
+                            </div>
+                        </th>
+                    </thead>
+                </table>
+                <!-- isDataHsdt -->
+                <table *ngIf="!isDataHsdt" datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="table-input table-selection stripe row-border hover cell-border dataTable">
+                    <tbody>
+                        <tr *ngFor="let item of data; let i = index">
+                            <td class="stt w5 bg-default" *ngIf="item.type==2">
+                                <div class="d-flex justify-content-around">
+                                    <div style="width: 40%;">
+                                        <div class="center-parent">
+                                            <label class="custom-control custom-checkbox">
+                                                <input type="checkbox" class="custom-control-input" [(ngModel)]="item.checkboxSelected">
+                                                <span class="custom-control-indicator"></span>
+                                            </label>
+                                        </div>
+                                    </div>
+
+                                    <div style="width: 35%;" class="center-parent">
+                                        <div>{{i+1}}</div>
+                                    </div>
+                                </div>
+                            </td>
+                            <td *ngIf="item.type==2" style="width: 17%">{{ item.documentType }}</td>
+                            <td *ngIf="item.type==2" class="w15 text-center">{{ item.documentName }}</td>
+                            <td *ngIf="item.type==2" class="w15 text-center">{{ item.timeTransfer }}</td>
+                            <td *ngIf="item.type==2" class="select-filter w15 text-center">{{ item.documentNumber}}</td>
+                            <td *ngIf="item.type==2" class="select-filter text-center w12">{{ item.status ===1 ? 'Đang sử dụng' :'Quá hạn sử dụng'}}</td>
+                            <td *ngIf="item.type==2" class="text-center w10">
+                                <div class="row ">
+                                    <div class="col-md-4 offset-md-1 center-parent cursor-pointer">
+                                        <i [title]="'tải file'" class="fa fa-download color-item-down"></i>
+                                    </div>
+
+                                    <div class="col-md-3 center-parent cursor-pointer color-item-print" >
+                                        <i [title]="'In'" class="fa fa-print "></i>
+                                    </div>
+                                    <div *ngIf="item.status==2" class="col-md-3 center-parent cursor-pointer" style="color:#673AB7;">
+                                        <i class="fa fa-undo" aria-hidden="true"></i>
+                                    </div>
+
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="show">Hiển thị {{total}} kết quả</div>
+        </div>
+
+    </div>
+    <!-- Model Ql người nhận tài liệu -->
+    <ng-template #ViewListData>
+        <div class="modal-header no-boder-bottom">
+            <div class="col-md-10 offset-md-1 text-center">
+                <h4 class="modal-title text-model">Quản lý người nhận tài liệu</h4>
+            </div>
+            <div class="col-md-1">
+                <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+        </div>
+        <div class="modal-body">
+            <div class="bot-table">
+                <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="table-selection stripe row-border hover cell-border dataTable">
+                    <thead>
+                        <tr>
+                            <th class="bg-default">
+                                <div class="d-flex justify-content-around">
+                                    <div style="width: 40%;">
+                                        <div class="center-parent">
+                                            <label class="custom-control custom-checkbox">
+                                                <input type="checkbox" class="custom-control-input" [(ngModel)]="seclectAllDocument" (change)="onSelectDocument($event.target.checked)">
+                                                <span class="custom-control-indicator"></span>
+                                            </label>
+                                        </div>
+                                    </div>
+
+                                    <div style="width: 35%;" class="center-parent">
+                                        <div>STT</div>
+                                    </div>
+                                </div>
+                            </th>
+                            <th class="bg-default">
+                                <div class="d-flex">
+                                    <div class="center-parent">
+                                        <div>Phòng ban</div>
+                                    </div>
+                                </div>
+                            </th>
+                            <th class="bg-default">
+                                <div class="d-flex">
+                                    <div class="center-parent">
+                                        <div>Người dùng</div>
+                                    </div>
+                                </div>
+                            </th>
+                            <th class="bg-default">
+                                <div class="d-flex">
+                                    <div class="center-parent">
+                                        <div>Tên tài liệu</div>
+                                    </div>
+                                </div>
+                            </th>
+                            <th class="bg-default">
+                                <div class="d-flex">
+                                    <div class="center-parent">
+                                        <div>Trạng thái</div>
+                                    </div>
+                                </div>
+                            </th>
+                            <th class="bg-default">
+                                <div class="d-flex">
+                                    <div class="center-parent">
+                                        <div>Thao tác</div>
+                                    </div>
+                                </div>
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let data of listData; let i = index">
+                            <td class="select-filter text-center">
+                                <div class="d-flex justify-content-around">
+                                    <div style="width: 40%;">
+                                        <div class="center-parent">
+                                            <label class="custom-control custom-checkbox">
+                                                <input type="checkbox" class="custom-control-input" [(ngModel)]="data.selectedDocument">
+                                                <span class="custom-control-indicator"></span>
+                                            </label>
+                                        </div>
+                                    </div>
+
+                                    <div style="width:35%;" class="center-parent">
+                                        <div>{{i+1}}</div>
+                                    </div>
+                                </div>
+                            </td>
+                            <td class="select-filter">{{ data.rom}}</td>
+                            <td class="select-filter">{{ data.username}}</td>
+                            <td class="select-filter">{{ data.nameDocument}}</td>
+                            <td class="select-filter">{{ data.status}}</td>
+                            <td class="select-filter text-center">
+                                <div *ngIf="data.status =='Yêu cầu gửi lại'" class="col-md-4 offset-md-4 center-parent cursor-pointer">
+                                    <i [title]="'Yêu cầu gửi lại'" class="fa fa-paper-plane color-item-down"></i>
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+        </div>
+    </ng-template>

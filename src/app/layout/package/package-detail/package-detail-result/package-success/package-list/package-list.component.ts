@@ -82,7 +82,7 @@ export class PackageListComponent implements OnInit {
     this.textNotification = this.showBtnNotification ? 'Thông báo cho các bên liên quan' : 'Thông báo cho phòng hợp đồng';
     this.textTitleSendMail = this.showBtnNotification ? 'Gửi thư thông báo đến các bên liên quan' : 'Gửi thư phản hồi đến phòng hợp đồng';
   }
-  SendMailOther() { console.log('SendMailOther');
+  SendMailOther() {
     this.modalRef.hide();
     this.showBtnNotification = true;
     this.showTableSigned = true;
