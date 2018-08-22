@@ -36,7 +36,6 @@ export class PackageEmailComponent implements OnInit {
     });
     const that = this;
     this.emailService.watchEmailSubject().subscribe(data => {
-      console.log('abcd');
       this.emailService.getListCategory(this.packageId).subscribe(result => {
         this.listEmailCategory = result;
         this.listEmailCategory.forEach(e => {

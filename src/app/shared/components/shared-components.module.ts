@@ -17,9 +17,18 @@ import { PoupRejectPackageComponent } from './poup-reject-package/poup-reject-pa
 import { PopupCreateAssignerComponent } from './popup-create-assigner/popup-create-assigner.component';
 import { PopupCreateChairComponent } from './popup-create-chair/popup-create-chair.component';
 import { ResetPasswordComponent } from './reset-password/reset-password.component';
+import { PrintEmailComponent } from './print-email/print-email.component';
+// Imports the Button module
+import { ButtonModule } from '@progress/kendo-angular-buttons';
 
+// Imports the ButtonGroup module
+import { ButtonGroupModule } from '@progress/kendo-angular-buttons';
+import { PDFExportModule } from '@progress/kendo-angular-pdf-export';
 @NgModule({
     imports: [
+        PDFExportModule,
+        ButtonGroupModule,
+        ButtonModule,
         CommonModule,
         SharedPipesModule,
         FormsModule,
@@ -44,6 +53,7 @@ import { ResetPasswordComponent } from './reset-password/reset-password.componen
         PopupCreateAssignerComponent,
         PopupCreateChairComponent,
         ResetPasswordComponent,
+        PrintEmailComponent,
     ],
     exports: [
         // AlertComponent,
@@ -57,7 +67,8 @@ import { ResetPasswordComponent } from './reset-password/reset-password.componen
         PoupRejectPackageComponent,
         PopupCreateAssignerComponent,
         PopupCreateChairComponent,
-        ResetPasswordComponent
+        ResetPasswordComponent,
+        PrintEmailComponent
     ],
     entryComponents: [
         ConfirmationPopupComponent,
@@ -67,7 +78,8 @@ import { ResetPasswordComponent } from './reset-password/reset-password.componen
         PoupRejectPackageComponent,
         PopupCreateAssignerComponent,
         PopupCreateChairComponent,
-        ResetPasswordComponent
+        ResetPasswordComponent,
+        PrintEmailComponent
     ]
 })
 export class SharedComponentsModule { }

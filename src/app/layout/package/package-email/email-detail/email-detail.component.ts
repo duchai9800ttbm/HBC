@@ -4,6 +4,8 @@ import { EmailService } from '../../../../shared/services/email.service';
 import { EmailItemModel, MultipeDelete } from '../../../../shared/models/email/email-item.model';
 import { Router } from '@angular/router';
 import { ConfirmationService, AlertService } from '../../../../shared/services';
+import { DialogService } from '../../../../../../node_modules/@progress/kendo-angular-dialog';
+import { PrintEmailComponent } from '../../../../shared/components/print-email/print-email.component';
 
 @Component({
   selector: 'app-email-detail',
@@ -17,9 +19,11 @@ export class EmailDetailComponent implements OnInit {
     private emailService: EmailService,
     private router: Router,
     private confirmationService: ConfirmationService,
-    private alertService: AlertService
+    private alertService: AlertService,
+    private dialogService: DialogService,
   ) { }
   packageId;
+  dialog;
   email: EmailItemModel;
   ngOnInit() {
     this.packageId = +PackageEmailComponent.packageId;
@@ -49,7 +53,15 @@ export class EmailDetailComponent implements OnInit {
   }
 
   print() {
-
+    this.dialog = this.dialogService.open({
+      title: 'EMAIL',
+      content: PrintEmailComponent,
+      width: 600,
+      minWidth: 250
+    });
+    const instance = this.dialog.content.instance;
+    instance.emailId = this.emailId;
+    instance.callBack = this.back.bind(this);
   }
 
   back() {
