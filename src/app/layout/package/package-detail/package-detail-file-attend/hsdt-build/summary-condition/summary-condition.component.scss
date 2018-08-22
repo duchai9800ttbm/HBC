@@ -321,3 +321,8 @@ table.dataTable th {
     background-color: #ffff!important;
     border: 1px solid #dddddd;
 }
+#marginIcon {
+    display: flex;
+    justify-content: space-between; align-items: center;
+    width: 8vw;
+}
