@@ -127,7 +127,7 @@ export class KickOffListComponent implements OnInit {
         () => {
           that.spinner.show();
           that.emailService
-            .delete(obj)
+            .moveToTrash(obj)
             .subscribe(_ => {
               if (this.pagedResult.items.length === obj.ids.length && +this.pagedResult.currentPage > 0) {
                 this.pagedResult.currentPage = +this.pagedResult.currentPage - 1;
