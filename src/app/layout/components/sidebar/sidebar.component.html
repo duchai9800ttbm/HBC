@@ -98,7 +98,7 @@
     </ul>
 </nav>  -->
 <nav id="sidebar" class="sidebar" [@slideInOut]="state">
-    <div class="d-flex flex-row-reverse" [class.center-parent]="showSidebarContent">
+    <div class="d-flex flex-row-reverse button-tog" [class.center-parent]="showSidebarContent">
         <div class="action center-parent" width="">
             <div class="center-parent">
                 <img (click)="toggleSidebar()" src="assets/images/zoom.png" width="16" height="16" style="cursor: pointer;">
@@ -106,7 +106,7 @@
         </div>
 
     </div>
-    <div [class.toggle]="showSidebarContent">
+    <div [class.toggle]="showSidebarContent" class="change">
         <div class="font-weight-bold mb-3 mt-4">Thay đổi gần đây</div>
         <div class="mt-2">
             <div style="display: flex" class="row">

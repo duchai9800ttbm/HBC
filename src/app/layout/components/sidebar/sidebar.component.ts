@@ -79,21 +79,25 @@ export class SidebarComponent implements OnInit {
     }
     toggleSidebar() {
         let width = document.getElementById('sidebar').offsetWidth;
-        if (width === 55) {
-            this.toggleMenuFromSidebar.emit(false);
-            this.layoutService.emitEvent(false);
+        const widthScreen = window.screen.width;
+        if (widthScreen > 1000) {
+            if (width === 55) {
+                this.toggleMenuFromSidebar.emit(false);
+                this.layoutService.emitEvent(false);
 
-        } if (width === 200) {
-            this.toggleMenuFromSidebar.emit(true);
-            this.layoutService.emitEvent(true);
-        }
-        width = document.getElementById('sidebar').offsetWidth;
-        if (width === 55) {
-            this.showSidebarContent = false;
+            } if (width === 200) {
+                this.toggleMenuFromSidebar.emit(true);
+                this.layoutService.emitEvent(true);
+            }
+            width = document.getElementById('sidebar').offsetWidth;
+            if (width === 55) {
+                this.showSidebarContent = false;
 
-        } if (width === 200) {
-            this.showSidebarContent = true;
-            document.getElementById('logo').setAttribute('Width', '200');
+            } if (width === 200) {
+                this.showSidebarContent = true;
+                document.getElementById('logo').setAttribute('Width', '200');
+            }
         }
+
     }
 }
