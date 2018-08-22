@@ -17,14 +17,10 @@ export class HsdtInterviewNegotiationComponent implements OnInit {
 
   createInvitation() {
       this.dialog = this.dialogService.open({
-        // title: 'ĐƠN ĐẶT HÀNG',
         content: CreateNewInvitationComponent,
         width: 650,
         minWidth: 250
       });
-      // const obj = this.dialog2.content.instance;
-      // obj.company = company;
-      // obj.form = form;
   }
 
 
