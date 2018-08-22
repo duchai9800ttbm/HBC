@@ -20,7 +20,7 @@
                 Tên
             </div>
             <div class="col-md-10">
-                <textarea class="content-textarea form-control" name="" id="" cols="30" rows="1" [(ngModel)]="groupCreate.name" [ngClass]="{ 'is-invalid': submittedCreateGroup && !groupCreate.name }"></textarea>
+                <textarea class="content-textarea form-control" tabindex="46" name="" id="" cols="30" rows="1" [(ngModel)]="groupCreate.name" [ngClass]="{ 'is-invalid': submittedCreateGroup && !groupCreate.name }"></textarea>
                 <div class="cus-validate" *ngIf="submittedCreateGroup && !groupCreate.name">Trường này là bắt buộc nhập</div>
             </div>
         </div>
@@ -29,7 +29,7 @@
                 Mô tả
             </div>
             <div class="col-md-10">
-                <textarea class="content-textarea form-control" name="" id="" cols="30" rows="1" [(ngModel)]="groupCreate.description"></textarea>
+                <textarea class="content-textarea form-control" tabindex="47" name="" id="" cols="30" rows="1" [(ngModel)]="groupCreate.description"></textarea>
             </div>
         </div>
         <div class="modal-header no-boder-bottom">
@@ -65,8 +65,8 @@
             </div>
         </div>
         <div class="pd-b20 d-flex justify-content-end">
-            <button type="submit" class="btn btn-primary w-80" (click)="submitForm();" style="margin-right: 8px">Lưu</button>
-            <button type="button" class="btn btn-default w-80" (click)="closedPopup()" style="margin-right: 15px">Hủy</button>
+            <button type="submit" class="btn btn-primary w-80" (click)="submitForm();" style="margin-right: 8px" tabindex="48">Lưu</button>
+            <button type="button" class="btn btn-default w-80" (click)="closedPopup()" style="margin-right: 15px" tabindex="49">Hủy</button>
         </div>
 
     </div>
