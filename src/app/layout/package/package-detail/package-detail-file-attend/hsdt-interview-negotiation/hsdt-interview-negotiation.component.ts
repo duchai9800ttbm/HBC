@@ -1,15 +1,31 @@
 import { Component, OnInit } from '@angular/core';
-
+import { DialogService } from '../../../../../../../node_modules/@progress/kendo-angular-dialog';
+import { CreateNewInvitationComponent } from './create-new-invitation/create-new-invitation.component';
 @Component({
   selector: 'app-hsdt-interview-negotiation',
   templateUrl: './hsdt-interview-negotiation.component.html',
   styleUrls: ['./hsdt-interview-negotiation.component.scss']
 })
 export class HsdtInterviewNegotiationComponent implements OnInit {
-
-  constructor() { }
+  dialog;
+  constructor(
+    private dialogService: DialogService;
+  ) { }
 
   ngOnInit() {
   }
+
+  createInvitation() {
+      this.dialog = this.dialogService.open({
+        // title: 'ĐƠN ĐẶT HÀNG',
+        content: CreateNewInvitationComponent,
+        width: 650,
+        minWidth: 250
+      });
+      // const obj = this.dialog2.content.instance;
+      // obj.company = company;
+      // obj.form = form;
+  }
+
 
 }
