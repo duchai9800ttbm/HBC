@@ -2,12 +2,15 @@
     box-shadow: 0 16px 3px -12px #F5F5F5, 0 4px 25px 0 #F5F5F5, 0 8px 10px -5px #F5F5F5;
     height: 55px;
     position: fixed;
-    background-color: #ffff;
-    z-index: 50;
-    width: 100%;
+    background-color: #ffff; // z-index: 50;
+    width: calc(100% - 200px); //  display: 
     top: 50px;
+    right: 0; //left: auto;
 }
 
+.title-detail-toggle{
+    width: calc(100% - 55px)!important;
+}
 .main-detail {
     margin: 15px 15px; //padding: 0 25px;
     // width: 100%;
@@ -141,8 +144,6 @@
 }
 
 .gr-icon {
-    position: absolute;
-    right: 235px;
     img {
         width: 27px;
     }

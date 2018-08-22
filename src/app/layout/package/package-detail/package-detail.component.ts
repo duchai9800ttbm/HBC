@@ -8,6 +8,7 @@ import { NgxSpinnerService } from '../../../../../node_modules/ngx-spinner';
 import { UserModel } from '../../../shared/models/user/user.model';
 import { SessionService } from '../../../shared/services/session.service';
 import { PackageInfoModel } from '../../../shared/models/package/package-info.model';
+import { LayoutService } from '../../../shared/services/layout.service';
 
 @Component({
   selector: 'app-package-detail',
@@ -24,6 +25,7 @@ export class PackageDetailComponent implements OnInit {
     private packageService: PackageService,
     private spinner: NgxSpinnerService,
     private sessionService: SessionService,
+    private layoutService: LayoutService
   ) { }
   static packageId;
   public packageId: number;
@@ -37,6 +39,7 @@ export class PackageDetailComponent implements OnInit {
   isManageBidOpportunitys;
   isEditBidOpportunity;
   isViewBidOpportunityDetail;
+  isToggle = false;
   ngOnInit() {
     setTimeout(() => {
       this.userModel = this.sessionService.userInfo;
@@ -60,6 +63,14 @@ export class PackageDetailComponent implements OnInit {
     this.packageService.getInforPackageID(this.packageId).subscribe(result => {
       this.packageData = result;
     }, err => {
+    });
+    this.layoutService.watchLayoutSubject().subscribe(data => {
+      console.log('bbbbb');
+      if (data) {
+        this.isToggle = true;
+      } else {
+        this.isToggle = false;
+      }
     });
   }
 
