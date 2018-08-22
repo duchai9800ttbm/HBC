@@ -2,8 +2,8 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { SharedModule } from '../../../../shared/shared.module';
 import { PackageDetailFileAttendRoutingModule } from './package-detail-file-attend-routing.module';
-import { PackageDetailFileAttendComponent } from './package-detail-file-attend.component'
-import { InformationDeploymentComponent } from './information-deployment/information-deployment.component'
+import { PackageDetailFileAttendComponent } from './package-detail-file-attend.component';
+import { InformationDeploymentComponent } from './information-deployment/information-deployment.component';
 import { ModalModule } from 'ngx-bootstrap';
 import { CKEditorModule } from 'ng2-ckeditor';
 import { AssignmentProgressComponent } from './information-deployment/assignment-progress/assignment-progress.component';
@@ -17,7 +17,7 @@ import { HsdtPendingComponent } from './hsdt-pending/hsdt-pending.component';
 import { DocumentPriceReviewService } from '../../../../shared/services/document-price-review.service';
 import { UploadFilePriceReviewComponent } from './price-review/upload-file-price-review/upload-file-price-review.component';
 import { HsdtInterviewNegotiationComponent } from './hsdt-interview-negotiation/hsdt-interview-negotiation.component';
-
+import { CreateNewInvitationComponent } from './hsdt-interview-negotiation/create-new-invitation/create-new-invitation.component';
 @NgModule({
   imports: [
     CommonModule,
@@ -38,7 +38,11 @@ import { HsdtInterviewNegotiationComponent } from './hsdt-interview-negotiation/
     HsdtSubmittedComponent,
     HsdtPendingComponent,
     UploadFilePriceReviewComponent,
-    HsdtInterviewNegotiationComponent
+    HsdtInterviewNegotiationComponent,
+    CreateNewInvitationComponent
+  ],
+  entryComponents: [
+    CreateNewInvitationComponent
   ],
   providers: [
     DocumentPriceReviewService

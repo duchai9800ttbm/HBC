@@ -17,13 +17,13 @@ import { OnDestroy } from '@angular/core/src/metadata/lifecycle_hooks';
   animations: [slideToLeft()],
 })
 export class EnterActiveCodeComponent implements OnInit, OnDestroy {
-    constructor(
-      private fb: FormBuilder,
-      private userService: UserService,
-      private router: Router,
-      private activatedRoute: ActivatedRoute,
-      private alertService: AlertService
-    ) { }
+  constructor(
+    private fb: FormBuilder,
+    private userService: UserService,
+    private router: Router,
+    private activatedRoute: ActivatedRoute,
+    private alertService: AlertService
+  ) { }
   isSubmitted: boolean;
   apiErrorCode: string;
   enterActiveCodeForm: FormGroup;
@@ -45,6 +45,10 @@ export class EnterActiveCodeComponent implements OnInit, OnDestroy {
     this.queryParamsSubsription = this.activatedRoute.queryParams.subscribe(data => {
       this.email = data.email;
     });
+    const browserName = this.getBrowser();
+    if (browserName === 'Firefox') {
+      document.getElementById('formLogin').classList.add('col-xl-12');
+    }
   }
 
   createForm() {
@@ -88,11 +92,13 @@ export class EnterActiveCodeComponent implements OnInit, OnDestroy {
           data => {
             if (data) {
               // this.userService.deleteEmail();
-              this.router.navigate(['/login/forgot-password/reset-password'], { queryParams: {
-                // activeCode: code
-                email: this.email,
-                token: data,
-              } });
+              this.router.navigate(['/login/forgot-password/reset-password'], {
+                queryParams: {
+                  // activeCode: code
+                  email: this.email,
+                  token: data,
+                }
+              });
             } else {
               this.apiErrorCode = 'Mã xác nhận không đúng.';
             }
@@ -119,6 +125,21 @@ export class EnterActiveCodeComponent implements OnInit, OnDestroy {
   ngOnDestroy() {
     if (this.queryParamsSubsription) {
       this.queryParamsSubsription.unsubscribe();
+    }
+  }
+  getBrowser(): string {
+    if ((navigator.userAgent.indexOf('Opera') || navigator.userAgent.indexOf('OPR')) !== -1) {
+      return 'Opera';
+    } else if (navigator.userAgent.indexOf('Chrome') !== -1) {
+      return 'Chrome';
+    } else if (navigator.userAgent.indexOf('Safari') !== -1) {
+      return 'Safari';
+    } else if (navigator.userAgent.indexOf('Firefox') !== -1) {
+      return 'Firefox';
+    } else if ((navigator.userAgent.indexOf('MSIE') !== -1) || (!!(<any>document).documentMode === true)) {
+      return 'IE';
+    } else {
+      return 'unknown';
     }
   }
 }

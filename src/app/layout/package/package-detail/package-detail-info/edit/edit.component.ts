@@ -3,7 +3,7 @@ import ValidationHelper from '../../../../../shared/helpers/validation.helper';
 import { FakePackageData } from '../../../../../shared/fake-data/package-data';
 import DateTimeConvertHelper from '../../../../../shared/helpers/datetime-convert-helper';
 import { Validators, FormBuilder, FormGroup } from '../../../../../../../node_modules/@angular/forms';
-import { AlertService, DataService } from '../../../../../shared/services';
+import { AlertService, DataService, UserService } from '../../../../../shared/services';
 import { ActivatedRoute, Router } from '../../../../../../../node_modules/@angular/router';
 import { DATETIME_PICKER_CONFIG } from '../../../../../shared/configs/datepicker.config';
 import { PackageDetailComponent } from '../../package-detail.component';
@@ -25,6 +25,7 @@ import { DictionaryItem } from '../../../../../shared/models';
 import { PackageEditModel } from '../../../../../shared/models/package/package-edit.model';
 import { PackageInfoModel } from '../../../../../shared/models/package/package-info.model';
 import { DISABLED } from '@angular/forms/src/model';
+import { UserItemModel } from '../../../../../shared/models/user/user-item.model';
 @Component({
     selector: 'app-edit',
     templateUrl: './edit.component.html',
@@ -56,9 +57,13 @@ export class EditComponent implements OnInit {
     listStatus: Observable<DictionaryItem[]>;
     datePickerConfig = DATETIME_PICKER_CONFIG;
     showPopupAdd = false;
+    showPopupAddUser = false;
     packageId: number;
     contactsSearchResults: DictionaryItem[];
     editPackage: any;
+    assignSearchResults: DictionaryItem[];
+    customersSearchResults: any[];
+    userListItem: UserItemModel[];
 
     constructor(
         private fb: FormBuilder,
@@ -68,9 +73,11 @@ export class EditComponent implements OnInit {
         private packageService: PackageService,
         private spinner: NgxSpinnerService,
         private dataService: DataService,
+        private userService: UserService,
     ) { }
 
     ngOnInit() {
+        this.userService.getAllUser('').subscribe(data => this.userListItem = data);
         this.packageId = +PackageDetailComponent.packageId;
         this.listZone = this.dataService.getListRegionTypes();
         this.listQuarterOfYear = this.dataService.getListQuatersOfYear();
@@ -104,10 +111,10 @@ export class EditComponent implements OnInit {
             place: [this.package.place],
             locationId: [this.package.location && this.package.location.id, Validators.required],
             quarter: [this.package.quarter && this.package.quarter.id],
-            customerId: [this.package.customer && this.package.customer.id],
-            classify: [this.package.classify],
-            customerContactId: [this.package.customerContact && this.package.customerContact.id],
-            consultantUnit: [this.package.consultantUnit],
+            customerId: this.package.customer,
+            customerNewOldType: [this.package.customer && this.package.customer.customerNewOldType],
+            customerContactId: [this.package.customerContact],
+            consultantUnitCustomerId: [this.package.consultantUnitCustomer  ],
             consultantAddress: [this.package.consultantAddress],
             consultantPhone: [this.package.consultantPhone],
             floorArea: [this.package.floorArea],
@@ -156,7 +163,12 @@ export class EditComponent implements OnInit {
                     const message = 'Gói thầu đã chỉnh sửa thành công';
                     this.router.navigate([`/package/detail/${this.package.id}/infomation`]);
                     this.alertService.success(message);
-                });
+                },
+                    err => {
+                        this.spinner.hide();
+                        const message = 'Đã xảy ra lỗi. Gói thầu không được tạo.';
+                        this.alertService.error(message);
+                    });
         }
     }
 
@@ -189,4 +201,45 @@ export class EditComponent implements OnInit {
             }
             );
     }
+    searchCustomers(query) {
+        this.packageService.getListCustomer(query)
+            .subscribe(result => {
+                this.customersSearchResults = result;
+            });
+    }
+    customerSelectedChange(e) {
+        this.packageForm.get('customerNewOldType').patchValue(e.customerNewOldType);
+    }
+    changeConsultant(e) {
+        this.packageForm.get('consultantAddress').patchValue(e.customerAddress);
+        this.packageForm.get('consultantPhone').patchValue(e.customerPhone);
+    }
+
+    searchAssigns(query) {
+        this.userService.searchListUser(query)
+            .subscribe(result => this.assignSearchResults = result);
+    }
+
+    createUser() {
+        this.showPopupAddUser = true;
+    }
+
+    closePopupAddUser(agreed: boolean) {
+        this.showPopupAddUser = false;
+        if (agreed) {
+            const message = 'Người dùng đã được tạo.';
+            this.alertService.success(message);
+        }
+    }
+    mapNewUser(employeeId) {
+        this.userService.getAllUser('').subscribe(data => {
+            this.userListItem = data;
+            this.packageForm.get('chairEmployeeId').patchValue(employeeId);
+        });
+    }
+
+    mapNewCustomer(obj) {
+        this.packageForm.get('customerId').patchValue(obj);
+    }
+
 }

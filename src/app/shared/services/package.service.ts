@@ -17,18 +17,8 @@ import { Subject } from '../../../../node_modules/rxjs';
 
 @Injectable()
 export class PackageService {
-
-    constructor(
-        private filterService: FilterPipe,
-        private instantSearchService: InstantSearchService,
-        private apiService: ApiService,
-    ) { }
-
     private userIdSub = new Subject<any>();
     userId$ = this.userIdSub.asObservable();
-    setUserId(data:boolean) {
-        this.userIdSub.next(data);
-      }
     private static createFilterParams(filter: PackageFilter): URLSearchParams {
         const urlFilterParams = new URLSearchParams();
         urlFilterParams.append('projectName', filter.projectName);
@@ -40,7 +30,7 @@ export class PackageService {
         urlFilterParams.append('sorting', filter.sorting);
         return urlFilterParams;
     }
-    
+
     private static toPackageListItem(result: any): PackageListItem {
         return {
             id: result.id,
@@ -102,6 +92,18 @@ export class PackageService {
             totalTime: result.totalTime,
         };
     }
+
+    constructor(
+        private filterService: FilterPipe,
+        private instantSearchService: InstantSearchService,
+        private apiService: ApiService,
+    ) { }
+
+    setUserId(data: boolean) {
+        this.userIdSub.next(data);
+    }
+
+
 
 
     filter(terms: string, status: string, uploader: string, uploadDate: number, source: any[]): any[] {
@@ -282,13 +284,18 @@ export class PackageService {
                 region: result.region,
                 customer: result.customer && {
                     id: result.customer.customerId,
-                    text: result.customer.customerName
+                    text: result.customer.customerName,
+                    customerNewOldType: result.customer.customerNewOldType
                 },
                 customerContact: result.customerContact && {
                     id: result.customerContact.id,
                     text: result.customerContact.name,
                 },
-                consultantUnit: result.consultantUnit,
+                consultantUnitCustomer: result.consultantUnitCustomer && {
+                    id: result.consultantUnitCustomer.customerId,
+                    text: result.consultantUnitCustomer.customerName,
+                    classify: result.consultantUnitCustomer.customerClassify
+                },
                 consultantAddress: result.consultantAddress,
                 consultantPhone: result.consultantPhone,
                 floorArea: result.floorArea,
@@ -460,9 +467,9 @@ export class PackageService {
             locationId: formValue.locationId,
             quarter: formValue.quarter,
             customerId: formValue.customerId ? formValue.customerId.id : null,
-            classify: formValue.classify,
+            // classify: formValue.classify,
             customerContactId: formValue.customerContactId ? formValue.customerContactId.id : null,
-            consultantUnit: formValue.consultantUnit ? formValue.consultantUnit.id : 0,
+            consultantUnitCustomerId: formValue.consultantUnitCustomerId ? formValue.consultantUnitCustomerId.id : 0,
             consultantAddress: formValue.consultantAddress,
             consultantPhone: formValue.consultantPhone,
             floorArea: formValue.floorArea,
@@ -500,9 +507,9 @@ export class PackageService {
             locationId: formValue.locationId,
             quarter: formValue.quarter,
             customerId: formValue.customerId ? formValue.customerId.id : null,
-            classify: formValue.classify,
+            // classify: formValue.classify,
             customerContactId: formValue.customerContactId ? formValue.customerContactId.id : null,
-            consultantUnit: formValue.consultantUnit ? formValue.consultantUnit.id : 0,
+            consultantUnitCustomerId: formValue.consultantUnitCustomerId ? formValue.consultantUnitCustomerId.id : 0,
             consultantAddress: formValue.consultantAddress,
             consultantPhone: formValue.consultantPhone,
             floorArea: formValue.floorArea,
@@ -568,6 +575,9 @@ export class PackageService {
                     return {
                         id: x.customerId,
                         text: x.customerName,
+                        customerNewOldType: x.customerNewOldType,
+                        customerPhone: x.customerPhone,
+                        customerAddress: x.customerAddress
                     };
                 });
             })

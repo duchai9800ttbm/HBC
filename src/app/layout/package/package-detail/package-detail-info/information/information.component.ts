@@ -30,6 +30,7 @@ export class InformationComponent implements OnInit {
     this.spinner.show();
     this.packageService.getInforPackageID(this.currentPackageId).subscribe(result => {
       this.package = result;
+      console.log(this.package);
       this.spinner.hide();
     }, err => {
       this.spinner.hide();

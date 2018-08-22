@@ -11,7 +11,7 @@
             </div>
         </div>
         <div style="margin-top: -1rem;">
-            <p class="mb-3">Phân công người đảm nhận cho từng vị trí trong gói thầu</p>
+            <h5 class="mb-3 text-uppercase">Phân công người đảm nhận cho từng vị trí trong gói thầu</h5>
             <div formArrayName="chuTri">
                 <div class="grid-container-4" *ngFor="let item of packagePermissionUserForm.get('chuTri').controls; let i = index;" [formGroupName]="i">
                     <div [class.form-title-blank]="i != 0">
@@ -360,7 +360,7 @@
             </div>
         </div>
         <div style="margin-top: -1rem;">
-            <p class="mb-3">Các bên liên quan/ Stakeholders</p>
+            <h5 class="mb-3 text-uppercase">Các bên liên quan/ Stakeholders</h5>
             <div formArrayName="chuDauTu">
                 <div class="grid-container-4" *ngFor="let item of packagePermissionUserForm.get('chuDauTu').controls; let i = index;" [formGroupName]="i">
                     <div [class.form-title-blank]="i != 0">

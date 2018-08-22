@@ -23,6 +23,7 @@ import { NgxSpinnerService } from 'ngx-spinner';
 })
 export class UserFormComponent implements OnInit {
     @Output() closed = new EventEmitter<boolean>();
+    @Output() returnNewUserId = new EventEmitter<number>();
     userForm: FormGroup;
     formErrors = {
         userName: '',
@@ -37,6 +38,7 @@ export class UserFormComponent implements OnInit {
     };
     invalidMessages: string[];
     isError;
+    hidePopup = false;
     user = new UserModel();
     submitted = false;
     isCollapsedUser = false;
@@ -164,9 +166,9 @@ export class UserFormComponent implements OnInit {
                 address: this.userForm.value.address,
             };
             this.groupUserService.createOrUpdateUser(dataUser).subscribe(data => {
-                const message = 'Thêm người dùng thành công';
-                this.router.navigate([`/management-user/group-user/manage-user-list/manage-user`]);
-                this.alertService.success(message);
+                const newUser = data;
+                this.returnNewUserId.emit(newUser.employeeId);
+                this.closedPopup();
             },
                 err => {
                     if (JSON.parse(err._body).errorMessage === 'Tên đăng nhập của bạn trùng với tên đăng nhập của nhân viên khác!') {
@@ -174,6 +176,10 @@ export class UserFormComponent implements OnInit {
                     }
                 });
         }
+    }
+    closedPopup() {
+        this.close();
+        this.hidePopup = true;
     }
 
     validateForm() {
@@ -200,6 +206,7 @@ export class UserFormComponent implements OnInit {
         this.modalRef = this.modalService.show(template, {
             class: 'gray modal-lg'
         });
+
     }
     selectAllPrivilegesEditUse() {
         this.GroupCreate.notPrivileges = [];
@@ -271,6 +278,7 @@ export class UserFormComponent implements OnInit {
     closedPopupGroupUser() {
         this.submittedCreateGroup = false;
         this.modalRef.hide();
+        this.hidePopup = true;
     }
 
     addGroupUser() {
@@ -316,13 +324,15 @@ export class UserFormComponent implements OnInit {
         }
     }
 
-    //
     createGroupUser() {
         this.showPopupAddGroupUser = true;
+        this.hidePopup = true;
+        console.log(this.hidePopup);
     }
 
     closePopupGroupUser(agreed: boolean) {
         this.showPopupAddGroupUser = false;
+        this.hidePopup = false;
         // if (agreed) {
         //     const message = 'Nhóm người dùng đã được tạo.';
         //     this.alertService.success(message);

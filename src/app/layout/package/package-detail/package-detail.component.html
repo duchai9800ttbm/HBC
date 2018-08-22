@@ -7,24 +7,28 @@
           <img width="12" height="12" class="pointer not-outline" src="assets\images\nghia.png" style="margin-bottom: 1px;">
         </a>
         <h4 class="d-inline mb-0 text-dark">CHI TIẾT GÓI THẦU "{{packageData.opportunityName | uppercase}}"</h4>
+        <span class="gr-icon">
+          <img class="mr-3 pointer" src="assets\images\ic_permission_set.png" [routerLink]="['/package/permission', packageId]">
+          <img class="pointer" src="assets\images\ic_email_manage.png" [routerLink]="['/package/email', packageId]">
+        </span>
       </div>
     </div>
   </div>
   <div class="main-detail">
-      <div class="menu" style="margin-left: 20px; margin-right: 20px;margin-bottom: 5px;">
-          <div class="action" style="width: calc(25% - 10px)" [routerLinkActive]="['router-link-active']" [routerLink]="['/package/detail', packageId ,'info']">
-            THÔNG TIN CHI TIẾT
-          </div>
-          <div class="action" style="width: calc(25% - 10px)" [routerLinkActive]="['router-link-active']" [routerLink]="['/package/detail', packageId ,'invitation']">
-            ĐÁNH GIÁ HSMT
-          </div>
-          <div class="action" style="width: calc(25% - 10px)" [routerLinkActive]="['router-link-active']" [routerLink]="['/package/detail', packageId ,'attend']">
-            DỰ THẦU
-          </div>
-          <div class="action" style="width: calc(25% - 10px)" [routerLinkActive]="['router-link-active']" [routerLink]="['/package/detail', packageId ,'result']">
-            KẾT QUẢ DỰ THẦU
-          </div>
-        </div>
+    <div class="menu" style="margin-left: 20px; margin-right: 20px;margin-bottom: 5px;">
+      <div class="action" style="width: calc(25% - 10px)" [routerLinkActive]="['router-link-active']" [routerLink]="['/package/detail', packageId ,'info']">
+        THÔNG TIN CHI TIẾT
+      </div>
+      <div class="action" style="width: calc(25% - 10px)" [routerLinkActive]="['router-link-active']" [routerLink]="['/package/detail', packageId ,'invitation']">
+        ĐÁNH GIÁ HSMT
+      </div>
+      <div class="action" style="width: calc(25% - 10px)" [routerLinkActive]="['router-link-active']" [routerLink]="['/package/detail', packageId ,'attend']">
+        DỰ THẦU
+      </div>
+      <div class="action" style="width: calc(25% - 10px)" [routerLinkActive]="['router-link-active']" [routerLink]="['/package/detail', packageId ,'result']">
+        KẾT QUẢ DỰ THẦU
+      </div>
+    </div>
     <div>
       <router-outlet></router-outlet>
     </div>

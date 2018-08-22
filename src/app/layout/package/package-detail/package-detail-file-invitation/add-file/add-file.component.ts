@@ -47,6 +47,7 @@ export class AddFileComponent implements OnInit {
     bidDocumentGroupListItem: BidDocumentGroupModel[];
     bidDocumentGroupListItemSearchResult: BidDocumentGroupModel[];
     packageData: PackageInfoModel;
+    tableEmpty: boolean;
     constructor(
         private alertService: AlertService,
         private dataService: DataService,
@@ -60,7 +61,6 @@ export class AddFileComponent implements OnInit {
         private packageService: PackageService
     ) {
     }
-
     ngOnInit() {
         this.packageId = +PackageDetailComponent.packageId;
         this.packageService.getInforPackageID(this.packageId).subscribe(result => {
@@ -211,6 +211,7 @@ export class AddFileComponent implements OnInit {
             this.bidDocumentGroupListItem = response;
             this.bidDocumentGroupListItemSearchResult = response;
             this.dtTrigger.next();
+            document.getElementsByClassName('dataTables_empty')[0].remove();
             this.spinner.hide();
         });
     }
