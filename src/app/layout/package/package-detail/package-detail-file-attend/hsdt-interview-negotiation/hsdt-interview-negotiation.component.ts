@@ -9,7 +9,7 @@ import { CreateNewInvitationComponent } from './create-new-invitation/create-new
 export class HsdtInterviewNegotiationComponent implements OnInit {
   dialog;
   constructor(
-    private dialogService: DialogService;
+    private dialogService: DialogService,
   ) { }
 
   ngOnInit() {
