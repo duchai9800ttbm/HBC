@@ -1,48 +1,48 @@
 <div class="boder-table">
   <div class="row">
     <ul class="progressbar">
-        <li class="triangle active" [routerLink]="['../infomation-deployment']">
-            <div style="width: 100%" class="center-parent">
-                <div class="arrow-down-active"></div>
-            </div>
-            <span class="text-color ">Triển khai &amp; phân công tiến độ</span>
-        </li>
-        <li class="triangle" [routerLink]="['../build']">
-            <div style="width: 100%" class="center-parent">
-                <div class="arrow-down"></div>
-            </div>
-            <span class="text-color ">Lập HSDT</span>
-        </li>
-        <li class="triangle" [routerLink]="['../price-review']">
-            <div style="width: 100%" class="center-parent">
-                <div class="arrow-down"></div>
-            </div>
-            <span class="text-color ">Trình duyệt giá</span>
-        </li>
-        <li class="triangle">
-            <div style="width: 100%" class="center-parent">
-                <div class="arrow-down"></div>
-            </div>
-            <span class="text-color ">Đơn báo giá dự thầu</span>
-        </li>
-        <li class="triangle">
-            <div style="width: 100%" class="center-parent">
-                <div class="arrow-down"></div>
-            </div>
-            <span>Hồ sơ dự thầu đã ký</span>
-        </li>
-        <li class="triangle">
-            <div style="width: 100%" class="center-parent">
-                <div class="arrow-down"></div>
-            </div>
+      <li class="triangle active" [routerLink]="['../infomation-deployment']">
+        <div style="width: 100%" class="center-parent">
+          <div class="arrow-down-active"></div>
+        </div>
+        <span class="text-color ">Triển khai &amp; phân công tiến độ</span>
+      </li>
+      <li class="triangle" [routerLink]="['../build']">
+        <div style="width: 100%" class="center-parent">
+          <div class="arrow-down"></div>
+        </div>
+        <span class="text-color ">Lập HSDT</span>
+      </li>
+      <li class="triangle" [routerLink]="['../price-review']">
+        <div style="width: 100%" class="center-parent">
+          <div class="arrow-down"></div>
+        </div>
+        <span class="text-color ">Trình duyệt giá</span>
+      </li>
+      <li class="triangle">
+        <div style="width: 100%" class="center-parent">
+          <div class="arrow-down"></div>
+        </div>
+        <span class="text-color ">Đơn báo giá dự thầu</span>
+      </li>
+      <li class="triangle">
+        <div style="width: 100%" class="center-parent">
+          <div class="arrow-down"></div>
+        </div>
+        <span>Hồ sơ dự thầu đã ký</span>
+      </li>
+      <li class="triangle">
+        <div style="width: 100%" class="center-parent">
+          <div class="arrow-down"></div>
+        </div>
 
-            <span>Quản lý phỏng vấn/thương thảo</span>
-        </li>
+        <span>Quản lý phỏng vấn/thương thảo</span>
+      </li>
     </ul>
   </div>
 
-  <div class="row" [ngClass]="{ 'content-deployment': isSendInformation ===  false,'content-UploadFile': isSendInformation ===  true }">
-    <div [ngClass]="{ 'col-md-4': isSendInformation ===  true,'col-md-8': isSendInformation ===  false }" class="color-dep">
+  <!-- <div class="row" [ngClass]="{ 'content-deployment': isSendInformation ===  false,'content-UploadFile': isSendInformation ===  true }">
+    <div class="col-md-4 color-dep">
       {{textInformation}}
       <button type="button" class="btn btn-primary setHSDT" *ngIf="setHSDT" (click)="openModelViewListData(ViewListData)">
         Xem danh sách phân công
@@ -76,7 +76,45 @@
 
     </div>
     <div *ngIf="isSendInformation && !showTabelAssignment" class="col-md-4 offset-md-0 table-assignment">Bảng phân công tiến độ thực hiện</div>
+  </div> -->
+
+  <div class=" title-list-package d-flex flex-wrap align-items-center status-filter" style=" padding:0px 20px 20px 30px;">
+
+    <div class="mr-auto d-flex align-items-end list-package mt-2 mb-2">
+      <div class="d-flex justify-content-start" style="height: 40px;">
+        <div class="rule mr-2">
+        </div>
+        <div class="center-parent mr-4" style="font-size: 18px">
+          <div> {{textInformation}}
+            <button type="button" class="btn btn-primary setHSDT" *ngIf="setHSDT" (click)="openModelViewListData(ViewListData)">
+              Xem danh sách phân công
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div>
+      <div class="btn-toolbar mt-2 mb-2">
+         <button type="button" *ngIf="setHSDT" [ngClass]="{'btn-dep':setHSDT == true}" class="btn btn-up ">Bắt đầu lập HSDT</button>
+        <button type="button" *ngIf="isconfirmProgress" [ngClass]="{'btn-dep':isconfirmProgress == true}" class="btn btn-up"
+          (click)="openModeSendAssignment(SendAssignment)">{{textConfirmProgress}}</button>
+        <button type="button" *ngIf="isSendInformation" [ngClass]="{'btn-dep':showButtonAssignmet == true,'disable':showButtonAssignmet == false}"
+          class="btn btn-up" (click)="confirmProgress()">Xác nhận phân công tiến độ</button>
+        <button type="button" [ngClass]="{ 'btn-dep': isSendInformation ===  false,'disable': isSendInformation ===  true}" class="btn btn-up "
+          (click)="openModalDeployment(informationDeployment)">Thông báo triển khai</button>
+        <button type="button" *ngIf="isTeamPlate" [ngClass]="{ 'btn-dep': isSendInformation === true }" class="btn btn-up ">Tải Template</button>
+        <button type="button" *ngIf="isconfirmProgress" class="btn btn-up disable">Upload file</button>
+        <button type="button" *ngIf="!isconfirmProgress" [ngClass]="{ 'btn-dep': dowloadTem === true,'disable': dowloadTem === false }" (click)="openModalUpload(Upload)" class="btn btn-up " >Upload file</button>
+        <button type="button" class="btn btn-primary ">
+          <i class="fa fa-refresh" aria-hidden="true"></i>
+        </button>
+      </div>
+    </div>
+
   </div>
+
+
+
 
   <div class="row" *ngIf="!showTabelAssignment">
     <div class="col-sm-12 col-sm-offset-0 hid">

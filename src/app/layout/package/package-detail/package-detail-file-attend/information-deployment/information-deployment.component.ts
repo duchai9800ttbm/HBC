@@ -39,6 +39,7 @@ export class InformationDeploymentComponent implements OnInit {
   isconfirmProgress: boolean;
   textConfirmProgress: string;
   setHSDT: boolean;
+  dowloadTem:boolean;
   dataConfirm = true;
   ckeditorContent: string = '<p>Dear All!</p>';
   datePickerConfig = DATETIME_PICKER_CONFIG;
@@ -69,6 +70,7 @@ export class InformationDeploymentComponent implements OnInit {
       version: [''],
     });
     this.setHSDT = false;
+    this.dowloadTem = false;
     this.isTeamPlate = false;
     this.isconfirmProgress = false;
     this.hideButon = false;
@@ -99,6 +101,7 @@ export class InformationDeploymentComponent implements OnInit {
   SendInformation() {
     this.isSendInformation = !this.isSendInformation;
     this.isTeamPlate = !this.isTeamPlate;
+    this.dowloadTem = true;
     this.textInformation = 'Đã thông báo triển khai';
     this.toggleTextUpFile = this.isSendInformation ? 'Chưa có tài liệu phân công tiến độ. Vui lòng upload file'
       : 'Bạn cần phải thông báo triển khai trước khi phân công tiến độ';

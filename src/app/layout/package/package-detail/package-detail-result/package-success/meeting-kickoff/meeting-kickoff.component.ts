@@ -5,7 +5,8 @@ import { Router, ActivatedRoute, ParamMap } from '@angular/router';
 import { PackageDetailComponent } from '../../../package-detail.component';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { DATETIME_PICKER_CONFIG } from '../../../../../../shared/configs/datepicker.config';
-
+import { DATATABLE_CONFIG } from '../../../../../../shared/configs';
+import { Observable, BehaviorSubject, Subject } from '../../../../../../../../node_modules/rxjs';
 @Component({
   selector: 'app-meeting-kickoff',
   templateUrl: './meeting-kickoff.component.html',
@@ -16,6 +17,7 @@ export class MeetingKickoffComponent implements OnInit {
   submitted = false;
   currentPackageId: number;
   modalUpload: BsModalRef;
+  modalViewData:BsModalRef;
   modalRef: BsModalRef;
   textTitleSendMail: string;
   textMetting: string;
@@ -27,12 +29,13 @@ export class MeetingKickoffComponent implements OnInit {
   reportMeeting: boolean;
   reportFile:boolean;
   datePickerConfig = DATETIME_PICKER_CONFIG;
-  reasons: Array<{ name: string; id: number }> = [
-    { id: 1, name: 'Thiết kế đẹp ' },
-    { id: 2, name: 'Kỹ thuật, nguồn lực tốt' },
-    { id: 3, name: 'Khác' }
-
-  ];
+  dtTrigger: Subject<any> = new Subject();
+  dtOptions: any = DATATABLE_CONFIG;
+  listData : any =[
+    { id:1, username:'Oliver Dinh',email:'oliverdinh@gmail.com'},
+    { id:2, username:'Van Dinh',email:'vandinh@gmail.com'},
+    { id:3, username:'Huy Nhat',email:'huynhat@gmail.com'}
+  ]
   constructor(
     private modalService: BsModalService,
     private router: Router,
@@ -112,5 +115,7 @@ export class MeetingKickoffComponent implements OnInit {
     this.modalUpload = this.modalService.show(template);
 
   }
-
+  modelViewListData (template: TemplateRef<any>) {
+    this.modalViewData = this.modalService.show(template);
+  }
 }

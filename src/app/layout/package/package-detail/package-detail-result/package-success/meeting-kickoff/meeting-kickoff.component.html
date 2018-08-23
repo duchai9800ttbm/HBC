@@ -6,7 +6,7 @@
         </div>
         <div class="center-parent  mr-4">
           <div style="font-size: 15px"> {{textMetting}}</div>
-          <button type="button" class="btn btn-primary btn-noti" *ngIf="doNotiMeeting">Xem danh sách email đã gửi</button>
+          <button type="button" class="btn btn-primary btn-noti" *ngIf="doNotiMeeting" (click)="modelViewListData(ViewListData)">Xem danh sách email đã gửi</button>
         </div>
       </div>
     </div>
@@ -175,6 +175,59 @@
           [toolbar]="'clipboard,1'">
         </ckbutton>
       </ckeditor>
+    </div>
+
+  </div>
+</ng-template>
+
+<!-- modal view data send mail -->
+<ng-template #ViewListData>
+  <div class="modal-header no-boder-bottom">
+    <div class="col-md-10 offset-md-1 text-center">
+      <h4 class="modal-title text-model">Danh sách gửi thông báo họp kick-off</h4>
+    </div>
+    <div class="col-md-1">
+      <button type="button" class="close pull-right" aria-label="Close" (click)="modalViewData.hide()">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+  </div>
+  <div class="modal-body">
+    <div class="bot-table">
+      <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="table-selection stripe row-border hover cell-border dataTable">
+        <thead>
+          <tr>
+            <th class="bg-default" style="background-color: #f68e56!important;">
+              <div class="d-flex justify-content-center">
+                <div class="center-parent">
+                  <div>STT</div>
+                </div>
+              </div>
+            </th>
+            <th class="bg-default" style="background-color: #f68e56!important;">
+              <div class="d-flex justify-content-center">
+                <div class="center-parent">
+                  <div>Nhân viên</div>
+                </div>
+              </div>
+            </th>
+            <th class="bg-default" style="background-color: #f68e56!important;">
+              <div class="d-flex justify-content-center">
+                <div class="center-parent">
+                  <div>Email</div>
+                </div>
+              </div>
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let data of listData; let i = index">
+            <td class="select-filter text-center">{{ i+1}}</td>
+            <td class="select-filter text-center">{{ data.username}}</td>
+            <td class="select-filter text-center color-default">{{ data.email}}</td>
+          </tr>
+        </tbody>
+      </table>
     </div>
 
   </div>

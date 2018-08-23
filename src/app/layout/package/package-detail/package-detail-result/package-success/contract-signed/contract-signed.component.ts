@@ -45,6 +45,10 @@ export class ContractSignedComponent implements OnInit {
     this.textContract ='Đã phản hồi đến phòng hợp đồng';
      this.total = this.resultData.length;
   }
+  onSelectAll(value: boolean) {
+    this.resultData.forEach(x => (x['checkboxSelected'] = value));
+  }
+
   modalAdd(template: TemplateRef<any>) {
     this.modalUpload = this.modalService.show(template);
   }

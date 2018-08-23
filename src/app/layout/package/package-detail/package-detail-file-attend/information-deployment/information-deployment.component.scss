@@ -298,8 +298,7 @@ input.icon {
 }
 
 .setHSDT {
-    height: 20px;
-    line-height: 4px;
+    padding: 1px 4px 1px 4px;
 }
 
 .pd-body {
@@ -324,4 +323,7 @@ table.dataTable th {
     .col-md-4 {
         flex: none !important; max-width: none !important;
     }
+}
+#header-table {
+    padding-left: 55px;
 }
