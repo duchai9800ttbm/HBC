@@ -221,11 +221,6 @@
                         <td class="text-center">
                             <div class="d-flex justify-content-around">
                                 <div>
-                                    <a>
-                                        <i class="fa fa-pencil" aria-hidden="true"></i>
-                                    </a>
-                                </div>
-                                <div>
                                     <a title="Tải file" (click)="downloadFileItem(item.id)">
                                         <i class="fa fa-download color-item-down" aria-hidden="true"></i>
                                     </a>
@@ -238,7 +233,6 @@
                                 <div>
                                     <a title="In">
                                         <i class="fa fa-print color-item-print" aria-hidden="true"></i>
-
                                     </a>
 
                                 </div>
@@ -248,6 +242,7 @@
                 </tbody>
             </table>
         </div>
+        <div class="show">Hiển thị {{total}} kết quả</div>
     </div>
 </div>
 
@@ -265,7 +260,7 @@
         </div>
         <div class="modal-body fg-w">
             <div class="row pd-up">
-                <div class="col-md-4">Chọn file</div>
+                <div class="col-md-4 mg-l">Chọn file</div>
                 <div class="col-md-7 input-group">
                     <div class="custom-file form-control">
                         <input type="file" class="custom-file-input" id="inputGroupFile01">
@@ -276,35 +271,38 @@
                     </span>
                 </div>
             </div>
+            <div class="row">
+                <div class="col-md-4 mg-l or">OR</div>
+            </div>
             <div class="row pd-up">
-                <div class="col-md-4">Đường dẫn file</div>
+                <div class="col-md-4 mg-l">Đường dẫn file</div>
                 <div class="col-md-7">
                     <input type="text" class="form-control" placeholder="Text">
                 </div>
             </div>
 
             <div class="row pd-up">
-                <div class="col-md-4">Tên</div>
+                <div class="col-md-4 mg-l">Tên</div>
                 <div class="col-md-7">
                     <input type="text" class="form-control" placeholder="Text">
                 </div>
             </div>
 
             <div class="row pd-up">
-                <div class="col-md-4">Version</div>
+                <div class="col-md-4 mg-l">Version</div>
                 <div class="col-md-7">
                     <input type="text" class="form-control" value="1">
                 </div>
             </div>
             <div class="row pd-up">
-                <div class="col-md-4">Lần phỏng vấn</div>
+                <div class="col-md-4 mg-l">Lần phỏng vấn</div>
                 <div class="col-md-7">
                     <input type="number" placeholder=Number class="form-control" value="">
                 </div>
             </div>
 
             <div class="row pd-up">
-                <div class="col-md-4">Ngày ký hợp đồng</div>
+                <div class="col-md-4 mg-l">Ngày ký hợp đồng</div>
                 <div class="col-md-7 input-group">
                     <owl-date-time [readonlyInput]="datePickerConfig.readonlyInput" [locale]="datePickerConfig.vi" [placeHolder]="datePickerConfig.placeHolderVn">
                     </owl-date-time>
@@ -315,7 +313,7 @@
             </div>
 
             <div class="row pd-up">
-                <div class="col-md-4">Mô tả/Nội dung cập nhật</div>
+                <div class="col-md-4 mg-l">Mô tả/Nội dung cập nhật</div>
                 <div class="col-md-7">
                     <textarea class="form-control textarea-content" name="" id="" cols="30" rows="3" placeholder=""></textarea>
                 </div>

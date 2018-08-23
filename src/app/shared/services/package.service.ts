@@ -18,7 +18,9 @@ import { Subject } from '../../../../node_modules/rxjs';
 @Injectable()
 export class PackageService {
     private userIdSub = new Subject<any>();
-    userId$ = this.userIdSub.asObservable();
+    userId$ = this.userIdSub.asObservable();    
+    kickOff$ = this.userIdSub.asObservable();
+
     private static createFilterParams(filter: PackageFilter): URLSearchParams {
         const urlFilterParams = new URLSearchParams();
         urlFilterParams.append('projectName', filter.projectName);
@@ -99,11 +101,13 @@ export class PackageService {
         private apiService: ApiService,
     ) { }
 
+    // active step
     setUserId(data: boolean) {
         this.userIdSub.next(data);
     }
-
-
+    setActiveKickoff(data: boolean) {
+        this.userIdSub.next(data);
+    }
 
 
     filter(terms: string, status: string, uploader: string, uploadDate: number, source: any[]): any[] {

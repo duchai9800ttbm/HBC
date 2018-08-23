@@ -10,4 +10,6 @@ export class DocumentItem {
     timeTransfer:string;
     status:string;
     type:number;
+    version:number;
+    employeeName:string;
 }
