@@ -42,6 +42,10 @@
 =================================================================*/
 
 /*HELPER*/
+@font-face {
+    font-family: 'MyriadPro' , Fallback, sans-serif !important;
+    src: url('/assets/fonts/MyriadPro-Bold.otf') format("opentype");
+}
 
 .center-all {
     display: -webkit-box;
