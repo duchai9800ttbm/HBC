@@ -1,59 +1,112 @@
 export class PackageListItem {
-    id: number;
-    opportunityId: number;
     bidOpportunityId: number;
     classify: string;
     amount: number;
     opportunityName: string;
     projectName: string;
-    projectType: string;
+    projectType: {
+      key: string;
+      value: string;
+      displayText: string
+    };
     hbcRole: {
-        id: string;
-        text: string;
+      type: string;
+      name: string
     };
     chairEmployee: {
-        id: string;
-        text: string;
+      id: number;
+      employeeId: number;
+      employeeNo: string;
+      employeeName: string;
+      employeeAddress: string;
+      employeeDob: number;
+      employeeTel: string;
+      employeeTel1: string;
+      departmentName: string;
+      levelName: string;
+      employeeAvatar: string;
+      departmentRoomName: string;
+      branchName: string;
+      employeeBirthPlace: string;
+      employeeIDNumber: string;
+      employeeGender: string;
+      employeeTaxNumber: string;
+      employeeBankAccount: string
     };
-    trimester: string;
+    quarter: {
+      type: string;
+      name: string
+    };
     magnitude: string;
     stage: {
-        id: string;
-        text: string;
+      key: string;
+      value: string;
+      displayText: string
     };
     stageStatus: {
-        id: string;
-        text: string;
+      key: string;
+      value: string;
+      displayText: string
     };
-    location: string;
+    location: {
+      key: string;
+      value: string;
+      displayText: string
+    };
     projectNo: string;
     job: string;
     place: string;
     region: string;
-    customerName: string;
-    contact: {
-        id: number;
-        text: string;
+    customer: {
+      id: number;
+      customerId: number;
+      customerName: string;
+      customerNo: string;
+      customerDesc: string;
+      customerClassify: string;
+      customerNewOldType: string;
+      customerPhone: string;
+      customerAddress: string
     };
     customerContact: {
-        id: number;
-        text: string;
+      id: number;
+      name: string
     };
-    consultantUnit: string;
+    consultantUnitCustomer: {
+      id: number;
+      customerId: number;
+      customerName: string;
+      customerNo: string;
+      customerDesc: string;
+      customerClassify: string;
+      customerNewOldType: string;
+      customerPhone: string;
+      customerAddress: string
+    };
     consultantAddress: string;
     consultantPhone: string;
     floorArea: number;
-    mainBuildingCategory: string;
+    mainBuildingCategory: {
+      key: string;
+      value: string;
+      displayText: string
+    };
     documentLink: string;
-    status: string;
+    status: {
+      key: string;
+      value: string;
+      displayText: string
+    };
     progress: number;
     acceptanceReason: string;
     unacceptanceReason: string;
+    cancelReason: string;
     evaluation: string;
     startTrackingDate: number;
     submissionDate: number;
     resultEstimatedDate: number;
     projectEstimatedStartDate: number;
     projectEstimatedEndDate: number;
-    totalTime: number;
+    totalTime: string;
+    description: string;
 }
