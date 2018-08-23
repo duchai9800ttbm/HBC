@@ -1,5 +1,5 @@
-<app-header></app-header>
-<app-sidebar [state]="menuState" (toggleMenuFromSidebar)="toggleMenu()" (emitPhoneCall)="receive($event)" (emitPhoneStatus)="receive2($event)" (listPhoneCall)="receiveListPhone($event)"></app-sidebar>
+<app-header [logo]="logo"></app-header>
+<app-sidebar [state]="menuState" (toggleMenuFromSidebar)="toggleMenu($event)" (emitPhoneCall)="receive($event)" (emitPhoneStatus)="receive2($event)" (listPhoneCall)="receiveListPhone($event)"></app-sidebar>
 <section id="main-container" class="main-container sectionIn" [ngStyle]="{'min-height': clientHeight + 'px'}">
     <router-outlet></router-outlet>
 </section>

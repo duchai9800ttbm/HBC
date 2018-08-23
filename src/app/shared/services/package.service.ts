@@ -17,6 +17,8 @@ import { Subject } from '../../../../node_modules/rxjs';
 
 @Injectable()
 export class PackageService {
+    private isSummaryConditionForm = new Subject<boolean>();
+    public isSummaryConditionForm$ = this.isSummaryConditionForm.asObservable();
     private userIdSub = new Subject<any>();
     userId$ = this.userIdSub.asObservable();    
     kickOff$ = this.userIdSub.asObservable();
@@ -107,6 +109,10 @@ export class PackageService {
     }
     setActiveKickoff(data: boolean) {
         this.userIdSub.next(data);
+    }
+
+    setSummaryConditionForm(data: boolean) {
+        this.isSummaryConditionForm.next(data);
     }
 
 

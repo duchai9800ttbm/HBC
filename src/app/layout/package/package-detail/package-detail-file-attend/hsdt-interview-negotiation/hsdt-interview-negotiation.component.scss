@@ -30,8 +30,8 @@
     color: #7d7d7d;
     z-index: 20;
     outline: none;
-
 }
+
 .arrow-down {
     width: 0;
     height: 0;
@@ -42,6 +42,7 @@
     top: -10px;
     z-index: 3;
 }
+
 .arrow-down-active {
     width: 0;
     height: 0;
@@ -58,20 +59,17 @@
     height: 30px;
     content: counter(step);
     counter-increment: step;
-    line-height: 30px;
-  //  border: 1px solid #b8b8b8;
+    line-height: 30px; //  border: 1px solid #b8b8b8;
     display: block;
     text-align: center;
     margin: 0 auto 10px auto;
     border-radius: 10%;
     background-color: #ebebeb;
     z-index: 30;
-    cursor: pointer;
-
-   // border-top: 1px dashed #8c8b8b;
-
+    cursor: pointer; // border-top: 1px dashed #8c8b8b;
 }
-li.triangle::before{
+
+li.triangle::before {
     background-color: red;
 }
 
@@ -82,19 +80,16 @@ li.triangle::before{
     position: absolute;
     background-color: #ebebeb;
     border-top: 1px dashed #8c8b8b;
-
     top: 15px;
     left: calc(-50% + 15px);
-    z-index: 1;
-
-    // background-color: #00a0e3;
-	// bottom: 5px;
-	// content: "";
-	// height: 38px;
-	// position: absolute;
-	// left: 50%;
-	// margin-left: -44px;
-	// width: 44px;
+    z-index: 1; // background-color: #00a0e3;
+    // bottom: 5px;
+    // content: "";
+    // height: 38px;
+    // position: absolute;
+    // left: 50%;
+    // margin-left: -44px;
+    // width: 44px;
 }
 
 .progressbar li:first-child:after {
@@ -117,17 +112,16 @@ li.triangle::before{
         height: 0;
         border-left: 6px solid transparent;
         border-right: 6px solid transparent;
-        border-top: 8px solid #00a0e3!important;
+        border-top: 8px solid #00a0e3 !important;
         position: relative;
         top: -10px;
         z-index: 3;
-      }
+    }
 }
 
 .progressbar li.active:after {
-   // background-color: #00a0e3;
-   border-top: 1px dashed #00a0e3!important;
-
+    // background-color: #00a0e3;
+    border-top: 1px dashed #00a0e3 !important;
 }
 
 .rule {
@@ -193,7 +187,8 @@ li.triangle::before{
 .no-boder-bottom {
     border-bottom: none;
 }
-input.icon{
+
+input.icon {
     font-family: FontAwesome, "Open Sans", Verdana, sans-serif;
     font-style: normal;
     font-weight: normal;
@@ -318,68 +313,84 @@ button:focus {
 
 table.dataTable th {
     border-bottom: 1px solid #dddddd !important;
-    background-color: #ffff!important;
+    background-color: #ffff !important;
     border: 1px solid #dddddd;
 }
 
-.pad-two-target{
+.pad-two-target {
     padding-left: 40px;
     padding-right: 40px;
 }
-.cus-menu{
+
+.cus-menu {
     padding-left: 15px;
     font-size: 10px;
     width: 100%;
-    .cus-menu-children{
-        width: 100% ;
+    .cus-menu-children {
+        width: 100%;
         padding-left: 5px;
         cursor: pointer;
-        
     }
 }
-.div-menu{
+
+.div-menu {
     width: 15%;
     border-right: 3px solid #edeff0;
 }
-.active{
-    .number{
-        width: 10%; 
+
+.active {
+    .number {
+        width: 10%;
         font-size: 14px;
     }
-    .word{
+    .word {
         width: 90%;
         display: flex;
         align-items: center;
     }
 }
-.no-active{
+
+.no-active {
     background-color: #edeff0 !important;
-    .number{
-        width: 10%; 
+    .number {
+        width: 10%;
         font-size: 14px;
     }
-    .word{
+    .word {
         width: 90%;
         display: flex;
         align-items: center;
         color: #8d8d8d;
     }
 }
-.border-top{
+
+.border-top {
     border-top: 8px solid #00a0e3;
     opacity: inherit;
 }
-.message-create-interview{
+
+.message-create-interview {
     padding: 20px;
     font-size: 14px;
     font-weight: bolder;
     color: #4c5465;
     white-space: nowrap;
 }
-.class-image{
+
+.class-image {
     max-width: 100%;
     height: auto;
 }
-.color-active-show{
+
+.color-active-show {
     background-color: #8dc73d;
+}
+
+@media only screen and (max-width: 1024px) {
+    #ipad-res {
+        zoom: 0.8 !important;
+    }
+    #outer-table {
+        padding: 0px 20px;
+    }
 }

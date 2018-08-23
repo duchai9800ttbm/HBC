@@ -15,21 +15,16 @@ import { TranslateService } from '../../../../../node_modules/@ngx-translate/cor
 import { DownloadTemplateService } from '../../../shared/services/download-template.service';
 import { NgxSpinnerService } from '../../../../../node_modules/ngx-spinner';
 import { BehaviorSubject } from '../../../../../node_modules/rxjs';
-import DateTimeConvertHelper from '../../../shared/helpers/datetime-convert-helper';
-import ValidationHelper from '../../../shared/helpers/validation.helper';
 import * as moment from 'moment';
 import { routerTransition } from '../../../router.animations';
-import { FakePackageData } from '../../../shared/fake-data/package-data';
-import { ClassifyCustomer } from '../../../shared/fake-data/classify-customer';
-import { PhasePackage } from '../../../shared/fake-data/phase-package';
 import { PresideHBC } from '../../../shared/fake-data/presideHBC';
 import { NameProjectListPackage } from '../../../shared/fake-data/nameProject-listPackage';
 import { PackageService } from '../../../shared/services/package.service';
 import { PackageFilter } from '../../../shared/models/package/package-filter.model';
-import { ObjectInforPackage } from '../../../shared/models/package/object-infoPackage';
 import { UserItemModel } from '../../../shared/models/user/user-item.model';
 import { UserModel } from '../../../shared/models/user/user.model';
 import { FieldModel } from '../../../shared/models/package/field.model';
+import { LayoutService } from '../../../shared/services/layout.service';
 @Component({
     selector: 'app-package-list',
     templateUrl: './package-list.component.html',
@@ -41,7 +36,7 @@ export class PackageListComponent implements OnInit, AfterViewChecked {
     @ViewChild('myDrop') myDrop: ElementRef;
     activityStatusList: Observable<DictionaryItem[]>;
     checkboxSeclectAll: boolean;
-    dtOptions: any = DATATABLE_CONFIG;
+    dtOptions: any = DATATABLE_CONFIG2;
     dtTrigger: Subject<any> = new Subject();
     filterModel = new PackageFilter();
     pagedResult: PagedResult<ActivityListItem> = new PagedResult<
@@ -73,6 +68,8 @@ export class PackageListComponent implements OnInit, AfterViewChecked {
     isViewBidOpportunityDetail;
     userModel: UserModel;
     listPrivileges = [];
+    isToggle = false;
+
     constructor(
         private activityService: ActivityService,
         private alertService: AlertService,
@@ -86,7 +83,9 @@ export class PackageListComponent implements OnInit, AfterViewChecked {
         private spinner: NgxSpinnerService,
         private packageService: PackageService,
         private userService: UserService,
-        private sessionService: SessionService
+        private sessionService: SessionService,
+        private layoutService: LayoutService
+
     ) { }
     someRange = [1000000, 10000000000];
     someKeyboardConfig: any = {
@@ -161,6 +160,13 @@ export class PackageListComponent implements OnInit, AfterViewChecked {
             }, err => {
                 this.spinner.hide();
             });
+        this.layoutService.watchLayoutSubject().subscribe(data => {
+            if (data) {
+                this.isToggle = true;
+            } else {
+                this.isToggle = false;
+            }
+        });
     }
     ngAfterViewChecked() {
 
@@ -201,21 +207,7 @@ export class PackageListComponent implements OnInit, AfterViewChecked {
     }
 
     multiDelete() {
-        const deleteIds = this.pagedResult.items
-            .filter(x => x.checkboxSelected)
-            .map(x => {
-                return {
-                    id: +x.id,
-                    activityType: x.activityType ? x.activityType.toLowerCase() : ''
-                };
-            });
-        if (deleteIds.length === 0) {
-            this.alertService.error(
-                'Bạn phải chọn ít nhất một đối tượng để xóa!'
-            );
-        } else {
-            //  this.delete(deleteIds);
-        }
+       
     }
 
     filter(clear: boolean = false) {
