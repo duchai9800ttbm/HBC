@@ -2,25 +2,37 @@
     <div class="row">
         <ul class="progressbar">
 
-            <li class="triangle active" [routerLinkActive]="['active']" [routerLink]="['../package-success/package-list']">
+            <li *ngIf="!arrowSuccess" class="triangle active" [routerLinkActive]="['active']" [routerLink]="['../package-success/package-list']">
                 <div style="width: 100%" class="center-parent">
                     <div class="arrow-down"></div>
                 </div>
             </li>
-            <!-- <li *ngIf="arrowSuccess" class="triangle active"[routerLinkActive]="['active']" (click)="onClickList();" [routerLink]="['../package-success/package-list']">
+            <li *ngIf="arrowSuccess" class="triangle active" (click)="onClickList();" [routerLink]="['../package-success/package-list']">
                 <div style="width: 100%" class="center-parent">
                     <div></div>
                 </div>
-            </li> -->
-            <li class="triangle2" [routerLinkActive]="['active']" (click)="onClickContract();" [ngClass]="{ 'active' : isActive === true }" [routerLink]="['../package-success/contract-signed']">
+            </li>
+            
+            <li *ngIf="!arrow" class="triangle2" [routerLinkActive]="['active']" (click)="onClickContract();" [ngClass]="{ 'active' : isActive === true }" [routerLink]="['../package-success/contract-signed']">
                 <div style="width: 100%" class="center-parent">
                     <div [ngClass]="{'': showArrow == false,'arrow-down':showArrow==true}"></div>
                 </div>
             </li>
-            
-            <li class="triangle3" [routerLinkActive]="['active']" [routerLink]="['../package-list']">
+            <li *ngIf="arrow" class="triangle2 active" [routerLinkActive]="['active']" (click)="onClickContract();"  [routerLink]="['../package-success/contract-signed']">
                 <div style="width: 100%" class="center-parent">
-                    <div class="arrow-down"></div>
+                    <div></div>
+                </div>
+            </li>
+
+            <li *ngIf="!kickOffActive" class="triangle3" [routerLinkActive]="['active']" (click)="onClickKickOff();"  [ngClass]="{ 'active' : kickOff === true }" [routerLink]="['../package-success/meeting-kickoff']">
+                <div style="width: 100%" class="center-parent">
+                    <div [ngClass]="{'': arrowKickOff == false,'arrow-down':arrowKickOff==true}"></div>
+                </div>
+            </li>
+
+            <li *ngIf="kickOffActive" class="triangle3 active" [routerLinkActive]="['active']" (click)="onClickKickOff();"  [ngClass]="{ 'active' : kickOff === true }" [routerLink]="['../package-success/meeting-kickoff']">
+                <div style="width: 100%" class="center-parent">
+                    <div ></div>
                 </div>
             </li>
         </ul>

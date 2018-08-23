@@ -30,11 +30,11 @@
     color: #7d7d7d;
     z-index: 20;
     outline: none;
-   
+
 }
 .arrow-down {
-    width: 0; 
-    height: 0; 
+    width: 0;
+    height: 0;
     border-left: 6px solid transparent;
     border-right: 6px solid transparent;
     border-top: 8px solid #ebebeb;
@@ -43,8 +43,8 @@
     z-index: 3;
 }
 .arrow-down-active {
-    width: 0; 
-    height: 0; 
+    width: 0;
+    height: 0;
     border-left: 6px solid transparent;
     border-right: 6px solid transparent;
     border-top: 8px solid #00a0e3;
@@ -67,7 +67,7 @@
     background-color: #ebebeb;
     z-index: 30;
     cursor: pointer;
-    
+
    // border-top: 1px dashed #8c8b8b;
 
 }
@@ -113,8 +113,8 @@ li.triangle::before{
     border-color: #00a0e3;
     background-color: #00a0e3;
     .arrow-down {
-        width: 0; 
-        height: 0; 
+        width: 0;
+        height: 0;
         border-left: 6px solid transparent;
         border-right: 6px solid transparent;
         border-top: 8px solid #00a0e3!important;
@@ -320,4 +320,13 @@ table.dataTable th {
     border-bottom: 1px solid #dddddd !important;
     background-color: #ffff!important;
     border: 1px solid #dddddd;
+}
+
+@media only screen and (max-width: 1024px) {
+    #ipad-res {
+        zoom: 0.8 !important;
+    }
+    #outer-table {
+        padding: 0px 20px;
+    }
 }

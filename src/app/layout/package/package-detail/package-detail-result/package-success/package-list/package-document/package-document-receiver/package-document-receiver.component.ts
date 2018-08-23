@@ -7,6 +7,7 @@ import { Observable, BehaviorSubject, Subject } from '../../../../../../../../..
 import { DocumentItem } from '../../../../../../../../shared/models/document-item';
 import { PackageSuccessService } from '../../../../../../../../shared/services/package-success.service';
 import { SessionService } from '../../../../../../../../shared/services/index';
+import { PackageService } from '../../../../../../../../shared/services/package.service'
 
 @Component({
   selector: 'app-package-document-receiver',
@@ -37,6 +38,7 @@ export class PackageDocumentReceiverComponent implements OnInit {
     private packageSuccessService: PackageSuccessService,
     private modalService: BsModalService,
     private sessionService: SessionService,
+    private packageService: PackageService
   ) { }
 
   ngOnInit() {
@@ -73,6 +75,7 @@ export class PackageDocumentReceiverComponent implements OnInit {
 
   confirmGot() {
     this.bntConfirm = true;
+    this.packageService.setActiveKickoff(this.bntConfirm)
     this.textmovedata = this.bntConfirm  ?'Đã nhận tài liệu được chuyển giao':'Chưa nhận tài liệu được chuyển giao';
   }
 

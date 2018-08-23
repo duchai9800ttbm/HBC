@@ -75,7 +75,7 @@
         </div>
         <div class="modal-body fg-w">
             <div class="row pd-up">
-                <div class="col-md-4">Chọn file</div>
+                <div class="col-md-4 mg-l">Chọn file</div>
                 <div class="col-md-7 input-group">
                     <div class="custom-file form-control">
                         <input type="file" class="custom-file-input" id="inputGroupFile01">
@@ -86,8 +86,18 @@
                     </span>
                 </div>
             </div>
+            <div class="row">
+                <div class="col-md-4 mg-l or">OR</div>
+            </div>
             <div class="row pd-up">
-                <div class="col-md-4">Tên</div>
+                <div class="col-md-4 mg-l">Đường dẫn file</div>
+                <div class="col-md-7">
+                    <input type="text" placeholder="Text" class="form-control" value="">
+                </div>
+            </div>
+
+            <div class="row pd-up">
+                <div class="col-md-4 mg-l">Tên</div>
                 <div class="col-md-7">
                     <input type="text" class="form-control" placeholder="Tên" formControlName="name" [ngClass]="{ 'is-invalid': submitted && f.name.errors }">
                     <div *ngIf="submitted && f.name.errors" class="invalid-feedback">
@@ -98,20 +108,20 @@
             </div>
 
             <div class="row pd-up">
-                <div class="col-md-4">Version</div>
+                <div class="col-md-4 mg-l">Version</div>
                 <div class="col-md-7">
                     <input type="text" class="form-control" value="1">
                 </div>
             </div>
             <div class="row pd-up">
-                    <div class="col-md-4">Lần phỏng vấn</div>
-                    <div class="col-md-7">
-                        <input type="number" placeholder=Number class="form-control" value="">
-                    </div>
+                <div class="col-md-4 mg-l">Lần phỏng vấn</div>
+                <div class="col-md-7">
+                    <input type="number" placeholder=Number class="form-control" value="">
                 </div>
+            </div>
 
             <div class="row pd-up">
-                <div class="col-md-4">Ngày nhận kết quả</div>
+                <div class="col-md-4 mg-l">Ngày nhận kết quả</div>
                 <div class="col-md-7 input-group">
                     <owl-date-time [readonlyInput]="datePickerConfig.readonlyInput" [locale]="datePickerConfig.vi" [placeHolder]="datePickerConfig.placeHolderVn">
                     </owl-date-time>
@@ -122,7 +132,7 @@
             </div>
 
             <div class="row pd-up">
-                <div class="col-md-4">Mô tả/Nội dung cập nhật</div>
+                <div class="col-md-4 mg-l">Mô tả/Nội dung cập nhật</div>
                 <div class="col-md-7">
                     <textarea class="form-control textarea-content" name="" id="" cols="30" rows="3" placeholder=""></textarea>
                 </div>

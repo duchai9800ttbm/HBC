@@ -14,7 +14,7 @@
                 <button class="btn btn-primary ml-2" (click)="openModalNotification(notification)">
                     {{textNotification}}
                 </button>
-              
+
                 <button class="btn btn-primary ml-2">
                     Tải Template
                 </button>
@@ -57,16 +57,24 @@
                                 <div style="width: 35%;" class="center-parent">
                                     <div>STT</div>
                                 </div>
+                                <div class="center-parent" style="width: 15%;padding-left: 5px;">
+                                    <div class="ng-tns-c15-6">
+                                        <i class="fa fa-caret-down" style="color: #ffff;"></i>
+                                    </div>
+                                </div>
                             </div>
                         </th>
 
                         <th style="width: 35%; background-color: #f68e56!important;">
                             <div class="d-flex justify-content-center">
-
                                 <div class="center-parent">
                                     <div>Tên tài liệu</div>
                                 </div>
-
+                                <div class="center-parent pd-l">
+                                    <div class="ng-tns-c15-6">
+                                        <i class="fa fa-caret-down" style="color: #ffff;"></i>
+                                    </div>
+                                </div>
                             </div>
 
                         </th>
@@ -74,6 +82,11 @@
                             <div class="d-flex justify-content-center">
                                 <div style="width: 80%;" class="center-parent">
                                     <div>Phiên bản</div>
+                                </div>
+                                <div class="center-parent pd-l">
+                                    <div class="ng-tns-c15-6">
+                                        <i class="fa fa-caret-down" style="color: #ffff;"></i>
+                                    </div>
                                 </div>
                             </div>
                         </th>
@@ -86,18 +99,28 @@
                             </div>
                         </th>
 
-                        <th style="width: 12%;background-color: #f68e56!important;" >
+                        <th style="width: 12%;background-color: #f68e56!important;">
                             <div class="d-flex justify-content-center">
                                 <div class="center-parent">
                                     <div>Người upload</div>
                                 </div>
+                                <div class="center-parent pd-l">
+                                    <div class="ng-tns-c15-6">
+                                        <i class="fa fa-caret-down" style="color: #ffff;"></i>
+                                    </div>
+                                </div>
                             </div>
                         </th>
 
-                        <th style="width: 12%; background-color: #f68e56!important;" >
+                        <th style="width: 12%; background-color: #f68e56!important;">
                             <div class="d-flex justify-content-center">
                                 <div class="center-parent">
                                     <div>Ngày upload</div>
+                                </div>
+                                <div class="center-parent pd-l">
+                                    <div class="ng-tns-c15-6">
+                                        <i class="fa fa-caret-down" style="color: #ffff;"></i>
+                                    </div>
                                 </div>
                             </div>
                         </th>
@@ -105,6 +128,11 @@
                             <div class="d-flex justify-content-center">
                                 <div class="center-parent">
                                     <div>Lần phỏng vấn</div>
+                                </div>
+                                <div class="center-parent pd-l">
+                                    <div class="ng-tns-c15-6">
+                                        <i class="fa fa-caret-down" style="color: #ffff;"></i>
+                                    </div>
                                 </div>
                             </div>
                         </th>
@@ -116,17 +144,28 @@
                 </thead>
                 <tbody>
                     <tr *ngFor="let item of resultData; let i = index">
-                        <td class="stt d-flex justify-content-around">
-                            <div class="center-parent" style="width: 40%">
-                                <label class="custom-control custom-checkbox">
-                                    <input type="checkbox" class="custom-control-input" [(ngModel)]="item.checkboxSelected">
-                                    <span class="custom-control-indicator"></span>
-                                </label>
-                            </div>
-                            <div style="width: 35%;" class="center-parent">
-                                <div>{{i+1}}</div>
+                        <td class="stt" style="width: 5%; min-width: 20px;">
+                            <div class="d-flex justify-content-around">
+                                <div style="width: 40%;">
+                                    <div class="center-parent">
+                                        <label class="custom-control custom-checkbox">
+                                            <input type="checkbox" class="custom-control-input" [(ngModel)]="item.checkboxSelected">
+                                            <span class="custom-control-indicator"></span>
+                                        </label>
+                                    </div>
+                                </div>
+
+                                <div style="width: 35%;" class="center-parent">
+                                    <div>{{i+1}}</div>
+                                </div>
+                                <div class="center-parent" style="width: 15%;padding-left: 5px;">
+                                    <div class="ng-tns-c15-6">
+                                       
+                                    </div>
+                                </div>
                             </div>
                         </td>
+
                         <td>{{ item.bidReviewDocumentName }}</td>
                         <td class="text-center">{{ item.bidReviewDocumentVersion }}</td>
                         <td>
@@ -147,7 +186,8 @@
                                 <div class="col-md-4 center-parent cursor-pointer" *ngIf="!showBtnNotification">
                                     <i [title]="'Xóa'" class="fa fa-trash-o"></i>
                                 </div>
-                                <div [ngClass]="{ 'col-md-4': showBtnNotification === false,'col-md-5': showBtnNotification === true }"  class="center-parent cursor-pointer" style="color:#e92121;">
+                                <div [ngClass]="{ 'col-md-4': showBtnNotification === false,'col-md-5': showBtnNotification === true }" class="center-parent cursor-pointer"
+                                    style="color:#e92121;">
                                     <i [title]="'In'" class="fa fa-print "></i>
                                 </div>
                             </div>

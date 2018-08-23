@@ -1,0 +1,582 @@
+<div class="table-small mt-3">
+  <div class=" title-list-package d-flex flex-wrap align-items-center status-filter">
+    <div class="mr-auto d-flex align-items-end list-package mt-2 mb-2">
+      <div class="d-flex justify-content-start" style="height: 40px;">
+        <div class="rule mr-2">
+        </div>
+        <div class="center-parent  mr-4">
+          <div class="title-header"> Đã họp kick-off </div>
+        </div>
+      </div>
+    </div>
+    <div>
+      <div class="btn-toolbar mt-2 mb-2">
+        <div class="input-group btn-rg">
+          <span class="input-group-addon">Tìm kiếm theo</span>
+          <input type="text" class="form-control icon" placeholder="&#xf002; Tên tài liệu" (keyup)="searchTerm$.next($event.target.value)">
+        </div>
+
+        <button class="btn btn-primary ml-2">
+          Tải Template
+        </button>
+        <button class="btn btn-primary ml-2">
+          Tải xuống tài liệu
+        </button>
+        <button class="btn btn-primary ml-2">
+          In
+        </button>
+        <button class="btn btn-primary ml-2">
+          Xóa
+        </button>
+        <button class="btn btn-primary ml-2" (click)="modalUp(uploadFile,1)">
+          Upload&nbsp;biên bản cuộc họp
+
+        </button>
+        <button class="btn btn-primary ml-2">
+          <i class="fa fa-refresh" aria-hidden="true"></i>
+        </button>
+      </div>
+    </div>
+  </div>
+  <h5 style="text-transform: uppercase">Biên bản cuộc họp</h5>
+  <div class="main-table">
+    <div class="d-flex flex-row flex-wrap filter-bar custom-filter-bar" style="background-color: #fafbfc!important">
+      <div class="d-flex form-inline flex-pad">
+
+        <div class="form-group ">
+          <label for="" class="form-label">Người upload</label>
+          <span class="custom-dropdown mx-sm-2">
+            <select class="form-control">
+              <option value="">--Lựa chọn--</option>
+              <option value="Official">Olive Dinh</option>
+              <option value="Draft">Van Dinh</option>
+            </select>
+          </span>
+        </div>
+        <div class="form-group ">
+          <label for="" class="form-label">Ngày upload</label>
+          <span class="custom-dropdown mx-sm-2">
+            <select class="form-control">
+              <option value="">--Lựa chọn--</option>
+              <option value="Official">01-08-2018</option>
+              <option value="Draft">02-08-2018</option>
+            </select>
+          </span>
+        </div>
+        <div class="form-group ">
+          <label for="" class="form-label">Lần phỏng vấn</label>
+          <span class="custom-dropdown mx-sm-2">
+            <select class="form-control">
+              <option value="">--Lựa chọn--</option>
+              <option value="Official">1</option>
+              <option value="Draft">2</option>
+            </select>
+          </span>
+        </div>
+
+        <div class="form-group ">
+          <button type="submit" class="btn btn-primary mx-sm-2" (click)="filter()">
+            <i class="fa fa-filter" aria-hidden="true"></i>
+            <span class="filter-pd">Lọc </span>
+          </button>
+          <button class="btn btn-secondary" (click)="clearFilter()">
+            <i class="fa fa-times"></i>
+            <span class="filter-pd">Xóa lọc </span>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <div class="bot-table">
+      <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="table-selection stripe row-border hover cell-border dataTable">
+        <thead>
+          <tr>
+            <th class="stt" style="width: 5%; min-width: 20px;background-color: #f68e56!important;">
+              <div class="d-flex justify-content-around">
+                <div style="width: 40%;">
+                  <div class="center-parent">
+                    <label class="custom-control custom-checkbox">
+                      <input type="checkbox" class="custom-control-input" [(ngModel)]="checkboxSeclectAll" (change)="onSelectAll($event.target.checked)">
+                      <span class="custom-control-indicator"></span>
+                    </label>
+                  </div>
+                </div>
+
+                <div style="width: 35%;" class="center-parent">
+                  <div>STT</div>
+                </div>
+                <div class="center-parent pd-l">
+                    <div class="ng-tns-c15-6">
+                      <i class="fa fa-caret-down" style="color: #ffff;"></i>
+                    </div>
+                  </div>
+              </div>
+            </th>
+
+            <th style="width: 35%; background-color: #f68e56!important;white-space: nowrap;">
+              <div class="d-flex">
+                <div class="center-parent">
+                  <div>Tên tài liệu</div>
+                </div>
+                <div class="center-parent pd-l">
+                  <div class="ng-tns-c15-6">
+                    <i class="fa fa-caret-down" style="color: #ffff;"></i>
+                  </div>
+                </div>
+              </div>
+
+            </th>
+            <th class="th-mark-status" style="width: 10%; min-width: 20px;background-color: #f68e56!important;white-space: nowrap;">
+              <div class="d-flex">
+                <div style="width: 80%;" class="center-parent">
+                  <div>Phiên bản</div>
+                </div>
+                <div class="center-parent pd-l">
+                    <div class="ng-tns-c15-6">
+                      <i class="fa fa-caret-down" style="color: #ffff;"></i>
+                    </div>
+                  </div>
+              </div>
+            </th>
+
+            <th style="background-color: #f68e56!important;white-space: nowrap;">
+              <div class="d-flex">
+                <div class="center-parent">
+                  <div>Mô tả</div>
+                </div>
+              </div>
+            </th>
+
+            <th style="width: 12%;background-color: #f68e56!important;white-space: nowrap;">
+              <div class="d-flex">
+                <div class="center-parent">
+                  <div>Người upload</div>
+                </div>
+                <div class="center-parent pd-l">
+                    <div class="ng-tns-c15-6">
+                      <i class="fa fa-caret-down" style="color: #ffff;"></i>
+                    </div>
+                  </div>
+              </div>
+            </th>
+
+            <th style="width: 12%; background-color: #f68e56!important;white-space: nowrap;">
+              <div class="d-flex">
+                <div class="center-parent">
+                  <div>Ngày upload</div>
+                </div>
+                <div class="center-parent pd-l">
+                    <div class="ng-tns-c15-6">
+                      <i class="fa fa-caret-down" style="color: #ffff;"></i>
+                    </div>
+                  </div>
+              </div>
+            </th>
+            <th style="width: 12%;background-color: #f68e56!important;white-space: nowrap;">
+              <div class="d-flex justify-content-center">
+                <div class="center-parent">
+                  <div>Lần phỏng vấn</div>
+                </div>
+                <div class="center-parent pd-l">
+                    <div class="ng-tns-c15-6">
+                      <i class="fa fa-caret-down" style="color: #ffff;"></i>
+                    </div>
+                  </div>
+              </div>
+            </th>
+            <th style="width: 12%;background-color: #f68e56!important;white-space: nowrap;">
+                <div class="d-flex">
+                  <div class="center-parent">
+                    <div>Thời gian họp</div>
+                  </div>
+                  <div class="center-parent pd-l">
+                      <div class="ng-tns-c15-6">
+                        <i class="fa fa-caret-down" style="color: #ffff;"></i>
+                      </div>
+                    </div>
+                </div>
+              </th>
+            <th class="table-action text-center" style="background-color: #f68e56!important;white-space: nowrap;">
+              Thao tác
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let item of resultData; let i = index">
+            <td class="stt d-flex justify-content-around">
+              <div class="center-parent" style="width: 40%">
+                <label class="custom-control custom-checkbox">
+                  <input type="checkbox" class="custom-control-input" [(ngModel)]="item.checkboxSelected">
+                  <span class="custom-control-indicator"></span>
+                </label>
+              </div>
+              <div style="width: 35%;" class="center-parent">
+                <div>{{i+1}}</div>
+              </div>
+            </td>
+            <td>{{ item.documentName }}</td>
+            <td class="text-center">{{ item.version }}</td>
+            <td>
+              <div class="d-flex justify-content-around">
+                <div> {{ item.description | translate }}</div>
+              </div>
+            </td>
+
+            <td class="select-filter text-center">{{ item.employeeName}}</td>
+            <!-- <td class="text-center">{{ item.bidReviewDocumentUploadDate* 1000 | date:'dd/MM/yyyy HH:mm': '+0000'}}</td> -->
+            <td class="select-filter text-center">{{ item.createdDate}}</td>
+            <td class="select-filter text-center">{{ item.interview}}</td>
+            <td class="select-filter text-center">{{ item.createdDate}}</td>
+            <td class="text-center" style="width: 12%;">
+              <div class="d-flex justify-content-around">
+                <div>
+                  <a title="Tải file" (click)="downloadFileItem(item.id)">
+                    <i class="fa fa-download color-item-down" aria-hidden="true"></i>
+                  </a>
+                </div>
+                <div>
+                  <a title="Xóa file">
+                    <i class="fa fa-trash-o" aria-hidden="true"></i>
+                  </a>
+                </div>
+                <div>
+                  <a title="In">
+                    <i class="fa fa-print color-item-print" aria-hidden="true"></i>
+                  </a>
+                </div>
+              </div>
+            </td>
+          </tr>
+          <tr *ngIf ="total ==0"><td style="width: 100%">Không có dữ liệu</td></tr>
+        </tbody>        
+      </table>
+    </div>
+    <div class="show">Hiển thị {{total}} kết quả</div>
+  </div>
+</div>
+<!-- File Presentation -->
+<div class="table-small mt-3">
+    <div class=" title-list-package d-flex flex-wrap align-items-center status-filter">
+      <div class="mr-auto d-flex align-items-end list-package mt-2 mb-2">
+        <div class="d-flex justify-content-start" style="height: 40px;">
+          <div class="rule mr-2">
+          </div>
+          <div class="center-parent  mr-4">
+            <div class="title-header"> File Presentation </div>
+          </div>
+        </div>
+      </div>
+      <div>
+        <div class="btn-toolbar mt-2 mb-2">
+          <div class="input-group btn-rg">
+            <span class="input-group-addon">Tìm kiếm theo</span>
+            <input type="text" class="form-control icon" placeholder="&#xf002; Tên tài liệu" (keyup)="searchTerm$.next($event.target.value)">
+          </div>
+  
+          <button class="btn btn-primary ml-2">
+            Tải Template
+          </button>
+          <button class="btn btn-primary ml-2">
+            Tải xuống tài liệu
+          </button>
+          <button class="btn btn-primary ml-2">
+            In
+          </button>
+          <button class="btn btn-primary ml-2">
+            Xóa
+          </button>
+          <button class="btn btn-primary ml-2" (click)="modalUp(uploadFile,2)">
+            Upload&nbsp;file Presentation  
+          </button>
+          <button class="btn btn-primary ml-2">
+            <i class="fa fa-refresh" aria-hidden="true"></i>
+          </button>
+        </div>
+      </div>
+    </div>
+    <div class="main-table">
+      <div class="d-flex flex-row flex-wrap filter-bar custom-filter-bar" style="background-color: #fafbfc!important">
+        <div class="d-flex form-inline flex-pad">
+  
+          <div class="form-group ">
+            <label for="" class="form-label">Người upload</label>
+            <span class="custom-dropdown mx-sm-2">
+              <select class="form-control">
+                <option value="">--Lựa chọn--</option>
+                <option value="Official">Olive Dinh</option>
+                <option value="Draft">Van Dinh</option>
+              </select>
+            </span>
+          </div>
+          <div class="form-group ">
+            <label for="" class="form-label">Ngày upload</label>
+            <span class="custom-dropdown mx-sm-2">
+              <select class="form-control">
+                <option value="">--Lựa chọn--</option>
+                <option value="Official">01-08-2018</option>
+                <option value="Draft">02-08-2018</option>
+              </select>
+            </span>
+          </div>
+          <div class="form-group ">
+            <label for="" class="form-label">Lần phỏng vấn</label>
+            <span class="custom-dropdown mx-sm-2">
+              <select class="form-control">
+                <option value="">--Lựa chọn--</option>
+                <option value="Official">1</option>
+                <option value="Draft">2</option>
+              </select>
+            </span>
+          </div>
+  
+          <div class="form-group ">
+            <button type="submit" class="btn btn-primary mx-sm-2" (click)="filter()">
+              <i class="fa fa-filter" aria-hidden="true"></i>
+              <span class="filter-pd">Lọc </span>
+            </button>
+            <button class="btn btn-secondary" (click)="clearFilter()">
+              <i class="fa fa-times"></i>
+              <span class="filter-pd">Xóa lọc </span>
+            </button>
+          </div>
+        </div>
+      </div>
+  
+      <div class="bot-table">
+        <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="table-selection stripe row-border hover cell-border dataTable">
+          <thead>
+            <tr>
+              <th class="stt" style="width: 5%; min-width: 20px;background-color: #f68e56!important;">
+                <div class="d-flex justify-content-around">
+                  <div style="width: 40%;">
+                    <div class="center-parent">
+                      <label class="custom-control custom-checkbox">
+                        <input type="checkbox" class="custom-control-input" [(ngModel)]="checkboxSeclectAll" (change)="onSelectAllFile($event.target.checked)">
+                        <span class="custom-control-indicator"></span>
+                      </label>
+                    </div>
+                  </div>
+  
+                  <div style="width: 35%;" class="center-parent">
+                    <div>STT</div>
+                  </div>
+                  <div class="center-parent pd-l">
+                      <div class="ng-tns-c15-6">
+                        <i class="fa fa-caret-down" style="color: #ffff;"></i>
+                      </div>
+                    </div>
+                </div>
+              </th>
+  
+              <th style="width: 35%; background-color: #f68e56!important;white-space: nowrap;">
+                <div class="d-flex">
+                  <div class="center-parent">
+                    <div>Tên tài liệu</div>
+                  </div>
+                  <div class="center-parent pd-l">
+                    <div class="ng-tns-c15-6">
+                      <i class="fa fa-caret-down" style="color: #ffff;"></i>
+                    </div>
+                  </div>
+                </div>
+  
+              </th>
+              <th class="th-mark-status" style="width: 10%; min-width: 20px;background-color: #f68e56!important;white-space: nowrap;">
+                <div class="d-flex">
+                  <div style="width: 80%;" class="center-parent">
+                    <div>Phiên bản</div>
+                  </div>
+                  <div class="center-parent pd-l">
+                      <div class="ng-tns-c15-6">
+                        <i class="fa fa-caret-down" style="color: #ffff;"></i>
+                      </div>
+                    </div>
+                </div>
+              </th>
+  
+              <th style="background-color: #f68e56!important;white-space: nowrap;">
+                <div class="d-flex">
+                  <div class="center-parent">
+                    <div>Mô tả</div>
+                  </div>
+                </div>
+              </th>
+  
+              <th style="width: 12%;background-color: #f68e56!important;white-space: nowrap;">
+                <div class="d-flex">
+                  <div class="center-parent">
+                    <div>Người upload</div>
+                  </div>
+                  <div class="center-parent pd-l">
+                      <div class="ng-tns-c15-6">
+                        <i class="fa fa-caret-down" style="color: #ffff;"></i>
+                      </div>
+                    </div>
+                </div>
+              </th>
+  
+              <th style="width: 12%; background-color: #f68e56!important;white-space: nowrap;">
+                <div class="d-flex">
+                  <div class="center-parent">
+                    <div>Ngày upload</div>
+                  </div>
+                  <div class="center-parent pd-l">
+                      <div class="ng-tns-c15-6">
+                        <i class="fa fa-caret-down" style="color: #ffff;"></i>
+                      </div>
+                    </div>
+                </div>
+              </th>
+              <th style="width: 12%;background-color: #f68e56!important;white-space: nowrap;">
+                <div class="d-flex justify-content-center">
+                  <div class="center-parent">
+                    <div>Lần phỏng vấn</div>
+                  </div>
+                  <div class="center-parent pd-l">
+                      <div class="ng-tns-c15-6">
+                        <i class="fa fa-caret-down" style="color: #ffff;"></i>
+                      </div>
+                    </div>
+                </div>
+              </th>
+                
+              <th class="table-action text-center" style="background-color: #f68e56!important;white-space: nowrap;">
+                Thao tác
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let item of dataFileUpload; let i = index">
+              <td class="stt d-flex justify-content-around">
+                <div class="center-parent" style="width: 40%">
+                  <label class="custom-control custom-checkbox">
+                    <input type="checkbox" class="custom-control-input" [(ngModel)]="item.checkboxSelectedFile">
+                    <span class="custom-control-indicator"></span>
+                  </label>
+                </div>
+                <div style="width: 35%;" class="center-parent">
+                  <div>{{i+1}}</div>
+                </div>
+              </td>
+              <td>{{ item.documentName }}</td>
+              <td class="text-center">{{ item.version }}</td>
+              <td>
+                <div class="d-flex justify-content-around">
+                  <div> {{ item.documentName | translate }}</div>
+                </div>
+              </td>
+  
+              <td class="select-filter text-center">{{ item.employeeName}}</td>
+              <!-- <td class="text-center">{{ item.bidReviewDocumentUploadDate* 1000 | date:'dd/MM/yyyy HH:mm': '+0000'}}</td> -->
+              <td class="select-filter text-center">{{ item.timeTransfer}}</td>
+              <td class="select-filter text-center">{{ item.interviewNo}}</td>           
+              <td class="text-center" style="width: 12%;">
+                <div class="d-flex justify-content-around">
+                  <div>
+                    <a title="Tải file" (click)="downloadFileItem(item.id)">
+                      <i class="fa fa-download color-item-down" aria-hidden="true"></i>
+                    </a>
+                  </div>
+                  <div>
+                    <a title="Xóa file">
+                      <i class="fa fa-trash-o" aria-hidden="true"></i>
+                    </a>
+                  </div>
+                  <div>
+                    <a title="In">
+                      <i class="fa fa-print color-item-print" aria-hidden="true"></i>
+                    </a>
+                  </div>
+                </div>
+              </td>
+            </tr>
+            <tr *ngIf ="totalFileUpload ==0"><td style="width: 100%">Không có dữ liệu</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="show">Hiển thị {{totalFileUpload}} kết quả</div>
+    </div>
+  </div>
+
+ <!-- Modal upladfile -->
+
+<ng-template #uploadFile>
+    <form [formGroup]="formUpload" (ngSubmit)="type ==1 ? onSubmit() : submitForm()">
+      <div class="modal-header no-boder-bottom">
+        <div class="col-md-10 offset-md-1 text-center">
+          <h4 class="modal-title text-title text-model">{{textUploadReport}}</h4>
+        </div>
+        <div class="col-md-1">
+          <button type="button" class="close pull-right" aria-label="Close" (click)="modalUpload.hide()">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+      </div>
+      <div class="modal-body fg-w">
+        <div class="row pd-up">
+          <div class="col-md-4 mg-l">Chọn file</div>
+          <div class="col-md-7 input-group">
+            <div class="custom-file form-control">
+              <input type="file" class="custom-file-input" id="inputGroupFile01">
+              <label class="custom-file-label" for="inputGroupFile01">--Chọn file--</label>
+            </div>
+            <span class="input-group-addon">
+              <i class="fa fa-upload" aria-hidden="true"></i>
+            </span>
+          </div>
+        </div>
+        <div class="row pd-up">
+          <div class="col-md-4 mg-l">Tên</div>
+          <div class="col-md-7">
+            <input type="text" class="form-control" placeholder="Tên">
+            <div *ngIf="submitted && f.name.errors" class="invalid-feedback">
+              <div *ngIf="f.name.errors.required">Vui lòng nhập tên file</div>
+            </div>
+          </div>
+        </div>
+  
+        <div class="row pd-up">
+          <div class="col-md-4 mg-l">Đường dẫn file</div>
+          <div class="col-md-7">
+            <input type="text" placeholder="Text" class="form-control" value="">
+          </div>
+        </div>
+  
+        <div class="row pd-up">
+          <div class="col-md-4 mg-l">Version</div>
+          <div class="col-md-7">
+            <input type="text" class="form-control" value="1">
+          </div>
+        </div>
+        <div class="row pd-up">
+          <div class="col-md-4 mg-l">Lần phỏng vấn</div>
+          <div class="col-md-7">
+            <input type="number" placeholder=Number class="form-control" value="">
+          </div>
+        </div>
+  
+        <div class="row pd-up" *ngIf = "type == 1">
+          <div class="col-md-4 mg-l">Thời gian họp</div>
+          <div class="col-md-7 input-group">
+            <owl-date-time [readonlyInput]="datePickerConfig.readonlyInput" [locale]="datePickerConfig.vi" [placeHolder]="datePickerConfig.placeHolderVn">
+            </owl-date-time>
+            <span class="input-group-addon">
+              <i class="fa fa-calendar"></i>
+            </span>
+          </div>
+        </div>
+  
+        <div class="row pd-up">
+          <div class="col-md-4 mg-l">Mô tả/Nội dung cập nhật</div>
+          <div class="col-md-7">
+            <textarea class="form-control textarea-content" name="" id="" cols="30" rows="3" placeholder=""></textarea>
+          </div>
+        </div>
+  
+        <div class="text-center pd-food">
+          <button type="submit" class="btn btn-primary w-80" [disabled]="loading">Upload</button>
+          <button type="button" class="btn btn-cancel w-80" (click)="modalUpload.hide()">Hủy</button>
+        </div>
+      </div>
+    </form>
+  </ng-template>

@@ -5,6 +5,7 @@ import { DATETIME_PICKER_CONFIG } from '../../../../../../shared/configs/datepic
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { DATATABLE_CONFIG } from '../../../../../../shared/configs';
 import { Observable, BehaviorSubject, Subject } from '../../../../../../../../node_modules/rxjs';
+import { PackageSuccessService } from '../../../../../../shared/services/package-success.service'
 
 @Component({
   selector: 'app-contract-signed',
@@ -21,11 +22,14 @@ export class ContractSignedComponent implements OnInit {
   textContract :string;
   dtTrigger: Subject<any> = new Subject();
   dtOptions: any = DATATABLE_CONFIG;
-  resultData: any = [
-    { id: 1, documentName: 'Tài liệu cung cấp vật tư', version: 1, description: 'Danh sách tài liệu cung cấp vật tư  ', employeeName: 'Oliver Dinh', createdDate: '01/01/2018 ,09:00',upDate: '01/01/2018', interview: 1 },
-    { id: 2, documentName: 'Tài liệu cung cấp giấy tờ liên quan', version: 1.1, description: '', employeeName: 'Van Dinh', createdDate: '02/02/2018,09:00', upDate: '02/02/2018', interview: 1 }
-  ];
-  constructor(private modalService: BsModalService, private formBuilder: FormBuilder) { }
+  total:number;
+  public resultData :any [] = this.packageSuccessService.getDataResult();
+  
+  constructor(
+    private modalService: BsModalService,
+    private formBuilder: FormBuilder,
+    private packageSuccessService: PackageSuccessService
+  ) { }
 
   ngOnInit() {
     //  this.isContract= false;
@@ -39,6 +43,7 @@ export class ContractSignedComponent implements OnInit {
       interview: ['']
     });
     this.textContract ='Đã phản hồi đến phòng hợp đồng';
+     this.total = this.resultData.length;
   }
   modalAdd(template: TemplateRef<any>) {
     this.modalUpload = this.modalService.show(template);

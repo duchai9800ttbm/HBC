@@ -1,3 +1,183 @@
-<p>
-  meeting-kickoff works!
-</p>
+<div id="outer" *ngIf="!reportMeeting">
+  <div class=" title-list-package d-flex flex-wrap align-items-center status-filter">
+    <div class="mr-auto d-flex align-items-end list-package mt-2 mb-2">
+      <div class="d-flex justify-content-start" style="height: 35px;">
+        <div class="rule mr-2">
+        </div>
+        <div class="center-parent  mr-4">
+          <div style="font-size: 15px"> {{textMetting}}</div>
+          <button type="button" class="btn btn-primary btn-noti" *ngIf="doNotiMeeting">Xem danh sách email đã gửi</button>
+        </div>
+      </div>
+    </div>
+    <div>
+      <div class="btn-toolbar mt-2 mb-2">
+        <button class="btn btn-primary ml-2" *ngIf="doNotiMeeting" (click)="modalNoti(notiKickOff)">
+          Gửi lại email thông báo kick-off
+        </button>
+        <button class="btn btn-primary ml-2" (click)="refresh(true)">
+          <i class="fa fa-refresh" aria-hidden="true"></i>
+        </button>
+      </div>
+    </div>
+  </div>
+  <div id="outer-img">
+    <img *ngIf="!doNotiMeeting" src="../../../../../../assets/images/kickOffMetting.png" alt="">
+    <img *ngIf="doNotiMeeting" src="../../../../../../assets/images/onKickOff.png" alt="">
+    <h5 *ngIf="1doNotiMeeting">Bạn chưa thông báo họp kick-off dự án?</h5>
+    <div class="confirm-button">
+      <button *ngIf="!doNotiMeeting" class="btn btn-primary" id="success" (click)="modalNoti(notiKickOff)">Thông báo họp kick-off</button>
+      <div *ngIf="doNotiMeeting">
+        <button class="btn btn-primary" (click)="modalUp(uploadFile,1)">Upload biên bản cuộc họp</button>
+        <button class="btn btn-primary" (click)="modalUp(uploadFile,2)">Upload file presentation</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal upladfile -->
+
+<ng-template #uploadFile>
+  <form [formGroup]="formUpload" (ngSubmit)="type ==1 ? onSubmit() : submitForm()">
+    <div class="modal-header no-boder-bottom">
+      <div class="col-md-10 offset-md-1 text-center">
+        <h4 class="modal-title text-title text-model">{{textUploadReport}}</h4>
+      </div>
+      <div class="col-md-1">
+        <button type="button" class="close pull-right" aria-label="Close" (click)="modalUpload.hide()">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+    </div>
+    <div class="modal-body fg-w">
+      <div class="row pd-up">
+        <div class="col-md-4 mg-l">Chọn file</div>
+        <div class="col-md-7 input-group">
+          <div class="custom-file form-control">
+            <input type="file" class="custom-file-input" id="inputGroupFile01">
+            <label class="custom-file-label" for="inputGroupFile01">--Chọn file--</label>
+          </div>
+          <span class="input-group-addon">
+            <i class="fa fa-upload" aria-hidden="true"></i>
+          </span>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-4 mg-l or">OR</div>
+      </div>
+      <div class="row pd-up">
+        <div class="col-md-4 mg-l">Đường dẫn file</div>
+        <div class="col-md-7">
+          <input type="text" placeholder="Text" class="form-control" value="">
+        </div>
+      </div>
+
+      <div class="row pd-up">
+        <div class="col-md-4 mg-l">Tên</div>
+        <div class="col-md-7">
+          <input type="text" class="form-control" placeholder="Tên">
+          <div *ngIf="submitted && f.name.errors" class="invalid-feedback">
+            <div *ngIf="f.name.errors.required">Vui lòng nhập tên file</div>
+          </div>
+        </div>
+      </div>
+      <div class="row pd-up">
+        <div class="col-md-4 mg-l">Version</div>
+        <div class="col-md-7">
+          <input type="text" class="form-control" value="1">
+        </div>
+      </div>
+      <div class="row pd-up">
+        <div class="col-md-4 mg-l">Lần phỏng vấn</div>
+        <div class="col-md-7">
+          <input type="number" placeholder=Number class="form-control" value="">
+        </div>
+      </div>
+
+      <div class="row pd-up" *ngIf="type == 1">
+        <div class="col-md-4 mg-l">Thời gian họp</div>
+        <div class="col-md-7 input-group">
+          <owl-date-time [readonlyInput]="datePickerConfig.readonlyInput" [locale]="datePickerConfig.vi" [placeHolder]="datePickerConfig.placeHolderVn">
+          </owl-date-time>
+          <span class="input-group-addon">
+            <i class="fa fa-calendar"></i>
+          </span>
+        </div>
+      </div>
+
+      <div class="row pd-up">
+        <div class="col-md-4 mg-l">Mô tả/Nội dung cập nhật</div>
+        <div class="col-md-7">
+          <textarea class="form-control textarea-content" name="" id="" cols="30" rows="3" placeholder=""></textarea>
+        </div>
+      </div>
+
+      <div class="text-center pd-food">
+        <button type="submit" class="btn btn-primary w-80" [disabled]="loading">Upload</button>
+        <button type="button" class="btn btn-cancel w-80" (click)="modalUpload.hide()">Hủy</button>
+      </div>
+    </div>
+  </form>
+</ng-template>
+<!-- Model send noti -->
+<ng-template #notiKickOff>
+  <div class="modal-header no-boder-bottom">
+    <div class="pull-left ">
+      <div class="text-title icon-arrow">
+        <img width="15" height="15" class="img-back pointer" src="assets\images\nghia.png" (click)="ClosePopup()" />
+        <h4 class="modal-title text-dark d-inline text-send-noti"> {{textTitleSendMail}}</h4>
+      </div>
+    </div>
+
+    <div class="pull-right">
+      <button type="button" class="btn btn-cancel" aria-label="Close" (click)="modalRef.hide()">Hủy</button>
+      <button type="button" class="btn btn-send" aria-label="Close" (click)="sendMail()">Gửi</button>
+    </div>
+  </div>
+  <div class="modal-body">
+    <div class="input-group mb-3">
+      <div class="input-group-prepend">
+        <span class="input-group-text">To:</span>
+      </div>
+      <input type="text" class="form-control boder-left-none" [ngClass]="{ 'bd-r' : isSendCc === false ||isSendBcc===false }" aria-label="To"
+        autofocus>
+      <div class="input-group-append" *ngIf="!isSendCc || !isSendBcc">
+        <span class="input-group-text">
+          <span *ngIf="!isSendCc" title="Thêm người nhận Cc" class="send-cc" (click)="sendCc()">Cc</span>
+          <span *ngIf="!isSendBcc" title="Thêm người nhận Bcc" class="send-cc" (click)="sendBcc()">Bcc</span>
+        </span>
+      </div>
+    </div>
+
+    <div class="input-group mb-3" *ngIf="isSendCc">
+      <div class="input-group-prepend">
+        <span class="input-group-text" id="basic-addon1">Cc:</span>
+      </div>
+      <input type="text" class="form-control boder-left-none" placeholder="" aria-label="To" aria-describedby="basic-addon1" autofocus>
+    </div>
+
+    <div class="input-group mb-3" *ngIf="isSendBcc">
+      <div class="input-group-prepend">
+        <span class="input-group-text" id="basic-addon1">Bcc:</span>
+      </div>
+      <input type="text" class="form-control boder-left-none" placeholder="" aria-label="To" aria-describedby="basic-addon1" autofocus>
+    </div>
+
+    <div class="input-group mb-3">
+      <div class="input-group-prepend">
+        <span class="input-group-text" id="basic-addon1">Tiêu đề:</span>
+      </div>
+      <input type="text" class="form-control boder-left-none" placeholder="" aria-label="Tiede" aria-describedby="basic-addon1">
+    </div>
+    <div class="body-ckeditor">
+      <ckeditor [(ngModel)]="ckeditorContent">
+        <ckbutton [name]="'saveButton'" [command]="'saveCmd'" (click)="save($event)" [icon]="'save.png'" [label]="'Save Document'"
+          [toolbar]="'clipboard,1'">
+        </ckbutton>
+      </ckeditor>
+    </div>
+
+  </div>
+</ng-template>
+
+<app-report-meeting [reportFile]="reportFile" *ngIf="reportMeeting"></app-report-meeting>

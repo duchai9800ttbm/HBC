@@ -14,7 +14,9 @@ export class PackageSuccessService {
     timeTransfer = ['22/08/2018, 09:56'];
     documentData = [];
     status = [];
-    type=[1,2];
+    type = [1, 2];
+    version =[1,1.1];
+    employeeName = ['Oliver Dinh', 'Van Dinh'];
     dataDocuments: DocumentItem[] = [];
     constructor() {
         for (let i = 1; i < 6; i++) {
@@ -29,7 +31,9 @@ export class PackageSuccessService {
                 documentData: this.documentData[Math.floor(Math.random() * (this.documentData.length))],
                 timeTransfer: this.timeTransfer[Math.floor(Math.random() * (this.timeTransfer.length))],
                 status: this.status[Math.floor(Math.random() * (this.status.length))],
-                type:this.type[Math.floor(Math.random() * (this.type.length))]
+                type: this.type[Math.floor(Math.random() * (this.type.length))],
+                version:this.version[Math.floor(Math.random() * (this.version.length))],
+                employeeName:this.employeeName[Math.floor(Math.random() * (this.employeeName.length))]
             });
         }
     }
@@ -41,6 +45,14 @@ export class PackageSuccessService {
     getdataGetDocument() {
         return this.dataGetDocument;
     }
+    getDataResult () {
+        return this.resultData;
+    }
+    resultData: any = [
+        { id: 1, documentName: 'Tài liệu cung cấp vật tư', version: 1, description: 'Danh sách tài liệu cung cấp vật tư  ', employeeName: 'Oliver Dinh', createdDate: '01/01/2018 ,09:00', upDate: '01/01/2018', interview: 1 },
+        { id: 2, documentName: 'Tài liệu cung cấp giấy tờ liên quan', version: 1.1, description: '', employeeName: 'Van Dinh', createdDate: '02/02/2018,09:00', upDate: '02/02/2018', interview: 1 }
+    ];
+   
     dataGetDocument: any = [
         {
             id: 1,
@@ -52,7 +64,7 @@ export class PackageSuccessService {
             documentRom: 'Phòng hành chính',
             documentData: 'Cuốn hồ sơ mời thầu',
             status: 1,
-            type:1
+            type: 1
 
         },
         {
@@ -65,7 +77,7 @@ export class PackageSuccessService {
             documentRom: 'Phòng hành chính',
             documentData: 'kho sản xuất vật tư',
             status: 1,
-            type:1
+            type: 1
 
         },
 
@@ -80,7 +92,7 @@ export class PackageSuccessService {
             documentRom: 'Phòng lưu trữ',
             documentData: 'Maketing online',
             status: 2,
-            type:2
+            type: 2
         },
         {
             id: 4,
@@ -92,7 +104,7 @@ export class PackageSuccessService {
             documentRom: 'Phòng lưu trữ',
             documentData: 'Maketing online',
             status: 2,
-            type:2
+            type: 2
 
 
         },
