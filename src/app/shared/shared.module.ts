@@ -48,6 +48,7 @@ import { ButtonModule } from '@progress/kendo-angular-buttons';
 // Imports the ButtonGroup module
 import { ButtonGroupModule } from '@progress/kendo-angular-buttons';
 import { PDFExportModule } from '@progress/kendo-angular-pdf-export';
+import { LayoutService } from './services/layout.service';
 
 @NgModule({
     imports: [
@@ -145,7 +146,8 @@ import { PDFExportModule } from '@progress/kendo-angular-pdf-export';
         DocumentReviewService,
         SettingService,
         PackageSuccessService,
-        EmailService
+        EmailService,
+        LayoutService
     ],
 })
 export class SharedModule { }

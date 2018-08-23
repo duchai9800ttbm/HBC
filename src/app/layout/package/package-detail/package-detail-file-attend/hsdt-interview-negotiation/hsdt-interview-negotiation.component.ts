@@ -9,7 +9,7 @@ import { CreateNewInvitationComponent } from './create-new-invitation/create-new
 export class HsdtInterviewNegotiationComponent implements OnInit {
   dialog;
   constructor(
-    private dialogService: DialogService
+    private dialogService: DialogService,
   ) { }
 
   ngOnInit() {
@@ -21,7 +21,12 @@ export class HsdtInterviewNegotiationComponent implements OnInit {
         width: 650,
         minWidth: 250
       });
+      const instance = this.dialog.content.instance;
+      instance.callBack = this.closePopuup.bind(this);
   }
 
+  closePopuup() {
+    this.dialog.close();
+  }
 
 }

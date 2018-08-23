@@ -58,14 +58,14 @@ export class WaitResultComponent implements OnInit {
   }
   modalTrungThau(template: TemplateRef<any>) {
     this.modaltrungThau = this.modalService.show(template);
-    this.btnTrungThau = !this.btnTrungThau;
+    this.btnTrungThau = true;
     this.btnHuyThau = false;
     this.btnTratThau = false;
     this.textTrungThau = 'trúng'
   }
   modalTratThau(template: TemplateRef<any>) {
     this.modaltratThau = this.modalService.show(template);
-    this.btnTratThau = !this.btnTratThau;
+    this.btnTratThau = true;
     this.btnTrungThau = false;
     this.btnHuyThau = false;
     this.textTratThau = 'trật'
@@ -73,7 +73,7 @@ export class WaitResultComponent implements OnInit {
   }
   modalHuyThau(template: TemplateRef<any>) {
     this.modalhuyThau = this.modalService.show(template);
-    this.btnHuyThau = !this.btnHuyThau;
+    this.btnHuyThau = true;
     this.btnTrungThau = false;
     this.btnTratThau = false;
     this.textHuyThau = 'hủy'

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { Router, NavigationEnd } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 import { DataService, SessionService, UserNotificationService } from '../../../shared/services/index';
@@ -16,7 +16,7 @@ import { NotificationItem } from '../../../shared/models/index';
 export class HeaderComponent implements OnInit {
 
     pushRightClass = 'push-right';
-
+    @Input() logo;
     constructor(
         private translate: TranslateService,
         private router: Router,

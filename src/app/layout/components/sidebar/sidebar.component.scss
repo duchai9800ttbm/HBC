@@ -6,8 +6,7 @@ $topnav-background-color: #135377;
     top: 56px;
     left: 235px;
     width: 200px;
-    padding: 10px;
-    //padding-top: 40px;
+    padding: 10px; //padding-top: 40px;
     margin-left: -235px;
     border: none;
     border-radius: 0;
@@ -26,17 +25,15 @@ $topnav-background-color: #135377;
         .list-group-item {
             border: 0;
             background-color: $topnav-background-color;
-            &.detail{
+            &.detail {
                 padding: 0;
                 margin: 2px;
             }
             color: #fff;
-            
             a {
                 background: $topnav-background-color;
                 border: 0;
                 border-radius: 0;
-                
                 text-decoration: none;
                 .fa {
                     margin-right: 10px;
@@ -45,8 +42,7 @@ $topnav-background-color: #135377;
             }
         }
         a:hover {
-            background: darken($topnav-background-color, 5%);
-            // color: #fff;
+            background: darken($topnav-background-color, 5%); // color: #fff;
         }
         a.router-link-active {
             background: darken($topnav-background-color, 5%);
@@ -139,8 +135,15 @@ $topnav-background-color: #135377;
 
 @media screen and (max-width: 992px) {
     .sidebar {
-        top: 0px;
-        left: 0px;
+        width: 55px !important;
+    }
+    .change {
+        display: none !important;
+    }
+    .button-tog {
+        display: flex;
+        justify-content: center;
+        align-items: center;
     }
 }
 
@@ -159,69 +162,81 @@ $topnav-background-color: #135377;
 }
 
 img {
-    border-radius:50% !important;
-    -moz-border-radius:50%;
-    -webkit-border-radius:50%;
-    }
-    
-    .dh-icon, .tt-icon, .gh-icon, .ht-icon {
-        width: 15px;
-        height: 15px;
-        border-radius: 50%;
-       transform: translate(-50%, 0);
-      //  position: absolute;
-        // left: 50%;
-        // opacity: 0.0;
-        // border-radius: 4rem;
-        
-        
-    }
+    border-radius: 50% !important;
+    -moz-border-radius: 50%;
+    -webkit-border-radius: 50%;
+}
 
-    .offline{
-        opacity: 0.0;
-        
-        -webkit-animation: pulsate 1000ms ease-out;
-        -webkit-animation-iteration-count: infinite; 
-            
-        -webkit-transition: background-color 300ms linear;
-        -moz-transition: background-color 300ms linear;
-        -o-transition: background-color 300ms linear;
-        -ms-transition: background-color 300ms linear;
-        transition: background-color 300ms linear;
-    }
+.dh-icon,
+.tt-icon,
+.gh-icon,
+.ht-icon {
+    width: 15px;
+    height: 15px;
+    border-radius: 50%;
+    transform: translate(-50%, 0); //  position: absolute;
+    // left: 50%;
+    // opacity: 0.0;
+    // border-radius: 4rem;
+}
 
-    @-webkit-keyframes pulsate {
-        0% {opacity: 0.1;}
-        40% {opacity: 1.0;}
-        60% {opacity: 1.0;}
-        100% {opacity: 0.1;}
-    }
-    
-    .padding-phone{
-        padding: 0 10px;
-    }
-    .pointer{
-        cursor: pointer;
-      
-    }
-    .pointer:hover{
-       .media-big{
-           font-weight: bold;
-       }
-    }
-    .media-big{
-        font-size: 130%;
-    }
+.offline {
+    opacity: 0.0;
+    -webkit-animation: pulsate 1000ms ease-out;
+    -webkit-animation-iteration-count: infinite;
+    -webkit-transition: background-color 300ms linear;
+    -moz-transition: background-color 300ms linear;
+    -o-transition: background-color 300ms linear;
+    -ms-transition: background-color 300ms linear;
+    transition: background-color 300ms linear;
+}
 
-    .phone-color{
-        color: #999;
-        font-size: 90%;
+@-webkit-keyframes pulsate {
+    0% {
+        opacity: 0.1;
     }
-    .action{
-        img:hover{
-            width: 20px;
-            height: 20px;
-        }
-        height: 30px;
-      //  min-width: 55px;
+    40% {
+        opacity: 1.0;
     }
+    60% {
+        opacity: 1.0;
+    }
+    100% {
+        opacity: 0.1;
+    }
+}
+
+.padding-phone {
+    padding: 0 10px;
+}
+
+.pointer {
+    cursor: pointer;
+}
+
+.pointer:hover {
+    .media-big {
+        font-weight: bold;
+    }
+}
+
+.media-big {
+    font-size: 130%;
+}
+
+.phone-color {
+    color: #999;
+    font-size: 90%;
+}
+
+.action {
+    img:hover {
+        width: 20px;
+        height: 20px;
+    }
+    height: 30px; //  min-width: 55px;
+}
+
+.toggle {
+    display: none !important;
+}

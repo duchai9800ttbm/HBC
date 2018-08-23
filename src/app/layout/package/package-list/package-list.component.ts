@@ -30,6 +30,7 @@ import { ObjectInforPackage } from '../../../shared/models/package/object-infoPa
 import { UserItemModel } from '../../../shared/models/user/user-item.model';
 import { UserModel } from '../../../shared/models/user/user.model';
 import { FieldModel } from '../../../shared/models/package/field.model';
+import { LayoutService } from '../../../shared/services/layout.service';
 @Component({
     selector: 'app-package-list',
     templateUrl: './package-list.component.html',
@@ -73,6 +74,8 @@ export class PackageListComponent implements OnInit, AfterViewChecked {
     isViewBidOpportunityDetail;
     userModel: UserModel;
     listPrivileges = [];
+    isToggle = false;
+
     constructor(
         private activityService: ActivityService,
         private alertService: AlertService,
@@ -86,7 +89,9 @@ export class PackageListComponent implements OnInit, AfterViewChecked {
         private spinner: NgxSpinnerService,
         private packageService: PackageService,
         private userService: UserService,
-        private sessionService: SessionService
+        private sessionService: SessionService,
+        private layoutService: LayoutService
+
     ) { }
     someRange = [1000000, 10000000000];
     someKeyboardConfig: any = {
@@ -161,6 +166,14 @@ export class PackageListComponent implements OnInit, AfterViewChecked {
             }, err => {
                 this.spinner.hide();
             });
+        this.layoutService.watchLayoutSubject().subscribe(data => {
+            console.log('bbbbb');
+            if (data) {
+                this.isToggle = true;
+            } else {
+                this.isToggle = false;
+            }
+        });
     }
     ngAfterViewChecked() {
 

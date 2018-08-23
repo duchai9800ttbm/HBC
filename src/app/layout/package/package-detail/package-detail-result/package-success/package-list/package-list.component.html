@@ -43,7 +43,7 @@
             <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="table-selection stripe row-border hover cell-border dataTable">
                 <thead>
                     <tr>
-                        <th class="stt" style="width: 5%; min-width: 20px;" class="bg-default">
+                        <th class="stt" style="width: 5%; min-width: 20px;background-color: #f68e56!important;">
                             <div class="d-flex justify-content-around">
                                 <div style="width: 40%;">
                                     <div class="center-parent">
@@ -60,7 +60,7 @@
                             </div>
                         </th>
 
-                        <th style="width: 35%;" class="bg-default">
+                        <th style="width: 35%; background-color: #f68e56!important;">
                             <div class="d-flex justify-content-center">
 
                                 <div class="center-parent">
@@ -70,7 +70,7 @@
                             </div>
 
                         </th>
-                        <th class="th-mark-status bg-default" style="width: 10%; min-width: 20px;">
+                        <th class="th-mark-status" style="width: 10%; min-width: 20px;background-color: #f68e56!important;">
                             <div class="d-flex justify-content-center">
                                 <div style="width: 80%;" class="center-parent">
                                     <div>Phiên bản</div>
@@ -78,7 +78,7 @@
                             </div>
                         </th>
 
-                        <th class="bg-default">
+                        <th style="background-color: #f68e56!important;">
                             <div class="d-flex justify-content-center">
                                 <div class="center-parent">
                                     <div>Mô tả</div>
@@ -86,7 +86,7 @@
                             </div>
                         </th>
 
-                        <th style="width: 12%;" class="bg-default">
+                        <th style="width: 12%;background-color: #f68e56!important;" >
                             <div class="d-flex justify-content-center">
                                 <div class="center-parent">
                                     <div>Người upload</div>
@@ -94,14 +94,14 @@
                             </div>
                         </th>
 
-                        <th style="width: 12%;" class="bg-default">
+                        <th style="width: 12%; background-color: #f68e56!important;" >
                             <div class="d-flex justify-content-center">
                                 <div class="center-parent">
                                     <div>Ngày upload</div>
                                 </div>
                             </div>
                         </th>
-                        <th style="width: 12%;" class="bg-default">
+                        <th style="width: 12%;background-color: #f68e56!important;">
                             <div class="d-flex justify-content-center">
                                 <div class="center-parent">
                                     <div>Lần phỏng vấn</div>
@@ -223,5 +223,5 @@
 
     </div>
 </ng-template>
-<!-- Hop dong da ky -->
-<app-contract-signed *ngIf="showTableSigned"></app-contract-signed>
+<!-- <app-contract-signed [isContract]="showTableSigned" *ngIf="showTableSigned" ></app-contract-signed> -->
+<app-package-document [isContract]="showTableSigned" *ngIf="showTableSigned"></app-package-document>

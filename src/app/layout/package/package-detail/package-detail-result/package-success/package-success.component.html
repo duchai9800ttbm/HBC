@@ -1,13 +1,31 @@
 <div class="header">
     <div class="row">
         <ul class="progressbar">
-            <li class="triangle active" [routerLink]="['../package-list']">                
+
+            <li class="triangle active" [routerLinkActive]="['active']" [routerLink]="['../package-success/package-list']">
+                <div style="width: 100%" class="center-parent">
+                    <div class="arrow-down"></div>
+                </div>
             </li>
-            <li class="triangle2" [ngClass]="{ 'active' : isActive === true }" [routerLink]="['./package-list']">                
+            <!-- <li *ngIf="arrowSuccess" class="triangle active"[routerLinkActive]="['active']" (click)="onClickList();" [routerLink]="['../package-success/package-list']">
+                <div style="width: 100%" class="center-parent">
+                    <div></div>
+                </div>
+            </li> -->
+            <li class="triangle2" [routerLinkActive]="['active']" (click)="onClickContract();" [ngClass]="{ 'active' : isActive === true }" [routerLink]="['../package-success/contract-signed']">
+                <div style="width: 100%" class="center-parent">
+                    <div [ngClass]="{'': showArrow == false,'arrow-down':showArrow==true}"></div>
+                </div>
             </li>
-            <li class="triangle3" [routerLink]="['../package-list']">                
+            
+            <li class="triangle3" [routerLinkActive]="['active']" [routerLink]="['../package-list']">
+                <div style="width: 100%" class="center-parent">
+                    <div class="arrow-down"></div>
+                </div>
             </li>
         </ul>
     </div>
 </div>
 <router-outlet></router-outlet>
+
+<!-- Khi nao click vào thì mới có dấu mũi tên xuông -->

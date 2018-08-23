@@ -26,7 +26,7 @@ export class LayoutComponent implements OnInit {
     listSdt;
     clientHeight: number;
     menuState = 'out';
-
+    logo = false;
     ngOnInit() {
         // disable datatable error alerts
         $.fn.dataTable.ext.errMode = "none";
@@ -58,7 +58,7 @@ export class LayoutComponent implements OnInit {
         //         });
         //     }
         // });
-        
+
         // if (window.innerWidth <= 1024) {
         //     this.sectionOut();
         //     this.toggleMenu();
@@ -85,10 +85,16 @@ export class LayoutComponent implements OnInit {
         dom.classList.remove('sectionIn');
         dom.classList.add('sectionOut');
     }
-    toggleMenu() {
+    toggleMenu(e) {
         // 1-line if statement that toggles the value:
         const dom: Element = document.getElementById('main-container');
         this.menuState = this.menuState === 'out' ? 'in' : 'out';
         this.menuState === 'out' ? this.sectionIn() : this.sectionOut();
+        if (e) {
+            this.logo = true;
+
+        } else {
+            this.logo = false;
+        }
     }
 }

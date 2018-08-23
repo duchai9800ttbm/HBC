@@ -368,3 +368,6 @@ select.form-control:not([size]):not([multiple]){
 // }
 
 
+.title-detail-toggle{
+    width: calc(100% - 55px)!important;
+}
