@@ -3,7 +3,7 @@
     height: 55px;
     position: fixed;
     background-color: #ffff; // z-index: 50;
-    width: calc(100% - 200px); //  display: 
+    width: calc(100% - 200px); //  display:
     top: 50px;
     right: 0; //left: auto;
 }
@@ -168,14 +168,20 @@
 }
 
 @media only screen and (max-width: 1024px) {
-    .menu {
-        zoom: 0.8;
+    #bigMenu {
+        zoom: 0.8 !important;
+    }
+    .router-link-active {
+        font-size: 110% !important;
+    }
+    .action {
+        font-size: 110% !important
     }
 }
 
 @media only screen and (max-width: 1100px) {
-    .menu {
-        zoom: 0.87;
+    #bigMenu {
+        zoom: 0.8;
     }
 }
 

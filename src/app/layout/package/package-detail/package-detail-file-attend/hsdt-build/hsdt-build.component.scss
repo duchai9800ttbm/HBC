@@ -344,7 +344,7 @@ table.dataTable th {
                 justify-content: start;
                 align-items: center;
                 font-size: 0.95em;
-                transition: 2s;
+                transition: 600ms;
                 &:hover {
                     background-color: #009CE2;
                     color: #FFFFFF;
@@ -373,7 +373,7 @@ table.dataTable th {
             justify-content: start;
             align-items: center;
             font-size: 0.95em;
-            transition: 2s;
+            transition: 600ms;
             &:hover {
                 background-color: #009CE2;
                 color: #FFFFFF;
@@ -384,6 +384,7 @@ table.dataTable th {
             }
         }
         .button-click {
+            cursor: pointer;
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -399,7 +400,8 @@ table.dataTable th {
 }
 
 .resize {
-    transition: width 2s;
+    transition: width 600ms;
+    pointer-events: none;
     width: 0px !important;
     color: transparent !important;
     background-color: transparent !important;
@@ -415,30 +417,72 @@ table.dataTable th {
 }
 
 .iconN1 {
-    transition-duration: 1.5s;
+    transition-duration: 600ms;
 }
 
 .iconN01 {
     width: 25px;
     transform: rotate(45deg) translate(5px, 5px);
-    transition-duration: 1.5s;
+    transition-duration: 600ms;
 }
 
 .iconN3 {
-    transition-duration: 1.5s;
+    transition-duration: 600ms;
 }
 
 .iconN03 {
     width: 25px;
     transform: rotate(-45deg) translate(4px, -4px);
-    transition-duration: 1.5s;
+    transition-duration: 600ms;
 }
 
 .iconN2 {
-    transition-duration: 1.5s;
+    transition-duration: 600ms;
 }
 
 .iconN02 {
     transform: rotateY(90deg);
-    transition-duration: 1.5s;
+    transition-duration: 600ms;
+}
+
+@media only screen and (max-width: 1024px) {
+    .toggle-menu-item {
+        width: 150px !important;
+        font-size: 12px !important;
+    }
+    #outer-table {
+        padding-top: 0 !important;
+    }
+    #header-table {
+        zoom: 0.8 !important;
+        padding-left: 20px;
+        :first-child {
+            #res-header {
+                position: relative;
+                top: -30px;
+            }
+        }
+        :last-child {
+            div {
+                display: flex;
+                flex-direction: column;
+                align-items: flex-end;
+                :first-child {
+                    margin-bottom: 5px;
+                    div {
+                        justify-content: flex-end;
+                        align-items: flex-start;
+                        span {
+                            padding-bottom: 10px;
+                        }
+                    }
+                }
+                :last-child {
+                    flex-direction: row;
+                    align-items: flex-start;
+                    justify-content: flex-end;
+                }
+            }
+        }
+    }
 }

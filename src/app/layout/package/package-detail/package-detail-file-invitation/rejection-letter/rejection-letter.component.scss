@@ -17,7 +17,7 @@ input.icon{
 .color{
    a{
     color: #19a3b9;
-   } 
+   }
    a:hover{
        color:#478993;
    }
@@ -84,6 +84,9 @@ span{
     td {
         max-width: 60px;
     }
+    .title-list-package {
+        zoom: 0.8 !important;
+    }
 }
 
 .fileUpload {
@@ -106,7 +109,7 @@ a{
     cursor: pointer;
 }
 .calendarInput{
-   
+
 }
 
 .type-task{
@@ -151,7 +154,7 @@ a{
     border-right: 7px solid #f06eaa;
 }
 .rule{
-    border-right: 5px solid #f06eaa;  
+    border-right: 5px solid #f06eaa;
     content: '';
     margin: 10px 0;
   //  padding: 0.3rem 1.25rem
