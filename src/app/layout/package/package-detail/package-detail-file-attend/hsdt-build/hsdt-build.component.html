@@ -95,15 +95,17 @@
                             <i class="fa fa-times" aria-hidden="true"></i>
                         </ng-template> -->
                     </div>
-                    <div class="toggle-menu-item">Bảng tóm tắt ĐKDT</div>
-                    <div class="toggle-menu-item">Yêu cầu báo giá vật tư, thầu phụ</div>
-                    <div class="toggle-menu-item">Báo cáo tham quan công trình</div>
-                    <div class="toggle-menu-item">Bảng tổng hợp dự toán</div>
-                    <div class="toggle-menu-item">Bảng tính chi phí chung</div>
-                    <div class="toggle-menu-item">Bảng câu hỏi làm rõ HSMT</div>
-                    <div class="toggle-menu-item">Các HSKT có liên quan</div>
-                    <div class="toggle-menu-item">Hồ sơ pháp lý</div>
-                    <div class="toggle-menu-item">Hồ sơ khác</div>
+                    <div id="toggle-menu-item">
+                        <div class="toggle-menu-item" [routerLink]="['./summary']">Bảng tóm tắt ĐKDT</div>
+                        <div class="toggle-menu-item">Yêu cầu báo giá vật tư, thầu phụ</div>
+                        <div class="toggle-menu-item">Báo cáo tham quan công trình</div>
+                        <div class="toggle-menu-item">Bảng tổng hợp dự toán</div>
+                        <div class="toggle-menu-item">Bảng tính chi phí chung</div>
+                        <div class="toggle-menu-item">Bảng câu hỏi làm rõ HSMT</div>
+                        <div class="toggle-menu-item" [routerLink]="['hskt']">Các HSKT có liên quan</div>
+                        <div class="toggle-menu-item">Hồ sơ pháp lý</div>
+                        <div class="toggle-menu-item">Hồ sơ khác</div>
+                    </div>
                 </div>
                 <router-outlet></router-outlet>
             </div>
