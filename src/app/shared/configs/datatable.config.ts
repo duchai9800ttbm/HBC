@@ -78,6 +78,6 @@ export const DATATABLE_CONFIG2 = {
     },
     scrollX: 'auto',
     // responsive: true,
-    // autoWidth: true
+    autoWidth: true
 };
 
