@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
+import { PackageService } from '../../../../../shared/services/package.service';
 
 @Component({
     selector: 'app-hsdt-build',
@@ -6,9 +7,17 @@ import { Component, OnInit } from '@angular/core';
     styleUrls: ['./hsdt-build.component.scss']
 })
 export class HsdtBuildComponent implements OnInit {
-    constructor() { }
+    isShowMenu = false;
+    constructor(
+        private packageService: PackageService,
+        private cdr: ChangeDetectorRef
+    ) { }
 
     ngOnInit() {
+        this.packageService.isSummaryConditionForm$.subscribe(data => {
+            this.isShowMenu = data;
+            this.cdr.detectChanges();
+        });
     }
 
     toggleClick() {
