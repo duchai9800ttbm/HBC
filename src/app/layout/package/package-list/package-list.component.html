@@ -12,7 +12,7 @@
                     Công cụ &nbsp;&nbsp;
                 </button>
                 <div class="dropdown-menu" ngbDropdownMenu>
-                    <a class="dropdown-item" (click)="multiDelete()">Xóa</a>
+                    <a class="dropdown-item">Xuất file</a>
                     <div class="dropdown-divider"></div>
                     <a class="dropdown-item">Tải template</a>
                 </div>
@@ -85,7 +85,7 @@
                     </div>
                     <div>Cột</div>
                 </div>
-                <div class="dropdown-menu" style="" ngbDropdownMenu (click)="$event.stopPropagation();" (blur)="resetDefaultState()">
+                <div class="dropdown-menu" style="" ngbDropdownMenu >
                     <div class="popup-dynamic-col" style="min-width: 600px; min-height: 300px;">
                         <div class="">{{sum}}/{{listField?.length}} cột được chọn</div>
                         <hr>
@@ -94,7 +94,7 @@
                                 <div class="form-check-inline" *ngFor="let item of listField">
                                     <div class="d-flex">
                                         <div style="margin-top: 2px;">
-                                            <input type="checkbox" [(ngModel)]="item.hidden" style="cursor: pointer;">
+                                            <input type="checkbox" (change)="inputChange()" [(ngModel)]="item.hidden" style="cursor: pointer;">
                                         </div>
                                         <div class=""> &nbsp;{{item.fieldCaption}}</div>
                                     </div>
@@ -130,7 +130,7 @@
 
 
         <div class="table-responsive" id="style-scroll">
-            <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="table-selection stripe hover">
+            <table datatable id="tableId" [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="table-selection stripe hover">
                 <thead>
                     <tr style="width: 100%;">
                         <th class="text-center" type="check" style="width: 30px; min-width: 30px !important;">
@@ -161,7 +161,7 @@
                                 </div>
                             </div>
                         </th>
-                        <th *ngIf="listField.fieldName === 'ARBidOpportunityName'">
+                        <th [hidden]="!tenGoithau">
 
                             <div class="d-flex justify-content-start">
                                 <div style="margin-right: 10px">Gói thầu</div>
@@ -348,7 +348,7 @@
                                 {{ item.projectName }}
                             </a>
                         </td>
-                        <td class="text-truncate">
+                        <td class="text-truncate" [hidden]="!tenGoithau">
                             <a>
                                 {{ item.opportunityName}}
                             </a>
@@ -368,7 +368,7 @@
                                 </div>
                                 <div class="center-parent" [class.type-HSMT-child]="item.stage?.key == 'HSMT'" [class.type-HSDT-child]="item.stage?.key == 'HSDT'"
                                     [class.type-KQDT-child]="item.stage?.key == 'KQDT'">
-                                    <div class="text-truncate">{{item.stageStatus?.text }}</div>
+                                    <div class="text-truncate">{{item.stageStatus?.value }}</div>
                                 </div>
 
                             </div>
