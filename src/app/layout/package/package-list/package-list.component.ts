@@ -123,6 +123,7 @@ export class PackageListComponent implements OnInit, AfterViewChecked {
         return this.sessionService.currentUser.userId;
 
     }
+
     ngOnInit() {
         window.scrollTo(0, 0);
         this.refreshPopupConfig();
@@ -207,7 +208,6 @@ export class PackageListComponent implements OnInit, AfterViewChecked {
     }
 
     multiDelete() {
-       
     }
 
     filter(clear: boolean = false) {
@@ -280,6 +280,7 @@ export class PackageListComponent implements OnInit, AfterViewChecked {
     rerender(pagedResult: any) {
         this.checkboxSeclectAll = false;
         this.pagedResult = pagedResult;
+        console.log(this.pagedResult.items);
         this.dtTrigger.next();
     }
 
