@@ -1,7 +1,7 @@
 <div [@routerTransition] class="parent">
     <div class="search-box  title-list-package center-parent status-filter" [class.title-detail-toggle]="isToggle">
         <!-- <div class="mr-auto d-flex align-items-end list-package">DANH SÁCH GÓI THẦU</div> -->
-        <h4 class="d-inline mb-0 mr-auto text-dark">DANH SÁCH GÓI THẦU</h4>
+        <h4 class="d-inline mb-0 mr-auto text-dark" style="font-family: MyriadPro, sans-serif">DANH SÁCH GÓI THẦU</h4>
         <div class="btn-toolbar">
             <div class="input-group">
                 <span class="input-group-addon">Tìm kiếm theo</span>
@@ -11,6 +11,11 @@
                 <button type="button" class="btn btn-primary" ngbDropdownToggle data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     Công cụ &nbsp;&nbsp;
                 </button>
+                <div class="dropdown-menu" ngbDropdownMenu>
+                    <a class="dropdown-item" (click)="multiDelete()">Xóa</a>
+                    <div class="dropdown-divider"></div>
+                    <a class="dropdown-item">Tải template</a>
+                </div>
             </div>
             <button *ngIf="isCreateBidOpportunity" class="btn btn-primary ml-2" [routerLink]="['/package/create']">
                 Thêm gói thầu
@@ -125,16 +130,16 @@
 
 
         <div>
-            <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="table-selection stripe hover">
+            <table id="style-scroll" datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="table-selection stripe hover">
                 <thead>
                     <tr style="width: 100%;">
-                        <th class="text-center" style="width: 15px;">
+                        <th class="text-center" style="width: 15px!important;">
                             <label class="custom-control custom-checkbox">
                                 <input type="checkbox" class="custom-control-input input-checkbox" [(ngModel)]="checkboxSeclectAll" (change)="onSelectAll($event.target.checked)">
                                 <span class="custom-control-indicator"></span>
                             </label>
                         </th>
-                        <th style="width: 12%">
+                        <th >
 
                             <div class="d-flex justify-content-start">
                                 <div style="margin-right: 10px">Tên dự án</div>
@@ -145,7 +150,7 @@
                                 </div>
                             </div>
                         </th>
-                        <th style="width: 10%">
+                        <th >
 
                             <div class="d-flex justify-content-start">
                                 <div style="margin-right: 10px">Gói thầu</div>
@@ -156,7 +161,7 @@
                                 </div>
                             </div>
                         </th>
-                        <th style="width: 10%">
+                        <th >
                             <div class="d-flex justify-content-start">
                                 <div style="margin-right: 10px">Vai trò</div>
                                 <div class="center-parent">
@@ -166,7 +171,7 @@
                                 </div>
                             </div>
                         </th>
-                        <th style="width: 10%">
+                        <th >
                             <div class="d-flex justify-content-start">
                                 <div style="margin-right: 10px">Chủ trì</div>
                                 <div class="center-parent">
@@ -176,7 +181,7 @@
                                 </div>
                             </div>
                         </th>
-                        <th style="width: 10%">
+                        <th >
                             <div class="d-flex justify-content-start">
                                 <div style="margin-right: 10px">Phân loại</div>
                                 <div class="center-parent">
@@ -186,7 +191,7 @@
                                 </div>
                             </div>
                         </th>
-                        <th style="width: 10%">
+                        <th >
                             <div class="d-flex justify-content-center">
                                 <div style="margin-right: 10px" class="text-center">
                                     <div class="d-flex justify-content-center">
@@ -204,7 +209,7 @@
                                 </div>
                             </div>
                         </th>
-                        <th style="width: 70px">
+                        <th >
                             <div class="d-flex justify-content-start">
                                 <div style="margin-right: 10px">Quy mô</div>
                                 <div class="center-parent">
@@ -214,7 +219,7 @@
                                 </div>
                             </div>
                         </th>
-                        <th class="text-center" style="width: 13%;min-width: 165px!important;" class="HSMT">
+                        <th class="text-center"  class="HSMT">
                             <div class="d-flex justify-content-center">
                                 <div style="margin-right: 10px"> Giai đoạn</div>
                                 <div class="center-parent">
@@ -224,7 +229,7 @@
                                 </div>
                             </div>
                         </th>
-                        <th style="width: 10%;">
+                        <th>
                             <div class="d-flex justify-content-start">
                                 <div style="margin-right: 10px">Khu vực</div>
                                 <div class="center-parent">
@@ -234,7 +239,27 @@
                                 </div>
                             </div>
                         </th>
-                        <th class="table-action" style="width: calc(15% - 95px);">
+                        <th class="text-center"  class="HSMT">
+                                <div class="d-flex justify-content-center">
+                                    <div style="margin-right: 10px"> Giai đoạn</div>
+                                    <div class="center-parent">
+                                        <div>
+                                            <i class="fa fa-caret-down" style="color: #ffff;"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                            </th>
+                            <th>
+                                <div class="d-flex justify-content-start">
+                                    <div style="margin-right: 10px">Khu vực</div>
+                                    <div class="center-parent">
+                                        <div>
+                                            <i class="fa fa-caret-down" style="color: #ffff;"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                            </th>
+                        <th class="table-action" >
                             Thao tác
                         </th>
                     </tr>
@@ -278,6 +303,20 @@
                             </div>
                         </td>
                         <td>{{item.region | translate}}</td>
+                        <td class="" style="text-align: center;">
+                                <div class="d-flex flex-column p-2">
+    
+                                    <div class="center-parent" [class.type-HSMT]="item.stage?.id == 'HSMT'" [class.type-HSDT]="item.stage?.id == 'HSDT'" [class.type-KQDT]="item.stage?.id == 'KQDT'">
+                                        <div>{{item.stage?.text | uppercase}}</div>
+                                    </div>
+                                    <div class="center-parent" [class.type-HSMT-child]="item.stage?.id == 'HSMT'" [class.type-HSDT-child]="item.stage?.id == 'HSDT'"
+                                        [class.type-KQDT-child]="item.stage?.id == 'KQDT'">
+                                        <div class="text-truncate">{{item.stageStatus?.text }}</div>
+                                    </div>
+    
+                                </div>
+                            </td>
+                            <td>{{item.region | translate}}</td>
                         <!-- <td class="select-filter" [title]="item.assignTo">{{ item.assignTo}}</td> -->
                         <td>
                             <a *ngIf="isViewBidOpportunityDetail" [routerLink]="['/package/detail',item.bidOpportunityId]">
