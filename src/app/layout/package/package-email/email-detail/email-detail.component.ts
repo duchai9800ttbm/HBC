@@ -61,7 +61,7 @@ export class EmailDetailComponent implements OnInit {
     });
     const instance = this.dialog.content.instance;
     instance.emailId = this.emailId;
-    instance.callBack = this.back.bind(this);
+    instance.callBack = () => this.back();
   }
 
   back() {
