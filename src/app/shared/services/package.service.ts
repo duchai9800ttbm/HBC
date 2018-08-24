@@ -20,7 +20,7 @@ export class PackageService {
     private isSummaryConditionForm = new Subject<boolean>();
     public isSummaryConditionForm$ = this.isSummaryConditionForm.asObservable();
     private userIdSub = new Subject<any>();
-    userId$ = this.userIdSub.asObservable();    
+    userId$ = this.userIdSub.asObservable();
     kickOff$ = this.userIdSub.asObservable();
 
     private static createFilterParams(filter: PackageFilter): URLSearchParams {
