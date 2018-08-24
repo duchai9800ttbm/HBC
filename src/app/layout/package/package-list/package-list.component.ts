@@ -210,8 +210,21 @@ export class PackageListComponent implements OnInit, AfterViewChecked {
             this.listFieldNomarlized = [...this.listField].filter(x => x.hidden === true).map(x => x.fieldName);
             this.sum = [...this.listField].filter(x => x.hidden === true).length;
             this.tenGoithau = this.listFieldNomarlized.includes('ARBidOpportunityName');
+            this.maDuAn = this.listFieldNomarlized.includes('ARBidOpportunityNo');
+            this.congViec = this.listFieldNomarlized.includes('ARBidOpportunityJob');
             // this.tenDuAn = this.listFieldNomarlized.includes('')
             this.vaiTro = this.listFieldNomarlized.includes('ARBidOpportunityHBCChair');
+            this.donViTuVan = this.listFieldNomarlized.includes('ARBidOpportunityConsultantUnit');
+            this.quy = this.listFieldNomarlized.includes('ARBidOpportunityQuarter');
+            // this.linkTaiLieu = this.listFieldNomarlized.includes('');
+            // this.chuTri = this.listFieldNomarlized.includes('');
+            // this.phanLoai = this.listFieldNomarlized.includes('');
+            // this.tongGiaTri = this.listFieldNomarlized.includes('');
+            // this.quyMo = this.listFieldNomarlized.includes('ARBidOpportunityMagnitude');
+            // this.giaiDoan = this.listFieldNomarlized.includes('');
+            // this.khuVuc = this.listFieldNomarlized.includes('');
+            // this.tienDoThucHien = this.listFieldNomarlized.includes('ARBidOpportunityProgress');
+
             console.log(this.tenGoithau);
         });
     }

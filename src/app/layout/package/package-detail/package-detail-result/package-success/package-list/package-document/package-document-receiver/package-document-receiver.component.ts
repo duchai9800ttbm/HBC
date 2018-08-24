@@ -7,7 +7,8 @@ import { Observable, BehaviorSubject, Subject } from '../../../../../../../../..
 import { DocumentItem } from '../../../../../../../../shared/models/document-item';
 import { PackageSuccessService } from '../../../../../../../../shared/services/package-success.service';
 import { SessionService } from '../../../../../../../../shared/services/index';
-import { PackageService } from '../../../../../../../../shared/services/package.service'
+import { PackageService } from '../../../../../../../../shared/services/package.service';
+import { ConfirmationService, AlertService } from '../../../../../../../../shared/services';
 
 @Component({
   selector: 'app-package-document-receiver',
@@ -31,14 +32,16 @@ export class PackageDocumentReceiverComponent implements OnInit {
   btnManageTransfer: boolean;
   textUserManage: string;
   userInfo: any;
-  bntConfirm:boolean;
+  bntConfirm: boolean;
   public data: DocumentItem[] = this.packageSuccessService.getdataGetDocument();
 
   constructor(
     private packageSuccessService: PackageSuccessService,
     private modalService: BsModalService,
     private sessionService: SessionService,
-    private packageService: PackageService
+    private packageService: PackageService,
+    private alertService: AlertService,
+    private confirmationService: ConfirmationService,
   ) { }
 
   ngOnInit() {
@@ -52,7 +55,7 @@ export class PackageDocumentReceiverComponent implements OnInit {
     this.total = this.data.length;
     this.textmovedata = 'Chưa nhận tài liệu được chuyển giao';
     this.total = this.data.length;
-    this.bntConfirm =false;
+    this.bntConfirm = false;
   }
   onSelectAll(value: boolean) {
     this.data.forEach(x => (x['checkboxSelected'] = value));
@@ -74,9 +77,16 @@ export class PackageDocumentReceiverComponent implements OnInit {
   }
 
   confirmGot() {
-    this.bntConfirm = true;
-    this.packageService.setActiveKickoff(this.bntConfirm)
-    this.textmovedata = this.bntConfirm  ?'Đã nhận tài liệu được chuyển giao':'Chưa nhận tài liệu được chuyển giao';
+    this.confirmationService.confirm(
+      'Bạn có muốn xác nhận nhận tài liệu?',
+      () => {
+        this.alertService.success('Xác nhận nhận tài liệu thành công!');
+        this.bntConfirm = true;
+        this.packageService.setActiveKickoff(this.bntConfirm)
+        this.textmovedata = this.bntConfirm ? 'Đã nhận tài liệu được chuyển giao' : 'Chưa nhận tài liệu được chuyển giao';
+      }
+    );
+
   }
 
   manageTransferDocument(template: TemplateRef<any>) {

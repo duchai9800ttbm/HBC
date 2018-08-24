@@ -7,6 +7,8 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { DATETIME_PICKER_CONFIG } from '../../../../../../shared/configs/datepicker.config';
 import { DATATABLE_CONFIG } from '../../../../../../shared/configs';
 import { Observable, BehaviorSubject, Subject } from '../../../../../../../../node_modules/rxjs';
+import { ConfirmationService, AlertService } from '../../../../../../shared/services';
+
 @Component({
   selector: 'app-meeting-kickoff',
   templateUrl: './meeting-kickoff.component.html',
@@ -17,7 +19,7 @@ export class MeetingKickoffComponent implements OnInit {
   submitted = false;
   currentPackageId: number;
   modalUpload: BsModalRef;
-  modalViewData:BsModalRef;
+  modalViewData: BsModalRef;
   modalRef: BsModalRef;
   textTitleSendMail: string;
   textMetting: string;
@@ -27,20 +29,23 @@ export class MeetingKickoffComponent implements OnInit {
   isSendCc: boolean;
   isSendBcc: boolean;
   reportMeeting: boolean;
-  reportFile:boolean;
+  reportFile: boolean;
   datePickerConfig = DATETIME_PICKER_CONFIG;
   dtTrigger: Subject<any> = new Subject();
   dtOptions: any = DATATABLE_CONFIG;
-  listData : any =[
-    { id:1, username:'Oliver Dinh',email:'oliverdinh@gmail.com'},
-    { id:2, username:'Van Dinh',email:'vandinh@gmail.com'},
-    { id:3, username:'Huy Nhat',email:'huynhat@gmail.com'}
+  listData: any = [
+    { id: 1, username: 'Oliver Dinh', email: 'oliverdinh@gmail.com' },
+    { id: 2, username: 'Van Dinh', email: 'vandinh@gmail.com' },
+    { id: 3, username: 'Huy Nhat', email: 'huynhat@gmail.com' }
   ]
   constructor(
     private modalService: BsModalService,
     private router: Router,
     private activetedRoute: ActivatedRoute,
-    private formBuilder: FormBuilder) { }
+    private formBuilder: FormBuilder,
+    private alertService: AlertService,
+    private confirmationService: ConfirmationService,
+  ) { }
 
   ngOnInit() {
     this.formUpload = this.formBuilder.group({
@@ -79,16 +84,19 @@ export class MeetingKickoffComponent implements OnInit {
     if (this.formUpload.invalid) {
       return;
     }
+
+    this.alertService.success('Upload biên bản cuộc họp thành công!');
     this.reportFile = true;
     this.reportMeeting = true;
     this.modalUpload.hide();
   }
+
   submitForm() {
     this.submitted = true;
     if (this.formUpload.invalid) {
       return;
-    }
-    console.log('2');
+    }    
+    this.alertService.success('Upload file Presentation thành công!');
     this.reportFile = false;
     this.reportMeeting = true;
     this.modalUpload.hide();
@@ -97,6 +105,7 @@ export class MeetingKickoffComponent implements OnInit {
 
   sendMail() {
     this.doNotiMeeting = true;
+    this.alertService.success('Gửi thông báo họp kick-off thành công!');
     this.textMetting = this.doNotiMeeting ? 'Đã thông báo họp kick-off' : 'Đã nhận tài liệu';
     this.modalRef.hide();
   }
@@ -115,7 +124,7 @@ export class MeetingKickoffComponent implements OnInit {
     this.modalUpload = this.modalService.show(template);
 
   }
-  modelViewListData (template: TemplateRef<any>) {
+  modelViewListData(template: TemplateRef<any>) {
     this.modalViewData = this.modalService.show(template);
   }
 }

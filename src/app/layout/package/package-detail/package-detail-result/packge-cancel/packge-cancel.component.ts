@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router,ActivatedRoute } from '@angular/router';
 import { PackageDetailComponent } from '../../package-detail.component';
+import { ConfirmationService, AlertService } from '../../../../../shared/services';
 @Component({
   selector: 'app-packge-cancel',
   templateUrl: './packge-cancel.component.html',
@@ -8,10 +9,13 @@ import { PackageDetailComponent } from '../../package-detail.component';
 })
 export class PackgeCancelComponent implements OnInit {
   currentPackageId: number;
-  constructor() { }
+  constructor(
+    private alertService: AlertService
+  ) { }
 
   ngOnInit() {
     this.currentPackageId = +PackageDetailComponent.packageId;
+   
   }
 
 }

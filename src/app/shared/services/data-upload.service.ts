@@ -7,7 +7,8 @@ export class DataUploadService implements OnInit {
      version = [1,1.2,1.3];
     createDate = ['01/08/2018', '02/08/2018', '03/08/2018'];
     userId = [1, 2];
-    status =[1,2]
+    status =[1,2];
+    interview = [1, 1.1]
     
     dataUpload: UploadItem[] = []; 
     dataUploadSelect: UploadItem[] = []; 
@@ -21,6 +22,7 @@ export class DataUploadService implements OnInit {
                 createDate: this.createDate[Math.floor(Math.random() * (this.createDate.length))],
                 userId: this.userId[Math.floor(Math.random() * (this.userId.length))],
                 status: this.status[Math.floor(Math.random() * (this.status.length))],
+                interview: this.interview[Math.floor(Math.random() * (this.interview.length))],
                
             });
         }
@@ -34,6 +36,7 @@ export class DataUploadService implements OnInit {
                 createDate: this.createDate[Math.floor(Math.random() * (this.createDate.length))],
                 userId: this.userId[Math.floor(Math.random() * (this.userId.length))],
                 status: 2,
+                interview: this.interview[Math.floor(Math.random() * (this.interview.length))],
                
             });
         }
