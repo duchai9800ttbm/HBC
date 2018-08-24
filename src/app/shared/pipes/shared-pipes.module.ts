@@ -5,6 +5,7 @@ import { FromNowPipe } from './from-now-pipes.module';
 import { TimesPipe } from './times-pipe.module';
 import { ShortenedName } from './shortened-name-pipe.module';
 import { VnNumberPipe } from './vn-number-pipe.module';
+import { NumberAreaPipe } from './number-area.pipe';
 
 @NgModule({
     imports: [
@@ -15,14 +16,16 @@ import { VnNumberPipe } from './vn-number-pipe.module';
         FromNowPipe,
         TimesPipe,
         ShortenedName,
-        VnNumberPipe
+        VnNumberPipe,
+        NumberAreaPipe
     ],
     exports: [
         VnCurrencyPipe,
         FromNowPipe,
         TimesPipe,
         ShortenedName,
-        VnNumberPipe
+        VnNumberPipe,
+        NumberAreaPipe
     ],
 })
 export class SharedPipesModule { }
