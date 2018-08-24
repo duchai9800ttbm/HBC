@@ -210,6 +210,8 @@ export class PackageListComponent implements OnInit, AfterViewChecked {
             this.listFieldNomarlized = [...this.listField].filter(x => x.hidden === true).map(x => x.fieldName);
             this.sum = [...this.listField].filter(x => x.hidden === true).length;
             this.tenGoithau = this.listFieldNomarlized.includes('ARBidOpportunityName');
+            // this.tenDuAn = this.listFieldNomarlized.includes('')
+            this.vaiTro = this.listFieldNomarlized.includes('ARBidOpportunityHBCChair');
             console.log(this.tenGoithau);
         });
     }

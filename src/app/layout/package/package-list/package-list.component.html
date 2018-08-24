@@ -172,7 +172,7 @@
                                 </div>
                             </div>
                         </th>
-                        <th>
+                        <th [hidden]="!vaiTro">
                             <div class="d-flex justify-content-start">
                                 <div style="margin-right: 10px">Vai trò</div>
                                 <div class="center-parent">
@@ -353,7 +353,7 @@
                                 {{ item.opportunityName}}
                             </a>
                         </td>
-                        <td class="text-truncate">{{ item.hbcRole?.name }}</td>
+                        <td class="text-truncate" [hidden]="!vaiTro">{{ item.hbcRole?.name }}</td>
                         <td class="text-truncate">{{ item.chairEmployee?.employeeName }}</td>
                         <td class="text-truncate">{{ item.classify | translate }}</td>
                         <td class="text-truncate text-right">{{ item.amount | vnCurrency }}</td>
