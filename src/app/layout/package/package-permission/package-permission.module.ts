@@ -8,6 +8,7 @@ import { SharedModule } from '../../../shared/shared.module';
 import { PackagePermissionReviewComponent } from './package-permission-review/package-permission-review.component';
 import { PackagePermissionResultComponent } from './package-permission-result/package-permission-result.component';
 import { PackagePermissionBidComponent } from './package-permission-bid/package-permission-bid.component';
+import { UserBidGroupMemberFormComponent } from './package-permission-user/user-bid-group-member-form/user-bid-group-member-form.component';
 
 @NgModule({
   imports: [
@@ -15,6 +16,6 @@ import { PackagePermissionBidComponent } from './package-permission-bid/package-
     SharedModule,
     PackagePermissionRoutingModule
   ],
-  declarations: [PackagePermissionComponent, PackagePermissionUserComponent, PackagePermissionReviewComponent, PackagePermissionResultComponent, PackagePermissionBidComponent]
+  declarations: [PackagePermissionComponent, PackagePermissionUserComponent, PackagePermissionReviewComponent, PackagePermissionResultComponent, PackagePermissionBidComponent, UserBidGroupMemberFormComponent]
 })
 export class PackagePermissionModule { }

@@ -6,6 +6,9 @@ import {
     FormBuilder,
     FormArray
 } from '../../../../../../node_modules/@angular/forms';
+import { PackageService } from '../../../../shared/services/package.service';
+import { PackagePermissionComponent } from '../package-permission.component';
+import { SETTING_BID_STAGE } from '../../../../shared/configs/common.config';
 
 @Component({
     selector: 'app-package-permission-review',
@@ -16,14 +19,22 @@ export class PackagePermissionReviewComponent implements OnInit {
     dtTrigger: Subject<any> = new Subject();
     dtOptions: any = DATATABLE_CONFIG;
     packagePermissionReviewForm: FormGroup;
+    packageId: number;
 
-    constructor(private fb: FormBuilder) {}
+    constructor(
+        private fb: FormBuilder,
+        private packageService: PackageService
+    ) {}
 
     ngOnInit() {
+        this.packageId = PackagePermissionComponent.packageId;
         setTimeout(() => {
             this.dtTrigger.next();
         });
         this.createForm();
+        this.packageService.getBidPermissionGroupByStage(this.packageId, SETTING_BID_STAGE.Hsmt).subscribe(data => {
+            console.log(data);
+        });
     }
 
     createForm() {

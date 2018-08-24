@@ -4,6 +4,14 @@ import {
     FormBuilder,
     FormArray
 } from '../../../../../../node_modules/@angular/forms';
+import { UserService, DataService } from '../../../../shared/services';
+import { DictionaryItem } from '../../../../shared/models';
+import { DepartmentsFormBranches } from '../../../../shared/models/user/departments-from-branches';
+import { Observable } from 'rxjs';
+import { BidUserGroupMemberResponsive } from '../../../../shared/models/api-response/setting/bid-user-group-member-responsive';
+import { PackageService } from '../../../../shared/services/package.service';
+import { PackagePermissionComponent } from '../package-permission.component';
+import { UserItemModel } from '../../../../shared/models/user/user-item.model';
 
 @Component({
     selector: 'app-package-permission-user',
@@ -12,51 +20,18 @@ import {
 })
 export class PackagePermissionUserComponent implements OnInit {
     packagePermissionUserForm: FormGroup;
-    constructor(private fb: FormBuilder) {}
+    listUser: Observable<UserItemModel[]>;
+    listBidUserGroupMember: BidUserGroupMemberResponsive[];
+    packageId: number;
+    constructor(
+        private fb: FormBuilder,
+        private userService: UserService,
+        private dataService: DataService,
+        private packageService: PackageService
+    ) {}
 
     ngOnInit() {
-        this.createForm();
-    }
-
-    createForm() {
-        this.packagePermissionUserForm = this.fb.group({
-            chuTri: this.fb.array([]),
-            phanPhoiHoSo: this.fb.array([]),
-            chuTriKhoiLuong: this.fb.array([]),
-            chuyenVienGoiGia: this.fb.array([]),
-            chuTriMEP: this.fb.array([]),
-            chuNhiemGoiPrelims: this.fb.array([]),
-            chuNhiemKyThuat: this.fb.array([]),
-            chuNhiemHoSo: this.fb.array([]),
-            chuNhiemPhapLy: this.fb.array([]),
-            // ----------
-            chuDauTu: this.fb.array([]),
-            quanLyDuAn: this.fb.array([]),
-            quanLyChiPhi: this.fb.array([]),
-            thietKeKienTruc: this.fb.array([]),
-            thietKeKetCau: this.fb.array([]),
-            thietKeCoDien: this.fb.array([]),
-            khac: this.fb.array([])
-        });
-        // tslint:disable-next-line:forin
-        for (const control in this.packagePermissionUserForm.value) {
-            this.addFormItem(control);
-        }
-    }
-
-    addFormItem(name: string): void {
-        const itemArr = this.packagePermissionUserForm.get(name) as FormArray;
-        const item = this.fb.group({
-            name: '',
-            department: ''
-        });
-        itemArr.push(item);
-    }
-
-    removeFormItem(name: string, idx: number) {
-        const attachedArray = <FormArray>(
-            this.packagePermissionUserForm.controls[name]
-        );
-        attachedArray.removeAt(idx);
+        this.packageId = PackagePermissionComponent.packageId;
+        this.listUser = this.userService.getAllUser('');
     }
 }

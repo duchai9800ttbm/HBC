@@ -10,6 +10,7 @@ import { ActivatedRoute } from '@angular/router';
 })
 export class PackagePermissionComponent implements OnInit {
 
+  static packageId;
   packageId;
   constructor(
     private activetedRoute: ActivatedRoute,
@@ -18,6 +19,7 @@ export class PackagePermissionComponent implements OnInit {
   ngOnInit() {
     this.activetedRoute.params.subscribe(result => {
       this.packageId = result.id;
+      PackagePermissionComponent.packageId = this.packageId;
     });
   }
 
