@@ -84,7 +84,7 @@ export class MeetingKickoffComponent implements OnInit {
     if (this.formUpload.invalid) {
       return;
     }
-
+    this.router.navigate([`/package/detail/${this.currentPackageId}/result/package-success/meeting-kickoff/report-meeting`]);
     this.alertService.success('Upload biên bản cuộc họp thành công!');
     this.reportFile = true;
     this.reportMeeting = true;
@@ -96,6 +96,7 @@ export class MeetingKickoffComponent implements OnInit {
     if (this.formUpload.invalid) {
       return;
     }    
+    this.router.navigate([`/package/detail/${this.currentPackageId}/result/package-success/meeting-kickoff/report-meeting`]);
     this.alertService.success('Upload file Presentation thành công!');
     this.reportFile = false;
     this.reportMeeting = true;
