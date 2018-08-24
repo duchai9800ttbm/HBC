@@ -3,14 +3,14 @@ import { CommonModule } from '@angular/common';
 import { SharedModule } from '../../../../../shared/shared.module';
 import { PackageListComponent } from './package-list/package-list.component';
 import { ContractSignedComponent } from './contract-signed/contract-signed.component';
-import { MeetingKickoffComponent } from './meeting-kickoff/meeting-kickoff.component';
+// import { MeetingKickoffComponent } from './meeting-kickoff/meeting-kickoff.component';
 import { PackageSuccessRoutingModule } from './package-success-routing.module';
 import { PackageSuccessComponent } from './package-success.component';
 import { CKEditorModule } from 'ng2-ckeditor';
 import { PackageDocumentComponent } from './package-list/package-document/package-document.component';
 import { PackageDocumentSenderComponent } from './package-list/package-document/package-document-sender/package-document-sender.component';
 import { PackageDocumentReceiverComponent } from './package-list/package-document/package-document-receiver/package-document-receiver.component';
-import { ReportMeetingComponent } from './meeting-kickoff/report-meeting/report-meeting.component';
+// import { ReportMeetingComponent } from './meeting-kickoff/report-meeting/report-meeting.component';
 @NgModule({
     imports: [
         CommonModule,
@@ -21,12 +21,12 @@ import { ReportMeetingComponent } from './meeting-kickoff/report-meeting/report-
     declarations: [
         PackageListComponent,
         ContractSignedComponent,
-        MeetingKickoffComponent,
+        // MeetingKickoffComponent,
         PackageSuccessComponent,
         PackageDocumentComponent,
         PackageDocumentSenderComponent,
         PackageDocumentReceiverComponent,
-        ReportMeetingComponent
+        // ReportMeetingComponent
     ]
 })
 export class PackageSuccessModule { }

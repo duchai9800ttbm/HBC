@@ -5,97 +5,97 @@ export class PackageListItem {
     opportunityName: string;
     projectName: string;
     projectType: {
-      key: string;
-      value: string;
-      displayText: string
+        key: string;
+        value: string;
+        displayText: string
     };
     hbcRole: {
-      type: string;
-      name: string
+        type: string;
+        name: string
     };
     chairEmployee: {
-      id: number;
-      employeeId: number;
-      employeeNo: string;
-      employeeName: string;
-      employeeAddress: string;
-      employeeDob: number;
-      employeeTel: string;
-      employeeTel1: string;
-      departmentName: string;
-      levelName: string;
-      employeeAvatar: string;
-      departmentRoomName: string;
-      branchName: string;
-      employeeBirthPlace: string;
-      employeeIDNumber: string;
-      employeeGender: string;
-      employeeTaxNumber: string;
-      employeeBankAccount: string
+        id: number;
+        employeeId: number;
+        employeeNo: string;
+        employeeName: string;
+        employeeAddress: string;
+        employeeDob: number;
+        employeeTel: string;
+        employeeTel1: string;
+        departmentName: string;
+        levelName: string;
+        employeeAvatar: string;
+        departmentRoomName: string;
+        branchName: string;
+        employeeBirthPlace: string;
+        employeeIDNumber: string;
+        employeeGender: string;
+        employeeTaxNumber: string;
+        employeeBankAccount: string
     };
     quarter: {
-      type: string;
-      name: string
+        type: string;
+        name: string
     };
     magnitude: string;
     stage: {
-      key: string;
-      value: string;
-      displayText: string
+        key: string;
+        value: string;
+        displayText: string
     };
     stageStatus: {
-      key: string;
-      value: string;
-      displayText: string
+        key: string;
+        value: string;
+        displayText: string
     };
     location: {
-      key: string;
-      value: string;
-      displayText: string
+        key: string;
+        value: string;
+        displayText: string
     };
     projectNo: string;
     job: string;
     place: string;
     region: string;
     customer: {
-      id: number;
-      customerId: number;
-      customerName: string;
-      customerNo: string;
-      customerDesc: string;
-      customerClassify: string;
-      customerNewOldType: string;
-      customerPhone: string;
-      customerAddress: string
+        id: number;
+        customerId: number;
+        customerName: string;
+        customerNo: string;
+        customerDesc: string;
+        customerClassify: string;
+        customerNewOldType: string;
+        customerPhone: string;
+        customerAddress: string
     };
     customerContact: {
-      id: number;
-      name: string
+        id: number;
+        name: string
     };
     consultantUnitCustomer: {
-      id: number;
-      customerId: number;
-      customerName: string;
-      customerNo: string;
-      customerDesc: string;
-      customerClassify: string;
-      customerNewOldType: string;
-      customerPhone: string;
-      customerAddress: string
+        id: number;
+        customerId: number;
+        customerName: string;
+        customerNo: string;
+        customerDesc: string;
+        customerClassify: string;
+        customerNewOldType: string;
+        customerPhone: string;
+        customerAddress: string
     };
     consultantAddress: string;
     consultantPhone: string;
     floorArea: number;
     mainBuildingCategory: {
-      key: string;
-      value: string;
-      displayText: string
+        key: string;
+        value: string;
+        displayText: string
     };
     documentLink: string;
     status: {
-      key: string;
-      value: string;
-      displayText: string
+        key: string;
+        value: string;
+        displayText: string
     };
     progress: number;
     acceptanceReason: string;
@@ -109,4 +109,5 @@ export class PackageListItem {
     projectEstimatedEndDate: number;
     totalTime: string;
     description: string;
+    checkboxSelected?: boolean;
 }
