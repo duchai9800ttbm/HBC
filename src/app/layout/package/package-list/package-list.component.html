@@ -85,7 +85,7 @@
                     </div>
                     <div>Cột</div>
                 </div>
-                <div class="dropdown-menu" style="" ngbDropdownMenu >
+                <div class="dropdown-menu" style="" ngbDropdownMenu>
                     <div class="popup-dynamic-col" style="min-width: 600px; min-height: 300px;">
                         <div class="">{{sum}}/{{listField?.length}} cột được chọn</div>
                         <hr>
@@ -349,7 +349,7 @@
                             </a>
                         </td>
                         <td class="text-truncate" [hidden]="!tenGoithau">
-                            <a>
+                            <a [routerLink]="['/package/detail',item.bidOpportunityId]">
                                 {{ item.opportunityName}}
                             </a>
                         </td>

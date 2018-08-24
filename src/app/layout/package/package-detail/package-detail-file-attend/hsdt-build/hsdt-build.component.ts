@@ -1,14 +1,18 @@
-import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
-import { PackageService } from '../../../../../shared/services/package.service';
 
+import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
+import { DialogService } from '../../../../../../../node_modules/@progress/kendo-angular-dialog';
+import { UploadFileHsdtComponent } from './upload-file-hsdt/upload-file-hsdt.component';
+import { PackageService } from '../../../../../shared/services/package.service';
 @Component({
     selector: 'app-hsdt-build',
     templateUrl: './hsdt-build.component.html',
     styleUrls: ['./hsdt-build.component.scss']
 })
 export class HsdtBuildComponent implements OnInit {
+    dialog;
     isShowMenu = false;
     constructor(
+        private dialogService: DialogService,
         private packageService: PackageService,
         private cdr: ChangeDetectorRef
     ) { }
@@ -28,4 +32,19 @@ export class HsdtBuildComponent implements OnInit {
         $('.iconN3').toggleClass('iconN03');
         console.log('ok');
     }
+
+    showDialogUploadFile(name: string) {
+        this.dialog = this.dialogService.open({
+            content: UploadFileHsdtComponent,
+            width: 493,
+            minWidth: 250
+        });
+        const instance = this.dialog.content.instance;
+        instance.nameFile = name;
+        instance.callBack = this.closePopuup.bind(this);
+    }
+
+    closePopuup() {
+        this.dialog.close();
+      }
 }

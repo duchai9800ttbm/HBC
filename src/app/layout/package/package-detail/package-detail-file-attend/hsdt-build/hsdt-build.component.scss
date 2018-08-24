@@ -486,3 +486,24 @@ table.dataTable th {
         }
     }
 }
+.dropdown-toggle::after {
+    content: none !important;
+    border: none !important;
+}
+.dropdown-item{
+    cursor: pointer;
+}
+.dropdown-menu{
+    transform: translateX(-56%) !important;
+}
+.dropdown-menu::before{
+    position: absolute;
+    top: -12px;
+    left: 572px;
+    display: inline-block;
+    border-right: 12px solid transparent;
+    border-bottom: 12px solid #CCC;
+    border-left: 12px solid transparent;
+    border-bottom-color: rgba(0, 0, 0, 0.2);
+    content: '';
+}

@@ -5,6 +5,8 @@ import { InputMoneyDirective } from './input-money.directive';
 import { VnCurrencyPipe } from '../pipes/vn-currency-pipe.module';
 import { PhoneNumberCallableDirective } from './phone-number-callable.directive';
 import { SameWidthDirective } from './same-width.directive';
+import { InputAreaDirective } from './input-area.directive';
+import { NumberAreaPipe } from '../pipes/number-area.pipe';
 
 @NgModule({
     imports: [
@@ -15,15 +17,18 @@ import { SameWidthDirective } from './same-width.directive';
         InputMoneyDirective,
         PhoneNumberCallableDirective,
         SameWidthDirective,
+        InputAreaDirective
     ],
     exports: [
         InputNumberDirective,
         InputMoneyDirective,
         PhoneNumberCallableDirective,
-        SameWidthDirective
+        SameWidthDirective,
+        InputAreaDirective
     ],
     providers: [
         VnCurrencyPipe,
+        NumberAreaPipe
     ]
 })
 export class SharedDirectivesModule { }

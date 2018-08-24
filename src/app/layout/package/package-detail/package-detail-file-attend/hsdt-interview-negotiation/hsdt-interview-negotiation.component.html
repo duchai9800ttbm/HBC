@@ -57,7 +57,7 @@
               <span class="input-group-addon">Tìm kiếm theo</span>
               <input type="text" class="form-control icon" placeholder="&#xf002; Tên tài liệu" (keyup)="search($event.target.value)">
             </div>
-            <button class="btn btn-primary ml-2">
+            <button class="btn btn-primary ml-2" (click)="createInvitation()">
               Tạo lời mời phỏng vấn
             </button>
             <button class="btn btn-primary ml-2">
@@ -69,7 +69,7 @@
     </div>
   </div>
   <div class="d-flex" style="width: 100%">
-    <div style="width: 15%">
+    <div style="width: 18%">
       <div class="nav flex-column nav-pills cus-menu" id="v-pills-tab" role="tablist" aria-orientation="vertical">
         <div class="nav-link active d-flex cus-menu-children" id="v-pills-home-tab" data-toggle="pill" role="tab" href="#v-pills-profile"
           aria-controls="v-pills-home" aria-selected="true">
@@ -96,7 +96,7 @@
         </div>
       </div>
     </div>
-    <div class="center-parent row" style="width: 85%; padding-left: 15px" *ngIf="false">
+    <div class="center-parent row" style="width: 82%; padding-left: 15px" *ngIf="false">
       <div class="col-md-12 center-parent">
         <img class="class-image" src="\assets\images\thuongthao.png" width="300" height="200" class="d-inline-block" alt="">
       </div>
@@ -107,7 +107,7 @@
         </button>
       </div>
     </div>
-    <div style="padding-left: 15px; width: 85%">
+    <div style="padding-left: 15px; width: 82%">
       <div>
         <div class=" title-list-package d-flex flex-wrap align-items-center status-filter">
           <div class="mr-auto d-flex align-items-end list-package mt-2 mb-2" style="padding-top: 0!important;">

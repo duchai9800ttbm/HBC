@@ -5,10 +5,11 @@ import { HsdtBuildRoutingModule } from './hsdt-build-routing.module';
 import { RequirePriceComponent } from './require-price/require-price.component';
 import { HsdtBuildComponent } from './hsdt-build.component';
 import { HsktInvolvedComponent } from './hskt-involved/hskt-involved.component';
-
+import { SharedModule } from '../../../../../shared/shared.module';
 @NgModule({
     imports: [
         CommonModule,
+        SharedModule,
         HsdtBuildRoutingModule
     ],
     declarations: [

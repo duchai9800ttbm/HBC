@@ -18,7 +18,7 @@ export class HsdtInterviewNegotiationComponent implements OnInit {
   createInvitation() {
       this.dialog = this.dialogService.open({
         content: CreateNewInvitationComponent,
-        width: 650,
+        width: 600,
         minWidth: 250
       });
       const instance = this.dialog.content.instance;
