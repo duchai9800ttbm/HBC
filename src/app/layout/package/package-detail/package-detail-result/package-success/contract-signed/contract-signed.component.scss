@@ -72,7 +72,11 @@
     font-weight: 400;
 }
 .pd-up {
-    padding-bottom: 10px;
+    padding-bottom: 20px;
+    .mg-l {
+        white-space: nowrap;
+        margin-left: 3%;
+    }
 }
 .fg-w {
     font-weight: 700
@@ -114,4 +118,40 @@ table.dataTable th {
     border-bottom: 1px solid #dddddd !important;
     background-color: #ffff!important;
     border: 1px solid #dddddd;
+}
+
+.show {
+    padding-top: 15px
+}
+
+.or {
+    position: absolute;
+    top: 40px;
+    left: 34px;
+    color: #c2baba;
+    &::after {
+        display: block;
+        background: #c2baba;
+        width: 2px;
+        height: 11px;
+        position: absolute;
+        z-index: 99999999999;
+        left: 23px;
+        top: 18px;
+        content: "";
+      }
+      &::before {
+        display: block;
+        background: #c2baba;
+        width: 2px;
+        height: 11px;
+        position: absolute;
+        z-index: 99999999999;
+        left: 23px;
+        top: -8px;
+        content: "";
+      }
+}
+.pd-l {
+    padding-left: 10px;
 }

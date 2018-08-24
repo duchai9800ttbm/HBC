@@ -126,13 +126,23 @@
                                 <div style="width: 35%;" class="center-parent">
                                     <div>STT</div>
                                 </div>
+                                <div class="center-parent" style="width: 15%;padding-left: 5px;">
+                                    <div class="ng-tns-c15-6">
+                                        <i class="fa fa-caret-down" style="color: #ffff;"></i>
+                                    </div>
+                                </div>
                             </div>
                         </th>
 
                         <th style="width: 35%;background-color: #f68e56!important;">
-                            <div class="d-flex justify-content-center">
+                            <div class="d-flex">
                                 <div class="center-parent">
                                     <div>Tên tài liệu</div>
+                                </div>
+                                <div class="center-parent pd-l">
+                                    <div class="ng-tns-c15-6">
+                                        <i class="fa fa-caret-down" style="color: #ffff;"></i>
+                                    </div>
                                 </div>
                             </div>
                         </th>
@@ -141,6 +151,11 @@
                             <div class="d-flex justify-content-center">
                                 <div class="center-parent">
                                     <div>Phiên bản</div>
+                                </div>
+                                <div class="center-parent pd-l">
+                                    <div class="ng-tns-c15-6">
+                                        <i class="fa fa-caret-down" style="color: #ffff;"></i>
+                                    </div>
                                 </div>
                             </div>
                         </th>
@@ -158,6 +173,11 @@
                                 <div style="width: 80%;" class="center-parent">
                                     <div>Tình trạng</div>
                                 </div>
+                                <div class="center-parent pd-l">
+                                    <div class="ng-tns-c15-6">
+                                        <i class="fa fa-caret-down" style="color: #ffff;"></i>
+                                    </div>
+                                </div>
                             </div>
                         </th>
 
@@ -165,6 +185,11 @@
                             <div class="d-flex justify-content-center">
                                 <div class="center-parent">
                                     <div>Người upload</div>
+                                </div>
+                                <div class="center-parent pd-l">
+                                    <div class="ng-tns-c15-6">
+                                        <i class="fa fa-caret-down" style="color: #ffff;"></i>
+                                    </div>
                                 </div>
                             </div>
                         </th>
@@ -174,12 +199,22 @@
                                 <div class="center-parent">
                                     <div>Ngày upload</div>
                                 </div>
+                                <div class="center-parent pd-l">
+                                    <div class="ng-tns-c15-6">
+                                        <i class="fa fa-caret-down" style="color: #ffff;"></i>
+                                    </div>
+                                </div>
                             </div>
                         </th>
                         <th style="background-color: #f68e56!important;">
                             <div class="d-flex justify-content-center">
                                 <div class="center-parent">
                                     <div>Ngày ký hợp đồng</div>
+                                </div>
+                                <div class="center-parent pd-l">
+                                    <div class="ng-tns-c15-6">
+                                        <i class="fa fa-caret-down" style="color: #ffff;"></i>
+                                    </div>
                                 </div>
                             </div>
                         </th>
@@ -188,25 +223,41 @@
                                 <div class="center-parent">
                                     <div>Lần phỏng vấn</div>
                                 </div>
+                                <div class="center-parent pd-l">
+                                    <div class="ng-tns-c15-6">
+                                        <i class="fa fa-caret-down" style="color: #ffff;"></i>
+                                    </div>
+                                </div>
                             </div>
                         </th>
 
-                        <th class="table-action text-center" style="width: 12%; background-color: #f68e56!important;">
+                        <th class="table-action text-center" style="width: 12%; background-color: #f68e56!important">
                             Thao tác
                         </th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr *ngFor="let item of resultData; let i = index;">
-                        <td class="stt d-flex justify-content-around">
-                            <div class="center-parent">
-                                <label class="custom-control custom-checkbox">
-                                    <input type="checkbox" class="custom-control-input">
-                                    <span class="custom-control-indicator"></span>
-                                </label>
-                            </div>
-                            <div class="center-parent">
-                                <div>{{i+1}}</div>
+                      
+                        <td class="stt" style="width: 5%; min-width: 20px;">
+                            <div class="d-flex justify-content-around">
+                                <div style="width: 40%;">
+                                    <div class="center-parent">
+                                        <label class="custom-control custom-checkbox">
+                                            <input type="checkbox" class="custom-control-input" [(ngModel)]="item.checkboxSelected">
+                                            <span class="custom-control-indicator"></span>
+                                        </label>
+                                    </div>
+                                </div>
+
+                                <div style="width: 35%;" class="center-parent">
+                                    <div>{{i+1}}</div>
+                                </div>
+                                <div class="center-parent" style="width: 15%;padding-left: 5px;">
+                                    <div class="ng-tns-c15-6">
+                                       
+                                    </div>
+                                </div>
                             </div>
                         </td>
                         <td>{{item.documentName}}</td>
@@ -221,11 +272,6 @@
                         <td class="text-center">
                             <div class="d-flex justify-content-around">
                                 <div>
-                                    <a>
-                                        <i class="fa fa-pencil" aria-hidden="true"></i>
-                                    </a>
-                                </div>
-                                <div>
                                     <a title="Tải file" (click)="downloadFileItem(item.id)">
                                         <i class="fa fa-download color-item-down" aria-hidden="true"></i>
                                     </a>
@@ -238,7 +284,6 @@
                                 <div>
                                     <a title="In">
                                         <i class="fa fa-print color-item-print" aria-hidden="true"></i>
-
                                     </a>
 
                                 </div>
@@ -248,6 +293,7 @@
                 </tbody>
             </table>
         </div>
+        <div class="show">Hiển thị {{total}} kết quả</div>
     </div>
 </div>
 
@@ -265,7 +311,7 @@
         </div>
         <div class="modal-body fg-w">
             <div class="row pd-up">
-                <div class="col-md-4">Chọn file</div>
+                <div class="col-md-4 mg-l">Chọn file</div>
                 <div class="col-md-7 input-group">
                     <div class="custom-file form-control">
                         <input type="file" class="custom-file-input" id="inputGroupFile01">
@@ -276,35 +322,38 @@
                     </span>
                 </div>
             </div>
+            <div class="row">
+                <div class="col-md-4 mg-l or">OR</div>
+            </div>
             <div class="row pd-up">
-                <div class="col-md-4">Đường dẫn file</div>
+                <div class="col-md-4 mg-l">Đường dẫn file</div>
                 <div class="col-md-7">
                     <input type="text" class="form-control" placeholder="Text">
                 </div>
             </div>
 
             <div class="row pd-up">
-                <div class="col-md-4">Tên</div>
+                <div class="col-md-4 mg-l">Tên</div>
                 <div class="col-md-7">
                     <input type="text" class="form-control" placeholder="Text">
                 </div>
             </div>
 
             <div class="row pd-up">
-                <div class="col-md-4">Version</div>
+                <div class="col-md-4 mg-l">Version</div>
                 <div class="col-md-7">
                     <input type="text" class="form-control" value="1">
                 </div>
             </div>
             <div class="row pd-up">
-                <div class="col-md-4">Lần phỏng vấn</div>
+                <div class="col-md-4 mg-l">Lần phỏng vấn</div>
                 <div class="col-md-7">
                     <input type="number" placeholder=Number class="form-control" value="">
                 </div>
             </div>
 
             <div class="row pd-up">
-                <div class="col-md-4">Ngày ký hợp đồng</div>
+                <div class="col-md-4 mg-l">Ngày ký hợp đồng</div>
                 <div class="col-md-7 input-group">
                     <owl-date-time [readonlyInput]="datePickerConfig.readonlyInput" [locale]="datePickerConfig.vi" [placeHolder]="datePickerConfig.placeHolderVn">
                     </owl-date-time>
@@ -315,7 +364,7 @@
             </div>
 
             <div class="row pd-up">
-                <div class="col-md-4">Mô tả/Nội dung cập nhật</div>
+                <div class="col-md-4 mg-l">Mô tả/Nội dung cập nhật</div>
                 <div class="col-md-7">
                     <textarea class="form-control textarea-content" name="" id="" cols="30" rows="3" placeholder=""></textarea>
                 </div>

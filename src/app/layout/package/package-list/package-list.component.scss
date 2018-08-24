@@ -32,14 +32,31 @@ span{
  }
 
  table.dataTable {
-    th,
-    td {
+    th,td:nth-child(1) {
+        width: 30px!important;
+    }
+    th,td:nth-last-child(1) {
+        width: 100px!important;
+    }
+    th,td:not([type="check"]){
         min-width: 130px;
         max-width: 160px;
+       
+    }
+    th,td[type="check"]{
+        width: 30px!important;
+    }
+    th,td[type="check-action"]{
+        width: 100px!important;
     }
     overflow-x: scroll;
-    display: block;
+   // display: block;
 
+}
+
+.grid-container {
+    display: grid;
+    grid-template-columns: 30px freg
 }
 
  @media only screen and (max-width: 3000px) {
@@ -177,7 +194,7 @@ a{
     width: calc(100% - 200px);
   //  min-width: calc(100% - 70px);
     background-color: #ffff;
-    z-index: 500;
+    z-index: 10000;
 }
 .main-table{
     //padding: 15px 15px;

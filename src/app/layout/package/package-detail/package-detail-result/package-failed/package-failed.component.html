@@ -55,7 +55,7 @@
       <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="table-selection stripe row-border hover cell-border dataTable">
         <thead>
           <tr>
-            <th class="stt" style="width: 5%; min-width: 20px;" class="bg-default">
+            <th class="stt" style="width: 5%; min-width: 20px; background-color: #f68e56!important;" class="bg-default">
               <div class="d-flex justify-content-around">
                 <div style="width: 40%;">
                   <div class="center-parent">
@@ -66,31 +66,44 @@
                   </div>
                 </div>
 
-                <div style="width: 35%;" class="center-parent">
+                <div style="width: 35%;background-color: #f68e56!important;" class="center-parent">
                   <div>STT</div>
+                </div>
+                <div class="center-parent" style="width: 15%;padding-left: 5px;">
+                  <div class="ng-tns-c15-6">
+                    <i class="fa fa-caret-down" style="color: #ffff;"></i>
+                  </div>
                 </div>
               </div>
             </th>
 
-            <th style="width: 35%;" class="bg-default">
-              <div class="d-flex justify-content-center">
-
+            <th style="width: 35%;background-color: #f68e56!important;" class="bg-default">
+              <div class="d-flex">
                 <div class="center-parent">
                   <div>Tên tài liệu</div>
                 </div>
-
+                <div class="center-parent pd-l">
+                  <div class="ng-tns-c15-6">
+                    <i class="fa fa-caret-down" style="color: #ffff;"></i>
+                  </div>
+                </div>
               </div>
 
             </th>
-            <th class="th-mark-status bg-default" style="width: 10%; min-width: 20px;">
+            <th class="th-mark-status bg-default" style="width: 10%; min-width: 20px;background-color: #f68e56!important;">
               <div class="d-flex justify-content-center">
                 <div style="width: 80%;" class="center-parent">
                   <div>Phiên bản</div>
                 </div>
+                <div class="center-parent pd-l">
+                  <div class="ng-tns-c15-6">
+                    <i class="fa fa-caret-down" style="color: #ffff;"></i>
+                  </div>
+                </div>
               </div>
             </th>
 
-            <th class="bg-default">
+            <th class="bg-default" style="background-color: #f68e56!important;">
               <div class="d-flex justify-content-center">
                 <div class="center-parent">
                   <div>Mô tả</div>
@@ -98,25 +111,40 @@
               </div>
             </th>
 
-            <th style="width: 12%;" class="bg-default">
+            <th style="width: 12%;background-color: #f68e56!important;" class="bg-default">
               <div class="d-flex justify-content-center">
                 <div class="center-parent">
                   <div>Người upload</div>
                 </div>
+                <div class="center-parent pd-l">
+                  <div class="ng-tns-c15-6">
+                    <i class="fa fa-caret-down" style="color: #ffff;"></i>
+                  </div>
+                </div>
               </div>
             </th>
 
-            <th style="width: 12%;" class="bg-default">
+            <th style="width: 12%;background-color: #f68e56!important;" class="bg-default">
               <div class="d-flex justify-content-center">
                 <div class="center-parent">
                   <div>Ngày upload</div>
                 </div>
+                <div class="center-parent pd-l">
+                  <div class="ng-tns-c15-6">
+                    <i class="fa fa-caret-down" style="color: #ffff;"></i>
+                  </div>
+                </div>
               </div>
             </th>
-            <th style="width: 12%;" class="bg-default">
+            <th style="width: 12%;background-color: #f68e56!important;" class="bg-default">
               <div class="d-flex justify-content-center">
                 <div class="center-parent">
                   <div>Lần phỏng vấn</div>
+                </div>
+                <div class="center-parent pd-l">
+                  <div class="ng-tns-c15-6">
+                    <i class="fa fa-caret-down" style="color: #ffff;"></i>
+                  </div>
                 </div>
               </div>
             </th>
@@ -128,15 +156,25 @@
         </thead>
         <tbody>
           <tr *ngFor="let item of bidDocumentReviewListItemSearchResult; let i = index">
-            <td class="stt d-flex justify-content-around">
-              <div class="center-parent" style="width: 40%">
-                <label class="custom-control custom-checkbox">
-                  <input type="checkbox" class="custom-control-input" [(ngModel)]="item.checkboxSelected">
-                  <span class="custom-control-indicator"></span>
-                </label>
-              </div>
-              <div style="width: 35%;" class="center-parent">
-                <div>{{i+1}}</div>
+            <td class="stt" style="width: 5%; min-width: 20px;">
+              <div class="d-flex justify-content-around">
+                <div style="width: 40%;">
+                  <div class="center-parent">
+                    <label class="custom-control custom-checkbox">
+                      <input type="checkbox" class="custom-control-input" [(ngModel)]="item.checkboxSelected">
+                      <span class="custom-control-indicator"></span>
+                    </label>
+                  </div>
+                </div>
+
+                <div style="width: 35%;" class="center-parent">
+                  <div>{{i+1}}</div>
+                </div>
+                <div class="center-parent" style="width: 15%;padding-left: 5px;">
+                  <div class="ng-tns-c15-6">
+
+                  </div>
+                </div>
               </div>
             </td>
             <td>{{ item.bidReviewDocumentName }}</td>
@@ -151,18 +189,19 @@
             <!-- <td class="text-center">{{ item.bidReviewDocumentUploadDate* 1000 | date:'dd/MM/yyyy HH:mm': '+0000'}}</td> -->
             <td class="select-filter text-center">{{ item.bidReviewDocumentUploadDate}}</td>
             <td class="select-filter text-center">{{ item.interview}}</td>
-            <td class="text-center" style="width: 10%;">              
-                <div class="row " [ngClass]="{ 'pd-row-24': showBtnNotification === false,'pd-row-18': showBtnNotification === true }">
-                    <div [ngClass]="{ 'col-md-4': showBtnNotification === false,'col-md-5': showBtnNotification === true }" class=" center-parent cursor-pointer">
-                        <i [title]="'tải file'" class="fa fa-download color-item-down"></i>
-                    </div>
-                    <div class="col-md-4 center-parent cursor-pointer" *ngIf="!showBtnNotification">
-                        <i [title]="'Xóa'" class="fa fa-trash-o"></i>
-                    </div>
-                    <div [ngClass]="{ 'col-md-4': showBtnNotification === false,'col-md-5': showBtnNotification === true }"  class="center-parent cursor-pointer" style="color:#e92121;">
-                        <i [title]="'In'" class="fa fa-print "></i>
-                    </div>
+            <td class="text-center" style="width: 10%;">
+              <div class="row " [ngClass]="{ 'pd-row-24': showBtnNotification === false,'pd-row-18': showBtnNotification === true }">
+                <div [ngClass]="{ 'col-md-4': showBtnNotification === false,'col-md-5': showBtnNotification === true }" class=" center-parent cursor-pointer">
+                  <i [title]="'tải file'" class="fa fa-download color-item-down"></i>
                 </div>
+                <div class="col-md-4 center-parent cursor-pointer" *ngIf="!showBtnNotification">
+                  <i [title]="'Xóa'" class="fa fa-trash-o"></i>
+                </div>
+                <div [ngClass]="{ 'col-md-4': showBtnNotification === false,'col-md-5': showBtnNotification === true }" class="center-parent cursor-pointer"
+                  style="color:#e92121;">
+                  <i [title]="'In'" class="fa fa-print "></i>
+                </div>
+              </div>
             </td>
           </tr>
         </tbody>
@@ -250,21 +289,21 @@
       <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="table-selection stripe row-border hover cell-border dataTable">
         <thead>
           <tr>
-            <th class="bg-default">
+            <th class="bg-default" style="background-color: #f68e56!important;">
               <div class="d-flex justify-content-center">
                 <div class="center-parent">
                   <div>STT</div>
                 </div>
               </div>
             </th>
-            <th class="bg-default">
+            <th class="bg-default" style="background-color: #f68e56!important;">
               <div class="d-flex justify-content-center">
                 <div class="center-parent">
                   <div>Nhân viên</div>
                 </div>
               </div>
             </th>
-            <th class="bg-default">
+            <th class="bg-default" style="background-color: #f68e56!important;">
               <div class="d-flex justify-content-center">
                 <div class="center-parent">
                   <div>Email</div>

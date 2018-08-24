@@ -107,9 +107,9 @@
                                                 <option *ngFor="let item of userListItem" [value]="item.employeeId">{{item.employeeName}}</option>
                                             </select>
                                         </span>
-                                        <span class="input-group-addon mar-add" (click)="createUser()" id="addUser">
+                                        <!-- <span class="input-group-addon mar-add" (click)="createUser()" id="addUser">
                                             <i class="fa fa-plus"> </i>
-                                        </span>
+                                        </span> -->
                                     </td>
                                 </tr>
                                 <tr>
@@ -122,18 +122,11 @@
                                             </select>
                                         </span>
                                     </td>
-                                    <td class="w-15 bg-light text-right label required no-boder">Tình trạng</td>
+                                    <td class="w-15 bg-light text-right label no-boder">Tổng giá trị</td>
                                     <td class="w-35 no-boder">
-                                        <span class="custom-dropdown w-75">
-                                            <select class="form-control" tabindex="14" formControlName="bidStatusId" [class.is-invalid]="formErrors.bidStatusId">
-                                                <option [ngValue]="null">---Chọn---</option>
-                                                <option *ngFor="let item of listStatus | async" [value]="item.id">{{item.text }}</option>
-                                            </select>
-                                        </span>
-                                        <div class="invalid-feedback" *ngIf="formErrors.bidStatusId">
-                                            {{formErrors.bidStatusId}}
-                                        </div>
+                                        <input appInputMoney class="w-75 form-control" tabindex="16" placeholder="" type="text" formControlName="amount">
                                     </td>
+
                                 </tr>
                                 <tr>
                                     <td class="w-15 bg-light text-right label no-boder">Tên khách hàng</td>
@@ -148,13 +141,16 @@
                                                 <i class="fa fa-search"></i>
                                             </span>
                                         </span>
-                                        <span class="input-group-addon mar-add" (click)="addCustomer()">
+                                        <!-- <span class="input-group-addon mar-add" (click)="addCustomer()">
                                             <i class="fa fa-plus"> </i>
-                                        </span>
+                                        </span> -->
                                     </td>
-                                    <td class="w-15 bg-light text-right label no-boder">Tổng giá trị</td>
+                                    <td class="w-15 bg-light text-right label no-boder">Tiến độ thực hiện</td>
                                     <td class="w-35 no-boder">
-                                        <input class="w-75 form-control" tabindex="16" placeholder="" type="text" formControlName="amount">
+                                        <div class=" w-75 autocomplete-wrapper-2 ui-fluid fix-m2-floor-area">
+                                            <input class="w-100 form-control cus-input" tabindex="17" type="text" formControlName="progress">
+                                            <span class="span-m2">%</span>
+                                        </div>
                                     </td>
                                 </tr>
                                 <tr>
@@ -168,12 +164,9 @@
                                             </select>
                                         </span> -->
                                     </td>
-                                    <td class="w-15 bg-light text-right label no-boder">Tiến độ thực hiện</td>
+                                    <td class="w-15 bg-light text-right label no-boder">Lí do thắng thầu</td>
                                     <td class="w-35 no-boder">
-                                        <div class=" w-75 autocomplete-wrapper-2 ui-fluid fix-m2-floor-area">
-                                            <input class="w-100 form-control cus-input" tabindex="17" type="text" formControlName="progress">
-                                            <span class="span-m2">%</span>
-                                        </div>
+                                        <input class="w-75 form-control" readonly type="text" formControlName="acceptanceReason">
                                     </td>
                                 </tr>
                                 <tr>
@@ -190,9 +183,9 @@
                                             </span>
                                         </div>
                                     </td>
-                                    <td class="w-15 bg-light text-right label no-boder">Lí do thắng thầu</td>
+                                    <td class="w-15 bg-light text-right label no-boder">Lí do trật thầu</td>
                                     <td class="w-35 no-boder">
-                                        <input class="w-75 form-control" readonly type="text" formControlName="acceptanceReason">
+                                        <input class="w-75 form-control" readonly type="text" formControlName="unacceptanceReason">
                                     </td>
                                 </tr>
                                 <tr>
@@ -209,9 +202,9 @@
                                                     </span>
                                                 </span>
                                     </td>
-                                    <td class="w-15 bg-light text-right label no-boder">Lí do trật thầu</td>
+                                    <td class="w-15 bg-light text-right label no-boder">Lý do hủy thầu</td>
                                     <td class="w-35 no-boder">
-                                        <input class="w-75 form-control" readonly type="text" formControlName="unacceptanceReason">
+                                        <input class="w-75 form-control" readonly type="text" formControlName="cancelReason">
                                     </td>
                                 </tr>
                                 <tr>
@@ -219,9 +212,9 @@
                                     <td class="w-35 no-boder">
                                         <input class="w-75 form-control" tabindex="21" placeholder="" type="text" formControlName="consultantAddress" [value]="packageForm.get('consultantAddress').value">
                                     </td>
-                                    <td class="w-15 bg-light text-right label no-boder">Lý do hủy thầu</td>
+                                    <td class="w-15 bg-light text-right label no-boder">Đánh giá dự án</td>
                                     <td class="w-35 no-boder">
-                                        <input class="w-75 form-control" readonly type="text" formControlName="cancelReason">
+                                        <input class="w-75 form-control" tabindex="23" type="text" formControlName="evaluation">
                                     </td>
                                 </tr>
                                 <tr>
@@ -229,9 +222,9 @@
                                     <td class="w-35 no-boder">
                                         <input class="w-75 form-control" tabindex="22" placeholder="" type="text" formControlName="consultantPhone" [value]="packageForm.get('consultantPhone').value">
                                     </td>
-                                    <td class="w-15 bg-light text-right label no-boder">Đánh giá dự án</td>
+                                    <td class="w-15 bg-light text-right label no-boder"></td>
                                     <td class="w-35 no-boder">
-                                        <input class="w-75 form-control" tabindex="23" type="text" formControlName="evaluation">
+                                        <!-- <input class="w-75 form-control" tabindex="23" type="text" formControlName="evaluation"> -->
                                     </td>
                                 </tr>
                                 <tr>

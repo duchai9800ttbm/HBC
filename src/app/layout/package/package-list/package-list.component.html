@@ -1,7 +1,7 @@
 <div [@routerTransition] class="parent">
     <div class="search-box  title-list-package center-parent status-filter" [class.title-detail-toggle]="isToggle">
         <!-- <div class="mr-auto d-flex align-items-end list-package">DANH SÁCH GÓI THẦU</div> -->
-        <h4 class="d-inline mb-0 mr-auto text-dark" style="font-family: MyriadPro, sans-serif">DANH SÁCH GÓI THẦU</h4>
+        <h4 class="d-inline mb-0 mr-auto text-dark">DANH SÁCH GÓI THẦU</h4>
         <div class="btn-toolbar">
             <div class="input-group">
                 <span class="input-group-addon">Tìm kiếm theo</span>
@@ -12,7 +12,7 @@
                     Công cụ &nbsp;&nbsp;
                 </button>
                 <div class="dropdown-menu" ngbDropdownMenu>
-                    <a class="dropdown-item" (click)="multiDelete()">Xóa</a>
+                    <a class="dropdown-item">Xuất file</a>
                     <div class="dropdown-divider"></div>
                     <a class="dropdown-item">Tải template</a>
                 </div>
@@ -85,7 +85,7 @@
                     </div>
                     <div>Cột</div>
                 </div>
-                <div class="dropdown-menu" style="" ngbDropdownMenu (click)="$event.stopPropagation();" (blur)="resetDefaultState()">
+                <div class="dropdown-menu" style="" ngbDropdownMenu>
                     <div class="popup-dynamic-col" style="min-width: 600px; min-height: 300px;">
                         <div class="">{{sum}}/{{listField?.length}} cột được chọn</div>
                         <hr>
@@ -94,7 +94,7 @@
                                 <div class="form-check-inline" *ngFor="let item of listField">
                                     <div class="d-flex">
                                         <div style="margin-top: 2px;">
-                                            <input type="checkbox" [(ngModel)]="item.hidden" style="cursor: pointer;">
+                                            <input type="checkbox" (change)="inputChange()" [(ngModel)]="item.hidden" style="cursor: pointer;">
                                         </div>
                                         <div class=""> &nbsp;{{item.fieldCaption}}</div>
                                     </div>
@@ -129,17 +129,28 @@
 
 
 
-        <div>
-            <table id="style-scroll" datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="table-selection stripe hover">
+        <div class="table-responsive" id="style-scroll">
+            <table datatable id="tableId" [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="table-selection stripe hover">
                 <thead>
                     <tr style="width: 100%;">
-                        <th class="text-center" style="width: 15px!important;">
+                        <th class="text-center" type="check" style="width: 30px; min-width: 30px !important;">
                             <label class="custom-control custom-checkbox">
                                 <input type="checkbox" class="custom-control-input input-checkbox" [(ngModel)]="checkboxSeclectAll" (change)="onSelectAll($event.target.checked)">
                                 <span class="custom-control-indicator"></span>
                             </label>
                         </th>
-                        <th >
+                        <th>
+
+                            <div class="d-flex justify-content-start">
+                                <div style="margin-right: 10px">Mã dự án</div>
+                                <div class="center-parent">
+                                    <div>
+                                        <i class="fa fa-caret-down" style="color: #ffff;"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </th>
+                        <th>
 
                             <div class="d-flex justify-content-start">
                                 <div style="margin-right: 10px">Tên dự án</div>
@@ -150,7 +161,7 @@
                                 </div>
                             </div>
                         </th>
-                        <th >
+                        <th [hidden]="!tenGoithau">
 
                             <div class="d-flex justify-content-start">
                                 <div style="margin-right: 10px">Gói thầu</div>
@@ -161,7 +172,7 @@
                                 </div>
                             </div>
                         </th>
-                        <th >
+                        <th [hidden]="!vaiTro">
                             <div class="d-flex justify-content-start">
                                 <div style="margin-right: 10px">Vai trò</div>
                                 <div class="center-parent">
@@ -171,7 +182,7 @@
                                 </div>
                             </div>
                         </th>
-                        <th >
+                        <th>
                             <div class="d-flex justify-content-start">
                                 <div style="margin-right: 10px">Chủ trì</div>
                                 <div class="center-parent">
@@ -181,7 +192,7 @@
                                 </div>
                             </div>
                         </th>
-                        <th >
+                        <th>
                             <div class="d-flex justify-content-start">
                                 <div style="margin-right: 10px">Phân loại</div>
                                 <div class="center-parent">
@@ -191,7 +202,7 @@
                                 </div>
                             </div>
                         </th>
-                        <th >
+                        <th>
                             <div class="d-flex justify-content-center">
                                 <div style="margin-right: 10px" class="text-center">
                                     <div class="d-flex justify-content-center">
@@ -209,7 +220,7 @@
                                 </div>
                             </div>
                         </th>
-                        <th >
+                        <th>
                             <div class="d-flex justify-content-start">
                                 <div style="margin-right: 10px">Quy mô</div>
                                 <div class="center-parent">
@@ -219,7 +230,7 @@
                                 </div>
                             </div>
                         </th>
-                        <th class="text-center"  class="HSMT">
+                        <th class="text-center" class="HSMT">
                             <div class="d-flex justify-content-center">
                                 <div style="margin-right: 10px"> Giai đoạn</div>
                                 <div class="center-parent">
@@ -239,34 +250,89 @@
                                 </div>
                             </div>
                         </th>
-                        <th class="text-center"  class="HSMT">
-                                <div class="d-flex justify-content-center">
-                                    <div style="margin-right: 10px"> Giai đoạn</div>
-                                    <div class="center-parent">
-                                        <div>
-                                            <i class="fa fa-caret-down" style="color: #ffff;"></i>
-                                        </div>
+                        <th>
+                            <div class="d-flex justify-content-start">
+                                <div style="margin-right: 10px">Công việc</div>
+                                <div class="center-parent">
+                                    <div>
+                                        <i class="fa fa-caret-down" style="color: #ffff;"></i>
                                     </div>
                                 </div>
-                            </th>
-                            <th>
-                                <div class="d-flex justify-content-start">
-                                    <div style="margin-right: 10px">Khu vực</div>
-                                    <div class="center-parent">
-                                        <div>
-                                            <i class="fa fa-caret-down" style="color: #ffff;"></i>
-                                        </div>
+                            </div>
+                        </th>
+                        <th>
+                            <div class="d-flex justify-content-start">
+                                <div style="margin-right: 10px">Tiến độ thực hiện</div>
+                                <div class="center-parent">
+                                    <div>
+                                        <i class="fa fa-caret-down" style="color: #ffff;"></i>
                                     </div>
                                 </div>
-                            </th>
-                        <th class="table-action" >
+                            </div>
+                        </th>
+
+                        <th>
+                            <div class="d-flex justify-content-start">
+                                <div style="margin-right: 10px">Link tài liệu</div>
+                                <div class="center-parent">
+                                    <div>
+                                        <i class="fa fa-caret-down" style="color: #ffff;"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </th>
+                        <th>
+                            <div class="d-flex justify-content-start">
+                                <div style="margin-right: 10px">Tổng thời gian</div>
+                                <div class="center-parent">
+                                    <div>
+                                        <i class="fa fa-caret-down" style="color: #ffff;"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </th>
+
+                        <th>
+                            <div class="d-flex justify-content-start">
+                                <div style="margin-right: 10px">Quý</div>
+                                <div class="center-parent">
+                                    <div>
+                                        <i class="fa fa-caret-down" style="color: #ffff;"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </th>
+                        <th>
+                            <div class="d-flex justify-content-start">
+                                <div style="margin-right: 10px">Đơn vị tư vấn</div>
+                                <div class="center-parent">
+                                    <div>
+                                        <i class="fa fa-caret-down" style="color: #ffff;"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </th>
+
+                        <th>
+                            <div class="d-flex justify-content-start">
+                                <div style="margin-right: 10px">Loại khách hàng</div>
+                                <div class="center-parent">
+                                    <div>
+                                        <i class="fa fa-caret-down" style="color: #ffff;"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </th>
+
+
+                        <th style="max-width: 100px!important; width: 100px!important;" class="table-action text-center" type="check-action">
                             Thao tác
                         </th>
                     </tr>
                 </thead>
                 <tbody *ngIf="listPackage">
                     <tr *ngFor="let item of pagedResult.items; let i = index">
-                        <td class="text-center">
+                        <td class="text-center" type="check">
                             <label class="custom-control custom-checkbox">
                                 <input type="checkbox" class="custom-control-input" [(ngModel)]="item.checkboxSelected">
                                 <span class="custom-control-indicator"></span>
@@ -274,60 +340,62 @@
                         </td>
                         <td class="text-truncate">
                             <a [title]="item.projectName">
-                                {{ item.projectName }}
+                                {{ item.projectNo }}
                             </a>
                         </td>
                         <td class="text-truncate">
-                            <a>
+                            <a [title]="item.projectName">
+                                {{ item.projectName }}
+                            </a>
+                        </td>
+                        <td class="text-truncate" [hidden]="!tenGoithau">
+                            <a [routerLink]="['/package/detail',item.bidOpportunityId]">
                                 {{ item.opportunityName}}
                             </a>
                         </td>
-                        <td class="text-truncate">{{ item.hbcRole?.text }}</td>
-                        <td class="text-truncate">{{ item.chairEmployee?.text }}</td>
+                        <td class="text-truncate" [hidden]="!vaiTro">{{ item.hbcRole?.name }}</td>
+                        <td class="text-truncate">{{ item.chairEmployee?.employeeName }}</td>
                         <td class="text-truncate">{{ item.classify | translate }}</td>
                         <td class="text-truncate text-right">{{ item.amount | vnCurrency }}</td>
                         <td class="color" class="text-center">
-                            {{item.magnitude ? item.magnitude : ''}}
+                            {{item.magnitude}}
                         </td>
                         <td class="" style="text-align: center;">
                             <div class="d-flex flex-column p-2">
 
-                                <div class="center-parent" [class.type-HSMT]="item.stage?.id == 'HSMT'" [class.type-HSDT]="item.stage?.id == 'HSDT'" [class.type-KQDT]="item.stage?.id == 'KQDT'">
-                                    <div>{{item.stage?.text | uppercase}}</div>
+                                <div class="center-parent" [class.type-HSMT]="item.stage?.key == 'HSMT'" [class.type-HSDT]="item.stage?.key == 'HSDT'" [class.type-KQDT]="item.stage?.key == 'KQDT'">
+                                    <div>{{item.stage?.value }}</div>
                                 </div>
-                                <div class="center-parent" [class.type-HSMT-child]="item.stage?.id == 'HSMT'" [class.type-HSDT-child]="item.stage?.id == 'HSDT'"
-                                    [class.type-KQDT-child]="item.stage?.id == 'KQDT'">
-                                    <div class="text-truncate">{{item.stageStatus?.text }}</div>
+                                <div class="center-parent" [class.type-HSMT-child]="item.stage?.key == 'HSMT'" [class.type-HSDT-child]="item.stage?.key == 'HSDT'"
+                                    [class.type-KQDT-child]="item.stage?.key == 'KQDT'">
+                                    <div class="text-truncate">{{item.stageStatus?.value }}</div>
                                 </div>
 
                             </div>
                         </td>
                         <td>{{item.region | translate}}</td>
-                        <td class="" style="text-align: center;">
-                                <div class="d-flex flex-column p-2">
-    
-                                    <div class="center-parent" [class.type-HSMT]="item.stage?.id == 'HSMT'" [class.type-HSDT]="item.stage?.id == 'HSDT'" [class.type-KQDT]="item.stage?.id == 'KQDT'">
-                                        <div>{{item.stage?.text | uppercase}}</div>
-                                    </div>
-                                    <div class="center-parent" [class.type-HSMT-child]="item.stage?.id == 'HSMT'" [class.type-HSDT-child]="item.stage?.id == 'HSDT'"
-                                        [class.type-KQDT-child]="item.stage?.id == 'KQDT'">
-                                        <div class="text-truncate">{{item.stageStatus?.text }}</div>
-                                    </div>
-    
+                        <td class="text-truncate">{{ item.job }}</td>
+                        <td class="text-truncate">{{ item.progress }}</td>
+                        <td class="text-truncate">{{ item.documentLink }}</td>
+                        <td class="text-truncate">{{ item.totalTime }}</td>
+                        <td class="text-truncate">{{ item.quarter?.name }}</td>
+                        <td class="text-truncate">{{ item.consultantUnitCustomer?.customerName }}</td>
+                        <td class="text-truncate">{{ item.customer?.customerNewOldType }}</td>
+
+                        <td style="max-width: 100px!important;" type="check-action">
+                            <div class="d-flex justify-content-center">
+                                <div>
+                                    <a *ngIf="isViewBidOpportunityDetail" [routerLink]="['/package/detail',item.bidOpportunityId]">
+                                        <i class="fa fa-eye text-warning" aria-hidden="true"></i>
+                                    </a>
+                                    <a *ngIf="isEditBidOpportunity" [routerLink]="['/package/detail',item.bidOpportunityId,'edit']" class=" text-success ml-3">
+                                        <i class="fa fa-pencil cursor-pointer" aria-hidden="true"> </i>
+                                    </a>
+                                    <a *ngIf="isDeleteBidOpportunity" class=" text-dark ml-3">
+                                        <i (click)="delete(item.bidOpportunityId)" class="fa fa-trash-o" aria-hidden="true"></i>
+                                    </a>
                                 </div>
-                            </td>
-                            <td>{{item.region | translate}}</td>
-                        <!-- <td class="select-filter" [title]="item.assignTo">{{ item.assignTo}}</td> -->
-                        <td>
-                            <a *ngIf="isViewBidOpportunityDetail" [routerLink]="['/package/detail',item.bidOpportunityId]">
-                                <i class="fa fa-eye text-warning" aria-hidden="true"></i>
-                            </a>
-                            <a *ngIf="isEditBidOpportunity" [routerLink]="['/package/detail',item.bidOpportunityId,'edit']" class=" text-success ml-3">
-                                <i class="fa fa-pencil cursor-pointer" aria-hidden="true"> </i>
-                            </a>
-                            <a *ngIf="isDeleteBidOpportunity" class=" text-dark ml-3">
-                                <i (click)="delete(item.bidOpportunityId)" class="fa fa-trash-o" aria-hidden="true"></i>
-                            </a>
+                            </div>
                         </td>
                     </tr>
                 </tbody>

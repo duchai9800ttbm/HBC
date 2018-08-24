@@ -95,12 +95,22 @@
                                 <div style="width: 35%;background-color: #f68e56!important;" class="center-parent">
                                     <div>STT</div>
                                 </div>
+                                <div class="center-parent" style="width: 15%;padding-left: 5px;">
+                                    <div class="ng-tns-c15-6">
+                                        <i class="fa fa-caret-down" style="color: #ffff;"></i>
+                                    </div>
+                                </div>
                             </div>
                         </th>
                         <th class="bg-default" style="width: 17%;background-color: #f68e56!important;">
                             <div class="d-flex justify-content-center">
                                 <div class="center-parent">
                                     <div>Loại tài liệu</div>
+                                </div>
+                                <div class="center-parent pd-l">
+                                    <div class="ng-tns-c15-6">
+                                        <i class="fa fa-caret-down" style="color: #ffff;"></i>
+                                    </div>
                                 </div>
                             </div>
                         </th>
@@ -110,12 +120,22 @@
                                 <div class="center-parent">
                                     <div>Tên tài liệu</div>
                                 </div>
+                                <div class="center-parent pd-l">
+                                    <div class="ng-tns-c15-6">
+                                        <i class="fa fa-caret-down" style="color: #ffff;"></i>
+                                    </div>
+                                </div>
                             </div>
                         </th>
                         <th class="bg-default w15" style="background-color: #f68e56!important;">
                             <div class="d-flex justify-content-center">
                                 <div class="center-parent">
                                     <div>Thời gian chuyển giao</div>
+                                </div>
+                                <div class="center-parent pd-l">
+                                    <div class="ng-tns-c15-6">
+                                        <i class="fa fa-caret-down" style="color: #ffff;"></i>
+                                    </div>
                                 </div>
                             </div>
                         </th>
@@ -124,12 +144,22 @@
                                 <div class="center-parent">
                                     <div>Được sử dụng đến ngày</div>
                                 </div>
+                                <div class="center-parent pd-l">
+                                    <div class="ng-tns-c15-6">
+                                        <i class="fa fa-caret-down" style="color: #ffff;"></i>
+                                    </div>
+                                </div>
                             </div>
                         </th>
                         <th class="bg-default w12" style="background-color: #f68e56!important;">
                             <div class="d-flex justify-content-center">
                                 <div class="center-parent">
                                     <div>Trạng thái </div>
+                                </div>
+                                <div class="center-parent pd-l">
+                                    <div class="ng-tns-c15-6">
+                                        <i class="fa fa-caret-down" style="color: #ffff;"></i>
+                                    </div>
                                 </div>
                             </div>
                         </th>
@@ -143,7 +173,8 @@
                         </th>
                     </thead>
                 </table>
-                <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="table-selection stripe row-border hover cell-border" style="width: 100%">
+                <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="table-selection stripe row-border hover cell-border"
+                    style="width: 100%">
                     <thead>
                         <th class="stt hsmt-head th">
                             <div class="mgl-hs"> Hồ sơ mời thầu
@@ -155,7 +186,7 @@
                 <table *ngIf="!isDataHsmt" datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="table-selection stripe row-border hover cell-border dataTable table-input">
                     <tbody>
                         <tr *ngFor="let item of data; let i = index">
-                            <td class="stt w5 bg-default" *ngIf="item.type==1">
+                            <td class="stt bg-default" style="width: 6%" *ngIf="item.type==1">
                                 <div class="d-flex justify-content-around">
                                     <div style="width: 40%;">
                                         <div class="center-parent">
@@ -168,6 +199,11 @@
 
                                     <div style="width: 35%;" class="center-parent">
                                         <div>{{i+1}}</div>
+                                    </div>
+                                    <div class="center-parent" style="width: 15%;padding-left: 5px;">
+                                        <div class="ng-tns-c15-6">
+
+                                        </div>
                                     </div>
                                 </div>
                             </td>
@@ -193,9 +229,10 @@
                         </tr>
                     </tbody>
                 </table>
-                <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="table-selection stripe row-border hover cell-border"style="width: 100%">
+                <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="table-selection stripe row-border hover cell-border"
+                    style="width: 100%">
                     <thead>
-                        <th class="stt hsmt-head th" >
+                        <th class="stt hsmt-head th">
                             <div class="mgl-hs"> Hồ sơ dự thầu
                                 <i class="fa fa-caret-down mr-l3" (click)="showhsdt()"></i>
                             </div>
@@ -206,7 +243,7 @@
                 <table *ngIf="!isDataHsdt" datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="table-input table-selection stripe row-border hover cell-border dataTable">
                     <tbody>
                         <tr *ngFor="let item of data; let i = index">
-                            <td class="stt w5 bg-default" *ngIf="item.type==2">
+                            <td class="stt " style="width: 6%;" *ngIf="item.type==2">
                                 <div class="d-flex justify-content-around">
                                     <div style="width: 40%;">
                                         <div class="center-parent">
@@ -219,6 +256,11 @@
 
                                     <div style="width: 35%;" class="center-parent">
                                         <div>{{i+1}}</div>
+                                    </div>
+                                    <div class="center-parent" style="width: 15%;padding-left: 5px;">
+                                        <div class="ng-tns-c15-6">
+
+                                        </div>
                                     </div>
                                 </div>
                             </td>
@@ -233,7 +275,7 @@
                                         <i [title]="'tải file'" class="fa fa-download color-item-down"></i>
                                     </div>
 
-                                    <div class="col-md-3 center-parent cursor-pointer color-item-print" >
+                                    <div class="col-md-3 center-parent cursor-pointer color-item-print">
                                         <i [title]="'In'" class="fa fa-print "></i>
                                     </div>
                                     <div *ngIf="item.status==2" class="col-md-3 center-parent cursor-pointer" style="color:#673AB7;">

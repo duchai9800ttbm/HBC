@@ -1,6 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+
+import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { DialogService } from '../../../../../../../node_modules/@progress/kendo-angular-dialog';
 import { UploadFileHsdtComponent } from './upload-file-hsdt/upload-file-hsdt.component';
+import { PackageService } from '../../../../../shared/services/package.service';
 @Component({
     selector: 'app-hsdt-build',
     templateUrl: './hsdt-build.component.html',
@@ -8,11 +10,18 @@ import { UploadFileHsdtComponent } from './upload-file-hsdt/upload-file-hsdt.com
 })
 export class HsdtBuildComponent implements OnInit {
     dialog;
+    isShowMenu = false;
     constructor(
         private dialogService: DialogService,
+        private packageService: PackageService,
+        private cdr: ChangeDetectorRef
     ) { }
 
     ngOnInit() {
+        this.packageService.isSummaryConditionForm$.subscribe(data => {
+            this.isShowMenu = data;
+            this.cdr.detectChanges();
+        });
     }
 
     toggleClick() {

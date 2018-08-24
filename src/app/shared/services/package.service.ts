@@ -17,8 +17,12 @@ import { Subject } from '../../../../node_modules/rxjs';
 
 @Injectable()
 export class PackageService {
+    private isSummaryConditionForm = new Subject<boolean>();
+    public isSummaryConditionForm$ = this.isSummaryConditionForm.asObservable();
     private userIdSub = new Subject<any>();
     userId$ = this.userIdSub.asObservable();
+    kickOff$ = this.userIdSub.asObservable();
+
     private static createFilterParams(filter: PackageFilter): URLSearchParams {
         const urlFilterParams = new URLSearchParams();
         urlFilterParams.append('projectName', filter.projectName);
@@ -33,56 +37,108 @@ export class PackageService {
 
     private static toPackageListItem(result: any): PackageListItem {
         return {
-            id: result.id,
-            opportunityId: result.opportunityId,
             bidOpportunityId: result.bidOpportunityId,
             classify: result.classify,
             amount: result.amount,
             opportunityName: result.opportunityName,
             projectName: result.projectName,
-            projectType: result.projectType,
+            projectType: result.projectType && {
+                key: result.projectType.key,
+                value: result.projectType.value,
+                displayText: result.projectType.displayText
+            },
             hbcRole: result.hbcRole && {
-                id: result.hbcRole.key,
-                text: result.hbcRole.name
+                type: result.hbcRole.type,
+                name: result.hbcRole.name
             },
             chairEmployee: result.chairEmployee && {
-                id: result.chairEmployee.key,
-                text: result.chairEmployee.name
+                id: result.chairEmployee.id,
+                employeeId: result.chairEmployee.employeeId,
+                employeeNo: result.chairEmployee.employeeNo,
+                employeeName: result.chairEmployee.employeeName,
+                employeeAddress: result.chairEmployee.employeeAddress,
+                employeeDob: result.chairEmployee.employeeDob,
+                employeeTel: result.chairEmployee.employeeTel,
+                employeeTel1: result.chairEmployee.employeeTel1,
+                departmentName: result.chairEmployee.departmentName,
+                levelName: result.chairEmployee.levelName,
+                employeeAvatar: result.chairEmployee.employeeAvatar,
+                departmentRoomName: result.chairEmployee.departmentRoomName,
+                branchName: result.chairEmployee.branchName,
+                employeeBirthPlace: result.chairEmployee.employeeBirthPlace,
+                employeeIDNumber: result.chairEmployee.employeeIDNumber,
+                employeeGender: result.chairEmployee.employeeIDNumber,
+                employeeTaxNumber: result.chairEmployee.employeeTaxNumber,
+                employeeBankAccount: result.chairEmployee.employeeBankAccount,
             },
-            trimester: result.trimester,
+            quarter: result.quarter && {
+                type: result.quarter.type,
+                name: result.quarter.name
+            },
             magnitude: result.magnitude,
             stage: result.stage && {
-                id: result.stage.key,
-                text: result.stage.value
+                key: result.stage.key,
+                value: result.stage.value,
+                displayText: result.stage.displayText
             },
             stageStatus: result.stageStatus && {
-                id: result.stageStatus.key,
-                text: result.stageStatus.value
+                key: result.stageStatus.key,
+                value: result.stageStatus.value,
+                displayText: result.stageStatus.displayText
             },
-            location: result.location,
+            location: result.location && {
+                key: result.location.key,
+                value: result.location.value,
+                displayText: result.location.displayText
+            },
             projectNo: result.projectNo,
             job: result.job,
             place: result.place,
             region: result.region,
-            customerName: result.customerName,
-            contact: result.contact && {
-                id: result.contact.id,
-                text: result.contact.customerName,
+            customer: result.customer && {
+                id: result.customer.id,
+                customerId: result.customer.customerId,
+                customerName: result.customer.customerName,
+                customerNo: result.customer.customerNo,
+                customerDesc: result.customer.customerDesc,
+                customerClassify: result.customer.customerClassify,
+                customerNewOldType: result.customer.customerNewOldType,
+                customerPhone: result.customer.customerPhone,
+                customerAddress: result.customer.customerAddress
             },
             customerContact: result.customerContact && {
                 id: result.customerContact.id,
-                text: result.customerContact.name,
+                name: result.customerContact.name
             },
-            consultantUnit: result.consultantUnit,
+            consultantUnitCustomer: result.consultantUnitCustomer && {
+                id: result.consultantUnitCustomer.id,
+                customerId: result.consultantUnitCustomer.customerId,
+                customerName: result.consultantUnitCustomer.customerName,
+                customerNo: result.consultantUnitCustomer.customerNo,
+                customerDesc: result.consultantUnitCustomer.customerDesc,
+                customerClassify: result.consultantUnitCustomer.customerClassify,
+                customerNewOldType: result.consultantUnitCustomer.customerNewOldType,
+                customerPhone: result.consultantUnitCustomer.customerPhone,
+                customerAddress: result.consultantUnitCustomer.customerAddress
+            },
             consultantAddress: result.consultantAddress,
             consultantPhone: result.consultantPhone,
             floorArea: result.floorArea,
-            mainBuildingCategory: result.mainBuildingCategory,
+            mainBuildingCategory: result.mainBuildingCategory && {
+                key: result.mainBuildingCategory.key,
+                value: result.mainBuildingCategory.value,
+                displayText: result.mainBuildingCategory.displayText
+            },
             documentLink: result.documentLink,
-            status: result.status,
+            status: result.status && {
+                key: result.status.key,
+                value: result.status.value,
+                displayText: result.status.displayText
+            },
             progress: result.progress,
             acceptanceReason: result.acceptanceReason,
             unacceptanceReason: result.unacceptanceReason,
+            cancelReason: result.cancelReason,
             evaluation: result.evaluation,
             startTrackingDate: result.startTrackingDate,
             submissionDate: result.submissionDate,
@@ -90,6 +146,7 @@ export class PackageService {
             projectEstimatedStartDate: result.projectEstimatedStartDate,
             projectEstimatedEndDate: result.projectEstimatedEndDate,
             totalTime: result.totalTime,
+            description: result.description ,
         };
     }
 
@@ -99,11 +156,17 @@ export class PackageService {
         private apiService: ApiService,
     ) { }
 
+    // active step
     setUserId(data: boolean) {
         this.userIdSub.next(data);
     }
+    setActiveKickoff(data: boolean) {
+        this.userIdSub.next(data);
+    }
 
-
+    setSummaryConditionForm(data: boolean) {
+        this.isSummaryConditionForm.next(data);
+    }
 
 
     filter(terms: string, status: string, uploader: string, uploadDate: number, source: any[]): any[] {

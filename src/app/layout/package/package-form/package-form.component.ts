@@ -41,7 +41,6 @@ export class PackageFormComponent implements OnInit {
         locationId: '',
         constructionCategoryId: '',
         constructionTypeId: '',
-        bidStatusId: ''
     };
     dialogChair;
     dialogAssigner;
@@ -116,7 +115,7 @@ export class PackageFormComponent implements OnInit {
             hbcRole: [this.package.hbcRole],
             documentLink: [this.package.documentLink],
             chairEmployeeId: [this.package.chairEmployeeId],
-            bidStatusId: [this.package.bidStatusId, Validators.required],
+            //   bidStatusId: [this.package.bidStatusId, Validators.required],
             amount: [this.package.amount],
             evaluation: [this.package.evaluation],
             startTrackingDate: [this.package.startTrackingDate],
