@@ -17,7 +17,7 @@ export class UploadFileComponent implements OnInit {
   @Input() typeFile;
   @Input() packageId;
   datePickerConfig = DATETIME_PICKER_CONFIG;
-  public listItems: Array<string> = ["Item 1", "Item 2", "Item 3"];
+  public listItems: Array<string> = ['Item 1', 'Item 2', 'Item 3'];
 
   listTypeFile = [
     {
