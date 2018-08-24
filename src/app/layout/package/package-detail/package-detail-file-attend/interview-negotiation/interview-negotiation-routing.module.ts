@@ -11,6 +11,10 @@ const routes: Routes = [
         path: 'create',
         loadChildren: './create-interview/create-interview.module#CreateInterviewModule'
       },
+      {
+        path: 'prepare',
+        loadChildren: './prepare-interview/prepare-interview.module#PrepareInterviewModule'
+      },
     ]
   }
 ];
