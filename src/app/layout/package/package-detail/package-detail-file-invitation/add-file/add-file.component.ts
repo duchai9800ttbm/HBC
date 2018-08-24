@@ -235,25 +235,22 @@ export class AddFileComponent implements OnInit {
     }
 
     sendEvaluate() {
-        // if (!this.checkSendEvaluate()) {
-        //     this.alertService.error('Vui lòng chọn một loại tài liệu chính thức');
-        // } else {
-            const that = this;
-            this.confirmationService.confirm(
-                'Bạn có muốn chuyển đánh giá ?',
-                () => {
-                    that.spinner.show();
-                    this.opportunityHsmtService.moveEvaluate(this.packageId).subscribe(result => {
-                        that.router.navigate([`/package/detail/${this.packageId}/invitation/evaluate`]);
+        const that = this;
+        this.confirmationService.confirm(
+            'Bạn có muốn chuyển đánh giá ?',
+            () => {
+                that.spinner.show();
+                this.opportunityHsmtService.moveEvaluate(this.packageId).subscribe(result => {
+                    that.router.navigate([`/package/detail/${this.packageId}/invitation/evaluate`]);
+                    that.spinner.hide();
+                    that.alertService.success('Chuyển đánh giá thành công!');
+                },
+                    err => {
                         that.spinner.hide();
-                        that.alertService.success('Chuyển đánh giá thành công!');
-                    },
-                        err => {
-                            that.spinner.hide();
-                            that.alertService.error('Chuyển đánh giá không thành công. Bạn vui lòng kiểm tra lại!');
-                        });
-                }
-            );
+                        that.alertService.error('Chuyển đánh giá không thành công. Bạn vui lòng kiểm tra lại!');
+                    });
+            }
+        );
     }
 
     checkSendEvaluate(): boolean {
@@ -330,17 +327,16 @@ export class AddFileComponent implements OnInit {
         const that = this;
         const listNoGroup = this.documentService.unGroup([...this.bidDocumentGroupListItemSearchResult]);
         const listId = listNoGroup.filter(x => x.checkboxSelected).map(x => x.id);
-        // console.log(listId);
         if (listId && listId.length === 0) {
             this.alertService.error('Bạn phải chọn ít nhất một tài liệu để xóa!');
         } else {
             this.confirmationService.confirm('Bạn có chắc chắn muốn xóa những tài liệu này?',
-            () => {
-                this.documentService.multiDelete(listId).subscribe(data => {
-                    that.alertService.success('Đã xóa tài liệu!');
-                    that.refresh();
+                () => {
+                    this.documentService.multiDelete(listId).subscribe(data => {
+                        that.alertService.success('Đã xóa tài liệu!');
+                        that.refresh();
+                    });
                 });
-            });
         }
     }
 
