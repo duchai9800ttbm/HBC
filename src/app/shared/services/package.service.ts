@@ -14,24 +14,35 @@ import { PackageModel } from '../models/package/package.model';
 import { FieldModel } from '../models/package/field.model';
 import { PackageInfoModel } from '../models/package/package-info.model';
 import { Subject } from '../../../../node_modules/rxjs';
+import { BidUserGroupMemberResponsive } from '../models/api-response/setting/bid-user-group-member-responsive';
+import { SETTING_BID_USER, SETTING_BID_STAGE } from '../configs/common.config';
+import { BidPermissionGroupResponsive } from '../models/api-response/setting/bid-permission-group-responsive';
 
 @Injectable()
 export class PackageService {
     private isSummaryConditionForm = new Subject<boolean>();
     public isSummaryConditionForm$ = this.isSummaryConditionForm.asObservable();
     private userIdSub = new Subject<any>();
-
     public kickOff = new Subject<any>();
-    userId$ = this.userIdSub.asObservable();    
+    userId$ = this.userIdSub.asObservable();
     kickOff$ = this.kickOff.asObservable();
     private static createFilterParams(filter: PackageFilter): URLSearchParams {
         const urlFilterParams = new URLSearchParams();
         urlFilterParams.append('projectName', filter.projectName);
-        urlFilterParams.append('opportunityClassify', filter.opportunityClassify);
+        urlFilterParams.append(
+            'opportunityClassify',
+            filter.opportunityClassify
+        );
         urlFilterParams.append('stage', filter.stage);
         urlFilterParams.append('chairEmployeeId', filter.chairEmployeeId);
-        urlFilterParams.append('minCost', filter.minCost ? filter.minCost.toString() : '');
-        urlFilterParams.append('maxCost', filter.maxCost ? filter.maxCost.toString() : '');
+        urlFilterParams.append(
+            'minCost',
+            filter.minCost ? filter.minCost.toString() : ''
+        );
+        urlFilterParams.append(
+            'maxCost',
+            filter.maxCost ? filter.maxCost.toString() : ''
+        );
         urlFilterParams.append('sorting', filter.sorting);
         return urlFilterParams;
     }
@@ -70,7 +81,7 @@ export class PackageService {
                 employeeIDNumber: result.chairEmployee.employeeIDNumber,
                 employeeGender: result.chairEmployee.employeeIDNumber,
                 employeeTaxNumber: result.chairEmployee.employeeTaxNumber,
-                employeeBankAccount: result.chairEmployee.employeeBankAccount,
+                employeeBankAccount: result.chairEmployee.employeeBankAccount
             },
             quarter: result.quarter && {
                 type: result.quarter.type,
@@ -117,8 +128,10 @@ export class PackageService {
                 customerName: result.consultantUnitCustomer.customerName,
                 customerNo: result.consultantUnitCustomer.customerNo,
                 customerDesc: result.consultantUnitCustomer.customerDesc,
-                customerClassify: result.consultantUnitCustomer.customerClassify,
-                customerNewOldType: result.consultantUnitCustomer.customerNewOldType,
+                customerClassify:
+                    result.consultantUnitCustomer.customerClassify,
+                customerNewOldType:
+                    result.consultantUnitCustomer.customerNewOldType,
                 customerPhone: result.consultantUnitCustomer.customerPhone,
                 customerAddress: result.consultantUnitCustomer.customerAddress
             },
@@ -147,15 +160,15 @@ export class PackageService {
             projectEstimatedStartDate: result.projectEstimatedStartDate,
             projectEstimatedEndDate: result.projectEstimatedEndDate,
             totalTime: result.totalTime,
-            description: result.description ,
+            description: result.description
         };
     }
 
     constructor(
         private filterService: FilterPipe,
         private instantSearchService: InstantSearchService,
-        private apiService: ApiService,
-    ) { }
+        private apiService: ApiService
+    ) {}
 
     // active step
     setUserId(data: boolean) {
@@ -169,10 +182,21 @@ export class PackageService {
         this.isSummaryConditionForm.next(data);
     }
 
-
-    filter(terms: string, status: string, uploader: string, uploadDate: number, source: any[]): any[] {
+    filter(
+        terms: string,
+        status: string,
+        uploader: string,
+        uploadDate: number,
+        source: any[]
+    ): any[] {
         const list = this.convertNestedJson(source);
-        const listSource = this.sortAndSearchFileName(terms, status, uploader, uploadDate, list);
+        const listSource = this.sortAndSearchFileName(
+            terms,
+            status,
+            uploader,
+            uploadDate,
+            list
+        );
         return this.group(listSource);
     }
 
@@ -192,46 +216,62 @@ export class PackageService {
                 pageSize: result.pageSize,
                 pageCount: result.totalPages,
                 total: result.totalCount,
-                items: (result.items || []).map(PackageService.toPackageListItem),
+                items: (result.items || []).map(
+                    PackageService.toPackageListItem
+                )
             };
         });
     }
 
-    filterNoGroup(terms: string, status: string, uploader: string, uploadDate: number, source: any[]) {
+    filterNoGroup(
+        terms: string,
+        status: string,
+        uploader: string,
+        uploadDate: number,
+        source: any[]
+    ) {
         const list = this.convertJson(source);
-        const listSource = this.sortAndSearchFileName(terms, status, uploader, uploadDate, list);
+        const listSource = this.sortAndSearchFileName(
+            terms,
+            status,
+            uploader,
+            uploadDate,
+            list
+        );
         const listFormat = this.formatJson(listSource);
         return listFormat;
     }
 
     convertNestedJson(source: any[]) {
-        const arr = source.map(x => {
-            return x.item.map(y => {
-                const day = moment.utc(y.uploadDate * 1000).get('date');
-                const month = moment.utc(y.uploadDate * 1000).get('month');
-                const year = moment.utc(y.uploadDate * 1000).get('year');
-                return {
-                    typeOfDocument: x.typeOfDocument,
-                    id: y.id,
-                    fileName: y.fileName,
-                    version: y.version,
-                    status: y.status,
-                    uploadPeople: y.uploadPeople,
-                    uploadDate: y.uploadDate,
-                    day: day,
-                    month: month + 1,
-                    year: year
-                };
-            });
-        }).concat();
-        return ([]).concat(...arr);
+        const arr = source
+            .map(x => {
+                return x.item.map(y => {
+                    const day = moment.utc(y.uploadDate * 1000).get('date');
+                    const month = moment.utc(y.uploadDate * 1000).get('month');
+                    const year = moment.utc(y.uploadDate * 1000).get('year');
+                    return {
+                        typeOfDocument: x.typeOfDocument,
+                        id: y.id,
+                        fileName: y.fileName,
+                        version: y.version,
+                        status: y.status,
+                        uploadPeople: y.uploadPeople,
+                        uploadDate: y.uploadDate,
+                        day: day,
+                        month: month + 1,
+                        year: year
+                    };
+                });
+            })
+            .concat();
+        return [].concat(...arr);
     }
-
 
     convertJson(source: any[]) {
         source.forEach(element => {
             element.day = moment.utc(element.uploadDate * 1000).get('date');
-            element.month = moment.utc(element.uploadDate * 1000).get('month') + 1;
+            element.month =
+                moment.utc(element.uploadDate * 1000).get('month') + 1;
             element.year = moment.utc(element.uploadDate * 1000).get('year');
         });
         return source;
@@ -246,26 +286,30 @@ export class PackageService {
         return source;
     }
 
-    sortAndSearchFileName(fileName, status, uploader, uploadDate, source: any[]) {
-        let day = null, month = null, year = null;
+    sortAndSearchFileName(
+        fileName,
+        status,
+        uploader,
+        uploadDate,
+        source: any[]
+    ) {
+        let day = null,
+            month = null,
+            year = null;
         if (uploadDate) {
-            const today = new Date(
-                moment(uploadDate).unix()
-            );
+            const today = new Date(moment(uploadDate).unix());
             day = moment(uploadDate).get('date');
             month = moment(uploadDate).get('month') + 1;
             year = moment(uploadDate).get('year');
         }
-        return this.filterService
-            .transform(source,
-                {
-                    fileName: `${fileName ? fileName : ''}`,
-                    status: `${status ? status : ''}`,
-                    uploadPeople: `${uploader ? uploader : ''}`,
-                    day: `${day ? day : ''}`,
-                    month: `${month ? month : ''}`,
-                    year: `${year ? year : ''}`
-                });
+        return this.filterService.transform(source, {
+            fileName: `${fileName ? fileName : ''}`,
+            status: `${status ? status : ''}`,
+            uploadPeople: `${uploader ? uploader : ''}`,
+            day: `${day ? day : ''}`,
+            month: `${month ? month : ''}`,
+            year: `${year ? year : ''}`
+        });
     }
 
     group(source: any[]) {
@@ -277,7 +321,10 @@ export class PackageService {
             }
             return prev;
         }, {});
-        return Object.keys(groupedObj).map(typeOfDocument => ({ typeOfDocument, item: groupedObj[typeOfDocument] }));
+        return Object.keys(groupedObj).map(typeOfDocument => ({
+            typeOfDocument,
+            item: groupedObj[typeOfDocument]
+        }));
     }
 
     instantSearchWithFilter(
@@ -287,23 +334,28 @@ export class PackageService {
         pageSize: number | string
     ): Observable<PagedResult<PackageListItem>> {
         const searchUrl = `bidopportunity/filter/${page}/${pageSize}?searchTerm=`;
-        return this.instantSearchService.searchWithFilter(
-            searchUrl,
-            terms,
-            PackageService.createFilterParams(filter),
-        )
+        return this.instantSearchService
+            .searchWithFilter(
+                searchUrl,
+                terms,
+                PackageService.createFilterParams(filter)
+            )
             .map(result => {
                 return {
                     currentPage: result.pageIndex,
                     pageSize: result.pageSize,
                     pageCount: result.totalPages,
                     total: result.totalCount,
-                    items: (result.items || []).map(PackageService.toPackageListItem),
+                    items: (result.items || []).map(
+                        PackageService.toPackageListItem
+                    )
                 };
             });
     }
 
-    getInforPackageID(bidOpportunityId: number | string): Observable<PackageInfoModel> {
+    getInforPackageID(
+        bidOpportunityId: number | string
+    ): Observable<PackageInfoModel> {
         const searchUrl = `bidopportunity/${bidOpportunityId}`;
         return this.apiService.get(searchUrl).map(response => {
             const result = response.result;
@@ -353,7 +405,7 @@ export class PackageService {
                 },
                 customerContact: result.customerContact && {
                     id: result.customerContact.id,
-                    text: result.customerContact.name,
+                    text: result.customerContact.name
                 },
                 consultantUnitCustomer: result.consultantUnitCustomer && {
                     id: result.consultantUnitCustomer.customerId,
@@ -388,7 +440,6 @@ export class PackageService {
         });
     }
 
-
     getRegiontypesPackage(): Observable<any> {
         const url = `data/regiontypes`;
         return this.apiService.get(url).map(response => {
@@ -396,7 +447,7 @@ export class PackageService {
             return result.map(i => {
                 return {
                     id: i.key,
-                    text: i.value,
+                    text: i.value
                 };
             });
         });
@@ -409,7 +460,7 @@ export class PackageService {
             return result.map(i => {
                 return {
                     id: i.key,
-                    text: i.value,
+                    text: i.value
                 };
             });
         });
@@ -422,7 +473,7 @@ export class PackageService {
             return result.map(i => {
                 return {
                     id: i.key,
-                    text: i.value,
+                    text: i.value
                 };
             });
         });
@@ -435,7 +486,7 @@ export class PackageService {
             return result.map(i => {
                 return {
                     id: i.key,
-                    text: i.value,
+                    text: i.value
                 };
             });
         });
@@ -448,7 +499,7 @@ export class PackageService {
             return result.map(i => {
                 return {
                     id: i.key,
-                    text: i.value,
+                    text: i.value
                 };
             });
         });
@@ -461,7 +512,7 @@ export class PackageService {
             return result.map(i => {
                 return {
                     id: i.key,
-                    text: i.value,
+                    text: i.value
                 };
             });
         });
@@ -474,7 +525,7 @@ export class PackageService {
             return result.map(i => {
                 return {
                     id: i.key,
-                    text: i.value,
+                    text: i.value
                 };
             });
         });
@@ -487,7 +538,7 @@ export class PackageService {
             return result.map(i => {
                 return {
                     id: i.key,
-                    text: i.value,
+                    text: i.value
                 };
             });
         });
@@ -500,7 +551,7 @@ export class PackageService {
             return result.map(i => {
                 return {
                     id: i.key,
-                    text: i.value,
+                    text: i.value
                 };
             });
         });
@@ -513,7 +564,7 @@ export class PackageService {
             return result.map(i => {
                 return {
                     id: i.key,
-                    text: i.value,
+                    text: i.value
                 };
             });
         });
@@ -532,8 +583,12 @@ export class PackageService {
             quarter: formValue.quarter,
             customerId: formValue.customerId ? formValue.customerId.id : null,
             // classify: formValue.classify,
-            customerContactId: formValue.customerContactId ? formValue.customerContactId.id : null,
-            consultantUnitCustomerId: formValue.consultantUnitCustomerId ? formValue.consultantUnitCustomerId.id : 0,
+            customerContactId: formValue.customerContactId
+                ? formValue.customerContactId.id
+                : null,
+            consultantUnitCustomerId: formValue.consultantUnitCustomerId
+                ? formValue.consultantUnitCustomerId.id
+                : 0,
             consultantAddress: formValue.consultantAddress,
             consultantPhone: formValue.consultantPhone,
             floorArea: formValue.floorArea,
@@ -542,19 +597,26 @@ export class PackageService {
             constructionCategoryId: formValue.constructionCategoryId,
             hbcRole: formValue.hbcRole,
             documentLink: formValue.documentLink,
-            chairEmployeeId: formValue.chairEmployeeId ? +formValue.chairEmployeeId : 0,
+            chairEmployeeId: formValue.chairEmployeeId
+                ? +formValue.chairEmployeeId
+                : 0,
             bidStatusId: formValue.bidStatusId,
             amount: formValue.amount,
             evaluation: formValue.evaluation,
             startTrackingDate: moment(formValue.startTrackingDate).unix(),
             submissionDate: moment(formValue.submissionDate).unix(),
             resultEstimatedDate: moment(formValue.resultEstimatedDate).unix(),
-            projectEstimatedStartDate: moment(formValue.projectEstimatedStartDate).unix(),
-            projectEstimatedEndDate: moment(formValue.projectEstimatedEndDate).unix(),
+            projectEstimatedStartDate: moment(
+                formValue.projectEstimatedStartDate
+            ).unix(),
+            projectEstimatedEndDate: moment(
+                formValue.projectEstimatedEndDate
+            ).unix(),
             totalTime: formValue.totalTime,
             description: formValue.description
         };
-        return this.apiService.post(url, inforPackage)
+        return this.apiService
+            .post(url, inforPackage)
             .map(response => response)
             .share();
     }
@@ -572,8 +634,12 @@ export class PackageService {
             quarter: formValue.quarter,
             customerId: formValue.customerId ? formValue.customerId.id : null,
             // classify: formValue.classify,
-            customerContactId: formValue.customerContactId ? formValue.customerContactId.id : null,
-            consultantUnitCustomerId: formValue.consultantUnitCustomerId ? formValue.consultantUnitCustomerId.id : 0,
+            customerContactId: formValue.customerContactId
+                ? formValue.customerContactId.id
+                : null,
+            consultantUnitCustomerId: formValue.consultantUnitCustomerId
+                ? formValue.consultantUnitCustomerId.id
+                : 0,
             consultantAddress: formValue.consultantAddress,
             consultantPhone: formValue.consultantPhone,
             floorArea: formValue.floorArea,
@@ -582,15 +648,21 @@ export class PackageService {
             constructionCategoryId: formValue.constructionCategoryId,
             hbcRole: formValue.hbcRole,
             documentLink: formValue.documentLink,
-            chairEmployeeId: formValue.chairEmployeeId ? +formValue.chairEmployeeId : 0,
+            chairEmployeeId: formValue.chairEmployeeId
+                ? +formValue.chairEmployeeId
+                : 0,
             bidStatusId: formValue.bidStatusId,
             amount: formValue.amount,
             evaluation: formValue.evaluation,
             startTrackingDate: moment(formValue.startTrackingDate).unix(),
             submissionDate: moment(formValue.submissionDate).unix(),
             resultEstimatedDate: moment(formValue.resultEstimatedDate).unix(),
-            projectEstimatedStartDate: moment(formValue.projectEstimatedStartDate).unix(),
-            projectEstimatedEndDate: moment(formValue.projectEstimatedEndDate).unix(),
+            projectEstimatedStartDate: moment(
+                formValue.projectEstimatedStartDate
+            ).unix(),
+            projectEstimatedEndDate: moment(
+                formValue.projectEstimatedEndDate
+            ).unix(),
             totalTime: formValue.totalTime,
             description: formValue.description,
             cancelReason: formValue.cancelReason,
@@ -598,7 +670,8 @@ export class PackageService {
             unacceptanceReason: formValue.unacceptanceReason,
             progress: formValue.progress
         };
-        return this.apiService.post(url, inforPackage)
+        return this.apiService
+            .post(url, inforPackage)
             .map(response => {
                 return response;
             })
@@ -607,9 +680,10 @@ export class PackageService {
     // Xóa gói thầu
     deleteOpportunity(id: any): Observable<any> {
         const url = `bidopportunity/delete`;
-        return this.apiService.post(url, {
-            id: id
-        })
+        return this.apiService
+            .post(url, {
+                id: id
+            })
             .map(response => {
                 return response;
             })
@@ -618,12 +692,13 @@ export class PackageService {
     // Liên hệ khách hàng - Màn hình tạo mới gói thầu
     getListCustomercontact(searchTerm: string): Observable<any> {
         const url = `customercontact/0/10/?searchTerm=${searchTerm}`;
-        return this.apiService.get(url)
+        return this.apiService
+            .get(url)
             .map(response => {
                 return response.result.items.map(x => {
                     return {
                         id: x.id,
-                        text: x.name,
+                        text: x.name
                     };
                 });
             })
@@ -633,7 +708,8 @@ export class PackageService {
     //
     getListCustomer(searchTerm: string): Observable<any> {
         const url = `customer/search/0/10/?searchTerm=${searchTerm}`;
-        return this.apiService.get(url)
+        return this.apiService
+            .get(url)
             .map(response => {
                 return response.result.items.map(x => {
                     return {
@@ -651,7 +727,8 @@ export class PackageService {
     // Lấy cấu hình màn hình hiển thị danh sách gói thầu
     getListFields(userId: number): Observable<FieldModel[]> {
         const url = `bidopportunity/user/${userId}/fields`;
-        return this.apiService.get(url)
+        return this.apiService
+            .get(url)
             .map(response => {
                 return response.result.map(x => {
                     return {
@@ -670,16 +747,18 @@ export class PackageService {
         const url = `bidopportunity/fieldconfigs/update`;
         const model = {
             userId: userId,
-            entityFields: listField,
+            entityFields: listField
         };
-        return this.apiService.post(url, model)
+        return this.apiService
+            .post(url, model)
             .map(response => response.result);
     }
 
     // default config
     getListFieldsDefault(): Observable<FieldModel[]> {
         const url = `bidopportunity/defaultfields`;
-        return this.apiService.get(url)
+        return this.apiService
+            .get(url)
             .map(response => {
                 return response.result.map(x => {
                     return {
@@ -692,8 +771,6 @@ export class PackageService {
             })
             .share();
     }
-
-
 
     // Create New Customer
     createCustomer(customer: any) {
@@ -709,7 +786,8 @@ export class PackageService {
             type: customer.type,
             address: customer.address,
             assignedEmployeeID: customer.assignedEmployeeID,
-            customerContactId: customer.customerContactId && customer.customerContactId.id,
+            customerContactId:
+                customer.customerContactId && customer.customerContactId.id,
             business: customer.business,
             customerGroup: customer.customerGroup,
             classify: customer.classify,
@@ -728,8 +806,47 @@ export class PackageService {
         return this.apiService
             .post(url, model)
             .map(response => response.result);
-
     }
 
+    // Danh sách user của các nhóm trong "phân công người đảm nhận vị trí trong gói thầu"
+    getBidGroupMembers(
+        bidId: number,
+        type: string
+    ): Observable<BidUserGroupMemberResponsive[]> {
+        let url = `bidopportunity/${bidId}/`;
+        switch (type) {
+            case SETTING_BID_USER.GroupMember:
+                url += 'bidusergroupmembers';
+                break;
+            case SETTING_BID_USER.StackHolder:
+                url += 'bidusergroupmembersofstakeholders';
+                break;
+        }
+        return this.apiService.get(url).map(response => response.result);
+    }
 
+    updateBidGroupMembers(bidId: number, data): Observable<any> {
+        const url = `bidopportunity/${bidId}/changebidusergroupmembers`;
+        return this.apiService.post(url, data).map(response => response.result);
+    }
+
+    // Danh sách nhóm người thuộc các quyền trong các giai đoạn
+    getBidPermissionGroupByStage(
+        bidId: number,
+        type: string
+    ): Observable<BidPermissionGroupResponsive[]> {
+        let url = `bidopportunity/${bidId}/`;
+        switch (type) {
+            case SETTING_BID_STAGE.Hsdt:
+                url += 'bidpermissiongrouphsdt';
+                break;
+            case SETTING_BID_STAGE.Hsmt:
+                url += 'bidpermissiongrouphsmt';
+                break;
+            case SETTING_BID_STAGE.Kqdt:
+                url += 'bidpermissiongroupkqdt';
+                break;
+        }
+        return this.apiService.get(url).map(response => response.result);
+    }
 }
