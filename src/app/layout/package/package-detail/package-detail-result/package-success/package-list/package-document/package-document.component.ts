@@ -10,7 +10,7 @@ export class PackageDocumentComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
-     this.isContract = false;
+      this.isContract = false;
   }
 
 }

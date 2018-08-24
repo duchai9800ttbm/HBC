@@ -62,7 +62,8 @@ input.form-control.icon {
     font-size: 1.8rem !important;
 }
 .w-80{
-    width: 80px;
+    width: 114px;
+    height: 34px;
     margin-left: 10px;
     color: #fff!important;
 }
@@ -81,7 +82,7 @@ input.form-control.icon {
     font-weight: 400;
 }
 .pd-up {
-    padding-bottom: 10px;
+    padding-bottom: 20px;
     .mg-l {
         white-space: nowrap;
         margin-left: 3%;
@@ -107,4 +108,32 @@ input.form-control.icon {
     white-space: nowrap;
     height: 40px;
     line-height: 35px;
+}
+.or {
+    position: absolute;
+    top: 40px;
+    left: 34px;
+    color: #c2baba;
+    &::after {
+        display: block;
+        background: #c2baba;
+        width: 2px;
+        height: 11px;
+        position: absolute;
+        z-index: 99999999999;
+        left: 23px;
+        top: 18px;
+        content: "";
+      }
+      &::before {
+        display: block;
+        background: #c2baba;
+        width: 2px;
+        height: 11px;
+        position: absolute;
+        z-index: 99999999999;
+        left: 23px;
+        top: -8px;
+        content: "";
+      }
 }

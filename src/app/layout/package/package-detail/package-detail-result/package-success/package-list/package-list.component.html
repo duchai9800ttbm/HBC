@@ -27,7 +27,7 @@
                 <button class="btn btn-primary ml-2" *ngIf="!showBtnNotification">
                     Xóa
                 </button>
-                <button class="btn btn-primary ml-2" *ngIf="!showBtnNotification">
+                <button class="btn btn-primary ml-2" *ngIf="!showBtnNotification" (click)="uploadkqdt(uploadFile)">
                     Upload&nbsp;
                     <span style="text-transform: uppercase" *ngIf="!showBtnNotification">kqdt</span>
                 </button>
@@ -212,7 +212,7 @@
         </div>
 
         <div class="pull-right">
-            <button type="button" class="btn btn-cancel" aria-label="Close" (click)="modalRef.hide()">Hủy</button>
+            <button type="button" class="btn btn-cancel mg-r" aria-label="Close" (click)="modalRef.hide()">Hủy</button>
             <button type="button" *ngIf="!showBtnNotification" class="btn btn-send" aria-label="Close" (click)="SendMailHD()">Gửi</button>
             <button type="button" *ngIf="showBtnNotification" class="btn btn-send" aria-label="Close" (click)="SendMailOther()">Gửi</button>
 
@@ -263,5 +263,91 @@
 
     </div>
 </ng-template>
+<!-- Modal upladfile -->
+
+<ng-template #uploadFile>
+        <form [formGroup]="formUpload" (ngSubmit)="onSubmit()">
+            <div class="modal-header no-boder-bottom">
+                <div class="col-md-10 offset-md-1 text-center">
+                    <h4 class="modal-title text-title text-model">Upload kết quả dự thầu</h4>
+                </div>
+                <div class="col-md-1">
+                    <button type="button" class="close pull-right" aria-label="Close" (click)="modalUpload.hide()">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+            </div>
+            <div class="modal-body fg-w">
+                <div class="row pd-up">
+                    <div class="col-md-4 mg-l">Chọn file</div>
+                    <div class="col-md-7 input-group">
+                        <div class="custom-file form-control">
+                            <input type="file" class="custom-file-input" id="inputGroupFile01">
+                            <label class="custom-file-label" for="inputGroupFile01">--Choose file--</label>
+                        </div>
+                        <span class="input-group-addon">
+                            <i class="fa fa-upload" aria-hidden="true"></i>
+                        </span>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-4 mg-l or">OR</div>
+                </div>
+                <div class="row pd-up">
+                    <div class="col-md-4 mg-l">Đường dẫn file</div>
+                    <div class="col-md-7">
+                        <input type="text" placeholder="Text" class="form-control" value="">
+                    </div>
+                </div>
+    
+                <div class="row pd-up">
+                    <div class="col-md-4 mg-l">Tên</div>
+                    <div class="col-md-7">
+                        <input type="text" class="form-control" placeholder="Tên" formControlName="name" [ngClass]="{ 'is-invalid': submitted && f.name.errors }">
+                        <div *ngIf="submitted && f.name.errors" class="invalid-feedback">
+                            <div *ngIf="f.name.errors.required">Vui lòng nhập tên file</div>
+                        </div>
+                    </div>
+    
+                </div>
+    
+                <div class="row pd-up">
+                    <div class="col-md-4 mg-l">Version</div>
+                    <div class="col-md-7">
+                        <input type="text" class="form-control" value="1">
+                    </div>
+                </div>
+                <div class="row pd-up">
+                    <div class="col-md-4 mg-l">Lần phỏng vấn</div>
+                    <div class="col-md-7">
+                        <input type="number" placeholder=Number class="form-control" value="">
+                    </div>
+                </div>
+    
+                <div class="row pd-up">
+                    <div class="col-md-4 mg-l">Ngày nhận kết quả</div>
+                    <div class="col-md-7 input-group">
+                        <owl-date-time [readonlyInput]="datePickerConfig.readonlyInput" [locale]="datePickerConfig.vi" [placeHolder]="datePickerConfig.placeHolderVn">
+                        </owl-date-time>
+                        <span class="input-group-addon">
+                            <i class="fa fa-calendar"></i>
+                        </span>
+                    </div>
+                </div>
+    
+                <div class="row pd-up">
+                    <div class="col-md-4 mg-l">Mô tả/Nội dung cập nhật</div>
+                    <div class="col-md-7">
+                        <textarea class="form-control textarea-content" name="" id="" cols="30" rows="3" placeholder=""></textarea>
+                    </div>
+                </div>
+    
+                <div class="text-center pd-food">
+                    <button type="submit" class="btn btn-primary w-80" [disabled]="loading">Upload</button>
+                    <button type="button" class="btn btn-cancel w-80" (click)="modalUpload.hide()">Hủy</button>
+                </div>
+            </div>
+        </form>
+    </ng-template>
 <!-- <app-contract-signed [isContract]="showTableSigned" *ngIf="showTableSigned" ></app-contract-signed> -->
 <app-package-document [isContract]="showTableSigned" *ngIf="showTableSigned"></app-package-document>

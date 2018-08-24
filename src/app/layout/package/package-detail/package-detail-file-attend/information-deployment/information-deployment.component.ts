@@ -8,7 +8,11 @@ import { from } from 'rxjs/observable/from';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { GridDataResult, PageChangeEvent, } from '@progress/kendo-angular-grid';
 import { SortDescriptor, orderBy } from '@progress/kendo-data-query';
-
+import { Router } from '@angular/router';
+import { DATATABLE_CONFIG } from '../../../../../shared/configs';
+import { Observable, BehaviorSubject, Subject } from '../../../../../../../node_modules/rxjs';
+import { ConfirmationService, AlertService } from '../../../../../shared/services';
+import { NgxSpinnerService } from 'ngx-spinner';
 
 @Component({
   selector: 'app-information-deployment',
@@ -19,7 +23,8 @@ export class InformationDeploymentComponent implements OnInit {
   public gridView: GridDataResult;
   public items: any[] = listUsers;
   public mySelection: number[] = [];
-
+  isSendCc: boolean;
+  isSendBcc: boolean;
   formUpload: FormGroup;
   submitted = false;
   private dataUploadFile: UploadItem[] = [];
@@ -39,12 +44,17 @@ export class InformationDeploymentComponent implements OnInit {
   isconfirmProgress: boolean;
   textConfirmProgress: string;
   setHSDT: boolean;
-  dowloadTem:boolean;
+  dowloadTem: boolean;
   dataConfirm = true;
+  isShowTable: boolean;
+  packageId: number;
+  dtTrigger: Subject<any> = new Subject();
+  dtOptions: any = DATATABLE_CONFIG;
   ckeditorContent: string = '<p>Dear All!</p>';
   datePickerConfig = DATETIME_PICKER_CONFIG;
   public skip = 0;
   pageSize = 5;
+  checkboxSeclectAll: boolean;
   roms: Array<{ name: string; id: number }> = [
     { id: 1, name: 'Sales' },
     { id: 2, name: 'Master' }
@@ -56,12 +66,24 @@ export class InformationDeploymentComponent implements OnInit {
     { id: 4, name: 'Dao Nhan' },
     { id: 5, name: 'Dang Quyen' }
   ];
-  constructor(private modalService: BsModalService, private formBuilder: FormBuilder) {
+  listData: any = [
+    { id: 1, rom: 'Phòng Giám đốc', username: 'Oliver Dinh', email: 'oliverdinh@gmail.com', checkboxSelected: 'checkboxSelected' },
+    { id: 2, rom: 'Phòng Hành chính', username: 'Van Dinh', email: 'vandinh@gmail.com', checkboxSelected: 'checkboxSelected' },
+    { id: 3, rom: 'Phòng lưu trữ', username: 'Huy Nhat', email: 'huynhat@gmail.com', checkboxSelected: 'checkboxSelected' }
+  ]
+  constructor(
+    private modalService: BsModalService,
+    private formBuilder: FormBuilder,
+    private router: Router,
+    private confirmationService: ConfirmationService,
+    private spinner: NgxSpinnerService,
+    private alertService: AlertService
+  ) {
     this.loadItems();
   }
 
   ngOnInit() {
-
+    this.packageId = +PackageDetailComponent.packageId;
     this.formUpload = this.formBuilder.group({
       name: ['', Validators.required],
       description: [''],
@@ -69,6 +91,8 @@ export class InformationDeploymentComponent implements OnInit {
       userId: [null],
       version: [''],
     });
+    this.isSendCc = false;
+    this.isSendBcc = false;
     this.setHSDT = false;
     this.dowloadTem = false;
     this.isTeamPlate = false;
@@ -76,6 +100,7 @@ export class InformationDeploymentComponent implements OnInit {
     this.hideButon = false;
     this.isSendInformation = false;
     this.showTabelAssignment = false;
+    this.isShowTable = true;
     this.showButtonAssignmet = false;
     this.textConfirmProgress = 'Gửi phân công tiến độ';
     this.toggleTextUpFile = 'Bạn cần phải thông báo triển khai trước khi phân công tiến độ';
@@ -86,8 +111,9 @@ export class InformationDeploymentComponent implements OnInit {
   openModalDeployment(template: TemplateRef<any>) {
     this.modalRef = this.modalService.show(
       template,
-      Object.assign({}, { class: 'gray modal-lg' })
+      Object.assign({}, { class: 'gray modal-lg-max' })
     );
+
   }
   openModalUpload(template: TemplateRef<any>) {
     this.modelUp = this.modalService.show(template);
@@ -105,6 +131,7 @@ export class InformationDeploymentComponent implements OnInit {
     this.textInformation = 'Đã thông báo triển khai';
     this.toggleTextUpFile = this.isSendInformation ? 'Chưa có tài liệu phân công tiến độ. Vui lòng upload file'
       : 'Bạn cần phải thông báo triển khai trước khi phân công tiến độ';
+    this.alertService.success('Gửi thông báo triển khai thành công!');
     this.modalRef.hide();
   }
 
@@ -122,14 +149,17 @@ export class InformationDeploymentComponent implements OnInit {
       createDate: '',
       status: null,
       userId: null,
-      version: this.formUpload.value.version
+      version: this.formUpload.value.version,
+      interview: null
     });
     this.uploadItem = this.dataUploadFile;
     this.formUpload.reset();
     this.submitted = false;
     // this.isSendInformation = false;
-    this.showTabelAssignment = !this.showTabelAssignment;
-    this.showButtonAssignmet = !this.showButtonAssignmet;
+    this.hideButon = false;
+    this.showTabelAssignment = true;
+    this.showButtonAssignmet = true;
+    this.alertService.success('Upload file phân công tiến độ thành công!');
     this.modelUp.hide();
 
   }
@@ -137,15 +167,19 @@ export class InformationDeploymentComponent implements OnInit {
   confirmProgress() {
     this.isconfirmProgress = !this.isconfirmProgress;
     this.showButtonAssignmet = !this.showButtonAssignmet;
-    this.hideButon = !this.hideButon;
+    this.hideButon = true;
+    this.showTabelAssignment = true;
+    this.isShowTable = false;
     this.isTeamPlate = false;
     this.dataConfirm = !this.dataConfirm;
     this.textInformation = 'Đã xác nhận phân công';
+    this.alertService.success('Xác nhận phân công tiến độ thành công!');
   }
   sendConfirmAssignment() {
     this.setHSDT = true;
     this.modelSendAssignment.hide();
     this.textConfirmProgress = 'Gửi lại phân công tiến độ';
+    this.alertService.success('Gửi phân công tiến độ thành công!');
   }
 
   public sortChange(sort: SortDescriptor[]): void {
@@ -157,6 +191,31 @@ export class InformationDeploymentComponent implements OnInit {
       data: this.items.slice(this.skip, this.skip + this.pageSize),
       total: this.items.length
     };
+  }
+  sendCc() {
+    this.isSendCc = !this.isSendCc;
+  }
+  sendBcc() {
+    this.isSendBcc = !this.isSendBcc;
+  }
+  ClosePopup() {
+    this.modalRef.hide();
+    // this.router.navigate([`/package/detail/${this.packageId}/result`]);
+  }
+  onSelectAll(value: boolean) {
+    this.listData.forEach(x => (x['checkboxSelected'] = value));
+  }
+
+  lapHSDT() {
+    this.confirmationService.confirm(
+      'Bạn có muốn lập hồ sơ dự thầu?',
+      () => {
+        this.spinner.show();
+        this.router.navigate([`/package/detail/${this.packageId}/attend/build`]);
+        this.spinner.hide();
+        this.alertService.success('Triển khai & phân công tiến độ thành công!');
+      }
+    );
   }
 
 }

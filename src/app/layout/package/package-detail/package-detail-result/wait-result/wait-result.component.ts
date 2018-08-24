@@ -5,6 +5,8 @@ import { Router, ActivatedRoute, ParamMap } from '@angular/router';
 import { PackageDetailComponent } from '../../package-detail.component';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { DATETIME_PICKER_CONFIG } from '../../../../../shared/configs/datepicker.config';
+import { ConfirmationService, AlertService } from '../../../../../shared/services';
+import { NgxSpinnerService } from 'ngx-spinner';
 
 @Component({
   selector: 'app-wait-result',
@@ -38,7 +40,10 @@ export class WaitResultComponent implements OnInit {
     private modalService: BsModalService,
     private router: Router,
     private activetedRoute: ActivatedRoute,
-    private formBuilder: FormBuilder) { }
+    private formBuilder: FormBuilder,
+    private alertService: AlertService,
+    private spinner: NgxSpinnerService,
+  ) { }
 
   ngOnInit() {
     this.formUpload = this.formBuilder.group({
@@ -93,12 +98,17 @@ export class WaitResultComponent implements OnInit {
     if (this.btnTrungThau) {
       this.modaltrungThau.hide();
       this.modalUpload = this.modalService.show(template);
+      this.alertService.success('Gửi lý do trúng thầu thành công!');
     } else if (this.btnTratThau) {
       this.modaltratThau.hide();
       this.modalUpload = this.modalService.show(template);
-    } else {
-      this.modalhuyThau.hide();
+      this.alertService.success('Gửi lý do trật thầu thành công!');
+    } else {     
+      this.spinner.show();
       this.router.navigate([`/package/detail/${this.currentPackageId}/result/package-cancel`]);
+      this.spinner.hide();
+      this.alertService.success('Gửi lý do hủy thầu thành công!');
+      this.modalhuyThau.hide();   
     }
   }
   get f() { return this.formUpload.controls; }
@@ -108,10 +118,16 @@ export class WaitResultComponent implements OnInit {
       return;
     }
     if(this.btnTrungThau) {
+      this.spinner.show();
       this.router.navigate([`/package/detail/${this.currentPackageId}/result/package-success`]);
+      this.spinner.hide();
+      this.alertService.success('Upload kết quả dự thầu thành công!');      
     }
-    if (this.btnTratThau) {
+    if (this.btnTratThau) {      
+      this.spinner.show();
       this.router.navigate([`/package/detail/${this.currentPackageId}/result/package-failed`]);
+      this.spinner.hide();
+      this.alertService.success('Upload kết quả dự thầu thành công!');
     }
     
     this.modalUpload.hide();
