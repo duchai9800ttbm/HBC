@@ -20,10 +20,10 @@ export class PackageService {
     private isSummaryConditionForm = new Subject<boolean>();
     public isSummaryConditionForm$ = this.isSummaryConditionForm.asObservable();
     private userIdSub = new Subject<any>();
+
     public kickOff = new Subject<any>();
     userId$ = this.userIdSub.asObservable();    
     kickOff$ = this.kickOff.asObservable();
-
     private static createFilterParams(filter: PackageFilter): URLSearchParams {
         const urlFilterParams = new URLSearchParams();
         urlFilterParams.append('projectName', filter.projectName);

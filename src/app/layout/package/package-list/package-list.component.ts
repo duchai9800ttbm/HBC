@@ -1,4 +1,4 @@
-import { Component, OnInit, OnChanges, AfterViewChecked, ViewChild, ElementRef } from '@angular/core';
+import { Component, OnInit, OnChanges, AfterViewChecked, ViewChild, ElementRef, ChangeDetectorRef, NgZone } from '@angular/core';
 import { Observable } from '../../../../../node_modules/rxjs/Observable';
 import { DictionaryItem } from '../../../shared/models/dictionary-item.model';
 import { Subject } from '../../../../../node_modules/rxjs/Subject';
@@ -25,11 +25,13 @@ import { UserItemModel } from '../../../shared/models/user/user-item.model';
 import { UserModel } from '../../../shared/models/user/user.model';
 import { FieldModel } from '../../../shared/models/package/field.model';
 import { LayoutService } from '../../../shared/services/layout.service';
+import { NgbDropdownConfig } from '@ng-bootstrap/ng-bootstrap';
 @Component({
     selector: 'app-package-list',
     templateUrl: './package-list.component.html',
     styleUrls: ['./package-list.component.scss'],
-    animations: [routerTransition()]
+    animations: [routerTransition()],
+    providers: [NgbDropdownConfig] // add NgbDropdownConfig to the component providers
 
 })
 export class PackageListComponent implements OnInit, AfterViewChecked {
@@ -59,6 +61,7 @@ export class PackageListComponent implements OnInit, AfterViewChecked {
     userListItem: UserItemModel[];
     user: UserModel;
     listField: FieldModel[];
+    listFieldNomarlized = [];
     sum;
     isManageBidOpportunitys;
     isViewBidOpportunitys;
@@ -84,10 +87,14 @@ export class PackageListComponent implements OnInit, AfterViewChecked {
         private packageService: PackageService,
         private userService: UserService,
         private sessionService: SessionService,
-        private layoutService: LayoutService
-
-    ) { }
-    someRange = [1000000, 10000000000];
+        private layoutService: LayoutService,
+        private cdRef: ChangeDetectorRef,
+        private zone: NgZone,
+        config: NgbDropdownConfig
+    ) {
+        config.autoClose = false;
+    }
+    someRange = [0, 10000000000];
     someKeyboardConfig: any = {
         behaviour: 'drag',
         connect: true,
@@ -123,7 +130,31 @@ export class PackageListComponent implements OnInit, AfterViewChecked {
         return this.sessionService.currentUser.userId;
 
     }
-
+    tenGoithau = false;
+    maDuAn = false;
+    tenDuAn = false;
+    vaiTro = false;
+    chuTri = false;
+    phanLoai = false;
+    tongGiaTri = false;
+    quyMo = false;
+    giaiDoan = false;
+    khuVuc = false;
+    congViec = false;
+    tienDoThucHien = false;
+    linkTaiLieu = false;
+    tongThoiGian = false;
+    quy = false;
+    donViTuVan = false;
+    loaiKhachHang = false;
+    ngayBatDau = false;
+    ngayKhoiCongDuAn = false;
+    ngayNhanHoSoMoiThau = false;
+    ngayKetThucDuAn = false;
+    ngayDuKienKetQuaThau = false;
+    diaChiDVTV = false;
+    soDienThoaiDVTV = false;
+    dienTichSan = false;
     ngOnInit() {
         window.scrollTo(0, 0);
         this.refreshPopupConfig();
@@ -176,7 +207,25 @@ export class PackageListComponent implements OnInit, AfterViewChecked {
     refreshPopupConfig() {
         this.packageService.getListFields(this.getUserId).subscribe(data => {
             this.listField = data;
+            this.listFieldNomarlized = [...this.listField].filter(x => x.hidden === true).map(x => x.fieldName);
             this.sum = [...this.listField].filter(x => x.hidden === true).length;
+            this.tenGoithau = this.listFieldNomarlized.includes('ARBidOpportunityName');
+            this.maDuAn = this.listFieldNomarlized.includes('ARBidOpportunityNo');
+            this.congViec = this.listFieldNomarlized.includes('ARBidOpportunityJob');
+            // this.tenDuAn = this.listFieldNomarlized.includes('')
+            this.vaiTro = this.listFieldNomarlized.includes('ARBidOpportunityHBCChair');
+            this.donViTuVan = this.listFieldNomarlized.includes('ARBidOpportunityConsultantUnit');
+            this.quy = this.listFieldNomarlized.includes('ARBidOpportunityQuarter');
+            // this.linkTaiLieu = this.listFieldNomarlized.includes('');
+            // this.chuTri = this.listFieldNomarlized.includes('');
+            // this.phanLoai = this.listFieldNomarlized.includes('');
+            // this.tongGiaTri = this.listFieldNomarlized.includes('');
+            // this.quyMo = this.listFieldNomarlized.includes('ARBidOpportunityMagnitude');
+            // this.giaiDoan = this.listFieldNomarlized.includes('');
+            // this.khuVuc = this.listFieldNomarlized.includes('');
+            // this.tienDoThucHien = this.listFieldNomarlized.includes('ARBidOpportunityProgress');
+
+            console.log(this.tenGoithau);
         });
     }
 
@@ -280,7 +329,6 @@ export class PackageListComponent implements OnInit, AfterViewChecked {
     rerender(pagedResult: any) {
         this.checkboxSeclectAll = false;
         this.pagedResult = pagedResult;
-        console.log(this.pagedResult.items);
         this.dtTrigger.next();
     }
 
@@ -303,27 +351,49 @@ export class PackageListComponent implements OnInit, AfterViewChecked {
 
 
     resetDefaultState() {
+        this.spinner.show();
         this.packageService.getListFieldsDefault()
             .subscribe(data => {
                 this.listField = data;
+                this.sum = [...this.listField].filter(x => x.hidden === true).length;
+                this.spinner.hide();
             });
     }
 
     cancel(myDrop) {
-        this.refreshPopupConfig();
         myDrop.close();
+        this.packageService.getListFields(this.getUserId).subscribe(data => {
+            this.listField = data;
+            this.listFieldNomarlized = [...this.listField].filter(x => x.hidden === true).map(x => x.fieldName);
+            this.sum = [...this.listField].filter(x => x.hidden === true).length;
+            this.tenGoithau = this.listFieldNomarlized.includes('ARBidOpportunityName');
+        });
     }
 
     apply(myDrop) {
+        this.spinner.show();
         this.packageService.updateFieldConfigs(this.listField, this.getUserId)
             .subscribe(result => {
                 this.alertService.success('Đã cập nhật cấu hình thành công!');
+                this.refresh();
+
                 this.refreshPopupConfig();
                 myDrop.close();
+                this.spinner.hide();
+
             }, err => {
                 this.alertService.error('Cập nhật cấu hình thất bại, xin vui lòng thử lại!');
+                this.refresh();
+
                 this.refreshPopupConfig();
                 myDrop.close();
+                this.spinner.hide();
+
             });
+    }
+
+    inputChange() {
+        this.sum = [...this.listField].filter(x => x.hidden === true).length;
+
     }
 }

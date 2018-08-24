@@ -12,7 +12,7 @@
                     Công cụ &nbsp;&nbsp;
                 </button>
                 <div class="dropdown-menu" ngbDropdownMenu>
-                    <a class="dropdown-item" (click)="multiDelete()">Xóa</a>
+                    <a class="dropdown-item">Xuất file</a>
                     <div class="dropdown-divider"></div>
                     <a class="dropdown-item">Tải template</a>
                 </div>
@@ -85,7 +85,7 @@
                     </div>
                     <div>Cột</div>
                 </div>
-                <div class="dropdown-menu" style="" ngbDropdownMenu (click)="$event.stopPropagation();" (blur)="resetDefaultState()">
+                <div class="dropdown-menu" style="" ngbDropdownMenu>
                     <div class="popup-dynamic-col" style="min-width: 600px; min-height: 300px;">
                         <div class="">{{sum}}/{{listField?.length}} cột được chọn</div>
                         <hr>
@@ -94,7 +94,7 @@
                                 <div class="form-check-inline" *ngFor="let item of listField">
                                     <div class="d-flex">
                                         <div style="margin-top: 2px;">
-                                            <input type="checkbox" [(ngModel)]="item.hidden" style="cursor: pointer;">
+                                            <input type="checkbox" (change)="inputChange()" [(ngModel)]="item.hidden" style="cursor: pointer;">
                                         </div>
                                         <div class=""> &nbsp;{{item.fieldCaption}}</div>
                                     </div>
@@ -130,7 +130,7 @@
 
 
         <div class="table-responsive" id="style-scroll">
-            <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="table-selection stripe hover">
+            <table datatable id="tableId" [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="table-selection stripe hover">
                 <thead>
                     <tr style="width: 100%;">
                         <th class="text-center" type="check" style="width: 30px; min-width: 30px !important;">
@@ -139,7 +139,7 @@
                                 <span class="custom-control-indicator"></span>
                             </label>
                         </th>
-                        <th>
+                        <th [hidden]="!maDuAn">
 
                             <div class="d-flex justify-content-start">
                                 <div style="margin-right: 10px">Mã dự án</div>
@@ -161,7 +161,7 @@
                                 </div>
                             </div>
                         </th>
-                        <th *ngIf="listField.fieldName === 'ARBidOpportunityName'">
+                        <th [hidden]="!tenGoithau">
 
                             <div class="d-flex justify-content-start">
                                 <div style="margin-right: 10px">Gói thầu</div>
@@ -172,7 +172,7 @@
                                 </div>
                             </div>
                         </th>
-                        <th>
+                        <th [hidden]="!vaiTro">
                             <div class="d-flex justify-content-start">
                                 <div style="margin-right: 10px">Vai trò</div>
                                 <div class="center-parent">
@@ -250,7 +250,7 @@
                                 </div>
                             </div>
                         </th>
-                        <th>
+                        <th [hidden]="!congViec">
                             <div class="d-flex justify-content-start">
                                 <div style="margin-right: 10px">Công việc</div>
                                 <div class="center-parent">
@@ -292,7 +292,7 @@
                             </div>
                         </th>
 
-                        <th>
+                        <th [hidden]="!quy">
                             <div class="d-flex justify-content-start">
                                 <div style="margin-right: 10px">Quý</div>
                                 <div class="center-parent">
@@ -302,7 +302,7 @@
                                 </div>
                             </div>
                         </th>
-                        <th>
+                        <th [hidden]="!donViTuVan">
                             <div class="d-flex justify-content-start">
                                 <div style="margin-right: 10px">Đơn vị tư vấn</div>
                                 <div class="center-parent">
@@ -338,7 +338,7 @@
                                 <span class="custom-control-indicator"></span>
                             </label>
                         </td>
-                        <td class="text-truncate">
+                        <td class="text-truncate" [hidden]="!maDuAn">
                             <a [title]="item.projectName">
                                 {{ item.projectNo }}
                             </a>
@@ -348,12 +348,12 @@
                                 {{ item.projectName }}
                             </a>
                         </td>
-                        <td class="text-truncate">
-                            <a>
+                        <td class="text-truncate" [hidden]="!tenGoithau">
+                            <a [routerLink]="['/package/detail',item.bidOpportunityId]">
                                 {{ item.opportunityName}}
                             </a>
                         </td>
-                        <td class="text-truncate">{{ item.hbcRole?.name }}</td>
+                        <td class="text-truncate" [hidden]="!vaiTro">{{ item.hbcRole?.name }}</td>
                         <td class="text-truncate">{{ item.chairEmployee?.employeeName }}</td>
                         <td class="text-truncate">{{ item.classify | translate }}</td>
                         <td class="text-truncate text-right">{{ item.amount | vnCurrency }}</td>
@@ -368,18 +368,18 @@
                                 </div>
                                 <div class="center-parent" [class.type-HSMT-child]="item.stage?.key == 'HSMT'" [class.type-HSDT-child]="item.stage?.key == 'HSDT'"
                                     [class.type-KQDT-child]="item.stage?.key == 'KQDT'">
-                                    <div class="text-truncate">{{item.stageStatus?.text }}</div>
+                                    <div class="text-truncate">{{item.stageStatus?.value }}</div>
                                 </div>
 
                             </div>
                         </td>
                         <td>{{item.region | translate}}</td>
-                        <td class="text-truncate">{{ item.job }}</td>
+                        <td [hidden]="!congViec" class="text-truncate">{{ item.job }}</td>
                         <td class="text-truncate">{{ item.progress }}</td>
                         <td class="text-truncate">{{ item.documentLink }}</td>
                         <td class="text-truncate">{{ item.totalTime }}</td>
-                        <td class="text-truncate">{{ item.quarter?.name }}</td>
-                        <td class="text-truncate">{{ item.consultantUnitCustomer?.customerName }}</td>
+                        <td [hidden]="!quy" class="text-truncate">{{ item.quarter?.name }}</td>
+                        <td [hidden]="!donViTuVan" class="text-truncate">{{ item.consultantUnitCustomer?.customerName }}</td>
                         <td class="text-truncate">{{ item.customer?.customerNewOldType }}</td>
 
                         <td style="max-width: 100px!important;" type="check-action">

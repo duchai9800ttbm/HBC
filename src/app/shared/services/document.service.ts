@@ -87,6 +87,13 @@ export class DocumentService {
         const url = `biddocument/${bidDocumentId}/delete `;
         return this.apiService.post(url).map(response => response);
     }
+    multiDelete(ids: any[]) {
+        const url = `biddocument/multidelete`;
+        const model = {
+            ids: ids
+        };
+        return this.apiService.post(url, model).map(res => res);
+    }
 
     download(bidDocumentId: number) {
         const url = `biddocument/${bidDocumentId}/download `;
@@ -160,6 +167,25 @@ export class DocumentService {
                     day: day,
                     month: month + 1,
                     year: year,
+                    employeeId: y.uploadedBy.employeeId
+                };
+            });
+        }).concat();
+        return ([]).concat(...arr);
+    }
+
+    unGroup(source: any[]) {
+        const arr = source.map(x => {
+            return x.items.map(y => {
+                return {
+                    id: y.id,
+                    documentType: y.documentType,
+                    documentName: y.documentName,
+                    version: y.version,
+                    status: y.status,
+                    uploadedBy: y.uploadedBy,
+                    createdDate: y.createdDate,
+                    checkboxSelected: y.checkboxSelected,
                     employeeId: y.uploadedBy.employeeId
                 };
             });

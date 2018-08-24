@@ -211,7 +211,7 @@ export class AddFileComponent implements OnInit {
             this.bidDocumentGroupListItem = response;
             this.bidDocumentGroupListItemSearchResult = response;
             this.dtTrigger.next();
-            document.getElementsByClassName('dataTables_empty')[0].remove();
+            if (this.bidDocumentGroupListItem.length === 0) { document.getElementsByClassName('dataTables_empty')[0].remove(); }
             this.spinner.hide();
         });
     }
@@ -328,6 +328,23 @@ export class AddFileComponent implements OnInit {
                 });
             }
         );
+    }
+    multiDelete() {
+        const that = this;
+        const listNoGroup = this.documentService.unGroup([...this.bidDocumentGroupListItemSearchResult]);
+        const listId = listNoGroup.filter(x => x.checkboxSelected).map(x => x.id);
+        // console.log(listId);
+        if (listId && listId.length === 0) {
+            this.alertService.error('Bạn phải chọn ít nhất một tài liệu để xóa!');
+        } else {
+            this.confirmationService.confirm('Bạn có chắc chắn muốn xóa những tài liệu này?',
+            () => {
+                this.documentService.multiDelete(listId).subscribe(data => {
+                    that.alertService.success('Đã xóa tài liệu!');
+                    that.refresh();
+                });
+            });
+        }
     }
 
     dowloadDocument(id) {
