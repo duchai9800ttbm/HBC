@@ -1,5 +1,5 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
-import { DATETIME_PICKER_CONFIG } from '../../../../../../shared/configs/datepicker.config';
+import { Component, OnInit, Input } from '@angular/core';
+import { DATETIME_PICKER_CONFIG } from '../../../../../../../shared/configs/datepicker.config';
 @Component({
   selector: 'app-create-new-invitation',
   templateUrl: './create-new-invitation.component.html',
