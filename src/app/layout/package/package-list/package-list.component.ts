@@ -94,7 +94,7 @@ export class PackageListComponent implements OnInit, AfterViewChecked {
     ) {
         config.autoClose = false;
     }
-    someRange = [1000000, 10000000000];
+    someRange = [0, 10000000000];
     someKeyboardConfig: any = {
         behaviour: 'drag',
         connect: true,
