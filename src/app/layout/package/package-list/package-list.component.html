@@ -139,7 +139,7 @@
                                 <span class="custom-control-indicator"></span>
                             </label>
                         </th>
-                        <th>
+                        <th [hidden]="!maDuAn">
 
                             <div class="d-flex justify-content-start">
                                 <div style="margin-right: 10px">Mã dự án</div>
@@ -250,7 +250,7 @@
                                 </div>
                             </div>
                         </th>
-                        <th>
+                        <th [hidden]="!congViec">
                             <div class="d-flex justify-content-start">
                                 <div style="margin-right: 10px">Công việc</div>
                                 <div class="center-parent">
@@ -292,7 +292,7 @@
                             </div>
                         </th>
 
-                        <th>
+                        <th [hidden]="!quy">
                             <div class="d-flex justify-content-start">
                                 <div style="margin-right: 10px">Quý</div>
                                 <div class="center-parent">
@@ -302,7 +302,7 @@
                                 </div>
                             </div>
                         </th>
-                        <th>
+                        <th [hidden]="!donViTuVan">
                             <div class="d-flex justify-content-start">
                                 <div style="margin-right: 10px">Đơn vị tư vấn</div>
                                 <div class="center-parent">
@@ -338,7 +338,7 @@
                                 <span class="custom-control-indicator"></span>
                             </label>
                         </td>
-                        <td class="text-truncate">
+                        <td class="text-truncate" [hidden]="!maDuAn">
                             <a [title]="item.projectName">
                                 {{ item.projectNo }}
                             </a>
@@ -374,12 +374,12 @@
                             </div>
                         </td>
                         <td>{{item.region | translate}}</td>
-                        <td class="text-truncate">{{ item.job }}</td>
+                        <td [hidden]="!congViec" class="text-truncate">{{ item.job }}</td>
                         <td class="text-truncate">{{ item.progress }}</td>
                         <td class="text-truncate">{{ item.documentLink }}</td>
                         <td class="text-truncate">{{ item.totalTime }}</td>
-                        <td class="text-truncate">{{ item.quarter?.name }}</td>
-                        <td class="text-truncate">{{ item.consultantUnitCustomer?.customerName }}</td>
+                        <td [hidden]="!quy" class="text-truncate">{{ item.quarter?.name }}</td>
+                        <td [hidden]="!donViTuVan" class="text-truncate">{{ item.consultantUnitCustomer?.customerName }}</td>
                         <td class="text-truncate">{{ item.customer?.customerNewOldType }}</td>
 
                         <td style="max-width: 100px!important;" type="check-action">
