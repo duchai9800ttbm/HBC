@@ -26,6 +26,7 @@ import { UserModel } from '../../../shared/models/user/user.model';
 import { FieldModel } from '../../../shared/models/package/field.model';
 import { LayoutService } from '../../../shared/services/layout.service';
 import { NgbDropdownConfig } from '@ng-bootstrap/ng-bootstrap';
+import { PackageListItem } from '../../../shared/models/package/package-list-item';
 @Component({
     selector: 'app-package-list',
     templateUrl: './package-list.component.html',
@@ -41,8 +42,8 @@ export class PackageListComponent implements OnInit, AfterViewChecked {
     dtOptions: any = DATATABLE_CONFIG2;
     dtTrigger: Subject<any> = new Subject();
     filterModel = new PackageFilter();
-    pagedResult: PagedResult<ActivityListItem> = new PagedResult<
-        ActivityListItem
+    pagedResult: PagedResult<PackageListItem> = new PagedResult<
+    PackageListItem
         >();
     datePickerConfig = DATETIME_PICKER_CONFIG;
     activityForm: FormGroup;
@@ -158,6 +159,14 @@ export class PackageListComponent implements OnInit, AfterViewChecked {
     lyDoTrungThau = false;
     lyDoTratThau = false;
     trangThaiGoiThau = false;
+    diaDiem = false;
+    tenKhachHang = false;
+    lienHe = false;
+    ngayBatDauTheoDoi = false;
+    ngayNopHoSoMoiThau = false;
+    danhGiaDuAn = false;
+    loaiCongTrinh = false;
+    hangMucCongTrinh = false;
 
     ngOnInit() {
         window.scrollTo(0, 0);
@@ -215,24 +224,34 @@ export class PackageListComponent implements OnInit, AfterViewChecked {
             this.sum = [...this.listField].filter(x => x.hidden === true).length;
             this.tenDuAn = this.listFieldNomarlized.includes('ARBidOpportunityProjectName');
             this.tenGoithau = this.listFieldNomarlized.includes('ARBidOpportunityName');
-            this.congViec = this.listFieldNomarlized.includes('ARBidOpportunityJob');
-            this.maDuAn = this.listFieldNomarlized.includes('ARBidOpportunityNo');
-            this.khuVuc = this.listFieldNomarlized.includes('ARBidOpportunityPlace');
-            this.loaiKhachHang = this.listFieldNomarlized.includes('ARBidOpportunityCustomerType');
-            this.donViTuVan = this.listFieldNomarlized.includes('ARBidOpportunityConsultantUnit');
-            this.diaChiDVTV = this.listFieldNomarlized.includes('ARBidOpportunityConsultantAddress');
-            this.soDienThoaiDVTV = this.listFieldNomarlized.includes('ARBidOpportunityConsultantPhone');
-            this.quyMo = this.listFieldNomarlized.includes('ARBidOpportunityMagnitude');
-            this.quy = this.listFieldNomarlized.includes('ARBidOpportunityQuarter');
-            this.lyDoTrungThau = this.listFieldNomarlized.includes('ARBidOpportunityAcceptanceReason');
-            this.lyDoTratThau = this.listFieldNomarlized.includes('ARBidOpportunityUnacceptanceReason');
-            this.tongThoiGian = this.listFieldNomarlized.includes('ARBidOpportunityActualTotalTime');
-            this.ngayKetThucDuAn = this.listFieldNomarlized.includes('ARBidOpportunityEstimatedProjectEndDate');
-            this.ngayKhoiCongDuAn = this.listFieldNomarlized.includes('ARBidOpportunityEstimatedProjectStartDate');
-            this.linkTaiLieu = this.listFieldNomarlized.includes('ARBidOpportunityDocumentLink');
-            this.chuTri = this.listFieldNomarlized.includes('ARBidOpportunityHBCChair');
-            this.trangThaiGoiThau = this.listFieldNomarlized.includes('ARBidOpportunityStage');
-            this.tienDoThucHien = this.listFieldNomarlized.includes('ARBidOpportunityProgress');
+            console.log(this.tenGoithau);
+            // this.congViec = this.listFieldNomarlized.includes('ARBidOpportunityJob');
+            // this.maDuAn = this.listFieldNomarlized.includes('ARBidOpportunityNo');
+            // this.diaDiem = this.listFieldNomarlized.includes('ARBidOpportunityPlace');
+            // this.loaiKhachHang = this.listFieldNomarlized.includes('ARBidOpportunityCustomerType');
+            // this.donViTuVan = this.listFieldNomarlized.includes('ARBidOpportunityConsultantUnit');
+            // this.diaChiDVTV = this.listFieldNomarlized.includes('ARBidOpportunityConsultantAddress');
+            // this.soDienThoaiDVTV = this.listFieldNomarlized.includes('ARBidOpportunityConsultantPhone');
+            // this.quyMo = this.listFieldNomarlized.includes('ARBidOpportunityMagnitude');
+            // this.quy = this.listFieldNomarlized.includes('ARBidOpportunityQuarter');
+            // this.lyDoTrungThau = this.listFieldNomarlized.includes('ARBidOpportunityAcceptanceReason');
+            // this.lyDoTratThau = this.listFieldNomarlized.includes('ARBidOpportunityUnacceptanceReason');
+            // this.tongThoiGian = this.listFieldNomarlized.includes('ARBidOpportunityActualTotalTime');
+            // this.ngayKetThucDuAn = this.listFieldNomarlized.includes('ARBidOpportunityEstimatedProjectEndDate');
+            // this.ngayKhoiCongDuAn = this.listFieldNomarlized.includes('ARBidOpportunityEstimatedProjectStartDate');
+            // this.linkTaiLieu = this.listFieldNomarlized.includes('ARBidOpportunityDocumentLink');
+            // this.chuTri = this.listFieldNomarlized.includes('ARBidOpportunityHBCChair');
+            // this.giaiDoan = this.listFieldNomarlized.includes('ARBidOpportunityStage');
+            // this.tienDoThucHien = this.listFieldNomarlized.includes('ARBidOpportunityProgress');
+            // this.khuVuc = this.listFieldNomarlized.includes('FK_ARBidLocationID');
+            // this.tenKhachHang = this.listFieldNomarlized.includes('FK_HREmployeeID');
+            // this.lienHe = this.listFieldNomarlized.includes('FK_ARCustomerContactID');
+            // this.ngayBatDauTheoDoi = this.listFieldNomarlized.includes('ARBidOpportunityStartTrackingDate');
+            // this.ngayNopHoSoMoiThau = this.listFieldNomarlized.includes('ARBidOpportunityBidSubmissionDate');
+            // this.ngayDuKienKetQuaThau = this.listFieldNomarlized.includes('ARBidOpportunityEstimatedResultDate');
+            // this.loaiCongTrinh = this.listFieldNomarlized.includes('FK_ARBidConstructionTypeID');
+            // this.hangMucCongTrinh = this.listFieldNomarlized.includes('FK_ARBidConstructionCategoryID');
+            // this.danhGiaDuAn = this.listFieldNomarlized.includes('ARBidOpportunityEvaluation');
             // console.log(this.tenGoithau);
         });
     }
