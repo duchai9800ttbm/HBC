@@ -11,6 +11,10 @@
     background-color: #f6f6f6;
 }
 
+router-outlet{
+    height: 100%;
+}
+
 @media screen and (max-width: 992px) {
     .main-container {
         margin-left: 55px !important;

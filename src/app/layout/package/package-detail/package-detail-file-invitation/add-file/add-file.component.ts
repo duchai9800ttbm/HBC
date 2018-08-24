@@ -50,14 +50,12 @@ export class AddFileComponent implements OnInit {
     tableEmpty: boolean;
     constructor(
         private alertService: AlertService,
-        private dataService: DataService,
         private confirmationService: ConfirmationService,
         private router: Router,
         private spinner: NgxSpinnerService,
         private documentService: DocumentService,
         private userService: UserService,
         private opportunityHsmtService: OpportunityHsmtService,
-        private documentReviewService: DocumentReviewService,
         private packageService: PackageService
     ) {
     }
@@ -211,7 +209,7 @@ export class AddFileComponent implements OnInit {
             this.bidDocumentGroupListItem = response;
             this.bidDocumentGroupListItemSearchResult = response;
             this.dtTrigger.next();
-            document.getElementsByClassName('dataTables_empty')[0].remove();
+            if (this.bidDocumentGroupListItem.length === 0) { document.getElementsByClassName('dataTables_empty')[0].remove(); }
             this.spinner.hide();
         });
     }
@@ -237,26 +235,22 @@ export class AddFileComponent implements OnInit {
     }
 
     sendEvaluate() {
-        if (!this.checkSendEvaluate()) {
-            this.alertService.error('Vui lòng chọn một loại tài liệu chính thức');
-        } else {
-            const that = this;
-            this.confirmationService.confirm(
-                'Bạn có muốn chuyển đánh giá ?',
-                () => {
-                    that.spinner.show();
-                    this.opportunityHsmtService.moveEvaluate(this.packageId).subscribe(result => {
-                        that.router.navigate([`/package/detail/${this.packageId}/invitation/evaluate`]);
+        const that = this;
+        this.confirmationService.confirm(
+            'Bạn có muốn chuyển đánh giá ?',
+            () => {
+                that.spinner.show();
+                this.opportunityHsmtService.moveEvaluate(this.packageId).subscribe(result => {
+                    that.router.navigate([`/package/detail/${this.packageId}/invitation/evaluate`]);
+                    that.spinner.hide();
+                    that.alertService.success('Chuyển đánh giá thành công!');
+                },
+                    err => {
                         that.spinner.hide();
-                        that.alertService.success('Chuyển đánh giá thành công!');
-                    },
-                        err => {
-                            that.spinner.hide();
-                            that.alertService.error('Chuyển đánh giá không thành công. Bạn vui lòng kiểm tra lại!');
-                        });
-                }
-            );
-        }
+                        that.alertService.error('Chuyển đánh giá không thành công. Bạn vui lòng kiểm tra lại!');
+                    });
+            }
+        );
     }
 
     checkSendEvaluate(): boolean {
@@ -328,6 +322,22 @@ export class AddFileComponent implements OnInit {
                 });
             }
         );
+    }
+    multiDelete() {
+        const that = this;
+        const listNoGroup = this.documentService.unGroup([...this.bidDocumentGroupListItemSearchResult]);
+        const listId = listNoGroup.filter(x => x.checkboxSelected).map(x => x.id);
+        if (listId && listId.length === 0) {
+            this.alertService.error('Bạn phải chọn ít nhất một tài liệu để xóa!');
+        } else {
+            this.confirmationService.confirm('Bạn có chắc chắn muốn xóa những tài liệu này?',
+                () => {
+                    this.documentService.multiDelete(listId).subscribe(data => {
+                        that.alertService.success('Đã xóa tài liệu!');
+                        that.refresh();
+                    });
+                });
+        }
     }
 
     dowloadDocument(id) {

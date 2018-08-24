@@ -12,7 +12,7 @@ const routes: Routes = [
             { path: '', redirectTo: 'package-list'},
             { path: 'package-list', component: PackageListComponent},
             { path: 'contract-signed', component: ContractSignedComponent},
-            { path: 'meeting-kickoff', component: MeetingKickoffComponent}
+            { path: 'meeting-kickoff', loadChildren: './meeting-kickoff/meeting-kickoff.module#MeetingKickoffModule'}
         ]
     }
 ];

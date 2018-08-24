@@ -85,7 +85,7 @@
                     </div>
                     <div>Cột</div>
                 </div>
-                <div class="dropdown-menu" style="" ngbDropdownMenu >
+                <div class="dropdown-menu" ngbDropdownMenu>
                     <div class="popup-dynamic-col" style="min-width: 600px; min-height: 300px;">
                         <div class="">{{sum}}/{{listField?.length}} cột được chọn</div>
                         <hr>
@@ -139,7 +139,7 @@
                                 <span class="custom-control-indicator"></span>
                             </label>
                         </th>
-                        <th>
+                        <th [hidden]="!maDuAn">
 
                             <div class="d-flex justify-content-start">
                                 <div style="margin-right: 10px">Mã dự án</div>
@@ -150,7 +150,7 @@
                                 </div>
                             </div>
                         </th>
-                        <th>
+                        <th [hidden]="!tenDuAn">
 
                             <div class="d-flex justify-content-start">
                                 <div style="margin-right: 10px">Tên dự án</div>
@@ -172,7 +172,7 @@
                                 </div>
                             </div>
                         </th>
-                        <th>
+                        <th [hidden]="!vaiTro">
                             <div class="d-flex justify-content-start">
                                 <div style="margin-right: 10px">Vai trò</div>
                                 <div class="center-parent">
@@ -182,7 +182,7 @@
                                 </div>
                             </div>
                         </th>
-                        <th>
+                        <th [hidden]="!chuTri">
                             <div class="d-flex justify-content-start">
                                 <div style="margin-right: 10px">Chủ trì</div>
                                 <div class="center-parent">
@@ -192,7 +192,7 @@
                                 </div>
                             </div>
                         </th>
-                        <th>
+                        <th [hidden]="!loaiCongTrinh">
                             <div class="d-flex justify-content-start">
                                 <div style="margin-right: 10px">Phân loại</div>
                                 <div class="center-parent">
@@ -220,7 +220,7 @@
                                 </div>
                             </div>
                         </th>
-                        <th>
+                        <th [hidden]="!quyMo">
                             <div class="d-flex justify-content-start">
                                 <div style="margin-right: 10px">Quy mô</div>
                                 <div class="center-parent">
@@ -230,7 +230,7 @@
                                 </div>
                             </div>
                         </th>
-                        <th class="text-center" class="HSMT">
+                        <th [hidden]="!giaiDoan" class="text-center" class="HSMT">
                             <div class="d-flex justify-content-center">
                                 <div style="margin-right: 10px"> Giai đoạn</div>
                                 <div class="center-parent">
@@ -240,7 +240,7 @@
                                 </div>
                             </div>
                         </th>
-                        <th>
+                        <th [hidden]="!khuVuc">
                             <div class="d-flex justify-content-start">
                                 <div style="margin-right: 10px">Khu vực</div>
                                 <div class="center-parent">
@@ -250,7 +250,7 @@
                                 </div>
                             </div>
                         </th>
-                        <th>
+                        <th [hidden]="!congViec">
                             <div class="d-flex justify-content-start">
                                 <div style="margin-right: 10px">Công việc</div>
                                 <div class="center-parent">
@@ -260,7 +260,7 @@
                                 </div>
                             </div>
                         </th>
-                        <th>
+                        <th [hidden]="!tienDoThucHien">
                             <div class="d-flex justify-content-start">
                                 <div style="margin-right: 10px">Tiến độ thực hiện</div>
                                 <div class="center-parent">
@@ -271,7 +271,7 @@
                             </div>
                         </th>
 
-                        <th>
+                        <th [hidden]="!linkTaiLieu">
                             <div class="d-flex justify-content-start">
                                 <div style="margin-right: 10px">Link tài liệu</div>
                                 <div class="center-parent">
@@ -281,7 +281,7 @@
                                 </div>
                             </div>
                         </th>
-                        <th>
+                        <th [hidden]="!tongThoiGian">
                             <div class="d-flex justify-content-start">
                                 <div style="margin-right: 10px">Tổng thời gian</div>
                                 <div class="center-parent">
@@ -292,7 +292,7 @@
                             </div>
                         </th>
 
-                        <th>
+                        <th [hidden]="!quy">
                             <div class="d-flex justify-content-start">
                                 <div style="margin-right: 10px">Quý</div>
                                 <div class="center-parent">
@@ -302,7 +302,7 @@
                                 </div>
                             </div>
                         </th>
-                        <th>
+                        <th [hidden]="!donViTuVan">
                             <div class="d-flex justify-content-start">
                                 <div style="margin-right: 10px">Đơn vị tư vấn</div>
                                 <div class="center-parent">
@@ -313,7 +313,7 @@
                             </div>
                         </th>
 
-                        <th>
+                        <th [hidden]="!loaiKhachHang">
                             <div class="d-flex justify-content-start">
                                 <div style="margin-right: 10px">Loại khách hàng</div>
                                 <div class="center-parent">
@@ -323,6 +323,67 @@
                                 </div>
                             </div>
                         </th>
+                        <th [hidden]="!ngayBatDauTheoDoi">
+                            <div class="d-flex justify-content-start">
+                                <div style="margin-right: 10px">Ngày bắt đầu theo dõi</div>
+                                <div class="center-parent">
+                                    <div>
+                                        <i class="fa fa-caret-down" style="color: #ffff;"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </th>
+                        <th [hidden]="!ngayDuKienKetQuaThau">
+                            <div class="d-flex justify-content-start">
+                                <div style="margin-right: 10px">Ngày dự kiến kết quả thầu</div>
+                                <div class="center-parent">
+                                    <div>
+                                        <i class="fa fa-caret-down" style="color: #ffff;"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </th>
+                        <th [hidden]="!ngayNopHoSoMoiThau">
+                            <div class="d-flex justify-content-start">
+                                <div style="margin-right: 10px">Ngày nộp hồ sơ mời thầu</div>
+                                <div class="center-parent">
+                                    <div>
+                                        <i class="fa fa-caret-down" style="color: #ffff;"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </th>
+                        <th [hidden]="!ngayKhoiCongDuAn">
+                            <div class="d-flex justify-content-start">
+                                <div style="margin-right: 10px">Ngày khởi công dự án</div>
+                                <div class="center-parent">
+                                    <div>
+                                        <i class="fa fa-caret-down" style="color: #ffff;"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </th>
+                        <th [hidden]="!ngayKetThucDuAn">
+                            <div class="d-flex justify-content-start">
+                                <div style="margin-right: 10px">Ngày kết thúc dự án</div>
+                                <div class="center-parent">
+                                    <div>
+                                        <i class="fa fa-caret-down" style="color: #ffff;"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </th>
+                        <th [hidden]="!hangMucCongTrinh">
+                            <div class="d-flex justify-content-start">
+                                <div style="margin-right: 10px">Hạng mục công trình</div>
+                                <div class="center-parent">
+                                    <div>
+                                        <i class="fa fa-caret-down" style="color: #ffff;"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </th>
+
 
 
                         <th style="max-width: 100px!important; width: 100px!important;" class="table-action text-center" type="check-action">
@@ -338,29 +399,27 @@
                                 <span class="custom-control-indicator"></span>
                             </label>
                         </td>
-                        <td class="text-truncate">
-                            <a [title]="item.projectName">
+                        <td [hidden]="!maDuAn" class="text-truncate">
+                            <span [title]="item.projectName">
                                 {{ item.projectNo }}
-                            </a>
+                            </span>
                         </td>
-                        <td class="text-truncate">
-                            <a [title]="item.projectName">
+                        <td [hidden]="!tenDuAn" class="text-truncate">
+                            <span [title]="item.projectName">
                                 {{ item.projectName }}
-                            </a>
+                            </span>
                         </td>
-                        <td class="text-truncate" [hidden]="!tenGoithau">
-                            <a>
+                        <td [hidden]="!tenGoithau" class="text-truncate">
+                            <a [routerLink]="['/package/detail',item.bidOpportunityId]">
                                 {{ item.opportunityName}}
                             </a>
                         </td>
-                        <td class="text-truncate">{{ item.hbcRole?.name }}</td>
-                        <td class="text-truncate">{{ item.chairEmployee?.employeeName }}</td>
-                        <td class="text-truncate">{{ item.classify | translate }}</td>
+                        <td [hidden]="!vaiTro" class="text-truncate">{{ item.hbcRole?.name }}</td>
+                        <td [hidden]="!chuTri" class="text-truncate">{{ item.chairEmployee?.employeeName }}</td>
+                        <td [hidden]="!loaiCongTrinh" class="text-truncate">{{ item.projectType?.value }}</td>
                         <td class="text-truncate text-right">{{ item.amount | vnCurrency }}</td>
-                        <td class="color" class="text-center">
-                            {{item.magnitude}}
-                        </td>
-                        <td class="" style="text-align: center;">
+                        <td [hidden]="!quyMo" class="color" class="text-center">{{item.magnitude }}</td>
+                        <td [hidden]="!giaiDoan" class="" style="text-align: center;">
                             <div class="d-flex flex-column p-2">
 
                                 <div class="center-parent" [class.type-HSMT]="item.stage?.key == 'HSMT'" [class.type-HSDT]="item.stage?.key == 'HSDT'" [class.type-KQDT]="item.stage?.key == 'KQDT'">
@@ -373,15 +432,20 @@
 
                             </div>
                         </td>
-                        <td>{{item.region | translate}}</td>
-                        <td class="text-truncate">{{ item.job }}</td>
-                        <td class="text-truncate">{{ item.progress }}</td>
-                        <td class="text-truncate">{{ item.documentLink }}</td>
-                        <td class="text-truncate">{{ item.totalTime }}</td>
-                        <td class="text-truncate">{{ item.quarter?.name }}</td>
-                        <td class="text-truncate">{{ item.consultantUnitCustomer?.customerName }}</td>
-                        <td class="text-truncate">{{ item.customer?.customerNewOldType }}</td>
-
+                        <td [hidden]="!khuVuc">{{item.region | translate}}</td>
+                        <td [hidden]="!congViec" class="text-truncate">{{ item.job }}</td>
+                        <td [hidden]="!tienDoThucHien" class="text-truncate">{{ item.progress }}</td>
+                        <td [hidden]="!linkTaiLieu" class="text-truncate">{{ item.documentLink }}</td>
+                        <td [hidden]="!tongThoiGian" class="text-truncate">{{ item.totalTime }}</td>
+                        <td [hidden]="!quy" class="text-truncate">{{ item.quarter?.name }}</td>
+                        <td [hidden]="!donViTuVan" class="text-truncate">{{ item.consultantUnitCustomer?.customerName }}</td>
+                        <td [hidden]="!loaiKhachHang" class="text-truncate">{{ item.customer?.customerNewOldType }}</td>
+                        <td [hidden]="!ngayBatDauTheoDoi" class="text-truncate">{{ item.startTrackingDate }}</td>
+                        <td [hidden]="!ngayDuKienKetQuaThau" class="text-truncate">{{ item.resultEstimatedDate }}</td>
+                        <td [hidden]="!ngayNopHoSoMoiThau" class="text-truncate">{{ item.submissionDate }}</td>
+                        <td [hidden]="!ngayKhoiCongDuAn" class="text-truncate">{{ item.projectEstimatedStartDate }}</td>
+                        <td [hidden]="!ngayKetThucDuAn" class="text-truncate">{{ item.projectEstimatedEndDate }}</td>
+                        <td [hidden]="!hangMucCongTrinh" class="text-truncate">{{ item.mainBuildingCategory?.value }}</td>
                         <td style="max-width: 100px!important;" type="check-action">
                             <div class="d-flex justify-content-center">
                                 <div>

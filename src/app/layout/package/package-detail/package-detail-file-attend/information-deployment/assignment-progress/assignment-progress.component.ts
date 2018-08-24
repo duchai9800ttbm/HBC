@@ -18,13 +18,14 @@ import { SortDescriptor, orderBy } from '@progress/kendo-data-query';
 })
 export class AssignmentProgressComponent implements OnInit {
 
-  @Input() UploadItem: UploadItem;
+  @Input() UploadItem;
   @Input() hideButon: boolean;
-  @Input() dataConfirm = false;
+  @Input() dataConfirm;
+  dtTrigger: Subject<any> = new Subject();
+  dtOptions: any = DATATABLE_CONFIG;
   public gridView: GridDataResult;
   public gridViewSelect: GridDataResult;
-  public items: UploadItem[] = this.dataUploadService.getdataUploadFile();
-  public itemSelect: UploadItem[] = this.dataUploadService.getdataUploadFileSelect();
+  public items: UploadItem[] =[];
   public selectAllState: SelectAllCheckboxState = 'unchecked';
   public mySelection: number[] = [];
   public pageSize = 10;
@@ -33,6 +34,7 @@ export class AssignmentProgressComponent implements OnInit {
   totalSelect: number;
   public multiple = false;
   public allowUnsort = true;
+  checkboxSeclectAll: boolean;
   public sort: SortDescriptor[] = [
 
     {
@@ -82,11 +84,16 @@ export class AssignmentProgressComponent implements OnInit {
     { date: '04/08/2018' },
     { date: '05/08/2018' }
   ];
-  checkboxSeclectAll: boolean;
 
   ngOnInit() {
+    console.log('hideButon',this.dataConfirm);
+    console.log('uploadItem',this.UploadItem);
+    if (!this.hideButon) {
+      this.items = this.dataUploadService.getdataUploadFile();
+    } else {
+      this.items =this.dataUploadService.getdataUploadFileSelect()
+    }
     this.total = this.items.length;
-    this.totalSelect = this.itemSelect.length;
 
   }
   public sortChange(sort: SortDescriptor[]): void {
@@ -103,7 +110,9 @@ export class AssignmentProgressComponent implements OnInit {
       this.selectAllState = 'checked';
     }
   }
-
+  onSelectAll(value: boolean) {
+    this.items.forEach(x => (x['checkboxSelected'] = value));
+  }
   public onSelectAllChange(checkedState: SelectAllCheckboxState) {
 
     if (checkedState === 'checked') {
@@ -120,11 +129,7 @@ export class AssignmentProgressComponent implements OnInit {
       data: this.items.slice(this.skip, this.skip + this.pageSize),
       total: this.items.length
     };
-    this.itemSelect = orderBy(this.itemSelect, this.sort);
-    this.gridViewSelect = {
-      data: this.itemSelect.slice(this.skip, this.skip + this.pageSize),
-      total: this.itemSelect.length
-    };
+    
   }
 
 }

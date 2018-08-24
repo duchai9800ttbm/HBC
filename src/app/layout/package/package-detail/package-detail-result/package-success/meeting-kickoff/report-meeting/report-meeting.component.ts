@@ -7,6 +7,8 @@ import { PackageSuccessService } from '../../../../../../../shared/services/pack
 import { DocumentItem } from '../../../../../../../shared/models/document-item';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { DATETIME_PICKER_CONFIG } from '../../../../../../../shared/configs/datepicker.config';
+import { ConfirmationService, AlertService } from '../../../../../../../shared/services';
+
 @Component({
   selector: 'app-report-meeting',
   templateUrl: './report-meeting.component.html',
@@ -34,7 +36,9 @@ export class ReportMeetingComponent implements OnInit {
   constructor(
     private packageSuccessService: PackageSuccessService,
     private modalService: BsModalService,
-    private formBuilder: FormBuilder
+    private formBuilder: FormBuilder,
+    private alertService: AlertService,
+    private confirmationService: ConfirmationService,
   ) { }
 
   ngOnInit() {    
@@ -70,7 +74,7 @@ export class ReportMeetingComponent implements OnInit {
     if (this.formUpload.invalid) {
       return;
     }
-  
+    this.alertService.success('Upload biên bản cuộc họp thành công!');
     this.resultData =  this.packageSuccessService.getDataResult();
     this.total = this.resultData.length;
     this.modalUpload.hide();
@@ -80,6 +84,7 @@ export class ReportMeetingComponent implements OnInit {
     if (this.formUpload.invalid) {
       return;
     }
+    this.alertService.success('Upload file Presentation thành công!');
     this.dataFileUpload = this.packageSuccessService.getdataDocuments();
     this.totalFileUpload =this.dataFileUpload.length;    
   

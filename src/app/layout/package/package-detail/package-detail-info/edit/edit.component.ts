@@ -40,7 +40,6 @@ export class EditComponent implements OnInit {
         locationId: '',
         constructionCategoryId: '',
         constructionTypeId: '',
-        bidStatusId: ''
     };
     dtTrigger: Subject<any> = new Subject();
 
@@ -114,7 +113,7 @@ export class EditComponent implements OnInit {
             customerId: this.package.customer,
             customerNewOldType: [this.package.customer && this.package.customer.customerNewOldType],
             customerContactId: [this.package.customerContact],
-            consultantUnitCustomerId: [this.package.consultantUnitCustomer  ],
+            consultantUnitCustomerId: [this.package.consultantUnitCustomer],
             consultantAddress: [this.package.consultantAddress],
             consultantPhone: [this.package.consultantPhone],
             floorArea: [this.package.floorArea],
@@ -124,7 +123,7 @@ export class EditComponent implements OnInit {
             hbcRole: [this.package.hbcRole ? this.package.hbcRole.id : ''],
             documentLink: [this.package.documentLink],
             chairEmployeeId: [this.package.chairEmployee && this.package.chairEmployee.text],
-            bidStatusId: [this.package.status && this.package.status.id, Validators.required],
+            //  bidStatusId: [this.package.status && this.package.status.id, Validators.required],
             amount: [this.package.amount],
             evaluation: [this.package.evaluation],
             startTrackingDate: [DateTimeConvertHelper.fromTimestampToDtObject(

@@ -6,6 +6,8 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { DATATABLE_CONFIG } from '../../../../../../shared/configs';
 import { Observable, BehaviorSubject, Subject } from '../../../../../../../../node_modules/rxjs';
 import { PackageSuccessService } from '../../../../../../shared/services/package-success.service'
+import { ConfirmationService, AlertService } from '../../../../../../shared/services';
+import { PackageService } from '../../../../../../shared/services/package.service'
 
 @Component({
   selector: 'app-contract-signed',
@@ -28,7 +30,10 @@ export class ContractSignedComponent implements OnInit {
   constructor(
     private modalService: BsModalService,
     private formBuilder: FormBuilder,
-    private packageSuccessService: PackageSuccessService
+    private packageSuccessService: PackageSuccessService,
+    private alertService: AlertService,
+    private confirmationService: ConfirmationService,
+    private packageService: PackageService
   ) { }
 
   ngOnInit() {
@@ -59,6 +64,8 @@ export class ContractSignedComponent implements OnInit {
       return;
     }
     this.isSignedContract = true;
+    this.packageService.setActiveKickoff(this.isSignedContract)
+    this.alertService.success('Upload hợp đồng ký kết thành công!');    
     this.textContract = this.isSignedContract ? 'Đã ký kết hợp đồng':'Đã phản hồi đến phòng hợp đồng'
     this.modalUpload.hide();
 

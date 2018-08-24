@@ -16,7 +16,7 @@ $positions: static, relative, absolute, fixed, sticky;
   top: 0;
   right: 0;
   left: 0;
-  z-index: $zindex-fixed;
+  z-index: 30000;
 }
 
 .fixed-bottom {

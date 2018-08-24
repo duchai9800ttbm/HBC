@@ -50,8 +50,9 @@ export function createTranslateLoader(http: HttpClient) {
         SessionService,
         ConfirmationService,
         InstantSearchService,
-        UserNotificationService,DataUploadService,
+        UserNotificationService,
+        DataUploadService,
         { provide: LocationStrategy, useClass: HashLocationStrategy }
-    ]
+    ],
 })
 export class AppModule { }

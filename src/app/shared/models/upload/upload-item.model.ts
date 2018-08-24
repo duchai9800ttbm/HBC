@@ -6,4 +6,5 @@ export class UploadItem {
     userId:number;
     status:number;
     createDate:string;
+    interview:number;
 }

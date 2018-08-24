@@ -1,0 +1,45 @@
+.title{
+    font-weight: bold;
+    font-size: 1rem !important;
+}
+.name-field{
+    text-align: right;
+    font-size: 13px;
+    color: black;
+    padding-left: 5%;
+    align-items: center;
+}
+.pad-row{
+    padding-top: 20px;
+}
+.boder-input-choose-file{
+    border-radius: 0.25rem 0rem 0rem 0.25rem;
+}
+.fileUpload {
+    position: relative;
+    overflow: hidden;
+    cursor: pointer;
+}
+.fileUpload input.upload {
+    position: absolute;
+    top: 0;
+    right: 0;
+    margin: 0;
+    padding: 0;
+    font-size: 20px;
+    cursor: pointer;
+    opacity: 0;
+    filter: alpha(opacity=0);
+}
+.cus-button-popup{
+    text-align: center;
+    padding-top: 20px;
+}
+.close-popup{
+    cursor: pointer;
+}
+.close-popup-X{
+    zoom: 1.5;
+    font-weight: bold;
+    color: black;
+}
