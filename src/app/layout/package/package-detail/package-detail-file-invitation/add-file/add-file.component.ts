@@ -50,14 +50,12 @@ export class AddFileComponent implements OnInit {
     tableEmpty: boolean;
     constructor(
         private alertService: AlertService,
-        private dataService: DataService,
         private confirmationService: ConfirmationService,
         private router: Router,
         private spinner: NgxSpinnerService,
         private documentService: DocumentService,
         private userService: UserService,
         private opportunityHsmtService: OpportunityHsmtService,
-        private documentReviewService: DocumentReviewService,
         private packageService: PackageService
     ) {
     }
@@ -237,9 +235,9 @@ export class AddFileComponent implements OnInit {
     }
 
     sendEvaluate() {
-        if (!this.checkSendEvaluate()) {
-            this.alertService.error('Vui lòng chọn một loại tài liệu chính thức');
-        } else {
+        // if (!this.checkSendEvaluate()) {
+        //     this.alertService.error('Vui lòng chọn một loại tài liệu chính thức');
+        // } else {
             const that = this;
             this.confirmationService.confirm(
                 'Bạn có muốn chuyển đánh giá ?',
@@ -256,7 +254,6 @@ export class AddFileComponent implements OnInit {
                         });
                 }
             );
-        }
     }
 
     checkSendEvaluate(): boolean {
