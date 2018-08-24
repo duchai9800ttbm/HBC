@@ -87,6 +87,10 @@ export class DocumentService {
         const url = `biddocument/${bidDocumentId}/delete `;
         return this.apiService.post(url).map(response => response);
     }
+    // multiDelete(ids: number) {
+    //     const url = `biddocument/multidelete`;
+    //     return this.apiService.post(url).map(res => res);
+    // }
 
     download(bidDocumentId: number) {
         const url = `biddocument/${bidDocumentId}/download `;
