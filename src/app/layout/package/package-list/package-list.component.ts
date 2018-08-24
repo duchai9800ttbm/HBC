@@ -155,6 +155,10 @@ export class PackageListComponent implements OnInit, AfterViewChecked {
     diaChiDVTV = false;
     soDienThoaiDVTV = false;
     dienTichSan = false;
+    lyDoTrungThau = false;
+    lyDoTratThau = false;
+    trangThaiGoiThau = false;
+
     ngOnInit() {
         window.scrollTo(0, 0);
         this.refreshPopupConfig();
@@ -209,23 +213,27 @@ export class PackageListComponent implements OnInit, AfterViewChecked {
             this.listField = data;
             this.listFieldNomarlized = [...this.listField].filter(x => x.hidden === true).map(x => x.fieldName);
             this.sum = [...this.listField].filter(x => x.hidden === true).length;
+            this.tenDuAn = this.listFieldNomarlized.includes('ARBidOpportunityProjectName');
             this.tenGoithau = this.listFieldNomarlized.includes('ARBidOpportunityName');
-            this.maDuAn = this.listFieldNomarlized.includes('ARBidOpportunityNo');
             this.congViec = this.listFieldNomarlized.includes('ARBidOpportunityJob');
-            // this.tenDuAn = this.listFieldNomarlized.includes('')
-            this.vaiTro = this.listFieldNomarlized.includes('ARBidOpportunityHBCChair');
+            this.maDuAn = this.listFieldNomarlized.includes('ARBidOpportunityNo');
+            this.khuVuc = this.listFieldNomarlized.includes('ARBidOpportunityPlace');
+            this.loaiKhachHang = this.listFieldNomarlized.includes('ARBidOpportunityCustomerType');
             this.donViTuVan = this.listFieldNomarlized.includes('ARBidOpportunityConsultantUnit');
+            this.diaChiDVTV = this.listFieldNomarlized.includes('ARBidOpportunityConsultantAddress');
+            this.soDienThoaiDVTV = this.listFieldNomarlized.includes('ARBidOpportunityConsultantPhone');
+            this.quyMo = this.listFieldNomarlized.includes('ARBidOpportunityMagnitude');
             this.quy = this.listFieldNomarlized.includes('ARBidOpportunityQuarter');
-            // this.linkTaiLieu = this.listFieldNomarlized.includes('');
-            // this.chuTri = this.listFieldNomarlized.includes('');
-            // this.phanLoai = this.listFieldNomarlized.includes('');
-            // this.tongGiaTri = this.listFieldNomarlized.includes('');
-            // this.quyMo = this.listFieldNomarlized.includes('ARBidOpportunityMagnitude');
-            // this.giaiDoan = this.listFieldNomarlized.includes('');
-            // this.khuVuc = this.listFieldNomarlized.includes('');
-            // this.tienDoThucHien = this.listFieldNomarlized.includes('ARBidOpportunityProgress');
-
-            console.log(this.tenGoithau);
+            this.lyDoTrungThau = this.listFieldNomarlized.includes('ARBidOpportunityAcceptanceReason');
+            this.lyDoTratThau = this.listFieldNomarlized.includes('ARBidOpportunityUnacceptanceReason');
+            this.tongThoiGian = this.listFieldNomarlized.includes('ARBidOpportunityActualTotalTime');
+            this.ngayKetThucDuAn = this.listFieldNomarlized.includes('ARBidOpportunityEstimatedProjectEndDate');
+            this.ngayKhoiCongDuAn = this.listFieldNomarlized.includes('ARBidOpportunityEstimatedProjectStartDate');
+            this.linkTaiLieu = this.listFieldNomarlized.includes('ARBidOpportunityDocumentLink');
+            this.chuTri = this.listFieldNomarlized.includes('ARBidOpportunityHBCChair');
+            this.trangThaiGoiThau = this.listFieldNomarlized.includes('ARBidOpportunityStage');
+            this.tienDoThucHien = this.listFieldNomarlized.includes('ARBidOpportunityProgress');
+            // console.log(this.tenGoithau);
         });
     }
 
