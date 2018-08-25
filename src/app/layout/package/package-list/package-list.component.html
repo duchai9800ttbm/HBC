@@ -172,6 +172,26 @@
                                 </div>
                             </div>
                         </th>
+                        <th [hidden]="!tenKhachHang">
+                            <div class="d-flex justify-content-start">
+                                <div style="margin-right: 10px">Tên khách hàng</div>
+                                <div class="center-parent">
+                                    <div>
+                                        <i class="fa fa-caret-down" style="color: #ffff;"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </th>
+                        <th [hidden]="!lienHe">
+                            <div class="d-flex justify-content-start">
+                                <div style="margin-right: 10px">Liên hệ</div>
+                                <div class="center-parent">
+                                    <div>
+                                        <i class="fa fa-caret-down" style="color: #ffff;"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </th>
                         <th [hidden]="!vaiTro">
                             <div class="d-flex justify-content-start">
                                 <div style="margin-right: 10px">Vai trò</div>
@@ -202,7 +222,7 @@
                                 </div>
                             </div>
                         </th>
-                        <th>
+                        <th [hidden]="!tongGiaTri">
                             <div class="d-flex justify-content-center">
                                 <div style="margin-right: 10px" class="text-center">
                                     <div class="d-flex justify-content-center">
@@ -270,7 +290,6 @@
                                 </div>
                             </div>
                         </th>
-
                         <th [hidden]="!linkTaiLieu">
                             <div class="d-flex justify-content-start">
                                 <div style="margin-right: 10px">Link tài liệu</div>
@@ -291,7 +310,6 @@
                                 </div>
                             </div>
                         </th>
-
                         <th [hidden]="!quy">
                             <div class="d-flex justify-content-start">
                                 <div style="margin-right: 10px">Quý</div>
@@ -312,7 +330,26 @@
                                 </div>
                             </div>
                         </th>
-
+                        <th [hidden]="!diaChiDVTV">
+                            <div class="d-flex justify-content-start">
+                                <div style="margin-right: 10px">Địa chỉ ĐVTV</div>
+                                <div class="center-parent">
+                                    <div>
+                                        <i class="fa fa-caret-down" style="color: #ffff;"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </th>
+                        <th [hidden]="!soDienThoaiDVTV">
+                            <div class="d-flex justify-content-start">
+                                <div style="margin-right: 10px">Số điện thoại ĐVTV</div>
+                                <div class="center-parent">
+                                    <div>
+                                        <i class="fa fa-caret-down" style="color: #ffff;"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </th>
                         <th [hidden]="!loaiKhachHang">
                             <div class="d-flex justify-content-start">
                                 <div style="margin-right: 10px">Loại khách hàng</div>
@@ -323,7 +360,27 @@
                                 </div>
                             </div>
                         </th>
-                        <th [hidden]="!ngayBatDauTheoDoi">
+                        <th [hidden]="!lyDoTrungThau">
+                            <div class="d-flex justify-content-start">
+                                <div style="margin-right: 10px">Lý do trúng thầu</div>
+                                <div class="center-parent">
+                                    <div>
+                                        <i class="fa fa-caret-down" style="color: #ffff;"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </th>
+                        <th [hidden]="!lyDoTratThau">
+                            <div class="d-flex justify-content-start">
+                                <div style="margin-right: 10px">Lý do trật thầu</div>
+                                <div class="center-parent">
+                                    <div>
+                                        <i class="fa fa-caret-down" style="color: #ffff;"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </th>
+                        <th [hidden]="!ngayBatDau">
                             <div class="d-flex justify-content-start">
                                 <div style="margin-right: 10px">Ngày bắt đầu theo dõi</div>
                                 <div class="center-parent">
@@ -343,7 +400,7 @@
                                 </div>
                             </div>
                         </th>
-                        <th [hidden]="!ngayNopHoSoMoiThau">
+                        <th [hidden]="!ngayNhanHoSoMoiThau">
                             <div class="d-flex justify-content-start">
                                 <div style="margin-right: 10px">Ngày nộp hồ sơ mời thầu</div>
                                 <div class="center-parent">
@@ -383,9 +440,36 @@
                                 </div>
                             </div>
                         </th>
-
-
-
+                        <th [hidden]="!diaDiem">
+                            <div class="d-flex justify-content-start">
+                                <div style="margin-right: 10px">Địa điểm</div>
+                                <div class="center-parent">
+                                    <div>
+                                        <i class="fa fa-caret-down" style="color: #ffff;"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </th>
+                        <th [hidden]="!moTa">
+                            <div class="d-flex justify-content-start">
+                                <div style="margin-right: 10px">Mô tả</div>
+                                <div class="center-parent">
+                                    <div>
+                                        <i class="fa fa-caret-down" style="color: #ffff;"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </th>
+                        <th [hidden]="!danhGiaDuAn">
+                            <div class="d-flex justify-content-start">
+                                <div style="margin-right: 10px">Đánh giá dự án</div>
+                                <div class="center-parent">
+                                    <div>
+                                        <i class="fa fa-caret-down" style="color: #ffff;"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </th>
                         <th style="max-width: 100px!important; width: 100px!important;" class="table-action text-center" type="check-action">
                             Thao tác
                         </th>
@@ -414,10 +498,12 @@
                                 {{ item.opportunityName}}
                             </a>
                         </td>
+                        <td [hidden]="!tenKhachHang" class="text-truncate">{{ item.customer?.customerName }}</td>
+                        <td [hidden]="!lienHe" class="text-truncate">{{ item.customerContact?.name }}</td>
                         <td [hidden]="!vaiTro" class="text-truncate">{{ item.hbcRole?.name }}</td>
                         <td [hidden]="!chuTri" class="text-truncate">{{ item.chairEmployee?.employeeName }}</td>
                         <td [hidden]="!loaiCongTrinh" class="text-truncate">{{ item.projectType?.value }}</td>
-                        <td class="text-truncate text-right">{{ item.amount | vnCurrency }}</td>
+                        <td [hidden]="!tongGiaTri" class="text-truncate text-right">{{ item.amount | vnCurrency }}</td>
                         <td [hidden]="!quyMo" class="color" class="text-center">{{item.magnitude }}</td>
                         <td [hidden]="!giaiDoan" class="" style="text-align: center;">
                             <div class="d-flex flex-column p-2">
@@ -439,13 +525,20 @@
                         <td [hidden]="!tongThoiGian" class="text-truncate">{{ item.totalTime }}</td>
                         <td [hidden]="!quy" class="text-truncate">{{ item.quarter?.name }}</td>
                         <td [hidden]="!donViTuVan" class="text-truncate">{{ item.consultantUnitCustomer?.customerName }}</td>
+                        <td [hidden]="!diaChiDVTV" class="text-truncate">{{ item.consultantAddress }}</td>
+                        <td [hidden]="!soDienThoaiDVTV" class="text-truncate">{{ item.consultantPhone }}</td>
                         <td [hidden]="!loaiKhachHang" class="text-truncate">{{ item.customer?.customerNewOldType }}</td>
-                        <td [hidden]="!ngayBatDauTheoDoi" class="text-truncate">{{ item.startTrackingDate }}</td>
-                        <td [hidden]="!ngayDuKienKetQuaThau" class="text-truncate">{{ item.resultEstimatedDate }}</td>
-                        <td [hidden]="!ngayNopHoSoMoiThau" class="text-truncate">{{ item.submissionDate }}</td>
-                        <td [hidden]="!ngayKhoiCongDuAn" class="text-truncate">{{ item.projectEstimatedStartDate }}</td>
-                        <td [hidden]="!ngayKetThucDuAn" class="text-truncate">{{ item.projectEstimatedEndDate }}</td>
+                        <td [hidden]="!lyDoTrungThau" class="text-truncate">{{ item.acceptanceReason }}</td>
+                        <td [hidden]="!lyDoTratThau" class="text-truncate">{{ item.unacceptanceReason }}</td>
+                        <td [hidden]="!ngayBatDau" class="text-truncate">{{ (item.startTrackingDate)*1000 |date:'dd/MM/yyyy' }}</td>
+                        <td [hidden]="!ngayDuKienKetQuaThau" class="text-truncate">{{ (item.resultEstimatedDate)*1000 |date:'dd/MM/yyyy' }}</td>
+                        <td [hidden]="!ngayNhanHoSoMoiThau" class="text-truncate">{{ (item.submissionDate)*1000 |date:'dd/MM/yyyy' }}</td>
+                        <td [hidden]="!ngayKhoiCongDuAn" class="text-truncate">{{ (item.projectEstimatedStartDate)*1000 |date:'dd/MM/yyyy' }}</td>
+                        <td [hidden]="!ngayKetThucDuAn" class="text-truncate">{{ (item.projectEstimatedEndDate)*1000 |date:'dd/MM/yyyy' }}</td>
                         <td [hidden]="!hangMucCongTrinh" class="text-truncate">{{ item.mainBuildingCategory?.value }}</td>
+                        <td [hidden]="!diaDiem" class="text-truncate">{{ item.location?.value }}</td>
+                        <td [hidden]="!moTa" class="text-truncate">{{ item.description }}</td>
+                        <td [hidden]="!danhGiaDuAn" class="text-truncate">{{ item.evaluation }}</td>
                         <td style="max-width: 100px!important;" type="check-action">
                             <div class="d-flex justify-content-center">
                                 <div>
