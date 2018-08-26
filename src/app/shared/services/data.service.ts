@@ -11,6 +11,7 @@ import { SessionService } from './index';
 import { SelectItemWithType } from '../models/select-item-with-type';
 import { DepartmentsFormBranches } from '../models/user/departments-from-branches';
 import { Levels } from '../models/user/levels';
+import { BidGroupUserResponsive } from '../models/api-response/user/group-user/bid-group-user-responsive';
 
 const MODULE_NAMES = {
     prospect: 'prospect',
@@ -898,5 +899,10 @@ export class DataService {
                     };
                 });
             });
+    }
+    // Danh sách nhóm người dùng phân quyền
+    getListBidUserGroup(): Observable<BidGroupUserResponsive[]> {
+        const url = `bidusergroup/getall`;
+        return this.apiService.get(url).map(response => response.result);
     }
 }

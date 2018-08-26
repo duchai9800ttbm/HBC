@@ -849,4 +849,9 @@ export class PackageService {
         }
         return this.apiService.get(url).map(response => response.result);
     }
+
+    updateBidPermissionGroupByStage(bidId: number, data): Observable<any> {
+        const url = `bidopportunity/${bidId}/changebidusergrouppermission`;
+        return this.apiService.post(url, data).map(response => response.result);
+    }
 }
