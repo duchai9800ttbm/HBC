@@ -98,4 +98,8 @@ export class PackageDetailComponent implements OnInit {
       this.router.navigate([`/package/detail/${this.packageId}/invitation`]);
     }
   }
+
+  isActive(instruction: any[]): boolean {
+   return this.router.isActive(this.router.createUrlTree(instruction), false);
+  }
 }
