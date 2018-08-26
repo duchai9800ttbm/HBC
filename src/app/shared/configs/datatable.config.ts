@@ -43,7 +43,7 @@ export const DATATABLE_CONFIG = {
 export const DATATABLE_CONFIG2 = {
     dom: '<<t><"footer-wrapper">>',
     pagingType: 'full_numbers',
-  //  pageLength: 10,
+    //  pageLength: 10,
     language: {
         infoEmpty: 'Không có dữ liệu',
         sProcessing: 'Đang xử lý...',
@@ -77,11 +77,11 @@ export const DATATABLE_CONFIG2 = {
         selector: 'td:first-child'
     },
     scrollX: 'auto',
-    // responsive: true,
+    responsive: true,
     columnDefs: [
         { width: 30, targets: 0 }
     ],
-    //   autoWidth: true,
+    autoWidth: true,
 
 };
 

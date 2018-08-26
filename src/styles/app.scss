@@ -927,3 +927,55 @@ pre {
     background-color: #00aeef;
     color: #fff;
 }
+
+
+
+
+
+
+
+
+
+
+
+//kendo
+.k-datepicker .k-select, .k-timepicker .k-select, .k-datetimepicker .k-select{
+    width: 40px !important;
+    background-color: #00a0e3!important;
+    .k-icon{
+        color: #fff!important;
+    }
+    border-color: 1px solid #00a0e3 !important;
+    &:hover{
+        .k-icon{
+            color: #fff!important;
+        }
+    }
+}
+.k-picker-wrap .k-state-default{
+    &:hover{
+        .k-select{
+            color: #fff!important;
+        }
+    }
+}
+
+.k-dropdown .k-select{
+     width: 40px !important;
+    background-color: #00a0e3!important;
+    color: #fff;
+    border-color: 1px solid #00a0e3 !important;
+    &:hover{
+        color: #fff!important;
+    }
+}
+
+.k-textbox::selection, .k-input::selection, .k-textarea::selection{
+    color: #656565!important;
+}
+
+
+.k-widget ::selection, .k-block ::selection, .k-panel ::selection {
+    color: #656565!important;
+
+}
