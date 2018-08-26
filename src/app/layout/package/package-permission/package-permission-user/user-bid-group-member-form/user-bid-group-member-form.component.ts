@@ -22,11 +22,9 @@ import { NgxSpinnerService } from 'ngx-spinner';
 export class UserBidGroupMemberFormComponent implements OnInit {
     packagePermissionBidUserGroupForm: FormGroup;
     @Input()
-    listUser: Observable<UserItemModel[]>;
+    listUser: UserItemModel[];
     @Input()
     type: string;
-    @Output()
-    formData;
     listBidUserGroupMember: BidUserGroupMemberResponsive[];
     packageId: number;
     constructor(
@@ -41,19 +39,23 @@ export class UserBidGroupMemberFormComponent implements OnInit {
     ngOnInit() {
         this.packageId = PackagePermissionComponent.packageId;
         this.spinner.show();
-        this.listUser = this.userService.getAllUser('');
+        this.userService.getAllUser('').subscribe(data => {
+            this.listUser = data;
+        });
         this.packageService
             .getBidGroupMembers(this.packageId, this.type)
             .subscribe(data => {
                 this.listBidUserGroupMember = data;
                 this.createForm(data);
-                this.packagePermissionBidUserGroupForm.valueChanges.subscribe(
-                    formData => {
-                        this.formData = this.getFormValue(formData);
-                    }
-                );
                 this.spinner.hide();
             });
+    }
+
+    getDepartmentName(name: string, index: number, value: number) {
+        const formArray = this.packagePermissionBidUserGroupForm.get(name).get('users') as FormArray;
+        const formGroup = formArray.controls[index] as FormGroup;
+        // tslint:disable-next-line:triple-equals
+        formGroup.get('department').patchValue(this.listUser.find(i => i.id == value).department.value);
     }
 
     onSubmit() {

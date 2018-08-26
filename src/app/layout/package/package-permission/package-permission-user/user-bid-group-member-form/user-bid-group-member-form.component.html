@@ -25,9 +25,9 @@
                         <div class="grid-container-2">
                             <label>Họ tên</label>
                             <span class="custom-dropdown">
-                                <select class="form-control" formControlName="name">
+                                <select class="form-control" formControlName="name" (change)="getDepartmentName(fControl.groupName, i, $event.target.value)">
                                     <option [ngValue]="null">---Chọn---</option>
-                                    <option *ngFor="let item of listUser | async" [value]="item.id">{{item.employeeName }}</option>
+                                    <option *ngFor="let item of listUser" [value]="item.id">{{item.employeeName }}</option>
                                 </select>
                             </span>
                         </div>

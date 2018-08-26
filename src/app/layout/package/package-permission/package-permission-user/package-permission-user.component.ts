@@ -20,7 +20,7 @@ import { UserItemModel } from '../../../../shared/models/user/user-item.model';
 })
 export class PackagePermissionUserComponent implements OnInit {
     packagePermissionUserForm: FormGroup;
-    listUser: Observable<UserItemModel[]>;
+    listUser: UserItemModel[];
     listBidUserGroupMember: BidUserGroupMemberResponsive[];
     packageId: number;
     constructor(
@@ -32,6 +32,6 @@ export class PackagePermissionUserComponent implements OnInit {
 
     ngOnInit() {
         this.packageId = PackagePermissionComponent.packageId;
-        this.listUser = this.userService.getAllUser('');
+        this.userService.getAllUser('').subscribe(data => this.listUser = data);
     }
 }
