@@ -43,7 +43,7 @@ export class PackageListComponent implements OnInit, AfterViewChecked {
     dtTrigger: Subject<any> = new Subject();
     filterModel = new PackageFilter();
     pagedResult: PagedResult<PackageListItem> = new PagedResult<
-    PackageListItem
+        PackageListItem
         >();
     datePickerConfig = DATETIME_PICKER_CONFIG;
     activityForm: FormGroup;
