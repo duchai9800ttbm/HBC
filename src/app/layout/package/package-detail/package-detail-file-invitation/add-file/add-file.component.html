@@ -178,11 +178,12 @@
 
 
                             </th>
-                            <th style="background-color: #f68e56!important;">
+
+                            <th style="width: 12%; background-color: #f68e56!important;">
                                 <div class="d-flex justify-content-center">
 
                                     <div class="center-parent">
-                                        <div>Người upload</div>
+                                        <div>Ngày upload</div>
                                     </div>
 
                                 </div>
@@ -190,11 +191,11 @@
 
 
                             </th>
-                            <th style="width: 12%; background-color: #f68e56!important;">
+                            <th style="background-color: #f68e56!important;">
                                 <div class="d-flex justify-content-center">
 
                                     <div class="center-parent">
-                                        <div>Ngày upload</div>
+                                        <div>Ngày nhận</div>
                                     </div>
 
                                 </div>
@@ -251,8 +252,11 @@
 
 
                                     </td>
-                                    <td class="text-center">{{ item.uploadedBy?.employeeName }}</td>
+
                                     <td class="text-center">{{ item.createdDate*1000 | date:'dd/MM/yyyy HH:mm': '+0000'}}</td>
+                                    <td class="text-center">
+                                        <span *ngIf="item.receivedDate">{{ item.receivedDate*1000 | date:'dd/MM/yyyy HH:mm': '+0000' }}</span>
+                                    </td>
                                     <td>
                                         <div class="d-flex justify-content-around">
                                             <div style="cursor: pointer;" title="Tải file" (click)="dowloadDocument(item.id)">

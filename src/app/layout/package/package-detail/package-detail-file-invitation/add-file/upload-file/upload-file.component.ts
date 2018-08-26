@@ -72,6 +72,7 @@ export class UploadFileComponent implements OnInit {
       nameFile: '',
       type: this.typeFile.id,
       editName: '',
+      date: null,
       description: ''
     });
   }
@@ -81,7 +82,8 @@ export class UploadFileComponent implements OnInit {
       const documentName = this.uploadForm.get('editName').value;
       const documentType = this.uploadForm.get('type').value;
       const description = this.uploadForm.get('description').value;
-      this.documentService.upload(this.packageId, documentName, documentType, description, this.file).subscribe(data => {
+      const date = this.uploadForm.get('date').value;
+      this.documentService.upload(this.packageId, documentName, documentType, description, date, this.file).subscribe(data => {
         this.closed.emit(true);
       });
     }

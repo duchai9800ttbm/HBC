@@ -1,7 +1,7 @@
 <div class="main-form" *ngIf="packageForm" class="boder-table" style="margin-left: 20px; margin-right: 20px">
     <form [formGroup]="packageForm">
         <div class="d-flex">
-            <div class="w-80  mr-auto">
+            <div class="mr-auto">
                 <div class="card-collapse">
                     <div class="header" (click)="isCollapsedMain = !isCollapsedMain" [attr.aria-expanded]="!isCollapsedMain" aria-controls="info-main">
                         <i class="fa fa-caret-down mr-3"></i>Thông tin chi tiết
@@ -344,14 +344,22 @@
                     </div>
                 </div>
             </div>
-            <div class="w-15 mr-auto zoom-button">
-                <div class="media-header" style="float: right">
-                    <span class="action-bar alignment-but">
-                        <button type="submit" class="btn btn-primary" (click)="submitForm()" tabindex="30">Lưu
-                        </button>
+            <div class=" zoom-button" style="width: auto; margin-right: 20px;  margin-left: 20px">
+                <div class="media-header" style="">
+                    <!-- <span class="action-bar alignment-but">
+                       
+                    </span> -->
+                    <div class="d-flex justify-content-between">
+                        <div class="p-1">
+                            <button type="submit" class="btn btn-primary" (click)="submitForm()" tabindex="30">Lưu
+                            </button>
+                        </div>
+                        <div class="p-1">
+                            
                         <button class="btn btn-secondary" [routerLink]="['/package/detail',packageId,'info']" tabindex="31">Hủy
                         </button>
-                    </span>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>

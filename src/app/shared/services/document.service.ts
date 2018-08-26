@@ -35,6 +35,7 @@ export class DocumentService {
             status: result.status,
             uploadPeople: result.uploadedBy.employeeName,
             uploadDate: result.createdDate,
+            receivedDate: result.receivedDate
             // fileGuid: result.fileGuid,
         };
     }
@@ -111,7 +112,8 @@ export class DocumentService {
         documentName: string,
         documentType: string,
         description: string,
-        file: File
+        receivedDate: number,
+        file: File,
     ) {
         const url = `biddocument/upload`;
         const formData = new FormData();
@@ -119,6 +121,7 @@ export class DocumentService {
         formData.append('DocumentType', documentType);
         formData.append('DocumentName', documentName);
         formData.append('DocumentDesc', description);
+        formData.append('ReceivedDate', `${moment(receivedDate).unix()}`);
         formData.append('DocumentFile', file);
         return this.apiService.postFile(url, formData)
             .map(response => response)
@@ -164,6 +167,7 @@ export class DocumentService {
                     status: y.status,
                     uploadedBy: y.uploadedBy,
                     createdDate: y.createdDate,
+                    receivedDate: y.receivedDate,
                     day: day,
                     month: month + 1,
                     year: year,
@@ -185,6 +189,7 @@ export class DocumentService {
                     status: y.status,
                     uploadedBy: y.uploadedBy,
                     createdDate: y.createdDate,
+                    receivedDate: y.receivedDate,
                     checkboxSelected: y.checkboxSelected,
                     employeeId: y.uploadedBy.employeeId
                 };

@@ -11,5 +11,6 @@ export class BidDocumentModel {
         employeeAvatar: string;
     };
     createdDate: number;
+    receivedDate: number;
     fileGuid: string;
 }
