@@ -10,6 +10,16 @@ export class OpportunityHsmtService {
   constructor(
     private apiService: ApiService,
   ) { }
+
+  daDuHSMT(bidOpportunityId: number) {
+    const url = `bidopportunity/hsmt/${bidOpportunityId}/daduhsmt`;
+    return this.apiService.post(url)
+      .map(response => {
+        return response;
+      })
+      .share();
+  }
+
   moveEvaluate(bidOpportunityId: number): Observable<any> {
     const url = `bidopportunity/hsmt/${bidOpportunityId}/chuyendanhgia`;
     return this.apiService.post(url)

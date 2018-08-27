@@ -65,7 +65,6 @@ export class PackageDetailComponent implements OnInit {
     }, err => {
     });
     this.layoutService.watchLayoutSubject().subscribe(data => {
-      console.log('bbbbb');
       if (data) {
         this.isToggle = true;
       } else {
@@ -98,4 +97,6 @@ export class PackageDetailComponent implements OnInit {
       this.router.navigate([`/package/detail/${this.packageId}/invitation`]);
     }
   }
+
+
 }
