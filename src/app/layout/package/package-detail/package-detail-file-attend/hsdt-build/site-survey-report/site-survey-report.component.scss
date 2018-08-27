@@ -4,7 +4,7 @@
     margin-top: 10px;
     border-radius: 4px;
     box-shadow: 0 0 10px 3px #f1f1f1;
-    height: auto;
+    height: 1009px;
     background-color: #fff;
 }
 
@@ -176,11 +176,7 @@ li.triangle::before {
 }
 
 #outer-table {
-    padding: 20px 15px 20px 0;
-}
-
-#header-table {
-    padding-left: 55px;
+    padding: 20px 70px;
 }
 
 .table-assignment {
@@ -320,49 +316,32 @@ table.dataTable th {
     background-color: #ffff !important;
     border: 1px solid #dddddd;
 }
-
-#main-content {
+#contentNone {
+    align-items: center;
+    flex-direction: column;
+}
+#surveynone {
+    flex-direction: column;
+    align-items: center;
+    div img {
+        width: 20%;
+        height: auto;
+    }
+    #buttons {
+        flex-direction: row
+    }
+}
+#toggle-menu {
+    // box-shadow: ;
     display: flex;
-    #toggle-menu {
-        // box-shadow: ;
+    flex-direction: column;
+    padding-top: 30px;
+    #toggle-menu-item {
         display: flex;
         flex-direction: column;
-        padding-top: 30px;
-        #toggle-menu-item {
-            display: flex;
-            flex-direction: column;
-            .toggle-menu-item {
-                cursor: pointer;
-                outline: none;
-                color: #009CE2;
-                background-color: #FFFFFF;
-                width: 210px;
-                height: 45px;
-                box-sizing: border-box;
-                padding: 5px 10px;
-                display: flex;
-                justify-content: start;
-                align-items: center;
-                font-size: 0.95em;
-                transition: 600ms;
-                &:hover {
-                    background-color: #009CE2;
-                    color: #FFFFFF;
-                }
-                &:first-child {
-                    border-top: #009CE2 solid 1px;
-                    border-top-right-radius: 5px;
-                }
-                &:last-child {
-                    border-bottom: #009CE2 solid 1px;
-                    border-bottom-right-radius: 5px;
-                }
-            }
-        }
         .toggle-menu-item {
             cursor: pointer;
             outline: none;
-            border-right: #009CE2 solid 1px;
             color: #009CE2;
             background-color: #FFFFFF;
             width: 210px;
@@ -378,132 +357,51 @@ table.dataTable th {
                 background-color: #009CE2;
                 color: #FFFFFF;
             }
-            .router-link-active {
-                background-color: #009CE2;
-                color: #FFFFFF;
+            &:first-child {
+                border-top: #009CE2 solid 1px;
+                border-top-right-radius: 5px;
+            }
+            &:last-child {
+                border-bottom: #009CE2 solid 1px;
+                border-bottom-right-radius: 5px;
             }
         }
-        .button-click {
-            cursor: pointer;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            font-size: 15px;
-            color: #FFFFFF;
-            background-color: #009CE2;
-            width: 25px;
-            height: 25px;
-            align-self: flex-end;
-        }
     }
-}
-
-.resize {
-    transition: width 600ms;
-    pointer-events: none;
-    width: 0px !important;
-    color: transparent !important;
-    background-color: transparent !important;
-    border: none !important;
-}
-
-.iconButton {
-    width: 19px;
-    height: 3px;
-    background-color: #fff;
-    border: none;
-    border-radius: 10px;
-}
-
-.iconN1 {
-    transition-duration: 600ms;
-}
-
-.iconN01 {
-    width: 25px;
-    transform: rotate(45deg) translate(5px, 5px);
-    transition-duration: 600ms;
-}
-
-.iconN3 {
-    transition-duration: 600ms;
-}
-
-.iconN03 {
-    width: 25px;
-    transform: rotate(-45deg) translate(4px, -4px);
-    transition-duration: 600ms;
-}
-
-.iconN2 {
-    transition-duration: 600ms;
-}
-
-.iconN02 {
-    transform: rotateY(90deg);
-    transition-duration: 600ms;
-}
-
-@media only screen and (max-width: 1024px) {
     .toggle-menu-item {
-        width: 150px !important;
-        font-size: 12px !important;
-    }
-    #outer-table {
-        padding-top: 0 !important;
-    }
-    #header-table {
-        zoom: 0.8 !important;
-        padding-left: 20px;
-        :first-child {
-            #res-header {
-                position: relative;
-                top: -30px;
-            }
+        cursor: pointer;
+        outline: none;
+        border-right: #009CE2 solid 1px;
+        color: #009CE2;
+        background-color: #FFFFFF;
+        width: 210px;
+        height: 45px;
+        box-sizing: border-box;
+        padding: 5px 10px;
+        display: flex;
+        justify-content: start;
+        align-items: center;
+        font-size: 0.95em;
+        transition: 600ms;
+        &:hover {
+            background-color: #009CE2;
+            color: #FFFFFF;
         }
-        :last-child {
-            div {
-                display: flex;
-                flex-direction: column;
-                align-items: flex-end;
-                :first-child {
-                    margin-bottom: 5px;
-                    div {
-                        justify-content: flex-end;
-                        align-items: flex-start;
-                        span {
-                            padding-bottom: 10px;
-                        }
-                    }
-                }
-                :last-child {
-                    flex-direction: row;
-                    align-items: flex-start;
-                    justify-content: flex-end;
-                }
-            }
+        .router-link-active {
+            background-color: #009CE2;
+            color: #FFFFFF;
         }
     }
-}
-.dropdown-toggle::after {
-    content: none !important;
-    border: none !important;
-}
-.dropdown-item{
-    cursor: pointer;
-}
-.dropdown-menu{
-    transform: translateX(-56%) !important;
-}
-.dropdown-menu::before{
-    position: absolute;
-    top: -12px;
-    left: 572px;
-    display: inline-block;
-    border-right: 12px solid transparent;
-    border-bottom: 12px solid #CCC;
-    border-left: 12px solid transparent;
-    border-bottom-color: rgba(0, 0, 0, 0.2);
-    content: '';
+    .button-click {
+        cursor: pointer;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        font-size: 15px;
+        color: #FFFFFF;
+        background-color: #009CE2;
+        width: 25px;
+        height: 25px;
+        align-self: flex-end;
+    }
 }

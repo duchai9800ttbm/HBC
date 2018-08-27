@@ -16,7 +16,8 @@ const routes: Routes = [
                 loadChildren:
                     './summary-condition/summary-condition.module#SummaryConditionModule'
             },
-            { path: 'hskt', component: HsktInvolvedComponent }
+            { path: 'hskt', component: HsktInvolvedComponent },
+            { path: 'sitereport', loadChildren: './site-survey-report/site-survey-report.module#SiteSurveyReportModule' }
         ]
     }
 ];
@@ -25,4 +26,4 @@ const routes: Routes = [
     imports: [RouterModule.forChild(routes)],
     exports: [RouterModule]
 })
-export class HsdtBuildRoutingModule {}
+export class HsdtBuildRoutingModule { }

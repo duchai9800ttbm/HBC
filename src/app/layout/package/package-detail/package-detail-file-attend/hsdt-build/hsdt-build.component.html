@@ -100,7 +100,7 @@
                     </div>
                 </div>
             </div>
-            <div id="main-content">
+            <div id="main-content" *ngIf="!notShow">
                 <div id="toggle-menu" *ngIf="!isShowMenu">
                     <div class="button-click" (click)="toggleClick()">
                         <div class="iconButton iconN1"></div>
@@ -116,7 +116,7 @@
                     <div id="toggle-menu-item">
                         <div class="toggle-menu-item" [routerLink]="['./summary']">Bảng tóm tắt ĐKDT</div>
                         <div class="toggle-menu-item">Yêu cầu báo giá vật tư, thầu phụ</div>
-                        <div class="toggle-menu-item">Báo cáo tham quan công trình</div>
+                        <div class="toggle-menu-item" [routerLink]="['./sitereport']">Báo cáo tham quan công trình</div>
                         <div class="toggle-menu-item">Bảng tổng hợp dự toán</div>
                         <div class="toggle-menu-item">Bảng tính chi phí chung</div>
                         <div class="toggle-menu-item">Bảng câu hỏi làm rõ HSMT</div>
