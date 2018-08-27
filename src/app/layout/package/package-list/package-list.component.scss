@@ -32,23 +32,29 @@ span{
  }
 
  table.dataTable {
-    th,td:nth-child(1) {
-        width: 30px!important;
+    tr:nth-child(odd) {background-color: #fafbfc;}
+    .star-color{
+        color: #fbc439;
     }
-    th,td:nth-last-child(1) {
+    th:first-child,td:first-child {
+        width: 60px!important;
+        max-width: 60px;
+    }
+    th,td[type="check"]{
+        width: 60px!important;
+    }
+    th[type="check-action"],td[type="check-action"]{
         width: 100px!important;
     }
-    th,td:not([type="check"]){
+    th:nth-last-child(1),td:nth-last-child(1) {
+    //    width: 100px!important;
+    }
+    th:not([type="check"]),td:not([type="check"]){
         min-width: 130px;
         max-width: 160px;
        
     }
-    th,td[type="check"]{
-        width: 30px!important;
-    }
-    th,td[type="check-action"]{
-        width: 100px!important;
-    }
+
     overflow-x: scroll;
    // display: block;
 

@@ -1,3 +1,6 @@
+:host(){
+    font-size: 80%;
+}
 .close-popup{
     font-size: 20px;
     font-weight: bold;
@@ -30,6 +33,8 @@
     position: relative;
     overflow: hidden;
     cursor: pointer;
+    width: 40px;
+
 }
 .fileUpload input.upload {
     position: absolute;
@@ -42,37 +47,4 @@
     opacity: 0;
     filter: alpha(opacity=0);
 }
-@media only screen and (max-width: 1366px) {
-    .width-kendo-dialog{
-        zoom: 0.6;
-        font-size: 120%;
-    }
-}
-
-@media only screen and (max-width: 1270px) {
-    .width-kendo-dialog{
-        zoom: 0.7;
-        font-size: 120%;
-    }
-}
-
-@media only screen and (max-width: 1200px) {
-    .width-kendo-dialog{
-        zoom: 0.6;
-        font-size: 120%;
-    }
-}
-@media only screen and (max-width: 1024px) {
-    .width-kendo-dialog{
-        zoom: 0.6;
-        font-size: 120%;
-    }
-}
-@media only screen and (max-width: 1100px) {
-    .width-kendo-dialogr{
-        zoom: 0.5;
-        font-size: 120%;
-        // [width]="600"
-        // [minWidth]="250"
-    }
-}
+    

@@ -98,5 +98,7 @@ export class PackageDetailComponent implements OnInit {
     }
   }
 
-
+  isActive(instruction: any[]): boolean {
+   return this.router.isActive(this.router.createUrlTree(instruction), false);
+  }
 }

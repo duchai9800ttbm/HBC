@@ -1,6 +1,6 @@
 <div *ngIf="package" class="boder-table" style="margin-left: 20px; margin-right: 20px">
     <div class="d-flex">
-        <div class="w-80  mr-auto">
+        <div class="  mr-auto" style="width: calc(100% - 100px);">
             <div class="card-collapse">
                 <div class="header" (click)="isCollapsedMain = !isCollapsedMain" [attr.aria-expanded]="!isCollapsedMain" aria-controls="info-main">
                     <i class="fa fa-caret-down mr-3"></i>Thông tin chi tiết
@@ -218,8 +218,8 @@
                 </div>
             </div>
         </div>
-        <div class="w-15  mr-auto">
-            <div class="media-header" style="float: right">
+        <div class="" style="width: auto; margin-right: 20px;  margin-left: 20px">
+            <div class="media-header" >
                 <span class="action-bar alignment-but">
                     <button type="submit" class="btn btn-primary" [routerLink]="['/package/detail',currentPackageId,'info','edit']">Chỉnh sửa &nbsp;
                     </button>

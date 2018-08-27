@@ -209,8 +209,10 @@ export class AddFileComponent implements OnInit {
             this.bidDocumentGroupListItem = response;
             this.bidDocumentGroupListItemSearchResult = response;
             this.dtTrigger.next();
-            if (this.bidDocumentGroupListItem.length === 0) { document.getElementsByClassName('dataTables_empty')[0].remove(); }
             this.spinner.hide();
+            if (!(this.bidDocumentGroupListItem && this.bidDocumentGroupListItem.length > 1)) {
+                document.getElementsByClassName('dataTables_empty')[0].remove();
+            }
         });
     }
 
