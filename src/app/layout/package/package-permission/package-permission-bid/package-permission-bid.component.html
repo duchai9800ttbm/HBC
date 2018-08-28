@@ -1,11 +1,11 @@
-<form [formGroup]="packagePermissionReviewForm">
+<form [formGroup]="packagePermissionReviewForm" *ngIf="packagePermissionReviewForm">
     <div class="boder-table mt-3">
         <div class="">
             <div class="media-header" style="text-align: right; padding-right: 1rem; margin-top: -0.75rem;">
                 <span class="action-bar alignment-but">
-                    <button type="submit" (click)="testSubmit()" class="btn btn-primary">Lưu
+                    <button type="submit" (click)="onSubmit()" class="btn btn-primary">Lưu
                     </button>
-                    <button type="submit" class="btn btn-secondary" [routerLink]="['/package/detail']">Hủy
+                    <button type="submit" class="btn btn-secondary">Hủy
                     </button>
                 </span>
             </div>
@@ -45,84 +45,88 @@
                         </th>
                     </tr>
                 </thead>
-                <tbody formArrayName="trienKhai">
-                    <tr *ngFor="let item of packagePermissionReviewForm.get('trienKhai').controls; let i = index;" [formGroupName]="i" [class.odd]="i % 2 == 0">
-                        <td>
-                            <div class="grid-container-3">
-                                <div class="btn-icon btn-icon-plus" (click)="addFormItem('trienKhai')">
-                                    <i class="fa fa-plus" style="margin-top: 2px" aria-hidden="true"></i>
+                <tbody [formGroupName]="'TrienKhaiVaPhanCongTienDo'">
+                    <ng-container [formArrayName]="'permission'">
+                        <tr *ngFor="let item of packagePermissionReviewForm.get('TrienKhaiVaPhanCongTienDo').get('permission').controls; let i = index;"
+                            [formGroupName]="i" [class.odd]="i % 2 == 0">
+                            <td>
+                                <div class="grid-container-3">
+                                    <div class="btn-icon btn-icon-plus" (click)="addFormArrayItem(listFormData[0], {})">
+                                        <i class="fa fa-plus" style="margin-top: 2px" aria-hidden="true"></i>
+                                    </div>
+                                    <div class="btn-icon btn-icon-minus" [class.invisible]="i == 0" (click)="removeFormItem(listFormData[0], i)">
+                                        <i class="fa fa-minus" style="margin-top: 2px" aria-hidden="true" *ngIf="i != 0"></i>
+                                    </div>
+                                    <div>
+                                        <span style="padding-left: 12px" class="custom-dropdown w-100">
+                                            <select class="form-control" formControlName="userName">
+                                                <option [ngValue]="null">--Chọn--</option>
+                                                <option *ngFor="let user of listBidGroupUser" [value]="user.id">{{user.desc}}</option>
+                                            </select>
+                                        </span>
+                                    </div>
                                 </div>
-                                <div class="btn-icon btn-icon-minus" [class.invisible]="i == 0" (click)="removeFormItem('trienKhai', i)">
-                                    <i class="fa fa-minus" style="margin-top: 2px" aria-hidden="true" *ngIf="i != 0"></i>
-                                </div>
-                                <div>
-                                    <span style="padding-left: 12px" class="custom-dropdown w-100">
-                                        <select class="form-control">
-                                            <option [ngValue]="null">--Chọn--</option>
-                                        </select>
-                                    </span>
-                                </div>
-                            </div>
-                        </td>
-                        <td class="text-center">
-                            <label class="custom-control custom-checkbox">
-                                <input type="checkbox" class="custom-control-input">
-                                <span class="custom-control-indicator"></span>
-                            </label>
-                        </td>
-                        <td class="text-center">
-                            <label class="custom-control custom-checkbox">
-                                <input type="checkbox" class="custom-control-input">
-                                <span class="custom-control-indicator"></span>
-                            </label>
-                        </td>
-                        <td class="text-center">
-                            <label class="custom-control custom-checkbox">
-                                <input type="checkbox" class="custom-control-input">
-                                <span class="custom-control-indicator"></span>
-                            </label>
-                        </td>
-                        <td class="text-center">
-                            <label class="custom-control custom-checkbox">
-                                <input type="checkbox" class="custom-control-input">
-                                <span class="custom-control-indicator"></span>
-                            </label>
-                        </td>
-                        <td class="text-center">
-                            <label class="custom-control custom-checkbox">
-                                <input type="checkbox" class="custom-control-input">
-                                <span class="custom-control-indicator"></span>
-                            </label>
-                        </td>
-                        <td class="text-center">
-                            <label class="custom-control custom-checkbox">
-                                <input type="checkbox" class="custom-control-input">
-                                <span class="custom-control-indicator"></span>
-                            </label>
-                        </td>
-                        <td class="text-center">
-                            <label class="custom-control custom-checkbox">
-                                <input type="checkbox" class="custom-control-input">
-                                <span class="custom-control-indicator"></span>
-                            </label>
-                        </td>
-                        <td class="text-center">
-                            <label class="custom-control custom-checkbox">
-                                <input type="checkbox" class="custom-control-input">
-                                <span class="custom-control-indicator"></span>
-                            </label>
-                        </td>
-                        <td class="text-center">
-                            <label class="custom-control custom-checkbox">
-                                <input type="checkbox" class="custom-control-input">
-                                <span class="custom-control-indicator"></span>
-                            </label>
-                        </td>
-                    </tr>
+                            </td>
+                            <td class="text-center">
+                                <label class="custom-control custom-checkbox">
+                                    <input type="checkbox" class="custom-control-input">
+                                    <span class="custom-control-indicator"></span>
+                                </label>
+                            </td>
+                            <td class="text-center">
+                                <label class="custom-control custom-checkbox">
+                                    <input type="checkbox" class="custom-control-input">
+                                    <span class="custom-control-indicator"></span>
+                                </label>
+                            </td>
+                            <td class="text-center">
+                                <label class="custom-control custom-checkbox">
+                                    <input type="checkbox" class="custom-control-input">
+                                    <span class="custom-control-indicator"></span>
+                                </label>
+                            </td>
+                            <td class="text-center">
+                                <label class="custom-control custom-checkbox">
+                                    <input type="checkbox" class="custom-control-input">
+                                    <span class="custom-control-indicator"></span>
+                                </label>
+                            </td>
+                            <td class="text-center">
+                                <label class="custom-control custom-checkbox">
+                                    <input type="checkbox" class="custom-control-input">
+                                    <span class="custom-control-indicator"></span>
+                                </label>
+                            </td>
+                            <td class="text-center">
+                                <label class="custom-control custom-checkbox">
+                                    <input type="checkbox" class="custom-control-input">
+                                    <span class="custom-control-indicator"></span>
+                                </label>
+                            </td>
+                            <td class="text-center">
+                                <label class="custom-control custom-checkbox">
+                                    <input type="checkbox" class="custom-control-input">
+                                    <span class="custom-control-indicator"></span>
+                                </label>
+                            </td>
+                            <td class="text-center">
+                                <label class="custom-control custom-checkbox">
+                                    <input type="checkbox" class="custom-control-input">
+                                    <span class="custom-control-indicator"></span>
+                                </label>
+                            </td>
+                            <td class="text-center">
+                                <label class="custom-control custom-checkbox">
+                                    <input type="checkbox" class="custom-control-input">
+                                    <span class="custom-control-indicator"></span>
+                                </label>
+                            </td>
+                        </tr>
+                    </ng-container>
                 </tbody>
             </table>
 
-            <div formArrayName="createBid" class="mt-4 table-striped-fake">
+            <div [formGroupName]="'LapHoSoDuThau'" class="mt-4 table-striped-fake">
                 <div class="table-fake header">
                     <div class="text-center">Lập hồ sơ dự thầu</div>
                     <div class="text-center">Loại tài liệu</div>
@@ -133,80 +137,84 @@
                     <div class="text-center" appSameWidth="col4">Tải template</div>
                     <div class="text-center" appSameWidth="col5">Chốt file</div>
                 </div>
-                <div *ngFor="let item of packagePermissionReviewForm.get('createBid').controls; let i = index;" [formGroupName]="i">
-                    <div formArrayName="types" [class.odd]="i % 2 == 0">
-                        <div class="table-fake content" *ngFor="let itemBid of item.get('types').controls; let j = index;" [formGroupName]="j">
-                            <div>
-                                <div class="grid-container-3" *ngIf="j == 0">
-                                    <div class="btn-icon btn-icon-plus" (click)="addGroupCreateBidFormItem(packagePermissionReviewForm.get('createBid').controls.length)">
-                                        <i class="fa fa-plus" style="margin-top: 2px" aria-hidden="true"></i>
+                <div [formArrayName]="'permission'">
+                    <div *ngFor="let item of packagePermissionReviewForm.get('LapHoSoDuThau').get('permission').controls; let i = index;" [formGroupName]="i">
+                        <div formArrayName="documentTypes" [class.odd]="i % 2 == 0">
+                            <div class="table-fake content" *ngFor="let itemBid of item.get('documentTypes').controls; let j = index;" [formGroupName]="j">
+                                <div>
+                                    <div class="grid-container-3" *ngIf="j == 0">
+                                        <div class="btn-icon btn-icon-plus" (click)="addFormArrayBidItem(listFormData[1], {})">
+                                            <i class="fa fa-plus" style="margin-top: 2px" aria-hidden="true"></i>
+                                        </div>
+                                        <div class="btn-icon btn-icon-minus" [class.invisible]="i == 0" (click)="removeFormItem(listFormData[1], i)">
+                                            <i class="fa fa-minus" style="margin-top: 2px" aria-hidden="true" *ngIf="i != 0"></i>
+                                        </div>
+                                        <div>
+                                            <span style="padding-left: 12px" class="custom-dropdown w-100">
+                                                <select class="form-control" formControlName="userName">
+                                                    <option [ngValue]="null">--Chọn--</option>
+                                                    <option *ngFor="let user of listBidGroupUser" [value]="user.id">{{user.desc}}</option>
+                                                </select>
+                                            </span>
+                                        </div>
                                     </div>
-                                    <div class="btn-icon btn-icon-minus" [class.invisible]="i == 0" (click)="removeFormItem('createBid', i)">
-                                        <i class="fa fa-minus" style="margin-top: 2px" aria-hidden="true" *ngIf="i != 0"></i>
-                                    </div>
+                                </div>
+                                <div class="grid-container-3-child">
                                     <div>
                                         <span style="padding-left: 12px" class="custom-dropdown w-100">
-                                            <select class="form-control">
+                                            <select class="form-control" formControlName="documentId">
                                                 <option [ngValue]="null">--Chọn--</option>
+                                                <option *ngFor="let document of listDocumentType" [value]="document.id">{{document.text}}</option>
                                             </select>
                                         </span>
                                     </div>
+                                    <div class="btn-icon btn-icon-plus" (click)="addFormArrayDocumentTypeItem(listFormData[1], i)">
+                                        <i class="fa fa-plus" style="margin-top: 2px" aria-hidden="true"></i>
+                                    </div>
+                                    <div class="btn-icon btn-icon-minus" [class.invisible]="j == 0" (click)="removeFormBidItem(listFormData[1], i, j)">
+                                        <i class="fa fa-minus" style="margin-top: 2px" aria-hidden="true" *ngIf="j != 0"></i>
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="grid-container-3-child">
-                                <div>
-                                    <span style="padding-left: 12px" class="custom-dropdown w-100">
-                                        <select class="form-control">
-                                            <option [ngValue]="null">--Chọn--</option>
-                                        </select>
-                                    </span>
+                                <div class="text-center">
+                                    <label class="custom-control custom-checkbox">
+                                        <input type="checkbox" class="custom-control-input">
+                                        <span class="custom-control-indicator"></span>
+                                    </label>
                                 </div>
-                                <div class="btn-icon btn-icon-plus" (click)="addCreateBidItemFormItem(i)">
-                                    <i class="fa fa-plus" style="margin-top: 2px" aria-hidden="true"></i>
+                                <div class="text-center col1">
+                                    <label class="custom-control custom-checkbox">
+                                        <input type="checkbox" class="custom-control-input" formControlName="UploadFile">
+                                        <span class="custom-control-indicator"></span>
+                                    </label>
                                 </div>
-                                <div class="btn-icon btn-icon-minus" [class.invisible]="j == 0" (click)="removeCreateBidItemFormItem(i, j)">
-                                    <i class="fa fa-minus" style="margin-top: 2px" aria-hidden="true" *ngIf="j != 0"></i>
+                                <div class="text-center col2">
+                                    <label class="custom-control custom-checkbox">
+                                        <input type="checkbox" class="custom-control-input" formControlName="TaiXuongTepTin">
+                                        <span class="custom-control-indicator"></span>
+                                    </label>
                                 </div>
-                            </div>
-                            <div class="text-center">
-                                <label class="custom-control custom-checkbox">
-                                    <input type="checkbox" class="custom-control-input">
-                                    <span class="custom-control-indicator"></span>
-                                </label>
-                            </div>
-                            <div class="text-center col1">
-                                <label class="custom-control custom-checkbox">
-                                    <input type="checkbox" class="custom-control-input">
-                                    <span class="custom-control-indicator"></span>
-                                </label>
-                            </div>
-                            <div class="text-center col2">
-                                <label class="custom-control custom-checkbox">
-                                    <input type="checkbox" class="custom-control-input">
-                                    <span class="custom-control-indicator"></span>
-                                </label>
-                            </div>
-                            <div class="text-center col3">
-                                <label class="custom-control custom-checkbox">
-                                    <input type="checkbox" class="custom-control-input">
-                                    <span class="custom-control-indicator"></span>
-                                </label>
-                            </div>
-                            <div class="text-center col4">
-                                <label class="custom-control custom-checkbox">
-                                    <input type="checkbox" class="custom-control-input">
-                                    <span class="custom-control-indicator"></span>
-                                </label>
-                            </div>
-                            <div class="text-center col5">
-                                <label class="custom-control custom-checkbox">
-                                    <input type="checkbox" class="custom-control-input">
-                                    <span class="custom-control-indicator"></span>
-                                </label>
+                                <div class="text-center col3">
+                                    <label class="custom-control custom-checkbox">
+                                        <input type="checkbox" class="custom-control-input" formControlName="XoaFile">
+                                        <span class="custom-control-indicator"></span>
+                                    </label>
+                                </div>
+                                <div class="text-center col4">
+                                    <label class="custom-control custom-checkbox">
+                                        <input type="checkbox" class="custom-control-input" formControlName="TaiTemplate">
+                                        <span class="custom-control-indicator"></span>
+                                    </label>
+                                </div>
+                                <div class="text-center col5">
+                                    <label class="custom-control custom-checkbox">
+                                        <input type="checkbox" class="custom-control-input" formControlName="ChotFile">
+                                        <span class="custom-control-indicator"></span>
+                                    </label>
+                                </div>
                             </div>
                         </div>
-                    </div>
 
+                    </div>
                 </div>
             </div>
 
@@ -237,68 +245,72 @@
                         </th>
                     </tr>
                 </thead>
-                <tbody formArrayName="trinhDuyetGia">
-                    <tr *ngFor="let item of packagePermissionReviewForm.get('trinhDuyetGia').controls; let i = index;" [formGroupName]="i" [class.odd]="i % 2 == 0">
-                        <td>
-                            <div class="grid-container-3">
-                                <div class="btn-icon btn-icon-plus" (click)="addFormItem('trinhDuyetGia')">
-                                    <i class="fa fa-plus" style="margin-top: 2px" aria-hidden="true"></i>
+                <tbody [formGroupName]="'TrinhDuyetGia'">
+                    <ng-container [formArrayName]="'permission'">
+                        <tr *ngFor="let item of packagePermissionReviewForm.get('TrinhDuyetGia').get('permission').controls; let i = index;" [formGroupName]="i"
+                            [class.odd]="i % 2 == 0">
+                            <td>
+                                <div class="grid-container-3">
+                                    <div class="btn-icon btn-icon-plus" (click)="addFormArrayItem(listFormData[2], {})">
+                                        <i class="fa fa-plus" style="margin-top: 2px" aria-hidden="true"></i>
+                                    </div>
+                                    <div class="btn-icon btn-icon-minus" [class.invisible]="i == 0" (click)="removeFormItem(listFormData[2], i)">
+                                        <i class="fa fa-minus" style="margin-top: 2px" aria-hidden="true" *ngIf="i != 0"></i>
+                                    </div>
+                                    <div>
+                                        <span style="padding-left: 12px" class="custom-dropdown w-100">
+                                            <select class="form-control" formControlName="userName">
+                                                <option [ngValue]="null">--Chọn--</option>
+                                                <option *ngFor="let user of listBidGroupUser" [value]="user.id">{{user.desc}}</option>
+                                            </select>
+                                        </span>
+                                    </div>
                                 </div>
-                                <div class="btn-icon btn-icon-minus" [class.invisible]="i == 0" (click)="removeFormItem('trinhDuyetGia', i)">
-                                    <i class="fa fa-minus" style="margin-top: 2px" aria-hidden="true" *ngIf="i != 0"></i>
-                                </div>
-                                <div>
-                                    <span style="padding-left: 12px" class="custom-dropdown w-100">
-                                        <select class="form-control">
-                                            <option [ngValue]="null">--Chọn--</option>
-                                        </select>
-                                    </span>
-                                </div>
-                            </div>
-                        </td>
-                        <td class="text-center">
-                            <label class="custom-control custom-checkbox">
-                                <input type="checkbox" class="custom-control-input">
-                                <span class="custom-control-indicator"></span>
-                            </label>
-                        </td>
-                        <td class="text-center">
-                            <label class="custom-control custom-checkbox">
-                                <input type="checkbox" class="custom-control-input">
-                                <span class="custom-control-indicator"></span>
-                            </label>
-                        </td>
-                        <td class="text-center">
-                            <label class="custom-control custom-checkbox">
-                                <input type="checkbox" class="custom-control-input">
-                                <span class="custom-control-indicator"></span>
-                            </label>
-                        </td>
-                        <td class="text-center">
-                            <label class="custom-control custom-checkbox">
-                                <input type="checkbox" class="custom-control-input">
-                                <span class="custom-control-indicator"></span>
-                            </label>
-                        </td>
-                        <td class="text-center">
-                            <label class="custom-control custom-checkbox">
-                                <input type="checkbox" class="custom-control-input">
-                                <span class="custom-control-indicator"></span>
-                            </label>
-                        </td>
-                        <td class="text-center">
-                            <label class="custom-control custom-checkbox">
-                                <input type="checkbox" class="custom-control-input">
-                                <span class="custom-control-indicator"></span>
-                            </label>
-                        </td>
-                        <td class="text-center">
-                            <label class="custom-control custom-checkbox">
-                                <input type="checkbox" class="custom-control-input">
-                                <span class="custom-control-indicator"></span>
-                            </label>
-                        </td>
-                    </tr>
+                            </td>
+                            <td class="text-center">
+                                <label class="custom-control custom-checkbox">
+                                    <input type="checkbox" class="custom-control-input">
+                                    <span class="custom-control-indicator"></span>
+                                </label>
+                            </td>
+                            <td class="text-center">
+                                <label class="custom-control custom-checkbox">
+                                    <input type="checkbox" class="custom-control-input">
+                                    <span class="custom-control-indicator"></span>
+                                </label>
+                            </td>
+                            <td class="text-center">
+                                <label class="custom-control custom-checkbox">
+                                    <input type="checkbox" class="custom-control-input">
+                                    <span class="custom-control-indicator"></span>
+                                </label>
+                            </td>
+                            <td class="text-center">
+                                <label class="custom-control custom-checkbox">
+                                    <input type="checkbox" class="custom-control-input">
+                                    <span class="custom-control-indicator"></span>
+                                </label>
+                            </td>
+                            <td class="text-center">
+                                <label class="custom-control custom-checkbox">
+                                    <input type="checkbox" class="custom-control-input">
+                                    <span class="custom-control-indicator"></span>
+                                </label>
+                            </td>
+                            <td class="text-center">
+                                <label class="custom-control custom-checkbox">
+                                    <input type="checkbox" class="custom-control-input">
+                                    <span class="custom-control-indicator"></span>
+                                </label>
+                            </td>
+                            <td class="text-center">
+                                <label class="custom-control custom-checkbox">
+                                    <input type="checkbox" class="custom-control-input">
+                                    <span class="custom-control-indicator"></span>
+                                </label>
+                            </td>
+                        </tr>
+                    </ng-container>
                 </tbody>
             </table>
 
@@ -332,74 +344,78 @@
                         </th>
                     </tr>
                 </thead>
-                <tbody formArrayName="donBaoGia">
-                    <tr *ngFor="let item of packagePermissionReviewForm.get('donBaoGia').controls; let i = index;" [formGroupName]="i" [class.odd]="i % 2 == 0">
-                        <td>
-                            <div class="grid-container-3">
-                                <div class="btn-icon btn-icon-plus" (click)="addFormItem('donBaoGia')">
-                                    <i class="fa fa-plus" style="margin-top: 2px" aria-hidden="true"></i>
+                <tbody [formGroupName]="'DonBaoGiaDuThau'">
+                    <ng-container [formArrayName]="'permission'">
+                        <tr *ngFor="let item of packagePermissionReviewForm.get('DonBaoGiaDuThau').get('permission').controls; let i = index;" [formGroupName]="i"
+                            [class.odd]="i % 2 == 0">
+                            <td>
+                                <div class="grid-container-3">
+                                    <div class="btn-icon btn-icon-plus" (click)="addFormArrayItem(listFormData[3], {})">
+                                        <i class="fa fa-plus" style="margin-top: 2px" aria-hidden="true"></i>
+                                    </div>
+                                    <div class="btn-icon btn-icon-minus" [class.invisible]="i == 0" (click)="removeFormItem(listFormData[3], i)">
+                                        <i class="fa fa-minus" style="margin-top: 2px" aria-hidden="true" *ngIf="i != 0"></i>
+                                    </div>
+                                    <div>
+                                        <span style="padding-left: 12px" class="custom-dropdown w-100">
+                                            <select class="form-control" formControlName="userName">
+                                                <option [ngValue]="null">--Chọn--</option>
+                                                <option *ngFor="let user of listBidGroupUser" [value]="user.id">{{user.desc}}</option>
+                                            </select>
+                                        </span>
+                                    </div>
                                 </div>
-                                <div class="btn-icon btn-icon-minus" [class.invisible]="i == 0" (click)="removeFormItem('donBaoGia', i)">
-                                    <i class="fa fa-minus" style="margin-top: 2px" aria-hidden="true" *ngIf="i != 0"></i>
-                                </div>
-                                <div>
-                                    <span style="padding-left: 12px" class="custom-dropdown w-100">
-                                        <select class="form-control">
-                                            <option [ngValue]="null">--Chọn--</option>
-                                        </select>
-                                    </span>
-                                </div>
-                            </div>
-                        </td>
-                        <td class="text-center">
-                            <label class="custom-control custom-checkbox">
-                                <input type="checkbox" class="custom-control-input">
-                                <span class="custom-control-indicator"></span>
-                            </label>
-                        </td>
-                        <td class="text-center">
-                            <label class="custom-control custom-checkbox">
-                                <input type="checkbox" class="custom-control-input">
-                                <span class="custom-control-indicator"></span>
-                            </label>
-                        </td>
-                        <td class="text-center">
-                            <label class="custom-control custom-checkbox">
-                                <input type="checkbox" class="custom-control-input">
-                                <span class="custom-control-indicator"></span>
-                            </label>
-                        </td>
-                        <td class="text-center">
-                            <label class="custom-control custom-checkbox">
-                                <input type="checkbox" class="custom-control-input">
-                                <span class="custom-control-indicator"></span>
-                            </label>
-                        </td>
-                        <td class="text-center">
-                            <label class="custom-control custom-checkbox">
-                                <input type="checkbox" class="custom-control-input">
-                                <span class="custom-control-indicator"></span>
-                            </label>
-                        </td>
-                        <td class="text-center">
-                            <label class="custom-control custom-checkbox">
-                                <input type="checkbox" class="custom-control-input">
-                                <span class="custom-control-indicator"></span>
-                            </label>
-                        </td>
-                        <td class="text-center">
-                            <label class="custom-control custom-checkbox">
-                                <input type="checkbox" class="custom-control-input">
-                                <span class="custom-control-indicator"></span>
-                            </label>
-                        </td>
-                        <td class="text-center">
-                            <label class="custom-control custom-checkbox">
-                                <input type="checkbox" class="custom-control-input">
-                                <span class="custom-control-indicator"></span>
-                            </label>
-                        </td>
-                    </tr>
+                            </td>
+                            <td class="text-center">
+                                <label class="custom-control custom-checkbox">
+                                    <input type="checkbox" class="custom-control-input">
+                                    <span class="custom-control-indicator"></span>
+                                </label>
+                            </td>
+                            <td class="text-center">
+                                <label class="custom-control custom-checkbox">
+                                    <input type="checkbox" class="custom-control-input">
+                                    <span class="custom-control-indicator"></span>
+                                </label>
+                            </td>
+                            <td class="text-center">
+                                <label class="custom-control custom-checkbox">
+                                    <input type="checkbox" class="custom-control-input">
+                                    <span class="custom-control-indicator"></span>
+                                </label>
+                            </td>
+                            <td class="text-center">
+                                <label class="custom-control custom-checkbox">
+                                    <input type="checkbox" class="custom-control-input">
+                                    <span class="custom-control-indicator"></span>
+                                </label>
+                            </td>
+                            <td class="text-center">
+                                <label class="custom-control custom-checkbox">
+                                    <input type="checkbox" class="custom-control-input">
+                                    <span class="custom-control-indicator"></span>
+                                </label>
+                            </td>
+                            <td class="text-center">
+                                <label class="custom-control custom-checkbox">
+                                    <input type="checkbox" class="custom-control-input">
+                                    <span class="custom-control-indicator"></span>
+                                </label>
+                            </td>
+                            <td class="text-center">
+                                <label class="custom-control custom-checkbox">
+                                    <input type="checkbox" class="custom-control-input">
+                                    <span class="custom-control-indicator"></span>
+                                </label>
+                            </td>
+                            <td class="text-center">
+                                <label class="custom-control custom-checkbox">
+                                    <input type="checkbox" class="custom-control-input">
+                                    <span class="custom-control-indicator"></span>
+                                </label>
+                            </td>
+                        </tr>
+                    </ng-container>
                 </tbody>
             </table>
 
@@ -430,68 +446,72 @@
                         </th>
                     </tr>
                 </thead>
-                <tbody formArrayName="hsdtDaKy">
-                    <tr *ngFor="let item of packagePermissionReviewForm.get('hsdtDaKy').controls; let i = index;" [formGroupName]="i" [class.odd]="i % 2 == 0">
-                        <td>
-                            <div class="grid-container-3">
-                                <div class="btn-icon btn-icon-plus" (click)="addFormItem('hsdtDaKy')">
-                                    <i class="fa fa-plus" style="margin-top: 2px" aria-hidden="true"></i>
+                <tbody [formGroupName]="'HoSoDuThauDaKy'">
+                    <ng-container [formArrayName]="'permission'">
+                        <tr *ngFor="let item of packagePermissionReviewForm.get('HoSoDuThauDaKy').get('permission').controls; let i = index;" [formGroupName]="i"
+                            [class.odd]="i % 2 == 0">
+                            <td>
+                                <div class="grid-container-3">
+                                    <div class="btn-icon btn-icon-plus" (click)="addFormArrayItem(listFormData[4], {})">
+                                        <i class="fa fa-plus" style="margin-top: 2px" aria-hidden="true"></i>
+                                    </div>
+                                    <div class="btn-icon btn-icon-minus" [class.invisible]="i == 0" (click)="removeFormItem(listFormData[4], i)">
+                                        <i class="fa fa-minus" style="margin-top: 2px" aria-hidden="true" *ngIf="i != 0"></i>
+                                    </div>
+                                    <div>
+                                        <span style="padding-left: 12px" class="custom-dropdown w-100">
+                                            <select class="form-control" formControlName="userName">
+                                                <option [ngValue]="null">--Chọn--</option>
+                                                <option *ngFor="let user of listBidGroupUser" [value]="user.id">{{user.desc}}</option>
+                                            </select>
+                                        </span>
+                                    </div>
                                 </div>
-                                <div class="btn-icon btn-icon-minus" [class.invisible]="i == 0" (click)="removeFormItem('hsdtDaKy', i)">
-                                    <i class="fa fa-minus" style="margin-top: 2px" aria-hidden="true" *ngIf="i != 0"></i>
-                                </div>
-                                <div>
-                                    <span style="padding-left: 12px" class="custom-dropdown w-100">
-                                        <select class="form-control">
-                                            <option [ngValue]="null">--Chọn--</option>
-                                        </select>
-                                    </span>
-                                </div>
-                            </div>
-                        </td>
-                        <td class="text-center">
-                            <label class="custom-control custom-checkbox">
-                                <input type="checkbox" class="custom-control-input">
-                                <span class="custom-control-indicator"></span>
-                            </label>
-                        </td>
-                        <td class="text-center">
-                            <label class="custom-control custom-checkbox">
-                                <input type="checkbox" class="custom-control-input">
-                                <span class="custom-control-indicator"></span>
-                            </label>
-                        </td>
-                        <td class="text-center">
-                            <label class="custom-control custom-checkbox">
-                                <input type="checkbox" class="custom-control-input">
-                                <span class="custom-control-indicator"></span>
-                            </label>
-                        </td>
-                        <td class="text-center">
-                            <label class="custom-control custom-checkbox">
-                                <input type="checkbox" class="custom-control-input">
-                                <span class="custom-control-indicator"></span>
-                            </label>
-                        </td>
-                        <td class="text-center">
-                            <label class="custom-control custom-checkbox">
-                                <input type="checkbox" class="custom-control-input">
-                                <span class="custom-control-indicator"></span>
-                            </label>
-                        </td>
-                        <td class="text-center">
-                            <label class="custom-control custom-checkbox">
-                                <input type="checkbox" class="custom-control-input">
-                                <span class="custom-control-indicator"></span>
-                            </label>
-                        </td>
-                        <td class="text-center">
-                            <label class="custom-control custom-checkbox">
-                                <input type="checkbox" class="custom-control-input">
-                                <span class="custom-control-indicator"></span>
-                            </label>
-                        </td>
-                    </tr>
+                            </td>
+                            <td class="text-center">
+                                <label class="custom-control custom-checkbox">
+                                    <input type="checkbox" class="custom-control-input">
+                                    <span class="custom-control-indicator"></span>
+                                </label>
+                            </td>
+                            <td class="text-center">
+                                <label class="custom-control custom-checkbox">
+                                    <input type="checkbox" class="custom-control-input">
+                                    <span class="custom-control-indicator"></span>
+                                </label>
+                            </td>
+                            <td class="text-center">
+                                <label class="custom-control custom-checkbox">
+                                    <input type="checkbox" class="custom-control-input">
+                                    <span class="custom-control-indicator"></span>
+                                </label>
+                            </td>
+                            <td class="text-center">
+                                <label class="custom-control custom-checkbox">
+                                    <input type="checkbox" class="custom-control-input">
+                                    <span class="custom-control-indicator"></span>
+                                </label>
+                            </td>
+                            <td class="text-center">
+                                <label class="custom-control custom-checkbox">
+                                    <input type="checkbox" class="custom-control-input">
+                                    <span class="custom-control-indicator"></span>
+                                </label>
+                            </td>
+                            <td class="text-center">
+                                <label class="custom-control custom-checkbox">
+                                    <input type="checkbox" class="custom-control-input">
+                                    <span class="custom-control-indicator"></span>
+                                </label>
+                            </td>
+                            <td class="text-center">
+                                <label class="custom-control custom-checkbox">
+                                    <input type="checkbox" class="custom-control-input">
+                                    <span class="custom-control-indicator"></span>
+                                </label>
+                            </td>
+                        </tr>
+                    </ng-container>
                 </tbody>
             </table>
 
@@ -534,95 +554,100 @@
                         </th>
                     </tr>
                 </thead>
-                <tbody formArrayName="phongVan">
-                    <tr *ngFor="let item of packagePermissionReviewForm.get('phongVan').controls; let i = index;" [formGroupName]="i" [class.odd]="i % 2 == 0">
-                        <td>
-                            <div class="grid-container-3">
-                                <div class="btn-icon btn-icon-plus" (click)="addFormItem('phongVan')">
-                                    <i class="fa fa-plus" style="margin-top: 2px" aria-hidden="true"></i>
+                <tbody [formGroupName]="'QuanLyPhongVanThuongThao'">
+                    <ng-container [formArrayName]="'permission'">
+                        <tr *ngFor="let item of packagePermissionReviewForm.get('QuanLyPhongVanThuongThao').get('permission').controls; let i = index;"
+                            [formGroupName]="i" [class.odd]="i % 2 == 0">
+                            <td>
+                                <div class="grid-container-3">
+                                    <div class="btn-icon btn-icon-plus" (click)="addFormArrayItem(listFormData[5], {})">
+                                        <i class="fa fa-plus" style="margin-top: 2px" aria-hidden="true"></i>
+                                    </div>
+                                    <div class="btn-icon btn-icon-minus" [class.invisible]="i == 0" (click)="removeFormItem(listFormData[5], i)">
+                                        <i class="fa fa-minus" style="margin-top: 2px" aria-hidden="true" *ngIf="i != 0"></i>
+                                    </div>
+                                    <div>
+                                        <span style="padding-left: 12px" class="custom-dropdown w-100">
+                                            <select class="form-control" formControlName="userName">
+                                                <option [ngValue]="null">--Chọn--</option>
+                                                <option *ngFor="let user of listBidGroupUser" [value]="user.id">{{user.desc}}</option>
+                                            </select>
+                                        </span>
+                                    </div>
                                 </div>
-                                <div class="btn-icon btn-icon-minus" [class.invisible]="i == 0" (click)="removeFormItem('phongVan', i)">
-                                    <i class="fa fa-minus" style="margin-top: 2px" aria-hidden="true" *ngIf="i != 0"></i>
-                                </div>
-                                <div>
-                                    <span style="padding-left: 12px" class="custom-dropdown w-100">
-                                        <select class="form-control">
-                                            <option [ngValue]="null">--Chọn--</option>
-                                        </select>
-                                    </span>
-                                </div>
-                            </div>
-                        </td>
-                        <td class="text-center">
-                            <label class="custom-control custom-checkbox">
-                                <input type="checkbox" class="custom-control-input">
-                                <span class="custom-control-indicator"></span>
-                            </label>
-                        </td>
-                        <td class="text-center">
-                            <label class="custom-control custom-checkbox">
-                                <input type="checkbox" class="custom-control-input">
-                                <span class="custom-control-indicator"></span>
-                            </label>
-                        </td>
-                        <td class="text-center">
-                            <label class="custom-control custom-checkbox">
-                                <input type="checkbox" class="custom-control-input">
-                                <span class="custom-control-indicator"></span>
-                            </label>
-                        </td>
-                        <td class="text-center">
-                            <label class="custom-control custom-checkbox">
-                                <input type="checkbox" class="custom-control-input">
-                                <span class="custom-control-indicator"></span>
-                            </label>
-                        </td>
-                        <td class="text-center">
-                            <label class="custom-control custom-checkbox">
-                                <input type="checkbox" class="custom-control-input">
-                                <span class="custom-control-indicator"></span>
-                            </label>
-                        </td>
-                        <td class="text-center">
-                            <label class="custom-control custom-checkbox">
-                                <input type="checkbox" class="custom-control-input">
-                                <span class="custom-control-indicator"></span>
-                            </label>
-                        </td>
-                        <td class="text-center">
-                            <label class="custom-control custom-checkbox">
-                                <input type="checkbox" class="custom-control-input">
-                                <span class="custom-control-indicator"></span>
-                            </label>
-                        </td>
-                        <td class="text-center">
-                            <label class="custom-control custom-checkbox">
-                                <input type="checkbox" class="custom-control-input">
-                                <span class="custom-control-indicator"></span>
-                            </label>
-                        </td>
-                        <td class="text-center">
-                            <label class="custom-control custom-checkbox">
-                                <input type="checkbox" class="custom-control-input">
-                                <span class="custom-control-indicator"></span>
-                            </label>
-                        </td>
-                        <td class="text-center">
-                            <label class="custom-control custom-checkbox">
-                                <input type="checkbox" class="custom-control-input">
-                                <span class="custom-control-indicator"></span>
-                            </label>
-                        </td>
-                        <td class="text-center">
-                            <label class="custom-control custom-checkbox">
-                                <input type="checkbox" class="custom-control-input">
-                                <span class="custom-control-indicator"></span>
-                            </label>
-                        </td>
-                    </tr>
+                            </td>
+                            <td class="text-center">
+                                <label class="custom-control custom-checkbox">
+                                    <input type="checkbox" class="custom-control-input">
+                                    <span class="custom-control-indicator"></span>
+                                </label>
+                            </td>
+                            <td class="text-center">
+                                <label class="custom-control custom-checkbox">
+                                    <input type="checkbox" class="custom-control-input">
+                                    <span class="custom-control-indicator"></span>
+                                </label>
+                            </td>
+                            <td class="text-center">
+                                <label class="custom-control custom-checkbox">
+                                    <input type="checkbox" class="custom-control-input">
+                                    <span class="custom-control-indicator"></span>
+                                </label>
+                            </td>
+                            <td class="text-center">
+                                <label class="custom-control custom-checkbox">
+                                    <input type="checkbox" class="custom-control-input">
+                                    <span class="custom-control-indicator"></span>
+                                </label>
+                            </td>
+                            <td class="text-center">
+                                <label class="custom-control custom-checkbox">
+                                    <input type="checkbox" class="custom-control-input">
+                                    <span class="custom-control-indicator"></span>
+                                </label>
+                            </td>
+                            <td class="text-center">
+                                <label class="custom-control custom-checkbox">
+                                    <input type="checkbox" class="custom-control-input">
+                                    <span class="custom-control-indicator"></span>
+                                </label>
+                            </td>
+                            <td class="text-center">
+                                <label class="custom-control custom-checkbox">
+                                    <input type="checkbox" class="custom-control-input">
+                                    <span class="custom-control-indicator"></span>
+                                </label>
+                            </td>
+                            <td class="text-center">
+                                <label class="custom-control custom-checkbox">
+                                    <input type="checkbox" class="custom-control-input">
+                                    <span class="custom-control-indicator"></span>
+                                </label>
+                            </td>
+                            <td class="text-center">
+                                <label class="custom-control custom-checkbox">
+                                    <input type="checkbox" class="custom-control-input">
+                                    <span class="custom-control-indicator"></span>
+                                </label>
+                            </td>
+                            <td class="text-center">
+                                <label class="custom-control custom-checkbox">
+                                    <input type="checkbox" class="custom-control-input">
+                                    <span class="custom-control-indicator"></span>
+                                </label>
+                            </td>
+                            <td class="text-center">
+                                <label class="custom-control custom-checkbox">
+                                    <input type="checkbox" class="custom-control-input">
+                                    <span class="custom-control-indicator"></span>
+                                </label>
+                            </td>
+                        </tr>
+                    </ng-container>
                 </tbody>
             </table>
         </div>
     </div>
 
 </form>
+<ngx-spinner bdColor="rgba(51, 51, 51, 0.7)" size="medium" color="#fff" type="ball-clip-rotate-multiple"></ngx-spinner>
