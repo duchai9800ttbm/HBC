@@ -270,7 +270,7 @@
                                 </div>
                             </div>
                         </th>
-                        <th [hidden]="!congViec">
+                        <!-- <th [hidden]="!congViec">
                             <div class="d-flex justify-content-start">
                                 <div style="margin-right: 10px">Công việc</div>
                                 <div class="center-parent">
@@ -279,7 +279,7 @@
                                     </div>
                                 </div>
                             </div>
-                        </th>
+                        </th> -->
                         <th [hidden]="!tienDoThucHien">
                             <div class="d-flex justify-content-start">
                                 <div style="margin-right: 10px">Tiến độ thực hiện</div>
@@ -519,7 +519,7 @@
                             </div>
                         </td>
                         <td [hidden]="!khuVuc">{{item.region | translate}}</td>
-                        <td [hidden]="!congViec" class="text-truncate">{{ item.job }}</td>
+                        <!-- <td [hidden]="!congViec" class="text-truncate">{{ item.job }}</td> -->
                         <td [hidden]="!tienDoThucHien" class="text-truncate">{{ item.progress }}</td>
                         <td [hidden]="!linkTaiLieu" class="text-truncate">{{ item.documentLink }}</td>
                         <td [hidden]="!tongThoiGian" class="text-truncate">{{ item.totalTime }}</td>
