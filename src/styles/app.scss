@@ -1,7 +1,7 @@
 /* You can add global styles to this file, and also import other style files */
 
 @import "bootstrap/bootstrap";
-@import "kendo/scss/all";
+//@import "kendo/scss/all";
 @import "spinner";
 @import "form";
 @import "utils";
@@ -20,6 +20,7 @@
 @import 'sidebar-menu';
 @import 'checkbox_custom';
 @import "~nouislider/distribute/nouislider.css";
+@import 'customKendo';
 @charset "UTF-8";
 /*VARIABLES
 ====================================================*/
@@ -927,3 +928,4 @@ pre {
     background-color: #00aeef;
     color: #fff;
 }
+

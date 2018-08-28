@@ -12,14 +12,14 @@
                         <div>&nbsp; Danh sách bộ HSMT</div>
                     </div>
                     <div class="alert alert-danger alert-trim status-package ">
-                        Đã nhận HSMT
+                        Cần bổ sung HSMT
                     </div>
                 </div>
 
             </div>
             <div id="ipad-control-button0">
                 <div class="btn-toolbar mt-2 mb-2">
-                    <div>
+                    <div class="mr-1">
                         <div class="input-group">
                             <span class="input-group-addon">Tìm kiếm theo</span>
                             <input type="text" class="form-control icon" placeholder="&#xf002; Tên tài liệu" (keyup)="search($event.target.value)">
@@ -32,8 +32,8 @@
                         <button class="btn btn-primary ml-2">
                             Tải xuống tài liệu
                         </button>
-                        <button class="btn btn-primary ml-2" (click)="sendEvaluate()">
-                            Chuyển đánh giá
+                        <button class="btn btn-primary ml-2" (click)="fullHSMT()">
+                            Đã đủ HSMT
                         </button>
                         <div class="btn-group ml-2" ngbDropdown>
                             <button type="button" class="btn btn-primary" ngbDropdownToggle data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -106,14 +106,13 @@
                     <div class="form-group ml-sm-2">
 
                         <button type="submit" class="btn btn-primary ml-sm-2" (click)="filter()">
-                            <i class="fa fa-filter" aria-hidden="true"></i>Lọc
+                            <i class="fa fa-filter" aria-hidden="true"></i> &nbsp;Lọc
                         </button>
                         <button class="btn btn-secondary ml-sm-2" (click)="clearFilter()">
-                            <i class="fa fa-times"></i>Xóa lọc
+                            <i class="fa fa-times"></i> &nbsp;Xóa lọc
                         </button>
                     </div>
                 </div>
-
             </div>
 
 
@@ -125,13 +124,6 @@
 
                             <th class="stt" style="background-color: #f68e56!important;">
                                 <div class="d-flex justify-content-around">
-                                    <!-- <div style="width: 40%;">
-                                        <label class="custom-control custom-checkbox">
-                                            <input type="checkbox" class="custom-control-input" [(ngModel)]="checkboxSeclectAll" (change)="onSelectAll($event.target.checked)">
-                                            <span class="custom-control-indicator"></span>
-
-                                        </label>
-                                    </div> -->
                                     <div style="width: 35%;" class="center-parent">
                                         <div>STT</div>
                                     </div>
@@ -179,11 +171,12 @@
 
 
                             </th>
-                            <th style="background-color: #f68e56!important;">
+
+                            <th style="width: 12%; background-color: #f68e56!important;">
                                 <div class="d-flex justify-content-center">
 
                                     <div class="center-parent">
-                                        <div>Người upload</div>
+                                        <div>Ngày upload</div>
                                     </div>
 
                                 </div>
@@ -191,11 +184,11 @@
 
 
                             </th>
-                            <th style="width: 12%; background-color: #f68e56!important;">
+                            <th style="background-color: #f68e56!important;">
                                 <div class="d-flex justify-content-center">
 
                                     <div class="center-parent">
-                                        <div>Ngày upload</div>
+                                        <div>Ngày nhận</div>
                                     </div>
 
                                 </div>
@@ -252,8 +245,11 @@
 
 
                                     </td>
-                                    <td class="text-center">{{ item.uploadedBy?.employeeName }}</td>
+
                                     <td class="text-center">{{ item.createdDate*1000 | date:'dd/MM/yyyy HH:mm': '+0000'}}</td>
+                                    <td class="text-center">
+                                        <span *ngIf="item.receivedDate">{{ item.receivedDate*1000 | date:'dd/MM/yyyy HH:mm': '+0000' }}</span>
+                                    </td>
                                     <td>
                                         <div class="d-flex justify-content-around">
                                             <div style="cursor: pointer;" title="Tải file" (click)="dowloadDocument(item.id)">

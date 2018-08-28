@@ -32,23 +32,29 @@ span{
  }
 
  table.dataTable {
-    th,td:nth-child(1) {
-        width: 30px!important;
+    tr:nth-child(odd) {background-color: #fafbfc;}
+    .star-color{
+        color: #fbc439;
     }
-    th,td:nth-last-child(1) {
+    th:first-child,td:first-child {
+        width: 60px!important;
+        max-width: 60px;
+    }
+    th,td[type="check"]{
+        width: 60px!important;
+    }
+    th[type="check-action"],td[type="check-action"]{
         width: 100px!important;
     }
-    th,td:not([type="check"]){
+    th:nth-last-child(1),td:nth-last-child(1) {
+    //    width: 100px!important;
+    }
+    th:not([type="check"]),td:not([type="check"]){
         min-width: 130px;
         max-width: 160px;
        
     }
-    th,td[type="check"]{
-        width: 30px!important;
-    }
-    th,td[type="check-action"]{
-        width: 100px!important;
-    }
+
     overflow-x: scroll;
    // display: block;
 
@@ -191,6 +197,7 @@ a{
         font-weight: 400;
     }
     position: fixed;
+    transition: margin 0.5s; /* IE 10+, Fx 29+ */
     width: calc(100% - 200px);
   //  min-width: calc(100% - 70px);
     background-color: #ffff;
@@ -255,10 +262,11 @@ select.form-control:not([size]):not([multiple]){
  #style-scroll::-webkit-scrollbar {
     height: 8px;
  }
- #style-scroll{
-  //  scroll-direction: horizontal;
-    // transform:rotate(-90deg) translateY(-80px);
-    // transform-origin:right top;
+ #style-scroll::-webkit-scrollbar:hover {
+    height: 10px!important;
+ }
+ #style-scroll::-webkit-thumb:hover {
+    background-color: red;
  }
 ::-webkit-scrollbar-track {
  //   -webkit-box-shadow: inset 0 0 3px rgba(0,0,0,0.3); 
@@ -367,4 +375,6 @@ select.form-control:not([size]):not([multiple]){
 
 .title-detail-toggle{
     width: calc(100% - 55px)!important;
+    transition: margin 0.5s; /* IE 10+, Fx 29+ */
+
 }

@@ -1,11 +1,11 @@
-<form [formGroup]="packagePermissionReviewForm">
+<form [formGroup]="packagePermissionReviewForm" *ngIf="packagePermissionReviewForm">
     <div class="boder-table mt-3">
         <div class="">
             <div class="media-header" style="text-align: right; padding-right: 1rem; margin-top: -0.75rem;">
                 <span class="action-bar alignment-but">
-                    <button type="submit" class="btn btn-primary" [routerLink]="['/package/detail']">Lưu
+                    <button type="submit" class="btn btn-primary" (click)="onSubmit()">Lưu
                     </button>
-                    <button type="submit" class="btn btn-secondary" [routerLink]="['/package/detail']">Hủy
+                    <button type="submit" class="btn btn-secondary">Hủy
                     </button>
                 </span>
             </div>
@@ -37,21 +37,22 @@
 
                     </tr>
                 </thead>
-                <tbody>
-                    <ng-container formArrayName="profiles">
-                        <tr *ngFor="let item of packagePermissionReviewForm.get('profiles').controls; let i = index;" [formGroupName]="i" [class.odd]="i % 2 == 0">
+                <tbody [formGroupName]="'HSMT'">
+                    <ng-container [formArrayName]="'permission'">
+                        <tr *ngFor="let item of packagePermissionReviewForm.get('HSMT').get('permission').controls; let i = index;" [formGroupName]="i" [class.odd]="i % 2 == 0">
                             <td>
                                 <div class="grid-container-3">
-                                    <div class="btn-icon btn-icon-plus" (click)="addFormItem('profiles')">
+                                    <div class="btn-icon btn-icon-plus" (click)="addFormArrayItem(listFormData[0], {})">
                                         <i class="fa fa-plus" style="margin-top: 2px" aria-hidden="true"></i>
                                     </div>
-                                    <div class="btn-icon btn-icon-minus" [class.invisible]="i == 0" (click)="removeFormItem('profiles', i)">
+                                    <div class="btn-icon btn-icon-minus" [class.invisible]="i == 0" (click)="removeFormItem(listFormData[0], i)">
                                         <i class="fa fa-minus" style="margin-top: 2px" aria-hidden="true" *ngIf="i != 0"></i>
                                     </div>
                                     <div>
                                         <span style="padding-left: 12px" class="custom-dropdown w-100">
-                                            <select class="form-control">
+                                            <select class="form-control" formControlName="userName">
                                                 <option [ngValue]="null">--Chọn--</option>
+                                                <option *ngFor="let user of listBidGroupUser" [value]="user.name">{{user.desc}}</option>
                                             </select>
                                         </span>
                                     </div>
@@ -65,31 +66,31 @@
                             </td>
                             <td class="text-center">
                                 <label class="custom-control custom-checkbox">
-                                    <input type="checkbox" class="custom-control-input">
+                                    <input type="checkbox" class="custom-control-input" formControlName="UploadHSMT">
                                     <span class="custom-control-indicator"></span>
                                 </label>
                             </td>
                             <td class="text-center">
                                 <label class="custom-control custom-checkbox">
-                                    <input type="checkbox" class="custom-control-input">
+                                    <input type="checkbox" class="custom-control-input" formControlName="TaiXuongTepTin">
                                     <span class="custom-control-indicator"></span>
                                 </label>
                             </td>
                             <td class="text-center">
                                 <label class="custom-control custom-checkbox">
-                                    <input type="checkbox" class="custom-control-input">
+                                    <input type="checkbox" class="custom-control-input" formControlName="Xoafile">
                                     <span class="custom-control-indicator"></span>
                                 </label>
                             </td>
                             <td class="text-center">
                                 <label class="custom-control custom-checkbox">
-                                    <input type="checkbox" class="custom-control-input">
+                                    <input type="checkbox" class="custom-control-input" formControlName="ChuyenDanhGiaHSMT">
                                     <span class="custom-control-indicator"></span>
                                 </label>
                             </td>
                             <td class="text-center">
                                 <label class="custom-control custom-checkbox">
-                                    <input type="checkbox" class="custom-control-input">
+                                    <input type="checkbox" class="custom-control-input" formControlName="DanhGiaHSMT">
                                     <span class="custom-control-indicator"></span>
                                 </label>
                             </td>
@@ -128,21 +129,22 @@
                         </th>
                     </tr>
                 </thead>
-                <tbody>
-                    <ng-container formArrayName="formOfBids">
-                        <tr *ngFor="let item of packagePermissionReviewForm.get('formOfBids').controls; let i = index;" [formGroupName]="i" [class.odd]="i % 2 == 0">
+                <tbody formGroupName="PhieuDeNghiDuThau">
+                    <ng-container formArrayName="permission">
+                        <tr *ngFor="let item of packagePermissionReviewForm.get('PhieuDeNghiDuThau').get('permission').controls; let i = index;" [formGroupName]="i" [class.odd]="i % 2 == 0">
                             <td>
                                 <div class="grid-container-3">
-                                    <div class="btn-icon btn-icon-plus" (click)="addFormItem('formOfBids')">
+                                    <div class="btn-icon btn-icon-plus" (click)="addFormArrayItem(listFormData[1], {})">
                                         <i class="fa fa-plus" style="margin-top: 2px" aria-hidden="true"></i>
                                     </div>
-                                    <div class="btn-icon btn-icon-minus" [class.invisible]="i == 0" (click)="removeFormItem('formOfBids', i)">
+                                    <div class="btn-icon btn-icon-minus" [class.invisible]="i == 0" (click)="removeFormItem(listFormData[1], i)">
                                         <i class="fa fa-minus" style="margin-top: 2px" aria-hidden="true" *ngIf="i != 0"></i>
                                     </div>
                                     <div>
                                         <span style="padding-left: 12px" class="custom-dropdown w-100">
-                                            <select class="form-control">
+                                            <select class="form-control" formControlName="userName">
                                                 <option [ngValue]="null">--Chọn--</option>
+                                                <option *ngFor="let user of listBidGroupUser" [value]="user.name">{{user.desc}}</option>
                                             </select>
                                         </span>
                                     </div>
@@ -156,43 +158,43 @@
                             </td>
                             <td class="text-center">
                                 <label class="custom-control custom-checkbox">
-                                    <input type="checkbox" class="custom-control-input">
+                                    <input type="checkbox" class="custom-control-input" formControlName="UploadFile">
                                     <span class="custom-control-indicator"></span>
                                 </label>
                             </td>
                             <td class="text-center">
                                 <label class="custom-control custom-checkbox">
-                                    <input type="checkbox" class="custom-control-input">
+                                    <input type="checkbox" class="custom-control-input" formControlName="TaiXuongTepTin">
                                     <span class="custom-control-indicator"></span>
                                 </label>
                             </td>
                             <td class="text-center">
                                 <label class="custom-control custom-checkbox">
-                                    <input type="checkbox" class="custom-control-input">
+                                    <input type="checkbox" class="custom-control-input" formControlName="XoaFile">
                                     <span class="custom-control-indicator"></span>
                                 </label>
                             </td>
                             <td class="text-center">
                                 <label class="custom-control custom-checkbox">
-                                    <input type="checkbox" class="custom-control-input">
+                                    <input type="checkbox" class="custom-control-input" formControlName="TaiTemplate">
                                     <span class="custom-control-indicator"></span>
                                 </label>
                             </td>
                             <td class="text-center">
                                 <label class="custom-control custom-checkbox">
-                                    <input type="checkbox" class="custom-control-input">
+                                    <input type="checkbox" class="custom-control-input" formControlName="GuiDuyetDeNghiDuThau">
                                     <span class="custom-control-indicator"></span>
                                 </label>
                             </td>
                             <td class="text-center">
                                 <label class="custom-control custom-checkbox">
-                                    <input type="checkbox" class="custom-control-input">
+                                    <input type="checkbox" class="custom-control-input" formControlName="ThamGiaTuChoiDuThau">
                                     <span class="custom-control-indicator"></span>
                                 </label>
                             </td>
                             <td class="text-center">
                                 <label class="custom-control custom-checkbox">
-                                    <input type="checkbox" class="custom-control-input">
+                                    <input type="checkbox" class="custom-control-input" formControlName="GuiThuTuChoiDuThau">
                                     <span class="custom-control-indicator"></span>
                                 </label>
                             </td>
@@ -200,7 +202,9 @@
                     </ng-container>
                 </tbody>
             </table>
+           
         </div>
     </div>
 
 </form>
+<ngx-spinner bdColor="rgba(51, 51, 51, 0.7)" size="medium" color="#fff" type="ball-clip-rotate-multiple"></ngx-spinner>

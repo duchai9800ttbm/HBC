@@ -18,6 +18,7 @@ import { UploadFileComponent } from './add-file/upload-file/upload-file.componen
 import { FilterPipeModule } from 'ngx-filter-pipe';
 import { TagInputModule } from 'ngx-chips';
 import { UploadReviewDocumentComponent } from './suggest/upload-review-document/upload-review-document.component';
+import { FullFileComponent } from './full-file/full-file.component';
 TagInputModule.withDefaults({
   tagInput: {
     placeholder: 'Nhập địa chỉ email',
@@ -39,6 +40,7 @@ TagInputModule.withDefaults({
   ],
   declarations: [
     PackageDetailFileInvitationComponent,
+    FullFileComponent,
     AddFileComponent,
     EvaluateComponent,
     SuggestComponent,

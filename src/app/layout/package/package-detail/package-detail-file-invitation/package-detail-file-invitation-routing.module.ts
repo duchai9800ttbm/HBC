@@ -9,6 +9,7 @@ import { ApprovedComponent } from './approved/approved.component';
 import { HasDeclinedComponent } from './has-declined/has-declined.component';
 import { RejectionLetterComponent } from './rejection-letter/rejection-letter.component';
 import { SendMailRejectComponent } from './send-mail-reject/send-mail-reject.component';
+import { FullFileComponent } from './full-file/full-file.component';
 
 const routes: Routes = [
     {
@@ -17,13 +18,14 @@ const routes: Routes = [
         children: [
             { path: '', redirectTo: 'add-file' },
             { path: 'add-file', component: AddFileComponent },
-            { path: 'evaluate', component: EvaluateComponent },
-            { path: 'suggest', component: SuggestComponent },
-            { path: 'pending', component: PendingComponent },
-            { path: 'approved', component: ApprovedComponent },
-            { path: 'has-declined', component: HasDeclinedComponent },
-            { path: 'rejection-letter', component: RejectionLetterComponent },
-            { path: 'send-mail', component: SendMailRejectComponent },
+            { path: 'full-file', component: FullFileComponent },
+            //   { path: 'evaluate', component: EvaluateComponent },
+            //   { path: 'suggest', component: SuggestComponent },
+            //   { path: 'pending', component: PendingComponent },
+            //   { path: 'approved', component: ApprovedComponent },
+            //   { path: 'has-declined', component: HasDeclinedComponent },
+            //   { path: 'rejection-letter', component: RejectionLetterComponent },
+            //   { path: 'send-mail', component: SendMailRejectComponent },
         ]
     },
 ];

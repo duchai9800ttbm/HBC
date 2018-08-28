@@ -37,23 +37,26 @@ router-outlet{
 
 .sectionIn {
     margin-left: 200px;
+    transition: margin 0.5s; /* IE 10+, Fx 29+ */
+
     // animation: sectionIn 0.4s ease-in-out;
 }
 
 .sectionOut {
     margin-left: 55px;
+    transition: margin 0.5s;
     // animation: sectionOut 0.8s ease-in-out;
 }
 
-@keyframes sectionIn {
-    0%   {margin-left: 0;}
-    100% {margin-left: 200px;}
-}
+// @keyframes sectionIn {
+//     0%   {margin-left: 0;}
+//     100% {margin-left: 200px;}
+// }
 
-@keyframes sectionOut {
-    0%   {margin-left: 200px;}
-    100% {margin-left: 0;}
-}
+// @keyframes sectionOut {
+//     0%   {margin-left: 200px;}
+//     100% {margin-left: 0;}
+// }
 :host{
     background-color: #f6f6f6;
 }

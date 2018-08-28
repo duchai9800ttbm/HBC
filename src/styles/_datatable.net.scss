@@ -20,6 +20,8 @@ table.dataTable {
     margin: 0 0 40px 0;
     width: 100%;
     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2); //display: table;
+    tr:nth-child(odd) {background-color: #fafbfc;}
+
     th {
         border-bottom: 1px solid #f68e56 !important;
         background-color: #f68e56;
@@ -55,6 +57,7 @@ table.dataTable {
                 max-width: 30px !important;
             }
         }
+       
     }
     
     .table-action {

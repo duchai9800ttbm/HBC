@@ -8,5 +8,13 @@ export const SETTING_REASON = {
     Cancel: 'cancel'
 };
 
+export const SETTING_BID_USER = {
+    StackHolder: 'bidusergroupmembersofstakeholders',
+    GroupMember: 'bidusergroupmembers'
+};
 
-
+export const SETTING_BID_STAGE = {
+    Hsmt: 'hsmt',
+    Hsdt: 'hsdt',
+    Kqdt: 'kqdt'
+};

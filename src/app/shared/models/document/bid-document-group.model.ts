@@ -13,6 +13,7 @@ export class BidDocumentGroupModel {
             employeeAvatar: string;
         };
         createdDate: number;
+        receivedDate: number;
         fileGuid: string;
     }[];
 }

@@ -1,5 +1,5 @@
 <div class="example-wrapper">
-    <kendo-dialog (close)="close('cancel')" [width]="600" class="width-kendo-dialog">
+    <kendo-dialog (close)="close('cancel')" [width]="700" class="width-kendo-dialog">
         <form [formGroup]="uploadForm" novalidate>
             <div class="title-detail center-parent">
                 <div class="col-md-1"></div>
@@ -20,7 +20,7 @@
                             <table class="w-100 table">
                                 <tbody>
                                     <tr>
-                                        <td class="w-20 label no-boder bold-title">Chọn file</td>
+                                        <td class="w-30 label no-boder bold-title">Chọn file</td>
                                         <td class="no-boder d-flex">
                                             <span class="w-100">
                                                 <span class="form-control boder-input-choose-file">
@@ -35,40 +35,38 @@
                                         </td>
                                     </tr>
                                     <tr>
-                                        <td class="w-20 label no-boder bold-title">Loại</td>
+                                        <td class="w-30 label no-boder bold-title">Loại HSMT</td>
                                         <td class="no-boder d-flex">
                                             <!-- <span class="w-100 custom-dropdown">
                                                 <select class="form-control" tabindex="5" formControlName="type">
                                                     <option *ngFor="let item of listTypeFile" [value]="item.id">{{item.text }}</option>
                                                 </select>
                                             </span> -->
-                                            <kendo-dropdownlist class="w-100" [data]="listItems"></kendo-dropdownlist>
-
+                                            <kendo-dropdownlist [data]="listTypeFile">
+                                            </kendo-dropdownlist>
                                         </td>
                                     </tr>
                                     <tr>
-                                        <td class="w-20 label no-boder bold-title">Tên</td>
-                                        <td class="w-80 no-boder">
+                                        <td class="w-30 label no-boder bold-title">Tên</td>
+                                        <td class="w-70 no-boder">
                                             <input class="form-control" tabindex="1" type="text" formControlName="editName">
                                         </td>
                                     </tr>
                                     <tr>
-                                        <td class="w-20 label no-boder bold-title">Ngày nhận HSMT</td>
+                                        <td class="w-30 label no-boder bold-title">Ngày nhận HSMT</td>
                                         <td class="no-boder d-flex">
                                             <!-- <owl-date-time [readonlyInput]="datePickerConfig.readonlyInput" [locale]="datePickerConfig.vi" [placeHolder]="datePickerConfig.placeHolderVn">
                                             </owl-date-time> -->
-                                            <div style="width: 100%;">
-                                                <kendo-datepicker class="w-100"></kendo-datepicker>
+                                                <kendo-datepicker class="w-100" formControlName="date"></kendo-datepicker>
 
-                                            </div>
                                             <!-- <span class="input-group-addon">
                                                 <i class="fa fa-calendar"></i>
                                             </span> -->
                                         </td>
                                     </tr>
                                     <tr>
-                                        <td class="w-20 label no-boder bold-title">Mô tả</td>
-                                        <td class="w-80 no-boder">
+                                        <td class="w-30 label no-boder bold-title">Mô tả/Nội dung cập nhật</td>
+                                        <td class="w-70 no-boder">
                                             <textarea cols="3" rows="3" class="w-100 form-control no-resize-textarea" formControlName="description"></textarea>
                                         </td>
                                     </tr>
@@ -86,5 +84,7 @@
                 </div>
             </div>
         </form>
+        <kendo-dropdownlist [data]="listTypeFile">
+        </kendo-dropdownlist>
     </kendo-dialog>
 </div>

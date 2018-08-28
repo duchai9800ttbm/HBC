@@ -3,8 +3,10 @@ $topnav-background-color: #135377;
     border-radius: 0;
     position: fixed;
     z-index: 1000;
-    top: 56px;
+    top: 54px;
     left: 235px;
+    transition: width 0.5s; /* IE 10+, Fx 29+ */
+
     width: 200px;
     padding: 10px; //padding-top: 40px;
     margin-left: -235px;
@@ -136,6 +138,8 @@ $topnav-background-color: #135377;
 @media screen and (max-width: 992px) {
     .sidebar {
         width: 55px !important;
+        transition: margin 0.5s; /* IE 10+, Fx 29+ */
+
     }
     .change {
         display: none !important;
