@@ -127,19 +127,19 @@ export class EditComponent implements OnInit {
             amount: [this.package.amount],
             evaluation: [this.package.evaluation],
             startTrackingDate: [DateTimeConvertHelper.fromTimestampToDtObject(
-                this.package.startTrackingDate
+                this.package.startTrackingDate * 1000
             )],
             submissionDate: [DateTimeConvertHelper.fromTimestampToDtObject(
-                this.package.submissionDate
+                this.package.submissionDate * 1000
             )],
             resultEstimatedDate: [DateTimeConvertHelper.fromTimestampToDtObject(
-                this.package.resultEstimatedDate
+                this.package.resultEstimatedDate * 1000
             )],
             projectEstimatedStartDate: [DateTimeConvertHelper.fromTimestampToDtObject(
-                this.package.projectEstimatedStartDate
+                this.package.projectEstimatedStartDate * 1000
             )],
             projectEstimatedEndDate: [DateTimeConvertHelper.fromTimestampToDtObject(
-                this.package.projectEstimatedEndDate
+                this.package.projectEstimatedEndDate * 1000
             )],
             totalTime: [this.package.totalTime],
             description: [this.package.description],

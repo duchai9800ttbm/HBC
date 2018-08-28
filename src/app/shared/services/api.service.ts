@@ -86,9 +86,19 @@ export class ApiService {
     }
 
     getFileHBC(path: string, params: URLSearchParams = new URLSearchParams()): Observable<any> {
-        return this.http.get(`${environment.api_endpoint}${path}`, { headers: this.setHeaders(), search: params })
+        return this.http.get(`${environment.api_endpoint}${path}`, {
+            headers: this.setHeaders(), search: params,
+            responseType: ResponseContentType.Blob
+        })
             .catch(this.formatErrors.bind(this))
-            .map((res: Response) => res);
+            .map((res: Response) => {
+                const matches = res.headers.get('content-disposition');
+                const fileName = decodeURI(matches.split(';')[2].trim().slice(17));
+                return {
+                    file: res.blob(),
+                    fileName: fileName
+                };
+            });
     }
 
     getNoHeader(path: string): Observable<any> {

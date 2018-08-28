@@ -439,4 +439,9 @@ export class PackageListComponent implements OnInit, AfterViewChecked {
         this.sum = [...this.listField].filter(x => x.hidden === true).length;
 
     }
+
+    exportFileExcel() {
+        this.packageService.exportExcel(this.searchTerm$.value, this.filterModel)
+            .subscribe(result => result);
+    }
 }
