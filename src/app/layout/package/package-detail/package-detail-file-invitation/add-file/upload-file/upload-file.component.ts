@@ -42,18 +42,35 @@ export class UploadFileComponent implements OnInit {
     },
   ];
   file;
+  icon = `<i class="fa fa-search" aria-hidden="true"></i>`;
+  public events: string[] = [];
+  public source: Array<string> = ['Albania', 'Andorra', 'Armenia', 'Austria', 'Azerbaijan'];
+  public data: Array<string>;
   public close() {
     this.closed.emit(false);
   }
+
   constructor(
     private alertService: AlertService,
     private fb: FormBuilder,
     private documentService: DocumentService
-  ) { }
+  ) {
+    this.data = this.source.slice();
+
+  }
+
   ngOnInit() {
     this.createForm();
   }
+  public valueChange(value: any): void {
+  }
 
+  public selectionChange(value: any): void {
+  }
+
+  public filterChange(filter: any): void {
+    this.data = this.source.filter((s) => s.toLowerCase().indexOf(filter.toLowerCase()) !== -1);
+  }
   fileChange(event) {
     const fileList: FileList = event.target.files;
     if (fileList.length > 0) {

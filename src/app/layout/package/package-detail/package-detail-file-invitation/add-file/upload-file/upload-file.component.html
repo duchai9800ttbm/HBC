@@ -37,30 +37,25 @@
                                     <tr>
                                         <td class="w-30 label no-boder bold-title">Loại HSMT</td>
                                         <td class="no-boder d-flex">
-                                            <span class="w-100 custom-dropdown">
+                                            <!-- <span class="w-100 custom-dropdown">
                                                 <select class="form-control" tabindex="5" formControlName="type">
                                                     <option *ngFor="let item of listTypeFile" [value]="item.id">{{item.text }}</option>
                                                 </select>
-                                            </span>
-
+                                            </span> -->
+                                            <kendo-dropdownlist [data]="listTypeFile">
+                                            </kendo-dropdownlist>
                                         </td>
                                     </tr>
                                     <tr>
                                         <td class="w-30 label no-boder bold-title">Tên</td>
                                         <td class="w-70 no-boder">
-                                            <input class="form-control" tabindex="1" type="text" formControlName="editName">
+                                            <input kendoTextBox tabindex="1" type="text" formControlName="editName">
                                         </td>
                                     </tr>
                                     <tr>
                                         <td class="w-30 label no-boder bold-title">Ngày nhận HSMT</td>
                                         <td class="no-boder d-flex">
-                                            <!-- <owl-date-time [readonlyInput]="datePickerConfig.readonlyInput" [locale]="datePickerConfig.vi" [placeHolder]="datePickerConfig.placeHolderVn">
-                                            </owl-date-time> -->
-                                                <kendo-datepicker class="w-100" formControlName="date"></kendo-datepicker>
-
-                                            <!-- <span class="input-group-addon">
-                                                <i class="fa fa-calendar"></i>
-                                            </span> -->
+                                            <kendo-datepicker class="w-100" formControlName="date"></kendo-datepicker>
                                         </td>
                                     </tr>
                                     <tr>
