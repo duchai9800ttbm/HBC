@@ -50,9 +50,12 @@ import { ButtonGroupModule } from '@progress/kendo-angular-buttons';
 import { PDFExportModule } from '@progress/kendo-angular-pdf-export';
 import { LayoutService } from './services/layout.service';
 import { InputsModule } from '@progress/kendo-angular-inputs';
-
+import { HttpClientModule } from '@angular/common/http';
+import { UploadModule } from '@progress/kendo-angular-upload';
 @NgModule({
     imports: [
+        HttpClientModule,
+        UploadModule,
         InputsModule,
         PDFExportModule,
         ButtonModule,
@@ -96,6 +99,8 @@ import { InputsModule } from '@progress/kendo-angular-inputs';
         // ScrollToTopService
     ],
     exports: [
+        HttpClientModule,
+        UploadModule,
         InputsModule,
         PDFExportModule,
         ButtonModule,

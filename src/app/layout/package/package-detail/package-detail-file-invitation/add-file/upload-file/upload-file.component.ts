@@ -5,6 +5,7 @@ import { FormGroup, FormBuilder } from '../../../../../../../../node_modules/@an
 import { DocumentService } from '../../../../../../shared/services/document.service';
 import { DocumentReviewService } from '../../../../../../shared/services/document-review.service';
 import { DATETIME_PICKER_CONFIG } from '../../../../../../shared/configs/datepicker.config';
+import { FileInfo, SelectEvent } from '../../../../../../../../node_modules/@progress/kendo-angular-upload';
 
 @Component({
   selector: 'app-upload-file',
@@ -42,9 +43,12 @@ export class UploadFileComponent implements OnInit {
     },
   ];
   file;
+  icon = `<i class="fa fa-search" aria-hidden="true"></i>`;
   public events: string[] = [];
   public source: Array<string> = ['Albania', 'Andorra', 'Armenia', 'Austria', 'Azerbaijan'];
   public data: Array<string>;
+  myFiles: Array<FileInfo> = [];
+
   public close() {
     this.closed.emit(false);
   }
@@ -60,6 +64,9 @@ export class UploadFileComponent implements OnInit {
 
   ngOnInit() {
     this.createForm();
+  }
+  selectEventHandler(e: SelectEvent) {
+    e.files.forEach((file) => this.myFiles.push(file));
   }
   public valueChange(value: any): void {
   }

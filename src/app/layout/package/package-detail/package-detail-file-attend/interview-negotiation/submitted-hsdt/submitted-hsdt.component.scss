@@ -176,14 +176,12 @@ li.triangle::before {
 }
 
 #outer-table {
-    padding: 20px 70px;
+    padding: 20px 15px;
 }
 
 .table-assignment {
     padding: 10px 0px 0px 0px;
     text-transform: uppercase;
-    font-size: 15px;
-    color: black;
 }
 
 .no-boder-bottom {
@@ -261,11 +259,7 @@ input.icon {
 }
 
 .pd-up {
-    padding-bottom: 20px;
-    .mg-l {
-        white-space: nowrap;
-        margin-left: 3%;
-    }
+    padding-bottom: 10px;
 }
 
 .custom-file-label {
@@ -273,11 +267,10 @@ input.icon {
     top: 0;
     right: 0;
     left: 0;
-    z-index: 1;
+    z-index: 1; // height: calc(2.25rem + 2px);
     padding: .375rem .75rem;
     line-height: 1.5;
-    color: #9b9595;
-    font-weight: 400;
+    color: #495057;
 }
 
 .btnOther {
@@ -287,16 +280,12 @@ input.icon {
 }
 
 .pdOther {
-    padding: 18px 0px 18px 0px;
-    font-size: 15px;
-    font-weight: 600;
+    padding: 10px 0px 10px 0px;
 }
 
-.text-body {
+.text-model {
     color: #343a40 !important;
-    font-weight: 700;
-    font-size: 15px;
-    padding-bottom: 5px;
+    font-weight: 700
 }
 
 .custom-filter-bar {
@@ -306,11 +295,11 @@ input.icon {
 .btn-default-w {
     width: 110px;
     height: 34px;
-    margin-left: 10px;
 }
 
 .setHSDT {
-    padding: 1px 4px 1px 4px;
+    height: 20px;
+    line-height: 4px;
 }
 
 .pd-body {
@@ -326,186 +315,95 @@ table.dataTable th {
     border-bottom: 1px solid #dddddd !important;
     background-color: #ffff !important;
     border: 1px solid #dddddd;
+    font-size: 12px;
+}
+table.dataTable td{
+    font-size: 12px;
+}
+
+.pad-two-target {
+    padding-left: 40px;
+    padding-right: 40px;
+}
+
+.cus-menu {
+    padding-left: 15px;
+    font-size: 10px;
+    width: 100%;
+    .cus-menu-children {
+        width: 100%;
+        padding-left: 5px;
+        cursor: pointer;
+    }
+}
+
+.div-menu {
+    width: 15%;
+    border-right: 3px solid #edeff0;
+}
+
+.active {
+    .number {
+        width: 10%;
+        font-size: 14px;
+    }
+    .word {
+        width: 90%;
+        display: flex;
+        align-items: center;
+    }
+}
+
+.no-active {
+    background-color: #edeff0 !important;
+    .number {
+        width: 10%;
+        font-size: 14px;
+    }
+    .word {
+        width: 90%;
+        display: flex;
+        align-items: center;
+        color: #8d8d8d;
+    }
+}
+
+.border-top {
+    border-top: 8px solid #00a0e3;
+    opacity: inherit;
+}
+
+.message-create-interview {
+    padding: 20px;
+    font-size: 14px;
+    font-weight: bolder;
+    color: #4c5465;
+    white-space: nowrap;
+}
+
+.class-image {
+    max-width: 100%;
+    height: auto;
+}
+
+.color-active-show {
+    background-color: #8dc73d;
 }
 
 @media only screen and (max-width: 1024px) {
-    .content-deployment {
-        zoom: 0.8;
+    #ipad-res {
+        zoom: 0.8 !important;
     }
-    // .col-md-4 {
-    //     flex: none !important; max-width: none !important;
-    // }
-    .no-boder-bottom {
-        margin-top: 20px;
-    }
-    .btn-toolbar {
-        zoom: 0.8;
-    }
-    .file-filter {
-        zoom: 0.6;
-        font-size: 120%;
-    }
-    .status-filter{
-      zoom: 0.8!important;
-      font-size: 120%;
-    }
-    .custom-filter-bar{
-        zoom: 0.7;
+    #outer-table {
+        padding: 0px 20px;
     }
 }
-@media only screen and (max-width: 1200px) {
-    .content-deployment {
-        zoom: 0.9;
-    }
-    .no-boder-bottom {
-        margin-top: 20px;
-    }
-    .btn-toolbar {
-        zoom: 0.9;
-    }
-    .file-filter {
-        zoom: 0.85;
-        font-size: 120%;
-    }
-    .status-filter{
-      zoom: 0.9;
-      font-size: 120%;
-    }
-    .custom-filter-bar{
-        zoom: 0.9;
-    }
+.zoom-toolbar{
+    zoom: 0.7;
 }
-@media only screen and (max-width: 1366px) {
-    .no-boder-bottom {
-        margin-top: 20px;
-    }
+.deactive-but{
+    background-color: #d7d7d7;
 }
-
-#header-table {
-    padding-left: 55px;
-}
-.input-group-prepend {
-    margin-right: -1px;
-}
-.input-group-prepend>.input-group-text {
-    border-top-right-radius: 0;
-    border-bottom-right-radius: 0;
-    background: #fff!important;
-    border-right: none;
-}
-.input-group-append {
-    margin-left: -1px;
-}
-.input-group-append>.input-group-text {
-    border-top-left-radius: 0;
-    border-bottom-left-radius: 0;
-    background: #fff!important;
-    border-left: none;
-}
-
-.input-group-text {
-    display: -webkit-box;
-    display: -ms-flexbox;
-    display: flex;
-    -webkit-box-align: center;
-    -ms-flex-align: center;
-    align-items: center;
-    padding: .375rem .75rem;
-    margin-bottom: 0;
-    font-size: 1rem;
-    font-weight: 400;
-    line-height: 1.5;
-    color: #495057;
-    text-align: center;
-    white-space: nowrap;
-    background-color: #e9ecef;
-    border: 1px solid #ced4da;
-    border-radius: .25rem;
-    padding-right: 6px;    
-}
-
-.boder-left-none {
-    border-left:none; 
-    padding-left: 0px;
-}
-.form-control:focus {
-    color: #495057;
-    background-color: #fff;
-    border-color: #d8d8d8;
-    outline: none; // box-shadow: 0 0 0 0.02rem rgba(0, 160, 227, 0.25);
-    box-shadow: none;
-}
-.btn-send {
-    background-color: #00a0e3;
-    border: #00a0e3;
-    color: white;
-    margin-right: 4px;
-}
-.btn-cancel {
-    background-color: #8e8b8b;
-    border: #8e8b8b;
-    color: white;
-}
-.send-cc {
-    margin-right: 10px;
-    color: #00a0e3;
-    cursor: pointer;
-}
-.bd-r {
-    border-right: none
-}
-.send-group {
-    padding-top: 4px;
-    float: right;
-}
-.img-back {
-    margin: 0px 5px 8px 5px; 
-}
-.body-ckeditor {
-    padding-bottom: 50px;
-}
-.text-send-noti {
-    text-transform: uppercase;
-}
-.or {
-    position: absolute;
-    top: 40px;
-    left: 34px;
-    color: #c2baba;
-    &::after {
-        display: block;
-        background: #c2baba;
-        width: 2px;
-        height: 11px;
-        position: absolute;
-        z-index: 99999999999;
-        left: 23px;
-        top: 18px;
-        content: "";
-      }
-      &::before {
-        display: block;
-        background: #c2baba;
-        width: 2px;
-        height: 11px;
-        position: absolute;
-        z-index: 99999999999;
-        left: 23px;
-        top: -8px;
-        content: "";
-      }
-}
-.fg-w {
-    font-weight: 700;
-}
-.text-model {
-    color: #343a40 !important;
-    text-transform: uppercase;
-    font-weight: 700;
-}
-.bot-table {
-    padding-bottom: 30px;
-}
-.color-default {
-    color:#00a0e3;
+.icon-download-file{
+    color: #21ae00;
 }

@@ -315,6 +315,10 @@ table.dataTable th {
     border-bottom: 1px solid #dddddd !important;
     background-color: #ffff !important;
     border: 1px solid #dddddd;
+    font-size: 12px;
+}
+table.dataTable td{
+    font-size: 12px;
 }
 
 .pad-two-target {
@@ -382,8 +386,14 @@ table.dataTable th {
     height: auto;
 }
 
-.color-active-show {
+.color-dpv-show {
     background-color: #8dc73d;
+}
+.color-cpv-show {
+    background-color: #f68e56;
+}
+.color-qhpv-show {
+    background-color: #f03940;
 }
 
 @media only screen and (max-width: 1024px) {
@@ -393,4 +403,7 @@ table.dataTable th {
     #outer-table {
         padding: 0px 20px;
     }
+}
+.zoom-toolbar{
+    zoom: 0.7;
 }
