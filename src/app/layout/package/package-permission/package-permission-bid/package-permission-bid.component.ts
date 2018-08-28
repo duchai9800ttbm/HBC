@@ -73,9 +73,11 @@ export class PackagePermissionBidComponent implements OnInit {
                                 listItem.list.push(user);
                             }
                             user.documentTypes.forEach(doc => {
-                                const userOfList = listItem.list.find(li => li.userGroupId === user.userGroupId);
-                                if (!userOfList.allDocumentTypes.find(dt => dt.key === doc.key)) {
-                                    userOfList.allDocumentTypes.push(doc);
+                                if (doc) {
+                                    const userOfList = listItem.list.find(li => li.userGroupId === user.userGroupId);
+                                    if (!userOfList.allDocumentTypes.find(dt => dt.key === doc.key)) {
+                                        userOfList.allDocumentTypes.push(doc);
+                                    }
                                 }
                             });
                         });
