@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { InterviewNegotiationComponent } from './interview-negotiation.component';
+import { SubmittedHsdtComponent } from './submitted-hsdt/submitted-hsdt.component';
 const routes: Routes = [
   {
     path: '',
@@ -15,6 +16,7 @@ const routes: Routes = [
         path: 'prepare',
         loadChildren: './prepare-interview/prepare-interview.module#PrepareInterviewModule'
       },
+      { path: 'submitted', component: SubmittedHsdtComponent },
     ]
   }
 ];
