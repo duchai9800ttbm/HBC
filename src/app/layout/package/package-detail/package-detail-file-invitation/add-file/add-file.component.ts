@@ -63,39 +63,39 @@ export class AddFileComponent implements OnInit {
         this.packageId = +PackageDetailComponent.packageId;
         this.packageService.getInforPackageID(this.packageId).subscribe(result => {
             this.packageData = result;
-            switch (this.packageData.stageStatus.id) {
-                case 'CanBoSungHSMT': {
-                    break;
-                }
-                case 'CanDanhGiaHSMT': {
-                    this.router.navigate([`/package/detail/${this.packageId}/invitation/evaluate`]);
-                    break;
-                }
-                case 'CanLapDeNghiMoiThau': {
-                    this.router.navigate([`/package/detail/${this.packageId}/invitation/suggest`]);
-                    break;
-                }
-                case 'ChoDuyet': {
-                    this.router.navigate([`/package/detail/${this.packageId}/invitation/pending`]);
-                    break;
-                }
-                case 'DaDuyet': {
-                    this.router.navigate([`/package/detail/${this.packageId}/invitation/approved`]);
-                    break;
-                }
-                case 'DaTuChoi': {
-                    this.router.navigate([`/package/detail/${this.packageId}/invitation/has-declined`]);
-                    break;
-                }
-                case 'DaGuiThuTuChoi': {
-                    this.router.navigate([`/package/detail/${this.packageId}/invitation/rejection-letter`]);
-                    break;
-                }
-                default: {
-                    // statements;
-                    break;
-                }
-            }
+            // switch (this.packageData.stageStatus.id) {
+            //     case 'CanBoSungHSMT': {
+            //         break;
+            //     }
+            //     case 'CanDanhGiaHSMT': {
+            //         this.router.navigate([`/package/detail/${this.packageId}/invitation/evaluate`]);
+            //         break;
+            //     }
+            //     case 'CanLapDeNghiMoiThau': {
+            //         this.router.navigate([`/package/detail/${this.packageId}/invitation/suggest`]);
+            //         break;
+            //     }
+            //     case 'ChoDuyet': {
+            //         this.router.navigate([`/package/detail/${this.packageId}/invitation/pending`]);
+            //         break;
+            //     }
+            //     case 'DaDuyet': {
+            //         this.router.navigate([`/package/detail/${this.packageId}/invitation/approved`]);
+            //         break;
+            //     }
+            //     case 'DaTuChoi': {
+            //         this.router.navigate([`/package/detail/${this.packageId}/invitation/has-declined`]);
+            //         break;
+            //     }
+            //     case 'DaGuiThuTuChoi': {
+            //         this.router.navigate([`/package/detail/${this.packageId}/invitation/rejection-letter`]);
+            //         break;
+            //     }
+            //     default: {
+            //         // statements;
+            //         break;
+            //     }
+            // }
         });
         // config
         window.scrollTo(0, 0);
@@ -344,6 +344,19 @@ export class AddFileComponent implements OnInit {
 
     dowloadDocument(id) {
         this.documentService.download(id).subscribe(data => {
+        });
+    }
+
+    fullHSMT() {
+        const that = this;
+        this.confirmationService.confirm('Bạn có chắc chắn muốn chuyển trạng thái đã có HSMT?', () => {
+            this.spinner.show();
+            this.opportunityHsmtService.daDuHSMT(this.packageId)
+                .subscribe(data => {
+                    that.spinner.hide();
+                    that.router.navigate([`/package/detail/${this.packageId}/invitation/full-file`]);
+                    that.alertService.success('Đã chuyển sang trang thái đã có HSMT thành công!');
+                });
         });
     }
 }

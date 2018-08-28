@@ -1,4 +1,4 @@
-<div id="outer">
+<div class="outer" id="outer">
     <div class=" title-list-package d-flex flex-wrap align-items-center status-filter">
         <div class="mr-auto d-flex align-items-end list-package mt-2 mb-2">
             <div class="d-flex justify-content-start" style="height: 35px;">
@@ -18,7 +18,7 @@
         </div>
     </div>
     <div id="outer-img">
-        <img src="../../../../../../assets/images/icon-wailt.png" alt="">
+        <img src="assets/images/icon-wailt.png" alt="">
         <h5>bạn đã nhận kết quả dự thầu từ khách hàng?</h5>
         <div class="confirm-button">
             <button class="btn btn-primary" id="success" (click)="modalTrungThau(trungthau)">trúng thầu</button>
@@ -42,10 +42,10 @@
         </div>
     </div>
     <div class="modal-body">
-        <div class="row" style="padding-bottom: 40px">
-            <div class="col-md-3 offset-md-1" *ngIf="btnTrungThau">Lý do {{textTrungThau}} thầu</div>
-            <div class="col-md-3 offset-md-1" *ngIf="btnTratThau">Lý do {{textTratThau}} thầu</div>
-            <div class="col-md-3 offset-md-1" *ngIf="btnHuyThau">Lý do {{textHuyThau}} thầu</div>
+        <div class="row" style="padding-bottom: 40px;font-weight: 700">
+            <div class="col-md-3 offset-md-1 lh" *ngIf="btnTrungThau">Lý do {{textTrungThau}} thầu</div>
+            <div class="col-md-3 offset-md-1 lh" *ngIf="btnTratThau">Lý do {{textTratThau}} thầu</div>
+            <div class="col-md-3 offset-md-1 lh" *ngIf="btnHuyThau">Lý do {{textHuyThau}} thầu</div>
             <div class="col-md-6 custom-dropdown">
                 <select class="form-control ">
                     <option value="">--Chọn--</option>
@@ -63,7 +63,7 @@
 
 <ng-template #uploadFile>
     <form [formGroup]="formUpload" (ngSubmit)="onSubmit()">
-        <div class="modal-header no-boder-bottom">
+        <div class="modal-header no-bt-bdr">
             <div class="col-md-10 offset-md-1 text-center">
                 <h4 class="modal-title text-title text-model">Upload kết quả dự thầu</h4>
             </div>

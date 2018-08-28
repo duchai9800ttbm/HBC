@@ -80,7 +80,7 @@ export class SidebarComponent implements OnInit {
     toggleSidebar() {
         let width = document.getElementById('sidebar').offsetWidth;
         const widthScreen = window.screen.width;
-        if (widthScreen > 1000) {
+        if (widthScreen > 992) {
             if (width === 55) {
                 this.toggleMenuFromSidebar.emit(false);
                 this.layoutService.emitEvent(false);
@@ -98,6 +98,26 @@ export class SidebarComponent implements OnInit {
                 document.getElementById('logo').setAttribute('Width', '200');
             }
         }
+
+    }
+
+    onResize(e) {
+        const width = document.getElementById('sidebar').offsetWidth;
+        if (width === 55) {
+            this.toggleMenuFromSidebar.emit(false);
+            this.layoutService.emitEvent(true);
+            this.showSidebarContent = true;
+
+
+        }
+        if (width === 200) {
+            this.layoutService.emitEvent(false);
+            document.getElementById('logo').setAttribute('Width', '200');
+            this.showSidebarContent = false;
+
+            // this.toggleMenuFromSidebar.emit(true);
+        }
+
 
     }
 }

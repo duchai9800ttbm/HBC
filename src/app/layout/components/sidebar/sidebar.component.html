@@ -97,7 +97,7 @@
 
     </ul>
 </nav>  -->
-<nav id="sidebar" class="sidebar" [@slideInOut]="state">
+<nav id="sidebar" class="sidebar" [@slideInOut]="state" (window:resize)="onResize($event)">
     <div class="d-flex flex-row-reverse button-tog" [class.center-parent]="showSidebarContent">
         <div class="action center-parent" width="">
             <div class="center-parent">

@@ -4,33 +4,18 @@
       <div class="d-flex justify-content-start" style="height: 40px;">
         <div class="rule mr-2">
         </div>
-        <div class="center-parent  mr-4">
-          <div class="title-header"> Đã họp kick-off </div>
+        <div class="center-parent mr-4">
+          <div class="title-header">Đã họp kick-off</div>
         </div>
       </div>
     </div>
     <div>
-      <div class="btn-toolbar mt-2 mb-2">
-        <div class="input-group btn-rg">
-          <span class="input-group-addon">Tìm kiếm theo</span>
-          <input type="text" class="form-control icon" placeholder="&#xf002; Tên tài liệu" (keyup)="searchTerm$.next($event.target.value)">
-        </div>
-
+      <div class="btn-toolbar mt-2 mb-2 status-filter">
         <button class="btn btn-primary ml-2">
           Tải Template
         </button>
-        <button class="btn btn-primary ml-2">
-          Tải xuống tài liệu
-        </button>
-        <button class="btn btn-primary ml-2">
-          In
-        </button>
-        <button class="btn btn-primary ml-2">
-          Xóa
-        </button>
         <button class="btn btn-primary ml-2" (click)="modalUp(uploadFile,1)">
           Upload&nbsp;biên bản cuộc họp
-
         </button>
         <button class="btn btn-primary ml-2">
           <i class="fa fa-refresh" aria-hidden="true"></i>
@@ -38,7 +23,25 @@
       </div>
     </div>
   </div>
-  <h5 style="text-transform: uppercase">Biên bản cuộc họp</h5>
+  <div class="d-flex form-group status-filter" id="result">
+    <h5 class="d-inline mb-0 mr-auto text-dark text-uppercase pd-t"> Biên bản cuộc họp</h5>
+    <div class="btn-toolbar">
+      <div class="input-group btn-rg">
+        <span class="input-group-addon">Tìm kiếm theo</span>
+        <input type="text" class="form-control icon" placeholder="&#xf002; Tên tài liệu" (keyup)="searchTerm$.next($event.target.value)">
+      </div>
+      <button class="btn btn-primary ml-2">
+        Tải xuống tài liệu
+      </button>
+      <button class="btn btn-primary ml-2">
+        In
+      </button>
+      <button class="btn btn-primary ml-2">
+        Xóa
+      </button>
+    </div>
+  </div>
+
   <div class="main-table">
     <div class="d-flex flex-row flex-wrap filter-bar custom-filter-bar" style="background-color: #fafbfc!important">
       <div class="d-flex form-inline flex-pad">
@@ -90,64 +93,66 @@
     <div class="bot-table">
       <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="table-selection stripe row-border hover cell-border dataTable">
         <thead>
-          <tr>
-            <th class="stt" style="width: 5%; min-width: 20px;background-color: #f68e56!important;">
-              <div class="d-flex justify-content-around">
-                <div style="width: 40%;">
-                  <div class="center-parent">
-                    <label class="custom-control custom-checkbox">
-                      <input type="checkbox" class="custom-control-input" [(ngModel)]="checkboxSeclectAll" (change)="onSelectAll($event.target.checked)">
-                      <span class="custom-control-indicator"></span>
-                    </label>
-                  </div>
-                </div>
-
-                <div style="width: 35%;" class="center-parent">
-                  <div>STT</div>
-                </div>
-                <div class="center-parent" style="width: 15%;padding-left: 5px;">
-                  <div class="ng-tns-c15-6">
-                    <i class="fa fa-caret-down" style="color: #ffff;"></i>
-                  </div>
-                </div>
-              </div>
-            </th>
-            <th style="width: 25%; background-color: #f68e56!important;">
-              <div class="d-flex">
+          <th class="stt bg-default w5" style="background-color: #f68e56!important;">
+            <div class="d-flex justify-content-around">
+              <div style="width: 40%;">
                 <div class="center-parent">
-                  <div>Tên tài liệu</div>
-                </div>
-                <div class="center-parent pd-l">
-                  <div class="ng-tns-c15-6">
-                    <i class="fa fa-caret-down" style="color: #ffff;"></i>
-                  </div>
+                  <label class="custom-control custom-checkbox">
+                    <input type="checkbox" class="custom-control-input" [(ngModel)]="checkboxSeclectAll" (change)="onSelectAll($event.target.checked)">
+                    <span class="custom-control-indicator"></span>
+                  </label>
                 </div>
               </div>
 
-            </th>
-            <th class="th-mark-status" style="width: 10%; min-width: 20px;background-color: #f68e56!important;">
-              <div class="d-flex">
-                <div style="width: 80%;" class="center-parent">
-                  <div>Phiên bản</div>
-                </div>
-                <div class="center-parent pd-l">
-                  <div class="ng-tns-c15-6">
-                    <i class="fa fa-caret-down" style="color: #ffff;"></i>
-                  </div>
+              <div style="width: 35%;" class="center-parent">
+                <div>STT</div>
+              </div>
+              <div class="center-parent" style="width: 15%;padding-left: 5px;">
+                <div class="ng-tns-c15-6">
+                  <i class="fa fa-caret-down" style="color: #ffff;"></i>
                 </div>
               </div>
-            </th>
-
-            <th style="width: 10%;background-color: #f68e56!important;">
-              <div class="d-flex">
-                <div class="center-parent">
-                  <div>Mô tả</div>
+            </div>
+          </th>
+          <th class="bg-default w12" style="background-color: #f68e56!important;">
+            <div class="d-flex justify-content-center">
+              <div class="center-parent">
+                <div>Tên tài liệu</div>
+              </div>
+              <div class="center-parent pd-l">
+                <div class="ng-tns-c15-6">
+                  <i class="fa fa-caret-down" style="color: #ffff;"></i>
                 </div>
               </div>
-            </th>
-
-            <th style="width: 10%;background-color: #f68e56!important;">
-              <div class="d-flex">
+            </div>
+          </th>
+         
+          <th class="bg-default w12" style="background-color: #f68e56!important;">
+            <div class="d-flex justify-content-center">
+              <div class="center-parent">
+                <div>Phiên bản</div>
+              </div>
+              <div class="center-parent pd-l">
+                <div class="ng-tns-c15-6">
+                  <i class="fa fa-caret-down" style="color: #ffff;"></i>
+                </div>
+              </div>
+            </div>
+          </th>
+          <th class="bg-default w15" style="background-color: #f68e56!important;">
+            <div class="d-flex justify-content-center">
+              <div class="center-parent">
+                <div>Mô tả</div>
+              </div>
+              <div class="center-parent pd-l">
+                <div class="ng-tns-c15-6">
+                  <i class="fa fa-caret-down" style="color: #ffff;"></i>
+                </div>
+              </div>
+            </div>
+          </th>
+          <th class="bg-default w12" style="background-color: #f68e56!important;">
+              <div class="d-flex justify-content-center">
                 <div class="center-parent">
                   <div>Người upload</div>
                 </div>
@@ -158,50 +163,52 @@
                 </div>
               </div>
             </th>
-
-            <th style="width: 10%; background-color: #f68e56!important;">
-              <div class="d-flex">
-                <div class="center-parent">
-                  <div>Ngày upload</div>
-                </div>
-                <div class="center-parent pd-l">
-                  <div class="ng-tns-c15-6">
-                    <i class="fa fa-caret-down" style="color: #ffff;"></i>
-                  </div>
+          <th class="bg-default w12" style="background-color: #f68e56!important;">
+            <div class="d-flex justify-content-center">
+              <div class="center-parent">
+                <div>Ngày upload</div>
+              </div>
+              <div class="center-parent pd-l">
+                <div class="ng-tns-c15-6">
+                  <i class="fa fa-caret-down" style="color: #ffff;"></i>
                 </div>
               </div>
-            </th>
-            <th style="width: 10%;background-color: #f68e56!important;">
-              <div class="d-flex justify-content-center">
-                <div class="center-parent">
-                  <div>Lần phỏng vấn</div>
-                </div>
-                <div class="center-parent pd-l">
-                  <div class="ng-tns-c15-6">
-                    <i class="fa fa-caret-down" style="color: #ffff;"></i>
-                  </div>
+            </div>
+          </th>
+          <th class="bg-default w10" style="background-color: #f68e56!important;">
+            <div class="d-flex justify-content-center">
+              <div class="center-parent">
+                <div>Lần phỏng vấn</div>
+              </div>
+              <div class="center-parent pd-l">
+                <div class="ng-tns-c15-6">
+                  <i class="fa fa-caret-down" style="color: #ffff;"></i>
                 </div>
               </div>
-            </th>
-            <th style="width: 10%;background-color: #f68e56!important;">
-              <div class="d-flex">
-                <div class="center-parent">
-                  <div>Thời gian họp</div>
-                </div>
-                <div class="center-parent pd-l">
-                  <div class="ng-tns-c15-6">
-                    <i class="fa fa-caret-down" style="color: #ffff;"></i>
-                  </div>
+            </div>
+          </th>
+          <th class="bg-default w12" style="background-color: #f68e56!important;">
+            <div class="d-flex justify-content-center">
+              <div class="center-parent">
+                <div>Thời gian họp</div>
+              </div>
+              <div class="center-parent pd-l">
+                <div class="ng-tns-c15-6">
+                  <i class="fa fa-caret-down" style="color: #ffff;"></i>
                 </div>
               </div>
-            </th>
-            <th class="table-action text-center" style="width: 10%;background-color: #f68e56!important;">
-              Thao tác
-            </th>
-          </tr>
+            </div>
+          </th>
+          <th class="bg-default w10" style="background-color: #f68e56!important;">
+            <div class="d-flex justify-content-center">
+              <div class="center-parent">
+                <div>Thao tác</div>
+              </div>
+            </div>
+          </th>
         </thead>
         <tbody>
-          <tr *ngFor="let item of resultData; let i = index">
+          <tr *ngFor="let item of resultData; let i = index;">
             <td class="stt" style="width: 5%; min-width: 20px;">
               <div class="d-flex justify-content-around">
                 <div style="width: 40%;">
@@ -223,27 +230,21 @@
                 </div>
               </div>
             </td>
-            <td>{{ item.documentName }}</td>
-            <td class="text-center">{{ item.version }}</td>
-            <td>
+            <td class="tdup-name">{{item.documentName}}</td>
+            <td class="text-center">{{item.version}}</td>
+            <td class="text-center tdup">{{item.description}} </td>
+            <td class="text-center" >{{item.employeeName}}</td>
+            <td class="text-center">{{item.createdDate}}</td>
+            <td class="text-center">{{item.interview}}</td>
+            <td class="text-center">{{item.createdDate}}</td>
+            <td class="text-center">
               <div class="d-flex justify-content-around">
-                <div> {{ item.description | translate }}</div>
-              </div>
-            </td>
-
-            <td class="select-filter text-center">{{ item.employeeName}}</td>
-            <!-- <td class="text-center">{{ item.bidReviewDocumentUploadDate* 1000 | date:'dd/MM/yyyy HH:mm': '+0000'}}</td> -->
-            <td class="select-filter text-center">{{ item.createdDate}}</td>
-            <td class="select-filter text-center">{{ item.interview}}</td>
-            <td class="select-filter text-center">{{ item.createdDate}}</td>
-            <td class="text-center" style="width: 12%;">
-              <div class="d-flex justify-content-around">
-                <div>
+                <div id="mr">
                   <a title="Tải file" (click)="downloadFileItem(item.id)">
                     <i class="fa fa-download color-item-down" aria-hidden="true"></i>
                   </a>
                 </div>
-                <div>
+                <div id="mr">
                   <a title="Xóa file">
                     <i class="fa fa-trash-o" aria-hidden="true"></i>
                   </a>
@@ -252,15 +253,17 @@
                   <a title="In">
                     <i class="fa fa-print color-item-print" aria-hidden="true"></i>
                   </a>
+
                 </div>
               </div>
             </td>
           </tr>
-          <tr *ngIf="total ==0" >
+          <tr *ngIf="total ==0">
             <td colspan="9" class="text-center">Không có dữ liệu</td>
           </tr>
         </tbody>
       </table>
+
     </div>
     <div class="show">Hiển thị {{total}} kết quả</div>
   </div>
@@ -269,40 +272,45 @@
 <div class="table-small mt-3">
   <div class=" title-list-package d-flex flex-wrap align-items-center status-filter">
     <div class="mr-auto d-flex align-items-end list-package mt-2 mb-2">
-      <div class="d-flex justify-content-start" style="height: 40px;">
+      <div class="d-flex justify-content-start">
         <div class="rule mr-2">
         </div>
-        <div class="center-parent  mr-4">
-          <div class="title-header"> File Presentation </div>
+        <div class="center-parent mr-4">
+          <div class="title-header"></div>
         </div>
       </div>
     </div>
     <div>
-      <div class="btn-toolbar mt-2 mb-2">
-        <div class="input-group btn-rg">
-          <span class="input-group-addon">Tìm kiếm theo</span>
-          <input type="text" class="form-control icon" placeholder="&#xf002; Tên tài liệu" (keyup)="searchTerm$.next($event.target.value)">
-        </div>
-
+      <div class="btn-toolbar mt-2 mb-2 status-filter">
         <button class="btn btn-primary ml-2">
           Tải Template
         </button>
-        <button class="btn btn-primary ml-2">
-          Tải xuống tài liệu
-        </button>
-        <button class="btn btn-primary ml-2">
-          In
-        </button>
-        <button class="btn btn-primary ml-2">
-          Xóa
-        </button>
         <button class="btn btn-primary ml-2" (click)="modalUp(uploadFile,2)">
-          Upload&nbsp;file Presentation
+          Upload&nbsp;biên bản cuộc họp
         </button>
         <button class="btn btn-primary ml-2">
           <i class="fa fa-refresh" aria-hidden="true"></i>
         </button>
       </div>
+    </div>
+  </div>
+  <div class="d-flex form-group status-filter" id="result">
+    <h5 class="d-inline mb-0 mr-auto text-dark text-uppercase pd-t">File Presentation</h5>
+    <div class="btn-toolbar">
+      <div class="input-group btn-rg">
+        <span class="input-group-addon">Tìm kiếm theo</span>
+        <input type="text" class="form-control icon" placeholder="&#xf002; Tên tài liệu" (keyup)="searchTerm$.next($event.target.value)">
+      </div>
+      <button class="btn btn-primary ml-2">
+        Tải xuống tài liệu
+      </button>
+      <button class="btn btn-primary ml-2">
+        In
+      </button>
+      <button class="btn btn-primary ml-2">
+        Xóa
+      </button>
+
     </div>
   </div>
   <div class="main-table">
@@ -479,26 +487,21 @@
                 </div>
               </div>
             </td>
-            <td>{{ item.documentName }}</td>
+            <td class="tdup-name">{{ item.documentName }}</td>
             <td class="text-center">{{ item.version }}</td>
-            <td>
-              <div class="d-flex justify-content-around">
-                <div> {{ item.documentName | translate }}</div>
-              </div>
-            </td>
-
+            <td class="tdup">{{ item.documentName | translate }}</td>
             <td class="select-filter text-center">{{ item.employeeName}}</td>
             <!-- <td class="text-center">{{ item.bidReviewDocumentUploadDate* 1000 | date:'dd/MM/yyyy HH:mm': '+0000'}}</td> -->
             <td class="select-filter text-center">{{ item.timeTransfer}}</td>
             <td class="select-filter text-center">{{ item.interviewNo}}</td>
             <td class="text-center" style="width: 12%;">
               <div class="d-flex justify-content-around">
-                <div>
+                <div id="mr">
                   <a title="Tải file" (click)="downloadFileItem(item.id)">
                     <i class="fa fa-download color-item-down" aria-hidden="true"></i>
                   </a>
                 </div>
-                <div>
+                <div id="mr">
                   <a title="Xóa file">
                     <i class="fa fa-trash-o" aria-hidden="true"></i>
                   </a>
@@ -511,8 +514,8 @@
               </div>
             </td>
           </tr>
-          <tr *ngIf="totalFileUpload ==0" >
-              <td colspan="9" class="text-center">Không có dữ liệu</td>
+          <tr *ngIf="totalFileUpload ==0">
+            <td colspan="9" class="text-center">Không có dữ liệu</td>
           </tr>
         </tbody>
       </table>
@@ -525,7 +528,7 @@
 
 <ng-template #uploadFile>
   <form [formGroup]="formUpload" (ngSubmit)="type ==1 ? onSubmit() : submitForm()">
-    <div class="modal-header no-boder-bottom">
+    <div class="modal-header no-mr-bt">
       <div class="col-md-10 offset-md-1 text-center">
         <h4 class="modal-title text-title text-model">{{textUploadReport}}</h4>
       </div>

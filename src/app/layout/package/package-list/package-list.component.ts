@@ -164,10 +164,10 @@ export class PackageListComponent implements OnInit, AfterViewChecked {
     tongGiaTri = false; // ok
     danhGiaDuAn = false; //ok
 
-    // dienTichSan = false;
-    // trangThaiGoiThau = false;
-    // ngayBatDauTheoDoi = false;
-    // ngayNopHoSoMoiThau = false;
+    dienTichSan = false;
+    trangThaiGoiThau = false;
+    ngayBatDauTheoDoi = false;
+    ngayNopHoSoMoiThau = false;
 
     ngOnInit() {
         window.scrollTo(0, 0);
@@ -227,6 +227,7 @@ export class PackageListComponent implements OnInit, AfterViewChecked {
             this.maDuAn = this.listFieldNomarlized.includes('ARBidOpportunityNo');
             this.tenGoithau = this.listFieldNomarlized.includes('ARBidOpportunityName');
             this.congViec = this.listFieldNomarlized.includes('ARBidOpportunityJob');
+            this.maDuAn = this.listFieldNomarlized.includes('ARBidOpportunityNo');
             this.diaDiem = this.listFieldNomarlized.includes('ARBidOpportunityPlace');
             this.loaiKhachHang = this.listFieldNomarlized.includes('ARBidOpportunityCustomerType');
             this.donViTuVan = this.listFieldNomarlized.includes('ARBidOpportunityConsultantUnit');
@@ -240,6 +241,18 @@ export class PackageListComponent implements OnInit, AfterViewChecked {
             this.ngayKetThucDuAn = this.listFieldNomarlized.includes('ARBidOpportunityEstimatedProjectEndDate');
             this.ngayKhoiCongDuAn = this.listFieldNomarlized.includes('ARBidOpportunityEstimatedProjectStartDate');
             this.linkTaiLieu = this.listFieldNomarlized.includes('ARBidOpportunityDocumentLink');
+
+            this.chuTri = this.listFieldNomarlized.includes('ARBidOpportunityHBCChair');
+            this.giaiDoan = this.listFieldNomarlized.includes('ARBidOpportunityStage');
+            this.tienDoThucHien = this.listFieldNomarlized.includes('ARBidOpportunityProgress');
+            this.khuVuc = this.listFieldNomarlized.includes('FK_ARBidLocationID');
+            this.tenKhachHang = this.listFieldNomarlized.includes('FK_HREmployeeID');
+            this.lienHe = this.listFieldNomarlized.includes('FK_ARCustomerContactID');
+            this.ngayBatDauTheoDoi = this.listFieldNomarlized.includes('ARBidOpportunityStartTrackingDate');
+            this.ngayNopHoSoMoiThau = this.listFieldNomarlized.includes('ARBidOpportunityBidSubmissionDate');
+            this.ngayDuKienKetQuaThau = this.listFieldNomarlized.includes('ARBidOpportunityEstimatedResultDate');
+            this.loaiCongTrinh = this.listFieldNomarlized.includes('FK_ARBidConstructionTypeID');
+            this.hangMucCongTrinh = this.listFieldNomarlized.includes('FK_ARBidConstructionCategoryID');
             this.vaiTro = this.listFieldNomarlized.includes('ARBidOpportunityHBCChair');
             this.tienDoThucHien = this.listFieldNomarlized.includes('ARBidOpportunityProgress');
             this.giaiDoan = this.listFieldNomarlized.includes('ARBidOpportunityStage');
@@ -254,6 +267,7 @@ export class PackageListComponent implements OnInit, AfterViewChecked {
             this.loaiCongTrinh = this.listFieldNomarlized.includes('FK_ARBidConstructionTypeID');
             this.hangMucCongTrinh = this.listFieldNomarlized.includes('FK_ARBidConstructionCategoryID');
             this.tongGiaTri = this.listFieldNomarlized.includes('ARBidOpportunitys');
+
             this.danhGiaDuAn = this.listFieldNomarlized.includes('ARBidOpportunityEvaluation');
         });
     }
@@ -424,5 +438,10 @@ export class PackageListComponent implements OnInit, AfterViewChecked {
     inputChange() {
         this.sum = [...this.listField].filter(x => x.hidden === true).length;
 
+    }
+
+    exportFileExcel() {
+        this.packageService.exportExcel(this.searchTerm$.value, this.filterModel)
+            .subscribe(result => result);
     }
 }

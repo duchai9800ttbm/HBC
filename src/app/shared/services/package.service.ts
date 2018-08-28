@@ -17,6 +17,7 @@ import { Subject } from '../../../../node_modules/rxjs';
 import { BidUserGroupMemberResponsive } from '../models/api-response/setting/bid-user-group-member-responsive';
 import { SETTING_BID_USER, SETTING_BID_STAGE } from '../configs/common.config';
 import { BidPermissionGroupResponsive } from '../models/api-response/setting/bid-permission-group-responsive';
+import * as FileSaver from 'file-saver';
 
 @Injectable()
 export class PackageService {
@@ -168,7 +169,7 @@ export class PackageService {
         private filterService: FilterPipe,
         private instantSearchService: InstantSearchService,
         private apiService: ApiService
-    ) {}
+    ) { }
 
     // active step
     setUserId(data: boolean) {
@@ -853,5 +854,21 @@ export class PackageService {
     updateBidPermissionGroupByStage(bidId: number, data): Observable<any> {
         const url = `bidopportunity/${bidId}/changebidusergrouppermission`;
         return this.apiService.post(url, data).map(response => response.result);
+    }
+
+    exportExcel(
+        searchTerm: string,
+        filter: PackageFilter,
+    ) {
+        const filterUrl = `bidopportunity/export?searchTerm=`;
+        const urlParams = PackageService.createFilterParams(filter);
+        urlParams.append('search', searchTerm);
+        return this.apiService.getFileHBC(filterUrl, urlParams).map(response => {
+            return FileSaver.saveAs(
+                new Blob([response.file], {
+                    type: `${response.file.type}`,
+                }), response.fileName
+            );
+        });
     }
 }
