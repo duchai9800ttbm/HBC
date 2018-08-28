@@ -42,6 +42,7 @@ export class UploadFileComponent implements OnInit {
     },
   ];
   file;
+  icon = `<i class="fa fa-search" aria-hidden="true"></i>`;
   public events: string[] = [];
   public source: Array<string> = ['Albania', 'Andorra', 'Armenia', 'Austria', 'Azerbaijan'];
   public data: Array<string>;

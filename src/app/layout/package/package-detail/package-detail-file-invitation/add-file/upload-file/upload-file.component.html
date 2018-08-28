@@ -55,13 +55,7 @@
                                     <tr>
                                         <td class="w-30 label no-boder bold-title">Ngày nhận HSMT</td>
                                         <td class="no-boder d-flex">
-                                            <!-- <owl-date-time [readonlyInput]="datePickerConfig.readonlyInput" [locale]="datePickerConfig.vi" [placeHolder]="datePickerConfig.placeHolderVn">
-                                            </owl-date-time> -->
                                             <kendo-datepicker class="w-100" formControlName="date"></kendo-datepicker>
-
-                                            <!-- <span class="input-group-addon">
-                                                <i class="fa fa-calendar"></i>
-                                            </span> -->
                                         </td>
                                     </tr>
                                     <tr>
@@ -70,9 +64,6 @@
                                             <textarea cols="3" rows="3" class="w-100 form-control no-resize-textarea" formControlName="description"></textarea>
                                         </td>
                                     </tr>
-                                    <kendo-combobox [data]="data" [filterable]="true" (valueChange)="valueChange($event)" (selectionChange)="selectionChange($event)"
-                                        (filterChange)="filterChange($event)">
-                                    </kendo-combobox>
                                 </tbody>
                             </table>
                         </div>
