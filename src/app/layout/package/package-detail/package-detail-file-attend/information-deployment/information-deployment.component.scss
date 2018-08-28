@@ -332,10 +332,55 @@ table.dataTable th {
     .content-deployment {
         zoom: 0.8;
     }
-    .col-md-4 {
-        flex: none !important; max-width: none !important;
+    // .col-md-4 {
+    //     flex: none !important; max-width: none !important;
+    // }
+    .no-boder-bottom {
+        margin-top: 20px;
+    }
+    .btn-toolbar {
+        zoom: 0.8;
+    }
+    .file-filter {
+        zoom: 0.6;
+        font-size: 120%;
+    }
+    .status-filter{
+      zoom: 0.8!important;
+      font-size: 120%;
+    }
+    .custom-filter-bar{
+        zoom: 0.7;
     }
 }
+@media only screen and (max-width: 1200px) {
+    .content-deployment {
+        zoom: 0.9;
+    }
+    .no-boder-bottom {
+        margin-top: 20px;
+    }
+    .btn-toolbar {
+        zoom: 0.9;
+    }
+    .file-filter {
+        zoom: 0.85;
+        font-size: 120%;
+    }
+    .status-filter{
+      zoom: 0.9;
+      font-size: 120%;
+    }
+    .custom-filter-bar{
+        zoom: 0.9;
+    }
+}
+@media only screen and (max-width: 1366px) {
+    .no-boder-bottom {
+        margin-top: 20px;
+    }
+}
+
 #header-table {
     padding-left: 55px;
 }
