@@ -37,12 +37,13 @@
                                     <tr>
                                         <td class="w-30 label no-boder bold-title">Loại HSMT</td>
                                         <td class="no-boder d-flex">
-                                            <span class="w-100 custom-dropdown">
+                                            <!-- <span class="w-100 custom-dropdown">
                                                 <select class="form-control" tabindex="5" formControlName="type">
                                                     <option *ngFor="let item of listTypeFile" [value]="item.id">{{item.text }}</option>
                                                 </select>
-                                            </span>
-
+                                            </span> -->
+                                            <kendo-dropdownlist [data]="listTypeFile">
+                                            </kendo-dropdownlist>
                                         </td>
                                     </tr>
                                     <tr>
@@ -83,5 +84,7 @@
                 </div>
             </div>
         </form>
+        <kendo-dropdownlist [data]="listTypeFile">
+        </kendo-dropdownlist>
     </kendo-dialog>
 </div>
