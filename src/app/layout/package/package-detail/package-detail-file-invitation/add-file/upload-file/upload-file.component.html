@@ -20,36 +20,48 @@
                             <table class="w-100 table">
                                 <tbody>
                                     <tr>
-                                        <td class="w-30 label no-boder bold-title">Chọn file</td>
-                                        <td class="no-boder d-flex">
-                                            <span class="w-100">
+                                        <td class="w-30 label no-boder bold-title">Đường dẫn link</td>
+                                        <td class="w-70 no-boder">
+                                            <input class="w-100" kendoTextBox tabindex="1" type="text">
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="w-30 label no-boder bold-title">Hoặc</td>
+                                        <td class="no-boder d-flex justify-content-between">
+                                            <!-- <span class="w-100">
                                                 <span class="form-control boder-input-choose-file">
                                                     {{this.uploadForm.get('nameFile').value ? this.uploadForm.get('nameFile').value : '-- Chọn file --'}}
                                                 </span>
                                             </span>
                                             <span class="input-group-addon fileUpload">
                                                 <i class="fa fa-upload" aria-hidden="true"></i>
-                                                <input type="file" class="upload" (change)="fileChange($event)" accept=".xlsx,.xls,image/*,.doc, .docx,.ppt, .pptx,.txt,.pdf, .application/msword, application/vnd.openxmlformats-officedocument.wordprocessingml.document, application/vnd.ms-powerpoint, application/vnd.openxmlformats-officedocument.presentationml.slideshow, application/vnd.openxmlformats-officedocument.presentationml.presentation"
+                                                <input type="file" class="upload hide" (change)="fileChange($event)" accept=".xlsx,.xls,image/*,.doc, .docx,.ppt, .pptx,.txt,.pdf, .application/msword, application/vnd.openxmlformats-officedocument.wordprocessingml.document, application/vnd.ms-powerpoint, application/vnd.openxmlformats-officedocument.presentationml.slideshow, application/vnd.openxmlformats-officedocument.presentationml.presentation"
                                                 />
-                                            </span>
+                                            </span> -->
+                                            <div class="fileUpload">
+                                                <button class="btn btn-primary">
+                                                    <i class="fa fa-cloud-upload" aria-hidden="true"></i>&nbsp;&nbsp; Chọn File</button>
+                                                <input type="file" class="upload" (change)="fileChange($event)" />
+                                            </div>
+                                            <div style="width: calc(100% - 120px);" *ngIf="file" class="d-flex justify-content-between">
+                                                <div>{{file.name}}</div>
+                                                <div>
+                                                    <button (click)="deleteFileUpload()" class="btn btn-secondary">X</button>
+                                                </div>
+                                            </div>
                                         </td>
                                     </tr>
                                     <tr>
                                         <td class="w-30 label no-boder bold-title">Loại HSMT</td>
                                         <td class="no-boder d-flex">
-                                            <!-- <span class="w-100 custom-dropdown">
-                                                <select class="form-control" tabindex="5" formControlName="type">
-                                                    <option *ngFor="let item of listTypeFile" [value]="item.id">{{item.text }}</option>
-                                                </select>
-                                            </span> -->
-                                            <kendo-dropdownlist [data]="listTypeFile">
+                                            <kendo-dropdownlist class="w-100" [data]="listTypeFile">
                                             </kendo-dropdownlist>
                                         </td>
                                     </tr>
                                     <tr>
                                         <td class="w-30 label no-boder bold-title">Tên</td>
                                         <td class="w-70 no-boder">
-                                            <input kendoTextBox tabindex="1" type="text" formControlName="editName">
+                                            <input class="w-100" kendoTextBox tabindex="1" type="text" formControlName="editName">
                                         </td>
                                     </tr>
                                     <tr>
@@ -61,7 +73,7 @@
                                     <tr>
                                         <td class="w-30 label no-boder bold-title">Mô tả/Nội dung cập nhật</td>
                                         <td class="w-70 no-boder">
-                                            <textarea cols="3" rows="3" class="w-100 form-control no-resize-textarea" formControlName="description"></textarea>
+                                            <textarea kendoTextArea cols="3" rows="3" class="w-100 form-control no-resize-textarea" formControlName="description"></textarea>
                                         </td>
                                     </tr>
                                 </tbody>
