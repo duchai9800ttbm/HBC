@@ -52,7 +52,7 @@
                                         <span style="padding-left: 12px" class="custom-dropdown w-100">
                                             <select class="form-control" formControlName="userName">
                                                 <option [ngValue]="null">--Chọn--</option>
-                                                <option *ngFor="let user of listBidGroupUser" [value]="user.name">{{user.desc}}</option>
+                                                <option *ngFor="let user of listBidGroupUser" [value]="user.id">{{user.desc}}</option>
                                             </select>
                                         </span>
                                     </div>
@@ -144,7 +144,7 @@
                                         <span style="padding-left: 12px" class="custom-dropdown w-100">
                                             <select class="form-control" formControlName="userName">
                                                 <option [ngValue]="null">--Chọn--</option>
-                                                <option *ngFor="let user of listBidGroupUser" [value]="user.name">{{user.desc}}</option>
+                                                <option *ngFor="let user of listBidGroupUser" [value]="user.id">{{user.desc}}</option>
                                             </select>
                                         </span>
                                     </div>

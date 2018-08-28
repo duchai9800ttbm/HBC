@@ -92,7 +92,7 @@ export class PackagePermissionResultComponent implements OnInit {
     addFormArrayItem(formData, user) {
         const formArrayControl = this.packagePermissionReviewForm.get(formData.bidPermissionGroupName).get('permission') as FormArray;
         const formArrayItem = this.fb.group({});
-        formArrayItem.addControl('userName', this.fb.control(user.userGroupName));
+        formArrayItem.addControl('userName', this.fb.control(user.userGroupId));
         formData.bidPermissions.forEach(p => {
             formArrayItem
                 .addControl(
@@ -118,6 +118,7 @@ export class PackagePermissionResultComponent implements OnInit {
     onSubmit() {
         this.spinner.show();
         const formValue = this.packagePermissionReviewForm.value;
+        console.log('formValue: ', formValue);
         const result = [];
         this.listFormData.forEach(pData => {
             pData.bidPermissions.forEach(permission => {
@@ -127,7 +128,7 @@ export class PackagePermissionResultComponent implements OnInit {
                 };
                 formValue[pData.bidPermissionGroupName]['permission'].forEach(user => {
                     if (user[permission.bidPermissionName] && user['userName']) {
-                        item.userGroupIdentitys.push({bidUserGroupId: this.listBidGroupUser.find(i => i.name === user['userName']).id});
+                        item.userGroupIdentitys.push({bidUserGroupId: user['userName']});
                     }
                 });
                 // if (item.userGroupIdentitys.length > 0) {
