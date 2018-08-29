@@ -192,7 +192,7 @@ export class DocumentService {
         return listGroup;
     }
     // convert list => listGroup
-    group(source: BidDocumentModel[]): BidDocumentGroupModel[] {
+        group(source: BidDocumentModel[]): BidDocumentGroupModel[] {
         const groupedObj = source.reduce((prev, cur) => {
             if (!prev[cur['documentType']]) {
                 prev[cur['documentType']] = [cur];

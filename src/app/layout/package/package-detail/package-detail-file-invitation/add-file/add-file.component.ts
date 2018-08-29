@@ -1,15 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { routerTransition } from '../../../../../router.animations';
-import * as moment from 'moment';
 import { DictionaryItem, PagedResult } from '../../../../../shared/models';
 import { DATATABLE_CONFIG } from '../../../../../shared/configs';
 import { Subject } from '../../../../../../../node_modules/rxjs/Subject';
-import { AlertService, DataService, ConfirmationService, UserService } from '../../../../../shared/services';
+import { AlertService, ConfirmationService, UserService } from '../../../../../shared/services';
 import { Router } from '../../../../../../../node_modules/@angular/router';
 import { NgxSpinnerService } from '../../../../../../../node_modules/ngx-spinner';
 import { DATETIME_PICKER_CONFIG } from '../../../../../shared/configs/datepicker.config';
 import { PackageDetailComponent } from '../../package-detail.component';
-import { TypeDocument } from '../../../../../shared/models/package/type-document';
 import { DocumentService } from '../../../../../shared/services/document.service';
 import { BidDocumentModel } from '../../../../../shared/models/document/bid-document.model';
 import { BidDocumentGroupModel } from '../../../../../shared/models/document/bid-document-group.model';
@@ -17,9 +15,7 @@ import { UserModel } from '../../../../../shared/models/user/user.model';
 import { BidDocumentFilter } from '../../../../../shared/models/document/bid-document-filter.model';
 import { OpportunityHsmtService } from '../../../../../shared/services/opportunity-hsmt.service';
 import { UserItemModel } from '../../../../../shared/models/user/user-item.model';
-import { DocumentReviewService } from '../../../../../shared/services/document-review.service';
 import { PackageService } from '../../../../../shared/services/package.service';
-import { PackageModel } from '../../../../../shared/models/package/package.model';
 import { PackageInfoModel } from '../../../../../shared/models/package/package-info.model';
 @Component({
     selector: 'app-add-file',
@@ -74,13 +70,10 @@ export class AddFileComponent implements OnInit {
         this.filterModel.status = '';
         this.filterModel.uploadedEmployeeId = null;
         // this.filterModel.createDate = new Date();
-        // get OpportunityId
-        this.packageId = +PackageDetailComponent.packageId;
         // danh sách người upload (lấy từ danh sách user)
         this.userService.getAllUser('').subscribe(data => {
             this.userListItem = data;
         });
-        // danh sách tài liệu
         this.spinner.show();
         this.documentService.bidDocumentMajortypes().subscribe(data => {
             this.majorTypeListItem = data;
