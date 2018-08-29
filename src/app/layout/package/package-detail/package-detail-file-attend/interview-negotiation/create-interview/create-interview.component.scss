@@ -310,7 +310,11 @@ button:focus {
     outline: 1px dotted;
     outline: #fff !important;
 }
-
+table.dataTable{
+    border-bottom: 1px solid #dddddd !important;
+    box-shadow: none;
+    border-collapse: collapse;
+}
 table.dataTable th {
     border-bottom: 1px solid #dddddd !important;
     background-color: #ffff !important;
@@ -415,4 +419,8 @@ table.dataTable td{
 }
 .margin-right-table{
     width: calc(100% - 15px) !important;
+    // overflow-x: inherit !important;
+}
+.text-align-number{
+    text-align: right;
 }

@@ -16,6 +16,10 @@ const routes: Routes = [
         path: 'prepare',
         loadChildren: './prepare-interview/prepare-interview.module#PrepareInterviewModule'
       },
+      {
+        path: 'end',
+        loadChildren: './end-interview/end-interview.module#EndInterviewModule'
+      },
       { path: 'submitted', component: SubmittedHsdtComponent },
     ]
   }

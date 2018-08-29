@@ -12,7 +12,7 @@
       </div>
     </div>
     <div class="row pad-row">
-      <div class="col-md-4 name-field">
+      <div class="col-md-4 name-field p-2">
         Khách hàng
       </div>
       <div class="col-md-8" style="padding-left: 0px">
@@ -20,13 +20,13 @@
       </div>
     </div>
     <div class="row pad-row">
-      <div class="col-md-4 name-field">
+      <div class="col-md-4 name-field p-2">
         Ngày nhận phỏng vấn
       </div>
       <div class="col-md-8" style="padding-left: 0px">
         <div class="input-group w-75">
           <owl-date-time [locale]="datePickerConfig.vi" [placeHolder]="datePickerConfig.datePlaceHolder" [type]="datePickerConfig.calendarType"
-            [dateFormat]="datePickerConfig.dateFormat" formControlName="approvedDate">
+            [dateFormat]="datePickerConfig.dateFormat" formControlName="approvedDate" class="font-size-datePickerConfig">
           </owl-date-time>
           <span class="input-group-addon">
             <i class="fa fa-calendar"></i>
@@ -35,13 +35,13 @@
       </div>
     </div>
     <div class="row pad-row">
-      <div class="col-md-4 name-field">
+      <div class="col-md-4 name-field p-2">
         Thời gian phỏng vấn
       </div>
       <div class="col-md-8" style="padding-left: 0px">
         <div class="input-group w-75">
-          <owl-date-time [locale]="datePickerConfig.vi" [placeHolder]="datePickerConfig.datePlaceHolder" [type]="datePickerConfig.calendarType"
-            [dateFormat]="datePickerConfig.dateFormat" formControlName="interviewDate">
+          <owl-date-time [locale]="datePickerConfig.vi" [placeHolder]="datePickerConfig.placeHolderVnTime" [type]="datePickerConfig.calendarType"
+            [dateFormat]="datePickerConfig.datetimeFormat" formControlName="interviewDate" class="font-size-datePickerConfig">
           </owl-date-time>
           <span class="input-group-addon">
             <i class="fa fa-calendar"></i>
@@ -50,7 +50,7 @@
       </div>
     </div>
     <div class="row pad-row">
-      <div class="col-md-4 name-field">
+      <div class="col-md-4 name-field p-2">
         Địa điểm
       </div>
       <div class="col-md-8" style="padding-left: 0px">
@@ -58,7 +58,7 @@
       </div>
     </div>
     <div class="row pad-row">
-      <div class="col-md-4 name-field">
+      <div class="col-md-4 name-field p-2">
         Lần phỏng vấn
       </div>
       <div class="col-md-8" style="padding-left: 0px">
@@ -66,15 +66,15 @@
       </div>
     </div>
     <div class="row pad-row">
-      <div class="col-md-4 name-field">
+      <div class="col-md-4 name-field p-2">
         Nội dung
       </div>
       <div class="col-md-8" style="padding-left: 0px">
-        <input class="form-control w-75" type="text" formControlName="content">
+        <input textArea class="form-control w-75" type="text" formControlName="content">
       </div>
     </div>
     <div class="row pad-row">
-      <div class="col-md-4 name-field">
+      <div class="col-md-4 name-field p-2">
         File đính kèm
       </div>
       <div class="col-md-8 d-flex" style="padding-left: 0px">

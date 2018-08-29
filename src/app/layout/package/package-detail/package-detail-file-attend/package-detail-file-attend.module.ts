@@ -18,6 +18,7 @@ import { DocumentPriceReviewService } from '../../../../shared/services/document
 import { UploadFilePriceReviewComponent } from './price-review/upload-file-price-review/upload-file-price-review.component';
 import { UploadFileHsdtComponent } from './hsdt-build/upload-file-hsdt/upload-file-hsdt.component';
 import { CreateNewInvitationComponent } from './interview-negotiation/create-interview/create-new-invitation/create-new-invitation.component';
+import { ReportEndInterviewComponent } from './interview-negotiation/end-interview/report-end-interview/report-end-interview.component';
 @NgModule({
   imports: [
     CommonModule,
@@ -39,11 +40,13 @@ import { CreateNewInvitationComponent } from './interview-negotiation/create-int
     HsdtPendingComponent,
     UploadFilePriceReviewComponent,
     CreateNewInvitationComponent,
-    UploadFileHsdtComponent
+    UploadFileHsdtComponent,
+    ReportEndInterviewComponent
   ],
   entryComponents: [
     CreateNewInvitationComponent,
-    UploadFileHsdtComponent
+    UploadFileHsdtComponent,
+    ReportEndInterviewComponent,
   ],
   providers: [
     DocumentPriceReviewService
