@@ -28,6 +28,7 @@ import { PackageInfoModel } from '../../../../../shared/models/package/package-i
     animations: [routerTransition()]
 })
 export class AddFileComponent implements OnInit {
+    isShowMenu = false;
 
     checkboxSeclectAll: boolean;
     dtOptions: any = DATATABLE_CONFIG;
@@ -120,6 +121,14 @@ export class AddFileComponent implements OnInit {
         });
     }
 
+    toggleClick() {
+        $('.toggle-menu-item').toggleClass('resize');
+        // setTimeout( () => ($('.toggle-menu-item').toggleClass('hidden')), 2100);
+        $('.iconN1').toggleClass('iconN01');
+        $('.iconN2').toggleClass('iconN02');
+        $('.iconN3').toggleClass('iconN03');
+        console.log('ok');
+    }
     search(value) {
         this.searchTerm = value;
         this.bidDocumentGroupListItemSearchResult = this.documentService

@@ -929,3 +929,16 @@ pre {
     color: #fff;
 }
 
+::-webkit-scrollbar {
+    height: 8px;
+ }
+
+::-webkit-scrollbar-track {
+    background-color:#f8f8f8;
+ // border-radius: 5px;
+
+}
+::-webkit-scrollbar-thumb {
+    background-color: #c6c6c6;
+    cursor: pointer;
+}
