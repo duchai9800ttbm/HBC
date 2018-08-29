@@ -332,7 +332,7 @@ table.dataTable td{
     width: 100%;
     .cus-menu-children {
         width: 100%;
-        padding-left: 5px;
+        // padding-left: 5px;
         cursor: pointer;
     }
 }
@@ -406,4 +406,13 @@ table.dataTable td{
 }
 .zoom-toolbar{
     zoom: 0.7;
+}
+.transform-icon-edit{
+    transform: translateY(10%);
+}
+.nav-link{
+    padding: 0.5rem 4px;
+}
+.margin-right-table{
+    width: calc(100% - 15px) !important;
 }
