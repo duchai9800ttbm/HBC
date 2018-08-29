@@ -20,6 +20,8 @@ input.icon {
 
 .bot-table {
     padding-bottom: 20px;
+    margin-top: 55px;
+    margin-left: 20px;  
 }
 
 .color-item-down {
@@ -276,8 +278,9 @@ a {
 .table-small {
     box-shadow: 0 4px 25px 0 rgb(245, 245, 245), 0 16px 38px -12px rgb(241, 237, 237), 0 4px 25px 0 rgb(241, 237, 237), 0 8px 10px -5px rgb(241, 237, 237);
     border-radius: 10px;
-    padding: 0 15px;
+    padding: 15px 15px;
     background-color: #fff;
+    width: 100%;
 }
 
 .alert {
@@ -510,7 +513,8 @@ li.triangle::before {
 }
 
 #outer-table {
-    padding: 20px 15px 20px 0;
+    padding: 20px 15px 20px 15px;
+    width: 100%;
 }
 
 #header-table {
@@ -657,6 +661,7 @@ table.dataTable th {
 
 #main-content {
     display: flex;
+    width: 100%;
     #toggle-menu {
         // box-shadow: ;
         display: flex;
@@ -733,6 +738,13 @@ table.dataTable th {
             align-self: flex-end;
         }
     }
+}
+
+.active-menu{
+
+        background-color: #009CE2!important;
+        color: #FFFFFF!important;
+    
 }
 
 .resize {
@@ -842,4 +854,8 @@ table.dataTable th {
     border-left: 12px solid transparent;
     border-bottom-color: rgba(0, 0, 0, 0.2);
     content: '';
+}
+
+.table-toggle{
+  width: calc(100% - 25px)!important;
 }

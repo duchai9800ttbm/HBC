@@ -10,6 +10,7 @@ import { FilterPipe } from '../../../../node_modules/ngx-filter-pipe';
 import * as FileSaver from 'file-saver';
 import { InstantSearchService } from './instant-search.service';
 import { URLSearchParams } from '@angular/http';
+import { PagedResult } from '../models/paging-result.model';
 
 @Injectable()
 export class DocumentService {
@@ -24,6 +25,8 @@ export class DocumentService {
         urlFilterParams.append('status', filter.status);
         urlFilterParams.append('uploadedEmployeeId', filter.uploadedEmployeeId ? filter.uploadedEmployeeId.toString() : '');
         urlFilterParams.append('createdDate', filter.createDate ? filter.createDate.toString() : '');
+        urlFilterParams.append('receivedDate', filter.receivedDate ? filter.receivedDate.toString() : '');
+
         return urlFilterParams;
     }
     private static toRecordInvitation(result: any): any {
@@ -39,14 +42,67 @@ export class DocumentService {
             // fileGuid: result.fileGuid,
         };
     }
+
+    private static toDocumentListItem(result: any): BidDocumentModel {
+        if (!result) {
+            return new BidDocumentModel();
+        }
+        return {
+            id: result.id,
+            documentType: result.documentType && result.documentType.value,
+            documentName: result.documentName,
+            version: result.version,
+            status: result.status,
+            uploadedBy: result.uploadedBy && {
+                employeeId: result.uploadedBy.employeeId,
+                employeeNo: result.uploadedBy.employeeNo,
+                employeeName: result.uploadedBy.employeeName,
+                employeeAvatar: result.uploadedBy.employeeAvatar,
+            },
+            createdDate: result.createdDate,
+            receivedDate: result.receivedDate,
+            fileGuid: result.fileGuid,
+        };
+    }
     get employeeId() {
         return this.sessionService.currentUser.employeeId;
     }
 
-    read(opportunityId: number | string): Observable<BidDocumentModel[]> {
-        const url = `bidopportunity/${opportunityId}/biddocuments`;
+    read(opportunityId: number | string, bidDocumentMajorTypeId: number | string): Observable<BidDocumentGroupModel[]> {
+        const url = `bidopportunity/${opportunityId}/biddocumenttypes/${bidDocumentMajorTypeId}/biddocuments/filter/0/1000`;
         return this.apiService.get(url)
-            .map(response => response.result as BidDocumentModel[]);
+            .map(response => {
+                if (!response) {
+                    return this.group([]);
+                }
+                const list = ((response.result && response.result.items) || []).map(DocumentService.toDocumentListItem);
+                return this.group(list);
+            });
+    }
+
+    // filterAndSearch(
+    //     searchTerm: string,
+    //     filter: BidDocumentFilter,
+    // ): Observable<BidDocumentModel[]> {
+    //     const filterUrl = `bidopportunity/filter/${0}/${1000}?searchTerm=`;
+    //     const urlParams = DocumentService.createFilterParams(filter);
+    //     urlParams.append('search', searchTerm);
+    //     return this.apiService.get(filterUrl, urlParams)
+    //     .map(response =>  response.result as BidDocumentModel[]);
+    // }
+
+    // danh sách loại tài liệu chính thức
+    bidDocumentMajortypes(): Observable<any> {
+        const url = `biddocumentmajortypes`;
+        return this.apiService.get(url).map(response => {
+            const result = response.result;
+            return result.map(i => {
+                return {
+                    id: i.key,
+                    text: i.value
+                };
+            });
+        });
     }
 
     readAndGroup(opportunityId: number | string): Observable<BidDocumentGroupModel[]> {

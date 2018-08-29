@@ -3,3 +3,14 @@
     padding: 0.5rem;
     color: white;
 }
+
+.grid-square-4 {
+    display: grid;
+    grid-template-columns: 25% 25% 25% 25%;
+    grid-gap: 1rem 1rem;
+}
+
+.border-dashed {
+    border: 1px dashed;
+    background-color: #f2f2f2;
+}
