@@ -269,7 +269,7 @@
         </div>
 
     </div>
-</div> -->
+</div>  -->
 
 
 
@@ -279,90 +279,240 @@
 
 
 <div id="outer-table">
-        <div class="table-small mt-3">
-            <div id="header-table" class=" title-list-package d-flex flex-wrap align-items-center status-filter" *ngIf="!isShowMenu">
-                <div class="mr-auto d-flex align-items-end list-package mt-2 mb-2">
-                    <div class="d-flex justify-content-start" style="height: 40px;" id="res-header">
-                        <div class="rule mr-2">
-                        </div>
-                        <div class="center-parent  mr-4" style="font-size: 18px">
-                            <div>Cần bổ sung HSMT</div>
-                        </div>
+    <div class="table-small mt-3">
+        <div id="header-table" class=" title-list-package d-flex flex-wrap align-items-center status-filter" *ngIf="!isShowMenu">
+            <div class="mr-auto d-flex align-items-end list-package mt-2 mb-2">
+                <div class="d-flex justify-content-start" style="height: 40px;" id="res-header">
+                    <div class="rule mr-2">
                     </div>
-                </div>
-                <div>
-                    <div class="btn-toolbar mt-2 mb-2">
-                        <div>
-                            <div class="input-group">
-                                <span class="input-group-addon">Tìm kiếm theo</span>
-                                <input type="text" class="form-control icon" placeholder="&#xf002; Tên tài liệu" (keyup)="search($event.target.value)">
-                            </div>
-                        </div>
-                        <div>
-                                <button class="btn btn-primary ml-2" (click)="multiDelete()">
-                                        Xóa
-                                    </button>
-                                    <button class="btn btn-primary ml-2">
-                                        Tải xuống tài liệu
-                                    </button>
-                                    <button class="btn btn-primary ml-2" (click)="fullHSMT()">
-                                        Đã đủ HSMT
-                                    </button>
-                                    <div class="btn-group ml-2" ngbDropdown>
-                                        <button type="button" class="btn btn-primary" ngbDropdownToggle data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                            Upload HSMT
-                                        </button>
-                                        <div class="dropdown-menu" ngbDropdownMenu>
-                                            <div class="fileUpload dropdown-item" (click)="openPopupUploadFile('Drawing')">
-                                                <a>Bản vẽ</a>
-                                            </div>
-                                            <div class="dropdown-divider"></div>
-                                            <div class="fileUpload dropdown-item" (click)="openPopupUploadFile('Book')">
-                                                <a>Cuốn hồ sơ mời thầu</a>
-                                            </div>
-                                            <div class="dropdown-divider"></div>
-                                            <div class="fileUpload dropdown-item" (click)="openPopupUploadFile('TechnicalStandard')">
-                                                <a>Tiêu chuẩn kỹ thuật</a>
-                                            </div>
-                                            <div class="dropdown-divider"></div>
-                                            <div class="fileUpload dropdown-item" (click)="openPopupUploadFile('BOQ')">
-                                                <a>BOQ</a>
-                                            </div>
-                                            <div class="dropdown-divider"></div>
-                                            <div class="fileUpload dropdown-item" (click)="openPopupUploadFile('GeologicalSurvey')">
-                                                <a>Khảo sát địa chất</a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <button class="btn btn-primary ml-2" (click)="refresh(true)">
-                                        <i class="fa fa-refresh" aria-hidden="true"></i>
-                                    </button>   
-                   
-                         
-                        </div>
+                    <div class="center-parent  mr-4" style="font-size: 18px">
+                        <div>Cần bổ sung HSMT</div>
                     </div>
                 </div>
             </div>
-            <div id="main-content">
-                <div id="toggle-menu" *ngIf="!isShowMenu">
-                    <div class="button-click" (click)="toggleClick()">
-                        <div class="iconButton iconN1"></div>
-                        <div class="iconButton iconN2" style="margin: 3px 0;"></div>
-                        <div class="iconButton iconN3"></div>
+            <div>
+                <div class="btn-toolbar mt-2 mb-2">
+                    <div>
+                        <div class="input-group">
+                            <span class="input-group-addon">Tìm kiếm theo</span>
+                            <input type="text" class="form-control icon" placeholder="&#xf002; Tên tài liệu" (keyup)="search($event.target.value)">
+                        </div>
                     </div>
-                    <div id="toggle-menu-item">
-                        <div class="toggle-menu-item" [routerLink]="['./summary']">Bảng tóm tắt ĐKDT</div>
-                        <div class="toggle-menu-item">Yêu cầu báo giá vật tư, thầu phụ</div>
-                        <div class="toggle-menu-item">Báo cáo tham quan công trình</div>
-                        <div class="toggle-menu-item">Bảng tổng hợp dự toán</div>
-                        <div class="toggle-menu-item">Bảng tính chi phí chung</div>
-                        <div class="toggle-menu-item">Bảng câu hỏi làm rõ HSMT</div>
-                        <div class="toggle-menu-item" [routerLink]="['hskt']">Các HSKT có liên quan</div>
-                        <div class="toggle-menu-item">Hồ sơ pháp lý</div>
-                        <div class="toggle-menu-item">Hồ sơ khác</div>
+                    <div>
+                        <button class="btn btn-primary ml-2" (click)="multiDelete()">
+                            Xóa
+                        </button>
+                        <button class="btn btn-primary ml-2">
+                            Tải xuống tài liệu
+                        </button>
+                        <button class="btn btn-primary ml-2" (click)="fullHSMT()">
+                            Đã đủ HSMT
+                        </button>
+                        <!-- <div class="btn-group ml-2" ngbDropdown>
+                            <button type="button" class="btn btn-primary" ngbDropdownToggle data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                Upload HSMT
+                            </button>
+                            <div class="dropdown-menu" ngbDropdownMenu>
+                                <div class="fileUpload dropdown-item" (click)="openPopupUploadFile('Drawing')">
+                                    <a>Bản vẽ</a>
+                                </div>
+                                <div class="dropdown-divider"></div>
+                                <div class="fileUpload dropdown-item" (click)="openPopupUploadFile('Book')">
+                                    <a>Cuốn hồ sơ mời thầu</a>
+                                </div>
+                                <div class="dropdown-divider"></div>
+                                <div class="fileUpload dropdown-item" (click)="openPopupUploadFile('TechnicalStandard')">
+                                    <a>Tiêu chuẩn kỹ thuật</a>
+                                </div>
+                                <div class="dropdown-divider"></div>
+                                <div class="fileUpload dropdown-item" (click)="openPopupUploadFile('BOQ')">
+                                    <a>BOQ</a>
+                                </div>
+                                <div class="dropdown-divider"></div>
+                                <div class="fileUpload dropdown-item" (click)="openPopupUploadFile('GeologicalSurvey')">
+                                    <a>Khảo sát địa chất</a>
+                                </div>
+                            </div>
+                        </div> -->
+                        <button class="btn btn-primary ml-2" (click)="refresh(true)">
+                            <i class="fa fa-refresh" aria-hidden="true"></i>
+                        </button>
+
+
                     </div>
                 </div>
-                <router-outlet></router-outlet>
+            </div>
+        </div>
+        <div id="main-content">
+            <div id="toggle-menu" *ngIf="!isShowMenu">
+                <div class="button-click" (click)="toggleClick()">
+                    <div class="iconButton iconN1"></div>
+                    <div class="iconButton iconN2" style="margin: 3px 0;"></div>
+                    <div class="iconButton iconN3"></div>
+                </div>
+                <div id="toggle-menu-item">
+                    <ng-container *ngFor="let item of majorTypeListItem">
+                        <div class="toggle-menu-item" [class.active-menu]="currentMajorTypeId === +item.id" (click)="filterMajorTypeListItem(item.id)">{{item?.text}}</div>
+                    </ng-container>
+                </div>
+            </div>
+            <div class="bot-table" [class.table-toggle]="!isShowMenu" style="width: calc(100% - 210px);">
+                <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="table-selection row-border cell-border ">
+                    <thead>
+                        <tr>
+
+                            <th class="stt" style="background-color: #f68e56!important;">
+                                <div class="d-flex justify-content-around">
+                                    <div style="width: 35%;" class="center-parent">
+                                        <div>STT</div>
+                                    </div>
+
+                                </div>
+                            </th>
+                            <th style="width: 16%; background-color: #f68e56!important;">
+                                <div class="d-flex justify-content-center">
+
+                                    <div class="center-parent" style="white-space: pre-line!important;">
+                                        <div>Loại tài liệu</div>
+                                    </div>
+
+                                </div>
+                            </th>
+                            <th style="width: 20%; background-color: #f68e56!important;">
+                                <div class="d-flex justify-content-center">
+
+                                    <div class="center-parent">
+                                        <div>Tên tài liệu</div>
+                                    </div>
+
+                                </div>
+
+                            </th>
+                            <th style="background-color: #f68e56!important;">
+                                <div class="d-flex justify-content-center">
+
+                                    <div class="center-parent">
+                                        <div>Phiên bản</div>
+                                    </div>
+
+                                </div>
+
+                            </th>
+                            <th class="th-mark-status" style="background-color: #f68e56!important;">
+
+                                <div class="d-flex justify-content-center">
+
+                                    <div style="width: 80%;" class="center-parent">
+                                        <div>Tình trạng</div>
+                                    </div>
+
+                                </div>
+
+
+                            </th>
+
+                            <th style="width: 12%; background-color: #f68e56!important;">
+                                <div class="d-flex justify-content-center">
+
+                                    <div class="center-parent">
+                                        <div>Ngày upload</div>
+                                    </div>
+
+                                </div>
+
+
+
+                            </th>
+                            <th style="background-color: #f68e56!important;">
+                                <div class="d-flex justify-content-center">
+
+                                    <div class="center-parent">
+                                        <div>Ngày nhận</div>
+                                    </div>
+
+                                </div>
+
+
+
+                            </th>
+                            <th class="table-action text-center" style="background-color: #f68e56!important;">
+                                Thao tác
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <ng-container *ngFor="let bidDocumentGroup of bidDocumentGroupListItemSearchResult; let i = index;">
+                            <ng-container *ngFor="let item of bidDocumentGroup.items; let k = index;">
+                                <tr>
+                                    <td class=" stt d-flex justify-content-around">
+                                        <div style="width: 35%;">
+                                            <label class="custom-control custom-checkbox">
+                                                <input type="checkbox" class="custom-control-input" [(ngModel)]="item.checkboxSelected">
+                                                <span class="custom-control-indicator"></span>
+                                            </label>
+                                        </div>
+                                        <div style="width: 35%;" class="center-parent">
+                                            <div>{{renderIndex(i , k)}}</div>
+                                        </div>
+                                    </td>
+                                    <td valign="baseline" [attr.rowspan]="bidDocumentGroup.items.length" *ngIf="k == 0" class="td-group">
+                                        <div class="d-flex  document-type center-parent">
+                                            <div style="width: calc(100% - 25px);"> {{ item.documentType }}</div>
+                                            <div style="width: 25px;" (click)="uploadFileItem(item.documentType)" style="cursor: pointer" title="Upload tài liệu">
+                                                <img width="25" height="25" src="assets\images\document.png">
+                                            </div>
+                                        </div>
+
+                                    </td>
+                                    <td *ngIf="k != 0" style="display: none">
+
+                                    </td>
+                                    <td>
+                                        <span [title]="item.documentName">{{ item.documentName }}</span>
+                                    </td>
+                                    <td class="text-center">{{ item.version }}</td>
+                                    <td class="td-mark-status">
+                                        <div class="d-flex justify-content-between">
+                                            <div class="text-truncate text-right" [title]="item.status">
+                                                {{ item.status | translate }}
+                                            </div>
+                                            <div (click)="changeStatus(item.id, item.status, item.documentType)" [title]="item.status">
+                                                <i class="fa fa-check-square color-item-down" style="cursor: pointer;" aria-hidden="true" *ngIf="item.status === 'Official'"></i>
+                                                <i class="fa fa-check-square color-item-test" style="cursor: pointer;" aria-hidden="true" *ngIf="item.status === 'Draft'"></i>
+                                            </div>
+                                        </div>
+
+
+                                    </td>
+
+                                    <td class="text-center">{{ item.createdDate*1000 | date:'dd/MM/yyyy HH:mm': '+0000'}}</td>
+                                    <td class="text-center">
+                                        <span *ngIf="item.receivedDate">{{ item.receivedDate*1000 | date:'dd/MM/yyyy HH:mm': '+0000' }}</span>
+                                    </td>
+                                    <td>
+                                        <div class="d-flex justify-content-around">
+                                            <div style="cursor: pointer;" title="Tải file" (click)="dowloadDocument(item.id)">
+                                                <a>
+                                                    <i class="fa fa-download color-item-down" aria-hidden="true"></i>
+                                                </a>
+                                            </div>
+                                            <div (click)="deleteDocument(item.id)" style="cursor: pointer;" title="Xóa">
+                                                <a class="text-success ml-3">
+                                                    <i class="fa fa-trash-o" aria-hidden="true"></i>
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </ng-container>
+
+                        </ng-container>
+                        <tr *ngIf="tableEmpty">
+                            <td colspan="8">Không có dữ liệu</td>
+                        </tr>
+                    </tbody>
+                </table>
             </div>
         </div>
     </div>
+</div>
