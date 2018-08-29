@@ -4,6 +4,7 @@ import { SummaryConditionComponent } from './summary-condition/summary-condition
 import { HsdtBuildComponent } from './hsdt-build.component';
 import { HsktInvolvedComponent } from './hskt-involved/hskt-involved.component';
 import { SummaryConditionFormComponent } from './summary-condition/summary-condition-form/summary-condition-form.component';
+import { SiteSurveyReportComponent } from './site-survey-report/site-survey-report.component';
 
 const routes: Routes = [
     {
@@ -13,11 +14,13 @@ const routes: Routes = [
             { path: '', redirectTo: 'summary' },
             {
                 path: 'summary',
-                loadChildren:
-                    './summary-condition/summary-condition.module#SummaryConditionModule'
+                loadChildren: './summary-condition/summary-condition.module#SummaryConditionModule'
             },
             { path: 'hskt', component: HsktInvolvedComponent },
-            { path: 'sitereport', loadChildren: './site-survey-report/site-survey-report.module#SiteSurveyReportModule' }
+            {
+                path: 'sitereport',
+                loadChildren: './site-survey-report/site-survey-report.module#SiteSurveyReportModule'
+            }
         ]
     }
 ];

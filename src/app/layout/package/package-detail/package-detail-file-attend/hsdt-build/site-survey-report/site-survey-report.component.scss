@@ -1,3 +1,12 @@
+#sitesurveyrp {
+    display: flex;
+}
+#template1, #template0 {
+    width: 100%;
+}
+#header-table-child {
+    padding-left: 55px;
+}
 .boder-table {
     border: 1px solid #ebebeb;
     padding-bottom: 35px;
@@ -316,10 +325,12 @@ table.dataTable th {
     background-color: #ffff !important;
     border: 1px solid #dddddd;
 }
+
 #contentNone {
     align-items: center;
     flex-direction: column;
 }
+
 #surveynone {
     flex-direction: column;
     align-items: center;
@@ -331,11 +342,12 @@ table.dataTable th {
         flex-direction: row
     }
 }
-#toggle-menu {
+
+#toggle-menu-child {
     // box-shadow: ;
     display: flex;
     flex-direction: column;
-    padding-top: 30px;
+    margin-right: 20px;
     #toggle-menu-item {
         display: flex;
         flex-direction: column;
@@ -404,4 +416,25 @@ table.dataTable th {
         height: 25px;
         align-self: flex-end;
     }
+}
+
+.icon-mg {
+    margin: 0 12px 0 12px;
+}
+
+.bot-none {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+:host() {
+    width: 100%;
+}
+
+.w-10 {
+    width: 10%;
+}
+
+.pl-5r {
+    padding-left: 5rem;
 }

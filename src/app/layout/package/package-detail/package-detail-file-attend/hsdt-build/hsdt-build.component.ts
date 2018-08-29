@@ -29,9 +29,9 @@ export class HsdtBuildComponent implements OnInit {
             this.cdr.detectChanges();
         });
 
-        this.router.events.subscribe((val) => {
-            this.notShow = this.isActive();
-        });
+        // this.router.events.subscribe((val) => {
+        //     this.notShow = this.isActive();
+        // });
     }
 
     toggleClick() {
@@ -59,7 +59,10 @@ export class HsdtBuildComponent implements OnInit {
     }
 
 
-    isActive(): boolean {
-        return this.router.isActive(`/package/detail/${this.packageId}/attend/build/sitereport`, true);
-    }
+    // isActive(): boolean {
+    //     return this.router.isActive(`/package/detail/${this.packageId}/attend/build/sitereport`, true);
+    // }
+
+    // hiddenFunc() {
+    // }
 }

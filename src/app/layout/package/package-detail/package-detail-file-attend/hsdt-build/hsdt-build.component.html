@@ -54,7 +54,7 @@
                 </div>
                 <div>
                     <div class="btn-toolbar mt-2 mb-2">
-                        <div>
+                        <div id="searchButton">
                             <div class="input-group">
                                 <span class="input-group-addon">Tìm kiếm theo</span>
                                 <input type="text" class="form-control icon" placeholder="&#xf002; Tên tài liệu" (keyup)="search($event.target.value)">
@@ -64,19 +64,19 @@
                             <button class="btn btn-primary ml-2">
                                 Tải Template
                             </button>
-                            <button class="btn btn-primary ml-2">
+                            <button id="downloadButton" class="btn btn-primary ml-2">
                                 Tải xuống tài liệu
                             </button>
-                            <button class="btn btn-primary ml-2">
+                            <button id="deleteButton" class="btn btn-primary ml-2">
                                 Xóa
                             </button>
-                            <button class="btn btn-primary ml-2">
+                            <button id="printButton" class="btn btn-primary ml-2">
                                 In
                             </button>
                             <!-- <button class="btn btn-primary ml-2" type="button" ngbDropdownToggle data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> 
                                 Thêm mới HSDT
                             </button> -->
-                            <span ngbDropdown>
+                            <span id="addNewButton" ngbDropdown>
                                 <button class="btn btn-primary ml-2" id="dropdownBasic1" ngbDropdownToggle>Thêm mới HSDT</button>
                                 <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
                                     <button class="dropdown-item">Bảng tóm tắt ĐKDT</button>
@@ -90,7 +90,7 @@
                                     <button class="dropdown-item" (click)="showDialogUploadFile('Hồ sơ khác')">Hồ sơ khác</button>
                                 </div>
                             </span>
-                            <button class="btn btn-primary ml-2">
+                            <button id="agreeButton" class="btn btn-primary ml-2">
                                 Chốt HSDT
                             </button>
                             <button class="btn btn-primary ml-2">
