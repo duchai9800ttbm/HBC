@@ -8,7 +8,7 @@ import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { AuthGuard, SessionService, ConfirmationService, InstantSearchService, UserNotificationService } from './shared/services';
+import { AuthGuard, SessionService, ConfirmationService, InstantSearchService, UserNotificationService, ApiService, DataService, UserService } from './shared/services';
 import { AlertService } from './shared/services';
 import { HttpModule } from '@angular/http';
 import { SharedModule } from './shared/shared.module';
@@ -24,6 +24,17 @@ import { MessageService } from '../../node_modules/@progress/kendo-angular-l10n'
 import { MyMessageService } from './my-message.service';
 import localeFrCa from '@angular/common/locales/vi';
 import localeFrCaExtra from '@angular/common/locales/extra/vi';
+import { WindowService } from '@progress/kendo-angular-dialog';
+import { FengShuisInforService } from './shared/services/feng-shuis-infor.service';
+import { PackageService } from './shared/services/package.service';
+import { DocumentService } from './shared/services/document.service';
+import { ScrollToTopService } from './shared/services/scroll-to-top.service';
+import { OpportunityHsmtService } from './shared/services/opportunity-hsmt.service';
+import { DocumentReviewService } from './shared/services/document-review.service';
+import { SettingService } from './shared/services/setting.service';
+import { PackageSuccessService } from './shared/services/package-success.service';
+import { EmailService } from './shared/services/email.service';
+import { LayoutService } from './shared/services/layout.service';
 registerLocaleData(localeFrCa, localeFrCaExtra);
 
 // AoT requires an exported function for factories
@@ -62,6 +73,22 @@ export function createTranslateLoader(http: HttpClient) {
         InstantSearchService,
         UserNotificationService,
         DataUploadService,
+        TranslateService,
+        AuthGuard,
+        ApiService,
+        DataService,
+        UserService,
+        WindowService,
+        FengShuisInforService,
+        PackageService,
+        DocumentService,
+        ScrollToTopService,
+        OpportunityHsmtService,
+        DocumentReviewService,
+        SettingService,
+        PackageSuccessService,
+        EmailService,
+        LayoutService,
         { provide: LocationStrategy, useClass: HashLocationStrategy },
         {
             // Set default locale to bg-BG

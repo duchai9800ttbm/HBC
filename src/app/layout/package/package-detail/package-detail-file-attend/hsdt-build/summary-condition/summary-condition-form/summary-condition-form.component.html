@@ -3,12 +3,11 @@
         <div class="d-flex justify-content-start" style="height: 40px;">
             <div class="rule mr-2">
             </div>
-            <div class="center-parent  mr-4" style="font-size: 18px">
-              <a [routerLink]='["/package/list"]' style="cursor: pointer;">
-                <!-- <i class="fa fa-chevron-left mr-3" aria-hidden="true"></i> -->
-                <img width="12" height="12" class="pointer not-outline" src="assets\images\nghia.png" style="margin-bottom: 1px;">
-            </a>
-                <div class="text-uppercase">bảng tóm tắt điều kiện dự thầu (tender conditional summary)</div>
+            <div class="center-parent pl-3 mr-4" style="font-size: 18px">
+                <a [routerLink]='["/package/list"]' style="cursor: pointer; margin-top: -3px">
+                    <img width="12" height="12" class="pointer not-outline" src="assets\images\nghia.png" style="margin-bottom: 1px;">
+                </a>
+                <div class="text-uppercase ml-3">bảng tóm tắt điều kiện dự thầu (tender conditional summary)</div>
             </div>
         </div>
     </div>
@@ -25,22 +24,35 @@
             </button>
         </div>
     </div>
-    
+
 </div>
 <div id="main-content">
-  <div id="toggle-menu" *ngIf="!isShowMenu">
-      <div class="toggle-menu-item" routerLink="./info" routerLinkActive="active-link">I. Thông tin dự án</div>
-      <div class="toggle-menu-item">II. Các bên liên quan</div>
-      <div class="toggle-menu-item">III. Phạm vi công việc</div>
-      <div class="toggle-menu-item">IV. Nhà thầu phụ được chỉ định</div>
-      <div class="toggle-menu-item">V. Vật tư do CĐT cung cấp/ chỉ định</div>
-      <div class="toggle-menu-item">VI. Hồ sơ phải nộp đáng lưu ý</div>
-      <div class="toggle-menu-item">Diễn giải chi tiết hồ sơ</div>
-      <div class="toggle-menu-item">&#9656; Yêu cầu hồ sơ</div>
-      <div class="toggle-menu-item">Hồ sơ pháp lý</div>
-      <div class="toggle-menu-item">Hồ sơ khác</div>
-  </div>
-  <div class="w-100 ml-2">
-    <router-outlet></router-outlet>
-  </div>
+    <div id="toggle-menu" *ngIf="!isShowMenu">
+        <div class="toggle-menu-item" routerLink="./info" routerLinkActive="active-link">I. Thông tin dự án</div>
+        <div class="toggle-menu-item" routerLink="./stackholder" routerLinkActive="active-link">II. Các bên liên quan</div>
+        <div class="toggle-menu-item" routerLink="./scope" routerLinkActive="active-link">III. Phạm vi công việc</div>
+        <div class="toggle-menu-item" routerLink="./nonminate" routerLinkActive="active-link">IV. Nhà thầu phụ được chỉ định</div>
+        <div class="toggle-menu-item" routerLink="./main-material" routerLinkActive="active-link">V. Vật tư do CĐT cung cấp/ chỉ định</div>
+        <div class="toggle-menu-item" routerLink="./tender-submission" routerLinkActive="active-link">VI. Hồ sơ phải nộp đáng lưu ý</div>
+        <div class="toggle-menu-item">Diễn giải chi tiết hồ sơ</div>
+        <div class="toggle-menu-item" routerLink="./profile-destination" routerLinkActive="active-link"><i class="fa fa-caret-right mr-3" aria-hidden="true"></i> VII. Yêu cầu hồ sơ</div>
+        <div class="toggle-menu-item" routerLink="./tender-clarify" routerLinkActive="active-link"><i class="fa fa-caret-right mr-3" aria-hidden="true"></i> VIII. Yêu cầu làm rõ HSMT</div>
+        <div class="toggle-menu-item" routerLink="./condition-contract" routerLinkActive="active-link"><i class="fa fa-caret-right mr-3" aria-hidden="true"></i> IX. Điều kiện hợp đồng</div>
+        <div class="toggle-menu-item" routerLink="./condition-tender" routerLinkActive="active-link"><i class="fa fa-caret-right mr-3" aria-hidden="true"></i> X. Điều kiện HSMT</div>
+        <div class="toggle-menu-item" routerLink="./special-requirement" routerLinkActive="active-link">XI. Yêu cầu đặc biệt khác</div>
+    </div>
+    <div class="w-100 ml-2">
+        <div>
+            <div class="row header m-0">
+                <div class="col-md-6">
+                    <p>Dự án (Project):</p>
+                    <p>Địa điểm (Location):</p>
+                </div>
+                <div class="col-md-6">
+                    <p>Gói thầu (Package):</p>
+                </div>
+            </div>
+        </div>
+        <router-outlet></router-outlet>
+    </div>
 </div>

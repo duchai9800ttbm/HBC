@@ -7,6 +7,7 @@ import { PhoneNumberCallableDirective } from './phone-number-callable.directive'
 import { SameWidthDirective } from './same-width.directive';
 import { InputAreaDirective } from './input-area.directive';
 import { NumberAreaPipe } from '../pipes/number-area.pipe';
+import { SquareBoxDirective } from './square-box.directive';
 
 @NgModule({
     imports: [
@@ -17,14 +18,16 @@ import { NumberAreaPipe } from '../pipes/number-area.pipe';
         InputMoneyDirective,
         PhoneNumberCallableDirective,
         SameWidthDirective,
-        InputAreaDirective
+        InputAreaDirective,
+        SquareBoxDirective
     ],
     exports: [
         InputNumberDirective,
         InputMoneyDirective,
         PhoneNumberCallableDirective,
         SameWidthDirective,
-        InputAreaDirective
+        InputAreaDirective,
+        SquareBoxDirective
     ],
     providers: [
         VnCurrencyPipe,

@@ -138,24 +138,6 @@ import { UploadModule } from '@progress/kendo-angular-upload';
         DropDownsModule,
         MenuModule
         // ScrollToTopService
-    ],
-    providers: [
-        TranslateService,
-        AuthGuard,
-        ApiService,
-        DataService,
-        UserService,
-        WindowService,
-        FengShuisInforService,
-        PackageService,
-        DocumentService,
-        ScrollToTopService,
-        OpportunityHsmtService,
-        DocumentReviewService,
-        SettingService,
-        PackageSuccessService,
-        EmailService,
-        LayoutService
-    ],
+    ]
 })
 export class SharedModule { }
