@@ -74,8 +74,7 @@ export class SidebarComponent implements OnInit {
         //     this.getListPhoneNumberIsCall();
         //     this.getListPhoneCallAway();
         // });
-        console.log('hello');
-        console.log(document.getElementById('sidebar').offsetWidth);
+
     }
     toggleSidebar() {
         let width = document.getElementById('sidebar').offsetWidth;
@@ -102,22 +101,22 @@ export class SidebarComponent implements OnInit {
     }
 
     onResize(e) {
+     
         const width = document.getElementById('sidebar').offsetWidth;
-        if (width === 55) {
+        console.log(e);
+        console.log(width);
+        if (width < 150) {
+            document.getElementById('logo').setAttribute('Width', '55');
+
             this.toggleMenuFromSidebar.emit(false);
             this.layoutService.emitEvent(true);
             this.showSidebarContent = true;
-
-
         }
         if (width === 200) {
-            this.layoutService.emitEvent(false);
             document.getElementById('logo').setAttribute('Width', '200');
+
+            this.layoutService.emitEvent(false);
             this.showSidebarContent = false;
-
-            // this.toggleMenuFromSidebar.emit(true);
         }
-
-
     }
 }

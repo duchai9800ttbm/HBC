@@ -16,7 +16,11 @@ const routes: Routes = [
                 loadChildren:
                     './summary-condition/summary-condition.module#SummaryConditionModule'
             },
-            { path: 'hskt', component: HsktInvolvedComponent }
+            { path: 'hskt', component: HsktInvolvedComponent },
+            {
+                path: 'site-survey',
+                loadChildren: './site-survey/site-survey.module#SiteSurveyModule'
+            }
         ]
     }
 ];
