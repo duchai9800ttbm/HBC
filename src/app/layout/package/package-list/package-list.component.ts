@@ -400,6 +400,9 @@ export class PackageListComponent implements OnInit, AfterViewChecked {
                 this.listField = data;
                 this.sum = [...this.listField].filter(x => x.hidden === true).length;
                 this.spinner.hide();
+                setTimeout(() => {
+                    this.dtTrigger.next();
+                });
             });
     }
 
@@ -410,6 +413,9 @@ export class PackageListComponent implements OnInit, AfterViewChecked {
             this.listFieldNomarlized = [...this.listField].filter(x => x.hidden === true).map(x => x.fieldName);
             this.sum = [...this.listField].filter(x => x.hidden === true).length;
             this.tenGoithau = this.listFieldNomarlized.includes('ARBidOpportunityName');
+            setTimeout(() => {
+                this.dtTrigger.next();
+            });
         });
     }
 
@@ -423,7 +429,9 @@ export class PackageListComponent implements OnInit, AfterViewChecked {
                 this.refreshPopupConfig();
                 myDrop.close();
                 this.spinner.hide();
-
+                setTimeout(() => {
+                    this.dtTrigger.next();
+                });
             }, err => {
                 this.alertService.error('Cập nhật cấu hình thất bại, xin vui lòng thử lại!');
                 this.refresh();
