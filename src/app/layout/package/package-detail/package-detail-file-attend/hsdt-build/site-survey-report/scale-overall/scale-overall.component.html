@@ -150,12 +150,12 @@
                             <input type="text" placeholder="TEXT">
                         </div>
                         <div id="imageDemoImg">
-                            <input type="file" style="display:none" #inputclick multiple (change)="uploadPerspectiveImage($event)">
-                            <div class="perspectiveImage" (click)="inputclick.click()">
+                            <input type="file" style="display:none" #inputclick0 (change)="uploadPerspectiveImage($event)">
+                            <div class="perspectiveImage" (click)="inputclick0.click()">
                                 <i class="fa fa-plus" aria-hidden="true"></i>
                                 <p>Image</p>
                             </div>
-                            <div class="displayImg" *ngFor="let url of urls">
+                            <div class="displayImg" *ngFor="let url of perspectiveImageUrls">
                                 <img [src]="url">
                             </div>
                         </div>
@@ -171,8 +171,8 @@
                     </div>
                     <div>
                         <div id="imageDemoImg">
-                            <input type="file" style="display:none" #inputclick multiple (change)="uploadStructureImage($event)">
-                            <div class="perspectiveImage" (click)="inputclick.click()">
+                            <input type="file" style="display:none" #inputclick1 (change)="uploadStructureImage($event)">
+                            <div class="perspectiveImage" (click)="inputclick1.click()">
                                 <i class="fa fa-plus" aria-hidden="true"></i>
                                 <p>Image</p>
                             </div>
@@ -190,8 +190,8 @@
                         <input type="text" placeholder="TEXT">
                     </div>
                     <div id="imageDemoImg">
-                        <input type="file" style="display:none" #inputclick multiple (change)="uploadRequirementsImage($event)">
-                        <div class="perspectiveImage" (click)="inputclick.click()">
+                        <input type="file" style="display:none" #inputclick2 (change)="uploadRequirementsImage($event)">
+                        <div class="perspectiveImage" (click)="inputclick2.click()">
                             <i class="fa fa-plus" aria-hidden="true"></i>
                             <p>Image</p>
                         </div>
