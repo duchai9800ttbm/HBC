@@ -15,7 +15,7 @@
             <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="table-selection stripe hover">
                 <thead>
                     <tr style="width: 100%">
-                        <th>
+                        <th style="width: 280px !important">
                             <div class="text-center">Hồ sơ mời thầu</div>
                         </th>
                         <th></th>
@@ -49,7 +49,7 @@
                                         <i class="fa fa-minus" style="margin-top: 2px" aria-hidden="true" *ngIf="i != 0"></i>
                                     </div>
                                     <div>
-                                        <span style="padding-left: 12px" class="custom-dropdown w-100">
+                                        <span style="margin-left: 12px" class="custom-dropdown w-100">
                                             <select class="form-control" formControlName="userName">
                                                 <option [ngValue]="null">--Chọn--</option>
                                                 <option *ngFor="let user of listBidGroupUser" [value]="user.id">{{user.desc}}</option>
@@ -60,7 +60,7 @@
                             </td>
                             <td class="text-center">
                                 <label class="custom-control custom-checkbox">
-                                    <input type="checkbox" class="custom-control-input">
+                                    <input type="checkbox" class="custom-control-input" (click)="checkAll($event.target.checked, 'HSMT', i)">
                                     <span class="custom-control-indicator"></span>
                                 </label>
                             </td>
@@ -102,7 +102,7 @@
             <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="table-selection stripe hover mt-4">
                 <thead>
                     <tr style="width: 100%">
-                        <th>
+                        <th style="width: 280px !important">
                             <div class="text-center">Phiếu đề nghị dự thầu</div>
                         </th>
                         <th></th>
@@ -141,7 +141,7 @@
                                         <i class="fa fa-minus" style="margin-top: 2px" aria-hidden="true" *ngIf="i != 0"></i>
                                     </div>
                                     <div>
-                                        <span style="padding-left: 12px" class="custom-dropdown w-100">
+                                        <span style="margin-left: 12px" class="custom-dropdown w-100">
                                             <select class="form-control" formControlName="userName">
                                                 <option [ngValue]="null">--Chọn--</option>
                                                 <option *ngFor="let user of listBidGroupUser" [value]="user.id">{{user.desc}}</option>
@@ -152,7 +152,7 @@
                             </td>
                             <td class="text-center">
                                 <label class="custom-control custom-checkbox">
-                                    <input type="checkbox" class="custom-control-input">
+                                    <input type="checkbox" class="custom-control-input" (click)="checkAll($event.target.checked, 'PhieuDeNghiDuThau', i)">
                                     <span class="custom-control-indicator"></span>
                                 </label>
                             </td>

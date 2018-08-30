@@ -73,9 +73,11 @@ export class PackagePermissionBidComponent implements OnInit {
                                 listItem.list.push(user);
                             }
                             user.documentTypes.forEach(doc => {
-                                const userOfList = listItem.list.find(li => li.userGroupId === user.userGroupId);
-                                if (!userOfList.allDocumentTypes.find(dt => dt.key === doc.key)) {
-                                    userOfList.allDocumentTypes.push(doc);
+                                if (doc) {
+                                    const userOfList = listItem.list.find(li => li.userGroupId === user.userGroupId);
+                                    if (!userOfList.allDocumentTypes.find(dt => dt.key === doc.key)) {
+                                        userOfList.allDocumentTypes.push(doc);
+                                    }
                                 }
                             });
                         });
@@ -113,6 +115,7 @@ export class PackagePermissionBidComponent implements OnInit {
                     : this.addFormArrayBidItem(e, {});
             }
         });
+        console.log(this.packagePermissionReviewForm.value);
     }
 
     addFormControl(formData): FormGroup {
@@ -287,5 +290,27 @@ export class PackagePermissionBidComponent implements OnInit {
             });
         });
         return formData;
+    }
+
+    checkAll(checked: boolean, name: string, idx: number) {
+        const formArrayControl = this.packagePermissionReviewForm.get(name).get('permission') as FormArray;
+        const formItemControl = formArrayControl.controls[idx] as FormGroup;
+        // tslint:disable-next-line:forin
+        for (const fControl in formItemControl.controls) {
+            if (fControl !== 'userName') {
+                formItemControl.get(fControl).patchValue(checked);
+            }
+        }
+    }
+
+    checkAllBidItem(checked: boolean, parentIdx: number, childIdx: number) {
+        const parentArrayControl = this.packagePermissionReviewForm.get('LapHoSoDuThau').get('permission') as FormArray;
+        const childArrayControl = parentArrayControl.controls[parentIdx].get('documentTypes') as FormArray;
+        const childGroupControl = childArrayControl.controls[childIdx] as FormGroup;
+        for (const fControl in childGroupControl.controls) {
+            if (fControl !== 'userName' && fControl !== 'documentId') {
+                childGroupControl.get(fControl).patchValue(checked);
+            }
+        }
     }
 }

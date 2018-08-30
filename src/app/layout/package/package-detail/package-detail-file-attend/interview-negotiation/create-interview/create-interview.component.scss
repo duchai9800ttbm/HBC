@@ -310,7 +310,11 @@ button:focus {
     outline: 1px dotted;
     outline: #fff !important;
 }
-
+table.dataTable{
+    border-bottom: 1px solid #dddddd !important;
+    box-shadow: none;
+    border-collapse: collapse;
+}
 table.dataTable th {
     border-bottom: 1px solid #dddddd !important;
     background-color: #ffff !important;
@@ -332,7 +336,7 @@ table.dataTable td{
     width: 100%;
     .cus-menu-children {
         width: 100%;
-        padding-left: 5px;
+        // padding-left: 5px;
         cursor: pointer;
     }
 }
@@ -406,4 +410,17 @@ table.dataTable td{
 }
 .zoom-toolbar{
     zoom: 0.7;
+}
+.transform-icon-edit{
+    transform: translateY(10%);
+}
+.nav-link{
+    padding: 0.5rem 4px;
+}
+.margin-right-table{
+    width: calc(100% - 15px) !important;
+    // overflow-x: inherit !important;
+}
+.text-align-number{
+    text-align: right;
 }

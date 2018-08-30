@@ -4,7 +4,6 @@
     margin-top: 10px;
     border-radius: 4px;
     box-shadow: 0 0 10px 3px #f1f1f1;
-    height: 1009px;
     background-color: #fff;
 }
 
@@ -358,6 +357,10 @@ table.dataTable th {
                     border-bottom-right-radius: 5px;
                 }
             }
+            .active-link {
+                background-color: #009CE2;
+                color: white;
+            }
         }
         .toggle-menu-item {
             cursor: pointer;
@@ -417,31 +420,35 @@ table.dataTable th {
 }
 
 .iconN1 {
+    transform: rotate(45deg) translate(5px, 5px);
     transition-duration: 600ms;
 }
 
 .iconN01 {
     width: 25px;
-    transform: rotate(45deg) translate(5px, 5px);
+    transform: none;
     transition-duration: 600ms;
 }
 
 .iconN3 {
+    transform: rotate(-45deg) translate(4px, -4px);
     transition-duration: 600ms;
 }
 
 .iconN03 {
     width: 25px;
-    transform: rotate(-45deg) translate(4px, -4px);
+    transform: none;
     transition-duration: 600ms;
 }
 
 .iconN2 {
+    transform: rotateY(90deg);
     transition-duration: 600ms;
 }
 
 .iconN02 {
-    transform: rotateY(90deg);
+    transform: none;
+    width: 25px;
     transition-duration: 600ms;
 }
 

@@ -441,6 +441,8 @@ export class PackageService {
         });
     }
 
+
+
     getRegiontypesPackage(): Observable<any> {
         const url = `data/regiontypes`;
         return this.apiService.get(url).map(response => {

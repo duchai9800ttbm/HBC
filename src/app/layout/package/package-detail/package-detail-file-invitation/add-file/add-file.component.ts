@@ -1,15 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { routerTransition } from '../../../../../router.animations';
-import * as moment from 'moment';
 import { DictionaryItem, PagedResult } from '../../../../../shared/models';
 import { DATATABLE_CONFIG } from '../../../../../shared/configs';
 import { Subject } from '../../../../../../../node_modules/rxjs/Subject';
-import { AlertService, DataService, ConfirmationService, UserService } from '../../../../../shared/services';
+import { AlertService, ConfirmationService, UserService } from '../../../../../shared/services';
 import { Router } from '../../../../../../../node_modules/@angular/router';
 import { NgxSpinnerService } from '../../../../../../../node_modules/ngx-spinner';
 import { DATETIME_PICKER_CONFIG } from '../../../../../shared/configs/datepicker.config';
 import { PackageDetailComponent } from '../../package-detail.component';
-import { TypeDocument } from '../../../../../shared/models/package/type-document';
 import { DocumentService } from '../../../../../shared/services/document.service';
 import { BidDocumentModel } from '../../../../../shared/models/document/bid-document.model';
 import { BidDocumentGroupModel } from '../../../../../shared/models/document/bid-document-group.model';
@@ -17,9 +15,7 @@ import { UserModel } from '../../../../../shared/models/user/user.model';
 import { BidDocumentFilter } from '../../../../../shared/models/document/bid-document-filter.model';
 import { OpportunityHsmtService } from '../../../../../shared/services/opportunity-hsmt.service';
 import { UserItemModel } from '../../../../../shared/models/user/user-item.model';
-import { DocumentReviewService } from '../../../../../shared/services/document-review.service';
 import { PackageService } from '../../../../../shared/services/package.service';
-import { PackageModel } from '../../../../../shared/models/package/package.model';
 import { PackageInfoModel } from '../../../../../shared/models/package/package-info.model';
 @Component({
     selector: 'app-add-file',
@@ -28,6 +24,7 @@ import { PackageInfoModel } from '../../../../../shared/models/package/package-i
     animations: [routerTransition()]
 })
 export class AddFileComponent implements OnInit {
+    isShowMenu = false;
 
     checkboxSeclectAll: boolean;
     dtOptions: any = DATATABLE_CONFIG;
@@ -44,10 +41,12 @@ export class AddFileComponent implements OnInit {
     };
     userListItem: UserItemModel[];
     ListItem: BidDocumentModel[];
+    majorTypeListItem: DictionaryItem[];
     bidDocumentGroupListItem: BidDocumentGroupModel[];
     bidDocumentGroupListItemSearchResult: BidDocumentGroupModel[];
     packageData: PackageInfoModel;
     tableEmpty: boolean;
+    currentMajorTypeId = 1;
     constructor(
         private alertService: AlertService,
         private confirmationService: ConfirmationService,
@@ -63,39 +62,6 @@ export class AddFileComponent implements OnInit {
         this.packageId = +PackageDetailComponent.packageId;
         this.packageService.getInforPackageID(this.packageId).subscribe(result => {
             this.packageData = result;
-            // switch (this.packageData.stageStatus.id) {
-            //     case 'CanBoSungHSMT': {
-            //         break;
-            //     }
-            //     case 'CanDanhGiaHSMT': {
-            //         this.router.navigate([`/package/detail/${this.packageId}/invitation/evaluate`]);
-            //         break;
-            //     }
-            //     case 'CanLapDeNghiMoiThau': {
-            //         this.router.navigate([`/package/detail/${this.packageId}/invitation/suggest`]);
-            //         break;
-            //     }
-            //     case 'ChoDuyet': {
-            //         this.router.navigate([`/package/detail/${this.packageId}/invitation/pending`]);
-            //         break;
-            //     }
-            //     case 'DaDuyet': {
-            //         this.router.navigate([`/package/detail/${this.packageId}/invitation/approved`]);
-            //         break;
-            //     }
-            //     case 'DaTuChoi': {
-            //         this.router.navigate([`/package/detail/${this.packageId}/invitation/has-declined`]);
-            //         break;
-            //     }
-            //     case 'DaGuiThuTuChoi': {
-            //         this.router.navigate([`/package/detail/${this.packageId}/invitation/rejection-letter`]);
-            //         break;
-            //     }
-            //     default: {
-            //         // statements;
-            //         break;
-            //     }
-            // }
         });
         // config
         window.scrollTo(0, 0);
@@ -104,22 +70,29 @@ export class AddFileComponent implements OnInit {
         this.filterModel.status = '';
         this.filterModel.uploadedEmployeeId = null;
         // this.filterModel.createDate = new Date();
-        // get OpportunityId
-        this.packageId = +PackageDetailComponent.packageId;
         // danh sách người upload (lấy từ danh sách user)
         this.userService.getAllUser('').subscribe(data => {
             this.userListItem = data;
         });
-        // danh sách tài liệu
         this.spinner.show();
-        this.documentService.readAndGroup(this.packageId).subscribe(response => {
-            this.bidDocumentGroupListItem = response;
-            this.bidDocumentGroupListItemSearchResult = response;
-            this.dtTrigger.next();
-            this.spinner.hide();
+        this.documentService.bidDocumentMajortypes().subscribe(data => {
+            this.majorTypeListItem = data;
+            this.currentMajorTypeId = this.majorTypeListItem[0].id;
+            this.documentService.read(this.packageId, this.currentMajorTypeId).subscribe(response => {
+                this.bidDocumentGroupListItem = response;
+                this.bidDocumentGroupListItemSearchResult = response;
+                this.dtTrigger.next();
+                this.spinner.hide();
+            }, err => this.spinner.hide());
         });
     }
 
+    toggleClick() {
+        $('.toggle-menu-item').toggleClass('resize');
+        $('.iconN1').toggleClass('iconN01');
+        $('.iconN2').toggleClass('iconN02');
+        $('.iconN3').toggleClass('iconN03');
+    }
     search(value) {
         this.searchTerm = value;
         this.bidDocumentGroupListItemSearchResult = this.documentService
@@ -205,7 +178,7 @@ export class AddFileComponent implements OnInit {
     closePopup(params) {
         this.showPopupAdd = false;
         this.spinner.show();
-        this.documentService.readAndGroup(this.packageId).subscribe(response => {
+        this.documentService.read(this.packageId, this.currentMajorTypeId).subscribe(response => {
             this.bidDocumentGroupListItem = response;
             this.bidDocumentGroupListItemSearchResult = response;
             this.dtTrigger.next();
@@ -219,7 +192,7 @@ export class AddFileComponent implements OnInit {
 
     refresh(): void {
         this.spinner.show();
-        this.documentService.readAndGroup(this.packageId).subscribe(response => {
+        this.documentService.read(this.packageId, this.currentMajorTypeId).subscribe(response => {
             this.bidDocumentGroupListItem = response;
             this.bidDocumentGroupListItemSearchResult = response;
             this.dtTrigger.next();
@@ -321,7 +294,7 @@ export class AddFileComponent implements OnInit {
                 this.documentService.delete(id).subscribe(data => {
                     that.alertService.success('Đã xóa tài liệu!');
                     that.refresh();
-                });
+                }, err => this.spinner.hide());
             }
         );
     }
@@ -344,7 +317,7 @@ export class AddFileComponent implements OnInit {
 
     dowloadDocument(id) {
         this.documentService.download(id).subscribe(data => {
-        });
+        }, err => this.spinner.hide());
     }
 
     fullHSMT() {
@@ -356,7 +329,17 @@ export class AddFileComponent implements OnInit {
                     that.spinner.hide();
                     that.router.navigate([`/package/detail/${this.packageId}/invitation/full-file`]);
                     that.alertService.success('Đã chuyển sang trang thái đã có HSMT thành công!');
-                });
+                }, err => this.spinner.hide());
         });
+    }
+
+    filterMajorTypeListItem(id) {
+        this.currentMajorTypeId = id;
+        this.documentService.read(this.packageId, this.currentMajorTypeId).subscribe(response => {
+            this.bidDocumentGroupListItem = response;
+            this.bidDocumentGroupListItemSearchResult = response;
+            this.dtTrigger.next();
+            this.spinner.hide();
+        }, err => this.spinner.hide());
     }
 }

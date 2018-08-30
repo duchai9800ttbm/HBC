@@ -14,7 +14,6 @@ export class SummaryConditionFormComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.packageService.setSummaryConditionForm(true);
-    console.log('onInit');
   }
 
   ngOnDestroy(): void {

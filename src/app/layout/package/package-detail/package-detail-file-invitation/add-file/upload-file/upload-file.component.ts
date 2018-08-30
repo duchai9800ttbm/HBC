@@ -5,7 +5,7 @@ import { FormGroup, FormBuilder } from '../../../../../../../../node_modules/@an
 import { DocumentService } from '../../../../../../shared/services/document.service';
 import { DocumentReviewService } from '../../../../../../shared/services/document-review.service';
 import { DATETIME_PICKER_CONFIG } from '../../../../../../shared/configs/datepicker.config';
-import { FileInfo, SelectEvent } from '../../../../../../../../node_modules/@progress/kendo-angular-upload';
+import { FileInfo, SelectEvent } from '@progress/kendo-angular-upload';
 
 @Component({
   selector: 'app-upload-file',

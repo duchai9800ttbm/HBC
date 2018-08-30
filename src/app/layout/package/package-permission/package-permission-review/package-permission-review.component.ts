@@ -150,4 +150,15 @@ export class PackagePermissionReviewComponent implements OnInit {
             this.alertService.error('Phân quyền đánh giá hồ sơ mời thầu thất bại!');
         });
     }
+
+    checkAll(checked: boolean, name: string, idx: number) {
+        const formArrayControl = this.packagePermissionReviewForm.get(name).get('permission') as FormArray;
+        const formItemControl = formArrayControl.controls[idx] as FormGroup;
+        // tslint:disable-next-line:forin
+        for (const fControl in formItemControl.controls) {
+            if (fControl !== 'userName') {
+                formItemControl.get(fControl).patchValue(checked);
+            }
+        }
+    }
 }
