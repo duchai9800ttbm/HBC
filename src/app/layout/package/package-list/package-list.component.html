@@ -13,8 +13,8 @@
                 </button>
                 <div class="dropdown-menu" ngbDropdownMenu>
                     <a class="dropdown-item" (click)="exportFileExcel()">Xuất file</a>
-                    <div class="dropdown-divider"></div>
-                    <a class="dropdown-item">Tải template</a>
+                    <!-- <div class="dropdown-divider"></div>
+                    <a class="dropdown-item">Tải template</a> -->
                 </div>
             </div>
             <button *ngIf="isCreateBidOpportunity" class="btn btn-primary ml-2" [routerLink]="['/package/create']">
@@ -42,7 +42,7 @@
                     <span class="custom-dropdown mx-sm-2">
                         <select class="form-control" [(ngModel)]="filterModel.stage">
                             <option value="">--Tất cả--</option>
-                            <option *ngFor="let item of listPhasePackage | async" [value]="item.id">{{item.text }}</option>
+                            <option *ngFor="let item of listPhasePackage | async" [value]="item.id">{{item.text | translate}}</option>
                         </select>
                     </span>
                 </div>
@@ -60,7 +60,7 @@
                 </div>
                 <div style="width: 280px; margin-left: 10px; margin-right: 60px; zoom: 0.8;padding: 5px; ">
 
-                    <nouislider [config]="someKeyboardConfig" [step]="1000" [min]="0" [max]="10000000000" (ngModelChange)="changeValueRange($event)"
+                    <nouislider [config]="someKeyboardConfig" [step]="1000" [min]="0" [max]="1000000000000" (ngModelChange)="changeValueRange($event)"
                         [(ngModel)]="someRange"></nouislider>
                     <div class="d-flex justify-content-between range text-truncate">
                         <div class="min">{{ someRange[0] | vnCurrency }}</div>
@@ -87,7 +87,12 @@
                 </div>
                 <div class="dropdown-menu" ngbDropdownMenu>
                     <div class="popup-dynamic-col" style="min-width: 600px; min-height: 300px;">
-                        <div class="">{{sum}}/{{listField?.length}} cột được chọn</div>
+                        <div class="d-flex justify-content-between">
+                            <div class="">{{sum}}/{{listField?.length}} cột được chọn</div>
+                            <div>
+                                <span style="cursor: pointer; color: #00a0e3" (click)="chooseAll()">Chọn tất cả</span>
+                            </div>
+                        </div>
                         <hr>
                         <div style="height: 160px;">
                             <div class="wrapper">
@@ -96,7 +101,7 @@
                                         <div style="margin-top: 2px;">
                                             <input type="checkbox" (change)="inputChange()" [(ngModel)]="item.hidden" style="cursor: pointer;">
                                         </div>
-                                        <div class=""> &nbsp;{{item.fieldCaption}}</div>
+                                        <div class="cus-pointer" (click)="inputChange2(item.id)"> &nbsp;{{item.fieldCaption}}</div>
                                     </div>
                                 </div>
 
@@ -116,7 +121,7 @@
                                 <div class="p-1">
                                     <button class="btn btn-secondary" (click)="cancel(myDrop)">Hủy</button>
                                 </div>
-                                <div class="p-1">
+                                <div class="p-1" style="padding-right: 0px">
                                     <button class="btn btn-primary" (click)="apply(myDrop)">Áp dụng</button>
                                 </div>
                             </div>
@@ -507,9 +512,8 @@
                         <td [hidden]="!quyMo" class="color" class="text-center">{{item.magnitude }}</td>
                         <td [hidden]="!giaiDoan" class="" style="text-align: center;">
                             <div class="d-flex flex-column p-2">
-
                                 <div class="center-parent" [class.type-HSMT]="item.stage?.key == 'HSMT'" [class.type-HSDT]="item.stage?.key == 'HSDT'" [class.type-KQDT]="item.stage?.key == 'KQDT'">
-                                    <div>{{item.stage?.value }}</div>
+                                    <div>{{item.stage?.value | translate}}</div>
                                 </div>
                                 <div class="center-parent" [class.type-HSMT-child]="item.stage?.key == 'HSMT'" [class.type-HSDT-child]="item.stage?.key == 'HSDT'"
                                     [class.type-KQDT-child]="item.stage?.key == 'KQDT'">

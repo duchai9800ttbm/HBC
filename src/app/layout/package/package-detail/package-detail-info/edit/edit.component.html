@@ -159,7 +159,7 @@
                                     <td class="w-15 bg-light text-right label no-boder">Tiến độ thực hiện</td>
                                     <td class="w-35 no-boder">
                                         <div class=" w-75 autocomplete-wrapper-2 ui-fluid fix-m2-floor-area">
-                                            <input class="w-100 form-control cus-input text-right align-placeholder" tabindex="24" type="text" formControlName="progress">
+                                            <input appInputArea class="w-100 form-control cus-input text-right align-placeholder" tabindex="24" type="text" formControlName="progress">
                                             <span class="span-m2">%</span>
                                         </div>
                                     </td>
@@ -215,7 +215,7 @@
                                 <tr>
                                     <td class="w-15 bg-light text-right label no-boder">Số điện thoại ĐVTV</td>
                                     <td class="w-35 no-boder">
-                                        <input class="w-75 form-control" tabindex="12" placeholder="" type="text" formControlName="consultantPhone" [value]="packageForm.get('consultantPhone').value">
+                                        <input appInputArea class="w-75 form-control" tabindex="12" placeholder="" type="text" formControlName="consultantPhone" [value]="packageForm.get('consultantPhone').value">
                                     </td>
                                     <td class="w-15 bg-light text-right label no-boder">Đánh giá dự án</td>
                                     <td class="w-35 no-boder">
@@ -225,9 +225,12 @@
                                 <tr>
                                     <td class="w-15 bg-light text-right label" style="border-top: none;border-right: none;">Diện tích sàn (m2)</td>
                                     <td class="w-35" style="border-top: none;border-right: none;border-left: none;">
-                                        <div class=" w-75 autocomplete-wrapper-2 ui-fluid fix-m2-floor-area">
+                                        <!-- <div class=" w-75 autocomplete-wrapper-2 ui-fluid fix-m2-floor-area">
                                             <input class="w-100 form-control cus-input text-right align-placeholder" tabindex="13" placeholder="" type="text" formControlName="floorArea">
                                             <span class="span-m2">m2</span>
+                                        </div> -->
+                                        <div class=" w-75 autocomplete-wrapper-2 ui-fluid">
+                                            <input appInputArea class="form-control cus-input text-right align-placeholder" tabindex="13" placeholder="" type="text" formControlName="floorArea">
                                         </div>
                                     </td>
                                     <td class="w-15 bg-light text-right label no-boder"></td>

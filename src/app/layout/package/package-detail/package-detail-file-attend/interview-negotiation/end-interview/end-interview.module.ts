@@ -12,6 +12,6 @@ import { EndInterviewComponent } from './end-interview.component';
   ],
   declarations: [
     EndInterviewComponent,
-  ]
+  ],
 })
 export class EndInterviewModule { }

@@ -95,11 +95,11 @@ export class PackageListComponent implements OnInit, AfterViewChecked {
     ) {
         config.autoClose = false;
     }
-    someRange = [0, 10000000000];
+    someRange = [0, 1000000000000];
     someKeyboardConfig: any = {
         behaviour: 'drag',
         connect: true,
-        start: [0, 10000000000],
+        start: [0, 1000000000000],
         keyboard: false,  // same as [keyboard]="true"
         // pips: {
         //     mode: 'count',
@@ -304,6 +304,7 @@ export class PackageListComponent implements OnInit, AfterViewChecked {
 
     filter(clear: boolean = false) {
         this.spinner.show();
+        console.log('this.searchTerm$.value', this.searchTerm$.value);
         this.packageService
             .filterList(
                 this.searchTerm$.value,
@@ -312,6 +313,7 @@ export class PackageListComponent implements OnInit, AfterViewChecked {
                 this.pagedResult.pageSize
             )
             .subscribe(result => {
+                console.log('result', result);
                 this.rerender(result);
                 this.spinner.hide();
             }, err => this.spinner.hide());
@@ -324,7 +326,8 @@ export class PackageListComponent implements OnInit, AfterViewChecked {
         this.filterModel.chairEmployeeId = '';
         this.filterModel.minCost = null;
         this.filterModel.maxCost = null;
-        this.someRange = [0, 10000000000];
+        this.someRange = [0, 1000000000000];
+        console.log('this.searchTerm$.value', this.searchTerm$.value);
         this.filter(true);
     }
 
@@ -399,6 +402,7 @@ export class PackageListComponent implements OnInit, AfterViewChecked {
             .subscribe(data => {
                 this.listField = data;
                 this.sum = [...this.listField].filter(x => x.hidden === true).length;
+                this.apply(this.myDrop);
                 this.spinner.hide();
             });
     }
@@ -437,11 +441,25 @@ export class PackageListComponent implements OnInit, AfterViewChecked {
 
     inputChange() {
         this.sum = [...this.listField].filter(x => x.hidden === true).length;
+    }
 
+    inputChange2(id: number) {
+        this.listField.forEach( item => {
+            if ( item.id === id ) {
+                item.hidden = !item.hidden;
+            }
+        });
+        this.sum = [...this.listField].filter(x => x.hidden === true).length;
     }
 
     exportFileExcel() {
         this.packageService.exportExcel(this.searchTerm$.value, this.filterModel)
             .subscribe(result => result);
+    }
+
+    chooseAll() {
+        console.log('this.listField-this.listField', this.listField);
+        this.listField.forEach(x => (x.hidden = true));
+        this.sum = [...this.listField].filter(x => x.hidden === true).length;
     }
 }

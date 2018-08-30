@@ -371,3 +371,6 @@ select.form-control:not([size]):not([multiple]){
     transition: margin 0.5s; /* IE 10+, Fx 29+ */
 
 }
+.cus-pointer{
+    cursor: pointer;
+}
