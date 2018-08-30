@@ -2,19 +2,14 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { SummaryConditionFormComponent } from './summary-condition-form.component';
 import { SummaryConditionFormInfoComponent } from './summary-condition-form-info/summary-condition-form-info.component';
-// tslint:disable-next-line:max-line-length
 import { SummaryConditionFormRelatedPartiesComponent } from './summary-condition-form-related-parties/summary-condition-form-related-parties.component';
 import { SummaryConditionFormScopeWorkComponent } from './summary-condition-form-scope-work/summary-condition-form-scope-work.component';
-// tslint:disable-next-line:max-line-length
 import { SummaryConditionFormNonminatedSubConstructorComponent } from './summary-condition-form-nonminated-sub-constructor/summary-condition-form-nonminated-sub-constructor.component';
 import { SummaryConditionFormMainMaterialComponent } from './summary-condition-form-main-material/summary-condition-form-main-material.component';
-// tslint:disable-next-line:max-line-length
 import { SummaryConditionFormTenderSubmissionComponent } from './summary-condition-form-tender-submission/summary-condition-form-tender-submission.component';
 import { SummaryConditionFormProfileDestinationComponent } from './summary-condition-form-profile-destination/summary-condition-form-profile-destination.component';
-// tslint:disable-next-line:max-line-length
 import { SummaryConditionFormTenderClarficationComponent } from './summary-condition-form-tender-clarfication/summary-condition-form-tender-clarfication.component';
 import { SummaryConditionFormConditionContractComponent } from './summary-condition-form-condition-contract/summary-condition-form-condition-contract.component';
-// tslint:disable-next-line:max-line-length
 import { SummaryConditionFormConditionTenderComponent } from './summary-condition-form-condition-tender/summary-condition-form-condition-tender.component';
 import { SummaryConditionFormSpecialRequirementComponent } from './summary-condition-form-special-requirement/summary-condition-form-special-requirement.component';
 
