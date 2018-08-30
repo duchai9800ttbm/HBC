@@ -219,7 +219,7 @@
                         </th>
                         <th [hidden]="!loaiCongTrinh">
                             <div class="d-flex justify-content-start">
-                                <div style="margin-right: 10px">Phân loại</div>
+                                <div style="margin-right: 10px">Phân loại công trình</div>
                                 <div class="center-parent">
                                     <div>
                                         <i class="fa fa-caret-down" style="color: #ffff;"></i>
@@ -357,7 +357,8 @@
                         </th>
                         <th [hidden]="!loaiKhachHang">
                             <div class="d-flex justify-content-start">
-                                <div style="margin-right: 10px">Loại khách hàng</div>
+                                <!-- <div style="margin-right: 10px">Loại khách hàng</div> -->
+                                <div style="margin-right: 10px">Phân loại</div>
                                 <div class="center-parent">
                                     <div>
                                         <i class="fa fa-caret-down" style="color: #ffff;"></i>
@@ -488,15 +489,15 @@
                                 <span class="custom-control-indicator"></span>
                             </label>
                         </td>
-                        <td [hidden]="!maDuAn" class="text-truncate">
-                            <span [title]="item.projectName">
+                        <td [hidden]="!maDuAn">
+                            <div  class="text-truncate" [title]="item.projectName">
                                 {{ item.projectNo }}
-                            </span>
+                            </div>
                         </td>
-                        <td [hidden]="!tenDuAn" class="text-truncate">
-                            <span [title]="item.projectName">
+                        <td [hidden]="!tenDuAn" >
+                            <div class="text-truncate" [title]="item.projectName">
                                 {{ item.projectName }}
-                            </span>
+                            </div>
                         </td>
                         <td [hidden]="!tenGoithau" class="text-truncate">
                             <a [routerLink]="['/package/detail',item.bidOpportunityId]">
@@ -508,8 +509,9 @@
                         <td [hidden]="!vaiTro" class="text-truncate">{{ item.hbcRole?.name }}</td>
                         <td [hidden]="!chuTri" class="text-truncate">{{ item.chairEmployee?.employeeName }}</td>
                         <td [hidden]="!loaiCongTrinh" class="text-truncate">{{ item.projectType?.value }}</td>
+                        
                         <td [hidden]="!tongGiaTri" class="text-truncate text-right">{{ item.amount | vnCurrency }}</td>
-                        <td [hidden]="!quyMo" class="color" class="text-center">{{item.magnitude }}</td>
+                        <td [hidden]="!quyMo" class="color">{{item.magnitude }}</td>
                         <td [hidden]="!giaiDoan" class="" style="text-align: center;">
                             <div class="d-flex flex-column p-2">
                                 <div class="center-parent" [class.type-HSMT]="item.stage?.key == 'HSMT'" [class.type-HSDT]="item.stage?.key == 'HSDT'" [class.type-KQDT]="item.stage?.key == 'KQDT'">
@@ -519,13 +521,12 @@
                                     [class.type-KQDT-child]="item.stage?.key == 'KQDT'">
                                     <div class="text-truncate">{{item.stageStatus?.value }}</div>
                                 </div>
-
                             </div>
                         </td>
-                        <td [hidden]="!khuVuc">{{item.region | translate}}</td>
+                        <td [hidden]="!khuVuc" class="text-truncate">{{item.region | translate}}</td>
                         <!-- <td [hidden]="!congViec" class="text-truncate">{{ item.job }}</td> -->
-                        <td [hidden]="!tienDoThucHien" class="text-truncate">{{ item.progress }}</td>
-                        <td [hidden]="!linkTaiLieu" class="text-truncate">{{ item.documentLink }}</td>
+                        <td [hidden]="!tienDoThucHien" class="text-truncate text-right">{{ item.progress }}</td>
+                        <td [hidden]="!linkTaiLieu" class="text-truncate cus-pointer" (click)="openLinkDocument(item.documentLink)">{{ item.documentLink }}</td>
                         <td [hidden]="!tongThoiGian" class="text-truncate">{{ item.totalTime }}</td>
                         <td [hidden]="!quy" class="text-truncate">{{ item.quarter?.name }}</td>
                         <td [hidden]="!donViTuVan" class="text-truncate">{{ item.consultantUnitCustomer?.customerName }}</td>

@@ -1,4 +1,4 @@
-import { Component, OnInit, OnChanges, AfterViewChecked, ViewChild, ElementRef, ChangeDetectorRef, NgZone } from '@angular/core';
+import { Component, OnInit, OnChanges, AfterViewChecked, ViewChild, ElementRef, ChangeDetectorRef, NgZone, HostListener } from '@angular/core';
 import { Observable } from '../../../../../node_modules/rxjs/Observable';
 import { DictionaryItem } from '../../../shared/models/dictionary-item.model';
 import { Subject } from '../../../../../node_modules/rxjs/Subject';
@@ -168,7 +168,18 @@ export class PackageListComponent implements OnInit, AfterViewChecked {
     trangThaiGoiThau = false;
     ngayBatDauTheoDoi = false;
     ngayNopHoSoMoiThau = false;
+    phanloai = false;
 
+    // isShowPopup = false;
+    // @HostListener('document:click', ['$event'])
+    // clickout(event) {
+    //     console.log('event', event);
+    //     if (event.target.className = 'popup-dynamic-col') {
+    //         this.isShowPopup = true;
+    //     } else {
+    //         this.isShowPopup = false;
+    //     }
+    // }
     ngOnInit() {
         window.scrollTo(0, 0);
         this.refreshPopupConfig();
@@ -222,6 +233,7 @@ export class PackageListComponent implements OnInit, AfterViewChecked {
         this.packageService.getListFields(this.getUserId).subscribe(data => {
             this.listField = data;
             this.listFieldNomarlized = [...this.listField].filter(x => x.hidden === true).map(x => x.fieldName);
+            console.log('this.listFieldNomarlized', this.listFieldNomarlized);
             this.sum = [...this.listField].filter(x => x.hidden === true).length;
             this.tenDuAn = this.listFieldNomarlized.includes('ARBidOpportunityProjectName');
             this.maDuAn = this.listFieldNomarlized.includes('ARBidOpportunityNo');
@@ -246,7 +258,8 @@ export class PackageListComponent implements OnInit, AfterViewChecked {
             this.giaiDoan = this.listFieldNomarlized.includes('ARBidOpportunityStage');
             this.tienDoThucHien = this.listFieldNomarlized.includes('ARBidOpportunityProgress');
             this.khuVuc = this.listFieldNomarlized.includes('FK_ARBidLocationID');
-            this.tenKhachHang = this.listFieldNomarlized.includes('FK_HREmployeeID');
+            // this.tenKhachHang = this.listFieldNomarlized.includes('FK_HREmployeeID');
+            this.tenKhachHang = this.listFieldNomarlized.includes('ARCustomerName');
             this.lienHe = this.listFieldNomarlized.includes('FK_ARCustomerContactID');
             this.ngayBatDauTheoDoi = this.listFieldNomarlized.includes('ARBidOpportunityStartTrackingDate');
             this.ngayNopHoSoMoiThau = this.listFieldNomarlized.includes('ARBidOpportunityBidSubmissionDate');
@@ -257,7 +270,7 @@ export class PackageListComponent implements OnInit, AfterViewChecked {
             this.tienDoThucHien = this.listFieldNomarlized.includes('ARBidOpportunityProgress');
             this.giaiDoan = this.listFieldNomarlized.includes('ARBidOpportunityStage');
             this.khuVuc = this.listFieldNomarlized.includes('FK_ARBidLocationID');
-            this.tenKhachHang = this.listFieldNomarlized.includes('FK_HREmployeeID');
+            // this.tenKhachHang = this.listFieldNomarlized.includes('FK_HREmployeeID');
             this.lienHe = this.listFieldNomarlized.includes('FK_ARCustomerContactID');
             this.ngayBatDau = this.listFieldNomarlized.includes('ARBidOpportunityStartTrackingDate');
             this.ngayNhanHoSoMoiThau = this.listFieldNomarlized.includes('ARBidOpportunityBidSubmissionDate');
@@ -469,5 +482,9 @@ export class PackageListComponent implements OnInit, AfterViewChecked {
         console.log('this.listField-this.listField', this.listField);
         this.listField.forEach(x => (x.hidden = true));
         this.sum = [...this.listField].filter(x => x.hidden === true).length;
+    }
+
+    openLinkDocument(linkDocument) {
+        window.open(linkDocument, '_blank');
     }
 }
