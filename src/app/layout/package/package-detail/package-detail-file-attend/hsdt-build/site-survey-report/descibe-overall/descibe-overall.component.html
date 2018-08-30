@@ -48,17 +48,16 @@
                     </div>
                     <div>
                         <div id="imageDemoImg">
-                            <div class="perspectiveImage">
+                            <input type="file" style="display:none" #inputclick0 (change)="uploadTopographyImage($event)">
+                            <div class="perspectiveImage" (click)="inputclick0.click()">
                                 <i class="fa fa-plus" aria-hidden="true"></i>
                                 <p>Image</p>
                             </div>
-                            <div class="perspectiveImage">
-                                <i class="fa fa-plus" aria-hidden="true"></i>
-                                <p>Image</p>
-                            </div>
-                            <div class="perspectiveImage">
-                                <i class="fa fa-plus" aria-hidden="true"></i>
-                                <p>Image</p>
+                            <div class="displayImg" *ngFor="let url of topographyImageUrls">
+                                <img [src]="url">
+                                <div class="toppp" (click)="deleteImg0()">
+                                    <i class="fa fa-times deleteIco" aria-hidden="true"></i>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -72,17 +71,16 @@
                     </div>
                     <div>
                         <div id="imageDemoImg">
-                            <div class="perspectiveImage">
+                            <input type="file" style="display:none" #inputclick1 (change)="uploadExistingBuildImage($event)">
+                            <div class="perspectiveImage" (click)="inputclick1.click()">
                                 <i class="fa fa-plus" aria-hidden="true"></i>
                                 <p>Image</p>
                             </div>
-                            <div class="perspectiveImage">
-                                <i class="fa fa-plus" aria-hidden="true"></i>
-                                <p>Image</p>
-                            </div>
-                            <div class="perspectiveImage">
-                                <i class="fa fa-plus" aria-hidden="true"></i>
-                                <p>Image</p>
+                            <div class="displayImg" *ngFor="let url of existingBuildImageUrls">
+                                <img [src]="url">
+                                <div class="toppp" (click)="deleteImg1()">
+                                    <i class="fa fa-times deleteIco" aria-hidden="true"></i>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -97,17 +95,16 @@
                     </div>
                     <div>
                         <div id="imageDemoImg">
-                            <div class="perspectiveImage">
+                            <input type="file" style="display:none" #inputclick2 (change)="uploadStacaleImage($event)">
+                            <div class="perspectiveImage" (click)="inputclick2.click()">
                                 <i class="fa fa-plus" aria-hidden="true"></i>
                                 <p>Image</p>
                             </div>
-                            <div class="perspectiveImage">
-                                <i class="fa fa-plus" aria-hidden="true"></i>
-                                <p>Image</p>
-                            </div>
-                            <div class="perspectiveImage">
-                                <i class="fa fa-plus" aria-hidden="true"></i>
-                                <p>Image</p>
+                            <div class="displayImg" *ngFor="let url of stacaleImageUrls">
+                                <img [src]="url">
+                                <div class="toppp" (click)="deleteImg2()">
+                                    <i class="fa fa-times deleteIco" aria-hidden="true"></i>
+                                </div>
                             </div>
                         </div>
                     </div>

@@ -184,3 +184,39 @@ input[type=text] {
 .smallTitle {
     margin-bottom: 30px;
 }
+//
+.displayImg {
+    margin: 5px;
+    max-width: 100px;
+    max-height: 100px;
+    border: 1px solid #ced4da;
+    border-radius: 8px;
+
+    img {
+        width: 100%;
+        height: 100%;
+        border-radius: 8px;
+    }
+
+    &:hover {
+        box-shadow: 0 0 2px 1px rgba(0, 140, 186, 0.5);
+
+        .toppp {
+            opacity: 1;
+        }
+    }
+}
+
+.toppp {
+    transition: 1s ease;
+    opacity: 0;
+    position: relative;
+    top: 0;
+    left: 0;
+    text-align: center;
+}
+
+.deleteIco {
+    color: #CCC;
+    font-size: 20px;
+}

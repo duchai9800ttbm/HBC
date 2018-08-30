@@ -49,17 +49,16 @@
                     </div>
                     <div>
                         <div id="imageDemoImg">
-                            <div class="perspectiveImage">
+                            <input type="file" style="display:none" #inputclick0 (change)="uploadFootingImage($event)">
+                            <div class="perspectiveImage" (click)="inputclick0.click()">
                                 <i class="fa fa-plus" aria-hidden="true"></i>
                                 <p>Image</p>
                             </div>
-                            <div class="perspectiveImage">
-                                <i class="fa fa-plus" aria-hidden="true"></i>
-                                <p>Image</p>
-                            </div>
-                            <div class="perspectiveImage">
-                                <i class="fa fa-plus" aria-hidden="true"></i>
-                                <p>Image</p>
+                            <div class="displayImg" *ngFor="let url of footingImageUrls">
+                                <img [src]="url">
+                                <div class="toppp" (click)="deleteImg0()">
+                                    <i class="fa fa-times deleteIco" aria-hidden="true"></i>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -75,19 +74,18 @@
                             <input type="text">
                         </div>
                         <div id="imageDemoImg">
-                            <div class="perspectiveImage">
-                                <i class="fa fa-plus" aria-hidden="true"></i>
-                                <p>Image</p>
+                                <input type="file" style="display:none" #inputclick1 (change)="uploadInvestigationImage($event)">
+                                <div class="perspectiveImage" (click)="inputclick1.click()">
+                                    <i class="fa fa-plus" aria-hidden="true"></i>
+                                    <p>Image</p>
+                                </div>
+                                <div class="displayImg" *ngFor="let url of investigationImageUrls">
+                                    <img [src]="url">
+                                    <div class="toppp" (click)="deleteImg1()">
+                                        <i class="fa fa-times deleteIco" aria-hidden="true"></i>
+                                    </div>
+                                </div>
                             </div>
-                            <div class="perspectiveImage">
-                                <i class="fa fa-plus" aria-hidden="true"></i>
-                                <p>Image</p>
-                            </div>
-                            <div class="perspectiveImage">
-                                <i class="fa fa-plus" aria-hidden="true"></i>
-                                <p>Image</p>
-                            </div>
-                        </div>
                     </div>
                 </div>
             </div>

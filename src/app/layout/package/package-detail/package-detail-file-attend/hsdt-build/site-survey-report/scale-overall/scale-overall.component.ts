@@ -2,7 +2,6 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { LiveformDataReportService } from '../../../../../../../shared/services/liveform-data-report.service';
 import { Router } from '@angular/router';
 import { ScaleOverall } from '../../../../../../../shared/models/site-survey-report/scale-overall.model';
-import { url } from 'inspector';
 
 @Component({
   selector: 'app-scale-overall',
@@ -18,7 +17,7 @@ export class ScaleOverallComponent implements OnInit, OnDestroy {
   perspectiveImageUrls = [];
   structureImageUrls = [];
   requirementsImageUrls = [];
-
+  url;
   scaleModel: ScaleOverall;
 
   constructor(
@@ -53,6 +52,11 @@ export class ScaleOverallComponent implements OnInit, OnDestroy {
       }
     }
   }
+  deleteImg0() {
+    const index = this.perspectiveImageUrls.indexOf(this.url);
+    this.perspectiveImageUrls.splice(index, 1);
+  }
+
   uploadStructureImage(event) {
     const files = event.target.files;
     if (files) {
@@ -63,6 +67,11 @@ export class ScaleOverallComponent implements OnInit, OnDestroy {
       }
     }
   }
+  deleteImg1() {
+    const index = this.structureImageUrls.indexOf(this.url);
+    this.structureImageUrls.splice(index, 1);
+  }
+
   uploadRequirementsImage(event) {
     const files = event.target.files;
     if (files) {
@@ -72,6 +81,10 @@ export class ScaleOverallComponent implements OnInit, OnDestroy {
         reader.readAsDataURL(file);
       }
     }
+  }
+  deleteImg2() {
+    const index = this.requirementsImageUrls.indexOf(this.url);
+    this.requirementsImageUrls.splice(index, 1);
   }
 
   addDisplayImg() {

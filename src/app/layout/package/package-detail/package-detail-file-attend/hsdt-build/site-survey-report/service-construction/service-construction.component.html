@@ -49,17 +49,16 @@
                             <input type="text">
                         </div>
                         <div id="imageDemoImg">
-                            <div class="perspectiveImage">
+                            <input type="file" style="display:none" #inputclick0 (change)="uploadSupplySystemImage($event)">
+                            <div class="perspectiveImage" (click)="inputclick0.click()">
                                 <i class="fa fa-plus" aria-hidden="true"></i>
                                 <p>Image</p>
                             </div>
-                            <div class="perspectiveImage">
-                                <i class="fa fa-plus" aria-hidden="true"></i>
-                                <p>Image</p>
-                            </div>
-                            <div class="perspectiveImage">
-                                <i class="fa fa-plus" aria-hidden="true"></i>
-                                <p>Image</p>
+                            <div class="displayImg" *ngFor="let url of supplySystemImageUrls">
+                                <img [src]="url">
+                                <div class="toppp" (click)="deleteImg0()">
+                                    <i class="fa fa-times deleteIco" aria-hidden="true"></i>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -69,17 +68,16 @@
                             <input type="text">
                         </div>
                         <div id="imageDemoImg">
-                            <div class="perspectiveImage">
+                            <input type="file" style="display:none" #inputclick1 (change)="uploadSupplyPointImage($event)">
+                            <div class="perspectiveImage" (click)="inputclick1.click()">
                                 <i class="fa fa-plus" aria-hidden="true"></i>
                                 <p>Image</p>
                             </div>
-                            <div class="perspectiveImage">
-                                <i class="fa fa-plus" aria-hidden="true"></i>
-                                <p>Image</p>
-                            </div>
-                            <div class="perspectiveImage">
-                                <i class="fa fa-plus" aria-hidden="true"></i>
-                                <p>Image</p>
+                            <div class="displayImg" *ngFor="let url of supplyPointImageUrls">
+                                <img [src]="url">
+                                <div class="toppp" (click)="deleteImg1()">
+                                    <i class="fa fa-times deleteIco" aria-hidden="true"></i>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -94,17 +92,16 @@
                             <input type="text">
                         </div>
                         <div id="imageDemoImg">
-                            <div class="perspectiveImage">
+                            <input type="file" style="display:none" #inputclick2 (change)="uploadDrainageSystemImage($event)">
+                            <div class="perspectiveImage" (click)="inputclick2.click()">
                                 <i class="fa fa-plus" aria-hidden="true"></i>
                                 <p>Image</p>
                             </div>
-                            <div class="perspectiveImage">
-                                <i class="fa fa-plus" aria-hidden="true"></i>
-                                <p>Image</p>
-                            </div>
-                            <div class="perspectiveImage">
-                                <i class="fa fa-plus" aria-hidden="true"></i>
-                                <p>Image</p>
+                            <div class="displayImg" *ngFor="let url of drainageSystemImageUrls">
+                                <img [src]="url">
+                                <div class="toppp" (click)="deleteImg2()">
+                                    <i class="fa fa-times deleteIco" aria-hidden="true"></i>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -114,17 +111,16 @@
                             <input type="text">
                         </div>
                         <div id="imageDemoImg">
-                            <div class="perspectiveImage">
+                            <input type="file" style="display:none" #inputclick3 (change)="uploadDrainagePointImage($event)">
+                            <div class="perspectiveImage" (click)="inputclick3.click()">
                                 <i class="fa fa-plus" aria-hidden="true"></i>
                                 <p>Image</p>
                             </div>
-                            <div class="perspectiveImage">
-                                <i class="fa fa-plus" aria-hidden="true"></i>
-                                <p>Image</p>
-                            </div>
-                            <div class="perspectiveImage">
-                                <i class="fa fa-plus" aria-hidden="true"></i>
-                                <p>Image</p>
+                            <div class="displayImg" *ngFor="let url of drainagePointImageUrls">
+                                <img [src]="url">
+                                <div class="toppp" (click)="deleteImg3()">
+                                    <i class="fa fa-times deleteIco" aria-hidden="true"></i>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -139,17 +135,16 @@
                             <input type="text">
                         </div>
                         <div id="imageDemoImg">
-                            <div class="perspectiveImage">
+                            <input type="file" style="display:none" #inputclick4 (change)="uploadPowerStationImage($event)">
+                            <div class="perspectiveImage" (click)="inputclick4.click()">
                                 <i class="fa fa-plus" aria-hidden="true"></i>
                                 <p>Image</p>
                             </div>
-                            <div class="perspectiveImage">
-                                <i class="fa fa-plus" aria-hidden="true"></i>
-                                <p>Image</p>
-                            </div>
-                            <div class="perspectiveImage">
-                                <i class="fa fa-plus" aria-hidden="true"></i>
-                                <p>Image</p>
+                            <div class="displayImg" *ngFor="let url of powerStationImageUrls">
+                                <img [src]="url">
+                                <div class="toppp" (click)="deleteImg4()">
+                                    <i class="fa fa-times deleteIco" aria-hidden="true"></i>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -159,17 +154,16 @@
                             <input type="text">
                         </div>
                         <div id="imageDemoImg">
-                            <div class="perspectiveImage">
+                            <input type="file" style="display:none" #inputclick5 (change)="uploadMediumVoltageSystemImage($event)">
+                            <div class="perspectiveImage" (click)="inputclick5.click()">
                                 <i class="fa fa-plus" aria-hidden="true"></i>
                                 <p>Image</p>
                             </div>
-                            <div class="perspectiveImage">
-                                <i class="fa fa-plus" aria-hidden="true"></i>
-                                <p>Image</p>
-                            </div>
-                            <div class="perspectiveImage">
-                                <i class="fa fa-plus" aria-hidden="true"></i>
-                                <p>Image</p>
+                            <div class="displayImg" *ngFor="let url of mediumVoltageSystemImageUrls">
+                                <img [src]="url">
+                                <div class="toppp" (click)="deleteImg5()">
+                                    <i class="fa fa-times deleteIco" aria-hidden="true"></i>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -179,17 +173,16 @@
                             <input type="text">
                         </div>
                         <div id="imageDemoImg">
-                            <div class="perspectiveImage">
+                            <input type="file" style="display:none" #inputclick6 (change)="uploadPowerOtherImage($event)">
+                            <div class="perspectiveImage" (click)="inputclick6.click()">
                                 <i class="fa fa-plus" aria-hidden="true"></i>
                                 <p>Image</p>
                             </div>
-                            <div class="perspectiveImage">
-                                <i class="fa fa-plus" aria-hidden="true"></i>
-                                <p>Image</p>
-                            </div>
-                            <div class="perspectiveImage">
-                                <i class="fa fa-plus" aria-hidden="true"></i>
-                                <p>Image</p>
+                            <div class="displayImg" *ngFor="let url of powerOtherImageUrls">
+                                <img [src]="url">
+                                <div class="toppp" (click)="deleteImg6()">
+                                    <i class="fa fa-times deleteIco" aria-hidden="true"></i>
+                                </div>
                             </div>
                         </div>
                     </div>

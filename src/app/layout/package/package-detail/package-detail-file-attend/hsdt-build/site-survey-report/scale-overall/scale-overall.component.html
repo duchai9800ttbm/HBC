@@ -157,6 +157,9 @@
                             </div>
                             <div class="displayImg" *ngFor="let url of perspectiveImageUrls">
                                 <img [src]="url">
+                                <div class="toppp" (click)="deleteImg0()">
+                                    <i class="fa fa-times deleteIco" aria-hidden="true"></i>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -178,6 +181,9 @@
                             </div>
                             <div class="displayImg" *ngFor="let url of structureImageUrls">
                                 <img [src]="url">
+                                <div class="toppp" (click)="deleteImg1()">
+                                    <i class="fa fa-times deleteIco" aria-hidden="true"></i>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -197,6 +203,9 @@
                         </div>
                         <div class="displayImg" *ngFor="let url of requirementsImageUrls">
                             <img [src]="url">
+                            <div class="toppp" (click)="deleteImg2()">
+                                <i class="fa fa-times deleteIco" aria-hidden="true"></i>
+                            </div>
                         </div>
                     </div>
                 </div>
