@@ -2,6 +2,9 @@ import { Injectable } from '@angular/core';
 import { ApiService } from './api.service';
 import { DocumentItem } from '../models/document-item'
 import { dateFieldName } from '@progress/kendo-angular-intl';
+import { Observable, Subject } from 'rxjs/Rx';
+import { PagedResult } from '../models/paging-result.model';
+import { CancelItem } from '../models/reason/cancel-item'
 
 @Injectable()
 export class PackageSuccessService {
@@ -18,7 +21,9 @@ export class PackageSuccessService {
     version =[1,1.1];
     employeeName = ['Oliver Dinh', 'Van Dinh'];
     dataDocuments: DocumentItem[] = [];
-    constructor() {
+    constructor(
+        private apiService: ApiService
+    ) {
         for (let i = 1; i < 6; i++) {
             this.dataDocuments.unshift({
                 id: i,
@@ -110,5 +115,59 @@ export class PackageSuccessService {
         },
 
     ]
+    // Get ds lý do  hủy thầu
+    getReasonCancel(
+        page: number | string,
+        pageSize: number | string
+    ): Observable<PagedResult<CancelItem>> {
+        const url = `bidopportunitycancelreason/getall/${page}/${pageSize}`;
+        return this.apiService.get(url)
+            .map(response => {
+                const result = response.result;
+                return {
+                    currentPage: result.pageIndex,
+                    pageSize: result.pageSize,
+                    pageCount: result.totalPages,
+                    total: result.totalCount,
+                    items: result.items,
+                };
+            }).share();
+    }
 
+    // get ds lý tro trật thầu
+    getReasonLose(
+        page: number | string,
+        pageSize: number | string
+    ): Observable<PagedResult<CancelItem>> {
+        const url = `bidopportunitylosereason/getall/${page}/${pageSize}`;
+        return this.apiService.get(url)
+            .map(response => {
+                const result = response.result;
+                return {
+                    currentPage: result.pageIndex,
+                    pageSize: result.pageSize,
+                    pageCount: result.totalPages,
+                    total: result.totalCount,
+                    items: result.items,
+                };
+            }).share();
+    }
+    // Det ds lý do trúng thầu
+    getReasonWin(
+        page: number | string,
+        pageSize: number | string
+    ): Observable<PagedResult<CancelItem>> {
+        const url = `bidopportunitywinreason/getall/${page}/${pageSize}`;
+        return this.apiService.get(url)
+            .map(response => {
+                const result = response.result;
+                return {
+                    currentPage: result.pageIndex,
+                    pageSize: result.pageSize,
+                    pageCount: result.totalPages,
+                    total: result.totalCount,
+                    items: result.items,
+                };
+            }).share();
+    }
 }
