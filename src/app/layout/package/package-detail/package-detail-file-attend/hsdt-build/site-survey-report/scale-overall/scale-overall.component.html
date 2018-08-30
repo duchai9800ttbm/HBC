@@ -55,66 +55,66 @@
                 <div class="mainDetail">
                     <div class="singleRow">
                         <label class="child0 childcheck">Văn phòng (Office)
-                            <input type="checkbox"><span class="checkmark"></span>
+                            <input type="radio" name="classifyBuild"><span class="checkmark"></span>
                         </label>
                         <label class="child1 childcheck">Nhà công nghiệp (Industrial)
-                            <input type="checkbox"><span class="checkmark"></span>
+                            <input type="radio" name="classifyBuild"><span class="checkmark"></span>
                         </label>
                         <label class="child2 childcheck">MEP
-                            <input type="checkbox"><span class="checkmark"></span>
+                            <input type="radio" name="classifyBuild"><span class="checkmark"></span>
                         </label>
                     </div>
                     <div class="singleRow">
                         <label class="child0 childcheck">Khu dân cư (Residential)
-                            <input type="checkbox"><span class="checkmark"></span>
+                            <input type="radio" name="classifyBuild"><span class="checkmark"></span>
                         </label>
                         <label class="child1 childcheck">Tổ hợp (Mixed use)
-                            <input type="checkbox"><span class="checkmark"></span>
+                            <input type="radio" name="classifyBuild"><span class="checkmark"></span>
                         </label>
                         <label class="child2 childcheck">Sân bay
-                            <input type="checkbox"><span class="checkmark"></span>
+                            <input type="radio" name="classifyBuild"><span class="checkmark"></span>
                         </label>
                     </div>
                     <div class="singleRow">
                         <label class="child0 childcheck">TT Thương mại (Commercial)
-                            <input type="checkbox"><span class="checkmark"></span>
+                            <input type="radio" name="classifyBuild"><span class="checkmark"></span>
                         </label>
                         <label class="child1 childcheck">Căn hộ
-                            <input type="checkbox"><span class="checkmark"></span>
+                            <input type="radio" name="classifyBuild"><span class="checkmark"></span>
                         </label>
                         <label class="child2 childcheck">Nhà phố, biệt thự
-                            <input type="checkbox"><span class="checkmark"></span>
+                            <input type="radio" name="classifyBuild"><span class="checkmark"></span>
                         </label>
                     </div>
                     <div class="singleRow">
                         <label class="child0 childcheck">Khách sạn/Resort (Hotel/Resort)
-                            <input type="checkbox"><span class="checkmark"></span>
+                            <input type="radio" name="classifyBuild"><span class="checkmark"></span>
                         </label>
                         <label class="child1 childcheck">Hạ tầng
-                            <input type="checkbox"><span class="checkmark"></span>
+                            <input type="radio" name="classifyBuild"><span class="checkmark"></span>
                         </label>
                         <label class="child2 childcheck">Trường học
-                            <input type="checkbox"><span class="checkmark"></span>
+                            <input type="radio" name="classifyBuild"><span class="checkmark"></span>
                         </label>
                     </div>
                     <hr />
                     <div class="singleRow">
                         <label class="child0 childcheck">Mới (New)
-                            <input type="checkbox"><span class="checkmark"></span>
+                            <input type="radio" name="classifyType"><span class="checkmark"></span>
                         </label>
                         <label class="child1 childcheck">Thay đổi & bổ sung (Alteration & Additional)
-                            <input type="checkbox"><span class="checkmark"></span>
+                            <input type="radio" name="classifyType"><span class="checkmark"></span>
                         </label>
                         <label class="child2 childcheck">Khác (Other)
-                            <input type="checkbox"><span class="checkmark"></span>
+                            <input type="radio" name="classifyType"><span class="checkmark"></span>
                         </label>
                     </div>
                     <div class="singleRow">
                         <label class="child0 childcheck">Nâng cấp, cải tiến (Renovation)
-                            <input type="checkbox"><span class="checkmark"></span>
+                            <input type="radio" name="classifyType"><span class="checkmark"></span>
                         </label>
                         <label class="child1 childcheck">Tháo dỡ & cải tiến (Demolishment & Renovation)
-                            <input type="checkbox"><span class="checkmark"></span>
+                            <input type="radio" name="classifyType"><span class="checkmark"></span>
                         </label>
                         <div class="child2">
                             <input type="checkbox" style="visibility: hidden;">
@@ -129,7 +129,7 @@
                     <div>
                         <div class="label1-2">
                             <label for="">Diện tích công trường/Site area (m2)</label>
-                            <input class="no-boder" type="text">
+                            <input class="no-boder" type="text" (keyup)="readValue($event)">
                         </div>
                         <div class="label1-2">
                             <label for="">Tổng diện tích xây dựng/Gross floor area (m2)</label>
@@ -150,17 +150,13 @@
                             <input type="text" placeholder="TEXT">
                         </div>
                         <div id="imageDemoImg">
-                            <div class="perspectiveImage">
+                            <input type="file" style="display:none" #inputclick multiple (change)="uploadPerspectiveImage($event)">
+                            <div class="perspectiveImage" (click)="inputclick.click()">
                                 <i class="fa fa-plus" aria-hidden="true"></i>
                                 <p>Image</p>
                             </div>
-                            <div class="perspectiveImage">
-                                <i class="fa fa-plus" aria-hidden="true"></i>
-                                <p>Image</p>
-                            </div>
-                            <div class="perspectiveImage">
-                                <i class="fa fa-plus" aria-hidden="true"></i>
-                                <p>Image</p>
+                            <div class="displayImg" *ngFor="let url of urls">
+                                <img [src]="url">
                             </div>
                         </div>
                     </div>
@@ -175,17 +171,13 @@
                     </div>
                     <div>
                         <div id="imageDemoImg">
-                            <div class="perspectiveImage">
+                            <input type="file" style="display:none" #inputclick multiple (change)="uploadStructureImage($event)">
+                            <div class="perspectiveImage" (click)="inputclick.click()">
                                 <i class="fa fa-plus" aria-hidden="true"></i>
                                 <p>Image</p>
                             </div>
-                            <div class="perspectiveImage">
-                                <i class="fa fa-plus" aria-hidden="true"></i>
-                                <p>Image</p>
-                            </div>
-                            <div class="perspectiveImage">
-                                <i class="fa fa-plus" aria-hidden="true"></i>
-                                <p>Image</p>
+                            <div class="displayImg" *ngFor="let url of structureImageUrls">
+                                <img [src]="url">
                             </div>
                         </div>
                     </div>
@@ -198,17 +190,13 @@
                         <input type="text" placeholder="TEXT">
                     </div>
                     <div id="imageDemoImg">
-                        <div class="perspectiveImage">
+                        <input type="file" style="display:none" #inputclick multiple (change)="uploadRequirementsImage($event)">
+                        <div class="perspectiveImage" (click)="inputclick.click()">
                             <i class="fa fa-plus" aria-hidden="true"></i>
                             <p>Image</p>
                         </div>
-                        <div class="perspectiveImage">
-                            <i class="fa fa-plus" aria-hidden="true"></i>
-                            <p>Image</p>
-                        </div>
-                        <div class="perspectiveImage">
-                            <i class="fa fa-plus" aria-hidden="true"></i>
-                            <p>Image</p>
+                        <div class="displayImg" *ngFor="let url of requirementsImageUrls">
+                            <img [src]="url">
                         </div>
                     </div>
                 </div>

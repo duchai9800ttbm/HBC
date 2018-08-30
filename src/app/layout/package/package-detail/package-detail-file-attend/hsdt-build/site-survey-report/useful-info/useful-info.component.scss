@@ -164,8 +164,10 @@ input[type=text] {
     }
 }
 
-#imageDemoImg {
+.imageDemoImg {
     display: flex;
+    position: relative;
+    right: -20%;
 }
 
 .perspectiveImage {
@@ -184,4 +186,31 @@ input[type=text] {
 
 .smallTitle {
     margin-bottom: 30px;
+}
+
+.listDetail {
+    padding-left: 30px;
+
+    input, textarea {
+        width: 30%;
+    }
+    label {
+        width: 20%;
+    }
+
+    .topic7 {
+        margin-bottom: 15px;
+
+        textarea {
+            border: 1px solid #ced4da;
+            border-radius: 0.25rem;
+            padding: 0.375rem 0.75rem;
+        }
+
+        label {
+            width: 20%;
+        }
+
+        .imageDemoImg {}
+    }
 }

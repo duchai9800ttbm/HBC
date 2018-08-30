@@ -10,6 +10,7 @@ import { DemoConsoComponent } from './demo-conso/demo-conso.component';
 import { ServiceConstructionComponent } from './service-construction/service-construction.component';
 import { SoilConditionComponent } from './soil-condition/soil-condition.component';
 import { UsefulInfoComponent } from './useful-info/useful-info.component';
+import { UpdateConfirmPopupComponent } from './update-confirm-popup/update-confirm-popup.component';
 
 @NgModule({
   imports: [
@@ -24,7 +25,8 @@ import { UsefulInfoComponent } from './useful-info/useful-info.component';
     DemoConsoComponent,
     ServiceConstructionComponent,
     SoilConditionComponent,
-    UsefulInfoComponent
+    UsefulInfoComponent,
+    UpdateConfirmPopupComponent
   ]
 })
 export class SiteSurveyReportModule { }

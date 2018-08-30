@@ -17,6 +17,7 @@ import { NgxSpinnerModule } from 'ngx-spinner';
 import { StarRatingModule } from 'angular-star-rating';
 import { DataUploadService } from './shared/services/data-upload.service';
 import { GroupUserService } from './shared/services/group-user.service';
+import { LiveformDataReportService } from './shared/services/liveform-data-report.service';
 // AoT requires an exported function for factories
 export function createTranslateLoader(http: HttpClient) {
     // for development
@@ -51,6 +52,7 @@ export function createTranslateLoader(http: HttpClient) {
         ConfirmationService,
         InstantSearchService,
         UserNotificationService,
+        LiveformDataReportService,
         DataUploadService,
         { provide: LocationStrategy, useClass: HashLocationStrategy }
     ],

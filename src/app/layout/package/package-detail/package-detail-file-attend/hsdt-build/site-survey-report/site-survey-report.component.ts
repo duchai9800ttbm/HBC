@@ -8,6 +8,7 @@ import { DATETIME_PICKER_CONFIG } from '../../../../../../shared/configs/datepic
 })
 export class SiteSurveyReportComponent implements OnInit, AfterViewInit {
   isData;
+  showPopupConfirm = false;
   datePickerConfig = DATETIME_PICKER_CONFIG;
   fakeData = [
     {
@@ -49,6 +50,13 @@ export class SiteSurveyReportComponent implements OnInit, AfterViewInit {
 
   ngOnInit() {
     (this.fakeData.length) ? this.isData = true : this.isData = false;
+  }
+  updateliveform() {
+    this.showPopupConfirm = true;
+    console.log(this.showPopupConfirm);
+  }
+  closePopup() {
+    this.showPopupConfirm = false;
   }
   ngAfterViewInit() {
     // Đang test nên để ở đây ^^

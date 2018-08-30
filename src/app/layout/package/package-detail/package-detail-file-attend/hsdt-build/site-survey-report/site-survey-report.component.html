@@ -16,7 +16,7 @@
                     <button type="button" class="btn btn-primary">
                         Import dữ liệu theo mẫu
                     </button>
-                    <button type="button" class="btn btn-primary">
+                    <button type="button" class="btn btn-primary" (click)="updateliveform()">
                         Lưu
                     </button>
                     <button type="button" class="btn btn-secondary">
@@ -285,3 +285,4 @@
     </div>
 
 </div>
+<app-update-confirm-popup *ngIf="showPopupConfirm" (closed)="closePopup($event)"></app-update-confirm-popup>
