@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { routerTransition } from '../../../../../router.animations';
 import { DictionaryItem, PagedResult } from '../../../../../shared/models';
-import { DATATABLE_CONFIG } from '../../../../../shared/configs';
+import { DATATABLE_CONFIG, DATATABLE_CONFIG2 } from '../../../../../shared/configs';
 import { Subject } from '../../../../../../../node_modules/rxjs/Subject';
 import { AlertService, ConfirmationService, UserService } from '../../../../../shared/services';
 import { Router } from '../../../../../../../node_modules/@angular/router';
@@ -27,7 +27,7 @@ export class AddFileComponent implements OnInit {
     isShowMenu = false;
 
     checkboxSeclectAll: boolean;
-    dtOptions: any = DATATABLE_CONFIG;
+    dtOptions: any = DATATABLE_CONFIG2;
     dtTrigger: Subject<any> = new Subject();
     filterModel = new BidDocumentFilter();
     searchTerm;
@@ -47,6 +47,8 @@ export class AddFileComponent implements OnInit {
     packageData: PackageInfoModel;
     tableEmpty: boolean;
     currentMajorTypeId = 1;
+    sum = 0;
+    showTable = false;
     constructor(
         private alertService: AlertService,
         private confirmationService: ConfirmationService,
@@ -69,7 +71,6 @@ export class AddFileComponent implements OnInit {
         // initFilterModel
         this.filterModel.status = '';
         this.filterModel.uploadedEmployeeId = null;
-        // this.filterModel.createDate = new Date();
         // danh sách người upload (lấy từ danh sách user)
         this.userService.getAllUser('').subscribe(data => {
             this.userListItem = data;
@@ -81,6 +82,7 @@ export class AddFileComponent implements OnInit {
             this.documentService.read(this.packageId, this.currentMajorTypeId).subscribe(response => {
                 this.bidDocumentGroupListItem = response;
                 this.bidDocumentGroupListItemSearchResult = response;
+                this.showTable = this.bidDocumentGroupListItemSearchResult.length > 0;
                 this.dtTrigger.next();
                 this.spinner.hide();
             }, err => this.spinner.hide());
@@ -89,6 +91,9 @@ export class AddFileComponent implements OnInit {
 
     toggleClick() {
         $('.toggle-menu-item').toggleClass('resize');
+        $('.line').toggleClass('resize');
+        $('#toggle-menu-item').toggleClass('hidden');
+
         $('.iconN1').toggleClass('iconN01');
         $('.iconN2').toggleClass('iconN02');
         $('.iconN3').toggleClass('iconN03');
@@ -97,12 +102,16 @@ export class AddFileComponent implements OnInit {
         this.searchTerm = value;
         this.bidDocumentGroupListItemSearchResult = this.documentService
             .filter(this.searchTerm, this.filterModel, this.bidDocumentGroupListItem);
+        this.showTable = this.bidDocumentGroupListItemSearchResult.length > 0;
+
         this.dtTrigger.next();
     }
 
     filter() {
         this.bidDocumentGroupListItemSearchResult = this.documentService
             .filter(this.searchTerm, this.filterModel, this.bidDocumentGroupListItem);
+        this.showTable = this.bidDocumentGroupListItemSearchResult.length > 0;
+
         this.dtTrigger.next();
     }
 
@@ -112,6 +121,8 @@ export class AddFileComponent implements OnInit {
         this.filterModel.uploadedEmployeeId = null;
         this.bidDocumentGroupListItemSearchResult = this.documentService
             .filter(this.searchTerm, this.filterModel, this.bidDocumentGroupListItem);
+        this.showTable = this.bidDocumentGroupListItemSearchResult.length > 0;
+
         this.dtTrigger.next();
     }
 
@@ -181,6 +192,8 @@ export class AddFileComponent implements OnInit {
         this.documentService.read(this.packageId, this.currentMajorTypeId).subscribe(response => {
             this.bidDocumentGroupListItem = response;
             this.bidDocumentGroupListItemSearchResult = response;
+            this.showTable = this.bidDocumentGroupListItemSearchResult.length > 0;
+
             this.dtTrigger.next();
             this.spinner.hide();
             if (!(this.bidDocumentGroupListItem && this.bidDocumentGroupListItem.length > 1)) {
@@ -195,6 +208,8 @@ export class AddFileComponent implements OnInit {
         this.documentService.read(this.packageId, this.currentMajorTypeId).subscribe(response => {
             this.bidDocumentGroupListItem = response;
             this.bidDocumentGroupListItemSearchResult = response;
+            this.showTable = this.bidDocumentGroupListItemSearchResult.length > 0;
+
             this.dtTrigger.next();
             this.spinner.hide();
             this.alertService.success('Dữ liệu đã được cập nhật mới nhất!');
@@ -239,6 +254,7 @@ export class AddFileComponent implements OnInit {
         let dem = 0;
         let tam = -1;
         if (+i === 0) {
+            this.sum = k + 1;
             return k + 1;
         } else {
             this.bidDocumentGroupListItemSearchResult.forEach(ite => {
@@ -249,6 +265,7 @@ export class AddFileComponent implements OnInit {
                 }
                 tam++;
             });
+            this.sum = dem + k + 1;
             return dem + k + 1;
         }
     }
@@ -338,6 +355,8 @@ export class AddFileComponent implements OnInit {
         this.documentService.read(this.packageId, this.currentMajorTypeId).subscribe(response => {
             this.bidDocumentGroupListItem = response;
             this.bidDocumentGroupListItemSearchResult = response;
+            this.showTable = this.bidDocumentGroupListItemSearchResult.length > 0;
+
             this.dtTrigger.next();
             this.spinner.hide();
         }, err => this.spinner.hide());

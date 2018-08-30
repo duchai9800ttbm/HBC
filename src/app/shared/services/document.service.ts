@@ -61,6 +61,7 @@ export class DocumentService {
             },
             createdDate: result.createdDate,
             receivedDate: result.receivedDate,
+            desc: result.description,
             fileGuid: result.fileGuid,
         };
     }

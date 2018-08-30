@@ -13,4 +13,5 @@ export class BidDocumentModel {
     createdDate: number;
     receivedDate: number;
     fileGuid: string;
+    desc: string;
 }
