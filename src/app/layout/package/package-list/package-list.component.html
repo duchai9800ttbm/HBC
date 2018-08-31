@@ -224,7 +224,7 @@
                         </th>
                         <th [hidden]="!loaiCongTrinh">
                             <div class="d-flex justify-content-start">
-                                <div style="margin-right: 10px">Phân loại công trình</div>
+                                <div style="margin-right: 10px">Loại công trình</div>
                                 <div class="center-parent">
                                     <div>
                                         <i class="fa fa-caret-down" style="color: #ffff;"></i>
@@ -360,10 +360,22 @@
                                 </div>
                             </div>
                         </th>
+
+                        <!-- <th [hidden]="!dientichsan">
+                            <div class="d-flex justify-content-start">
+                                <div style="margin-right: 10px">Diện tích sàn (m2)</div>
+                                <div class="center-parent">
+                                    <div>
+                                        <i class="fa fa-caret-down" style="color: #ffff;"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </th> -->
+
                         <th [hidden]="!loaiKhachHang">
                             <div class="d-flex justify-content-start">
                                 <!-- <div style="margin-right: 10px">Loại khách hàng</div> -->
-                                <div style="margin-right: 10px">Phân loại</div>
+                                <div style="margin-right: 10px">Loại khách hàng</div>
                                 <div class="center-parent">
                                     <div>
                                         <i class="fa fa-caret-down" style="color: #ffff;"></i>
@@ -393,7 +405,7 @@
                         </th>
                         <th [hidden]="!ngayBatDau">
                             <div class="d-flex justify-content-start">
-                                <div style="margin-right: 10px">Ngày bắt đầu theo dõi</div>
+                                <div style="margin-right: 10px">Ngày bắt đầu</div>
                                 <div class="center-parent">
                                     <div>
                                         <i class="fa fa-caret-down" style="color: #ffff;"></i>
@@ -413,7 +425,7 @@
                         </th>
                         <th [hidden]="!ngayNhanHoSoMoiThau">
                             <div class="d-flex justify-content-start">
-                                <div style="margin-right: 10px">Ngày nộp hồ sơ mời thầu</div>
+                                <div style="margin-right: 10px">Ngày nhận hồ sơ mời thầu</div>
                                 <div class="center-parent">
                                     <div>
                                         <i class="fa fa-caret-down" style="color: #ffff;"></i>
@@ -531,8 +543,8 @@
                         <td [hidden]="!khuVuc" class="text-truncate">{{item.location.value | translate}}</td>
                         <!-- <td [hidden]="!congViec" class="text-truncate">{{ item.job }}</td> -->
                         <td [hidden]="!tienDoThucHien" class="text-truncate text-right">{{ item.progress }}</td>
-                        <td [hidden]="!linkTaiLieu" class="text-truncate cus-pointer" >
-                                <!-- (click)="openLinkDocument(item.documentLink)" -->
+                        <td [hidden]="!linkTaiLieu" class="text-truncate cus-pointer">
+                            <!-- (click)="openLinkDocument(item.documentLink)" -->
                             <!-- <a title="link tài liệu">{{ item.documentLink }}</a> -->
                             <a target="_blank" [href]="item.documentLink">{{ item.documentLink }}</a>
                         </td>
@@ -541,7 +553,7 @@
                         <td [hidden]="!donViTuVan" class="text-truncate">{{ item.consultantUnitCustomer?.customerName }}</td>
                         <td [hidden]="!diaChiDVTV" class="text-truncate">{{ item.consultantAddress }}</td>
                         <td [hidden]="!soDienThoaiDVTV" class="text-truncate">{{ item.consultantPhone }}</td>
-                        <td [hidden]="!loaiKhachHang" class="text-truncate">{{ item.customer?.customerNewOldType }}</td>
+                        <td [hidden]="!loaiKhachHang" class="text-truncate">{{ item.classify | translate }}</td>
                         <td [hidden]="!lyDoTrungThau" class="text-truncate">{{ item.acceptanceReason }}</td>
                         <td [hidden]="!lyDoTratThau" class="text-truncate">{{ item.unacceptanceReason }}</td>
                         <td [hidden]="!ngayBatDau" class="text-truncate">
