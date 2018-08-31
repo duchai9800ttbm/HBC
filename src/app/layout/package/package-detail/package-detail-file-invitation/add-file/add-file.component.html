@@ -137,9 +137,9 @@
                 <div>
                     <table id="table-file-scroll" [hidden]="!showTable" datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="table-selection table-responsive row-border cell-border ">
                         <thead>
-                            <tr type="check">
+                            <tr>
 
-                                <th class="stt" style="background-color: #f68e56!important;">
+                                <th type="check" class="stt" style="background-color: #f68e56!important;">
                                     <div class="d-flex justify-content-around">
                                         <div style="width: 35%;" class="center-parent">
                                             <div>STT</div>
@@ -240,14 +240,14 @@
                             <ng-container *ngFor="let bidDocumentGroup of bidDocumentGroupListItemSearchResult; let i = index;">
                                 <ng-container *ngFor="let item of bidDocumentGroup.items; let k = index;">
                                     <tr>
-                                        <td class=" stt d-flex justify-content-around">
+                                        <td type="check" class=" stt d-flex justify-content-around">
                                             <div style="width: 35%;">
                                                 <label class="custom-control custom-checkbox">
                                                     <input type="checkbox" class="custom-control-input" [(ngModel)]="item.checkboxSelected">
                                                     <span class="custom-control-indicator"></span>
                                                 </label>
                                             </div>
-                                            <div style="width: 35%;" class="center-parent">
+                                            <div style="width: 35%;" class=" ml-1 center-parent">
                                                 <div>{{renderIndex(i , k)}}</div>
                                             </div>
                                         </td>
@@ -263,8 +263,8 @@
                                         <td *ngIf="k != 0" style="display: none">
 
                                         </td>
-                                        <td>
-                                            <span [title]="item.documentName">{{ item.documentName }}</span>
+                                        <td [title]="item.documentName">
+                                            {{ item.documentName }}
                                         </td>
                                         <td class="text-center">{{ item.version }}</td>
                                         <td class="">{{ item.desc }}</td>

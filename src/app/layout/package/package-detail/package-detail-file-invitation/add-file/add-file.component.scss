@@ -170,8 +170,8 @@ table.dataTable th {
 }
 
 .stt {
-    min-width: 30px;
-    max-width: 30px !important;
+    // min-width: 30px;
+    // max-width: 30px !important;
 }
 
 .td-group {
@@ -619,8 +619,13 @@ table.dataTable th {
 }
 
 table.dataTable {
-    overflow-x: scroll;
+    tr:nth-child(odd) {background-color: #fafbfc;}
 
+    overflow-x: scroll;
+    // th:first-child,td:first-child {
+    //     width: 70px!important;
+    //     max-width: 80px;
+    // }
     th:not([type="check"]),
     td:not([type="check"]) {
         min-width: 100px;
