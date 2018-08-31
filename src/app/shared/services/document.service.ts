@@ -81,18 +81,6 @@ export class DocumentService {
             });
     }
 
-    // filterAndSearch(
-    //     searchTerm: string,
-    //     filter: BidDocumentFilter,
-    // ): Observable<BidDocumentModel[]> {
-    //     const filterUrl = `bidopportunity/filter/${0}/${1000}?searchTerm=`;
-    //     const urlParams = DocumentService.createFilterParams(filter);
-    //     urlParams.append('search', searchTerm);
-    //     return this.apiService.get(filterUrl, urlParams)
-    //     .map(response =>  response.result as BidDocumentModel[]);
-    // }
-
-    // danh sách loại tài liệu chính thức
     bidDocumentMajortypes(): Observable<any> {
         const url = `biddocumentmajortypes`;
         return this.apiService.get(url).map(response => {
@@ -206,7 +194,7 @@ export class DocumentService {
         return listGroup;
     }
     // convert list => listGroup
-        group(source: BidDocumentModel[]): BidDocumentGroupModel[] {
+    group(source: BidDocumentModel[]): BidDocumentGroupModel[] {
         const groupedObj = source.reduce((prev, cur) => {
             if (!prev[cur['documentType']]) {
                 prev[cur['documentType']] = [cur];
@@ -229,6 +217,9 @@ export class DocumentService {
                 const day = moment.utc(y.createdDate * 1000).get('date');
                 const month = moment.utc(y.createdDate * 1000).get('month');
                 const year = moment.utc(y.createdDate * 1000).get('year');
+                const day2 = moment.utc(y.receivedDate * 1000).get('date');
+                const month2 = moment.utc(y.receivedDate * 1000).get('month');
+                const year2 = moment.utc(y.receivedDate * 1000).get('year');
                 return {
                     id: y.id,
                     documentType: y.documentType,
@@ -241,6 +232,9 @@ export class DocumentService {
                     day: day,
                     month: month + 1,
                     year: year,
+                    day2: day2,
+                    month2: month2 + 1,
+                    year2: year2,
                     employeeId: y.uploadedBy.employeeId
                 };
             });
@@ -273,6 +267,9 @@ export class DocumentService {
             delete element.day;
             delete element.month;
             delete element.year;
+            delete element.day2;
+            delete element.month2;
+            delete element.year2;
             delete element.employeeId;
         });
         return source;
@@ -280,6 +277,8 @@ export class DocumentService {
 
     sortAndSearch(searchTerm: string, filterModel: BidDocumentFilter, source: any[]) {
         let day = null, month = null, year = null;
+        let day2 = null, month2 = null, year2 = null;
+
         if (filterModel.createDate) {
             const today = new Date(
                 moment(filterModel.createDate).unix()
@@ -287,7 +286,17 @@ export class DocumentService {
             day = moment(filterModel.createDate).get('date');
             month = moment(filterModel.createDate).get('month') + 1;
             year = moment(filterModel.createDate).get('year');
+
         }
+        if (filterModel.receivedDate) {
+            const today2 = new Date(
+                moment(filterModel.receivedDate).unix()
+            );
+            day2 = moment(filterModel.receivedDate).get('date');
+            month2 = moment(filterModel.receivedDate).get('month') + 1;
+            year2 = moment(filterModel.receivedDate).get('year');
+        }
+
         return this.filterService
             .transform(source,
                 {
@@ -296,7 +305,10 @@ export class DocumentService {
                     employeeId: filterModel.uploadedEmployeeId ? +filterModel.uploadedEmployeeId : null,
                     day: `${day ? day : ''}`,
                     month: `${month ? month : ''}`,
-                    year: `${year ? year : ''}`
+                    year: `${year ? year : ''}`,
+                    day2: `${day2 ? day2 : ''}`,
+                    month2: `${month2 ? month2 : ''}`,
+                    year2: `${year2 ? year2 : ''}`
                 });
     }
 }

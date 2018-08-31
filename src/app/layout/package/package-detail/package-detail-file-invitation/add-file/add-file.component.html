@@ -1,352 +1,88 @@
-<div id="outer-table">
-    <div class="table-small mt-3">
-        <div id="header-table" class=" title-list-package d-flex flex-wrap align-items-start status-filter">
-            <div class="status mr-auto d-flex align-items-end list-package mt-2 mb-2">
-                <div class="d-flex justify-content-start" style="height: 40px;" id="res-header">
-                    <div class="rule mr-2">
-                    </div>
-                    <div class="center-parent  mr-2" style="font-size: 16px">
-                        <div>Danh sách bộ HSMT</div>
-                    </div>
-                    <div class="alert alert-danger alert-trim status-package center-parent">
-                        <div>Cần bổ sung HSMT</div>
+<div class="example-wrapper">
+    <kendo-dialog (close)="close('cancel')" [width]="700" class="width-kendo-dialog">
+        <form [formGroup]="uploadForm" novalidate>
+            <div class="title-detail center-parent">
+                <div class="col-md-1"></div>
+                <div class="mr-auto col-md-10">
+                    <div class="media-header center-parent">
+                        <h3 class="d-inline mb-0 text-dark bold-title">UPLOAD HSMT</h3>
                     </div>
                 </div>
+                <div class="col-md-1 close-popup">
+                    <span (click)="close('cancel')">X</span>
+                </div>
             </div>
-            <div class="search">
-                <div class="btn-toolbar-2 mt-2 mb-2">
+            <hr>
+            <div class="d-flex">
+                <div class="w-100  mr-auto">
                     <div>
-                        <div>
-                            <div class="input-group ml-auto" style="width: 250px">
-                                <span class="input-group-addon">Tìm kiếm theo</span>
-                                <input type="text" class="form-control icon" placeholder="&#xf002; Tên tài liệu"
-                                    (keyup)="search($event.target.value)">
-                            </div>
-                        </div>
-
-                    </div>
-                    <div class="mt-2">
-                        <button class="btn btn-primary" (click)="multiDelete()">
-                            Xóa
-                        </button>
-                        <button class="btn btn-primary ml-2">
-                            Tải xuống tài liệu
-                        </button>
-
-                        <div class="btn-group ml-2" ngbDropdown>
-                            <button type="button" class="btn btn-primary" ngbDropdownToggle data-toggle="dropdown"
-                                aria-haspopup="true" aria-expanded="false">
-                                Upload HSMT
-                            </button>
-                            <div class="dropdown-menu" ngbDropdownMenu>
-                                <div class="fileUpload dropdown-item" (click)="openPopupUploadFile('Drawing')">
-                                    <a>Bản vẽ</a>
-                                </div>
-                                <div class="dropdown-divider"></div>
-                                <div class="fileUpload dropdown-item" (click)="openPopupUploadFile('Book')">
-                                    <a>Cuốn hồ sơ mời thầu</a>
-                                </div>
-                                <div class="dropdown-divider"></div>
-                                <div class="fileUpload dropdown-item" (click)="openPopupUploadFile('TechnicalStandard')">
-                                    <a>Tiêu chuẩn kỹ thuật</a>
-                                </div>
-                                <div class="dropdown-divider"></div>
-                                <div class="fileUpload dropdown-item" (click)="openPopupUploadFile('BOQ')">
-                                    <a>BOQ</a>
-                                </div>
-                                <div class="dropdown-divider"></div>
-                                <div class="fileUpload dropdown-item" (click)="openPopupUploadFile('GeologicalSurvey')">
-                                    <a>Khảo sát địa chất</a>
-                                </div>
-                            </div>
-                        </div>
-                        <button class="btn btn-primary ml-2" (click)="fullHSMT()">
-                            Đã đủ HSMT
-                        </button>
-                        <button class="btn btn-primary ml-2" (click)="refresh(true)">
-                            <i class="fa fa-refresh" aria-hidden="true"></i>
-                        </button>
-
-
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div id="main-content">
-            <div id="toggle-menu" [class.menu-left]="isShowMenu" style="width: 212px;">
-                <div class="button-click" (click)="toggleClick()">
-                    <div class="iconButton iconN1"></div>
-                    <div class="iconButton iconN2" style="margin: 3px 0;"></div>
-                    <div class="iconButton iconN3"></div>
-                </div>
-                <div id="toggle-menu-item" *ngIf="majorTypeListItem">
-                    <ng-container *ngFor="let item of majorTypeListItem; let i = index">
-                        <div class="toggle-menu-item" [class.active-menu]="(currentMajorTypeId == item.id)" (click)="filterMajorTypeListItem(item.id)">{{item?.text}}</div>
-                        <div class="line" *ngIf="!(majorTypeListItem.length == i+1)" style="width: calc(100% - 10px); border-top: #ccecf9 solid 1px; height: 1px; border-left: 1px; margin-left: 10px;"></div>
-                    </ng-container>
-                </div>
-            </div>
-            <div class="bot-table" [class.table-toggle-2]="isShowMenu" style="width: calc(100% - 230px);">
-                <div class="d-flex flex-row flex-wrap filter-bar custom-filter-bar" style="background-color: #fafbfc">
-                    <div class="d-flex form-inline ">
-                        <div class="form-group ml-sm-2 p-1">
-                            <label for="" class="form-label">Tình trạng</label>
-                            <span class="custom-dropdown mx-sm-2">
-                                <select class="form-control" [(ngModel)]="filterModel.status">
-                                    <option value="">Tất cả</option>
-                                    <option value="Official">Chính thức</option>
-                                    <option value="Draft">Bản nháp</option>
-                                </select>
-                            </span>
-                        </div>
-
-                        <div class="form-group ml-sm-2 p-1">
-                            <label for="" class="form-label">Ngày upload</label>
-                            <div class="input-group calendarInput">
-                                <owl-date-time [(ngModel)]="filterModel.createDate" [locale]="datePickerConfig.vi"
-                                    [placeHolder]="datePickerConfig.datePlaceHolder" [type]="datePickerConfig.calendarType"
-                                    pickerType="calendar" [dateFormat]="datePickerConfig.dateFormat">
-                                </owl-date-time>
-                                <span class="input-group-addon">
-                                    <i class="fa fa-calendar"></i>
-                                </span>
-                            </div>
-                        </div>
-
-                        <div class="form-group ml-sm-2 p-1">
-                            <label for="" class="form-label">Ngày nhận HSMT</label>
-                            <div class="input-group calendarInput">
-                                <owl-date-time [(ngModel)]="filterModel.createDate" [locale]="datePickerConfig.vi"
-                                    [placeHolder]="datePickerConfig.datePlaceHolder" [type]="datePickerConfig.calendarType"
-                                    pickerType="calendar" [dateFormat]="datePickerConfig.dateFormat">
-                                </owl-date-time>
-                                <span class="input-group-addon">
-                                    <i class="fa fa-calendar"></i>
-                                </span>
-                                <!-- <kendo-datepicker [(ngModel)]="filterModel.createDate" class="w-100"></kendo-datepicker> -->
-                            </div>
-                        </div>
-                        <div class="form-group ml-sm-2 p-1">
-
-                            <button type="submit" class="btn btn-primary ml-sm-2" (click)="filter()">
-                                <i class="fa fa-filter" aria-hidden="true"></i>&nbsp; Lọc
-                            </button>
-                            <button class="btn btn-secondary ml-sm-2" (click)="clearFilter()">
-                                <i class="fa fa-times"></i>&nbsp; Xóa lọc
-                            </button>
-                        </div>
-                    </div>
-
-                </div>
-
-                <div>
-                    <table id="table-file-scroll" [hidden]="!showTable" datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger"
-                        class="table-selection table-responsive row-border cell-border ">
-                        <thead>
-                            <tr type="check">
-
-                                <th class="stt" style="background-color: #f68e56!important;">
-                                    <div class="d-flex justify-content-around">
-                                        <div style="width: 35%;" class="center-parent">
-                                            <div>STT</div>
-                                        </div>
-
-                                    </div>
-                                </th>
-                                <th style=" background-color: #f68e56!important;" [hidden]="currentMajorTypeId != 1">
-                                    <div class="d-flex justify-content-center">
-
-                                        <div class="center-parent" style="white-space: pre-line!important;">
-                                            <div>Loại tài liệu</div>
-                                        </div>
-
-                                    </div>
-                                </th>
-                                <th style=" background-color: #f68e56!important;">
-                                    <div class="d-flex justify-content-center">
-
-                                        <div class="center-parent">
-                                            <div>Tên tài liệu</div>
-                                        </div>
-
-                                    </div>
-
-                                </th>
-                                <th style="background-color: #f68e56!important;">
-                                    <div class="d-flex justify-content-center">
-
-                                        <div class="center-parent">
-                                            <div>Phiên bản</div>
-                                        </div>
-
-                                    </div>
-
-                                </th>
-                                <th style="background-color: #f68e56!important;">
-                                    <div class="d-flex justify-content-center">
-
-                                        <div class="center-parent">
-                                            <div>Mô tả</div>
-                                        </div>
-
-                                    </div>
-
-                                </th>
-                                <th class="th-mark-status" style="background-color: #f68e56!important;">
-
-                                    <div class="d-flex justify-content-center">
-
-                                        <div style="width: 80%;" class="center-parent">
-                                            <div>Tình trạng</div>
-                                        </div>
-
-                                    </div>
-
-
-                                </th>
-
-                                <th style=" background-color: #f68e56!important;">
-                                    <div class="d-flex justify-content-center">
-
-                                        <div class="center-parent">
-                                            <div>Ngày upload</div>
-                                        </div>
-
-                                    </div>
-
-
-
-                                </th>
-                                <th style="background-color: #f68e56!important;">
-                                    <div class="d-flex justify-content-center">
-
-                                        <div class="center-parent">
-                                            <div>Người upload</div>
-                                        </div>
-
-                                    </div>
-                                <th style="background-color: #f68e56!important;">
-                                    <div class="d-flex justify-content-center">
-
-                                        <div class="center-parent">
-                                            <div>Ngày nhận</div>
-                                        </div>
-
-                                    </div>
-
-
-
-                                </th>
-                                <th class="table-action text-center" style="background-color: #f68e56!important;">
-                                    Thao tác
-                                </th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <ng-container *ngFor="let bidDocumentGroup of bidDocumentGroupListItemSearchResult; let i = index;">
-                                <ng-container *ngFor="let item of bidDocumentGroup.items; let k = index;">
+                        <div class="body cus-header" id="info-main" [ngbCollapse]="isCollapsedMain">
+                            <table class="w-100 table">
+                                <tbody>
                                     <tr>
-                                        <td class=" stt d-flex justify-content-around">
-                                            <div style="width: 35%;">
-                                                <label class="custom-control custom-checkbox">
-                                                    <input type="checkbox" class="custom-control-input" [(ngModel)]="item.checkboxSelected">
-                                                    <span class="custom-control-indicator"></span>
-                                                </label>
+                                        <td class="w-30 label no-boder bold-title">Đường dẫn link</td>
+                                        <td class="w-70 no-boder">
+                                            <input (change)="inputChange()" class="w-100" kendoTextBox formControlName="link" tabindex="1" type="text">
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="w-30 label no-boder bold-title">Hoặc</td>
+                                        <td class="no-boder d-flex justify-content-between">
+                                            <div class="fileUpload">
+                                                <button class="btn btn-primary">
+                                                    <i class="fa fa-cloud-upload" aria-hidden="true"></i>&nbsp;&nbsp; Chọn File</button>
+                                                <input type="file" class="upload" (change)="fileChange($event)" />
                                             </div>
-                                            <div style="width: 35%;" class="center-parent">
-                                                <div>{{renderIndex(i , k)}}</div>
-                                            </div>
-                                        </td>
-                                        <td [hidden]="currentMajorTypeId != 1" valign="baseline" [attr.rowspan]="bidDocumentGroup.items.length"
-                                            *ngIf="k == 0" class="td-group">
-                                            <div class="d-flex  document-type center-parent">
-                                                <div style="width: calc(100% - 25px);"> {{ item.documentType }}</div>
-                                                <div style="width: 25px;" (click)="uploadFileItem(item.documentType)"
-                                                    style="cursor: pointer" title="Upload tài liệu">
-                                                    <img width="25" height="25" src="assets\images\document.png">
-                                                </div>
-                                            </div>
-
-                                        </td>
-                                        <td *ngIf="k != 0" style="display: none">
-
-                                        </td>
-                                        <td>
-                                            <span [title]="item.documentName">{{ item.documentName }}</span>
-                                        </td>
-                                        <td class="text-center">{{ item.version }}</td>
-                                        <td class="">{{ item.desc }}</td>
-
-                                        <td class="td-mark-status">
-                                            <div class="d-flex justify-content-between">
-                                                <div class="text-truncate text-right" [title]="item.status">
-                                                    {{ item.status | translate }}
-                                                </div>
-                                                <div (click)="changeStatus(item.id, item.status, item.documentType)"
-                                                    [title]="item.status">
-                                                    <i class="fa fa-check-square color-item-down" style="cursor: pointer;"
-                                                        aria-hidden="true" *ngIf="item.status === 'Official'"></i>
-                                                    <i class="fa fa-check-square color-item-test" style="cursor: pointer;"
-                                                        aria-hidden="true" *ngIf="item.status === 'Draft'"></i>
-                                                </div>
-                                            </div>
-
-
-                                        </td>
-
-                                        <td class="text-center">{{ item.createdDate*1000 | date:'dd/MM/yyyy HH:mm':
-                                            '+0000'}}</td>
-                                        <td class="text-center">{{ item.uploadedBy?.employeeName }}</td>
-
-                                        <td class="text-center">
-                                            <span *ngIf="item.receivedDate">{{ item.receivedDate*1000 |
-                                                date:'dd/MM/yyyy':
-                                                '+0000' }}</span>
-                                        </td>
-                                        <td>
-                                            <div class="d-flex justify-content-around">
-                                                <div style="cursor: pointer;" title="Tải file" (click)="dowloadDocument(item.id)">
-                                                    <a>
-                                                        <i class="fa fa-download color-item-down" aria-hidden="true"></i>
-                                                    </a>
-                                                </div>
-                                                <div (click)="deleteDocument(item.id)" style="cursor: pointer;" title="Xóa">
-                                                    <a class="text-success ml-3">
-                                                        <i class="fa fa-trash-o" aria-hidden="true"></i>
-                                                    </a>
+                                            <div style="width: calc(100% - 120px);" ngIf="file" class="d-flex justify-content-between">
+                                                <div>{{file.name}}</div>
+                                                <div>
+                                                    <button (click)="deleteFileUpload()" class="btn btn-secondary">X</button>
                                                 </div>
                                             </div>
                                         </td>
                                     </tr>
-                                </ng-container>
-
-                            </ng-container>
-                            <tr *ngIf="tableEmpty">
-                                <td colspan="8">Không có dữ liệu</td>
-                            </tr>
-                        </tbody>
-                    </table>
-
-                    <div>
-                        <div style="margin-top: 15px" *ngIf="showTable">
-                            <span>Hiển thị</span> <span class="font-weight-bold">&nbsp;{{sum}}&nbsp;</span> <span>kết
-                                quả</span>
+                                    <tr>
+                                        <td class="w-30 label no-boder bold-title">Loại HSMT</td>
+                                        <td class="no-boder d-flex">
+                                            <kendo-dropdownlist class="w-100" formControlName="type" [textField]="'text'" [valueField]="'id'" [data]="listTypeFile">
+                                            </kendo-dropdownlist>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="w-30 label no-boder bold-title">Tên</td>
+                                        <td class="w-70 no-boder">
+                                            <input class="w-100" kendoTextBox tabindex="1" type="text" formControlName="editName" [class.is-invalid]="formErrors.editName">
+                                            <div class="invalid-feedback" ngIf="formErrors.editName">
+                                                {{formErrors.editName}}
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="w-30 label no-boder bold-title">Ngày nhận HSMT</td>
+                                        <td class="no-boder d-flex">
+                                            <kendo-datepicker class="w-100" formControlName="date"></kendo-datepicker>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="w-30 label no-boder bold-title">Mô tả/Nội dung cập nhật</td>
+                                        <td class="w-70 no-boder">
+                                            <textarea kendoTextArea cols="3" rows="3" class="w-100 form-control no-resize-textarea" formControlName="description"></textarea>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
                         </div>
-                        <div style="margin-top: 15px" class="center-parent" *ngIf="!showTable">
-                            <div>
-                                Không có dữ liệu được hiển thị!
-                            </div>
-                        </div>
+
                     </div>
-
+                    <div class="action-bar alignment-but center-parent">
+                        <button type="submit" class="btn btn-primary ml-2 cus-but-cs" (click)="submitForm()">Upload
+                        </button>
+                        <button class="btn btn-secondary ml-2 cus-but-cs" (click)="close('cancel')">Hủy
+                        </button>
+                    </div>
                 </div>
             </div>
-        </div>
-
-
-
-    </div>
-
-    <ngx-spinner bdColor="rgba(51, 51, 51, 0.7)" size="medium" color="#fff" type="ball-clip-rotate-multiple"></ngx-spinner>
-    <app-upload-file [typeFile]="typeFileUpload" [majorTypeId]="currentMajorTypeId" [packageId]="packageId" *ngIf="showPopupAdd"
-        (closed)="closePopup($event)"></app-upload-file>
+        </form>
+    </kendo-dialog>
+</div>
+<ngx-spinner bdColor="rgba(51, 51, 51, 0.7)" size="medium" color="#fff" type="ball-clip-rotate-multiple"></ngx-spinner>

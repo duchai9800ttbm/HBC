@@ -36,8 +36,8 @@ export class AddFileComponent implements OnInit {
     packageId;
     showPopupAdd = false;
     typeFileUpload = {
-        id: 1,
-        text: 'Bản vẽ',
+        id: '2',
+        text: 'Quyển HSMT',
     };
     userListItem: UserItemModel[];
     ListItem: BidDocumentModel[];
@@ -64,6 +64,15 @@ export class AddFileComponent implements OnInit {
         this.packageId = +PackageDetailComponent.packageId;
         this.packageService.getInforPackageID(this.packageId).subscribe(result => {
             this.packageData = result;
+            switch (this.packageData.stageStatus.id) {
+                case 'DaCoHSMT': {
+                  this.router.navigate([`/package/detail/${this.packageId}/invitation/full-file`]);
+                    break;
+                }
+                default: {
+                    break;
+                }
+            }
         });
         // config
         window.scrollTo(0, 0);
@@ -111,6 +120,7 @@ export class AddFileComponent implements OnInit {
     filter() {
         this.bidDocumentGroupListItemSearchResult = this.documentService
             .filter(this.searchTerm, this.filterModel, this.bidDocumentGroupListItem);
+        console.log(this.bidDocumentGroupListItemSearchResult);
         this.showTable = this.bidDocumentGroupListItemSearchResult.length > 0;
 
         this.dtTrigger.next();
@@ -128,62 +138,62 @@ export class AddFileComponent implements OnInit {
     }
 
     openPopupUploadFile(documentType) {
-        // if (documentType === 'Drawing') {
-        //     this.typeFileUpload = {
-        //         id: 'Drawing',
-        //         text: 'Bản vẽ',
-        //     };
-        // } else if (documentType === 'Book') {
-        //     this.typeFileUpload = {
-        //         id: 'Book',
-        //         text: 'Cuốn hồ sơ mời thầu',
-        //     };
-        // } else if (documentType === 'TechnicalStandard') {
-        //     this.typeFileUpload = {
-        //         id: 'TechnicalStandard',
-        //         text: 'Tiêu chuẩn kĩ thuật',
-        //     };
-        // } else if (documentType === 'BOQ') {
-        //     this.typeFileUpload = {
-        //         id: 'BOQ',
-        //         text: 'BOQ',
-        //     };
-        // } else if (documentType === 'GeologicalSurvey') {
-        //     this.typeFileUpload = {
-        //         id: 'GeologicalSurvey',
-        //         text: 'Khảo sát địa chất',
-        //     };
-        // }
+        if (documentType === '2') {
+            this.typeFileUpload = {
+                id: '2',
+                text: 'Quyển HSMT',
+            };
+        } else if (documentType === '3') {
+            this.typeFileUpload = {
+                id: '3',
+                text: 'Bản vẽ thuyết minh',
+            };
+        } else if (documentType === '4') {
+            this.typeFileUpload = {
+                id: '4',
+                text: 'BOQ',
+            };
+        } else if (documentType === '5') {
+            this.typeFileUpload = {
+                id: '5',
+                text: 'Tiêu chí kỹ thuật (Specs)',
+            };
+        } else if (documentType === '6') {
+            this.typeFileUpload = {
+                id: '6',
+                text: 'Các báo cáo và các tài liệu kỹ thuật (KSDQ)',
+            };
+        }
         this.showPopupAdd = true;
     }
 
-    uploadFileItem(type) {
-        // if (type === 'Drawing') {
-        //     this.typeFileUpload = {
-        //         id: 'Drawing',
-        //         text: 'Bản vẽ',
-        //     };
-        // } else if (type === 'Book') {
-        //     this.typeFileUpload = {
-        //         id: 'Book',
-        //         text: 'Cuốn hồ sơ mời thầu',
-        //     };
-        // } else if (type === 'TechnicalStandard') {
-        //     this.typeFileUpload = {
-        //         id: 'TechnicalStandard',
-        //         text: 'Tiêu chuẩn kĩ thuật',
-        //     };
-        // } else if (type === 'BOQ') {
-        //     this.typeFileUpload = {
-        //         id: 'BOQ',
-        //         text: 'BOQ',
-        //     };
-        // } else if (type === 'GeologicalSurvey') {
-        //     this.typeFileUpload = {
-        //         id: 'GeologicalSurvey',
-        //         text: 'Khảo sát địa chất',
-        //     };
-        // }
+    uploadFileItem(documentType) {
+        if (documentType === 'Quyển HSMT') {
+            this.typeFileUpload = {
+                id: '2',
+                text: 'Quyển HSMT',
+            };
+        } else if (documentType === 'Bản vẽ thuyết minh') {
+            this.typeFileUpload = {
+                id: '3',
+                text: 'Bản vẽ thuyết minh',
+            };
+        } else if (documentType === 'BOQ') {
+            this.typeFileUpload = {
+                id: '4',
+                text: 'BOQ',
+            };
+        } else if (documentType === 'Tiêu chí kĩ thuật (Specs)') {
+            this.typeFileUpload = {
+                id: '5',
+                text: 'Tiêu chí kỹ thuật (Specs)',
+            };
+        } else if (documentType === 'Các báo cáo và các tài liệu khác (KSDQ)') {
+            this.typeFileUpload = {
+                id: '6',
+                text: 'Các báo cáo và các tài liệu khác (KSDQ)',
+            };
+        }
         this.showPopupAdd = true;
     }
 
@@ -272,35 +282,63 @@ export class AddFileComponent implements OnInit {
     }
 
     changeStatus(id, status, type) {
-        this.bidDocumentGroupListItem.forEach(i => {
-            if (i.documentType === type) {
-                i.items.forEach(item => {
-                    if (item.id !== +id) {
-                        item.status = 'Draft';
-                    }
+        if (status === 'Draft') {
+            this.documentService.updateStatus(id, 'Official').subscribe(data => {
+                this.documentService.read(this.packageId, this.currentMajorTypeId).subscribe(response => {
+                    this.bidDocumentGroupListItem = response;
+                    this.bidDocumentGroupListItemSearchResult = response;
+                    this.showTable = this.bidDocumentGroupListItemSearchResult.length > 0;
+
+                    this.dtTrigger.next();
+                    this.spinner.hide();
+                    this.alertService.success('Dữ liệu đã được cập nhật mới nhất!');
                 });
-                i.items.forEach(item => {
-                    if (item.id === +id) {
-                        item.status = status === 'Draft' ? 'Official' : 'Draft';
-                    }
+            });
+
+        }
+        if (status === 'Official') {
+            this.documentService.updateStatus(id, 'Draft').subscribe(data => {
+                this.documentService.read(this.packageId, this.currentMajorTypeId).subscribe(response => {
+                    this.bidDocumentGroupListItem = response;
+                    this.bidDocumentGroupListItemSearchResult = response;
+                    this.showTable = this.bidDocumentGroupListItemSearchResult.length > 0;
+
+                    this.dtTrigger.next();
+                    this.spinner.hide();
+                    this.alertService.success('Dữ liệu đã được cập nhật mới nhất!');
                 });
-            }
-        });
-        this.bidDocumentGroupListItemSearchResult.forEach(i => {
-            if (i.documentType === type) {
-                i.items.forEach(item => {
-                    if (item.id !== +id) {
-                        item.status = 'Draft';
-                    }
-                });
-                i.items.forEach(item => {
-                    if (item.id === +id) {
-                        item.status = status === 'Draft' ? 'Official' : 'Draft';
-                        this.documentService.updateStatus(id, item.status).subscribe();
-                    }
-                });
-            }
-        });
+            });
+
+        }
+        // this.bidDocumentGroupListItem.forEach(i => {
+        //     if (i.documentType === type) {
+        //         i.items.forEach(item => {
+        //             if (item.id !== +id) {
+        //                 item.status = 'Draft';
+        //             }
+        //         });
+        //         i.items.forEach(item => {
+        //             if (item.id === +id) {
+        //                 item.status = status === 'Draft' ? 'Official' : 'Draft';
+        //             }
+        //         });
+        //     }
+        // });
+        // this.bidDocumentGroupListItemSearchResult.forEach(i => {
+        //     if (i.documentType === type) {
+        //         i.items.forEach(item => {
+        //             if (item.id !== +id) {
+        //                 item.status = 'Draft';
+        //             }
+        //         });
+        //         i.items.forEach(item => {
+        //             if (item.id === +id) {
+        //                 item.status = status === 'Draft' ? 'Official' : 'Draft';
+        //                 this.documentService.updateStatus(id, item.status).subscribe();
+        //             }
+        //         });
+        //     }
+        // });
     }
 
 

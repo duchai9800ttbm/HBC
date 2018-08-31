@@ -1,4 +1,4 @@
-<div [@routerTransition]  >
+<div [@routerTransition]>
   <div class="title-detail center-parent" [class.title-detail-toggle]="isToggle" *ngIf="packageData">
     <div class="mr-auto col-md-12">
       <div class="media-header header-title" style="padding: 0px">
@@ -28,10 +28,12 @@
       <div class="action" style="width: calc(25% - 10px)" [routerLinkActive]="['router-link-active']" [routerLink]="['/package/detail', packageId ,'invitation']">
         HỒ SƠ MỜI THẦU
       </div>
-      <div class="action" style="width: calc(25% - 10px)" [routerLinkActive]="['router-link-active']" [routerLink]="['/package/detail', packageId ,'attend']">
+      <div class="no-action" style="width: calc(25% - 10px)" [routerLinkActive]="['router-link-active']">
         DỰ THẦU
+        <!-- [routerLink]="['/package/detail', packageId ,'attend']" -->
       </div>
-      <div class="action" style="width: calc(25% - 10px)" [routerLinkActive]="['router-link-active']" [routerLink]="['/package/detail', packageId ,'result']">
+      <div class="no-action" style="width: calc(25% - 10px)" [routerLinkActive]="['router-link-active']">
+        <!-- [routerLink]="['/package/detail', packageId ,'result']" -->
         KẾT QUẢ DỰ THẦU
       </div>
     </div>

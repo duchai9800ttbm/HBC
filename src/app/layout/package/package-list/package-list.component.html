@@ -5,16 +5,18 @@
         <div class="btn-toolbar">
             <div class="input-group">
                 <span class="input-group-addon">Tìm kiếm theo</span>
-                <input type="text" class="form-control" placeholder="Tên, vai trò, chủ trì" (keyup)="searchTerm$.next($event.target.value)">
+                <input type="text" class="form-control" placeholder="Tên, chủ trì" (keyup)="searchTerm$.next($event.target.value)">
             </div>
-            <div class="btn-group ml-2" ngbDropdown>
-                <button type="button" class="btn btn-primary" ngbDropdownToggle data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    Công cụ &nbsp;&nbsp;
-                </button>
-                <div class="dropdown-menu" ngbDropdownMenu>
-                    <a class="dropdown-item" (click)="exportFileExcel()">Xuất file</a>
-                    <!-- <div class="dropdown-divider"></div>
-                    <a class="dropdown-item">Tải template</a> -->
+            <div class="btn-group ml-2" ngbDropdown #DropTool="ngbDropdown">
+                <div #DropTool2>
+                    <button type="button" class="btn btn-primary" ngbDropdownToggle data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Công cụ &nbsp;&nbsp;
+                    </button>
+                    <div class="dropdown-menu" ngbDropdownMenu>
+                        <a class="dropdown-item" (click)="exportFileExcel()">Xuất file</a>
+                        <!-- <div class="dropdown-divider"></div>
+                                <a class="dropdown-item">Tải template</a> -->
+                    </div>
                 </div>
             </div>
             <button *ngIf="isCreateBidOpportunity" class="btn btn-primary ml-2" [routerLink]="['/package/create']">
@@ -75,7 +77,8 @@
                     <i class="fa fa-times"></i>&nbsp;&nbsp; Xóa lọc
                 </button>
             </div>
-            <div class="filter-bar center-parent" style="width: 80px; margin-left: 10px; text-align: center" ngbDropdown #myDrop="ngbDropdown" placement="bottom-right">
+            <div class="filter-bar center-parent" style="width: 80px; margin-left: 10px; text-align: center" ngbDropdown #myDrop="ngbDropdown"
+                placement="bottom-right">
                 <div #myDrop2>
                     <div style="cursor: pointer; padding-left: 10px; padding-right: 10px;" class="d-flex justify-content-around center-parent h-100"
                         ngbDropdownToggle>
@@ -224,7 +227,7 @@
                         </th>
                         <th [hidden]="!loaiCongTrinh">
                             <div class="d-flex justify-content-start">
-                                <div style="margin-right: 10px">Phân loại công trình</div>
+                                <div style="margin-right: 10px">Loại công trình</div>
                                 <div class="center-parent">
                                     <div>
                                         <i class="fa fa-caret-down" style="color: #ffff;"></i>
@@ -360,10 +363,22 @@
                                 </div>
                             </div>
                         </th>
+
+                        <!-- <th [hidden]="!dientichsan">
+                            <div class="d-flex justify-content-start">
+                                <div style="margin-right: 10px">Diện tích sàn (m2)</div>
+                                <div class="center-parent">
+                                    <div>
+                                        <i class="fa fa-caret-down" style="color: #ffff;"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </th> -->
+
                         <th [hidden]="!loaiKhachHang">
                             <div class="d-flex justify-content-start">
                                 <!-- <div style="margin-right: 10px">Loại khách hàng</div> -->
-                                <div style="margin-right: 10px">Phân loại</div>
+                                <div style="margin-right: 10px">Loại khách hàng</div>
                                 <div class="center-parent">
                                     <div>
                                         <i class="fa fa-caret-down" style="color: #ffff;"></i>
@@ -393,7 +408,7 @@
                         </th>
                         <th [hidden]="!ngayBatDau">
                             <div class="d-flex justify-content-start">
-                                <div style="margin-right: 10px">Ngày bắt đầu theo dõi</div>
+                                <div style="margin-right: 10px">Ngày bắt đầu</div>
                                 <div class="center-parent">
                                     <div>
                                         <i class="fa fa-caret-down" style="color: #ffff;"></i>
@@ -413,7 +428,7 @@
                         </th>
                         <th [hidden]="!ngayNhanHoSoMoiThau">
                             <div class="d-flex justify-content-start">
-                                <div style="margin-right: 10px">Ngày nộp hồ sơ mời thầu</div>
+                                <div style="margin-right: 10px">Ngày nhận hồ sơ mời thầu</div>
                                 <div class="center-parent">
                                     <div>
                                         <i class="fa fa-caret-down" style="color: #ffff;"></i>
@@ -453,7 +468,7 @@
                         </th>
                         <th [hidden]="!diaDiem">
                             <div class="d-flex justify-content-start">
-                                <div style="margin-right: 10px">Địa điểm</div>
+                                <div style="margin-right: 10px">Khu vực</div>
                                 <div class="center-parent">
                                     <div>
                                         <i class="fa fa-caret-down" style="color: #ffff;"></i>
@@ -528,23 +543,37 @@
                                 </div>
                             </div>
                         </td>
-                        <td [hidden]="!khuVuc" class="text-truncate">{{item.region | translate}}</td>
+                        <td [hidden]="!khuVuc" class="text-truncate">{{item.location.value | translate}}</td>
                         <!-- <td [hidden]="!congViec" class="text-truncate">{{ item.job }}</td> -->
                         <td [hidden]="!tienDoThucHien" class="text-truncate text-right">{{ item.progress }}</td>
-                        <td [hidden]="!linkTaiLieu" class="text-truncate cus-pointer" (click)="openLinkDocument(item.documentLink)">{{ item.documentLink }}</td>
+                        <td [hidden]="!linkTaiLieu" class="text-truncate cus-pointer">
+                            <!-- (click)="openLinkDocument(item.documentLink)" -->
+                            <!-- <a title="link tài liệu">{{ item.documentLink }}</a> -->
+                            <a target="_blank" [href]="item.documentLink">{{ item.documentLink }}</a>
+                        </td>
                         <td [hidden]="!tongThoiGian" class="text-truncate">{{ item.totalTime }}</td>
                         <td [hidden]="!quy" class="text-truncate">{{ item.quarter?.name }}</td>
                         <td [hidden]="!donViTuVan" class="text-truncate">{{ item.consultantUnitCustomer?.customerName }}</td>
                         <td [hidden]="!diaChiDVTV" class="text-truncate">{{ item.consultantAddress }}</td>
                         <td [hidden]="!soDienThoaiDVTV" class="text-truncate">{{ item.consultantPhone }}</td>
-                        <td [hidden]="!loaiKhachHang" class="text-truncate">{{ item.customer?.customerNewOldType }}</td>
+                        <td [hidden]="!loaiKhachHang" class="text-truncate">{{ item.classify | translate }}</td>
                         <td [hidden]="!lyDoTrungThau" class="text-truncate">{{ item.acceptanceReason }}</td>
                         <td [hidden]="!lyDoTratThau" class="text-truncate">{{ item.unacceptanceReason }}</td>
-                        <td [hidden]="!ngayBatDau" class="text-truncate">{{ item.startTrackingDate*1000 | date:'dd/MM/yyyy' }}</td>
-                        <td [hidden]="!ngayDuKienKetQuaThau" class="text-truncate">{{ item.resultEstimatedDate*1000 | date:'dd/MM/yyyy' }}</td>
-                        <td [hidden]="!ngayNhanHoSoMoiThau" class="text-truncate">{{ item.submissionDate*1000 | date:'dd/MM/yyyy' }}</td>
-                        <td [hidden]="!ngayKhoiCongDuAn" class="text-truncate">{{ item.projectEstimatedStartDate*1000 |date:'dd/MM/yyyy' }}</td>
-                        <td [hidden]="!ngayKetThucDuAn" class="text-truncate">{{ item.projectEstimatedEndDate*1000 | date:'dd/MM/yyyy' }}</td>
+                        <td [hidden]="!ngayBatDau" class="text-truncate">
+                            <span *ngIf="item.startTrackingDate">{{ item.startTrackingDate*1000 | date:'dd/MM/yyyy' }}</span>
+                        </td>
+                        <td [hidden]="!ngayDuKienKetQuaThau" class="text-truncate">
+                            <span *ngIf="item.resultEstimatedDate">{{ item.resultEstimatedDate*1000 | date:'dd/MM/yyyy' }}</span>
+                        </td>
+                        <td [hidden]="!ngayNhanHoSoMoiThau" class="text-truncate">
+                            <span *ngIf="item.submissionDate">{{ item.submissionDate*1000 | date:'dd/MM/yyyy' }}</span>
+                        </td>
+                        <td [hidden]="!ngayKhoiCongDuAn" class="text-truncate">
+                            <span *ngIf="item.projectEstimatedStartDate">{{ item.projectEstimatedStartDate*1000 |date:'dd/MM/yyyy' }}</span>
+                        </td>
+                        <td [hidden]="!ngayKetThucDuAn" class="text-truncate">
+                            <span *ngIf=" item.projectEstimatedEndDate">{{ item.projectEstimatedEndDate*1000 | date:'dd/MM/yyyy' }}</span>
+                        </td>
                         <td [hidden]="!hangMucCongTrinh" class="text-truncate">{{ item.mainBuildingCategory?.value }}</td>
                         <td [hidden]="!diaDiem" class="text-truncate">{{ item.location?.value }}</td>
                         <td [hidden]="!moTa" class="text-truncate">{{ item.description }}</td>

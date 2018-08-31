@@ -1,7 +1,7 @@
 import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
 import { ActivityService } from '../../../../../../shared/services/activity.service';
 import { AlertService } from '../../../../../../shared/services/alert.service';
-import { FormGroup, FormBuilder } from '../../../../../../../../node_modules/@angular/forms';
+import { FormGroup, FormBuilder, Validators } from '../../../../../../../../node_modules/@angular/forms';
 import { DocumentService } from '../../../../../../shared/services/document.service';
 import { DocumentReviewService } from '../../../../../../shared/services/document-review.service';
 import { DATETIME_PICKER_CONFIG } from '../../../../../../shared/configs/datepicker.config';
@@ -9,6 +9,7 @@ import { FileInfo, SelectEvent } from '@progress/kendo-angular-upload';
 import { Observable } from 'rxjs';
 import { DictionaryItem } from '../../../../../../shared/models';
 import { NgxSpinnerService } from 'ngx-spinner';
+import ValidationHelper from '../../../../../../shared/helpers/validation.helper';
 
 @Component({
   selector: 'app-upload-file',
@@ -31,7 +32,11 @@ export class UploadFileComponent implements OnInit {
   public source: Array<string> = ['Albania', 'Andorra', 'Armenia', 'Austria', 'Azerbaijan'];
   public data: Array<string>;
   myFiles: Array<FileInfo> = [];
-
+  isSubmitted: boolean;
+  invalidMessages: string[];
+  formErrors = {
+    editName: '',
+  };
   public close() {
     this.closed.emit(false);
   }
@@ -50,9 +55,12 @@ export class UploadFileComponent implements OnInit {
     this.createForm();
     this.documentService.bidDocumentMajorTypeByParent(this.majorTypeId).subscribe(data => {
       this.listTypeFile = data;
-      this.uploadForm.get('type').patchValue(data[0]);
+      console.log(this.typeFile);
+      this.uploadForm.get('type').patchValue(this.typeFile);
     });
   }
+
+
   selectEventHandler(e: SelectEvent) {
     e.files.forEach((file) => this.myFiles.push(file));
   }
@@ -65,20 +73,24 @@ export class UploadFileComponent implements OnInit {
   public filterChange(filter: any): void {
     this.data = this.source.filter((s) => s.toLowerCase().indexOf(filter.toLowerCase()) !== -1);
   }
+
   fileChange(event) {
+
     const fileList: FileList = event.target.files;
     if (fileList.length > 0) {
       this.file = fileList[0];
-      if (this.file.size < 10485760) {
-        this.uploadForm.get('nameFile').patchValue(event.target.files[0].name);
-        this.uploadForm.get('editName').patchValue(event.target.files[0].name);
-        event.target.value = null;
-      } else {
-        this.alertService.error('Dung lượng ảnh quá lớn! Vui lòng chọn ảnh dưới 10MB.');
-      }
+      this.uploadForm.get('link').patchValue('');
+      this.uploadForm.get('nameFile').patchValue('');
+      this.uploadForm.get('editName').patchValue('');
+      this.uploadForm.get('nameFile').patchValue(event.target.files[0].name);
+      this.uploadForm.get('editName').patchValue(event.target.files[0].name);
+      event.target.value = null;
     }
   }
 
+  inputChange() {
+    this.deleteFileUpload();
+  }
   deleteFileUpload() {
     this.file = null;
     this.uploadForm.get('nameFile').patchValue('');
@@ -87,16 +99,34 @@ export class UploadFileComponent implements OnInit {
 
   createForm() {
     this.uploadForm = this.fb.group({
+      link: '',
       nameFile: '',
       type: null,
-      editName: '',
+      editName: ['', Validators.required],
       date: new Date(),
       description: ''
     });
+
+    this.uploadForm.valueChanges.subscribe(data => {
+      this.onFormValueChanged(data);
+    });
+  }
+  onFormValueChanged(data?: any) {
+    if (this.isSubmitted) {
+      this.validateForm();
+    }
   }
 
+  validateForm() {
+    this.invalidMessages = ValidationHelper.getInvalidMessages(
+      this.uploadForm,
+      this.formErrors,
+    );
+    return this.invalidMessages.length === 0;
+  }
   submitForm() {
-    if (this.uploadForm.get('nameFile').value.length > 0) {
+    this.isSubmitted = true;
+    if (this.validateForm()) {
       this.spinner.show();
       const documentName = this.uploadForm.get('editName').value;
       const documentType = this.uploadForm.get('type').value;
@@ -105,7 +135,7 @@ export class UploadFileComponent implements OnInit {
       this.documentService.upload(this.packageId, documentName, documentType.id, description, date, this.file).subscribe(data => {
         this.spinner.hide();
         this.closed.emit(true);
-      });
+      }, err => this.spinner.hide());
     }
   }
 

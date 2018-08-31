@@ -59,7 +59,8 @@
                                 </td>
                                 <td class="w-15 bg-light text-right label no-boder">Link tài liệu</td>
                                 <td class="w-35 no-boder">
-                                    <div class="w-75 form-control">{{package.documentLink}}</div>
+                                    <!-- <div class="w-75 form-control">{{package.documentLink}}</div> -->
+                                    <a class="w-75 form-control" target="_blank" [href]="package.documentLink">{{ package.documentLink }}</a>
                                 </td>
                             </tr>
                             <tr>
@@ -153,7 +154,7 @@
                                 </td>
                             </tr>
                             <tr>
-                                <td class="w-15 bg-light text-right label no-boder">Ngày bắt đầu theo dõi</td>
+                                <td class="w-15 bg-light text-right label no-boder">Ngày bắt đầu</td>
                                 <td class="w-35 no-boder">
                                     <div class="w-75 form-control">
                                         <span *ngIf="package.startTrackingDate">{{(package.startTrackingDate)*1000 | date:'dd/MM/yyyy'}}</span>
@@ -167,7 +168,7 @@
                                 </td>
                             </tr>
                             <tr>
-                                <td class="w-15 bg-light text-right label required no-boder">Ngày nộp hồ sơ mời thầu</td>
+                                <td class="w-15 bg-light text-right label required no-boder">Ngày nhận hồ sơ mời thầu</td>
                                 <td class="w-35 no-boder">
                                     <div class="w-75 form-control">
                                         <span *ngIf="package.submissionDate">{{(package.submissionDate)*1000 | date:'dd/MM/yyyy'}}</span>
