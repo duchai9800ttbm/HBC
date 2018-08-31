@@ -64,6 +64,15 @@ export class AddFileComponent implements OnInit {
         this.packageId = +PackageDetailComponent.packageId;
         this.packageService.getInforPackageID(this.packageId).subscribe(result => {
             this.packageData = result;
+            switch (this.packageData.stageStatus.id) {
+                case 'DaCoHSMT': {
+                  this.router.navigate([`/package/detail/${this.packageId}/invitation/full-file`]);
+                    break;
+                }
+                default: {
+                    break;
+                }
+            }
         });
         // config
         window.scrollTo(0, 0);

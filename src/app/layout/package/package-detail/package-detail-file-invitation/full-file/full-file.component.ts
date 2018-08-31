@@ -64,6 +64,15 @@ export class FullFileComponent implements OnInit {
         this.packageId = +PackageDetailComponent.packageId;
         this.packageService.getInforPackageID(this.packageId).subscribe(result => {
             this.packageData = result;
+            switch (this.packageData.stageStatus.id) {
+                case 'CanBoSungHSMT': {
+                  this.router.navigate([`/package/detail/${this.packageId}/invitation/add-file`]);
+                    break;
+                }
+                default: {
+                    break;
+                }
+            }
         });
         // config
         window.scrollTo(0, 0);
