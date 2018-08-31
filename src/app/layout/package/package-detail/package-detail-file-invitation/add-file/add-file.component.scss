@@ -72,6 +72,7 @@ input.icon {
 
 .calendarInput {
     //width: 170px;
+    max-width: 160px;
     margin-left: 10px !important;
 }
 
@@ -529,6 +530,7 @@ table.dataTable th {
             border-bottom: #ccecf9 solid 1px;
             border-bottom-right-radius: 3px;
             border-bottom-left-radius: 3px;
+            font-size: 0.875rem;
 
             .toggle-menu-item {
                 cursor: pointer;
@@ -793,4 +795,9 @@ table.dataTable {
 
 .menu-left {
     width: 25px !important;
+}
+
+.menu-grid {
+    display: grid;
+    grid-template-columns: 230px 255px 255px auto
 }
