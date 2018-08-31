@@ -45,6 +45,7 @@ export class PackageService {
             filter.maxCost ? filter.maxCost.toString() : ''
         );
         urlFilterParams.append('sorting', filter.sorting);
+        console.log('urlFilterParams-urlFilterParams', urlFilterParams);
         return urlFilterParams;
     }
 

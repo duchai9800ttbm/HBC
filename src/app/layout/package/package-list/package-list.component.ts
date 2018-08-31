@@ -205,7 +205,8 @@ export class PackageListComponent implements OnInit, AfterViewChecked {
         this.filterModel.stage = '';
         this.filterModel.chairEmployeeId = '';
         this.dtOptions = DATATABLE_CONFIG;
-
+        this.filterModel.minCost = 0;
+        this.filterModel.maxCost = 1000000000000;
         setTimeout(() => {
             this.userModel = this.sessionService.userInfo;
             this.listPrivileges = this.userModel.privileges;
@@ -330,7 +331,7 @@ export class PackageListComponent implements OnInit, AfterViewChecked {
 
     filter(clear: boolean = false) {
         this.spinner.show();
-        console.log('this.filter.Model', this.filterModel);
+        console.log('this.filter', this.filterModel);
         this.packageService
             .filterList(
                 this.searchTerm$.value,
@@ -349,8 +350,8 @@ export class PackageListComponent implements OnInit, AfterViewChecked {
         this.filterModel.opportunityClassify = '';
         this.filterModel.stage = '';
         this.filterModel.chairEmployeeId = '';
-        this.filterModel.minCost = null;
-        this.filterModel.maxCost = null;
+        this.filterModel.minCost = 0;
+        this.filterModel.maxCost = 1000000000000;
         this.someRange = [0, 1000000000000];
         this.filter(true);
     }
