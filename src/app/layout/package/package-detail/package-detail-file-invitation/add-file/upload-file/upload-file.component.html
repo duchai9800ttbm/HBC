@@ -33,7 +33,7 @@
                                                     <i class="fa fa-cloud-upload" aria-hidden="true"></i>&nbsp;&nbsp; Chọn File</button>
                                                 <input type="file" class="upload" (change)="fileChange($event)" />
                                             </div>
-                                            <div style="width: calc(100% - 120px);" *ngIf="file" class="d-flex justify-content-between">
+                                            <div style="width: calc(100% - 120px);" ngIf="file" class="d-flex justify-content-between">
                                                 <div>{{file.name}}</div>
                                                 <div>
                                                     <button (click)="deleteFileUpload()" class="btn btn-secondary">X</button>
@@ -52,7 +52,7 @@
                                         <td class="w-30 label no-boder bold-title">Tên</td>
                                         <td class="w-70 no-boder">
                                             <input class="w-100" kendoTextBox tabindex="1" type="text" formControlName="editName" [class.is-invalid]="formErrors.editName">
-                                            <div class="invalid-feedback" *ngIf="formErrors.editName">
+                                            <div class="invalid-feedback" ngIf="formErrors.editName">
                                                 {{formErrors.editName}}
                                             </div>
                                         </td>
