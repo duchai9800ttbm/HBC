@@ -658,31 +658,35 @@ table.dataTable {
 }
 
 .iconN1 {
+    transform: rotate(45deg) translate(5px, 5px);
     transition-duration: 600ms;
 }
 
 .iconN01 {
     width: 25px;
-    transform: rotate(45deg) translate(5px, 5px);
+    transform: none;
     transition-duration: 600ms;
 }
 
 .iconN3 {
+    transform: rotate(-45deg) translate(4px, -4px);
     transition-duration: 600ms;
 }
 
 .iconN03 {
     width: 25px;
-    transform: rotate(-45deg) translate(4px, -4px);
+    transform: none;
     transition-duration: 600ms;
 }
 
 .iconN2 {
+    transform: rotateY(90deg);
     transition-duration: 600ms;
 }
 
 .iconN02 {
-    transform: rotateY(90deg);
+    transform: none;
+    width: 25px;
     transition-duration: 600ms;
 }
 

@@ -165,13 +165,17 @@ export class PackageListComponent implements OnInit, AfterViewChecked {
     loaiCongTrinh = false; // ok
     hangMucCongTrinh = false; // ok
     tongGiaTri = false; // ok
-    danhGiaDuAn = false; //ok
+    danhGiaDuAn = false; // ok
 
     dienTichSan = false;
     trangThaiGoiThau = false;
     ngayBatDauTheoDoi = false;
     ngayNopHoSoMoiThau = false;
     phanloai = false;
+
+    orderBy = '';
+    currentSort = '';
+    fieldSort = '';
 
     isShowPopup = false;
     @HostListener('document:click', ['$event'])
@@ -257,6 +261,19 @@ export class PackageListComponent implements OnInit, AfterViewChecked {
 
     }
 
+    orderByField(fieldName: string) {
+        if (fieldName === this.currentSort && this.orderBy === 'Desc') {
+            this.orderBy = 'Asc';
+        } else if (fieldName === this.currentSort && this.orderBy === 'Asc') {
+            this.orderBy = 'Desc';
+        }
+        if (fieldName !== this.currentSort) {
+            this.currentSort = fieldName;
+            this.orderBy = 'Asc';
+        }
+        this.fieldSort = fieldName + this.orderBy;
+        // this.refresh();
+    }
 
     refreshPopupConfig() {
         this.packageService.getListFields(this.getUserId).subscribe(data => {

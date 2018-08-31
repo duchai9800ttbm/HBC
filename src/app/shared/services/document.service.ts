@@ -106,6 +106,19 @@ export class DocumentService {
         });
     }
 
+    bidDocumentMajorTypeByParent(parentId: number): Observable<any> {
+        const url = `biddocumenttypes/${parentId}/child`;
+        return this.apiService.get(url).map(response => {
+            const result = response.result;
+            return result.map(i => {
+                return {
+                    id: i.key,
+                    text: i.value
+                };
+            });
+        });
+    }
+
     readAndGroup(opportunityId: number | string): Observable<BidDocumentGroupModel[]> {
         const url = `bidopportunity/${opportunityId}/biddocuments`;
         return this.apiService.get(url)
@@ -167,7 +180,7 @@ export class DocumentService {
     upload(
         id: number,
         documentName: string,
-        documentType: string,
+        documentTypeId: string,
         description: string,
         receivedDate: number,
         file: File,
@@ -175,7 +188,7 @@ export class DocumentService {
         const url = `biddocument/upload`;
         const formData = new FormData();
         formData.append('BidOpportunityId', `${id}`);
-        formData.append('DocumentType', documentType);
+        formData.append('DocumentTypeId', documentTypeId);
         formData.append('DocumentName', documentName);
         formData.append('DocumentDesc', description);
         formData.append('ReceivedDate', `${moment(receivedDate).unix()}`);
@@ -267,6 +280,8 @@ export class DocumentService {
 
     sortAndSearch(searchTerm: string, filterModel: BidDocumentFilter, source: any[]) {
         let day = null, month = null, year = null;
+        let day2 = null, month2 = null, year2 = null;
+
         if (filterModel.createDate) {
             const today = new Date(
                 moment(filterModel.createDate).unix()
@@ -274,6 +289,9 @@ export class DocumentService {
             day = moment(filterModel.createDate).get('date');
             month = moment(filterModel.createDate).get('month') + 1;
             year = moment(filterModel.createDate).get('year');
+            day2 = moment(filterModel.receivedDate).get('date');
+            month2 = moment(filterModel.receivedDate).get('month') + 1;
+            year2 = moment(filterModel.receivedDate).get('year');
         }
         return this.filterService
             .transform(source,
@@ -283,7 +301,10 @@ export class DocumentService {
                     employeeId: filterModel.uploadedEmployeeId ? +filterModel.uploadedEmployeeId : null,
                     day: `${day ? day : ''}`,
                     month: `${month ? month : ''}`,
-                    year: `${year ? year : ''}`
+                    year: `${year ? year : ''}`,
+                    day2: `${day ? day : ''}`,
+                    month2: `${month ? month : ''}`,
+                    year2: `${year ? year : ''}`
                 });
     }
 }

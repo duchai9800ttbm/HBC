@@ -36,7 +36,7 @@ export class FullFileComponent implements OnInit {
     packageId;
     showPopupAdd = false;
     typeFileUpload = {
-        id: 'Drawing',
+        id: 1,
         text: 'Bản vẽ',
     };
     userListItem: UserItemModel[];
@@ -128,62 +128,62 @@ export class FullFileComponent implements OnInit {
     }
 
     openPopupUploadFile(documentType) {
-        if (documentType === 'Drawing') {
-            this.typeFileUpload = {
-                id: 'Drawing',
-                text: 'Bản vẽ',
-            };
-        } else if (documentType === 'Book') {
-            this.typeFileUpload = {
-                id: 'Book',
-                text: 'Cuốn hồ sơ mời thầu',
-            };
-        } else if (documentType === 'TechnicalStandard') {
-            this.typeFileUpload = {
-                id: 'TechnicalStandard',
-                text: 'Tiêu chuẩn kĩ thuật',
-            };
-        } else if (documentType === 'BOQ') {
-            this.typeFileUpload = {
-                id: 'BOQ',
-                text: 'BOQ',
-            };
-        } else if (documentType === 'GeologicalSurvey') {
-            this.typeFileUpload = {
-                id: 'GeologicalSurvey',
-                text: 'Khảo sát địa chất',
-            };
-        }
+        // if (documentType === 'Drawing') {
+        //     this.typeFileUpload = {
+        //         id: 'Drawing',
+        //         text: 'Bản vẽ',
+        //     };
+        // } else if (documentType === 'Book') {
+        //     this.typeFileUpload = {
+        //         id: 'Book',
+        //         text: 'Cuốn hồ sơ mời thầu',
+        //     };
+        // } else if (documentType === 'TechnicalStandard') {
+        //     this.typeFileUpload = {
+        //         id: 'TechnicalStandard',
+        //         text: 'Tiêu chuẩn kĩ thuật',
+        //     };
+        // } else if (documentType === 'BOQ') {
+        //     this.typeFileUpload = {
+        //         id: 'BOQ',
+        //         text: 'BOQ',
+        //     };
+        // } else if (documentType === 'GeologicalSurvey') {
+        //     this.typeFileUpload = {
+        //         id: 'GeologicalSurvey',
+        //         text: 'Khảo sát địa chất',
+        //     };
+        // }
         this.showPopupAdd = true;
     }
 
     uploadFileItem(type) {
-        if (type === 'Drawing') {
-            this.typeFileUpload = {
-                id: 'Drawing',
-                text: 'Bản vẽ',
-            };
-        } else if (type === 'Book') {
-            this.typeFileUpload = {
-                id: 'Book',
-                text: 'Cuốn hồ sơ mời thầu',
-            };
-        } else if (type === 'TechnicalStandard') {
-            this.typeFileUpload = {
-                id: 'TechnicalStandard',
-                text: 'Tiêu chuẩn kĩ thuật',
-            };
-        } else if (type === 'BOQ') {
-            this.typeFileUpload = {
-                id: 'BOQ',
-                text: 'BOQ',
-            };
-        } else if (type === 'GeologicalSurvey') {
-            this.typeFileUpload = {
-                id: 'GeologicalSurvey',
-                text: 'Khảo sát địa chất',
-            };
-        }
+        // if (type === 'Drawing') {
+        //     this.typeFileUpload = {
+        //         id: 'Drawing',
+        //         text: 'Bản vẽ',
+        //     };
+        // } else if (type === 'Book') {
+        //     this.typeFileUpload = {
+        //         id: 'Book',
+        //         text: 'Cuốn hồ sơ mời thầu',
+        //     };
+        // } else if (type === 'TechnicalStandard') {
+        //     this.typeFileUpload = {
+        //         id: 'TechnicalStandard',
+        //         text: 'Tiêu chuẩn kĩ thuật',
+        //     };
+        // } else if (type === 'BOQ') {
+        //     this.typeFileUpload = {
+        //         id: 'BOQ',
+        //         text: 'BOQ',
+        //     };
+        // } else if (type === 'GeologicalSurvey') {
+        //     this.typeFileUpload = {
+        //         id: 'GeologicalSurvey',
+        //         text: 'Khảo sát địa chất',
+        //     };
+        // }
         this.showPopupAdd = true;
     }
 
