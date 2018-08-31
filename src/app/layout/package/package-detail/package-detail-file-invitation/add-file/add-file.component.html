@@ -1,6 +1,6 @@
 <div id="outer-table">
     <div class="table-small mt-3">
-        <div id="header-table" class=" title-list-package d-flex flex-wrap align-items-start status-filter" >
+        <div id="header-table" class=" title-list-package d-flex flex-wrap align-items-start status-filter">
             <div class="status mr-auto d-flex align-items-end list-package mt-2 mb-2">
                 <div class="d-flex justify-content-start" style="height: 40px;" id="res-header">
                     <div class="rule mr-2">
@@ -19,8 +19,7 @@
                         <div>
                             <div class="input-group ml-auto" style="width: 250px">
                                 <span class="input-group-addon">Tìm kiếm theo</span>
-                                <input type="text" class="form-control icon" placeholder="&#xf002; Tên tài liệu"
-                                    (keyup)="search($event.target.value)">
+                                <input type="text" class="form-control icon" placeholder="&#xf002; Tên tài liệu" (keyup)="search($event.target.value)">
                             </div>
                         </div>
 
@@ -29,34 +28,33 @@
                         <button class="btn btn-primary" (click)="multiDelete()">
                             Xóa
                         </button>
-                        <button class="btn btn-primary ml-1">
+                        <!-- <button class="btn btn-primary ml-1">
                             Tải xuống tài liệu
-                        </button>
+                        </button> -->
 
                         <div class="btn-group ml-1" ngbDropdown>
-                            <button type="button" class="btn btn-primary" ngbDropdownToggle data-toggle="dropdown"
-                                aria-haspopup="true" aria-expanded="false">
+                            <button type="button" class="btn btn-primary" ngbDropdownToggle data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 Upload HSMT
                             </button>
                             <div class="dropdown-menu" ngbDropdownMenu>
-                                <div class="fileUpload dropdown-item" (click)="openPopupUploadFile('Drawing')">
-                                    <a>Bản vẽ</a>
+                                <div class="fileUpload dropdown-item" (click)="openPopupUploadFile('2')">
+                                    <a>Quyển HSMT</a>
                                 </div>
                                 <div class="dropdown-divider"></div>
-                                <div class="fileUpload dropdown-item" (click)="openPopupUploadFile('Book')">
-                                    <a>Cuốn hồ sơ mời thầu</a>
+                                <div class="fileUpload dropdown-item" (click)="openPopupUploadFile('3')">
+                                    <a>Bản vẽ thuyết minh</a>
                                 </div>
                                 <div class="dropdown-divider"></div>
-                                <div class="fileUpload dropdown-item" (click)="openPopupUploadFile('TechnicalStandard')">
-                                    <a>Tiêu chuẩn kỹ thuật</a>
-                                </div>
-                                <div class="dropdown-divider"></div>
-                                <div class="fileUpload dropdown-item" (click)="openPopupUploadFile('BOQ')">
+                                <div class="fileUpload dropdown-item" (click)="openPopupUploadFile('4')">
                                     <a>BOQ</a>
                                 </div>
                                 <div class="dropdown-divider"></div>
-                                <div class="fileUpload dropdown-item" (click)="openPopupUploadFile('GeologicalSurvey')">
-                                    <a>Khảo sát địa chất</a>
+                                <div class="fileUpload dropdown-item" (click)="openPopupUploadFile('5')">
+                                    <a>Tiêu chí kỹ thuật (Specs)</a>
+                                </div>
+                                <div class="dropdown-divider"></div>
+                                <div class="fileUpload dropdown-item" (click)="openPopupUploadFile('6')">
+                                    <a>Các báo cáo và các tài liệu kỹ thuật (KSDQ)</a>
                                 </div>
                             </div>
                         </div>
@@ -87,58 +85,57 @@
                 </div>
             </div>
             <div class="bot-table" [class.table-toggle-2]="isShowMenu" style="width: calc(100% - 230px);">
-                    <div class="d-flex flex-row flex-wrap filter-bar custom-filter-bar" style="background-color: #fafbfc">
-                            <div class="d-flex form-inline ">
-                                <div class="form-group ml-sm-2 p-1">
-                                    <label for="" class="form-label">Tình trạng</label>
-                                    <span class="custom-dropdown mx-sm-2">
-                                        <select class="form-control" [(ngModel)]="filterModel.status">
-                                            <option value="">Tất cả</option>
-                                            <option value="Official">Chính thức</option>
-                                            <option value="Draft">Bản nháp</option>
-                                        </select>
-                                    </span>
-                                </div>
-                    
-                                <div class="form-group ml-sm-2 p-1">
-                                    <label for="" class="form-label">Ngày upload</label>
-                                    <div class="input-group calendarInput">
-                                        <owl-date-time [(ngModel)]="filterModel.createDate" [locale]="datePickerConfig.vi" [placeHolder]="datePickerConfig.datePlaceHolder"
-                                            [type]="datePickerConfig.calendarType" pickerType="calendar" [dateFormat]="datePickerConfig.dateFormat">
-                                        </owl-date-time>
-                                        <span class="input-group-addon">
-                                            <i class="fa fa-calendar"></i>
-                                        </span>
-                                    </div>
-                                </div>
-            
-                                <div class="form-group ml-sm-2 p-1">
-                                    <label for="" class="form-label">Ngày nhận HSMT</label>
-                                    <div class="input-group calendarInput">
-                                        <owl-date-time [(ngModel)]="filterModel.receivedDate" [locale]="datePickerConfig.vi" [placeHolder]="datePickerConfig.datePlaceHolder"
-                                            [type]="datePickerConfig.calendarType" pickerType="calendar" [dateFormat]="datePickerConfig.dateFormat">
-                                        </owl-date-time>
-                                        <span class="input-group-addon">
-                                            <i class="fa fa-calendar"></i>
-                                        </span>
-                                    </div>
-                                </div>
-                                <div class="form-group ml-sm-2 p-1">
-            
-                                    <button type="submit" class="btn btn-primary ml-sm-2" (click)="filter()">
-                                        <i class="fa fa-filter" aria-hidden="true"></i>&nbsp; Lọc
-                                    </button>
-                                    <button class="btn btn-secondary ml-sm-2" (click)="clearFilter()">
-                                        <i class="fa fa-times"></i>&nbsp; Xóa lọc
-                                    </button>
-                                </div>
-                            </div>
-            
+                <div class="d-flex flex-row flex-wrap filter-bar custom-filter-bar" style="background-color: #fafbfc">
+                    <div class="d-flex form-inline ">
+                        <div class="form-group ml-sm-2 p-1">
+                            <label for="" class="form-label">Tình trạng</label>
+                            <span class="custom-dropdown mx-sm-2">
+                                <select class="form-control" [(ngModel)]="filterModel.status">
+                                    <option value="">Tất cả</option>
+                                    <option value="Official">Chính thức</option>
+                                    <option value="Draft">Bản nháp</option>
+                                </select>
+                            </span>
                         </div>
-            
+
+                        <div class="form-group ml-sm-2 p-1">
+                            <label for="" class="form-label">Ngày upload</label>
+                            <div class="input-group calendarInput">
+                                <owl-date-time [(ngModel)]="filterModel.createDate" [locale]="datePickerConfig.vi" [placeHolder]="datePickerConfig.datePlaceHolder"
+                                    [type]="datePickerConfig.calendarType" pickerType="calendar" [dateFormat]="datePickerConfig.dateFormat">
+                                </owl-date-time>
+                                <span class="input-group-addon">
+                                    <i class="fa fa-calendar"></i>
+                                </span>
+                            </div>
+                        </div>
+
+                        <div class="form-group ml-sm-2 p-1">
+                            <label for="" class="form-label">Ngày nhận HSMT</label>
+                            <div class="input-group calendarInput">
+                                <owl-date-time [(ngModel)]="filterModel.receivedDate" [locale]="datePickerConfig.vi" [placeHolder]="datePickerConfig.datePlaceHolder"
+                                    [type]="datePickerConfig.calendarType" pickerType="calendar" [dateFormat]="datePickerConfig.dateFormat">
+                                </owl-date-time>
+                                <span class="input-group-addon">
+                                    <i class="fa fa-calendar"></i>
+                                </span>
+                            </div>
+                        </div>
+                        <div class="form-group ml-sm-2 p-1">
+
+                            <button type="submit" class="btn btn-primary ml-sm-2" (click)="filter()">
+                                <i class="fa fa-filter" aria-hidden="true"></i>&nbsp; Lọc
+                            </button>
+                            <button class="btn btn-secondary ml-sm-2" (click)="clearFilter()">
+                                <i class="fa fa-times"></i>&nbsp; Xóa lọc
+                            </button>
+                        </div>
+                    </div>
+
+                </div>
+
                 <div>
-                    <table id="table-file-scroll" [hidden]="!showTable" datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger"
-                        class="table-selection table-responsive row-border cell-border ">
+                    <table id="table-file-scroll" [hidden]="!showTable" datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="table-selection table-responsive row-border cell-border ">
                         <thead>
                             <tr type="check">
 
@@ -222,21 +219,21 @@
                                         </div>
 
                                     </div>
-                                <th style="background-color: #f68e56!important;">
-                                    <div class="d-flex justify-content-center">
+                                    <th style="background-color: #f68e56!important;">
+                                        <div class="d-flex justify-content-center">
 
-                                        <div class="center-parent">
-                                            <div>Ngày nhận</div>
+                                            <div class="center-parent">
+                                                <div>Ngày nhận</div>
+                                            </div>
+
                                         </div>
 
-                                    </div>
 
 
-
-                                </th>
-                                <th class="table-action text-center" style="background-color: #f68e56!important;">
-                                    Thao tác
-                                </th>
+                                    </th>
+                                    <th class="table-action text-center" style="background-color: #f68e56!important;">
+                                        Thao tác
+                                    </th>
                             </tr>
                         </thead>
                         <tbody>
@@ -254,12 +251,10 @@
                                                 <div>{{renderIndex(i , k)}}</div>
                                             </div>
                                         </td>
-                                        <td [hidden]="currentMajorTypeId != 1" valign="baseline" [attr.rowspan]="bidDocumentGroup.items.length"
-                                            *ngIf="k == 0" class="td-group">
+                                        <td [hidden]="currentMajorTypeId != 1" valign="baseline" [attr.rowspan]="bidDocumentGroup.items.length" *ngIf="k == 0" class="td-group">
                                             <div class="d-flex  document-type center-parent">
                                                 <div style="width: calc(100% - 25px);"> {{ item.documentType }}</div>
-                                                <div style="width: 25px;" (click)="uploadFileItem(item.documentType)"
-                                                    style="cursor: pointer" title="Upload tài liệu">
+                                                <div style="width: 25px;" (click)="uploadFileItem(item.documentType)" style="cursor: pointer" title="Upload tài liệu">
                                                     <img width="25" height="25" src="assets\images\document.png">
                                                 </div>
                                             </div>
@@ -279,26 +274,21 @@
                                                 <div class="text-truncate text-right" [title]="item.status">
                                                     {{ item.status | translate }}
                                                 </div>
-                                                <div (click)="changeStatus(item.id, item.status, item.documentType)"
-                                                    [title]="item.status">
-                                                    <i class="fa fa-check-square color-item-down" style="cursor: pointer;"
-                                                        aria-hidden="true" *ngIf="item.status === 'Official'"></i>
-                                                    <i class="fa fa-check-square color-item-test" style="cursor: pointer;"
-                                                        aria-hidden="true" *ngIf="item.status === 'Draft'"></i>
+                                                <div (click)="changeStatus(item.id, item.status, item.documentType)">
+                                                    <i class="fa fa-check-square color-item-down" style="cursor: pointer;" aria-hidden="true" *ngIf="item.status === 'Official'"></i>
+                                                    <i class="fa fa-check-square color-item-test" style="cursor: pointer;" aria-hidden="true" *ngIf="item.status === 'Draft'"></i>
                                                 </div>
                                             </div>
 
 
                                         </td>
 
-                                        <td class="text-center">{{ item.createdDate*1000 | date:'dd/MM/yyyy HH:mm':
-                                            '+0000'}}</td>
+                                        <td class="text-center">{{ item.createdDate*1000 | date:'dd/MM/yyyy HH:mm': '+0000'}}
+                                        </td>
                                         <td class="text-center">{{ item.uploadedBy?.employeeName }}</td>
 
                                         <td class="text-center">
-                                            <span *ngIf="item.receivedDate">{{ item.receivedDate*1000 |
-                                                date:'dd/MM/yyyy':
-                                                '+0000' }}</span>
+                                            <span *ngIf="item.receivedDate">{{ item.receivedDate*1000 | date:'dd/MM/yyyy': '+0000' }}</span>
                                         </td>
                                         <td>
                                             <div class="d-flex justify-content-around">
@@ -326,8 +316,10 @@
 
                     <div>
                         <div style="margin-top: 15px" *ngIf="showTable">
-                            <span>Hiển thị</span> <span class="font-weight-bold">&nbsp;{{sum}}&nbsp;</span> <span>kết
-                                quả</span>
+                            <span>Hiển thị</span>
+                            <span class="font-weight-bold">&nbsp;{{sum}}&nbsp;</span>
+                            <span>kết quả
+                            </span>
                         </div>
                         <div style="margin-top: 15px" class="center-parent" *ngIf="!showTable">
                             <div>
@@ -345,4 +337,5 @@
     </div>
 
     <ngx-spinner bdColor="rgba(51, 51, 51, 0.7)" size="medium" color="#fff" type="ball-clip-rotate-multiple"></ngx-spinner>
-    <app-upload-file [typeFile]="typeFileUpload" [majorTypeId]="currentMajorTypeId" [packageId]="packageId" *ngIf="showPopupAdd" (closed)="closePopup($event)"></app-upload-file>
+    <app-upload-file [typeFile]="typeFileUpload" [majorTypeId]="currentMajorTypeId" [packageId]="packageId" *ngIf="showPopupAdd"
+        (closed)="closePopup($event)"></app-upload-file>
