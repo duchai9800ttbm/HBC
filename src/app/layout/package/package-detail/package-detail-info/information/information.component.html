@@ -59,7 +59,8 @@
                                 </td>
                                 <td class="w-15 bg-light text-right label no-boder">Link tài liệu</td>
                                 <td class="w-35 no-boder">
-                                    <div class="w-75 form-control">{{package.documentLink}}</div>
+                                    <!-- <div class="w-75 form-control">{{package.documentLink}}</div> -->
+                                    <a class="w-75 form-control" target="_blank" [href]="package.documentLink">{{ package.documentLink }}</a>
                                 </td>
                             </tr>
                             <tr>

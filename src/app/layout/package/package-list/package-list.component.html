@@ -7,14 +7,16 @@
                 <span class="input-group-addon">Tìm kiếm theo</span>
                 <input type="text" class="form-control" placeholder="Tên, chủ trì" (keyup)="searchTerm$.next($event.target.value)">
             </div>
-            <div class="btn-group ml-2" ngbDropdown>
-                <button type="button" class="btn btn-primary" ngbDropdownToggle data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    Công cụ &nbsp;&nbsp;
-                </button>
-                <div class="dropdown-menu" ngbDropdownMenu>
-                    <a class="dropdown-item" (click)="exportFileExcel()">Xuất file</a>
-                    <!-- <div class="dropdown-divider"></div>
-                    <a class="dropdown-item">Tải template</a> -->
+            <div class="btn-group ml-2" ngbDropdown #DropTool="ngbDropdown">
+                <div #DropTool2>
+                    <button type="button" class="btn btn-primary" ngbDropdownToggle data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Công cụ &nbsp;&nbsp;
+                    </button>
+                    <div class="dropdown-menu" ngbDropdownMenu>
+                        <a class="dropdown-item" (click)="exportFileExcel()">Xuất file</a>
+                        <!-- <div class="dropdown-divider"></div>
+                                <a class="dropdown-item">Tải template</a> -->
+                    </div>
                 </div>
             </div>
             <button *ngIf="isCreateBidOpportunity" class="btn btn-primary ml-2" [routerLink]="['/package/create']">
@@ -526,10 +528,14 @@
                                 </div>
                             </div>
                         </td>
-                        <td [hidden]="!khuVuc" class="text-truncate">{{item.region | translate}}</td>
+                        <td [hidden]="!khuVuc" class="text-truncate">{{item.location.value | translate}}</td>
                         <!-- <td [hidden]="!congViec" class="text-truncate">{{ item.job }}</td> -->
                         <td [hidden]="!tienDoThucHien" class="text-truncate text-right">{{ item.progress }}</td>
-                        <td [hidden]="!linkTaiLieu" class="text-truncate cus-pointer" (click)="openLinkDocument(item.documentLink)">{{ item.documentLink }}</td>
+                        <td [hidden]="!linkTaiLieu" class="text-truncate cus-pointer" >
+                                <!-- (click)="openLinkDocument(item.documentLink)" -->
+                            <!-- <a title="link tài liệu">{{ item.documentLink }}</a> -->
+                            <a target="_blank" [href]="item.documentLink">{{ item.documentLink }}</a>
+                        </td>
                         <td [hidden]="!tongThoiGian" class="text-truncate">{{ item.totalTime }}</td>
                         <td [hidden]="!quy" class="text-truncate">{{ item.quarter?.name }}</td>
                         <td [hidden]="!donViTuVan" class="text-truncate">{{ item.consultantUnitCustomer?.customerName }}</td>
