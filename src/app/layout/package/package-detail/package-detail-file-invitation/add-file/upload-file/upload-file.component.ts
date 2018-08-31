@@ -48,7 +48,10 @@ export class UploadFileComponent implements OnInit {
 
   ngOnInit() {
     this.createForm();
-    this.documentService.bidDocumentMajorTypeByParent(this.majorTypeId).subscribe(data => this.listTypeFile = data);
+    this.documentService.bidDocumentMajorTypeByParent(this.majorTypeId).subscribe(data => {
+      this.listTypeFile = data;
+      this.uploadForm.get('type').patchValue(data[0]);
+    });
   }
   selectEventHandler(e: SelectEvent) {
     e.files.forEach((file) => this.myFiles.push(file));
@@ -69,10 +72,17 @@ export class UploadFileComponent implements OnInit {
       if (this.file.size < 10485760) {
         this.uploadForm.get('nameFile').patchValue(event.target.files[0].name);
         this.uploadForm.get('editName').patchValue(event.target.files[0].name);
+        event.target.value = null;
       } else {
         this.alertService.error('Dung lượng ảnh quá lớn! Vui lòng chọn ảnh dưới 10MB.');
       }
     }
+  }
+
+  deleteFileUpload() {
+    this.file = null;
+    this.uploadForm.get('nameFile').patchValue('');
+    this.uploadForm.get('editName').patchValue('');
   }
 
   createForm() {
@@ -80,7 +90,7 @@ export class UploadFileComponent implements OnInit {
       nameFile: '',
       type: null,
       editName: '',
-      date: null,
+      date: new Date(),
       description: ''
     });
   }
