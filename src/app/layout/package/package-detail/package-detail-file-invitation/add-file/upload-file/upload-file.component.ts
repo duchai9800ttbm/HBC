@@ -6,6 +6,9 @@ import { DocumentService } from '../../../../../../shared/services/document.serv
 import { DocumentReviewService } from '../../../../../../shared/services/document-review.service';
 import { DATETIME_PICKER_CONFIG } from '../../../../../../shared/configs/datepicker.config';
 import { FileInfo, SelectEvent } from '@progress/kendo-angular-upload';
+import { Observable } from 'rxjs';
+import { DictionaryItem } from '../../../../../../shared/models';
+import { NgxSpinnerService } from 'ngx-spinner';
 
 @Component({
   selector: 'app-upload-file',
@@ -17,31 +20,11 @@ export class UploadFileComponent implements OnInit {
   @Output() closed = new EventEmitter<boolean>();
   @Input() typeFile;
   @Input() packageId;
+  @Input() majorTypeId;
   datePickerConfig = DATETIME_PICKER_CONFIG;
   public listItems: Array<string> = ['Item 1', 'Item 2', 'Item 3'];
 
-  listTypeFile = [
-    {
-      id: 'Drawing',
-      text: 'Bản vẽ',
-    },
-    {
-      id: 'Book',
-      text: 'Cuốn hồ sơ mời thầu',
-    },
-    {
-      id: 'TechnicalStandard',
-      text: 'Tiêu chuẩn kỹ thuật',
-    },
-    {
-      id: 'BOQ',
-      text: 'BOQ',
-    },
-    {
-      id: 'GeologicalSurvey',
-      text: 'Khảo sát địa chất',
-    },
-  ];
+  listTypeFile: DictionaryItem[];
   file;
   icon = `<i class="fa fa-search" aria-hidden="true"></i>`;
   public events: string[] = [];
@@ -56,7 +39,8 @@ export class UploadFileComponent implements OnInit {
   constructor(
     private alertService: AlertService,
     private fb: FormBuilder,
-    private documentService: DocumentService
+    private documentService: DocumentService,
+    private spinner: NgxSpinnerService,
   ) {
     this.data = this.source.slice();
 
@@ -64,6 +48,7 @@ export class UploadFileComponent implements OnInit {
 
   ngOnInit() {
     this.createForm();
+    this.documentService.bidDocumentMajorTypeByParent(this.majorTypeId).subscribe(data => this.listTypeFile = data);
   }
   selectEventHandler(e: SelectEvent) {
     e.files.forEach((file) => this.myFiles.push(file));
@@ -93,7 +78,7 @@ export class UploadFileComponent implements OnInit {
   createForm() {
     this.uploadForm = this.fb.group({
       nameFile: '',
-      type: this.typeFile.id,
+      type: null,
       editName: '',
       date: null,
       description: ''
@@ -102,11 +87,13 @@ export class UploadFileComponent implements OnInit {
 
   submitForm() {
     if (this.uploadForm.get('nameFile').value.length > 0) {
+      this.spinner.show();
       const documentName = this.uploadForm.get('editName').value;
       const documentType = this.uploadForm.get('type').value;
       const description = this.uploadForm.get('description').value;
       const date = this.uploadForm.get('date').value;
-      this.documentService.upload(this.packageId, documentName, documentType, description, date, this.file).subscribe(data => {
+      this.documentService.upload(this.packageId, documentName, documentType.id, description, date, this.file).subscribe(data => {
+        this.spinner.hide();
         this.closed.emit(true);
       });
     }

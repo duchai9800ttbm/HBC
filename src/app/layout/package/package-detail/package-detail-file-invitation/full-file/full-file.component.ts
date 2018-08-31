@@ -36,7 +36,7 @@ export class FullFileComponent implements OnInit {
     packageId;
     showPopupAdd = false;
     typeFileUpload = {
-        id: 'Drawing',
+        id: 1,
         text: 'Bản vẽ',
     };
     userListItem: UserItemModel[];
