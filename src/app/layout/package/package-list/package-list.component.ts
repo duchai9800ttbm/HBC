@@ -176,7 +176,6 @@ export class PackageListComponent implements OnInit, AfterViewChecked {
 
     orderBy = '';
     currentSort = '';
-    fieldSort = '';
 
     isShowPopup = false;
     @HostListener('document:click', ['$event'])
@@ -225,6 +224,7 @@ export class PackageListComponent implements OnInit, AfterViewChecked {
         this.dtOptions = DATATABLE_CONFIG;
         this.filterModel.minCost = 0;
         this.filterModel.maxCost = 1000000000000;
+        this.filterModel.sorting = '';
         setTimeout(() => {
             this.userModel = this.sessionService.userInfo;
             this.listPrivileges = this.userModel.privileges;
@@ -272,8 +272,8 @@ export class PackageListComponent implements OnInit, AfterViewChecked {
             this.currentSort = fieldName;
             this.orderBy = 'Asc';
         }
-        this.fieldSort = fieldName + this.orderBy;
-        // this.refresh();
+        this.filterModel.sorting = fieldName + this.orderBy;
+        this.refresh(false);
     }
 
     refreshPopupConfig() {
