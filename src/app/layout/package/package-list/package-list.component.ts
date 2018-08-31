@@ -38,6 +38,8 @@ import { PackageListItem } from '../../../shared/models/package/package-list-ite
 export class PackageListComponent implements OnInit, AfterViewChecked {
     @ViewChild('myDrop') myDrop: ElementRef;
     @ViewChild('myDrop2') myDrop2: ElementRef;
+    @ViewChild('DropTool') DropTool: ElementRef;
+    @ViewChild('DropTool2') DropTool2: ElementRef;
     activityStatusList: Observable<DictionaryItem[]>;
     checkboxSeclectAll: boolean;
     dtOptions: any = DATATABLE_CONFIG2;
@@ -186,12 +188,23 @@ export class PackageListComponent implements OnInit, AfterViewChecked {
         if (!this.contains(event.target)) {
             this.cancel(this.myDrop);
         }
+        if (!this.containsDropTool(event.target)) {
+            this.closeDropToll(this.DropTool);
+        }
     }
 
+    
+
     contains(target: any): boolean {
-            return this.myDrop2.nativeElement.contains(target) ||
-                (this.myDrop2 ? this.myDrop2.nativeElement.contains(target) : false);
+        return this.myDrop2.nativeElement.contains(target) ||
+            (this.myDrop2 ? this.myDrop2.nativeElement.contains(target) : false);
     }
+
+    containsDropTool(target: any): boolean {
+        return this.DropTool2.nativeElement.contains(target) ||
+            (this.DropTool2 ? this.DropTool2.nativeElement.contains(target) : false);
+    }
+
 
     ngOnInit() {
         window.scrollTo(0, 0);
@@ -226,6 +239,7 @@ export class PackageListComponent implements OnInit, AfterViewChecked {
         this.packageService
             .instantSearchWithFilter(this.searchTerm$, this.filterModel, 0, 10)
             .subscribe(result => {
+                console.log('result', result);
                 this.rerender(result);
                 this.spinner.hide();
             }, err => {
@@ -331,7 +345,6 @@ export class PackageListComponent implements OnInit, AfterViewChecked {
 
     filter(clear: boolean = false) {
         this.spinner.show();
-        console.log('this.filter', this.filterModel);
         this.packageService
             .filterList(
                 this.searchTerm$.value,
@@ -435,6 +448,10 @@ export class PackageListComponent implements OnInit, AfterViewChecked {
             });
     }
 
+    closeDropToll(DropTool) {
+        DropTool.close();
+    }
+    
     cancel(myDrop) {
         myDrop.close();
         this.packageService.getListFields(this.getUserId).subscribe(data => {
@@ -477,8 +494,8 @@ export class PackageListComponent implements OnInit, AfterViewChecked {
     }
 
     inputChange2(id: number) {
-        this.listField.forEach( item => {
-            if ( item.id === id ) {
+        this.listField.forEach(item => {
+            if (item.id === id) {
                 item.hidden = !item.hidden;
             }
         });
