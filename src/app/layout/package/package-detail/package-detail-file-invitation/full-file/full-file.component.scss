@@ -791,3 +791,11 @@ table.dataTable {
 .menu-left {
     width: 25px !important;
 }
+
+#table-file-scroll {
+    tr {
+        td:first-child {
+            display: table-cell !important;
+        }
+    }
+}

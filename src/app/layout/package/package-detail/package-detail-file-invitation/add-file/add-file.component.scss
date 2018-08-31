@@ -606,6 +606,14 @@ table.dataTable th {
     width: 6px;
 }
 
+#table-file-scroll {
+    tr {
+        td:first-child {
+            display: table-cell !important;
+        }
+    }
+}
+
 #table-file-scroll::-webkit-scrollbar {
     height: 8px;
 }
