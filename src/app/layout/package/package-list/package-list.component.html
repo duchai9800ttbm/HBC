@@ -57,6 +57,7 @@
                         </select>
                     </span>
                 </div>
+
                 <div class="form-group ml-sm-2">
                     <label for="" class="form-label">Tổng giá trị</label>
                 </div>
@@ -222,6 +223,16 @@
                                 </div>
                             </div>
                         </th>
+                        <th [hidden]="!loaiKhachHang">
+                                <div class="d-flex justify-content-start">
+                                    <div style="margin-right: 10px">Loại khách hàng</div>
+                                    <div class="center-parent">
+                                        <div>
+                                            <i class="fa fa-caret-down" style="color: #ffff;"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                            </th>
                         <th [hidden]="!loaiCongTrinh">
                             <div class="d-flex justify-content-start">
                                 <div style="margin-right: 10px">Loại công trình</div>
@@ -372,17 +383,7 @@
                             </div>
                         </th>
 
-                        <th [hidden]="!loaiKhachHang">
-                            <div class="d-flex justify-content-start">
-                                <!-- <div style="margin-right: 10px">Loại khách hàng</div> -->
-                                <div style="margin-right: 10px">Loại khách hàng</div>
-                                <div class="center-parent">
-                                    <div>
-                                        <i class="fa fa-caret-down" style="color: #ffff;"></i>
-                                    </div>
-                                </div>
-                            </div>
-                        </th>
+
                         <th [hidden]="!lyDoTrungThau">
                             <div class="d-flex justify-content-start">
                                 <div style="margin-right: 10px">Lý do trúng thầu</div>
@@ -404,15 +405,15 @@
                             </div>
                         </th>
                         <th [hidden]="!lydohuythau">
-                                <div class="d-flex justify-content-start">
-                                    <div style="margin-right: 10px">Lý do hủy thầu</div>
-                                    <div class="center-parent">
-                                        <div>
-                                            <i class="fa fa-caret-down" style="color: #ffff;"></i>
-                                        </div>
+                            <div class="d-flex justify-content-start">
+                                <div style="margin-right: 10px">Lý do hủy thầu</div>
+                                <div class="center-parent">
+                                    <div>
+                                        <i class="fa fa-caret-down" style="color: #ffff;"></i>
                                     </div>
                                 </div>
-                            </th>
+                            </div>
+                        </th>
                         <th [hidden]="!ngayBatDau">
                             <div class="d-flex justify-content-start">
                                 <div style="margin-right: 10px">Ngày bắt đầu</div>
@@ -535,6 +536,7 @@
                         <td [hidden]="!lienHe" class="text-truncate">{{ item.customerContact?.name }}</td>
                         <td [hidden]="!vaiTro" class="text-truncate">{{ item.hbcRole?.name }}</td>
                         <td [hidden]="!chuTri" class="text-truncate">{{ item.chairEmployee?.employeeName }}</td>
+                        <td [hidden]="!loaiKhachHang" class="text-truncate">{{ item.classify | translate }}</td>
                         <td [hidden]="!loaiCongTrinh" class="text-truncate">{{ item.projectType?.value }}</td>
 
                         <td [hidden]="!tongGiaTri" class="text-truncate text-right">{{ item.amount | vnCurrency }}</td>
@@ -564,8 +566,8 @@
                         <td [hidden]="!diaChiDVTV" class="text-truncate">{{ item.consultantAddress }}</td>
                         <td [hidden]="!soDienThoaiDVTV" class="text-truncate">{{ item.consultantPhone }}</td>
                         <td [hidden]="!dientichsan" class="text-truncate">{{ item.floorArea }}</td>
-                        
-                        <td [hidden]="!loaiKhachHang" class="text-truncate">{{ item.classify | translate }}</td>
+
+
                         <td [hidden]="!lyDoTrungThau" class="text-truncate">{{ item.acceptanceReason }}</td>
                         <td [hidden]="!lyDoTratThau" class="text-truncate">{{ item.unacceptanceReason }}</td>
                         <td [hidden]="!lydohuythau" class="text-truncate">{{ item.cancelReason }}</td>
