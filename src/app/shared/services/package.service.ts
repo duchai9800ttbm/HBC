@@ -38,11 +38,11 @@ export class PackageService {
         urlFilterParams.append('chairEmployeeId', filter.chairEmployeeId);
         urlFilterParams.append(
             'minCost',
-            filter.minCost ? filter.minCost.toString() : ''
+            filter.minCost.toString()
         );
         urlFilterParams.append(
             'maxCost',
-            filter.maxCost ? filter.maxCost.toString() : ''
+            filter.maxCost.toString()
         );
         urlFilterParams.append('sorting', filter.sorting);
         return urlFilterParams;
@@ -207,9 +207,8 @@ export class PackageService {
         page: number | string,
         pageSize: number | string
     ): Observable<PagedResult<PackageListItem>> {
-        const filterUrl = `bidopportunity/filter/${page}/${pageSize}?searchTerm=`;
+        const filterUrl = `bidopportunity/filter/${page}/${pageSize}?searchTerm=${searchTerm}`;
         const urlParams = PackageService.createFilterParams(filter);
-        urlParams.append('search', searchTerm);
         return this.apiService.get(filterUrl, urlParams).map(response => {
             const result = response.result;
             return {

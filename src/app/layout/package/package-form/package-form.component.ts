@@ -211,6 +211,7 @@ export class PackageFormComponent implements OnInit {
         this.packageService.getListCustomer(query)
             .subscribe(result => {
                 this.customersSearchResults = result;
+                console.log('this.customersSearchResults', result);
             });
     }
 
@@ -219,6 +220,7 @@ export class PackageFormComponent implements OnInit {
         this.packageForm.get('customerNewOldType').patchValue(e.customerNewOldType);
     }
     changeConsultant(e) {
+        console.log('eeee', e);
         this.packageForm.get('consultantAddress').patchValue(e.customerAddress);
         this.packageForm.get('consultantPhone').patchValue(e.customerPhone);
     }

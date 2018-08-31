@@ -75,54 +75,56 @@
                     <i class="fa fa-times"></i>&nbsp;&nbsp; Xóa lọc
                 </button>
             </div>
-            <div class="filter-bar" style="width: 80px; margin-left: 10px; text-align: center" ngbDropdown #myDrop="ngbDropdown" placement="bottom-right">
-                <div style="cursor: pointer; padding-left: 10px; padding-right: 10px;" class="d-flex justify-content-around center-parent h-100"
-                    ngbDropdownToggle>
-                    <div class="center-parent" style="margin-right: 6px">
-                        <div>
-                            <i class="fa fa-cog" style="color: #625141;"></i>
-                        </div>
-                    </div>
-                    <div>Cột</div>
-                </div>
-                <div class="dropdown-menu" ngbDropdownMenu>
-                    <div class="popup-dynamic-col" style="min-width: 600px; min-height: 300px;">
-                        <div class="d-flex justify-content-between">
-                            <div class="">{{sum}}/{{listField?.length}} cột được chọn</div>
+            <div class="filter-bar center-parent" style="width: 80px; margin-left: 10px; text-align: center" ngbDropdown #myDrop="ngbDropdown" placement="bottom-right">
+                <div #myDrop2>
+                    <div style="cursor: pointer; padding-left: 10px; padding-right: 10px;" class="d-flex justify-content-around center-parent h-100"
+                        ngbDropdownToggle>
+                        <div class="center-parent" style="margin-right: 6px">
                             <div>
-                                <span style="cursor: pointer; color: #00a0e3" (click)="chooseAll()">Chọn tất cả</span>
+                                <i class="fa fa-cog" style="color: #625141;"></i>
                             </div>
                         </div>
-                        <hr>
-                        <div style="height: 160px;">
-                            <div class="wrapper">
-                                <div class="form-check-inline" *ngFor="let item of listField">
-                                    <div class="d-flex">
-                                        <div style="margin-top: 2px;">
-                                            <input type="checkbox" (change)="inputChange()" [(ngModel)]="item.hidden" style="cursor: pointer;">
-                                        </div>
-                                        <div class="cus-pointer" (click)="inputChange2(item.id)"> &nbsp;{{item.fieldCaption}}</div>
-                                    </div>
+                        <div>Cột</div>
+                    </div>
+                    <div class="dropdown-menu" ngbDropdownMenu>
+                        <div class="popup-dynamic-col" style="min-width: 600px; min-height: 300px;">
+                            <div class="d-flex justify-content-between">
+                                <div class="">{{sum}}/{{listField?.length}} cột được chọn</div>
+                                <div>
+                                    <span style="cursor: pointer; color: #00a0e3" (click)="chooseAll()">Chọn tất cả</span>
                                 </div>
-
                             </div>
-                        </div>
-
-                        <hr>
-                        <div>
-                            <div class="d-flex">
-                                <div class="mr-auto">
-                                    <div class="center-parent w-100 h-100">
-                                        <div>
-                                            <span style="cursor: pointer; color: #00a0e3" (click)="resetDefaultState()">Trở về mặc định</span>
+                            <hr>
+                            <div style="height: 160px;">
+                                <div class="wrapper">
+                                    <div class="form-check-inline" *ngFor="let item of listField">
+                                        <div class="d-flex">
+                                            <div style="margin-top: 2px;">
+                                                <input type="checkbox" (change)="inputChange()" [(ngModel)]="item.hidden" style="cursor: pointer;">
+                                            </div>
+                                            <div class="cus-pointer" (click)="inputChange2(item.id)"> &nbsp;{{item.fieldCaption}}</div>
                                         </div>
                                     </div>
+
                                 </div>
-                                <div class="p-1">
-                                    <button class="btn btn-secondary" (click)="cancel(myDrop)">Hủy</button>
-                                </div>
-                                <div class="p-1" style="padding-right: 0px">
-                                    <button class="btn btn-primary" (click)="apply(myDrop)">Áp dụng</button>
+                            </div>
+
+                            <hr>
+                            <div>
+                                <div class="d-flex">
+                                    <div class="mr-auto">
+                                        <div class="center-parent w-100 h-100">
+                                            <div>
+                                                <span style="cursor: pointer; color: #00a0e3" (click)="resetDefaultState()">Trở về mặc định</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="p-1">
+                                        <button class="btn btn-secondary" (click)="cancel(myDrop)">Hủy</button>
+                                    </div>
+                                    <div class="p-1" style="padding-right: 0px">
+                                        <button class="btn btn-primary" (click)="apply(myDrop)">Áp dụng</button>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -490,11 +492,11 @@
                             </label>
                         </td>
                         <td [hidden]="!maDuAn">
-                            <div  class="text-truncate" [title]="item.projectName">
+                            <div class="text-truncate" [title]="item.projectName">
                                 {{ item.projectNo }}
                             </div>
                         </td>
-                        <td [hidden]="!tenDuAn" >
+                        <td [hidden]="!tenDuAn">
                             <div class="text-truncate" [title]="item.projectName">
                                 {{ item.projectName }}
                             </div>
@@ -509,7 +511,7 @@
                         <td [hidden]="!vaiTro" class="text-truncate">{{ item.hbcRole?.name }}</td>
                         <td [hidden]="!chuTri" class="text-truncate">{{ item.chairEmployee?.employeeName }}</td>
                         <td [hidden]="!loaiCongTrinh" class="text-truncate">{{ item.projectType?.value }}</td>
-                        
+
                         <td [hidden]="!tongGiaTri" class="text-truncate text-right">{{ item.amount | vnCurrency }}</td>
                         <td [hidden]="!quyMo" class="color">{{item.magnitude }}</td>
                         <td [hidden]="!giaiDoan" class="" style="text-align: center;">
