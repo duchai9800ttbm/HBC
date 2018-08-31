@@ -619,8 +619,8 @@ table.dataTable {
 
     overflow-x: scroll;
     th:first-child,td:first-child {
-        width: 50px!important;
-        max-width: 60px;
+        width: 80px!important;
+        max-width: 90px;
     }
     th:not([type="check"]),
     td:not([type="check"]) {
