@@ -557,7 +557,7 @@
                         </td>
                         <td [hidden]="!khuVuc" class="text-truncate">{{item.location.value | translate}}</td>
                         <!-- <td [hidden]="!congViec" class="text-truncate">{{ item.job }}</td> -->
-                        <td [hidden]="!tienDoThucHien" class="text-truncate text-right">{{ item.progress }}</td>
+                        <td [hidden]="!tienDoThucHien" class="text-truncate text-right">{{ item.progress }} (%)</td>
                         <td [hidden]="!linkTaiLieu" class="text-truncate cus-pointer">
                             <!-- (click)="openLinkDocument(item.documentLink)" -->
                             <!-- <a title="link tài liệu">{{ item.documentLink }}</a> -->
@@ -568,7 +568,7 @@
                         <td [hidden]="!donViTuVan" class="text-truncate">{{ item.consultantUnitCustomer?.customerName }}</td>
                         <td [hidden]="!diaChiDVTV" class="text-truncate">{{ item.consultantAddress }}</td>
                         <td [hidden]="!soDienThoaiDVTV" class="text-truncate">{{ item.consultantPhone }}</td>
-                        <td [hidden]="!dientichsan" class="text-truncate text-right">{{ item.floorArea }}</td>
+                        <td [hidden]="!dientichsan" class="text-truncate text-right">{{ item.floorArea | numberArea}}</td>
 
 
                         <td [hidden]="!lyDoTrungThau" class="text-truncate">{{ item.acceptanceReason }}</td>
