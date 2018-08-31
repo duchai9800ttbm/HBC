@@ -133,10 +133,15 @@ export class UploadFileComponent implements OnInit {
       const description = this.uploadForm.get('description').value;
       const date = this.uploadForm.get('date').value;
       const link = this.uploadForm.get('link').value;
-      this.documentService.upload(this.packageId, documentName, documentType.id, description, date, this.file, link).subscribe(data => {
-        this.spinner.hide();
-        this.closed.emit(true);
-      }, err => this.spinner.hide());
+      if (date || link) {
+        this.documentService.upload(this.packageId, documentName, documentType.id, description, date, this.file, link).subscribe(data => {
+          this.spinner.hide();
+          this.closed.emit(true);
+        }, err => this.spinner.hide());
+      } else {
+      
+      }
+
     }
   }
 
