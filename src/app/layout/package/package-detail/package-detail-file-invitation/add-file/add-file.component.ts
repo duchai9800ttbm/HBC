@@ -90,10 +90,11 @@ export class AddFileComponent implements OnInit {
     }
 
     toggleClick() {
+        this.isShowMenu = !this.isShowMenu;
         $('.toggle-menu-item').toggleClass('resize');
         $('.line').toggleClass('resize');
         $('#toggle-menu-item').toggleClass('hidden');
-
+        $('#toggle-menu-item').toggleClass('resize');
         $('.iconN1').toggleClass('iconN01');
         $('.iconN2').toggleClass('iconN02');
         $('.iconN3').toggleClass('iconN03');

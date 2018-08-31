@@ -1,11 +1,11 @@
 <div id="outer-table">
     <div class="table-small mt-3">
-        <div id="header-table" class=" title-list-package d-flex flex-wrap align-items-center status-filter" *ngIf="!isShowMenu">
-            <div class="mr-auto d-flex align-items-end list-package mt-2 mb-2">
+        <div id="header-table" class=" title-list-package d-flex flex-wrap align-items-start status-filter" >
+            <div class="status mr-auto d-flex align-items-end list-package mt-2 mb-2">
                 <div class="d-flex justify-content-start" style="height: 40px;" id="res-header">
                     <div class="rule mr-2">
                     </div>
-                    <div class="center-parent  mr-4" style="font-size: 18px">
+                    <div class="center-parent  mr-2" style="font-size: 16px">
                         <div>Danh sách bộ HSMT</div>
                     </div>
                     <div class="alert alert-danger alert-trim status-package center-parent">
@@ -13,16 +13,20 @@
                     </div>
                 </div>
             </div>
-            <div>
-                <div class="btn-toolbar mt-2 mb-2">
+            <div class="search">
+                <div class="btn-toolbar-2 mt-2 mb-2">
                     <div>
-                        <div class="input-group">
-                            <span class="input-group-addon">Tìm kiếm theo</span>
-                            <input type="text" class="form-control icon" placeholder="&#xf002; Tên tài liệu" (keyup)="search($event.target.value)">
+                        <div>
+                            <div class="input-group ml-auto" style="width: 250px">
+                                <span class="input-group-addon">Tìm kiếm theo</span>
+                                <input type="text" class="form-control icon" placeholder="&#xf002; Tên tài liệu"
+                                    (keyup)="search($event.target.value)">
+                            </div>
                         </div>
+
                     </div>
-                    <div>
-                        <button class="btn btn-primary ml-2" (click)="multiDelete()">
+                    <div class="mt-2">
+                        <button class="btn btn-primary" (click)="multiDelete()">
                             Xóa
                         </button>
                         <button class="btn btn-primary ml-2">
@@ -69,7 +73,7 @@
             </div>
         </div>
         <div id="main-content">
-            <div id="toggle-menu" *ngIf="!isShowMenu">
+            <div id="toggle-menu" [class.menu-left]="isShowMenu" style="width: 212px;">
                 <div class="button-click" (click)="toggleClick()">
                     <div class="iconButton iconN1"></div>
                     <div class="iconButton iconN2" style="margin: 3px 0;"></div>
@@ -82,69 +86,61 @@
                     </ng-container>
                 </div>
             </div>
-            <div class="bot-table" [class.table-toggle]="!isShowMenu" style="width: calc(100% - 210px);">
-                <div style="zoom: 0.7;" class="d-flex flex-row flex-wrap filter-bar custor-filter-bar mt-2 custom-filter-bar"
-                    style="background-color: #fafbfc!important">
-                    <div class="d-flex form-inline">
-                        <div class="form-group ml-sm-2">
-                            <label for="" class="form-label">Tình trạng</label>
-                            <span class="custom-dropdown mx-sm-2">
-                                <select class="form-control" [(ngModel)]="filterModel.status">
-                                    <option value="">Tất cả</option>
-                                    <option value="Official">Chính thức</option>
-                                    <option value="Draft">Bản nháp</option>
-                                </select>
-                            </span>
-                        </div>
-                        <!-- <div class="form-group ml-sm-2">
-                            <label for="" class="form-label">Người upload</label>
-                            <span class="custom-dropdown mx-sm-2">
-                                <select class="form-control" [(ngModel)]="filterModel.uploadedEmployeeId">
-                                    <option [ngValue]="null">--Lựa chọn--</option>
-                                    <option *ngFor="let item of userListItem" [value]="item.employeeId">{{item.employeeName
-                                        }}</option>
-                                </select>
-                            </span>
-                        </div> -->
-                        <div class="form-group ml-sm-2">
-                            <label for="" class="form-label">Ngày upload</label>
-                            <div class="input-group mx-sm-2">
-                                <owl-date-time [(ngModel)]="filterModel.createDate" [readonlyInput]="datePickerConfig.readonlyInput"
-                                    [locale]="datePickerConfig.vi" [placeHolder]="datePickerConfig.datePlaceHolder"
-                                    [type]="datePickerConfig.calendarType" [dateFormat]="datePickerConfig.dateFormat">
-                                </owl-date-time>
-                                <span class="input-group-addon">
-                                    <i class="fa fa-calendar"></i>
-                                </span>
+            <div class="bot-table" [class.table-toggle-2]="isShowMenu" style="width: calc(100% - 230px);">
+                    <div class="d-flex flex-row flex-wrap filter-bar custom-filter-bar" style="background-color: #fafbfc">
+                            <div class="d-flex form-inline ">
+                                <div class="form-group ml-sm-2 p-1">
+                                    <label for="" class="form-label">Tình trạng</label>
+                                    <span class="custom-dropdown mx-sm-2">
+                                        <select class="form-control" [(ngModel)]="filterModel.status">
+                                            <option value="">Tất cả</option>
+                                            <option value="Official">Chính thức</option>
+                                            <option value="Draft">Bản nháp</option>
+                                        </select>
+                                    </span>
+                                </div>
+                    
+                                <div class="form-group ml-sm-2 p-1">
+                                    <label for="" class="form-label">Ngày upload</label>
+                                    <div class="input-group calendarInput">
+                                        <owl-date-time [(ngModel)]="filterModel.createDate" [locale]="datePickerConfig.vi" [placeHolder]="datePickerConfig.datePlaceHolder"
+                                            [type]="datePickerConfig.calendarType" pickerType="calendar" [dateFormat]="datePickerConfig.dateFormat">
+                                        </owl-date-time>
+                                        <span class="input-group-addon">
+                                            <i class="fa fa-calendar"></i>
+                                        </span>
+                                    </div>
+                                </div>
+            
+                                <div class="form-group ml-sm-2 p-1">
+                                    <label for="" class="form-label">Ngày nhận HSMT</label>
+                                    <div class="input-group calendarInput">
+                                        <owl-date-time [(ngModel)]="filterModel.createDate" [locale]="datePickerConfig.vi" [placeHolder]="datePickerConfig.datePlaceHolder"
+                                            [type]="datePickerConfig.calendarType" pickerType="calendar" [dateFormat]="datePickerConfig.dateFormat">
+                                        </owl-date-time>
+                                        <span class="input-group-addon">
+                                            <i class="fa fa-calendar"></i>
+                                        </span>
+                                    </div>
+                                </div>
+                                <div class="form-group ml-sm-2 p-1">
+            
+                                    <button type="submit" class="btn btn-primary ml-sm-2" (click)="filter()">
+                                        <i class="fa fa-filter" aria-hidden="true"></i>&nbsp; Lọc
+                                    </button>
+                                    <button class="btn btn-secondary ml-sm-2" (click)="clearFilter()">
+                                        <i class="fa fa-times"></i>&nbsp; Xóa lọc
+                                    </button>
+                                </div>
                             </div>
+            
                         </div>
-                        <!-- <div class="form-group ">
-                            <label for="" class="form-label">Ngày nhận HSMT</label>
-                            <div class="input-group calendarInput">
-                                <owl-date-time [locale]="datePickerConfig.vi"
-                                    [placeHolder]="datePickerConfig.datePlaceHolder" [type]="datePickerConfig.calendarType"
-                                    pickerType="calendar" [dateFormat]="datePickerConfig.dateFormat">
-                                </owl-date-time>
-                                <span class="input-group-addon">
-                                    <i class="fa fa-calendar"></i>
-                                </span>
-                            </div>
-                        </div> -->
-                    </div>
-                    <div class="d-flex form-inline">
-
-                        <button type="submit" class="btn btn-primary ml-sm-2" (click)="filter()">
-                            <i class="fa fa-filter" aria-hidden="true"></i>&nbsp; Lọc
-                        </button>
-                        <button class="btn btn-secondary ml-sm-2" (click)="clearFilter()">
-                            <i class="fa fa-times"></i>&nbsp; Xóa lọc
-                        </button>
-                    </div>
-                </div>
-                <div >
-                    <table id="table-file-scroll" [hidden]="!showTable" datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="table-selection row-border cell-border ">
+            
+                <div>
+                    <table id="table-file-scroll" [hidden]="!showTable" datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger"
+                        class="table-selection table-responsive row-border cell-border ">
                         <thead>
-                            <tr>
+                            <tr type="check">
 
                                 <th class="stt" style="background-color: #f68e56!important;">
                                     <div class="d-flex justify-content-around">
@@ -327,26 +323,26 @@
                             </tr>
                         </tbody>
                     </table>
-                </div>
 
-                <div>
-                    <div style="margin-top: 15px" *ngIf="showTable">
-                        <span>Hiển thị</span> <span class="font-weight-bold">&nbsp;{{sum}}&nbsp;</span> <span>kết quả</span>
-                    </div>
-                    <div style="margin-top: 15px" class="center-parent" *ngIf="!showTable">
-                        <div>
-                            Không có dữ liệu được hiển thị!
+                    <div>
+                        <div style="margin-top: 15px" *ngIf="showTable">
+                            <span>Hiển thị</span> <span class="font-weight-bold">&nbsp;{{sum}}&nbsp;</span> <span>kết
+                                quả</span>
+                        </div>
+                        <div style="margin-top: 15px" class="center-parent" *ngIf="!showTable">
+                            <div>
+                                Không có dữ liệu được hiển thị!
+                            </div>
                         </div>
                     </div>
-                </div>
 
+                </div>
             </div>
         </div>
+
+
+
     </div>
 
-
-
-</div>
-
-<ngx-spinner bdColor="rgba(51, 51, 51, 0.7)" size="medium" color="#fff" type="ball-clip-rotate-multiple"></ngx-spinner>
-<app-upload-file [typeFile]="typeFileUpload" [packageId]="packageId" *ngIf="showPopupAdd" (closed)="closePopup($event)"></app-upload-file>
+    <ngx-spinner bdColor="rgba(51, 51, 51, 0.7)" size="medium" color="#fff" type="ball-clip-rotate-multiple"></ngx-spinner>
+    <app-upload-file [typeFile]="typeFileUpload" [packageId]="packageId" *ngIf="showPopupAdd" (closed)="closePopup($event)"></app-upload-file>
