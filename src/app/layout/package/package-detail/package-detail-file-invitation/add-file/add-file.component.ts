@@ -111,6 +111,7 @@ export class AddFileComponent implements OnInit {
     filter() {
         this.bidDocumentGroupListItemSearchResult = this.documentService
             .filter(this.searchTerm, this.filterModel, this.bidDocumentGroupListItem);
+        console.log(this.bidDocumentGroupListItemSearchResult);
         this.showTable = this.bidDocumentGroupListItemSearchResult.length > 0;
 
         this.dtTrigger.next();
