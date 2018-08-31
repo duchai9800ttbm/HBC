@@ -468,7 +468,7 @@ export class PackageListComponent implements OnInit, AfterViewChecked {
     closeDropToll(DropTool) {
         DropTool.close();
     }
-    
+
     cancel(myDrop) {
         myDrop.close();
         this.packageService.getListFields(this.getUserId).subscribe(data => {
