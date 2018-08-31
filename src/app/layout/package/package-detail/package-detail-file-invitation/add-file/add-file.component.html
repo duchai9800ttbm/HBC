@@ -5,7 +5,7 @@
                 <div class="d-flex justify-content-start" style="height: 40px;" id="res-header">
                     <div class="rule mr-2">
                     </div>
-                    <div class="center-parent  mr-2" style="font-size: 16px">
+                    <div class="center-parent  mr-4" style="font-size: 16px">
                         <div>Danh sách bộ HSMT</div>
                     </div>
                     <div class="alert alert-danger alert-trim status-package center-parent">
@@ -115,7 +115,7 @@
                                 <div class="form-group ml-sm-2 p-1">
                                     <label for="" class="form-label">Ngày nhận HSMT</label>
                                     <div class="input-group calendarInput">
-                                        <owl-date-time [(ngModel)]="filterModel.createDate" [locale]="datePickerConfig.vi" [placeHolder]="datePickerConfig.datePlaceHolder"
+                                        <owl-date-time [(ngModel)]="filterModel.receivedDate" [locale]="datePickerConfig.vi" [placeHolder]="datePickerConfig.datePlaceHolder"
                                             [type]="datePickerConfig.calendarType" pickerType="calendar" [dateFormat]="datePickerConfig.dateFormat">
                                         </owl-date-time>
                                         <span class="input-group-addon">

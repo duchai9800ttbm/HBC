@@ -75,7 +75,8 @@
                     <i class="fa fa-times"></i>&nbsp;&nbsp; Xóa lọc
                 </button>
             </div>
-            <div class="filter-bar center-parent" style="width: 80px; margin-left: 10px; text-align: center" ngbDropdown #myDrop="ngbDropdown" placement="bottom-right">
+            <div class="filter-bar center-parent" style="width: 80px; margin-left: 10px; text-align: center" ngbDropdown #myDrop="ngbDropdown"
+                placement="bottom-right">
                 <div #myDrop2>
                     <div style="cursor: pointer; padding-left: 10px; padding-right: 10px;" class="d-flex justify-content-around center-parent h-100"
                         ngbDropdownToggle>
@@ -537,11 +538,21 @@
                         <td [hidden]="!loaiKhachHang" class="text-truncate">{{ item.customer?.customerNewOldType }}</td>
                         <td [hidden]="!lyDoTrungThau" class="text-truncate">{{ item.acceptanceReason }}</td>
                         <td [hidden]="!lyDoTratThau" class="text-truncate">{{ item.unacceptanceReason }}</td>
-                        <td [hidden]="!ngayBatDau" class="text-truncate">{{ item.startTrackingDate*1000 | date:'dd/MM/yyyy' }}</td>
-                        <td [hidden]="!ngayDuKienKetQuaThau" class="text-truncate">{{ item.resultEstimatedDate*1000 | date:'dd/MM/yyyy' }}</td>
-                        <td [hidden]="!ngayNhanHoSoMoiThau" class="text-truncate">{{ item.submissionDate*1000 | date:'dd/MM/yyyy' }}</td>
-                        <td [hidden]="!ngayKhoiCongDuAn" class="text-truncate">{{ item.projectEstimatedStartDate*1000 |date:'dd/MM/yyyy' }}</td>
-                        <td [hidden]="!ngayKetThucDuAn" class="text-truncate">{{ item.projectEstimatedEndDate*1000 | date:'dd/MM/yyyy' }}</td>
+                        <td [hidden]="!ngayBatDau" class="text-truncate">
+                            <span *ngIf="item.startTrackingDate">{{ item.startTrackingDate*1000 | date:'dd/MM/yyyy' }}</span>
+                        </td>
+                        <td [hidden]="!ngayDuKienKetQuaThau" class="text-truncate">
+                            <span *ngIf="item.resultEstimatedDate">{{ item.resultEstimatedDate*1000 | date:'dd/MM/yyyy' }}</span>
+                        </td>
+                        <td [hidden]="!ngayNhanHoSoMoiThau" class="text-truncate">
+                            <span *ngIf="item.submissionDate">{{ item.submissionDate*1000 | date:'dd/MM/yyyy' }}</span>
+                        </td>
+                        <td [hidden]="!ngayKhoiCongDuAn" class="text-truncate">
+                            <span *ngIf="item.projectEstimatedStartDate">{{ item.projectEstimatedStartDate*1000 |date:'dd/MM/yyyy' }}</span>
+                        </td>
+                        <td [hidden]="!ngayKetThucDuAn" class="text-truncate">
+                            <span *ngIf=" item.projectEstimatedEndDate">{{ item.projectEstimatedEndDate*1000 | date:'dd/MM/yyyy' }}</span>
+                        </td>
                         <td [hidden]="!hangMucCongTrinh" class="text-truncate">{{ item.mainBuildingCategory?.value }}</td>
                         <td [hidden]="!diaDiem" class="text-truncate">{{ item.location?.value }}</td>
                         <td [hidden]="!moTa" class="text-truncate">{{ item.description }}</td>

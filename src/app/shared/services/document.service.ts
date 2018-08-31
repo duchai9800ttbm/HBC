@@ -280,6 +280,8 @@ export class DocumentService {
 
     sortAndSearch(searchTerm: string, filterModel: BidDocumentFilter, source: any[]) {
         let day = null, month = null, year = null;
+        let day2 = null, month2 = null, year2 = null;
+
         if (filterModel.createDate) {
             const today = new Date(
                 moment(filterModel.createDate).unix()
@@ -287,6 +289,9 @@ export class DocumentService {
             day = moment(filterModel.createDate).get('date');
             month = moment(filterModel.createDate).get('month') + 1;
             year = moment(filterModel.createDate).get('year');
+            day2 = moment(filterModel.receivedDate).get('date');
+            month2 = moment(filterModel.receivedDate).get('month') + 1;
+            year2 = moment(filterModel.receivedDate).get('year');
         }
         return this.filterService
             .transform(source,
@@ -296,7 +301,10 @@ export class DocumentService {
                     employeeId: filterModel.uploadedEmployeeId ? +filterModel.uploadedEmployeeId : null,
                     day: `${day ? day : ''}`,
                     month: `${month ? month : ''}`,
-                    year: `${year ? year : ''}`
+                    year: `${year ? year : ''}`,
+                    day2: `${day ? day : ''}`,
+                    month2: `${month ? month : ''}`,
+                    year2: `${year ? year : ''}`
                 });
     }
 }
