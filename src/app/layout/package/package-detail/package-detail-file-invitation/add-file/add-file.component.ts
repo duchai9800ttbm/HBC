@@ -248,7 +248,7 @@ export class AddFileComponent implements OnInit {
                 },
                     err => {
                         that.spinner.hide();
-                    
+
                         if (err.json().errorCode === 'BusinessException') {
                             that.alertService.error('Không đủ bản chính thức trong các bộ hồ sơ mời thầu!');
                         } else {
@@ -349,7 +349,13 @@ export class AddFileComponent implements OnInit {
 
     dowloadDocument(id) {
         this.documentService.download(id).subscribe(data => {
-        }, err => this.spinner.hide());
+        }, err => {
+            if (err.json().errorCode) {
+                this.alertService.error('File không tồn tại hoặc đã bị xóa!');
+            } else {
+                this.alertService.error('Đã có lỗi xãy ra!');
+            }
+        });
     }
 
     fullHSMT() {

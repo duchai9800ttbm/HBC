@@ -18,9 +18,9 @@ import { PackageService } from '../../../../../shared/services/package.service';
 import { PackageDetailComponent } from '../../package-detail.component';
 
 @Component({
-  selector: 'app-full-file',
-  templateUrl: './full-file.component.html',
-  styleUrls: ['./full-file.component.scss']
+    selector: 'app-full-file',
+    templateUrl: './full-file.component.html',
+    styleUrls: ['./full-file.component.scss']
 })
 export class FullFileComponent implements OnInit {
 
@@ -36,8 +36,8 @@ export class FullFileComponent implements OnInit {
     packageId;
     showPopupAdd = false;
     typeFileUpload = {
-        id: 1,
-        text: 'Bản vẽ',
+        id: '2',
+        text: 'Quyển HSMT',
     };
     userListItem: UserItemModel[];
     ListItem: BidDocumentModel[];
@@ -66,7 +66,7 @@ export class FullFileComponent implements OnInit {
             this.packageData = result;
             switch (this.packageData.stageStatus.id) {
                 case 'CanBoSungHSMT': {
-                  this.router.navigate([`/package/detail/${this.packageId}/invitation/add-file`]);
+                    this.router.navigate([`/package/detail/${this.packageId}/invitation/add-file`]);
                     break;
                 }
                 default: {
@@ -137,62 +137,62 @@ export class FullFileComponent implements OnInit {
     }
 
     openPopupUploadFile(documentType) {
-        // if (documentType === 'Drawing') {
-        //     this.typeFileUpload = {
-        //         id: 'Drawing',
-        //         text: 'Bản vẽ',
-        //     };
-        // } else if (documentType === 'Book') {
-        //     this.typeFileUpload = {
-        //         id: 'Book',
-        //         text: 'Cuốn hồ sơ mời thầu',
-        //     };
-        // } else if (documentType === 'TechnicalStandard') {
-        //     this.typeFileUpload = {
-        //         id: 'TechnicalStandard',
-        //         text: 'Tiêu chuẩn kĩ thuật',
-        //     };
-        // } else if (documentType === 'BOQ') {
-        //     this.typeFileUpload = {
-        //         id: 'BOQ',
-        //         text: 'BOQ',
-        //     };
-        // } else if (documentType === 'GeologicalSurvey') {
-        //     this.typeFileUpload = {
-        //         id: 'GeologicalSurvey',
-        //         text: 'Khảo sát địa chất',
-        //     };
-        // }
+        if (documentType === '2') {
+            this.typeFileUpload = {
+                id: '2',
+                text: 'Quyển HSMT',
+            };
+        } else if (documentType === '3') {
+            this.typeFileUpload = {
+                id: '3',
+                text: 'Bản vẽ thuyết minh',
+            };
+        } else if (documentType === '4') {
+            this.typeFileUpload = {
+                id: '4',
+                text: 'BOQ',
+            };
+        } else if (documentType === '5') {
+            this.typeFileUpload = {
+                id: '5',
+                text: 'Tiêu chí kỹ thuật (Specs)',
+            };
+        } else if (documentType === '6') {
+            this.typeFileUpload = {
+                id: '6',
+                text: 'Các báo cáo và các tài liệu kỹ thuật (KSDQ)',
+            };
+        }
         this.showPopupAdd = true;
     }
 
-    uploadFileItem(type) {
-        // if (type === 'Drawing') {
-        //     this.typeFileUpload = {
-        //         id: 'Drawing',
-        //         text: 'Bản vẽ',
-        //     };
-        // } else if (type === 'Book') {
-        //     this.typeFileUpload = {
-        //         id: 'Book',
-        //         text: 'Cuốn hồ sơ mời thầu',
-        //     };
-        // } else if (type === 'TechnicalStandard') {
-        //     this.typeFileUpload = {
-        //         id: 'TechnicalStandard',
-        //         text: 'Tiêu chuẩn kĩ thuật',
-        //     };
-        // } else if (type === 'BOQ') {
-        //     this.typeFileUpload = {
-        //         id: 'BOQ',
-        //         text: 'BOQ',
-        //     };
-        // } else if (type === 'GeologicalSurvey') {
-        //     this.typeFileUpload = {
-        //         id: 'GeologicalSurvey',
-        //         text: 'Khảo sát địa chất',
-        //     };
-        // }
+    uploadFileItem(documentType) {
+        if (documentType === 'Quyển HSMT') {
+            this.typeFileUpload = {
+                id: '2',
+                text: 'Quyển HSMT',
+            };
+        } else if (documentType === 'Bản vẽ thuyết minh') {
+            this.typeFileUpload = {
+                id: '3',
+                text: 'Bản vẽ thuyết minh',
+            };
+        } else if (documentType === 'BOQ') {
+            this.typeFileUpload = {
+                id: '4',
+                text: 'BOQ',
+            };
+        } else if (documentType === 'Tiêu chí kĩ thuật (Specs)') {
+            this.typeFileUpload = {
+                id: '5',
+                text: 'Tiêu chí kỹ thuật (Specs)',
+            };
+        } else if (documentType === 'Các báo cáo và các tài liệu khác (KSDQ)') {
+            this.typeFileUpload = {
+                id: '6',
+                text: 'Các báo cáo và các tài liệu khác (KSDQ)',
+            };
+        }
         this.showPopupAdd = true;
     }
 
@@ -344,7 +344,13 @@ export class FullFileComponent implements OnInit {
 
     dowloadDocument(id) {
         this.documentService.download(id).subscribe(data => {
-        }, err => this.spinner.hide());
+        }, err => {
+            if (err.json().errorCode) {
+                this.alertService.error('File không tồn tại hoặc đã bị xóa!');
+            } else {
+                this.alertService.error('Đã có lỗi xãy ra!');
+            }
+        });
     }
 
     fullHSMT() {

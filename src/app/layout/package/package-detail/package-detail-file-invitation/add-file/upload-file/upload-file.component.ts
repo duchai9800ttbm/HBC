@@ -139,9 +139,12 @@ export class UploadFileComponent implements OnInit {
           this.spinner.hide();
           this.errorMess = null;
           this.closed.emit(true);
-        }, err => this.spinner.hide());
+        }, err => {
+          this.errorMess = 'Upload thất bại, xin vui lòng thử lại!';
+          this.spinner.hide();
+        });
       } else {
-        this.errorMess = 'Vui lòng chọn File hoặc đường dẫn link đển file!';
+        this.errorMess = 'Vui lòng chọn file hoặc đường dẫn link đển file!';
       }
 
     }

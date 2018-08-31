@@ -799,3 +799,7 @@ table.dataTable {
         }
     }
 }
+
+:host(){
+    height: 100%;
+}
