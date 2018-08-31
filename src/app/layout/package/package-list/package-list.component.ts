@@ -166,12 +166,13 @@ export class PackageListComponent implements OnInit, AfterViewChecked {
     hangMucCongTrinh = false; // ok
     tongGiaTri = false; // ok
     danhGiaDuAn = false; // ok
-
     dienTichSan = false;
     trangThaiGoiThau = false;
     ngayBatDauTheoDoi = false;
     ngayNopHoSoMoiThau = false;
     phanloai = false;
+    dientichsan = false;
+    lydohuythau = false;
 
     orderBy = '';
     currentSort = '';
@@ -327,6 +328,8 @@ export class PackageListComponent implements OnInit, AfterViewChecked {
             this.tongGiaTri = this.listFieldNomarlized.includes('ARBidOpportunitys');
 
             this.danhGiaDuAn = this.listFieldNomarlized.includes('ARBidOpportunityEvaluation');
+            this.dientichsan = this.listFieldNomarlized.includes('ARBidOpportunityFloorArea');
+            this.lydohuythau =  this.listFieldNomarlized.includes('ARBidOpportunityCancelReason');
         });
     }
 

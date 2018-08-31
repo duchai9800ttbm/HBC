@@ -361,7 +361,7 @@
                             </div>
                         </th>
 
-                        <!-- <th [hidden]="!dientichsan">
+                        <th [hidden]="!dientichsan">
                             <div class="d-flex justify-content-start">
                                 <div style="margin-right: 10px">Diện tích sàn (m2)</div>
                                 <div class="center-parent">
@@ -370,7 +370,7 @@
                                     </div>
                                 </div>
                             </div>
-                        </th> -->
+                        </th>
 
                         <th [hidden]="!loaiKhachHang">
                             <div class="d-flex justify-content-start">
@@ -403,6 +403,16 @@
                                 </div>
                             </div>
                         </th>
+                        <th [hidden]="!lydohuythau">
+                                <div class="d-flex justify-content-start">
+                                    <div style="margin-right: 10px">Lý do hủy thầu</div>
+                                    <div class="center-parent">
+                                        <div>
+                                            <i class="fa fa-caret-down" style="color: #ffff;"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                            </th>
                         <th [hidden]="!ngayBatDau">
                             <div class="d-flex justify-content-start">
                                 <div style="margin-right: 10px">Ngày bắt đầu</div>
@@ -553,9 +563,12 @@
                         <td [hidden]="!donViTuVan" class="text-truncate">{{ item.consultantUnitCustomer?.customerName }}</td>
                         <td [hidden]="!diaChiDVTV" class="text-truncate">{{ item.consultantAddress }}</td>
                         <td [hidden]="!soDienThoaiDVTV" class="text-truncate">{{ item.consultantPhone }}</td>
+                        <td [hidden]="!dientichsan" class="text-truncate">{{ item.floorArea }}</td>
+                        
                         <td [hidden]="!loaiKhachHang" class="text-truncate">{{ item.classify | translate }}</td>
                         <td [hidden]="!lyDoTrungThau" class="text-truncate">{{ item.acceptanceReason }}</td>
                         <td [hidden]="!lyDoTratThau" class="text-truncate">{{ item.unacceptanceReason }}</td>
+                        <td [hidden]="!lydohuythau" class="text-truncate">{{ item.cancelReason }}</td>
                         <td [hidden]="!ngayBatDau" class="text-truncate">
                             <span *ngIf="item.startTrackingDate">{{ item.startTrackingDate*1000 | date:'dd/MM/yyyy' }}</span>
                         </td>
