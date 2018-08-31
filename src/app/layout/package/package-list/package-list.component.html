@@ -5,7 +5,7 @@
         <div class="btn-toolbar">
             <div class="input-group">
                 <span class="input-group-addon">Tìm kiếm theo</span>
-                <input type="text" class="form-control" placeholder="Tên, vai trò, chủ trì" (keyup)="searchTerm$.next($event.target.value)">
+                <input type="text" class="form-control" placeholder="Tên, chủ trì" (keyup)="searchTerm$.next($event.target.value)">
             </div>
             <div class="btn-group ml-2" ngbDropdown>
                 <button type="button" class="btn btn-primary" ngbDropdownToggle data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
