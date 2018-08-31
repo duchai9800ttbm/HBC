@@ -22,22 +22,12 @@
                                     <tr>
                                         <td class="w-30 label no-boder bold-title">Đường dẫn link</td>
                                         <td class="w-70 no-boder">
-                                            <input class="w-100" kendoTextBox tabindex="1" type="text">
+                                            <input (change)="inputChange()" class="w-100" kendoTextBox formControlName="link" tabindex="1" type="text">
                                         </td>
                                     </tr>
                                     <tr>
                                         <td class="w-30 label no-boder bold-title">Hoặc</td>
                                         <td class="no-boder d-flex justify-content-between">
-                                            <!-- <span class="w-100">
-                                                <span class="form-control boder-input-choose-file">
-                                                    {{this.uploadForm.get('nameFile').value ? this.uploadForm.get('nameFile').value : '-- Chọn file --'}}
-                                                </span>
-                                            </span>
-                                            <span class="input-group-addon fileUpload">
-                                                <i class="fa fa-upload" aria-hidden="true"></i>
-                                                <input type="file" class="upload hide" (change)="fileChange($event)" accept=".xlsx,.xls,image/*,.doc, .docx,.ppt, .pptx,.txt,.pdf, .application/msword, application/vnd.openxmlformats-officedocument.wordprocessingml.document, application/vnd.ms-powerpoint, application/vnd.openxmlformats-officedocument.presentationml.slideshow, application/vnd.openxmlformats-officedocument.presentationml.presentation"
-                                                />
-                                            </span> -->
                                             <div class="fileUpload">
                                                 <button class="btn btn-primary">
                                                     <i class="fa fa-cloud-upload" aria-hidden="true"></i>&nbsp;&nbsp; Chọn File</button>
@@ -61,7 +51,10 @@
                                     <tr>
                                         <td class="w-30 label no-boder bold-title">Tên</td>
                                         <td class="w-70 no-boder">
-                                            <input class="w-100" kendoTextBox tabindex="1" type="text" formControlName="editName">
+                                            <input class="w-100" kendoTextBox tabindex="1" type="text" formControlName="editName" [class.is-invalid]="formErrors.editName">
+                                            <div class="invalid-feedback" *ngIf="formErrors.editName">
+                                                {{formErrors.editName}}
+                                            </div>
                                         </td>
                                     </tr>
                                     <tr>
