@@ -63,6 +63,7 @@ export class DocumentService {
             receivedDate: result.receivedDate,
             desc: result.description,
             fileGuid: result.fileGuid,
+            url: result.url
         };
     }
     get employeeId() {
@@ -172,6 +173,7 @@ export class DocumentService {
         description: string,
         receivedDate: number,
         file: File,
+        link: string
     ) {
         const url = `biddocument/upload`;
         const formData = new FormData();
@@ -181,6 +183,7 @@ export class DocumentService {
         formData.append('DocumentDesc', description);
         formData.append('ReceivedDate', `${moment(receivedDate).unix()}`);
         formData.append('DocumentFile', file);
+        formData.append('Url', link);
         return this.apiService.postFile(url, formData)
             .map(response => response)
             .share();

@@ -385,7 +385,10 @@ export class AddFileComponent implements OnInit {
                     that.spinner.hide();
                     that.router.navigate([`/package/detail/${this.packageId}/invitation/full-file`]);
                     that.alertService.success('Đã chuyển sang trang thái đã có HSMT thành công!');
-                }, err => this.spinner.hide());
+                }, err => {
+                    that.alertService.error('Chuyển sang trạng thái đã có HSMT thất bại!');
+                    this.spinner.hide();
+                });
         });
     }
 

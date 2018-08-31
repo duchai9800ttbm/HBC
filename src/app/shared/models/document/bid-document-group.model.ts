@@ -16,5 +16,6 @@ export class BidDocumentGroupModel {
         receivedDate: number;
         fileGuid: string;
         desc: string;
+        url?: string;
     }[];
 }
