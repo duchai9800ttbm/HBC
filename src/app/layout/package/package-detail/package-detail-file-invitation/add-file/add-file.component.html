@@ -240,16 +240,19 @@
                             <ng-container *ngFor="let bidDocumentGroup of bidDocumentGroupListItemSearchResult; let i = index;">
                                 <ng-container *ngFor="let item of bidDocumentGroup.items; let k = index;">
                                     <tr>
-                                        <td type="check" class=" stt d-flex justify-content-around">
-                                            <div style="width: 35%;">
-                                                <label class="custom-control custom-checkbox">
-                                                    <input type="checkbox" class="custom-control-input" [(ngModel)]="item.checkboxSelected">
-                                                    <span class="custom-control-indicator"></span>
-                                                </label>
+                                        <td type="check">
+                                            <div class="d-flex justify-content-around">
+                                                <div style="width: 35%;">
+                                                    <label class="custom-control custom-checkbox">
+                                                        <input type="checkbox" class="custom-control-input" [(ngModel)]="item.checkboxSelected">
+                                                        <span class="custom-control-indicator"></span>
+                                                    </label>
+                                                </div>
+                                                <div style="width: 35%;" class="center-parent">
+                                                    <div>{{renderIndex(i , k)}}</div>
+                                                </div>
                                             </div>
-                                            <div style="width: 35%;" class=" ml-1 center-parent">
-                                                <div>{{renderIndex(i , k)}}</div>
-                                            </div>
+
                                         </td>
                                         <td [hidden]="currentMajorTypeId != 1" valign="baseline" [attr.rowspan]="bidDocumentGroup.items.length" *ngIf="k == 0" class="td-group">
                                             <div class="d-flex  document-type center-parent">

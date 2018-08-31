@@ -37,6 +37,7 @@ export class UploadFileComponent implements OnInit {
   formErrors = {
     editName: '',
   };
+  errorMess;
   public close() {
     this.closed.emit(false);
   }
@@ -127,19 +128,20 @@ export class UploadFileComponent implements OnInit {
   submitForm() {
     this.isSubmitted = true;
     if (this.validateForm()) {
-      this.spinner.show();
       const documentName = this.uploadForm.get('editName').value;
       const documentType = this.uploadForm.get('type').value;
       const description = this.uploadForm.get('description').value;
       const date = this.uploadForm.get('date').value;
       const link = this.uploadForm.get('link').value;
-      if (date || link) {
+      if (this.file || link) {
+        this.spinner.show();
         this.documentService.upload(this.packageId, documentName, documentType.id, description, date, this.file, link).subscribe(data => {
           this.spinner.hide();
+          this.errorMess = null;
           this.closed.emit(true);
         }, err => this.spinner.hide());
       } else {
-      
+        this.errorMess = 'Vui lòng chọn File hoặc đường dẫn link đển file!';
       }
 
     }

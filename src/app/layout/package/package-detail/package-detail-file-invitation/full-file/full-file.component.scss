@@ -618,10 +618,10 @@ table.dataTable {
     tr:nth-child(odd) {background-color: #fafbfc;}
 
     overflow-x: scroll;
-    // th:first-child,td:first-child {
-    //     width: 70px!important;
-    //     max-width: 80px;
-    // }
+    th:first-child,td:first-child {
+        width: 50px!important;
+        max-width: 60px;
+    }
     th:not([type="check"]),
     td:not([type="check"]) {
         min-width: 100px;
@@ -790,4 +790,12 @@ table.dataTable {
 
 .menu-left {
     width: 25px !important;
+}
+
+#table-file-scroll {
+    tr {
+        td:first-child {
+            display: table-cell !important;
+        }
+    }
 }

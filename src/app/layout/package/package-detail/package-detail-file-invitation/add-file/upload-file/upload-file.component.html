@@ -17,7 +17,11 @@
                 <div class="w-100  mr-auto">
                     <div>
                         <div class="body cus-header" id="info-main" [ngbCollapse]="isCollapsedMain">
+                            <div class="w-100 center-parent" *ngIf="errorMess" class="alert alert-danger" role="alert">
+                                <span> {{errorMess}}</span>
+                            </div>
                             <table class="w-100 table">
+
                                 <tbody>
                                     <tr>
                                         <td class="w-30 label no-boder bold-title">Đường dẫn link</td>
@@ -49,7 +53,7 @@
                                         </td>
                                     </tr>
                                     <tr>
-                                        <td class="w-30 label no-boder bold-title">Tên</td>
+                                        <td class="w-30 label no-boder bold-title required">Tên</td>
                                         <td class="w-70 no-boder">
                                             <input class="w-100" kendoTextBox tabindex="1" type="text" formControlName="editName" [class.is-invalid]="formErrors.editName">
                                             <div class="invalid-feedback" *ngIf="formErrors.editName">
