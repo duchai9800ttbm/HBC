@@ -37,6 +37,7 @@ import { PackageListItem } from '../../../shared/models/package/package-list-ite
 })
 export class PackageListComponent implements OnInit, AfterViewChecked {
     @ViewChild('myDrop') myDrop: ElementRef;
+    @ViewChild('myDrop2') myDrop2: ElementRef;
     activityStatusList: Observable<DictionaryItem[]>;
     checkboxSeclectAll: boolean;
     dtOptions: any = DATATABLE_CONFIG2;
@@ -170,16 +171,28 @@ export class PackageListComponent implements OnInit, AfterViewChecked {
     ngayNopHoSoMoiThau = false;
     phanloai = false;
 
-    // isShowPopup = false;
-    // @HostListener('document:click', ['$event'])
+    isShowPopup = false;
+    @HostListener('document:click', ['$event'])
     // clickout(event) {
-    //     console.log('event', event);
-    //     if (event.target.className = 'popup-dynamic-col') {
-    //         this.isShowPopup = true;
-    //     } else {
-    //         this.isShowPopup = false;
+    //     if ( event.target.parentElement.className === 'popup-dynamic-col' ) {
     //     }
+    //     // if (event.target.className = 'popup-dynamic-col') {
+    //     //     this.isShowPopup = true;
+    //     // } else {
+    //     //     this.isShowPopup = false;
+    //     // }
     // }
+    public documentClick(event: any): void {
+        if (!this.contains(event.target)) {
+            this.cancel(this.myDrop);
+        }
+    }
+
+    contains(target: any): boolean {
+            return this.myDrop2.nativeElement.contains(target) ||
+                (this.myDrop2 ? this.myDrop2.nativeElement.contains(target) : false);
+    }
+
     ngOnInit() {
         window.scrollTo(0, 0);
         this.refreshPopupConfig();
@@ -229,11 +242,11 @@ export class PackageListComponent implements OnInit, AfterViewChecked {
 
     }
 
+
     refreshPopupConfig() {
         this.packageService.getListFields(this.getUserId).subscribe(data => {
             this.listField = data;
             this.listFieldNomarlized = [...this.listField].filter(x => x.hidden === true).map(x => x.fieldName);
-            console.log('this.listFieldNomarlized', this.listFieldNomarlized);
             this.sum = [...this.listField].filter(x => x.hidden === true).length;
             this.tenDuAn = this.listFieldNomarlized.includes('ARBidOpportunityProjectName');
             this.maDuAn = this.listFieldNomarlized.includes('ARBidOpportunityNo');
@@ -317,7 +330,7 @@ export class PackageListComponent implements OnInit, AfterViewChecked {
 
     filter(clear: boolean = false) {
         this.spinner.show();
-        console.log('this.searchTerm$.value', this.searchTerm$.value);
+        console.log('this.filter.Model', this.filterModel);
         this.packageService
             .filterList(
                 this.searchTerm$.value,
@@ -326,7 +339,6 @@ export class PackageListComponent implements OnInit, AfterViewChecked {
                 this.pagedResult.pageSize
             )
             .subscribe(result => {
-                console.log('result', result);
                 this.rerender(result);
                 this.spinner.hide();
             }, err => this.spinner.hide());
@@ -340,7 +352,6 @@ export class PackageListComponent implements OnInit, AfterViewChecked {
         this.filterModel.minCost = null;
         this.filterModel.maxCost = null;
         this.someRange = [0, 1000000000000];
-        console.log('this.searchTerm$.value', this.searchTerm$.value);
         this.filter(true);
     }
 
@@ -479,7 +490,6 @@ export class PackageListComponent implements OnInit, AfterViewChecked {
     }
 
     chooseAll() {
-        console.log('this.listField-this.listField', this.listField);
         this.listField.forEach(x => (x.hidden = true));
         this.sum = [...this.listField].filter(x => x.hidden === true).length;
     }

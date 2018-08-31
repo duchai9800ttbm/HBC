@@ -122,7 +122,7 @@ export class EditComponent implements OnInit {
             constructionCategoryId: [this.package.mainBuildingCategory && this.package.mainBuildingCategory.id, Validators.required],
             hbcRole: [this.package.hbcRole ? this.package.hbcRole.id : ''],
             documentLink: [this.package.documentLink],
-            chairEmployeeId: [this.package.chairEmployee && this.package.chairEmployee.text],
+            chairEmployeeId: [this.package.chairEmployee && this.package.chairEmployee.id],
             //  bidStatusId: [this.package.status && this.package.status.id, Validators.required],
             amount: [this.package.amount],
             evaluation: [this.package.evaluation],
