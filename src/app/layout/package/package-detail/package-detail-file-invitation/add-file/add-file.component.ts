@@ -66,7 +66,7 @@ export class AddFileComponent implements OnInit {
             this.packageData = result;
             switch (this.packageData.stageStatus.id) {
                 case 'DaCoHSMT': {
-                  this.router.navigate([`/package/detail/${this.packageId}/invitation/full-file`]);
+                    this.router.navigate([`/package/detail/${this.packageId}/invitation/full-file`]);
                     break;
                 }
                 default: {
@@ -248,7 +248,12 @@ export class AddFileComponent implements OnInit {
                 },
                     err => {
                         that.spinner.hide();
-                        that.alertService.error('Chuyển đánh giá không thành công. Bạn vui lòng kiểm tra lại!');
+                    
+                        if (err.json().errorCode === 'BusinessException') {
+                            that.alertService.error('Không đủ bản chính thức trong các bộ hồ sơ mời thầu!');
+                        } else {
+                            that.alertService.error('Chuyển đánh giá không thành công. Bạn vui lòng kiểm tra lại!');
+                        }
                     });
             }
         );
@@ -357,8 +362,12 @@ export class AddFileComponent implements OnInit {
                     that.router.navigate([`/package/detail/${this.packageId}/invitation/full-file`]);
                     that.alertService.success('Đã chuyển sang trang thái đã có HSMT thành công!');
                 }, err => {
-                    that.alertService.error('Chuyển sang trạng thái đã có HSMT thất bại!');
                     this.spinner.hide();
+                    if (err.json().errorCode === 'BusinessException') {
+                        that.alertService.error('Không đủ bản chính thức trong các bộ hồ sơ mời thầu!');
+                    } else {
+                        that.alertService.error('Chuyển sang trạng thái đã có HSMT thất bại!');
+                    }
                 });
         });
     }
