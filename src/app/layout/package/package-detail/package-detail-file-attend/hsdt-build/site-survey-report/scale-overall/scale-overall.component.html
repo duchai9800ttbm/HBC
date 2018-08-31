@@ -41,11 +41,11 @@
         <div id="step1Head">
             <div class="labelstep1" style="margin-bottom: 15px;">
                 <label for="">Tên tài liệu</label>
-                <input type="text">
+                <input type="text" value="Tên tài liệu">
             </div>
             <div class="labelstep1">
                 <label for="">Lần phỏng vấn</label>
-                <input type="text">
+                <input type="text" value="Lần phỏng vấn">
             </div>
         </div>
         <h4 class="bigTitle">1.&nbsp;quy mô tổng quan công trình (project statistic/scale)</h4>
@@ -61,7 +61,7 @@
                             <input type="radio" name="classifyBuild"><span class="checkmark"></span>
                         </label>
                         <label class="child2 childcheck">MEP
-                            <input type="radio" name="classifyBuild"><span class="checkmark"></span>
+                            <input type="radio" checked name="classifyBuild"><span class="checkmark"></span>
                         </label>
                     </div>
                     <div class="singleRow">
@@ -111,14 +111,14 @@
                     </div>
                     <div class="singleRow">
                         <label class="child0 childcheck">Nâng cấp, cải tiến (Renovation)
-                            <input type="radio" name="classifyType"><span class="checkmark"></span>
+                            <input type="radio" checked name="classifyType"><span class="checkmark"></span>
                         </label>
                         <label class="child1 childcheck">Tháo dỡ & cải tiến (Demolishment & Renovation)
                             <input type="radio" name="classifyType"><span class="checkmark"></span>
                         </label>
                         <div class="child2">
                             <input type="checkbox" style="visibility: hidden;">
-                            <input type="text">
+                            <input type="text" value="Khác">
                         </div>
                     </div>
                 </div>
@@ -130,10 +130,12 @@
                         <div class="label1-2">
                             <label for="">Diện tích công trường/Site area (m2)</label>
                             <input class="no-boder" type="text" (keyup)="readValue($event)">
+                            <span class="span-m2" style="position:relative; right:30px">m2</span>
                         </div>
                         <div class="label1-2">
                             <label for="">Tổng diện tích xây dựng/Gross floor area (m2)</label>
                             <input class="no-boder" type="text">
+                            <span class="span-m2" style="position:relative; right:30px">m2</span>
                         </div>
                         <div class="label1-2">
                             <label for="">Số tầng/Total number of floor</label>
@@ -142,12 +144,13 @@
                         <div class="label1-2">
                             <label for="">Tiến độ dự kiến/Construction period (ngày)</label>
                             <input class="no-boder" type="text">
+                            <span class="span-m2" style="position:relative; right:40px">ngày</span>
                         </div>
                     </div>
                     <div id="imageDemo">
                         <p style="text-decoration: underline;">Hình ảnh phối cảnh dự án / Perspective image of project</p>
                         <div class="textdesInput">
-                            <input type="text" placeholder="TEXT">
+                            <input type="text" value="Phối cảnh công trường">
                         </div>
                         <div id="imageDemoImg">
                             <input type="file" style="display:none" #inputclick0 (change)="uploadPerspectiveImage($event)">
@@ -170,7 +173,7 @@
                     package structure)</h5>
                 <div class="mainDetail">
                     <div class="textdesInput">
-                        <input type="text" placeholder="TEXT">
+                        <input type="text" value="Thông tin kết cấu">
                     </div>
                     <div>
                         <div id="imageDemoImg">
@@ -193,7 +196,7 @@
                 <h5 class="smallTitle">1.4 Những yêu cầu đặc biệt (Special Requirements)</h5>
                 <div class="mainDetail">
                     <div class="textdesInput">
-                        <input type="text" placeholder="TEXT">
+                        <input type="text" value="Special Requirements">
                     </div>
                     <div id="imageDemoImg">
                         <input type="file" style="display:none" #inputclick2 (change)="uploadRequirementsImage($event)">

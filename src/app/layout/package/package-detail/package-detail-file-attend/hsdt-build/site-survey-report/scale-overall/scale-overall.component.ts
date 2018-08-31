@@ -31,16 +31,6 @@ export class ScaleOverallComponent implements OnInit, OnDestroy {
   ngOnDestroy() {
     // this.liveformDataReportService.saveData(this.scaleModel);
   }
-  readValue(event) {
-    this.siteArea = event.target.value;
-    const x = this.siteArea;
-    // console.log(x);
-    if (x) { this.liveformDataReportService.saveData(x); console.log(x); }
-  }
-  // saveData(x) {
-  //   this.liveformDataReportService.saveData(x);
-  //   console.log(x);
-  // }
 
   uploadPerspectiveImage(event) {
     const files = event.target.files;
@@ -92,5 +82,11 @@ export class ScaleOverallComponent implements OnInit, OnDestroy {
       const x = (<HTMLInputElement>event.target).className;
       console.log(x);
     };
+  }
+
+  readValue(event) {
+    this.siteArea = event.target.value;
+    const x = this.siteArea;
+    if (x) { this.liveformDataReportService.saveData(x); }
   }
 }

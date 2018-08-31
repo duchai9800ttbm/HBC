@@ -22,7 +22,7 @@
                     <button type="button" class="btn btn-secondary">
                         Hủy
                     </button>
-                    <button class="btn btn-primary ml-2">
+                    <button class="btn btn-primary ml-2" (click)="refresh(true)">
                         <i class="fa fa-refresh" aria-hidden="true"></i>
                     </button>
                 </div>
@@ -79,6 +79,13 @@
                                 <th style="width: 18%;background-color: #f68e56!important;">
                                     <div class="d-flex justify-content-center">
                                         <div class="center-parent">
+                                            <div>Tên tài liệu</div>
+                                        </div>
+                                    </div>
+                                </th>
+                                <th style="width: 18%;background-color: #f68e56!important;">
+                                    <div class="d-flex justify-content-center">
+                                        <div class="center-parent">
                                             <div>Lần phỏng vấn</div>
                                         </div>
                                     </div>
@@ -90,14 +97,14 @@
                                         </div>
                                     </div>
                                 </th>
-                                <th style="width: 30%; background-color: #f68e56!important;">
+                                <th style="width: 18%; background-color: #f68e56!important;">
                                     <div class="d-flex justify-content-center">
                                         <div class="center-parent">
                                             <div>Ngày tạo</div>
                                         </div>
                                     </div>
                                 </th>
-                                <th class="table-action text-center" style="width: 30%; background-color: #f68e56!important;">
+                                <th class="table-action text-center" style="width: 24%; background-color: #f68e56!important;">
                                     Thao tác
                                 </th>
 
@@ -117,13 +124,14 @@
                                         <div>{{ item.stt }}</div>
                                     </div>
                                 </td>
+                                <td class="text-center">{{ item.ttl }}</td>
                                 <td class="text-center">{{ item.lpv }}</td>
                                 <td class="text-center">{{ item.maker }}</td>
                                 <td class="text-center">{{ item.date }}</td>
                                 <td class="text-center">
                                     <div class="d-flex justify-content-center">
                                         <div class="icon-mg">
-                                            <a title="Xem file" style="color: #00B21E" [routerLink]="['./scale']">
+                                            <a title="Xem file" style="color: #00B21E">
                                                 <i class="fa fa-eye" aria-hidden="true"></i>
                                             </a>
                                         </div>
@@ -199,21 +207,21 @@
                                         </div>
                                     </div>
                                 </th>
-                                <th style="width: 15%; background-color: #f68e56!important;">
+                                <th style="width: 18%; background-color: #f68e56!important;">
                                     <div class="d-flex justify-content-center">
                                         <div class="center-parent">
                                             <div>Ngày cập nhật</div>
                                         </div>
                                     </div>
                                 </th>
-                                <th style="width: 20%; background-color: #f68e56!important;">
+                                <th style="width: 18%; background-color: #f68e56!important;">
                                     <div class="d-flex justify-content-center">
                                         <div class="center-parent">
                                             <div>Nội dung cập nhật</div>
                                         </div>
                                     </div>
                                 </th>
-                                <th style="width: 25%; background-color: #f68e56!important;">
+                                <th style="width: 24%; background-color: #f68e56!important;">
                                     <div class="d-flex justify-content-center">
                                         <div class="center-parent">
                                             <div>Chi tiết cập nhật</div>

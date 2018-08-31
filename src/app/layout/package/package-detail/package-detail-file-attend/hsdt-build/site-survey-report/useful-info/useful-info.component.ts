@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { ConfirmationService, AlertService } from '../../../../../../../shared/services';
 
 @Component({
   selector: 'app-useful-info',
@@ -6,10 +7,45 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./useful-info.component.scss']
 })
 export class UsefulInfoComponent implements OnInit {
+  topicLists = [];
 
-  constructor() { }
+  content0Imgs = [];
+  content1Imgs = [];
+  url;
+  constructor(
+    private confirmationService: ConfirmationService,
+    private alertService: AlertService,
+  ) { }
 
   ngOnInit() {
+  }
+  uploaContentImage(event) {
+    const files = event.target.files;
+    if (files) {
+      for (const file of files) {
+        const reader = new FileReader();
+        reader.onload = (e: any) => this.content0Imgs.push(e.target.result);
+        reader.readAsDataURL(file);
+      }
+    }
+  }
+  deleteImg0() {
+    const index = this.content0Imgs.indexOf(this.url);
+    this.content0Imgs.splice(index, 1);
+  }
+
+  addTopic() {
+    const max = this.topicLists.length;
+    this.topicLists.push(max + 1);
+  }
+  deleteTopic(topic) {
+    const that = this;
+    const index = this.topicLists.indexOf(topic);
+    this.confirmationService.confirm('Bạn có chắc chắn muốn xóa chủ đề này?',
+      () => {
+        that.topicLists.splice(index, 1);
+        that.alertService.success('Đã xóa chủ đề!', true);
+      });
   }
 
 }

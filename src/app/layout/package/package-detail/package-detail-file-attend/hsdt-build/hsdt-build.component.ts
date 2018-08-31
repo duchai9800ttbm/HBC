@@ -6,20 +6,26 @@ import { PackageService } from '../../../../../shared/services/package.service';
 import { Route } from '@angular/compiler/src/core';
 import { Router } from '@angular/router';
 import { PackageDetailComponent } from '../../package-detail.component';
+import { NgxSpinnerService } from 'ngx-spinner';
+import { AlertService } from '../../../../../shared/services';
+import { Subject } from 'rxjs';
 @Component({
     selector: 'app-hsdt-build',
     templateUrl: './hsdt-build.component.html',
     styleUrls: ['./hsdt-build.component.scss']
 })
 export class HsdtBuildComponent implements OnInit {
+    dtTrigger: Subject<any> = new Subject();
     dialog;
     packageId;
     isShowMenu = false;
     constructor(
         private dialogService: DialogService,
+        private alertService: AlertService,
         private packageService: PackageService,
         private cdr: ChangeDetectorRef,
-        private router: Router
+        private router: Router,
+        private spinner: NgxSpinnerService,
     ) { }
     notShow = false;
     ngOnInit() {
@@ -41,6 +47,14 @@ export class HsdtBuildComponent implements OnInit {
         $('.iconN2').toggleClass('iconN02');
         $('.iconN3').toggleClass('iconN03');
         console.log('ok');
+    }
+
+
+    refresh(): void {
+        this.spinner.show();
+        this.dtTrigger.next();
+        this.spinner.show();
+        this.alertService.success('Dữ liệu đã được cập nhật mới nhất!');
     }
 
     showDialogUploadFile(name: string) {
