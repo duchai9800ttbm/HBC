@@ -90,18 +90,28 @@ span{
 @media only screen and (max-width: 1366px) {
 
     .custom-filter-bar{
-        zoom: 0.7;
+        zoom: 0.85;
+    }
+}
+
+@media only screen and (max-width: 1350px) {
+    .custom-filter-bar{
+        zoom: 0.77;
+    }
+}
+
+@media only screen and (max-width: 1250px) {
+    .custom-filter-bar{
+        zoom: 0.72;
     }
 }
 
 @media only screen and (max-width: 1200px) {
-
-
+    // .custom-filter-bar{
+    //     zoom: 0.85;
+    // }
     .custom-filter-bar{
-        zoom: 0.85;
-    }
-    .custom-filter-bar{
-        zoom: 0.65;
+        zoom: 0.678;
     }
 }
 
@@ -109,14 +119,32 @@ span{
     table.dataTable{
         zoom: 0.72;
     }
- 
     .status-filter{
         zoom: 0.85;
     }
     .custom-filter-bar{
-        zoom: 0.5;
+        zoom: 0.65;
     }
 }
+
+@media only screen and (max-width: 1120px) {
+    .custom-filter-bar{
+        zoom: 0.63;
+    }
+}
+
+@media only screen and (max-width: 1100px) {
+    .custom-filter-bar{
+        zoom: 0.6;
+    }
+}
+
+@media only screen and (max-width: 1083px) {
+    .custom-filter-bar{
+        zoom: 0.57;
+    }
+}
+
 
 @media only screen and (max-width: 1024px) {
     .btn-toolbar {
@@ -127,7 +155,7 @@ span{
         zoom: 0.75;
     }
     .custom-filter-bar{
-        zoom: 0.6;
+        zoom: 0.65;
     }
 }
 
@@ -137,7 +165,7 @@ span{
         zoom: 0.65;
     }
     .custom-filter-bar{
-        zoom: 0.5;
+        zoom: 0.63;
     }
 }
 
