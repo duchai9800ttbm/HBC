@@ -433,7 +433,9 @@ export class PackageListComponent implements OnInit, AfterViewChecked {
     rerender(pagedResult: any) {
         this.checkboxSeclectAll = false;
         this.pagedResult = pagedResult;
-        this.dtTrigger.next();
+        setTimeout(() => {
+            this.dtTrigger.next();
+        });
     }
 
     onSelectAll(value: boolean) {
