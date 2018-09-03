@@ -80,19 +80,28 @@ input.icon {
 }
 
 @media only screen and (max-width: 1600px) {
-  
   .custom-filter-bar{
       zoom: 0.9;
   }
 }
 
-@media only screen and (max-width: 1400px) {
-  
+@media only screen and (max-width: 1420px) {
     .custom-filter-bar{
-        zoom: 0.8;
+        zoom: 0.88;
     }
 }
 
+@media only screen and (max-width: 1400px) {
+    .custom-filter-bar{
+        zoom: 0.87;
+    }
+}
+
+@media only screen and (max-width: 1380px) {
+    .custom-filter-bar{
+        zoom: 0.86;
+    }
+}
 
 @media only screen and (max-width: 1366px) {
 
@@ -101,24 +110,70 @@ input.icon {
     }
 }
 
+@media only screen and (max-width: 1358px) {
+
+    .custom-filter-bar{
+        zoom: 0.84;
+    }
+}
+
 @media only screen and (max-width: 1350px) {
     .custom-filter-bar{
-        zoom: 0.77;
+        zoom: 0.82;
+    }
+}
+
+@media only screen and (max-width: 1328px) {
+    .custom-filter-bar{
+        zoom: 0.81;
+    }
+}
+
+@media only screen and (max-width: 1320px) {
+    .custom-filter-bar{
+        zoom: 0.8;
+    }
+}
+
+@media only screen and (max-width: 1295px) {
+    .custom-filter-bar{
+        zoom: 0.78;
+    }
+}
+
+@media only screen and (max-width: 1275px) {
+    .custom-filter-bar{
+        zoom: 0.76;
     }
 }
 
 @media only screen and (max-width: 1250px) {
+    .custom-filter-bar{
+        zoom: 0.74;
+    }
+}
+
+@media only screen and (max-width: 1225px) {
+    .custom-filter-bar{
+        zoom: 0.73;
+    }
+}
+
+@media only screen and (max-width: 1220px) {
     .custom-filter-bar{
         zoom: 0.72;
     }
 }
 
 @media only screen and (max-width: 1200px) {
-    // .custom-filter-bar{
-    //     zoom: 0.85;
-    // }
     .custom-filter-bar{
         zoom: 0.678;
+    }
+}
+
+@media only screen and (max-width: 1160px) {
+    .custom-filter-bar{
+        zoom: 0.67;
     }
 }
 
@@ -148,7 +203,7 @@ input.icon {
 
 @media only screen and (max-width: 1083px) {
     .custom-filter-bar{
-        zoom: 0.57;
+        zoom: 0.565;
     }
 }
 

@@ -31,7 +31,7 @@
         <div class="d-flex justify-content-between  custom-filter-bar">
             <div class="d-flex form-inline flex-pad filter-bar" style="width: calc(100% - 80px);">
                 <div class="form-group ml-sm-2">
-                    <label for="" class="form-label">Phân loại</label>
+                    <label for="" class="form-label">Loại khách hàng</label>
                     <span class="custom-dropdown mx-sm-2">
                         <select class="form-control" [(ngModel)]="filterModel.opportunityClassify">
                             <option value="">--Tất cả--</option>
@@ -61,7 +61,7 @@
                 <div class="form-group ml-sm-2">
                     <label for="" class="form-label">Tổng giá trị</label>
                 </div>
-                <div style="width: 280px; margin-left: 10px; margin-right: 60px; zoom: 0.8;padding: 5px; ">
+                <div style="width: 280px; margin-left: 10px; margin-right: 15px; zoom: 0.8;padding: 5px; ">
 
                     <nouislider [config]="someKeyboardConfig" [step]="1000" [min]="0" [max]="1000000000000" (ngModelChange)="changeValueRange($event)"
                         [(ngModel)]="someRange"></nouislider>
