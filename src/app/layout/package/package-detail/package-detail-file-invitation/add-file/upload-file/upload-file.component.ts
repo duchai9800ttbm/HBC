@@ -144,7 +144,7 @@ export class UploadFileComponent implements OnInit {
           this.spinner.hide();
         });
       } else {
-        this.errorMess = 'Vui lòng chọn file hoặc đường dẫn link đển file!';
+        this.errorMess = 'Vui lòng chọn file hoặc đường dẫn link đến file!';
       }
 
     }

@@ -65,6 +65,13 @@ span{
     grid-template-columns: 30px freg
 }
 
+input.icon {
+    font-family: FontAwesome, "Open Sans", Verdana, sans-serif;
+    font-style: normal;
+    font-weight: normal;
+    text-decoration: inherit;
+}
+
  @media only screen and (max-width: 3000px) {
    
     .HSMT{
