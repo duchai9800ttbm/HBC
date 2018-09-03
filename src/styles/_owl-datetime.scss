@@ -1,5 +1,5 @@
 owl-date-time{
-    width: 100% ;
+    width: 0px;
     
 }
 .owl-dateTime-dialog {
@@ -16,4 +16,18 @@ owl-date-time{
 }
 .is-invalid{
     border-color: #dc3545 !important;
+}
+
+.input-date-time {
+    margin-right: -1px;
+    height: 2rem;
+    padding: 8px;
+    border: 1px solid #d6d6d6;
+    border-top-left-radius: 0.25rem;
+    border-bottom-left-radius: 0.25rem;
+    width: 100%;
+}
+
+.input-date-time-bar {
+    max-width: 117px;
 }

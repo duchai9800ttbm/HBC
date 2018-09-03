@@ -49,6 +49,11 @@ export class FullFileComponent implements OnInit {
     currentMajorTypeId = 1;
     sum = 0;
     showTable = false;
+    get titleStr() {
+        if (this.majorTypeListItem && this.majorTypeListItem.length > 0) {
+            return this.majorTypeListItem.find(i => i.id == this.currentMajorTypeId).text;
+        }
+    }
     constructor(
         private alertService: AlertService,
         private confirmationService: ConfirmationService,
