@@ -244,7 +244,7 @@ export class PackageListComponent implements OnInit, AfterViewChecked {
         this.packageService
             .instantSearchWithFilter(this.searchTerm$, this.filterModel, 0, 10)
             .subscribe(result => {
-                console.log('result', result);
+                console.log('instantSearchWithFilter', this.filterModel);
                 this.rerender(result);
                 this.spinner.hide();
             }, err => {
@@ -373,6 +373,7 @@ export class PackageListComponent implements OnInit, AfterViewChecked {
                 this.pagedResult.pageSize
             )
             .subscribe(result => {
+                console.log('function filter');
                 this.rerender(result);
                 this.spinner.hide();
             }, err => this.spinner.hide());
