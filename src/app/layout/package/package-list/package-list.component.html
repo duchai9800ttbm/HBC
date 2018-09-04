@@ -592,7 +592,7 @@
                         <td [hidden]="!chuTri" class="text-truncate">{{ item.chairEmployee?.employeeName }}</td>
                         <td [hidden]="!loaiKhachHang" class="text-truncate">
                             <span *ngIf="item && item.classify">
-                                {{ item?.classify | translate }}
+                                {{ item.classify | translate }}
                             </span>
                         </td>
                         <td [hidden]="!loaiCongTrinh" class="text-truncate">{{ item.projectType?.value }}</td>
