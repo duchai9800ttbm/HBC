@@ -8,6 +8,7 @@ import { SameWidthDirective } from './same-width.directive';
 import { InputAreaDirective } from './input-area.directive';
 import { NumberAreaPipe } from '../pipes/number-area.pipe';
 import { SquareBoxDirective } from './square-box.directive';
+import { TextEllipsisDirective } from './text-ellipsis.directive';
 
 @NgModule({
     imports: [
@@ -19,7 +20,8 @@ import { SquareBoxDirective } from './square-box.directive';
         PhoneNumberCallableDirective,
         SameWidthDirective,
         InputAreaDirective,
-        SquareBoxDirective
+        SquareBoxDirective,
+        TextEllipsisDirective
     ],
     exports: [
         InputNumberDirective,
@@ -27,7 +29,8 @@ import { SquareBoxDirective } from './square-box.directive';
         PhoneNumberCallableDirective,
         SameWidthDirective,
         InputAreaDirective,
-        SquareBoxDirective
+        SquareBoxDirective,
+        TextEllipsisDirective
     ],
     providers: [
         VnCurrencyPipe,
