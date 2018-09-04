@@ -94,7 +94,6 @@ export class AddFileComponent implements OnInit {
         this.documentService.bidDocumentMajortypes().subscribe(data => {
             this.majorTypeListItem = data;
             this.currentMajorTypeId = this.majorTypeListItem[0].id;
-            console.log(data);
             this.documentService.read(this.packageId, this.currentMajorTypeId).subscribe(response => {
                 this.bidDocumentGroupListItem = response;
                 this.bidDocumentGroupListItemSearchResult = response;
