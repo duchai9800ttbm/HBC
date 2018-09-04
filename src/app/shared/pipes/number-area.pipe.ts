@@ -27,7 +27,6 @@ export class NumberAreaPipe implements PipeTransform {
 
     integer = integer.replace(/\B(?=(\d{3})+(?!\d))/g, this.THOUSANDS_SEPARATOR);
 
-
     return integer + fraction + (integer && this.CURRENCY_UNIT);
   }
   parse(value: string, fractionSize: number = 0): number {
@@ -39,4 +38,14 @@ export class NumberAreaPipe implements PipeTransform {
 
     return +integer;
   }
+
+  // parseDouble(value: string, fractionSize: number = 0): number {
+  //   if (!isNaN(+value)) { return parseFloat(value); }
+
+  //   let integer = (value || '').replace(this.CURRENCY_UNIT, '');
+
+  //   integer = integer.split(this.THOUSANDS_SEPARATOR).join('');
+  //   return parseFloat(integer);
+  // }
+
 }

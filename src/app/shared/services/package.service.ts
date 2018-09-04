@@ -210,6 +210,7 @@ export class PackageService {
     ): Observable<PagedResult<PackageListItem>> {
         const filterUrl = `bidopportunity/filter/${page}/${pageSize}?searchTerm=${searchTerm}`;
         const urlParams = PackageService.createFilterParams(filter);
+        // urlParams.append('search', searchTerm);
         return this.apiService.get(filterUrl, urlParams).map(response => {
             const result = response.result;
             return {
@@ -335,11 +336,12 @@ export class PackageService {
         pageSize: number | string
     ): Observable<PagedResult<PackageListItem>> {
         const searchUrl = `bidopportunity/filter/${page}/${pageSize}?searchTerm=`;
+        const urlParams = PackageService.createFilterParams(filter);
         return this.instantSearchService
             .searchWithFilter(
                 searchUrl,
                 terms,
-                PackageService.createFilterParams(filter)
+                urlParams
             )
             .map(result => {
                 return {

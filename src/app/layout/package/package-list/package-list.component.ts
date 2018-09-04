@@ -198,7 +198,6 @@ export class PackageListComponent implements OnInit, AfterViewChecked {
     }
 
 
-
     contains(target: any): boolean {
         return this.myDrop2.nativeElement.contains(target) ||
             (this.myDrop2 ? this.myDrop2.nativeElement.contains(target) : false);
