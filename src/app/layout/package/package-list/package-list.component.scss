@@ -485,3 +485,7 @@ select.form-control:not([size]):not([multiple]){
     background-repeat: no-repeat;
     background-position: center right;
 }
+
+.dataTables_empty{
+    display: none!important;
+}

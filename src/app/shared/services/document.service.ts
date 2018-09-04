@@ -108,6 +108,19 @@ export class DocumentService {
         });
     }
 
+    bidDocumentType(): Observable<any> {
+        const url = `biddocumenttypes`;
+        return this.apiService.get(url).map(response => {
+            const result = response.result;
+            return result.map(i => {
+                return {
+                    id: i.key,
+                    text: i.value
+                };
+            });
+        });
+    }
+
     readAndGroup(opportunityId: number | string): Observable<BidDocumentGroupModel[]> {
         const url = `bidopportunity/${opportunityId}/biddocuments`;
         return this.apiService.get(url)

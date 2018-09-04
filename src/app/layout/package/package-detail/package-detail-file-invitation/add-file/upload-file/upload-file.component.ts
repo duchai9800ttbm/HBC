@@ -54,9 +54,8 @@ export class UploadFileComponent implements OnInit {
 
   ngOnInit() {
     this.createForm();
-    this.documentService.bidDocumentMajorTypeByParent(this.majorTypeId).subscribe(data => {
+    this.documentService.bidDocumentType().subscribe(data => {
       this.listTypeFile = data;
-      console.log(this.typeFile);
       this.uploadForm.get('type').patchValue(this.typeFile);
     });
   }

@@ -47,6 +47,7 @@ export class FullFileComponent implements OnInit {
     packageData: PackageInfoModel;
     tableEmpty: boolean;
     currentMajorTypeId = 1;
+    currentMajorTypeText = '';
     sum = 0;
     showTable = false;
     get titleStr() {
@@ -140,7 +141,13 @@ export class FullFileComponent implements OnInit {
 
         this.dtTrigger.next();
     }
-
+    uploadHSMT() {
+        this.typeFileUpload = {
+            id: `${this.currentMajorTypeId}`,
+            text: this.currentMajorTypeText
+        };
+        this.showPopupAdd = true;
+    }
     openPopupUploadFile(documentType) {
         if (documentType === '2') {
             this.typeFileUpload = {
@@ -371,8 +378,9 @@ export class FullFileComponent implements OnInit {
         });
     }
 
-    filterMajorTypeListItem(id) {
+    filterMajorTypeListItem(id, text) {
         this.currentMajorTypeId = id;
+        this.currentMajorTypeText = text;
         this.documentService.read(this.packageId, this.currentMajorTypeId).subscribe(response => {
             this.bidDocumentGroupListItem = response;
             this.bidDocumentGroupListItemSearchResult = response;

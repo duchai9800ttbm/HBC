@@ -197,7 +197,7 @@ export class PackageListComponent implements OnInit, AfterViewChecked {
         }
     }
 
-    
+
 
     contains(target: any): boolean {
         return this.myDrop2.nativeElement.contains(target) ||
@@ -244,7 +244,6 @@ export class PackageListComponent implements OnInit, AfterViewChecked {
         this.packageService
             .instantSearchWithFilter(this.searchTerm$, this.filterModel, 0, 10)
             .subscribe(result => {
-                console.log('instantSearchWithFilter', this.filterModel);
                 this.rerender(result);
                 this.spinner.hide();
             }, err => {
@@ -329,7 +328,7 @@ export class PackageListComponent implements OnInit, AfterViewChecked {
 
             this.danhGiaDuAn = this.listFieldNomarlized.includes('ARBidOpportunityEvaluation');
             this.dientichsan = this.listFieldNomarlized.includes('ARBidOpportunityFloorArea');
-            this.lydohuythau =  this.listFieldNomarlized.includes('ARBidOpportunityCancelReason');
+            this.lydohuythau = this.listFieldNomarlized.includes('ARBidOpportunityCancelReason');
         });
     }
 
@@ -373,7 +372,6 @@ export class PackageListComponent implements OnInit, AfterViewChecked {
                 this.pagedResult.pageSize
             )
             .subscribe(result => {
-                console.log('function filter');
                 this.rerender(result);
                 this.spinner.hide();
             }, err => this.spinner.hide());
@@ -434,9 +432,11 @@ export class PackageListComponent implements OnInit, AfterViewChecked {
     rerender(pagedResult: any) {
         this.checkboxSeclectAll = false;
         this.pagedResult = pagedResult;
-        setTimeout(() => {
-            this.dtTrigger.next();
-        });
+        if (!(this.pagedResult.items && this.pagedResult.items.length > 1)
+            || document.getElementsByClassName('dataTables_empty')[0]) {
+            document.getElementsByClassName('dataTables_empty')[0].remove();
+        }
+        this.dtTrigger.next();
     }
 
     onSelectAll(value: boolean) {
@@ -465,9 +465,7 @@ export class PackageListComponent implements OnInit, AfterViewChecked {
                 this.sum = [...this.listField].filter(x => x.hidden === true).length;
                 this.apply(this.myDrop);
                 this.spinner.hide();
-                setTimeout(() => {
-                    this.dtTrigger.next();
-                });
+                this.dtTrigger.next();
             });
     }
 
@@ -482,9 +480,7 @@ export class PackageListComponent implements OnInit, AfterViewChecked {
             this.listFieldNomarlized = [...this.listField].filter(x => x.hidden === true).map(x => x.fieldName);
             this.sum = [...this.listField].filter(x => x.hidden === true).length;
             this.tenGoithau = this.listFieldNomarlized.includes('ARBidOpportunityName');
-            setTimeout(() => {
-                this.dtTrigger.next();
-            });
+            this.dtTrigger.next();
         });
     }
 
@@ -498,9 +494,7 @@ export class PackageListComponent implements OnInit, AfterViewChecked {
                 this.refreshPopupConfig();
                 myDrop.close();
                 this.spinner.hide();
-                setTimeout(() => {
-                    this.dtTrigger.next();
-                });
+                this.dtTrigger.next();
             }, err => {
                 this.alertService.error('Cập nhật cấu hình thất bại, xin vui lòng thử lại!');
                 this.refresh();
