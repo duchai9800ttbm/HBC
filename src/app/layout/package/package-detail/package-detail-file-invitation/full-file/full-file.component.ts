@@ -311,35 +311,40 @@ export class FullFileComponent implements OnInit {
     }
 
     changeStatus(id, status, type) {
-        this.bidDocumentGroupListItem.forEach(i => {
-            if (i.documentType === type) {
-                i.items.forEach(item => {
-                    if (item.id !== +id) {
-                        item.status = 'Draft';
+        if (status === 'Draft') {
+            this.documentService.updateStatus(id, 'Official').subscribe(data => {
+                this.documentService.read(this.packageId, this.currentMajorTypeId).subscribe(response => {
+                    this.bidDocumentGroupListItem = response;
+                    this.bidDocumentGroupListItemSearchResult = response;
+                    this.showTable = this.bidDocumentGroupListItemSearchResult.length > 0;
+
+                    this.dtTrigger.next();
+                    if (document.getElementsByClassName('dataTables_empty')[0]) {
+                        document.getElementsByClassName('dataTables_empty')[0].remove();
                     }
+                    this.spinner.hide();
+                    this.alertService.success('Dữ liệu đã được cập nhật mới nhất!');
                 });
-                i.items.forEach(item => {
-                    if (item.id === +id) {
-                        item.status = status === 'Draft' ? 'Official' : 'Draft';
+            });
+
+        }
+        if (status === 'Official') {
+            this.documentService.updateStatus(id, 'Draft').subscribe(data => {
+                this.documentService.read(this.packageId, this.currentMajorTypeId).subscribe(response => {
+                    this.bidDocumentGroupListItem = response;
+                    this.bidDocumentGroupListItemSearchResult = response;
+                    this.showTable = this.bidDocumentGroupListItemSearchResult.length > 0;
+
+                    this.dtTrigger.next();
+                    if (document.getElementsByClassName('dataTables_empty')[0]) {
+                        document.getElementsByClassName('dataTables_empty')[0].remove();
                     }
+                    this.spinner.hide();
+                    this.alertService.success('Dữ liệu đã được cập nhật mới nhất!');
                 });
-            }
-        });
-        this.bidDocumentGroupListItemSearchResult.forEach(i => {
-            if (i.documentType === type) {
-                i.items.forEach(item => {
-                    if (item.id !== +id) {
-                        item.status = 'Draft';
-                    }
-                });
-                i.items.forEach(item => {
-                    if (item.id === +id) {
-                        item.status = status === 'Draft' ? 'Official' : 'Draft';
-                        this.documentService.updateStatus(id, item.status).subscribe();
-                    }
-                });
-            }
-        });
+            });
+
+        }
     }
 
 
