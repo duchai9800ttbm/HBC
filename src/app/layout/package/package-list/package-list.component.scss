@@ -486,9 +486,15 @@ select.form-control:not([size]):not([multiple]){
     background-position: center right;
 }
 
+
+.dataTables_empty{
+    display: none!important;
+}
+
 .ellipsis {
     overflow:hidden; 
     white-space:nowrap; 
     text-overflow: ellipsis;
     color: #00a0e3;
 }
+

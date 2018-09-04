@@ -2,14 +2,20 @@
     <kendo-dialog (close)="close('cancel')" [width]="700" class="width-kendo-dialog">
         <form [formGroup]="uploadForm" novalidate>
             <div class="title-detail center-parent">
-                <div class="col-md-1 no-gutters"></div>
-                <div class="mr-auto col-md-10">
+                <div style="width: 20%;">
+
+                </div>
+                <div style="width: 80%;">
                     <div class="media-header center-parent">
                         <h3 class="d-inline mb-0 text-dark bold-title">UPLOAD HSMT</h3>
                     </div>
                 </div>
-                <div class="col-md-1 no-gutters close-popup">
-                    <span (click)="close('cancel')">X</span>
+                <div style="width: 20%;" class="d-flex justify-content-end">
+                    <div>
+                        <div>
+                            <img (click)="close('cancel')" width="25" height="25" class="cursor-pointer not-outline" src="assets\images\close.png">
+                        </div>
+                    </div>
                 </div>
             </div>
             <hr>
@@ -26,7 +32,8 @@
                                     <tr>
                                         <td class="w-30 label no-boder bold-title">Đường dẫn link</td>
                                         <td class="w-70 no-boder">
-                                            <input (change)="inputChange()" [readonly]="uploadForm.get('editName').value" class="w-100" kendoTextBox formControlName="link" tabindex="1" type="text">
+                                            <input (change)="inputChange()" [readonly]="uploadForm.get('editName').value" class="w-100" kendoTextBox formControlName="link"
+                                                tabindex="1" type="text">
                                         </td>
                                     </tr>
                                     <tr>
@@ -59,6 +66,15 @@
                                             <div class="invalid-feedback" *ngIf="formErrors.editName">
                                                 {{formErrors.editName}}
                                             </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="w-30 label no-boder bold-title">Version</td>
+                                        <td class="w-70 no-boder">
+                                            <input class="w-100" kendoTextBox tabindex="1" type="text" formControlName="version">
+                                            <!-- <div class="invalid-feedback" *ngIf="formErrors.editName">
+                                                    {{formErrors.editName}}
+                                                </div> -->
                                         </td>
                                     </tr>
                                     <tr>

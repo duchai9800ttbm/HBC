@@ -47,6 +47,7 @@ export class FullFileComponent implements OnInit {
     packageData: PackageInfoModel;
     tableEmpty: boolean;
     currentMajorTypeId = 1;
+    currentMajorTypeText = '';
     sum = 0;
     showTable = false;
     get titleStr() {
@@ -98,6 +99,9 @@ export class FullFileComponent implements OnInit {
                 this.bidDocumentGroupListItemSearchResult = response;
                 this.showTable = this.bidDocumentGroupListItemSearchResult.length > 0;
                 this.dtTrigger.next();
+                if (document.getElementsByClassName('dataTables_empty')[0]) {
+                    document.getElementsByClassName('dataTables_empty')[0].remove();
+                }
                 this.spinner.hide();
             }, err => this.spinner.hide());
         });
@@ -120,6 +124,9 @@ export class FullFileComponent implements OnInit {
         this.showTable = this.bidDocumentGroupListItemSearchResult.length > 0;
 
         this.dtTrigger.next();
+        if (document.getElementsByClassName('dataTables_empty')[0]) {
+            document.getElementsByClassName('dataTables_empty')[0].remove();
+        }
     }
 
     filter() {
@@ -128,6 +135,9 @@ export class FullFileComponent implements OnInit {
         this.showTable = this.bidDocumentGroupListItemSearchResult.length > 0;
 
         this.dtTrigger.next();
+        if (document.getElementsByClassName('dataTables_empty')[0]) {
+            document.getElementsByClassName('dataTables_empty')[0].remove();
+        }
     }
 
     clearFilter() {
@@ -139,8 +149,17 @@ export class FullFileComponent implements OnInit {
         this.showTable = this.bidDocumentGroupListItemSearchResult.length > 0;
 
         this.dtTrigger.next();
+        if (document.getElementsByClassName('dataTables_empty')[0]) {
+            document.getElementsByClassName('dataTables_empty')[0].remove();
+        }
     }
-
+    uploadHSMT() {
+        this.typeFileUpload = {
+            id: `${this.currentMajorTypeId}`,
+            text: this.currentMajorTypeText
+        };
+        this.showPopupAdd = true;
+    }
     openPopupUploadFile(documentType) {
         if (documentType === '2') {
             this.typeFileUpload = {
@@ -210,6 +229,9 @@ export class FullFileComponent implements OnInit {
             this.showTable = this.bidDocumentGroupListItemSearchResult.length > 0;
 
             this.dtTrigger.next();
+            if (document.getElementsByClassName('dataTables_empty')[0]) {
+                document.getElementsByClassName('dataTables_empty')[0].remove();
+            }
             this.spinner.hide();
             if (!(this.bidDocumentGroupListItem && this.bidDocumentGroupListItem.length > 1)) {
                 document.getElementsByClassName('dataTables_empty')[0].remove();
@@ -226,6 +248,9 @@ export class FullFileComponent implements OnInit {
             this.showTable = this.bidDocumentGroupListItemSearchResult.length > 0;
 
             this.dtTrigger.next();
+            if (document.getElementsByClassName('dataTables_empty')[0]) {
+                document.getElementsByClassName('dataTables_empty')[0].remove();
+            }
             this.spinner.hide();
             this.alertService.success('Dữ liệu đã được cập nhật mới nhất!');
         });
@@ -286,35 +311,40 @@ export class FullFileComponent implements OnInit {
     }
 
     changeStatus(id, status, type) {
-        this.bidDocumentGroupListItem.forEach(i => {
-            if (i.documentType === type) {
-                i.items.forEach(item => {
-                    if (item.id !== +id) {
-                        item.status = 'Draft';
+        if (status === 'Draft') {
+            this.documentService.updateStatus(id, 'Official').subscribe(data => {
+                this.documentService.read(this.packageId, this.currentMajorTypeId).subscribe(response => {
+                    this.bidDocumentGroupListItem = response;
+                    this.bidDocumentGroupListItemSearchResult = response;
+                    this.showTable = this.bidDocumentGroupListItemSearchResult.length > 0;
+
+                    this.dtTrigger.next();
+                    if (document.getElementsByClassName('dataTables_empty')[0]) {
+                        document.getElementsByClassName('dataTables_empty')[0].remove();
                     }
+                    this.spinner.hide();
+                    this.alertService.success('Dữ liệu đã được cập nhật mới nhất!');
                 });
-                i.items.forEach(item => {
-                    if (item.id === +id) {
-                        item.status = status === 'Draft' ? 'Official' : 'Draft';
+            });
+
+        }
+        if (status === 'Official') {
+            this.documentService.updateStatus(id, 'Draft').subscribe(data => {
+                this.documentService.read(this.packageId, this.currentMajorTypeId).subscribe(response => {
+                    this.bidDocumentGroupListItem = response;
+                    this.bidDocumentGroupListItemSearchResult = response;
+                    this.showTable = this.bidDocumentGroupListItemSearchResult.length > 0;
+
+                    this.dtTrigger.next();
+                    if (document.getElementsByClassName('dataTables_empty')[0]) {
+                        document.getElementsByClassName('dataTables_empty')[0].remove();
                     }
+                    this.spinner.hide();
+                    this.alertService.success('Dữ liệu đã được cập nhật mới nhất!');
                 });
-            }
-        });
-        this.bidDocumentGroupListItemSearchResult.forEach(i => {
-            if (i.documentType === type) {
-                i.items.forEach(item => {
-                    if (item.id !== +id) {
-                        item.status = 'Draft';
-                    }
-                });
-                i.items.forEach(item => {
-                    if (item.id === +id) {
-                        item.status = status === 'Draft' ? 'Official' : 'Draft';
-                        this.documentService.updateStatus(id, item.status).subscribe();
-                    }
-                });
-            }
-        });
+            });
+
+        }
     }
 
 
@@ -371,14 +401,18 @@ export class FullFileComponent implements OnInit {
         });
     }
 
-    filterMajorTypeListItem(id) {
+    filterMajorTypeListItem(id, text) {
         this.currentMajorTypeId = id;
+        this.currentMajorTypeText = text;
         this.documentService.read(this.packageId, this.currentMajorTypeId).subscribe(response => {
             this.bidDocumentGroupListItem = response;
             this.bidDocumentGroupListItemSearchResult = response;
             this.showTable = this.bidDocumentGroupListItemSearchResult.length > 0;
 
             this.dtTrigger.next();
+            if (document.getElementsByClassName('dataTables_empty')[0]) {
+                document.getElementsByClassName('dataTables_empty')[0].remove();
+            }
             this.spinner.hide();
         }, err => this.spinner.hide());
     }
