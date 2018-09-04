@@ -498,3 +498,6 @@ select.form-control:not([size]):not([multiple]){
     color: #00a0e3;
 }
 
+:host /deep/ .dataTables_empty {
+    display: none !important;
+}
