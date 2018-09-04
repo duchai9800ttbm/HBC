@@ -59,7 +59,7 @@
     "font-awesome": "^4.7.0",
     "jquery": "^3.2.1",
     "linqts": "^1.12.0",
-    "ng-pick-datetime": "5.0.0-beta.15",
+    "ng-pick-datetime": "^5.2.6",
     "ng-pick-datetime-fork": "^4.0.6",
     "ng2-charts": "^1.6.0",
     "ng2-ckeditor": "^1.2.1",

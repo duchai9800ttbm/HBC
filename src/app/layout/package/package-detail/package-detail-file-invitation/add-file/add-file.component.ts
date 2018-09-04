@@ -49,6 +49,11 @@ export class AddFileComponent implements OnInit {
     currentMajorTypeId = 1;
     sum = 0;
     showTable = false;
+    get titleStr() {
+        if (this.majorTypeListItem && this.majorTypeListItem.length > 0) {
+            return this.majorTypeListItem.find(i => i.id == this.currentMajorTypeId).text;
+        }
+    }
     constructor(
         private alertService: AlertService,
         private confirmationService: ConfirmationService,
@@ -88,6 +93,7 @@ export class AddFileComponent implements OnInit {
         this.documentService.bidDocumentMajortypes().subscribe(data => {
             this.majorTypeListItem = data;
             this.currentMajorTypeId = this.majorTypeListItem[0].id;
+            console.log(data);
             this.documentService.read(this.packageId, this.currentMajorTypeId).subscribe(response => {
                 this.bidDocumentGroupListItem = response;
                 this.bidDocumentGroupListItemSearchResult = response;

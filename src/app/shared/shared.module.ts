@@ -1,7 +1,8 @@
 import { DataTablesModule } from 'angular-datatables';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { DateTimePickerModule } from 'ng-pick-datetime';
+// import { DateTimePickerModule } from 'ng-pick-datetime';
+import { OwlDateTimeModule, OwlNativeDateTimeModule } from 'ng-pick-datetime';
 import { SharedComponentsModule } from './components/shared-components.module';
 import { SharedPipesModule } from './pipes/shared-pipes.module';
 import { CommentsModule } from './modules/comments/comments.module';
@@ -81,7 +82,8 @@ import { UploadModule } from '@progress/kendo-angular-upload';
         AutoCompleteModule,
         DropdownModule,
         DataTablesModule,
-        DateTimePickerModule,
+        OwlDateTimeModule,
+        OwlNativeDateTimeModule,
         CommentsModule,
         ActivitiesModule,
         AuditsModule,
@@ -124,7 +126,8 @@ import { UploadModule } from '@progress/kendo-angular-upload';
         DataTablesModule,
         AutoCompleteModule,
         DropdownModule,
-        DateTimePickerModule,
+        OwlDateTimeModule,
+        OwlNativeDateTimeModule,
         CommentsModule,
         ActivitiesModule,
         AuditsModule,

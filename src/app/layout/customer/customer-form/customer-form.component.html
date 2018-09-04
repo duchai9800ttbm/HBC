@@ -191,9 +191,9 @@
                                         <td *ngIf="type.value ==='Personal'" class="w-25 bg-light text-right label">Ngày sinh nhật</td>
                                         <td *ngIf="type.value ==='Personal'" class="w-25">
                                             <div class="input-group w-75">
-                                                <owl-date-time [readonlyInput]="datePickerConfig.readonlyInput" [inputStyleClass]="formErrors.startDate ? 'is-invalid' : ''"
-                                                    [dateFormat]="datePickerConfig.dateFormat" [placeHolder]="datePickerConfig.datePlaceHolder"
-                                                    [locale]="datePickerConfig.vi" [type]="datePickerConfig.calendarType" formControlName="dob"
+                                                <owl-date-time  
+                                                     
+                                                      formControlName="dob"
                                                     tabindex="18">
                                                 </owl-date-time>
                                                 <span class="input-group-addon">
@@ -205,9 +205,9 @@
                                         <td *ngIf="type.value ==='Company'" class="w-25 bg-light text-right label">Ngày thành lập công ty</td>
                                         <td *ngIf="type.value ==='Company'" class="w-25">
                                             <div class="input-group w-75">
-                                                <owl-date-time [readonlyInput]="datePickerConfig.readonlyInput" [inputStyleClass]="formErrors.startDate ? 'is-invalid' : ''"
-                                                    [dateFormat]="datePickerConfig.dateFormat" [placeHolder]="datePickerConfig.datePlaceHolder"
-                                                    [locale]="datePickerConfig.vi" [type]="datePickerConfig.calendarType" formControlName="companyEstablishmentDay"
+                                                <owl-date-time 
+                                                     
+                                                      formControlName="companyEstablishmentDay"
                                                     tabindex="18">
                                                 </owl-date-time>
                                                 <span class="input-group-addon">

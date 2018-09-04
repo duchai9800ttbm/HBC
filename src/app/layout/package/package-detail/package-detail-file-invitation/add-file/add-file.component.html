@@ -85,6 +85,7 @@
                 </div>
             </div>
             <div class="bot-table" [class.table-toggle-2]="isShowMenu" style="width: calc(100% - 230px);">
+                <h5 class="text-uppercase">{{titleStr}}</h5>
                 <div class="d-flex flex-row flex-wrap filter-bar custom-filter-bar" style="background-color: #fafbfc">
                     <div class="d-flex form-inline ">
                         <div class="form-group ml-sm-2 p-1">
@@ -101,10 +102,16 @@
                         <div class="form-group ml-sm-2 p-1">
                             <label for="" class="form-label">Ngày upload</label>
                             <div class="input-group calendarInput">
-                                <owl-date-time [(ngModel)]="filterModel.createDate" [locale]="datePickerConfig.vi" [placeHolder]="datePickerConfig.datePlaceHolder"
-                                    [type]="datePickerConfig.calendarType" pickerType="calendar" #dtUpload [dateFormat]="datePickerConfig.dateFormat" >
+                                <!-- <owl-date-time [(ngModel)]="filterModel.createDate"  
+                                     pickerType="calendar" #dtUpload  >
                                 </owl-date-time>
                                 <span class="input-group-addon">
+                                    <i class="fa fa-calendar"></i>
+                                </span> -->
+                                <input [placeholder]="datePickerConfig.datePlaceHolder" class="input-date-time input-date-time-bar" readonly [(ngModel)]="filterModel.createDate"
+                                    [owlDateTimeTrigger]="dt" [owlDateTime]="dt">
+                                <owl-date-time #dt pickerType="calendar"></owl-date-time>
+                                <span [owlDateTimeTrigger]="dt" class="input-group-addon">
                                     <i class="fa fa-calendar"></i>
                                 </span>
                             </div>
@@ -113,10 +120,16 @@
                         <div class="form-group ml-sm-2 p-1">
                             <label for="" class="form-label">Ngày nhận HSMT</label>
                             <div class="input-group calendarInput">
-                                <owl-date-time [(ngModel)]="filterModel.receivedDate" [locale]="datePickerConfig.vi" [placeHolder]="datePickerConfig.datePlaceHolder"
-                                    [type]="datePickerConfig.calendarType" pickerType="calendar" [dateFormat]="datePickerConfig.dateFormat">
+                                <!-- <owl-date-time [(ngModel)]="filterModel.receivedDate"  
+                                     pickerType="calendar" >
                                 </owl-date-time>
                                 <span class="input-group-addon">
+                                    <i class="fa fa-calendar"></i>
+                                </span> -->
+                                <input [placeholder]="datePickerConfig.datePlaceHolder" class="input-date-time input-date-time-bar" readonly [(ngModel)]="filterModel.receivedDate"
+                                    [owlDateTimeTrigger]="dt1" [owlDateTime]="dt1">
+                                <owl-date-time #dt1 pickerType="calendar"></owl-date-time>
+                                <span [owlDateTimeTrigger]="dt1" class="input-group-addon">
                                     <i class="fa fa-calendar"></i>
                                 </span>
                             </div>

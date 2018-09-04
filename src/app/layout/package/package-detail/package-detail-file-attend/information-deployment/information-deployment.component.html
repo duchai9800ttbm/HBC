@@ -1,420 +1,435 @@
 <div class="boder-table">
-  <div class="row">
-    <ul class="progressbar">
-      <li class="triangle active" [routerLink]="['../infomation-deployment']">
-        <div style="width: 100%" class="center-parent">
-          <div class="arrow-down-active"></div>
-        </div>
-        <span class="text-color ">Triển khai &amp; phân công tiến độ</span>
-      </li>
-      <li class="triangle" [routerLink]="['../build']">
-        <div style="width: 100%" class="center-parent">
-          <div class="arrow-down"></div>
-        </div>
-        <span class="text-color ">Lập HSDT</span>
-      </li>
-      <li class="triangle" [routerLink]="['../price-review']">
-        <div style="width: 100%" class="center-parent">
-          <div class="arrow-down"></div>
-        </div>
-        <span class="text-color ">Trình duyệt giá</span>
-      </li>
-      <li class="triangle">
-        <div style="width: 100%" class="center-parent">
-          <div class="arrow-down"></div>
-        </div>
-        <span class="text-color ">Đơn báo giá dự thầu</span>
-      </li>
-      <li class="triangle">
-        <div style="width: 100%" class="center-parent">
-          <div class="arrow-down"></div>
-        </div>
-        <span>Hồ sơ dự thầu đã ký</span>
-      </li>
-      <li class="triangle" [routerLink]="['../interview-negotiation']">
-        <div style="width: 100%" class="center-parent">
-          <div class="arrow-down"></div>
-        </div>
-        <span>Quản lý phỏng vấn/thương thảo</span>
-      </li>
-    </ul>
-  </div>
-
-  <div class=" title-list-package d-flex flex-wrap align-items-center status-filter" style=" padding:0px 20px 20px 30px;">
-
-    <div class="mr-auto d-flex align-items-end list-package mt-2 mb-2">
-      <div class="d-flex justify-content-start" style="height: 40px;">
-        <div class="rule mr-2">
-        </div>
-        <div class="center-parent mr-4" style="font-size: 18px">
-          <div> {{textInformation}}
-            <button type="button" class="btn btn-primary setHSDT" *ngIf="setHSDT" (click)="openModelViewListData(ViewListData)">
-              Xem danh sách phân công
-            </button>
-          </div>
-        </div>
-      </div>
+    <div class="row">
+        <ul class="progressbar">
+            <li class="triangle active" [routerLink]="['../infomation-deployment']">
+                <div style="width: 100%" class="center-parent">
+                    <div class="arrow-down-active"></div>
+                </div>
+                <span class="text-color ">Triển khai &amp; phân công tiến độ</span>
+            </li>
+            <li class="triangle" [routerLink]="['../build']">
+                <div style="width: 100%" class="center-parent">
+                    <div class="arrow-down"></div>
+                </div>
+                <span class="text-color ">Lập HSDT</span>
+            </li>
+            <li class="triangle" [routerLink]="['../price-review']">
+                <div style="width: 100%" class="center-parent">
+                    <div class="arrow-down"></div>
+                </div>
+                <span class="text-color ">Trình duyệt giá</span>
+            </li>
+            <li class="triangle">
+                <div style="width: 100%" class="center-parent">
+                    <div class="arrow-down"></div>
+                </div>
+                <span class="text-color ">Đơn báo giá dự thầu</span>
+            </li>
+            <li class="triangle">
+                <div style="width: 100%" class="center-parent">
+                    <div class="arrow-down"></div>
+                </div>
+                <span>Hồ sơ dự thầu đã ký</span>
+            </li>
+            <li class="triangle" [routerLink]="['../interview-negotiation']">
+                <div style="width: 100%" class="center-parent">
+                    <div class="arrow-down"></div>
+                </div>
+                <span>Quản lý phỏng vấn/thương thảo</span>
+            </li>
+        </ul>
     </div>
-    <div>
-      <div class="btn-toolbar mt-2 mb-2">
-        <button type="button" *ngIf="setHSDT" [ngClass]="{'btn-dep':setHSDT == true}" class="btn btn-up " (click)="lapHSDT()">Bắt đầu lập HSDT</button>
-        <button type="button" *ngIf="isconfirmProgress" [ngClass]="{'btn-dep':isconfirmProgress == true}" class="btn btn-up" (click)="openModeSendAssignment(SendAssignment)">{{textConfirmProgress}}</button>
-        <button type="button" *ngIf="isSendInformation" [ngClass]="{'btn-dep':showButtonAssignmet == true,'disable':showButtonAssignmet == false}"
-          class="btn btn-up" (click)="confirmProgress()">Xác nhận phân công tiến độ</button>
-        <button type="button" [ngClass]="{ 'btn-dep': isSendInformation ===  false,'disable': isSendInformation ===  true}" class="btn btn-up "
-          (click)="openModalDeployment(informationDeployment)">Thông báo triển khai</button>
-        <button type="button" *ngIf="isTeamPlate" [ngClass]="{ 'btn-dep': isSendInformation === true }" class="btn btn-up ">Tải Template</button>
-        <button type="button" *ngIf="isconfirmProgress" class="btn btn-up disable">Upload file</button>
-        <button type="button" *ngIf="!isconfirmProgress" [ngClass]="{ 'btn-dep': dowloadTem === true,'disable': dowloadTem === false }"
-          (click)="openModalUpload(Upload)" class="btn btn-up ">Upload file</button>
-        <button type="button" class="btn btn-primary ">
-          <i class="fa fa-refresh" aria-hidden="true"></i>
-        </button>
-      </div>
-    </div>
-    <div *ngIf="isSendInformation && !showTabelAssignment" class="col-md-4 offset-md-0 table-assignment">Bảng phân công tiến độ thực hiện</div>
-  </div>
 
+    <div class=" title-list-package d-flex flex-wrap align-items-center status-filter" style=" padding:0px 20px 20px 30px;">
 
-  <div class="row" *ngIf="!showTabelAssignment" style="padding-top: 60px;">
-    <div class="col-sm-12 col-sm-offset-0 hid">
-      <div class="row">
-        <div class="col-sm-12 col-sm-offset-0 text-center">
-          <img class="icon-filter" src="assets/images/ic-file0.png" style="width: 116px;" alt="">
+        <div class="mr-auto d-flex align-items-end list-package mt-2 mb-2">
+            <div class="d-flex justify-content-start" style="height: 40px;">
+                <div class="rule mr-2">
+                </div>
+                <div class="center-parent mr-4" style="font-size: 18px">
+                    <div> {{textInformation}}
+                        <button type="button" class="btn btn-primary setHSDT" *ngIf="setHSDT" (click)="openModelViewListData(ViewListData)">
+                            Xem danh sách phân công
+                        </button>
+                    </div>
+                </div>
+            </div>
         </div>
-        <div class="col-sm-12 col-sm-offset-0 text-center" style="padding-top: 20px">
-          {{toggleTextUpFile}}
+        <div>
+            <div class="btn-toolbar mt-2 mb-2">
+                <button type="button" *ngIf="setHSDT" [ngClass]="{'btn-dep':setHSDT == true}" class="btn btn-up "
+                    (click)="lapHSDT()">Bắt đầu lập HSDT</button>
+                <button type="button" *ngIf="isconfirmProgress" [ngClass]="{'btn-dep':isconfirmProgress == true}" class="btn btn-up"
+                    (click)="openModeSendAssignment(SendAssignment)">{{textConfirmProgress}}</button>
+                <button type="button" *ngIf="isSendInformation" [ngClass]="{'btn-dep':showButtonAssignmet == true,'disable':showButtonAssignmet == false}"
+                    class="btn btn-up" (click)="confirmProgress()">Xác nhận phân công tiến độ</button>
+                <button type="button" [ngClass]="{ 'btn-dep': isSendInformation ===  false,'disable': isSendInformation ===  true}"
+                    class="btn btn-up " (click)="openModalDeployment(informationDeployment)">Thông báo triển khai</button>
+                <button type="button" *ngIf="isTeamPlate" [ngClass]="{ 'btn-dep': isSendInformation === true }" class="btn btn-up ">Tải
+                    Template</button>
+                <button type="button" *ngIf="isconfirmProgress" class="btn btn-up disable">Upload file</button>
+                <button type="button" *ngIf="!isconfirmProgress" [ngClass]="{ 'btn-dep': dowloadTem === true,'disable': dowloadTem === false }"
+                    (click)="openModalUpload(Upload)" class="btn btn-up ">Upload file</button>
+                <button type="button" class="btn btn-primary ">
+                    <i class="fa fa-refresh" aria-hidden="true"></i>
+                </button>
+            </div>
         </div>
-      </div>
+        <div *ngIf="isSendInformation && !showTabelAssignment" class="col-md-4 offset-md-0 table-assignment">Bảng phân
+            công tiến độ thực hiện</div>
     </div>
-  </div>
 
-  <app-assignment-progress *ngIf="showTabelAssignment && isShowTable" [dataConfirm]="dataConfirm" [hideButon]="hideButon" [UploadItem]="uploadItem"></app-assignment-progress>
-  <app-assignment-progress *ngIf="!isShowTable" [hideButon]="hideButon"></app-assignment-progress>
+
+    <div class="row" *ngIf="!showTabelAssignment" style="padding-top: 60px;">
+        <div class="col-sm-12 col-sm-offset-0 hid">
+            <div class="row">
+                <div class="col-sm-12 col-sm-offset-0 text-center">
+                    <img class="icon-filter" src="assets/images/ic-file0.png" style="width: 116px;" alt="">
+                </div>
+                <div class="col-sm-12 col-sm-offset-0 text-center" style="padding-top: 20px">
+                    {{toggleTextUpFile}}
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <app-assignment-progress *ngIf="showTabelAssignment && isShowTable" [dataConfirm]="dataConfirm" [hideButon]="hideButon"
+        [UploadItem]="uploadItem"></app-assignment-progress>
+    <app-assignment-progress *ngIf="!isShowTable" [hideButon]="hideButon"></app-assignment-progress>
 
 </div>
 <!-- Model Gửi thông báo -->
 <ng-template #informationDeployment>
-  <div class="modal-header no-boder-bottom">
-    <div class="pull-left ">
-      <div class="text-title icon-arrow">
-        <img width="15" height="15" class="img-back pointer" src="assets\images\nghia.png" (click)="ClosePopup()" />
-        <h4 class="modal-title text-dark d-inline text-send-noti"> Gửi thư thông báo triển khai</h4>
-      </div>
-    </div>
+    <div class="modal-header no-boder-bottom">
+        <div class="pull-left ">
+            <div class="text-title icon-arrow">
+                <img width="15" height="15" class="img-back pointer" src="assets\images\nghia.png" (click)="ClosePopup()" />
+                <h4 class="modal-title text-dark d-inline text-send-noti"> Gửi thư thông báo triển khai</h4>
+            </div>
+        </div>
 
-    <div class="pull-right">
-      <button type="button" class="btn btn-cancel mr-2" aria-label="Close" (click)="modalRef.hide()">Hủy</button>
-      <button type="button" *ngIf="!showBtnNotification" class="btn btn-send" aria-label="Close" (click)="SendInformation()">Gửi</button>
+        <div class="pull-right">
+            <button type="button" class="btn btn-cancel mr-2" aria-label="Close" (click)="modalRef.hide()">Hủy</button>
+            <button type="button" *ngIf="!showBtnNotification" class="btn btn-send" aria-label="Close" (click)="SendInformation()">Gửi</button>
+        </div>
     </div>
-  </div>
-  <div class="modal-body">
-    <div class="input-group mb-3">
-      <div class="input-group-prepend">
-        <span class="input-group-text">To:</span>
-      </div>
-      <input type="text" class="form-control boder-left-none" [ngClass]="{ 'bd-r' : isSendCc === false ||isSendBcc===false }" aria-label="To"
-        autofocus>
-      <div class="input-group-append" *ngIf="!isSendCc || !isSendBcc">
-        <span class="input-group-text">
-          <span *ngIf="!isSendCc" title="Thêm người nhận Cc" class="send-cc" (click)="sendCc()">Cc</span>
-          <span *ngIf="!isSendBcc" title="Thêm người nhận Bcc" class="send-cc" (click)="sendBcc()">Bcc</span>
-        </span>
-      </div>
-    </div>
+    <div class="modal-body">
+        <div class="input-group mb-3">
+            <div class="input-group-prepend">
+                <span class="input-group-text">To:</span>
+            </div>
+            <input type="text" class="form-control boder-left-none" [ngClass]="{ 'bd-r' : isSendCc === false ||isSendBcc===false }"
+                aria-label="To" autofocus>
+            <div class="input-group-append" *ngIf="!isSendCc || !isSendBcc">
+                <span class="input-group-text">
+                    <span *ngIf="!isSendCc" title="Thêm người nhận Cc" class="send-cc" (click)="sendCc()">Cc</span>
+                    <span *ngIf="!isSendBcc" title="Thêm người nhận Bcc" class="send-cc" (click)="sendBcc()">Bcc</span>
+                </span>
+            </div>
+        </div>
 
-    <div class="input-group mb-3" *ngIf="isSendCc">
-      <div class="input-group-prepend">
-        <span class="input-group-text" id="basic-addon1">Cc:</span>
-      </div>
-      <input type="text" class="form-control boder-left-none" placeholder="" aria-label="To" aria-describedby="basic-addon1" autofocus>
-    </div>
+        <div class="input-group mb-3" *ngIf="isSendCc">
+            <div class="input-group-prepend">
+                <span class="input-group-text" id="basic-addon1">Cc:</span>
+            </div>
+            <input type="text" class="form-control boder-left-none" placeholder="" aria-label="To" aria-describedby="basic-addon1"
+                autofocus>
+        </div>
 
-    <div class="input-group mb-3" *ngIf="isSendBcc">
-      <div class="input-group-prepend">
-        <span class="input-group-text" id="basic-addon1">Bcc:</span>
-      </div>
-      <input type="text" class="form-control boder-left-none" placeholder="" aria-label="To" aria-describedby="basic-addon1" autofocus>
-    </div>
+        <div class="input-group mb-3" *ngIf="isSendBcc">
+            <div class="input-group-prepend">
+                <span class="input-group-text" id="basic-addon1">Bcc:</span>
+            </div>
+            <input type="text" class="form-control boder-left-none" placeholder="" aria-label="To" aria-describedby="basic-addon1"
+                autofocus>
+        </div>
 
-    <div class="input-group mb-3">
-      <div class="input-group-prepend">
-        <span class="input-group-text" id="basic-addon1">Tiêu đề:</span>
-      </div>
-      <input type="text" class="form-control boder-left-none" placeholder="" aria-label="Tiede" aria-describedby="basic-addon1">
-    </div>
-    <div class="body-ckeditor">
-      <ckeditor [(ngModel)]="ckeditorContent">
-        <ckbutton [name]="'saveButton'" [command]="'saveCmd'" (click)="save($event)" [icon]="'save.png'" [label]="'Save Document'"
-          [toolbar]="'clipboard,1'">
-        </ckbutton>
-      </ckeditor>
-    </div>
+        <div class="input-group mb-3">
+            <div class="input-group-prepend">
+                <span class="input-group-text" id="basic-addon1">Tiêu đề:</span>
+            </div>
+            <input type="text" class="form-control boder-left-none" placeholder="" aria-label="Tiede" aria-describedby="basic-addon1">
+        </div>
+        <div class="body-ckeditor">
+            <ckeditor [(ngModel)]="ckeditorContent">
+                <ckbutton [name]="'saveButton'" [command]="'saveCmd'" (click)="save($event)" [icon]="'save.png'"
+                    [label]="'Save Document'" [toolbar]="'clipboard,1'">
+                </ckbutton>
+            </ckeditor>
+        </div>
 
-  </div>
+    </div>
 </ng-template>
 <!-- Model Upload file -->
 <ng-template #Upload>
-  <form [formGroup]="formUpload" (ngSubmit)="onSubmit()">
-    <div class="modal-header no-boder-bottom">
-      <div class="col-md-10 offset-md-1 text-center">
-        <h4 class="modal-title text-title text-model">Upload file phân công tiến độ</h4>
-      </div>
-      <div class="col-md-1">
-        <button type="button" class="close pull-right" aria-label="Close" (click)="modelUp.hide()">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-    </div>
-    <div class="modal-body fg-w">
-      <div class="row pd-up">
-        <div class="col-md-4 mg-l">Chọn file</div>
-        <div class="col-md-7 input-group">
-          <div class="custom-file form-control">
-            <input type="file" class="custom-file-input" id="inputGroupFile01">
-            <label class="custom-file-label" for="inputGroupFile01">--Choose file--</label>
-          </div>
-          <span class="input-group-addon">
-            <i class="fa fa-upload" aria-hidden="true"></i>
-          </span>
+    <form [formGroup]="formUpload" (ngSubmit)="onSubmit()">
+        <div class="modal-header no-boder-bottom">
+            <div class="col-md-10 offset-md-1 text-center">
+                <h4 class="modal-title text-title text-model">Upload file phân công tiến độ</h4>
+            </div>
+            <div class="col-md-1">
+                <button type="button" class="close pull-right" aria-label="Close" (click)="modelUp.hide()">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
         </div>
-      </div>
-      <div class="row">
-        <div class="col-md-4 mg-l or">OR</div>
-      </div>
-      <div class="row pd-up">
-        <div class="col-md-4 mg-l">Đường dẫn file</div>
-        <div class="col-md-7">
-          <input type="text" class="form-control" placeholder="Text">
-        </div>
-      </div>
-      <div class="row pd-up">
-        <div class="col-md-4 mg-l">Tên</div>
-        <div class="col-md-7">
-          <input type="text" class="form-control" placeholder="Tên" formControlName="name" [ngClass]="{ 'is-invalid': submitted && f.name.errors }">
-          <div *ngIf="submitted && f.name.errors" class="invalid-feedback">
-            <div *ngIf="f.name.errors.required">Vui lòng nhập tên file</div>
-          </div>
-        </div>
+        <div class="modal-body fg-w">
+            <div class="row pd-up">
+                <div class="col-md-4 mg-l">Chọn file</div>
+                <div class="col-md-7 input-group">
+                    <div class="custom-file form-control">
+                        <input type="file" class="custom-file-input" id="inputGroupFile01">
+                        <label class="custom-file-label" for="inputGroupFile01">--Choose file--</label>
+                    </div>
+                    <span class="input-group-addon">
+                        <i class="fa fa-upload" aria-hidden="true"></i>
+                    </span>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-4 mg-l or">OR</div>
+            </div>
+            <div class="row pd-up">
+                <div class="col-md-4 mg-l">Đường dẫn file</div>
+                <div class="col-md-7">
+                    <input type="text" class="form-control" placeholder="Text">
+                </div>
+            </div>
+            <div class="row pd-up">
+                <div class="col-md-4 mg-l">Tên</div>
+                <div class="col-md-7">
+                    <input type="text" class="form-control" placeholder="Tên" formControlName="name" [ngClass]="{ 'is-invalid': submitted && f.name.errors }">
+                    <div *ngIf="submitted && f.name.errors" class="invalid-feedback">
+                        <div *ngIf="f.name.errors.required">Vui lòng nhập tên file</div>
+                    </div>
+                </div>
 
-      </div>
+            </div>
 
-      <div class="row pd-up">
-        <div class="col-md-4 mg-l">Version</div>
-        <div class="col-md-7">
-          <input type="text" class="form-control" value="1">
-        </div>
-      </div>
+            <div class="row pd-up">
+                <div class="col-md-4 mg-l">Version</div>
+                <div class="col-md-7">
+                    <input type="text" class="form-control" value="1">
+                </div>
+            </div>
 
-      <div class="row pd-up">
-        <div class="col-md-4 mg-l">Ngày Upload</div>
-        <div class="col-md-7 input-group">
-          <owl-date-time [readonlyInput]="datePickerConfig.readonlyInput" [locale]="datePickerConfig.vi" [placeHolder]="datePickerConfig.placeHolderVn">
+            <div class="row pd-up">
+                <div class="col-md-4 mg-l">Ngày Upload</div>
+                <div class="col-md-7 input-group">
+                    <!-- <owl-date-time   [placeHolder]="datePickerConfig.placeHolderVn">
           </owl-date-time>
           <span class="input-group-addon">
             <i class="fa fa-calendar"></i>
-          </span>
-        </div>
-      </div>
+          </span> -->
+                    <input [placeholder]="datePickerConfig.datePlaceHolder" class="input-date-time input-date-time-bar"
+                        readonly [owlDateTimeTrigger]="dt" [owlDateTime]="dt">
+                    <owl-date-time #dt pickerType="calendar"></owl-date-time>
+                    <span [owlDateTimeTrigger]="dt" class="input-group-addon">
+                        <i class="fa fa-calendar"></i>
+                    </span>
+                </div>
+            </div>
 
-      <div class="row pd-up">
-        <div class="col-md-4 mg-l">Mô tả/Nội dung cập nhật</div>
-        <div class="col-md-7">
-          <textarea class="form-control textarea-content" name="" id="" cols="30" rows="3" placeholder=""></textarea>
-        </div>
-      </div>
+            <div class="row pd-up">
+                <div class="col-md-4 mg-l">Mô tả/Nội dung cập nhật</div>
+                <div class="col-md-7">
+                    <textarea class="form-control textarea-content" name="" id="" cols="30" rows="3" placeholder=""></textarea>
+                </div>
+            </div>
 
-      <div class="text-center">
-        <button type="submit" class="btn btn-primary btn-default-w" [disabled]="loading">Upload</button>
-        <button type="button" class="btn btn-cancel btn-default-w" (click)="modelUp.hide()">Hủy</button>
-      </div>
-    </div>
-  </form>
+            <div class="text-center">
+                <button type="submit" class="btn btn-primary btn-default-w" [disabled]="loading">Upload</button>
+                <button type="button" class="btn btn-cancel btn-default-w" (click)="modelUp.hide()">Hủy</button>
+            </div>
+        </div>
+    </form>
 </ng-template>
 
 <!-- Gửi phân công tiến độ -->
 <ng-template #SendAssignment>
-  <div class="modal-header no-boder-bottom">
-    <div class="col-md-10 offset-md-1 text-center">
-      <h4 class="modal-title text-title text-model">{{textConfirmProgress}}</h4>
-    </div>
-    <div class="col-md-1">
-      <button type="button" class="close pull-right" aria-label="Close" (click)="modelSendAssignment.hide()">
-        <span aria-hidden="true">&times;</span>
-      </button>
-    </div>
-  </div>
-  <div class="modal-body">
-    <p class="text-body">Bảng phân công tiến độ sẽ được gửi đến</p>
-
-    <div class="">
-      <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="table-selection stripe row-border hover cell-border dataTable">
-        <thead>
-          <tr>
-            <th class="stt" style="width: 5%; min-width: 20px;background-color: #f68e56!important;">
-              <div class="d-flex justify-content-around">
-                <div style="width: 40%;">
-                  <div class="center-parent">
-                    <label class="custom-control custom-checkbox">
-                      <input type="checkbox" class="custom-control-input" [checked]="checked" [(ngModel)]="checkboxSeclectAll" (change)="onSelectAll($event.target.checked)">
-                      <span class="custom-control-indicator"></span>
-                    </label>
-                  </div>
-                </div>
-
-                <div style="width: 35%;" class="center-parent">
-                  <div>STT</div>
-                </div>
-              </div>
-            </th>
-            <th class="bg-default" style="background-color: #f68e56!important;">
-              <div class="d-flex">
-                <div class="center-parent">
-                  <div>Phòng ban</div>
-                </div>
-              </div>
-            </th>
-            <th class="bg-default" style="background-color: #f68e56!important;">
-              <div class="d-flex">
-                <div class="center-parent">
-                  <div>Nhân viên</div>
-                </div>
-              </div>
-            </th>
-            <th class="bg-default" style="background-color: #f68e56!important;">
-              <div class="d-flex">
-                <div class="center-parent">
-                  <div>Email</div>
-                </div>
-              </div>
-            </th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr *ngFor="let data of listData; let i = index">
-            <td class="stt" style="width: 5%; min-width: 20px;">
-              <div class="d-flex justify-content-around">
-                <div style="width: 40%;">
-                  <div class="center-parent">
-                    <label class="custom-control custom-checkbox">
-                      <input type="checkbox" class="custom-control-input" [checked]="data.checkboxSelected" [(ngModel)]="data.checkboxSelected">
-                      <span class="custom-control-indicator"></span>
-                    </label>
-                  </div>
-                </div>
-
-                <div style="width: 35%;" class="center-parent">
-                  <div>{{i+1}}</div>
-                </div>
-              </div>
-            </td>
-            <td class="select-filter">{{ data.rom}}</td>
-            <td class="select-filter">{{ data.username}}</td>
-            <td class="select-filter color-default">{{ data.email}}</td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-    <div class="row pdOther">
-      <div class="col-md-1">Khác</div>
-      <div class="col">
-        <button type="button" class="btn btnOther">
-          <i class="fa fa-plus" aria-hidden="true"></i>
-        </button>
-      </div>
-    </div>
-
-    <div class="main-table">
-      <div class="d-flex flex-row flex-wrap filter-bar custom-filter-bar">
-        <div class="d-flex form-inline flex-pad">
-
-          <div class="form-group ml-sm-2">
-            <label for="" class="form-label">Phòng ban</label>
-            <span class="custom-dropdown mx-sm-2">
-              <select class="form-control">
-                <option value="">--Tất cả--</option>
-                <option *ngFor="let item of roms" [value]="item.id">{{item.name | translate}}</option>
-              </select>
-            </span>
-          </div>
-
-          <div class="form-group ml-sm-2">
-            <label for="" class="form-label">Nhân viên</label>
-            <span class="custom-dropdown mx-sm-2">
-              <select class="form-control">
-                <option value="">--Lựa chọn--</option>
-                <option *ngFor="let item of listUsers" [value]="item.id">{{item.name | translate}}</option>
-              </select>
-            </span>
-          </div>
-
+    <div class="modal-header no-boder-bottom">
+        <div class="col-md-10 offset-md-1 text-center">
+            <h4 class="modal-title text-title text-model">{{textConfirmProgress}}</h4>
         </div>
-      </div>
+        <div class="col-md-1">
+            <button type="button" class="close pull-right" aria-label="Close" (click)="modelSendAssignment.hide()">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
     </div>
-    <div class="text-center">
-      <button type="submit" class="btn btn-primary btn-default-w" (click)="sendConfirmAssignment()">Gửi phân công</button>
-      <button type="button" class="btn btn-cancel btn-default-w" (click)="modelSendAssignment.hide()">Hủy</button>
+    <div class="modal-body">
+        <p class="text-body">Bảng phân công tiến độ sẽ được gửi đến</p>
+
+        <div class="">
+            <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="table-selection stripe row-border hover cell-border dataTable">
+                <thead>
+                    <tr>
+                        <th class="stt" style="width: 5%; min-width: 20px;background-color: #f68e56!important;">
+                            <div class="d-flex justify-content-around">
+                                <div style="width: 40%;">
+                                    <div class="center-parent">
+                                        <label class="custom-control custom-checkbox">
+                                            <input type="checkbox" class="custom-control-input" [checked]="checked"
+                                                [(ngModel)]="checkboxSeclectAll" (change)="onSelectAll($event.target.checked)">
+                                            <span class="custom-control-indicator"></span>
+                                        </label>
+                                    </div>
+                                </div>
+
+                                <div style="width: 35%;" class="center-parent">
+                                    <div>STT</div>
+                                </div>
+                            </div>
+                        </th>
+                        <th class="bg-default" style="background-color: #f68e56!important;">
+                            <div class="d-flex">
+                                <div class="center-parent">
+                                    <div>Phòng ban</div>
+                                </div>
+                            </div>
+                        </th>
+                        <th class="bg-default" style="background-color: #f68e56!important;">
+                            <div class="d-flex">
+                                <div class="center-parent">
+                                    <div>Nhân viên</div>
+                                </div>
+                            </div>
+                        </th>
+                        <th class="bg-default" style="background-color: #f68e56!important;">
+                            <div class="d-flex">
+                                <div class="center-parent">
+                                    <div>Email</div>
+                                </div>
+                            </div>
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let data of listData; let i = index">
+                        <td class="stt" style="width: 5%; min-width: 20px;">
+                            <div class="d-flex justify-content-around">
+                                <div style="width: 40%;">
+                                    <div class="center-parent">
+                                        <label class="custom-control custom-checkbox">
+                                            <input type="checkbox" class="custom-control-input" [checked]="data.checkboxSelected"
+                                                [(ngModel)]="data.checkboxSelected">
+                                            <span class="custom-control-indicator"></span>
+                                        </label>
+                                    </div>
+                                </div>
+
+                                <div style="width: 35%;" class="center-parent">
+                                    <div>{{i+1}}</div>
+                                </div>
+                            </div>
+                        </td>
+                        <td class="select-filter">{{ data.rom}}</td>
+                        <td class="select-filter">{{ data.username}}</td>
+                        <td class="select-filter color-default">{{ data.email}}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="row pdOther">
+            <div class="col-md-1">Khác</div>
+            <div class="col">
+                <button type="button" class="btn btnOther">
+                    <i class="fa fa-plus" aria-hidden="true"></i>
+                </button>
+            </div>
+        </div>
+
+        <div class="main-table">
+            <div class="d-flex flex-row flex-wrap filter-bar custom-filter-bar">
+                <div class="d-flex form-inline flex-pad">
+
+                    <div class="form-group ml-sm-2">
+                        <label for="" class="form-label">Phòng ban</label>
+                        <span class="custom-dropdown mx-sm-2">
+                            <select class="form-control">
+                                <option value="">--Tất cả--</option>
+                                <option *ngFor="let item of roms" [value]="item.id">{{item.name | translate}}</option>
+                            </select>
+                        </span>
+                    </div>
+
+                    <div class="form-group ml-sm-2">
+                        <label for="" class="form-label">Nhân viên</label>
+                        <span class="custom-dropdown mx-sm-2">
+                            <select class="form-control">
+                                <option value="">--Lựa chọn--</option>
+                                <option *ngFor="let item of listUsers" [value]="item.id">{{item.name | translate}}</option>
+                            </select>
+                        </span>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        <div class="text-center">
+            <button type="submit" class="btn btn-primary btn-default-w" (click)="sendConfirmAssignment()">Gửi phân công</button>
+            <button type="button" class="btn btn-cancel btn-default-w" (click)="modelSendAssignment.hide()">Hủy</button>
+        </div>
     </div>
-  </div>
 </ng-template>
 
 <!-- ViewListData -->
 <ng-template #ViewListData>
-  <div class="modal-header no-boder-bottom" style="margin-top: 0px">
-    <div class="col-md-10 offset-md-1 text-center">
-      <h4 class="modal-title text-model">Danh sách gửi phân công tiến độ</h4>
+    <div class="modal-header no-boder-bottom" style="margin-top: 0px">
+        <div class="col-md-10 offset-md-1 text-center">
+            <h4 class="modal-title text-model">Danh sách gửi phân công tiến độ</h4>
+        </div>
+        <div class="col-md-1">
+            <button type="button" class="close pull-right" aria-label="Close" (click)="modalViewListData.hide()">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
     </div>
-    <div class="col-md-1">
-      <button type="button" class="close pull-right" aria-label="Close" (click)="modalViewListData.hide()">
-        <span aria-hidden="true">&times;</span>
-      </button>
-    </div>
-  </div>
-  <div class="modal-body">
-    <div class="bot-table">
-      <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="table-selection stripe row-border hover cell-border dataTable">
-        <thead>
-          <tr>
-            <th class="bg-default" style="background-color: #f68e56!important;">
-              <div class="d-flex justify-content-center">
-                <div class="center-parent">
-                  <div>STT</div>
-                </div>
-              </div>
-            </th>
-            <th class="bg-default" style="background-color: #f68e56!important;">
-              <div class="d-flex">
-                <div class="center-parent">
-                  <div>Phòng ban</div>
-                </div>
-              </div>
-            </th>
-            <th class="bg-default" style="background-color: #f68e56!important;">
-              <div class="d-flex">
-                <div class="center-parent">
-                  <div>Nhân viên</div>
-                </div>
-              </div>
-            </th>
-            <th class="bg-default" style="background-color: #f68e56!important;">
-              <div class="d-flex">
-                <div class="center-parent">
-                  <div>Email</div>
-                </div>
-              </div>
-            </th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr *ngFor="let data of listData; let i = index">
-            <td class="select-filter text-center">{{ i+1}}</td>
-            <td class="select-filter">{{ data.rom}}</td>
-            <td class="select-filter">{{ data.username}}</td>
-            <td class="select-filter color-default">{{ data.email}}</td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
+    <div class="modal-body">
+        <div class="bot-table">
+            <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="table-selection stripe row-border hover cell-border dataTable">
+                <thead>
+                    <tr>
+                        <th class="bg-default" style="background-color: #f68e56!important;">
+                            <div class="d-flex justify-content-center">
+                                <div class="center-parent">
+                                    <div>STT</div>
+                                </div>
+                            </div>
+                        </th>
+                        <th class="bg-default" style="background-color: #f68e56!important;">
+                            <div class="d-flex">
+                                <div class="center-parent">
+                                    <div>Phòng ban</div>
+                                </div>
+                            </div>
+                        </th>
+                        <th class="bg-default" style="background-color: #f68e56!important;">
+                            <div class="d-flex">
+                                <div class="center-parent">
+                                    <div>Nhân viên</div>
+                                </div>
+                            </div>
+                        </th>
+                        <th class="bg-default" style="background-color: #f68e56!important;">
+                            <div class="d-flex">
+                                <div class="center-parent">
+                                    <div>Email</div>
+                                </div>
+                            </div>
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let data of listData; let i = index">
+                        <td class="select-filter text-center">{{ i+1}}</td>
+                        <td class="select-filter">{{ data.rom}}</td>
+                        <td class="select-filter">{{ data.username}}</td>
+                        <td class="select-filter color-default">{{ data.email}}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
 
-  </div>
+    </div>
 </ng-template>

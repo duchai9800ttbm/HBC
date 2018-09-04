@@ -561,7 +561,7 @@
                         <td [hidden]="!linkTaiLieu" class="text-truncate cus-pointer ellipsis">
                             <!-- (click)="openLinkDocument(item.documentLink)" -->
                             <!-- <a title="link tài liệu">{{ item.documentLink }}</a> -->
-                            <a target="_blank" [href]="item.documentLink">{{ item.documentLink }}</a>
+                            <a target="_blank" [href]="item.documentLink | safeUrl">{{ item.documentLink }}</a>
                         </td>
                         <td [hidden]="!tongThoiGian" class="text-truncate">{{ item.totalTime }}</td>
                         <td [hidden]="!quy" class="text-truncate">{{ item.quarter?.name }}</td>
