@@ -26,7 +26,8 @@
                                     <tr>
                                         <td class="w-30 label no-boder bold-title">Đường dẫn link</td>
                                         <td class="w-70 no-boder">
-                                            <input (change)="inputChange()" [readonly]="uploadForm.get('editName').value" class="w-100" kendoTextBox formControlName="link" tabindex="1" type="text">
+                                            <input (change)="inputChange()" [readonly]="uploadForm.get('editName').value" class="w-100" kendoTextBox formControlName="link"
+                                                tabindex="1" type="text">
                                         </td>
                                     </tr>
                                     <tr>
@@ -59,6 +60,15 @@
                                             <div class="invalid-feedback" *ngIf="formErrors.editName">
                                                 {{formErrors.editName}}
                                             </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="w-30 label no-boder bold-title">Version</td>
+                                        <td class="w-70 no-boder">
+                                            <input class="w-100" kendoTextBox tabindex="1" type="text" formControlName="version">
+                                            <!-- <div class="invalid-feedback" *ngIf="formErrors.editName">
+                                                    {{formErrors.editName}}
+                                                </div> -->
                                         </td>
                                     </tr>
                                     <tr>

@@ -186,7 +186,8 @@ export class DocumentService {
         description: string,
         receivedDate: number,
         file: File,
-        link: string
+        link: string,
+        version: string
     ) {
         const url = `biddocument/upload`;
         const formData = new FormData();
@@ -197,6 +198,7 @@ export class DocumentService {
         formData.append('ReceivedDate', `${moment(receivedDate).unix()}`);
         formData.append('DocumentFile', file);
         formData.append('Url', link);
+        formData.append('Version', version);
         return this.apiService.postFile(url, formData)
             .map(response => response)
             .share();
