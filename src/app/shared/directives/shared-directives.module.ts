@@ -9,6 +9,7 @@ import { InputAreaDirective } from './input-area.directive';
 import { NumberAreaPipe } from '../pipes/number-area.pipe';
 import { SquareBoxDirective } from './square-box.directive';
 import { TextEllipsisDirective } from './text-ellipsis.directive';
+import { EnterPreventDefaultDirective } from './enter-prevent-default.directive';
 
 @NgModule({
     imports: [
@@ -21,7 +22,8 @@ import { TextEllipsisDirective } from './text-ellipsis.directive';
         SameWidthDirective,
         InputAreaDirective,
         SquareBoxDirective,
-        TextEllipsisDirective
+        TextEllipsisDirective,
+        EnterPreventDefaultDirective
     ],
     exports: [
         InputNumberDirective,

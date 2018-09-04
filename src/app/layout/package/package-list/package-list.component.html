@@ -565,15 +565,15 @@
                                 </div>
                             </div>
                         </th>
-                        <th [hidden]="!moTa" [title]="'Mô tả'" (click)="orderByField('ProjectInfo')">
+                        <th [hidden]="!moTa" [title]="'Mô tả'" (click)="orderByField('Description')">
                             <div class="d-flex justify-content-start">
                                 <div style="margin-right: 10px" textEllipsis>Mô tả</div>
                                 <div class="center-parent">
                                     <div>
                                         <!-- <i class="fa fa-caret-down" style="color: #ffff;"></i> -->
                                         <i *ngIf="filterModel.sorting == ''" class="fa fa-sort" style="color: #ffff;"></i>
-                                        <i *ngIf="filterModel.sorting == 'ProjectInfoAsc'" class="fa fa-caret-down" style="color: #ffff;"></i>
-                                        <i *ngIf="filterModel.sorting == 'ProjectInfoDesc'" class="fa fa-caret-up" style="color: #ffff;"></i>
+                                        <i *ngIf="filterModel.sorting == 'DescriptionAsc'" class="fa fa-caret-down" style="color: #ffff;"></i>
+                                        <i *ngIf="filterModel.sorting == 'DescriptionDesc'" class="fa fa-caret-up" style="color: #ffff;"></i>
                                     </div>
                                 </div>
                             </div>
