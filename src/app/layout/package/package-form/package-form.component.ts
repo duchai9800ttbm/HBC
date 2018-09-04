@@ -248,4 +248,11 @@ export class PackageFormComponent implements OnInit {
     //         minWidth: 250
     //     });
     // }
+
+    nextTabIndex(e, nextE: HTMLInputElement) {
+        if (e.charCode === 13) {
+            nextE.focus();
+            e.preventDefault();
+        }
+    }
 }
