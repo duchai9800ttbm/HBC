@@ -485,3 +485,10 @@ select.form-control:not([size]):not([multiple]){
     background-repeat: no-repeat;
     background-position: center right;
 }
+
+.ellipsis {
+    overflow:hidden; 
+    white-space:nowrap; 
+    text-overflow: ellipsis;
+    color: #00a0e3;
+}
