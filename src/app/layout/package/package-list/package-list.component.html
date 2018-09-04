@@ -152,7 +152,7 @@
                         </th>
                         <th [hidden]="!maDuAn" (click)="orderByField('BidOpportunityNo')">
                             <div class="d-flex justify-content-start">
-                                <div style="margin-right: 10px">Mã dự án</div>
+                                <div style="margin-right: 10px" textEllipsis>Mã dự án</div>
                                 <div class="center-parent">
                                     <div>
                                         <!-- <i class="fa fa-caret-down" style="color: #ffff;"></i> -->
@@ -162,9 +162,9 @@
                                 </div>
                             </div>
                         </th>
-                        <th [hidden]="!tenDuAn" (click)="orderByField('ProjectName')">
+                        <th [hidden]="!tenDuAn" (click)="orderByField('ProjectName')" [title]="'Tên dự án'">
                             <div class="d-flex justify-content-start">
-                                <div style="margin-right: 10px">Tên dự án</div>
+                                <div style="margin-right: 10px" textEllipsis>Tên dự án</div>
                                 <div class="center-parent">
                                     <div>
                                         <i *ngIf="filterModel.sorting == 'ProjectNameAsc'" class="fa fa-caret-down" style="color: #ffff;"></i>
@@ -173,9 +173,9 @@
                                 </div>
                             </div>
                         </th>
-                        <th [hidden]="!tenGoithau" (click)="orderByField('BidOpportunity')">
+                        <th [hidden]="!tenGoithau" (click)="orderByField('BidOpportunity')" [title]="'Gói thầu'">
                             <div class="d-flex justify-content-start">
-                                <div style="margin-right: 10px">Gói thầu</div>
+                                <div style="margin-right: 10px" textEllipsis>Gói thầu</div>
                                 <div class="center-parent">
                                     <div>
                                         <i *ngIf="filterModel.sorting == 'BidOpportunityAsc'" class="fa fa-caret-down" style="color: #ffff;"></i>
@@ -184,9 +184,9 @@
                                 </div>
                             </div>
                         </th>
-                        <th [hidden]="!tenKhachHang">
+                        <th [hidden]="!tenKhachHang" [title]="'Tên khách hàng'">
                             <div class="d-flex justify-content-start">
-                                <div style="margin-right: 10px">Tên khách hàng</div>
+                                <div style="margin-right: 10px" textEllipsis>Tên khách hàng</div>
                                 <div class="center-parent">
                                     <div>
                                         <i class="fa fa-caret-down" style="color: #ffff;"></i>
@@ -195,9 +195,9 @@
                                 </div>
                             </div>
                         </th>
-                        <th [hidden]="!lienHe">
+                        <th [hidden]="!lienHe" [title]="'Liên hệ'">
                             <div class="d-flex justify-content-start">
-                                <div style="margin-right: 10px">Liên hệ</div>
+                                <div style="margin-right: 10px" textEllipsis>Liên hệ</div>
                                 <div class="center-parent">
                                     <div>
                                         <i class="fa fa-caret-down" style="color: #ffff;"></i>
@@ -205,9 +205,9 @@
                                 </div>
                             </div>
                         </th>
-                        <th [hidden]="!vaiTro" (click)="orderByField('HBCRole')">
+                        <th [hidden]="!vaiTro" (click)="orderByField('HBCRole')" [title]="'Vai trò'">
                             <div class="d-flex justify-content-start">
-                                <div style="margin-right: 10px">Vai trò</div>
+                                <div style="margin-right: 10px" textEllipsis>Vai trò</div>
                                 <div class="center-parent">
                                     <div>
                                         <i *ngIf="filterModel.sorting == 'HBCRoleAsc'" class="fa fa-caret-down" style="color: #ffff;"></i>
@@ -216,9 +216,9 @@
                                 </div>
                             </div>
                         </th>
-                        <th [hidden]="!chuTri" (click)="orderByField('ChairEmployeeName')">
+                        <th [hidden]="!chuTri" (click)="orderByField('ChairEmployeeName')" [title]="'Chủ trì'">
                             <div class="d-flex justify-content-start">
-                                <div style="margin-right: 10px">Chủ trì</div>
+                                <div style="margin-right: 10px" textEllipsis>Chủ trì</div>
                                 <div class="center-parent">
                                     <div>
                                         <i *ngIf="filterModel.sorting == 'ChairEmployeeNameAsc'" class="fa fa-caret-down" style="color: #ffff;"></i>
@@ -227,9 +227,9 @@
                                 </div>
                             </div>
                         </th>
-                        <th [hidden]="!loaiKhachHang" (click)="orderByField('OpportunityClassify')">
+                        <th [hidden]="!loaiKhachHang" (click)="orderByField('OpportunityClassify')" [title]="'Loại khách hàng'">
                             <div class="d-flex justify-content-start">
-                                <div style="margin-right: 10px">Loại khách hàng</div>
+                                <div style="margin-right: 10px" textEllipsis>Loại khách hàng</div>
                                 <div class="center-parent">
                                     <div>
                                         <!-- <i class="fa fa-caret-down" style="color: #ffff;"></i> -->
@@ -239,9 +239,9 @@
                                 </div>
                             </div>
                         </th>
-                        <th [hidden]="!loaiCongTrinh">
+                        <th [hidden]="!loaiCongTrinh" [title]="'Loại công trình'">
                             <div class="d-flex justify-content-start">
-                                <div style="margin-right: 10px">Loại công trình</div>
+                                <div style="margin-right: 10px" textEllipsis>Loại công trình</div>
                                 <div class="center-parent">
                                     <div>
                                         <i class="fa fa-caret-down" style="color: #ffff;"></i>
@@ -249,12 +249,12 @@
                                 </div>
                             </div>
                         </th>
-                        <th [hidden]="!tongGiaTri" (click)="orderByField('Amount')">
+                        <th [hidden]="!tongGiaTri" (click)="orderByField('Amount')" [title]="'Tổng giá trị'">
                             <div class="d-flex justify-content-center">
                                 <div style="margin-right: 10px" class="text-center">
                                     <div class="d-flex justify-content-center">
                                         <div class="center-parent">
-                                            <div>Tổng giá trị</div>
+                                            <div textEllipsis>Tổng giá trị</div>
                                         </div>
                                     </div>
                                 </div>
@@ -267,9 +267,9 @@
                                 </div>
                             </div>
                         </th>
-                        <th [hidden]="!quyMo" (click)="orderByField('Magnitude')">
+                        <th [hidden]="!quyMo" (click)="orderByField('Magnitude')" [title]="'Quy mô'">
                             <div class="d-flex justify-content-start">
-                                <div style="margin-right: 10px">Quy mô</div>
+                                <div style="margin-right: 10px" textEllipsis>Quy mô</div>
                                 <div class="center-parent">
                                     <div>
                                         <!-- <i class="fa fa-caret-down" style="color: #ffff;"></i> -->
@@ -279,9 +279,9 @@
                                 </div>
                             </div>
                         </th>
-                        <th [hidden]="!giaiDoan" class="text-center" class="HSMT" (click)="orderByField('Stage')">
+                        <th [hidden]="!giaiDoan" class="text-center" class="HSMT" (click)="orderByField('Stage')" [title]="'Giai đoạn'">
                             <div class="d-flex justify-content-center">
-                                <div style="margin-right: 10px"> Giai đoạn</div>
+                                <div style="margin-right: 10px" textEllipsis> Giai đoạn</div>
                                 <div class="center-parent">
                                     <div>
                                         <!-- <i class="fa fa-caret-down" style="color: #ffff;"></i> -->
@@ -291,9 +291,9 @@
                                 </div>
                             </div>
                         </th>
-                        <th [hidden]="!khuVuc" (click)="orderByField('Location')">
+                        <th [hidden]="!khuVuc" (click)="orderByField('Location')" [title]="'Khu vực'">
                             <div class="d-flex justify-content-start">
-                                <div style="margin-right: 10px">Khu vực</div>
+                                <div style="margin-right: 10px" textEllipsis>Khu vực</div>
                                 <div class="center-parent">
                                     <div>
                                         <!-- <i class="fa fa-caret-down" style="color: #ffff;"></i> -->
@@ -313,9 +313,9 @@
                                 </div>
                             </div>
                         </th> -->
-                        <th [hidden]="!tienDoThucHien">
+                        <th [hidden]="!tienDoThucHien" [title]="'Tiến độ thực hiện'">
                             <div class="d-flex justify-content-start">
-                                <div style="margin-right: 10px">Tiến độ thực hiện</div>
+                                <div style="margin-right: 10px" textEllipsis>Tiến độ thực hiện</div>
                                 <div class="center-parent">
                                     <div>
                                         <i class="fa fa-caret-down" style="color: #ffff;"></i>
@@ -323,9 +323,9 @@
                                 </div>
                             </div>
                         </th>
-                        <th [hidden]="!linkTaiLieu">
+                        <th [hidden]="!linkTaiLieu" [title]="'Link tài liệu'">
                             <div class="d-flex justify-content-start">
-                                <div style="margin-right: 10px">Link tài liệu</div>
+                                <div style="margin-right: 10px" textEllipsis>Link tài liệu</div>
                                 <div class="center-parent">
                                     <div>
                                         <i class="fa fa-caret-down" style="color: #ffff;"></i>
@@ -333,9 +333,9 @@
                                 </div>
                             </div>
                         </th>
-                        <th [hidden]="!tongThoiGian">
+                        <th [hidden]="!tongThoiGian" [title]="'Tổng thời gian'">
                             <div class="d-flex justify-content-start">
-                                <div style="margin-right: 10px">Tổng thời gian</div>
+                                <div style="margin-right: 10px" textEllipsis>Tổng thời gian</div>
                                 <div class="center-parent">
                                     <div>
                                         <i class="fa fa-caret-down" style="color: #ffff;"></i>
@@ -343,7 +343,7 @@
                                 </div>
                             </div>
                         </th>
-                        <th [hidden]="!quy" (click)="orderByField('Quarter')">
+                        <th [hidden]="!quy" (click)="orderByField('Quarter')" [title]="'Quý'">
                             <div class="d-flex justify-content-start">
                                 <div style="margin-right: 10px">Quý</div>
                                 <div class="center-parent">
@@ -355,9 +355,9 @@
                                 </div>
                             </div>
                         </th>
-                        <th [hidden]="!donViTuVan" (click)="orderByField('ConsultantUnit')">
+                        <th [hidden]="!donViTuVan" (click)="orderByField('ConsultantUnit')" [title]="'Đơn vị tư vấn'">
                             <div class="d-flex justify-content-start">
-                                <div style="margin-right: 10px">Đơn vị tư vấn</div>
+                                <div style="margin-right: 10px" textEllipsis>Đơn vị tư vấn</div>
                                 <div class="center-parent">
                                     <div>
                                         <!-- <i class="fa fa-caret-down" style="color: #ffff;"></i> -->
@@ -367,9 +367,9 @@
                                 </div>
                             </div>
                         </th>
-                        <th [hidden]="!diaChiDVTV" (click)="orderByField('ConsultantAddress')">
+                        <th [hidden]="!diaChiDVTV" (click)="orderByField('ConsultantAddress')" [title]="'Địa chỉ ĐVTV'">
                             <div class="d-flex justify-content-start">
-                                <div style="margin-right: 10px">Địa chỉ ĐVTV</div>
+                                <div style="margin-right: 10px" textEllipsis>Địa chỉ ĐVTV</div>
                                 <div class="center-parent">
                                     <div>
                                         <!-- <i class="fa fa-caret-down" style="color: #ffff;"></i> -->
@@ -379,9 +379,9 @@
                                 </div>
                             </div>
                         </th>
-                        <th [hidden]="!soDienThoaiDVTV" (click)="orderByField('ConsultantPhone')">
+                        <th [hidden]="!soDienThoaiDVTV" (click)="orderByField('ConsultantPhone')" [title]="'Số điện thoại ĐVTV'">
                             <div class="d-flex justify-content-start">
-                                <div style="margin-right: 10px">Số điện thoại ĐVTV</div>
+                                <div style="margin-right: 10px" textEllipsis>Số điện thoại ĐVTV</div>
                                 <div class="center-parent">
                                     <div>
                                         <!-- <i class="fa fa-caret-down" style="color: #ffff;"></i> -->
@@ -391,10 +391,9 @@
                                 </div>
                             </div>
                         </th>
-
-                        <th [hidden]="!dientichsan" (click)="orderByField('FloorArea')">
+                        <th [hidden]="!dientichsan" (click)="orderByField('FloorArea')" [title]="'Diện tích sàn (m2)'">
                             <div class="d-flex justify-content-start">
-                                <div style="margin-right: 10px">Diện tích sàn (m2)</div>
+                                <div style="margin-right: 10px" textEllipsis>Diện tích sàn (m2)</div>
                                 <div class="center-parent">
                                     <div>
                                         <!-- <i class="fa fa-caret-down" style="color: #ffff;"></i> -->
@@ -404,11 +403,9 @@
                                 </div>
                             </div>
                         </th>
-
-
-                        <th [hidden]="!lyDoTrungThau" (click)="orderByField('AcceptanceReason')">
+                        <th [hidden]="!lyDoTrungThau" (click)="orderByField('AcceptanceReason')" [title]="'Lý do trúng thầu'">
                             <div class="d-flex justify-content-start">
-                                <div style="margin-right: 10px">Lý do trúng thầu</div>
+                                <div style="margin-right: 10px" textEllipsis>Lý do trúng thầu</div>
                                 <div class="center-parent">
                                     <div>
                                         <!-- <i class="fa fa-caret-down" style="color: #ffff;"></i> -->
@@ -418,9 +415,9 @@
                                 </div>
                             </div>
                         </th>
-                        <th [hidden]="!lyDoTratThau" (click)="orderByField('UnacceptanceReason')">
+                        <th [hidden]="!lyDoTratThau" (click)="orderByField('UnacceptanceReason')" [title]="'Lý do trật thầu'">
                             <div class="d-flex justify-content-start">
-                                <div style="margin-right: 10px">Lý do trật thầu</div>
+                                <div style="margin-right: 10px" textEllipsis>Lý do trật thầu</div>
                                 <div class="center-parent">
                                     <div>
                                         <!-- <i class="fa fa-caret-down" style="color: #ffff;"></i> -->
@@ -430,9 +427,9 @@
                                 </div>
                             </div>
                         </th>
-                        <th [hidden]="!lydohuythau">
+                        <th [hidden]="!lydohuythau" [title]="'Lý do hủy thầu'">
                             <div class="d-flex justify-content-start">
-                                <div style="margin-right: 10px">Lý do hủy thầu</div>
+                                <div style="margin-right: 10px" textEllipsis>Lý do hủy thầu</div>
                                 <div class="center-parent">
                                     <div>
                                         <i class="fa fa-caret-down" style="color: #ffff;"></i>
@@ -440,9 +437,9 @@
                                 </div>
                             </div>
                         </th>
-                        <th [hidden]="!ngayBatDau">
+                        <th [hidden]="!ngayBatDau" [title]="'Ngày bắt đầu'">
                             <div class="d-flex justify-content-start">
-                                <div style="margin-right: 10px">Ngày bắt đầu</div>
+                                <div style="margin-right: 10px" textEllipsis>Ngày bắt đầu</div>
                                 <div class="center-parent">
                                     <div>
                                         <i class="fa fa-caret-down" style="color: #ffff;"></i>
@@ -450,9 +447,9 @@
                                 </div>
                             </div>
                         </th>
-                        <th [hidden]="!ngayDuKienKetQuaThau">
+                        <th [hidden]="!ngayDuKienKetQuaThau" [title]="'Ngày dự kiến kết quả thầu'">
                             <div class="d-flex justify-content-start">
-                                <div style="margin-right: 10px">Ngày dự kiến kết quả thầu</div>
+                                <div style="margin-right: 10px" textEllipsis>Ngày dự kiến kết quả thầu</div>
                                 <div class="center-parent">
                                     <div>
                                         <i class="fa fa-caret-down" style="color: #ffff;"></i>
@@ -460,9 +457,9 @@
                                 </div>
                             </div>
                         </th>
-                        <th [hidden]="!ngayNhanHoSoMoiThau">
+                        <th [hidden]="!ngayNhanHoSoMoiThau" [title]="'Ngày nhận hồ sơ mời thầu'">
                             <div class="d-flex justify-content-start">
-                                <div style="margin-right: 10px">Ngày nhận hồ sơ mời thầu</div>
+                                <div style="margin-right: 10px" textEllipsis>Ngày nhận hồ sơ mời thầu</div>
                                 <div class="center-parent">
                                     <div>
                                         <i class="fa fa-caret-down" style="color: #ffff;"></i>
@@ -470,9 +467,9 @@
                                 </div>
                             </div>
                         </th>
-                        <th [hidden]="!ngayKhoiCongDuAn">
+                        <th [hidden]="!ngayKhoiCongDuAn" [title]="'Ngày khởi công dự án'">
                             <div class="d-flex justify-content-start">
-                                <div style="margin-right: 10px">Ngày khởi công dự án</div>
+                                <div style="margin-right: 10px" textEllipsis>Ngày khởi công dự án</div>
                                 <div class="center-parent">
                                     <div>
                                         <i class="fa fa-caret-down" style="color: #ffff;"></i>
@@ -480,9 +477,9 @@
                                 </div>
                             </div>
                         </th>
-                        <th [hidden]="!ngayKetThucDuAn">
+                        <th [hidden]="!ngayKetThucDuAn" [title]="'Ngày kết thúc dự án'">
                             <div class="d-flex justify-content-start">
-                                <div style="margin-right: 10px">Ngày kết thúc dự án</div>
+                                <div style="margin-right: 10px" textEllipsis>Ngày kết thúc dự án</div>
                                 <div class="center-parent">
                                     <div>
                                         <i class="fa fa-caret-down" style="color: #ffff;"></i>
@@ -490,9 +487,9 @@
                                 </div>
                             </div>
                         </th>
-                        <th [hidden]="!hangMucCongTrinh">
+                        <th [hidden]="!hangMucCongTrinh" [title]="'Hạng mục công trình'">
                             <div class="d-flex justify-content-start">
-                                <div style="margin-right: 10px">Hạng mục công trình</div>
+                                <div style="margin-right: 10px" textEllipsis>Hạng mục công trình</div>
                                 <div class="center-parent">
                                     <div>
                                         <i class="fa fa-caret-down" style="color: #ffff;"></i>
@@ -500,9 +497,9 @@
                                 </div>
                             </div>
                         </th>
-                        <th [hidden]="!diaDiem">
+                        <th [hidden]="!diaDiem" [title]="'Địa điểm'">
                             <div class="d-flex justify-content-start">
-                                <div style="margin-right: 10px">Địa điểm</div>
+                                <div style="margin-right: 10px" textEllipsis>Địa điểm</div>
                                 <div class="center-parent">
                                     <div>
                                         <i class="fa fa-caret-down" style="color: #ffff;"></i>
@@ -510,9 +507,9 @@
                                 </div>
                             </div>
                         </th>
-                        <th [hidden]="!moTa">
+                        <th [hidden]="!moTa" [title]="'Mô tả'">
                             <div class="d-flex justify-content-start">
-                                <div style="margin-right: 10px">Mô tả</div>
+                                <div style="margin-right: 10px" textEllipsis>Mô tả</div>
                                 <div class="center-parent">
                                     <div>
                                         <i class="fa fa-caret-down" style="color: #ffff;"></i>
@@ -520,9 +517,9 @@
                                 </div>
                             </div>
                         </th>
-                        <th [hidden]="!danhGiaDuAn">
+                        <th [hidden]="!danhGiaDuAn" [title]="'Đánh giá dự án'">
                             <div class="d-flex justify-content-start">
-                                <div style="margin-right: 10px">Đánh giá dự án</div>
+                                <div style="margin-right: 10px" textEllipsis>Đánh giá dự án</div>
                                 <div class="center-parent">
                                     <div>
                                         <i class="fa fa-caret-down" style="color: #ffff;"></i>

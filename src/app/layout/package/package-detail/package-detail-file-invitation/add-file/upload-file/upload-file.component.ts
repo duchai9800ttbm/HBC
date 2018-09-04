@@ -54,9 +54,8 @@ export class UploadFileComponent implements OnInit {
 
   ngOnInit() {
     this.createForm();
-    this.documentService.bidDocumentMajorTypeByParent(this.majorTypeId).subscribe(data => {
+    this.documentService.bidDocumentType().subscribe(data => {
       this.listTypeFile = data;
-      console.log(this.typeFile);
       this.uploadForm.get('type').patchValue(this.typeFile);
     });
   }
@@ -102,6 +101,7 @@ export class UploadFileComponent implements OnInit {
     this.uploadForm = this.fb.group({
       link: '',
       nameFile: '',
+      version: '',
       type: null,
       editName: ['', Validators.required],
       date: new Date(),
@@ -129,20 +129,28 @@ export class UploadFileComponent implements OnInit {
     this.isSubmitted = true;
     if (this.validateForm()) {
       const documentName = this.uploadForm.get('editName').value;
+      const version = this.uploadForm.get('version').value;
       const documentType = this.uploadForm.get('type').value;
       const description = this.uploadForm.get('description').value;
       const date = this.uploadForm.get('date').value;
       const link = this.uploadForm.get('link').value;
       if (this.file || link) {
         this.spinner.show();
-        this.documentService.upload(this.packageId, documentName, documentType.id, description, date, this.file, link).subscribe(data => {
-          this.spinner.hide();
-          this.errorMess = null;
-          this.closed.emit(true);
-        }, err => {
-          this.errorMess = 'Upload thất bại, xin vui lòng thử lại!';
-          this.spinner.hide();
-        });
+        this.documentService.upload(
+          this.packageId,
+          documentName,
+          documentType.id,
+          description, date,
+          this.file,
+          link,
+          version).subscribe(data => {
+            this.spinner.hide();
+            this.errorMess = null;
+            this.closed.emit(true);
+          }, err => {
+            this.errorMess = 'Upload thất bại, xin vui lòng thử lại!';
+            this.spinner.hide();
+          });
       } else {
         this.errorMess = 'Vui lòng chọn file hoặc đường dẫn link đến file!';
       }

@@ -108,6 +108,19 @@ export class DocumentService {
         });
     }
 
+    bidDocumentType(): Observable<any> {
+        const url = `biddocumenttypes`;
+        return this.apiService.get(url).map(response => {
+            const result = response.result;
+            return result.map(i => {
+                return {
+                    id: i.key,
+                    text: i.value
+                };
+            });
+        });
+    }
+
     readAndGroup(opportunityId: number | string): Observable<BidDocumentGroupModel[]> {
         const url = `bidopportunity/${opportunityId}/biddocuments`;
         return this.apiService.get(url)
@@ -173,7 +186,8 @@ export class DocumentService {
         description: string,
         receivedDate: number,
         file: File,
-        link: string
+        link: string,
+        version: string
     ) {
         const url = `biddocument/upload`;
         const formData = new FormData();
@@ -184,6 +198,7 @@ export class DocumentService {
         formData.append('ReceivedDate', `${moment(receivedDate).unix()}`);
         formData.append('DocumentFile', file);
         formData.append('Url', link);
+        formData.append('Version', version);
         return this.apiService.postFile(url, formData)
             .map(response => response)
             .share();

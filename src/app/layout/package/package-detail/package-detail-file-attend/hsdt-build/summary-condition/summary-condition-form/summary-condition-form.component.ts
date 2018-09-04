@@ -1,5 +1,6 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { PackageService } from '../../../../../../../shared/services/package.service';
+import { TenderConditionSummaryRequest } from '../../../../../../../shared/models/api-request/package/tender-condition-summary-request';
 
 @Component({
   selector: 'app-summary-condition-form',
@@ -8,6 +9,7 @@ import { PackageService } from '../../../../../../../shared/services/package.ser
 })
 export class SummaryConditionFormComponent implements OnInit, OnDestroy {
 
+  static formModel: TenderConditionSummaryRequest = new TenderConditionSummaryRequest();
   constructor(
     private packageService: PackageService
   ) { }
@@ -18,6 +20,10 @@ export class SummaryConditionFormComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     this.packageService.setSummaryConditionForm(false);
+  }
+
+  onSubmit() {
+    console.log(SummaryConditionFormComponent.formModel);
   }
 
 }
