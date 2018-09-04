@@ -380,6 +380,7 @@ export class PackageListComponent implements OnInit, AfterViewChecked {
         this.filterModel.minCost = 0;
         this.filterModel.maxCost = 1000000000000;
         this.someRange = [0, 1000000000000];
+        this.filterModel.sorting = '';
         this.filter(true);
     }
 

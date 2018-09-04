@@ -32,7 +32,8 @@ import { EnterPreventDefaultDirective } from './enter-prevent-default.directive'
         SameWidthDirective,
         InputAreaDirective,
         SquareBoxDirective,
-        TextEllipsisDirective
+        TextEllipsisDirective,
+        EnterPreventDefaultDirective
     ],
     providers: [
         VnCurrencyPipe,
