@@ -614,24 +614,24 @@
                                 {{ item.projectName }}
                             </div>
                         </td>
-                        <td [hidden]="!tenGoithau" class="text-truncate ellipsis">
+                        <td [hidden]="!tenGoithau" class="text-truncate ellipsis" [title]="item.opportunityName">
                             <a [routerLink]="['/package/detail',item.bidOpportunityId]">
                                 {{ item.opportunityName}}
                             </a>
                         </td>
-                        <td [hidden]="!tenKhachHang" class="text-truncate">{{ item.customer?.customerName }}</td>
-                        <td [hidden]="!lienHe" class="text-truncate">{{ item.customerContact?.name }}</td>
-                        <td [hidden]="!vaiTro" class="text-truncate">{{ item.hbcRole?.name }}</td>
-                        <td [hidden]="!chuTri" class="text-truncate">{{ item.chairEmployee?.employeeName }}</td>
-                        <td [hidden]="!loaiKhachHang" class="text-truncate">
+                        <td [hidden]="!tenKhachHang" class="text-truncate" [title]="item.customer?.customerName">{{ item.customer?.customerName }}</td>
+                        <td [hidden]="!lienHe" class="text-truncate" [title]="item.customerContact?.name">{{ item.customerContact?.name }}</td>
+                        <td [hidden]="!vaiTro" class="text-truncate" [title]="item.hbcRole?.name">{{ item.hbcRole?.name }}</td>
+                        <td [hidden]="!chuTri" class="text-truncate" [title]="item.chairEmployee?.employeeName">{{ item.chairEmployee?.employeeName }}</td>
+                        <td [hidden]="!loaiKhachHang" class="text-truncate" [title]="item.classify">
                             <span *ngIf="item && item.classify">
                                 {{ item.classify | translate }}
                             </span>
                         </td>
-                        <td [hidden]="!loaiCongTrinh" class="text-truncate">{{ item.projectType?.value }}</td>
+                        <td [hidden]="!loaiCongTrinh" class="text-truncate" [title]="item.projectType?.value">{{ item.projectType?.value }}</td>
 
-                        <td [hidden]="!tongGiaTri" class="text-truncate text-right">{{ item.amount | vnCurrency }}</td>
-                        <td [hidden]="!quyMo" class="color">{{item.magnitude }}</td>
+                        <td [hidden]="!tongGiaTri" class="text-truncate text-right" [title]="item.amount">{{ item.amount | vnCurrency }}</td>
+                        <td [hidden]="!quyMo" class="color" [title]="item.magnitude">{{item.magnitude }}</td>
                         <td [hidden]="!giaiDoan" class="" style="text-align: center;">
                             <div class="d-flex flex-column p-2">
                                 <div class="center-parent" [class.type-HSMT]="item.stage?.key == 'HSMT'" [class.type-HSDT]="item.stage?.key == 'HSDT'" [class.type-KQDT]="item.stage?.key == 'KQDT'">
@@ -643,25 +643,25 @@
                                 </div>
                             </div>
                         </td>
-                        <td [hidden]="!khuVuc" class="text-truncate">{{item.location.value}}</td>
+                        <td [hidden]="!khuVuc" class="text-truncate" [title]="item.location.value">{{item.location.value}}</td>
                         <!-- <td [hidden]="!congViec" class="text-truncate">{{ item.job }}</td> -->
-                        <td [hidden]="!tienDoThucHien" class="text-truncate text-right">{{ item.progress }} %</td>
-                        <td [hidden]="!linkTaiLieu" class="text-truncate cus-pointer ellipsis">
+                        <td [hidden]="!tienDoThucHien" class="text-truncate text-right" [title]="item.progress">{{ item.progress }} %</td>
+                        <td [hidden]="!linkTaiLieu" class="text-truncate cus-pointer ellipsis" [title]="item.documentLink">
                             <!-- (click)="openLinkDocument(item.documentLink)" -->
                             <!-- <a title="link tài liệu">{{ item.documentLink }}</a> -->
                             <a target="_blank" [href]="item.documentLink | safeUrl">{{ item.documentLink }}</a>
                         </td>
-                        <td [hidden]="!tongThoiGian" class="text-truncate">{{ item.totalTime }}</td>
-                        <td [hidden]="!quy" class="text-truncate">{{ item.quarter?.name }}</td>
-                        <td [hidden]="!donViTuVan" class="text-truncate">{{ item.consultantUnitCustomer?.customerName }}</td>
-                        <td [hidden]="!diaChiDVTV" class="text-truncate">{{ item.consultantAddress }}</td>
-                        <td [hidden]="!soDienThoaiDVTV" class="text-truncate">{{ item.consultantPhone }}</td>
-                        <td [hidden]="!dientichsan" class="text-truncate text-right">{{ item.floorArea | numberArea}}</td>
+                        <td [hidden]="!tongThoiGian" class="text-truncate" [title]="item.totalTime">{{ item.totalTime }}</td>
+                        <td [hidden]="!quy" class="text-truncate" [title]="item.quarter?.name">{{ item.quarter?.name }}</td>
+                        <td [hidden]="!donViTuVan" class="text-truncate" [title]="item.consultantUnitCustomer?.customerName">{{ item.consultantUnitCustomer?.customerName }}</td>
+                        <td [hidden]="!diaChiDVTV" class="text-truncate" [title]="item.consultantAddress">{{ item.consultantAddress }}</td>
+                        <td [hidden]="!soDienThoaiDVTV" class="text-truncate" [title]="item.consultantPhone">{{ item.consultantPhone }}</td>
+                        <td [hidden]="!dientichsan" class="text-truncate text-right" [title]="item.floorArea">{{ item.floorArea | numberArea}}</td>
 
 
-                        <td [hidden]="!lyDoTrungThau" class="text-truncate">{{ item.acceptanceReason }}</td>
-                        <td [hidden]="!lyDoTratThau" class="text-truncate">{{ item.unacceptanceReason }}</td>
-                        <td [hidden]="!lydohuythau" class="text-truncate">{{ item.cancelReason }}</td>
+                        <td [hidden]="!lyDoTrungThau" class="text-truncate" [title]="item.acceptanceReason">{{ item.acceptanceReason }}</td>
+                        <td [hidden]="!lyDoTratThau" class="text-truncate" [title]="item.unacceptanceReason">{{ item.unacceptanceReason }}</td>
+                        <td [hidden]="!lydohuythau" class="text-truncate" [title]="item.cancelReason">{{ item.cancelReason }}</td>
                         <td [hidden]="!ngayBatDau" class="text-truncate">
                             <span *ngIf="item.startTrackingDate">{{ item.startTrackingDate*1000 | date:'dd/MM/yyyy' }}</span>
                         </td>
@@ -677,10 +677,10 @@
                         <td [hidden]="!ngayKetThucDuAn" class="text-truncate">
                             <span *ngIf=" item.projectEstimatedEndDate">{{ item.projectEstimatedEndDate*1000 | date:'dd/MM/yyyy' }}</span>
                         </td>
-                        <td [hidden]="!hangMucCongTrinh" class="text-truncate">{{ item.mainBuildingCategory?.value }}</td>
-                        <td [hidden]="!diaDiem" class="text-truncate">{{ item.place }}</td>
-                        <td [hidden]="!moTa" class="text-truncate">{{ item.description }}</td>
-                        <td [hidden]="!danhGiaDuAn" class="text-truncate">{{ item.evaluation }}</td>
+                        <td [hidden]="!hangMucCongTrinh" class="text-truncate" [title]="item.mainBuildingCategory?.value">{{ item.mainBuildingCategory?.value }}</td>
+                        <td [hidden]="!diaDiem" class="text-truncate" [title]="item.place">{{ item.place }}</td>
+                        <td [hidden]="!moTa" class="text-truncate" [title]="item.description">{{ item.description }}</td>
+                        <td [hidden]="!danhGiaDuAn" class="text-truncate" [title]="item.evaluation">{{ item.evaluation }}</td>
                         <td style="max-width: 100px!important;" type="check-action">
                             <div class="d-flex justify-content-center">
                                 <div>
