@@ -10,8 +10,8 @@ export class NumberAreaPipe implements PipeTransform {
   private CURRENCY_UNIT: string;
   constructor() {
     // TODO comes from configuration settings
-    this.DECIMAL_SEPARATOR = ',';
-    this.THOUSANDS_SEPARATOR = '.';
+    this.DECIMAL_SEPARATOR = '.';
+    this.THOUSANDS_SEPARATOR = ',';
     this.CURRENCY_UNIT = ' m2';
   }
   transform(value: number | string, fractionSize: number = 0): string {
