@@ -99,9 +99,9 @@ export class FullFileComponent implements OnInit {
                 this.bidDocumentGroupListItemSearchResult = response;
                 this.showTable = this.bidDocumentGroupListItemSearchResult.length > 0;
                 this.dtTrigger.next();
-                if (document.getElementsByClassName('dataTables_empty')[0]) {
-                    document.getElementsByClassName('dataTables_empty')[0].remove();
-                }
+                // if (document.getElementsByClassName('dataTables_empty')[0]) {
+                //     document.getElementsByClassName('dataTables_empty')[0].remove();
+                // }
                 this.spinner.hide();
             }, err => this.spinner.hide());
         });
@@ -124,9 +124,9 @@ export class FullFileComponent implements OnInit {
         this.showTable = this.bidDocumentGroupListItemSearchResult.length > 0;
 
         this.dtTrigger.next();
-        if (document.getElementsByClassName('dataTables_empty')[0]) {
-            document.getElementsByClassName('dataTables_empty')[0].remove();
-        }
+        // if (document.getElementsByClassName('dataTables_empty')[0]) {
+        //     document.getElementsByClassName('dataTables_empty')[0].remove();
+        // }
     }
 
     filter() {
@@ -135,9 +135,9 @@ export class FullFileComponent implements OnInit {
         this.showTable = this.bidDocumentGroupListItemSearchResult.length > 0;
 
         this.dtTrigger.next();
-        if (document.getElementsByClassName('dataTables_empty')[0]) {
-            document.getElementsByClassName('dataTables_empty')[0].remove();
-        }
+        // if (document.getElementsByClassName('dataTables_empty')[0]) {
+        //     document.getElementsByClassName('dataTables_empty')[0].remove();
+        // }
     }
 
     clearFilter() {
@@ -149,9 +149,9 @@ export class FullFileComponent implements OnInit {
         this.showTable = this.bidDocumentGroupListItemSearchResult.length > 0;
 
         this.dtTrigger.next();
-        if (document.getElementsByClassName('dataTables_empty')[0]) {
-            document.getElementsByClassName('dataTables_empty')[0].remove();
-        }
+        // if (document.getElementsByClassName('dataTables_empty')[0]) {
+        //     document.getElementsByClassName('dataTables_empty')[0].remove();
+        // }
     }
     uploadHSMT() {
         this.typeFileUpload = {
@@ -229,13 +229,13 @@ export class FullFileComponent implements OnInit {
             this.showTable = this.bidDocumentGroupListItemSearchResult.length > 0;
 
             this.dtTrigger.next();
-            if (document.getElementsByClassName('dataTables_empty')[0]) {
-                document.getElementsByClassName('dataTables_empty')[0].remove();
-            }
-            this.spinner.hide();
-            if (!(this.bidDocumentGroupListItem && this.bidDocumentGroupListItem.length > 1)) {
-                document.getElementsByClassName('dataTables_empty')[0].remove();
-            }
+            // if (document.getElementsByClassName('dataTables_empty')[0]) {
+            //     document.getElementsByClassName('dataTables_empty')[0].remove();
+            // }
+            // this.spinner.hide();
+            // if (!(this.bidDocumentGroupListItem && this.bidDocumentGroupListItem.length > 1)) {
+            //     document.getElementsByClassName('dataTables_empty')[0].remove();
+            // }
         });
     }
 
@@ -248,9 +248,9 @@ export class FullFileComponent implements OnInit {
             this.showTable = this.bidDocumentGroupListItemSearchResult.length > 0;
 
             this.dtTrigger.next();
-            if (document.getElementsByClassName('dataTables_empty')[0]) {
-                document.getElementsByClassName('dataTables_empty')[0].remove();
-            }
+            // if (document.getElementsByClassName('dataTables_empty')[0]) {
+            //     document.getElementsByClassName('dataTables_empty')[0].remove();
+            // }
             this.spinner.hide();
             this.alertService.success('Dữ liệu đã được cập nhật mới nhất!');
         });
@@ -319,9 +319,9 @@ export class FullFileComponent implements OnInit {
                     this.showTable = this.bidDocumentGroupListItemSearchResult.length > 0;
 
                     this.dtTrigger.next();
-                    if (document.getElementsByClassName('dataTables_empty')[0]) {
-                        document.getElementsByClassName('dataTables_empty')[0].remove();
-                    }
+                    // if (document.getElementsByClassName('dataTables_empty')[0]) {
+                    //     document.getElementsByClassName('dataTables_empty')[0].remove();
+                    // }
                     this.spinner.hide();
                     this.alertService.success('Dữ liệu đã được cập nhật mới nhất!');
                 });
@@ -336,9 +336,9 @@ export class FullFileComponent implements OnInit {
                     this.showTable = this.bidDocumentGroupListItemSearchResult.length > 0;
 
                     this.dtTrigger.next();
-                    if (document.getElementsByClassName('dataTables_empty')[0]) {
-                        document.getElementsByClassName('dataTables_empty')[0].remove();
-                    }
+                    // if (document.getElementsByClassName('dataTables_empty')[0]) {
+                    //     document.getElementsByClassName('dataTables_empty')[0].remove();
+                    // }
                     this.spinner.hide();
                     this.alertService.success('Dữ liệu đã được cập nhật mới nhất!');
                 });

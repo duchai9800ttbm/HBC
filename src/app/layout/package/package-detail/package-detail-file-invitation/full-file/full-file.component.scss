@@ -807,3 +807,7 @@ table.dataTable {
 :host(){
     height: 100%;
 }   
+
+:host /deep/ .dataTables_empty {
+    display: none !important;
+}
