@@ -15,13 +15,34 @@ export class SummaryConditionFormConditionContractComponent implements OnInit {
 
   ngOnInit() {
     this.conditionContractForm = this.fb.group({
+      contractType: '',
+      desc: '',
+      contractCondition: this.fb.group({
+        executiveGuaranteePercent: 0,
+        executiveGuaranteeEfficiency: 0,
+        advanceGuaranteePercent: 0,
+        advanceGuaranteeEfficiency: 0,
+        paymentType: '',
+        paymentTime: 0,
+        paymentMaterialOnSite: '',
+        retainedPercent: 0,
+        retainedLimit: 0,
+        retainedPayment: 0,
+        punishhOverduePercent: 0,
+        punishhOverdueLimit: 0,
+        guaranteeDuration: 0,
+        insurranceMachineOfContractor: '',
+        insurrancePersonOfContractor: '',
+        insurranceConstructionAnd3rdPart: '',
       insurances: this.fb.array([])
+      }),
     });
     this.addFormArrayControl('insurances');
   }
 
   addFormArrayControl(name: string) {
-    const formArray = this.conditionContractForm.get(name) as FormArray;
+    const formGroup = this.conditionContractForm.get('contractCondition') as FormGroup;
+    const formArray = formGroup.get(name) as FormArray;
     const formItem = this.fb.group({
       name: '',
       description: ''

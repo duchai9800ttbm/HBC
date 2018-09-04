@@ -7,6 +7,8 @@ import { TenderContractCondition } from '../../package/tender-contract-condition
 import { TenderCondition } from '../../package/tender-condition';
 import { TenderOtherSpecRequirement } from '../../package/tender-other-spec-requirement';
 import { TenderScopeOfWork } from '../../package/tender-scope-of-work';
+import { TenderNonminatedSubContractor } from '../../package/tender-nonminated-sub-contractor';
+import { TenderMaterialToSupplier } from '../../package/tender-material-to-supplier';
 
 export class TenderConditionSummaryRequest {
     bidOpportunityId: number;
@@ -19,12 +21,8 @@ export class TenderConditionSummaryRequest {
     };
     stakeholder: any;
     scopeOfWork: TenderScopeOfWork;
-    nonminatedSubContractor: {
-        workPackages: WorkPackage[];
-    };
-    materialsTobeSuppliedOrAppointedByOwner: {
-        materials: DictionaryItemText[];
-    };
+    nonminatedSubContractor: TenderNonminatedSubContractor;
+    materialsTobeSuppliedOrAppointedByOwner: TenderMaterialToSupplier;
     mainItemOfTenderSubmission: TenderSubmission;
     requestDocument: RequestDocument;
     requestTenderClarification: RequestTenderClarification;

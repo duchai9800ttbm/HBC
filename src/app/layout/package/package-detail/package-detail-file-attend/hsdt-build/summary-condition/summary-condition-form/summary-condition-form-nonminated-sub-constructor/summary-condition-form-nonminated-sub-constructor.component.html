@@ -2,19 +2,19 @@
     <div class="p-3">
         <h5 class="text-uppercase">IV. danh sách các nhà thầu phụ được chỉ định (list of nonminated sub-contractors)</h5>
         <div formArrayName="packageWork">
-            <div *ngFor="let fControl of nonminateForm.get('packageWork').controls; let i = index">
+            <div *ngFor="let fControl of nonminateForm.get('packageWork').controls; let i = index" [formGroupName]="i">
                 <div class="row mt-3">
                     <div class="col-md-3 text-nowrap">{{i + 1}}.<span class="ml-3">Gói công việc {{i + 1}}</span><i class="fa fa-plus-square-o ml-3 pointer"
                             aria-hidden="true" (click)="addFormArrayControl('packageWork')" *ngIf="(i + 1) === nonminateForm.get('packageWork').length"></i></div>
                     <div class="col-md-8">
-                        <input class="form-control" placeholder="Tên gói công việc {{i + 1}}">
+                        <input class="form-control" formControlName="name" placeholder="Tên gói công việc {{i + 1}}">
                     </div>
                     <div class="col-md-1 pl-0" *ngIf="i !== 0"><i (click)="removeFormArrayControl('packageWork', i)" class="fa fa-times-circle pointer" style="color: #c0c0c0; font-size: 1.2rem" aria-hidden="true"></i></div>
                 </div>
                 <div class="row mt-3">
                     <div class="col-md-3"></div>
                     <div class="col-md-8">
-                        <textarea placeholder="Ghi chú thêm về gói công việc hoặc diễn giải chi tiết {{i + 1}}" class="form-control"></textarea>
+                        <textarea formControlName="desc" placeholder="Ghi chú thêm về gói công việc hoặc diễn giải chi tiết {{i + 1}}" class="form-control"></textarea>
                     </div>
                 </div>
                 <div class="row mt-3">
@@ -24,7 +24,7 @@
                             <div class="input-group-prepend">
                               <span class="input-group-text">Thành tiền (nếu có)</span>
                             </div>
-                            <input type="text" class="form-control" placeholder="Số tiền">
+                            <input type="text" formControlName="totalCost" class="form-control" placeholder="Số tiền">
                           </div>
                     </div>
                 </div>
