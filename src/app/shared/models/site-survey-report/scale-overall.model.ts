@@ -1,16 +1,32 @@
+import { Image } from './image';
+
 export class ScaleOverall {
     documentName: string;
     interviewTimes: number;
-    classify: {
-        key: number;
-        value: string;
-    };
+    vanPhong: boolean;
+    khuDanCu: boolean;
+    trungTamThuongMai: boolean;
+    khachSan: boolean;
+    nhaCongNghiep: boolean;
+    toHop: boolean;
+    canHo: boolean;
+    haTang: boolean;
+    mep: boolean;
+    sanBay: boolean;
+    nhaphoBietThu: boolean;
+    truongHoc: boolean;
+    congtrinhMoi: boolean;
+    nangCapCaiTien: boolean;
+    thayDoiBoSung: boolean;
+    thaoDoCaiTien: boolean;
+    khac: string;
     scale: {
-        area: number;
+        areaSite: number;
         totalArea: number;
-        numberOfFloor: number;
+        numberOfFloor: string;
         progess: number;
     };
-    structureInfo: string;
-    specialRequirement: string;
+    hinhAnhPhoiCanh: Image;
+    thongTinVeKetCau: Image;
+    nhungYeuCauDacBiet: Image;
 }

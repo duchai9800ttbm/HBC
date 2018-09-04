@@ -1,11 +1,7 @@
+import { Image } from './image';
+
 export class DescribeOverall {
-    topography: {
-        text: string;
-    };
-    existingbuilding: {
-        text: string;
-    };
-    existingstacale: {
-        text: string;
-    };
+    chiTietDiaHinh: Image;
+    kienTrucHienHuu: Image;
+    yeuCauChuongNgai: Image;
 }

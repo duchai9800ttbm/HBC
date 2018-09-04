@@ -43,9 +43,9 @@ export class HsdtBuildComponent implements OnInit {
     toggleClick() {
         $('.toggle-menu-item').toggleClass('resize');
         // setTimeout( () => ($('.toggle-menu-item').toggleClass('hidden')), 2100);
-        $('.iconN1').toggleClass('iconN01');
-        $('.iconN2').toggleClass('iconN02');
-        $('.iconN3').toggleClass('iconN03');
+        $('.iconN01').toggleClass('iconN1');
+        $('.iconN02').toggleClass('iconN2');
+        $('.iconN03').toggleClass('iconN3');
         console.log('ok');
     }
 

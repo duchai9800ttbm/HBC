@@ -5,7 +5,7 @@ import { HsdtBuildComponent } from './hsdt-build.component';
 import { HsktInvolvedComponent } from './hskt-involved/hskt-involved.component';
 import { SummaryConditionFormComponent } from './summary-condition/summary-condition-form/summary-condition-form.component';
 import { SiteSurveyReportComponent } from './site-survey-report/site-survey-report.component';
-
+import { LiveformSiteReportComponent } from './liveform-site-report/liveform-site-report.component';
 const routes: Routes = [
     {
         path: '',
@@ -20,6 +20,10 @@ const routes: Routes = [
             {
                 path: 'sitereport',
                 loadChildren: './site-survey-report/site-survey-report.module#SiteSurveyReportModule'
+            },
+            {
+                path: 'liveformsite',
+                loadChildren: './liveform-site-report/liveform-site-report.module#LiveformSiteReportModule'
             }
         ]
     }

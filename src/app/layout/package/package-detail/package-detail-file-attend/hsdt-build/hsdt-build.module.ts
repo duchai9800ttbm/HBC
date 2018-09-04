@@ -6,6 +6,7 @@ import { RequirePriceComponent } from './require-price/require-price.component';
 import { HsdtBuildComponent } from './hsdt-build.component';
 import { HsktInvolvedComponent } from './hskt-involved/hskt-involved.component';
 import { SharedModule } from '../../../../../shared/shared.module';
+
 @NgModule({
     imports: [
         CommonModule,
@@ -15,7 +16,7 @@ import { SharedModule } from '../../../../../shared/shared.module';
     declarations: [
         HsdtBuildComponent,
         RequirePriceComponent,
-        HsktInvolvedComponent,
+        HsktInvolvedComponent
     ]
 })
 export class HsdtBuildModule { }
