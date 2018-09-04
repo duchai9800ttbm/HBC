@@ -74,20 +74,25 @@
             </div>
         </div>
         <div id="main-content">
-            <div id="toggle-menu" [class.menu-left]="isShowMenu" style="width: 212px;">
-                <div class="button-click" (click)="toggleClick()">
-                    <div class="iconButton iconN1"></div>
-                    <div class="iconButton iconN2" style="margin: 3px 0;"></div>
-                    <div class="iconButton iconN3"></div>
+            <div id="toggle-menu" [class.menu-left]="isShowMenu" style="width: 237px;">
+                <div class="d-flex">
+                    <div id="toggle-menu-item" *ngIf="majorTypeListItem">
+                        <ng-container *ngFor="let item of majorTypeListItem; let i = index">
+                            <div class="toggle-menu-item" [title]="item.text" [class.active-menu]="(currentMajorTypeId == item.id)" (click)="filterMajorTypeListItem(item.id, item.text)">
+                                <span class="text-truncate">{{item?.text}}</span>
+                            </div>
+                            <div class="line" *ngIf="!(majorTypeListItem.length == i+1)" style="width: calc(100% - 10px); border-top: #ccecf9 solid 1px; height: 1px; border-left: 1px; margin-left: 10px;"></div>
+                        </ng-container>
+                    </div>
+                    <div class="button-click mb-auto" (click)="toggleClick()">
+                        <div class="iconButton iconN1"></div>
+                        <div class="iconButton iconN2" style="margin: 3px 0;"></div>
+                        <div class="iconButton iconN3"></div>
+                    </div>
                 </div>
-                <div id="toggle-menu-item" *ngIf="majorTypeListItem">
-                    <ng-container *ngFor="let item of majorTypeListItem; let i = index">
-                        <div class="toggle-menu-item" [class.active-menu]="(currentMajorTypeId == item.id)" (click)="filterMajorTypeListItem(item.id, item.text)">{{item?.text}}</div>
-                        <div class="line" *ngIf="!(majorTypeListItem.length == i+1)" style="width: calc(100% - 10px); border-top: #ccecf9 solid 1px; height: 1px; border-left: 1px; margin-left: 10px;"></div>
-                    </ng-container>
-                </div>
+
             </div>
-            <div class="bot-table" [class.table-toggle-2]="isShowMenu" style="width: calc(100% - 230px);">
+            <div class="bot-table" [class.table-toggle-2]="isShowMenu" style="width: calc(100% - 245px);">
 
                 <div class="d-flex justify-content-between">
                     <div>

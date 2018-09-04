@@ -20,7 +20,7 @@ input.icon {
 
 .bot-table {
     padding-bottom: 20px;
-    margin-top: 55px;
+    margin-top: 15px;
     margin-left: 20px;
 }
 
@@ -511,7 +511,7 @@ table.dataTable th {
         // box-shadow: ;
         display: flex;
         flex-direction: column;
-        padding-top: 30px;
+        padding-top: 15px;
 
         #toggle-menu-item {
             -webkit-box-shadow: 6px 7px 48px -4px rgba(229, 245, 252, 0.44);
@@ -581,6 +581,7 @@ table.dataTable th {
         }
 
         .button-click {
+            margin-top: 1px;
             cursor: pointer;
             display: flex;
             flex-direction: column;
