@@ -21,16 +21,38 @@ export class SummaryConditionFormScopeWorkComponent implements OnInit {
       scopeInclude: this.fb.array([]),
       scopeNotInclude: this.fb.array([])
     });
-    this.addFormArrayControl('scopeInclude');
-    this.addFormArrayControl('scopeNotInclude');
+    this.initFormData();
     this.scopeWorkForm.valueChanges.subscribe(data => this.mappingToLiveFormData(data));
   }
 
-  addFormArrayControl(name: string) {
+  initFormData() {
+    if (SummaryConditionFormComponent.formModel.scopeOfWork) {
+      const data = SummaryConditionFormComponent.formModel.scopeOfWork;
+      if (data.includedWorks.length > 0) {
+        data.includedWorks.forEach(e => {
+          this.addFormArrayControl('scopeInclude', e);
+        });
+      } else {
+        this.addFormArrayControl('scopeInclude');
+      }
+      if (data.nonIncludedWorks.length > 0) {
+        data.nonIncludedWorks.forEach(e => {
+          this.addFormArrayControl('scopeNotInclude', e);
+        });
+      } else {
+        this.addFormArrayControl('scopeNotInclude');
+      }
+    } else {
+      this.addFormArrayControl('scopeInclude');
+      this.addFormArrayControl('scopeNotInclude');
+    }
+  }
+
+  addFormArrayControl(name: string, data?: DictionaryItemText) {
     const formArray = this.scopeWorkForm.get(name) as FormArray;
     const formItem = this.fb.group({
-      name: '',
-      desc: ''
+      name: data ? data.name : '',
+      desc: data ? data.desc : ''
     });
     formArray.push(formItem);
   }
