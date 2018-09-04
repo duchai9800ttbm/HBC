@@ -14,47 +14,7 @@
                 </div>
             </div>
             <div class="search">
-                <div class="btn-toolbar mt-2 mb-2">
-                    <div class="input-group">
-                        <span class="input-group-addon">Tìm kiếm theo</span>
-                        <input type="text" class="form-control icon" placeholder="&#xf002; Tên tài liệu" (keyup)="search($event.target.value)">
-                    </div>
-                    <!-- <button class="btn btn-primary ml-1">
-                        Tải xuống tài liệu
-                    </button> -->
-                    <div *ngIf="currentMajorTypeId == 1" class="btn-group ml-1" ngbDropdown>
-                            <button type="button" class="btn btn-primary" ngbDropdownToggle data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                Upload HSMT
-                            </button>
-                            <div class="dropdown-menu" ngbDropdownMenu>
-                                <div class="fileUpload dropdown-item" (click)="openPopupUploadFile('2')">
-                                    <a>Quyển HSMT</a>
-                                </div>
-                                <div class="dropdown-divider"></div>
-                                <div class="fileUpload dropdown-item" (click)="openPopupUploadFile('3')">
-                                    <a>Bản vẽ thuyết minh</a>
-                                </div>
-                                <div class="dropdown-divider"></div>
-                                <div class="fileUpload dropdown-item" (click)="openPopupUploadFile('4')">
-                                    <a>BOQ</a>
-                                </div>
-                                <div class="dropdown-divider"></div>
-                                <div class="fileUpload dropdown-item" (click)="openPopupUploadFile('5')">
-                                    <a>Tiêu chí kỹ thuật (Specs)</a>
-                                </div>
-                                <div class="dropdown-divider"></div>
-                                <div class="fileUpload dropdown-item" (click)="openPopupUploadFile('6')">
-                                    <a>Các báo cáo và các tài liệu kỹ thuật (KSDQ)</a>
-                                </div>
-                            </div>
-                        </div>
-                        <button *ngIf="currentMajorTypeId != 1" class="btn btn-primary ml-1" (click)="uploadHSMT()">
-                            Upload HSMT
-                        </button>
-                    <button class="btn btn-primary ml-1" (click)="refresh(true)">
-                        <i class="fa fa-refresh" aria-hidden="true"></i>
-                    </button>
-                </div>
+             
             </div>
         </div>
         <div id="main-content">
@@ -73,6 +33,47 @@
             </div>
             <div class="bot-table" [class.table-toggle-2]="isShowMenu" style="width: calc(100% - 230px);">
                 <h5 class="text-uppercase">{{titleStr}}</h5>
+                <div class="btn-toolbar mt-2 mb-2 d-flex justify-content-end ml-1">
+                        <div class="input-group">
+                            <span class="input-group-addon">Tìm kiếm theo</span>
+                            <input type="text" class="form-control icon" placeholder="&#xf002; Tên tài liệu" (keyup)="search($event.target.value)">
+                        </div>
+                        <!-- <button class="btn btn-primary ml-1">
+                            Tải xuống tài liệu
+                        </button> -->
+                        <div *ngIf="currentMajorTypeId == 1" class="btn-group ml-1" ngbDropdown>
+                                <button type="button" class="btn btn-primary" ngbDropdownToggle data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    Upload HSMT
+                                </button>
+                                <div class="dropdown-menu" ngbDropdownMenu>
+                                    <div class="fileUpload dropdown-item" (click)="openPopupUploadFile('2')">
+                                        <a>Quyển HSMT</a>
+                                    </div>
+                                    <div class="dropdown-divider"></div>
+                                    <div class="fileUpload dropdown-item" (click)="openPopupUploadFile('3')">
+                                        <a>Bản vẽ thuyết minh</a>
+                                    </div>
+                                    <div class="dropdown-divider"></div>
+                                    <div class="fileUpload dropdown-item" (click)="openPopupUploadFile('4')">
+                                        <a>BOQ</a>
+                                    </div>
+                                    <div class="dropdown-divider"></div>
+                                    <div class="fileUpload dropdown-item" (click)="openPopupUploadFile('5')">
+                                        <a>Tiêu chí kỹ thuật (Specs)</a>
+                                    </div>
+                                    <div class="dropdown-divider"></div>
+                                    <div class="fileUpload dropdown-item" (click)="openPopupUploadFile('6')">
+                                        <a>Các báo cáo và các tài liệu kỹ thuật (KSDQ)</a>
+                                    </div>
+                                </div>
+                            </div>
+                            <button *ngIf="currentMajorTypeId != 1" class="btn btn-primary ml-1" (click)="uploadHSMT()">
+                                Upload HSMT
+                            </button>
+                        <button class="btn btn-primary ml-1" (click)="refresh(true)">
+                            <i class="fa fa-refresh" aria-hidden="true"></i>
+                        </button>
+                    </div>
                 <div class="d-flex flex-row flex-wrap filter-bar custom-filter-bar" style="background-color: #fafbfc">
                     <div class="d-flex form-inline ">
                         <div class="form-group ml-sm-2 p-1">
