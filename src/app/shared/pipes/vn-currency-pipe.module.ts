@@ -11,8 +11,8 @@ export class VnCurrencyPipe implements PipeTransform {
 
   constructor() {
     // TODO comes from configuration settings
-    this.DECIMAL_SEPARATOR = ',';
-    this.THOUSANDS_SEPARATOR = '.';
+    this.DECIMAL_SEPARATOR = '.';
+    this.THOUSANDS_SEPARATOR = ',';
     this.CURRENCY_UNIT = ' đ';
   }
 

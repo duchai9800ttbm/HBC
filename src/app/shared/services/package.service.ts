@@ -52,7 +52,7 @@ export class PackageService {
     private static toPackageListItem(result: any): PackageListItem {
         return {
             bidOpportunityId: result.bidOpportunityId,
-            classify: result.classify,
+            classify: result.classify ?  result.classify.value : '',
             amount: result.amount,
             opportunityName: result.opportunityName,
             projectName: result.projectName,
