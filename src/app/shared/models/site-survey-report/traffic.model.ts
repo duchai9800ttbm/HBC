@@ -1,24 +1,14 @@
+import { Image } from './image';
+
 export class Traffic {
-    topography: {
-        disadvantage: {
-            text: string;
-        };
-        advantage: {
-            text: string;
-        }
+    chiTietDiaHinh: {
+        khoKhan: Image;
+        thuanLoi: Image;
     };
-    siteentrance: {
-        direction: {
-            text: string;
-        };
-        existingroad: {
-            text: string;
-        };
-        temproad: {
-            text: string;
-        };
-        tempfence: {
-            text: string;
-        }
+    loiVaoCongTrinh: {
+        huongVao: Image;
+        duongHienCo: Image;
+        yeuCauDuongTam: Image;
+        yeuCauHangRao: Image;
     };
 }

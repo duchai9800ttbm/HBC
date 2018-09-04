@@ -2,7 +2,6 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 import { LiveformSiteReportRoutingModule } from './liveform-site-report-routing.module';
-import { EditComponent } from './edit/edit.component';
 import { LiveformSiteReportComponent } from './liveform-site-report.component';
 
 @NgModule({
@@ -11,8 +10,7 @@ import { LiveformSiteReportComponent } from './liveform-site-report.component';
     LiveformSiteReportRoutingModule
   ],
   declarations: [
-    LiveformSiteReportComponent,
-    EditComponent
+    LiveformSiteReportComponent
   ]
 })
 export class LiveformSiteReportModule { }

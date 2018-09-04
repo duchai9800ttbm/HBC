@@ -1,8 +1,6 @@
+import { Image } from './image';
+
 export class SoilCondition {
-    existingfooting: {
-        text: string;
-    };
-    investigation: {
-        text: string;
-    };
+    nenMongHienCo: Image;
+    thongTinCongTrinhGanDo: Image;
 }

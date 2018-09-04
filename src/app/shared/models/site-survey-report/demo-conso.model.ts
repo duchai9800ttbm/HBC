@@ -1,11 +1,7 @@
+import { Image } from './image';
+
 export class DemoConso {
-    demobilisation: {
-        text: string;
-    };
-    consolidation: {
-        text: string;
-    };
-    adjacent: {
-        text: string;
-    };
+    phaVoKetCau: Image;
+    giaCoKetCau: Image;
+    dieuKien: Image;
 }

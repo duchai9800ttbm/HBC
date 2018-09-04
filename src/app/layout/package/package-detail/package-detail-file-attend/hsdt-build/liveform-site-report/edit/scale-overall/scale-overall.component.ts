@@ -1,15 +1,13 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
-// import { LiveformDataReportService } from '../../../../../../../shared/services/liveform-data-report.service';
-import { Router } from '@angular/router';
+import { Component, OnInit } from '@angular/core';
 import { ScaleOverall } from '../../../../../../../../shared/models/site-survey-report/scale-overall.model';
-// import { ScaleOverall } from '../../../../../../../shared/models/site-survey-report/scale-overall.model';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-scale-overall',
   templateUrl: './scale-overall.component.html',
   styleUrls: ['./scale-overall.component.scss']
 })
-export class ScaleOverallComponent implements OnInit, OnDestroy {
+export class ScaleOverallComponent implements OnInit {
   siteArea;
   totalBuildArea;
   floorNumbers;
@@ -21,7 +19,6 @@ export class ScaleOverallComponent implements OnInit, OnDestroy {
   url;
   scaleModel: ScaleOverall;
   constructor(
-    // private liveformDataReportService: LiveformDataReportService,
     private router: Router
   ) { }
 
@@ -66,10 +63,6 @@ export class ScaleOverallComponent implements OnInit, OnDestroy {
       thongTinVeKetCau: null,
       nhungYeuCauDacBiet: null
     };
-  }
-
-  ngOnDestroy() {
-    // this.liveformDataReportService.saveData(this.scaleModel);
   }
 
   uploadPerspectiveImage(event) {
@@ -123,10 +116,4 @@ export class ScaleOverallComponent implements OnInit, OnDestroy {
       console.log(x);
     };
   }
-
-  // readValue(event) {
-  //   this.siteArea = event.target.value;
-  //   const x = this.siteArea;
-  //   if (x) { this.liveformDataReportService.saveData(x); }
-  // }
 }

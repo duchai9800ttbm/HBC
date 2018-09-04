@@ -1,0 +1,59 @@
+<div class="detailInfo">
+  <div id="step5" class="stepInfo">
+      <h5 class="bigTitle">6.&nbsp;điều kiện về đất nền hiện hữu (có thể thấy được)/ existing soil condition
+          (seeable)</h5>
+      <div>
+          <div class="detailEachTitle">
+              <h6 class="smallTitle">6.1 Nền móng hiện có hoặc công trình lân cận/ Existing footing (or adjacent
+                  building if seeable))</h6>
+              <div class="mainDetail">
+                  <div class="textdesInput">
+                      <input type="text" placeholder="TEXT">
+                  </div>
+                  <div>
+                      <div id="imageDemoImg">
+                          <input type="file" style="display:none" #inputclick0 (change)="uploadFootingImage($event)">
+
+                          <div class="displayImg" *ngFor="let url of footingImageUrls">
+                              <img [src]="url">
+                              <div class="toppp" (click)="deleteImg0()">
+                                  <i class="fa fa-times deleteIco" aria-hidden="true"></i>
+                              </div>
+                          </div>
+                          <div class="perspectiveImage" (click)="inputclick0.click()">
+                              <i class="fa fa-plus" aria-hidden="true"></i>
+                              <p>Image</p>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+          </div>
+          <div class="detailEachTitle">
+              <h6 class="smallTitle">6.2 Địa tầng lớp đất (trong trường hợp Design và Build)/ Soil investigation (in
+                  case Design and Build))</h6>
+              <div class="mainDetail">
+                  <div class="listDetail">
+                      <div class="labelstep1" style="margin-bottom: 15px;">
+                          <label for="">Thông tin công trình gần đó/ Soil investigation of similar project</label>
+                          <input type="text">
+                      </div>
+                      <div id="imageDemoImg">
+                          <input type="file" style="display:none" #inputclick1 (change)="uploadInvestigationImage($event)">
+
+                          <div class="displayImg" *ngFor="let url of investigationImageUrls">
+                              <img [src]="url">
+                              <div class="toppp" (click)="deleteImg1()">
+                                  <i class="fa fa-times deleteIco" aria-hidden="true"></i>
+                              </div>
+                          </div>
+                          <div class="perspectiveImage" (click)="inputclick1.click()">
+                              <i class="fa fa-plus" aria-hidden="true"></i>
+                              <p>Image</p>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+          </div>
+      </div>
+  </div>
+</div>
