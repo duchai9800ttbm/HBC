@@ -232,7 +232,7 @@ export class PackageListComponent implements OnInit, AfterViewChecked {
         //     }, err => {
         //         this.spinner.hide();
         //     });
-        this.filter(false);
+        // this.filter(false);
         this.layoutService.watchLayoutSubject().subscribe(data => {
             if (data) {
                 this.isToggle = true;
@@ -240,9 +240,7 @@ export class PackageListComponent implements OnInit, AfterViewChecked {
                 this.isToggle = false;
             }
         });
-        this.searchTerm$.subscribe(data => {
-        });
-
+   
         this.searchTerm$.debounceTime(600)
         .distinctUntilChanged()
         .subscribe(term => {
