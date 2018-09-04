@@ -150,37 +150,36 @@
                                 <span class="custom-control-indicator"></span>
                             </label>
                         </th>
-                        <th [hidden]="!maDuAn" [title]="'Mã dự án'">
-
+                        <th [hidden]="!maDuAn" (click)="orderByField('BidOpportunityNo')">
                             <div class="d-flex justify-content-start">
                                 <div style="margin-right: 10px" textEllipsis>Mã dự án</div>
                                 <div class="center-parent">
                                     <div>
-                                        <i class="fa fa-caret-down" style="color: #ffff;"></i>
+                                        <!-- <i class="fa fa-caret-down" style="color: #ffff;"></i> -->
+                                        <i *ngIf="filterModel.sorting == 'BidOpportunityNoAsc'" class="fa fa-caret-down" style="color: #ffff;"></i>
+                                        <i *ngIf="filterModel.sorting == 'BidOpportunityNoDesc'" class="fa fa-caret-up" style="color: #ffff;"></i>
                                     </div>
                                 </div>
                             </div>
                         </th>
                         <th [hidden]="!tenDuAn" (click)="orderByField('ProjectName')" [title]="'Tên dự án'">
-
                             <div class="d-flex justify-content-start">
                                 <div style="margin-right: 10px" textEllipsis>Tên dự án</div>
                                 <div class="center-parent">
                                     <div>
-                                        <i *ngIf="filterModel.sorting == 'ProjectNameAsc'" class="fa fa-caret-up" style="color: #ffff;"></i>
-                                        <i *ngIf="filterModel.sorting == 'ProjectNameDesc'" class="fa fa-caret-down" style="color: #ffff;"></i>
+                                        <i *ngIf="filterModel.sorting == 'ProjectNameAsc'" class="fa fa-caret-down" style="color: #ffff;"></i>
+                                        <i *ngIf="filterModel.sorting == 'ProjectNameDesc'" class="fa fa-caret-up" style="color: #ffff;"></i>
                                     </div>
                                 </div>
                             </div>
                         </th>
                         <th [hidden]="!tenGoithau" (click)="orderByField('BidOpportunity')" [title]="'Gói thầu'">
-
                             <div class="d-flex justify-content-start">
                                 <div style="margin-right: 10px" textEllipsis>Gói thầu</div>
                                 <div class="center-parent">
                                     <div>
-                                        <i *ngIf="filterModel.sorting == 'BidOpportunityAsc'" class="fa fa-caret-up" style="color: #ffff;"></i>
-                                        <i *ngIf="filterModel.sorting == 'BidOpportunityDesc'" class="fa fa-caret-down" style="color: #ffff;"></i>
+                                        <i *ngIf="filterModel.sorting == 'BidOpportunityAsc'" class="fa fa-caret-down" style="color: #ffff;"></i>
+                                        <i *ngIf="filterModel.sorting == 'BidOpportunityDesc'" class="fa fa-caret-up" style="color: #ffff;"></i>
                                     </div>
                                 </div>
                             </div>
@@ -191,6 +190,7 @@
                                 <div class="center-parent">
                                     <div>
                                         <i class="fa fa-caret-down" style="color: #ffff;"></i>
+
                                     </div>
                                 </div>
                             </div>
@@ -205,12 +205,13 @@
                                 </div>
                             </div>
                         </th>
-                        <th [hidden]="!vaiTro" [title]="'Vai trò'">
+                        <th [hidden]="!vaiTro" (click)="orderByField('HBCRole')" [title]="'Vai trò'">
                             <div class="d-flex justify-content-start">
                                 <div style="margin-right: 10px" textEllipsis>Vai trò</div>
                                 <div class="center-parent">
                                     <div>
-                                        <i class="fa fa-caret-down" style="color: #ffff;"></i>
+                                        <i *ngIf="filterModel.sorting == 'HBCRoleAsc'" class="fa fa-caret-down" style="color: #ffff;"></i>
+                                        <i *ngIf="filterModel.sorting == 'HBCRoleDesc'" class="fa fa-caret-up" style="color: #ffff;"></i>
                                     </div>
                                 </div>
                             </div>
@@ -220,18 +221,20 @@
                                 <div style="margin-right: 10px" textEllipsis>Chủ trì</div>
                                 <div class="center-parent">
                                     <div>
-                                        <i *ngIf="filterModel.sorting == 'ChairEmployeeNameAsc'" class="fa fa-caret-up" style="color: #ffff;"></i>
-                                        <i *ngIf="filterModel.sorting == 'ChairEmployeeNameDesc'" class="fa fa-caret-down" style="color: #ffff;"></i>
+                                        <i *ngIf="filterModel.sorting == 'ChairEmployeeNameAsc'" class="fa fa-caret-down" style="color: #ffff;"></i>
+                                        <i *ngIf="filterModel.sorting == 'ChairEmployeeNameDesc'" class="fa fa-caret-up" style="color: #ffff;"></i>
                                     </div>
                                 </div>
                             </div>
                         </th>
-                        <th [hidden]="!loaiKhachHang" [title]="'Loại khách hàng'">
+                        <th [hidden]="!loaiKhachHang" (click)="orderByField('OpportunityClassify')" [title]="'Loại khách hàng'">
                             <div class="d-flex justify-content-start">
                                 <div style="margin-right: 10px" textEllipsis>Loại khách hàng</div>
                                 <div class="center-parent">
                                     <div>
-                                        <i class="fa fa-caret-down" style="color: #ffff;"></i>
+                                        <!-- <i class="fa fa-caret-down" style="color: #ffff;"></i> -->
+                                        <i *ngIf="filterModel.sorting == 'OpportunityClassifyAsc'" class="fa fa-caret-down" style="color: #ffff;"></i>
+                                        <i *ngIf="filterModel.sorting == 'OpportunityClassifyDesc'" class="fa fa-caret-up" style="color: #ffff;"></i>
                                     </div>
                                 </div>
                             </div>
@@ -246,50 +249,56 @@
                                 </div>
                             </div>
                         </th>
-                        <th [hidden]="!tongGiaTri" [title]="'Tổng giá trị'">
+                        <th [hidden]="!tongGiaTri" (click)="orderByField('Amount')" [title]="'Tổng giá trị'">
                             <div class="d-flex justify-content-center">
                                 <div style="margin-right: 10px" class="text-center">
                                     <div class="d-flex justify-content-center">
-
                                         <div class="center-parent">
                                             <div textEllipsis>Tổng giá trị</div>
                                         </div>
-
                                     </div>
                                 </div>
                                 <div class="center-parent">
                                     <div>
-                                        <i class="fa fa-caret-down" style="color: #ffff;"></i>
+                                        <!-- <i class="fa fa-caret-down" style="color: #ffff;"></i> -->
+                                        <i *ngIf="filterModel.sorting == 'AmountAsc'" class="fa fa-caret-down" style="color: #ffff;"></i>
+                                        <i *ngIf="filterModel.sorting == 'AmountDesc'" class="fa fa-caret-up" style="color: #ffff;"></i>
                                     </div>
                                 </div>
                             </div>
                         </th>
-                        <th [hidden]="!quyMo" [title]="'Quy mô'">
+                        <th [hidden]="!quyMo" (click)="orderByField('Magnitude')" [title]="'Quy mô'">
                             <div class="d-flex justify-content-start">
                                 <div style="margin-right: 10px" textEllipsis>Quy mô</div>
                                 <div class="center-parent">
                                     <div>
-                                        <i class="fa fa-caret-down" style="color: #ffff;"></i>
+                                        <!-- <i class="fa fa-caret-down" style="color: #ffff;"></i> -->
+                                        <i *ngIf="filterModel.sorting == 'MagnitudeAsc'" class="fa fa-caret-down" style="color: #ffff;"></i>
+                                        <i *ngIf="filterModel.sorting == 'MagnitudeDesc'" class="fa fa-caret-up" style="color: #ffff;"></i>
                                     </div>
                                 </div>
                             </div>
                         </th>
-                        <th [hidden]="!giaiDoan" class="text-center" class="HSMT" [title]="'Giai đoạn'">
+                        <th [hidden]="!giaiDoan" class="text-center" class="HSMT" (click)="orderByField('Stage')" [title]="'Giai đoạn'">
                             <div class="d-flex justify-content-center">
                                 <div style="margin-right: 10px" textEllipsis> Giai đoạn</div>
                                 <div class="center-parent">
                                     <div>
-                                        <i class="fa fa-caret-down" style="color: #ffff;"></i>
+                                        <!-- <i class="fa fa-caret-down" style="color: #ffff;"></i> -->
+                                        <i *ngIf="filterModel.sorting == 'StageAsc'" class="fa fa-caret-down" style="color: #ffff;"></i>
+                                        <i *ngIf="filterModel.sorting == 'StageDesc'" class="fa fa-caret-up" style="color: #ffff;"></i>
                                     </div>
                                 </div>
                             </div>
                         </th>
-                        <th [hidden]="!khuVuc" [title]="'Khu vực'">
+                        <th [hidden]="!khuVuc" (click)="orderByField('Location')" [title]="'Khu vực'">
                             <div class="d-flex justify-content-start">
                                 <div style="margin-right: 10px" textEllipsis>Khu vực</div>
                                 <div class="center-parent">
                                     <div>
-                                        <i class="fa fa-caret-down" style="color: #ffff;"></i>
+                                        <!-- <i class="fa fa-caret-down" style="color: #ffff;"></i> -->
+                                        <i *ngIf="filterModel.sorting == 'LocationAsc'" class="fa fa-caret-down" style="color: #ffff;"></i>
+                                        <i *ngIf="filterModel.sorting == 'LocationDesc'" class="fa fa-caret-up" style="color: #ffff;"></i>
                                     </div>
                                 </div>
                             </div>
@@ -334,75 +343,86 @@
                                 </div>
                             </div>
                         </th>
-                        <th [hidden]="!quy" [title]="'Quý'">
+                        <th [hidden]="!quy" (click)="orderByField('Quarter')" [title]="'Quý'">
                             <div class="d-flex justify-content-start">
                                 <div style="margin-right: 10px">Quý</div>
                                 <div class="center-parent">
                                     <div>
-                                        <i class="fa fa-caret-down" style="color: #ffff;"></i>
+                                        <!-- <i class="fa fa-caret-down" style="color: #ffff;"></i> -->
+                                        <i *ngIf="filterModel.sorting == 'QuarterAsc'" class="fa fa-caret-down" style="color: #ffff;"></i>
+                                        <i *ngIf="filterModel.sorting == 'QuarterDesc'" class="fa fa-caret-up" style="color: #ffff;"></i>
                                     </div>
                                 </div>
                             </div>
                         </th>
-                        <th [hidden]="!donViTuVan" [title]="'Đơn vị tư vấn'">
+                        <th [hidden]="!donViTuVan" (click)="orderByField('ConsultantUnit')" [title]="'Đơn vị tư vấn'">
                             <div class="d-flex justify-content-start">
                                 <div style="margin-right: 10px" textEllipsis>Đơn vị tư vấn</div>
                                 <div class="center-parent">
                                     <div>
-                                        <i class="fa fa-caret-down" style="color: #ffff;"></i>
+                                        <!-- <i class="fa fa-caret-down" style="color: #ffff;"></i> -->
+                                        <i *ngIf="filterModel.sorting == 'ConsultantUnitAsc'" class="fa fa-caret-down" style="color: #ffff;"></i>
+                                        <i *ngIf="filterModel.sorting == 'ConsultantUnitDesc'" class="fa fa-caret-up" style="color: #ffff;"></i>
                                     </div>
                                 </div>
                             </div>
                         </th>
-                        <th [hidden]="!diaChiDVTV" [title]="'Địa chỉ ĐVTV'">
+                        <th [hidden]="!diaChiDVTV" (click)="orderByField('ConsultantAddress')" [title]="'Địa chỉ ĐVTV'">
                             <div class="d-flex justify-content-start">
                                 <div style="margin-right: 10px" textEllipsis>Địa chỉ ĐVTV</div>
                                 <div class="center-parent">
                                     <div>
-                                        <i class="fa fa-caret-down" style="color: #ffff;"></i>
+                                        <!-- <i class="fa fa-caret-down" style="color: #ffff;"></i> -->
+                                        <i *ngIf="filterModel.sorting == 'ConsultantAddressAsc'" class="fa fa-caret-down" style="color: #ffff;"></i>
+                                        <i *ngIf="filterModel.sorting == 'ConsultantAddressDesc'" class="fa fa-caret-up" style="color: #ffff;"></i>
                                     </div>
                                 </div>
                             </div>
                         </th>
-                        <th [hidden]="!soDienThoaiDVTV" [title]="'Số điện thoại ĐVTV'">
+                        <th [hidden]="!soDienThoaiDVTV" (click)="orderByField('ConsultantPhone')" [title]="'Số điện thoại ĐVTV'">
                             <div class="d-flex justify-content-start">
                                 <div style="margin-right: 10px" textEllipsis>Số điện thoại ĐVTV</div>
                                 <div class="center-parent">
                                     <div>
-                                        <i class="fa fa-caret-down" style="color: #ffff;"></i>
+                                        <!-- <i class="fa fa-caret-down" style="color: #ffff;"></i> -->
+                                        <i *ngIf="filterModel.sorting == 'ConsultantPhoneAsc'" class="fa fa-caret-down" style="color: #ffff;"></i>
+                                        <i *ngIf="filterModel.sorting == 'ConsultantPhoneDesc'" class="fa fa-caret-up" style="color: #ffff;"></i>
                                     </div>
                                 </div>
                             </div>
                         </th>
-
-                        <th [hidden]="!dientichsan" [title]="'Diện tích sàn (m2)'">
+                        <th [hidden]="!dientichsan" (click)="orderByField('FloorArea')" [title]="'Diện tích sàn (m2)'">
                             <div class="d-flex justify-content-start">
                                 <div style="margin-right: 10px" textEllipsis>Diện tích sàn (m2)</div>
                                 <div class="center-parent">
                                     <div>
-                                        <i class="fa fa-caret-down" style="color: #ffff;"></i>
+                                        <!-- <i class="fa fa-caret-down" style="color: #ffff;"></i> -->
+                                        <i *ngIf="filterModel.sorting == 'FloorAreaAsc'" class="fa fa-caret-down" style="color: #ffff;"></i>
+                                        <i *ngIf="filterModel.sorting == 'FloorAreaDesc'" class="fa fa-caret-up" style="color: #ffff;"></i>
                                     </div>
                                 </div>
                             </div>
                         </th>
-
-
-                        <th [hidden]="!lyDoTrungThau" [title]="'Lý do trúng thầu'">
+                        <th [hidden]="!lyDoTrungThau" (click)="orderByField('AcceptanceReason')" [title]="'Lý do trúng thầu'">
                             <div class="d-flex justify-content-start">
                                 <div style="margin-right: 10px" textEllipsis>Lý do trúng thầu</div>
                                 <div class="center-parent">
                                     <div>
-                                        <i class="fa fa-caret-down" style="color: #ffff;"></i>
+                                        <!-- <i class="fa fa-caret-down" style="color: #ffff;"></i> -->
+                                        <i *ngIf="filterModel.sorting == 'AcceptanceReasonAsc'" class="fa fa-caret-down" style="color: #ffff;"></i>
+                                        <i *ngIf="filterModel.sorting == 'AcceptanceReasonDesc'" class="fa fa-caret-up" style="color: #ffff;"></i>
                                     </div>
                                 </div>
                             </div>
                         </th>
-                        <th [hidden]="!lyDoTratThau" [title]="'Lý do trật thầu'">
+                        <th [hidden]="!lyDoTratThau" (click)="orderByField('UnacceptanceReason')" [title]="'Lý do trật thầu'">
                             <div class="d-flex justify-content-start">
                                 <div style="margin-right: 10px" textEllipsis>Lý do trật thầu</div>
                                 <div class="center-parent">
                                     <div>
-                                        <i class="fa fa-caret-down" style="color: #ffff;"></i>
+                                        <!-- <i class="fa fa-caret-down" style="color: #ffff;"></i> -->
+                                        <i *ngIf="filterModel.sorting == 'UnacceptanceReasonAsc'" class="fa fa-caret-down" style="color: #ffff;"></i>
+                                        <i *ngIf="filterModel.sorting == 'UnacceptanceReasonDesc'" class="fa fa-caret-up" style="color: #ffff;"></i>
                                     </div>
                                 </div>
                             </div>
@@ -557,7 +577,7 @@
                         </td>
                         <td [hidden]="!khuVuc" class="text-truncate">{{item.location.value}}</td>
                         <!-- <td [hidden]="!congViec" class="text-truncate">{{ item.job }}</td> -->
-                        <td [hidden]="!tienDoThucHien" class="text-truncate text-right">{{ item.progress }} (%)</td>
+                        <td [hidden]="!tienDoThucHien" class="text-truncate text-right">{{ item.progress }} %</td>
                         <td [hidden]="!linkTaiLieu" class="text-truncate cus-pointer ellipsis">
                             <!-- (click)="openLinkDocument(item.documentLink)" -->
                             <!-- <a title="link tài liệu">{{ item.documentLink }}</a> -->

@@ -76,28 +76,8 @@ export class PackageListComponent implements OnInit, AfterViewChecked {
     userModel: UserModel;
     listPrivileges = [];
     isToggle = false;
-
-    constructor(
-        private activityService: ActivityService,
-        private alertService: AlertService,
-        private dataService: DataService,
-        private confirmationService: ConfirmationService,
-        private router: Router,
-        private excelService: ExcelService,
-        private translateService: TranslateService,
-        private downloadTemplate: DownloadTemplateService,
-        private fb: FormBuilder,
-        private spinner: NgxSpinnerService,
-        private packageService: PackageService,
-        private userService: UserService,
-        private sessionService: SessionService,
-        private layoutService: LayoutService,
-        private cdRef: ChangeDetectorRef,
-        private zone: NgZone,
-        config: NgbDropdownConfig
-    ) {
-        config.autoClose = false;
-    }
+    searchTerm$ = new BehaviorSubject<string>('');
+    listPackage = [];
     someRange = [0, 1000000000000];
     someKeyboardConfig: any = {
         behaviour: 'drag',
@@ -128,12 +108,6 @@ export class PackageListComponent implements OnInit, AfterViewChecked {
         //     },
         // }
     };
-    searchTerm$ = new BehaviorSubject<string>('');
-    listPackage = [];
-    get getUserId() {
-        return this.sessionService.currentUser.userId;
-
-    }
     tenDuAn = false; // ok
     maDuAn = false; // ok
     tenGoithau = false; // ok
@@ -173,21 +147,34 @@ export class PackageListComponent implements OnInit, AfterViewChecked {
     phanloai = false;
     dientichsan = false;
     lydohuythau = false;
-
     orderBy = '';
     currentSort = '';
-
     isShowPopup = false;
+    constructor(
+        private activityService: ActivityService,
+        private alertService: AlertService,
+        private dataService: DataService,
+        private confirmationService: ConfirmationService,
+        private router: Router,
+        private excelService: ExcelService,
+        private translateService: TranslateService,
+        private downloadTemplate: DownloadTemplateService,
+        private fb: FormBuilder,
+        private spinner: NgxSpinnerService,
+        private packageService: PackageService,
+        private userService: UserService,
+        private sessionService: SessionService,
+        private layoutService: LayoutService,
+        private cdRef: ChangeDetectorRef,
+        private zone: NgZone,
+        config: NgbDropdownConfig
+    ) {
+        config.autoClose = false;
+    }
+    get getUserId() {
+        return this.sessionService.currentUser.userId;
+    }
     @HostListener('document:click', ['$event'])
-    // clickout(event) {
-    //     if ( event.target.parentElement.className === 'popup-dynamic-col' ) {
-    //     }
-    //     // if (event.target.className = 'popup-dynamic-col') {
-    //     //     this.isShowPopup = true;
-    //     // } else {
-    //     //     this.isShowPopup = false;
-    //     // }
-    // }
     public documentClick(event: any): void {
         if (!this.contains(event.target)) {
             this.cancel(this.myDrop);
@@ -196,7 +183,6 @@ export class PackageListComponent implements OnInit, AfterViewChecked {
             this.closeDropToll(this.DropTool);
         }
     }
-
 
     contains(target: any): boolean {
         return this.myDrop2.nativeElement.contains(target) ||
@@ -207,16 +193,7 @@ export class PackageListComponent implements OnInit, AfterViewChecked {
         return this.DropTool2.nativeElement.contains(target) ||
             (this.DropTool2 ? this.DropTool2.nativeElement.contains(target) : false);
     }
-
-
     ngOnInit() {
-        window.scrollTo(0, 0);
-        this.refreshPopupConfig();
-        this.listClassifyCustomer = this.dataService.getListOpportunityClassifies();
-        this.listPhasePackage = this.dataService.getListBidOpportunityStages();
-        this.userService.getAllUser('').subscribe(data => {
-            this.userListItem = data;
-        });
         this.filterModel.opportunityClassify = '';
         this.filterModel.stage = '';
         this.filterModel.chairEmployeeId = '';
@@ -224,6 +201,13 @@ export class PackageListComponent implements OnInit, AfterViewChecked {
         this.filterModel.minCost = 0;
         this.filterModel.maxCost = 1000000000000;
         this.filterModel.sorting = '';
+        window.scrollTo(0, 0);
+        this.refreshPopupConfig();
+        this.listClassifyCustomer = this.dataService.getListOpportunityClassifies();
+        this.listPhasePackage = this.dataService.getListBidOpportunityStages();
+        this.userService.getAllUser('').subscribe(data => {
+            this.userListItem = data;
+        });
         setTimeout(() => {
             this.userModel = this.sessionService.userInfo;
             this.listPrivileges = this.userModel.privileges;
@@ -240,14 +224,15 @@ export class PackageListComponent implements OnInit, AfterViewChecked {
             }
         }, 300);
         this.spinner.show();
-        this.packageService
-            .instantSearchWithFilter(this.searchTerm$, this.filterModel, 0, 10)
-            .subscribe(result => {
-                this.rerender(result);
-                this.spinner.hide();
-            }, err => {
-                this.spinner.hide();
-            });
+        // this.packageService
+        //     .instantSearchWithFilter(this.searchTerm$, this.filterModel, 0, 10)
+        //     .subscribe(result => {
+        //         this.rerender(result);
+        //         this.spinner.hide();
+        //     }, err => {
+        //         this.spinner.hide();
+        //     });
+        this.filter(false);
         this.layoutService.watchLayoutSubject().subscribe(data => {
             if (data) {
                 this.isToggle = true;
@@ -255,6 +240,17 @@ export class PackageListComponent implements OnInit, AfterViewChecked {
                 this.isToggle = false;
             }
         });
+        this.searchTerm$.subscribe(data => {
+        });
+
+        this.searchTerm$.debounceTime(600)
+        .distinctUntilChanged()
+        .switchMap(term => {
+            console.log(term);
+            this.filter(false);
+            return Observable.create(x => x.next(''));
+        });
+
     }
     ngAfterViewChecked() {
 

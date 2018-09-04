@@ -336,12 +336,11 @@ export class PackageService {
         pageSize: number | string
     ): Observable<PagedResult<PackageListItem>> {
         const searchUrl = `bidopportunity/filter/${page}/${pageSize}?searchTerm=`;
-        const urlParams = PackageService.createFilterParams(filter);
         return this.instantSearchService
             .searchWithFilter(
                 searchUrl,
                 terms,
-                urlParams
+                PackageService.createFilterParams(filter)
             )
             .map(result => {
                 return {
