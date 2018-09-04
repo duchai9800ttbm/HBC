@@ -101,7 +101,6 @@ export class SidebarComponent implements OnInit {
     }
 
     onResize(e) {
-     
         const width = document.getElementById('sidebar').offsetWidth;
         console.log(e);
         console.log(width);

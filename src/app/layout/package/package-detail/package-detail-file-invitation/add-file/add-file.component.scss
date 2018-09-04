@@ -77,8 +77,8 @@ input.icon {
 }
 
 span {
-    float: left;
-    text-align: center;
+    //float: left;
+    //text-align: center;
 }
 
 .custom-filter-bar {}
@@ -816,3 +816,6 @@ table.dataTable {
     grid-template-columns: 230px 255px 255px auto
 }
 
+:host /deep/ .dataTables_empty {
+    display: none !important;
+}

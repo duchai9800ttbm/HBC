@@ -134,8 +134,8 @@
 
                 </div>
 
-                <div>
-                    <table id="table-file-scroll" [hidden]="!showTable" datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="table-selection table-responsive row-border cell-border ">
+                <div class="table-responsive">
+                    <table id="table-file-scroll" [hidden]="!showTable" datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="table-selection row-border cell-border ">
                         <thead>
                             <tr>
 
@@ -330,7 +330,7 @@
                         </div>
                         <div style="margin-top: 15px" class="center-parent" *ngIf="!showTable">
                             <div>
-                                Không có dữ liệu được hiển thị!
+                                Không có dữ liệu!
                             </div>
                         </div>
                     </div>
