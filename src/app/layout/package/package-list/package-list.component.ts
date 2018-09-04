@@ -245,10 +245,10 @@ export class PackageListComponent implements OnInit, AfterViewChecked {
 
         this.searchTerm$.debounceTime(600)
         .distinctUntilChanged()
-        .switchMap(term => {
+        .subscribe(term => {
             console.log(term);
             this.filter(false);
-            return Observable.create(x => x.next(''));
+            // return Observable.create(x => x.next(''));
         });
 
     }
@@ -427,11 +427,13 @@ export class PackageListComponent implements OnInit, AfterViewChecked {
     rerender(pagedResult: any) {
         this.checkboxSeclectAll = false;
         this.pagedResult = pagedResult;
-        if (!(this.pagedResult.items && this.pagedResult.items.length > 1)
-            || document.getElementsByClassName('dataTables_empty')[0]) {
-            document.getElementsByClassName('dataTables_empty')[0].remove();
-        }
-        this.dtTrigger.next();
+        // if (!(this.pagedResult.items && this.pagedResult.items.length > 1)
+        //     || document.getElementsByClassName('dataTables_empty')[0]) {
+        //     document.getElementsByClassName('dataTables_empty')[0].remove();
+        // }
+        setTimeout(() => {
+            this.dtTrigger.next();
+        });
     }
 
     onSelectAll(value: boolean) {
