@@ -666,7 +666,7 @@
                     </tr>
                 </tbody>
             </table>
-            <div class="center-parent" *ngIf="!pagedResult.items">Không có dữ liệu</div>
+            <div class="center-parent" *ngIf="!pagedResult.items || pagedResult.items.length === 0">Không có dữ liệu</div>
         </div>
 
         <app-pagination [(pagedResult)]="pagedResult" (pagedResultChange)="pagedResultChange($event)"></app-pagination>

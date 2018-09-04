@@ -656,7 +656,7 @@ export class PackageService {
                 ? +formValue.chairEmployeeId
                 : 0,
             bidStatusId: formValue.bidStatusId,
-            amount: formValue.amount,
+            amount: formValue.amount ? formValue.amount : 0,
             evaluation: formValue.evaluation,
             startTrackingDate: moment(formValue.startTrackingDate).unix(),
             submissionDate: moment(formValue.submissionDate).unix(),

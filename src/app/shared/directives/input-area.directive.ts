@@ -36,7 +36,7 @@ export class InputAreaDirective implements OnInit {
             'onkeypress', 'return ( ( event.charCode >= 48 && event.charCode <= 57 ) || (event.charCode === 46) )');
         // || (event.charCode === 44)
         // this.renderer.setElementAttribute(this.el.nativeElement, 'type', 'number');
-        this.renderer.setElementAttribute(this.el.nativeElement, 'maxlength', '13');
+        this.renderer.setElementAttribute(this.el.nativeElement, 'maxlength', '16');
     }
 
 
