@@ -76,17 +76,17 @@ export const DATATABLE_CONFIG2 = {
         style: 'os',
         selector: 'td:first-child'
     },
-    scrollX: 'auto',
-    scrollCollapse: true,
-    fixedColumns:   {
-        leftColumns: 1,
-        rightColumns: 1
-    },
-    responsive: true,
-    columnDefs: [
-        { width: 30, targets: 0 }
-    ],
-    autoWidth: true,
+    scrollX: true,
+    // scrollCollapse: true,
+    // fixedColumns:   {
+    //     leftColumns: 1,
+    //     rightColumns: 1
+    // },
+    // responsive: true,
+    // columnDefs: [
+    //     { width: 30, targets: 0 }
+    // ],
+    // autoWidth: true,
 
 };
 
