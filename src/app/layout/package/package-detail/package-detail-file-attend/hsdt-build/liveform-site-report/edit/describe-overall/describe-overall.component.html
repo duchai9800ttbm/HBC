@@ -10,7 +10,7 @@
                     </div>
                     <div>
                         <div class="image-demo-img">
-                            <input type="file" style="display:none" #uploadTopographyImage (change)="uploadTopographyImage($event)">
+                            <input type="file" style="display:none" #uploadTopography (change)="uploadTopographyImage($event)">
 
                             <div class="display-img" *ngFor="let url of topographyImageUrls">
                                 <img [src]="url">
@@ -18,7 +18,7 @@
                                     <i class="fa fa-times delete-icon" aria-hidden="true"></i>
                                 </div>
                             </div>
-                            <div class="perspective-image" (click)="uploadTopographyImage.click()">
+                            <div class="perspective-image" (click)="uploadTopography.click()">
                                 <i class="fa fa-plus" aria-hidden="true"></i>
                                 <p>Image</p>
                             </div>
@@ -34,7 +34,7 @@
                     </div>
                     <div>
                         <div class="image-demo-img">
-                            <input type="file" style="display:none" #uploadExistingBuildImage (change)="uploadExistingBuildImage($event)">
+                            <input type="file" style="display:none" #uploadExistingBuild (change)="uploadExistingBuildImage($event)">
 
                             <div class="display-img" *ngFor="let url of existingBuildImageUrls">
                                 <img [src]="url">
@@ -42,7 +42,7 @@
                                     <i class="fa fa-times delete-icon" aria-hidden="true"></i>
                                 </div>
                             </div>
-                            <div class="perspective-image" (click)="uploadExistingBuildImage.click()">
+                            <div class="perspective-image" (click)="uploadExistingBuild.click()">
                                 <i class="fa fa-plus" aria-hidden="true"></i>
                                 <p>Image</p>
                             </div>
@@ -59,7 +59,7 @@
                     </div>
                     <div>
                         <div class="image-demo-img">
-                            <input type="file" style="display:none" #uploadStacaleImage (change)="uploadStacaleImage($event)">
+                            <input type="file" style="display:none" #uploadStacale (change)="uploadStacaleImage($event)">
 
                             <div class="display-img" *ngFor="let url of stacaleImageUrls">
                                 <img [src]="url">
@@ -67,7 +67,7 @@
                                     <i class="fa fa-times delete-icon" aria-hidden="true"></i>
                                 </div>
                             </div>
-                            <div class="perspective-image" (click)="uploadStacaleImage.click()">
+                            <div class="perspective-image" (click)="uploadStacale.click()">
                                 <i class="fa fa-plus" aria-hidden="true"></i>
                                 <p>Image</p>
                             </div>

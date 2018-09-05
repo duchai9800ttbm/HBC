@@ -115,14 +115,14 @@
                             <input type="text" value="Text">
                         </div>
                         <div class="image-demo-img">
-                            <input type="file" style="display:none" #uploadPerspectiveImage (change)="uploadPerspectiveImage($event)">
+                            <input type="file" style="display:none" #uploadPerspective (change)="uploadPerspectiveImage($event)">
                             <div class="display-img" *ngFor="let url of perspectiveImageUrls">
                                 <img [src]="url">
                                 <div class="toppp" (click)="deletePerspectiveImage()">
                                     <i class="fa fa-times delete-icon" aria-hidden="true"></i>
                                 </div>
                             </div>
-                            <div class="perspective-image" (click)="uploadPerspectiveImage.click()">
+                            <div class="perspective-image" (click)="uploadPerspective.click()">
                                 <i class="fa fa-plus" aria-hidden="true"></i>
                                 <p>Image</p>
                             </div>
@@ -139,14 +139,14 @@
                     </div>
                     <div>
                         <div class="image-demo-img">
-                            <input type="file" style="display:none" #uploadStructureImage (change)="uploadStructureImage($event)">
+                            <input type="file" style="display:none" #uploadStructure (change)="uploadStructureImage($event)">
                             <div class="display-img" *ngFor="let url of structureImageUrls">
                                 <img [src]="url">
                                 <div class="toppp" (click)="deleteStructureImage()">
                                     <i class="fa fa-times delete-icon" aria-hidden="true"></i>
                                 </div>
                             </div>
-                            <div class="perspective-image" (click)="uploadStructureImage.click()">
+                            <div class="perspective-image" (click)="uploadStructure.click()">
                                 <i class="fa fa-plus" aria-hidden="true"></i>
                                 <p>Image</p>
                             </div>
@@ -161,14 +161,14 @@
                         <input type="text" value="Special Requirements">
                     </div>
                     <div class="image-demo-img">
-                        <input type="file" style="display:none" #uploadRequirementsImage (change)="uploadRequirementsImage($event)">
+                        <input type="file" style="display:none" #uploadRequirements (change)="uploadRequirementsImage($event)">
                         <div class="display-img" *ngFor="let url of requirementsImageUrls">
                             <img [src]="url">
                             <div class="toppp" (click)="deleteRequirementsImage()">
                                 <i class="fa fa-times delete-icon" aria-hidden="true"></i>
                             </div>
                         </div>
-                        <div class="perspective-image" (click)="uploadRequirementsImage.click()">
+                        <div class="perspective-image" (click)="uploadRequirements.click()">
                             <i class="fa fa-plus" aria-hidden="true"></i>
                             <p>Image</p>
                         </div>

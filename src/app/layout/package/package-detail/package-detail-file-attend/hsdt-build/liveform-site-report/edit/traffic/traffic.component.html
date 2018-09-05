@@ -11,7 +11,7 @@
                             <input type="text">
                         </div>
                         <div class="image-demo-img">
-                            <input type="file" style="display:none" #uploaDisadvantageImage (change)="uploaDisadvantageImage($event)">
+                            <input type="file" style="display:none" #uploaDisadvantage (change)="uploaDisadvantageImage($event)">
 
                             <div class="display-img" *ngFor="let url of disadvantageImageUrls">
                                 <img [src]="url">
@@ -19,7 +19,7 @@
                                     <i class="fa fa-times delete-icon" aria-hidden="true"></i>
                                 </div>
                             </div>
-                            <div class="perspective-image" (click)="uploaDisadvantageImage.click()">
+                            <div class="perspective-image" (click)="uploaDisadvantage.click()">
                                 <i class="fa fa-plus" aria-hidden="true"></i>
                                 <p>Image</p>
                             </div>
@@ -31,7 +31,7 @@
                             <input type="text">
                         </div>
                         <div class="image-demo-img">
-                            <input type="file" style="display:none" #uploaAdvantageImage (change)="uploaAdvantageImage($event)">
+                            <input type="file" style="display:none" #uploaAdvantage (change)="uploaAdvantageImage($event)">
 
                             <div class="display-img" *ngFor="let url of advantageImageUrls">
                                 <img [src]="url">
@@ -39,7 +39,7 @@
                                     <i class="fa fa-times delete-icon" aria-hidden="true"></i>
                                 </div>
                             </div>
-                            <div class="perspective-image" (click)="uploaAdvantageImage.click()">
+                            <div class="perspective-image" (click)="uploaAdvantage.click()">
                                 <i class="fa fa-plus" aria-hidden="true"></i>
                                 <p>Image</p>
                             </div>
@@ -56,7 +56,7 @@
                             <input type="text">
                         </div>
                         <div class="image-demo-img">
-                            <input type="file" style="display:none" #uploadDirectionImage (change)="uploadDirectionImage($event)">
+                            <input type="file" style="display:none" #uploadDirection (change)="uploadDirectionImage($event)">
 
                             <div class="display-img" *ngFor="let url of directionImageUrls">
                                 <img [src]="url">
@@ -64,7 +64,7 @@
                                     <i class="fa fa-times delete-icon" aria-hidden="true"></i>
                                 </div>
                             </div>
-                            <div class="perspective-image" (click)="uploadDirectionImage.click()">
+                            <div class="perspective-image" (click)="uploadDirection.click()">
                                 <i class="fa fa-plus" aria-hidden="true"></i>
                                 <p>Image</p>
                             </div>
@@ -76,7 +76,7 @@
                             <input type="text">
                         </div>
                         <div class="image-demo-img">
-                            <input type="file" style="display:none" #uploadExistingImage (change)="uploadExistingImage($event)">
+                            <input type="file" style="display:none" #uploadExisting (change)="uploadExistingImage($event)">
 
                             <div class="display-img" *ngFor="let url of existingImageUrls">
                                 <img [src]="url">
@@ -84,7 +84,7 @@
                                     <i class="fa fa-times delete-icon" aria-hidden="true"></i>
                                 </div>
                             </div>
-                            <div class="perspective-image" (click)="uploadExistingImage.click()">
+                            <div class="perspective-image" (click)="uploadExisting.click()">
                                 <i class="fa fa-plus" aria-hidden="true"></i>
                                 <p>Image</p>
                             </div>
@@ -96,7 +96,7 @@
                             <input type="text">
                         </div>
                         <div class="image-demo-img">
-                            <input type="file" style="display:none" #uploadRoadImage (change)="uploadRoadImage($event)">
+                            <input type="file" style="display:none" #uploadRoad (change)="uploadRoadImage($event)">
 
                             <div class="display-img" *ngFor="let url of roadImageUrls">
                                 <img [src]="url">
@@ -104,7 +104,7 @@
                                     <i class="fa fa-times delete-icon" aria-hidden="true"></i>
                                 </div>
                             </div>
-                            <div class="perspective-image" (click)="uploadRoadImage.click()">
+                            <div class="perspective-image" (click)="uploadRoad.click()">
                                 <i class="fa fa-plus" aria-hidden="true"></i>
                                 <p>Image</p>
                             </div>
@@ -116,7 +116,7 @@
                             <input type="text">
                         </div>
                         <div class="image-demo-img">
-                            <input type="file" style="display:none" #uploadFenceImage (change)="uploadFenceImage($event)">
+                            <input type="file" style="display:none" #uploadFence (change)="uploadFenceImage($event)">
 
                             <div class="display-img" *ngFor="let url of fenceImageUrls">
                                 <img [src]="url">
@@ -124,7 +124,7 @@
                                     <i class="fa fa-times delete-icon" aria-hidden="true"></i>
                                 </div>
                             </div>
-                            <div class="perspective-image" (click)="uploadFenceImage.click()">
+                            <div class="perspective-image" (click)="uploadFence.click()">
                                 <i class="fa fa-plus" aria-hidden="true"></i>
                                 <p>Image</p>
                             </div>

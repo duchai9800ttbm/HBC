@@ -12,7 +12,7 @@
                     </div>
                     <div>
                         <div class="image-demo-img">
-                            <input type="file" style="display:none" #uploadFootingImage (change)="uploadFootingImage($event)">
+                            <input type="file" style="display:none" #uploadFooting (change)="uploadFootingImage($event)">
 
                             <div class="display-img" *ngFor="let url of footingImageUrls">
                                 <img [src]="url">
@@ -20,7 +20,7 @@
                                     <i class="fa fa-times delete-icon" aria-hidden="true"></i>
                                 </div>
                             </div>
-                            <div class="perspective-image" (click)="uploadFootingImage.click()">
+                            <div class="perspective-image" (click)="uploadFooting.click()">
                                 <i class="fa fa-plus" aria-hidden="true"></i>
                                 <p>Image</p>
                             </div>
@@ -38,7 +38,7 @@
                             <input type="text">
                         </div>
                         <div class="image-demo-img">
-                            <input type="file" style="display:none" #uploadInvestigationImage (change)="uploadInvestigationImage($event)">
+                            <input type="file" style="display:none" #uploadInvestigation (change)="uploadInvestigationImage($event)">
 
                             <div class="display-img" *ngFor="let url of investigationImageUrls">
                                 <img [src]="url">
@@ -46,7 +46,7 @@
                                     <i class="fa fa-times delete-icon" aria-hidden="true"></i>
                                 </div>
                             </div>
-                            <div class="perspective-image" (click)="uploadInvestigationImage.click()">
+                            <div class="perspective-image" (click)="uploadInvestigation.click()">
                                 <i class="fa fa-plus" aria-hidden="true"></i>
                                 <p>Image</p>
                             </div>

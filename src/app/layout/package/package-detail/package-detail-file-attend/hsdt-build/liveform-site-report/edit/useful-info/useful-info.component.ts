@@ -9,7 +9,6 @@ import { AlertService, ConfirmationService } from '../../../../../../../../share
 export class UsefulInfoComponent implements OnInit {
   topicLists = [];
   contentImgs = [];
-  content1Imgs = [];
   url;
   constructor(
     private confirmationService: ConfirmationService,

@@ -11,7 +11,7 @@
                             <input type="text" placeholder="TỪ GIAI ĐOẠN 1A">
                         </div>
                         <div class="image-demo-img">
-                            <input type="file" style="display:none" #uploadSupplySystemImage (change)="uploadSupplySystemImage($event)">
+                            <input type="file" style="display:none" #uploadSupplySystem (change)="uploadSupplySystemImage($event)">
 
                             <div class="display-img" *ngFor="let url of supplySystemImageUrls">
                                 <img [src]="url">
@@ -19,7 +19,7 @@
                                     <i class="fa fa-times delete-icon" aria-hidden="true"></i>
                                 </div>
                             </div>
-                            <div class="perspective-image" (click)="uploadSupplySystemImage.click()">
+                            <div class="perspective-image" (click)="uploadSupplySystem.click()">
                                 <i class="fa fa-plus" aria-hidden="true"></i>
                                 <p>Image</p>
                             </div>
@@ -31,7 +31,7 @@
                             <input type="text" placeholder="TỪ GIAI ĐOẠN 1A">
                         </div>
                         <div class="image-demo-img">
-                            <input type="file" style="display:none" #uploadSupplyPointImage (change)="uploadSupplyPointImage($event)">
+                            <input type="file" style="display:none" #uploadSupplyPoint (change)="uploadSupplyPointImage($event)">
 
                             <div class="display-img" *ngFor="let url of supplyPointImageUrls">
                                 <img [src]="url">
@@ -39,7 +39,7 @@
                                     <i class="fa fa-times delete-icon" aria-hidden="true"></i>
                                 </div>
                             </div>
-                            <div class="perspective-image" (click)="uploadSupplyPointImage.click()">
+                            <div class="perspective-image" (click)="uploadSupplyPoint.click()">
                                 <i class="fa fa-plus" aria-hidden="true"></i>
                                 <p>Image</p>
                             </div>
@@ -56,7 +56,7 @@
                             <input type="text" placeholder="THOÁT NƯỚC TỰ NHIÊN THEO KÊNH SẴN CÓ RA RẠCH">
                         </div>
                         <div class="image-demo-img">
-                            <input type="file" style="display:none" #uploadDrainageSystemImage (change)="uploadDrainageSystemImage($event)">
+                            <input type="file" style="display:none" #uploadDrainageSystem (change)="uploadDrainageSystemImage($event)">
 
                             <div class="display-img" *ngFor="let url of drainageSystemImageUrls">
                                 <img [src]="url">
@@ -64,7 +64,7 @@
                                     <i class="fa fa-times delete-icon" aria-hidden="true"></i>
                                 </div>
                             </div>
-                            <div class="perspective-image" (click)="uploadDrainageSystemImage.click()">
+                            <div class="perspective-image" (click)="uploadDrainageSystem.click()">
                                 <i class="fa fa-plus" aria-hidden="true"></i>
                                 <p>Image</p>
                             </div>
@@ -76,7 +76,7 @@
                             <input type="text" placeholder="Không có">
                         </div>
                         <div class="image-demo-img">
-                            <input type="file" style="display:none" #uploadDrainagePointImage (change)="uploadDrainagePointImage($event)">
+                            <input type="file" style="display:none" #uploadDrainagePoint (change)="uploadDrainagePointImage($event)">
 
                             <div class="display-img" *ngFor="let url of drainagePointImageUrls">
                                 <img [src]="url">
@@ -84,7 +84,7 @@
                                     <i class="fa fa-times delete-icon" aria-hidden="true"></i>
                                 </div>
                             </div>
-                            <div class="perspective-image" (click)="uploadDrainagePointImage.click()">
+                            <div class="perspective-image" (click)="uploadDrainagePoint.click()">
                                 <i class="fa fa-plus" aria-hidden="true"></i>
                                 <p>Image</p>
                             </div>
@@ -101,7 +101,7 @@
                             <input type="text" placeholder="Có sẵn trạm">
                         </div>
                         <div class="image-demo-img">
-                            <input type="file" style="display:none" #uploadPowerStationImage (change)="uploadPowerStationImage($event)">
+                            <input type="file" style="display:none" #uploadPowerStation (change)="uploadPowerStationImage($event)">
 
                             <div class="display-img" *ngFor="let url of powerStationImageUrls">
                                 <img [src]="url">
@@ -109,7 +109,7 @@
                                     <i class="fa fa-times delete-icon" aria-hidden="true"></i>
                                 </div>
                             </div>
-                            <div class="perspective-image" (click)="uploadPowerStationImage.click()">
+                            <div class="perspective-image" (click)="uploadPowerStation.click()">
                                 <i class="fa fa-plus" aria-hidden="true"></i>
                                 <p>Image</p>
                             </div>
@@ -121,7 +121,7 @@
                             <input type="text" placeholder="Cách 50m">
                         </div>
                         <div class="image-demo-img">
-                            <input type="file" style="display:none" #uploadMediumVoltageSystemImage (change)="uploadMediumVoltageSystemImage($event)">
+                            <input type="file" style="display:none" #uploadMediumVoltageSystem (change)="uploadMediumVoltageSystemImage($event)">
 
                             <div class="display-img" *ngFor="let url of mediumVoltageSystemImageUrls">
                                 <img [src]="url">
@@ -129,7 +129,7 @@
                                     <i class="fa fa-times delete-icon" aria-hidden="true"></i>
                                 </div>
                             </div>
-                            <div class="perspective-image" (click)="uploadMediumVoltageSystemImage.click()">
+                            <div class="perspective-image" (click)="uploadMediumVoltageSystem.click()">
                                 <i class="fa fa-plus" aria-hidden="true"></i>
                                 <p>Image</p>
                             </div>
@@ -141,7 +141,7 @@
                             <input type="text" placeholder="Không có">
                         </div>
                         <div class="image-demo-img">
-                            <input type="file" style="display:none" #uploadPowerOtherImage (change)="uploadPowerOtherImage($event)">
+                            <input type="file" style="display:none" #uploadPowerOther (change)="uploadPowerOtherImage($event)">
 
                             <div class="display-img" *ngFor="let url of powerOtherImageUrls">
                                 <img [src]="url">
@@ -149,7 +149,7 @@
                                     <i class="fa fa-times delete-icon" aria-hidden="true"></i>
                                 </div>
                             </div>
-                            <div class="perspective-image" (click)="uploadPowerOtherImage.click()">
+                            <div class="perspective-image" (click)="uploadPowerOther.click()">
 
                                 <i class="fa fa-plus" aria-hidden="true"></i>
                                 <p>Image</p>

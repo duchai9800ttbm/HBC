@@ -10,14 +10,14 @@
                     </div>
                     <div>
                         <div class="image-demo-img">
-                            <input type="file" style="display:none" #uploaDemobilisationImage (change)="uploaDemobilisationImage($event)">
+                            <input type="file" style="display:none" #uploaDemobilisation (change)="uploaDemobilisationImage($event)">
                             <div class="display-img" *ngFor="let url of demobilisationImageUrls">
                                 <img [src]="url">
                                 <div class="toppp" (click)="deleteDemobilisationImage()">
                                     <i class="fa fa-times delete-icon" aria-hidden="true"></i>
                                 </div>
                             </div>
-                            <div class="perspective-image" (click)="uploaDemobilisationImage.click()">
+                            <div class="perspective-image" (click)="uploaDemobilisation.click()">
                                 <i class="fa fa-plus" aria-hidden="true"></i>
                                 <p>Image</p>
                             </div>
@@ -33,7 +33,7 @@
                     </div>
                     <div>
                         <div class="image-demo-img">
-                            <input type="file" style="display:none" #uploaConsolidationImage (change)="uploaConsolidationImage($event)">
+                            <input type="file" style="display:none" #uploaConsolidation (change)="uploaConsolidationImage($event)">
 
                             <div class="display-img" *ngFor="let url of consolidationImageUrls">
                                 <img [src]="url">
@@ -41,7 +41,7 @@
                                     <i class="fa fa-times delete-icon" aria-hidden="true"></i>
                                 </div>
                             </div>
-                            <div class="perspective-image" (click)="uploaConsolidationImage.click()">
+                            <div class="perspective-image" (click)="uploaConsolidation.click()">
                                 <i class="fa fa-plus" aria-hidden="true"></i>
                                 <p>Image</p>
                             </div>
@@ -58,7 +58,7 @@
                     </div>
                     <div>
                         <div class="image-demo-img">
-                            <input type="file" style="display:none" #uploaAdjacentImage (change)="uploaAdjacentImage($event)">
+                            <input type="file" style="display:none" #uploaAdjacent (change)="uploaAdjacentImage($event)">
 
                             <div class="display-img" *ngFor="let url of adjacentImageUrls">
                                 <img [src]="url">
@@ -66,7 +66,7 @@
                                     <i class="fa fa-times delete-icon" aria-hidden="true"></i>
                                 </div>
                             </div>
-                            <div class="perspective-image" (click)="uploaAdjacentImage.click()">
+                            <div class="perspective-image" (click)="uploaAdjacent.click()">
                                 <i class="fa fa-plus" aria-hidden="true"></i>
                                 <p>Image</p>
                             </div>

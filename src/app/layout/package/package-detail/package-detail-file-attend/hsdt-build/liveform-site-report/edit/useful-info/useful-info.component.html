@@ -28,7 +28,7 @@
                             <textarea cols="20" rows="5"></textarea>
                         </div>
                         <div class="image-demo-img">
-                            <input type="file" style="display:none" #uploaContentImage (change)="uploaContentImage($event)">
+                            <input type="file" style="display:none" #uploaContent (change)="uploaContentImage($event)">
 
                             <div class="display-img" *ngFor="let url of contentImgs">
                                 <img [src]="url">
@@ -36,7 +36,7 @@
                                     <i class="fa fa-times delete-icon" aria-hidden="true"></i>
                                 </div>
                             </div>
-                            <div class="perspective-image" (click)="uploaContentImage.click()">
+                            <div class="perspective-image" (click)="uploaContent.click()">
                                 <i class="fa fa-plus" aria-hidden="true"></i>
                                 <p>Image</p>
                             </div>
