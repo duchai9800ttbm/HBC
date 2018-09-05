@@ -65,7 +65,6 @@ export class PackageDetailComponent implements OnInit {
     }, err => {
     });
     this.layoutService.watchLayoutSubject().subscribe(data => {
-      console.log('bbbbb');
       if (data) {
         this.isToggle = true;
       } else {

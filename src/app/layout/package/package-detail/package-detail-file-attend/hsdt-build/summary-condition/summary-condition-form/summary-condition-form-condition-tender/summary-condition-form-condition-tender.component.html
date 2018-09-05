@@ -1,0 +1,76 @@
+<form [formGroup]="conditionContractForm">
+    <div class="p-3">
+        <h5 class="text-uppercase">X. điều kiện hồ sơ mời thầu (tender conditions)</h5>
+        <div class="row mt-3">
+            <div class="col-md-3"><strong><u>1. Bảo lãnh dự thầu</u></strong></div>
+        </div>
+        <div class="row mt-3">
+            <div class="col-md-3">Giá trị</div>
+            <div class="col-md-8">
+                <input class="form-control">
+            </div>
+        </div>
+        <div class="row mt-3">
+            <div class="col-md-3">Hiệu lực</div>
+            <div class="col-md-8">
+                <kendo-datepicker class="form-control" ></kendo-datepicker>
+            </div>
+        </div>
+        <div class="row mt-3">
+            <div class="col-md-3"><strong><u>2. Hiệu lực hồ sơ dự thầu</u></strong></div>
+        </div>
+        <div class="row mt-3">
+            <div class="col-md-3">Thời gian</div>
+            <div class="col-md-8">
+                <kendo-datepicker class="form-control" ></kendo-datepicker>
+            </div>
+        </div>
+        <div class="row mt-3">
+            <div class="col-md-3"><strong><u>3. Tiến độ</u></strong></div>
+        </div>
+        <div class="row mt-3">
+            <div class="col-md-3">Ngày khởi công</div>
+            <div class="col-md-8">
+                <kendo-datepicker class="form-control" ></kendo-datepicker>
+            </div>
+        </div>
+        <div class="row mt-3">
+            <div class="col-md-3">Thời gian hoàn thành (ngày)</div>
+            <div class="col-md-8">
+                <input type="number" class="form-control" >
+            </div>
+        </div>
+        <div class="row mt-3">
+            <div class="col-md-3"><strong><u>4. Các loại thuế</u></strong></div>
+        </div>
+        <div class="row mt-3">
+            <div class="col-md-3">Chọn loại thuế</div>
+            <div class="col-md-8">
+                <span class="custom-dropdown w-100">
+                    <select class="form-control">
+                        <option [ngValue]="null">--Chọn--</option>
+                    </select>
+                </span>
+            </div>
+        </div>
+        <div class="row mt-3">
+            <div class="col-md-3">Danh sách</div>
+            <div class="col-md-8">
+                <textarea class="form-control"></textarea>
+            </div>
+        </div>
+        <div class="row mt-3">
+            <div class="col-md-3"><strong><u>5. Đồng tiền</u></strong></div>
+        </div>
+        <div class="row mt-3">
+            <div class="col-md-3">Đơn vị tiền tệ</div>
+            <div class="col-md-8">
+                <span class="custom-dropdown w-100">
+                    <select class="form-control">
+                        <option [ngValue]="null">--Chọn--</option>
+                    </select>
+                </span>
+            </div>
+        </div>
+    </div>
+</form>

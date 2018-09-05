@@ -75,9 +75,8 @@
                                     <td class="w-25">
                                         <div class="input-group w-75">
                                             <!-- <my-date-picker name="startDate" [options]="datePickerConfig" [locale]="'vi'" formControlName="startDate"></my-date-picker> -->
-                                            <owl-date-time #startDate [readonlyInput]="datePickerConfig.readonlyInput" [inputStyleClass]="formErrors.startDate ? 'is-invalid' : ''"
-                                                formControlName="startDate" [dateFormat]="datePickerConfig.datetimeFormat" [placeHolder]="datePickerConfig.placeHolder"
-                                                [locale]="datePickerConfig.vi" [max]="endDate.value" [tabIndex]="'3'">
+                                            <owl-date-time #startDate  
+                                                formControlName="startDate" [tabIndex]="'3'">
                                             </owl-date-time>
                                             <span class="input-group-addon">
                                                 <i class="fa fa-calendar"></i>
@@ -102,9 +101,8 @@
                                     <td class="w-25">
                                         <div class="input-group w-75">
                                             <!-- <my-date-picker name="endDate" [options]="datePickerConfig" [locale]="'vi'" formControlName="endDate"></my-date-picker> -->
-                                            <owl-date-time #endDate [readonlyInput]="datePickerConfig.readonlyInput" [inputStyleClass]="formErrors.endDate ? 'is-invalid' : ''"
-                                                formControlName="endDate" [dateFormat]="datePickerConfig.datetimeFormat" [placeHolder]="datePickerConfig.placeHolder"
-                                                [locale]="datePickerConfig.vi" [min]="startDate.value" [tabIndex]="'4'">
+                                            <owl-date-time #endDate  
+                                                formControlName="endDate" [tabIndex]="'4'">
                                             </owl-date-time>
 
                                             <span class="input-group-addon">

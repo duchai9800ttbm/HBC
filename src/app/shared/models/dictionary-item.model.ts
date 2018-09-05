@@ -7,3 +7,8 @@ export interface DictionaryItemIdString {
     id: string;
     text: string;
 }
+
+export class DictionaryItemText {
+    name: string;
+    desc: string;
+}

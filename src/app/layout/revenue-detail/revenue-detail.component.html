@@ -50,8 +50,8 @@
                 <div class="d-flex">
                     <div class="select_box mt-2  mr-2">Từ</div>
                     <div class="input-group  calendarInput  mr-3">
-                        <owl-date-time [(ngModel)]="startDate" [dateFormat]="datePickerConfig.dateFormat" [placeHolder]="datePickerConfig.datePlaceHolder" [locale]="datePickerConfig.vi"
-                        pickerType="calendar" [type]="datePickerConfig.calendarType">
+                        <owl-date-time [(ngModel)]="startDate"   
+                        pickerType="calendar" >
                         </owl-date-time>
                         <span class="input-group-addon">
                             <i class="fa fa-calendar"></i>
@@ -59,8 +59,8 @@
                     </div>
                     <div class="select_box mt-2"> đến</div>
                     <div class="input-group  calendarInput ml-3">
-                        <owl-date-time [(ngModel)]="endDate" [dateFormat]="datePickerConfig.dateFormat" [placeHolder]="datePickerConfig.datePlaceHolder" [locale]="datePickerConfig.vi"
-                            pickerType="calendar" [type]="datePickerConfig.calendarType">
+                        <owl-date-time [(ngModel)]="endDate"   
+                            pickerType="calendar" >
                         </owl-date-time>
                         <span class="input-group-addon">
                             <i class="fa fa-calendar"></i>

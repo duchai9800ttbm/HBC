@@ -18,18 +18,6 @@
         <button class="btn btn-primary ml-2" (click)="openModalNotification(notification)">
           {{textNotification}}
         </button>
-        <button class="btn btn-primary ml-2">
-          Tải Template
-        </button>
-        <button class="btn btn-primary ml-2">
-          Tải xuống tài liệu
-        </button>
-        <button class="btn btn-primary ml-2">
-          In
-        </button>
-        <button class="btn btn-primary ml-2" *ngIf="!showBtnNotification">
-          Xóa
-        </button>
         <button class="btn btn-primary ml-2" (click)="uploadkqdt(uploadFile)">
           Upload&nbsp;
           <span style="text-transform: uppercase">kqdt</span>
@@ -40,8 +28,23 @@
       </div>
     </div>
   </div>
-  <h4 style="text-transform: uppercase">kết quả dự thầu</h4>
-
+  <div class="d-flex form-group status-filter" id="result">
+    <h5 class="d-inline mb-0 mr-auto text-dark text-uppercase pd-t">Kết quả dự thầu</h5>
+    <div class="btn-toolbar">
+      <button class="btn btn-primary ml-2">
+        Tải Template
+      </button>
+      <button class="btn btn-primary ml-2">
+        Tải xuống tài liệu
+      </button>
+      <button class="btn btn-primary ml-2">
+        In
+      </button>
+      <button class="btn btn-primary ml-2" *ngIf="!showBtnNotification">
+        Xóa
+      </button>
+    </div>
+  </div>
   <div class="main-table">
     <div class="d-flex justify-content-start">
       <div>
@@ -150,7 +153,9 @@
             </th>
 
             <th class="table-action text-center" style="background-color: #f68e56!important;">
-              Thao tác
+              <div class="d-flex justify-content-center">
+                Thao tác
+              </div>
             </th>
           </tr>
         </thead>
@@ -177,32 +182,34 @@
                 </div>
               </div>
             </td>
-            <td>{{ item.bidReviewDocumentName }}</td>
+            <td class="nameDoc">{{ item.bidReviewDocumentName }}</td>
             <td class="text-center">{{ item.bidReviewDocumentVersion }}</td>
-            <td>
-              <div class="d-flex justify-content-around">
-                <div> {{ item.bidReviewDocumentStatus | translate }}</div>
-              </div>
-            </td>
-
-            <td class="select-filter text-center">{{ item.employeeName}}</td>
+            <td class="des"> {{ item.bidReviewDocumentStatus | translate }}</td>
+            <td class="select-filter text-center employeeName">{{ item.employeeName}}</td>
             <!-- <td class="text-center">{{ item.bidReviewDocumentUploadDate* 1000 | date:'dd/MM/yyyy HH:mm': '+0000'}}</td> -->
             <td class="select-filter text-center">{{ item.bidReviewDocumentUploadDate}}</td>
             <td class="select-filter text-center">{{ item.interview}}</td>
+
             <td class="text-center" style="width: 10%;">
-              <div class="row " [ngClass]="{ 'pd-row-24': showBtnNotification === false,'pd-row-18': showBtnNotification === true }">
-                <div [ngClass]="{ 'col-md-4': showBtnNotification === false,'col-md-5': showBtnNotification === true }" class=" center-parent cursor-pointer">
-                  <i [title]="'tải file'" class="fa fa-download color-item-down"></i>
+              <div class="d-flex justify-content-around">
+                <div id="mr">
+                  <a title="Tải file" (click)="downloadFileItem(item.id)">
+                    <i class="fa fa-download color-item-down" aria-hidden="true"></i>
+                  </a>
                 </div>
-                <div class="col-md-4 center-parent cursor-pointer" *ngIf="!showBtnNotification">
-                  <i [title]="'Xóa'" class="fa fa-trash-o"></i>
+                <div id="mr" *ngIf="!showBtnNotification">
+                  <a title="Xóa file">
+                    <i class="fa fa-trash-o" aria-hidden="true"></i>
+                  </a>
                 </div>
-                <div [ngClass]="{ 'col-md-4': showBtnNotification === false,'col-md-5': showBtnNotification === true }" class="center-parent cursor-pointer"
-                  style="color:#e92121;">
-                  <i [title]="'In'" class="fa fa-print "></i>
+                <div>
+                  <a title="In">
+                    <i class="fa fa-print color-item-print" aria-hidden="true"></i>
+                  </a>
                 </div>
               </div>
             </td>
+
           </tr>
         </tbody>
       </table>
@@ -215,7 +222,7 @@
 
 <!-- notification -->
 <ng-template #notification>
-  <div class="modal-header no-boder-bottom">
+  <div class="modal-header no-mr-bt">
     <div class="pull-left ">
       <div class="text-title icon-arrow">
         <img width="15" height="15" class="img-back pointer" src="assets\images\nghia.png" (click)="ClosePopup()" />
@@ -328,86 +335,86 @@
 <!-- Modal upladfile -->
 
 <ng-template #uploadFile>
-    <form [formGroup]="formUpload" (ngSubmit)="onSubmit()">
-        <div class="modal-header no-boder-bottom">
-            <div class="col-md-10 offset-md-1 text-center">
-                <h4 class="modal-title text-title text-model">Upload kết quả dự thầu</h4>
-            </div>
-            <div class="col-md-1">
-                <button type="button" class="close pull-right" aria-label="Close" (click)="modalUpload.hide()">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
+  <form [formGroup]="formUpload" (ngSubmit)="onSubmit()">
+    <div class="modal-header no-mr-bt">
+      <div class="col-md-10 offset-md-1 text-center">
+        <h4 class="modal-title text-title text-model">Upload kết quả dự thầu</h4>
+      </div>
+      <div class="col-md-1">
+        <button type="button" class="close pull-right" aria-label="Close" (click)="modalUpload.hide()">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+    </div>
+    <div class="modal-body fg-w">
+      <div class="row pd-up">
+        <div class="col-md-4 mg-l">Chọn file</div>
+        <div class="col-md-7 input-group">
+          <div class="custom-file form-control">
+            <input type="file" class="custom-file-input" id="inputGroupFile01">
+            <label class="custom-file-label" for="inputGroupFile01">--Choose file--</label>
+          </div>
+          <span class="input-group-addon">
+            <i class="fa fa-upload" aria-hidden="true"></i>
+          </span>
         </div>
-        <div class="modal-body fg-w">
-            <div class="row pd-up">
-                <div class="col-md-4 mg-l">Chọn file</div>
-                <div class="col-md-7 input-group">
-                    <div class="custom-file form-control">
-                        <input type="file" class="custom-file-input" id="inputGroupFile01">
-                        <label class="custom-file-label" for="inputGroupFile01">--Choose file--</label>
-                    </div>
-                    <span class="input-group-addon">
-                        <i class="fa fa-upload" aria-hidden="true"></i>
-                    </span>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-md-4 mg-l or">OR</div>
-            </div>
-            <div class="row pd-up">
-                <div class="col-md-4 mg-l">Đường dẫn file</div>
-                <div class="col-md-7">
-                    <input type="text" placeholder="Text" class="form-control" value="">
-                </div>
-            </div>
-
-            <div class="row pd-up">
-                <div class="col-md-4 mg-l">Tên</div>
-                <div class="col-md-7">
-                    <input type="text" class="form-control" placeholder="Tên" formControlName="name" [ngClass]="{ 'is-invalid': submitted && f.name.errors }">
-                    <div *ngIf="submitted && f.name.errors" class="invalid-feedback">
-                        <div *ngIf="f.name.errors.required">Vui lòng nhập tên file</div>
-                    </div>
-                </div>
-
-            </div>
-
-            <div class="row pd-up">
-                <div class="col-md-4 mg-l">Version</div>
-                <div class="col-md-7">
-                    <input type="text" class="form-control" value="1">
-                </div>
-            </div>
-            <div class="row pd-up">
-                <div class="col-md-4 mg-l">Lần phỏng vấn</div>
-                <div class="col-md-7">
-                    <input type="number" placeholder=Number class="form-control" value="">
-                </div>
-            </div>
-
-            <div class="row pd-up">
-                <div class="col-md-4 mg-l">Ngày nhận kết quả</div>
-                <div class="col-md-7 input-group">
-                    <owl-date-time [readonlyInput]="datePickerConfig.readonlyInput" [locale]="datePickerConfig.vi" [placeHolder]="datePickerConfig.placeHolderVn">
-                    </owl-date-time>
-                    <span class="input-group-addon">
-                        <i class="fa fa-calendar"></i>
-                    </span>
-                </div>
-            </div>
-
-            <div class="row pd-up">
-                <div class="col-md-4 mg-l">Mô tả/Nội dung cập nhật</div>
-                <div class="col-md-7">
-                    <textarea class="form-control textarea-content" name="" id="" cols="30" rows="3" placeholder=""></textarea>
-                </div>
-            </div>
-
-            <div class="text-center pd-food">
-                <button type="submit" class="btn btn-primary w-80" [disabled]="loading">Upload</button>
-                <button type="button" class="btn btn-cancel w-80" (click)="modalUpload.hide()">Hủy</button>
-            </div>
+      </div>
+      <div class="row">
+        <div class="col-md-4 mg-l or">OR</div>
+      </div>
+      <div class="row pd-up">
+        <div class="col-md-4 mg-l">Đường dẫn file</div>
+        <div class="col-md-7">
+          <input type="text" placeholder="Text" class="form-control" value="">
         </div>
-    </form>
+      </div>
+
+      <div class="row pd-up">
+        <div class="col-md-4 mg-l">Tên</div>
+        <div class="col-md-7">
+          <input type="text" class="form-control" placeholder="Tên" formControlName="name" [ngClass]="{ 'is-invalid': submitted && f.name.errors }">
+          <div *ngIf="submitted && f.name.errors" class="invalid-feedback">
+            <div *ngIf="f.name.errors.required">Vui lòng nhập tên file</div>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="row pd-up">
+        <div class="col-md-4 mg-l">Version</div>
+        <div class="col-md-7">
+          <input type="text" class="form-control" value="1">
+        </div>
+      </div>
+      <div class="row pd-up">
+        <div class="col-md-4 mg-l">Lần phỏng vấn</div>
+        <div class="col-md-7">
+          <input type="number" placeholder=Number class="form-control" value="">
+        </div>
+      </div>
+
+      <div class="row pd-up">
+        <div class="col-md-4 mg-l">Ngày nhận kết quả</div>
+        <div class="col-md-7 input-group">
+          <owl-date-time   [placeHolder]="datePickerConfig.placeHolderVn">
+          </owl-date-time>
+          <span class="input-group-addon">
+            <i class="fa fa-calendar"></i>
+          </span>
+        </div>
+      </div>
+
+      <div class="row pd-up">
+        <div class="col-md-4 mg-l">Mô tả/Nội dung cập nhật</div>
+        <div class="col-md-7">
+          <textarea class="form-control textarea-content" name="" id="" cols="30" rows="3" placeholder=""></textarea>
+        </div>
+      </div>
+
+      <div class="text-center pd-food">
+        <button type="submit" class="btn btn-primary w-80" [disabled]="loading">Upload</button>
+        <button type="button" class="btn btn-cancel w-80" (click)="modalUpload.hide()">Hủy</button>
+      </div>
+    </div>
+  </form>
 </ng-template>

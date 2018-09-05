@@ -1,4 +1,4 @@
-<div id="outer">
+<div class="outer" id="outer">
     <div class=" title-list-package d-flex flex-wrap align-items-center status-filter">
         <div class="mr-auto d-flex align-items-end list-package mt-2 mb-2">
             <div class="d-flex justify-content-start" style="height: 35px;">
@@ -18,7 +18,7 @@
         </div>
     </div>
     <div id="outer-img">
-        <img src="../../../../../../assets/images/icon-wailt.png" alt="">
+        <img src="assets/images/icon-wailt.png" alt="">
         <h5>bạn đã nhận kết quả dự thầu từ khách hàng?</h5>
         <div class="confirm-button">
             <button class="btn btn-primary" id="success" (click)="modalTrungThau(trungthau)">trúng thầu</button>
@@ -29,41 +29,48 @@
 </div>
 <!-- Model Lý do -->
 <ng-template #trungthau>
-    <div class="modal-header no-boder-bottom">
-        <div class="col-md-10 offset-md-1 text-center">
-            <h4 class="modal-title text-model" *ngIf="btnTrungThau">Kết quả dự thầu: {{textTrungThau}} thầu</h4>
-            <h4 class="modal-title text-model" *ngIf="btnTratThau">Kết quả dự thầu: {{textTratThau}} thầu</h4>
-            <h4 class="modal-title text-model" *ngIf="btnHuyThau">Kết quả dự thầu: {{textHuyThau}} thầu</h4>
-        </div>
-        <div class="col-md-1">
-            <button type="button" class="close pull-right" aria-label="Close" (click)="closeModel()">
-                <span aria-hidden="true">&times;</span>
-            </button>
-        </div>
-    </div>
-    <div class="modal-body">
-        <div class="row" style="padding-bottom: 40px">
-            <div class="col-md-3 offset-md-1" *ngIf="btnTrungThau">Lý do {{textTrungThau}} thầu</div>
-            <div class="col-md-3 offset-md-1" *ngIf="btnTratThau">Lý do {{textTratThau}} thầu</div>
-            <div class="col-md-3 offset-md-1" *ngIf="btnHuyThau">Lý do {{textHuyThau}} thầu</div>
-            <div class="col-md-6 custom-dropdown">
-                <select class="form-control ">
-                    <option value="">--Chọn--</option>
-                    <option *ngFor="let item of reasons" [value]="item.id">{{item.name | translate}}</option>
-                </select>
+    <form [formGroup]="reasonForm" novalidate (ngSubmit)="submitForm(uploadFile)">
+        <div class="modal-header no-boder-bottom">
+            <div class="col-md-10 offset-md-1 text-center">
+                <h4 class="modal-title text-model" *ngIf="btnTrungThau">Kết quả dự thầu: {{textTrungThau}} thầu</h4>
+                <h4 class="modal-title text-model" *ngIf="btnTratThau">Kết quả dự thầu: {{textTratThau}} thầu</h4>
+                <h4 class="modal-title text-model" *ngIf="btnHuyThau">Kết quả dự thầu: {{textHuyThau}} thầu</h4>
+            </div>
+            <div class="col-md-1">
+                <button type="button" class="close pull-right" aria-label="Close" (click)="closeModel()">
+                    <span aria-hidden="true">&times;</span>
+                </button>
             </div>
         </div>
-        <div class="text-center">
-            <button type="submit" class="btn btn-primary w-80" (click)="btnOk(uploadFile)">OK</button>
-            <button type="button" class="btn btn-default w-80 bg-cancle" (click)="closeModel()">Hủy</button>
+        <div class="modal-body">
+            <div class="row" style="padding-bottom: 40px;font-weight: 700">
+                <div class="col-md-3 offset-md-1 lh" *ngIf="btnTrungThau">Lý do {{textTrungThau}} thầu</div>
+                <div class="col-md-3 offset-md-1 lh" *ngIf="btnTratThau">Lý do {{textTratThau}} thầu</div>
+                <div class="col-md-3 offset-md-1 lh" *ngIf="btnHuyThau">Lý do {{textHuyThau}} thầu</div>
+                <div class="col-md-6">
+                    <span class="custom-dropdown" style="width: 100%">
+                        <select class="form-control" tabindex="5" formControlName="reasonName" [class.is-invalid]="formErrors.reasonName">
+                            <option [ngValue]="null">---Chọn---</option>
+                            <option *ngFor="let item of reason.items" [value]="item.id">{{item.reasonName }}</option>
+                        </select>
+                    </span>
+                    <div class="invalid-feedback" *ngIf="formErrors.reasonName">
+                        {{formErrors.reasonName}}
+                    </div>
+                </div>
+            </div>
+            <div class="text-center">
+                <button type="submit" class="btn btn-primary w-80" [disabled]="loading">OK</button>
+                <button type="button" class="btn btn-default w-80 bg-cancle" (click)="closeModel()">Hủy</button>
+            </div>
         </div>
-    </div>
+    </form>
 </ng-template>
 <!-- Modal upladfile -->
 
 <ng-template #uploadFile>
     <form [formGroup]="formUpload" (ngSubmit)="onSubmit()">
-        <div class="modal-header no-boder-bottom">
+        <div class="modal-header no-bt-bdr">
             <div class="col-md-10 offset-md-1 text-center">
                 <h4 class="modal-title text-title text-model">Upload kết quả dự thầu</h4>
             </div>
@@ -123,7 +130,7 @@
             <div class="row pd-up">
                 <div class="col-md-4 mg-l">Ngày nhận kết quả</div>
                 <div class="col-md-7 input-group">
-                    <owl-date-time [readonlyInput]="datePickerConfig.readonlyInput" [locale]="datePickerConfig.vi" [placeHolder]="datePickerConfig.placeHolderVn">
+                    <owl-date-time   [placeHolder]="datePickerConfig.placeHolderVn">
                     </owl-date-time>
                     <span class="input-group-addon">
                         <i class="fa fa-calendar"></i>

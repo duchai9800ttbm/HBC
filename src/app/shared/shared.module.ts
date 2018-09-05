@@ -1,7 +1,8 @@
 import { DataTablesModule } from 'angular-datatables';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { DateTimePickerModule } from 'ng-pick-datetime';
+// import { DateTimePickerModule } from 'ng-pick-datetime';
+import { OwlDateTimeModule, OwlNativeDateTimeModule } from 'ng-pick-datetime';
 import { SharedComponentsModule } from './components/shared-components.module';
 import { SharedPipesModule } from './pipes/shared-pipes.module';
 import { CommentsModule } from './modules/comments/comments.module';
@@ -49,9 +50,14 @@ import { ButtonModule } from '@progress/kendo-angular-buttons';
 import { ButtonGroupModule } from '@progress/kendo-angular-buttons';
 import { PDFExportModule } from '@progress/kendo-angular-pdf-export';
 import { LayoutService } from './services/layout.service';
-
+import { InputsModule } from '@progress/kendo-angular-inputs';
+import { HttpClientModule } from '@angular/common/http';
+import { UploadModule } from '@progress/kendo-angular-upload';
 @NgModule({
     imports: [
+        HttpClientModule,
+        UploadModule,
+        InputsModule,
         PDFExportModule,
         ButtonModule,
         ButtonGroupModule,
@@ -76,7 +82,8 @@ import { LayoutService } from './services/layout.service';
         AutoCompleteModule,
         DropdownModule,
         DataTablesModule,
-        DateTimePickerModule,
+        OwlDateTimeModule,
+        OwlNativeDateTimeModule,
         CommentsModule,
         ActivitiesModule,
         AuditsModule,
@@ -94,6 +101,9 @@ import { LayoutService } from './services/layout.service';
         // ScrollToTopService
     ],
     exports: [
+        HttpClientModule,
+        UploadModule,
+        InputsModule,
         PDFExportModule,
         ButtonModule,
         ButtonGroupModule,
@@ -116,7 +126,8 @@ import { LayoutService } from './services/layout.service';
         DataTablesModule,
         AutoCompleteModule,
         DropdownModule,
-        DateTimePickerModule,
+        OwlDateTimeModule,
+        OwlNativeDateTimeModule,
         CommentsModule,
         ActivitiesModule,
         AuditsModule,
@@ -130,24 +141,6 @@ import { LayoutService } from './services/layout.service';
         DropDownsModule,
         MenuModule
         // ScrollToTopService
-    ],
-    providers: [
-        TranslateService,
-        AuthGuard,
-        ApiService,
-        DataService,
-        UserService,
-        WindowService,
-        FengShuisInforService,
-        PackageService,
-        DocumentService,
-        ScrollToTopService,
-        OpportunityHsmtService,
-        DocumentReviewService,
-        SettingService,
-        PackageSuccessService,
-        EmailService,
-        LayoutService
-    ],
+    ]
 })
 export class SharedModule { }

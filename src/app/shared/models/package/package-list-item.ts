@@ -1,3 +1,5 @@
+import { SafeUrl } from "../../../../../node_modules/@angular/platform-browser";
+
 export class PackageListItem {
     bidOpportunityId: number;
     classify: string;
@@ -91,7 +93,7 @@ export class PackageListItem {
         value: string;
         displayText: string
     };
-    documentLink: string;
+    documentLink: string | SafeUrl;
     status: {
         key: string;
         value: string;

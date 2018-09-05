@@ -1,7 +1,7 @@
 /* You can add global styles to this file, and also import other style files */
 
 @import "bootstrap/bootstrap";
-@import "kendo/scss/all";
+//@import "kendo/scss/all";
 @import "spinner";
 @import "form";
 @import "utils";
@@ -20,6 +20,7 @@
 @import 'sidebar-menu';
 @import 'checkbox_custom';
 @import "~nouislider/distribute/nouislider.css";
+@import 'customKendo';
 @charset "UTF-8";
 /*VARIABLES
 ====================================================*/
@@ -928,54 +929,20 @@ pre {
     color: #fff;
 }
 
+::-webkit-scrollbar {
+    height: 8px;
+ }
 
+::-webkit-scrollbar-track {
+    background-color:#f8f8f8;
+ // border-radius: 5px;
 
-
-
-
-
-
-
-
-
-//kendo
-.k-datepicker .k-select, .k-timepicker .k-select, .k-datetimepicker .k-select{
-    width: 40px !important;
-    background-color: #00a0e3!important;
-    .k-icon{
-        color: #fff!important;
-    }
-    border-color: 1px solid #00a0e3 !important;
-    &:hover{
-        .k-icon{
-            color: #fff!important;
-        }
-    }
 }
-.k-picker-wrap .k-state-default{
-    &:hover{
-        .k-select{
-            color: #fff!important;
-        }
-    }
+::-webkit-scrollbar-thumb {
+    background-color: #c6c6c6;
+    cursor: pointer;
 }
 
-.k-dropdown .k-select{
-     width: 40px !important;
-    background-color: #00a0e3!important;
-    color: #fff;
-    border-color: 1px solid #00a0e3 !important;
-    &:hover{
-        color: #fff!important;
-    }
-}
-
-.k-textbox::selection, .k-input::selection, .k-textarea::selection{
-    color: #656565!important;
-}
-
-
-.k-widget ::selection, .k-block ::selection, .k-panel ::selection {
-    color: #656565!important;
-
+router-oulet{
+    height: 100%;
 }

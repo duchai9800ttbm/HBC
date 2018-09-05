@@ -1,11 +1,11 @@
-<div id="outer">
+<div class="outer" id="outer">
     <div class=" title-list-package d-flex flex-wrap align-items-center status-filter">
         <div class="mr-auto d-flex align-items-end list-package mt-2 mb-2">
             <div class="d-flex justify-content-start" style="height: 35px;">
                 <div class="rule mr-2">
                 </div>
                 <div class="center-parent  mr-4">
-                    <div style="font-size: 15px"> {{textContract}}</div>
+                    <div class="fs"> {{textContract}}</div>
                 </div>
             </div>
         </div>
@@ -24,7 +24,7 @@
         </div>
     </div>
     <div class="d-flex form-group" *ngIf="isSignedContract">
-        <h5 class="d-inline mb-0 mr-auto text-dark text-uppercase">Hợp đồng ký kết</h5>
+        <h5 class="d-inline mb-0 mr-auto text-dark text-uppercase pd-t">Hợp đồng ký kết</h5>
         <div class="btn-toolbar">
             <div class="input-group btn-rg">
                 <span class="input-group-addon">Tìm kiếm theo</span>
@@ -44,7 +44,7 @@
 
 
     <div id="outer-img" *ngIf="!isSignedContract">
-        <img src="../../../../../../assets/images/kykethd.png" alt="">
+        <img src="assets/images/kykethd.png" alt="">
         <h5>Đã hoàn tất ký kết hợp đồng</h5>
         <div class="confirm-button">
             <button class="btn btn-primary" id="success" (click)="modalAdd(hopdong)">Thêm mới hợp đồng ký kết</button>
@@ -95,8 +95,8 @@
                     </span>
                 </div>
 
-                <div class="form-group ">
-                    <button type="submit" class="btn btn-primary mx-sm-2" (click)="filter()">
+                <div class="form-group filter-contract">
+                    <button type="submit" class="btn btn-primary mr-f" (click)="filter()">
                         <i class="fa fa-filter" aria-hidden="true"></i>
                         <span class="filter-pd">Lọc </span>
                     </button>
@@ -260,28 +260,28 @@
                                 </div>
                             </div>
                         </td>
-                        <td>{{item.documentName}}</td>
+                        <td class="documentName">{{item.documentName}}</td>
                         <td class="text-center">{{item.version}}</td>
-                        <td class="text-center">{{item.description}} </td>
+                        <td class="text-center description">{{item.description}} </td>
 
                         <td class="select-filter text-center">{{item.status}}</td>
-                        <td class="text-center">{{item.employeeName}}</td>
+                        <td class="text-center employeeName">{{item.employeeName}}</td>
                         <td class="text-center">{{item.createdDate}}</td>
                         <td class="text-center">{{item.upDate}}</td>
                         <td class="text-center">{{item.interview}}</td>
                         <td class="text-center">
                             <div class="d-flex justify-content-around">
-                                <div>
+                                <div id="mr">
                                     <a title="Tải file" (click)="downloadFileItem(item.id)">
                                         <i class="fa fa-download color-item-down" aria-hidden="true"></i>
                                     </a>
                                 </div>
-                                <div>
+                                <div id="mr">
                                     <a title="Xóa file">
                                         <i class="fa fa-trash-o" aria-hidden="true"></i>
                                     </a>
                                 </div>
-                                <div>
+                                <div id="mr">
                                     <a title="In">
                                         <i class="fa fa-print color-item-print" aria-hidden="true"></i>
                                     </a>
@@ -355,7 +355,7 @@
             <div class="row pd-up">
                 <div class="col-md-4 mg-l">Ngày ký hợp đồng</div>
                 <div class="col-md-7 input-group">
-                    <owl-date-time [readonlyInput]="datePickerConfig.readonlyInput" [locale]="datePickerConfig.vi" [placeHolder]="datePickerConfig.placeHolderVn">
+                    <owl-date-time   [placeHolder]="datePickerConfig.placeHolderVn">
                     </owl-date-time>
                     <span class="input-group-addon">
                         <i class="fa fa-calendar"></i>

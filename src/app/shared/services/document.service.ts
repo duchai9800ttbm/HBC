@@ -10,6 +10,7 @@ import { FilterPipe } from '../../../../node_modules/ngx-filter-pipe';
 import * as FileSaver from 'file-saver';
 import { InstantSearchService } from './instant-search.service';
 import { URLSearchParams } from '@angular/http';
+import { PagedResult } from '../models/paging-result.model';
 
 @Injectable()
 export class DocumentService {
@@ -24,6 +25,8 @@ export class DocumentService {
         urlFilterParams.append('status', filter.status);
         urlFilterParams.append('uploadedEmployeeId', filter.uploadedEmployeeId ? filter.uploadedEmployeeId.toString() : '');
         urlFilterParams.append('createdDate', filter.createDate ? filter.createDate.toString() : '');
+        urlFilterParams.append('receivedDate', filter.receivedDate ? filter.receivedDate.toString() : '');
+
         return urlFilterParams;
     }
     private static toRecordInvitation(result: any): any {
@@ -39,14 +42,83 @@ export class DocumentService {
             // fileGuid: result.fileGuid,
         };
     }
+
+    private static toDocumentListItem(result: any): BidDocumentModel {
+        if (!result) {
+            return new BidDocumentModel();
+        }
+        return {
+            id: result.id,
+            documentType: result.documentType && result.documentType.value,
+            documentName: result.documentName,
+            version: result.version,
+            status: result.status,
+            uploadedBy: result.uploadedBy && {
+                employeeId: result.uploadedBy.employeeId,
+                employeeNo: result.uploadedBy.employeeNo,
+                employeeName: result.uploadedBy.employeeName,
+                employeeAvatar: result.uploadedBy.employeeAvatar,
+            },
+            createdDate: result.createdDate,
+            receivedDate: result.receivedDate,
+            desc: result.description,
+            fileGuid: result.fileGuid,
+            url: result.url
+        };
+    }
     get employeeId() {
         return this.sessionService.currentUser.employeeId;
     }
 
-    read(opportunityId: number | string): Observable<BidDocumentModel[]> {
-        const url = `bidopportunity/${opportunityId}/biddocuments`;
+    read(opportunityId: number | string, bidDocumentMajorTypeId: number | string): Observable<BidDocumentGroupModel[]> {
+        const url = `bidopportunity/${opportunityId}/biddocumenttypes/${bidDocumentMajorTypeId}/biddocuments/filter/0/1000`;
         return this.apiService.get(url)
-            .map(response => response.result as BidDocumentModel[]);
+            .map(response => {
+                if (!response) {
+                    return this.group([]);
+                }
+                const list = ((response.result && response.result.items) || []).map(DocumentService.toDocumentListItem);
+                return this.group(list);
+            });
+    }
+
+    bidDocumentMajortypes(): Observable<any> {
+        const url = `biddocumentmajortypes`;
+        return this.apiService.get(url).map(response => {
+            const result = response.result;
+            return result.map(i => {
+                return {
+                    id: i.key,
+                    text: i.value
+                };
+            });
+        });
+    }
+
+    bidDocumentMajorTypeByParent(parentId: number): Observable<any> {
+        const url = `biddocumenttypes/${parentId}/child`;
+        return this.apiService.get(url).map(response => {
+            const result = response.result;
+            return result.map(i => {
+                return {
+                    id: i.key,
+                    text: i.value
+                };
+            });
+        });
+    }
+
+    bidDocumentType(): Observable<any> {
+        const url = `biddocumenttypes`;
+        return this.apiService.get(url).map(response => {
+            const result = response.result;
+            return result.map(i => {
+                return {
+                    id: i.key,
+                    text: i.value
+                };
+            });
+        });
     }
 
     readAndGroup(opportunityId: number | string): Observable<BidDocumentGroupModel[]> {
@@ -110,19 +182,23 @@ export class DocumentService {
     upload(
         id: number,
         documentName: string,
-        documentType: string,
+        documentTypeId: string,
         description: string,
         receivedDate: number,
         file: File,
+        link: string,
+        version: string
     ) {
         const url = `biddocument/upload`;
         const formData = new FormData();
         formData.append('BidOpportunityId', `${id}`);
-        formData.append('DocumentType', documentType);
+        formData.append('DocumentTypeId', documentTypeId);
         formData.append('DocumentName', documentName);
         formData.append('DocumentDesc', description);
         formData.append('ReceivedDate', `${moment(receivedDate).unix()}`);
         formData.append('DocumentFile', file);
+        formData.append('Url', link);
+        formData.append('Version', version);
         return this.apiService.postFile(url, formData)
             .map(response => response)
             .share();
@@ -159,6 +235,9 @@ export class DocumentService {
                 const day = moment.utc(y.createdDate * 1000).get('date');
                 const month = moment.utc(y.createdDate * 1000).get('month');
                 const year = moment.utc(y.createdDate * 1000).get('year');
+                const day2 = moment.utc(y.receivedDate * 1000).get('date');
+                const month2 = moment.utc(y.receivedDate * 1000).get('month');
+                const year2 = moment.utc(y.receivedDate * 1000).get('year');
                 return {
                     id: y.id,
                     documentType: y.documentType,
@@ -171,6 +250,9 @@ export class DocumentService {
                     day: day,
                     month: month + 1,
                     year: year,
+                    day2: day2,
+                    month2: month2 + 1,
+                    year2: year2,
                     employeeId: y.uploadedBy.employeeId
                 };
             });
@@ -203,6 +285,9 @@ export class DocumentService {
             delete element.day;
             delete element.month;
             delete element.year;
+            delete element.day2;
+            delete element.month2;
+            delete element.year2;
             delete element.employeeId;
         });
         return source;
@@ -210,6 +295,8 @@ export class DocumentService {
 
     sortAndSearch(searchTerm: string, filterModel: BidDocumentFilter, source: any[]) {
         let day = null, month = null, year = null;
+        let day2 = null, month2 = null, year2 = null;
+
         if (filterModel.createDate) {
             const today = new Date(
                 moment(filterModel.createDate).unix()
@@ -217,7 +304,17 @@ export class DocumentService {
             day = moment(filterModel.createDate).get('date');
             month = moment(filterModel.createDate).get('month') + 1;
             year = moment(filterModel.createDate).get('year');
+
         }
+        if (filterModel.receivedDate) {
+            const today2 = new Date(
+                moment(filterModel.receivedDate).unix()
+            );
+            day2 = moment(filterModel.receivedDate).get('date');
+            month2 = moment(filterModel.receivedDate).get('month') + 1;
+            year2 = moment(filterModel.receivedDate).get('year');
+        }
+
         return this.filterService
             .transform(source,
                 {
@@ -226,7 +323,10 @@ export class DocumentService {
                     employeeId: filterModel.uploadedEmployeeId ? +filterModel.uploadedEmployeeId : null,
                     day: `${day ? day : ''}`,
                     month: `${month ? month : ''}`,
-                    year: `${year ? year : ''}`
+                    year: `${year ? year : ''}`,
+                    day2: `${day2 ? day2 : ''}`,
+                    month2: `${month2 ? month2 : ''}`,
+                    year2: `${year2 ? year2 : ''}`
                 });
     }
 }

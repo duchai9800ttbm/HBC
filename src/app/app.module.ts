@@ -1,5 +1,5 @@
-import { NgModule } from '@angular/core';
-import { CommonModule, LocationStrategy, HashLocationStrategy } from '@angular/common';
+import { NgModule, LOCALE_ID } from '@angular/core';
+import { CommonModule, LocationStrategy, HashLocationStrategy, registerLocaleData } from '@angular/common';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HttpClientModule, HttpClient } from '@angular/common/http';
@@ -8,7 +8,8 @@ import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { AuthGuard, SessionService, ConfirmationService, InstantSearchService, UserNotificationService } from './shared/services';
+// tslint:disable-next-line:max-line-length
+import { AuthGuard, SessionService, ConfirmationService, InstantSearchService, UserNotificationService, ApiService, DataService, UserService } from './shared/services';
 import { AlertService } from './shared/services';
 import { HttpModule } from '@angular/http';
 import { SharedModule } from './shared/shared.module';
@@ -18,6 +19,25 @@ import { StarRatingModule } from 'angular-star-rating';
 import { DataUploadService } from './shared/services/data-upload.service';
 import { GroupUserService } from './shared/services/group-user.service';
 import { LiveformDataReportService } from './shared/services/liveform-data-report.service';
+import '@progress/kendo-angular-intl/locales/vi/all';
+import { IntlModule } from '@progress/kendo-angular-intl';
+import '@angular/common/locales/vi';
+import { MessageService } from '../../node_modules/@progress/kendo-angular-l10n';
+import { MyMessageService } from './my-message.service';
+import localeFrCa from '@angular/common/locales/vi';
+import localeFrCaExtra from '@angular/common/locales/extra/vi';
+import { WindowService } from '@progress/kendo-angular-dialog';
+import { FengShuisInforService } from './shared/services/feng-shuis-infor.service';
+import { PackageService } from './shared/services/package.service';
+import { DocumentService } from './shared/services/document.service';
+import { ScrollToTopService } from './shared/services/scroll-to-top.service';
+import { OpportunityHsmtService } from './shared/services/opportunity-hsmt.service';
+import { DocumentReviewService } from './shared/services/document-review.service';
+import { SettingService } from './shared/services/setting.service';
+import { PackageSuccessService } from './shared/services/package-success.service';
+import { EmailService } from './shared/services/email.service';
+import { LayoutService } from './shared/services/layout.service';
+registerLocaleData(localeFrCa, localeFrCaExtra);
 // AoT requires an exported function for factories
 export function createTranslateLoader(http: HttpClient) {
     // for development
@@ -27,6 +47,7 @@ export function createTranslateLoader(http: HttpClient) {
 
 @NgModule({
     imports: [
+        IntlModule,
         StarRatingModule.forRoot(),
         CommonModule,
         SharedModule,
@@ -54,7 +75,28 @@ export function createTranslateLoader(http: HttpClient) {
         UserNotificationService,
         LiveformDataReportService,
         DataUploadService,
-        { provide: LocationStrategy, useClass: HashLocationStrategy }
+        TranslateService,
+        AuthGuard,
+        ApiService,
+        DataService,
+        UserService,
+        WindowService,
+        FengShuisInforService,
+        PackageService,
+        DocumentService,
+        ScrollToTopService,
+        OpportunityHsmtService,
+        DocumentReviewService,
+        SettingService,
+        PackageSuccessService,
+        EmailService,
+        LayoutService,
+        { provide: LocationStrategy, useClass: HashLocationStrategy },
+        {
+            // Set default locale to bg-BG
+            provide: LOCALE_ID, useValue: 'vi'
+        },
+        { provide: MessageService, useClass: MyMessageService },
     ],
 })
 export class AppModule { }

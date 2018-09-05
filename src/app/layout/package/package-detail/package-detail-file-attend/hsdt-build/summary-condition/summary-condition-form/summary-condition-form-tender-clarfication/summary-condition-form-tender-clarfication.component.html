@@ -1,0 +1,113 @@
+<form [formGroup]="clarficationForm">
+    <div class="p-3">
+        <h5 class="text-uppercase">VIII. yêu cầu làm rõ hồ sơ mời thầu (tender clarifitications)</h5>
+        <div class="mt-3">
+            <div><strong>1. Gửi</strong></div>
+        </div>
+        <div class="row mt-3">
+            <div class="col-md-6"><strong class="ml-3"><u>Consultant (QS or Engineer)</u></strong></div>
+            <div class="col-md-6 px-0">
+                <strong><u>Employer (Employer Representative)</u></strong>
+            </div>
+        </div>
+        <div class="row mt-3">
+            <div class="col-md-6 pr-0 row" formGroupName="consultant">
+                <div class="col-md-4 pl-2r pr-0">Tên công ty</div>
+                <div class="col-md-8"><input formControlName="companyName" type="text" class="form-control"></div>
+            </div>
+            <div class="col-md-6 pr-0 row" formGroupName="employer">
+                <div class="col-md-4 pl-2r pr-0">Tên công ty</div>
+                <div class="col-md-8 pr-0"><input formControlName="companyName" type="text" class="form-control"></div>
+            </div>
+        </div>
+        <div class="row mt-3">
+            <div class="col-md-6 pr-0 row" formGroupName="consultant">
+                <div class="col-md-4 pl-2r pr-0">Địa chỉ công ty</div>
+                <div class="col-md-8"><input formControlName="companyAddress" type="text" class="form-control"></div>
+            </div>
+            <div class="col-md-6 pr-0 row" formGroupName="employer">
+                <div class="col-md-4 pl-2r pr-0">Địa chỉ công ty</div>
+                <div class="col-md-8 pr-0"><input formControlName="companyAddress" type="text" class="form-control"></div>
+            </div>
+        </div>
+        <div class="row mt-3">
+            <div class="col-md-6 row">
+                <div class="col-md-4 pl-2r pr-0">Người liên hệ</div>
+            </div>
+            <div class="col-md-6 row">
+                <div class="col-md-4 pl-2r pr-0">Người liên hệ</div>
+            </div>
+        </div>
+        <div class="row mt-3">
+            <div class="col-md-6 pr-0 row" formGroupName="consultant">
+                <div class="col-md-4 pl-5 pr-0">Họ và tên</div>
+                <div class="col-md-8" formGroupName="contactPerson">
+                    <input type="text" formControlName="name" class="form-control">
+                </div>
+            </div>
+            <div class="col-md-6 pr-0 row" formGroupName="employer">
+                <div class="col-md-4 pl-5 pr-0">Họ và tên</div>
+                <div class="col-md-8 pr-0" formGroupName="contactPerson">
+                    <input type="text" formControlName="name" class="form-control">
+                </div>
+            </div>
+        </div>
+        <div class="row mt-3">
+            <div class="col-md-6 pr-0 row" formGroupName="consultant">
+                <div class="col-md-4 pl-5 pr-0">Địa chỉ</div>
+                <div class="col-md-8" formGroupName="contactPerson">
+                    <input type="text" formControlName="address" class="form-control">
+                </div>
+            </div>
+            <div class="col-md-6 pr-0 row" formGroupName="employer">
+                <div class="col-md-4 pl-5 pr-0">Địa chỉ</div>
+                <div class="col-md-8 pr-0" formGroupName="contactPerson">
+                    <input type="text" formControlName="address" class="form-control">
+                </div>
+            </div>
+        </div>
+        <div class="row mt-3">
+            <div class="col-md-6 pr-0 row" formGroupName="consultant">
+                <div class="col-md-4 pl-5 pr-0">Email</div>
+                <div class="col-md-8" formGroupName="contactPerson">
+                    <input type="text" formControlName="email" class="form-control">
+                </div>
+            </div>
+            <div class="col-md-6 pr-0 row" formGroupName="employer">
+                <div class="col-md-4 pl-5 pr-0">Email</div>
+                <div class="col-md-8 pr-0" formGroupName="contactPerson">
+                    <input type="text" formControlName="email" class="form-control">
+                </div>
+            </div>
+        </div>
+        <div class="row mt-3">
+            <div class="col-md-6 pr-0 row" formGroupName="consultant">
+                <div class="col-md-4 pl-5 pr-0">Vị trí/ chức vụ</div>
+                <div class="col-md-8" formGroupName="contactPerson">
+                    <input type="text" formControlName="level" class="form-control">
+                </div>
+            </div>
+            <div class="col-md-6 pr-0 row" formGroupName="employer">
+                <div class="col-md-4 pl-5 pr-0">Vị trí/ chức vụ</div>
+                <div class="col-md-8 pr-0" formGroupName="contactPerson">
+                    <input type="text" formControlName="level" class="form-control">
+                </div>
+            </div>
+        </div>
+        <div class="mt-3">
+            <div><strong>2. Hạn chót gửi làm rõ hồ sơ</strong></div>
+        </div>
+        <div class="row mt-3">
+            <div class="col-md-6 row" formGroupName="closingTime">
+                <div class="col-md-4 pl-5 pr-0">Ngày</div>
+                <div class="col-md-8 pr-0"><kendo-datepicker formControlName="closingTime" class="form-control" ></kendo-datepicker></div>
+            </div>
+        </div>
+        <div class="row mt-3">
+            <div class="col-md-6 row" formGroupName="closingTime">
+                <div class="col-md-4 pl-5 pr-0">Ghi chú</div>
+                <div class="col-md-8 pr-0"><textarea formControlName="desc" class="form-control"></textarea></div>
+            </div>
+        </div>
+    </div>
+</form>

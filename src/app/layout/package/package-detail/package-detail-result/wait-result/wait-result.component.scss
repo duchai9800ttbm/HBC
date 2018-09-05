@@ -1,4 +1,4 @@
-#outer {
+.outer {
     margin-top: 15px;
     width: 100%;
     //  height: 100vh;
@@ -36,6 +36,7 @@
 
 .no-boder-bottom {
     border-bottom: none;
+    margin-top: 15px;
 }
 .text-model {
     color: #343a40 !important;
@@ -113,4 +114,19 @@
         top: -8px;
         content: "";
       }
+}
+@media only screen and (max-width: 1024px) {
+    #outer {
+        zoom: 0.8 !important;
+    }    
+    .modal-content {
+        zoom: 0.8 !important;
+    }
+}
+.lh {
+    line-height: 30px;
+}
+.no-bt-bdr {
+    border-bottom: none;
+    margin-top: 20px;
 }

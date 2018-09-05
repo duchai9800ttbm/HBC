@@ -234,7 +234,6 @@
 
     "Hồ sơ mời thầu": "Chưa quyết định tham gia dự thầu",
     "Hồ sơ dự thầu": "Chưa có kết quả dự thầu",
-    "Kết quả dự thầu": "Đã có kết quả dự thầu",
 
     "CanBoSungHSMT": "Cần Bổ Sung HSMT",
     "CanDanhGiaHSMT": "Cần Đánh Giá HSMT",
@@ -310,5 +309,6 @@
     "ManageUserGroups": "Quản lý nhóm người dùng",
     "ManageSettings": "Quản lý cài đặt",
     "New": "Khách hàng mới",
-    "Old" : "Khách hàng cũ"
+    "Old" : "Khách hàng cũ",
+    "HSMT": "Hồ sơ mời thầu"
 }

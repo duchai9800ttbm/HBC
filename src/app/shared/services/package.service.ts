@@ -17,6 +17,7 @@ import { Subject } from '../../../../node_modules/rxjs';
 import { BidUserGroupMemberResponsive } from '../models/api-response/setting/bid-user-group-member-responsive';
 import { SETTING_BID_USER, SETTING_BID_STAGE } from '../configs/common.config';
 import { BidPermissionGroupResponsive } from '../models/api-response/setting/bid-permission-group-responsive';
+import * as FileSaver from 'file-saver';
 
 @Injectable()
 export class PackageService {
@@ -37,20 +38,21 @@ export class PackageService {
         urlFilterParams.append('chairEmployeeId', filter.chairEmployeeId);
         urlFilterParams.append(
             'minCost',
-            filter.minCost ? filter.minCost.toString() : ''
+            filter.minCost.toString()
         );
         urlFilterParams.append(
             'maxCost',
-            filter.maxCost ? filter.maxCost.toString() : ''
+            filter.maxCost.toString()
         );
         urlFilterParams.append('sorting', filter.sorting);
+        console.log('urlFilterParams', urlFilterParams);
         return urlFilterParams;
     }
 
     private static toPackageListItem(result: any): PackageListItem {
         return {
             bidOpportunityId: result.bidOpportunityId,
-            classify: result.classify,
+            classify: result.classify ?  result.classify.value : '',
             amount: result.amount,
             opportunityName: result.opportunityName,
             projectName: result.projectName,
@@ -168,7 +170,7 @@ export class PackageService {
         private filterService: FilterPipe,
         private instantSearchService: InstantSearchService,
         private apiService: ApiService
-    ) {}
+    ) { }
 
     // active step
     setUserId(data: boolean) {
@@ -206,9 +208,9 @@ export class PackageService {
         page: number | string,
         pageSize: number | string
     ): Observable<PagedResult<PackageListItem>> {
-        const filterUrl = `bidopportunity/filter/${page}/${pageSize}?searchTerm=`;
+        const filterUrl = `bidopportunity/filter/${page}/${pageSize}?searchTerm=${searchTerm}`;
         const urlParams = PackageService.createFilterParams(filter);
-        urlParams.append('search', searchTerm);
+        // urlParams.append('search', searchTerm);
         return this.apiService.get(filterUrl, urlParams).map(response => {
             const result = response.result;
             return {
@@ -440,6 +442,8 @@ export class PackageService {
         });
     }
 
+
+
     getRegiontypesPackage(): Observable<any> {
         const url = `data/regiontypes`;
         return this.apiService.get(url).map(response => {
@@ -601,7 +605,7 @@ export class PackageService {
                 ? +formValue.chairEmployeeId
                 : 0,
             bidStatusId: formValue.bidStatusId,
-            amount: formValue.amount,
+            amount: formValue.amount ? formValue.amount : 0,
             evaluation: formValue.evaluation,
             startTrackingDate: moment(formValue.startTrackingDate).unix(),
             submissionDate: moment(formValue.submissionDate).unix(),
@@ -652,7 +656,7 @@ export class PackageService {
                 ? +formValue.chairEmployeeId
                 : 0,
             bidStatusId: formValue.bidStatusId,
-            amount: formValue.amount,
+            amount: formValue.amount ? formValue.amount : 0,
             evaluation: formValue.evaluation,
             startTrackingDate: moment(formValue.startTrackingDate).unix(),
             submissionDate: moment(formValue.submissionDate).unix(),
@@ -853,5 +857,21 @@ export class PackageService {
     updateBidPermissionGroupByStage(bidId: number, data): Observable<any> {
         const url = `bidopportunity/${bidId}/changebidusergrouppermission`;
         return this.apiService.post(url, data).map(response => response.result);
+    }
+
+    exportExcel(
+        searchTerm: string,
+        filter: PackageFilter,
+    ) {
+        const filterUrl = `bidopportunity/export?searchTerm=`;
+        const urlParams = PackageService.createFilterParams(filter);
+        urlParams.append('search', searchTerm);
+        return this.apiService.getFileHBC(filterUrl, urlParams).map(response => {
+            return FileSaver.saveAs(
+                new Blob([response.file], {
+                    type: `${response.file.type}`,
+                }), response.fileName
+            );
+        });
     }
 }

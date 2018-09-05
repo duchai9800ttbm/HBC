@@ -905,4 +905,18 @@ export class DataService {
         const url = `bidusergroup/getall`;
         return this.apiService.get(url).map(response => response.result);
     }
+    // Danh sách loại tài liệu hồ sơ dự thầu
+    getListTenderDocumentType(): Observable<DictionaryItem[]> {
+        const url = `tenderdocumenttype/getall`;
+        return this.apiService.get(url)
+            .map( response => {
+                const result = response.result;
+                return result.map( item => {
+                    return {
+                        id: item.key,
+                        text: item.value
+                    };
+                });
+            });
+    }
 }

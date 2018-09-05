@@ -1,99 +1,112 @@
-<div>
-    <div class="title-detail center-parent">
-      <div class="col-md-1"></div>
-      <div class="mr-auto col-md-10">
-        <div class="media-header center-parent">
-          <h3 class="d-inline mb-0 text-dark bold-title title">TẠO LỜI MỜI PHỎNG VẤN</h3>
+<form [formGroup]="createFormNewInvitation" *ngIf="createFormNewInvitation" novalidate (ngSubmit)="onSubmit()">
+    <div>
+        <div class="title-detail center-parent">
+            <div class="col-md-1"></div>
+            <div class="mr-auto col-md-10">
+                <div class="media-header center-parent">
+                    <h3 class="d-inline mb-0 text-dark bold-title title">TẠO LỜI MỜI PHỎNG VẤN</h3>
+                </div>
+            </div>
+            <div class="col-md-1 close-popup close-popup-X">
+                <span (click)="closePopup()">X</span>
+            </div>
         </div>
-      </div>
-      <div class="col-md-1 close-popup close-popup-X">
-        <span (click)="closePopup()">X</span>
-      </div>
-    </div>
-    <div class="row pad-row">
-      <div class="col-md-4 name-field">
-        Khách hàng
-      </div>
-      <div class="col-md-8" style="padding-left: 0px">
-        <input class="form-control w-75" type="text">
-      </div>
-    </div>
-    <div class="row pad-row">
-      <div class="col-md-4 name-field">
-        Ngày nhận phỏng vấn
-      </div>
-      <div class="col-md-8" style="padding-left: 0px">
-        <div class="input-group w-75">
-          <owl-date-time [locale]="datePickerConfig.vi" [placeHolder]="datePickerConfig.datePlaceHolder" [type]="datePickerConfig.calendarType"
-            [dateFormat]="datePickerConfig.dateFormat">
+        <div class="row pad-row">
+            <div class="col-md-4 name-field p-2">
+                Khách hàng
+            </div>
+            <div class="col-md-8" style="padding-left: 0px">
+                <input class="form-control w-75" type="text" disabled="true" formControlName="customerName">
+            </div>
+        </div>
+        <div class="row pad-row">
+            <div class="col-md-4 name-field p-2">
+                Ngày nhận phỏng vấn
+            </div>
+            <div class="col-md-8" style="padding-left: 0px">
+                <div class="input-group w-75">
+                    <!-- <owl-date-time   
+             formControlName="approvedDate" class="font-size-datePickerConfig">
           </owl-date-time>
           <span class="input-group-addon">
             <i class="fa fa-calendar"></i>
-          </span>
+          </span> -->
+                    <input [placeholder]="datePickerConfig.datePlaceHolder" class="input-date-time input-date-time-bar"
+                        readonly formControlName="approvedDate" [owlDateTimeTrigger]="dtApprovedDate" [owlDateTime]="dtApprovedDate">
+                    <owl-date-time #dtApprovedDate pickerType="calendar"></owl-date-time>
+                    <span [owlDateTimeTrigger]="dtApprovedDate" class="input-group-addon">
+                        <i class="fa fa-calendar"></i>
+                    </span>
+                </div>
+            </div>
         </div>
-      </div>
-    </div>
-    <div class="row pad-row">
-      <div class="col-md-4 name-field">
-        Thời gian phỏng vấn
-      </div>
-      <div class="col-md-8" style="padding-left: 0px">
-        <div class="input-group w-75">
-          <owl-date-time [locale]="datePickerConfig.vi" [placeHolder]="datePickerConfig.datePlaceHolder" [type]="datePickerConfig.calendarType"
-            [dateFormat]="datePickerConfig.dateFormat">
+        <div class="row pad-row">
+            <div class="col-md-4 name-field p-2">
+                Thời gian phỏng vấn
+            </div>
+            <div class="col-md-8" style="padding-left: 0px">
+                <div class="input-group w-75">
+                    <!-- <owl-date-time  [placeHolder]="datePickerConfig.placeHolderVnTime" 
+            [dateFormat]="datePickerConfig.datetimeFormat" formControlName="interviewDate" class="font-size-datePickerConfig">
           </owl-date-time>
           <span class="input-group-addon">
             <i class="fa fa-calendar"></i>
-          </span>
+          </span> -->
+                    <input [placeholder]="datePickerConfig.datePlaceHolder" class="input-date-time input-date-time-bar"
+                        readonly formControlName="interviewDate" [owlDateTimeTrigger]="dtInterviewDate" [owlDateTime]="dtInterviewDate">
+                    <owl-date-time #dtInterviewDate pickerType="calendar"></owl-date-time>
+                    <span [owlDateTimeTrigger]="dtInterviewDate" class="input-group-addon">
+                        <i class="fa fa-calendar"></i>
+                    </span>
+                </div>
+            </div>
         </div>
-      </div>
-    </div>
-    <div class="row pad-row">
-      <div class="col-md-4 name-field">
-        Địa điểm
-      </div>
-      <div class="col-md-8" style="padding-left: 0px">
-        <input class="form-control w-75" type="text">
-      </div>
-    </div>
-    <div class="row pad-row">
-      <div class="col-md-4 name-field">
-        Lần phỏng vấn
-      </div>
-      <div class="col-md-8" style="padding-left: 0px">
-        <input class="form-control w-75" type="text">
-      </div>
-    </div>
-    <div class="row pad-row">
-      <div class="col-md-4 name-field">
-        Nội dung
-      </div>
-      <div class="col-md-8" style="padding-left: 0px">
-        <input class="form-control w-75" type="text">
-      </div>
-    </div>
-    <div class="row pad-row">
-      <div class="col-md-4 name-field">
-        File đính kèm
-      </div>
-      <div class="col-md-8 d-flex" style="padding-left: 0px">
-        <div class="no-boder w-75 d-flex">
-          <span class="w-100">
-            <span class="form-control boder-input-choose-file">
-              {{'-- Chọn file --'}}
-            </span>
-          </span>
-          <span class="input-group-addon fileUpload">
-            <i class="fa fa-upload" aria-hidden="true"></i>
-            <input type="file" class="upload" (change)="fileChange($event)" accept=".xlsx,.xls,image/*,.doc, .docx,.ppt, .pptx,.txt,.pdf, .application/msword, application/vnd.openxmlformats-officedocument.wordprocessingml.document, application/vnd.ms-powerpoint, application/vnd.openxmlformats-officedocument.presentationml.slideshow, application/vnd.openxmlformats-officedocument.presentationml.presentation"
-            />
-          </span>
+        <div class="row pad-row">
+            <div class="col-md-4 name-field p-2">
+                Địa điểm
+            </div>
+            <div class="col-md-8" style="padding-left: 0px">
+                <input class="form-control w-75" type="text" formControlName="place">
+            </div>
         </div>
-      </div>
+        <div class="row pad-row">
+            <div class="col-md-4 name-field p-2">
+                Lần phỏng vấn
+            </div>
+            <div class="col-md-8" style="padding-left: 0px">
+                <input appInputNumber class="form-control w-75" type="text" formControlName="interviewTimes">
+            </div>
+        </div>
+        <div class="row pad-row">
+            <div class="col-md-4 name-field p-2">
+                Nội dung
+            </div>
+            <div class="col-md-8" style="padding-left: 0px">
+                <input textArea class="form-control w-75" type="text" formControlName="content">
+            </div>
+        </div>
+        <div class="row pad-row">
+            <div class="col-md-4 name-field p-2">
+                File đính kèm
+            </div>
+            <div class="col-md-8 d-flex" style="padding-left: 0px">
+                <div class="no-boder w-75 d-flex">
+                    <span class="w-100">
+                        <span class="form-control boder-input-choose-file">
+                            {{ this.createFormNewInvitation.get('attachedFiles').value ?
+                            this.createFormNewInvitation.get('attachedFiles').value : '-- Chọn file --'}}
+                        </span>
+                    </span>
+                    <span class="input-group-addon fileUpload">
+                        <i class="fa fa-upload" aria-hidden="true"></i>
+                        <input type="file" class="upload" (change)="fileChange($event)" accept=".xlsx,.xls,image/*,.doc, .docx,.ppt, .pptx,.txt,.pdf, .application/msword, application/vnd.openxmlformats-officedocument.wordprocessingml.document, application/vnd.ms-powerpoint, application/vnd.openxmlformats-officedocument.presentationml.slideshow, application/vnd.openxmlformats-officedocument.presentationml.presentation" />
+                    </span>
+                </div>
+            </div>
+        </div>
+        <div class="cus-button-popup">
+            <button type="submit" class="btn btn-primary">Tạo mới</button>
+            <button type="button" class="btn btn-secondary" (click)="closePopup()">Hủy</button>
+        </div>
     </div>
-    <div class="cus-button-popup">
-      <button type="button" class="btn btn-primary" >Tạo mới</button>
-      <button type="button" class="btn btn-secondary" (click)="closePopup()">Hủy</button>
-    </div>
-  
-  </div>
+</form>

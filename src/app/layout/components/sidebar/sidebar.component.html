@@ -97,7 +97,7 @@
 
     </ul>
 </nav>  -->
-<nav id="sidebar" class="sidebar" [@slideInOut]="state">
+<nav id="sidebar" class="sidebar" [@slideInOut]="state" (window:resize)="onResize($event)">
     <div class="d-flex flex-row-reverse button-tog" [class.center-parent]="showSidebarContent">
         <div class="action center-parent" width="">
             <div class="center-parent">
@@ -106,7 +106,7 @@
         </div>
 
     </div>
-    <div [class.toggle]="showSidebarContent" class="change">
+    <div [hidden]="showSidebarContent" class="change">
         <div class="font-weight-bold mb-3 mt-4">Thay đổi gần đây</div>
         <div class="mt-2">
             <div style="display: flex" class="row">

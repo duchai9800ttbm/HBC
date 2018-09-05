@@ -10,11 +10,11 @@ export class NumberAreaPipe implements PipeTransform {
   private CURRENCY_UNIT: string;
   constructor() {
     // TODO comes from configuration settings
-    this.DECIMAL_SEPARATOR = ',';
-    this.THOUSANDS_SEPARATOR = '.';
+    this.DECIMAL_SEPARATOR = '.';
+    this.THOUSANDS_SEPARATOR = ',';
     this.CURRENCY_UNIT = ' m2';
   }
-  transform(value: number | string, fractionSize: number = 0): string {
+  transform(value: number | string, fractionSize: number = 2): string {
     if (!value) { return '0' + this.CURRENCY_UNIT; }
     if (isNaN(+value)) { return value.toString(); }
 
@@ -27,10 +27,9 @@ export class NumberAreaPipe implements PipeTransform {
 
     integer = integer.replace(/\B(?=(\d{3})+(?!\d))/g, this.THOUSANDS_SEPARATOR);
 
-
     return integer + fraction + (integer && this.CURRENCY_UNIT);
   }
-  parse(value: string, fractionSize: number = 0): number {
+  parse(value: string, fractionSize: number = 2): number {
     if (!isNaN(+value)) { return +value; }
 
     let integer = (value || '').replace(this.CURRENCY_UNIT, '');
@@ -39,4 +38,14 @@ export class NumberAreaPipe implements PipeTransform {
 
     return +integer;
   }
+
+  // parseDouble(value: string, fractionSize: number = 3): number {
+  //   if (!isNaN(+value)) { return parseFloat(value); }
+
+  //   let integer = (value || '').replace(this.CURRENCY_UNIT, '');
+
+  //   integer = integer.split(this.THOUSANDS_SEPARATOR).join('');
+  //   return parseFloat(integer);
+  // }
+
 }

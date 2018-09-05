@@ -49,12 +49,12 @@
                                     <td class="w-25 bg-light text-right label">Ngày bắt đầu</td>
                                     <td class="w-25">
                                         <div class="input-group w-75">
-                                                <owl-date-time #startDate [readonlyInput]="datePickerConfig.readonlyInput" formControlName="campaignDateStart" 
-                                                [dateFormat]="datePickerConfig.dateFormat" 
-                                                [placeHolder]="datePickerConfig.datePlaceHolder"
-                                                [locale]="datePickerConfig.vi" 
+                                                <owl-date-time #startDate  formControlName="campaignDateStart" 
+                                                 
+                                                
+                                                 
                                                 [max] = "endDate.value"
-                                                [type]="datePickerConfig.calendarType"
+                                                
                                                 [tabIndex]="'6'">
     
                                                 </owl-date-time>
@@ -79,12 +79,12 @@
                                     <td class="w-25 bg-light text-right label">Ngày xong dự kiến</td>
                                     <td class="w-25">
                                         <div class="input-group w-75">
-                                                <owl-date-time #endDate [readonlyInput]="datePickerConfig.readonlyInput" formControlName="campaignDateStop" 
-                                                [dateFormat]="datePickerConfig.dateFormat" 
-                                                [placeHolder]="datePickerConfig.datePlaceHolder"
-                                                [locale]="datePickerConfig.vi" 
+                                                <owl-date-time #endDate  formControlName="campaignDateStop" 
+                                                 
+                                                
+                                                 
                                                 [min] = "startDate.value"
-                                                [type]="datePickerConfig.calendarType"
+                                                
                                                 [tabIndex]="'7'">
     
                                                 </owl-date-time>

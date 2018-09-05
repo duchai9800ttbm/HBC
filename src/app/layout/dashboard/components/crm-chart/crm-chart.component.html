@@ -12,8 +12,8 @@
             </div>
             <div class="select_box mt-2  mr-2">Từ</div>
             <div class="input-group  calendarInput  mr-3">
-                <owl-date-time [readonlyInput]="datePickerConfig.readonlyInput" [inputStyleClass]="formErrors.startDate ? 'is-invalid' : ''" #startDate formControlName="startDate" [dateFormat]="datePickerConfig.dateFormat"
-                    [placeHolder]="datePickerConfig.datePlaceHolder" [locale]="datePickerConfig.vi" [max]="chartForm.get('endDate').value" [type]="datePickerConfig.calendarType">
+                <owl-date-time   #startDate formControlName="startDate" 
+                      >
                 </owl-date-time>
                 <span class="input-group-addon">
                     <i class="fa fa-calendar"></i>
@@ -22,8 +22,8 @@
             <div class="select_box mt-2"> đến</div>
 
             <div class="input-group  calendarInput ml-3">
-                <owl-date-time [readonlyInput]="datePickerConfig.readonlyInput" [inputStyleClass]="formErrors.endDate ? 'is-invalid' : ''" #endDate formControlName="endDate" [dateFormat]="datePickerConfig.dateFormat"
-                    [placeHolder]="datePickerConfig.datePlaceHolder" [locale]="datePickerConfig.vi" [min]="chartForm.get('startDate').value" pickerType="calendar" [type]="datePickerConfig.calendarType">
+                <owl-date-time   #endDate formControlName="endDate" 
+                       pickerType="calendar" >
                 </owl-date-time>
                 <span class="input-group-addon">
                     <i class="fa fa-calendar"></i>

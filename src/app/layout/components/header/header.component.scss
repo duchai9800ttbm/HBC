@@ -85,4 +85,6 @@ $topnav-background-color: $primary;
 
 .logo{
     width: 55px!important;
+    transition: margin 0.5s; /* IE 10+, Fx 29+ */
+
 }

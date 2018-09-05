@@ -204,9 +204,9 @@
                                 </div>
                             </div>
                         </td>
-                        <td>{{item.name}}</td>
+                        <td class="nameData">{{item.name}}</td>
                         <td class="text-center">{{item.version}}</td>
-                        <td class="text-center">{{item.description}} </td>
+                        <td class="text-center description">{{item.description}} </td>
 
                         <td class="select-filter text-center">
                             {{item.status ==1 ? 'Bảng nháp' : 'Chính thức'}}
@@ -214,7 +214,7 @@
                                 <input type="checkbox" [checked]="item.status ==2" />
                             </span>
                         </td>
-                        <td class="text-center">{{item.userId ==1 ? 'Oliver Dinh' : 'Phuong VD'}}</td>
+                        <td class="text-center empoly">{{item.userId ==1 ? 'Oliver Dinh' : 'Phuong VD'}}</td>
                         <td class="text-center">{{item.createDate}}</td>
                         <td class="text-center">{{item.interview}}</td>
                         <td class="text-center">

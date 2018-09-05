@@ -1,4 +1,4 @@
-import { Component, OnInit, OnChanges, AfterViewChecked, ViewChild, ElementRef, ChangeDetectorRef, NgZone } from '@angular/core';
+import { Component, OnInit, OnChanges, AfterViewChecked, ViewChild, ElementRef, ChangeDetectorRef, NgZone, HostListener } from '@angular/core';
 import { Observable } from '../../../../../node_modules/rxjs/Observable';
 import { DictionaryItem } from '../../../shared/models/dictionary-item.model';
 import { Subject } from '../../../../../node_modules/rxjs/Subject';
@@ -37,6 +37,9 @@ import { PackageListItem } from '../../../shared/models/package/package-list-ite
 })
 export class PackageListComponent implements OnInit, AfterViewChecked {
     @ViewChild('myDrop') myDrop: ElementRef;
+    @ViewChild('myDrop2') myDrop2: ElementRef;
+    @ViewChild('DropTool') DropTool: ElementRef;
+    @ViewChild('DropTool2') DropTool2: ElementRef;
     activityStatusList: Observable<DictionaryItem[]>;
     checkboxSeclectAll: boolean;
     dtOptions: any = DATATABLE_CONFIG2;
@@ -73,33 +76,13 @@ export class PackageListComponent implements OnInit, AfterViewChecked {
     userModel: UserModel;
     listPrivileges = [];
     isToggle = false;
-
-    constructor(
-        private activityService: ActivityService,
-        private alertService: AlertService,
-        private dataService: DataService,
-        private confirmationService: ConfirmationService,
-        private router: Router,
-        private excelService: ExcelService,
-        private translateService: TranslateService,
-        private downloadTemplate: DownloadTemplateService,
-        private fb: FormBuilder,
-        private spinner: NgxSpinnerService,
-        private packageService: PackageService,
-        private userService: UserService,
-        private sessionService: SessionService,
-        private layoutService: LayoutService,
-        private cdRef: ChangeDetectorRef,
-        private zone: NgZone,
-        config: NgbDropdownConfig
-    ) {
-        config.autoClose = false;
-    }
-    someRange = [0, 10000000000];
+    searchTerm$ = new BehaviorSubject<string>('');
+    listPackage = [];
+    someRange = [0, 1000000000000];
     someKeyboardConfig: any = {
         behaviour: 'drag',
         connect: true,
-        start: [0, 10000000000],
+        start: [0, 1000000000000],
         keyboard: false,  // same as [keyboard]="true"
         // pips: {
         //     mode: 'count',
@@ -125,12 +108,6 @@ export class PackageListComponent implements OnInit, AfterViewChecked {
         //     },
         // }
     };
-    searchTerm$ = new BehaviorSubject<string>('');
-    listPackage = [];
-    get getUserId() {
-        return this.sessionService.currentUser.userId;
-
-    }
     tenDuAn = false; // ok
     maDuAn = false; // ok
     tenGoithau = false; // ok
@@ -162,14 +139,68 @@ export class PackageListComponent implements OnInit, AfterViewChecked {
     loaiCongTrinh = false; // ok
     hangMucCongTrinh = false; // ok
     tongGiaTri = false; // ok
-    danhGiaDuAn = false; //ok
+    danhGiaDuAn = false; // ok
+    dienTichSan = false;
+    trangThaiGoiThau = false;
+    ngayBatDauTheoDoi = false;
+    ngayNopHoSoMoiThau = false;
+    phanloai = false;
+    dientichsan = false;
+    lydohuythau = false;
+    orderBy = '';
+    currentSort = '';
+    isShowPopup = false;
+    constructor(
+        private activityService: ActivityService,
+        private alertService: AlertService,
+        private dataService: DataService,
+        private confirmationService: ConfirmationService,
+        private router: Router,
+        private excelService: ExcelService,
+        private translateService: TranslateService,
+        private downloadTemplate: DownloadTemplateService,
+        private fb: FormBuilder,
+        private spinner: NgxSpinnerService,
+        private packageService: PackageService,
+        private userService: UserService,
+        private sessionService: SessionService,
+        private layoutService: LayoutService,
+        private cdRef: ChangeDetectorRef,
+        private zone: NgZone,
+        config: NgbDropdownConfig
+    ) {
+        config.autoClose = false;
+    }
+    get getUserId() {
+        return this.sessionService.currentUser.userId;
+    }
+    @HostListener('document:click', ['$event'])
+    public documentClick(event: any): void {
+        if (!this.contains(event.target)) {
+            this.cancel(this.myDrop);
+        }
+        if (!this.containsDropTool(event.target)) {
+            this.closeDropToll(this.DropTool);
+        }
+    }
 
-    // dienTichSan = false;
-    // trangThaiGoiThau = false;
-    // ngayBatDauTheoDoi = false;
-    // ngayNopHoSoMoiThau = false;
+    contains(target: any): boolean {
+        return this.myDrop2.nativeElement.contains(target) ||
+            (this.myDrop2 ? this.myDrop2.nativeElement.contains(target) : false);
+    }
 
+    containsDropTool(target: any): boolean {
+        return this.DropTool2.nativeElement.contains(target) ||
+            (this.DropTool2 ? this.DropTool2.nativeElement.contains(target) : false);
+    }
     ngOnInit() {
+        this.filterModel.opportunityClassify = '';
+        this.filterModel.stage = '';
+        this.filterModel.chairEmployeeId = '';
+        this.dtOptions = DATATABLE_CONFIG;
+        this.filterModel.minCost = 0;
+        this.filterModel.maxCost = 1000000000000;
+        this.filterModel.sorting = '';
         window.scrollTo(0, 0);
         this.refreshPopupConfig();
         this.listClassifyCustomer = this.dataService.getListOpportunityClassifies();
@@ -177,11 +208,6 @@ export class PackageListComponent implements OnInit, AfterViewChecked {
         this.userService.getAllUser('').subscribe(data => {
             this.userListItem = data;
         });
-        this.filterModel.opportunityClassify = '';
-        this.filterModel.stage = '';
-        this.filterModel.chairEmployeeId = '';
-        this.dtOptions = DATATABLE_CONFIG;
-
         setTimeout(() => {
             this.userModel = this.sessionService.userInfo;
             this.listPrivileges = this.userModel.privileges;
@@ -198,14 +224,15 @@ export class PackageListComponent implements OnInit, AfterViewChecked {
             }
         }, 300);
         this.spinner.show();
-        this.packageService
-            .instantSearchWithFilter(this.searchTerm$, this.filterModel, 0, 10)
-            .subscribe(result => {
-                this.rerender(result);
-                this.spinner.hide();
-            }, err => {
-                this.spinner.hide();
-            });
+        // this.packageService
+        //     .instantSearchWithFilter(this.searchTerm$, this.filterModel, 0, 10)
+        //     .subscribe(result => {
+        //         this.rerender(result);
+        //         this.spinner.hide();
+        //     }, err => {
+        //         this.spinner.hide();
+        //     });
+        // this.filter(false);
         this.layoutService.watchLayoutSubject().subscribe(data => {
             if (data) {
                 this.isToggle = true;
@@ -213,9 +240,32 @@ export class PackageListComponent implements OnInit, AfterViewChecked {
                 this.isToggle = false;
             }
         });
+   
+        this.searchTerm$.debounceTime(600)
+        .distinctUntilChanged()
+        .subscribe(term => {
+            console.log(term);
+            this.filter(false);
+            // return Observable.create(x => x.next(''));
+        });
+
     }
     ngAfterViewChecked() {
 
+    }
+
+    orderByField(fieldName: string) {
+        if (fieldName === this.currentSort && this.orderBy === 'Desc') {
+            this.orderBy = 'Asc';
+        } else if (fieldName === this.currentSort && this.orderBy === 'Asc') {
+            this.orderBy = 'Desc';
+        }
+        if (fieldName !== this.currentSort) {
+            this.currentSort = fieldName;
+            this.orderBy = 'Asc';
+        }
+        this.filterModel.sorting = fieldName + this.orderBy;
+        this.refresh(false);
     }
 
     refreshPopupConfig() {
@@ -227,6 +277,7 @@ export class PackageListComponent implements OnInit, AfterViewChecked {
             this.maDuAn = this.listFieldNomarlized.includes('ARBidOpportunityNo');
             this.tenGoithau = this.listFieldNomarlized.includes('ARBidOpportunityName');
             this.congViec = this.listFieldNomarlized.includes('ARBidOpportunityJob');
+            this.maDuAn = this.listFieldNomarlized.includes('ARBidOpportunityNo');
             this.diaDiem = this.listFieldNomarlized.includes('ARBidOpportunityPlace');
             this.loaiKhachHang = this.listFieldNomarlized.includes('ARBidOpportunityCustomerType');
             this.donViTuVan = this.listFieldNomarlized.includes('ARBidOpportunityConsultantUnit');
@@ -240,11 +291,24 @@ export class PackageListComponent implements OnInit, AfterViewChecked {
             this.ngayKetThucDuAn = this.listFieldNomarlized.includes('ARBidOpportunityEstimatedProjectEndDate');
             this.ngayKhoiCongDuAn = this.listFieldNomarlized.includes('ARBidOpportunityEstimatedProjectStartDate');
             this.linkTaiLieu = this.listFieldNomarlized.includes('ARBidOpportunityDocumentLink');
+
+            this.chuTri = this.listFieldNomarlized.includes('ARBidOpportunityHBCChair');
+            this.giaiDoan = this.listFieldNomarlized.includes('ARBidOpportunityStage');
+            this.tienDoThucHien = this.listFieldNomarlized.includes('ARBidOpportunityProgress');
+            this.khuVuc = this.listFieldNomarlized.includes('FK_ARBidLocationID');
+            // this.tenKhachHang = this.listFieldNomarlized.includes('FK_HREmployeeID');
+            this.tenKhachHang = this.listFieldNomarlized.includes('ARCustomerName');
+            this.lienHe = this.listFieldNomarlized.includes('FK_ARCustomerContactID');
+            this.ngayBatDauTheoDoi = this.listFieldNomarlized.includes('ARBidOpportunityStartTrackingDate');
+            this.ngayNopHoSoMoiThau = this.listFieldNomarlized.includes('ARBidOpportunityBidSubmissionDate');
+            this.ngayDuKienKetQuaThau = this.listFieldNomarlized.includes('ARBidOpportunityEstimatedResultDate');
+            this.loaiCongTrinh = this.listFieldNomarlized.includes('FK_ARBidConstructionTypeID');
+            this.hangMucCongTrinh = this.listFieldNomarlized.includes('FK_ARBidConstructionCategoryID');
             this.vaiTro = this.listFieldNomarlized.includes('ARBidOpportunityHBCChair');
             this.tienDoThucHien = this.listFieldNomarlized.includes('ARBidOpportunityProgress');
             this.giaiDoan = this.listFieldNomarlized.includes('ARBidOpportunityStage');
             this.khuVuc = this.listFieldNomarlized.includes('FK_ARBidLocationID');
-            this.tenKhachHang = this.listFieldNomarlized.includes('FK_HREmployeeID');
+            // this.tenKhachHang = this.listFieldNomarlized.includes('FK_HREmployeeID');
             this.lienHe = this.listFieldNomarlized.includes('FK_ARCustomerContactID');
             this.ngayBatDau = this.listFieldNomarlized.includes('ARBidOpportunityStartTrackingDate');
             this.ngayNhanHoSoMoiThau = this.listFieldNomarlized.includes('ARBidOpportunityBidSubmissionDate');
@@ -254,7 +318,10 @@ export class PackageListComponent implements OnInit, AfterViewChecked {
             this.loaiCongTrinh = this.listFieldNomarlized.includes('FK_ARBidConstructionTypeID');
             this.hangMucCongTrinh = this.listFieldNomarlized.includes('FK_ARBidConstructionCategoryID');
             this.tongGiaTri = this.listFieldNomarlized.includes('ARBidOpportunitys');
+
             this.danhGiaDuAn = this.listFieldNomarlized.includes('ARBidOpportunityEvaluation');
+            this.dientichsan = this.listFieldNomarlized.includes('ARBidOpportunityFloorArea');
+            this.lydohuythau = this.listFieldNomarlized.includes('ARBidOpportunityCancelReason');
         });
     }
 
@@ -308,9 +375,10 @@ export class PackageListComponent implements OnInit, AfterViewChecked {
         this.filterModel.opportunityClassify = '';
         this.filterModel.stage = '';
         this.filterModel.chairEmployeeId = '';
-        this.filterModel.minCost = null;
-        this.filterModel.maxCost = null;
-        this.someRange = [0, 10000000000];
+        this.filterModel.minCost = 0;
+        this.filterModel.maxCost = 1000000000000;
+        this.someRange = [0, 1000000000000];
+        this.filterModel.sorting = '';
         this.filter(true);
     }
 
@@ -358,7 +426,13 @@ export class PackageListComponent implements OnInit, AfterViewChecked {
     rerender(pagedResult: any) {
         this.checkboxSeclectAll = false;
         this.pagedResult = pagedResult;
-        this.dtTrigger.next();
+        // if (!(this.pagedResult.items && this.pagedResult.items.length > 1)
+        //     || document.getElementsByClassName('dataTables_empty')[0]) {
+        //     document.getElementsByClassName('dataTables_empty')[0].remove();
+        // }
+        setTimeout(() => {
+            this.dtTrigger.next();
+        });
     }
 
     onSelectAll(value: boolean) {
@@ -385,8 +459,14 @@ export class PackageListComponent implements OnInit, AfterViewChecked {
             .subscribe(data => {
                 this.listField = data;
                 this.sum = [...this.listField].filter(x => x.hidden === true).length;
+                this.apply(this.myDrop);
                 this.spinner.hide();
+                this.dtTrigger.next();
             });
+    }
+
+    closeDropToll(DropTool) {
+        DropTool.close();
     }
 
     cancel(myDrop) {
@@ -396,6 +476,7 @@ export class PackageListComponent implements OnInit, AfterViewChecked {
             this.listFieldNomarlized = [...this.listField].filter(x => x.hidden === true).map(x => x.fieldName);
             this.sum = [...this.listField].filter(x => x.hidden === true).length;
             this.tenGoithau = this.listFieldNomarlized.includes('ARBidOpportunityName');
+            this.dtTrigger.next();
         });
     }
 
@@ -409,7 +490,7 @@ export class PackageListComponent implements OnInit, AfterViewChecked {
                 this.refreshPopupConfig();
                 myDrop.close();
                 this.spinner.hide();
-
+                this.dtTrigger.next();
             }, err => {
                 this.alertService.error('Cập nhật cấu hình thất bại, xin vui lòng thử lại!');
                 this.refresh();
@@ -423,6 +504,28 @@ export class PackageListComponent implements OnInit, AfterViewChecked {
 
     inputChange() {
         this.sum = [...this.listField].filter(x => x.hidden === true).length;
+    }
 
+    inputChange2(id: number) {
+        this.listField.forEach(item => {
+            if (item.id === id) {
+                item.hidden = !item.hidden;
+            }
+        });
+        this.sum = [...this.listField].filter(x => x.hidden === true).length;
+    }
+
+    exportFileExcel() {
+        this.packageService.exportExcel(this.searchTerm$.value, this.filterModel)
+            .subscribe(result => result);
+    }
+
+    chooseAll() {
+        this.listField.forEach(x => (x.hidden = true));
+        this.sum = [...this.listField].filter(x => x.hidden === true).length;
+    }
+
+    openLinkDocument(linkDocument) {
+        window.open(linkDocument, '_blank');
     }
 }
