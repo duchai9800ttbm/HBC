@@ -27,7 +27,7 @@ export class TrafficComponent implements OnInit {
       }
     }
   }
-  deleteImg0() {
+  deleteDisadvantageImage() {
     const index = this.disadvantageImageUrls.indexOf(this.url);
     this.disadvantageImageUrls.splice(index, 1);
   }
@@ -42,7 +42,7 @@ export class TrafficComponent implements OnInit {
       }
     }
   }
-  deleteImg1() {
+  deleteAdvantageImage() {
     const index = this.advantageImageUrls.indexOf(this.url);
     this.advantageImageUrls.splice(index, 1);
   }
@@ -57,7 +57,7 @@ export class TrafficComponent implements OnInit {
       }
     }
   }
-  deleteImg2() {
+  deleteDirectionImage() {
     const index = this.directionImageUrls.indexOf(this.url);
     this.directionImageUrls.splice(index, 1);
   }
@@ -72,7 +72,7 @@ export class TrafficComponent implements OnInit {
       }
     }
   }
-  deleteImg3() {
+  deleteExistingImage() {
     const index = this.existingImageUrls.indexOf(this.url);
     this.existingImageUrls.splice(index, 1);
   }
@@ -87,7 +87,7 @@ export class TrafficComponent implements OnInit {
       }
     }
   }
-  deleteImg4() {
+  deleteRoadImage() {
     const index = this.roadImageUrls.indexOf(this.url);
     this.roadImageUrls.splice(index, 1);
   }
@@ -102,7 +102,7 @@ export class TrafficComponent implements OnInit {
       }
     }
   }
-  deleteImg5() {
+  deleteFenceImage() {
     const index = this.fenceImageUrls.indexOf(this.url);
     this.fenceImageUrls.splice(index, 1);
   }

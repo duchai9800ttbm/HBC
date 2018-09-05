@@ -26,28 +26,28 @@ app-info {
     }
 }
 
-.detailInfo {
+.detail-info {
     padding-left: 40px;
 }
 
-.stepInfo {
+.step-info {
     font-weight: bold;
 }
 
-.bigTitle {
+.big-title {
     text-transform: uppercase;
     margin-bottom: 20px;
 }
 
-.detailEachTitle {
+.detail-each-title {
     margin: 20px 0;
 }
 
-.mainDetail {
+.main-detail {
     padding-left: 30px;
 }
 
-.singleRow {
+.single-row {
     display: flex;
 
     .child0 {
@@ -100,7 +100,7 @@ input[type=text] {
     }
 
     &:hover input~.checkmark {
-        background-color: #ccc;
+        background-color: #CCCCCC;
     }
 
     input:checked~.checkmark {
@@ -136,7 +136,7 @@ input[type=text] {
     }
 }
 
-.textdesInput {
+.text-des-input {
     margin: 10px 0;
 
     input {
@@ -168,18 +168,18 @@ input[type=text] {
     }
 }
 
-#imageDemoImg {
+.image-demo-img {
     display: flex;
     flex-wrap: wrap;
 }
 
-.perspectiveImage {
+.perspective-image {
     margin: 5px;
     width: 100px;
     height: 100px;
-    border: #ccc 2px dashed;
+    border: #CCCCCC 2px dashed;
     background-color: #F2F2F2;
-    color: #ccc;
+    color: #CCCCCC;
     font-size: 20px;
     display: flex;
     flex-direction: column;
@@ -188,7 +188,7 @@ input[type=text] {
     cursor: pointer;
 }
 
-.displayImg {
+.display-img {
     margin: 5px;
     max-width: 100px;
     max-height: 100px;
@@ -219,12 +219,12 @@ input[type=text] {
     text-align: center;
 }
 
-.deleteIco {
-    color: #CCC;
+.delete-icon {
+    color: #CCCCCC;
     font-size: 20px;
 }
 
-.smallTitle {
+.small-title {
     margin-bottom: 30px;
 }
 

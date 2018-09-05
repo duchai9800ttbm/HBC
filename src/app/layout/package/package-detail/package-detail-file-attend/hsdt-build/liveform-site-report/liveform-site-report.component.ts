@@ -53,7 +53,6 @@ export class LiveformSiteReportComponent implements OnInit {
   ngOnInit() {
     // tslint:disable-next-line:max-line-length
     const elem = Array.from(document.querySelectorAll('#searchButton, #agreeButton, #addNewButton, #printButton, #deleteButton, #downloadButton'));
-    console.log(elem);
     elem.forEach(e => { (<HTMLElement>e).style.visibility = 'hidden'; (<HTMLElement>e).style.position = 'absolute'; });
     (this.fakeData.length) ? this.isData = true : this.isData = false;
   }

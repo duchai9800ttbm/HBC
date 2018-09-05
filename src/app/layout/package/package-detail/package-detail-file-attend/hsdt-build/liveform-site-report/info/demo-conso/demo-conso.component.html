@@ -1,23 +1,23 @@
-<div class="detailInfo">
-    <div id="step3" class="stepInfo">
-        <h5 class="bigTitle">4.&nbsp;phá vỡ và gia cố (demobilisation and consolidation)</h5>
+<div class="detail-info">
+    <div id="step3" class="step-info">
+        <h5 class="big-title">4.&nbsp;phá vỡ và gia cố (demobilisation and consolidation)</h5>
         <div>
-            <div class="detailEachTitle">
-                <h6 class="smallTitle">4.1 Phá vỡ kết cấu/ tòa nhà/ Demobilisation existing structure or building</h6>
-                <div class="mainDetail">
-                    <div class="textdesInput">
+            <div class="detail-each-title">
+                <h6 class="small-title">4.1 Phá vỡ kết cấu/ tòa nhà/ Demobilisation existing structure or building</h6>
+                <div class="main-detail">
+                    <div class="text-des-input">
                         <input type="text" placeholder="KHÔNG CÓ">
                     </div>
                     <div>
-                        <div id="imageDemoImg">
+                        <div class="image-demo-img">
                             <input type="file" style="display:none" #inputclick0 (change)="uploaDemobilisationImage($event)">
-                            <div class="displayImg" *ngFor="let url of demobilisationImageUrls">
+                            <div class="display-img" *ngFor="let url of demobilisationImageUrls">
                                 <img [src]="url">
                                 <div class="toppp" (click)="deleteImg0()">
-                                    <i class="fa fa-times deleteIco" aria-hidden="true"></i>
+                                    <i class="fa fa-times delete-icon" aria-hidden="true"></i>
                                 </div>
                             </div>
-                            <div class="perspectiveImage" (click)="inputclick0.click()">
+                            <div class="perspective-image" (click)="inputclick0.click()">
                                 <i class="fa fa-plus" aria-hidden="true"></i>
                                 <p>Image</p>
                             </div>
@@ -25,23 +25,23 @@
                     </div>
                 </div>
             </div>
-            <div class="detailEachTitle">
-                <h6 class="smallTitle">4.2 Gia cố kết cấu/ tòa nhà/ Consolidation existing structure or building</h6>
-                <div class="mainDetail">
-                    <div class="textdesInput">
+            <div class="detail-each-title">
+                <h6 class="small-title">4.2 Gia cố kết cấu/ tòa nhà/ Consolidation existing structure or building</h6>
+                <div class="main-detail">
+                    <div class="text-des-input">
                         <input type="text" placeholder="KHÔNG CÓ">
                     </div>
                     <div>
-                        <div id="imageDemoImg">
+                        <div class="image-demo-img">
                             <input type="file" style="display:none" #inputclick1 (change)="uploaConsolidationImage($event)">
 
-                            <div class="displayImg" *ngFor="let url of consolidationImageUrls">
+                            <div class="display-img" *ngFor="let url of consolidationImageUrls">
                                 <img [src]="url">
                                 <div class="toppp" (click)="deleteImg1()">
-                                    <i class="fa fa-times deleteIco" aria-hidden="true"></i>
+                                    <i class="fa fa-times delete-icon" aria-hidden="true"></i>
                                 </div>
                             </div>
-                            <div class="perspectiveImage" (click)="inputclick1.click()">
+                            <div class="perspective-image" (click)="inputclick1.click()">
                                 <i class="fa fa-plus" aria-hidden="true"></i>
                                 <p>Image</p>
                             </div>
@@ -49,24 +49,24 @@
                     </div>
                 </div>
             </div>
-            <div class="detailEachTitle">
-                <h6 class="smallTitle">4.3 Các điều kiện/ hình ảnh của tòa nhà lân cận/ Adjacent building
+            <div class="detail-each-title">
+                <h6 class="small-title">4.3 Các điều kiện/ hình ảnh của tòa nhà lân cận/ Adjacent building
                     conditions/figuring by picture</h6>
-                <div class="mainDetail">
-                    <div class="textdesInput">
+                <div class="main-detail">
+                    <div class="text-des-input">
                         <input type="text" placeholder="KHÔNG CÓ">
                     </div>
                     <div>
-                        <div id="imageDemoImg">
+                        <div class="image-demo-img">
                             <input type="file" style="display:none" #inputclick2 (change)="uploaAdjacentImage($event)">
 
-                            <div class="displayImg" *ngFor="let url of adjacentImageUrls">
+                            <div class="display-img" *ngFor="let url of adjacentImageUrls">
                                 <img [src]="url">
                                 <div class="toppp" (click)="deleteImg2()">
-                                    <i class="fa fa-times deleteIco" aria-hidden="true"></i>
+                                    <i class="fa fa-times delete-icon" aria-hidden="true"></i>
                                 </div>
                             </div>
-                            <div class="perspectiveImage" (click)="inputclick2.click()">
+                            <div class="perspective-image" (click)="inputclick2.click()">
                                 <i class="fa fa-plus" aria-hidden="true"></i>
                                 <p>Image</p>
                             </div>

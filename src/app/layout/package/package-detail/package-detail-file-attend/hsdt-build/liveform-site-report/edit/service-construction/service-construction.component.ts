@@ -28,7 +28,7 @@ export class ServiceConstructionComponent implements OnInit {
       }
     }
   }
-  deleteImg0() {
+  deleteSupplySystemImage() {
     const index = this.supplySystemImageUrls.indexOf(this.url);
     this.supplySystemImageUrls.splice(index, 1);
   }
@@ -43,7 +43,7 @@ export class ServiceConstructionComponent implements OnInit {
       }
     }
   }
-  deleteImg1() {
+  deleteSupplyPointImage() {
     const index = this.supplyPointImageUrls.indexOf(this.url);
     this.supplyPointImageUrls.splice(index, 1);
   }
@@ -59,7 +59,7 @@ export class ServiceConstructionComponent implements OnInit {
       }
     }
   }
-  deleteImg2() {
+  deleteDrainageSystemImage() {
     const index = this.drainageSystemImageUrls.indexOf(this.url);
     this.drainageSystemImageUrls.splice(index, 1);
   }
@@ -74,7 +74,7 @@ export class ServiceConstructionComponent implements OnInit {
       }
     }
   }
-  deleteImg3() {
+  deleteDrainagePointImage() {
     const index = this.drainagePointImageUrls.indexOf(this.url);
     this.drainagePointImageUrls.splice(index, 1);
   }
@@ -89,7 +89,7 @@ export class ServiceConstructionComponent implements OnInit {
       }
     }
   }
-  deleteImg4() {
+  deletePowerStationImage() {
     const index = this.powerStationImageUrls.indexOf(this.url);
     this.powerStationImageUrls.splice(index, 1);
   }
@@ -104,7 +104,7 @@ export class ServiceConstructionComponent implements OnInit {
       }
     }
   }
-  deleteImg5() {
+  deleteMediumVoltageSystemImage() {
     const index = this.mediumVoltageSystemImageUrls.indexOf(this.url);
     this.mediumVoltageSystemImageUrls.splice(index, 1);
   }
@@ -119,7 +119,7 @@ export class ServiceConstructionComponent implements OnInit {
       }
     }
   }
-  deleteImg6() {
+  deletePowerOtherImage() {
     const index = this.powerOtherImageUrls.indexOf(this.url);
     this.powerOtherImageUrls.splice(index, 1);
   }

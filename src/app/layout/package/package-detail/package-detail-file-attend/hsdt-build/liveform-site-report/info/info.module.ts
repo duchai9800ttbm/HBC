@@ -10,7 +10,6 @@ import { DemoConsoComponent } from './demo-conso/demo-conso.component';
 import { ServiceConstructionComponent } from './service-construction/service-construction.component';
 import { SoilConditionComponent } from './soil-condition/soil-condition.component';
 import { UsefulInfoComponent } from './useful-info/useful-info.component';
-import { UpdateConfirmPopupComponent } from './update-confirm-popup/update-confirm-popup.component';
 import { SharedModule } from '../../../../../../../shared/shared.module';
 
 
@@ -28,8 +27,7 @@ import { SharedModule } from '../../../../../../../shared/shared.module';
     DemoConsoComponent,
     ServiceConstructionComponent,
     SoilConditionComponent,
-    UsefulInfoComponent,
-    UpdateConfirmPopupComponent
+    UsefulInfoComponent
   ]
 })
 export class InfoModule { }

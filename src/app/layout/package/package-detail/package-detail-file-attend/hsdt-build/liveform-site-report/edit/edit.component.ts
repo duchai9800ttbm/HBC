@@ -83,7 +83,6 @@ export class EditComponent implements OnInit {
 
   updateliveform() {
     this.showPopupConfirm = true;
-    console.log(this.showPopupConfirm);
   }
   closePopup() {
     this.showPopupConfirm = false;

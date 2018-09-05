@@ -24,7 +24,7 @@ export class ScaleOverall {
         areaSite: number;
         totalArea: number;
         numberOfFloor: string;
-        progess: number;
+        progress: number;
     };
     hinhAnhPhoiCanh: Image;
     thongTinVeKetCau: Image;

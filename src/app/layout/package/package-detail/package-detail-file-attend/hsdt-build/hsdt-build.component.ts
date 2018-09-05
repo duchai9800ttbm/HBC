@@ -19,6 +19,7 @@ export class HsdtBuildComponent implements OnInit {
     dialog;
     packageId;
     isShowMenu = false;
+    notShow = false;
     constructor(
         private dialogService: DialogService,
         private alertService: AlertService,
@@ -27,7 +28,7 @@ export class HsdtBuildComponent implements OnInit {
         private router: Router,
         private spinner: NgxSpinnerService,
     ) { }
-    notShow = false;
+
     ngOnInit() {
         this.packageId = +PackageDetailComponent.packageId;
         this.packageService.isSummaryConditionForm$.subscribe(data => {
@@ -46,7 +47,6 @@ export class HsdtBuildComponent implements OnInit {
         $('.iconN01').toggleClass('iconN1');
         $('.iconN02').toggleClass('iconN2');
         $('.iconN03').toggleClass('iconN3');
-        console.log('ok');
     }
 
 
@@ -72,11 +72,7 @@ export class HsdtBuildComponent implements OnInit {
         this.dialog.close();
     }
 
-
     // isActive(): boolean {
     //     return this.router.isActive(`/package/detail/${this.packageId}/attend/build/sitereport`, true);
-    // }
-
-    // hiddenFunc() {
     // }
 }

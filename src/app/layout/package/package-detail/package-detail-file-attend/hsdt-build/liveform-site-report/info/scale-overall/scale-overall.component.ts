@@ -51,7 +51,7 @@ export class ScaleOverallComponent implements OnInit, OnDestroy {
         areaSite: 15389,
         totalArea: 114863,
         numberOfFloor: 'Podium 5 tầng; T6: 36 tầng; T7: 39 tầng',
-        progess: 600
+        progress: 600
       },
       hinhAnhPhoiCanh: {
         description: 'Demo miêu tả phối cảnh',
@@ -120,7 +120,6 @@ export class ScaleOverallComponent implements OnInit, OnDestroy {
   addDisplayImg() {
     window.onclick = e => {
       const x = (<HTMLInputElement>event.target).className;
-      console.log(x);
     };
   }
 

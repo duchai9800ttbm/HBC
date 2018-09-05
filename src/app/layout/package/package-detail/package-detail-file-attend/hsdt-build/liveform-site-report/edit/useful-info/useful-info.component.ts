@@ -28,7 +28,7 @@ export class UsefulInfoComponent implements OnInit {
       }
     }
   }
-  deleteImg() {
+  deleteContentImage() {
     const index = this.contentImgs.indexOf(this.url);
     this.contentImgs.splice(index, 1);
   }

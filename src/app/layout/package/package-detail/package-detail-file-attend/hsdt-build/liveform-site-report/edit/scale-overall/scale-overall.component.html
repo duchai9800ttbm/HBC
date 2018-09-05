@@ -1,82 +1,82 @@
-<div class="detailInfo">
-    <div id="step0" class="stepInfo">
+<div class="detail-info">
+    <div id="step0" class="step-info">
         <div id="step1Head">
             <div class="labelstep1" style="margin-bottom: 15px;">
                 <label for="">Tên tài liệu</label>
-                <input type="text" value="Tên tài liệu">
+                <input type="text" [(ngModel)]="scaleModel.documentName">
             </div>
             <div class="labelstep1">
                 <label for="">Lần phỏng vấn</label>
-                <input type="text" value="Lần phỏng vấn">
+                <input type="text" [(ngModel)]="scaleModel.interviewTimes">
             </div>
         </div>
-        <h5 class="bigTitle">1.&nbsp;quy mô tổng quan công trình (project statistic/scale)</h5>
+        <h5 class="big-title">1.&nbsp;quy mô tổng quan công trình (project statistic/scale)</h5>
         <div>
-            <div class="detailEachTitle">
-                <h6 class="smallTitle">1.1 Loại công trình xây dựng</h6>
-                <div class="mainDetail">
-                    <div class="singleRow">
+            <div class="detail-each-title">
+                <h6 class="small-title">1.1 Loại công trình xây dựng</h6>
+                <div class="main-detail">
+                    <div class="single-row">
                         <label class="child0 childcheck">Văn phòng (Office)
-                            <input type="radio" name="classifyBuild"><span class="checkmark"></span>
+                            <input type="radio" name="classifyBuild" [(ngModel)]="vanPhong"><span class="checkmark"></span>
                         </label>
                         <label class="child1 childcheck">Nhà công nghiệp (Industrial)
-                            <input type="radio" name="classifyBuild"><span class="checkmark"></span>
+                            <input type="radio" name="classifyBuild" [(ngModel)]="nhaCongNghiep"><span class="checkmark"></span>
                         </label>
                         <label class="child2 childcheck">MEP
-                            <input type="radio" name="classifyBuild"><span class="checkmark"></span>
+                            <input type="radio" name="classifyBuild" [(ngModel)]="meo"><span class="checkmark"></span>
                         </label>
                     </div>
-                    <div class="singleRow">
+                    <div class="single-row">
                         <label class="child0 childcheck">Khu dân cư (Residential)
-                            <input type="radio" name="classifyBuild"><span class="checkmark"></span>
+                            <input type="radio" name="classifyBuild" [(ngModel)]="khuDanCu"><span class="checkmark"></span>
                         </label>
                         <label class="child1 childcheck">Tổ hợp (Mixed use)
-                            <input type="radio" name="classifyBuild"><span class="checkmark"></span>
+                            <input type="radio" name="classifyBuild" [(ngModel)]="toHop"><span class="checkmark"></span>
                         </label>
                         <label class="child2 childcheck">Sân bay
-                            <input type="radio" name="classifyBuild"><span class="checkmark"></span>
+                            <input type="radio" name="classifyBuild" [(ngModel)]="sanBay"><span class="checkmark"></span>
                         </label>
                     </div>
-                    <div class="singleRow">
+                    <div class="single-row">
                         <label class="child0 childcheck">TT Thương mại (Commercial)
-                            <input type="radio" name="classifyBuild"><span class="checkmark"></span>
+                            <input type="radio" name="classifyBuild" [(ngModel)]="trungTamThuongMai"><span class="checkmark"></span>
                         </label>
                         <label class="child1 childcheck">Căn hộ
-                            <input type="radio" name="classifyBuild"><span class="checkmark"></span>
+                            <input type="radio" name="classifyBuild" [(ngModel)]="canHo"><span class="checkmark"></span>
                         </label>
                         <label class="child2 childcheck">Nhà phố, biệt thự
-                            <input type="radio" name="classifyBuild"><span class="checkmark"></span>
+                            <input type="radio" name="classifyBuild" [(ngModel)]="nhaphoBietThu"><span class="checkmark"></span>
                         </label>
                     </div>
-                    <div class="singleRow">
+                    <div class="single-row">
                         <label class="child0 childcheck">Khách sạn/Resort (Hotel/Resort)
-                            <input type="radio" name="classifyBuild"><span class="checkmark"></span>
+                            <input type="radio" name="classifyBuild" [(ngModel)]="khachSan"><span class="checkmark"></span>
                         </label>
                         <label class="child1 childcheck">Hạ tầng
-                            <input type="radio" name="classifyBuild"><span class="checkmark"></span>
+                            <input type="radio" name="classifyBuild" [(ngModel)]="haTang"><span class="checkmark"></span>
                         </label>
                         <label class="child2 childcheck">Trường học
-                            <input type="radio" name="classifyBuild"><span class="checkmark"></span>
+                            <input type="radio" name="classifyBuild" [(ngModel)]="truongHoc"><span class="checkmark"></span>
                         </label>
                     </div>
                     <hr style="margin-right: 13%" />
-                    <div class="singleRow">
+                    <div class="single-row">
                         <label class="child0 childcheck">Mới (New)
-                            <input type="radio" name="classifyType"><span class="checkmark"></span>
+                            <input type="radio" name="classifyType" [(ngModel)]="congtrinhMoi"><span class="checkmark"></span>
                         </label>
                         <label class="child1 childcheck">Thay đổi & bổ sung (Alteration & Additional)
-                            <input type="radio" name="classifyType"><span class="checkmark"></span>
+                            <input type="radio" name="classifyType" [(ngModel)]="thayDoiBoSung"><span class="checkmark"></span>
                         </label>
                         <label class="child2 childcheck">Khác (Other)
                             <input type="radio" name="classifyType"><span class="checkmark"></span>
                         </label>
                     </div>
-                    <div class="singleRow">
+                    <div class="single-row">
                         <label class="child0 childcheck">Nâng cấp, cải tiến (Renovation)
-                            <input type="radio" name="classifyType"><span class="checkmark"></span>
+                            <input type="radio" name="classifyType" [(ngModel)]="nangCapCaiTien"><span class="checkmark"></span>
                         </label>
                         <label class="child1 childcheck">Tháo dỡ & cải tiến (Demolishment & Renovation)
-                            <input type="radio" name="classifyType"><span class="checkmark"></span>
+                            <input type="radio" name="classifyType" [(ngModel)]="thaoDoCaiTien"><span class="checkmark"></span>
                         </label>
                         <div class="child2">
                             <input type="checkbox" style="visibility: hidden;">
@@ -85,44 +85,44 @@
                     </div>
                 </div>
             </div>
-            <div class="detailEachTitle">
-                <h6 class="smallTitle">1.2 Quy mô hạng mục dự án (Project scale)</h6>
-                <div class="mainDetail">
+            <div class="detail-each-title">
+                <h6 class="small-title">1.2 Quy mô hạng mục dự án (Project scale)</h6>
+                <div class="main-detail">
                     <div>
                         <div class="label1-2">
                             <label for="">Diện tích công trường/ Site area (m2)</label>
-                            <input style="padding-right:40px" class="no-boder" type="text">
+                            <input style="padding-right:40px" class="no-boder" type="text" [(ngModel)]="scaleModel.scale.areaSite">
                             <span class="span-m2" style="position:relative; right:30px">m2</span>
                         </div>
                         <div class="label1-2">
                             <label for="">Tổng diện tích xây dựng/ Gross floor area (m2)</label>
-                            <input style="padding-right:40px" class="no-boder" type="text">
+                            <input style="padding-right:40px" class="no-boder" type="text" [(ngModel)]="scaleModel.scale.totalArea">
                             <span class="span-m2" style="position:relative; right:30px">m2</span>
                         </div>
                         <div class="label1-2">
                             <label for="">Số tầng/ Total number of floor</label>
-                            <input class="no-boder" type="text">
+                            <input class="no-boder" type="text" [(ngModel)]="scaleModel.scale.numberOfFloor">
                         </div>
                         <div class="label1-2">
                             <label for="">Tiến độ dự kiến/ Construction period (ngày)</label>
-                            <input style="padding-right:40px" class="no-boder" type="text">
+                            <input style="padding-right:40px" class="no-boder" type="text" [(ngModel)]="scaleModel.scale.progress">
                             <span class="span-m2" style="position:relative; right:40px">ngày</span>
                         </div>
                     </div>
                     <div id="imageDemo">
                         <p style="text-decoration: underline;">Hình ảnh phối cảnh dự án/ Perspective image of project</p>
-                        <div class="textdesInput">
+                        <div class="text-des-input">
                             <input type="text" value="Text">
                         </div>
-                        <div id="imageDemoImg">
-                            <input type="file" style="display:none" #inputclick0 (change)="uploadPerspectiveImage($event)">
-                            <div class="displayImg" *ngFor="let url of perspectiveImageUrls">
+                        <div class="image-demo-img">
+                            <input type="file" style="display:none" #uploadPerspectiveImage (change)="uploadPerspectiveImage($event)">
+                            <div class="display-img" *ngFor="let url of perspectiveImageUrls">
                                 <img [src]="url">
-                                <div class="toppp" (click)="deleteImg0()">
-                                    <i class="fa fa-times deleteIco" aria-hidden="true"></i>
+                                <div class="toppp" (click)="deletePerspectiveImage()">
+                                    <i class="fa fa-times delete-icon" aria-hidden="true"></i>
                                 </div>
                             </div>
-                            <div class="perspectiveImage" (click)="inputclick0.click()">
+                            <div class="perspective-image" (click)="uploadPerspectiveImage.click()">
                                 <i class="fa fa-plus" aria-hidden="true"></i>
                                 <p>Image</p>
                             </div>
@@ -130,23 +130,23 @@
                     </div>
                 </div>
             </div>
-            <div class="detailEachTitle">
-                <h6 class="smallTitle">1.3 Thông tin về kết cấu (gói thầu) hiện hữu/ Existing structure (existing
+            <div class="detail-each-title">
+                <h6 class="small-title">1.3 Thông tin về kết cấu (gói thầu) hiện hữu/ Existing structure (existing
                     package structure)</h6>
-                <div class="mainDetail">
-                    <div class="textdesInput">
+                <div class="main-detail">
+                    <div class="text-des-input">
                         <input type="text" value="Thông tin kết cấu">
                     </div>
                     <div>
-                        <div id="imageDemoImg">
-                            <input type="file" style="display:none" #inputclick1 (change)="uploadStructureImage($event)">
-                            <div class="displayImg" *ngFor="let url of structureImageUrls">
+                        <div class="image-demo-img">
+                            <input type="file" style="display:none" #uploadStructureImage (change)="uploadStructureImage($event)">
+                            <div class="display-img" *ngFor="let url of structureImageUrls">
                                 <img [src]="url">
-                                <div class="toppp" (click)="deleteImg1()">
-                                    <i class="fa fa-times deleteIco" aria-hidden="true"></i>
+                                <div class="toppp" (click)="deleteStructureImage()">
+                                    <i class="fa fa-times delete-icon" aria-hidden="true"></i>
                                 </div>
                             </div>
-                            <div class="perspectiveImage" (click)="inputclick1.click()">
+                            <div class="perspective-image" (click)="uploadStructureImage.click()">
                                 <i class="fa fa-plus" aria-hidden="true"></i>
                                 <p>Image</p>
                             </div>
@@ -154,21 +154,21 @@
                     </div>
                 </div>
             </div>
-            <div class="detailEachTitle">
-                <h6 class="smallTitle">1.4 Những yêu cầu đặc biệt (Special Requirements)</h6>
-                <div class="mainDetail">
-                    <div class="textdesInput">
+            <div class="detail-each-title">
+                <h6 class="small-title">1.4 Những yêu cầu đặc biệt (Special Requirements)</h6>
+                <div class="main-detail">
+                    <div class="text-des-input">
                         <input type="text" value="Special Requirements">
                     </div>
-                    <div id="imageDemoImg">
-                        <input type="file" style="display:none" #inputclick2 (change)="uploadRequirementsImage($event)">
-                        <div class="displayImg" *ngFor="let url of requirementsImageUrls">
+                    <div class="image-demo-img">
+                        <input type="file" style="display:none" #uploadRequirementsImage (change)="uploadRequirementsImage($event)">
+                        <div class="display-img" *ngFor="let url of requirementsImageUrls">
                             <img [src]="url">
-                            <div class="toppp" (click)="deleteImg2()">
-                                <i class="fa fa-times deleteIco" aria-hidden="true"></i>
+                            <div class="toppp" (click)="deleteRequirementsImage()">
+                                <i class="fa fa-times delete-icon" aria-hidden="true"></i>
                             </div>
                         </div>
-                        <div class="perspectiveImage" (click)="inputclick2.click()">
+                        <div class="perspective-image" (click)="uploadRequirementsImage.click()">
                             <i class="fa fa-plus" aria-hidden="true"></i>
                             <p>Image</p>
                         </div>

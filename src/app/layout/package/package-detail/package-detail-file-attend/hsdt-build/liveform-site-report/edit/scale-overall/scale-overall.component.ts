@@ -39,7 +39,8 @@ export class ScaleOverallComponent implements OnInit {
       sanBay: false,
       nhaphoBietThu: false,
       truongHoc: false,
-      congtrinhMoi: false,
+      //
+      congtrinhMoi: true,
       nangCapCaiTien: false,
       thayDoiBoSung: false,
       thaoDoCaiTien: false,
@@ -48,7 +49,7 @@ export class ScaleOverallComponent implements OnInit {
         areaSite: 15389,
         totalArea: 114863,
         numberOfFloor: 'Podium 5 tầng; T6: 36 tầng; T7: 39 tầng',
-        progess: 600
+        progress: 600
       },
       hinhAnhPhoiCanh: {
         description: 'Demo miêu tả phối cảnh',
@@ -75,7 +76,7 @@ export class ScaleOverallComponent implements OnInit {
       }
     }
   }
-  deleteImg0() {
+  deletePerspectiveImage() {
     const index = this.perspectiveImageUrls.indexOf(this.url);
     this.perspectiveImageUrls.splice(index, 1);
   }
@@ -90,7 +91,7 @@ export class ScaleOverallComponent implements OnInit {
       }
     }
   }
-  deleteImg1() {
+  deleteStructureImage() {
     const index = this.structureImageUrls.indexOf(this.url);
     this.structureImageUrls.splice(index, 1);
   }
@@ -105,15 +106,8 @@ export class ScaleOverallComponent implements OnInit {
       }
     }
   }
-  deleteImg2() {
+  deleteRequirementsImage() {
     const index = this.requirementsImageUrls.indexOf(this.url);
     this.requirementsImageUrls.splice(index, 1);
-  }
-
-  addDisplayImg() {
-    window.onclick = e => {
-      const x = (<HTMLInputElement>event.target).className;
-      console.log(x);
-    };
   }
 }

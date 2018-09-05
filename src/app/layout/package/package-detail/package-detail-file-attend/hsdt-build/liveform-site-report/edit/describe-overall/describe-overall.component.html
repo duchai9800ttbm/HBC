@@ -1,80 +1,80 @@
-<div class="detailInfo">
-  <div id="step1" class="stepInfo">
-      <h5 class="bigTitle">2.&nbsp;mô tả tổng quát công trường (site infomation/conditional)</h5>
-      <div>
-          <div class="detailEachTitle">
-              <h6 class="smallTitle">2.1 Những chi tiết địa hình/Topography</h6>
-              <div class="mainDetail">
-                  <div class="textdesInput">
-                      <input type="text" placeholder="TEXT">
-                  </div>
-                  <div>
-                      <div id="imageDemoImg">
-                          <input type="file" style="display:none" #inputclick0 (change)="uploadTopographyImage($event)">
+<div class="detail-info">
+    <div id="step1" class="step-info">
+        <h5 class="big-title">2.&nbsp;mô tả tổng quát công trường (site infomation/conditional)</h5>
+        <div>
+            <div class="detail-each-title">
+                <h6 class="small-title">2.1 Những chi tiết địa hình/Topography</h6>
+                <div class="main-detail">
+                    <div class="text-des-input">
+                        <input type="text" placeholder="TEXT">
+                    </div>
+                    <div>
+                        <div class="image-demo-img">
+                            <input type="file" style="display:none" #uploadTopographyImage (change)="uploadTopographyImage($event)">
 
-                          <div class="displayImg" *ngFor="let url of topographyImageUrls">
-                              <img [src]="url">
-                              <div class="toppp" (click)="deleteImg0()">
-                                  <i class="fa fa-times deleteIco" aria-hidden="true"></i>
-                              </div>
-                          </div>
-                          <div class="perspectiveImage" (click)="inputclick0.click()">
-                              <i class="fa fa-plus" aria-hidden="true"></i>
-                              <p>Image</p>
-                          </div>
-                      </div>
-                  </div>
-              </div>
-          </div>
-          <div class="detailEachTitle">
-              <h6 class="smallTitle">2.2 Những kiến trúc hiện hữu trên công trường/ Existing building on the site</h6>
-              <div class="mainDetail">
-                  <div class="textdesInput">
-                      <input type="text" placeholder="TEXT">
-                  </div>
-                  <div>
-                      <div id="imageDemoImg">
-                          <input type="file" style="display:none" #inputclick1 (change)="uploadExistingBuildImage($event)">
-                          
-                          <div class="displayImg" *ngFor="let url of existingBuildImageUrls">
-                              <img [src]="url">
-                              <div class="toppp" (click)="deleteImg1()">
-                                  <i class="fa fa-times deleteIco" aria-hidden="true"></i>
-                              </div>
-                          </div>
-                          <div class="perspectiveImage" (click)="inputclick1.click()">
-                              <i class="fa fa-plus" aria-hidden="true"></i>
-                              <p>Image</p>
-                          </div>
-                      </div>
-                  </div>
-              </div>
-          </div>
-          <div class="detailEachTitle">
-              <h6 class="smallTitle">2.3 Những yêu cầu chướng ngại vật trên công trường/ Existing of stacale on the
-                  site</h6>
-              <div class="mainDetail">
-                  <div class="textdesInput">
-                      <input type="text" placeholder="TEXT">
-                  </div>
-                  <div>
-                      <div id="imageDemoImg">
-                          <input type="file" style="display:none" #inputclick2 (change)="uploadStacaleImage($event)">
+                            <div class="display-img" *ngFor="let url of topographyImageUrls">
+                                <img [src]="url">
+                                <div class="toppp" (click)="deleteTopographyImage()">
+                                    <i class="fa fa-times delete-icon" aria-hidden="true"></i>
+                                </div>
+                            </div>
+                            <div class="perspective-image" (click)="uploadTopographyImage.click()">
+                                <i class="fa fa-plus" aria-hidden="true"></i>
+                                <p>Image</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="detail-each-title">
+                <h6 class="small-title">2.2 Những kiến trúc hiện hữu trên công trường/ Existing building on the site</h6>
+                <div class="main-detail">
+                    <div class="text-des-input">
+                        <input type="text" placeholder="TEXT">
+                    </div>
+                    <div>
+                        <div class="image-demo-img">
+                            <input type="file" style="display:none" #uploadExistingBuildImage (change)="uploadExistingBuildImage($event)">
 
-                          <div class="displayImg" *ngFor="let url of stacaleImageUrls">
-                              <img [src]="url">
-                              <div class="toppp" (click)="deleteImg2()">
-                                  <i class="fa fa-times deleteIco" aria-hidden="true"></i>
-                              </div>
-                          </div>
-                          <div class="perspectiveImage" (click)="inputclick2.click()">
-                              <i class="fa fa-plus" aria-hidden="true"></i>
-                              <p>Image</p>
-                          </div>
-                      </div>
-                  </div>
-              </div>
-          </div>
-      </div>
-  </div>
+                            <div class="display-img" *ngFor="let url of existingBuildImageUrls">
+                                <img [src]="url">
+                                <div class="toppp" (click)="deleteExistingBuildImage()">
+                                    <i class="fa fa-times delete-icon" aria-hidden="true"></i>
+                                </div>
+                            </div>
+                            <div class="perspective-image" (click)="uploadExistingBuildImage.click()">
+                                <i class="fa fa-plus" aria-hidden="true"></i>
+                                <p>Image</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="detail-each-title">
+                <h6 class="small-title">2.3 Những yêu cầu chướng ngại vật trên công trường/ Existing of stacale on the
+                    site</h6>
+                <div class="main-detail">
+                    <div class="text-des-input">
+                        <input type="text" placeholder="TEXT">
+                    </div>
+                    <div>
+                        <div class="image-demo-img">
+                            <input type="file" style="display:none" #uploadStacaleImage (change)="uploadStacaleImage($event)">
+
+                            <div class="display-img" *ngFor="let url of stacaleImageUrls">
+                                <img [src]="url">
+                                <div class="toppp" (click)="deleteStacaleImage()">
+                                    <i class="fa fa-times delete-icon" aria-hidden="true"></i>
+                                </div>
+                            </div>
+                            <div class="perspective-image" (click)="uploadStacaleImage.click()">
+                                <i class="fa fa-plus" aria-hidden="true"></i>
+                                <p>Image</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>

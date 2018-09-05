@@ -10,11 +10,14 @@ import { SoilConditionComponent } from './soil-condition/soil-condition.componen
 import { TrafficComponent } from './traffic/traffic.component';
 import { UsefulInfoComponent } from './useful-info/useful-info.component';
 import { EditComponent } from './edit.component';
+import { SharedModule } from '../../../../../../../shared/shared.module';
+import { UpdateConfirmPopupComponent } from './update-confirm-popup/update-confirm-popup.component';
 
 @NgModule({
   imports: [
     CommonModule,
-    EditRoutingModule
+    EditRoutingModule,
+    SharedModule
   ],
   declarations: [
     EditComponent,
@@ -24,7 +27,8 @@ import { EditComponent } from './edit.component';
     ServiceConstructionComponent,
     SoilConditionComponent,
     TrafficComponent,
-    UsefulInfoComponent
+    UsefulInfoComponent,
+    UpdateConfirmPopupComponent
   ]
 })
 export class EditModule { }

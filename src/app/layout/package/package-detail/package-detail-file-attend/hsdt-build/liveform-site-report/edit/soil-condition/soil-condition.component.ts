@@ -24,7 +24,7 @@ export class SoilConditionComponent implements OnInit {
       }
     }
   }
-  deleteImg0() {
+  deleteFootingImage() {
     const index = this.footingImageUrls.indexOf(this.url);
     this.footingImageUrls.splice(index, 1);
   }
@@ -39,7 +39,7 @@ export class SoilConditionComponent implements OnInit {
       }
     }
   }
-  deleteImg1() {
+  deleteInvestigationImage() {
     const index = this.investigationImageUrls.indexOf(this.url);
     this.investigationImageUrls.splice(index, 1);
   }
