@@ -417,6 +417,27 @@ export class PackageListComponent implements OnInit, AfterViewChecked {
     }
 
     refresh(displayAlert: boolean = false): void {
+        // this.filterModel.sorting = '';
+        this.spinner.show();
+        this.packageService
+            .filterList(
+                this.searchTerm$.value,
+                this.filterModel,
+                this.pagedResult.currentPage,
+                this.pagedResult.pageSize
+            )
+            .subscribe(result => {
+                this.rerender(result);
+                this.spinner.hide();
+                if (displayAlert) {
+                    this.alertService.success(
+                        'Dữ liệu đã được cập nhật mới nhất'
+                    );
+                }
+            }, err => this.spinner.hide());
+    }
+
+    refreshGobal(displayAlert: boolean = false): void {
         this.filterModel.sorting = '';
         this.spinner.show();
         this.packageService
