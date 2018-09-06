@@ -10,7 +10,7 @@ import { PackageDetailComponent } from '../../../../package-detail.component';
 })
 export class SummaryConditionFormComponent implements OnInit, OnDestroy {
 
-  static formModel: TenderConditionSummaryRequest = new TenderConditionSummaryRequest();
+  static formModel: TenderConditionSummaryRequest;
   packageId;
   constructor(
     private packageService: PackageService
@@ -18,17 +18,17 @@ export class SummaryConditionFormComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.packageService.setSummaryConditionForm(true);
-    this.packageId = PackageDetailComponent.packageId;
-    SummaryConditionFormComponent.formModel.bidOpportunityId = this.packageId;
-    this.packageService.getTenderConditionSummary(this.packageId)
-      .subscribe(data => {
-        console.log(data);
-        if (data) {
-          SummaryConditionFormComponent.formModel = data;
-        } else {
-          SummaryConditionFormComponent.formModel = new TenderConditionSummaryRequest();
-        }
-      });
+    // this.packageId = PackageDetailComponent.packageId;
+    // SummaryConditionFormComponent.formModel.bidOpportunityId = this.packageId;
+    // this.packageService.getTenderConditionSummary(this.packageId)
+    //   .subscribe(data => {
+    //     console.log(data);
+    //     if (data) {
+    //       SummaryConditionFormComponent.formModel = data;
+    //     } else {
+    //       SummaryConditionFormComponent.formModel = new TenderConditionSummaryRequest();
+    //     }
+    //   });
   }
 
   ngOnDestroy(): void {
