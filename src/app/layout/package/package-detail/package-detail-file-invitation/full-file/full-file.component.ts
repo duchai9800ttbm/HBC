@@ -4,7 +4,7 @@ import { BidDocumentFilter } from '../../../../../shared/models/document/bid-doc
 import { Subject } from 'rxjs/Subject';
 import { UserModel } from '../../../../../shared/models/user/user.model';
 import { DATETIME_PICKER_CONFIG } from '../../../../../shared/configs/datepicker.config';
-import { PagedResult, DictionaryItem } from '../../../../../shared/models';
+import { PagedResult, DictionaryItem, DictionaryItemHightLight } from '../../../../../shared/models';
 import { UserItemModel } from '../../../../../shared/models/user/user-item.model';
 import { BidDocumentModel } from '../../../../../shared/models/document/bid-document.model';
 import { BidDocumentGroupModel } from '../../../../../shared/models/document/bid-document-group.model';
@@ -41,7 +41,7 @@ export class FullFileComponent implements OnInit {
     };
     userListItem: UserItemModel[];
     ListItem: BidDocumentModel[];
-    majorTypeListItem: DictionaryItem[];
+    majorTypeListItem: DictionaryItemHightLight[];
     bidDocumentGroupListItem: BidDocumentGroupModel[];
     bidDocumentGroupListItemSearchResult: BidDocumentGroupModel[];
     packageData: PackageInfoModel;
@@ -98,15 +98,22 @@ export class FullFileComponent implements OnInit {
                 this.bidDocumentGroupListItem = response;
                 this.bidDocumentGroupListItemSearchResult = response;
                 this.showTable = this.bidDocumentGroupListItemSearchResult.length > 0;
+                this.checkHightLight();
                 this.dtTrigger.next();
-                // if (document.getElementsByClassName('dataTables_empty')[0]) {
-                //     document.getElementsByClassName('dataTables_empty')[0].remove();
-                // }
                 this.spinner.hide();
             }, err => this.spinner.hide());
         });
     }
 
+    checkHightLight() {
+        if (this.majorTypeListItem && this.majorTypeListItem.length) {
+            this.majorTypeListItem.forEach(element => {
+                this.documentService.read(this.packageId, element.id).subscribe(data => {
+                    element.hightLight = data.length > 0;
+                });
+            });
+        }
+    }
     toggleClick() {
         this.isShowMenu = !this.isShowMenu;
         $('.toggle-menu-item').toggleClass('resize');
@@ -124,9 +131,6 @@ export class FullFileComponent implements OnInit {
         this.showTable = this.bidDocumentGroupListItemSearchResult.length > 0;
 
         this.dtTrigger.next();
-        // if (document.getElementsByClassName('dataTables_empty')[0]) {
-        //     document.getElementsByClassName('dataTables_empty')[0].remove();
-        // }
     }
 
     filter() {
@@ -135,9 +139,6 @@ export class FullFileComponent implements OnInit {
         this.showTable = this.bidDocumentGroupListItemSearchResult.length > 0;
 
         this.dtTrigger.next();
-        // if (document.getElementsByClassName('dataTables_empty')[0]) {
-        //     document.getElementsByClassName('dataTables_empty')[0].remove();
-        // }
     }
 
     clearFilter() {
@@ -149,9 +150,6 @@ export class FullFileComponent implements OnInit {
         this.showTable = this.bidDocumentGroupListItemSearchResult.length > 0;
 
         this.dtTrigger.next();
-        // if (document.getElementsByClassName('dataTables_empty')[0]) {
-        //     document.getElementsByClassName('dataTables_empty')[0].remove();
-        // }
     }
     uploadHSMT() {
         this.typeFileUpload = {
@@ -227,15 +225,8 @@ export class FullFileComponent implements OnInit {
             this.bidDocumentGroupListItem = response;
             this.bidDocumentGroupListItemSearchResult = response;
             this.showTable = this.bidDocumentGroupListItemSearchResult.length > 0;
-
+            this.checkHightLight();
             this.dtTrigger.next();
-            // if (document.getElementsByClassName('dataTables_empty')[0]) {
-            //     document.getElementsByClassName('dataTables_empty')[0].remove();
-            // }
-            // this.spinner.hide();
-            // if (!(this.bidDocumentGroupListItem && this.bidDocumentGroupListItem.length > 1)) {
-            //     document.getElementsByClassName('dataTables_empty')[0].remove();
-            // }
         });
     }
 
@@ -246,11 +237,8 @@ export class FullFileComponent implements OnInit {
             this.bidDocumentGroupListItem = response;
             this.bidDocumentGroupListItemSearchResult = response;
             this.showTable = this.bidDocumentGroupListItemSearchResult.length > 0;
-
+            this.checkHightLight();
             this.dtTrigger.next();
-            // if (document.getElementsByClassName('dataTables_empty')[0]) {
-            //     document.getElementsByClassName('dataTables_empty')[0].remove();
-            // }
             this.spinner.hide();
             this.alertService.success('Dữ liệu đã được cập nhật mới nhất!');
         });
@@ -317,11 +305,8 @@ export class FullFileComponent implements OnInit {
                     this.bidDocumentGroupListItem = response;
                     this.bidDocumentGroupListItemSearchResult = response;
                     this.showTable = this.bidDocumentGroupListItemSearchResult.length > 0;
-
+                    this.checkHightLight();
                     this.dtTrigger.next();
-                    // if (document.getElementsByClassName('dataTables_empty')[0]) {
-                    //     document.getElementsByClassName('dataTables_empty')[0].remove();
-                    // }
                     this.spinner.hide();
                     this.alertService.success('Dữ liệu đã được cập nhật mới nhất!');
                 });
@@ -334,11 +319,8 @@ export class FullFileComponent implements OnInit {
                     this.bidDocumentGroupListItem = response;
                     this.bidDocumentGroupListItemSearchResult = response;
                     this.showTable = this.bidDocumentGroupListItemSearchResult.length > 0;
-
+                    this.checkHightLight();
                     this.dtTrigger.next();
-                    // if (document.getElementsByClassName('dataTables_empty')[0]) {
-                    //     document.getElementsByClassName('dataTables_empty')[0].remove();
-                    // }
                     this.spinner.hide();
                     this.alertService.success('Dữ liệu đã được cập nhật mới nhất!');
                 });

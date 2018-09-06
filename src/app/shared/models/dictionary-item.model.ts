@@ -12,3 +12,9 @@ export class DictionaryItemText {
     name: string;
     desc: string;
 }
+
+export interface DictionaryItemHightLight {
+    id: number;
+    text: string;
+    hightLight?: boolean;
+}
