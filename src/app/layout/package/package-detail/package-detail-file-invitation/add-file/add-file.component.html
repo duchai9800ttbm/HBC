@@ -35,16 +35,22 @@
                 <div class="d-flex">
                     <div id="toggle-menu-item" *ngIf="majorTypeListItem">
                         <ng-container *ngFor="let item of majorTypeListItem; let i = index">
-                            <div class="toggle-menu-item" [title]="item.text" [class.hight-light]="!item.hightLight && (currentMajorTypeId != item.id)" [class.active-menu]="(currentMajorTypeId == item.id)" (click)="filterMajorTypeListItem(item.id, item.text)">
+                            <div class="toggle-menu-item" [title]="item.text" [class.hight-light]="!item.hightLight && (currentMajorTypeId != item.id)"
+                                [class.active-menu]="(currentMajorTypeId == item.id)" (click)="filterMajorTypeListItem(item.id, item.text)">
                                 <span class="text-truncate">{{item?.text}}</span>
                             </div>
                             <div class="line" *ngIf="!(majorTypeListItem.length == i+1)" style="width: calc(100% - 10px); border-top: #ccecf9 solid 1px; height: 1px; border-left: 1px; margin-left: 10px;"></div>
                         </ng-container>
                     </div>
                     <div class="button-click mb-auto" (click)="toggleClick()">
-                        <div class="iconButton iconN1"></div>
-                        <div class="iconButton iconN2" style="margin: 3px 0;"></div>
-                        <div class="iconButton iconN3"></div>
+                        <div class="center-parent">
+                            <div>
+                                <div class="iconButton iconN1"></div>
+                                <div class="iconButton iconN2" style="margin: 3.5px 0;"></div>
+                                <div class="iconButton iconN3"></div>
+                            </div>
+                        </div>
+
                     </div>
                 </div>
 
@@ -109,7 +115,7 @@
                     </div>
                 </div>
                 <div class="d-flex flex-row flex-wrap filter-bar custom-filter-bar" style="background-color: #fafbfc">
-                    <div class="d-flex form-inline ">
+                    <div class="d-flex form-inline   ">
                         <div class="form-group ml-sm-2 p-1">
                             <label for="" class="form-label">Tình trạng</label>
                             <span class="custom-dropdown mx-sm-2">
@@ -146,7 +152,7 @@
                                 </span>
                             </div>
                         </div>
-                        <div class="form-group ml-sm-2 p-1">
+                        <div class="form-group ml-auto p-1">
 
                             <button type="submit" class="btn btn-primary ml-sm-2" (click)="filter()">
                                 <i class="fa fa-filter" aria-hidden="true"></i>&nbsp; Lọc

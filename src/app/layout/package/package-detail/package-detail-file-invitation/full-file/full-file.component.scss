@@ -59,7 +59,7 @@ input.icon {
 }
 
 .hight-light {
-    color: #adadad !important;
+    color: #a5a2a2 !important;
 }
 
 .custor-filter-bar {
@@ -619,6 +619,7 @@ table.dataTable th {
 }
 
 table.dataTable {
+
     tr:nth-child(odd) {background-color: #fafbfc;}
 
     overflow-x: scroll;
@@ -628,11 +629,10 @@ table.dataTable {
     }
     th:not([type="check"]),
     td:not([type="check"]) {
-        min-width: 100px;
-        max-width: 160px;
+        min-width: 80px;
+        max-width: 90px;
     }
 }
-
 .hidden {
     border: none !important;
     box-shadow: none !important;
