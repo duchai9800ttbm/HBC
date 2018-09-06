@@ -1,16 +1,7 @@
+import { CustomerModel } from './customer.model';
 export class InterviewInvitationCreate {
     id: number;
-    customer: {
-        id: number;
-        customerId: number;
-        customerName: string;
-        customerNo: string;
-        customerDesc: string;
-        customerClassify: string;
-        customerNewOldType: string;
-        customerPhone: string;
-        customerAddress: string;
-    };
+    customer: CustomerModel;
     approvedDate: number;
     interviewDate: number;
     place: string;

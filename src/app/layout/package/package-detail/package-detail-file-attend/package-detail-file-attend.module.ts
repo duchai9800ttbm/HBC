@@ -17,10 +17,24 @@ import { HsdtPendingComponent } from './hsdt-pending/hsdt-pending.component';
 import { DocumentPriceReviewService } from '../../../../shared/services/document-price-review.service';
 import { UploadFilePriceReviewComponent } from './price-review/upload-file-price-review/upload-file-price-review.component';
 import { UploadFileHsdtComponent } from './hsdt-build/upload-file-hsdt/upload-file-hsdt.component';
+// tslint:disable-next-line:max-line-length
 import { CreateNewInvitationComponent } from './interview-negotiation/create-interview/create-new-invitation/create-new-invitation.component';
 import { ReportEndInterviewComponent } from './interview-negotiation/end-interview/report-end-interview/report-end-interview.component';
+import { InterviewNoticeComponent } from './interview-negotiation/create-interview/interview-notice/interview-notice.component';
+import { TagInputModule } from 'ngx-chips';
+TagInputModule.withDefaults({
+  tagInput: {
+    placeholder: 'Nhập địa chỉ email',
+    // add here other default values for tag-input
+  },
+  dropdown: {
+    displayBy: 'my-display-value',
+    // add here other default values for tag-input-dropdown
+  }
+});
 @NgModule({
   imports: [
+    TagInputModule,
     CommonModule,
     SharedModule,
     PackageDetailFileAttendRoutingModule,
@@ -41,12 +55,14 @@ import { ReportEndInterviewComponent } from './interview-negotiation/end-intervi
     UploadFilePriceReviewComponent,
     CreateNewInvitationComponent,
     UploadFileHsdtComponent,
-    ReportEndInterviewComponent
+    ReportEndInterviewComponent,
+    InterviewNoticeComponent
   ],
   entryComponents: [
     CreateNewInvitationComponent,
     UploadFileHsdtComponent,
     ReportEndInterviewComponent,
+    InterviewNoticeComponent
   ],
   providers: [
     DocumentPriceReviewService

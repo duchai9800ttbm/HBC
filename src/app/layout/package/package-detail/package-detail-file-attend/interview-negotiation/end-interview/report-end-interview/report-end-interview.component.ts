@@ -2,7 +2,8 @@ import { Component, OnInit, Input } from '@angular/core';
 import { FormGroup, FormBuilder } from '../../../../../../../../../node_modules/@angular/forms';
 import { InterviewInvitationReport } from '../../../../../../../shared/models/interview-invitation/interview-invitation-report.model';
 import { AlertService } from '../../../../../../../shared/services/alert.service';
-
+import { InterviewInvitationService } from '../../../../../../../shared/services/interview-invitation.service';
+import { PackageDetailComponent } from '../../../../package-detail.component';
 @Component({
   selector: 'app-report-end-interview',
   templateUrl: './report-end-interview.component.html',
@@ -13,12 +14,15 @@ export class ReportEndInterviewComponent implements OnInit {
   createFormReport: FormGroup;
   interviewInvitationReport = new InterviewInvitationReport();
   file: File;
+  currentPackageId: number;
   constructor(
     private fb: FormBuilder,
     private alertService: AlertService,
+    private interviewInvitationService: InterviewInvitationService,
   ) { }
 
   ngOnInit() {
+    this.currentPackageId = +PackageDetailComponent.packageId;
     this.createForm();
   }
 
@@ -29,6 +33,7 @@ export class ReportEndInterviewComponent implements OnInit {
       uploadedBy: [this.interviewInvitationReport.uploadedBy],
       createdDate: [this.interviewInvitationReport.uploadedBy],
       interviewTimes: [this.interviewInvitationReport.interviewTimes],
+      documentDesc: [this.interviewInvitationReport.documentDesc],
     });
   }
 
@@ -46,5 +51,17 @@ export class ReportEndInterviewComponent implements OnInit {
         this.alertService.error('Dung lượng ảnh quá lớn! Vui lòng chọn ảnh dưới 10MB.');
       }
     }
+  }
+
+  Upload() {
+    console.log('this.createFormReport.value', this.createFormReport.value);
+    this.interviewInvitationService.UploadReportInterview(this.currentPackageId, this.createFormReport.value, this.file)
+      .subscribe(response => {
+        this.closePopup();
+        this.alertService.success('Thêm mới lời mời thành công!');
+      },
+        err => {
+          this.alertService.error('Tạo mới lời mời thất bại, xin vui lòng thử lại!');
+        });
   }
 }

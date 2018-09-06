@@ -6,6 +6,7 @@ import { PackageDetailComponent } from '../../../../package-detail.component';
 import { PackageService } from '../../../../../../../shared/services/package.service';
 import { AlertService } from '../../../../../../../shared/services';
 import { InterviewInvitationService } from '../../../../../../../shared/services/interview-invitation.service';
+import { CustomerModel } from '../../../../../../../shared/models/interview-invitation/customer.model';
 @Component({
   selector: 'app-create-new-invitation',
   templateUrl: './create-new-invitation.component.html',
@@ -23,7 +24,9 @@ export class CreateNewInvitationComponent implements OnInit {
     private packageService: PackageService,
     private alertService: AlertService,
     private interviewInvitationService: InterviewInvitationService,
-  ) { }
+  ) {
+    this.interviewInvitation.customer = new CustomerModel();
+  }
 
   ngOnInit() {
     this.currentPackageId = +PackageDetailComponent.packageId;
@@ -66,7 +69,6 @@ export class CreateNewInvitationComponent implements OnInit {
   }
 
   onSubmit() {
-    // this.interviewInvitation.customer.customerId = 10;
     this.interviewInvitationService.createInterviewInvitation(
       this.interviewInvitation.customer ? this.interviewInvitation.customer.customerId : 0,
       this.currentPackageId, this.createFormNewInvitation.value, this.file).subscribe( response => {
