@@ -227,7 +227,8 @@ export class FullFileComponent implements OnInit {
             this.showTable = this.bidDocumentGroupListItemSearchResult.length > 0;
             this.checkHightLight();
             this.dtTrigger.next();
-        });
+            this.spinner.hide();
+        }, err => this.spinner.hide());
     }
 
 

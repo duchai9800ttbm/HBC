@@ -417,6 +417,7 @@ export class PackageListComponent implements OnInit, AfterViewChecked {
     }
 
     refresh(displayAlert: boolean = false): void {
+        this.filterModel.sorting = '';
         this.spinner.show();
         this.packageService
             .filterList(
