@@ -101,15 +101,15 @@ export class InterviewInvitationService {
     return this.apiService.get(filterUrl, urlParams).map(response => {
       const result = response.result;
       return {
-          currentPage: result.pageIndex,
-          pageSize: result.pageSize,
-          pageCount: result.totalPages,
-          total: result.totalCount,
-          items: (result.items || []).map(
-            this.toInterviewInvitationList
-          )
+        currentPage: result.pageIndex,
+        pageSize: result.pageSize,
+        pageCount: result.totalPages,
+        total: result.totalCount,
+        items: (result.items || []).map(
+          this.toInterviewInvitationList
+        )
       };
-  });
+    });
   }
   // Tạo mới lời mới phỏng vấn
   createInterviewInvitation(
@@ -132,4 +132,25 @@ export class InterviewInvitationService {
       .map(response => response)
       .share();
   }
+
+  // Tải lên biên bản phỏng vấn
+  UploadReportInterview(
+    BidOpportunityId: number,
+    createFormReportValue: any,
+    file: File,
+  ) {
+    const url = `bidinterviewreportdoc/upload`;
+    const formData = new FormData();
+    formData.append('BidOpportunityId', `${BidOpportunityId}`);
+    formData.append('DocumentName', `${createFormReportValue.documentName}`);
+    formData.append('DocumentDesc', `${createFormReportValue.documentDesc}`);
+    formData.append('InterviewTimes', `${createFormReportValue.interviewTimes}`);
+    formData.append('DocumentFile', file);
+    return this.apiService.postFile(url, formData)
+      .map(response => response)
+      .share();
+  }
+
+  // Danh sách biên bản phỏng vấn
+  
 }

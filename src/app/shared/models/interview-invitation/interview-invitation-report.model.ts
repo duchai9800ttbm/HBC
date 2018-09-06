@@ -10,4 +10,5 @@ export class InterviewInvitationReport  {
     };
     createdDate: number;
     interviewTimes: number;
+    documentDesc: string;
 }

@@ -11,6 +11,7 @@ import { DATATABLE_CONFIG } from '../../../../../../shared/configs';
 import { InterviewInvitationFilter } from '../../../../../../shared/models/interview-invitation/interview-invitation-filter.model';
 import { AlertService } from '../../../../../../shared/services';
 import { NgxSpinnerService } from '../../../../../../../../node_modules/ngx-spinner';
+import { InterviewNoticeComponent } from './interview-notice/interview-notice.component';
 @Component({
   selector: 'app-create-interview',
   templateUrl: './create-interview.component.html',
@@ -71,7 +72,6 @@ export class CreateInterviewComponent implements OnInit {
   }
 
   filter() {
-    console.log('this.filter', this.filterModel);
     this.spinner.show();
     this.interviewInvitationService
       .filterList(
@@ -110,5 +110,15 @@ export class CreateInterviewComponent implements OnInit {
 
   onSelectAll(value: boolean) {
     this.pagedResult.items.forEach(x => (x['checkboxSelected'] = value));
+  }
+
+  noticeInterview() {
+    this.dialog = this.dialogService.open({
+      content: InterviewNoticeComponent,
+      width: 1100,
+      minWidth: 250
+    });
+    const instance = this.dialog.content.instance;
+    instance.callBack = () => this.closePopuup();
   }
 }

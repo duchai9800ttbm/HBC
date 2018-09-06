@@ -296,6 +296,7 @@ a{
     z-index: 10000;
 }
 .main-table{
+    height: 100%;
     //padding: 15px 15px;
     padding-left: 15px;
     padding-right: 15px;
@@ -377,7 +378,7 @@ select.form-control:not([size]):not([multiple]){
 .dropdown-menu::before {
     position: absolute;
     top: -12px;
-    left: 572px;
+    left: 672px;
     display: inline-block;
     border-right: 12px solid transparent;
     border-bottom: 12px solid #CCC;
@@ -388,7 +389,7 @@ select.form-control:not([size]):not([multiple]){
   .dropdown-menu::after {
     position: absolute;
     top: -11px;
-    left: 573px;
+    left: 673px;
     display: inline-block;
     border-right: 11px solid transparent;
     border-bottom: 11px solid white;
