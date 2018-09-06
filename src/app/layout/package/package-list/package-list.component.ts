@@ -437,7 +437,7 @@ export class PackageListComponent implements OnInit, AfterViewChecked {
             }, err => this.spinner.hide());
     }
 
-    refreshGobal(displayAlert: boolean = false): void {
+    refreshGlobal(displayAlert: boolean = false): void {
         this.filterModel.sorting = '';
         this.spinner.show();
         this.packageService
@@ -450,11 +450,11 @@ export class PackageListComponent implements OnInit, AfterViewChecked {
             .subscribe(result => {
                 this.rerender(result);
                 this.spinner.hide();
-                if (displayAlert) {
-                    this.alertService.success(
-                        'Dữ liệu đã được cập nhật mới nhất'
-                    );
-                }
+                    if (displayAlert) {
+                        this.alertService.success(
+                            'Dữ liệu đã được cập nhật mới nhất'
+                        );
+                    }
             }, err => this.spinner.hide());
     }
 
