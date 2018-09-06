@@ -41,7 +41,7 @@ import { ReportEndInterviewComponent } from './interview-negotiation/end-intervi
     UploadFilePriceReviewComponent,
     CreateNewInvitationComponent,
     UploadFileHsdtComponent,
-    ReportEndInterviewComponent
+    ReportEndInterviewComponent,
   ],
   entryComponents: [
     CreateNewInvitationComponent,

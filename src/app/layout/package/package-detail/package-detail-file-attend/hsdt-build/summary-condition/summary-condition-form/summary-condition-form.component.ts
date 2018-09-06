@@ -2,6 +2,8 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { PackageService } from '../../../../../../../shared/services/package.service';
 import { TenderConditionSummaryRequest } from '../../../../../../../shared/models/api-request/package/tender-condition-summary-request';
 import { PackageDetailComponent } from '../../../../package-detail.component';
+import { NgxSpinnerService } from 'ngx-spinner';
+import { AlertService } from '../../../../../../../shared/services';
 
 @Component({
   selector: 'app-summary-condition-form',
@@ -13,7 +15,9 @@ export class SummaryConditionFormComponent implements OnInit, OnDestroy {
   static formModel: TenderConditionSummaryRequest;
   packageId;
   constructor(
-    private packageService: PackageService
+    private packageService: PackageService,
+    private spinner: NgxSpinnerService,
+    private alertService: AlertService
   ) { }
 
   ngOnInit() {
@@ -36,9 +40,14 @@ export class SummaryConditionFormComponent implements OnInit, OnDestroy {
   }
 
   onSubmit() {
-    console.log(SummaryConditionFormComponent.formModel);
+    this.spinner.show();
     this.packageService.createOrUpdateTenderConditionSummary(SummaryConditionFormComponent.formModel).subscribe(data => {
       console.log(data);
+      this.spinner.hide();
+      this.alertService.success('Lập hồ sơ dự thầu thành công!');
+    }, err => {
+      this.spinner.hide();
+      this.alertService.error('Lập hồ sơ dự thầu thất bại!');
     });
   }
 

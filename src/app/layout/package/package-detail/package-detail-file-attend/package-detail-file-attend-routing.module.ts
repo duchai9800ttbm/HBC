@@ -13,7 +13,7 @@ const routes: Routes = [
         path: '',
         component: PackageDetailFileAttendComponent,
         children: [
-            { path: '', redirectTo: 'infomation-deployment' },
+            { path: '', redirectTo: 'create-request' },
             { path: 'infomation-deployment', component: InformationDeploymentComponent },
             {
                 path: 'build',
@@ -29,6 +29,10 @@ const routes: Routes = [
                 path: 'interview-negotiation',
                 loadChildren: './interview-negotiation/interview-negotiation.module#InterviewNegotiationModule'
             },
+            {
+                path: 'create-request',
+                loadChildren: './need-create-tender/need-create-tender.module#NeedCreateTenderModule'
+            }
         ]
     }
 ];
