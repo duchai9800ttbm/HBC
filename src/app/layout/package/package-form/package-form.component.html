@@ -49,7 +49,8 @@
                                             <tr>
                                                 <td class="w-15 bg-light text-right label no-boder">Tên dự án</td>
                                                 <td class="w-35 no-boder">
-                                                    <input class="w-75 form-control" appEnterPreventDefault tabindex="1" placeholder="" type="text" formControlName="projectName" [class.is-invalid]="formErrors.projectName">
+                                                    <input class="w-75 form-control" appEnterPreventDefault tabindex="1" placeholder="" type="text" formControlName="projectName"
+                                                        [class.is-invalid]="formErrors.projectName">
                                                     <div class="invalid-feedback" *ngIf="formErrors.projectName">
                                                         {{formErrors.projectName}}
                                                     </div>
@@ -101,10 +102,7 @@
                                                 </td>
                                             </tr>
                                             <tr>
-                                                <!-- <td class="w-15 bg-light text-right label no-boder">Công việc</td>
-                                        <td class="w-35 no-boder">
-                                            <input class="w-75 form-control" tabindex="4" placeholder="" type="text" formControlName="job">
-                                        </td> -->
+
                                                 <td class="w-15 bg-light text-right label no-boder">Địa điểm</td>
                                                 <td class="w-35 no-boder">
                                                     <input class="w-75 form-control" appEnterPreventDefault tabindex="4" placeholder="" type="text" formControlName="place">
@@ -180,7 +178,8 @@
                                                 </td>
                                                 <td class="w-15 bg-light text-right label no-boder">Tổng giá trị</td>
                                                 <td class="w-35 no-boder">
-                                                    <input class="w-75 form-control text-right align-placeholder" appEnterPreventDefault appInputMoney tabindex="20" placeholder="" type="text" formControlName="amount">
+                                                    <input class="w-75 form-control text-right align-placeholder" appEnterPreventDefault appInputMoney tabindex="20" placeholder=""
+                                                        type="text" formControlName="amount">
                                                 </td>
                                                 <!-- <td class="w-15 bg-light text-right label required no-boder">Tình trạng</td>
                                         <td class="w-35 no-boder">
@@ -199,7 +198,8 @@
                                             <tr>
                                                 <td class="w-15 bg-light text-right label no-boder">Loại khách hàng</td>
                                                 <td class="w-35 no-boder">
-                                                    <input class="w-75 form-control" appEnterPreventDefault tabindex="8" disabled placeholder="" type="text" formControlName="customerNewOldType" [value]="packageForm.get('customerNewOldType').value | translate">
+                                                    <input class="w-75 form-control" appEnterPreventDefault tabindex="8" disabled placeholder="" type="text" formControlName="customerNewOldType"
+                                                        [value]="packageForm.get('customerNewOldType').value | translate">
                                                 </td>
                                                 <td class="w-15 bg-light text-right label no-boder">Đánh giá dự án</td>
                                                 <td class="w-35 no-boder">
@@ -210,10 +210,10 @@
                                                 <td class="w-15 bg-light text-right label no-boder">Liên hệ</td>
                                                 <td class="w-35 no-boder">
                                                     <div class=" w-75 autocomplete-wrapper-2 ui-fluid">
-                                                        <p-autoComplete appEnterPreventDefault formControlName="customerContactId" [suggestions]="contactsSearchResults" [forceSelection]="true" [delay]="'400'"
-                                                            [emptyMessage]="'Không có dữ liệu'" placeholder="---Chọn---" [immutable]="true"
-                                                            (completeMethod)="searchContacts($event.query)" field="text" dataKey="id"
-                                                            [multiple]="false" [tabindex]="'9'">
+                                                        <p-autoComplete appEnterPreventDefault formControlName="customerContactId" [suggestions]="contactsSearchResults" [forceSelection]="true"
+                                                            [delay]="'400'" [emptyMessage]="'Không có dữ liệu'" placeholder="---Chọn---"
+                                                            [immutable]="true" (completeMethod)="searchContacts($event.query)"
+                                                            field="text" dataKey="id" [multiple]="false" [tabindex]="'9'">
 
                                                         </p-autoComplete>
                                                         <span class="input-group-addon">
@@ -230,9 +230,9 @@
                                                 <td class="w-15 bg-light text-right label no-boder">Đơn vị tư vấn</td>
                                                 <td class="w-100 no-boder d-flex">
                                                     <span class="w-75 autocomplete-wrapper-2 ui-fluid">
-                                                        <p-autoComplete appEnterPreventDefault formControlName="consultantUnitCustomerId" [suggestions]="customersSearchResults" [forceSelection]="true"
-                                                            [delay]="'400'" [emptyMessage]="'Không có dữ liệu'" placeholder="---Chọn---"
-                                                            [immutable]="true" (completeMethod)="searchCustomers($event.query)"
+                                                        <p-autoComplete appEnterPreventDefault formControlName="consultantUnitCustomerId" [suggestions]="customersSearchResults"
+                                                            [forceSelection]="true" [delay]="'400'" [emptyMessage]="'Không có dữ liệu'"
+                                                            placeholder="---Chọn---" [immutable]="true" (completeMethod)="searchCustomers($event.query)"
                                                             field="text" dataKey="id" [multiple]="false" [tabindex]="'10'" (onSelect)="changeConsultant($event)">
                                                         </p-autoComplete>
                                                         <span class="input-group-addon">
@@ -257,7 +257,8 @@
                                             <tr>
                                                 <td class="w-15 bg-light text-right label no-boder">Địa chỉ ĐVTV</td>
                                                 <td class="w-35 no-boder">
-                                                    <input disabled appEnterPreventDefault class="w-75 form-control" tabindex="11" placeholder="" type="text" formControlName="consultantAddress" [value]="packageForm.get('consultantAddress').value">
+                                                    <input disabled appEnterPreventDefault class="w-75 form-control" tabindex="11" placeholder="" type="text" formControlName="consultantAddress"
+                                                        [value]="packageForm.get('consultantAddress').value">
                                                 </td>
                                                 <td class="w-15 bg-light text-right label no-boder"></td>
                                                 <td class="w-35 no-boder">
@@ -267,8 +268,9 @@
                                             <tr>
                                                 <td class="w-15 bg-light text-right label  no-boder">Số điện thoại ĐVTV</td>
                                                 <td class="w-35  no-boder">
-                                                    <input appEnterPreventDefault disabled appInputNumber class="w-75 form-control" tabindex="12" placeholder="" type="text" formControlName="consultantPhone"
-                                                        [class.is-invalid]="formErrors.consultantPhone" [value]="packageForm.get('consultantPhone').value">
+                                                    <input appEnterPreventDefault disabled appInputNumber class="w-75 form-control" tabindex="12" placeholder="" type="text"
+                                                        formControlName="consultantPhone" [class.is-invalid]="formErrors.consultantPhone"
+                                                        [value]="packageForm.get('consultantPhone').value">
                                                     <div class="invalid-feedback" *ngIf="formErrors.consultantPhone">
                                                         {{formErrors.consultantPhone}}
                                                     </div>
@@ -284,8 +286,8 @@
                                                 <td class="w-15 bg-light text-right label pb-1" style="padding-bottom: 20px!important; border-top: none;border-right: none;">Diện tích sàn (m2)</td>
                                                 <td class="w-35" style="padding-bottom: 20px!important; border-top: none;border-right: none;border-left: none;">
                                                     <div class=" w-75 autocomplete-wrapper-2 ui-fluid">
-                                                        <input appEnterPreventDefault appInputArea class="form-control cus-input text-right align-placeholder" tabindex="13" placeholder="" type="text"
-                                                            formControlName="floorArea">
+                                                        <input appEnterPreventDefault appInputArea class="form-control cus-input text-right align-placeholder" tabindex="13" placeholder=""
+                                                            type="text" formControlName="floorArea">
                                                     </div>
                                                 </td>
                                                 <td class="w-15 bg-light text-right label pb-1" style="padding-bottom: 20px!important; border-top: none;border-right: none;border-left: none;"></td>
@@ -301,8 +303,8 @@
                                                         <span class="input-group-addon">
                                                             <i class="fa fa-calendar"></i>
                                                         </span> -->
-                                                        <input appEnterPreventDefault [placeholder]="datePickerConfig.datePlaceHolder" class="input-date-time" formControlName="startTrackingDate" tabindex="27"
-                                                            [owlDateTimeTrigger]="dtStartTrackingDate" [owlDateTime]="dtStartTrackingDate">
+                                                        <input appEnterPreventDefault [placeholder]="datePickerConfig.datePlaceHolder" class="input-date-time" formControlName="startTrackingDate"
+                                                            tabindex="27" [owlDateTimeTrigger]="dtStartTrackingDate" [owlDateTime]="dtStartTrackingDate">
                                                         <owl-date-time #dtStartTrackingDate pickerType="calendar"></owl-date-time>
                                                         <span [owlDateTimeTrigger]="dtStartTrackingDate" class="input-group-addon">
                                                             <i class="fa fa-calendar"></i>
@@ -319,7 +321,7 @@
                                                         <span class="input-group-addon">
                                                             <i class="fa fa-calendar"></i>
                                                         </span> -->
-                                                        <input appEnterPreventDefault [placeholder]="datePickerConfig.datePlaceHolder" class="input-date-time"  formControlName="projectEstimatedStartDate"
+                                                        <input appEnterPreventDefault [placeholder]="datePickerConfig.datePlaceHolder" class="input-date-time" formControlName="projectEstimatedStartDate"
                                                             tabindex="30" [owlDateTimeTrigger]="dtProjectEstimatedStartDate"
                                                             [owlDateTime]="dtProjectEstimatedStartDate">
                                                         <owl-date-time #dtProjectEstimatedStartDate pickerType="calendar"></owl-date-time>
@@ -330,7 +332,7 @@
                                                 </td>
                                             </tr>
                                             <tr>
-                                                <td class="w-15 bg-light text-right label no-boder">Ngày nhận hồ sơ mời thầu
+                                                <td class="w-15 bg-light text-right label no-boder">Ngày nộp hồ sơ mời thầu
                                                 </td>
                                                 <td class="w-35 no-boder">
                                                     <div class="input-group w-75">
@@ -339,8 +341,8 @@
                                                         <span class="input-group-addon">
                                                             <i class="fa fa-calendar"></i>
                                                         </span> -->
-                                                        <input appEnterPreventDefault [placeholder]="datePickerConfig.datePlaceHolder" class="input-date-time" formControlName="submissionDate" tabindex="28"
-                                                            [owlDateTimeTrigger]="dtSubmissionDate" [owlDateTime]="dtSubmissionDate">
+                                                        <input appEnterPreventDefault [placeholder]="datePickerConfig.datePlaceHolder" class="input-date-time" formControlName="submissionDate"
+                                                            tabindex="28" [owlDateTimeTrigger]="dtSubmissionDate" [owlDateTime]="dtSubmissionDate">
                                                         <owl-date-time #dtSubmissionDate pickerType="calendar"></owl-date-time>
                                                         <span [owlDateTimeTrigger]="dtSubmissionDate" class="input-group-addon">
                                                             <i class="fa fa-calendar"></i>
@@ -359,7 +361,7 @@
                                                         <span class="input-group-addon">
                                                             <i class="fa fa-calendar"></i>
                                                         </span> -->
-                                                        <input appEnterPreventDefault [placeholder]="datePickerConfig.datePlaceHolder" class="input-date-time"  formControlName="projectEstimatedEndDate"
+                                                        <input appEnterPreventDefault [placeholder]="datePickerConfig.datePlaceHolder" class="input-date-time" formControlName="projectEstimatedEndDate"
                                                             tabindex="31" [owlDateTimeTrigger]="dtProjectEstimatedEndDate" [owlDateTime]="dtProjectEstimatedEndDate">
                                                         <owl-date-time #dtProjectEstimatedEndDate pickerType="calendar"></owl-date-time>
                                                         <span [owlDateTimeTrigger]="dtProjectEstimatedEndDate" class="input-group-addon">
@@ -377,8 +379,8 @@
                                                         <span class="input-group-addon">
                                                             <i class="fa fa-calendar"></i>
                                                         </span> -->
-                                                        <input appEnterPreventDefault [placeholder]="datePickerConfig.datePlaceHolder" class="input-date-time" formControlName="resultEstimatedDate" tabindex="29"
-                                                            [owlDateTimeTrigger]="dtResultEstimatedDate" [owlDateTime]="dtResultEstimatedDate">
+                                                        <input appEnterPreventDefault [placeholder]="datePickerConfig.datePlaceHolder" class="input-date-time" formControlName="resultEstimatedDate"
+                                                            tabindex="29" [owlDateTimeTrigger]="dtResultEstimatedDate" [owlDateTime]="dtResultEstimatedDate">
                                                         <owl-date-time #dtResultEstimatedDate pickerType="calendar"></owl-date-time>
                                                         <span [owlDateTimeTrigger]="dtResultEstimatedDate" class="input-group-addon">
                                                             <i class="fa fa-calendar"></i>

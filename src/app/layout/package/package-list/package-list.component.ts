@@ -43,6 +43,7 @@ export class PackageListComponent implements OnInit, AfterViewChecked {
     activityStatusList: Observable<DictionaryItem[]>;
     checkboxSeclectAll: boolean;
     dtOptions: any = DATATABLE_CONFIG2;
+    // dtOptions: any = {};
     dtTrigger: Subject<any> = new Subject();
     filterModel = new PackageFilter();
     pagedResult: PagedResult<PackageListItem> = new PagedResult<
@@ -240,7 +241,6 @@ export class PackageListComponent implements OnInit, AfterViewChecked {
                 this.isToggle = false;
             }
         });
-   
         this.searchTerm$.debounceTime(600)
         .distinctUntilChanged()
         .subscribe(term => {
@@ -248,6 +248,19 @@ export class PackageListComponent implements OnInit, AfterViewChecked {
             this.filter(false);
             // return Observable.create(x => x.next(''));
         });
+        // this.dtOptions = {
+        //     scrollX:        true,
+        //     fixedColumns:   {
+        //         leftColumns: 1,
+        //         rightColumns: 1
+        //     }
+        // };
+        // this.dtOptions['fixedColumns'] = {
+        //     leftColumns: 1,
+        //     rightColumns: 1
+        // };
+        // this.dtOptions['scrollX'] = true;
+        // this.dtOptions['scrollCollapse'] = true;
 
     }
     ngAfterViewChecked() {
@@ -404,6 +417,7 @@ export class PackageListComponent implements OnInit, AfterViewChecked {
     }
 
     refresh(displayAlert: boolean = false): void {
+        this.filterModel.sorting = '';
         this.spinner.show();
         this.packageService
             .filterList(

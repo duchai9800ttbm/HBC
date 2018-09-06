@@ -20,7 +20,6 @@ export class HsdtBuildComponent implements OnInit {
     ngOnInit() {
         this.packageService.isSummaryConditionForm$.subscribe(data => {
             this.isShowMenu = data;
-            console.log('this.isShowMenu: ', this.isShowMenu);
             this.cdr.detectChanges();
         });
     }

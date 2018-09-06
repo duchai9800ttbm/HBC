@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { routerTransition } from '../../../../../router.animations';
-import { DictionaryItem, PagedResult } from '../../../../../shared/models';
+import { DictionaryItem, PagedResult, DictionaryItemHightLight } from '../../../../../shared/models';
 import { DATATABLE_CONFIG, DATATABLE_CONFIG2 } from '../../../../../shared/configs';
 import { Subject } from '../../../../../../../node_modules/rxjs/Subject';
 import { AlertService, ConfirmationService, UserService } from '../../../../../shared/services';
@@ -41,7 +41,7 @@ export class AddFileComponent implements OnInit {
     };
     userListItem: UserItemModel[];
     ListItem: BidDocumentModel[];
-    majorTypeListItem: DictionaryItem[];
+    majorTypeListItem: DictionaryItemHightLight[];
     bidDocumentGroupListItem: BidDocumentGroupModel[];
     bidDocumentGroupListItemSearchResult: BidDocumentGroupModel[];
     packageData: PackageInfoModel;
@@ -98,15 +98,23 @@ export class AddFileComponent implements OnInit {
                 this.bidDocumentGroupListItem = response;
                 this.bidDocumentGroupListItemSearchResult = response;
                 this.showTable = this.bidDocumentGroupListItemSearchResult.length > 0;
+                this.checkHightLight();
                 this.dtTrigger.next();
-                // if (document.getElementsByClassName('dataTables_empty')[0]) {
-                //     document.getElementsByClassName('dataTables_empty')[0].remove();
-                // }
                 this.spinner.hide();
             }, err => this.spinner.hide());
         });
     }
 
+
+    checkHightLight() {
+        if (this.majorTypeListItem && this.majorTypeListItem.length) {
+            this.majorTypeListItem.forEach(element => {
+                this.documentService.read(this.packageId, element.id).subscribe(data => {
+                    element.hightLight = data.length > 0;
+                });
+            });
+        }
+    }
     toggleClick() {
         this.isShowMenu = !this.isShowMenu;
         $('.toggle-menu-item').toggleClass('resize');
@@ -122,23 +130,14 @@ export class AddFileComponent implements OnInit {
         this.bidDocumentGroupListItemSearchResult = this.documentService
             .filter(this.searchTerm, this.filterModel, this.bidDocumentGroupListItem);
         this.showTable = this.bidDocumentGroupListItemSearchResult.length > 0;
-
         this.dtTrigger.next();
-        // if (document.getElementsByClassName('dataTables_empty')[0]) {
-        //     document.getElementsByClassName('dataTables_empty')[0].remove();
-        // }
     }
 
     filter() {
         this.bidDocumentGroupListItemSearchResult = this.documentService
             .filter(this.searchTerm, this.filterModel, this.bidDocumentGroupListItem);
-        console.log(this.bidDocumentGroupListItemSearchResult);
         this.showTable = this.bidDocumentGroupListItemSearchResult.length > 0;
-
         this.dtTrigger.next();
-        // if (document.getElementsByClassName('dataTables_empty')[0]) {
-        //     document.getElementsByClassName('dataTables_empty')[0].remove();
-        // }
     }
 
     clearFilter() {
@@ -225,15 +224,9 @@ export class AddFileComponent implements OnInit {
             this.bidDocumentGroupListItem = response;
             this.bidDocumentGroupListItemSearchResult = response;
             this.showTable = this.bidDocumentGroupListItemSearchResult.length > 0;
-
+            this.checkHightLight();
             this.dtTrigger.next();
             this.spinner.hide();
-            // if (!(this.bidDocumentGroupListItem && this.bidDocumentGroupListItem.length > 1)) {
-            //     document.getElementsByClassName('dataTables_empty')[0].remove();
-            // }
-            // if (document.getElementsByClassName('dataTables_empty')[0]) {
-            //     document.getElementsByClassName('dataTables_empty')[0].remove();
-            // }
         });
     }
 
@@ -244,11 +237,8 @@ export class AddFileComponent implements OnInit {
             this.bidDocumentGroupListItem = response;
             this.bidDocumentGroupListItemSearchResult = response;
             this.showTable = this.bidDocumentGroupListItemSearchResult.length > 0;
-
+            this.checkHightLight();
             this.dtTrigger.next();
-            // if (document.getElementsByClassName('dataTables_empty')[0]) {
-            //     document.getElementsByClassName('dataTables_empty')[0].remove();
-            // }
             this.spinner.hide();
             this.alertService.success('Dữ liệu đã được cập nhật mới nhất!');
         });
@@ -320,11 +310,8 @@ export class AddFileComponent implements OnInit {
                     this.bidDocumentGroupListItem = response;
                     this.bidDocumentGroupListItemSearchResult = response;
                     this.showTable = this.bidDocumentGroupListItemSearchResult.length > 0;
-
+                    this.checkHightLight();
                     this.dtTrigger.next();
-                    // if (document.getElementsByClassName('dataTables_empty')[0]) {
-                    //     document.getElementsByClassName('dataTables_empty')[0].remove();
-                    // }
                     this.spinner.hide();
                     this.alertService.success('Dữ liệu đã được cập nhật mới nhất!');
                 });
@@ -339,9 +326,6 @@ export class AddFileComponent implements OnInit {
                     this.showTable = this.bidDocumentGroupListItemSearchResult.length > 0;
 
                     this.dtTrigger.next();
-                    // if (document.getElementsByClassName('dataTables_empty')[0]) {
-                    //     document.getElementsByClassName('dataTables_empty')[0].remove();
-                    // }
                     this.spinner.hide();
                     this.alertService.success('Dữ liệu đã được cập nhật mới nhất!');
                 });
@@ -418,11 +402,7 @@ export class AddFileComponent implements OnInit {
             this.bidDocumentGroupListItem = response;
             this.bidDocumentGroupListItemSearchResult = response;
             this.showTable = this.bidDocumentGroupListItemSearchResult.length > 0;
-
             this.dtTrigger.next();
-            // if (document.getElementsByClassName('dataTables_empty')[0]) {
-            //     document.getElementsByClassName('dataTables_empty')[0].remove();
-            // }
             this.spinner.hide();
         }, err => this.spinner.hide());
     }

@@ -16,22 +16,67 @@
             <div class="search">
                 <div class="btn-toolbar-2 mt-2 mb-2">
                     <div>
-                        <!-- <div>
+
+                    </div>
+                    <div class="mt-2">
+
+                        <button class="btn btn-primary" (click)="fullHSMT()">
+                            <span style="font-size: 120%">Đã đủ HSMT</span> &nbsp;
+                            <i style="color: #FFFFFF; font-size: 150%" class="fa fa-check" aria-hidden="true"></i>
+
+                        </button>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="main-content">
+            <div id="toggle-menu" [class.menu-left]="isShowMenu" style="width: 237px;">
+                <div class="d-flex">
+                    <div id="toggle-menu-item" *ngIf="majorTypeListItem">
+                        <ng-container *ngFor="let item of majorTypeListItem; let i = index">
+                            <div class="toggle-menu-item" [title]="item.text" [class.hight-light]="!item.hightLight && (currentMajorTypeId != item.id)"
+                                [class.active-menu]="(currentMajorTypeId == item.id)" (click)="filterMajorTypeListItem(item.id, item.text)">
+                                <span class="text-truncate">{{item?.text}}</span>
+                            </div>
+                            <div class="line" *ngIf="!(majorTypeListItem.length == i+1)" style="width: calc(100% - 10px); border-top: #ccecf9 solid 1px; height: 1px; border-left: 1px; margin-left: 10px;"></div>
+                        </ng-container>
+                    </div>
+                    <div class="button-click mb-auto" (click)="toggleClick()">
+                        <div class="center-parent">
+                            <div>
+                                <div class="iconButton iconN1"></div>
+                                <div class="iconButton iconN2" style="margin: 3.5px 0;"></div>
+                                <div class="iconButton iconN3"></div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>
+            <div class="bot-table" [class.table-toggle-2]="isShowMenu" style="width: calc(100% - 255px);">
+
+                <div class="d-flex justify-content-between">
+                    <div>
+                        <h5 class="text-uppercase">{{titleStr}}</h5>
+                    </div>
+                    <div>
+
+                    </div>
+                </div>
+                <div class="btn-toolbar-2 mt-2 mb-2">
+                    <div class="mt-2 d-flex justify-content-end ml-1">
+                        <div>
                             <div class="input-group ml-auto" style="width: 250px">
                                 <span class="input-group-addon">Tìm kiếm theo</span>
                                 <input type="text" class="form-control icon" placeholder="&#xf002; Tên tài liệu" (keyup)="search($event.target.value)">
                             </div>
-                        </div> -->
-
-                    </div>
-                    <div class="mt-2">
-                        <!-- <button class="btn btn-primary" (click)="multiDelete()">
+                        </div>
+                        <button class="btn btn-primary ml-1" (click)="multiDelete()">
                             Xóa
-                        </button> -->
-                        <!-- <button class="btn btn-primary ml-1">
-                            Tải xuống tài liệu
-                        </button> -->
-                        <!-- 
+                        </button>
+
                         <div *ngIf="currentMajorTypeId == 1" class="btn-group ml-1" ngbDropdown>
                             <button type="button" class="btn btn-primary" ngbDropdownToggle data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 Upload HSMT
@@ -60,100 +105,8 @@
                         </div>
                         <button *ngIf="currentMajorTypeId != 1" class="btn btn-primary ml-1" (click)="uploadHSMT()">
                             Upload HSMT
-                        </button> -->
-                        <button class="btn btn-primary" (click)="fullHSMT()">
-                            <span style="font-size: 120%">Đã đủ HSMT</span> &nbsp;
-                            <i style="color: #FFFFFF; font-size: 150%" class="fa fa-check" aria-hidden="true"></i>
-
                         </button>
-                        <!-- <button class="btn btn-primary ml-1" (click)="refresh(true)">
-                            <i class="fa fa-refresh" aria-hidden="true"></i>
-                        </button> -->
 
-
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div id="main-content">
-            <div id="toggle-menu" [class.menu-left]="isShowMenu" style="width: 237px;">
-                <div class="d-flex">
-                    <div id="toggle-menu-item" *ngIf="majorTypeListItem">
-                        <ng-container *ngFor="let item of majorTypeListItem; let i = index">
-                            <div class="toggle-menu-item" [title]="item.text" [class.active-menu]="(currentMajorTypeId == item.id)"
-                                (click)="filterMajorTypeListItem(item.id, item.text)">
-                                <span class="text-truncate">{{item?.text}}</span>
-                            </div>
-                            <div class="line" *ngIf="!(majorTypeListItem.length == i+1)" style="width: calc(100% - 10px); border-top: #ccecf9 solid 1px; height: 1px; border-left: 1px; margin-left: 10px;"></div>
-                        </ng-container>
-                    </div>
-                    <div class="button-click mb-auto" (click)="toggleClick()">
-                        <div class="iconButton iconN1"></div>
-                        <div class="iconButton iconN2" style="margin: 3px 0;"></div>
-                        <div class="iconButton iconN3"></div>
-                    </div>
-                </div>
-
-            </div>
-            <div class="bot-table" [class.table-toggle-2]="isShowMenu" style="width: calc(100% - 255px);">
-
-                <div class="d-flex justify-content-between">
-                    <div>
-                        <h5 class="text-uppercase">{{titleStr}}</h5>
-                    </div>
-                    <div>
-
-                    </div>
-                </div>
-                <div class="btn-toolbar-2 mt-2 mb-2">
-                    <div class="mt-2 d-flex justify-content-end ml-1">
-                        <div>
-                            <div class="input-group ml-auto" style="width: 250px">
-                                <span class="input-group-addon">Tìm kiếm theo</span>
-                                <input type="text" class="form-control icon" placeholder="&#xf002; Tên tài liệu"
-                                    (keyup)="search($event.target.value)">
-                            </div>
-                        </div>
-                        <button class="btn btn-primary ml-1" (click)="multiDelete()">
-                            Xóa
-                        </button>
-                        <!-- <button class="btn btn-primary ml-1">
-                                        Tải xuống tài liệu
-                                    </button> -->
-
-                        <div *ngIf="currentMajorTypeId == 1" class="btn-group ml-1" ngbDropdown>
-                            <button type="button" class="btn btn-primary" ngbDropdownToggle data-toggle="dropdown"
-                                aria-haspopup="true" aria-expanded="false">
-                                Upload HSMT
-                            </button>
-                            <div class="dropdown-menu" ngbDropdownMenu>
-                                <div class="fileUpload dropdown-item" (click)="openPopupUploadFile('2')">
-                                    <a>Quyển HSMT</a>
-                                </div>
-                                <div class="dropdown-divider"></div>
-                                <div class="fileUpload dropdown-item" (click)="openPopupUploadFile('3')">
-                                    <a>Bản vẽ thuyết minh</a>
-                                </div>
-                                <div class="dropdown-divider"></div>
-                                <div class="fileUpload dropdown-item" (click)="openPopupUploadFile('4')">
-                                    <a>BOQ</a>
-                                </div>
-                                <div class="dropdown-divider"></div>
-                                <div class="fileUpload dropdown-item" (click)="openPopupUploadFile('5')">
-                                    <a>Tiêu chí kỹ thuật (Specs)</a>
-                                </div>
-                                <div class="dropdown-divider"></div>
-                                <div class="fileUpload dropdown-item" (click)="openPopupUploadFile('6')">
-                                    <a>Các báo cáo và các tài liệu kỹ thuật (KSDQ)</a>
-                                </div>
-                            </div>
-                        </div>
-                        <button *ngIf="currentMajorTypeId != 1" class="btn btn-primary ml-1" (click)="uploadHSMT()">
-                            Upload HSMT
-                        </button>
-                        <!-- <button class="btn btn-primary ml-1" (click)="fullHSMT()">
-                                        Đã đủ HSMT
-                                    </button> -->
                         <button class="btn btn-primary ml-1" (click)="refresh(true)">
                             <i class="fa fa-refresh" aria-hidden="true"></i>
                         </button>
@@ -162,7 +115,7 @@
                     </div>
                 </div>
                 <div class="d-flex flex-row flex-wrap filter-bar custom-filter-bar" style="background-color: #fafbfc">
-                    <div class="d-flex form-inline ">
+                    <div class="d-flex form-inline   ">
                         <div class="form-group ml-sm-2 p-1">
                             <label for="" class="form-label">Tình trạng</label>
                             <span class="custom-dropdown mx-sm-2">
@@ -177,15 +130,9 @@
                         <div class="form-group ml-sm-2 p-1">
                             <label for="" class="form-label">Ngày upload</label>
                             <div class="input-group calendarInput">
-                                <!-- <owl-date-time [(ngModel)]="filterModel.createDate"  
-                                     pickerType="calendar" #dtUpload  >
-                                </owl-date-time>
-                                <span class="input-group-addon">
-                                    <i class="fa fa-calendar"></i>
-                                </span> -->
-                                <input [placeholder]="datePickerConfig.datePlaceHolder" class="input-date-time input-date-time-bar"
-                                    readonly [(ngModel)]="filterModel.createDate" [owlDateTimeTrigger]="dt"
-                                    [owlDateTime]="dt">
+
+                                <input [placeholder]="datePickerConfig.datePlaceHolder" class="input-date-time input-date-time-bar" readonly [(ngModel)]="filterModel.createDate"
+                                    [owlDateTimeTrigger]="dt" [owlDateTime]="dt">
                                 <owl-date-time #dt pickerType="calendar"></owl-date-time>
                                 <span [owlDateTimeTrigger]="dt" class="input-group-addon">
                                     <i class="fa fa-calendar"></i>
@@ -196,22 +143,16 @@
                         <div class="form-group ml-sm-2 p-1">
                             <label for="" class="form-label">Ngày nhận HSMT</label>
                             <div class="input-group calendarInput">
-                                <!-- <owl-date-time [(ngModel)]="filterModel.receivedDate"  
-                                     pickerType="calendar" >
-                                </owl-date-time>
-                                <span class="input-group-addon">
-                                    <i class="fa fa-calendar"></i>
-                                </span> -->
-                                <input [placeholder]="datePickerConfig.datePlaceHolder" class="input-date-time input-date-time-bar"
-                                    readonly [(ngModel)]="filterModel.receivedDate" [owlDateTimeTrigger]="dt1"
-                                    [owlDateTime]="dt1">
+
+                                <input [placeholder]="datePickerConfig.datePlaceHolder" class="input-date-time input-date-time-bar" readonly [(ngModel)]="filterModel.receivedDate"
+                                    [owlDateTimeTrigger]="dt1" [owlDateTime]="dt1">
                                 <owl-date-time #dt1 pickerType="calendar"></owl-date-time>
                                 <span [owlDateTimeTrigger]="dt1" class="input-group-addon">
                                     <i class="fa fa-calendar"></i>
                                 </span>
                             </div>
                         </div>
-                        <div class="form-group ml-sm-2 p-1">
+                        <div class="form-group ml-auto p-1" style="margin-top: 5px!important">
 
                             <button type="submit" class="btn btn-primary ml-sm-2" (click)="filter()">
                                 <i class="fa fa-filter" aria-hidden="true"></i>&nbsp; Lọc
@@ -225,8 +166,7 @@
                 </div>
 
                 <div class="table-responsive">
-                    <table id="table-file-scroll" [hidden]="!showTable" datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger"
-                        class="table-selection row-border cell-border ">
+                    <table id="table-file-scroll" [hidden]="!showTable" datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="table-selection row-border cell-border ">
                         <thead>
                             <tr>
 
@@ -310,21 +250,21 @@
                                         </div>
 
                                     </div>
-                                <th style="background-color: #f68e56!important;">
-                                    <div class="d-flex justify-content-center">
+                                    <th style="background-color: #f68e56!important;">
+                                        <div class="d-flex justify-content-center">
 
-                                        <div class="center-parent">
-                                            <div>Ngày nhận</div>
+                                            <div class="center-parent">
+                                                <div>Ngày nhận</div>
+                                            </div>
+
                                         </div>
 
-                                    </div>
 
 
-
-                                </th>
-                                <th class="table-action text-center" style="background-color: #f68e56!important;">
-                                    Thao tác
-                                </th>
+                                    </th>
+                                    <th class="table-action text-center" style="background-color: #f68e56!important;">
+                                        Thao tác
+                                    </th>
                             </tr>
                         </thead>
                         <tbody>
@@ -345,12 +285,10 @@
                                             </div>
 
                                         </td>
-                                        <td [hidden]="currentMajorTypeId != 1" valign="baseline" [attr.rowspan]="bidDocumentGroup.items.length"
-                                            *ngIf="k == 0" class="td-group">
+                                        <td [hidden]="currentMajorTypeId != 1" valign="baseline" [attr.rowspan]="bidDocumentGroup.items.length" *ngIf="k == 0" class="td-group">
                                             <div class="d-flex  document-type center-parent">
                                                 <div style="width: calc(100% - 25px);"> {{ item.documentType }}</div>
-                                                <div style="width: 25px;" (click)="uploadFileItem(item.documentType)"
-                                                    style="cursor: pointer" title="Upload tài liệu">
+                                                <div style="width: 25px;" (click)="uploadFileItem(item.documentType)" style="cursor: pointer" title="Upload tài liệu">
                                                     <img width="25" height="25" src="assets\images\document.png">
                                                 </div>
                                             </div>
@@ -371,29 +309,24 @@
                                                     {{ item.status | translate }}
                                                 </div>
                                                 <div (click)="changeStatus(item.id, item.status, item.documentType)">
-                                                    <i class="fa fa-check-square color-item-down" style="cursor: pointer;"
-                                                        aria-hidden="true" *ngIf="item.status === 'Official'"></i>
-                                                    <i class="fa fa-check-square color-item-test" style="cursor: pointer;"
-                                                        aria-hidden="true" *ngIf="item.status === 'Draft'"></i>
+                                                    <i class="fa fa-check-square color-item-down" style="cursor: pointer;" aria-hidden="true" *ngIf="item.status === 'Official'"></i>
+                                                    <i class="fa fa-check-square color-item-test" style="cursor: pointer;" aria-hidden="true" *ngIf="item.status === 'Draft'"></i>
                                                 </div>
                                             </div>
 
 
                                         </td>
 
-                                        <td class="text-center">{{ item.createdDate*1000 | date:'dd/MM/yyyy HH:mm':
-                                            '+0000'}}
+                                        <td class="text-center">{{ item.createdDate*1000 | date:'dd/MM/yyyy HH:mm': '+0000'}}
                                         </td>
                                         <td class="text-center">{{ item.uploadedBy?.employeeName }}</td>
 
                                         <td class="text-center">
-                                            <span *ngIf="item.receivedDate">{{ item.receivedDate*1000 |
-                                                date:'dd/MM/yyyy': '+0000' }}</span>
+                                            <span *ngIf="item.receivedDate">{{ item.receivedDate*1000 | date:'dd/MM/yyyy': '+0000' }}</span>
                                         </td>
                                         <td>
                                             <div class="d-flex justify-content-around">
-                                                <div *ngIf="!item.url" style="cursor: pointer;" title="Tải file"
-                                                    (click)="dowloadDocument(item.id)">
+                                                <div *ngIf="!item.url" style="cursor: pointer;" title="Tải file" (click)="dowloadDocument(item.id)">
                                                     <a>
                                                         <i class="fa fa-download color-item-down" aria-hidden="true"></i>
                                                     </a>
@@ -420,7 +353,7 @@
                         </tbody>
                     </table>
 
-                   
+
 
                 </div>
                 <div>

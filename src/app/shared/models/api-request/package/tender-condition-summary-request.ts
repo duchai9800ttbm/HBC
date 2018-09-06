@@ -27,6 +27,6 @@ export class TenderConditionSummaryRequest {
     requestDocument: RequestDocument;
     requestTenderClarification: RequestTenderClarification;
     contractCondition: TenderContractCondition;
-    tenderCondition: TenderCondition;
+    jsonTenderCondition: TenderCondition;
     otherSpecialRequirement: TenderOtherSpecRequirement;
 }
