@@ -3,7 +3,7 @@ import { routerTransition } from '../../../../../router.animations';
 import { DictionaryItem, PagedResult, DictionaryItemHightLight } from '../../../../../shared/models';
 import { DATATABLE_CONFIG, DATATABLE_CONFIG2 } from '../../../../../shared/configs';
 import { Subject } from '../../../../../../../node_modules/rxjs/Subject';
-import { AlertService, ConfirmationService, UserService } from '../../../../../shared/services';
+import { AlertService, ConfirmationService, UserService, DataService } from '../../../../../shared/services';
 import { Router } from '../../../../../../../node_modules/@angular/router';
 import { NgxSpinnerService } from '../../../../../../../node_modules/ngx-spinner';
 import { DATETIME_PICKER_CONFIG } from '../../../../../shared/configs/datepicker.config';
@@ -17,6 +17,7 @@ import { OpportunityHsmtService } from '../../../../../shared/services/opportuni
 import { UserItemModel } from '../../../../../shared/models/user/user-item.model';
 import { PackageService } from '../../../../../shared/services/package.service';
 import { PackageInfoModel } from '../../../../../shared/models/package/package-info.model';
+import { forEach } from '../../../../../../../node_modules/@angular/router/src/utils/collection';
 @Component({
     selector: 'app-add-file',
     templateUrl: './add-file.component.html',
@@ -66,7 +67,8 @@ export class AddFileComponent implements OnInit {
         private documentService: DocumentService,
         private userService: UserService,
         private opportunityHsmtService: OpportunityHsmtService,
-        private packageService: PackageService
+        private packageService: PackageService,
+        private dataService: DataService
     ) {
     }
     ngOnInit() {
@@ -98,12 +100,27 @@ export class AddFileComponent implements OnInit {
             this.majorTypeListItem = data;
             this.currentMajorTypeId = this.majorTypeListItem[0].id;
             this.documentService.read(this.packageId, this.currentMajorTypeId).subscribe(response => {
-                this.bidDocumentGroupListItem = response;
-                this.bidDocumentGroupListItemSearchResult = response;
-                this.showTable = this.bidDocumentGroupListItemSearchResult.length > 0;
-                this.checkHightLight();
-                this.dtTrigger.next();
-                this.spinner.hide();
+                console.log(response);
+                // this.documentService.getListBiddocumenttypes().subscribe( response => {
+                    // biddocumenttypes.forEach((item, index) => {
+                    //     response.forEach(elemnet => {
+                    //         if (elemnet.documentType === item.text) {
+                    //             elemnet['id'] = index;
+                    //         }
+                    //     });
+                    //     if (index === 4) {
+                    //         return;
+                    //     }
+                    // });
+                    // response.sort(function (a, b) {
+                    //     return a.id - b.id;
+                    // });
+                    this.bidDocumentGroupListItem = response;
+                    this.bidDocumentGroupListItemSearchResult = response;
+                    this.showTable = this.bidDocumentGroupListItemSearchResult.length > 0;
+                    this.checkHightLight();
+                    this.dtTrigger.next();
+                    this.spinner.hide();
             }, err => this.spinner.hide());
         });
     }

@@ -11,6 +11,7 @@ import * as FileSaver from 'file-saver';
 import { InstantSearchService } from './instant-search.service';
 import { URLSearchParams } from '@angular/http';
 import { PagedResult } from '../models/paging-result.model';
+import { DictionaryItem } from '../models/dictionary-item.model';
 
 @Injectable()
 export class DocumentService {
@@ -221,12 +222,31 @@ export class DocumentService {
             }
             return prev;
         }, {});
-        return Object.keys(groupedObj).map(documentType => (
+        const groupBeforeSort = Object.keys(groupedObj).map(documentType => (
             {
                 documentType,
-                items: groupedObj[documentType]
+                items: groupedObj[documentType],
+                id: 0
             }
         ));
+        // Fix waiting subcribe
+        this.getListBiddocumenttypes().subscribe(biddocumenttypes => {
+            biddocumenttypes.forEach((item, index) => {
+                groupBeforeSort.forEach(elemnet => {
+                    if (elemnet.documentType === item.text) {
+                        elemnet['id'] = index;
+                    }
+                });
+                if (index === 4) {
+                    return;
+                }
+            });
+            groupBeforeSort.sort(function (a, b) {
+                return a.id - b.id;
+            });
+            return groupBeforeSort;
+        });
+        return groupBeforeSort;
     }
 
     convertNestedJson(source: any[]) {
@@ -328,5 +348,21 @@ export class DocumentService {
                     month2: `${month2 ? month2 : ''}`,
                     year2: `${year2 ? year2 : ''}`
                 });
+    }
+
+    // Danh sách loại tài liệu cần kiểm tra bản chính thức
+    getListBiddocumenttypes(): Observable<DictionaryItem[]> {
+        const url = `biddocumenttypes`;
+        return this.apiService
+            .get(url)
+            .map(response =>
+                response.result.map(x => {
+                    return {
+                        id: x.key,
+                        text: `${x.value}`
+                    };
+                })
+            )
+            .share();
     }
 }
