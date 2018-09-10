@@ -531,9 +531,48 @@ select.form-control:not([size]):not([multiple]){
     display: none !important;
 }
 .set-height-table{
-    height: calc(100vh - 305px);
+    // height: calc(100vh - 305px);
 }
 :host /deep/ .flex-row{
     flex-direction: row !important;
     height: 20px !important;
+}
+
+.zui-wrapper {
+    position: relative;
+    overflow-x: scroll;
+    height: calc(100vh - 305px);
+}
+.zui-scroller {
+    margin-left: 72px;
+    margin-right: 112px;
+    overflow-x: scroll;
+    overflow-y: visible;
+    width: auto;
+}
+.zui-table .zui-sticky-col {
+    left: 0;
+    position: absolute;
+    top: auto;
+    width: 120px;
+    label {
+        margin-top: .5rem;
+    }
+}
+
+.zui-table .zui-sticky-col-right {
+    right: 0;
+    position: absolute;
+    top: auto;
+    width: 100px;
+    padding: 22px 0 !important;
+    background-color: white;
+}
+
+:host /deep/ .dataTables_wrapper {
+    position: inherit !important;
+}
+
+.d-none {
+    padding: 0 !important;
 }
