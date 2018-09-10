@@ -256,10 +256,13 @@ input.icon {
 }
 
 @media only screen and (max-width: 997px) {
-
+    .main-table{
+        height: 100%;
+        padding-left: 15px;
+        padding-right: 15px;
+        padding-top: 50px;
+    }
     .status-filter{
-
-        
         zoom: 0.45;
     }
     .custom-filter-bar{
