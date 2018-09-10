@@ -234,13 +234,13 @@ export class PackageListComponent implements OnInit, AfterViewChecked {
         //         this.spinner.hide();
         //     });
         // this.filter(false);
-        this.layoutService.watchLayoutSubject().subscribe(data => {
-            if (data) {
-                this.isToggle = true;
-            } else {
-                this.isToggle = false;
-            }
-        });
+        // this.layoutService.watchLayoutSubject().subscribe(data => {
+        //     if (data) {
+        //         this.isToggle = true;
+        //     } else {
+        //         this.isToggle = false;
+        //     }
+        // });
         this.searchTerm$.debounceTime(600)
         .distinctUntilChanged()
         .subscribe(term => {
