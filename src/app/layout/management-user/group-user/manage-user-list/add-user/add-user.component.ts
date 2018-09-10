@@ -118,7 +118,7 @@ export class AddUserComponent implements OnInit {
       levelId: null,
       userGroupId: null,
       departmentId: [null , Validators.required],
-      isActive: [false],
+      isActive: [true],
       phoneNumber: ['', [CustomValidator.phoneNumber]],
       address: '',
     });
