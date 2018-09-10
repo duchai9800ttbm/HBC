@@ -1,3 +1,70 @@
-<p>
-  need-create-tender-form-director-proposal works!
-</p>
+<form>
+    <div class="p-3">
+        <div>
+            <h5 class="text-uppercase">VII. ý kiến đề xuất của giám đốc dự thầu (tender director proposal)</h5>
+        </div>
+        <!-- <div class="row mt-4">
+          <div class="col-md-6">
+              <strong>Các mục đánh giá (item evaluation)</strong>
+          </div>
+          <div class="col-md-6">
+              <strong>Nội dung & Nhận xét (Comments)</strong>
+          </div>
+      </div> -->
+        <div class="row mt-4">
+            <div class="col-md-4">
+                Tham gia dự thầu
+            </div>
+            <div class="col-md-8 row">
+                <div class="col-md-6">
+                    <input type="checkbox"> Đồng ý tham gia/ Agree
+                </div>
+                <div class="col-md-6">
+                    <input type="checkbox"> Không đồng ý tham gia/ No agree
+                </div>
+            </div>
+        </div>
+        <div class="row mt-3">
+            <div class="col-md-4">
+                Lý do/ Reason
+            </div>
+            <div class="col-md-8">
+                <textarea class="form-control" rows="2"></textarea>
+            </div>
+        </div>
+        <div class="row mt-3">
+            <div class="col-md-4">
+                Ngày/ Date
+            </div>
+            <div class="col-md-8">
+                <kendo-datepicker class="form-control"></kendo-datepicker>
+            </div>
+        </div>
+        <div class="row mt-3">
+            <div class="col-md-4">
+                Thời gian mong đợi được duyệt
+            </div>
+            <div class="col-md-8">
+                <kendo-datepicker class="form-control"></kendo-datepicker>
+            </div>
+        </div>
+        <div class="row mt-3">
+            <div class="col-md-4">
+                Ký tên/ Signing
+            </div>
+            <div class="col-md-8">
+                <button class="btn btn-primary">Xác nhận ký</button>
+            </div>
+        </div>
+        <div class="text-center mt-4">
+            <button class="btn border" routerLink="../contract-condition">
+                <i class="fa font-size-3 mr-3 fa-angle-left" aria-hidden="true"></i>
+                Trở về
+            </button>
+            <button class="btn btn-primary ml-2" routerLink="../descion-board">
+                Tiếp
+                <i class="fa font-size-3 ml-3 fa-angle-right" aria-hidden="true"></i>
+            </button>
+        </div>
+    </div>
+</form>

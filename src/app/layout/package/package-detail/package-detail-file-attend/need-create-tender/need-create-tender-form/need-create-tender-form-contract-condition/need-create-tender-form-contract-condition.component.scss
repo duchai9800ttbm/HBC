@@ -1,0 +1,23 @@
+:host /deep/ kendo-dropdownlist {
+    max-width: 6rem;
+
+    .k-dropdown-wrap {
+        border: none;
+        border-bottom: 1px solid #00a0e3;
+        border-bottom-left-radius: 0.25rem;
+    }
+    
+    .k-input {
+        height: 2rem;
+        font-size: 0.875rem;
+        background-color: #00a0e3 !important;
+        color: white;
+        border-top-left-radius: 0.25rem;
+        border-bottom-left-radius: 0.25rem;
+    }
+}
+
+.input-dropdown-group {
+    width: calc(100% - 6rem) !important;
+    float: left;
+}
