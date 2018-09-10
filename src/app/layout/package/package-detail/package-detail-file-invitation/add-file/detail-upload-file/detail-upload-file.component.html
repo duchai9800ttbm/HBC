@@ -5,7 +5,7 @@
 
             </div>
             <div style="width: 80%;">
-              
+
             </div>
             <div style="width: 20%;" class="d-flex justify-content-end">
                 <div>
@@ -23,7 +23,14 @@
 
                         <div class="d-flex w-100" *ngIf="model.url">
                             <div class="w-40 font-weight-bold">
-                                Đường dẫn link:
+
+                                <div class="d-flex justify-content-between">
+                                    <div>
+                                        Đường dẫn link
+                                    </div>
+                                    <div>:&nbsp;&nbsp;</div>
+                                </div>
+
                             </div>
                             <div class="w-60">
                                 <a class="color-link color-link" target="_blank" [href]="model?.url">
@@ -33,8 +40,14 @@
                         </div>
                         <div class="d-flex w-100 mt-2">
                             <div class="w-40 font-weight-bold">
-                                Loại HSMT:
+                                <div class="d-flex justify-content-between">
+                                    <div>
+                                        Loại HSMT
+                                    </div>
+                                    <div>:&nbsp;&nbsp;</div>
+                                </div>
                             </div>
+
                             <div class="w-60">
                                 <span class="word-wrap">
                                     {{model?.documentType}}
@@ -44,9 +57,15 @@
                         </div>
                         <div class="d-flex w-100 mt-2">
                             <div class="w-40 font-weight-bold">
-                                Tên:
+                                <div class="d-flex justify-content-between">
+                                    <div>
+                                        Tên
+                                    </div>
+                                    <div>:&nbsp;&nbsp;</div>
+                                </div>
                             </div>
-                            <div class="w-60 mt-2">
+
+                            <div class="w-60">
                                 <span class="word-wrap">
                                     {{model?.documentName}}
 
@@ -55,8 +74,15 @@
                         </div>
                         <div class="d-flex w-100 mt-2">
                             <div class="w-40 font-weight-bold">
-                                Phiên bản:
+                                <div class="d-flex justify-content-between">
+                                    <div>
+                                        Phiên bản
+                                    </div>
+                                    <div>:&nbsp;&nbsp;</div>
+                                </div>
                             </div>
+
+
                             <div class="w-60">
                                 <span class="word-wrap">
                                     {{model?.version}}
@@ -66,8 +92,14 @@
                         </div>
                         <div class="d-flex w-100 mt-2">
                             <div class="w-40 font-weight-bold">
-                                Tình trạng:
+                                <div class="d-flex justify-content-between">
+                                    <div>
+                                        Tình trạng
+                                    </div>
+                                    <div>:&nbsp;&nbsp;</div>
+                                </div>
                             </div>
+
                             <div class="w-60">
                                 <span class="word-wrap">
                                     {{model?.status | translate}}
@@ -77,8 +109,14 @@
                         </div>
                         <div class="d-flex w-100 mt-2">
                             <div class="w-40 font-weight-bold">
-                                Ngày upload:
+                                <div class="d-flex justify-content-between">
+                                    <div>
+                                        Ngày upload
+                                    </div>
+                                    <div>:&nbsp;&nbsp;</div>
+                                </div>
                             </div>
+
                             <div class="w-60">
                                 <span class="word-wrap" *ngIf="model.createdDate">
                                     {{model?.createdDate *1000 | date:'dd/MM/yyyy HH:mm':'+0000'}}
@@ -88,8 +126,14 @@
                         </div>
                         <div class="d-flex w-100 mt-2">
                             <div class="w-40 font-weight-bold">
-                                Người upload:
+                                <div class="d-flex justify-content-between">
+                                    <div>
+                                        Người upload
+                                    </div>
+                                    <div>:&nbsp;&nbsp;</div>
+                                </div>
                             </div>
+
                             <div class="w-60">
                                 <span class="word-wrap">
                                     {{model?.uploadedBy?.employeeName}}
@@ -99,8 +143,14 @@
                         </div>
                         <div class="d-flex w-100 mt-2">
                             <div class="w-40 font-weight-bold">
-                                Ngày nhận HSMT:
+                                <div class="d-flex justify-content-between">
+                                    <div>
+                                        Ngày nhận
+                                    </div>
+                                    <div>:&nbsp;&nbsp;</div>
+                                </div>
                             </div>
+
                             <div class="w-60">
                                 <span class="word-wrap" *ngIf="model.receivedDate">
                                     {{model?.receivedDate *1000 | date:'dd/MM/yyyy HH:mm':'+0000'}}
@@ -109,8 +159,14 @@
                         </div>
                         <div class="d-flex w-100 mt-2">
                             <div class="w-40 font-weight-bold">
-                                Mô tả/Nội dung cập nhật:
+                                <div class="d-flex justify-content-between">
+                                    <div>
+                                        Mô tả/Nội dung cập nhật
+                                    </div>
+                                    <div>:&nbsp;&nbsp;</div>
+                                </div>
                             </div>
+
                             <div class="w-60">
                                 <span class="word-wrap">
                                     {{model?.desc}}
@@ -123,7 +179,7 @@
                             </div>
                             <div class="w-60">
                                 <button class="btn btn-primary" *ngIf="!model.url" (click)="dowloadDocument(model.id)">
-                                    Tải File &nbsp; &nbsp;
+                                    Tải File &nbsp;&nbsp; &nbsp;&nbsp;
                                     <i class="fa fa-download icon-download" aria-hidden="true"></i>
                                 </button>
                             </div>
@@ -131,7 +187,7 @@
                     </div>
 
                 </div>
-           
+
             </div>
         </div>
     </kendo-dialog>
