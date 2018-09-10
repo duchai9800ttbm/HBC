@@ -13,7 +13,8 @@
                 <div style="width: 20%;" class="d-flex justify-content-end">
                     <div>
                         <div>
-                            <img (click)="close('cancel')" width="25" height="25" class="cursor-pointer not-outline" src="assets\images\close.png">
+                            <img (click)="close('cancel')" width="25" height="25" class="cursor-pointer not-outline"
+                                src="assets\images\close.png">
                         </div>
                     </div>
                 </div>
@@ -32,7 +33,8 @@
                                     <tr>
                                         <td class="w-30 label no-boder bold-title">Đường dẫn link</td>
                                         <td class="w-70 no-boder">
-                                            <input (change)="inputChange()" class="w-100" class="form-control" formControlName="link" tabindex="1" type="text">
+                                            <input (change)="inputChange()" class="w-100" class="form-control"
+                                                formControlName="link" tabindex="1" type="text">
                                         </td>
                                     </tr>
                                     <tr>
@@ -40,11 +42,13 @@
                                         <td class="no-boder d-flex justify-content-between">
                                             <div class="fileUpload">
                                                 <button class="btn btn-primary" [disabled]="uploadForm.get('link').value">
-                                                    <i class="fa fa-cloud-upload" aria-hidden="true"></i>&nbsp;&nbsp; Chọn File</button>
-                                                <input type="file" class="upload" [disabled]="uploadForm.get('link').value" (change)="fileChange($event)" />
+                                                    <i class="fa fa-cloud-upload" aria-hidden="true"></i>&nbsp;&nbsp;
+                                                    Chọn File</button>
+                                                <input type="file" class="upload" [disabled]="uploadForm.get('link').value"
+                                                    (change)="fileChange($event)" />
                                             </div>
                                             <div style="width: calc(100% - 120px);" class="d-flex justify-content-between">
-                                                <div>{{file?.name}}</div>
+                                                <div> <span class="text-truncate">{{file?.name}}</span></div>
                                                 <div *ngIf="file">
                                                     <button (click)="deleteFileUpload()" class="btn btn-secondary">X</button>
                                                 </div>
@@ -54,14 +58,16 @@
                                     <tr>
                                         <td class="w-30 label no-boder bold-title">Loại HSMT</td>
                                         <td class="no-boder d-flex">
-                                            <kendo-dropdownlist class="w-100" formControlName="type" [textField]="'text'" [valueField]="'id'" [data]="listTypeFile">
+                                            <kendo-dropdownlist class="w-100" formControlName="type" [textField]="'text'"
+                                                [valueField]="'id'" [data]="listTypeFile">
                                             </kendo-dropdownlist>
                                         </td>
                                     </tr>
                                     <tr>
                                         <td class="w-30 label no-boder bold-title required">Tên</td>
                                         <td class="w-70 no-boder">
-                                            <input class="w-100" kendoTextBox tabindex="1" type="text" formControlName="editName" [class.is-invalid]="formErrors.editName">
+                                            <input class="w-100" kendoTextBox tabindex="1" type="text" formControlName="editName"
+                                                [class.is-invalid]="formErrors.editName">
                                             <div class="invalid-feedback" *ngIf="formErrors.editName">
                                                 {{formErrors.editName}}
                                             </div>
@@ -85,7 +91,8 @@
                                     <tr>
                                         <td class="w-30 label no-boder bold-title">Mô tả/Nội dung cập nhật</td>
                                         <td class="w-70 no-boder">
-                                            <textarea kendoTextArea cols="3" rows="3" class="w-100 form-control no-resize-textarea" formControlName="description"></textarea>
+                                            <textarea kendoTextArea cols="3" rows="3" class="w-100 form-control no-resize-textarea"
+                                                formControlName="description"></textarea>
                                         </td>
                                     </tr>
                                 </tbody>

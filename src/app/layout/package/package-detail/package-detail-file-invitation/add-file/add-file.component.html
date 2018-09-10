@@ -70,7 +70,8 @@
                         <div>
                             <div class="input-group ml-auto" style="width: 250px">
                                 <span class="input-group-addon">Tìm kiếm theo</span>
-                                <input type="text" class="form-control icon" placeholder="&#xf002; Tên tài liệu" (keyup)="search($event.target.value)">
+                                <input type="text" class="form-control icon" placeholder="&#xf002; Tên tài liệu"
+                                    (keyup)="search($event.target.value)">
                             </div>
                         </div>
                         <button class="btn btn-primary ml-1" (click)="multiDelete()">
@@ -78,7 +79,8 @@
                         </button>
 
                         <div *ngIf="currentMajorTypeId == 1" class="btn-group ml-1" ngbDropdown>
-                            <button type="button" class="btn btn-primary" ngbDropdownToggle data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <button type="button" class="btn btn-primary" ngbDropdownToggle data-toggle="dropdown"
+                                aria-haspopup="true" aria-expanded="false">
                                 Upload HSMT
                             </button>
                             <div class="dropdown-menu" ngbDropdownMenu>
@@ -131,8 +133,9 @@
                             <label for="" class="form-label">Ngày upload</label>
                             <div class="input-group calendarInput">
 
-                                <input [placeholder]="datePickerConfig.datePlaceHolder" class="input-date-time input-date-time-bar" readonly [(ngModel)]="filterModel.createDate"
-                                    [owlDateTimeTrigger]="dt" [owlDateTime]="dt">
+                                <input [placeholder]="datePickerConfig.datePlaceHolder" class="input-date-time input-date-time-bar"
+                                    readonly [(ngModel)]="filterModel.createDate" [owlDateTimeTrigger]="dt"
+                                    [owlDateTime]="dt">
                                 <owl-date-time #dt pickerType="calendar"></owl-date-time>
                                 <span [owlDateTimeTrigger]="dt" class="input-group-addon">
                                     <i class="fa fa-calendar"></i>
@@ -144,8 +147,9 @@
                             <label for="" class="form-label">Ngày nhận HSMT</label>
                             <div class="input-group calendarInput">
 
-                                <input [placeholder]="datePickerConfig.datePlaceHolder" class="input-date-time input-date-time-bar" readonly [(ngModel)]="filterModel.receivedDate"
-                                    [owlDateTimeTrigger]="dt1" [owlDateTime]="dt1">
+                                <input [placeholder]="datePickerConfig.datePlaceHolder" class="input-date-time input-date-time-bar"
+                                    readonly [(ngModel)]="filterModel.receivedDate" [owlDateTimeTrigger]="dt1"
+                                    [owlDateTime]="dt1">
                                 <owl-date-time #dt1 pickerType="calendar"></owl-date-time>
                                 <span [owlDateTimeTrigger]="dt1" class="input-group-addon">
                                     <i class="fa fa-calendar"></i>
@@ -166,7 +170,8 @@
                 </div>
 
                 <div class="table-responsive">
-                    <table id="table-file-scroll" [hidden]="!showTable" datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="table-selection row-border cell-border ">
+                    <table id="table-file-scroll" [hidden]="!showTable" datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger"
+                        class="table-selection row-border cell-border ">
                         <thead>
                             <tr>
 
@@ -250,21 +255,21 @@
                                         </div>
 
                                     </div>
-                                    <th style="background-color: #f68e56!important;">
-                                        <div class="d-flex justify-content-center">
+                                <th style="background-color: #f68e56!important;">
+                                    <div class="d-flex justify-content-center">
 
-                                            <div class="center-parent">
-                                                <div>Ngày nhận</div>
-                                            </div>
-
+                                        <div class="center-parent">
+                                            <div>Ngày nhận</div>
                                         </div>
 
+                                    </div>
 
 
-                                    </th>
-                                    <th class="table-action text-center" style="background-color: #f68e56!important;">
-                                        Thao tác
-                                    </th>
+
+                                </th>
+                                <th class="table-action text-center" style="background-color: #f68e56!important;">
+                                    Thao tác
+                                </th>
                             </tr>
                         </thead>
                         <tbody>
@@ -285,10 +290,12 @@
                                             </div>
 
                                         </td>
-                                        <td [hidden]="currentMajorTypeId != 1" valign="baseline" [attr.rowspan]="bidDocumentGroup.items.length" *ngIf="k == 0" class="td-group">
+                                        <td [hidden]="currentMajorTypeId != 1" valign="baseline" [attr.rowspan]="bidDocumentGroup.items.length"
+                                            *ngIf="k == 0" class="td-group">
                                             <div class="d-flex  document-type center-parent">
                                                 <div style="width: calc(100% - 25px);"> {{ item.documentType }}</div>
-                                                <div style="width: 25px;" (click)="uploadFileItem(item.documentType)" style="cursor: pointer" title="Upload tài liệu">
+                                                <div style="width: 25px;" (click)="uploadFileItem(item.documentType)"
+                                                    style="cursor: pointer" title="Upload tài liệu">
                                                     <img width="25" height="25" src="assets\images\document.png">
                                                 </div>
                                             </div>
@@ -297,8 +304,9 @@
                                         <td *ngIf="k != 0" style="display: none">
 
                                         </td>
-                                        <td [title]="item.documentName">
-                                            {{ item.documentName }}
+                                        <td [title]="item.documentName" (click)="viewDetail(item)">
+                                            <a href="javascript:;"> {{ item.documentName }}
+                                            </a>
                                         </td>
                                         <td class="text-center">{{ item.version }}</td>
                                         <td class="">{{ item.desc }}</td>
@@ -309,24 +317,29 @@
                                                     {{ item.status | translate }}
                                                 </div>
                                                 <div (click)="changeStatus(item.id, item.status, item.documentType)">
-                                                    <i class="fa fa-check-square color-item-down" style="cursor: pointer;" aria-hidden="true" *ngIf="item.status === 'Official'"></i>
-                                                    <i class="fa fa-check-square color-item-test" style="cursor: pointer;" aria-hidden="true" *ngIf="item.status === 'Draft'"></i>
+                                                    <i class="fa fa-check-square color-item-down" style="cursor: pointer;"
+                                                        aria-hidden="true" *ngIf="item.status === 'Official'"></i>
+                                                    <i class="fa fa-check-square color-item-test" style="cursor: pointer;"
+                                                        aria-hidden="true" *ngIf="item.status === 'Draft'"></i>
                                                 </div>
                                             </div>
 
 
                                         </td>
 
-                                        <td class="text-center">{{ item.createdDate*1000 | date:'dd/MM/yyyy HH:mm': '+0000'}}
+                                        <td class="text-center">{{ item.createdDate*1000 | date:'dd/MM/yyyy HH:mm':
+                                            '+0000'}}
                                         </td>
                                         <td class="text-center">{{ item.uploadedBy?.employeeName }}</td>
 
                                         <td class="text-center">
-                                            <span *ngIf="item.receivedDate">{{ item.receivedDate*1000 | date:'dd/MM/yyyy': '+0000' }}</span>
+                                            <span *ngIf="item.receivedDate">{{ item.receivedDate*1000 |
+                                                date:'dd/MM/yyyy': '+0000' }}</span>
                                         </td>
                                         <td>
                                             <div class="d-flex justify-content-around">
-                                                <div *ngIf="!item.url" style="cursor: pointer;" title="Tải file" (click)="dowloadDocument(item.id)">
+                                                <div *ngIf="!item.url" style="cursor: pointer;" title="Tải file"
+                                                    (click)="dowloadDocument(item.id)">
                                                     <a>
                                                         <i class="fa fa-download color-item-down" aria-hidden="true"></i>
                                                     </a>
@@ -378,3 +391,4 @@
 </div>
 <ngx-spinner bdColor="rgba(51, 51, 51, 0.7)" size="medium" color="#fff" type="ball-clip-rotate-multiple"></ngx-spinner>
 <app-upload-file [typeFile]="typeFileUpload" [majorTypeId]="1" [packageId]="packageId" *ngIf="showPopupAdd" (closed)="closePopup($event)"></app-upload-file>
+<app-detail-upload-file [model]="currentItem" *ngIf="showPopupDetail" (closed)="closePopupDetail($event)"></app-detail-upload-file>

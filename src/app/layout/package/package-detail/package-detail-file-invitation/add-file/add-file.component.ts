@@ -35,10 +35,13 @@ export class AddFileComponent implements OnInit {
     datePickerConfig = DATETIME_PICKER_CONFIG;
     packageId;
     showPopupAdd = false;
+    showPopupDetail = false;
+
     typeFileUpload = {
         id: '2',
         text: 'Quyển HSMT',
     };
+    currentItem = {};
     userListItem: UserItemModel[];
     ListItem: BidDocumentModel[];
     majorTypeListItem: DictionaryItemHightLight[];
@@ -150,6 +153,10 @@ export class AddFileComponent implements OnInit {
 
         this.dtTrigger.next();
     }
+    viewDetail(item) {
+        this.currentItem = item;
+        this.showPopupDetail = true;
+    }
     uploadHSMT() {
         this.typeFileUpload = {
             id: `${this.currentMajorTypeId}`,
@@ -157,6 +164,7 @@ export class AddFileComponent implements OnInit {
         };
         this.showPopupAdd = true;
     }
+
     openPopupUploadFile(documentType) {
         if (documentType === '2') {
             this.typeFileUpload = {
@@ -229,7 +237,9 @@ export class AddFileComponent implements OnInit {
             this.spinner.hide();
         });
     }
-
+    closePopupDetail() {
+        this.showPopupDetail = false;
+    }
 
     refresh(): void {
         this.spinner.show();
