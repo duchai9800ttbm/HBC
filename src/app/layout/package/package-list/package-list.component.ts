@@ -268,16 +268,22 @@ export class PackageListComponent implements OnInit, AfterViewChecked {
     }
 
     orderByField(fieldName: string) {
-        if (fieldName === this.currentSort && this.orderBy === 'Desc') {
+        if (fieldName !== this.currentSort) {
+            this.currentSort = fieldName;
+            this.orderBy = 'NoSort';
+        }
+        if (fieldName === this.currentSort && this.orderBy === 'NoSort') {
             this.orderBy = 'Asc';
         } else if (fieldName === this.currentSort && this.orderBy === 'Asc') {
             this.orderBy = 'Desc';
+        }  else if (fieldName === this.currentSort && this.orderBy === 'Desc') {
+            this.orderBy = 'NoSort';
         }
-        if (fieldName !== this.currentSort) {
-            this.currentSort = fieldName;
-            this.orderBy = 'Asc';
+        if ( this.orderBy !== 'NoSort') {
+            this.filterModel.sorting = fieldName + this.orderBy;
+        } else {
+            this.filterModel.sorting = '';
         }
-        this.filterModel.sorting = fieldName + this.orderBy;
         this.refresh(false);
     }
 
