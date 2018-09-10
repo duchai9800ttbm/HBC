@@ -3,7 +3,9 @@
         <div class="  mr-auto" style="width: calc(100% - 100px);">
             <div class="card-collapse">
                 <div class="header" (click)="isCollapsedMain = !isCollapsedMain" [attr.aria-expanded]="!isCollapsedMain" aria-controls="info-main">
-                    <i class="fa fa-caret-down mr-3"></i>Thông tin chi tiết
+                    <i *ngIf="!isCollapsedMain" class="fa fa-caret-down mr-3"></i>
+                    <i *ngIf="isCollapsedMain" class="fa fa-caret-right mr-3"></i>
+                    Thông tin chi tiết
                 </div>
                 <div class="body" id="info-main" [ngbCollapse]="isCollapsedMain">
                     <table class="w-100 table table-bordered layout-table" *ngIf="package">
@@ -199,7 +201,10 @@
             </div>
             <div class="mr-auto card-collapse">
                 <div class="header" (click)="isCollapsedDesc = !isCollapsedDesc" [attr.aria-expanded]="!isCollapsedDesc" aria-controls="info-desc">
-                    <i class="fa fa-caret-down mr-3"></i>Mô tả chi tiết</div>
+                    <i *ngIf="!isCollapsedDesc" class="fa fa-caret-down mr-3"></i>
+                    <i *ngIf="isCollapsedDesc" class="fa fa-caret-right mr-3"></i>
+                    Mô tả chi tiết
+                </div>
                 <div class="body" id="info-desc" [ngbCollapse]="isCollapsedDesc">
                     <table class="w-100 table table-bordered layout-table">
                         <tbody>
