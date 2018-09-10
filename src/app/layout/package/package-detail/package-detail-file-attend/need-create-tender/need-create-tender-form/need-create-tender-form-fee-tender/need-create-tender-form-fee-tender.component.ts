@@ -7,6 +7,8 @@ import { Component, OnInit } from '@angular/core';
 })
 export class NeedCreateTenderFormFeeTenderComponent implements OnInit {
 
+  listCurrency: Array<string> = ['VNĐ', 'USD'];
+  currency = 'VNĐ';
   constructor() { }
 
   ngOnInit() {

@@ -7,6 +7,10 @@ import { Component, OnInit } from '@angular/core';
 })
 export class NeedCreateTenderFormContractConditionComponent implements OnInit {
 
+  listCurrency: Array<string> = ['VNĐ', 'USD'];
+  currency = 'VNĐ';
+  listTime: Array<string> = ['Tháng', 'Năm'];
+  time = 'Tháng';
   constructor() { }
 
   ngOnInit() {
