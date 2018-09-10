@@ -558,7 +558,10 @@ export class PackageListComponent implements OnInit, AfterViewChecked {
 
     exportFileExcel() {
         this.packageService.exportExcel(this.searchTerm$.value, this.filterModel)
-            .subscribe(result => result);
+            .subscribe(result => {
+                // result;
+                this.closeDropToll(this.DropTool);
+            });
     }
 
     chooseAll() {

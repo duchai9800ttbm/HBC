@@ -77,22 +77,17 @@ export class SidebarComponent implements OnInit {
 
     }
     toggleSidebar() {
-        let width = document.getElementById('sidebar').offsetWidth;
+        const width = document.getElementById('sidebar').offsetWidth;
         const widthScreen = window.screen.width;
         if (widthScreen > 992) {
             if (width === 55) {
                 this.toggleMenuFromSidebar.emit(false);
                 this.layoutService.emitEvent(false);
+                this.showSidebarContent = false;
 
             } if (width === 200) {
                 this.toggleMenuFromSidebar.emit(true);
                 this.layoutService.emitEvent(true);
-            }
-            width = document.getElementById('sidebar').offsetWidth;
-            if (width === 55) {
-                this.showSidebarContent = false;
-
-            } if (width === 200) {
                 this.showSidebarContent = true;
                 document.getElementById('logo').setAttribute('Width', '200');
             }
@@ -104,16 +99,14 @@ export class SidebarComponent implements OnInit {
         const width = document.getElementById('sidebar').offsetWidth;
         if (width < 200) {
             document.getElementById('logo').setAttribute('Width', '55');
-
             this.toggleMenuFromSidebar.emit(false);
             this.layoutService.emitEvent(true);
-            this.showSidebarContent = true;
+            this.showSidebarContent = false;
         }
         if (width === 200) {
             document.getElementById('logo').setAttribute('Width', '200');
-
             this.layoutService.emitEvent(false);
-            this.showSidebarContent = false;
+            this.showSidebarContent = true;
         }
     }
 }
