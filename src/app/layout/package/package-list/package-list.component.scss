@@ -526,3 +526,10 @@ select.form-control:not([size]):not([multiple]){
 :host /deep/ .dataTables_empty {
     display: none !important;
 }
+.set-height-table{
+    height: calc(100vh - 307px);
+}
+:host /deep/ .flex-row{
+    flex-direction: row !important;
+    height: 18px !important;
+}
