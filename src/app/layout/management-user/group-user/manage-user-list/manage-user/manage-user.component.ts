@@ -89,7 +89,15 @@ export class ManageUserComponent implements OnInit {
   }
 
   pagedResultChange(pagedResult: any) {
-    this.refresh(pagedResult.currentPage, pagedResult.pageSize);
+    // this.refresh(pagedResult.currentPage, pagedResult.pageSize);
+    this.groupUserService
+      .searchKeyWord(this.searchTerm$, pagedResult.currentPage, pagedResult.pageSize)
+      .subscribe(result => {
+        this.rerender(result);
+        this.spinner.hide();
+      }, err => {
+        this.spinner.hide();
+      });
   }
 
   refresh(page: string | number, pageSize: string | number) {
