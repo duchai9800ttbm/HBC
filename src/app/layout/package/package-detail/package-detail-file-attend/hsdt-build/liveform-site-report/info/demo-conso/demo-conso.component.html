@@ -6,18 +6,18 @@
                 <h6 class="small-title">4.1 Phá vỡ kết cấu/ tòa nhà/ Demobilisation existing structure or building</h6>
                 <div class="main-detail">
                     <div class="text-des-input">
-                        <input type="text" placeholder="KHÔNG CÓ">
+                        <input readonly type="text" placeholder="KHÔNG CÓ">
                     </div>
                     <div>
                         <div class="image-demo-img">
-                            <input type="file" style="display:none" #inputclick0 (change)="uploaDemobilisationImage($event)">
+                            <input readonly type="file" style="display:none">
                             <div class="display-img" *ngFor="let url of demobilisationImageUrls">
                                 <img [src]="url">
-                                <div class="toppp" (click)="deleteImg0()">
+                                <div class="toppp">
                                     <i class="fa fa-times delete-icon" aria-hidden="true"></i>
                                 </div>
                             </div>
-                            <div class="perspective-image" (click)="inputclick0.click()">
+                            <div class="perspective-image">
                                 <i class="fa fa-plus" aria-hidden="true"></i>
                                 <p>Image</p>
                             </div>
@@ -29,19 +29,19 @@
                 <h6 class="small-title">4.2 Gia cố kết cấu/ tòa nhà/ Consolidation existing structure or building</h6>
                 <div class="main-detail">
                     <div class="text-des-input">
-                        <input type="text" placeholder="KHÔNG CÓ">
+                        <input readonly type="text" placeholder="KHÔNG CÓ">
                     </div>
                     <div>
                         <div class="image-demo-img">
-                            <input type="file" style="display:none" #inputclick1 (change)="uploaConsolidationImage($event)">
+                            <input readonly type="file" style="display:none">
 
                             <div class="display-img" *ngFor="let url of consolidationImageUrls">
                                 <img [src]="url">
-                                <div class="toppp" (click)="deleteImg1()">
+                                <div class="toppp">
                                     <i class="fa fa-times delete-icon" aria-hidden="true"></i>
                                 </div>
                             </div>
-                            <div class="perspective-image" (click)="inputclick1.click()">
+                            <div class="perspective-image">
                                 <i class="fa fa-plus" aria-hidden="true"></i>
                                 <p>Image</p>
                             </div>
@@ -54,19 +54,19 @@
                     conditions/figuring by picture</h6>
                 <div class="main-detail">
                     <div class="text-des-input">
-                        <input type="text" placeholder="KHÔNG CÓ">
+                        <input readonly type="text" placeholder="KHÔNG CÓ">
                     </div>
                     <div>
                         <div class="image-demo-img">
-                            <input type="file" style="display:none" #inputclick2 (change)="uploaAdjacentImage($event)">
+                            <input readonly type="file" style="display:none">
 
                             <div class="display-img" *ngFor="let url of adjacentImageUrls">
                                 <img [src]="url">
-                                <div class="toppp" (click)="deleteImg2()">
+                                <div class="toppp">
                                     <i class="fa fa-times delete-icon" aria-hidden="true"></i>
                                 </div>
                             </div>
-                            <div class="perspective-image" (click)="inputclick2.click()">
+                            <div class="perspective-image">
                                 <i class="fa fa-plus" aria-hidden="true"></i>
                                 <p>Image</p>
                             </div>

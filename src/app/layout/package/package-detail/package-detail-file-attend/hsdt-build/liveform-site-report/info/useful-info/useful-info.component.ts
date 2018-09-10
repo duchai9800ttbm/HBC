@@ -19,21 +19,6 @@ export class UsefulInfoComponent implements OnInit {
 
   ngOnInit() {
   }
-  uploaContentImage(event) {
-    const files = event.target.files;
-    if (files) {
-      for (const file of files) {
-        const reader = new FileReader();
-        reader.onload = (e: any) => this.contentImgs.push(e.target.result);
-        reader.readAsDataURL(file);
-      }
-    }
-  }
-  deleteImg() {
-    const index = this.contentImgs.indexOf(this.url);
-    this.contentImgs.splice(index, 1);
-  }
-
   addTopic() {
     const max = this.topicLists.length;
     this.topicLists.push(max + 1);

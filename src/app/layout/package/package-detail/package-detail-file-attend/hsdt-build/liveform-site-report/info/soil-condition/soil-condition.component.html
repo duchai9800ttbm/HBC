@@ -8,19 +8,19 @@
                     building if seeable))</h6>
                 <div class="main-detail">
                     <div class="text-des-input">
-                        <input type="text" placeholder="TEXT">
+                        <input readonly type="text" placeholder="TEXT">
                     </div>
                     <div>
                         <div class="image-demo-img">
-                            <input type="file" style="display:none" #inputclick0 (change)="uploadFootingImage($event)">
+                            <input readonly type="file" style="display:none">
 
                             <div class="display-img" *ngFor="let url of footingImageUrls">
                                 <img [src]="url">
-                                <div class="toppp" (click)="deleteImg0()">
+                                <div class="toppp">
                                     <i class="fa fa-times delete-icon" aria-hidden="true"></i>
                                 </div>
                             </div>
-                            <div class="perspective-image" (click)="inputclick0.click()">
+                            <div class="perspective-image">
                                 <i class="fa fa-plus" aria-hidden="true"></i>
                                 <p>Image</p>
                             </div>
@@ -35,18 +35,18 @@
                     <div class="listDetail">
                         <div class="labelstep1" style="margin-bottom: 15px;">
                             <label for="">Thông tin công trình gần đó/ Soil investigation of similar project</label>
-                            <input type="text">
+                            <input readonly type="text">
                         </div>
                         <div class="image-demo-img">
-                            <input type="file" style="display:none" #inputclick1 (change)="uploadInvestigationImage($event)">
+                            <input readonly type="file" style="display:none">
 
                             <div class="display-img" *ngFor="let url of investigationImageUrls">
                                 <img [src]="url">
-                                <div class="toppp" (click)="deleteImg1()">
+                                <div class="toppp">
                                     <i class="fa fa-times delete-icon" aria-hidden="true"></i>
                                 </div>
                             </div>
-                            <div class="perspective-image" (click)="inputclick1.click()">
+                            <div class="perspective-image">
                                 <i class="fa fa-plus" aria-hidden="true"></i>
                                 <p>Image</p>
                             </div>

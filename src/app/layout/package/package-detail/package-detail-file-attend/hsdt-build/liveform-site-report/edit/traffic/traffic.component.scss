@@ -145,13 +145,14 @@ input[type=text] {
     flex-direction: row;
 }
 
-.listDetail {
+.text-des-input {
     display: flex;
     flex-direction: column;
     margin-bottom: 20px;
 
-    .labelstep1 {
+    .img-demo-des {
         flex-direction: row;
+        margin-bottom: 15px;
 
         label {
             width: 40%;
@@ -164,29 +165,14 @@ input[type=text] {
     }
 }
 
-#step1Head {
-    display: flex;
-    flex-direction: column;
-    margin-bottom: 20px;
-
-    .labelstep1 {
-        flex-direction: row;
-
-        label {
-            width: 20%;
-            margin-bottom: 8px;
-        }
-
-        input {
-            width: 40%;
-        }
-    }
-}
-
 .image-demo-img {
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
+
+    input[type=file] {
+        display: none;
+    }
 }
 
 .perspective-image {

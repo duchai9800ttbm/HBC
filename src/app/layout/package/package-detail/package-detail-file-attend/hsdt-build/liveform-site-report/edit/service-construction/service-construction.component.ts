@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { ServiceConstruction } from '../../../../../../../../shared/models/site-survey-report/service-construction.model';
 
 @Component({
   selector: 'app-service-construction',
@@ -14,9 +15,49 @@ export class ServiceConstructionComponent implements OnInit {
   mediumVoltageSystemImageUrls = [];
   powerOtherImageUrls = [];
   url;
-  constructor() { }
+  serviceConstructionModel: ServiceConstruction;
+  constructor() {
+
+  }
 
   ngOnInit() {
+    this.serviceConstructionModel = new ServiceConstruction();
+    this.serviceConstructionModel = {
+      heThongNuoc: {
+        heThongHienHuu: {
+          description: 'TỪ GIAI ĐOẠN 1A',
+          images: []
+        },
+        diemDauNoi: {
+          description: 'TỪ GIAI ĐOẠN 1A',
+          images: []
+        }
+      },
+      heThongNuocThoat: {
+        heThongHienHuu: {
+          description: 'THOÁT NƯỚC TỰ NHIÊN THEO KÊNH SẴN CÓ RA RẠCH',
+          images: []
+        },
+        diemDauNoi: {
+          description: 'Không có',
+          images: []
+        }
+      },
+      heThongDien: {
+        tramHaThe: {
+          description: 'Có sẵn trạm',
+          images: []
+        },
+        duongDayTrungThe: {
+          description: 'Cách 50m',
+          images: []
+        },
+        thongTinKhac: {
+          description: 'Không có',
+          images: []
+        }
+      }
+    };
   }
   uploadSupplySystemImage(event) {
     const files = event.target.files;

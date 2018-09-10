@@ -145,29 +145,14 @@ input[type=text] {
     flex-direction: row;
 }
 
-#step1Head {
-    display: flex;
-    flex-direction: column;
-    margin-bottom: 20px;
-
-    .labelstep1 {
-        flex-direction: row;
-
-        label {
-            width: 20%;
-            margin-bottom: 8px;
-        }
-
-        input {
-            width: 40%;
-        }
-    }
-}
-
 .image-demo-img {
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
+
+    input[type=file] {
+        display: none;
+    }
 }
 
 .perspective-image {

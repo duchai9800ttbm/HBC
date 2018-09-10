@@ -5,17 +5,17 @@
             <div class="detail-each-title">
                 <h6 class="small-title">3.1 Những chi tiết địa hình/ Topography</h6>
                 <div class="main-detail">
-                    <div class="listDetail">
-                        <div class="labelstep1" style="margin-bottom: 15px;">
+                    <div class="text-des-input">
+                        <div class="img-demo-des">
                             <label for="">Khó khăn/Disadvantage</label>
-                            <input type="text">
+                            <input type="text" [(ngModel)]="trafficModel.chiTietDiaHinh.khoKhan.description">
                         </div>
                         <div class="image-demo-img">
-                            <input type="file" style="display:none" #uploaDisadvantage (change)="uploaDisadvantageImage($event)">
+                            <input type="file" #uploaDisadvantage (change)="uploaDisadvantageImage($event)">
 
-                            <div class="display-img" *ngFor="let url of disadvantageImageUrls">
-                                <img [src]="url">
-                                <div class="toppp" (click)="deleteDisadvantageImage()">
+                            <div class="display-img" *ngFor="let url of trafficModel.chiTietDiaHinh.khoKhan.images">
+                                <img *ngIf="url !== 0" [src]="url.image">
+                                <div *ngIf="url !== 0" class="toppp" (click)="deleteDisadvantageImage()">
                                     <i class="fa fa-times delete-icon" aria-hidden="true"></i>
                                 </div>
                             </div>
@@ -25,17 +25,17 @@
                             </div>
                         </div>
                     </div>
-                    <div class="listDetail">
-                        <div class="labelstep1" style="margin-bottom: 15px;">
+                    <div class="text-des-input">
+                        <div class="img-demo-des">
                             <label for="">Thuận lợi/ Advantage</label>
-                            <input type="text">
+                            <input type="text" [(ngModel)]="trafficModel.chiTietDiaHinh.thuanLoi.description">
                         </div>
                         <div class="image-demo-img">
-                            <input type="file" style="display:none" #uploaAdvantage (change)="uploaAdvantageImage($event)">
+                            <input type="file" #uploaAdvantage (change)="uploaAdvantageImage($event)">
 
-                            <div class="display-img" *ngFor="let url of advantageImageUrls">
-                                <img [src]="url">
-                                <div class="toppp" (click)="deleteAdvantageImage()">
+                            <div class="display-img" *ngFor="let url of trafficModel.chiTietDiaHinh.thuanLoi.images">
+                                <img *ngIf="url !== 0" [src]="url.image">
+                                <div *ngIf="url !== 0" class="toppp" (click)="deleteAdvantageImage()">
                                     <i class="fa fa-times delete-icon" aria-hidden="true"></i>
                                 </div>
                             </div>
@@ -50,17 +50,17 @@
             <div class="detail-each-title">
                 <h6 class="small-title">3.2 Lối vào công trường/ Site entrance</h6>
                 <div class="main-detail">
-                    <div class="listDetail">
-                        <div class="labelstep1" style="margin-bottom: 15px;">
+                    <div class="text-des-input">
+                        <div class="img-demo-des">
                             <label for="">Hướng vào công trường/ Direction of the site entrance</label>
-                            <input type="text">
+                            <input type="text" [(ngModel)]="trafficModel.loiVaoCongTrinh.huongVao.description">
                         </div>
                         <div class="image-demo-img">
-                            <input type="file" style="display:none" #uploadDirection (change)="uploadDirectionImage($event)">
+                            <input type="file" #uploadDirection (change)="uploadDirectionImage($event)">
 
-                            <div class="display-img" *ngFor="let url of directionImageUrls">
-                                <img [src]="url">
-                                <div class="toppp" (click)="deleteDirectionImage()">
+                            <div class="display-img" *ngFor="let url of trafficModel.loiVaoCongTrinh.huongVao.images">
+                                <img *ngIf="url !== 0" [src]="url.image">
+                                <div *ngIf="url !== 0" class="toppp" (click)="deleteDirectionImage()">
                                     <i class="fa fa-times delete-icon" aria-hidden="true"></i>
                                 </div>
                             </div>
@@ -70,17 +70,17 @@
                             </div>
                         </div>
                     </div>
-                    <div class="listDetail">
-                        <div class="labelstep1" style="margin-bottom: 15px;">
+                    <div class="text-des-input">
+                        <div class="img-demo-des">
                             <label for="">Đường hiện có trên công trường/ Existing road on site</label>
-                            <input type="text">
+                            <input type="text" [(ngModel)]="trafficModel.loiVaoCongTrinh.duongHienCo.description">
                         </div>
                         <div class="image-demo-img">
-                            <input type="file" style="display:none" #uploadExisting (change)="uploadExistingImage($event)">
+                            <input type="file" #uploadExisting (change)="uploadExistingImage($event)">
 
-                            <div class="display-img" *ngFor="let url of existingImageUrls">
-                                <img [src]="url">
-                                <div class="toppp" (click)="deleteExistingImage()">
+                            <div class="display-img" *ngFor="let url of trafficModel.loiVaoCongTrinh.duongHienCo.images">
+                                <img *ngIf="url !== 0" [src]="url.image">
+                                <div *ngIf="url !== 0" class="toppp" (click)="deleteExistingImage()">
                                     <i class="fa fa-times delete-icon" aria-hidden="true"></i>
                                 </div>
                             </div>
@@ -90,17 +90,17 @@
                             </div>
                         </div>
                     </div>
-                    <div class="listDetail">
-                        <div class="labelstep1" style="margin-bottom: 15px;">
+                    <div class="text-des-input">
+                        <div class="img-demo-des">
                             <label for="">Yêu cầu đường tạm/ Temporary road's requirement</label>
-                            <input type="text">
+                            <input type="text" [(ngModel)]="trafficModel.loiVaoCongTrinh.yeuCauDuongTam.description">
                         </div>
                         <div class="image-demo-img">
-                            <input type="file" style="display:none" #uploadRoad (change)="uploadRoadImage($event)">
+                            <input type="file" #uploadRoad (change)="uploadRoadImage($event)">
 
-                            <div class="display-img" *ngFor="let url of roadImageUrls">
-                                <img [src]="url">
-                                <div class="toppp" (click)="deleteRoadImage()">
+                            <div class="display-img" *ngFor="let url of trafficModel.loiVaoCongTrinh.yeuCauDuongTam.images">
+                                <img *ngIf="url !== 0" [src]="url.image">
+                                <div *ngIf="url !== 0" class="toppp" (click)="deleteRoadImage()">
                                     <i class="fa fa-times delete-icon" aria-hidden="true"></i>
                                 </div>
                             </div>
@@ -110,17 +110,17 @@
                             </div>
                         </div>
                     </div>
-                    <div class="listDetail">
-                        <div class="labelstep1" style="margin-bottom: 15px;">
+                    <div class="text-des-input">
+                        <div class="img-demo-des">
                             <label for="">Yêu cầu về hàng rào tạm/ Temporary fence's requirement</label>
-                            <input type="text">
+                            <input type="text" [(ngModel)]="trafficModel.loiVaoCongTrinh.yeuCauHangRao.description">
                         </div>
                         <div class="image-demo-img">
-                            <input type="file" style="display:none" #uploadFence (change)="uploadFenceImage($event)">
+                            <input type="file" #uploadFence (change)="uploadFenceImage($event)">
 
-                            <div class="display-img" *ngFor="let url of fenceImageUrls">
-                                <img [src]="url">
-                                <div class="toppp" (click)="deleteFenceImage()">
+                            <div class="display-img" *ngFor="let url of trafficModel.loiVaoCongTrinh.yeuCauHangRao.images">
+                                <img *ngIf="url !== 0" [src]="url.image">
+                                <div *ngIf="url !== 0" class="toppp" (click)="deleteFenceImage()">
                                     <i class="fa fa-times delete-icon" aria-hidden="true"></i>
                                 </div>
                             </div>

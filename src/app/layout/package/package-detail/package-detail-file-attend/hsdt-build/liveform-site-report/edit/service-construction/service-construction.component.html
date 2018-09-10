@@ -6,16 +6,16 @@
                 <h6 class="small-title">5.1 Hệ thống nước/ Existing temp. supply water system</h6>
                 <div class="main-detail">
                     <div class="listDetail">
-                        <div class="labelstep1" style="margin-bottom: 15px;">
+                        <div class="image-demo-des">
                             <label for="">Hệ thống hiện hữu/ Existing system</label>
-                            <input type="text" placeholder="TỪ GIAI ĐOẠN 1A">
+                            <input type="text" [(ngModel)]="serviceConstructionModel.heThongNuoc.heThongHienHuu.description">
                         </div>
                         <div class="image-demo-img">
-                            <input type="file" style="display:none" #uploadSupplySystem (change)="uploadSupplySystemImage($event)">
+                            <input type="file" #uploadSupplySystem (change)="uploadSupplySystemImage($event)">
 
-                            <div class="display-img" *ngFor="let url of supplySystemImageUrls">
-                                <img [src]="url">
-                                <div class="toppp" (click)="deleteSupplySystemImage()">
+                            <div class="display-img" *ngFor="let url of serviceConstructionModel.heThongNuoc.heThongHienHuu.images">
+                                <img *ngIf="url !== 0" [src]="url.image">
+                                <div *ngIf="url !== 0" class="toppp" (click)="deleteSupplySystemImage()">
                                     <i class="fa fa-times delete-icon" aria-hidden="true"></i>
                                 </div>
                             </div>
@@ -26,16 +26,16 @@
                         </div>
                     </div>
                     <div class="listDetail">
-                        <div class="labelstep1" style="margin-bottom: 15px;">
+                        <div class="image-demo-des">
                             <label for="">Điểm đấu nối/ Existing connection point</label>
-                            <input type="text" placeholder="TỪ GIAI ĐOẠN 1A">
+                            <input type="text" [(ngModel)]="serviceConstructionModel.heThongNuoc.diemDauNoi.description">
                         </div>
                         <div class="image-demo-img">
-                            <input type="file" style="display:none" #uploadSupplyPoint (change)="uploadSupplyPointImage($event)">
+                            <input type="file" #uploadSupplyPoint (change)="uploadSupplyPointImage($event)">
 
-                            <div class="display-img" *ngFor="let url of supplyPointImageUrls">
-                                <img [src]="url">
-                                <div class="toppp" (click)="deleteSupplyPointImage()">
+                            <div class="display-img" *ngFor="let url of serviceConstructionModel.heThongNuoc.diemDauNoi.images">
+                                <img *ngIf="url !== 0" [src]="url.image">
+                                <div *ngIf="url !== 0" class="toppp" (click)="deleteSupplyPointImage()">
                                     <i class="fa fa-times delete-icon" aria-hidden="true"></i>
                                 </div>
                             </div>
@@ -51,16 +51,16 @@
                 <h6 class="small-title">5.2 Hệ thống nước thoát/ Existing temp. waste/ drainage water system</h6>
                 <div class="main-detail">
                     <div class="listDetail">
-                        <div class="labelstep1" style="margin-bottom: 15px;">
+                        <div class="image-demo-des">
                             <label for="">Hệ thống hiện hữu/ Existing system</label>
-                            <input type="text" placeholder="THOÁT NƯỚC TỰ NHIÊN THEO KÊNH SẴN CÓ RA RẠCH">
+                            <input type="text" [(ngModel)]="serviceConstructionModel.heThongNuocThoat.heThongHienHuu.description">
                         </div>
                         <div class="image-demo-img">
-                            <input type="file" style="display:none" #uploadDrainageSystem (change)="uploadDrainageSystemImage($event)">
+                            <input type="file" #uploadDrainageSystem (change)="uploadDrainageSystemImage($event)">
 
-                            <div class="display-img" *ngFor="let url of drainageSystemImageUrls">
-                                <img [src]="url">
-                                <div class="toppp" (click)="deleteDrainageSystemImage()">
+                            <div class="display-img" *ngFor="let url of serviceConstructionModel.heThongNuocThoat.heThongHienHuu.images">
+                                <img *ngIf="url !== 0" [src]="url.image">
+                                <div *ngIf="url !== 0" class="toppp" (click)="deleteDrainageSystemImage()">
                                     <i class="fa fa-times delete-icon" aria-hidden="true"></i>
                                 </div>
                             </div>
@@ -71,16 +71,16 @@
                         </div>
                     </div>
                     <div class="listDetail">
-                        <div class="labelstep1" style="margin-bottom: 15px;">
+                        <div class="image-demo-des">
                             <label for="">Điểm đấu nối/ Existing connection point</label>
-                            <input type="text" placeholder="Không có">
+                            <input type="text" [(ngModel)]="serviceConstructionModel.heThongNuocThoat.diemDauNoi.description">
                         </div>
                         <div class="image-demo-img">
-                            <input type="file" style="display:none" #uploadDrainagePoint (change)="uploadDrainagePointImage($event)">
+                            <input type="file" #uploadDrainagePoint (change)="uploadDrainagePointImage($event)">
 
-                            <div class="display-img" *ngFor="let url of drainagePointImageUrls">
-                                <img [src]="url">
-                                <div class="toppp" (click)="deleteDrainagePointImage()">
+                            <div class="display-img" *ngFor="let url of serviceConstructionModel.heThongNuocThoat.diemDauNoi.images">
+                                <img *ngIf="url !== 0" [src]="url.image">
+                                <div *ngIf="url !== 0" class="toppp" (click)="deleteDrainagePointImage()">
                                     <i class="fa fa-times delete-icon" aria-hidden="true"></i>
                                 </div>
                             </div>
@@ -96,16 +96,16 @@
                 <h6 class="small-title">5.3 Hệ thống điện hiện hữu/ Existing temp. supply power</h6>
                 <div class="main-detail">
                     <div class="listDetail">
-                        <div class="labelstep1" style="margin-bottom: 15px;">
+                        <div class="image-demo-des">
                             <label for="">Trạm hạ thế/Transformer station</label>
-                            <input type="text" placeholder="Có sẵn trạm">
+                            <input type="text" [(ngModel)]="serviceConstructionModel.heThongDien.tramHaThe.description">
                         </div>
                         <div class="image-demo-img">
-                            <input type="file" style="display:none" #uploadPowerStation (change)="uploadPowerStationImage($event)">
+                            <input type="file" #uploadPowerStation (change)="uploadPowerStationImage($event)">
 
-                            <div class="display-img" *ngFor="let url of powerStationImageUrls">
-                                <img [src]="url">
-                                <div class="toppp" (click)="deletePowerStationImage()">
+                            <div class="display-img" *ngFor="let url of serviceConstructionModel.heThongDien.tramHaThe.images">
+                                <img *ngIf="url !== 0" [src]="url.image">
+                                <div *ngIf="url !== 0" class="toppp" (click)="deletePowerStationImage()">
                                     <i class="fa fa-times delete-icon" aria-hidden="true"></i>
                                 </div>
                             </div>
@@ -116,16 +116,16 @@
                         </div>
                     </div>
                     <div class="listDetail">
-                        <div class="labelstep1" style="margin-bottom: 15px;">
+                        <div class="image-demo-des">
                             <label for="">Đường dây trung thế hiện hữu/ Existing medium voltage system</label>
-                            <input type="text" placeholder="Cách 50m">
+                            <input type="text" [(ngModel)]="serviceConstructionModel.heThongDien.duongDayTrungThe.description">
                         </div>
                         <div class="image-demo-img">
-                            <input type="file" style="display:none" #uploadMediumVoltageSystem (change)="uploadMediumVoltageSystemImage($event)">
+                            <input type="file" #uploadMediumVoltageSystem (change)="uploadMediumVoltageSystemImage($event)">
 
-                            <div class="display-img" *ngFor="let url of mediumVoltageSystemImageUrls">
-                                <img [src]="url">
-                                <div class="toppp" (click)="deleteMediumVoltageSystemImage()">
+                            <div class="display-img" *ngFor="let url of serviceConstructionModel.heThongDien.duongDayTrungThe.images">
+                                <img *ngIf="url !== 0" [src]="url.image">
+                                <div *ngIf="url !== 0" class="toppp" (click)="deleteMediumVoltageSystemImage()">
                                     <i class="fa fa-times delete-icon" aria-hidden="true"></i>
                                 </div>
                             </div>
@@ -136,16 +136,16 @@
                         </div>
                     </div>
                     <div class="listDetail">
-                        <div class="labelstep1" style="margin-bottom: 15px;">
+                        <div class="image-demo-des">
                             <label for="">Khác/ Others</label>
-                            <input type="text" placeholder="Không có">
+                            <input type="text" [(ngModel)]="serviceConstructionModel.heThongDien.thongTinKhac.description">
                         </div>
                         <div class="image-demo-img">
-                            <input type="file" style="display:none" #uploadPowerOther (change)="uploadPowerOtherImage($event)">
+                            <input type="file" #uploadPowerOther (change)="uploadPowerOtherImage($event)">
 
-                            <div class="display-img" *ngFor="let url of powerOtherImageUrls">
-                                <img [src]="url">
-                                <div class="toppp" (click)="deletePowerOtherImage()">
+                            <div class="display-img" *ngFor="let url of serviceConstructionModel.heThongDien.thongTinKhac.images">
+                                <img *ngIf="url !== 0" [src]="url.image">
+                                <div *ngIf="url !== 0" class="toppp" (click)="deletePowerOtherImage()">
                                     <i class="fa fa-times delete-icon" aria-hidden="true"></i>
                                 </div>
                             </div>

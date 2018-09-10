@@ -78,13 +78,4 @@ export class InfoComponent implements OnInit {
     this.spinner.hide();
     this.alertService.success('Dữ liệu đã được cập nhật mới nhất!');
   }
-
-
-  updateliveform() {
-    this.showPopupConfirm = true;
-    console.log(this.showPopupConfirm);
-  }
-  closePopup() {
-    this.showPopupConfirm = false;
-  }
 }

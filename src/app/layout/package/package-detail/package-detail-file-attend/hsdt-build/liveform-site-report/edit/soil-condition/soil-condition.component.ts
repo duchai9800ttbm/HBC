@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { SoilCondition } from '../../../../../../../../shared/models/site-survey-report/soil-condition.model';
 
 @Component({
   selector: 'app-soil-condition',
@@ -9,10 +10,21 @@ export class SoilConditionComponent implements OnInit {
   footingImageUrls = [];
   investigationImageUrls = [];
   url;
-
+  soilConditionModel: SoilCondition;
   constructor() { }
 
   ngOnInit() {
+    this.soilConditionModel = new SoilCondition;
+    this.soilConditionModel = {
+      nenMongHienCo: {
+        description: 'TEXT',
+        images: []
+      },
+      thongTinCongTrinhGanDo: {
+        description: '',
+        images: []
+      }
+    };
   }
   uploadFootingImage(event) {
     const files = event.target.files;

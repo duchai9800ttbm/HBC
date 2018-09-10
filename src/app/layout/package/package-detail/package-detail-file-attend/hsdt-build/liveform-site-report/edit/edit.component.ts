@@ -1,9 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { DATETIME_PICKER_CONFIG } from '../../../../../../../shared/configs/datepicker.config';
+// tslint:disable-next-line:import-blacklist
 import { Subject } from 'rxjs';
 import { Router } from '@angular/router';
 import { AlertService, SessionService } from '../../../../../../../shared/services';
 import { NgxSpinnerService } from 'ngx-spinner';
+import { SiteSurveyReport } from '../../../../../../../shared/models/site-survey-report/site-survey-report';
 
 @Component({
   selector: 'app-edit',
@@ -11,6 +13,8 @@ import { NgxSpinnerService } from 'ngx-spinner';
   styleUrls: ['./edit.component.scss']
 })
 export class EditComponent implements OnInit {
+  static formModel: SiteSurveyReport = new SiteSurveyReport();
+
   dtTrigger: Subject<any> = new Subject();
   showBeforeLogin: any = true;
   showAfterLogin: any;

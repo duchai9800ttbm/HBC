@@ -6,19 +6,19 @@
                 <h6 class="small-title">2.1 Những chi tiết địa hình/Topography</h6>
                 <div class="main-detail">
                     <div class="text-des-input">
-                        <input type="text" placeholder="TEXT">
+                        <input readonly type="text" placeholder="TEXT">
                     </div>
                     <div>
                         <div class="image-demo-img">
-                            <input type="file" style="display:none" #inputclick0 (change)="uploadTopographyImage($event)">
+                            <input readonly type="file" style="display:none">
 
                             <div class="display-img" *ngFor="let url of topographyImageUrls">
                                 <img [src]="url">
-                                <div class="toppp" (click)="deleteImg0()">
+                                <div class="toppp">
                                     <i class="fa fa-times delete-icon" aria-hidden="true"></i>
                                 </div>
                             </div>
-                            <div class="perspective-image" (click)="inputclick0.click()">
+                            <div class="perspective-image">
                                 <i class="fa fa-plus" aria-hidden="true"></i>
                                 <p>Image</p>
                             </div>
@@ -30,19 +30,19 @@
                 <h6 class="small-title">2.2 Những kiến trúc hiện hữu trên công trường/ Existing building on the site</h6>
                 <div class="main-detail">
                     <div class="text-des-input">
-                        <input type="text" placeholder="TEXT">
+                        <input readonly type="text" placeholder="TEXT">
                     </div>
                     <div>
                         <div class="image-demo-img">
-                            <input type="file" style="display:none" #inputclick1 (change)="uploadExistingBuildImage($event)">
+                            <input readonly type="file" style="display:none">
                             
                             <div class="display-img" *ngFor="let url of existingBuildImageUrls">
                                 <img [src]="url">
-                                <div class="toppp" (click)="deleteImg1()">
+                                <div class="toppp">
                                     <i class="fa fa-times delete-icon" aria-hidden="true"></i>
                                 </div>
                             </div>
-                            <div class="perspective-image" (click)="inputclick1.click()">
+                            <div class="perspective-image">
                                 <i class="fa fa-plus" aria-hidden="true"></i>
                                 <p>Image</p>
                             </div>
@@ -55,19 +55,19 @@
                     site</h6>
                 <div class="main-detail">
                     <div class="text-des-input">
-                        <input type="text" placeholder="TEXT">
+                        <input readonly type="text" placeholder="TEXT">
                     </div>
                     <div>
                         <div class="image-demo-img">
-                            <input type="file" style="display:none" #inputclick2 (change)="uploadStacaleImage($event)">
+                            <input readonly type="file" style="display:none">
 
                             <div class="display-img" *ngFor="let url of stacaleImageUrls">
                                 <img [src]="url">
-                                <div class="toppp" (click)="deleteImg2()">
+                                <div class="toppp">
                                     <i class="fa fa-times delete-icon" aria-hidden="true"></i>
                                 </div>
                             </div>
-                            <div class="perspective-image" (click)="inputclick2.click()">
+                            <div class="perspective-image">
                                 <i class="fa fa-plus" aria-hidden="true"></i>
                                 <p>Image</p>
                             </div>

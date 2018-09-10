@@ -1,52 +1,54 @@
-<div class="detail-info">
-    <div id="step6" class="step-info">
+<form [formGroup]="usefulInfoForm" class="detail-info">
+    <div class="step-info">
         <h5 class="big-title">7.&nbsp;các thông tin hữu ích khác/ usefull infomation</h5>
         <div>
             <div class="detail-each-title">
-                <h6 class="small-title" style="padding-left: 30px;">Những chủ đề trên nếu thấy cần thiết thì làm riêng
+                <h6 class="small-title">Những chủ đề trên nếu thấy cần thiết thì làm riêng
                     một report cho chủ đề đó</h6>
-                <div class="listDetail" *ngFor="let topic of topicLists">
-                    <div class="labelstep1" style="margin-bottom: 15px;">
-                        <label for="">7.{{topic}} Chủ đề</label>
-                        <span class="custom-dropdown w-30">
-                            <select class="form-control">
-                                <option>---Chọn---</option>
-                                <option>Chủ đề số 1</option>
-                                <option>Chủ đề số 2</option>
-                                <option>Chủ đề số 3</option>
-                            </select>
-                        </span>
-                        <i (click)="deleteTopic(topic)" class="fa fa-times-circle" aria-hidden="true" style="position: relative;color: #BEBEBE;font-size: 30px;left: 30px;top: 6px;"></i>
-                    </div>
-                    <div class="topic7">
-                        <div class="labelstep1" style="margin-bottom: 15px;">
-                            <label for="">Nội dung 1</label>
-                            <input type="text">
+                <div formArrayName="topic">
+                    <div *ngFor="let topicItem of usefulInfoForm.get('topic').controls; index as i" [formGroupName]="i" class="list-detail">
+                        <div class="img-demo-des">
+                            <label for="">7.{{i + 1}} Chủ đề</label>
+                            <span class="custom-dropdown w-30">
+                                <select class="form-control">
+                                    <option>---Chọn---</option>
+                                    <option>Chủ đề số 1</option>
+                                    <option>Chủ đề số 2</option>
+                                    <option>Chủ đề số 3</option>
+                                </select>
+                            </span>
+                            <i (click)="deleteTopic('topic', i)" class="fa fa-times-circle" aria-hidden="true" style="position: relative;color: #BEBEBE;font-size: 30px;left: 30px;top: 6px;"></i>
                         </div>
-                        <div class="labelstep1" style="margin-bottom: 15px;">
-                            <label for="" style="visibility: hidden">Nội dung</label>
-                            <textarea cols="20" rows="5"></textarea>
-                        </div>
-                        <div class="image-demo-img">
-                            <input type="file" style="display:none" #uploaContent (change)="uploaContentImage($event)">
-
-                            <div class="display-img" *ngFor="let url of contentImgs">
-                                <img [src]="url">
-                                <div class="toppp" (click)="deleteContentImage()">
-                                    <i class="fa fa-times delete-icon" aria-hidden="true"></i>
-                                </div>
+                        <div class="topic7">
+                            <div class="img-demo-des">
+                                <label for="">Nội dung 1</label>
+                                <input type="text" [(ngModel)]="noidung">
                             </div>
-                            <div class="perspective-image" (click)="uploaContent.click()">
-                                <i class="fa fa-plus" aria-hidden="true"></i>
-                                <p>Image</p>
+                            <div class="img-demo-des">
+                                <label for="" style="visibility: hidden">Nội dung</label>
+                                <textarea cols="20" rows="5"></textarea>
+                            </div>
+                            <div class="image-demo-img">
+                                <input type="file" #uploaContent (change)="uploadContentImage($event, i)">
+                    
+                                <div class="display-img" formControlName="image">
+                                    <img [src]="url">
+                                    <div class="toppp" (click)="deleteContentImage()">
+                                        <i class="fa fa-times delete-icon" aria-hidden="true"></i>
+                                    </div>
+                                </div>
+                                <div class="perspective-image" (click)="uploaContent.click()">
+                                    <i class="fa fa-plus" aria-hidden="true"></i>
+                                    <p>Image</p>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
                 <div class="main-detail">
-                    <button type="button" class="btn btn-primary" (click)="addTopic()">Thêm chủ đề</button>
+                    <button type="button" class="btn btn-primary" (click)="addTopic('topic')">Thêm chủ đề</button>
                 </div>
             </div>
         </div>
     </div>
-</div>
+</form>

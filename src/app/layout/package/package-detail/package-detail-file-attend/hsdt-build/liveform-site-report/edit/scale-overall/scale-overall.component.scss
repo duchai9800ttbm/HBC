@@ -120,7 +120,7 @@ input[type=text] {
     }
 }
 
-.label1-2 {
+.label-project-scale {
     margin-bottom: 10px;
 
     label {
@@ -140,17 +140,22 @@ input[type=text] {
     }
 }
 
+.input-text-other {
+    margin-left: 20px;
+    width: 50%;
+}
+
 .checkboxStep1 {
     display: flex;
     flex-direction: row;
 }
 
-#step1Head {
+#info-docs {
     display: flex;
     flex-direction: column;
     margin-bottom: 20px;
 
-    .labelstep1 {
+    .label-info {
         flex-direction: row;
 
         label {
@@ -183,6 +188,10 @@ input[type=text] {
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
+
+    input[type=file] {
+        display: none;
+    }
 }
 
 .display-img {

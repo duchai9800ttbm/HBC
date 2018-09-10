@@ -8,18 +8,18 @@
                     <div class="listDetail">
                         <div class="labelstep1" style="margin-bottom: 15px;">
                             <label for="">Hệ thống hiện hữu/ Existing system</label>
-                            <input type="text" placeholder="TỪ GIAI ĐOẠN 1A">
+                            <input readonly type="text" placeholder="TỪ GIAI ĐOẠN 1A">
                         </div>
                         <div class="image-demo-img">
-                            <input type="file" style="display:none" #inputclick0 (change)="uploadSupplySystemImage($event)">
+                            <input readonly type="file" style="display:none">
 
                             <div class="display-img" *ngFor="let url of supplySystemImageUrls">
                                 <img [src]="url">
-                                <div class="toppp" (click)="deleteImg0()">
+                                <div class="toppp">
                                     <i class="fa fa-times delete-icon" aria-hidden="true"></i>
                                 </div>
                             </div>
-                            <div class="perspective-image" (click)="inputclick0.click()">
+                            <div class="perspective-image">
                                 <i class="fa fa-plus" aria-hidden="true"></i>
                                 <p>Image</p>
                             </div>
@@ -28,18 +28,18 @@
                     <div class="listDetail">
                         <div class="labelstep1" style="margin-bottom: 15px;">
                             <label for="">Điểm đấu nối/ Existing connection point</label>
-                            <input type="text" placeholder="TỪ GIAI ĐOẠN 1A">
+                            <input readonly type="text" placeholder="TỪ GIAI ĐOẠN 1A">
                         </div>
                         <div class="image-demo-img">
-                            <input type="file" style="display:none" #inputclick1 (change)="uploadSupplyPointImage($event)">
+                            <input readonly type="file" style="display:none">
 
                             <div class="display-img" *ngFor="let url of supplyPointImageUrls">
                                 <img [src]="url">
-                                <div class="toppp" (click)="deleteImg1()">
+                                <div class="toppp">
                                     <i class="fa fa-times delete-icon" aria-hidden="true"></i>
                                 </div>
                             </div>
-                            <div class="perspective-image" (click)="inputclick1.click()">
+                            <div class="perspective-image">
                                 <i class="fa fa-plus" aria-hidden="true"></i>
                                 <p>Image</p>
                             </div>
@@ -53,18 +53,18 @@
                     <div class="listDetail">
                         <div class="labelstep1" style="margin-bottom: 15px;">
                             <label for="">Hệ thống hiện hữu/ Existing system</label>
-                            <input type="text" placeholder="THOÁT NƯỚC TỰ NHIÊN THEO KÊNH SẴN CÓ RA RẠCH">
+                            <input readonly type="text" placeholder="THOÁT NƯỚC TỰ NHIÊN THEO KÊNH SẴN CÓ RA RẠCH">
                         </div>
                         <div class="image-demo-img">
-                            <input type="file" style="display:none" #inputclick2 (change)="uploadDrainageSystemImage($event)">
+                            <input readonly type="file" style="display:none">
 
                             <div class="display-img" *ngFor="let url of drainageSystemImageUrls">
                                 <img [src]="url">
-                                <div class="toppp" (click)="deleteImg2()">
+                                <div class="toppp">
                                     <i class="fa fa-times delete-icon" aria-hidden="true"></i>
                                 </div>
                             </div>
-                            <div class="perspective-image" (click)="inputclick2.click()">
+                            <div class="perspective-image">
                                 <i class="fa fa-plus" aria-hidden="true"></i>
                                 <p>Image</p>
                             </div>
@@ -73,18 +73,18 @@
                     <div class="listDetail">
                         <div class="labelstep1" style="margin-bottom: 15px;">
                             <label for="">Điểm đấu nối/ Existing connection point</label>
-                            <input type="text" placeholder="Không có">
+                            <input readonly type="text" placeholder="Không có">
                         </div>
                         <div class="image-demo-img">
-                            <input type="file" style="display:none" #inputclick3 (change)="uploadDrainagePointImage($event)">
+                            <input readonly type="file" style="display:none">
 
                             <div class="display-img" *ngFor="let url of drainagePointImageUrls">
                                 <img [src]="url">
-                                <div class="toppp" (click)="deleteImg3()">
+                                <div class="toppp">
                                     <i class="fa fa-times delete-icon" aria-hidden="true"></i>
                                 </div>
                             </div>
-                            <div class="perspective-image" (click)="inputclick3.click()">
+                            <div class="perspective-image">
                                 <i class="fa fa-plus" aria-hidden="true"></i>
                                 <p>Image</p>
                             </div>
@@ -98,18 +98,18 @@
                     <div class="listDetail">
                         <div class="labelstep1" style="margin-bottom: 15px;">
                             <label for="">Trạm hạ thế/Transformer station</label>
-                            <input type="text" placeholder="Có sẵn trạm">
+                            <input readonly type="text" placeholder="Có sẵn trạm">
                         </div>
                         <div class="image-demo-img">
-                            <input type="file" style="display:none" #inputclick4 (change)="uploadPowerStationImage($event)">
+                            <input readonly type="file" style="display:none">
 
                             <div class="display-img" *ngFor="let url of powerStationImageUrls">
                                 <img [src]="url">
-                                <div class="toppp" (click)="deleteImg4()">
+                                <div class="toppp">
                                     <i class="fa fa-times delete-icon" aria-hidden="true"></i>
                                 </div>
                             </div>
-                            <div class="perspective-image" (click)="inputclick4.click()">
+                            <div class="perspective-image">
                                 <i class="fa fa-plus" aria-hidden="true"></i>
                                 <p>Image</p>
                             </div>
@@ -118,18 +118,18 @@
                     <div class="listDetail">
                         <div class="labelstep1" style="margin-bottom: 15px;">
                             <label for="">Đường dây trung thế hiện hữu/ Existing medium voltage system</label>
-                            <input type="text" placeholder="Cách 50m">
+                            <input readonly type="text" placeholder="Cách 50m">
                         </div>
                         <div class="image-demo-img">
-                            <input type="file" style="display:none" #inputclick5 (change)="uploadMediumVoltageSystemImage($event)">
+                            <input readonly type="file" style="display:none">
 
                             <div class="display-img" *ngFor="let url of mediumVoltageSystemImageUrls">
                                 <img [src]="url">
-                                <div class="toppp" (click)="deleteImg5()">
+                                <div class="toppp">
                                     <i class="fa fa-times delete-icon" aria-hidden="true"></i>
                                 </div>
                             </div>
-                            <div class="perspective-image" (click)="inputclick5.click()">
+                            <div class="perspective-image">
                                 <i class="fa fa-plus" aria-hidden="true"></i>
                                 <p>Image</p>
                             </div>
@@ -138,18 +138,18 @@
                     <div class="listDetail">
                         <div class="labelstep1" style="margin-bottom: 15px;">
                             <label for="">Khác/ Others</label>
-                            <input type="text" placeholder="Không có">
+                            <input readonly type="text" placeholder="Không có">
                         </div>
                         <div class="image-demo-img">
-                            <input type="file" style="display:none" #inputclick6 (change)="uploadPowerOtherImage($event)">
+                            <input readonly type="file" style="display:none">
 
                             <div class="display-img" *ngFor="let url of powerOtherImageUrls">
                                 <img [src]="url">
-                                <div class="toppp" (click)="deleteImg6()">
+                                <div class="toppp">
                                     <i class="fa fa-times delete-icon" aria-hidden="true"></i>
                                 </div>
                             </div>
-                            <div class="perspective-image" (click)="inputclick6.click()">
+                            <div class="perspective-image">
                                 <i class="fa fa-plus" aria-hidden="true"></i>
                                 <p>Image</p>
                             </div>

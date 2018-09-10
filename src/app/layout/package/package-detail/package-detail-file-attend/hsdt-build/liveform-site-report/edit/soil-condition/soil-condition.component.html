@@ -8,15 +8,15 @@
                     building if seeable))</h6>
                 <div class="main-detail">
                     <div class="text-des-input">
-                        <input type="text" placeholder="TEXT">
+                        <input type="text" [(ngModel)]="soilConditionModel.nenMongHienCo.description">
                     </div>
                     <div>
                         <div class="image-demo-img">
-                            <input type="file" style="display:none" #uploadFooting (change)="uploadFootingImage($event)">
+                            <input type="file" #uploadFooting (change)="uploadFootingImage($event)">
 
-                            <div class="display-img" *ngFor="let url of footingImageUrls">
-                                <img [src]="url">
-                                <div class="toppp" (click)="deleteFootingImage()">
+                            <div class="display-img" *ngFor="let url of soilConditionModel.nenMongHienCo.images">
+                                <img *ngIf="url !== 0" [src]="url.image">
+                                <div *ngIf="url !== 0" class="toppp" (click)="deleteFootingImage()">
                                     <i class="fa fa-times delete-icon" aria-hidden="true"></i>
                                 </div>
                             </div>
@@ -32,17 +32,17 @@
                 <h6 class="small-title">6.2 Địa tầng lớp đất (trong trường hợp Design và Build)/ Soil investigation (in
                     case Design and Build))</h6>
                 <div class="main-detail">
-                    <div class="listDetail">
-                        <div class="labelstep1" style="margin-bottom: 15px;">
+                    <div class="text-des-input">
+                        <div class="img-demo-des">
                             <label for="">Thông tin công trình gần đó/ Soil investigation of similar project</label>
-                            <input type="text">
+                            <input type="text" [(ngModel)]="soilConditionModel.thongTinCongTrinhGanDo.description">
                         </div>
                         <div class="image-demo-img">
-                            <input type="file" style="display:none" #uploadInvestigation (change)="uploadInvestigationImage($event)">
+                            <input type="file" #uploadInvestigation (change)="uploadInvestigationImage($event)">
 
-                            <div class="display-img" *ngFor="let url of investigationImageUrls">
-                                <img [src]="url">
-                                <div class="toppp" (click)="deleteInvestigationImage()">
+                            <div class="display-img" *ngFor="let url of soilConditionModel.thongTinCongTrinhGanDo.images">
+                                <img *ngIf="url !== 0" [src]="url.image">
+                                <div *ngIf="url !== 0" class="toppp" (click)="deleteInvestigationImage()">
                                     <i class="fa fa-times delete-icon" aria-hidden="true"></i>
                                 </div>
                             </div>

@@ -145,13 +145,14 @@ input[type=text] {
     flex-direction: row;
 }
 
-.listDetail {
+.text-des-input {
     display: flex;
     flex-direction: column;
     margin-bottom: 20px;
 
-    .labelstep1 {
+    .img-demo-des {
         flex-direction: row;
+        margin-bottom: 15px;
 
         label {
             width: 40%;
@@ -188,6 +189,10 @@ input[type=text] {
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
+
+    input[type=file] {
+        display: none;
+    }
 }
 
 .perspective-image {

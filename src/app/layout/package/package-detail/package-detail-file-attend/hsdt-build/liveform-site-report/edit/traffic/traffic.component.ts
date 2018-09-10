@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Traffic } from '../../../../../../../../shared/models/site-survey-report/traffic.model';
 
 @Component({
   selector: 'app-traffic',
@@ -13,9 +14,67 @@ export class TrafficComponent implements OnInit {
   roadImageUrls = [];
   fenceImageUrls = [];
   url;
+  trafficModel: Traffic;
   constructor() { }
 
   ngOnInit() {
+    this.trafficModel = new Traffic();
+    this.trafficModel = {
+      chiTietDiaHinh: {
+        khoKhan: {
+          description: 'Text',
+          images: [
+            {
+              id: '123',
+              image: 'https://images.pexels.com/photos/268364/pexels-photo-268364.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260'
+            }
+          ]
+        },
+        thuanLoi: {
+          description: 'Text',
+          images: [
+            {
+              id: '',
+              image: ''
+            }
+          ]
+        }
+      },
+      loiVaoCongTrinh: {
+        huongVao: {
+          description: 'Text',
+          images: [
+            {
+              id: '123',
+              image: ''
+            }
+          ]
+        },
+        duongHienCo: {
+          description: 'Text',
+          images: [
+            {
+              id: '',
+              image: ''
+            }
+          ]
+        },
+        yeuCauDuongTam: {
+          description: 'Text',
+          images: [
+            {
+              id: '',
+              image: ''
+            }
+          ]
+        },
+        yeuCauHangRao: {
+          description: 'Text',
+          images: [
+          ]
+        }
+      }
+    };
   }
   uploaDisadvantageImage(event) {
     const files = event.target.files;

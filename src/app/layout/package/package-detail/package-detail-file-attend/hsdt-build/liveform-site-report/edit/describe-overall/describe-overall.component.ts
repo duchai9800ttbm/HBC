@@ -11,39 +11,36 @@ export class DescribeOverallComponent implements OnInit {
   existingBuildImageUrls = [];
   stacaleImageUrls = [];
   url;
-  describeOverall: DescribeOverall;
+  describeModel: DescribeOverall;
   constructor() { }
 
   ngOnInit() {
-    this.describeOverall = new DescribeOverall();
-    this.describeOverall = {
+    this.describeModel = new DescribeOverall();
+    this.describeModel = {
       chiTietDiaHinh: {
-        description: 'Demo miêu tả chi tiết địa hình',
+        description: 'XEM FILE ĐÍNH KÈM',
         images: [
           {
             id: '011',
-            // tslint:disable-next-line:max-line-length
-            image: 'https://www.google.com.vn/url?sa=i&rct=j&q=&esrc=s&source=images&cd=&cad=rja&uact=8&ved=2ahUKEwicrOnAkqHdAhXNdH0KHfImD2oQjRx6BAgBEAU&url=http%3A%2F%2Fthuvienanhdep.net%2Fnhung-hinh-anh-hot-girl-cuc-xinh-va-dang-yeu-danh-lam-hinh-nen-dien-thoai%2F&psig=AOvVaw2ENc-rTTvHCOZxXX5RpcS7&ust=1536143466729323'
+            image: 'https://images.pexels.com/photos/268364/pexels-photo-268364.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260'
           }
         ]
       },
       kienTrucHienHuu: {
-        description: 'Demo miêu tả kiến trúc hiện hữu',
+        description: 'Không có. Chưa có rào tạm',
         images: [
           {
             id: '031',
-            // tslint:disable-next-line:max-line-length
-            image: 'https://www.google.com.vn/url?sa=i&rct=j&q=&esrc=s&source=images&cd=&cad=rja&uact=8&ved=2ahUKEwicrOnAkqHdAhXNdH0KHfImD2oQjRx6BAgBEAU&url=http%3A%2F%2Fthuvienanhdep.net%2Fnhung-hinh-anh-hot-girl-cuc-xinh-va-dang-yeu-danh-lam-hinh-nen-dien-thoai%2F&psig=AOvVaw2ENc-rTTvHCOZxXX5RpcS7&ust=1536143466729323'
+            image: 'https://images.pexels.com/photos/268364/pexels-photo-268364.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260'
           }
         ]
       },
       yeuCauChuongNgai: {
-        description: 'Demo miêu tả yêu cầu chướng ngại',
+        description: 'Không có',
         images: [
           {
             id: '001',
-            // tslint:disable-next-line:max-line-length
-            image: 'https://www.google.com.vn/url?sa=i&rct=j&q=&esrc=s&source=images&cd=&cad=rja&uact=8&ved=2ahUKEwicrOnAkqHdAhXNdH0KHfImD2oQjRx6BAgBEAU&url=http%3A%2F%2Fthuvienanhdep.net%2Fnhung-hinh-anh-hot-girl-cuc-xinh-va-dang-yeu-danh-lam-hinh-nen-dien-thoai%2F&psig=AOvVaw2ENc-rTTvHCOZxXX5RpcS7&ust=1536143466729323'
+            image: 'https://images.pexels.com/photos/268364/pexels-photo-268364.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260'
           }
         ]
       }

@@ -6,14 +6,14 @@
                 <h6 class="small-title">4.1 Phá vỡ kết cấu/ tòa nhà/ Demobilisation existing structure or building</h6>
                 <div class="main-detail">
                     <div class="text-des-input">
-                        <input type="text" placeholder="KHÔNG CÓ">
+                        <input type="text" [(ngModel)]="demoConsoModel.phaVoKetCau.description">
                     </div>
                     <div>
                         <div class="image-demo-img">
-                            <input type="file" style="display:none" #uploaDemobilisation (change)="uploaDemobilisationImage($event)">
-                            <div class="display-img" *ngFor="let url of demobilisationImageUrls">
-                                <img [src]="url">
-                                <div class="toppp" (click)="deleteDemobilisationImage()">
+                            <input type="file" #uploaDemobilisation (change)="uploaDemobilisationImage($event)">
+                            <div class="display-img" *ngFor="let url of demoConsoModel.phaVoKetCau.images">
+                                <img *ngIf="url !== 0" [src]="url.image">
+                                <div *ngIf="url !== 0" class="toppp" (click)="deleteDemobilisationImage()">
                                     <i class="fa fa-times delete-icon" aria-hidden="true"></i>
                                 </div>
                             </div>
@@ -29,15 +29,15 @@
                 <h6 class="small-title">4.2 Gia cố kết cấu/ tòa nhà/ Consolidation existing structure or building</h6>
                 <div class="main-detail">
                     <div class="text-des-input">
-                        <input type="text" placeholder="KHÔNG CÓ">
+                        <input type="text" [(ngModel)]="demoConsoModel.giaCoKetCau.description">
                     </div>
                     <div>
                         <div class="image-demo-img">
-                            <input type="file" style="display:none" #uploaConsolidation (change)="uploaConsolidationImage($event)">
+                            <input type="file" #uploaConsolidation (change)="uploaConsolidationImage($event)">
 
-                            <div class="display-img" *ngFor="let url of consolidationImageUrls">
-                                <img [src]="url">
-                                <div class="toppp" (click)="deleteConsolidationImage()">
+                            <div class="display-img" *ngFor="let url of demoConsoModel.giaCoKetCau.images">
+                                <img *ngIf="url !== 0" [src]="url.image">
+                                <div *ngIf="url !== 0" class="toppp" (click)="deleteConsolidationImage()">
                                     <i class="fa fa-times delete-icon" aria-hidden="true"></i>
                                 </div>
                             </div>
@@ -54,15 +54,15 @@
                     conditions/figuring by picture</h6>
                 <div class="main-detail">
                     <div class="text-des-input">
-                        <input type="text" placeholder="KHÔNG CÓ">
+                        <input type="text" [(ngModel)]="demoConsoModel.dieuKien.description">
                     </div>
                     <div>
                         <div class="image-demo-img">
-                            <input type="file" style="display:none" #uploaAdjacent (change)="uploaAdjacentImage($event)">
+                            <input type="file" #uploaAdjacent (change)="uploaAdjacentImage($event)">
 
-                            <div class="display-img" *ngFor="let url of adjacentImageUrls">
-                                <img [src]="url">
-                                <div class="toppp" (click)="deleteAdjacentImage()">
+                            <div class="display-img" *ngFor="let url of demoConsoModel.dieuKien.images">
+                                <img *ngIf="url !== 0" [src]="url.image">
+                                <div *ngIf="url !== 0" class="toppp" (click)="deleteAdjacentImage()">
                                     <i class="fa fa-times delete-icon" aria-hidden="true"></i>
                                 </div>
                             </div>

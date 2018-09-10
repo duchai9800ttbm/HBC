@@ -18,7 +18,7 @@ export class DemoConsoComponent implements OnInit {
     this.demoConsoModel = new DemoConso();
     this.demoConsoModel = {
       phaVoKetCau: {
-        description: 'Demo mô tả phá vỡ kết cấu ',
+        description: 'KHÔNG CÓ',
         images: [
           {
             id: '12345',
@@ -27,7 +27,7 @@ export class DemoConsoComponent implements OnInit {
         ]
       },
       giaCoKetCau: {
-        description: 'Demo mô tả phá vỡ kết cấu ',
+        description: 'KHÔNG CÓ',
         images: [
           {
             id: '12345',
@@ -36,7 +36,7 @@ export class DemoConsoComponent implements OnInit {
         ]
       },
       dieuKien: {
-        description: 'Demo mô tả phá vỡ kết cấu ',
+        description: 'KHÔNG CÓ',
         images: [
           {
             id: '12345',
