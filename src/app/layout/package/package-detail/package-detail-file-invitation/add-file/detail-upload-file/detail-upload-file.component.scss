@@ -53,3 +53,7 @@
 .word-wrap{
     word-wrap: break-word;
 }
+
+:host(){
+    font-size: 0.875rem!important;
+}

@@ -372,9 +372,13 @@ select.form-control:not([size]):not([multiple]){
 }
 ::-webkit-scrollbar {
     width: 6px;
+    cursor: pointer;
+
 }
  #style-scroll::-webkit-scrollbar {
     height: 8px;
+    cursor: pointer;
+
  }
 
 ::-webkit-scrollbar-track {
