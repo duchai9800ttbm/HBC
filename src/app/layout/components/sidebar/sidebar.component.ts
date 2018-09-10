@@ -95,18 +95,19 @@ export class SidebarComponent implements OnInit {
 
     }
 
-    onResize(e) {
-        const width = document.getElementById('sidebar').offsetWidth;
-        if (width < 200) {
-            document.getElementById('logo').setAttribute('Width', '55');
-            this.toggleMenuFromSidebar.emit(false);
-            this.layoutService.emitEvent(true);
-            this.showSidebarContent = false;
-        }
-        if (width === 200) {
-            document.getElementById('logo').setAttribute('Width', '200');
-            this.layoutService.emitEvent(false);
-            this.showSidebarContent = true;
-        }
-    }
+    // onResize(e) {
+    //     const width = document.getElementById('sidebar').offsetWidth;
+    //     if (width < 200) {
+    //         // document.getElementById('logo').setAttribute('Width', '55');
+    //         this.toggleMenuFromSidebar.emit(false);
+    //         this.layoutService.emitEvent(false);
+    //         this.showSidebarContent = false;
+    //     }
+    //     if (width === 200) {
+    //         this.toggleMenuFromSidebar.emit(true);
+    //         this.layoutService.emitEvent(true);
+    //         this.showSidebarContent = true;
+    //         document.getElementById('logo').setAttribute('Width', '200');
+    //     }
+    // }
 }
