@@ -19,7 +19,7 @@ export class LayoutComponent implements OnInit {
         private translateService: TranslateService,
         private scrollToTopService: ScrollToTopService,
     ) {
-        this.clientHeight = window.innerHeight - 90;
+        this.clientHeight = window.innerHeight - 110;
     }
     sdt;
     status;
