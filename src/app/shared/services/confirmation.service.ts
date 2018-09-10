@@ -21,6 +21,18 @@ export class ConfirmationService {
         });
     }
 
+    // confirmAndErr(message: string, siFn: () => void, err: Function) {
+    //     //  this.setConfirmation(message, siFn, noFn);
+    //     this.openConfirmationPopup({
+    //         type: "confirm",
+    //         text: message,
+    //         siFn: function() {
+    //             siFn();
+    //         },
+    //         noFn: err
+    //     });
+    // }
+
     confirmCallAway(message: string, siFn: () => void) {
         // this.setConfirmation(message, siFn, noFn);
         this.openConfirmationPopupCallAway({
