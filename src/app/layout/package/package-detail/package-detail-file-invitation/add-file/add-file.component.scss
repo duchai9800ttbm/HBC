@@ -577,7 +577,7 @@ table.dataTable th {
 
             &:hover {
                 background-color: #009CE2;
-                color: #FFFFFF;
+                color: #FFFFFF!important;
             }
 
             .router-link-active {
@@ -630,6 +630,7 @@ table.dataTable th {
 }
 
 table.dataTable {
+
     tr:nth-child(odd) {background-color: #fafbfc;}
 
     overflow-x: scroll;
@@ -639,8 +640,8 @@ table.dataTable {
     }
     th:not([type="check"]),
     td:not([type="check"]) {
-        min-width: 100px;
-        max-width: 190px;
+        min-width: 80px;
+        max-width: 90px;
     }
 }
 
@@ -652,6 +653,10 @@ table.dataTable {
 .active-menu {
     background-color: #009CE2 !important;
     color: #FFFFFF !important;
+}
+
+.hight-light {
+    color: #a5a2a2 !important;
 }
 
 .resize {
@@ -744,7 +749,26 @@ table.dataTable {
     }
 }
 
-@media only screen and (max-width: 1200px) {
+@media only screen and (max-width: 1201px) {
+    table.dataTable {
+        zoom: 0.8;
+        tr:nth-child(odd) {background-color: #fafbfc;}
+    
+        overflow-x: scroll;
+        th:first-child,td:first-child {
+            width: 80px!important;
+            max-width: 90px;
+        }
+        th:last-child,td:last-child {
+            width: 80px!important;
+            max-width: 90px;
+        }
+        th:not([type="check"]),
+        td:not([type="check"]) {
+            min-width: 80px;
+            max-width: 100px;
+        }
+    }
     .toggle-menu-item {
         //   width: 150px !important;
         font-size: 12px !important;
@@ -764,6 +788,25 @@ table.dataTable {
 }
 
 @media only screen and (max-width: 1300px) {
+    table.dataTable {
+        zoom: 0.9;
+        tr:nth-child(odd) {background-color: #fafbfc;}
+    
+        overflow-x: scroll;
+        th:first-child,td:first-child {
+            width: 80px!important;
+            max-width: 90px;
+        }
+        th:last-child,td:last-child {
+            width: 80px!important;
+            max-width: 90px;
+        }
+        th:not([type="check"]),
+        td:not([type="check"]) {
+            min-width: 80px;
+            max-width: 100px;
+        }
+    }
     .toggle-menu-item {
         //   width: 150px !important;
         font-size: 12px !important;

@@ -33,7 +33,6 @@ export class HsdtBuildComponent implements OnInit {
         this.packageId = +PackageDetailComponent.packageId;
         this.packageService.isSummaryConditionForm$.subscribe(data => {
             this.isShowMenu = data;
-            console.log('this.isShowMenu: ', this.isShowMenu);
             this.cdr.detectChanges();
         });
 

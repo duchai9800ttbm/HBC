@@ -12,7 +12,7 @@ import { InterviewInvitationService } from '../../../../../../shared/services/in
     CreateInterviewRoutingModule
   ],
   declarations: [
-    CreateInterviewComponent
+    CreateInterviewComponent,
   ],
   providers: [
     InterviewInvitationService,

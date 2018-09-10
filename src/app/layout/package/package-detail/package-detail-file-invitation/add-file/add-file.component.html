@@ -16,60 +16,15 @@
             <div class="search">
                 <div class="btn-toolbar-2 mt-2 mb-2">
                     <div>
-                        <!-- <div>
-                            <div class="input-group ml-auto" style="width: 250px">
-                                <span class="input-group-addon">Tìm kiếm theo</span>
-                                <input type="text" class="form-control icon" placeholder="&#xf002; Tên tài liệu" (keyup)="search($event.target.value)">
-                            </div>
-                        </div> -->
 
                     </div>
                     <div class="mt-2">
-                        <!-- <button class="btn btn-primary" (click)="multiDelete()">
-                            Xóa
-                        </button> -->
-                        <!-- <button class="btn btn-primary ml-1">
-                            Tải xuống tài liệu
-                        </button> -->
-                        <!-- 
-                        <div *ngIf="currentMajorTypeId == 1" class="btn-group ml-1" ngbDropdown>
-                            <button type="button" class="btn btn-primary" ngbDropdownToggle data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                Upload HSMT
-                            </button>
-                            <div class="dropdown-menu" ngbDropdownMenu>
-                                <div class="fileUpload dropdown-item" (click)="openPopupUploadFile('2')">
-                                    <a>Quyển HSMT</a>
-                                </div>
-                                <div class="dropdown-divider"></div>
-                                <div class="fileUpload dropdown-item" (click)="openPopupUploadFile('3')">
-                                    <a>Bản vẽ thuyết minh</a>
-                                </div>
-                                <div class="dropdown-divider"></div>
-                                <div class="fileUpload dropdown-item" (click)="openPopupUploadFile('4')">
-                                    <a>BOQ</a>
-                                </div>
-                                <div class="dropdown-divider"></div>
-                                <div class="fileUpload dropdown-item" (click)="openPopupUploadFile('5')">
-                                    <a>Tiêu chí kỹ thuật (Specs)</a>
-                                </div>
-                                <div class="dropdown-divider"></div>
-                                <div class="fileUpload dropdown-item" (click)="openPopupUploadFile('6')">
-                                    <a>Các báo cáo và các tài liệu kỹ thuật (KSDQ)</a>
-                                </div>
-                            </div>
-                        </div>
-                        <button *ngIf="currentMajorTypeId != 1" class="btn btn-primary ml-1" (click)="uploadHSMT()">
-                            Upload HSMT
-                        </button> -->
+
                         <button class="btn btn-primary" (click)="fullHSMT()">
                             <span style="font-size: 120%">Đã đủ HSMT</span> &nbsp;
                             <i style="color: #FFFFFF; font-size: 150%" class="fa fa-check" aria-hidden="true"></i>
 
                         </button>
-                        <!-- <button class="btn btn-primary ml-1" (click)="refresh(true)">
-                            <i class="fa fa-refresh" aria-hidden="true"></i>
-                        </button> -->
-
 
                     </div>
                 </div>
@@ -80,17 +35,22 @@
                 <div class="d-flex">
                     <div id="toggle-menu-item" *ngIf="majorTypeListItem">
                         <ng-container *ngFor="let item of majorTypeListItem; let i = index">
-                            <div class="toggle-menu-item" [title]="item.text" [class.active-menu]="(currentMajorTypeId == item.id)"
-                                (click)="filterMajorTypeListItem(item.id, item.text)">
+                            <div class="toggle-menu-item" [title]="item.text" [class.hight-light]="!item.hightLight && (currentMajorTypeId != item.id)"
+                                [class.active-menu]="(currentMajorTypeId == item.id)" (click)="filterMajorTypeListItem(item.id, item.text)">
                                 <span class="text-truncate">{{item?.text}}</span>
                             </div>
                             <div class="line" *ngIf="!(majorTypeListItem.length == i+1)" style="width: calc(100% - 10px); border-top: #ccecf9 solid 1px; height: 1px; border-left: 1px; margin-left: 10px;"></div>
                         </ng-container>
                     </div>
                     <div class="button-click mb-auto" (click)="toggleClick()">
-                        <div class="iconButton iconN1"></div>
-                        <div class="iconButton iconN2" style="margin: 3px 0;"></div>
-                        <div class="iconButton iconN3"></div>
+                        <div class="center-parent">
+                            <div>
+                                <div class="iconButton iconN1"></div>
+                                <div class="iconButton iconN2" style="margin: 3.5px 0;"></div>
+                                <div class="iconButton iconN3"></div>
+                            </div>
+                        </div>
+
                     </div>
                 </div>
 
@@ -117,9 +77,6 @@
                         <button class="btn btn-primary ml-1" (click)="multiDelete()">
                             Xóa
                         </button>
-                        <!-- <button class="btn btn-primary ml-1">
-                                        Tải xuống tài liệu
-                                    </button> -->
 
                         <div *ngIf="currentMajorTypeId == 1" class="btn-group ml-1" ngbDropdown>
                             <button type="button" class="btn btn-primary" ngbDropdownToggle data-toggle="dropdown"
@@ -151,9 +108,7 @@
                         <button *ngIf="currentMajorTypeId != 1" class="btn btn-primary ml-1" (click)="uploadHSMT()">
                             Upload HSMT
                         </button>
-                        <!-- <button class="btn btn-primary ml-1" (click)="fullHSMT()">
-                                        Đã đủ HSMT
-                                    </button> -->
+
                         <button class="btn btn-primary ml-1" (click)="refresh(true)">
                             <i class="fa fa-refresh" aria-hidden="true"></i>
                         </button>
@@ -162,7 +117,7 @@
                     </div>
                 </div>
                 <div class="d-flex flex-row flex-wrap filter-bar custom-filter-bar" style="background-color: #fafbfc">
-                    <div class="d-flex form-inline ">
+                    <div class="d-flex form-inline   ">
                         <div class="form-group ml-sm-2 p-1">
                             <label for="" class="form-label">Tình trạng</label>
                             <span class="custom-dropdown mx-sm-2">
@@ -177,12 +132,7 @@
                         <div class="form-group ml-sm-2 p-1">
                             <label for="" class="form-label">Ngày upload</label>
                             <div class="input-group calendarInput">
-                                <!-- <owl-date-time [(ngModel)]="filterModel.createDate"  
-                                     pickerType="calendar" #dtUpload  >
-                                </owl-date-time>
-                                <span class="input-group-addon">
-                                    <i class="fa fa-calendar"></i>
-                                </span> -->
+
                                 <input [placeholder]="datePickerConfig.datePlaceHolder" class="input-date-time input-date-time-bar"
                                     readonly [(ngModel)]="filterModel.createDate" [owlDateTimeTrigger]="dt"
                                     [owlDateTime]="dt">
@@ -196,12 +146,7 @@
                         <div class="form-group ml-sm-2 p-1">
                             <label for="" class="form-label">Ngày nhận HSMT</label>
                             <div class="input-group calendarInput">
-                                <!-- <owl-date-time [(ngModel)]="filterModel.receivedDate"  
-                                     pickerType="calendar" >
-                                </owl-date-time>
-                                <span class="input-group-addon">
-                                    <i class="fa fa-calendar"></i>
-                                </span> -->
+
                                 <input [placeholder]="datePickerConfig.datePlaceHolder" class="input-date-time input-date-time-bar"
                                     readonly [(ngModel)]="filterModel.receivedDate" [owlDateTimeTrigger]="dt1"
                                     [owlDateTime]="dt1">
@@ -211,7 +156,7 @@
                                 </span>
                             </div>
                         </div>
-                        <div class="form-group ml-sm-2 p-1">
+                        <div class="form-group ml-auto p-1" style="margin-top: 5px!important">
 
                             <button type="submit" class="btn btn-primary ml-sm-2" (click)="filter()">
                                 <i class="fa fa-filter" aria-hidden="true"></i>&nbsp; Lọc
@@ -359,8 +304,9 @@
                                         <td *ngIf="k != 0" style="display: none">
 
                                         </td>
-                                        <td [title]="item.documentName">
-                                            {{ item.documentName }}
+                                        <td [title]="item.documentName" (click)="viewDetail(item)">
+                                            <a href="javascript:;"> {{ item.documentName }}
+                                            </a>
                                         </td>
                                         <td class="text-center">{{ item.version }}</td>
                                         <td class="">{{ item.desc }}</td>
@@ -420,7 +366,7 @@
                         </tbody>
                     </table>
 
-                   
+
 
                 </div>
                 <div>
@@ -445,3 +391,4 @@
 </div>
 <ngx-spinner bdColor="rgba(51, 51, 51, 0.7)" size="medium" color="#fff" type="ball-clip-rotate-multiple"></ngx-spinner>
 <app-upload-file [typeFile]="typeFileUpload" [majorTypeId]="1" [packageId]="packageId" *ngIf="showPopupAdd" (closed)="closePopup($event)"></app-upload-file>
+<app-detail-upload-file [model]="currentItem" *ngIf="showPopupDetail" (closed)="closePopupDetail($event)"></app-detail-upload-file>

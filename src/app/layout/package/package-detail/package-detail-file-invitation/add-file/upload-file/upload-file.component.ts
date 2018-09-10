@@ -75,7 +75,7 @@ export class UploadFileComponent implements OnInit {
   }
 
   fileChange(event) {
-
+    this.uploadForm.get('link').disable();
     const fileList: FileList = event.target.files;
     if (fileList.length > 0) {
       this.file = fileList[0];
@@ -93,6 +93,8 @@ export class UploadFileComponent implements OnInit {
   }
   deleteFileUpload() {
     this.file = null;
+    this.uploadForm.get('link').enable();
+
     this.uploadForm.get('nameFile').patchValue('');
     this.uploadForm.get('editName').patchValue('');
   }

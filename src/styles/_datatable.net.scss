@@ -8,6 +8,8 @@ table.dataTable.row-border tbody td,
 table.dataTable.display tbody th,
 table.dataTable.display tbody td {
     border-top: 1px solid #eaebeb !important;
+    border-bottom: 1px solid #eaebeb !important;
+
 }
 
 table.dataTable.stripe tbody tr.odd,

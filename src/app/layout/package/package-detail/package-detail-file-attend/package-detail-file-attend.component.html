@@ -1,4 +1,38 @@
-<div style="margin-left: 20px;margin-right: 20px;">
+<div class="mx-20 detail-container">
+    <div class="d-flex">
+        <ul class="progressbar">
+            <li class="triangle" [routerLink]="['./create-request']" routerLinkActive="active">
+                <div style="width: 100%" class="center-parent">
+                    <div class="arrow-down"></div>
+                </div>
+                <span class="text-color ">Cần lập đề nghị dự thầu</span>
+            </li>
+            <li class="triangle" [routerLink]="['./infomation-deployment']" routerLinkActive="active">
+                <div style="width: 100%" class="center-parent">
+                    <div class="arrow-down"></div>
+                </div>
+                <span class="text-color ">Triển khai &amp; phân công tiến độ</span>
+            </li>
+            <li class="triangle" [routerLink]="['./build']">
+                <div style="width: 100%" class="center-parent">
+                    <div class="arrow-down"></div>
+                </div>
+                <span class="text-color ">Lập HSDT</span>
+            </li>
+            <li class="triangle" [routerLink]="['./price-review']">
+                <div style="width: 100%" class="center-parent">
+                    <div class="arrow-down"></div>
+                </div>
+                <span class="text-color ">Trình duyệt giá</span>
+            </li>
+            <li class="triangle" [routerLink]="['./interview-negotiation']">
+                <div style="width: 100%" class="center-parent">
+                    <div class="arrow-down"></div>
+                </div>
+                <span>Quản lý phỏng vấn/thương thảo</span>
+            </li>
+        </ul>
+    </div>
     <router-outlet></router-outlet>
 </div>
 

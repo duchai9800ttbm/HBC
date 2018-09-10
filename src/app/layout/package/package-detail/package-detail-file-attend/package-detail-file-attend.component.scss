@@ -1,0 +1,99 @@
+.progressbar {
+    width: 100% !important;
+    counter-reset: step;
+    padding: 0.5rem 0 1rem 0;
+
+    li {
+        list-style-type: none;
+        width: 20%;
+        float: left;
+        font-size: 12px;
+        position: relative;
+        text-align: center;
+        color: #7d7d7d;
+        z-index: 20;
+        outline: none;
+
+        &::before {
+            width: 30px;
+            height: 30px;
+            content: counter(step);
+            counter-increment: step;
+            line-height: 30px;
+            display: block;
+            text-align: center;
+            margin: 0 auto 10px auto;
+            border-radius: 10%;
+            background-color: #ebebeb;
+            z-index: 30;
+            cursor: pointer;
+        }
+
+        &::after {
+            width: calc(100% - 30px);
+            height: 1px;
+            content: '';
+            position: absolute;
+            background-color: #ebebeb;
+            border-top: 1px dashed #8c8b8b;
+            top: 15px;
+            left: calc(-50% + 15px);
+            z-index: 1;
+        }
+    }
+}
+
+.text-color {
+    color: #7d7d7d;
+}
+
+.arrow-down {
+    width: 0;
+    height: 0;
+    border-left: 6px solid transparent;
+    border-right: 6px solid transparent;
+    border-top: 8px solid #ebebeb;
+    position: relative;
+    top: -10px;
+    z-index: 3;
+}
+
+li.triangle::before {
+    background-color: red;
+}
+
+.progressbar li:first-child:after {
+    content: none;
+}
+
+.progressbar li.active {
+    color: white;
+
+    &::before {
+        border-color: #00a0e3;
+        background-color: #00a0e3;
+    }
+
+    .arrow-down {
+        border-top: 8px solid #00a0e3 !important;
+    }
+}
+
+.progressbar li.active:after {
+    // background-color: #00a0e3;
+    border-top: 1px dashed #00a0e3 !important;
+}
+
+.mx-20 {
+    margin-left: 20px;
+    margin-right: 20px;
+}
+
+.detail-container {
+    box-shadow: 0px 0px 8px 0px hsla(0,0%,0%,0.2);
+    border-radius: 0.25rem;
+    padding: 1rem;
+    padding-left: 0;
+    margin-top: 2rem;
+    background-color: white;
+}

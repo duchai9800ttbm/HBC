@@ -9,6 +9,7 @@ import { NgxSpinnerService } from '../../../../../../../node_modules/ngx-spinner
 import { Subject } from '../../../../../../../node_modules/rxjs';
 import { DATATABLE_CONFIG } from '../../../../../shared/configs';
 import { PackageInfoModel } from '../../../../../shared/models/package/package-info.model';
+import { DomSanitizer } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-package-detail-info',
@@ -24,12 +25,14 @@ export class InformationComponent implements OnInit {
     private activatedRoute: ActivatedRoute,
     private packageService: PackageService,
     private spinner: NgxSpinnerService,
+    private sanitizer: DomSanitizer
   ) { }
   ngOnInit() {
     this.currentPackageId = +PackageDetailComponent.packageId;
     this.spinner.show();
     this.packageService.getInforPackageID(this.currentPackageId).subscribe(result => {
       this.package = result;
+      // this.package.documentLink = this.sanitizer.bypassSecurityTrustResourceUrl(this.package.documentLink);
       console.log(this.package);
       this.spinner.hide();
     }, err => {
