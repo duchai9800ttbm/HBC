@@ -173,10 +173,10 @@ export class ManageUserComponent implements OnInit {
         () => {
           this.groupUserService.deleteMulti({ ids: deleteIds }).subscribe(response => {
             this.refresh(0, 10);
-            this.alertService.success('Xóa nhiều người dùng thành công!');
+            this.alertService.success('Xóa người dùng thành công!');
           },
             err => {
-              this.alertService.error('Đã xảy ra lỗi! Xóa nhiều người dùng không thành công!');
+              this.alertService.error('Đã xảy ra lỗi! Xóa người dùng không thành công!');
             });
         }
       );
@@ -253,10 +253,10 @@ export class ManageUserComponent implements OnInit {
             // this.refresh(0, 10);
             // this.rerender(this.pagedResult);
             this.refresh(this.pagedResult.currentPage, this.pagedResult.pageSize);
-            this.alertService.success('Vô hiệu hóa nhiều người dùng thành công!');
+            this.alertService.success('Vô hiệu hóa người dùng thành công!');
           },
             err => {
-              this.alertService.error('Đã xảy ra lỗi! Vô hiệu hóa nhiều người dùng không thành công!');
+              this.alertService.error('Đã xảy ra lỗi! Vô hiệu hóa người dùng không thành công!');
             });
         }
       );
