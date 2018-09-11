@@ -57,10 +57,15 @@ export class ManageUserComponent implements OnInit {
 
   ngOnInit() {
     // this.refresh(0, 10);
+    if ( this.groupUserService.getSearchTerm() ) {
+      this.searchTerm$ = this.groupUserService.getSearchTerm();
+    }
+    console.log('this.SearchTerm', this.searchTerm$.value);
     this.spinner.show();
     this.groupUserService
       .searchKeyWord(this.searchTerm$, 0, 10)
       .subscribe(result => {
+        this.groupUserService.saveSearchTerm(this.searchTerm$);
         this.rerender(result);
         this.spinner.hide();
       }, err => {
@@ -168,10 +173,10 @@ export class ManageUserComponent implements OnInit {
         () => {
           this.groupUserService.deleteMulti({ ids: deleteIds }).subscribe(response => {
             this.refresh(0, 10);
-            this.alertService.success('Xóa nhiều người dùng thành công!');
+            this.alertService.success('Xóa người dùng thành công!');
           },
             err => {
-              this.alertService.error('Đã xảy ra lỗi! Xóa nhiều người dùng không thành công!');
+              this.alertService.error('Đã xảy ra lỗi! Xóa người dùng không thành công!');
             });
         }
       );
@@ -248,10 +253,10 @@ export class ManageUserComponent implements OnInit {
             // this.refresh(0, 10);
             // this.rerender(this.pagedResult);
             this.refresh(this.pagedResult.currentPage, this.pagedResult.pageSize);
-            this.alertService.success('Vô hiệu hóa nhiều người dùng thành công!');
+            this.alertService.success('Vô hiệu hóa người dùng thành công!');
           },
             err => {
-              this.alertService.error('Đã xảy ra lỗi! Vô hiệu hóa nhiều người dùng không thành công!');
+              this.alertService.error('Đã xảy ra lỗi! Vô hiệu hóa người dùng không thành công!');
             });
         }
       );

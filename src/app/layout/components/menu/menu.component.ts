@@ -39,6 +39,5 @@ export class MenuComponent implements OnInit {
 
   openChangePasswordModal() {
     const modalRef = this.modalService.open(ChangePasswordModalComponent);
-
   }
 }

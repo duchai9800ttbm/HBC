@@ -13,6 +13,7 @@ import { GroupUserList } from '../models/user/group-user-list-item';
 import { ListAllGroupUser } from '../models/user/list-all-groupuser';
 @Injectable()
 export class GroupUserService implements OnInit {
+  private searchTerm: any;
   // User
   private static toListUserItem(result: any): ListUserItem {
     return {
@@ -359,5 +360,19 @@ export class GroupUserService implements OnInit {
   //       };
   //     });
   // }
+
+  // Lưu value search in service
+  saveSearchTerm(searchTerm) {
+    this.searchTerm = searchTerm;
+  }
+
+  // Get value search from serivce
+  getSearchTerm() {
+    return this.searchTerm;
+  }
+
+  destroySearchTerm() {
+    this.searchTerm = null;
+  }
 }
 

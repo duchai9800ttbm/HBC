@@ -51,13 +51,13 @@ export class SettingLocationComponent implements OnInit {
     public onSelectedKeysChange(e) {
     }
 
-    deleteLocation(id: number) {
+    deleteLocation(item) {
         this.confirmationService.confirm(
             'Bạn có chắc chắn muốn xóa khu vực này?',
             () => {
-                this.settingService.deleteLocation(id).subscribe(
+                this.settingService.deleteLocation(item.id).subscribe(
                     result => {
-                        this.alertService.success('Đã xóa thành công khu vực!');
+                        this.alertService.success(`Đã xóa thành công khu vực ${item.locationName}!`);
                         this.refresh(0, this.pagedResult.pageSize);
                     },
                     err => {
