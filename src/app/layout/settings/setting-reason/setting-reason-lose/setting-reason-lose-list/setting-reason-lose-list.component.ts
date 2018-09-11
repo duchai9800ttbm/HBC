@@ -46,13 +46,13 @@ export class SettingReasonLoseListComponent implements OnInit {
     public onSelectedKeysChange(e) {
     }
 
-    deleteReasonLose(id: number) {
+    deleteReasonLose(item) {
         this.confirmationService.confirm(
             'Bạn có chắc chắn muốn xóa lý do trật thầu này?',
             () => {
-                this.settingService.deleteOpportunityReason(id, SETTING_REASON.Lose).subscribe(
+                this.settingService.deleteOpportunityReason(item.id, SETTING_REASON.Lose).subscribe(
                     result => {
-                        this.alertService.success('Đã xóa thành công lý do trật thầu!');
+                        this.alertService.success(`Đã xóa thành công lý do trật thầu ${item.reasonName}!`);
                         this.refresh(0, this.pagedResult.pageSize);
                     },
                     err => {

@@ -15,10 +15,6 @@ import { Subscription } from 'rxjs';
     styleUrls: ['./price-review.component.scss']
 })
 export class PriceReviewComponent implements OnInit, OnDestroy {
-    dtTrigger: Subject<any> = new Subject();
-    dtOptions: any = DATATABLE_CONFIG;
-    bidPriceApprovalListItem: BidPriceApprovalModel[];
-    bidPriceApprovalListItemSearchResult: BidPriceApprovalModel[];
     packageId;
     subscription: Subscription;
     constructor(
@@ -31,29 +27,8 @@ export class PriceReviewComponent implements OnInit, OnDestroy {
 
     ngOnInit() {
         this.packageId = +PackageDetailComponent.packageId;
-        this.spinner.show();
-        this.subscription = this.documentPriceReviewService.read(this.packageId).subscribe(result => {
-            this.bidPriceApprovalListItem = result;
-            this.bidPriceApprovalListItemSearchResult = result;
-            this.spinner.hide();
-        });
-    }
-    submited() {
-        this.router.navigate(['../../price-report-create']);
-        this.confirmationService.confirm(
-            'Bạn có muốn chốt trình duyệt giá?',
-            () => {
-                this.spinner.show();
-                this.router.navigate([`/package/detail/${this.packageId}/attend/price-report`]);
-                this.spinner.hide();
-                this.alertService.success('Chốt trình duyệt giá thành công!');
-            }
-        );
     }
 
-    downloadFileItem(id: number | string) {
-        this.documentPriceReviewService.download(id).subscribe();
-    }
     ngOnDestroy() {
         this.subscription.unsubscribe();
     }

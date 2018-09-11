@@ -227,7 +227,8 @@ export class UserService {
         const formData = new FormData();
         formData.append('ImageFiles', avatar);
         return this.apiService.postFile(url, formData)
-            .map(response => response)
+            // .map(response => response)
+            .map(response => UserService.toUserModel(response.result))
             .share();
     }
 

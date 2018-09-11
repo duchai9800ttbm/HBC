@@ -44,13 +44,14 @@ export class SettingConstructionCategoryFormComponent implements OnInit {
   }
 
   submitForm() {
+    const constructionCategoryName = this.constructionCategoryForm.get('constructionCategoryName').value;
     this.isSubmitted = true;
     const valid = this.validateForm();
     if (valid) {
       this.settingService.createOrUpdateConstructionCategory(this.constructionCategoryForm.value).subscribe(data => {
         const message = this.constructionCategory.id
-          ? 'Hạng mục thi công công trình đã được cập nhật thành công.'
-          : 'Hạng mục thi công công trình đã được tạo mới thành công.';
+          ? `Hạng mục thi công công trình ${constructionCategoryName} đã được cập nhật thành công.`
+          : `Hạng mục thi công công trình ${constructionCategoryName} đã được tạo mới thành công.`;
         this.router.navigate([`/settings/construction-category`]);
         this.alertService.success(message);
       });

@@ -38,7 +38,7 @@
           <kendo-grid-messages noRecords="Không có dữ liệu"
           ></kendo-grid-messages>
       </kendo-grid> -->
-      <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="table-selection stripe hover">
+      <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="table-selection stripe hover fix-table-layout">
         <thead>
             <tr style="width: 100%">
                 <th class="text-center" style="width: 15px; padding-left: 7px;">
@@ -47,22 +47,22 @@
                         <span class="custom-control-indicator"></span>
                     </label>
                 </th>
-                <th style="width: 33%">
+                <th class="w-33">
                     <div class="d-flex justify-content-start">
                         <div style="margin-right: 10px">Tên loại công trình</div>
                     </div>
                 </th>
-                <th style="width: 33%">
+                <th class="w-33">
                     <div class="d-flex justify-content-start">
                         <div style="margin-right: 10px">Tên loại công trình (ENG)</div>
                     </div>
                 </th>
-                <th style="width: 33%">
+                <th class="w-33">
                     <div class="d-flex justify-content-start">
                         <div style="margin-right: 10px">Mô tả</div>
                     </div>
                 </th>
-                <th class="text-center" style="width: calc(10% - 7px); min-width: 60px!important;">
+                <th class="text-center set-width-manipulation">
                     Thao tác
                 </th>
             </tr>
@@ -84,12 +84,12 @@
                 <td class="text-truncate">
                     {{item.constructionTypeDesc}}
                 </td>
-                <td class="row">
-                    <a [routerLink]="['/settings/construction/edit',item.id]" class=" text-success ml-3">
+                <td class="d-flex justify-content-around">
+                    <a [routerLink]="['/settings/construction/edit',item.id]" class=" text-success">
                         <i class="fa fa-pencil  cursor-pointer" aria-hidden="true"> </i>
                     </a>
                     <a class=" text-dark ml-3">
-                        <i (click)="deleteLocation(item.id)" class="fa fa-trash-o pointer" aria-hidden="true"></i>
+                        <i (click)="deleteLocation(item)" class="fa fa-trash-o pointer" aria-hidden="true"></i>
                     </a>
                 </td>
             </tr>

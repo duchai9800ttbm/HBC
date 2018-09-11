@@ -26,22 +26,22 @@
                                                     <div class="form-group list-code mt-1">
                                                         <div class="row">
                                                             <div class="code col-lg-2 col-md-2 col-sm-2" [class.is-invalid-2]="formErrors.numberOne">
-                                                                <input autofocus maxlength="1" appInputNumber class="form-control" formControlName="numberOne" (keyup)="$event.keyCode >= 48 && $event.keyCode <= 57 && code2.select()">
+                                                                <input autofocus maxlength="1" appInputNumber class="form-control" formControlName="numberOne" (paste)="pastValue($event)" (keyup)="(($event.keyCode >= 48 && $event.keyCode <= 57) || ($event.keyCode >= 96 && $event.keyCode <= 105)) && code2.select()">
                                                             </div>
                                                             <div class="code col-lg-2 col-md-2 col-sm-2" [class.is-invalid-2]="formErrors.numberTwo">
-                                                                <input #code2 maxlength="1" appInputNumber class="form-control" formControlName="numberTwo" (keyup)="$event.keyCode >= 48 && $event.keyCode <= 57 && code3.select()">
+                                                                <input #code2 maxlength="1" appInputNumber class="form-control" formControlName="numberTwo" (paste)="pastValue($event)" (keyup)="(($event.keyCode >= 48 && $event.keyCode <= 57) || ($event.keyCode >= 96 && $event.keyCode <= 105))  && code3.select()">
                                                             </div>
                                                             <div class="code col-lg-2 col-md-2 col-sm-2" [class.is-invalid-2]="formErrors.numberThree">
-                                                                <input #code3 maxlength="1" appInputNumber class="form-control" formControlName="numberThree" (keyup)="$event.keyCode >= 48 && $event.keyCode <= 57 && code4.select()">
+                                                                <input #code3 maxlength="1" appInputNumber class="form-control" formControlName="numberThree" (paste)="pastValue($event)" (keyup)="(($event.keyCode >= 48 && $event.keyCode <= 57) || ($event.keyCode >= 96 && $event.keyCode <= 105)) && code4.select()">
                                                             </div>
                                                             <div class="code col-lg-2 col-md-2 col-sm-2" [class.is-invalid-2]="formErrors.numberFour">
-                                                                <input #code4 maxlength="1" appInputNumber class="form-control" formControlName="numberFour" (keyup)="$event.keyCode >= 48 && $event.keyCode <= 57 && code5.select()">
+                                                                <input #code4 maxlength="1" appInputNumber class="form-control" formControlName="numberFour" (paste)="pastValue($event)" (keyup)="(($event.keyCode >= 48 && $event.keyCode <= 57) || ($event.keyCode >= 96 && $event.keyCode <= 105)) && code5.select()">
                                                             </div>
                                                             <div class="code col-lg-2 col-md-2 col-sm-2" [class.is-invalid-2]="formErrors.numberFive">
-                                                                <input #code5 maxlength="1" appInputNumber class="form-control" formControlName="numberFive" (keyup)="$event.keyCode >= 48 && $event.keyCode <= 57 && code6.select()">
+                                                                <input #code5 maxlength="1" appInputNumber class="form-control" formControlName="numberFive" (paste)="pastValue($event)" (keyup)="(($event.keyCode >= 48 && $event.keyCode <= 57) || ($event.keyCode >= 96 && $event.keyCode <= 105)) && code6.select()">
                                                             </div>
                                                             <div class="code col-lg-2 col-md-2 col-sm-2" [class.is-invalid-2]="formErrors.numberSix">
-                                                                <input #code6 maxlength="1" appInputNumber class="form-control" formControlName="numberSix" (keyup)="btnSubmit.focus()">
+                                                                <input #code6 maxlength="1" appInputNumber class="form-control" formControlName="numberSix" (paste)="pastValue($event)" (keyup)="btnSubmit.focus()">
                                                             </div>
                                                         </div>
                                                     </div>

@@ -46,13 +46,14 @@ export class SettingReasonLoseFormComponent implements OnInit {
   }
 
   submitForm() {
+    const reasonName = this.reasonLoseForm.get('bidOpportunityReasonName').value;
     this.isSubmitted = true;
     const valid = this.validateForm();
     if (valid) {
       this.settingService.createOrUpdateOpportunityReason(this.reasonLoseForm.value, SETTING_REASON.Lose).subscribe(data => {
         const message = this.reasonLose.id
-          ? 'Lý do trật thầu đã được cập nhật thành công.'
-          : 'Lý do trật thầu đã được tạo mới thành công.';
+          ? `Lý do trật thầu ${reasonName} đã được cập nhật thành công.`
+          : `Lý do trật thầu ${reasonName} đã được tạo mới thành công.`;
         this.router.navigate([`/settings/reason/lose`]);
         this.alertService.success(message);
       });

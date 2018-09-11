@@ -142,4 +142,42 @@ export class EnterActiveCodeComponent implements OnInit, OnDestroy {
       return 'unknown';
     }
   }
+
+  valueChangeKeypress(key) {
+    console.log('key', key);
+  }
+
+  pastValue(event) {
+    let key = event.clipboardData.getData('text/plain');
+    let keyCheck = key;
+    for (let i = 0; keyCheck.length > 0; i++) {
+      if (!Number.isInteger(Number(key.substr(0, 1)))) {
+        this.alertService.error('Mã xác nhận phải là kiểu số!');
+        event.preventDefault();
+        return;
+      }
+      keyCheck = keyCheck.substr(1, keyCheck.length - 1);
+    }
+    for (let i = 0; key.length > 0; i++) {
+      if (i === 0) {
+        this.enterActiveCodeForm.get('numberOne').patchValue(key.substr(0, 1));
+      }
+      if (i === 1) {
+        this.enterActiveCodeForm.get('numberTwo').patchValue(key.substr(0, 1));
+      }
+      if (i === 2) {
+        this.enterActiveCodeForm.get('numberThree').patchValue(key.substr(0, 1));
+      }
+      if (i === 3) {
+        this.enterActiveCodeForm.get('numberFour').patchValue(key.substr(0, 1));
+      }
+      if (i === 4) {
+        this.enterActiveCodeForm.get('numberFive').patchValue(key.substr(0, 1));
+      }
+      if (i === 5) {
+        this.enterActiveCodeForm.get('numberSix').patchValue(key.substr(0, 1));
+      }
+      key = key.substr(1, key.length - 1);
+    }
+  }
 }
