@@ -142,4 +142,8 @@ export class EnterActiveCodeComponent implements OnInit, OnDestroy {
       return 'unknown';
     }
   }
+
+  valueChangeKeypress(key) {
+    console.log('key', key);
+  }
 }
