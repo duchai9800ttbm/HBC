@@ -57,10 +57,15 @@ export class ManageUserComponent implements OnInit {
 
   ngOnInit() {
     // this.refresh(0, 10);
+    if ( this.groupUserService.getSearchTerm() ) {
+      this.searchTerm$ = this.groupUserService.getSearchTerm();
+    }
+    console.log('this.SearchTerm', this.searchTerm$.value);
     this.spinner.show();
     this.groupUserService
       .searchKeyWord(this.searchTerm$, 0, 10)
       .subscribe(result => {
+        this.groupUserService.saveSearchTerm(this.searchTerm$);
         this.rerender(result);
         this.spinner.hide();
       }, err => {
