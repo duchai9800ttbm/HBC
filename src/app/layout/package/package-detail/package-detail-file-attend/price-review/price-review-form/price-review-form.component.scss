@@ -1,79 +1,96 @@
-.price-review{
+.price-review {
     margin-left: 1rem;
-    .overview-package{
+
+    .overview-package {
         background-color: #ff8661;
         color: #ffffff;
         padding: 10px 20px;
-        .row-item{
+
+        .row-item {
             padding: 5px 0;
         }
     }
-    .content{
+
+    .content {
         padding-top: 25px;
-        .row-header{
+
+        .row-header {
             font-weight: 400;
             height: auto;
-            .label-document{
+
+            .label-document {
                 height: inherit;
                 width: 140px;
             }
-            .name-document{
+
+            .name-document {
                 height: inherit;
                 width: calc(100% - 140px);
             }
         }
-        .row-title{
+
+        .row-title {
             color: #FFFFFF;
             font-size: 110%;
             width: 100%;
             background-color: #ff8661;
-            .info-package{
+
+            .info-package {
                 height: 60px;
                 width: 40%;
-                .stt{
+
+                .stt {
                     width: 60px;
                     border-left: 1px solid #d4d4d4;
                     border-right: 1px solid #d4d4d4;
                     height: 60px;
                 }
-                .name{
+
+                .name {
                     border-right: 1px solid #d4d4d4;
                     width: calc(100% - 60px);
                     height: 60px;
                 }
             }
-            .scope-of-works{
+
+            .scope-of-works {
                 width: 40%;
                 height: 60px;
-                .above{
+
+                .above {
                     height: 30px;
                     border-bottom: 1px solid #d4d4d4;
                     border-right: 1px solid #d4d4d4;
 
                 }
-                .below{
+
+                .below {
                     height: 30px;
                     border-right: 1px solid #d4d4d4;
-                    .success{
-                        width: 20%;
+
+                    .success {
+                        width: 25%;
                         border-right: 1px solid #d4d4d4;
                         height: 30px;
 
                     }
-                    .error{
-                        width: 20%;
+
+                    .error {
+                        width: 25%;
                         border-right: 1px solid #d4d4d4;
                         height: 30px;
 
                     }
-                    .desc{
-                        width: 60%;
+
+                    .desc {
+                        width: 50%;
                         height: 30px;
 
                     }
                 }
             }
-            .gfa{
+
+            .gfa {
                 width: 20%;
                 height: 60px;
                 border-right: 1px solid #d4d4d4;
@@ -81,172 +98,252 @@
             }
         }
 
-        .row-item{
-            height: 30px;
+        .row-item {
+            min-height: 30px;
             border-bottom: 1px solid #d4d4d4;
-            .info{
+
+            .info {
                 width: 40%;
-                .stt{
+
+                .stt {
                     width: 60px;
                     border-left: 1px solid #d4d4d4;
                     border-right: 1px solid #d4d4d4;
 
-                    height: 30px;
+                    height: 100%;
 
                 }
-                .name{
+
+                .name {
                     width: calc(100% - 60px);
-                    height: 30px;
+                    height: 100%;
                     border-right: 1px solid #d4d4d4;
 
                 }
             }
 
-            .scope-of-works{
+            .scope-of-works {
                 width: 40%;
-                .success{
-                    width: 20%;
+
+                .success {
+                    width: 25%;
                     border-right: 1px solid #d4d4d4;
 
-                    height: 30px;
+                    height: 100%;
 
                 }
-                .error{
-                    width: 20%;
+
+                .error {
+                    width: 25%;
                     border-right: 1px solid #d4d4d4;
-                    height: 30px;
+                    height: 100%;
+
 
                 }
-                .desc{
-                    width: 60%;
-                    border-right: 1px solid #d4d4d4;
-                    height: 30px;
 
+                .desc {
+                    width: 50%;
+                    border-right: 1px solid #d4d4d4;
+                    height: 100%;
                 }
             }
 
-            .gfa{
+            .gfa {
                 width: 20%;
                 border-right: 1px solid #d4d4d4;
 
             }
-            
+
         }
 
-        .row-technical{
+        .row-technical {
             font-size: 110%;
             width: 100%;
             background-color: #ff8661;
             color: #ffffff;
-            .first{
+
+            .first {
                 width: 40%;
-                .stt{
+
+                .stt {
                     height: 30px;
                     width: 60px;
                     border-right: 1px solid #d4d4d4;
 
                 }
-                .name{
+
+                .name {
                     height: 30px;
                     width: calc(100% - 60px);
                     border-right: 1px solid #d4d4d4;
 
                 }
             }
-            .two{
+
+            .two {
                 width: 40%;
-                .required{
-                    width: 40%;
+
+                .required {
+                    width: 50%;
                     border-right: 1px solid #d4d4d4;
                     height: 30px;
 
                 }
-                .request{
-                    width: 60%;
+
+                .request {
+                    width: 50%;
                     border-right: 1px solid #d4d4d4;
                     height: 30px;
 
                 }
             }
-            .three{
+
+            .three {
                 width: 20%;
                 height: 30px;
 
             }
         }
 
-        .row-technical-item{
-            font-size: 110%;
+        .row-technical-item {
             width: 100%;
             border-bottom: 1px solid #d4d4d4;
 
-            .first{
+            .first {
                 width: 40%;
-                .stt{
-                    height: 30px;
+
+                .stt {
+                    min-height: 30px;
+                    height: 100%;
                     width: 60px;
                     border-right: 1px solid #d4d4d4;
                     border-left: 1px solid #d4d4d4;
 
                 }
-                .name{
-                    height: 30px;
+
+                .name {
+                    min-height: 30px;
+                    height: 100%;
+
                     width: calc(100% - 60px);
                     border-right: 1px solid #d4d4d4;
 
                 }
             }
-            .two{
+
+            .two {
                 width: 40%;
-                .required{
-                    width: 40%;
+
+                .required {
+                    width: 50%;
                     border-right: 1px solid #d4d4d4;
-                    height: 30px;
+                    min-height: 30px;
+                    height: 100%;
 
                 }
-                .request{
-                    width: 60%;
+
+                .request {
+                    width: 50%;
                     border-right: 1px solid #d4d4d4;
-                    height: 30px;
+                    min-height: 30px;
+                    height: 100%;
 
                 }
             }
-            .three{
+
+            .three {
                 width: 20%;
-                height: 30px;
+                min-height: 30px;
                 border-right: 1px solid #d4d4d4;
+                height: 100%;
 
             }
         }
 
-        .row-condition{
-            .first{
+        .row-condition-1 {
+            border-bottom: 1px solid #d4d4d4;
+
+            .first {
                 width: 40%;
-                .stt{
-                    width: 50%;
+                border-right: 1px solid #d4d4d4;
+                border-left: 1px solid #d4d4d4;
+
+                .stt {
+                    border-right: 1px solid #d4d4d4;
+                    width: 60px;
+                    min-height: 60px;
+                    height: 100%;
                 }
-                .name{
+
+                .name {
+                    width: calc(100% - 60px);
+                    min-height: 60px;
+                    height: 100%;
+                }
+            }
+
+            .two {
+                width: 40%;
+
+                .required {
+                    width: 50%;
+                    .one {
+                        border-right: 1px solid #d4d4d4;
+
+                        width: 50%;
+                    }
+
+                    .two {
+                        border-right: 1px solid #d4d4d4;
+
+                        width: 50%;
+
+                    }
+                }
+
+                .request {
                     width: 50%;
 
+                    .one {
+                        border-right: 1px solid #d4d4d4;
+                        width: 50%;
+                    }
+
+                    .two {
+                        border-right: 1px solid #d4d4d4;
+                        width: 50%;
+                    }
                 }
             }
-            .two{
-                width: 40%;
-            }
-            .three{
+
+            .three {
+                border-right: 1px solid #d4d4d4;
                 width: 20%;
+            }
+
+            .item {
+                width: 100%;
+            }
+
+            .item-above {
+                border-bottom: 1px solid #d4d4d4;
+                height: 30px;
+            }
+            .item-below{
+                height: calc(100% - 30px);
             }
         }
     }
 }
 
-.cell-right{
+.cell-right {
     border-right: 1px solid #d4d4d4;
     border-top: 1px solid #d4d4d4;
     border-bottom: 1px solid #d4d4d4;
     height: 30px;
 }
-.cell-left{
+
+.cell-left {
     border: 1px solid #d4d4d4;
     height: 30px;
 
@@ -256,7 +353,7 @@
 .childcheck {
     display: block;
     position: relative;
-   // padding-left: 35px;
+    // padding-left: 35px;
     cursor: pointer;
     user-select: none;
 
@@ -307,11 +404,18 @@
     }
 }
 
-input{
+input {
     background-color: #ffffff;
     border: none;
     width: calc(100% - 10px);
     margin: 3px 5px;
     height: 24px;
-    outline: none;
+}
+
+textarea {
+    background-color: #ffffff;
+    border: none;
+    width: calc(100% - 10px);
+    margin: 3px 5px;
+    height: calc(100% - 10px);
 }

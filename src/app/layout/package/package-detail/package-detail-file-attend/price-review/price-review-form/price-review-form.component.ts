@@ -6,7 +6,7 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./price-review-form.component.scss']
 })
 export class PriceReviewFormComponent implements OnInit {
-
+  number = 10;
   constructor() { }
 
   ngOnInit() {
