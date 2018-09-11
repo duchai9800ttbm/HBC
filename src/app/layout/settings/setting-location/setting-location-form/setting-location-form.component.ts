@@ -51,7 +51,7 @@ export class SettingLocationFormComponent implements OnInit {
         const message = this.location.id
           ? 'Khu vực đã được cập nhật thành công.'
           : 'Khu vực đã được tạo mới thành công.';
-        this.router.navigate([`/settings`]);
+        this.router.navigate([`/settings/location`]);
         this.alertService.success(message);
       });
     }
