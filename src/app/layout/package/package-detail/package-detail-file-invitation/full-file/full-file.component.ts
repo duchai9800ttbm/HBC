@@ -105,6 +105,7 @@ export class FullFileComponent implements OnInit {
                 this.checkHightLight();
                 this.dtTrigger.next();
                 this.spinner.hide();
+                console.log('this.response', this.bidDocumentGroupListItemSearchResult);
             }, err => this.spinner.hide());
         });
     }
