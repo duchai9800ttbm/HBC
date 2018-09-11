@@ -44,13 +44,14 @@ export class SettingLocationFormComponent implements OnInit {
   }
 
   submitForm() {
+    const locationName = this.locationForm.get('locationName').value;
     this.isSubmitted = true;
     const valid = this.validateForm();
     if (valid) {
       this.settingService.createOrUpdateLocation(this.locationForm.value).subscribe(data => {
         const message = this.location.id
-          ? 'Khu vực đã được cập nhật thành công.'
-          : 'Khu vực đã được tạo mới thành công.';
+          ? `Khu vực ${locationName} đã được cập nhật thành công.`
+          : `Khu vực ${locationName} đã được tạo mới thành công.`;
         this.router.navigate([`/settings/location`]);
         this.alertService.success(message);
       });

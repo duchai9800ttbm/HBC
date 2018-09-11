@@ -45,13 +45,14 @@ export class SettingConstructionFormComponent implements OnInit {
   }
 
   submitForm() {
+    const constructionTypeName = this.constructionForm.get('constructionTypeName').value;
     this.isSubmitted = true;
     const valid = this.validateForm();
     if (valid) {
       this.settingService.createOrUpdateConstruction(this.constructionForm.value).subscribe(data => {
         const message = this.construction.id
-          ? 'Loại công trình đã được cập nhật thành công.'
-          : 'Loại công trình đã được tạo mới thành công.';
+          ? `Loại công trình ${constructionTypeName} đã được cập nhật thành công.`
+          : `Loại công trình ${constructionTypeName} đã được tạo mới thành công.`;
         this.router.navigate([`/settings/construction`]);
         this.alertService.success(message);
       });

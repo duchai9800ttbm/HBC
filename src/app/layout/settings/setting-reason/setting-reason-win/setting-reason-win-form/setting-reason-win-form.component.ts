@@ -45,13 +45,14 @@ export class SettingReasonWinFormComponent implements OnInit {
   }
 
   submitForm() {
+    const reasonName = this.reasonWinForm.get('bidOpportunityReasonName').value;
     this.isSubmitted = true;
     const valid = this.validateForm();
     if (valid) {
       this.settingService.createOrUpdateOpportunityReason(this.reasonWinForm.value, SETTING_REASON.Win).subscribe(data => {
         const message = this.reasonWin.id
-          ? 'Lý do trúng thầu đã được cập nhật thành công.'
-          : 'Lý do trúng thầu đã được tạo mới thành công.';
+          ? `Lý do trúng thầu ${reasonName} đã được cập nhật thành công.`
+          : `Lý do trúng thầu ${reasonName} đã được tạo mới thành công.`;
         this.router.navigate([`/settings/reason/win`]);
         this.alertService.success(message);
       });
