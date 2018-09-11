@@ -473,6 +473,8 @@ export class PackageListComponent implements OnInit, AfterViewChecked {
         // }
         setTimeout(() => {
             this.dtTrigger.next();
+            const table = document.getElementById('tableId') as HTMLTableElement;
+            table.style.width = 'auto';
         });
     }
 
