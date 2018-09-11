@@ -41,13 +41,13 @@ export class SettingConstructionListComponent implements OnInit {
     public onSelectedKeysChange(e) {
     }
 
-    deleteLocation(id: number) {
+    deleteLocation(item) {
         this.confirmationService.confirm(
             'Bạn có chắc chắn muốn xóa loại công trình này?',
             () => {
-                this.settingService.deleteConstruction(id).subscribe(
+                this.settingService.deleteConstruction(item.id).subscribe(
                     _ => {
-                        this.alertService.success('Đã xóa thành công loại công trình!');
+                        this.alertService.success(`Đã xóa thành công loại công trình ${item.constructionTypeName}!`);
                         this.refresh(0, this.pagedResult.pageSize);
                     },
                     _ => {
