@@ -354,7 +354,7 @@ export class PackageService {
                 };
             });
     }
-
+    // get chi tiết gói thầu
     getInforPackageID(
         bidOpportunityId: number | string
     ): Observable<PackageInfoModel> {
@@ -882,5 +882,15 @@ export class PackageService {
     createOrUpdateTenderConditionSummary(data): Observable<any> {
         const url = `tenderconditionalsummary/createorupdate`;
         return this.apiService.post(url, data).map(response => response.result);
+    }
+    // tạo mới or update phiếu đề nghị dự thầu
+    createOrUpdateProposedTenderParticipateReport(data): Observable<any> {
+        const url = `proposedtenderparticipatinngreport/createorupdate`;
+        return this.apiService.post(url, data).map(response => response.result);
+    }
+    // get chi tiết phiếu đề nghị dự thầu
+    getProposedTenderParticipateReport(bidOpportunityId: number): Observable<any> {
+        const url = `${bidOpportunityId}/bidopportunity/proposedtenderparticipatinngreport`;
+        return this.apiService.get(url).map(response => response.result);
     }
 }

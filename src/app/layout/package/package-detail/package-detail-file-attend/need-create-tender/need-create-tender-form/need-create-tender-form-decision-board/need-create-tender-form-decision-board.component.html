@@ -1,4 +1,4 @@
-<form>
+<form [formGroup]="decisionBoardForm">
     <div class="p-3">
         <div>
             <h5 class="text-uppercase">VIII. quyết định của ban tổng giám đốc (decision of board of general director)</h5>
@@ -16,7 +16,10 @@
                 Ký tên/ Signing
             </div>
             <div class="col-md-8">
-                <button class="btn btn-primary">Xác nhận ký</button>
+                    <button *ngIf="!decisionBoardForm.get('isSigned').value" class="btn btn-primary btn-sign" (click)="clickSigned()">Xác nhận ký</button>
+                    <button *ngIf="decisionBoardForm.get('isSigned').value" class="btn btn-primary btn-sign position-relative">
+                            <i class="fa fa-check-square icon-check" aria-hidden="true"></i> Đã ký
+                    </button>
             </div>
         </div>
         <div class="text-center mt-4">

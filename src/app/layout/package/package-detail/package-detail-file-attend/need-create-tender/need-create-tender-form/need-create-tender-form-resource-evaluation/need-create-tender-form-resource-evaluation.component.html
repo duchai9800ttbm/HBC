@@ -1,4 +1,4 @@
-<form>
+<form [formGroup]="resourceEvaluationForm">
     <div class="p-3">
         <div>
             <h5 class="text-uppercase">III. tự đánh giá nguồn lực (internal resources evaluation)</h5>
@@ -16,7 +16,7 @@
                 1. Tình hình hiện tại (Current situation)
             </div>
             <div class="col-md-6">
-                <input type="text" class="form-control">
+                <input type="text" formControlName="currentSituation" class="form-control">
             </div>
         </div>
         <div class="row mt-3">
@@ -24,7 +24,7 @@
                 2. Nguồn nhân lực, thiết bị (Human resources & equipments)
             </div>
             <div class="col-md-6">
-                <input type="text" class="form-control">
+                <input type="text" formControlName="humanResorcesAndEquipments" class="form-control">
             </div>
         </div>
         <div class="row mt-3">
@@ -32,7 +32,7 @@
                 3. Nguồn tài chính (Finance capacity)
             </div>
             <div class="col-md-6">
-                <input type="text" class="form-control">
+                <input type="text" formControlName="financeCapacity" class="form-control">
             </div>
         </div>
         <div class="row mt-3">
@@ -40,7 +40,7 @@
                 4. Người cạnh tranh (Competitor)
             </div>
             <div class="col-md-6">
-                <input type="text" class="form-control">
+                <input type="text" formControlName="competitor" class="form-control">
             </div>
         </div>
         <div class="text-center mt-4">
