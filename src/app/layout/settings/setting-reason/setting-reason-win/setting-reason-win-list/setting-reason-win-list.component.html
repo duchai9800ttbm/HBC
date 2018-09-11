@@ -38,7 +38,7 @@
             <kendo-grid-messages noRecords="Không có dữ liệu"
             ></kendo-grid-messages>
         </kendo-grid> -->
-        <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="table-selection stripe hover">
+        <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="table-selection stripe hover fix-table-layout">
             <thead>
                 <tr style="width: 100%">
                     <th class="text-center set-width-checkbox">
@@ -76,8 +76,8 @@
                     <td class="text-truncate">
                         {{item.reasonDesc}}
                     </td>
-                    <td class="row">
-                        <a [routerLink]="['/settings/reason/win/edit',item.id]" class=" text-success ml-3">
+                    <td class="d-flex justify-content-around">
+                        <a [routerLink]="['/settings/reason/win/edit',item.id]" class=" text-success">
                             <i class="fa fa-pencil  cursor-pointer" aria-hidden="true"> </i>
                         </a>
                         <a class=" text-dark ml-3">
