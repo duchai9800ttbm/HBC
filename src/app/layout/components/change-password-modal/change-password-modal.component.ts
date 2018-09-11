@@ -78,7 +78,7 @@ export class ChangePasswordModalComponent implements OnInit {
         .changePassword(oldPassword, newPassword)
         .subscribe(data => {
           this.activeModal.close('Close click');
-          this.alertService.success('Đặt lại mật khẩu thành công!', true);
+          this.alertService.success('Cập nhật mật khẩu thành công!', true);
         }, err => {
           // if (err.status === 400) {
           //   if (JSON.parse(err.text()).error_code === ApiErrorCodes.WRONG_PASSWORD) {
@@ -89,7 +89,7 @@ export class ChangePasswordModalComponent implements OnInit {
           if (error.errorCode === 'BusinessException') {
             this.isError = true;
           } else {
-            this.alertService.error('Đã xảy ra lỗi. Thêm nhóm người dùng không thành công!');
+            this.alertService.error('Đã xảy ra lỗi. Cập nhật mật khẩu không thành công!');
           }
         });
     }
