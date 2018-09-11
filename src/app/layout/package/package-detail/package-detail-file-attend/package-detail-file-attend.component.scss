@@ -97,3 +97,7 @@ li.triangle::before {
     margin-top: 2rem;
     background-color: white;
 }
+
+router-outlet{
+    height: 100%;
+}
