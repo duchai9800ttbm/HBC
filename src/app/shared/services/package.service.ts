@@ -863,7 +863,7 @@ export class PackageService {
         searchTerm: string,
         filter: PackageFilter,
     ) {
-        const filterUrl = `bidopportunity/export?searchTerm=`;
+        const filterUrl = `bidopportunity/export?searchTerm=${searchTerm}`;
         const urlParams = PackageService.createFilterParams(filter);
         return this.apiService.getFileHBC(filterUrl, urlParams).map(response => {
             return FileSaver.saveAs(
