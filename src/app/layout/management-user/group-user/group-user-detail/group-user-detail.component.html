@@ -9,7 +9,7 @@
         <div class="btn-toolbar pull-right menu" style="flex-wrap: nowrap;">
           <div class="input-group btn-rg">
             <span class="input-group-addon">Tìm kiếm</span>
-            <input type="text" class="form-control icon" placeholder="&#xf002; Nhập tên" (keyup)="searchTerm$.next($event.target.value)">
+            <input type="text" class="form-control icon" placeholder="&#xf002; Nhập tên, mô tả" (keyup)="searchTerm$.next($event.target.value)">
           </div>
           <button type="submit" class="btn btn-primary btn-rg w-80 pull-right" [disabled]="loading" (click)="openModalCreate(edit)">
             Tạo mới

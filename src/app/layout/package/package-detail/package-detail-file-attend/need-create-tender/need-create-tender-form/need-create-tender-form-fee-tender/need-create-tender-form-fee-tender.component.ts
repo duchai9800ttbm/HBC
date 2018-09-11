@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { FormGroup, FormBuilder } from '@angular/forms';
+import { NeedCreateTenderFormComponent } from '../need-create-tender-form.component';
 
 @Component({
   selector: 'app-need-create-tender-form-fee-tender',
@@ -9,9 +11,38 @@ export class NeedCreateTenderFormFeeTenderComponent implements OnInit {
 
   listCurrency: Array<string> = ['VNĐ', 'USD'];
   currency = 'VNĐ';
-  constructor() { }
+  feeTenderForm: FormGroup;
+  constructor(
+    private fb: FormBuilder
+  ) { }
 
   ngOnInit() {
+    this.createForm();
+    this.feeTenderForm.valueChanges.subscribe(data => this.mappingToLiveFormData(data));
+  }
+
+  createForm() {
+    const formValue = NeedCreateTenderFormComponent.formModel.feeOfTenderInvitationDocument;
+    this.feeTenderForm = this.fb.group({
+      feeOfTenderInvitationDocument: formValue ? formValue.feeOfTenderInvitationDocument : 0,
+      feeOfTenderInvitationDocumentCurrency: this.fb.group({
+        key: formValue && formValue.feeOfTenderInvitationDocumentCurrency ? formValue.feeOfTenderInvitationDocumentCurrency.key : 'VNĐ',
+        value: formValue && formValue.feeOfTenderInvitationDocumentCurrency ? formValue.feeOfTenderInvitationDocumentCurrency.value : 'VNĐ',
+        // tslint:disable-next-line:max-line-length
+        displayText: formValue && formValue.feeOfTenderInvitationDocumentCurrency ? formValue.feeOfTenderInvitationDocumentCurrency.displayText : 'VNĐ'
+      }),
+      tenderDocumentDeposit: formValue ? formValue.tenderDocumentDeposit : 0,
+      tenderDocumentDepositCurrency: this.fb.group({
+        key: formValue && formValue.tenderDocumentDepositCurrency ? formValue.tenderDocumentDepositCurrency.key : 'VNĐ',
+        value: formValue && formValue.tenderDocumentDepositCurrency ? formValue.tenderDocumentDepositCurrency.value : 'VNĐ',
+        // tslint:disable-next-line:max-line-length
+        displayText: formValue && formValue.tenderDocumentDepositCurrency ? formValue.tenderDocumentDepositCurrency.displayText : 'VNĐ'
+      })
+    });
+  }
+
+  mappingToLiveFormData(data) {
+    NeedCreateTenderFormComponent.formModel.feeOfTenderInvitationDocument = data;
   }
 
 }

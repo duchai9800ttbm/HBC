@@ -11,6 +11,7 @@ import { SquareBoxDirective } from './square-box.directive';
 import { TextEllipsisDirective } from './text-ellipsis.directive';
 import { EnterPreventDefaultDirective } from './enter-prevent-default.directive';
 import { InputNumberIntegerDirective } from './input-number-integer.directive';
+import { WidthAutoDirective } from './width-auto.directive';
 
 @NgModule({
     imports: [
@@ -25,7 +26,8 @@ import { InputNumberIntegerDirective } from './input-number-integer.directive';
         SquareBoxDirective,
         TextEllipsisDirective,
         EnterPreventDefaultDirective,
-        InputNumberIntegerDirective
+        InputNumberIntegerDirective,
+        WidthAutoDirective
     ],
     exports: [
         InputNumberDirective,
@@ -36,7 +38,8 @@ import { InputNumberIntegerDirective } from './input-number-integer.directive';
         SquareBoxDirective,
         TextEllipsisDirective,
         EnterPreventDefaultDirective,
-        InputNumberIntegerDirective
+        InputNumberIntegerDirective,
+        WidthAutoDirective
     ],
     providers: [
         VnCurrencyPipe,
