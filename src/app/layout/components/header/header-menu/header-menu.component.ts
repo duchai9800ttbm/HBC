@@ -19,7 +19,6 @@ export class HeaderMenuComponent implements OnInit {
   isManageSettings;
   ngOnInit() {
     this.userModel = this.sessionService.userInfo;
-    console.log(this.userModel);
     this.listPrivileges = this.userModel.privileges;
     if (this.listPrivileges) {
       this.isManageBidOpportunitys = this.listPrivileges.some(x => x === 'ManageBidOpportunitys');

@@ -35,21 +35,25 @@ export class UserProfileComponent implements OnInit {
     private userService: UserService,
     private sessionService: SessionService,
     private modalService: NgbModal,
-    private alertService: AlertService, ) { }
+    private alertService: AlertService,
+  ) { }
   avatarSrc: string;
   ngOnInit() {
     this.avatarSrc = defaultAvatarSrc;
     this.userProfile = this.sessionService.userInfo;
-    this.createForm();
-    const that = this;
-    this.avatarSrc = this.userProfile.avatar ? this.userProfile.avatar : defaultAvatarSrc;
-    this.sessionService
-      .watchAvatarUser()
-      .subscribe(user => {
-        that.userProfile = user;
-        this.avatarSrc = this.userProfile.avatar ? this.userProfile.avatar : defaultAvatarSrc;
-      }
-      );
+    this.userService.getUserInformation(this.userProfile.id).subscribe(response => {
+      this.userProfile = response;
+      this.createForm();
+      const that = this;
+      this.avatarSrc = this.userProfile.avatar ? this.userProfile.avatar : defaultAvatarSrc;
+      this.sessionService
+        .watchAvatarUser()
+        .subscribe(user => {
+          that.userProfile = user;
+          this.avatarSrc = this.userProfile.avatar ? this.userProfile.avatar : defaultAvatarSrc;
+        }
+        );
+    });
   }
 
   createForm() {
@@ -107,7 +111,7 @@ export class UserProfileComponent implements OnInit {
   }
   clearAvatar() {
     this.avatarSrc = defaultAvatarSrc;
- //   this.uploadAvatar();
+    //   this.uploadAvatar();
   }
 
   // uploadAvatar() {
