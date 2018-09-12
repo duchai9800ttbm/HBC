@@ -305,12 +305,13 @@
                                                         <span class="input-group-addon">
                                                             <i class="fa fa-calendar"></i>
                                                         </span> -->
-                                                        <input appEnterPreventDefault [placeholder]="datePickerConfig.datePlaceHolder" class="input-date-time" formControlName="startTrackingDate"
+                                                        <!-- <input appEnterPreventDefault [placeholder]="datePickerConfig.datePlaceHolder" class="input-date-time" formControlName="startTrackingDate"
                                                             tabindex="27" [owlDateTimeTrigger]="dtStartTrackingDate" [owlDateTime]="dtStartTrackingDate">
-                                                        <owl-date-time #dtStartTrackingDate pickerType="calendar"></owl-date-time>
-                                                        <span [owlDateTimeTrigger]="dtStartTrackingDate" class="input-group-addon">
+                                                        <owl-date-time #dtStartTrackingDate pickerType="calendar"></owl-date-time> -->
+                                                        <kendo-datepicker appEnterPreventDefault class="w-100" tabindex="27" formControlName="startTrackingDate"></kendo-datepicker>
+                                                        <!-- <span [owlDateTimeTrigger]="dtStartTrackingDate" class="input-group-addon">
                                                             <i class="fa fa-calendar"></i>
-                                                        </span>
+                                                        </span> -->
                                                     </div>
                                                 </td>
                                                 <td class="w-15 bg-light text-right label no-boder" style="padding-top: 20px!important;">Ngày khởi công dự án
@@ -323,13 +324,14 @@
                                                         <span class="input-group-addon">
                                                             <i class="fa fa-calendar"></i>
                                                         </span> -->
-                                                        <input appEnterPreventDefault [placeholder]="datePickerConfig.datePlaceHolder" class="input-date-time" formControlName="projectEstimatedStartDate"
+                                                        <!-- <input appEnterPreventDefault [placeholder]="datePickerConfig.datePlaceHolder" class="input-date-time" formControlName="projectEstimatedStartDate"
                                                             tabindex="30" [owlDateTimeTrigger]="dtProjectEstimatedStartDate"
                                                             [owlDateTime]="dtProjectEstimatedStartDate">
                                                         <owl-date-time #dtProjectEstimatedStartDate pickerType="calendar"></owl-date-time>
                                                         <span [owlDateTimeTrigger]="dtProjectEstimatedStartDate" class="input-group-addon">
                                                             <i class="fa fa-calendar"></i>
-                                                        </span>
+                                                        </span> -->
+                                                        <kendo-datepicker appEnterPreventDefault class="w-100" tabindex="30" formControlName="projectEstimatedStartDate"></kendo-datepicker>
                                                     </div>
                                                 </td>
                                             </tr>
@@ -343,12 +345,14 @@
                                                         <span class="input-group-addon">
                                                             <i class="fa fa-calendar"></i>
                                                         </span> -->
-                                                        <input appEnterPreventDefault [placeholder]="datePickerConfig.datePlaceHolder" class="input-date-time" formControlName="submissionDate"
+                                                        <!-- <input appEnterPreventDefault [placeholder]="datePickerConfig.datePlaceHolder" class="input-date-time" formControlName="submissionDate"
                                                             tabindex="28" [owlDateTimeTrigger]="dtSubmissionDate" [owlDateTime]="dtSubmissionDate">
                                                         <owl-date-time #dtSubmissionDate pickerType="calendar"></owl-date-time>
                                                         <span [owlDateTimeTrigger]="dtSubmissionDate" class="input-group-addon">
                                                             <i class="fa fa-calendar"></i>
-                                                        </span>
+                                                        </span> -->
+
+                                                        <kendo-datepicker appEnterPreventDefault class="w-100" tabindex="28" formControlName="submissionDate"></kendo-datepicker>
                                                     </div>
                                                     <div class="invalid-feedback" *ngIf="formErrors.submissionDate">
                                                         {{formErrors.submissionDate}}
@@ -363,12 +367,14 @@
                                                         <span class="input-group-addon">
                                                             <i class="fa fa-calendar"></i>
                                                         </span> -->
-                                                        <input appEnterPreventDefault [placeholder]="datePickerConfig.datePlaceHolder" class="input-date-time" formControlName="projectEstimatedEndDate"
+                                                        <!-- <input appEnterPreventDefault [placeholder]="datePickerConfig.datePlaceHolder" class="input-date-time" formControlName="projectEstimatedEndDate"
                                                             tabindex="31" [owlDateTimeTrigger]="dtProjectEstimatedEndDate" [owlDateTime]="dtProjectEstimatedEndDate">
                                                         <owl-date-time #dtProjectEstimatedEndDate pickerType="calendar"></owl-date-time>
                                                         <span [owlDateTimeTrigger]="dtProjectEstimatedEndDate" class="input-group-addon">
                                                             <i class="fa fa-calendar"></i>
-                                                        </span>
+                                                        </span> -->
+
+                                                        <kendo-datepicker appEnterPreventDefault class="w-100" tabindex="31" formControlName="projectEstimatedEndDate"></kendo-datepicker>
                                                     </div>
                                                 </td>
                                             </tr>
@@ -381,12 +387,14 @@
                                                         <span class="input-group-addon">
                                                             <i class="fa fa-calendar"></i>
                                                         </span> -->
-                                                        <input appEnterPreventDefault [placeholder]="datePickerConfig.datePlaceHolder" class="input-date-time" formControlName="resultEstimatedDate"
+                                                        <!-- <input appEnterPreventDefault [placeholder]="datePickerConfig.datePlaceHolder" class="input-date-time" formControlName="resultEstimatedDate"
                                                             tabindex="29" [owlDateTimeTrigger]="dtResultEstimatedDate" [owlDateTime]="dtResultEstimatedDate">
                                                         <owl-date-time #dtResultEstimatedDate pickerType="calendar"></owl-date-time>
                                                         <span [owlDateTimeTrigger]="dtResultEstimatedDate" class="input-group-addon">
                                                             <i class="fa fa-calendar"></i>
-                                                        </span>
+                                                        </span> -->
+
+                                                        <kendo-datepicker appEnterPreventDefault class="w-100" tabindex="29" formControlName="resultEstimatedDate"></kendo-datepicker>
                                                     </div>
                                                     <div class="invalid-feedback" *ngIf="formErrors.resultEstimatedDate">
                                                         {{formErrors.resultEstimatedDate}}
