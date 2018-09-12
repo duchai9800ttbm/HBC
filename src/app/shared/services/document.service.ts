@@ -229,22 +229,28 @@ export class DocumentService {
                 id: 0
             }
         ));
-        // Fix waiting subcribe
-        this.getListBiddocumenttypes().subscribe(biddocumenttypes => {
-            biddocumenttypes.forEach((item, index) => {
-                groupBeforeSort.forEach(elemnet => {
-                    if (elemnet.documentType === item.text) {
-                        elemnet['id'] = index;
-                    }
-                });
-                if (index === 4) {
-                    return;
-                }
-            });
-            groupBeforeSort.sort(function (a, b) {
-                return a.id - b.id;
-            });
-            return groupBeforeSort;
+        // Sorted by design
+        groupBeforeSort.forEach(item => {
+            switch (item.documentType) {
+                case 'Quyển HSMT':
+                    item['id'] = 0;
+                    break;
+                case 'Bản vẽ thuyết minh':
+                    item['id'] = 1;
+                    break;
+                case 'BOQ':
+                    item['id'] = 2;
+                    break;
+                case 'Tiêu chí kĩ thuật (Specs)':
+                    item['id'] = 3;
+                    break;
+                case 'Các báo cáo và các tài liệu khác (KSDQ)':
+                    item['id'] = 4;
+                    break;
+            }
+        });
+        groupBeforeSort.sort(function (a, b) {
+            return a.id - b.id;
         });
         return groupBeforeSort;
     }
