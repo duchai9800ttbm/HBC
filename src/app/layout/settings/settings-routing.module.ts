@@ -28,10 +28,10 @@ const routes: Routes = [
         path: 'construction-category',
         loadChildren: './setting-construction-category/setting-construction-category.module#SettingConstructionCategoryModule'
       },
-      // {
-      //   path: 'bid-status',
-      //   loadChildren: './setting-bid-status/setting-bid-status.module#SettingBidStatusModule'
-      // }
+      {
+        path: 'position',
+        loadChildren: './setting-position/setting-position.module#SettingPositionModule'
+      }
     ]
   }
 ];

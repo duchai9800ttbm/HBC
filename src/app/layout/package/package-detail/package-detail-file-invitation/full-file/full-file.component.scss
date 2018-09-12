@@ -167,7 +167,7 @@ a {
 
 table.dataTable th {
     border-bottom: 1px solid #dddddd !important;
-    background-color: #ffff !important;
+    background-color: #f68e56 !important;
     border: 1px solid #dddddd;
     text-align: center !important;
 }
@@ -854,3 +854,9 @@ table.dataTable {
 :host /deep/ .dataTables_empty {
     display: none !important;
 }
+.set-width-status{
+    min-width: 95px !important;
+}
+// .set-width-stt{
+//     width: 95px !important;
+// }

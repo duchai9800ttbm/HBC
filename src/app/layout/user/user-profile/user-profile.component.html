@@ -1,5 +1,5 @@
 <div [@routerTransition]>
-  <form role="form" class="user-panel" [formGroup]="userProfileForm" (ngSubmit)="submitForm()">
+  <form *ngIf="userProfileForm" role="form" class="user-panel" [formGroup]="userProfileForm" (ngSubmit)="submitForm()">
 
     <div class="d-flex">
       <div class="column1">
@@ -62,7 +62,7 @@
                   <input type="text" readonly required formControlName="level" tabindex="5">
                   <span class="highlight"></span>
                   <span class="bar"></span>
-                  <label>Vị trí</label>
+                  <label>Vị trí/Chức vụ</label>
                 </div>
               </div>
               <div class="col-md-6 col-lg-6">

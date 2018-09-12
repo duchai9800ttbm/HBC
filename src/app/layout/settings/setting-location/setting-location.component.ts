@@ -110,21 +110,4 @@ export class SettingLocationComponent implements OnInit {
         this.pagedResult.items.forEach(x => (x['checkboxSelected'] = value));
     }
 
-    // multiDelete() {
-    //     const deleteIds = this.pagedResult.items
-    //         .filter(x => x.checkboxSelected)
-    //         .map(x => {
-    //             return {
-    //                 id: +x.id,
-    //             };
-    //         });
-    //     if (deleteIds.length === 0) {
-    //         this.alertService.error(
-    //             'Bạn phải chọn ít nhất một đối tượng để xóa!'
-    //         );
-    //     } else {
-    //         this.delete(deleteIds);
-    //     }
-    // }
-
 }

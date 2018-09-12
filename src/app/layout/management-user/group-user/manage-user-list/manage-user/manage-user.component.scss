@@ -376,6 +376,13 @@ table {
   .slider.round:before {
     border-radius: 50%;
   }
+.min-width-manipulation{
+    width: 60px!important;
+}
+.min-width-stt{
+    width: 15px !important;
+    padding-left: 7px;
+}
 .fix-layout-table{
     table-layout: fixed;
 }
