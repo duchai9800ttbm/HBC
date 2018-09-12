@@ -6,6 +6,7 @@ import { URLSearchParams } from '@angular/http';
 import { PagedResult } from '../models';
 import * as FileSaver from 'file-saver';
 import { Subject } from 'rxjs/Subject';
+import { SendEmailModel } from '../models/send-email-model';
 
 @Injectable()
 export class EmailService {
@@ -167,6 +168,17 @@ export class EmailService {
     const url = `emails/${bidEmailId}/markasimportant`;
     return this.apiService.post(url)
       .map(response => response);
+  }
+
+  // gửi thư thông báo triển khai
+  sendEmailDeployment(data: SendEmailModel) {
+    const url = `bidopportunity/hsdt/guithuthongbaotrienkhai`;
+    const dataObj = new FormData();
+    dataObj.append('BidOpportunityId', data.bidOpportunityId + '');
+    dataObj.append('Subject', data.subject);
+    dataObj.append('RecipientEmails', data.recipientEmails.join(','));
+    dataObj.append('Content', data.content);
+    return this.apiService.postFile(url, dataObj);
   }
 }
 

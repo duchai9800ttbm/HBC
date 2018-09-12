@@ -7,8 +7,9 @@ import {
 } from '../../../../../../shared/services';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { PackageDetailComponent } from '../../../package-detail.component';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute, ParamMap } from '@angular/router';
 import { PackageInfoModel } from '../../../../../../shared/models/package/package-info.model';
+import { switchMap } from 'rxjs/operators';
 
 @Component({
     selector: 'app-need-create-tender-form',
@@ -24,7 +25,8 @@ export class NeedCreateTenderFormComponent implements OnInit {
         private alertService: AlertService,
         private spinner: NgxSpinnerService,
         private router: Router,
-        private sessionService: SessionService
+        private sessionService: SessionService,
+        private route: ActivatedRoute
     ) {}
 
     ngOnInit() {
