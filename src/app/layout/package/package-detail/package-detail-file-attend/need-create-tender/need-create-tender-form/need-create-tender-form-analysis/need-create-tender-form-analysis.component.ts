@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder } from '@angular/forms';
 import { NeedCreateTenderFormComponent } from '../need-create-tender-form.component';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-need-create-tender-form-analysis',
@@ -11,7 +12,8 @@ export class NeedCreateTenderFormAnalysisComponent implements OnInit {
 
   analysisForm: FormGroup;
   constructor(
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private route: ActivatedRoute
   ) { }
 
   ngOnInit() {

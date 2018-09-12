@@ -36,6 +36,7 @@ import { PackageSuccessService } from './shared/services/package-success.service
 import { EmailService } from './shared/services/email.service';
 import { LayoutService } from './shared/services/layout.service';
 registerLocaleData(localeFrCa, localeFrCaExtra);
+import '@progress/kendo-ui';
 
 // AoT requires an exported function for factories
 export function createTranslateLoader(http: HttpClient) {

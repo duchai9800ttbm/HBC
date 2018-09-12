@@ -75,7 +75,7 @@
             <div class="input-group-prepend">
                 <span class="input-group-text">To:</span>
             </div>
-            <input type="text" class="form-control boder-left-none" [ngClass]="{ 'bd-r' : isSendCc === false ||isSendBcc===false }"
+            <input type="text" [(ngModel)]="emailModel.to" class="form-control boder-left-none" [ngClass]="{ 'bd-r' : isSendCc === false ||isSendBcc===false }"
                 aria-label="To" autofocus>
             <div class="input-group-append" *ngIf="!isSendCc || !isSendBcc">
                 <span class="input-group-text">
@@ -105,10 +105,10 @@
             <div class="input-group-prepend">
                 <span class="input-group-text" id="basic-addon1">Tiêu đề:</span>
             </div>
-            <input type="text" class="form-control boder-left-none" placeholder="" aria-label="Tiede" aria-describedby="basic-addon1">
+            <input type="text" [(ngModel)]="emailModel.subject" class="form-control boder-left-none" placeholder="" aria-label="Tiede" aria-describedby="basic-addon1">
         </div>
         <div class="body-ckeditor">
-            <ckeditor [(ngModel)]="ckeditorContent">
+            <ckeditor [(ngModel)]="emailModel.content">
                 <ckbutton [name]="'saveButton'" [command]="'saveCmd'" (click)="save($event)" [icon]="'save.png'"
                     [label]="'Save Document'" [toolbar]="'clipboard,1'">
                 </ckbutton>
@@ -390,3 +390,5 @@
 
     </div>
 </ng-template>
+
+<div #ganttChart></div>

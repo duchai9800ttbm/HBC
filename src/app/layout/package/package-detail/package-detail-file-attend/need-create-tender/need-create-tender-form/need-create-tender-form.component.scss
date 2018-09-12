@@ -5,11 +5,11 @@
         display: flex;
         flex-direction: column;
         border: 1px solid #DFF4FD;
-        // font-size: 0.875rem;
+        font-size: 0.75rem;
         .toggle-menu-item {
             width: 221px;
             box-sizing: border-box;
-            padding: 5px 10px;
+            padding: 8px 12px;
             display: flex;
             justify-content: start;
             align-items: center;
@@ -40,7 +40,7 @@
 
 .header {
     background-color: #f68e56;
-    padding: 0.5rem;
+    padding: 1rem;
     color: white;
 }
 

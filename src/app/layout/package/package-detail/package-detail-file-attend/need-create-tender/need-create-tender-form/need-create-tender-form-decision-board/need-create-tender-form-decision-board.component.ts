@@ -16,6 +16,7 @@ export class NeedCreateTenderFormDecisionBoardComponent implements OnInit {
 
   ngOnInit() {
     this.createForm();
+    this.decisionBoardForm.valueChanges.subscribe(data => this.mappingToLiveFormData(data));
   }
 
   createForm() {
@@ -27,6 +28,10 @@ export class NeedCreateTenderFormDecisionBoardComponent implements OnInit {
 
   clickSigned() {
     this.decisionBoardForm.get('isSigned').patchValue(true);
+  }
+
+  mappingToLiveFormData(data) {
+    NeedCreateTenderFormComponent.formModel.decisionOfBoardOfGeneralDirector = data;
   }
 
 }
