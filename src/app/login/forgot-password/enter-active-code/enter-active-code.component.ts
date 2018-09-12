@@ -159,23 +159,25 @@ export class EnterActiveCodeComponent implements OnInit, OnDestroy {
       keyCheck = keyCheck.substr(1, keyCheck.length - 1);
     }
     for (let i = 0; key.length > 0; i++) {
-      if (i === 0) {
-        this.enterActiveCodeForm.get('numberOne').patchValue(key.substr(0, 1));
-      }
-      if (i === 1) {
-        this.enterActiveCodeForm.get('numberTwo').patchValue(key.substr(0, 1));
-      }
-      if (i === 2) {
-        this.enterActiveCodeForm.get('numberThree').patchValue(key.substr(0, 1));
-      }
-      if (i === 3) {
-        this.enterActiveCodeForm.get('numberFour').patchValue(key.substr(0, 1));
-      }
-      if (i === 4) {
-        this.enterActiveCodeForm.get('numberFive').patchValue(key.substr(0, 1));
-      }
-      if (i === 5) {
-        this.enterActiveCodeForm.get('numberSix').patchValue(key.substr(0, 1));
+      switch (i) {
+        case 0:
+          this.enterActiveCodeForm.get('numberOne').patchValue(key.substr(0, 1));
+          break;
+        case 1:
+          this.enterActiveCodeForm.get('numberTwo').patchValue(key.substr(0, 1));
+          break;
+        case 2:
+          this.enterActiveCodeForm.get('numberThree').patchValue(key.substr(0, 1));
+          break;
+        case 3:
+          this.enterActiveCodeForm.get('numberFour').patchValue(key.substr(0, 1));
+          break;
+        case 4:
+          this.enterActiveCodeForm.get('numberFive').patchValue(key.substr(0, 1));
+          break;
+        case 5:
+          this.enterActiveCodeForm.get('numberSix').patchValue(key.substr(0, 1));
+          break;
       }
       key = key.substr(1, key.length - 1);
     }
