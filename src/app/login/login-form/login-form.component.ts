@@ -97,8 +97,7 @@ export class LoginFormComponent implements OnInit {
                         }, 300);
                     },
                     err => {
-                        // console.log('errrrr', err._body, JSON.parse(err._body), JSON.parse(err._body).errorMessage );
-                        if (err._body && JSON.parse(err._body).errorMessage === 'User login is not active') {
+                        if (err._body && JSON.parse(err._body).errorCode === 'UserLoginIsNotActive') {
                             this.apiErrorCode = 'Tài khoản này đã bị khoá hoạt động, vui lòng liên hệ admin để được hỗ trợ!';
                         } else {
                             this.apiErrorCode = 'Nhập sai tên người dùng hoặc mật khẩu!';
