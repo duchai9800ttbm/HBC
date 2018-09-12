@@ -25,10 +25,10 @@
       </div>
     </div>
     <div class="data-list menu">
-      <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="table-selection stripe hover">
+      <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="table-selection stripe hover fix-layout-table">
         <thead *ngIf="pagedResult.items">
           <tr style="width: 100%">
-            <th class="text-center" style="width: 15px; padding-left: 7px;">
+            <th class="text-cente min-width-stt">
               <label class="custom-control custom-checkbox">
                 <input type="checkbox" class="custom-control-input input-checkbox" [(ngModel)]="checkboxSeclectAll" (change)="onSelectAll($event.target.checked)">
                 <span class="custom-control-indicator"></span>
@@ -74,7 +74,7 @@
                 <div style="" class="text-center">Tình trạng</div>
               </div>
             </th>
-            <th class="text-center" style="width: calc(18% - 42px); min-width: 70px!important;">
+            <th class="text-center min-width-manipulation">
               <div class="d-flex justify-content-center">
                 <div style="" class="text-center">Thao tác</div>
               </div>

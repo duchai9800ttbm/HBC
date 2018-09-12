@@ -456,3 +456,13 @@ table {
     color: red;
     font-style: italic;
 }
+.fix-layout-table{
+    table-layout: fixed;
+}
+.min-width-stt{
+    width: 15px !important;
+    padding-left: 7px;
+}
+.min-width-manipulation{
+    width: 60px!important;
+}
