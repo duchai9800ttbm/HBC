@@ -1,0 +1,83 @@
+:host /deep/ {
+
+    .k-gantt-create,
+    .k-gantt-treelist,
+    .k-splitbar-draggable-horizontal {
+        display: none;
+    }
+
+    .b-datepicker-no-border {
+        .k-picker-wrap {
+            border: none;
+        }
+        .k-select {
+            border-radius: .25rem;
+        }
+        .k-dateinput-wrap {
+            input {
+                font-size: .75rem !important;
+            }
+        }
+    }
+}
+
+.header {
+    background-color: #f68e56;
+    padding: 1rem;
+    padding-left: 2rem;
+    color: white;
+}
+
+.live-form-title {
+    font-size: 1.1rem;
+
+    a {
+        cursor: pointer;
+        margin-top: -3px;
+
+        img {
+            margin-bottom: 1px;
+        }
+    }
+}
+
+table, thead, tbody, tfoot {
+    font-size: 0.7rem;
+}
+
+.tbl-header-bg-color {
+    background-color: #1EB1ED;
+    color: white;
+}
+
+.col-datetime {
+    max-width: 178px;
+}
+
+/* Custom dropdown */
+.b-dropdown-no-border {
+    
+
+    select {
+        border: none;
+        outline: none;
+        &:hover {
+            cursor: pointer;
+        }
+        &:focus {
+            box-shadow: none;
+        }
+    }
+
+    &::after {
+        color: black;
+        font-size: .75rem;
+        top: 20%;
+        right: 0;
+    }
+
+    &::before {
+        background-color: transparent;
+    }
+}
+

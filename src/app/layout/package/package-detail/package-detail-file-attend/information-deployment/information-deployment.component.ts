@@ -14,9 +14,6 @@ import { Observable, BehaviorSubject, Subject } from '../../../../../../../node_
 import { ConfirmationService, AlertService } from '../../../../../shared/services';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { SendEmailModel } from '../../../../../shared/models/send-email-model';
-import '@progress/kendo-ui';
-
-declare let kendo: any;
 
 @Component({
   selector: 'app-information-deployment',
@@ -75,87 +72,6 @@ export class InformationDeploymentComponent implements OnInit {
     { id: 3, rom: 'Phòng lưu trữ', username: 'Huy Nhat', email: 'huynhat@gmail.com', checkboxSelected: 'checkboxSelected' }
   ];
   emailModel: SendEmailModel = new SendEmailModel();
-  @ViewChild('ganttChart') ganttChart: ElementRef;
-
-  private readonly serviceRoot = 'https://demos.telerik.com/kendo-ui/service';
-  private readonly tasksDataSource = new kendo.data.GanttDataSource({
-      transport: {
-          read: {
-              url: this.serviceRoot + '/GanttTasks',
-              dataType: 'jsonp'
-          },
-          update: {
-              url: this.serviceRoot + '/GanttTasks/Update',
-              dataType: 'jsonp'
-          },
-          destroy: {
-              url: this.serviceRoot + '/GanttTasks/Destroy',
-              dataType: 'jsonp'
-          },
-          create: {
-              url: this.serviceRoot + '/GanttTasks/Create',
-              dataType: 'jsonp'
-          },
-          parameterMap: function(options, operation) {
-              if (operation !== 'read') {
-                  return { models: kendo.stringify(options.models || [options]) };
-              }
-          }
-      },
-      schema: {
-          model: {
-              id: 'id',
-              fields: {
-                  id: { from: 'ID', type: 'number' },
-                  orderId: { from: 'OrderID', type: 'number', validation: { required: true } },
-                  parentId: { from: 'ParentID', type: 'number', defaultValue: null, validation: { required: true } },
-                  start: { from: 'Start', type: 'date' },
-                  end: { from: 'End', type: 'date' },
-                  title: { from: 'Title', defaultValue: '', type: 'string' },
-                  percentComplete: { from: 'PercentComplete', type: 'number' },
-                  summary: { from: 'Summary', type: 'boolean' },
-                  expanded: { from: 'Expanded', type: 'boolean', defaultValue: true }
-              }
-          }
-      }
-  });
-
-  private readonly dependenciesDataSource = new kendo.data.GanttDependencyDataSource({
-      transport: {
-          read: {
-              url: this.serviceRoot + '/GanttDependencies',
-              dataType: 'jsonp'
-          },
-          update: {
-              url: this.serviceRoot + '/GanttDependencies/Update',
-              dataType: 'jsonp'
-          },
-          destroy: {
-              url: this.serviceRoot + '/GanttDependencies/Destroy',
-              dataType: 'jsonp'
-          },
-          create: {
-              url: this.serviceRoot + '/GanttDependencies/Create',
-              dataType: 'jsonp'
-          },
-          parameterMap: function(options, operation) {
-              if (operation !== 'read') {
-                  return { models: kendo.stringify(options.models || [options]) };
-              }
-          }
-      },
-      schema: {
-          model: {
-              id: 'id',
-              fields: {
-                  id: { from: 'ID', type: 'number' },
-                  predecessorId: { from: 'PredecessorID', type: 'number' },
-                  successorId: { from: 'SuccessorID', type: 'number' },
-                  type: { from: 'Type', type: 'number' }
-              }
-          }
-      }
-  });
 
   constructor(
     private modalService: BsModalService,
@@ -192,27 +108,6 @@ export class InformationDeploymentComponent implements OnInit {
     this.toggleTextUpFile = 'Bạn cần phải thông báo triển khai trước khi phân công tiến độ';
     this.textInformation = 'Chưa thông báo triển khai';
     this.currentPackageId = +PackageDetailComponent.packageId;
-    kendo.jQuery(this.ganttChart.nativeElement).kendoGantt({
-      dataSource: this.tasksDataSource,
-      dependencies: this.dependenciesDataSource,
-      views: [
-          'day',
-          { type: 'week', selected: true },
-          'month'
-      ],
-      columns: [
-          { field: 'id', title: 'ID', width: 60 },
-          { field: 'title', title: 'Title', editable: true, sortable: true },
-          { field: 'start', title: 'Start Time', format: '{0:MM/dd/yyyy}', width: 100, editable: true, sortable: true },
-          { field: 'end', title: 'End Time', format: '{0:MM/dd/yyyy}', width: 100, editable: true, sortable: true }
-      ],
-      height: 700,
-
-      showWorkHours: false,
-      showWorkDays: false,
-
-      snap: false
-  });
 
   }
   openModalDeployment(template: TemplateRef<any>) {

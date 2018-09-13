@@ -14,7 +14,9 @@ const routes: Routes = [
         component: PackageDetailFileAttendComponent,
         children: [
             { path: '', redirectTo: 'create-request' },
-            { path: 'infomation-deployment', component: InformationDeploymentComponent },
+            {
+                path: 'infomation-deployment',
+                loadChildren: './information-deployment/information-deployment.module#InformationDeploymentModule' },
             {
                 path: 'build',
                 loadChildren: './hsdt-build/hsdt-build.module#HsdtBuildModule'
