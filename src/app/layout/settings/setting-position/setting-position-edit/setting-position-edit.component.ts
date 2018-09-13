@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Observable } from '../../../../../../node_modules/rxjs';
-import { LocationListItem } from '../../../../shared/models/setting/location-list-item';
 import { ActivatedRoute, ParamMap } from '../../../../../../node_modules/@angular/router';
 import { SettingService } from '../../../../shared/services/setting.service';
+import { LevelListItem } from '../../../../shared/models/setting/level-list-item';
 
 @Component({
   selector: 'app-setting-position-edit',
@@ -10,7 +10,7 @@ import { SettingService } from '../../../../shared/services/setting.service';
   styleUrls: ['./setting-position-edit.component.scss']
 })
 export class SettingPositionEditComponent implements OnInit {
-  location$: Observable<LocationListItem>;
+  level$: Observable<LevelListItem>;
 
   constructor(
     private activatedRoute: ActivatedRoute,
@@ -18,8 +18,8 @@ export class SettingPositionEditComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.location$ = this.activatedRoute.paramMap
+    this.level$ = this.activatedRoute.paramMap
       .switchMap((params: ParamMap) =>
-        this.settingService.viewLocation(params.get('id')));
+        this.settingService.viewLevel(params.get('id')));
   }
 }

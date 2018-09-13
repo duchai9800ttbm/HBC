@@ -7,6 +7,7 @@ import { ApiService } from './api.service';
 import * as moment from 'moment';
 import { InterviewInvitationFilter } from '../models/interview-invitation/interview-invitation-filter.model';
 import { URLSearchParams } from '@angular/http';
+import { InterviewInvitationFilterReport } from '../models/interview-invitation/interview-invitation-filter-report';
 @Injectable()
 export class InterviewInvitationService {
 
@@ -31,6 +32,27 @@ export class InterviewInvitationService {
     );
     urlFilterParams.append('status', filter.status);
     urlFilterParams.append('sorting', filter.sorting);
+    return urlFilterParams;
+  }
+  // Tạo mới filter params for Report interview
+  private static createFilterParamsReport(filter: InterviewInvitationFilterReport): URLSearchParams {
+    const urlFilterParams = new URLSearchParams();
+    urlFilterParams.append(
+      'interviewtimes',
+      filter.interviewtimes ? filter.interviewtimes.toString() : ''
+    );
+    urlFilterParams.append(
+      'uploadedEmployeeId',
+      filter.uploadedEmployeeId ? filter.uploadedEmployeeId.toString() : ''
+    );
+    urlFilterParams.append(
+      'createdDate',
+      filter.createdDate ? filter.createdDate.toString() : ''
+    );
+    urlFilterParams.append(
+      'sorting',
+      filter.sorting ? filter.sorting.toString() : ''
+    );
     return urlFilterParams;
   }
   // map theo model danh sách lời lời phỏng vấn
@@ -151,6 +173,59 @@ export class InterviewInvitationService {
       .share();
   }
 
-  // Danh sách biên bản phỏng vấn
-  
+  // Danh sách biên bản phỏng vấn (search theo tên, sort, filter theo trạng thái, khách hàng, ngày nhận, lần phỏng vấn)
+  instantSearchWithFilterReport(
+    bidOpportunityId: number,
+    searchTerm: Observable<string>,
+    filter: InterviewInvitationFilterReport,
+    page: number | string,
+    pageSize: number | string
+  ): Observable<PagedResult<InterviewInvitationList>> {
+    const searchUrl = `/bidopportunity/${bidOpportunityId}/bidinterviewreportdocs/filter/${page}/${pageSize}/?searchTerm=`;
+    return this.instantSearchService
+      .searchWithFilter(
+        searchUrl,
+        searchTerm,
+        InterviewInvitationService.createFilterParamsReport(filter)
+      )
+      .map(result => {
+        return {
+          currentPage: result.page,
+          pageSize: pageSize,
+          pageCount: result.pageCount,
+          total: result.recordCount,
+          items: (result.items || []).map(this.toInterviewInvitationReportList)
+        };
+      });
+  }
+
+  // map theo model danh sách biên bản phỏng vấn
+  toInterviewInvitationReportList(result: any): InterviewInvitationList {
+    return {
+      id: result.id,
+      customer: {
+          id: result.customer.id,
+          customerId: result.customer.customerId,
+          customerName: result.customer.customerName,
+          customerNo: result.customer.customerNo,
+          customerDesc: result.customer.customerDesc,
+          customerClassify: result.customer.customerClassify,
+          customerNewOldType: result.customer.customerNewOldType,
+          customerPhone: result.customer.customerPhone,
+          customerAddress: result.customer.customerAddress,
+      },
+      approvedDate: result.approvedDate,
+      interviewDate: result.interviewDate,
+      place: result.place,
+      content: result.content,
+      interviewTimes: result.interviewTimes,
+      status: {
+          key: result.status.key,
+          value: result.status.value,
+          displayText: result.status.displayText,
+      },
+      remainningDay: result.remainningDay,
+    };
+  }
 }
+

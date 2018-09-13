@@ -40,7 +40,7 @@
                 </tr>
             </thead>
             <tbody>
-                <!-- <tr *ngFor="let item of pagedResult.items">
+                <tr *ngFor="let item of pagedResult.items">
                     <td class="text-center" style="width: 15px; padding-left: 7px;">
                         <label class="custom-control custom-checkbox">
                             <input type="checkbox" class="custom-control-input" [(ngModel)]="item.checkboxSelected">
@@ -48,20 +48,20 @@
                         </label>
                     </td>
                     <td class="text-truncate">
-                        {{item.locationName}}
+                        {{item.levelName}}
                     </td>
                     <td class="text-truncate">
-                        {{item.locationDesc}}
+                        {{item.levelDesc}}
                     </td>
                     <td class="d-flex justify-content-around">
-                        <a [routerLink]="['/settings/location/edit',item.id]" class=" text-success">
+                        <a [routerLink]="['/settings/position/edit',item.id]" class=" text-success">
                             <i class="fa fa-pencil  cursor-pointer" aria-hidden="true"> </i>
                         </a>
                         <a class=" text-dark ml-3">
-                            <i (click)="deleteLocation(item)" class="fa fa-trash-o pointer" aria-hidden="true"></i>
+                            <i (click)="deleteLevel(item)" class="fa fa-trash-o pointer" aria-hidden="true"></i>
                         </a>
                     </td>
-                </tr> -->
+                </tr>
             </tbody>
         </table>
         <app-pagination [(pagedResult)]="pagedResult" (pagedResultChange)="pagedResultChange($event)"></app-pagination>

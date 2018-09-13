@@ -314,12 +314,16 @@ table.dataTable{
     border-bottom: 1px solid #dddddd !important;
     box-shadow: none;
     border-collapse: collapse;
+    // border-collapse: separate;
+    border-spacing: 0;
 }
 table.dataTable th {
     border-bottom: 1px solid #dddddd !important;
-    background-color: #ffff !important;
     border: 1px solid #dddddd;
+    background-color: #f68e56!important;
     font-size: 12px;
+    vertical-align: middle;
+    text-align: center !important;
 }
 table.dataTable td{
     font-size: 12px;
@@ -429,6 +433,18 @@ table.dataTable td{
     border-right: 3px solid #00a0e3;
 }
 .position-absolute-image{
-    position: absolute;
+    // position: absolute;
     left: 0;
+}
+
+.set-width-menu-left{
+    width: 17%;
+}
+.set-width-content{
+    width: 83%;
+    padding-left: 15px;
+}
+.set-width-image{
+    width: 83%;
+    margin: -8.5%;
 }
