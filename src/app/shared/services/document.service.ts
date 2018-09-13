@@ -11,6 +11,9 @@ import * as FileSaver from 'file-saver';
 import { InstantSearchService } from './instant-search.service';
 import { URLSearchParams } from '@angular/http';
 import { PagedResult } from '../models/paging-result.model';
+import { SiteSurveyReport } from '../models/site-survey-report/site-survey-report';
+import { TenderSiteSurveyingReport } from '../models/api-request/package/tender-site-surveying-report';
+import { guid } from '@progress/kendo-angular-grid/dist/es2015/utils';
 
 @Injectable()
 export class DocumentService {
@@ -328,5 +331,258 @@ export class DocumentService {
                     month2: `${month2 ? month2 : ''}`,
                     year2: `${year2 ? year2 : ''}`
                 });
+    }
+
+    tenderSiteSurveyingReport(bidOpportunityId: number): Observable<SiteSurveyReport> {
+        const url = `bidopportunity/${bidOpportunityId}/tendersitesurveyingreport`;
+        return this.apiService.get(url).map(res => this.toSiteSurveyReport(res.result));
+    }
+
+    toSiteSurveyReport(model: any): SiteSurveyReport {
+        return {
+            id: model.id,
+            bidOpportunityId: model.bidOpportunityId,
+            nguoiTao: model.createdEmployee.employeeName,
+            ngayTao: model.createdEmployee.employeeNo,
+            lanCapNhat: 1, // ?
+            nguoiCapNhat: model.updatedEmployee.employeeName,
+            ngayCapNhat: model.updatedEmployee.employeeNo,
+            noiDungCapNhat: 'string', // ?
+            tenTaiLieu: model.documentName,
+            lanPhongVan: model.interviewTimes,
+            scaleOverall: model.projectStatistic && {
+                tenTaiLieu: model.documentName,
+                lanPhongVan: model.interviewTimes,
+                loaiCongTrinh: {
+                    vanPhong: false,
+                    khuDanCu: false,
+                    trungTamThuongMai: false,
+                    khachSan: false,
+                    nhaCongNghiep: false,
+                    toHop: false,
+                    canHo: false,
+                    haTang: false,
+                    mep: false,
+                    sanBay: false,
+                    nhaphoBietThu: false,
+                    truongHoc: false,
+                    congtrinhMoi: false,
+                    nangCapCaiTien: false,
+                    thayDoiBoSung: false,
+                    thaoDoCaiTien: false,
+                    khac: '',
+                },
+                quyMoDuAn: model.projectStatistic.projectStatistic && {
+                    dienTichCongTruong: model.projectStatistic.projectStatistic.siteArea,
+                    tongDienTichXayDung: model.projectStatistic.projectStatistic.grossFloorArea,
+                    soTang: model.projectStatistic.projectStatistic.totalNumberOfFloor,
+                    tienDo: model.projectStatistic.projectStatistic.constructionPeriod
+
+                },
+                hinhAnhPhoiCanh: model.projectStatistic.perspectiveImageOfProject && {
+                    description: model.projectStatistic.perspectiveImageOfProject.desc,
+                    images: model.projectStatistic.perspectiveImageOfProject.imageUrls ?
+                        model.projectStatistic.perspectiveImageOfProject.imageUrls.map(x => ({
+                            id: x.guid,
+                            image: x.largeSizeUrl
+                        })) : []
+                },
+                thongTinVeKetCau: model.projectStatistic.existingStructure && {
+                    description: model.projectStatistic.existingStructure.desc,
+                    images: (model.projectStatistic.existingStructure.imageUrls || []).map(x => ({
+                        id: x.guid,
+                        image: x.largeSizeUrl
+                    }))
+                },
+                nhungYeuCauDacBiet: model.projectStatistic.specialRequirement && {
+                    description: model.projectStatistic.specialRequirement.desc,
+                    images: (model.projectStatistic.specialRequirement.imageUrls || []).map(x => ({
+                        id: x.guid,
+                        image: x.largeSizeUrl
+                    }))
+                }
+            },
+            describeOverall: model.siteInformation && {
+                chiTietDiaHinh: model.siteInformation.topography && {
+                    description: model.siteInformation.topography.desc,
+                    images: (model.siteInformation.topography.imageUrls || []).map(x => ({
+                        id: x.guid,
+                        image: x.largeSizeUrl
+                    }))
+                },
+                kienTrucHienHuu: model.siteInformation.existBuildingOnTheSite && {
+                    description: model.siteInformation.existBuildingOnTheSite.desc,
+                    images: (model.siteInformation.existBuildingOnTheSite.imageUrls || []).map(x => ({
+                        id: x.guid,
+                        image: x.largeSizeUrl
+                    }))
+                },
+                yeuCauChuongNgai: model.siteInformation.existObstacleOnTheSite && {
+                    description: model.siteInformation.existObstacleOnTheSite.desc,
+                    images: (model.siteInformation.existObstacleOnTheSite.imageUrls || []).map(x => ({
+                        id: x.guid,
+                        image: x.largeSizeUrl
+                    }))
+                }
+            },
+            traffic: model.transportationAndSiteEntranceCondition && {
+                chiTietDiaHinh: model.transportationAndSiteEntranceCondition && {
+                    khoKhan: model.transportationAndSiteEntranceCondition.disadvantage && {
+                        description: model.transportationAndSiteEntranceCondition.disadvantage.desc,
+                        images: (model.transportationAndSiteEntranceCondition.disadvantage.imageUrls || []).map(x => ({
+                            id: x.guid,
+                            image: x.largeSizeUrl
+                        }))
+                    },
+                    thuanLoi: model.transportationAndSiteEntranceCondition.advantage && {
+                        description: model.transportationAndSiteEntranceCondition.advantage.desc,
+                        images: (model.transportationAndSiteEntranceCondition.advantage.imageUrls || []).map(x => ({
+                            id: x.guid,
+                            image: x.largeSizeUrl
+                        }))
+                    }
+                },
+                loiVaoCongTrinh: model.transportationAndSiteEntranceCondition && {
+                    huongVao: model.transportationAndSiteEntranceCondition.directionOfSiteEntrance && {
+                        description: model.transportationAndSiteEntranceCondition.directionOfSiteEntrance.desc,
+                        images: (model.transportationAndSiteEntranceCondition.directionOfSiteEntrance.imageUrls || []).map(x => ({
+                            id: x.guid,
+                            image: x.largeSizeUrl
+                        }))
+                    },
+                    duongHienCo: model.transportationAndSiteEntranceCondition.existingRoadOnSite && {
+                        description: model.transportationAndSiteEntranceCondition.existingRoadOnSite.desc,
+                        images: (model.transportationAndSiteEntranceCondition.existingRoadOnSite.imageUrls || []).map(x => ({
+                            id: x.guid,
+                            image: x.largeSizeUrl
+                        }))
+                    },
+                    yeuCauDuongTam: model.transportationAndSiteEntranceCondition.temporatyRoadRequirement && {
+                        description: model.transportationAndSiteEntranceCondition.temporatyRoadRequirement.desc,
+                        images: (model.transportationAndSiteEntranceCondition.temporatyRoadRequirement.imageUrls || []).map(x => ({
+                            id: x.guid,
+                            image: x.largeSizeUrl
+                        }))
+                    },
+                    yeuCauHangRao: model.transportationAndSiteEntranceCondition.temporaryFenceRequirement && {
+                        description: model.transportationAndSiteEntranceCondition.temporaryFenceRequirement.desc,
+                        images: (model.transportationAndSiteEntranceCondition.temporaryFenceRequirement.imageUrls || []).map(x => ({
+                            id: x.guid,
+                            image: x.largeSizeUrl
+                        }))
+                    }
+                }
+            },
+            demoConso: model.demobilisationAndConsolidation && {
+                phaVoKetCau: model.demobilisationAndConsolidation.demobilisationExistingStructureOrBuilding && {
+                    description: model.demobilisationAndConsolidation.demobilisationExistingStructureOrBuilding.desc,
+                    images: (model.demobilisationAndConsolidation.demobilisationExistingStructureOrBuilding.imageUrls || []).map(x => ({
+                        id: x.guid,
+                        image: x.largeSizeUrl
+                    }))
+                },
+                giaCoKetCau: model.demobilisationAndConsolidation.consolidationExistingStructureOrBuilding && {
+                    description: model.demobilisationAndConsolidation.consolidationExistingStructureOrBuilding.desc,
+                    images: (model.demobilisationAndConsolidation.consolidationExistingStructureOrBuilding.imageUrls || []).map(x => ({
+                        id: x.guid,
+                        image: x.largeSizeUrl
+                    }))
+                },
+                dieuKien: model.demobilisationAndConsolidation.adjacentBuildingConditions && {
+                    description: model.demobilisationAndConsolidation.adjacentBuildingConditions.desc,
+                    images: (model.demobilisationAndConsolidation.adjacentBuildingConditions.imageUrls || []).map(x => ({
+                        id: x.guid,
+                        image: x.largeSizeUrl
+                    }))
+                }
+            },
+            serviceConstruction: model.temporaryBuildingServiceForConstruction && {
+                heThongNuoc: model.temporaryBuildingServiceForConstruction && {
+                    heThongHienHuu: model.temporaryBuildingServiceForConstruction.supplyWaterSystemExistingSystem && {
+                        description: model.temporaryBuildingServiceForConstruction.supplyWaterSystemExistingSystem.desc,
+                        images: (model.temporaryBuildingServiceForConstruction.supplyWaterSystemExistingSystem.imageUrls || []).map(x => ({
+                            id: x.guid,
+                            image: x.largeSizeUrl
+                        }))
+                    },
+                    diemDauNoi: model.temporaryBuildingServiceForConstruction.supplyWaterSystemExistingConnectionPoint && {
+                        description: model.temporaryBuildingServiceForConstruction.supplyWaterSystemExistingConnectionPoint.desc,
+                        images: (model.temporaryBuildingServiceForConstruction.supplyWaterSystemExistingConnectionPoint.imageUrls || [])
+                            .map(x => ({
+                                id: x.guid,
+                                image: x.largeSizeUrl
+                            }))
+                    }
+                },
+                heThongNuocThoat: model.temporaryBuildingServiceForConstruction && {
+                    heThongHienHuu: model.temporaryBuildingServiceForConstruction.drainageWaterSystemExistingSystem && {
+                        description: model.temporaryBuildingServiceForConstruction.drainageWaterSystemExistingSystem.desc,
+                        images: (model.temporaryBuildingServiceForConstruction.drainageWaterSystemExistingSystem.imageUrls || [])
+                            .map(x => ({
+                                id: x.guid,
+                                image: x.largeSizeUrl
+                            }))
+                    },
+                    diemDauNoi: model.temporaryBuildingServiceForConstruction.drainageWaterSystemExistingConnectionPoint && {
+                        description: model.temporaryBuildingServiceForConstruction.drainageWaterSystemExistingConnectionPoint.desc,
+                        images: (model.temporaryBuildingServiceForConstruction.drainageWaterSystemExistingConnectionPoint.imageUrls || [])
+                            .map(x => ({
+                                id: x.guid,
+                                image: x.largeSizeUrl
+                            }))
+                    }
+                },
+                heThongDien: model.temporaryBuildingServiceForConstruction && {
+                    tramHaThe: model.temporaryBuildingServiceForConstruction.transformerStation && {
+                        description: model.temporaryBuildingServiceForConstruction.transformerStation.desc,
+                        images: (model.temporaryBuildingServiceForConstruction.transformerStation.imageUrls || []).map(x => ({
+                            id: x.guid,
+                            image: x.largeSizeUrl
+                        }))
+                    },
+                    duongDayTrungThe: model.temporaryBuildingServiceForConstruction.existingMediumVoltageSystem && {
+                        description: model.temporaryBuildingServiceForConstruction.existingMediumVoltageSystem.desc,
+                        images: (model.temporaryBuildingServiceForConstruction.existingMediumVoltageSystem.imageUrls || []).map(x => ({
+                            id: x.guid,
+                            image: x.largeSizeUrl
+                        }))
+                    },
+                    thongTinKhac: model.temporaryBuildingServiceForConstruction.others && {
+                        description: model.temporaryBuildingServiceForConstruction.others.desc,
+                        images: (model.temporaryBuildingServiceForConstruction.others.imageUrls || []).map(x => ({
+                            id: x.guid,
+                            image: x.largeSizeUrl
+                        }))
+                    }
+                }
+            },
+            soilCondition: model.reportExistingSoilCondition && {
+                nenMongHienCo: model.reportExistingSoilCondition.existingFooting && {
+                    description: model.reportExistingSoilCondition.existingFooting.desc,
+                    images: (model.reportExistingSoilCondition.existingFooting.imageUrls || []).map(x => ({
+                        id: guid,
+                        image: x.largeSizeUrl
+                    }))
+                },
+                thongTinCongTrinhGanDo: model.reportExistingSoilCondition.soilInvestigation && {
+                    description: model.reportExistingSoilCondition.soilInvestigation.desc,
+                    images: (model.reportExistingSoilCondition.soilInvestigation.imageUrls || []).map(x => ({
+                        id: guid,
+                        image: x.largeSizeUrl
+                    }))
+                }
+            },
+            usefulInfo: (model.usefulInFormations || []).map(x => ({
+                title: x.title,
+                content: x.content.map(i => ({
+                    name: i.name,
+                    detail: i.detail,
+                    images: i.imageUrls.map(e => ({
+                        id: e.guid,
+                        image: e.largeSizeUrl
+                    }))
+                }))
+            }))
+        };
     }
 }

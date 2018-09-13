@@ -96,7 +96,7 @@
                         </div>
                         <div class="label-project-scale">
                             <label for="">Tổng diện tích xây dựng/ Gross floor area (m2)</label>
-                            <input class="no-boder" type="text" formControlName="tongDienTich">
+                            <input class="no-boder" type="text" formControlName="tongDienTichXayDung">
 
                         </div>
                         <div class="label-project-scale">
@@ -106,19 +106,18 @@
                         <div class="label-project-scale">
                             <label for="">Tiến độ dự kiến/ Construction period (ngày)</label>
                             <input class="no-boder" type="text" formControlName="tienDo">
-
                         </div>
                     </div>
                     <div>
                         <p style="text-decoration: underline;">Hình ảnh phối cảnh dự án/ Perspective image of project</p>
                         <div class="text-des-input">
-                            <input type="text" value="Text">
+                            <input type="text" value="Text" formControlName="hinhAnhPhoiCanhDesc">
                         </div>
                         <div class="image-demo-img">
                             <input type="file" #uploadPerspective (change)="uploadPerspectiveImage($event)">
-                            <div class="display-img">
-                                <img>
-                                <div class="toppp" (click)="deletePerspectiveImage()" *ngIf="url !== 0">
+                            <div class="display-img" *ngFor="let url of perspectiveImageUrls">
+                                <img [src]="url">
+                                <div class="toppp" (click)="deletePerspectiveImage(url)">
                                     <i class="fa fa-times delete-icon" aria-hidden="true"></i>
                                 </div>
                             </div>
@@ -135,14 +134,14 @@
                     package structure)</h6>
                 <div class="main-detail">
                     <div class="text-des-input">
-                        <input type="text" value="Thông tin kết cấu">
+                        <input type="text" value="Thông tin kết cấu" formControlName="thongTinVeKetCauDesc">
                     </div>
                     <div>
                         <div class="image-demo-img">
                             <input type="file" #uploadStructure (change)="uploadStructureImage($event)">
-                            <div class="display-img">
-                                <img>
-                                <div class="toppp" (click)="deleteStructureImage()">
+                            <div class="display-img" *ngFor="let url of structureImageUrls">
+                                <img [src]="url">
+                                <div class="toppp" (click)="deleteStructureImage(url)">
                                     <i class="fa fa-times delete-icon" aria-hidden="true"></i>
                                 </div>
                             </div>
@@ -158,13 +157,13 @@
                 <h6 class="small-title">1.4 Những yêu cầu đặc biệt (Special Requirements)</h6>
                 <div class="main-detail">
                     <div class="text-des-input">
-                        <input type="text" value="Special Requirements">
+                        <input type="text" value="Special Requirements" formControlName="nhungYeuCauDacBietDesc">
                     </div>
                     <div class="image-demo-img">
                         <input type="file" #uploadRequirements (change)="uploadRequirementsImage($event)">
-                        <div class="display-img">
-                            <img>
-                            <div class="toppp" (click)="deleteRequirementsImage()">
+                        <div class="display-img" *ngFor="let url of requirementsImageUrls">
+                            <img [src]="url">
+                            <div class="toppp" (click)="deleteRequirementsImage(url)">
                                 <i class="fa fa-times delete-icon" aria-hidden="true"></i>
                             </div>
                         </div>

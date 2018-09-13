@@ -1,9 +1,25 @@
-import { Component, OnInit } from '@angular/core';
-import { ScaleOverall } from '../../../../../../../../shared/models/site-survey-report/scale-overall.model';
-import { Router } from '@angular/router';
-import { FormGroup, FormBuilder } from '@angular/forms';
-import { EditComponent } from '../edit.component';
-import { EDOM } from 'constants';
+import {
+  Component,
+  OnInit
+} from '@angular/core';
+import {
+  ScaleOverall
+} from '../../../../../../../../shared/models/site-survey-report/scale-overall.model';
+import {
+  Router
+} from '@angular/router';
+import {
+  FormGroup,
+  FormBuilder,
+  FormArray
+} from '@angular/forms';
+import {
+  EditComponent
+} from '../edit.component';
+import {
+  Image,
+  ImageItem
+} from '../../../../../../../../shared/models/site-survey-report/image';
 
 @Component({
   selector: 'app-scale-overall',
@@ -29,89 +45,73 @@ export class ScaleOverallComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.scaleModel = new ScaleOverall();
-    this.scaleModel = EditComponent.formModel.scaleOverall;
-    this.scaleModel = {
-      tenTaiLieu: 'Báo cáo tham quan công trình',
-      lanPhongVan: 3,
-      loaiCongTrinh: {
-        vanPhong: true,
-        khuDanCu: false,
-        trungTamThuongMai: false,
-        khachSan: false,
-        nhaCongNghiep: false,
-        toHop: false,
-        canHo: true,
-        haTang: false,
-        mep: false,
-        sanBay: false,
-        nhaphoBietThu: false,
-        truongHoc: false,
-        //
-        congtrinhMoi: true,
-        nangCapCaiTien: false,
-        thayDoiBoSung: false,
-        thaoDoCaiTien: false,
-        khac: 'Dự án mẫu',
-      },
-      quyMoDuAn: {
-        dienTichCongTruong: 15389,
-        tongDienTichXayDung: 114863,
-        soTang: 'Podium 5 tầng; T6: 36 tầng; T7: 39 tầng',
-        tienDo: 600
-      },
-// hinhAnhPhoiCanh: {
-//   description: 'Text',
-//   images: [
-//     {
-//       id: '001',
-//       image: 'https://images.pexels.com/photos/268364/pexels-photo-268364.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260'
-//     },
-//     {
-//       id: '002',
-//       image: 'https://images.pexels.com/photos/1055271/pexels-photo-1055271.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260'
-//     },
-//     {
-//       id: '003',
-//       image: 'https://images.pexels.com/photos/134575/pexels-photo-134575.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260'
-//     }
-//   ]
-// },
-// thongTinVeKetCau: {
-//   description: 'CÔNG TRÌNH XÂY DỰNG MỚI, BẮT ĐẦU TỪ NẮP HẦM',
-//   images: [
-//     {
-//       id: '001',
-//       image: 'https://images.pexels.com/photos/268364/pexels-photo-268364.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260'
-//     },
-//     {
-//       id: '002',
-//       image: 'https://images.pexels.com/photos/1055271/pexels-photo-1055271.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260'
-//     },
-//     {
-//       id: '003',
-//       image: 'https://images.pexels.com/photos/134575/pexels-photo-134575.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260'
-//     }
-//   ]
-// },
-// nhungYeuCauDacBiet: {
-//   description: 'Text',
-//   images: [
-//     {
-//       id: '001',
-//       image: 'https://images.pexels.com/photos/268364/pexels-photo-268364.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260'
-//     },
-//     {
-//       id: '002',
-//       image: 'https://images.pexels.com/photos/1055271/pexels-photo-1055271.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260'
-//     },
-//     {
-//       id: '003',
-//       image: 'https://images.pexels.com/photos/134575/pexels-photo-134575.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260'
-//     }
-//   ]
-// }
-    };
+    // this.scaleModel = {
+    //   tenTaiLieu: 'Báo cáo tham quan công trình',
+    //   lanPhongVan: 3,
+    //   loaiCongTrinh: {
+    //     vanPhong: true,
+    //     khuDanCu: false,
+    //     trungTamThuongMai: false,
+    //     khachSan: false,
+    //     nhaCongNghiep: false,
+    //     toHop: false,
+    //     canHo: true,
+    //     haTang: false,
+    //     mep: false,
+    //     sanBay: false,
+    //     nhaphoBietThu: false,
+    //     truongHoc: false,
+    //     //
+    //     congtrinhMoi: true,
+    //     nangCapCaiTien: false,
+    //     thayDoiBoSung: false,
+    //     thaoDoCaiTien: false,
+    //     khac: 'Dự án mẫu',
+    //   },
+    //   quyMoDuAn: {
+    //     dienTichCongTruong: 15389,
+    //     tongDienTichXayDung: 114863,
+    //     soTang: 'Podium 5 tầng; T6: 36 tầng; T7: 39 tầng',
+    //     tienDo: 600
+    //   },
+    //   hinhAnhPhoiCanh: {
+    //     description: 'Text',
+    //     images: [{
+    //       id: '1',
+    //       image: 'https://images.pexels.com/photos/268364/pexels-photo-268364.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260'
+    //     },
+    //     {
+    //       id: '1',
+    //       image: 'https://images.pexels.com/photos/268364/pexels-photo-268364.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260'
+    //     }
+    //     ]
+    //   },
+    //   thongTinVeKetCau: {
+    //     description: 'Text',
+    //     images: [{
+    //       id: '1',
+    //       image: 'https://images.pexels.com/photos/268364/pexels-photo-268364.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260'
+    //     },
+    //     {
+    //       id: '1',
+    //       image: 'https://images.pexels.com/photos/268364/pexels-photo-268364.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260'
+    //     }
+    //     ]
+    //   },
+    //   nhungYeuCauDacBiet: {
+    //     description: 'Text',
+    //     images: [{
+    //       id: '1',
+    //       image: 'https://images.pexels.com/photos/268364/pexels-photo-268364.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260'
+    //     },
+    //     {
+    //       id: '1',
+    //       image: 'https://images.pexels.com/photos/268364/pexels-photo-268364.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260'
+    //     }
+    //     ]
+    //   }
+    // };
+
     this.initData();
 
     this.scaleOverallForm = this.fb.group({
@@ -135,45 +135,24 @@ export class ScaleOverallComponent implements OnInit {
       thaoDoCaiTien: [this.scaleModel.loaiCongTrinh && this.scaleModel.loaiCongTrinh.thaoDoCaiTien],
       khac: [this.scaleModel.loaiCongTrinh && this.scaleModel.loaiCongTrinh.khac],
       dienTichCongTruong: [this.scaleModel.quyMoDuAn && this.scaleModel.quyMoDuAn.dienTichCongTruong],
-      tongDienTich: [this.scaleModel.quyMoDuAn && this.scaleModel.quyMoDuAn.tongDienTichXayDung],
+      tongDienTichXayDung: [this.scaleModel.quyMoDuAn && this.scaleModel.quyMoDuAn.tongDienTichXayDung],
       soTang: [this.scaleModel.quyMoDuAn && this.scaleModel.quyMoDuAn.soTang],
-      tienDo: [this.scaleModel.quyMoDuAn && this.scaleModel.quyMoDuAn.tienDo]
-      // hinhAnhPhoiCanhText: [this.scaleModel.hinhAnhPhoiCanh.description],
-      // hinhAnhPhoiCanhImage: [this.scaleModel.hinhAnhPhoiCanh.images],
-      // thongTinVeKetCauText: [this.scaleModel.thongTinVeKetCau.description],
-      // thongTinVeKetCauImage: [this.scaleModel.thongTinVeKetCau.images],
-      // nhungYeuCauDacBietText: [this.scaleModel.nhungYeuCauDacBiet.description],
-      // nhungYeuCauDacBietImage: [this.scaleModel.nhungYeuCauDacBiet.images],
-
+      tienDo: [this.scaleModel.quyMoDuAn && this.scaleModel.quyMoDuAn.tienDo],
+      hinhAnhPhoiCanhDesc: [this.scaleModel.hinhAnhPhoiCanh && this.scaleModel.hinhAnhPhoiCanh.description],
+      hinhAnhPhoiCanhList: [null],
+      thongTinVeKetCauDesc: [this.scaleModel.thongTinVeKetCau && this.scaleModel.thongTinVeKetCau.description],
+      thongTinVeKetCauList: [null],
+      nhungYeuCauDacBietDesc: [this.scaleModel.nhungYeuCauDacBiet && this.scaleModel.nhungYeuCauDacBiet.description],
+      nhungYeuCauDacBietList: [null]
     });
     this.scaleOverallForm.valueChanges.subscribe(data => this.mappingToLiveFormData(data));
-
   }
 
   initData() {
-    // const data = EditComponent.formModel.scaleOverall;
     const obj = EditComponent.formModel.scaleOverall;
     if (obj) {
-      console.log(obj);
       this.scaleModel.tenTaiLieu = obj.tenTaiLieu ? obj.tenTaiLieu : '';
       this.scaleModel.lanPhongVan = obj.lanPhongVan ? obj.lanPhongVan : 0;
-      // this.scaleModel.loaiCongTrinh.vanPhong = obj.loaiCongTrinh.vanPhong ? obj.loaiCongTrinh.vanPhong : false;
-      // this.scaleModel.loaiCongTrinh.nhaCongNghiep = obj.loaiCongTrinh.nhaCongNghiep ? obj.loaiCongTrinh.nhaCongNghiep : false;
-      // this.scaleModel.loaiCongTrinh.mep = obj.loaiCongTrinh.mep;
-      // this.scaleModel.loaiCongTrinh.khuDanCu = obj.loaiCongTrinh.khuDanCu;
-      // this.scaleModel.loaiCongTrinh.toHop = obj.loaiCongTrinh.toHop;
-      // this.scaleModel.loaiCongTrinh.sanBay = obj.loaiCongTrinh.sanBay;
-      // this.scaleModel.loaiCongTrinh.trungTamThuongMai = obj.loaiCongTrinh.trungTamThuongMai;
-      // this.scaleModel.loaiCongTrinh.canHo = obj.loaiCongTrinh.canHo;
-      // this.scaleModel.loaiCongTrinh.nhaphoBietThu = obj.loaiCongTrinh.nhaphoBietThu;
-      // this.scaleModel.loaiCongTrinh.khachSan = obj.loaiCongTrinh.khachSan;
-      // this.scaleModel.loaiCongTrinh.haTang = obj.loaiCongTrinh.haTang;
-      // this.scaleModel.loaiCongTrinh.truongHoc = obj.loaiCongTrinh.truongHoc;
-      // this.scaleModel.loaiCongTrinh.congtrinhMoi = obj.loaiCongTrinh.congtrinhMoi;
-      // this.scaleModel.loaiCongTrinh.thayDoiBoSung = obj.loaiCongTrinh.thayDoiBoSung;
-      // this.scaleModel.loaiCongTrinh.nangCapCaiTien = obj.loaiCongTrinh.nangCapCaiTien;
-      // this.scaleModel.loaiCongTrinh.thaoDoCaiTien = obj.loaiCongTrinh.thaoDoCaiTien;
-      // this.scaleModel.loaiCongTrinh.khac = obj.loaiCongTrinh.khac;
       this.scaleModel.loaiCongTrinh = obj.loaiCongTrinh && {
         vanPhong: obj.loaiCongTrinh.vanPhong,
         nhaCongNghiep: obj.loaiCongTrinh.nhaCongNghiep,
@@ -192,7 +171,6 @@ export class ScaleOverallComponent implements OnInit {
         nangCapCaiTien: obj.loaiCongTrinh.nangCapCaiTien,
         thaoDoCaiTien: obj.loaiCongTrinh.thaoDoCaiTien,
         khac: obj.loaiCongTrinh.khac
-
       };
       this.scaleModel.quyMoDuAn = obj.quyMoDuAn && {
         dienTichCongTruong: obj.quyMoDuAn.dienTichCongTruong,
@@ -200,44 +178,28 @@ export class ScaleOverallComponent implements OnInit {
         soTang: obj.quyMoDuAn.soTang,
         tienDo: obj.quyMoDuAn.tienDo
       };
-    } else {
-
-      this.scaleModel = {
-        tenTaiLieu: 'Báo cáo tham quan công trình',
-        lanPhongVan: 3,
-        loaiCongTrinh: {
-          vanPhong: true,
-          khuDanCu: false,
-          trungTamThuongMai: false,
-          khachSan: false,
-          nhaCongNghiep: false,
-          toHop: false,
-          canHo: true,
-          haTang: false,
-          mep: false,
-          sanBay: false,
-          nhaphoBietThu: false,
-          truongHoc: false,
-          //
-          congtrinhMoi: true,
-          nangCapCaiTien: false,
-          thayDoiBoSung: false,
-          thaoDoCaiTien: false,
-          khac: 'Dự án mẫu',
-        },
-        quyMoDuAn: {
-          dienTichCongTruong: 15389,
-          tongDienTichXayDung: 114863,
-          soTang: 'Podium 5 tầng; T6: 36 tầng; T7: 39 tầng',
-          tienDo: 600
-        },
+      this.scaleModel.hinhAnhPhoiCanh = obj.hinhAnhPhoiCanh && {
+        description: obj.hinhAnhPhoiCanh.description,
+        images: obj.hinhAnhPhoiCanh.images
       };
+      this.scaleModel.thongTinVeKetCau = obj.thongTinVeKetCau && {
+        description: obj.thongTinVeKetCau.description,
+        images: obj.thongTinVeKetCau.images
+      };
+      this.scaleModel.nhungYeuCauDacBiet = obj.nhungYeuCauDacBiet && {
+        description: obj.nhungYeuCauDacBiet.description,
+        images: obj.nhungYeuCauDacBiet.images
+      };
+      this.perspectiveImageUrls = this.scaleModel.hinhAnhPhoiCanh ? this.scaleModel.hinhAnhPhoiCanh.images : [];
+      this.structureImageUrls = this.scaleModel.thongTinVeKetCau ? this.scaleModel.thongTinVeKetCau.images : [];
+      this.requirementsImageUrls = this.scaleModel.nhungYeuCauDacBiet ? this.scaleModel.nhungYeuCauDacBiet.images : [];
     }
-
   }
 
   mappingToLiveFormData(data) {
     EditComponent.formModel.scaleOverall = new ScaleOverall;
+    EditComponent.formModel.scaleOverall.tenTaiLieu = data.tenTaiLieu;
+    EditComponent.formModel.scaleOverall.lanPhongVan = data.lanPhongVan;
     EditComponent.formModel.scaleOverall.loaiCongTrinh = {
       vanPhong: data.vanPhong,
       khuDanCu: data.khuDanCu,
@@ -257,7 +219,24 @@ export class ScaleOverallComponent implements OnInit {
       thaoDoCaiTien: data.thaoDoCaiTien,
       khac: data.khac
     };
-    console.log(EditComponent.formModel.scaleOverall);
+    EditComponent.formModel.scaleOverall.quyMoDuAn = {
+      dienTichCongTruong: data.dienTichCongTruong,
+      tongDienTichXayDung: data.tongDienTichXayDung,
+      soTang: data.soTang,
+      tienDo: data.tienDo
+    };
+    EditComponent.formModel.scaleOverall.hinhAnhPhoiCanh = {
+      description: data.hinhAnhPhoiCanhDesc,
+      images: this.perspectiveImageUrls
+    };
+    EditComponent.formModel.scaleOverall.thongTinVeKetCau = {
+      description: data.thongTinVeKetCauDesc,
+      images: this.structureImageUrls
+    };
+    EditComponent.formModel.scaleOverall.nhungYeuCauDacBiet = {
+      description: data.nhungYeuCauDacBietDesc,
+      images: this.requirementsImageUrls
+    };
   }
 
   uploadPerspectiveImage(event) {
@@ -268,13 +247,13 @@ export class ScaleOverallComponent implements OnInit {
         reader.onload = (e: any) => this.perspectiveImageUrls.push(e.target.result);
         reader.readAsDataURL(file);
       }
+      this.scaleOverallForm.get('hinhAnhPhoiCanhList').patchValue(this.perspectiveImageUrls);
     }
   }
-  deletePerspectiveImage() {
-    const index = this.perspectiveImageUrls.indexOf(this.url);
+  deletePerspectiveImage(i) {
+    const index = this.perspectiveImageUrls.indexOf(i);
     this.perspectiveImageUrls.splice(index, 1);
   }
-
   uploadStructureImage(event) {
     const files = event.target.files;
     if (files) {
@@ -283,13 +262,13 @@ export class ScaleOverallComponent implements OnInit {
         reader.onload = (e: any) => this.structureImageUrls.push(e.target.result);
         reader.readAsDataURL(file);
       }
+      this.scaleOverallForm.get('thongTinVeKetCauList').patchValue(this.structureImageUrls);
     }
   }
-  deleteStructureImage() {
-    const index = this.structureImageUrls.indexOf(this.url);
+  deleteStructureImage(i) {
+    const index = this.structureImageUrls.indexOf(i);
     this.structureImageUrls.splice(index, 1);
   }
-
   uploadRequirementsImage(event) {
     const files = event.target.files;
     if (files) {
@@ -298,93 +277,11 @@ export class ScaleOverallComponent implements OnInit {
         reader.onload = (e: any) => this.requirementsImageUrls.push(e.target.result);
         reader.readAsDataURL(file);
       }
+      this.scaleOverallForm.get('nhungYeuCauDacBietList').patchValue(this.requirementsImageUrls);
     }
   }
-  deleteRequirementsImage() {
-    const index = this.requirementsImageUrls.indexOf(this.url);
+  deleteRequirementsImage(i) {
+    const index = this.requirementsImageUrls.indexOf(i);
     this.requirementsImageUrls.splice(index, 1);
   }
 }
-
-//
-this.scaleModel = {
-  documentName: 'Báo cáo tham quan công trình',
-  interviewTimes: 3,
-  loaiCongTrinh: {
-    vanPhong: true,
-    khuDanCu: false,
-    trungTamThuongMai: false,
-    khachSan: false,
-    nhaCongNghiep: false,
-    toHop: false,
-    canHo: true,
-    haTang: false,
-    mep: false,
-    sanBay: false,
-    nhaphoBietThu: false,
-    truongHoc: false,
-    //
-    congtrinhMoi: true,
-    nangCapCaiTien: false,
-    thayDoiBoSung: false,
-    thaoDoCaiTien: false,
-    khac: 'Dự án mẫu',
-  },
-  scale: {
-    areaSite: 15389,
-    totalArea: 114863,
-    numberOfFloor: 'Podium 5 tầng; T6: 36 tầng; T7: 39 tầng',
-    progress: 600
-  },
-  hinhAnhPhoiCanh: {
-    description: 'Text',
-    images: [
-      {
-        id: '001',
-        image: 'https://images.pexels.com/photos/268364/pexels-photo-268364.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260'
-      },
-      {
-        id: '002',
-        image: 'https://images.pexels.com/photos/1055271/pexels-photo-1055271.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260'
-      },
-      {
-        id: '003',
-        image: 'https://images.pexels.com/photos/134575/pexels-photo-134575.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260'
-      }
-    ]
-  },
-  thongTinVeKetCau: {
-    description: 'CÔNG TRÌNH XÂY DỰNG MỚI, BẮT ĐẦU TỪ NẮP HẦM',
-    images: [
-      {
-        id: '001',
-        image: 'https://images.pexels.com/photos/268364/pexels-photo-268364.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260'
-      },
-      {
-        id: '002',
-        image: 'https://images.pexels.com/photos/1055271/pexels-photo-1055271.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260'
-      },
-      {
-        id: '003',
-        image: 'https://images.pexels.com/photos/134575/pexels-photo-134575.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260'
-      }
-    ]
-  },
-  nhungYeuCauDacBiet: {
-    description: 'Text',
-    images: [
-      {
-        id: '001',
-        image: 'https://images.pexels.com/photos/268364/pexels-photo-268364.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260'
-      },
-      {
-        id: '002',
-        image: 'https://images.pexels.com/photos/1055271/pexels-photo-1055271.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260'
-      },
-      {
-        id: '003',
-        image: 'https://images.pexels.com/photos/134575/pexels-photo-134575.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260'
-      }
-    ]
-  }
-};

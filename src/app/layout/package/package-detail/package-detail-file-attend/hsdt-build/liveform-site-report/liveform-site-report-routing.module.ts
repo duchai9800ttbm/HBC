@@ -1,12 +1,12 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { LiveformSiteReportComponent } from './liveform-site-report.component';
-import { InfoComponent } from './info/info.component';
 
 const routes: Routes = [
   { path: '', component: LiveformSiteReportComponent },
-  { path: 'info/:id', loadChildren: './info/info.module#InfoModule'},
-  { path: 'edit/:id', loadChildren: './edit/edit.module#EditModule'}
+  { path: 'info', loadChildren: './edit/edit.module#EditModule'},
+  { path: 'edit', loadChildren: './edit/edit.module#EditModule'},
+  { path: 'create', loadChildren: './edit/edit.module#EditModule'}
 ];
 
 @NgModule({

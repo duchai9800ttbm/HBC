@@ -12,6 +12,8 @@ import { UsefulInfoComponent } from './useful-info/useful-info.component';
 import { EditComponent } from './edit.component';
 import { SharedModule } from '../../../../../../../shared/shared.module';
 import { UpdateConfirmPopupComponent } from './update-confirm-popup/update-confirm-popup.component';
+import { SubjectItemComponent } from './useful-info/subject-item/subject-item.component';
+import { ContentItemComponent } from './useful-info/subject-item/content-item/content-item.component';
 
 @NgModule({
   imports: [
@@ -28,7 +30,9 @@ import { UpdateConfirmPopupComponent } from './update-confirm-popup/update-confi
     SoilConditionComponent,
     TrafficComponent,
     UsefulInfoComponent,
-    UpdateConfirmPopupComponent
+    UpdateConfirmPopupComponent,
+    SubjectItemComponent,
+    ContentItemComponent
   ]
 })
 export class EditModule { }

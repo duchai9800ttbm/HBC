@@ -28,7 +28,7 @@ export class ScaleOverall {
         soTang: string;
         tienDo: number;
     };
-    // hinhAnhPhoiCanh: Image;
-    // thongTinVeKetCau: Image;
-    // nhungYeuCauDacBiet: Image;
+    hinhAnhPhoiCanh: Image;
+    thongTinVeKetCau: Image;
+    nhungYeuCauDacBiet: Image;
 }

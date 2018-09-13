@@ -1,4 +1,4 @@
-<div class="detail-info">
+<form [formGroup]="serviceConstructionForm" class="detail-info">
     <div id="step4" class="step-info">
         <h5 class="big-title">5.&nbsp;dịch vụ cơ điện phục vụ thi công (temporary building service for construction)</h5>
         <div>
@@ -8,14 +8,14 @@
                     <div class="listDetail">
                         <div class="image-demo-des">
                             <label for="">Hệ thống hiện hữu/ Existing system</label>
-                            <input type="text" [(ngModel)]="serviceConstructionModel.heThongNuoc.heThongHienHuu.description">
+                            <input type="text" formControlName="heThongNuocHienHuuDesc">
                         </div>
                         <div class="image-demo-img">
                             <input type="file" #uploadSupplySystem (change)="uploadSupplySystemImage($event)">
 
-                            <div class="display-img" *ngFor="let url of serviceConstructionModel.heThongNuoc.heThongHienHuu.images">
-                                <img *ngIf="url !== 0" [src]="url.image">
-                                <div *ngIf="url !== 0" class="toppp" (click)="deleteSupplySystemImage()">
+                            <div class="display-img" *ngFor="let url of supplySystemImageUrls">
+                                <img [src]="url">
+                                <div class="toppp" (click)="deleteSupplySystemImage(url)">
                                     <i class="fa fa-times delete-icon" aria-hidden="true"></i>
                                 </div>
                             </div>
@@ -28,14 +28,14 @@
                     <div class="listDetail">
                         <div class="image-demo-des">
                             <label for="">Điểm đấu nối/ Existing connection point</label>
-                            <input type="text" [(ngModel)]="serviceConstructionModel.heThongNuoc.diemDauNoi.description">
+                            <input type="text" formControlName="heThongNuocDiemDauNoiDesc">
                         </div>
                         <div class="image-demo-img">
                             <input type="file" #uploadSupplyPoint (change)="uploadSupplyPointImage($event)">
 
-                            <div class="display-img" *ngFor="let url of serviceConstructionModel.heThongNuoc.diemDauNoi.images">
-                                <img *ngIf="url !== 0" [src]="url.image">
-                                <div *ngIf="url !== 0" class="toppp" (click)="deleteSupplyPointImage()">
+                            <div class="display-img" *ngFor="let url of supplyPointImageUrls">
+                                <img [src]="url">
+                                <div class="toppp" (click)="deleteSupplyPointImage(url)">
                                     <i class="fa fa-times delete-icon" aria-hidden="true"></i>
                                 </div>
                             </div>
@@ -53,14 +53,14 @@
                     <div class="listDetail">
                         <div class="image-demo-des">
                             <label for="">Hệ thống hiện hữu/ Existing system</label>
-                            <input type="text" [(ngModel)]="serviceConstructionModel.heThongNuocThoat.heThongHienHuu.description">
+                            <input type="text" formControlName="heThongNuocThoatHienHuuDesc">
                         </div>
                         <div class="image-demo-img">
                             <input type="file" #uploadDrainageSystem (change)="uploadDrainageSystemImage($event)">
 
-                            <div class="display-img" *ngFor="let url of serviceConstructionModel.heThongNuocThoat.heThongHienHuu.images">
-                                <img *ngIf="url !== 0" [src]="url.image">
-                                <div *ngIf="url !== 0" class="toppp" (click)="deleteDrainageSystemImage()">
+                            <div class="display-img" *ngFor="let url of drainageSystemImageUrls">
+                                <img [src]="url">
+                                <div class="toppp" (click)="deleteDrainageSystemImage(url)">
                                     <i class="fa fa-times delete-icon" aria-hidden="true"></i>
                                 </div>
                             </div>
@@ -73,14 +73,14 @@
                     <div class="listDetail">
                         <div class="image-demo-des">
                             <label for="">Điểm đấu nối/ Existing connection point</label>
-                            <input type="text" [(ngModel)]="serviceConstructionModel.heThongNuocThoat.diemDauNoi.description">
+                            <input type="text" formControlName="heThongNuocThoatDiemDauNoiDesc">
                         </div>
                         <div class="image-demo-img">
                             <input type="file" #uploadDrainagePoint (change)="uploadDrainagePointImage($event)">
 
-                            <div class="display-img" *ngFor="let url of serviceConstructionModel.heThongNuocThoat.diemDauNoi.images">
-                                <img *ngIf="url !== 0" [src]="url.image">
-                                <div *ngIf="url !== 0" class="toppp" (click)="deleteDrainagePointImage()">
+                            <div class="display-img" *ngFor="let url of drainagePointImageUrls">
+                                <img [src]="url">
+                                <div class="toppp" (click)="deleteDrainagePointImage(url)">
                                     <i class="fa fa-times delete-icon" aria-hidden="true"></i>
                                 </div>
                             </div>
@@ -98,14 +98,14 @@
                     <div class="listDetail">
                         <div class="image-demo-des">
                             <label for="">Trạm hạ thế/Transformer station</label>
-                            <input type="text" [(ngModel)]="serviceConstructionModel.heThongDien.tramHaThe.description">
+                            <input type="text" formControlName="tramHaTheDesc">
                         </div>
                         <div class="image-demo-img">
                             <input type="file" #uploadPowerStation (change)="uploadPowerStationImage($event)">
 
-                            <div class="display-img" *ngFor="let url of serviceConstructionModel.heThongDien.tramHaThe.images">
-                                <img *ngIf="url !== 0" [src]="url.image">
-                                <div *ngIf="url !== 0" class="toppp" (click)="deletePowerStationImage()">
+                            <div class="display-img" *ngFor="let url of powerStationImageUrls">
+                                <img [src]="url">
+                                <div class="toppp" (click)="deletePowerStationImage(url)">
                                     <i class="fa fa-times delete-icon" aria-hidden="true"></i>
                                 </div>
                             </div>
@@ -118,14 +118,14 @@
                     <div class="listDetail">
                         <div class="image-demo-des">
                             <label for="">Đường dây trung thế hiện hữu/ Existing medium voltage system</label>
-                            <input type="text" [(ngModel)]="serviceConstructionModel.heThongDien.duongDayTrungThe.description">
+                            <input type="text" formControlName="duongDayTrungTheDesc">
                         </div>
                         <div class="image-demo-img">
                             <input type="file" #uploadMediumVoltageSystem (change)="uploadMediumVoltageSystemImage($event)">
 
-                            <div class="display-img" *ngFor="let url of serviceConstructionModel.heThongDien.duongDayTrungThe.images">
-                                <img *ngIf="url !== 0" [src]="url.image">
-                                <div *ngIf="url !== 0" class="toppp" (click)="deleteMediumVoltageSystemImage()">
+                            <div class="display-img" *ngFor="let url of mediumVoltageSystemImageUrls">
+                                <img [src]="url">
+                                <div class="toppp" (click)="deleteMediumVoltageSystemImage(url)">
                                     <i class="fa fa-times delete-icon" aria-hidden="true"></i>
                                 </div>
                             </div>
@@ -138,14 +138,14 @@
                     <div class="listDetail">
                         <div class="image-demo-des">
                             <label for="">Khác/ Others</label>
-                            <input type="text" [(ngModel)]="serviceConstructionModel.heThongDien.thongTinKhac.description">
+                            <input type="text" formControlName="heThongDienKhacDesc">
                         </div>
                         <div class="image-demo-img">
                             <input type="file" #uploadPowerOther (change)="uploadPowerOtherImage($event)">
 
-                            <div class="display-img" *ngFor="let url of serviceConstructionModel.heThongDien.thongTinKhac.images">
-                                <img *ngIf="url !== 0" [src]="url.image">
-                                <div *ngIf="url !== 0" class="toppp" (click)="deletePowerOtherImage()">
+                            <div class="display-img" *ngFor="let url of powerOtherImageUrls">
+                                <img [src]="url">
+                                <div class="toppp" (click)="deletePowerOtherImage(url)">
                                     <i class="fa fa-times delete-icon" aria-hidden="true"></i>
                                 </div>
                             </div>
@@ -160,4 +160,4 @@
             </div>
         </div>
     </div>
-</div>
+</form>

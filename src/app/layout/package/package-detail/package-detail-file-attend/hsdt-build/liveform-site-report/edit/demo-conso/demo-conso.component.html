@@ -1,4 +1,4 @@
-<div class="detail-info">
+<form [formGroup]="demoConsoForm" class="detail-info">
     <div id="step3" class="step-info">
         <h5 class="big-title">4.&nbsp;phá vỡ và gia cố (demobilisation and consolidation)</h5>
         <div>
@@ -6,18 +6,18 @@
                 <h6 class="small-title">4.1 Phá vỡ kết cấu/ tòa nhà/ Demobilisation existing structure or building</h6>
                 <div class="main-detail">
                     <div class="text-des-input">
-                        <input type="text" [(ngModel)]="demoConsoModel.phaVoKetCau.description">
+                        <input type="text" formControlName="phaVoKetCauDesc">
                     </div>
                     <div>
                         <div class="image-demo-img">
-                            <input type="file" #uploaDemobilisation (change)="uploaDemobilisationImage($event)">
-                            <div class="display-img" *ngFor="let url of demoConsoModel.phaVoKetCau.images">
-                                <img *ngIf="url !== 0" [src]="url.image">
-                                <div *ngIf="url !== 0" class="toppp" (click)="deleteDemobilisationImage()">
+                            <input type="file" #uploadDemobilisation (change)="uploadDemobilisationImage($event)">
+                            <div class="display-img" *ngFor="let url of demobilisationImageUrls">
+                                <img [src]="url">
+                                <div class="toppp" (click)="deleteDemobilisationImage(url)">
                                     <i class="fa fa-times delete-icon" aria-hidden="true"></i>
                                 </div>
                             </div>
-                            <div class="perspective-image" (click)="uploaDemobilisation.click()">
+                            <div class="perspective-image" (click)="uploadDemobilisation.click()">
                                 <i class="fa fa-plus" aria-hidden="true"></i>
                                 <p>Image</p>
                             </div>
@@ -29,19 +29,19 @@
                 <h6 class="small-title">4.2 Gia cố kết cấu/ tòa nhà/ Consolidation existing structure or building</h6>
                 <div class="main-detail">
                     <div class="text-des-input">
-                        <input type="text" [(ngModel)]="demoConsoModel.giaCoKetCau.description">
+                        <input type="text" formControlName="giaCoKetCauDesc">
                     </div>
                     <div>
                         <div class="image-demo-img">
-                            <input type="file" #uploaConsolidation (change)="uploaConsolidationImage($event)">
+                            <input type="file" #uploadConsolidation (change)="uploadConsolidationImage($event)">
 
-                            <div class="display-img" *ngFor="let url of demoConsoModel.giaCoKetCau.images">
-                                <img *ngIf="url !== 0" [src]="url.image">
-                                <div *ngIf="url !== 0" class="toppp" (click)="deleteConsolidationImage()">
+                            <div class="display-img" *ngFor="let url of consolidationImageUrls">
+                                <img [src]="url">
+                                <div class="toppp" (click)="deleteConsolidationImage(url)">
                                     <i class="fa fa-times delete-icon" aria-hidden="true"></i>
                                 </div>
                             </div>
-                            <div class="perspective-image" (click)="uploaConsolidation.click()">
+                            <div class="perspective-image" (click)="uploadConsolidation.click()">
                                 <i class="fa fa-plus" aria-hidden="true"></i>
                                 <p>Image</p>
                             </div>
@@ -54,15 +54,15 @@
                     conditions/figuring by picture</h6>
                 <div class="main-detail">
                     <div class="text-des-input">
-                        <input type="text" [(ngModel)]="demoConsoModel.dieuKien.description">
+                        <input type="text" formControlName="dieuKienHinhAnhDesc">
                     </div>
                     <div>
                         <div class="image-demo-img">
                             <input type="file" #uploaAdjacent (change)="uploaAdjacentImage($event)">
 
-                            <div class="display-img" *ngFor="let url of demoConsoModel.dieuKien.images">
-                                <img *ngIf="url !== 0" [src]="url.image">
-                                <div *ngIf="url !== 0" class="toppp" (click)="deleteAdjacentImage()">
+                            <div class="display-img" *ngFor="let url of adjacentImageUrls">
+                                <img [src]="url">
+                                <div class="toppp" (click)="deleteAdjacentImage(url)">
                                     <i class="fa fa-times delete-icon" aria-hidden="true"></i>
                                 </div>
                             </div>
@@ -76,4 +76,4 @@
             </div>
         </div>
     </div>
-</div>
+</form>

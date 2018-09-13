@@ -75,7 +75,7 @@
                     <div class="toggle-menu-item" [routerLink]="['./summary']" routerLinkActive="active-link">Bảng tóm
                         tắt ĐKDT</div>
                     <div class="toggle-menu-item">Yêu cầu báo giá vật tư, thầu phụ</div>
-                    <div class="toggle-menu-item" routerLink="./site-survey" routerLinkActive="active-link">Báo cáo
+                    <div class="toggle-menu-item" routerLink="./liveformsite" routerLinkActive="active-link">Báo cáo
                         tham quan công trình</div>
                     <div class="toggle-menu-item">Bảng tổng hợp dự toán</div>
                     <div class="toggle-menu-item">Bảng tính chi phí chung</div>
@@ -85,7 +85,9 @@
                     <div class="toggle-menu-item">Hồ sơ khác</div>
                 </div>
             </div>
-            <router-outlet></router-outlet>
+            <div class="w-100">
+                <router-outlet></router-outlet>
+            </div>
         </div>
     </div>
 </div>

@@ -7,6 +7,10 @@ import { Traffic } from '../models/site-survey-report/traffic.model';
 import { DemoConso } from '../models/site-survey-report/demo-conso.model';
 import { SiteTempService } from '../models/site-survey-report/site-temp-service.model';
 import { SoilCondition } from '../models/site-survey-report/soil-condition.model';
+import { InstantSearchService } from './instant-search.service';
+import { FilterPipe } from 'ngx-filter-pipe';
+import { ApiService } from './api.service';
+import { SessionService } from './session.service';
 
 @Injectable()
 export class LiveformDataReportService {
@@ -24,7 +28,12 @@ export class LiveformDataReportService {
   private dataStringSource = new BehaviorSubject<ScaleOverall>(null);
   public dataString$ = this.dataStringSource.asObservable();
 
-  constructor() { }
+  constructor(
+    private sessionService: SessionService,
+    private apiService: ApiService,
+    private filterService: FilterPipe,
+    private instantSearchService: InstantSearchService,
+  ) { }
   // public saveData(obj: any) {
   //   this.storeData.scaleOverallModel = obj;
   //   this.dataStringSource.next(this.scaleOverallModel);
@@ -35,5 +44,10 @@ export class LiveformDataReportService {
     this.scaleOverallModel = obj;
     this.dataStringSource.next(this.scaleOverallModel);
     this.storeData.push(this.scaleOverallModel);
+  }
+
+  tenderSiteSurveying(): Observable<any> {
+    const url = `tendersitesurveyingeeport/createorupdate`;
+    return this.apiService.post(url).map(res => res);
   }
 }

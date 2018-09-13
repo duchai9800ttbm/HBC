@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { DescribeOverall } from '../../../../../../../../shared/models/site-survey-report/describe-overall.model';
+import { FormGroup, FormBuilder } from '@angular/forms';
+import { EditComponent } from '../edit.component';
 
 @Component({
   selector: 'app-describe-overall',
@@ -7,45 +9,68 @@ import { DescribeOverall } from '../../../../../../../../shared/models/site-surv
   styleUrls: ['./describe-overall.component.scss']
 })
 export class DescribeOverallComponent implements OnInit {
+  describeForm: FormGroup;
+
   topographyImageUrls = [];
   existingBuildImageUrls = [];
   stacaleImageUrls = [];
   url;
   describeModel: DescribeOverall;
-  constructor() { }
+  constructor(
+    private fb: FormBuilder
+  ) { }
 
   ngOnInit() {
-    this.describeModel = new DescribeOverall();
-    this.describeModel = {
-      chiTietDiaHinh: {
-        description: 'XEM FILE ĐÍNH KÈM',
-        images: [
-          {
-            id: '011',
-            image: 'https://images.pexels.com/photos/268364/pexels-photo-268364.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260'
-          }
-        ]
-      },
-      kienTrucHienHuu: {
-        description: 'Không có. Chưa có rào tạm',
-        images: [
-          {
-            id: '031',
-            image: 'https://images.pexels.com/photos/268364/pexels-photo-268364.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260'
-          }
-        ]
-      },
-      yeuCauChuongNgai: {
-        description: 'Không có',
-        images: [
-          {
-            id: '001',
-            image: 'https://images.pexels.com/photos/268364/pexels-photo-268364.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260'
-          }
-        ]
-      }
+    this.initData();
+
+    this.describeForm = this.fb.group({
+      chiTietDiaHinhDesc: [this.describeModel.chiTietDiaHinh && this.describeModel.chiTietDiaHinh.description],
+      chiTietDiaHinhList: [null],
+      kienTrucHienHuuDesc: [this.describeModel.chiTietDiaHinh && this.describeModel.chiTietDiaHinh.description],
+      kienTrucHienHuuList: [null],
+      yeuCauChuongNgaiDesc: [this.describeModel.chiTietDiaHinh && this.describeModel.chiTietDiaHinh.description],
+      yeuCauChuongNgaiList: [null],
+    });
+    this.describeForm.valueChanges.subscribe(data => this.mappingToLiveFormData(data));
+  }
+
+  initData() {
+    const obj = EditComponent.formModel.describeOverall;
+    if (obj) {
+      this.describeModel.chiTietDiaHinh = obj.chiTietDiaHinh && {
+        description: obj.chiTietDiaHinh.description,
+        images: obj.chiTietDiaHinh.images
+      };
+      this.describeModel.kienTrucHienHuu = obj.kienTrucHienHuu && {
+        description: obj.kienTrucHienHuu.description,
+        images: obj.kienTrucHienHuu.images
+      };
+      this.describeModel.yeuCauChuongNgai = obj.yeuCauChuongNgai && {
+        description: obj.yeuCauChuongNgai.description,
+        images: obj.yeuCauChuongNgai.images
+      };
+      this.topographyImageUrls = this.describeModel.chiTietDiaHinh ? this.describeModel.chiTietDiaHinh.images : [];
+      this.existingBuildImageUrls = this.describeModel.kienTrucHienHuu ? this.describeModel.kienTrucHienHuu.images : [];
+      this.stacaleImageUrls = this.describeModel.yeuCauChuongNgai ? this.describeModel.yeuCauChuongNgai.images : [];
+    }
+  }
+
+  mappingToLiveFormData(data) {
+    EditComponent.formModel.describeOverall = new DescribeOverall;
+    EditComponent.formModel.describeOverall.chiTietDiaHinh = {
+      description: data.hinhAnhPhoiCanhDesc,
+      images: this.topographyImageUrls
+    };
+    EditComponent.formModel.describeOverall.kienTrucHienHuu = {
+      description: data.thongTinVeKetCauDesc,
+      images: this.existingBuildImageUrls
+    };
+    EditComponent.formModel.describeOverall.yeuCauChuongNgai = {
+      description: data.nhungYeuCauDacBietDesc,
+      images: this.stacaleImageUrls
     };
   }
+
   uploadTopographyImage(event) {
     const files = event.target.files;
     if (files) {
@@ -54,10 +79,11 @@ export class DescribeOverallComponent implements OnInit {
         reader.onload = (e: any) => this.topographyImageUrls.push(e.target.result);
         reader.readAsDataURL(file);
       }
+      this.describeForm.get('chiTietDiaHinhList').patchValue(this.topographyImageUrls);
     }
   }
-  deleteTopographyImage() {
-    const index = this.topographyImageUrls.indexOf(this.url);
+  deleteTopographyImage(i) {
+    const index = this.topographyImageUrls.indexOf(i);
     this.topographyImageUrls.splice(index, 1);
   }
 
@@ -69,10 +95,11 @@ export class DescribeOverallComponent implements OnInit {
         reader.onload = (e: any) => this.existingBuildImageUrls.push(e.target.result);
         reader.readAsDataURL(file);
       }
+      this.describeForm.get('kienTrucHienHuuList').patchValue(this.existingBuildImageUrls);
     }
   }
-  deleteExistingBuildImage() {
-    const index = this.existingBuildImageUrls.indexOf(this.url);
+  deleteExistingBuildImage(i) {
+    const index = this.existingBuildImageUrls.indexOf(i);
     this.existingBuildImageUrls.splice(index, 1);
   }
 
@@ -84,10 +111,11 @@ export class DescribeOverallComponent implements OnInit {
         reader.onload = (e: any) => this.stacaleImageUrls.push(e.target.result);
         reader.readAsDataURL(file);
       }
+      this.describeForm.get('yeuCauChuongNgaiList').patchValue(this.stacaleImageUrls);
     }
   }
-  deleteStacaleImage() {
-    const index = this.stacaleImageUrls.indexOf(this.url);
+  deleteStacaleImage(i) {
+    const index = this.stacaleImageUrls.indexOf(i);
     this.stacaleImageUrls.splice(index, 1);
   }
 
