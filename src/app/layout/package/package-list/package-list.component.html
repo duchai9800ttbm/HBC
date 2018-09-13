@@ -140,13 +140,13 @@
 
 
 
-        <div class="zui-wrapper">
-            <div class="table-responsive set-height-table zui-scroller" id="style-scroll">
+        <div class="">
+            <div class="table-responsive set-height-table" id="style-scroll">
                 <table datatable id="tableId" [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" style="min-width: 100%" appWidthAuto class="table-selection zui-table stripe hover">
                     <thead>
                         <tr style="width: 100%;">
-                            <th class="text-center zui-sticky-col" type="check" style="width: 60px; max-width: 60px !important; height: calc(1rem + 2px)">
-                                <label class="custom-control custom-checkbox" style="margin-top: -0.5rem">
+                            <th class="text-center " type="check" style="width: 60px; max-width: 60px !important;">
+                                <label class="custom-control custom-checkbox">
                                     <input type="checkbox" class="custom-control-input input-checkbox" [(ngModel)]="checkboxSeclectAll" (change)="onSelectAll($event.target.checked)">
                                     <span class="custom-control-indicator"></span>
                                 </label>
@@ -625,14 +625,14 @@
                                     </div>
                                 </div>
                             </th>
-                            <th style="max-width: 100px!important; width: 100px!important; padding: 5px 0 !important; background-color: #f68e56" class="table-action text-center zui-sticky-col-right" type="check-action">
+                            <th style="max-width: 100px!important; width: 100px!important; padding: 5px 0 !important; background-color: #f68e56" class="table-action text-center -right" type="check-action">
                                 Thao tác
                             </th>
                         </tr>
                     </thead>
                     <tbody *ngIf="listPackage">
                         <tr *ngFor="let item of pagedResult.items; let i = index">
-                            <td class="text-center zui-sticky-col" type="check">
+                            <td class="text-center " type="check">
                                 <label class="custom-control custom-checkbox">
                                     <input type="checkbox" class="custom-control-input" [(ngModel)]="item.checkboxSelected">
                                     <span class="custom-control-indicator"></span>
@@ -715,7 +715,7 @@
                             <td [class.d-none]="!diaDiem" class="text-truncate" [title]="item.place">{{ item.place }}</td>
                             <td [class.d-none]="!moTa" class="text-truncate" [title]="item.description">{{ item.description }}</td>
                             <td [class.d-none]="!danhGiaDuAn" class="text-truncate" [title]="item.evaluation">{{ item.evaluation }}</td>
-                            <td style="max-width: 100px!important;" class="zui-sticky-col-right" type="check-action">
+                            <td style="max-width: 100px!important;" class="-right" type="check-action">
                                 <div class="d-flex justify-content-center">
                                     <div>
                                         <a *ngIf="isViewBidOpportunityDetail" [routerLink]="['/package/detail',item.bidOpportunityId]">

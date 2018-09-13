@@ -531,7 +531,7 @@ select.form-control:not([size]):not([multiple]){
     display: none !important;
 }
 .set-height-table{
-    // height: calc(100vh - 305px);
+    height: calc(100vh - 305px);
 }
 :host /deep/ .flex-row{
     flex-direction: row !important;

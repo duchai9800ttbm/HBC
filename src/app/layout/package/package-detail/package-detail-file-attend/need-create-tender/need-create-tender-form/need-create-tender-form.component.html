@@ -54,7 +54,7 @@
     <div class="w-100 ml-2">
         <div>
             <div class="header m-0">
-                <div class="row">
+                <!-- <div class="row">
                     <div class="col-md-6">
                         Công trình (Project): {{packageInfo?.projectName}}
                     </div>
@@ -69,10 +69,32 @@
                 <div class="row mt-2">
                     <div class="col-md-6"></div>
                     <div class="col-md-6">Thời gian thực hiện hồ sơ dự thầu (Tender process period): {{packageInfo?.totalTime}}</div>
+                </div> -->
+                <div class="row">
+                    <div class="col-md-3"><strong>Công trình (Project):</strong></div>
+                    <div class="col-md-9">{{packageInfo?.projectName}}</div>
+                </div>
+                <div class="row mt-2">
+                    <div class="col-md-3"><strong>Gói thầu (Package):</strong></div>
+                    <div class="col-md-9">{{packageInfo?.opportunityName}}</div>
+                </div>
+                <div class="row mt-2">
+                    <div class="col-md-3"><strong>Kiểu công trình (Project type):</strong></div>
+                    <div class="col-md-9">{{packageInfo?.projectType?.text}}</div>
+                </div>
+                <div class="row mt-2">
+                    <div class="col-md-3"><strong>Địa điểm (Location):</strong></div>
+                    <div class="col-md-9">{{packageInfo?.place}}</div>
+                </div>
+                <div class="row mt-2">
+                    <div class="col-md-3 text-nowrap"><strong>Thời gian thực hiện hồ sơ dự thầu<br>(Tender process period):</strong></div>
+                    <div class="col-md-9">{{packageInfo?.totalTime}}</div>
                 </div>
             </div>
         </div>
-        <router-outlet></router-outlet>
+        <div class="ml-3">
+            <router-outlet></router-outlet>
+        </div>
 
     </div>
 </div>
