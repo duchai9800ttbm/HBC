@@ -51,6 +51,7 @@ export class GroupUserService implements OnInit {
       id: result.id,
       name: result.name,
       desc: result.desc,
+      createdTime: result.createdTime,
       isActive: result.isActive,
       checkbox: null,
       notPrivileges: [],
