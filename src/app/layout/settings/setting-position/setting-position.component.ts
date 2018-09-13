@@ -8,10 +8,10 @@ import {
 } from '../../../shared/services';
 import { Observable, BehaviorSubject, Subject } from '../../../../../node_modules/rxjs';
 import { SettingService } from '../../../shared/services/setting.service';
-import { LocationListItem } from '../../../shared/models/setting/location-list-item';
 import { COMMON_CONSTANTS } from '../../../shared/configs/common.config';
 import { DATATABLE_CONFIG } from '../../../shared/configs';
 import { NgxSpinnerService } from '../../../../../node_modules/ngx-spinner';
+import { LevelListItem } from '../../../shared/models/setting/level-list-item';
 @Component({
   selector: 'app-setting-position',
   templateUrl: './setting-position.component.html',
@@ -23,8 +23,8 @@ export class SettingPositionComponent implements OnInit {
   dtOptions: any = DATATABLE_CONFIG;
   checkboxSeclectAll: boolean;
   gridLoading = true;
-  pagedResult: PagedResult<LocationListItem> = new PagedResult<
-    LocationListItem
+  pagedResult: PagedResult<LevelListItem> = new PagedResult<
+    LevelListItem
     >();
   mySelection: number[] = [];
   constructor(
@@ -40,29 +40,25 @@ export class SettingPositionComponent implements OnInit {
       .debounceTime(COMMON_CONSTANTS.SearchDelayTimeInMs)
       .distinctUntilChanged()
       .subscribe(term =>
-        // this.prospectService
-        //   .filter(term, this.filterModel, 0, 10)
-        //   .subscribe(result => this.rerender(result)));
         this.refresh(0, this.pagedResult.pageSize)
       );
-    //   this.refresh(0, this.pagedResult.pageSize);
   }
 
   public onSelectedKeysChange(e) {
   }
 
-  deleteLocation(item) {
+  deleteLevel(item) {
     this.confirmationService.confirm(
-      'Bạn có chắc chắn muốn xóa khu vực này?',
+      'Bạn có chắc chắn muốn xóa Vị trí/Chức vụ này?',
       () => {
-        this.settingService.deleteLocation(item.id).subscribe(
+        this.settingService.deleteLevel(item.id).subscribe(
           result => {
-            this.alertService.success(`Đã xóa thành công khu vực ${item.locationName}!`);
+            this.alertService.success(`Đã xóa thành công Vị trí/Chức vụ ${item.levelName}!`);
             this.refresh(0, this.pagedResult.pageSize);
           },
           err => {
             this.alertService.error(
-              'Đã gặp lỗi, chưa xóa được khu vực!'
+              'Đã gặp lỗi, chưa xóa được Vị trí/Chức vụ!'
             );
           }
         );
@@ -75,7 +71,7 @@ export class SettingPositionComponent implements OnInit {
   }
 
   refresh(page: string | number, pageSize: string | number) {
-    this.settingService.readLocation(this.searchTerm$.value, page, pageSize).subscribe(data => {
+    this.settingService.readLevel(this.searchTerm$.value, page, pageSize).subscribe(data => {
       this.pagedResult = data;
       this.dtTrigger.next();
       this.spinner.hide();
@@ -86,16 +82,16 @@ export class SettingPositionComponent implements OnInit {
     const listSelected = this.pagedResult.items.filter(i => i.checkboxSelected);
     if (listSelected.length > 0) {
       this.confirmationService.confirm(
-        'Bạn có chắc chắn muốn xóa những khu vực được chọn?',
+        'Bạn có chắc chắn muốn xóa những Vị trí/Chức vụ được chọn?',
         () => {
-          this.settingService.deleteMultipleLocation(listSelected.map(i => i.id)).subscribe(
+          this.settingService.deleteMultipleLevel(listSelected.map(i => i.id)).subscribe(
             result => {
-              this.alertService.success('Đã xóa thành công các khu vực được chọn!');
+              this.alertService.success('Đã xóa thành công các Vị trí/Chức vụ được chọn!');
               this.refresh(0, this.pagedResult.pageSize);
             },
             err => {
               this.alertService.error(
-                'Đã gặp lỗi, chưa xóa được các khu vực được chọn!'
+                'Đã gặp lỗi, chưa xóa được các Vị trí/Chức vụ được chọn!'
               );
             }
           );

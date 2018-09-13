@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { LocationListItem } from '../../../../shared/models/setting/location-list-item';
+import { LevelListItem } from '../../../../shared/models/setting/level-list-item';
 
 @Component({
   selector: 'app-setting-position-create',
@@ -7,7 +7,7 @@ import { LocationListItem } from '../../../../shared/models/setting/location-lis
   styleUrls: ['./setting-position-create.component.scss']
 })
 export class SettingPositionCreateComponent implements OnInit {
-  location: LocationListItem = new LocationListItem();
+  level: LevelListItem = new LevelListItem();
   constructor() { }
 
   ngOnInit() {
