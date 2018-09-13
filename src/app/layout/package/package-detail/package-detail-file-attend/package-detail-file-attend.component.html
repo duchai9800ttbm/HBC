@@ -5,34 +5,45 @@
                 <div style="width: 100%" class="center-parent">
                     <div class="arrow-down"></div>
                 </div>
-                <span class="text-color "><strong>Cần lập đề nghị dự thầu</strong></span>
+                <span class="text-color ">
+                    <strong>Cần lập đề nghị dự thầu</strong>
+                </span>
             </li>
             <li class="triangle" [routerLink]="['./infomation-deployment']" routerLinkActive="active">
                 <div style="width: 100%" class="center-parent">
                     <div class="arrow-down"></div>
                 </div>
-                <span class="text-color"><strong>Triển khai &amp; phân công tiến độ</strong></span>
+                <span class="text-color">
+                    <strong>Triển khai &amp; phân công tiến độ</strong>
+                </span>
             </li>
             <li class="triangle" [routerLink]="['./build']" routerLinkActive="active">
                 <div style="width: 100%" class="center-parent">
                     <div class="arrow-down"></div>
                 </div>
-                <span class="text-color "><strong>Lập HSDT</strong></span>
+                <span class="text-color ">
+                    <strong>Lập HSDT</strong>
+                </span>
             </li>
-            <li class="triangle" [routerLink]="['./price-review']"  routerLinkActive="active">
+            <li class="triangle" [routerLink]="['./price-review']" routerLinkActive="active">
                 <div style="width: 100%" class="center-parent">
                     <div class="arrow-down"></div>
                 </div>
-                <span class="text-color "><strong>Trình duyệt giá</strong></span>
+                <span class="text-color ">
+                    <strong>Trình duyệt giá</strong>
+                </span>
             </li>
             <li class="triangle" [routerLink]="['./interview-negotiation']" routerLinkActive="active">
                 <div style="width: 100%" class="center-parent">
                     <div class="arrow-down"></div>
                 </div>
-                <span class="text-color"><strong>Quản lý phỏng vấn/thương thảo</strong></span>
+                <span class="text-color">
+                    <strong>Quản lý phỏng vấn/thương thảo</strong>
+                </span>
             </li>
         </ul>
     </div>
-    <router-outlet></router-outlet>
+    <div class="set-min-height">
+        <router-outlet></router-outlet>
+    </div>
 </div>
-

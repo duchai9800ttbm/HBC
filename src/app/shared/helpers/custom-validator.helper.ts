@@ -35,6 +35,14 @@ export default class CustomValidator {
         };
     }
 
+    static totalValue(control: AbstractControl): ValidationErrors | null {
+        return ((control.value === '' || control.value === null) || (control.value > 0 )) ? null : {
+            totalValue: {
+                valid: false
+            }
+        };
+    }
+
     static probability(control: AbstractControl): ValidationErrors | null {
         return ((control.value === '' || control.value === null) || (control.value >= 0 && control.value <= 100)) ? null : {
             probability: {
@@ -101,5 +109,6 @@ export default class CustomValidator {
                 }
             };
     }
+
 
 }

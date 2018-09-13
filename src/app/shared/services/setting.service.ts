@@ -11,6 +11,7 @@ import { ConstructionTypeListItem } from '../models/setting/construction-type-li
 import { ConstructionCategoryListItem } from '../models/setting/construction-category-list-item';
 import { BidStatusListItem } from '../models/setting/bid-status-list-item';
 import Utils from '../helpers/utils.helper';
+import { LevelListItem } from '../models/setting/level-list-item';
 
 @Injectable()
 export class SettingService {
@@ -365,5 +366,65 @@ export class SettingService {
         };
         return this.apiService.post(url, requestModel)
             .map(data => data.result);
+    }
+
+    // Vị trí, chức vụ
+    // Tạo mới vị trí, chức vụ
+    createOrUpdateLevel(data) {
+        const url = data.id ? `level/edit` : `level/create`;
+        const model = {
+            id: data.id,
+            name: data.levelName,
+            desc: data.levelDesc
+        };
+        return this.apiService
+            .post(url, model)
+            .map(response => response.result);
+    }
+
+    // get danh sách vị trí, chức vụ
+    readLevel(
+        searchTerm: string,
+        page: number | string,
+        pageSize: number | string
+    ): Observable<PagedResult<LevelListItem>> {
+        // const that = this;
+        const urlParam = Utils.createSearchParam(searchTerm);
+        return this.apiService
+            .get(`level/filter/${page}/${pageSize}`, urlParam)
+            .map(response => {
+                return {
+                    currentPage: response.result.pageIndex,
+                    pageSize: pageSize,
+                    pageCount: response.result.totalPages,
+                    total: response.result.totalCount,
+                    items: response.result.items
+                };
+            })
+            .share();
+    }
+
+    // xóa Vị trí, chức vụ
+    deleteLevel(id: number) {
+        const url = `level/${id}/delete`;
+        return this.apiService
+            .post(url)
+            .map(response => response.result);
+    }
+
+    // view Vị trí, chức vụ
+      viewLevel(id: string): Observable<LevelListItem> {
+        const url = `level/${id}`;
+        return this.apiService.get(url)
+            .map(data => data.result);
+    }
+
+    // Xóa nhiều Vị trí, chức vụ
+    deleteMultipleLevel(arrayId: any) {
+        const url = `level/deletemultiple`;
+        const requestModel = {
+            ids: arrayId,
+        };
+        return this.apiService.post(url, requestModel);
     }
 }

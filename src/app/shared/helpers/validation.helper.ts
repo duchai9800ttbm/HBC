@@ -12,6 +12,7 @@ export default class ValidationHelper {
         password: 'Mật khẩu phải có ít nhất 6 kí tự',
         taxNumber: 'Mã số thuế từ 10 đến 13 chữ số',
         userName: 'Tên đăng nhập phải có ít nhất 6 kí tự',
+        totalValue: 'Giá trị phải lớn hơn 0'
     };
 
     static getInvalidMessages(
