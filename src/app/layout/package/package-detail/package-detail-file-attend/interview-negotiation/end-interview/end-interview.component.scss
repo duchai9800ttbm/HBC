@@ -314,12 +314,16 @@ table.dataTable{
     border-bottom: 1px solid #dddddd !important;
     box-shadow: none;
     border-collapse: collapse;
+    // border-collapse: separate;
+    border-spacing: 0;
 }
 table.dataTable th {
     border-bottom: 1px solid #dddddd !important;
-    background-color: #ffff !important;
     border: 1px solid #dddddd;
+    background-color: #f68e56!important;
     font-size: 12px;
+    vertical-align: middle;
+    text-align: center !important;
 }
 table.dataTable td{
     font-size: 12px;

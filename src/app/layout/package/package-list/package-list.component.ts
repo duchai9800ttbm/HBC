@@ -151,6 +151,7 @@ export class PackageListComponent implements OnInit, AfterViewChecked {
     orderBy = '';
     currentSort = '';
     isShowPopup = false;
+    userProfile: UserModel;
     constructor(
         private activityService: ActivityService,
         private alertService: AlertService,
@@ -560,7 +561,8 @@ export class PackageListComponent implements OnInit, AfterViewChecked {
     }
 
     exportFileExcel() {
-        this.packageService.exportExcel(this.searchTerm$.value, this.filterModel)
+        this.userProfile = this.sessionService.userInfo;
+        this.packageService.exportExcel(this.userProfile.id, this.searchTerm$.value, this.filterModel)
             .subscribe(result => {
                 // result;
                 this.closeDropToll(this.DropTool);

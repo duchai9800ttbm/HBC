@@ -860,11 +860,13 @@ export class PackageService {
     }
 
     exportExcel(
+        idUser: number,
         searchTerm: string,
         filter: PackageFilter,
     ) {
-        const filterUrl = `bidopportunity/export?searchTerm=${searchTerm}`;
+        const filterUrl = `bidopportunity/export?userId=${idUser}`;
         const urlParams = PackageService.createFilterParams(filter);
+        urlParams.append('searchTerm', searchTerm);
         return this.apiService.getFileHBC(filterUrl, urlParams).map(response => {
             return FileSaver.saveAs(
                 new Blob([response.file], {
