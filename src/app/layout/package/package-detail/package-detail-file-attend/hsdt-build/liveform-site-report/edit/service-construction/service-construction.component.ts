@@ -26,46 +26,7 @@ export class ServiceConstructionComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.serviceConstructionModel = {
-      heThongNuoc: {
-        heThongHienHuu: {
-          description: 'TỪ GIAI ĐOẠN 1A',
-          images: []
-        },
-        diemDauNoi: {
-          description: 'TỪ GIAI ĐOẠN 1A',
-          images: []
-        }
-      },
-      heThongNuocThoat: {
-        heThongHienHuu: {
-          description: 'THOÁT NƯỚC TỰ NHIÊN THEO KÊNH SẴN CÓ RA RẠCH',
-          images: []
-        },
-        diemDauNoi: {
-          description: 'Không có',
-          images: []
-        }
-      },
-      heThongDien: {
-        tramHaThe: {
-          description: 'Có sẵn trạm',
-          images: []
-        },
-        duongDayTrungThe: {
-          description: 'Cách 50m',
-          images: []
-        },
-        thongTinKhac: {
-          description: 'Không có',
-          images: []
-        }
-      }
-    };
-
-
     this.initData();
-
     this.serviceConstructionForm = this.fb.group({
       heThongNuocHienHuuDesc: [
         this.serviceConstructionModel.heThongNuoc.heThongHienHuu
@@ -151,100 +112,6 @@ export class ServiceConstructionComponent implements OnInit {
         this.serviceConstructionModel.heThongDien.duongDayTrungThe.images : [];
       this.powerOtherImageUrls = this.serviceConstructionModel.heThongDien.thongTinKhac ?
         this.serviceConstructionModel.heThongDien.thongTinKhac.images : [];
-    } else {
-
-      this.serviceConstructionModel = {
-        heThongNuoc: {
-          heThongHienHuu: {
-            description: 'Text edit',
-            images: [{
-              id: '1',
-              image: 'https://images.pexels.com/photos/268364/pexels-photo-268364.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260'
-            },
-            {
-              id: '1',
-              image: 'https://images.pexels.com/photos/268364/pexels-photo-268364.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260'
-            }
-            ]
-          },
-          diemDauNoi: {
-            description: 'Text edit',
-            images: [{
-              id: '1',
-              image: 'https://images.pexels.com/photos/268364/pexels-photo-268364.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260'
-            },
-            {
-              id: '1',
-              image: 'https://images.pexels.com/photos/268364/pexels-photo-268364.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260'
-            }
-            ]
-          }
-        },
-        heThongNuocThoat: {
-          heThongHienHuu: {
-            description: 'Text edit',
-            images: [{
-              id: '1',
-              image: 'https://images.pexels.com/photos/268364/pexels-photo-268364.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260'
-            },
-            {
-              id: '1',
-              image: 'https://images.pexels.com/photos/268364/pexels-photo-268364.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260'
-            }
-            ]
-          },
-          diemDauNoi: {
-            description: 'Text edit',
-            images: [{
-              id: '1',
-              image: 'https://images.pexels.com/photos/268364/pexels-photo-268364.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260'
-            },
-            {
-              id: '1',
-              image: 'https://images.pexels.com/photos/268364/pexels-photo-268364.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260'
-            }
-            ]
-          }
-        },
-        heThongDien: {
-          tramHaThe: {
-            description: 'Text edit',
-            images: [{
-              id: '1',
-              image: 'https://images.pexels.com/photos/268364/pexels-photo-268364.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260'
-            },
-            {
-              id: '1',
-              image: 'https://images.pexels.com/photos/268364/pexels-photo-268364.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260'
-            }
-            ]
-          },
-          duongDayTrungThe: {
-            description: 'Text edit',
-            images: [{
-              id: '1',
-              image: 'https://images.pexels.com/photos/268364/pexels-photo-268364.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260'
-            },
-            {
-              id: '1',
-              image: 'https://images.pexels.com/photos/268364/pexels-photo-268364.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260'
-            }
-            ]
-          },
-          thongTinKhac: {
-            description: 'Text edit',
-            images: [{
-              id: '1',
-              image: 'https://images.pexels.com/photos/268364/pexels-photo-268364.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260'
-            },
-            {
-              id: '1',
-              image: 'https://images.pexels.com/photos/268364/pexels-photo-268364.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260'
-            }
-            ]
-          }
-        }
-      };
     }
   }
 
@@ -399,7 +266,4 @@ export class ServiceConstructionComponent implements OnInit {
     const index = this.powerOtherImageUrls.indexOf(i);
     this.powerOtherImageUrls.splice(index, 1);
   }
-
-
-
 }

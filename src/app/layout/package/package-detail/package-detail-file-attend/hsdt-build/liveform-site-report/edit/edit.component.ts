@@ -37,48 +37,6 @@ export class EditComponent implements OnInit {
   bidDocumentGroupListItem: SiteSurveyReport[];
   bidDocumentGroupListItemSearchResult: SiteSurveyReport[];
 
-  // fakeData = [
-  //   {
-  //     id: 3,
-  //     stt: 1,
-  //     ttl: 'Báo cáo khảo sát công trường',
-  //     lpv: 1,
-  //     maker: 'Oliver Dang',
-  //     date: '15/12/2017, 09:00',
-  //     classify: 'MEP',
-  //     classifyType: 'Nâng cấp, cải tiến (Renovation)',
-  //     area: 12334234,
-  //     totalBuild: 99999,
-  //     numberOfFloor: 40,
-  //     progress: 250,
-  //     updateTimes: 2,
-  //     updater: 'Oliver Dang',
-  //     updateDate: '15/12/2017, 09:00',
-  //     updateContent: 'Chọn lại loại công trình, thêm ảnh',
-  //     updateDetail: 'Loại công trình mới'
-  //   },
-  //   {
-  //     id: 4,
-  //     stt: 2,
-  //     ttl: 'Báo cáo khảo sát công trường',
-  //     lpv: 1,
-  //     maker: 'Oliver Dang',
-  //     date: '15/12/2017, 09:00',
-  //     classify: 'Sân bay',
-  //     classifyType: 'Mới (New)',
-  //     area: 12334234,
-  //     totalBuild: 8888,
-  //     numberOfFloor: 35,
-  //     progress: 550,
-  //     updateTimes: 1,
-  //     updater: 'Oliver Dang',
-  //     updateDate: '15/11/2017, 07:00',
-  //     updateContent: 'Chọn lại loại công trình, thêm ảnh',
-  //     updateDetail: 'Loại công trình mới'
-  //   }
-  // ];
-
-
   constructor(
     private documentService: DocumentService,
     private router: Router,
@@ -91,19 +49,16 @@ export class EditComponent implements OnInit {
   ngOnInit() {
     const elem = Array.from(document.querySelectorAll('#header-table, #toggle-menu'));
     elem.forEach(e => { (<HTMLElement>e).style.visibility = 'hidden'; (<HTMLElement>e).style.position = 'absolute'; });
-    // check action
     this.currentBidOpportunityId = +PackageDetailComponent.packageId;
-    // this.createNewReport();
-    // this.documentService.tenderSiteSurveyingReport(this.currentBidOpportunityId).subscribe(data => {
-    //   EditComponent.formModel = data;
-    // });
+    this.createNewReport();
+    this.documentService.tenderSiteSurveyingReport(this.currentBidOpportunityId).subscribe(data => {
+      EditComponent.formModel = data;
+    });
   }
 
   createNewReport() {
     const modelEmpty = new SiteSurveyReport();
-    modelEmpty.bidOpportunityId = this.currentBidOpportunityId;
-    // modelEmpty.ngayTao = LiveformSiteReportComponent.documentData.creatEmpl
-    console.log(typeof (modelEmpty));
+
   }
   refresh(): void {
     this.spinner.show();

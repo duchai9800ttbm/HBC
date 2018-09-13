@@ -21,39 +21,7 @@ export class DemoConsoComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.demoConsoModel = {
-      phaVoKetCau: {
-        description: 'KHÔNG CÓ',
-        images: [
-          {
-            id: '12345',
-            image: ''
-          }
-        ]
-      },
-      giaCoKetCau: {
-        description: 'KHÔNG CÓ',
-        images: [
-          {
-            id: '12345',
-            image: ''
-          }
-        ]
-      },
-      dieuKien: {
-        description: 'KHÔNG CÓ',
-        images: [
-          {
-            id: '12345',
-            image: ''
-          }
-        ]
-      },
-    };
-
-
     this.initData();
-
     this.demoConsoForm = this.fb.group({
       phaVoKetCauDesc: [this.demoConsoModel.phaVoKetCau && this.demoConsoModel.phaVoKetCau.description],
       chiTietDiaHinhKhoKhanList: [null],
@@ -63,7 +31,6 @@ export class DemoConsoComponent implements OnInit {
       huongVaoCongTruongList: [null]
     });
     this.demoConsoForm.valueChanges.subscribe(data => this.mappingToLiveFormData(data));
-
   }
 
   initData() {
@@ -84,46 +51,6 @@ export class DemoConsoComponent implements OnInit {
       this.demobilisationImageUrls = this.demoConsoModel.phaVoKetCau ? this.demoConsoModel.phaVoKetCau.images : [];
       this.consolidationImageUrls = this.demoConsoModel.giaCoKetCau ? this.demoConsoModel.phaVoKetCau.images : [];
       this.adjacentImageUrls = this.demoConsoModel.dieuKien ? this.demoConsoModel.dieuKien.images : [];
-    } else {
-
-      this.demoConsoModel = {
-        phaVoKetCau: {
-          description: 'Text edit',
-          images: [{
-            id: '1',
-            image: 'https://images.pexels.com/photos/268364/pexels-photo-268364.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260'
-          },
-          {
-            id: '1',
-            image: 'https://images.pexels.com/photos/268364/pexels-photo-268364.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260'
-          }
-          ]
-        },
-        giaCoKetCau: {
-          description: 'Text edit',
-          images: [{
-            id: '1',
-            image: 'https://images.pexels.com/photos/268364/pexels-photo-268364.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260'
-          },
-          {
-            id: '1',
-            image: 'https://images.pexels.com/photos/268364/pexels-photo-268364.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260'
-          }
-          ]
-        },
-        dieuKien: {
-          description: 'Text edit',
-          images: [{
-            id: '1',
-            image: 'https://images.pexels.com/photos/268364/pexels-photo-268364.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260'
-          },
-          {
-            id: '1',
-            image: 'https://images.pexels.com/photos/268364/pexels-photo-268364.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260'
-          }
-          ]
-        }
-      };
     }
   }
 

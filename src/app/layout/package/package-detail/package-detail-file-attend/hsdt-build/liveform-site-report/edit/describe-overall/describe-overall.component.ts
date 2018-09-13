@@ -22,7 +22,6 @@ export class DescribeOverallComponent implements OnInit {
 
   ngOnInit() {
     this.initData();
-
     this.describeForm = this.fb.group({
       chiTietDiaHinhDesc: [this.describeModel.chiTietDiaHinh && this.describeModel.chiTietDiaHinh.description],
       chiTietDiaHinhList: [null],
@@ -118,6 +117,4 @@ export class DescribeOverallComponent implements OnInit {
     const index = this.stacaleImageUrls.indexOf(i);
     this.stacaleImageUrls.splice(index, 1);
   }
-
-
 }

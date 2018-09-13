@@ -22,42 +22,6 @@ export class UsefulInfoComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.usefulInfoData = [
-      {
-        title: 'Quy mô tổng quan công trình',
-        content: [
-          {
-            name: 'Chủ đề số 1',
-            detail: 'Mô tả tổng quát',
-            images: [
-              'https://images.pexels.com/photos/34950/pexels-photo.jpg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260',
-              'https://images.pexels.com/photos/681795/pexels-photo-681795.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260'
-            ]
-          }
-        ]
-      },
-      {
-        title: 'Phá vỡ và gia cố ',
-        content: [
-          {
-            name: 'Chủ đề số 1',
-            detail: 'Mô tả tổng quát công trường, lần chỉnh sửa n',
-            images: [
-              'https://images.pexels.com/photos/34950/pexels-photo.jpg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260',
-              'https://images.pexels.com/photos/681795/pexels-photo-681795.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260'
-            ]
-          },
-          {
-            name: 'Chủ đề số 2',
-            detail: 'Mô tả tổng quát công trường, lần chỉnh sửa n',
-            images: [
-              'https://images.pexels.com/photos/34950/pexels-photo.jpg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260',
-              'https://images.pexels.com/photos/681795/pexels-photo-681795.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260'
-            ]
-          }
-        ]
-      }
-    ];
     this.initdata();
   }
   addSubject() {
@@ -88,43 +52,6 @@ export class UsefulInfoComponent implements OnInit {
     const obj = EditComponent.formModel.usefulInfo;
     if (obj) {
       this.usefulInfoData = obj;
-    } else {
-      this.usefulInfoData = [
-        {
-          title: 'Quy mô tổng quan công trình',
-          content: [
-            {
-              name: 'Chủ đề số 1',
-              detail: 'Mô tả tổng quát',
-              images: [
-                'https://images.pexels.com/photos/34950/pexels-photo.jpg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260',
-                'https://images.pexels.com/photos/681795/pexels-photo-681795.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260'
-              ]
-            }
-          ]
-        },
-        {
-          title: 'Phá vỡ và gia cố ',
-          content: [
-            {
-              name: 'Chủ đề số 1',
-              detail: 'Mô tả tổng quát công trường, lần chỉnh sửa n',
-              images: [
-                'https://images.pexels.com/photos/34950/pexels-photo.jpg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260',
-                'https://images.pexels.com/photos/681795/pexels-photo-681795.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260'
-              ]
-            },
-            {
-              name: 'Chủ đề số 2',
-              detail: 'Mô tả tổng quát công trường, lần chỉnh sửa n',
-              images: [
-                'https://images.pexels.com/photos/34950/pexels-photo.jpg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260',
-                'https://images.pexels.com/photos/681795/pexels-photo-681795.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260'
-              ]
-            }
-          ]
-        }
-      ];
     }
   }
   endPointValue(obj: UsefulInfo, index) {

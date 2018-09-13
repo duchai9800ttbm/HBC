@@ -45,75 +45,7 @@ export class ScaleOverallComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    // this.scaleModel = {
-    //   tenTaiLieu: 'Báo cáo tham quan công trình',
-    //   lanPhongVan: 3,
-    //   loaiCongTrinh: {
-    //     vanPhong: true,
-    //     khuDanCu: false,
-    //     trungTamThuongMai: false,
-    //     khachSan: false,
-    //     nhaCongNghiep: false,
-    //     toHop: false,
-    //     canHo: true,
-    //     haTang: false,
-    //     mep: false,
-    //     sanBay: false,
-    //     nhaphoBietThu: false,
-    //     truongHoc: false,
-    //     //
-    //     congtrinhMoi: true,
-    //     nangCapCaiTien: false,
-    //     thayDoiBoSung: false,
-    //     thaoDoCaiTien: false,
-    //     khac: 'Dự án mẫu',
-    //   },
-    //   quyMoDuAn: {
-    //     dienTichCongTruong: 15389,
-    //     tongDienTichXayDung: 114863,
-    //     soTang: 'Podium 5 tầng; T6: 36 tầng; T7: 39 tầng',
-    //     tienDo: 600
-    //   },
-    //   hinhAnhPhoiCanh: {
-    //     description: 'Text',
-    //     images: [{
-    //       id: '1',
-    //       image: 'https://images.pexels.com/photos/268364/pexels-photo-268364.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260'
-    //     },
-    //     {
-    //       id: '1',
-    //       image: 'https://images.pexels.com/photos/268364/pexels-photo-268364.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260'
-    //     }
-    //     ]
-    //   },
-    //   thongTinVeKetCau: {
-    //     description: 'Text',
-    //     images: [{
-    //       id: '1',
-    //       image: 'https://images.pexels.com/photos/268364/pexels-photo-268364.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260'
-    //     },
-    //     {
-    //       id: '1',
-    //       image: 'https://images.pexels.com/photos/268364/pexels-photo-268364.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260'
-    //     }
-    //     ]
-    //   },
-    //   nhungYeuCauDacBiet: {
-    //     description: 'Text',
-    //     images: [{
-    //       id: '1',
-    //       image: 'https://images.pexels.com/photos/268364/pexels-photo-268364.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260'
-    //     },
-    //     {
-    //       id: '1',
-    //       image: 'https://images.pexels.com/photos/268364/pexels-photo-268364.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260'
-    //     }
-    //     ]
-    //   }
-    // };
-
     this.initData();
-
     this.scaleOverallForm = this.fb.group({
       tenTaiLieu: [this.scaleModel.tenTaiLieu],
       lanPhongVan: [this.scaleModel.lanPhongVan],

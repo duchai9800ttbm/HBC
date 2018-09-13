@@ -20,19 +20,7 @@ export class SoilConditionComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.soilConditionModel = {
-      nenMongHienCo: {
-        description: 'TEXT',
-        images: []
-      },
-      thongTinCongTrinhGanDo: {
-        description: '',
-        images: []
-      }
-    };
-
     this.initData();
-
     this.soilConditionForm = this.fb.group({
       nenMongHienCoDesc: [this.soilConditionModel.nenMongHienCo && this.soilConditionModel.nenMongHienCo.description],
       nenMongHienCoList: null,
@@ -57,27 +45,6 @@ export class SoilConditionComponent implements OnInit {
       this.footingImageUrls = this.soilConditionModel.nenMongHienCo ? this.soilConditionModel.nenMongHienCo.images : [];
       this.investigationImageUrls = this.soilConditionModel.thongTinCongTrinhGanDo ?
         this.soilConditionModel.thongTinCongTrinhGanDo.images : [];
-    } else {
-      this.soilConditionModel = {
-        nenMongHienCo: {
-          description: 'Text',
-          images: [
-            {
-              id: '1',
-              image: 'https://images.pexels.com/photos/268364/pexels-photo-268364.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260'
-            }
-          ]
-        },
-        thongTinCongTrinhGanDo: {
-          description: 'Text',
-          images: [
-            {
-              id: '1',
-              image: 'https://images.pexels.com/photos/268364/pexels-photo-268364.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260'
-            }
-          ]
-        }
-      };
     }
   }
 
