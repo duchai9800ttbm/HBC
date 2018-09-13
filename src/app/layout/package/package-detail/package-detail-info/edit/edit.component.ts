@@ -26,6 +26,7 @@ import { PackageEditModel } from '../../../../../shared/models/package/package-e
 import { PackageInfoModel } from '../../../../../shared/models/package/package-info.model';
 import { DISABLED } from '@angular/forms/src/model';
 import { UserItemModel } from '../../../../../shared/models/user/user-item.model';
+import CustomValidator from '../../../../../shared/helpers/custom-validator.helper';
 @Component({
     selector: 'app-edit',
     templateUrl: './edit.component.html',
@@ -40,6 +41,7 @@ export class EditComponent implements OnInit {
         locationId: '',
         constructionCategoryId: '',
         constructionTypeId: '',
+        amount: 0,
     };
     dtTrigger: Subject<any> = new Subject();
 
@@ -124,7 +126,7 @@ export class EditComponent implements OnInit {
             documentLink: [this.package.documentLink],
             chairEmployeeId: [this.package.chairEmployee && this.package.chairEmployee.id],
             //  bidStatusId: [this.package.status && this.package.status.id, Validators.required],
-            amount: [this.package.amount],
+            amount: [this.package.amount, [Validators.required, CustomValidator.totalValue]],
             evaluation: [this.package.evaluation],
             startTrackingDate: [DateTimeConvertHelper.fromTimestampToDtObject(
                 this.package.startTrackingDate * 1000
