@@ -15,7 +15,7 @@ export class DescribeOverallComponent implements OnInit {
   existingBuildImageUrls = [];
   stacaleImageUrls = [];
   url;
-  describeModel: DescribeOverall;
+  describeModel = new DescribeOverall();
   constructor(
     private fb: FormBuilder
   ) { }

@@ -18,7 +18,7 @@ export class TrafficComponent implements OnInit {
   roadImageUrls = [];
   fenceImageUrls = [];
   url;
-  trafficModel: Traffic;
+  trafficModel = new Traffic();
   constructor(
     private fb: FormBuilder
   ) { }

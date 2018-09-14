@@ -26,12 +26,8 @@ export class LiveformSiteReportComponent implements OnInit {
       ('#searchButton, #agreeButton, #addNewButton, #printButton, #deleteButton, #downloadButton')
     );
     elem.forEach(e => { (<HTMLElement>e).style.visibility = 'hidden'; (<HTMLElement>e).style.position = 'absolute'; });
-
     this.documentService.tenderSiteSurveyingReport(this.bidOpportunityId).subscribe(res => {
       this.documentData = res;
-      this.spinner.hide();
-    }, err => {
-      this.spinner.hide();
     });
   }
 }

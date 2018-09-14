@@ -38,7 +38,7 @@ export class ScaleOverallComponent implements OnInit {
   structureImageUrls = [];
   requirementsImageUrls = [];
   url;
-  scaleModel: ScaleOverall;
+  scaleModel = new ScaleOverall();
   constructor(
     private router: Router,
     private fb: FormBuilder

@@ -46,6 +46,7 @@ export class UsefulInfoComponent implements OnInit {
       images: []
     };
     this.usefulInfoData[index].content.push(obj);
+    console.log(this.usefulInfoData[index]);
   }
 
   initdata() {

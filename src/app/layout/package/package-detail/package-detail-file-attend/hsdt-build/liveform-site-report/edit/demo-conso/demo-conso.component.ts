@@ -15,7 +15,7 @@ export class DemoConsoComponent implements OnInit {
   consolidationImageUrls = [];
   adjacentImageUrls = [];
   url;
-  demoConsoModel: DemoConso;
+  demoConsoModel = new DemoConso();
   constructor(
     private fb: FormBuilder
   ) { }

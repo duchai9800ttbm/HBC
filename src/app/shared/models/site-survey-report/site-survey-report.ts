@@ -24,4 +24,5 @@ export class SiteSurveyReport {
     serviceConstruction: ServiceConstruction;
     soilCondition: SoilCondition;
     usefulInfo: UsefulInfo[];
+    updateDescription: string;
 }

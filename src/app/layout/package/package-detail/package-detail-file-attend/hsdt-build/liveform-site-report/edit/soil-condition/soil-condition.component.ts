@@ -14,7 +14,7 @@ export class SoilConditionComponent implements OnInit {
   footingImageUrls = [];
   investigationImageUrls = [];
   url;
-  soilConditionModel: SoilCondition;
+  soilConditionModel = new SoilCondition();
   constructor(
     private fb: FormBuilder
   ) { }

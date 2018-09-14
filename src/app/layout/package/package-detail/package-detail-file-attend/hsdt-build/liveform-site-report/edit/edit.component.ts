@@ -16,7 +16,8 @@ import { Traffic } from '../../../../../../../shared/models/site-survey-report/t
 import { DemoConso } from '../../../../../../../shared/models/site-survey-report/demo-conso.model';
 import { ServiceConstruction } from '../../../../../../../shared/models/site-survey-report/service-construction.model';
 import { SoilCondition } from '../../../../../../../shared/models/site-survey-report/soil-condition.model';
-import { UsefulInfo } from '../../../../../../../shared/models/site-survey-report/useful-info.model';
+import { UsefulInfo, ContentItem } from '../../../../../../../shared/models/site-survey-report/useful-info.model';
+import { Image } from '../../../../../../../shared/models/site-survey-report/image';
 
 @Component({
   selector: 'app-edit',
@@ -50,16 +51,27 @@ export class EditComponent implements OnInit {
     const elem = Array.from(document.querySelectorAll('#header-table, #toggle-menu'));
     elem.forEach(e => { (<HTMLElement>e).style.visibility = 'hidden'; (<HTMLElement>e).style.position = 'absolute'; });
     this.currentBidOpportunityId = +PackageDetailComponent.packageId;
-    this.createNewReport();
     this.documentService.tenderSiteSurveyingReport(this.currentBidOpportunityId).subscribe(data => {
       EditComponent.formModel = data;
     });
   }
 
-  createNewReport() {
-    const modelEmpty = new SiteSurveyReport();
-
+  submitLiveForm(event) {
+    if (!event) {
+      this.showPopupConfirm = false;
+    } else {
+      const objData = EditComponent.formModel;
+      this.documentService
+        .createOrUpdateSiteSurveyingReport(objData)
+        .subscribe();
+      this.showPopupConfirm = false;
+      this.alertService.success('Đã cập nhật thành công!');
+      this.spinner.hide();
+      setTimeout(
+        this.router.navigate([`/package/detail/${this.currentBidOpportunityId}/attend/build/liveformsite/info/scale`]), 300);
+    }
   }
+
   refresh(): void {
     this.spinner.show();
     this.dtTrigger.next();
@@ -67,11 +79,7 @@ export class EditComponent implements OnInit {
     this.alertService.success('Dữ liệu đã được cập nhật mới nhất!');
   }
 
-
   updateliveform() {
     this.showPopupConfirm = true;
-  }
-  closePopup() {
-    this.showPopupConfirm = false;
   }
 }

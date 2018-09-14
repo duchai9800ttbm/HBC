@@ -335,12 +335,18 @@ export class DocumentService {
 
     tenderSiteSurveyingReport(bidOpportunityId: number): Observable<SiteSurveyReport> {
         const url = `bidopportunity/${bidOpportunityId}/tendersitesurveyingreport`;
-        return this.apiService.get(url).map(res => this.toSiteSurveyReport(res.result));
+        return this.apiService.get(url).map(res => {
+            let newModel = new SiteSurveyReport();
+            if (res.result) {
+                newModel = res.result;
+            }
+            return newModel;
+        });
     }
 
     toSiteSurveyReport(model: any): SiteSurveyReport {
         return {
-            id: model.id,
+            id: model.id ? model.id : null,
             bidOpportunityId: model.bidOpportunityId,
             nguoiTao: model.createdEmployee.employeeName,
             ngayTao: model.createdEmployee.employeeNo,
@@ -582,7 +588,199 @@ export class DocumentService {
                         image: e.largeSizeUrl
                     }))
                 }))
-            }))
+            })),
+            updateDescription: '' // TODO: Map
         };
+    }
+
+    createOrUpdateSiteSurveyingReport(obj: SiteSurveyReport) {
+        const url = `bidopportunity/tendersitesurveyingreport/createorupdate`;
+        const objDataSiteReport = new FormData();
+        objDataSiteReport.append('BidOpportunityId', `${obj.bidOpportunityId}`);
+        objDataSiteReport.append('CreatedEmployeeId', `${obj.nguoiTao}`);
+        objDataSiteReport.append('UpdatedEmployeeId', `${obj.nguoiCapNhat}`);
+        objDataSiteReport.append('DocumentName', obj.tenTaiLieu);
+        objDataSiteReport.append('InterviewTimes', `${obj.lanCapNhat}`);
+        objDataSiteReport.append('ProjectStatistic.ProjectStatistic.ProjectScale.SiteArea',
+            `${obj.scaleOverall.quyMoDuAn.dienTichCongTruong}`);
+        objDataSiteReport.append('ProjectStatistic.ProjectStatistic.ProjectScale.GrossFloorArea',
+            `${obj.scaleOverall.quyMoDuAn.tongDienTichXayDung}`);
+        objDataSiteReport.append('ProjectStatistic.ProjectStatistic.ProjectScale.TotalNumberOfFloor',
+            obj.scaleOverall.quyMoDuAn.soTang);
+        objDataSiteReport.append('ProjectStatistic.ProjectStatistic.ProjectScale.ConstructionPeriod',
+            `${obj.scaleOverall.quyMoDuAn.tienDo}`);
+        objDataSiteReport.append('ProjectStatistic.PerspectiveImageOfProject.Desc',
+            obj.scaleOverall.hinhAnhPhoiCanh.description);
+        obj.scaleOverall.hinhAnhPhoiCanh.images.forEach(x => {
+            (x.id) ?
+                objDataSiteReport.append('ProjectStatistic.PerspectiveImageOfProject.ImageUrls', x.id) :
+                objDataSiteReport.append('ProjectStatistic.PerspectiveImageOfProject.Images', x.image);
+        });
+        objDataSiteReport.append('ProjectStatistic.ExistingStructure.Desc',
+            obj.scaleOverall.thongTinVeKetCau.description);
+        obj.scaleOverall.thongTinVeKetCau.images.forEach(x => {
+            (x.id) ?
+                objDataSiteReport.append('ProjectStatistic.ExistingStructure.ImageUrls', x.id) :
+                objDataSiteReport.append('ProjectStatistic.ExistingStructure.Images', x.image);
+        });
+        objDataSiteReport.append('ProjectStatistic.SpecialRequirement.Desc',
+            obj.scaleOverall.nhungYeuCauDacBiet.description);
+        obj.scaleOverall.nhungYeuCauDacBiet.images.forEach(x => {
+            (x.id) ?
+                objDataSiteReport.append('ProjectStatistic.SpecialRequirement.ImageUrls', x.id) :
+                objDataSiteReport.append('ProjectStatistic.SpecialRequirement.Images', x.image);
+        });
+        objDataSiteReport.append('SiteInformation.Topography.Desc', obj.describeOverall.chiTietDiaHinh.description);
+        obj.describeOverall.chiTietDiaHinh.images.forEach(x => {
+            (x.id) ?
+                objDataSiteReport.append('SiteInformation.Topography.ImageUrls', x.id) :
+                objDataSiteReport.append('SiteInformation.Topography.Images', x.image);
+        });
+        objDataSiteReport.append('SiteInformation.ExistBuildingOnTheSite.Desc', obj.describeOverall.kienTrucHienHuu.description);
+        obj.describeOverall.kienTrucHienHuu.images.forEach(x => {
+            (x.id) ?
+                objDataSiteReport.append('SiteInformation.ExistBuildingOnTheSite.ImageUrls', x.id) :
+                objDataSiteReport.append('SiteInformation.ExistBuildingOnTheSite.Images', x.image);
+        });
+        objDataSiteReport.append('SiteInformation.ExistObstacleOnTheSite.Desc', obj.describeOverall.yeuCauChuongNgai.description);
+        obj.describeOverall.yeuCauChuongNgai.images.forEach(x => {
+            (x.id) ?
+                objDataSiteReport.append('SiteInformation.ExistObstacleOnTheSite.ImageUrls', x.id) :
+                objDataSiteReport.append('SiteInformation.ExistObstacleOnTheSite.Images', x.image);
+        });
+        objDataSiteReport.append('TransportationAndSiteEntranceCondition.Disadvantage.Desc',
+            obj.traffic.chiTietDiaHinh.khoKhan.description);
+        obj.traffic.chiTietDiaHinh.khoKhan.images.forEach(x => {
+            (x.id) ?
+                objDataSiteReport.append('TransportationAndSiteEntranceCondition.Disadvantage.ImageUrls', x.id) :
+                objDataSiteReport.append('TransportationAndSiteEntranceCondition.Disadvantage.Images', x.image);
+        });
+        objDataSiteReport.append('TransportationAndSiteEntranceCondition.Advantage.Desc', obj.traffic.chiTietDiaHinh.thuanLoi.description);
+        obj.traffic.chiTietDiaHinh.thuanLoi.images.forEach(x => {
+            (x.id) ?
+                objDataSiteReport.append('TransportationAndSiteEntranceCondition.Advantage.ImageUrls', x.id) :
+                objDataSiteReport.append('TransportationAndSiteEntranceCondition.Advantage.Images', x.image);
+        });
+        objDataSiteReport.append('TransportationAndSiteEntranceCondition.DirectionOfSiteEntrance.Desc',
+            obj.traffic.loiVaoCongTrinh.huongVao.description);
+        obj.traffic.loiVaoCongTrinh.huongVao.images.forEach(x => {
+            (x.id) ?
+                objDataSiteReport.append('TransportationAndSiteEntranceCondition.DirectionOfSiteEntrance.ImageUrls', x.id) :
+                objDataSiteReport.append('TransportationAndSiteEntranceCondition.DirectionOfSiteEntrance.Images', x.image);
+        });
+        objDataSiteReport.append('TransportationAndSiteEntranceCondition.ExistingRoadOnSite.Desc',
+            obj.traffic.loiVaoCongTrinh.duongHienCo.description);
+        obj.traffic.loiVaoCongTrinh.duongHienCo.images.forEach(x => {
+            (x.id) ?
+                objDataSiteReport.append('TransportationAndSiteEntranceCondition.ExistingRoadOnSite.ImageUrls', x.id) :
+                objDataSiteReport.append('TransportationAndSiteEntranceCondition.ExistingRoadOnSite.Images', x.image);
+        });
+        objDataSiteReport.append('TransportationAndSiteEntranceCondition.TemporatyRoadRequirement.Desc',
+            obj.traffic.loiVaoCongTrinh.yeuCauDuongTam.description);
+        obj.traffic.loiVaoCongTrinh.yeuCauDuongTam.images.forEach(x => {
+            (x.id) ?
+                objDataSiteReport.append('TransportationAndSiteEntranceCondition.TemporatyRoadRequirement.ImageUrls', x.id) :
+                objDataSiteReport.append('TransportationAndSiteEntranceCondition.TemporatyRoadRequirement.Images', x.image);
+        });
+        objDataSiteReport.append('TransportationAndSiteEntranceCondition.TemporaryFenceRequirement.Desc',
+            obj.traffic.loiVaoCongTrinh.yeuCauHangRao.description);
+        obj.traffic.loiVaoCongTrinh.yeuCauHangRao.images.forEach(x => {
+            (x.id) ?
+                objDataSiteReport.append('TransportationAndSiteEntranceCondition.TemporaryFenceRequirement.ImageUrls', x.id) :
+                objDataSiteReport.append('TransportationAndSiteEntranceCondition.TemporaryFenceRequirement.Images', x.image);
+        });
+        objDataSiteReport.append('DemobilisationAndConsolidation.DemobilisationExistingStructureOrBuilding.Desc',
+            obj.demoConso.phaVoKetCau.description);
+        obj.demoConso.phaVoKetCau.images.forEach(x => {
+            (x.id) ?
+                objDataSiteReport.append('DemobilisationAndConsolidation.DemobilisationExistingStructureOrBuilding.ImageUrls', x.id) :
+                objDataSiteReport.append('DemobilisationAndConsolidation.DemobilisationExistingStructureOrBuilding.Images', x.image);
+        });
+        objDataSiteReport.append('DemobilisationAndConsolidation.ConsolidationExistingStructureOrBuilding.Desc',
+            obj.demoConso.giaCoKetCau.description);
+        obj.demoConso.giaCoKetCau.images.forEach(x => {
+            (x.id) ?
+                objDataSiteReport.append('DemobilisationAndConsolidation.ConsolidationExistingStructureOrBuilding.ImageUrls', x.id) :
+                objDataSiteReport.append('DemobilisationAndConsolidation.ConsolidationExistingStructureOrBuilding.Images', x.image);
+        });
+        objDataSiteReport.append('DemobilisationAndConsolidation.AdjacentBuildingConditions.Desc',
+            obj.demoConso.dieuKien.description);
+        obj.demoConso.dieuKien.images.forEach(x => {
+            (x.id) ?
+                objDataSiteReport.append('DemobilisationAndConsolidation.AdjacentBuildingConditions.ImageUrls', x.id) :
+                objDataSiteReport.append('DemobilisationAndConsolidation.AdjacentBuildingConditions.Images', x.image);
+        });
+        objDataSiteReport.append('TemporaryBuildingServiceForConstruction.SupplyWaterSystemExistingSystem.Desc',
+            obj.serviceConstruction.heThongNuoc.heThongHienHuu.description);
+        obj.serviceConstruction.heThongNuoc.heThongHienHuu.images.forEach(x => {
+            (x.id) ?
+                objDataSiteReport.append('TemporaryBuildingServiceForConstruction.SupplyWaterSystemExistingSystem.ImageUrls', x.id) :
+                objDataSiteReport.append('TemporaryBuildingServiceForConstruction.SupplyWaterSystemExistingSystem.Images', x.image);
+        });
+        objDataSiteReport.append('TemporaryBuildingServiceForConstruction.SupplyWaterSystemExistingConnectionPoint.Desc',
+            obj.serviceConstruction.heThongNuoc.diemDauNoi.description);
+        obj.serviceConstruction.heThongNuoc.diemDauNoi.images.forEach(x => {
+            (x.id) ?
+                objDataSiteReport.append('TemporaryBuildingServiceForConstruction.SupplyWaterSystemExistingConnectionPoint.ImageUrls',
+                    x.id) :
+                objDataSiteReport.append('TemporaryBuildingServiceForConstruction.SupplyWaterSystemExistingConnectionPoint.Images',
+                    x.image);
+        });
+        objDataSiteReport.append('TemporaryBuildingServiceForConstruction.DrainageWaterSystemExistingSystem.Desc',
+            obj.serviceConstruction.heThongNuocThoat.heThongHienHuu.description);
+        obj.serviceConstruction.heThongNuocThoat.heThongHienHuu.images.forEach(x => {
+            (x.id) ?
+                objDataSiteReport.append('TemporaryBuildingServiceForConstruction.DrainageWaterSystemExistingSystem.ImageUrls', x.id) :
+                objDataSiteReport.append('TemporaryBuildingServiceForConstruction.DrainageWaterSystemExistingSystem.Images', x.image);
+        });
+        objDataSiteReport.append('TemporaryBuildingServiceForConstruction.DrainageWaterSystemExistingConnectionPoint.Desc',
+            obj.serviceConstruction.heThongNuocThoat.diemDauNoi.description);
+        obj.serviceConstruction.heThongNuocThoat.diemDauNoi.images.forEach(x => {
+            (x.id) ?
+                objDataSiteReport.append('TemporaryBuildingServiceForConstruction.DrainageWaterSystemExistingConnectionPoint.ImageUrls',
+                    x.id) :
+                objDataSiteReport.append('TemporaryBuildingServiceForConstruction.DrainageWaterSystemExistingConnectionPoint.Images',
+                    x.image);
+        });
+        objDataSiteReport.append('TemporaryBuildingServiceForConstruction.TransformerStation.Desc',
+            obj.serviceConstruction.heThongDien.tramHaThe.description);
+        obj.serviceConstruction.heThongDien.tramHaThe.images.forEach(x => {
+            (x.id) ?
+                objDataSiteReport.append('TemporaryBuildingServiceForConstruction.TransformerStation.ImageUrls', x.id) :
+                objDataSiteReport.append('TemporaryBuildingServiceForConstruction.TransformerStation.Images', x.image);
+        });
+        objDataSiteReport.append('TemporaryBuildingServiceForConstruction.ExistingMediumVoltageSystem.Desc',
+            obj.serviceConstruction.heThongDien.duongDayTrungThe.description);
+        obj.serviceConstruction.heThongDien.duongDayTrungThe.images.forEach(x => {
+            (x.id) ?
+                objDataSiteReport.append('TemporaryBuildingServiceForConstruction.ExistingMediumVoltageSystem.ImageUrls', x.id) :
+                objDataSiteReport.append('TemporaryBuildingServiceForConstruction.ExistingMediumVoltageSystem.Images', x.image);
+        });
+        objDataSiteReport.append('TemporaryBuildingServiceForConstruction.Others.Desc',
+            obj.serviceConstruction.heThongDien.thongTinKhac.description);
+        obj.serviceConstruction.heThongDien.thongTinKhac.images.forEach(x => {
+            (x.id) ?
+                objDataSiteReport.append('TemporaryBuildingServiceForConstruction.Others.ImageUrls', x.id) :
+                objDataSiteReport.append('TemporaryBuildingServiceForConstruction.Others.Images', x.image);
+        });
+        objDataSiteReport.append('ExistingSoilCondition.ExistingFooting.Desc',
+            obj.soilCondition.nenMongHienCo.description);
+        obj.soilCondition.nenMongHienCo.images.forEach(x => {
+            (x.id) ?
+                objDataSiteReport.append('ExistingSoilCondition.ExistingFooting.ImageUrls', x.id) :
+                objDataSiteReport.append('ExistingSoilCondition.ExistingFooting.Images', x.image);
+        });
+        objDataSiteReport.append('ExistingSoilCondition.SoilInvestigation.Desc',
+            obj.soilCondition.thongTinCongTrinhGanDo.description);
+        obj.soilCondition.thongTinCongTrinhGanDo.images.forEach(x => {
+            (x.id) ?
+                objDataSiteReport.append('ExistingSoilCondition.SoilInvestigation.ImageUrls', x.id) :
+                objDataSiteReport.append('ExistingSoilCondition.SoilInvestigation.Images', x.image);
+        });
+        objDataSiteReport.append('UsefulInFormations',
+            null
+        );
+        objDataSiteReport.append('UpdatedDescription', obj.updateDescription);
+        return this.apiService.postFile(url, objDataSiteReport).map(res => res).share();
     }
 }

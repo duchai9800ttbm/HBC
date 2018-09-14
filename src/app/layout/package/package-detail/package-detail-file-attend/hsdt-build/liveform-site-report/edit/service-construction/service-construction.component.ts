@@ -18,7 +18,7 @@ export class ServiceConstructionComponent implements OnInit {
   mediumVoltageSystemImageUrls = [];
   powerOtherImageUrls = [];
   url;
-  serviceConstructionModel: ServiceConstruction;
+  serviceConstructionModel = new ServiceConstruction();
   constructor(
     private fb: FormBuilder
   ) {
