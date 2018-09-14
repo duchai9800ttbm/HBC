@@ -15,16 +15,14 @@
     </div>
     <div>
         <div class="btn-toolbar mt-2 mb-2">
-            <button type="button" *ngIf="setHSDT" [ngClass]="{'btn-dep':setHSDT == true}" class="btn btn-up " (click)="lapHSDT()">Bắt
-                đầu lập HSDT</button>
-            <button type="button" *ngIf="isconfirmProgress" [ngClass]="{'btn-dep':isconfirmProgress == true}" class="btn btn-up"
-                (click)="openModeSendAssignment(SendAssignment)">{{textConfirmProgress}}</button>
+            <button type="button" *ngIf="setHSDT" [ngClass]="{'btn-dep':setHSDT == true}" class="btn btn-up " (click)="lapHSDT()">Bắt đầu lập HSDT</button>
+            <button type="button" *ngIf="isconfirmProgress" [ngClass]="{'btn-dep':isconfirmProgress == true}" class="btn btn-up" (click)="openModeSendAssignment(SendAssignment)">{{textConfirmProgress}}</button>
             <button type="button" *ngIf="isSendInformation" [ngClass]="{'btn-dep':showButtonAssignmet == true,'disable':showButtonAssignmet == false}"
                 class="btn btn-up" (click)="confirmProgress()">Xác nhận phân công tiến độ</button>
-            <button type="button" [ngClass]="{ 'btn-dep': isSendInformation ===  false,'disable': isSendInformation ===  true}"
-                class="btn btn-up " (click)="openModalDeployment(informationDeployment)">Thông báo triển khai</button>
-            <button type="button" *ngIf="isTeamPlate" [ngClass]="{ 'btn-dep': isSendInformation === true }" class="btn btn-up ">Tải
-                Template</button>
+            <button type="button" [ngClass]="{ 'btn-dep': isSendInformation ===  false,'disable': isSendInformation ===  true}" class="btn btn-up "
+                (click)="openModalDeployment(informationDeployment)">Thông báo triển khai</button>
+            <button type="button" *ngIf="isTeamPlate" [ngClass]="{ 'btn-dep': isSendInformation === true }" class="btn btn-up ">Tải Template
+            </button>
             <button type="button" *ngIf="isconfirmProgress" class="btn btn-up disable">Upload file</button>
             <button type="button" *ngIf="!isconfirmProgress" [ngClass]="{ 'btn-dep': dowloadTem === true,'disable': dowloadTem === false }"
                 (click)="openModalUpload(Upload)" class="btn btn-up ">Upload file</button>
@@ -33,8 +31,7 @@
             </button>
         </div>
     </div>
-    <div *ngIf="isSendInformation && !showTabelAssignment" class="col-md-4 offset-md-0 table-assignment">Bảng phân
-        công tiến độ thực hiện</div>
+    <div *ngIf="isSendInformation && !showTabelAssignment" class="col-md-4 offset-md-0 table-assignment">Bảng phân công tiến độ thực hiện</div>
 </div>
 
 
@@ -75,8 +72,10 @@
             <div class="input-group-prepend">
                 <span class="input-group-text">To:</span>
             </div>
-            <input type="text" [(ngModel)]="emailModel.to" class="form-control boder-left-none" [ngClass]="{ 'bd-r' : isSendCc === false ||isSendBcc===false }"
-                aria-label="To" autofocus>
+            <!-- <input type="text" [(ngModel)]="emailModel.to" class="form-control boder-left-none" [ngClass]="{ 'bd-r' : isSendCc === false ||isSendBcc===false }"
+                aria-label="To" autofocus> -->
+            <kendo-multiselect [data]="listItems" [(ngModel)]="emailModel.to" [ngClass]="{ 'bd-r' : isSendCc === false ||isSendBcc===false }"
+                aria-label="To" autofocus></kendo-multiselect>
             <div class="input-group-append" *ngIf="!isSendCc || !isSendBcc">
                 <span class="input-group-text">
                     <span *ngIf="!isSendCc" title="Thêm người nhận Cc" class="send-cc" (click)="sendCc()">Cc</span>
@@ -105,12 +104,13 @@
             <div class="input-group-prepend">
                 <span class="input-group-text" id="basic-addon1">Tiêu đề:</span>
             </div>
-            <input type="text" [(ngModel)]="emailModel.subject" class="form-control boder-left-none" placeholder="" aria-label="Tiede" aria-describedby="basic-addon1">
+            <input type="text" [(ngModel)]="emailModel.subject" class="form-control boder-left-none" placeholder="" aria-label="Tiede"
+                aria-describedby="basic-addon1">
         </div>
         <div class="body-ckeditor">
             <ckeditor [(ngModel)]="emailModel.content" [config]="ckeConfig" #ckeditor>
-                <ckbutton [name]="'saveButton'" [command]="'saveCmd'" (click)="save($event)" [icon]="'save.png'"
-                    [label]="'Save Document'" [toolbar]="'clipboard,1'">
+                <ckbutton [name]="'saveButton'" [command]="'saveCmd'" (click)="save($event)" [icon]="'save.png'" [label]="'Save Document'"
+                    [toolbar]="'clipboard,1'">
                 </ckbutton>
             </ckeditor>
         </div>
@@ -178,8 +178,8 @@
           <span class="input-group-addon">
             <i class="fa fa-calendar"></i>
           </span> -->
-                    <input [placeholder]="datePickerConfig.datePlaceHolder" class="input-date-time input-date-time-bar"
-                        readonly [owlDateTimeTrigger]="dt" [owlDateTime]="dt">
+                    <input [placeholder]="datePickerConfig.datePlaceHolder" class="input-date-time input-date-time-bar" readonly [owlDateTimeTrigger]="dt"
+                        [owlDateTime]="dt">
                     <owl-date-time #dt pickerType="calendar"></owl-date-time>
                     <span [owlDateTimeTrigger]="dt" class="input-group-addon">
                         <i class="fa fa-calendar"></i>
@@ -216,7 +216,6 @@
     </div>
     <div class="modal-body">
         <p class="text-body">Bảng phân công tiến độ sẽ được gửi đến</p>
-
         <div class="">
             <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="table-selection stripe row-border hover cell-border dataTable">
                 <thead>
@@ -226,8 +225,7 @@
                                 <div style="width: 40%;">
                                     <div class="center-parent">
                                         <label class="custom-control custom-checkbox">
-                                            <input type="checkbox" class="custom-control-input" [checked]="checked"
-                                                [(ngModel)]="checkboxSeclectAll" (change)="onSelectAll($event.target.checked)">
+                                            <input type="checkbox" class="custom-control-input" [checked]="checked" [(ngModel)]="checkboxSeclectAll" (change)="onSelectAll($event.target.checked)">
                                             <span class="custom-control-indicator"></span>
                                         </label>
                                     </div>
@@ -268,8 +266,7 @@
                                 <div style="width: 40%;">
                                     <div class="center-parent">
                                         <label class="custom-control custom-checkbox">
-                                            <input type="checkbox" class="custom-control-input" [checked]="data.checkboxSelected"
-                                                [(ngModel)]="data.checkboxSelected">
+                                            <input type="checkbox" class="custom-control-input" [checked]="data.checkboxSelected" [(ngModel)]="data.checkboxSelected">
                                             <span class="custom-control-indicator"></span>
                                         </label>
                                     </div>
@@ -390,4 +387,3 @@
 
     </div>
 </ng-template>
-

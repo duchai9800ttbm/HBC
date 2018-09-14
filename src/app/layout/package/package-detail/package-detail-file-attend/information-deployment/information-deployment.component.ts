@@ -75,6 +75,7 @@ export class InformationDeploymentComponent implements OnInit {
   emailModel: SendEmailModel = new SendEmailModel();
   ckeConfig: any;
   @ViewChild('ckeditor') ckeditor: any;
+  public listItems: Array<string> = [ 'Small', 'Medium', 'Large' ];
   constructor(
     private modalService: BsModalService,
     private formBuilder: FormBuilder,
@@ -138,7 +139,6 @@ export class InformationDeploymentComponent implements OnInit {
     this.modalViewListData = this.modalService.show(template);
   }
   SendInformation() {
-    console.log(this.emailModel, this.packageId);
     if (this.emailModel && this.emailModel.to) {
       this.emailModel.bidOpportunityId = this.packageId;
       this.emailService.sendEmailDeployment(this.emailModel).subscribe(result => {
