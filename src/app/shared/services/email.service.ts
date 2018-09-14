@@ -176,7 +176,8 @@ export class EmailService {
     const dataObj = new FormData();
     dataObj.append('BidOpportunityId', data.bidOpportunityId + '');
     dataObj.append('Subject', data.subject);
-    dataObj.append('RecipientEmails', data.recipientEmails.join(','));
+    console.log('data.recipientEmails.join()', data.recipientEmails.join(','));
+    dataObj.append('RecipientEmails', data.recipientEmails.join(',') );
     dataObj.append('Content', data.content);
     return this.apiService.postFile(url, dataObj);
   }

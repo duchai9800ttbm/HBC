@@ -89,7 +89,7 @@
             <div class="input-group-prepend">
                 <span class="input-group-text" id="basic-addon1">Cc:</span>
             </div>
-            <input type="text" class="form-control boder-left-none" placeholder="" aria-label="To" aria-describedby="basic-addon1"
+            <input type="text" [(ngModel)]="emailModel.cc" class="form-control boder-left-none" placeholder="" aria-label="To" aria-describedby="basic-addon1"
                 autofocus>
         </div>
 
@@ -97,7 +97,7 @@
             <div class="input-group-prepend">
                 <span class="input-group-text" id="basic-addon1">Bcc:</span>
             </div>
-            <input type="text" class="form-control boder-left-none" placeholder="" aria-label="To" aria-describedby="basic-addon1"
+            <input type="text" [(ngModel)]="emailModel.bcc" class="form-control boder-left-none" placeholder="" aria-label="To" aria-describedby="basic-addon1"
                 autofocus>
         </div>
 
@@ -108,7 +108,7 @@
             <input type="text" [(ngModel)]="emailModel.subject" class="form-control boder-left-none" placeholder="" aria-label="Tiede" aria-describedby="basic-addon1">
         </div>
         <div class="body-ckeditor">
-            <ckeditor [(ngModel)]="emailModel.content">
+            <ckeditor [(ngModel)]="emailModel.content" [config]="ckeConfig" #ckeditor debounce="500">
                 <ckbutton [name]="'saveButton'" [command]="'saveCmd'" (click)="save($event)" [icon]="'save.png'"
                     [label]="'Save Document'" [toolbar]="'clipboard,1'">
                 </ckbutton>

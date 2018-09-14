@@ -14,6 +14,7 @@ import { Observable, BehaviorSubject, Subject } from '../../../../../../../node_
 import { ConfirmationService, AlertService } from '../../../../../shared/services';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { SendEmailModel } from '../../../../../shared/models/send-email-model';
+import { EmailService } from '../../../../../shared/services/email.service';
 
 @Component({
   selector: 'app-information-deployment',
@@ -72,19 +73,33 @@ export class InformationDeploymentComponent implements OnInit {
     { id: 3, rom: 'Phòng lưu trữ', username: 'Huy Nhat', email: 'huynhat@gmail.com', checkboxSelected: 'checkboxSelected' }
   ];
   emailModel: SendEmailModel = new SendEmailModel();
-
+  ckeConfig: any;
+  @ViewChild('ckeditor') ckeditor: any;
   constructor(
     private modalService: BsModalService,
     private formBuilder: FormBuilder,
     private router: Router,
     private confirmationService: ConfirmationService,
     private spinner: NgxSpinnerService,
-    private alertService: AlertService
+    private alertService: AlertService,
+    private emailService: EmailService,
   ) {
     this.loadItems();
   }
 
   ngOnInit() {
+    this.ckeConfig = {
+      height: 500,
+      language: 'en',
+      allowedContent: true,
+      extraPlugins: 'divarea',
+      toolbar: [
+        { name: 'basicstyles', items: ['Bold', 'Italic', 'Underline', 'Strike'] },
+        { name: 'justify', items: ['JustifyLeft', 'JustifyCenter', 'JustifyRight', 'JustifyBlock'] },
+        { name: 'styles', items: ['Styles', 'Format', 'FontSize', '-', 'TextColor', 'BGColor'] }
+      ]
+    };
+
     this.packageId = +PackageDetailComponent.packageId;
     this.formUpload = this.formBuilder.group({
       name: ['', Validators.required],
@@ -127,15 +142,21 @@ export class InformationDeploymentComponent implements OnInit {
     this.modalViewListData = this.modalService.show(template);
   }
   SendInformation() {
-    console.log(this.emailModel);
-    this.isSendInformation = !this.isSendInformation;
-    this.isTeamPlate = !this.isTeamPlate;
-    this.dowloadTem = true;
-    this.textInformation = 'Đã thông báo triển khai';
-    this.toggleTextUpFile = this.isSendInformation ? 'Chưa có tài liệu phân công tiến độ. Vui lòng upload file'
-      : 'Bạn cần phải thông báo triển khai trước khi phân công tiến độ';
-    this.alertService.success('Gửi thông báo triển khai thành công!');
-    this.modalRef.hide();
+    console.log(this.emailModel, this.packageId);
+    if (this.emailModel && this.emailModel.to) {
+      this.emailModel.bidOpportunityId = this.packageId;
+      this.emailService.sendEmailDeployment(this.emailModel).subscribe(result => {
+        console.log(result);
+        this.isSendInformation = !this.isSendInformation;
+        this.isTeamPlate = !this.isTeamPlate;
+        this.dowloadTem = true;
+        this.textInformation = 'Đã thông báo triển khai';
+        this.toggleTextUpFile = this.isSendInformation ? 'Chưa có tài liệu phân công tiến độ. Vui lòng upload file'
+          : 'Bạn cần phải thông báo triển khai trước khi phân công tiến độ';
+        this.alertService.success('Gửi thông báo triển khai thành công!');
+        this.modalRef.hide();
+      });
+    }
   }
 
   get f() { return this.formUpload.controls; }
