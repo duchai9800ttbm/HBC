@@ -919,4 +919,12 @@ export class DataService {
                 });
             });
     }
+    // Lấy giá trị đầu tư lớn nhất của gói thầu
+    getMaxopporunityamount(): Observable<number> {
+        const url = `bidopportunity/maxopporunityamount`;
+        return this.apiService.get(url)
+            .map( response => {
+                return response.result;
+            });
+    }
 }
