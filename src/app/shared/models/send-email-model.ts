@@ -7,10 +7,15 @@ export class SendEmailModel {
     bidOpportunityId: number;
 
     get recipientEmails(): string[] {
-        const to = this.to.split(',').map(i => i.trim());
-        // const cc = this.cc.split(',').map(i => i.trim());
-        // const bcc = this.bcc.split(',').map(i => i.trim());
-        // return (to.concat(cc)).concat(bcc);
-        return to;
+        let recipientEmails = this.to.split(',').map(i => i.trim());
+        if (this.cc) {
+            const cc = this.cc.split(',').map(i => i.trim());
+            recipientEmails = recipientEmails.concat(cc);
+        }
+        if (this.bcc) {
+            const bcc = this.bcc.split(',').map(i => i.trim());
+            recipientEmails = recipientEmails.concat(bcc);
+        }
+        return recipientEmails;
     }
 }

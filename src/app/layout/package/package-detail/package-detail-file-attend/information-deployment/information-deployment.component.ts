@@ -142,7 +142,6 @@ export class InformationDeploymentComponent implements OnInit {
     if (this.emailModel && this.emailModel.to) {
       this.emailModel.bidOpportunityId = this.packageId;
       this.emailService.sendEmailDeployment(this.emailModel).subscribe(result => {
-        console.log(result);
         this.isSendInformation = !this.isSendInformation;
         this.isTeamPlate = !this.isTeamPlate;
         this.dowloadTem = true;
