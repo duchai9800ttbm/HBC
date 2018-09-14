@@ -89,14 +89,10 @@ export class InformationDeploymentComponent implements OnInit {
 
   ngOnInit() {
     this.ckeConfig = {
-      height: 500,
-      language: 'en',
-      allowedContent: true,
-      extraPlugins: 'divarea',
       toolbar: [
         { name: 'basicstyles', items: ['Bold', 'Italic', 'Underline', 'Strike'] },
         { name: 'justify', items: ['JustifyLeft', 'JustifyCenter', 'JustifyRight', 'JustifyBlock'] },
-        { name: 'styles', items: ['Styles', 'Format', 'FontSize', '-', 'TextColor', 'BGColor'] }
+        { name: 'styles', items: ['Styles', 'Format', 'FontSize', '-', 'TextColor', 'BGColor'] },
       ]
     };
 

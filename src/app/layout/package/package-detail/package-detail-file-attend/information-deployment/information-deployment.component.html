@@ -108,7 +108,7 @@
             <input type="text" [(ngModel)]="emailModel.subject" class="form-control boder-left-none" placeholder="" aria-label="Tiede" aria-describedby="basic-addon1">
         </div>
         <div class="body-ckeditor">
-            <ckeditor [(ngModel)]="emailModel.content" [config]="ckeConfig" #ckeditor debounce="500">
+            <ckeditor [(ngModel)]="emailModel.content" [config]="ckeConfig" #ckeditor>
                 <ckbutton [name]="'saveButton'" [command]="'saveCmd'" (click)="save($event)" [icon]="'save.png'"
                     [label]="'Save Document'" [toolbar]="'clipboard,1'">
                 </ckbutton>
