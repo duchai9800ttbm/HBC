@@ -7,6 +7,7 @@ import { PagedResult } from '../models';
 import * as FileSaver from 'file-saver';
 import { Subject } from 'rxjs/Subject';
 import { SendEmailModel } from '../models/send-email-model';
+import { SearchEmailModel } from '../models/search-email.model';
 
 @Injectable()
 export class EmailService {
@@ -176,11 +177,28 @@ export class EmailService {
     const dataObj = new FormData();
     dataObj.append('BidOpportunityId', data.bidOpportunityId + '');
     dataObj.append('Subject', data.subject);
-    data.recipientEmails.forEach( (item, index) => {
-      dataObj.append('RecipientEmails[' + index + ']', item );
+    data.recipientEmails.forEach((item, index) => {
+      dataObj.append('RecipientEmails[' + index + ']', item);
     });
     dataObj.append('Content', data.content);
     return this.apiService.postFile(url, dataObj);
+  }
+
+  // Danh sách search email
+  searchbymail(search: string): Observable<SearchEmailModel[]> {
+    const url = `employee/searchbymail?searchTerm=${search}`;
+    return this.apiService.get(url)
+      .map(response => {
+        return response.result.map(item => {
+          return {
+            employeeId: item.employeeId,
+            employeeNo: item.employeeNo,
+            employeeName: item.employeeName,
+            employeeAvatar: item.employeeAvatar,
+            employeeEmail: item.employeeEmail,
+          };
+        });
+      });
   }
 }
 

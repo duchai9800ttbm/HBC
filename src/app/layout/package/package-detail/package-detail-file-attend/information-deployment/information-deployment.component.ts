@@ -15,6 +15,8 @@ import { ConfirmationService, AlertService } from '../../../../../shared/service
 import { NgxSpinnerService } from 'ngx-spinner';
 import { SendEmailModel } from '../../../../../shared/models/send-email-model';
 import { EmailService } from '../../../../../shared/services/email.service';
+import { COMMON_CONSTANTS } from '../../../../../shared/configs/common.config';
+import { SearchEmailModel } from '../../../../../shared/models/search-email.model';
 
 @Component({
   selector: 'app-information-deployment',
@@ -75,7 +77,8 @@ export class InformationDeploymentComponent implements OnInit {
   emailModel: SendEmailModel = new SendEmailModel();
   ckeConfig: any;
   @ViewChild('ckeditor') ckeditor: any;
-  public listItems: Array<string> = [ 'Small', 'Medium', 'Large' ];
+  listEmailSearch;
+  searchTerm$ = new BehaviorSubject<string>('');
   constructor(
     private modalService: BsModalService,
     private formBuilder: FormBuilder,
@@ -89,6 +92,14 @@ export class InformationDeploymentComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.searchTerm$
+      .debounceTime(COMMON_CONSTANTS.SearchDelayTimeInMs)
+      .distinctUntilChanged()
+      .subscribe(term => {
+        this.emailService.searchbymail(term).subscribe(response => {
+          this.listEmailSearch = response;
+        });
+      });
     this.ckeConfig = {
       toolbar: [
         { name: 'basicstyles', items: ['Bold', 'Italic', 'Underline', 'Strike'] },
@@ -139,6 +150,7 @@ export class InformationDeploymentComponent implements OnInit {
     this.modalViewListData = this.modalService.show(template);
   }
   SendInformation() {
+    console.log('this.emailModel', this.emailModel);
     if (this.emailModel && this.emailModel.to) {
       this.emailModel.bidOpportunityId = this.packageId;
       this.emailService.sendEmailDeployment(this.emailModel).subscribe(result => {
@@ -237,7 +249,9 @@ export class InformationDeploymentComponent implements OnInit {
     );
   }
 
+
 }
+
 const listUsers = [
   {
     id: 1,

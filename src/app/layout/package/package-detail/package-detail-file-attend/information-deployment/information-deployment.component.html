@@ -74,8 +74,16 @@
             </div>
             <!-- <input type="text" [(ngModel)]="emailModel.to" class="form-control boder-left-none" [ngClass]="{ 'bd-r' : isSendCc === false ||isSendBcc===false }"
                 aria-label="To" autofocus> -->
-            <kendo-multiselect [data]="listItems" [(ngModel)]="emailModel.to" [ngClass]="{ 'bd-r' : isSendCc === false ||isSendBcc===false }"
-                aria-label="To" autofocus></kendo-multiselect>
+            <kendo-multiselect [data]="listEmailSearch" [(ngModel)]="emailModel.to" [textField]="'employeeName'" [valueField]="'employeeEmail'"
+                [ngClass]="{ 'bd-r' : isSendCc === false ||isSendBcc===false }" aria-label="To" autofocus (keyup)="searchTerm$.next($event.target.value)">
+                <ng-template kendoMultiSelectItemTemplate let-dataItem>
+                    <table>
+                        <tr>{{ dataItem.employeeName }}</tr>
+                        <tr class="text-muted">{{ dataItem.employeeEmail}}</tr>
+                    </table>
+                </ng-template>
+            </kendo-multiselect>
+
             <div class="input-group-append" *ngIf="!isSendCc || !isSendBcc">
                 <span class="input-group-text">
                     <span *ngIf="!isSendCc" title="Thêm người nhận Cc" class="send-cc" (click)="sendCc()">Cc</span>
@@ -88,16 +96,34 @@
             <div class="input-group-prepend">
                 <span class="input-group-text" id="basic-addon1">Cc:</span>
             </div>
-            <input type="text" [(ngModel)]="emailModel.cc" class="form-control boder-left-none" placeholder="" aria-label="To" aria-describedby="basic-addon1"
-                autofocus>
+            <!-- <input type="text" [(ngModel)]="emailModel.cc" class="form-control boder-left-none" placeholder="" aria-label="To" aria-describedby="basic-addon1"
+                autofocus> -->
+            <kendo-multiselect [data]="listEmailSearch" [(ngModel)]="emailModel.cc" [textField]="'employeeName'" [valueField]="'employeeEmail'"
+                [ngClass]="{ 'bd-r' : isSendCc === false ||isSendBcc===false }" aria-label="To" autofocus (keyup)="searchTerm$.next($event.target.value)">
+                <ng-template kendoMultiSelectItemTemplate let-dataItem>
+                    <table>
+                        <tr>{{ dataItem.employeeName }}</tr>
+                        <tr class="text-muted">{{ dataItem.employeeEmail}}</tr>
+                    </table>
+                </ng-template>
+            </kendo-multiselect>
         </div>
 
         <div class="input-group mb-3" *ngIf="isSendBcc">
             <div class="input-group-prepend">
                 <span class="input-group-text" id="basic-addon1">Bcc:</span>
             </div>
-            <input type="text" [(ngModel)]="emailModel.bcc" class="form-control boder-left-none" placeholder="" aria-label="To" aria-describedby="basic-addon1"
-                autofocus>
+            <!-- <input type="text" [(ngModel)]="emailModel.bcc" class="form-control boder-left-none" placeholder="" aria-label="To" aria-describedby="basic-addon1"
+                autofocus> -->
+            <kendo-multiselect [data]="listEmailSearch" [(ngModel)]="emailModel.bcc" [textField]="'employeeName'" [valueField]="'employeeEmail'"
+                [ngClass]="{ 'bd-r' : isSendCc === false ||isSendBcc===false }" aria-label="To" autofocus (keyup)="searchTerm$.next($event.target.value)">
+                <ng-template kendoMultiSelectItemTemplate let-dataItem>
+                    <table>
+                        <tr>{{ dataItem.employeeName }}</tr>
+                        <tr class="text-muted">{{ dataItem.employeeEmail}}</tr>
+                    </table>
+                </ng-template>
+            </kendo-multiselect>
         </div>
 
         <div class="input-group mb-3">
