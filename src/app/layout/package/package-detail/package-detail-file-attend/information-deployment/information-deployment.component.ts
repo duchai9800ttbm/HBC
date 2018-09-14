@@ -24,6 +24,7 @@ import { SearchEmailModel } from '../../../../../shared/models/search-email.mode
   styleUrls: ['./information-deployment.component.scss']
 })
 export class InformationDeploymentComponent implements OnInit {
+  file;
   public gridView: GridDataResult;
   public items: any[] = listUsers;
   public mySelection: number[] = [];
@@ -249,7 +250,19 @@ export class InformationDeploymentComponent implements OnInit {
     );
   }
 
+  uploadfile(event) {
+    console.log(event);
+    const fileList: FileList = event.target.files;
+    if (fileList.length > 0) {
+      console.log(fileList);
+      this.file = fileList;
+      event.target.value = null;
+    }
+  }
 
+  deleteFileUpload() {
+    this.file = null;
+  }
 }
 
 const listUsers = [
