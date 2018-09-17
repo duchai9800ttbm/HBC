@@ -1,7 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { DATETIME_PICKER_CONFIG } from '../../../../../../../shared/configs/datepicker.config';
 import { FormGroup, FormBuilder, Validators } from '../../../../../../../../../node_modules/@angular/forms';
-import { InterviewInvitationCreate } from '../../../../../../../shared/models/interview-invitation/interview-invitation-create.model';
+import { InterviewInvitation } from '../../../../../../../shared/models/interview-invitation/interview-invitation-create.model';
 import { PackageDetailComponent } from '../../../../package-detail.component';
 import { PackageService } from '../../../../../../../shared/services/package.service';
 import { AlertService } from '../../../../../../../shared/services';
@@ -15,8 +15,9 @@ import { CustomerModel } from '../../../../../../../shared/models/interview-invi
 export class CreateNewInvitationComponent implements OnInit {
   datePickerConfig = DATETIME_PICKER_CONFIG;
   @Input() callBack: Function;
+  @Input() interviewInvitation: InterviewInvitation;
   createFormNewInvitation: FormGroup;
-  interviewInvitation = new InterviewInvitationCreate();
+  // interviewInvitation = new InterviewInvitation();
   currentPackageId: number;
   file;
   constructor(
@@ -25,10 +26,10 @@ export class CreateNewInvitationComponent implements OnInit {
     private alertService: AlertService,
     private interviewInvitationService: InterviewInvitationService,
   ) {
-    this.interviewInvitation.customer = new CustomerModel();
   }
 
   ngOnInit() {
+    // this.interviewInvitation.customer = new CustomerModel();
     this.currentPackageId = +PackageDetailComponent.packageId;
     this.packageService.getInforPackageID(this.currentPackageId).subscribe(result => {
       if (result.customer) {
@@ -69,9 +70,10 @@ export class CreateNewInvitationComponent implements OnInit {
   }
 
   onSubmit() {
+    console.log('this.interviewInvitation.customer', this.interviewInvitation.customer, this.interviewInvitation.customer.customerId);
     this.interviewInvitationService.createInterviewInvitation(
-      this.interviewInvitation.customer ? this.interviewInvitation.customer.customerId : 0,
-      this.currentPackageId, this.createFormNewInvitation.value, this.file).subscribe( response => {
+      this.interviewInvitation.customer.customerId,
+      this.currentPackageId, this.createFormNewInvitation.value, this.file).subscribe(response => {
         this.closePopup();
         this.alertService.success('Thêm mới lời mời thành công!');
       },
@@ -79,4 +81,5 @@ export class CreateNewInvitationComponent implements OnInit {
           this.alertService.error('Tạo mới lời mời thất bại, xin vui lòng thử lại!');
         });
   }
+
 }

@@ -63,7 +63,7 @@
     </div>
     <div class="center-parent row set-width-image" *ngIf="pagedResult.items?.length === 0">
       <div class="col-md-12 center-parent">
-        <img class="class-image" src="\assets\images\thuongthao.png" width="300" height="200" class="d-inline-block" alt="">
+        <img class="class-image" src="assets/images/thuongthao.png" width="300" height="200" class="d-inline-block" alt="">
       </div>
       <div class="col-md-12 center-parent message-create-interview">VUI LÒNG TẠO LỜI MỜI PHỎNG VẤN</div>
       <div class="col-md-12 center-parent">
@@ -154,52 +154,21 @@
                   </div>
                 </th>
 
-                <th style="width: 12%;background-color: #f68e56!important;">
-                  <div>
-                    <div>
-                      <div>Khách hàng</div>
-                    </div>
-                  </div>
+                <th style="width: 12%;background-color: #f68e56!important;">Khách hàng</th>
+
+                <th style="width: 9%;background-color: #f68e56!important;">Ngày nhận
                 </th>
 
-                <th style="width: 9%;background-color: #f68e56!important;">
-                  <div>
-                    <div>
-                      <div>Ngày nhận</div>
-                    </div>
-                  </div>
+                <th class="th-mark-status" style="width: 12%; min-width: 20px;background-color: #f68e56!important;">Thời gian phỏng vấn
                 </th>
 
-                <th class="th-mark-status" style="width: 12%; min-width: 20px;background-color: #f68e56!important;">
-                  <div>
-                    <div style="width: 80%;">
-                      <div>Thời gian phỏng vấn</div>
-                    </div>
-                  </div>
+                <th style="width: 14%; background-color: #f68e56!important;">Địa điểm
                 </th>
 
-                <th style="width: 14%; background-color: #f68e56!important;">
-                  <div>
-                    <div>
-                      <div>Địa điểm</div>
-                    </div>
-                  </div>
+                <th style="width: 12%;background-color: #f68e56!important;">Nội dung
                 </th>
 
-                <th style="width: 12%;background-color: #f68e56!important;">
-                  <div>
-                    <div>
-                      <div>Nội dung</div>
-                    </div>
-                  </div>
-                </th>
-
-                <th class="th-mark-status" style="width: 7%; min-width: 20px;background-color: #f68e56!important;">
-                  <div>
-                    <div style="width: 80%;">
-                      <div>Lần p/vấn</div>
-                    </div>
-                  </div>
+                <th class="th-mark-status" style="width: 7%; min-width: 20px;background-color: #f68e56!important;">Lần p/vấn
                 </th>
 
                 <th style="width: 5%;background-color: #f68e56!important;">
@@ -287,7 +256,7 @@
                     </div>
                     <div>
                       <a title="Chỉnh sửa">
-                        <i class="fa fa-pencil color-item-down" aria-hidden="true"></i>
+                        <i class="fa fa-pencil color-item-down" aria-hidden="true" (click)="EditInvitation(item)"></i>
                       </a>
                     </div>
                   </div>
