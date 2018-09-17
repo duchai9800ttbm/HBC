@@ -61,7 +61,6 @@ export class EmailService {
   constructor(
     private apiService: ApiService,
     private instantSearchService: InstantSearchService,
-    private sessionService: SessionService,
   ) { }
 
   watchEmailSubject(): Observable<any> {
@@ -80,11 +79,12 @@ export class EmailService {
     const url = `bidopportunitys/${bidOpportunityId}/emails/filter/${page}/${pageSize}/`;
     const urlParams = EmailService.createFilterParams(filter);
     urlParams.append('searchTerm', terms);
-    return this.apiService.get(url, urlParams).map(result => {
+    return this.apiService.get(url, urlParams).map(res => {
+      const result = res.result;
       return {
         currentPage: result.pageIndex,
         pageSize: result.pageSize,
-        pageCount: result.pageCount,
+        pageCount: result.totalPages,
         total: result.totalCount,
         items: (result.items || []).map(
           EmailService.toEmailListItem
@@ -103,11 +103,10 @@ export class EmailService {
     const url = `bidopportunitys/${bidOpportunityId}/emails/filter/${page}/${pageSize}/?searchTerm=`;
     return this.instantSearchService.searchWithFilter(url, terms, EmailService.createFilterParams(filter))
       .map(result => {
-        console.log(result);
         return {
           currentPage: result.pageIndex,
           pageSize: result.pageSize,
-          pageCount: result.pageCount,
+          pageCount: result.totalPages,
           total: result.totalCount,
           items: (result.items || []).map(
             EmailService.toEmailListItem
@@ -165,8 +164,14 @@ export class EmailService {
       .map(response => response);
   }
 
-  maskAsImportant(bidEmailId: number) {
-    const url = `emails/${bidEmailId}/markasimportant`;
+  important(bidEmailId: number) {
+    const url = `emails/${bidEmailId}/important`;
+    return this.apiService.post(url)
+      .map(response => response);
+  }
+
+  unImportant(bidEmailId: number) {
+    const url = `emails/${bidEmailId}/unimportant`;
     return this.apiService.post(url)
       .map(response => response);
   }
