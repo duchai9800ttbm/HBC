@@ -125,7 +125,6 @@ export class InterviewNoticeComponent implements OnInit {
       this.spinner.show();
       this.emailService.sendEmailInterview(this.emailModel, this.file).subscribe(result => {
         this.alertService.success('Gửi thông báo phỏng vấn đến các bên liên quan thành công!');
-        this.modalRef.hide();
         this.spinner.hide();
       },
         err => {
@@ -134,7 +133,6 @@ export class InterviewNoticeComponent implements OnInit {
           } else {
             this.alertService.error('Đã xảy ra lỗi. Gửi thông báo phỏng vấn đến các bên liên quan không thành công!');
           }
-          this.modalRef.hide();
           this.spinner.hide();
         });
     }
