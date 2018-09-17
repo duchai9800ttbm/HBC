@@ -92,10 +92,7 @@ export class EmailDetailComponent implements OnInit {
             this.beforeId = null;
           }
         }
-      
       });
-
-
   }
 
 
@@ -128,13 +125,22 @@ export class EmailDetailComponent implements OnInit {
     const obj = new MultipeDelete();
     obj.ids = [this.emailId];
     this.confirmationService.confirm(
-      'Bạn có chắc chắn muốn xóa tài liệu này?',
+      'Bạn có chắc chắn muốn email này?',
       () => {
-        this.emailService.moveToTrash(obj).subscribe(data => {
-          that.alertService.success('Đã xóa email thành công!');
-          that.emailService.emitEvent();
-          that.router.navigate([`package/email/${this.packageId}/${this.page}/list`]);
-        });
+        if (this.page == 'trash') {
+          this.emailService.delete(obj).subscribe(data => {
+            that.alertService.success('Đã xóa email thành công!');
+            that.emailService.emitEvent();
+            that.router.navigate([`package/email/${this.packageId}/${this.page}/list`]);
+          });
+        } else {
+          this.emailService.moveToTrash(obj).subscribe(data => {
+            that.alertService.success('Đã xóa email thành công!');
+            that.emailService.emitEvent();
+            that.router.navigate([`package/email/${this.packageId}/${this.page}/list`]);
+          });
+        }
+
       }
     );
   }
@@ -144,10 +150,12 @@ export class EmailDetailComponent implements OnInit {
       title: 'EMAIL',
       content: PrintEmailComponent,
       width: 600,
-      minWidth: 250
+      minWidth: 250,
+      height: 700
     });
     const instance = this.dialog.content.instance;
     instance.emailId = this.emailId;
+    instance.email = this.email;
     instance.callBack = () => this.back();
   }
 
