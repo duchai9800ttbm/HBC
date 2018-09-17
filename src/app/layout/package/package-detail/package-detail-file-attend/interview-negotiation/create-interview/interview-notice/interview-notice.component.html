@@ -1,4 +1,4 @@
-<div class="pad-top-table">
+<!-- <div class="pad-top-table">
   <div class="table-small">
     <div class="title-detail center-parent">
       <div class="mr-auto col-md-7 no-pading-left">
@@ -38,4 +38,108 @@
       </ckeditor>
     </div>
   </div>
+</div> -->
+
+
+
+<div class="modal-header no-boder-bottom">
+    <div class="pull-left ">
+        <div class="text-title icon-arrow">
+            <img width="15" height="15" class="img-back pointer" src="assets\images\nghia.png" (click)="ClosePopup()" />
+            <h4 class="modal-title text-dark d-inline text-send-noti"> GỬI THÔNG THÔNG BÁO PHỎNG VẤN ĐẾN CÁC BÊN LIÊN QUAN</h4>
+        </div>
+    </div>
+
+    <div class="pull-right">
+        <button type="button" class="btn btn-cancel mr-2" aria-label="Close" (click)="closePopup()">Hủy</button>
+        <button type="button" class="btn btn-send" aria-label="Close" (click)="SendInformation()">Gửi</button>
+    </div>
+</div>
+<div class="modal-body">
+    <div class="input-group mb-3">
+        <div class="input-group-prepend">
+            <span class="input-group-text">To:</span>
+        </div>
+        <kendo-multiselect [allowCustom]="true" [data]="listEmailSearchTo" [(ngModel)]="emailModel.to" [textField]="'employeeName'" [valueField]="'employeeEmail'"
+            [ngClass]="{ 'bd-r' : isSendCc === false ||isSendBcc===false }" aria-label="To" autofocus (keyup)="searchTermTo$.next($event.target.value)"
+            [valueNormalizer]="valueNormalizerTo">
+            <ng-template kendoMultiSelectItemTemplate let-dataItem>
+                <table>
+                    <tr>{{ dataItem.employeeName }}</tr>
+                    <tr class="text-muted">{{ dataItem.employeeEmail}}</tr>
+                </table>
+            </ng-template>
+        </kendo-multiselect>
+
+        <div class="input-group-append" *ngIf="!isSendCc || !isSendBcc">
+            <span class="input-group-text">
+                <span *ngIf="!isSendCc" title="Thêm người nhận Cc" class="send-cc" (click)="sendCc()">Cc</span>
+                <span *ngIf="!isSendBcc" title="Thêm người nhận Bcc" class="send-cc" (click)="sendBcc()">Bcc</span>
+            </span>
+        </div>
+    </div>
+
+    <div class="input-group mb-3" *ngIf="isSendCc">
+        <div class="input-group-prepend">
+            <span class="input-group-text" id="basic-addon1">Cc:</span>
+        </div>
+        <kendo-multiselect [allowCustom]="true" [data]="listEmailSearchCc" [(ngModel)]="emailModel.cc" [textField]="'employeeName'" [valueField]="'employeeEmail'"
+            [ngClass]="{ 'bd-r' : isSendCc === false ||isSendBcc===false }" aria-label="To" autofocus (keyup)="searchTermCc$.next($event.target.value)"
+            [valueNormalizer]="valueNormalizerCc">
+            <ng-template kendoMultiSelectItemTemplate let-dataItem>
+                <table>
+                    <tr>{{ dataItem.employeeName }}</tr>
+                    <tr class="text-muted">{{ dataItem.employeeEmail}}</tr>
+                </table>
+            </ng-template>
+        </kendo-multiselect>
+    </div>
+
+    <div class="input-group mb-3" *ngIf="isSendBcc">
+        <div class="input-group-prepend">
+            <span class="input-group-text" id="basic-addon1">Bcc:</span>
+        </div>
+        <kendo-multiselect [allowCustom]="true" [data]="listEmailSearchBcc" [(ngModel)]="emailModel.bcc" [textField]="'employeeName'" [valueField]="'employeeEmail'"
+            [ngClass]="{ 'bd-r' : isSendCc === false ||isSendBcc===false }" aria-label="To" autofocus (keyup)="searchTermBcc$.next($event.target.value)"
+            [valueNormalizer]="valueNormalizerBcc">
+            <ng-template kendoMultiSelectItemTemplate let-dataItem>
+                <table>
+                    <tr>{{ dataItem.employeeName }}</tr>
+                    <tr class="text-muted">{{ dataItem.employeeEmail}}</tr>
+                </table>
+            </ng-template>
+        </kendo-multiselect>
+    </div>
+
+    <div class="input-group mb-3">
+        <div class="input-group-prepend">
+            <span class="input-group-text" id="basic-addon1">Tiêu đề:</span>
+        </div>
+        <input type="text" [(ngModel)]="emailModel.subject" class="form-control boder-left-none" placeholder="" aria-label="Tiede"
+            aria-describedby="basic-addon1">
+    </div>
+    <div class="body-ckeditor">
+        <ckeditor [(ngModel)]="emailModel.content" [config]="ckeConfig" #ckeditor>
+            <ckbutton [name]="'saveButton'" [command]="'saveCmd'" (click)="save($event)" [icon]="'save.png'" [label]="'Save Document'"
+                [toolbar]="'clipboard,1'">
+            </ckbutton>
+        </ckeditor>
+    </div>
+    <div class="d-flex">
+        <div class="fileUpload width-but-upload pt-2">
+            <button class="btn btn-primary">
+                <i class="fa fa-paperclip" aria-hidden="true"></i>&nbsp;&nbsp; Đính kèm file</button>
+            <input type="file" class="upload" tabindex="2" (change)="uploadfile($event)" multiple />
+        </div>
+        <div class="width-add-file-upload pt-2 d-flex">
+            <div *ngFor="let item of file; let i = index" class="d-flex pl-2">
+                <div class="center-parent">
+                    <span class="text-truncate">{{item?.name}}</span>
+                </div>
+                <div class="pl-2 center-parent">
+                    <button (click)="deleteFileUpload(i)" class="btn btn-secondary">X</button>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>

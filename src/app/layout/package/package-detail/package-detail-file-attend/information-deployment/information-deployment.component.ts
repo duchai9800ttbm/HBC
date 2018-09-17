@@ -135,28 +135,11 @@ export class InformationDeploymentComponent implements OnInit {
         this.emailService.searchbymail(term).subscribe(response => {
           this.listEmailSearchTo = response;
         });
-        // if (term.substr(term.length - 1, 1) === ',' || term.substr(term.length - 1, 1) === ';') {
-        //   this.searchTermTo$.next('');
-        //   const emailModelTo = new SearchEmailModel();
-        //   emailModelTo.employeeName = term;
-        //   emailModelTo.employeeEmail = term;
-        //   if (!this.emailModel.to) {
-        //     this.emailModel.to = [];
-        //   }
-        //   this.emailModel.to.push(emailModelTo);
-        // }
       });
     this.searchTermCc$
       .debounceTime(COMMON_CONSTANTS.SearchDelayTimeInMs)
       .distinctUntilChanged()
       .subscribe(term => {
-        // if (term.substr(term.length - 1, 1) === ',' || term.substr(term.length - 1, 1) === ';') {
-        //   const emailModelTo = new SearchEmailModel();
-        //   emailModelTo.employeeName = term;
-        //   emailModelTo.employeeEmail = term;
-        //   this.emailModel.to.push(emailModelTo);
-        //   this.searchTerm$ = null;
-        // };
         this.emailService.searchbymail(term).subscribe(response => {
           this.listEmailSearchCc = response;
         });
@@ -165,13 +148,6 @@ export class InformationDeploymentComponent implements OnInit {
       .debounceTime(COMMON_CONSTANTS.SearchDelayTimeInMs)
       .distinctUntilChanged()
       .subscribe(term => {
-        // if (term.substr(term.length - 1, 1) === ',' || term.substr(term.length - 1, 1) === ';') {
-        //   const emailModelTo = new SearchEmailModel();
-        //   emailModelTo.employeeName = term;
-        //   emailModelTo.employeeEmail = term;
-        //   this.emailModel.to.push(emailModelTo);
-        //   this.searchTerm$ = null;
-        // };
         this.emailService.searchbymail(term).subscribe(response => {
           this.listEmailSearchBcc = response;
         });
@@ -338,7 +314,6 @@ export class InformationDeploymentComponent implements OnInit {
   }
 
   uploadfile(event) {
-    console.log('event', event);
     const fileList: FileList = event.target.files;
     if (fileList.length > 0) {
       for (let i = 0; i < fileList.length; i++) {

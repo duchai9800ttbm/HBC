@@ -38,7 +38,7 @@ export class CreateNewInvitationComponent implements OnInit {
   }
 
   ngOnInit() {
-    // this.interviewInvitation.customer = new CustomerModel();
+    console.log('interviewInvitation', this.interviewInvitation);
     this.currentPackageId = +PackageDetailComponent.packageId;
     this.packageService.getInforPackageID(this.currentPackageId).subscribe(result => {
       if (result.customer) {
@@ -53,8 +53,10 @@ export class CreateNewInvitationComponent implements OnInit {
     this.createFormNewInvitation = this.fb.group({
       customerName: [this.interviewInvitation.customer && this.interviewInvitation.customer.customerName ?
         this.interviewInvitation.customer.customerName : ''],
-      approvedDate: [this.interviewInvitation.approvedDate, [Validators.required]],
-      interviewDate: [this.interviewInvitation.interviewDate, [Validators.required]],
+      approvedDate: [this.interviewInvitation.approvedDate ? new Date(1000 * this.interviewInvitation.approvedDate) : null
+        , [Validators.required]],
+      interviewDate: [this.interviewInvitation.interviewDate ? new Date(1000 * this.interviewInvitation.interviewDate) : null
+        , [Validators.required]],
       place: [this.interviewInvitation.place, [Validators.required]],
       interviewTimes: [this.interviewInvitation.interviewTimes, [Validators.required]],
       content: [this.interviewInvitation.content],
