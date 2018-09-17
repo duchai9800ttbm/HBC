@@ -7,6 +7,7 @@ import { PackageService } from '../../../../../../../shared/services/package.ser
 import { AlertService } from '../../../../../../../shared/services';
 import { InterviewInvitationService } from '../../../../../../../shared/services/interview-invitation.service';
 import { CustomerModel } from '../../../../../../../shared/models/interview-invitation/customer.model';
+import ValidationHelper from '../../../../../../../shared/helpers/validation.helper';
 @Component({
   selector: 'app-create-new-invitation',
   templateUrl: './create-new-invitation.component.html',
@@ -20,6 +21,14 @@ export class CreateNewInvitationComponent implements OnInit {
   // interviewInvitation = new InterviewInvitation();
   currentPackageId: number;
   file;
+  formErrors = {
+    approvedDate: '',
+    interviewDate: '',
+    place: '',
+    interviewTimes: ''
+  };
+  isSubmitted: boolean;
+  invalidMessages: string[];
   constructor(
     private fb: FormBuilder,
     private packageService: PackageService,
@@ -44,13 +53,30 @@ export class CreateNewInvitationComponent implements OnInit {
     this.createFormNewInvitation = this.fb.group({
       customerName: [this.interviewInvitation.customer && this.interviewInvitation.customer.customerName ?
         this.interviewInvitation.customer.customerName : ''],
-      approvedDate: [this.interviewInvitation.approvedDate],
-      interviewDate: [this.interviewInvitation.interviewDate],
-      place: [this.interviewInvitation.place],
-      interviewTimes: [this.interviewInvitation.interviewTimes],
+      approvedDate: [this.interviewInvitation.approvedDate, [Validators.required]],
+      interviewDate: [this.interviewInvitation.interviewDate, [Validators.required]],
+      place: [this.interviewInvitation.place, [Validators.required]],
+      interviewTimes: [this.interviewInvitation.interviewTimes, [Validators.required]],
       content: [this.interviewInvitation.content],
       attachedFiles: ['']
     });
+    this.createFormNewInvitation.valueChanges.subscribe(data =>
+      this.onFormValueChanged(data)
+    );
+  }
+
+  onFormValueChanged(data?: any) {
+    if (this.isSubmitted) {
+      this.validateForm();
+    }
+  }
+
+  validateForm() {
+    this.invalidMessages = ValidationHelper.getInvalidMessages(
+      this.createFormNewInvitation,
+      this.formErrors
+    );
+    return this.invalidMessages.length === 0;
   }
 
   fileChange(event) {
@@ -70,16 +96,23 @@ export class CreateNewInvitationComponent implements OnInit {
   }
 
   onSubmit() {
-    console.log('this.interviewInvitation.customer', this.interviewInvitation.customer, this.interviewInvitation.customer.customerId);
-    this.interviewInvitationService.createInterviewInvitation(
-      this.interviewInvitation.customer.customerId,
-      this.currentPackageId, this.createFormNewInvitation.value, this.file).subscribe(response => {
-        this.closePopup();
-        this.alertService.success('Thêm mới lời mời thành công!');
-      },
-        err => {
-          this.alertService.error('Tạo mới lời mời thất bại, xin vui lòng thử lại!');
-        });
+    this.isSubmitted = true;
+    console.log('this.formError', this.formErrors);
+    if (this.validateForm()) {
+      this.interviewInvitationService.createInterviewInvitation(
+        this.interviewInvitation.customer.customerId,
+        this.currentPackageId, this.createFormNewInvitation.value, this.file).subscribe(response => {
+          this.closePopup();
+          this.alertService.success('Thêm mới lời mời thành công!');
+        },
+          err => {
+            if (err.json().errorCode === 'BusinessException') {
+              this.alertService.error('Giai đoạn gói thầu không hợp lệ!');
+            } else {
+              this.alertService.error('Tạo mới lời mời thất bại, xin vui lòng thử lại!');
+            }
+          });
+    }
   }
 
 }
