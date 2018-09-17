@@ -129,12 +129,11 @@ export class InterviewNoticeComponent implements OnInit {
         this.spinner.hide();
       },
         err => {
-          // if (err.json().errorCode === 'BusinessException') {
-          //   this.alertService.error('Đã xảy ra lỗi. Hồ sơ mời thầu này đã được gửi thư thông báo triển khai!');
-          // } else {
-          //   this.alertService.error('Đã xảy ra lỗi. Gửi thông báo phỏng vấn đến các bên liên quan không thành công!');
-          // }
-          this.alertService.error('Đã xảy ra lỗi. Gửi thông báo phỏng vấn đến các bên liên quan không thành công!');
+          if (err.json().errorCode === 'BusinessException') {
+            this.alertService.error('Đã xảy ra lỗi. Trạng thái gói thầu không hợp lệ!');
+          } else {
+            this.alertService.error('Đã xảy ra lỗi. Gửi thông báo phỏng vấn đến các bên liên quan không thành công!');
+          }
           this.modalRef.hide();
           this.spinner.hide();
         });
