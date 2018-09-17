@@ -12,6 +12,8 @@ import { InterviewInvitationFilter } from '../../../../../../shared/models/inter
 import { AlertService } from '../../../../../../shared/services';
 import { NgxSpinnerService } from '../../../../../../../../node_modules/ngx-spinner';
 import { InterviewNoticeComponent } from './interview-notice/interview-notice.component';
+import { InterviewInvitation } from '../../../../../../shared/models/interview-invitation/interview-invitation-create.model';
+import { CustomerModel } from '../../../../../../shared/models/interview-invitation/customer.model';
 @Component({
   selector: 'app-create-interview',
   templateUrl: './create-interview.component.html',
@@ -57,13 +59,16 @@ export class CreateInterviewComponent implements OnInit {
     this.dtTrigger.next();
   }
 
-  createInvitation() {
+  createInvitation(interviewCreate: InterviewInvitation) {
     this.dialog = this.dialogService.open({
       content: CreateNewInvitationComponent,
       width: 600,
       minWidth: 250
     });
     const instance = this.dialog.content.instance;
+    interviewCreate = new InterviewInvitation();
+    interviewCreate.customer = new CustomerModel();
+    instance.interviewInvitation = interviewCreate;
     instance.callBack = () => this.closePopuup();
   }
 
@@ -119,6 +124,17 @@ export class CreateInterviewComponent implements OnInit {
       minWidth: 250
     });
     const instance = this.dialog.content.instance;
+    instance.callBack = () => this.closePopuup();
+  }
+
+  EditInvitation(interviewEdit: InterviewInvitation) {
+    this.dialog = this.dialogService.open({
+      content: CreateNewInvitationComponent,
+      width: 600,
+      minWidth: 250
+    });
+    const instance = this.dialog.content.instance;
+    instance.interviewInvitation = interviewEdit;
     instance.callBack = () => this.closePopuup();
   }
 }
