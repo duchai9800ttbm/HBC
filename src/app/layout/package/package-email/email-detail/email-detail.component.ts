@@ -47,11 +47,8 @@ export class EmailDetailComponent implements OnInit {
     this.emailService.searchWithFilter(this.packageId, '', this.filterModel, 0, 10000)
       .subscribe(result => {
         this.pagedResult = result;
-        console.log(this.pagedResult.items);
         this.pagedResult.items.forEach(element => {
-          console.log(element);
-          if (element.id == this.emailId) {
-          }
+          
         });
       });
 

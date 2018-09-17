@@ -79,7 +79,8 @@ export class EmailService {
     const url = `bidopportunitys/${bidOpportunityId}/emails/filter/${page}/${pageSize}/`;
     const urlParams = EmailService.createFilterParams(filter);
     urlParams.append('searchTerm', terms);
-    return this.apiService.get(url, urlParams).map(result => {
+    return this.apiService.get(url, urlParams).map(res => {
+      const result = res.result;
       return {
         currentPage: result.pageIndex,
         pageSize: result.pageSize,

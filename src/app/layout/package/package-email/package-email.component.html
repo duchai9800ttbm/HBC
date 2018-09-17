@@ -18,40 +18,44 @@
               <div>Từ chối ({{giveUp?.count}})</div>
             </div>
           </div> -->
-          <div class="action d-flex align-content-between" [routerLinkActive]="['router-link-active-2']" [routerLink]="['/package/email', packageId ,'assign']">
-            <div class="center-parent mg">
-              <div> Phân công ({{assign?.count}})</div>
-            </div>
-          </div>
-          <div class="action d-flex align-content-between" [routerLinkActive]="['router-link-active-2']" [routerLink]="['/package/email', packageId ,'transfer']">
-            <div class="center-parent mg">
-              <div> Chuyển giao tài liệu ({{transfer?.count}})</div>
-            </div>
-          </div>
           <div class="action d-flex align-content-between" [routerLinkActive]="['router-link-active-2']" [routerLink]="['/package/email', packageId ,'deploy']">
             <div class="center-parent mg">
               <div> Thông báo triển khai ({{deploy?.count}})</div>
             </div>
           </div>
-          <div class="action d-flex align-content-between" [routerLinkActive]="['router-link-active-2']" [routerLink]="['/package/email', packageId ,'interview']">
+
+          <!-- <div class="action d-flex align-content-between" [routerLinkActive]="['router-link-active-2']" [routerLink]="['/package/email', packageId ,'interview']">
             <div class="center-parent mg">
               <div> Thông báo phỏng vấn ({{interview?.count}})</div>
             </div>
+          </div> -->
+          <div class="action d-flex align-content-between" [routerLinkActive]="['router-link-active-2']" [routerLink]="['/package/email', packageId ,'assign']">
+            <div class="center-parent mg">
+              <div> Phân công ({{assign?.count}})</div>
+            </div>
           </div>
+
+
           <div class="action d-flex align-content-between" [routerLinkActive]="['router-link-active-2']" [routerLink]="['/package/email', packageId ,'win']">
             <div class="center-parent mg">
               <div> Thông báo trúng thầu ({{win?.count}})</div>
             </div>
           </div>
-          <div class="action d-flex align-content-between" [routerLinkActive]="['router-link-active-2']" [routerLink]="['/package/email', packageId ,'miss']">
+          <!-- <div class="action d-flex align-content-between" [routerLinkActive]="['router-link-active-2']" [routerLink]="['/package/email', packageId ,'miss']">
             <div class="center-parent mg">
               <div> Thông báo trật thầu ({{miss?.count}})</div>
             </div>
-          </div>
+          </div> -->
           <div class="action d-flex align-content-between" [routerLinkActive]="['router-link-active-2']" [routerLink]="['/package/email', packageId , 'kick-off']">
             <div class="center-parent mg">
               <div> Kick-off ({{kickOff?.count}})
               </div>
+            </div>
+          </div>
+          
+          <div class="action d-flex align-content-between" [routerLinkActive]="['router-link-active-2']" [routerLink]="['/package/email', packageId ,'transfer']">
+            <div class="center-parent mg">
+              <div> Chuyển giao tài liệu ({{transfer?.count}})</div>
             </div>
           </div>
           <div class="action d-flex align-content-between" [routerLinkActive]="['router-link-active-2']" [routerLink]="['/package/email', packageId, 'important']">
