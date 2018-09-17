@@ -895,4 +895,11 @@ export class PackageService {
         const url = `${bidOpportunityId}/bidopportunity/proposedtenderparticipatinngreport`;
         return this.apiService.get(url).map(response => response.result);
     }
+    // gửi duyệt đề nghị dự thầu
+    sendApproveBidProposal(bidOpportunityId: number, date: number): Observable<any> {
+        const url = `bidopportunity/hsdt/${bidOpportunityId}/guiduyetdenghiduthau`;
+        return this.apiService.post(url, {
+            expectedAcceptanceDate: date
+        }).map(response => response.result);
+    }
 }

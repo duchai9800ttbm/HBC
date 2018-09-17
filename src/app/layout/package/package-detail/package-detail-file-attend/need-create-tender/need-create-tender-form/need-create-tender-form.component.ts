@@ -49,7 +49,8 @@ export class NeedCreateTenderFormComponent implements OnInit {
         }
     }
 
-    onSubmit() {
+    onSubmit(isDraf: boolean) {
+        NeedCreateTenderFormComponent.formModel.isDraftVersion = isDraf;
         NeedCreateTenderFormComponent.formModel.bidOpportunityId = this.bidOpportunityId;
         if (NeedCreateTenderFormComponent.formModel.createdEmployeeId) {
             NeedCreateTenderFormComponent.formModel.updatedEmployeeId = this.sessionService.currentUser.userId;

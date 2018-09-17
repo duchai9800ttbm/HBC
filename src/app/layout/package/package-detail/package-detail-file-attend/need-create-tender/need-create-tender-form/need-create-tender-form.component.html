@@ -16,10 +16,10 @@
             <!-- <button class="btn btn-primary ml-2">
                 Import dữ liệu theo mẫu
             </button> -->
-            <button class="btn btn-primary ml-2">
+            <button class="btn btn-primary ml-2" (click)="onSubmit(true)">
                 Lưu nháp
             </button>
-            <button class="btn btn-primary ml-2" (click)="onSubmit()">
+            <button class="btn btn-primary ml-2" (click)="onSubmit(false)">
                 Lưu
             </button>
             <button class="btn btn-secondary ml-2">
@@ -54,22 +54,6 @@
     <div class="w-100 ml-2">
         <div>
             <div class="header m-0">
-                <!-- <div class="row">
-                    <div class="col-md-6">
-                        Công trình (Project): {{packageInfo?.projectName}}
-                    </div>
-                    <div class="col-md-6">
-                        Gói thầu (Package): {{packageInfo?.opportunityName}}
-                    </div>
-                </div>
-                <div class="row mt-2">
-                    <div class="col-md-6">Địa điểm (Location): {{packageInfo?.place}}</div>
-                    <div class="col-md-6">Kiểu công trình (Project type): {{packageInfo?.projectType?.text}}</div>
-                </div>
-                <div class="row mt-2">
-                    <div class="col-md-6"></div>
-                    <div class="col-md-6">Thời gian thực hiện hồ sơ dự thầu (Tender process period): {{packageInfo?.totalTime}}</div>
-                </div> -->
                 <div class="row">
                     <div class="col-md-3"><strong>Công trình (Project):</strong></div>
                     <div class="col-md-9">{{packageInfo?.projectName}}</div>

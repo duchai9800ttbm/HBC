@@ -10,7 +10,9 @@
     </div>
     <div>
         <div class="btn-toolbar mt-2 mb-2">
-            <button type="button" class="btn btn-primary ">Tải
+            <button type="button" class="btn btn-primary ml-2" (click)="isShowDialog = true" *ngIf="proposedTender">Chấp thuận đề nghị DT</button>
+            <button type="button" class="btn btn-primary ml-2" (click)="isShowDialog = true" *ngIf="proposedTender">Gửi duyệt đề nghị DT</button>
+            <button type="button" class="btn btn-primary ml-2">Tải
                 Template</button>
             <button type="button" class="btn btn-primary ml-2">
                 <i class="fa fa-refresh" aria-hidden="true"></i>
@@ -62,19 +64,22 @@
                 </td>
                 <td>{{proposedTender.documentName}}</td>
                 <td>{{proposedTender.isDraftVersion ? 'Bản nháp' : 'Chính thức'}}</td>
-                <td></td>
+                <td>{{proposedTender.createdEmployee?.employeeName}}</td>
                 <td></td>
                 <td>
                     <div class="d-flex justify-content-center">
                         <div>
-                            <a [routerLink]="['./form/view']">
+                            <a [routerLink]="['./form/view']" (click)="changeAction('view')">
                                 <i class="fa fa-eye text-warning" aria-hidden="true"></i>
                             </a>
-                            <a class=" text-success ml-3" [routerLink]="['./form/edit']">
+                            <a class=" text-success ml-3" [routerLink]="['./form/edit']" (click)="changeAction('edit')">
                                 <i class="fa fa-pencil cursor-pointer" aria-hidden="true"> </i>
                             </a>
                             <a class=" text-dark ml-3">
                                 <i class="fa fa-trash-o" aria-hidden="true"></i>
+                            </a>
+                            <a class="ml-3" (click)="printForm()">
+                                <i class="fa fa-print ic-print-color" aria-hidden="true"></i>
                             </a>
                         </div>
                     </div>
@@ -83,3 +88,76 @@
         </tbody>
     </table>
 </div>
+<div id="divPrint" class="d-none" *ngIf="false">
+    <div class="header-print d-flex justify-content-between">
+        <img class="logo-hbc" src="assets\images\logo-hoabinh.png">
+        <div>BM-01/QT-CL-02</div>
+    </div>
+    <div class="body-print">
+        <table>
+            <thead></thead>
+        </table>
+    </div>
+</div>
+<kendo-dialog [width]="550" *ngIf="isShowDialog">
+    <div *ngIf="proposedTender">
+        <div class="dialog-header mt-2">
+            <h3 class="text-center text-uppercase color-black">gửi duyệt đề nghị dự thầu</h3>
+            <span class="ic-close pointer" (click)="isShowDialog = false">
+                <img src="assets/images/ic-close.svg">
+            </span>
+        </div>
+        <div class="dialog-body">
+            <div class="row mt-4">
+                <div class="col-md-5 offset-md-1 d-flex align-items-center text-nowrap">
+                    Thời gian mong đợi được duyệt
+                </div>
+                <div class="col-md-5">
+                    <kendo-datepicker [(ngModel)]="dateApproveBid" class="form-control"></kendo-datepicker>
+                </div>
+            </div>
+        </div>
+        <div class="mt-5 text-center mb-2">
+            <button class="btn b-btn btn-primary" (click)="sendApproveBidProposal()">Đồng ý</button>
+        </div>
+    </div>
+    <div *ngIf="proposedTender">
+        <div class="dialog-header mt-2">
+            <h3 class="text-center text-uppercase color-black">chấp thuận đề nghị dự thầu</h3>
+            <span class="ic-close pointer" (click)="isShowDialog = false">
+                <img src="assets/images/ic-close.svg">
+            </span>
+        </div>
+        <div class="dialog-body mt-4 text-center">
+            Đây là loại đề nghị dự thầu {{proposedTender.isAgreedParticipating ? 'Đồng ý tham gia' : 'Không đồng ý tham
+            gia'}}<br>
+            Bạn có muốn chấp thuận đề nghị dự thầu này?
+        </div>
+        <div class="mt-5 text-center mb-2">
+            <button class="btn b-btn btn-primary">Có</button>
+            <button class="btn b-btn btn-secondary ml-2" (click)="isNotAgreeParticipating = true">Không</button>
+        </div>
+    </div>
+    <div *ngIf="isNotAgreeParticipating">
+        <div class="dialog-header mt-2">
+            <h3 class="text-center text-uppercase color-black">không chấp thuận đề nghị dự thầu</h3>
+            <span class="ic-close pointer" (click)="isShowDialog = false">
+                <img src="assets/images/ic-close.svg">
+            </span>
+        </div>
+        <div class="dialog-body">
+            <div class="row mt-4">
+                <div class="col-md-3 offset-md-1">
+                    Lý do
+                </div>
+                <div class="col-md-7">
+                    <textarea class="form-control" rows="2"></textarea>
+                </div>
+            </div>
+        </div>
+        <div class="mt-5 text-center mb-2">
+                <button class="btn b-btn btn-primary">Gửi</button>
+        </div>
+    </div>
+
+</kendo-dialog>
