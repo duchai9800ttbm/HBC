@@ -1,11 +1,12 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { PackageEmailComponent } from '../package-email.component';
 import { EmailService } from '../../../../shared/services/email.service';
-import { EmailItemModel, MultipeDelete } from '../../../../shared/models/email/email-item.model';
+import { EmailItemModel, MultipeDelete, EmailFilter } from '../../../../shared/models/email/email-item.model';
 import { Router } from '@angular/router';
 import { ConfirmationService, AlertService } from '../../../../shared/services';
 import { DialogService } from '../../../../../../node_modules/@progress/kendo-angular-dialog';
 import { PrintEmailComponent } from '../../../../shared/components/print-email/print-email.component';
+import { PagedResult } from '../../../../shared/models';
 
 @Component({
   selector: 'app-email-detail',
@@ -15,6 +16,8 @@ import { PrintEmailComponent } from '../../../../shared/components/print-email/p
 export class EmailDetailComponent implements OnInit {
   @Input() emailId: number;
   @Input() page: string;
+  filterModel = new EmailFilter();
+  pagedResult: PagedResult<EmailItemModel> = new PagedResult<EmailItemModel>();
   constructor(
     private emailService: EmailService,
     private router: Router,
@@ -25,15 +28,40 @@ export class EmailDetailComponent implements OnInit {
   packageId;
   dialog;
   email: EmailItemModel;
+  up;
+  down;
   ngOnInit() {
     this.packageId = +PackageEmailComponent.packageId;
     this.emailService.view(this.emailId).subscribe(result => {
       this.email = result;
     });
+    switch (this.page) {
+      case 'trash': {
+        this.filterModel.category = 'TrashCan';
+        break;
+      }
+      default: {
+        break;
+      }
+    }
+    this.emailService.searchWithFilter(this.packageId, '', this.filterModel, 0, 10000)
+      .subscribe(result => {
+        this.pagedResult = result;
+        console.log(this.pagedResult.items);
+        this.pagedResult.items.forEach(element => {
+          console.log(element);
+          if (element.id == this.emailId) {
+          }
+        });
+      });
+
+
   }
 
   download(id) {
-    this.emailService.download(id).subscribe();
+    this.emailService.download(id).subscribe(() => { }, err => {
+      this.alertService.error('File không tồn tại hoặc đã bị xóa!');
+    });
   }
 
   delete() {
