@@ -155,8 +155,7 @@ export class PrintEmailComponent implements OnInit {
       
       </style></head><body onload="window.print()">` + innerContents + '</html>');
       popupWinindow.document.close();
-     // this.dialogRef.close();
+      this.dialogRef.close();
     
-    this.callBack();
   }
 }
