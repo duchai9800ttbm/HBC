@@ -151,7 +151,7 @@ export class EmailDetailComponent implements OnInit {
       content: PrintEmailComponent,
       width: 600,
       minWidth: 250,
-      height: 700
+      height: 500
     });
     const instance = this.dialog.content.instance;
     instance.emailId = this.emailId;
