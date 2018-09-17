@@ -57,7 +57,7 @@
         </thead>
         <tbody>
           <ng-container *ngFor="let item of pagedResult.items">
-            <tr (click)="goToDetail(item.id)" class="cursor-pointer">
+            <tr class="cursor-pointer">
 
               <td class="text-center" style="width: 30px;">
                 <label class="custom-control custom-checkbox">
@@ -68,27 +68,27 @@
 
               <td class="star-color">
                 <div class="center-parent">
-                  <div click="changeImportant(item.id)">
-                    <a *ngIf="item.isImportant">
+                  <div>
+                    <a *ngIf="item.isImportant" (click)="unImportant(item.id)">
                       <i class="fa fa-star" aria-hidden="true"></i>
                     </a>
-                    <a *ngIf="!item.isImportant">
+                    <a *ngIf="!item.isImportant" (click)="important(item.id)">
                       <i class="fa fa-star-o" aria-hidden="true"></i>
                     </a>
                   </div>
                 </div>
 
               </td>
-              <td> Tới: {{item.to}}</td>
-              <td> {{item.subject}}</td>
-              <td>
+              <td (click)="goToDetail(item.id)"> Tới: {{item.to}}</td>
+              <td (click)="goToDetail(item.id)"> {{item.subject}}</td>
+              <td (click)="goToDetail(item.id)">
                 <div class="center-parent">
                   <div>
                     <i *ngIf="item.emailAttatchments.length" class="fa fa-paperclip" aria-hidden="true"></i>
                   </div>
                 </div>
               </td>
-              <td class="text-center">{{item.sentDate*1000 | date:'dd/MM/yyyy HH:mm': '+0000'}}</td>
+              <td (click)="goToDetail(item.id)" class="text-center">{{item.sentDate*1000 | date:'dd/MM/yyyy HH:mm': '+0000'}}</td>
             </tr>
 
           </ng-container>

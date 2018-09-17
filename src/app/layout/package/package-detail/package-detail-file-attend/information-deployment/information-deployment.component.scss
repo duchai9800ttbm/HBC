@@ -527,9 +527,13 @@ table.dataTable th {
     filter: alpha(opacity=0);
 }
 .width-but-upload{
-    width: 105px;
+    width: 128px;
 }
 
 .btn-secondary{
     line-height: 1;
+}
+
+.width-add-file-upload{
+    width: calc(100% - 105px);
 }

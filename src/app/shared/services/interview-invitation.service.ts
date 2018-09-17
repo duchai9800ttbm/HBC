@@ -142,7 +142,10 @@ export class InterviewInvitationService {
   ) {
     const url = `bidinterviewinvitation/create`;
     const formData = new FormData();
-    formData.append('CustomerId', `${customerID}`);
+    console.log('customerID', customerID);
+    if (customerID) {
+      formData.append('CustomerId', `${customerID}`);
+    }
     formData.append('BidOpportunityId', `${BidOpportunityId}`);
     formData.append('ReceivedDate', `${moment(createFormNewInvitationValue.approvedDate).unix()}`);
     formData.append('InterViewDate', `${moment(createFormNewInvitationValue.interviewDate).unix()}`);

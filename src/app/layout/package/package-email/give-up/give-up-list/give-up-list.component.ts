@@ -48,7 +48,7 @@ export class GiveUpListComponent implements OnInit {
   down() {
     if (+this.pagedResult.currentPage > 0) {
       this.spinner.show();
-      this.emailService.instantSearchWithFilter(this.packageId, this.searchTerm$, this.filterModel, +this.pagedResult.currentPage - 1, 5)
+      this.emailService.searchWithFilter(this.packageId, this.searchTerm$.value, this.filterModel, +this.pagedResult.currentPage - 1, 5)
         .subscribe(result => {
           this.rerender(result);
           this.spinner.hide();
@@ -61,7 +61,7 @@ export class GiveUpListComponent implements OnInit {
   up() {
     if (+this.pagedResult.pageCount > (+this.pagedResult.currentPage + 1)) {
       this.spinner.show();
-      this.emailService.instantSearchWithFilter(this.packageId, this.searchTerm$, this.filterModel, +this.pagedResult.currentPage + 1, 5)
+      this.emailService.searchWithFilter(this.packageId, this.searchTerm$.value, this.filterModel, +this.pagedResult.currentPage + 1, 5)
         .subscribe(result => {
           this.rerender(result);
           this.spinner.hide();
@@ -74,7 +74,7 @@ export class GiveUpListComponent implements OnInit {
   refresh() {
     this.filterModel.category = 'RejectOpportunity';
     this.spinner.show();
-    this.emailService.instantSearchWithFilter(this.packageId, this.searchTerm$,
+    this.emailService.searchWithFilter(this.packageId, this.searchTerm$.value,
       this.filterModel, this.pagedResult.currentPage, this.pagedResult.pageSize)
       .subscribe(result => {
         this.rerender(result);
@@ -90,22 +90,43 @@ export class GiveUpListComponent implements OnInit {
 
   }
 
-  changeImportant(id) {
-    this.emailService.maskAsImportant(id).subscribe(data => {
-      this.emailService.instantSearchWithFilter(
+  important(id) {
+    this.emailService.important(id).subscribe(data => {
+      this.emailService.searchWithFilter(
         this.packageId,
-        this.searchTerm$,
+        this.searchTerm$.value,
         this.filterModel,
         this.pagedResult.currentPage,
         this.pagedResult.pageSize
       )
         .subscribe(result => {
           this.rerender(result);
+          this.emailService.emitEvent();
+
         }, err => {
           this.alertService.error('Đã có lỗi sảy ra, xin vui lòng thử lại sau!');
         });
     });
   }
+  unImportant(id) {
+    this.emailService.unImportant(id).subscribe(data => {
+      this.emailService.searchWithFilter(
+        this.packageId,
+        this.searchTerm$.value,
+        this.filterModel,
+        this.pagedResult.currentPage,
+        this.pagedResult.pageSize
+      )
+        .subscribe(result => {
+          this.rerender(result);
+          this.emailService.emitEvent();
+
+        }, err => {
+          this.alertService.error('Đã có lỗi sảy ra, xin vui lòng thử lại sau!');
+        });
+    });
+  }
+
 
   onSelectAll(value: boolean) {
     this.checkboxSeclectAll = value;
@@ -132,6 +153,7 @@ export class GiveUpListComponent implements OnInit {
               if (this.pagedResult.items.length === obj.ids.length && +this.pagedResult.currentPage > 0) {
                 this.pagedResult.currentPage = +this.pagedResult.currentPage - 1;
               }
+              that.emailService.emitEvent();
               that.alertService.success('Đã xóa email thành công!');
               that.refresh();
             });

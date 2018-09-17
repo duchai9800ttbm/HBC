@@ -74,8 +74,10 @@
             </div>
             <!-- <input type="text" [(ngModel)]="emailModel.to" class="form-control boder-left-none" [ngClass]="{ 'bd-r' : isSendCc === false ||isSendBcc===false }"
                 aria-label="To" autofocus> -->
-            <kendo-multiselect [data]="listEmailSearch" [(ngModel)]="emailModel.to" [textField]="'employeeName'" [valueField]="'employeeEmail'"
-                [ngClass]="{ 'bd-r' : isSendCc === false ||isSendBcc===false }" aria-label="To" autofocus (keyup)="searchTerm$.next($event.target.value)">
+            <kendo-multiselect [allowCustom]="true" [data]="listEmailSearchTo" [(ngModel)]="emailModel.to" [textField]="'employeeName'" [valueField]="'employeeEmail'"
+                [ngClass]="{ 'bd-r' : isSendCc === false ||isSendBcc===false }" aria-label="To" autofocus (keyup)="searchTermTo$.next($event.target.value)"
+                [valueNormalizer]="valueNormalizerTo">
+                <!-- (keyup)="searchTermTo$.next($event.target.value)" -->
                 <ng-template kendoMultiSelectItemTemplate let-dataItem>
                     <table>
                         <tr>{{ dataItem.employeeName }}</tr>
@@ -98,8 +100,9 @@
             </div>
             <!-- <input type="text" [(ngModel)]="emailModel.cc" class="form-control boder-left-none" placeholder="" aria-label="To" aria-describedby="basic-addon1"
                 autofocus> -->
-            <kendo-multiselect [data]="listEmailSearch" [(ngModel)]="emailModel.cc" [textField]="'employeeName'" [valueField]="'employeeEmail'"
-                [ngClass]="{ 'bd-r' : isSendCc === false ||isSendBcc===false }" aria-label="To" autofocus (keyup)="searchTerm$.next($event.target.value)">
+            <kendo-multiselect [allowCustom]="true" [data]="listEmailSearchCc" [(ngModel)]="emailModel.cc" [textField]="'employeeName'" [valueField]="'employeeEmail'"
+                [ngClass]="{ 'bd-r' : isSendCc === false ||isSendBcc===false }" aria-label="To" autofocus (keyup)="searchTermCc$.next($event.target.value)"
+                [valueNormalizer]="valueNormalizerCc">
                 <ng-template kendoMultiSelectItemTemplate let-dataItem>
                     <table>
                         <tr>{{ dataItem.employeeName }}</tr>
@@ -115,8 +118,9 @@
             </div>
             <!-- <input type="text" [(ngModel)]="emailModel.bcc" class="form-control boder-left-none" placeholder="" aria-label="To" aria-describedby="basic-addon1"
                 autofocus> -->
-            <kendo-multiselect [data]="listEmailSearch" [(ngModel)]="emailModel.bcc" [textField]="'employeeName'" [valueField]="'employeeEmail'"
-                [ngClass]="{ 'bd-r' : isSendCc === false ||isSendBcc===false }" aria-label="To" autofocus (keyup)="searchTerm$.next($event.target.value)">
+            <kendo-multiselect [allowCustom]="true" [data]="listEmailSearchBcc" [(ngModel)]="emailModel.bcc" [textField]="'employeeName'" [valueField]="'employeeEmail'"
+                [ngClass]="{ 'bd-r' : isSendCc === false ||isSendBcc===false }" aria-label="To" autofocus (keyup)="searchTermBcc$.next($event.target.value)"
+                [valueNormalizer]="valueNormalizerBcc">
                 <ng-template kendoMultiSelectItemTemplate let-dataItem>
                     <table>
                         <tr>{{ dataItem.employeeName }}</tr>
@@ -140,18 +144,30 @@
                 </ckbutton>
             </ckeditor>
         </div>
-        <div class="d-flex justify-content-start pt-2 pb-2">
+        <!-- <div *ngFor="let item of file; let i = index" class="d-flex justify-content-start pt-2">
             <div class="center-parent">
-                <span class="text-truncate"></span>
+                <span class="text-truncate">{{item?.name}}</span>
             </div>
             <div class="pl-2">
-                <button (click)="deleteFileUpload()" class="btn btn-secondary">X</button>
+                <button (click)="deleteFileUpload(i)" class="btn btn-secondary">X</button>
             </div>
-        </div>
-        <div class="fileUpload width-but-upload">
-            <button class="btn btn-primary">
-                <i class="fa fa-cloud-upload" aria-hidden="true"></i>&nbsp;&nbsp; Chọn File</button>
-            <input type="file" class="upload" tabindex="2" (change)="uploadfile($event)" />
+        </div> -->
+        <div class="d-flex">
+            <div class="fileUpload width-but-upload pt-2">
+                <button class="btn btn-primary">
+                    <i class="fa fa-paperclip" aria-hidden="true"></i>&nbsp;&nbsp; Đính kèm file</button>
+                <input type="file" class="upload" tabindex="2" (change)="uploadfile($event)" multiple />
+            </div>
+            <div class="width-add-file-upload pt-2 d-flex">
+                <div *ngFor="let item of file; let i = index" class="d-flex pl-2">
+                    <div class="center-parent">
+                        <span class="text-truncate">{{item?.name}}</span>
+                    </div>
+                    <div class="pl-2 center-parent">
+                        <button (click)="deleteFileUpload(i)" class="btn btn-secondary">X</button>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </ng-template>
@@ -425,3 +441,4 @@
 
     </div>
 </ng-template>
+<ngx-spinner bdColor="rgba(51, 51, 51, 0.7)" size="medium" color="#fff" type="ball-clip-rotate-multiple"></ngx-spinner>

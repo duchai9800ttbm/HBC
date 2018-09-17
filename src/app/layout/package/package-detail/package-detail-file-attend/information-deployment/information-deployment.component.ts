@@ -12,19 +12,19 @@ import { Router } from '@angular/router';
 import { DATATABLE_CONFIG } from '../../../../../shared/configs';
 import { Observable, BehaviorSubject, Subject } from '../../../../../../../node_modules/rxjs';
 import { ConfirmationService, AlertService } from '../../../../../shared/services';
-import { NgxSpinnerService } from 'ngx-spinner';
 import { SendEmailModel } from '../../../../../shared/models/send-email-model';
 import { EmailService } from '../../../../../shared/services/email.service';
 import { COMMON_CONSTANTS } from '../../../../../shared/configs/common.config';
 import { SearchEmailModel } from '../../../../../shared/models/search-email.model';
-
+import { NgxSpinnerService } from '../../../../../../../node_modules/ngx-spinner';
+import { map } from 'rxjs/operators/map';
 @Component({
   selector: 'app-information-deployment',
   templateUrl: './information-deployment.component.html',
   styleUrls: ['./information-deployment.component.scss']
 })
 export class InformationDeploymentComponent implements OnInit {
-  file;
+  file = [];
   public gridView: GridDataResult;
   public items: any[] = listUsers;
   public mySelection: number[] = [];
@@ -78,8 +78,13 @@ export class InformationDeploymentComponent implements OnInit {
   emailModel: SendEmailModel = new SendEmailModel();
   ckeConfig: any;
   @ViewChild('ckeditor') ckeditor: any;
-  listEmailSearch;
-  searchTerm$ = new BehaviorSubject<string>('');
+  listEmailSearchTo;
+  listEmailSearchCc;
+  listEmailSearchBcc;
+  searchTermTo$ = new BehaviorSubject<string>('');
+  searchTermCc$ = new BehaviorSubject<string>('');
+  searchTermBcc$ = new BehaviorSubject<string>('');
+  public selectedSizes: Array<string> = [];
   constructor(
     private modalService: BsModalService,
     private formBuilder: FormBuilder,
@@ -92,13 +97,83 @@ export class InformationDeploymentComponent implements OnInit {
     this.loadItems();
   }
 
+  public valueNormalizerTo = (employeeName$: Observable<string>) => employeeName$.pipe(map((employeeName: string) => {
+    const emailModelTo = new SearchEmailModel();
+    emailModelTo.employeeName = employeeName;
+    emailModelTo.employeeEmail = employeeName;
+    if (!this.emailModel.to) {
+      this.emailModel.to = [];
+    }
+    this.emailModel.to.push(emailModelTo);
+  }))
+
+  public valueNormalizerCc = (employeeName$: Observable<string>) => employeeName$.pipe(map((employeeName: string) => {
+    const emailModelCc = new SearchEmailModel();
+    emailModelCc.employeeName = employeeName;
+    emailModelCc.employeeEmail = employeeName;
+    if (!this.emailModel.cc) {
+      this.emailModel.cc = [];
+    }
+    this.emailModel.cc.push(emailModelCc);
+  }))
+
+  public valueNormalizerBcc = (employeeName$: Observable<string>) => employeeName$.pipe(map((employeeName: string) => {
+    const emailModelBcc = new SearchEmailModel();
+    emailModelBcc.employeeName = employeeName;
+    emailModelBcc.employeeEmail = employeeName;
+    if (!this.emailModel.bcc) {
+      this.emailModel.bcc = [];
+    }
+    this.emailModel.bcc.push(emailModelBcc);
+  }))
+
   ngOnInit() {
-    this.searchTerm$
-      .debounceTime(COMMON_CONSTANTS.SearchDelayTimeInMs)
+    this.searchTermTo$
+      .debounceTime(COMMON_CONSTANTS.SearchEmailDelayTimeInMs)
       .distinctUntilChanged()
       .subscribe(term => {
         this.emailService.searchbymail(term).subscribe(response => {
-          this.listEmailSearch = response;
+          this.listEmailSearchTo = response;
+        });
+        // if (term.substr(term.length - 1, 1) === ',' || term.substr(term.length - 1, 1) === ';') {
+        //   this.searchTermTo$.next('');
+        //   const emailModelTo = new SearchEmailModel();
+        //   emailModelTo.employeeName = term;
+        //   emailModelTo.employeeEmail = term;
+        //   if (!this.emailModel.to) {
+        //     this.emailModel.to = [];
+        //   }
+        //   this.emailModel.to.push(emailModelTo);
+        // }
+      });
+    this.searchTermCc$
+      .debounceTime(COMMON_CONSTANTS.SearchDelayTimeInMs)
+      .distinctUntilChanged()
+      .subscribe(term => {
+        // if (term.substr(term.length - 1, 1) === ',' || term.substr(term.length - 1, 1) === ';') {
+        //   const emailModelTo = new SearchEmailModel();
+        //   emailModelTo.employeeName = term;
+        //   emailModelTo.employeeEmail = term;
+        //   this.emailModel.to.push(emailModelTo);
+        //   this.searchTerm$ = null;
+        // };
+        this.emailService.searchbymail(term).subscribe(response => {
+          this.listEmailSearchCc = response;
+        });
+      });
+    this.searchTermBcc$
+      .debounceTime(COMMON_CONSTANTS.SearchDelayTimeInMs)
+      .distinctUntilChanged()
+      .subscribe(term => {
+        // if (term.substr(term.length - 1, 1) === ',' || term.substr(term.length - 1, 1) === ';') {
+        //   const emailModelTo = new SearchEmailModel();
+        //   emailModelTo.employeeName = term;
+        //   emailModelTo.employeeEmail = term;
+        //   this.emailModel.to.push(emailModelTo);
+        //   this.searchTerm$ = null;
+        // };
+        this.emailService.searchbymail(term).subscribe(response => {
+          this.listEmailSearchBcc = response;
         });
       });
     this.ckeConfig = {
@@ -134,6 +209,7 @@ export class InformationDeploymentComponent implements OnInit {
     this.currentPackageId = +PackageDetailComponent.packageId;
 
   }
+
   openModalDeployment(template: TemplateRef<any>) {
     this.modalRef = this.modalService.show(
       template,
@@ -151,10 +227,10 @@ export class InformationDeploymentComponent implements OnInit {
     this.modalViewListData = this.modalService.show(template);
   }
   SendInformation() {
-    console.log('this.emailModel', this.emailModel);
     if (this.emailModel && this.emailModel.to) {
       this.emailModel.bidOpportunityId = this.packageId;
-      this.emailService.sendEmailDeployment(this.emailModel).subscribe(result => {
+      this.spinner.show();
+      this.emailService.sendEmailDeployment(this.emailModel, this.file).subscribe(result => {
         this.isSendInformation = !this.isSendInformation;
         this.isTeamPlate = !this.isTeamPlate;
         this.dowloadTem = true;
@@ -163,7 +239,18 @@ export class InformationDeploymentComponent implements OnInit {
           : 'Bạn cần phải thông báo triển khai trước khi phân công tiến độ';
         this.alertService.success('Gửi thông báo triển khai thành công!');
         this.modalRef.hide();
-      });
+        this.spinner.hide();
+      },
+        err => {
+          console.log('err', err, err.json().errorCode);
+          if (err.json().errorCode === 'BusinessException') {
+            this.alertService.error('Đã xảy ra lỗi. Hồ sơ mời thầu này đã được gửi thư thông báo triển khai!');
+          } else {
+            this.alertService.error('Đã xảy ra lỗi. Gửi thông báo triển khai không thành công!');
+          }
+          this.modalRef.hide();
+          this.spinner.hide();
+        });
     }
   }
 
@@ -251,17 +338,18 @@ export class InformationDeploymentComponent implements OnInit {
   }
 
   uploadfile(event) {
-    console.log(event);
+    console.log('event', event);
     const fileList: FileList = event.target.files;
     if (fileList.length > 0) {
-      console.log(fileList);
-      this.file = fileList;
+      for (let i = 0; i < fileList.length; i++) {
+        this.file.push(fileList[i]);
+      }
       event.target.value = null;
     }
   }
 
-  deleteFileUpload() {
-    this.file = null;
+  deleteFileUpload(index: number) {
+    this.file.splice(index, 1);
   }
 }
 
