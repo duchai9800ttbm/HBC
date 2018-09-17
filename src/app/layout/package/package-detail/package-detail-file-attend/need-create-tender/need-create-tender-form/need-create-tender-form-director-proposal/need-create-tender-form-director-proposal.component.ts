@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder } from '@angular/forms';
 import { NeedCreateTenderFormComponent } from '../need-create-tender-form.component';
 import DateTimeConvertHelper from '../../../../../../../shared/helpers/datetime-convert-helper';
+import { NeedCreateTenderComponent } from '../../need-create-tender.component';
 
 @Component({
   selector: 'app-need-create-tender-form-director-proposal',
@@ -10,12 +11,14 @@ import DateTimeConvertHelper from '../../../../../../../shared/helpers/datetime-
 })
 export class NeedCreateTenderFormDirectorProposalComponent implements OnInit {
 
+  routerAction: string;
   directorProposalForm: FormGroup;
   constructor(
     private fb: FormBuilder
   ) { }
 
   ngOnInit() {
+    this.routerAction = NeedCreateTenderComponent.routerAction;
     this.createForm();
     this.directorProposalForm.valueChanges.subscribe(data => this.mappingToLiveFormData(data));
   }
@@ -23,7 +26,7 @@ export class NeedCreateTenderFormDirectorProposalComponent implements OnInit {
   createForm() {
     const formData = NeedCreateTenderFormComponent.formModel.tenderDirectorProposal;
     this.directorProposalForm = this.fb.group({
-      isAgreedParticipating: formData ? formData.isAgreedParticipating : null,
+      isAgreedParticipating: formData ? NeedCreateTenderFormComponent.formModel.isAgreedParticipating : true,
       reason: formData ? formData.reason : '',
       date: formData ? DateTimeConvertHelper.fromTimestampToDtObject(formData.date) : new Date(),
       expectedTime: formData ? DateTimeConvertHelper.fromTimestampToDtObject(formData.expectedTime) : new Date(),
@@ -37,6 +40,7 @@ export class NeedCreateTenderFormDirectorProposalComponent implements OnInit {
 
   mappingToLiveFormData(data) {
     NeedCreateTenderFormComponent.formModel.tenderDirectorProposal = data;
+    NeedCreateTenderFormComponent.formModel.isAgreedParticipating = data.isAgreedParticipating;
     // tslint:disable-next-line:max-line-length
     NeedCreateTenderFormComponent.formModel.tenderDirectorProposal.date = DateTimeConvertHelper.fromDtObjectToTimestamp(data.date);
     NeedCreateTenderFormComponent.formModel.tenderDirectorProposal.expectedTime = DateTimeConvertHelper.fromDtObjectToTimestamp(data.expectedTime);

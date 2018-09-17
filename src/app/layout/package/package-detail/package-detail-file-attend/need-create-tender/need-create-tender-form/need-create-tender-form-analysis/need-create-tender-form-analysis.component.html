@@ -1,5 +1,6 @@
 <form [formGroup]="analysisForm">
-    <div class="p-3">
+    <div class="p-3 position-relative">
+        <div *ngIf="routerAction == 'view'" class="b-form-readonly"></div>
         <div class="row">
             <div class="col-md-3 d-flex align-items-center">Tên tài liệu</div>
             <div class="col-md-9"><input formControlName="documentName" type="text" class="form-control"></div>
@@ -42,10 +43,6 @@
             </div>
         </div>
         <div class="text-center mt-4">
-            <!-- <button class="btn border" routerLink="../nonminate">
-                <i class="fa font-size-3 mr-3 fa-angle-left" aria-hidden="true"></i>
-                Trở về
-            </button> -->
             <button class="btn btn-primary" routerLink="../consultant-analys">
                 Tiếp
                 <i class="fa font-size-3 ml-3 fa-angle-right" aria-hidden="true"></i>

@@ -19,6 +19,30 @@
             }
         }
     }
+
+    .b-datepicker-ic {
+        .k-select {
+            background-color: transparent !important;
+        }
+        .k-i-calendar {
+            color: black;
+        }
+    }
+    .k-gantt-rows, .k-gantt-columns, .k-gantt-tasks {
+        tr {
+            height: 38px;
+        }
+    }
+    .b-k-alt {
+        .k-picker-wrap {
+            background-color: #f6f7f8;
+        }
+        .k-dateinput-wrap {
+            input {
+                background-color: #f6f7f8 !important;
+            }
+        }
+    }
 }
 
 .header {
@@ -43,6 +67,10 @@
 
 table, thead, tbody, tfoot {
     font-size: 0.7rem;
+    td {
+        padding: 0 .8rem;
+        height: 38px;
+    }
 }
 
 .tbl-header-bg-color {
@@ -50,8 +78,23 @@ table, thead, tbody, tfoot {
     color: white;
 }
 
+.tbl-data-gantt {
+    thead {
+        tr {
+            height: 83px;
+        }
+    }
+}
+
 .col-datetime {
     max-width: 178px;
+}
+
+.b-k-alt {
+    background-color: #f6f7f8;
+    select {
+        background-color: #f6f7f8;
+    }
 }
 
 /* Custom dropdown */

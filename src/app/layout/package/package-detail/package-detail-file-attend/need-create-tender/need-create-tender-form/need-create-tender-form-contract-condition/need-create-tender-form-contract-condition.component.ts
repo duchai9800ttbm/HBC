@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder } from '@angular/forms';
 import { NeedCreateTenderFormComponent } from '../need-create-tender-form.component';
 import DateTimeConvertHelper from '../../../../../../../shared/helpers/datetime-convert-helper';
+import { NeedCreateTenderComponent } from '../../need-create-tender.component';
 
 @Component({
   selector: 'app-need-create-tender-form-contract-condition',
@@ -10,6 +11,7 @@ import DateTimeConvertHelper from '../../../../../../../shared/helpers/datetime-
 })
 export class NeedCreateTenderFormContractConditionComponent implements OnInit {
 
+  routerAction: string;
   listCurrency: Array<string> = ['VNĐ', 'USD'];
   currency = 'VNĐ';
   listTime: Array<string> = ['Tháng', 'Năm'];
@@ -20,6 +22,7 @@ export class NeedCreateTenderFormContractConditionComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+    this.routerAction = NeedCreateTenderComponent.routerAction;
     this.createForm();
     this.contractConditionForm.valueChanges.subscribe(data => this.mappingToLiveFormData(data));
   }

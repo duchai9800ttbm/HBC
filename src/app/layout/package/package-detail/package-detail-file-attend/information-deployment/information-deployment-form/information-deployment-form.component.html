@@ -152,7 +152,7 @@
     </div>
     <div class="row">
         <div class="col-md-9 pr-0">
-            <table class="table table-bordered">
+            <table class="table table-bordered tbl-data-gantt">
                 <thead class="tbl-header-bg-color">
                     <tr>
                         <th class="text-center">Stt</th>
@@ -165,7 +165,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
+                    <tr *ngFor="let data of fakeArr; let i = index" [class.b-k-alt]="i % 2 == 0">
                         <td>1</td>
                         <td>Lưu trữ, cập nhật, kiểm soát </td>
                         <td></td>
@@ -177,8 +177,8 @@
                                 </select>
                             </span>
                         </td>
-                        <td class="pl-0"><kendo-datepicker class="form-control b-datepicker-no-border"></kendo-datepicker></td>
-                        <td class="pl-0"><kendo-datepicker class="form-control b-datepicker-no-border"></kendo-datepicker></td>
+                        <td class="pl-0"><kendo-datepicker class="form-control b-datepicker-no-border b-datepicker-ic"></kendo-datepicker></td>
+                        <td class="pl-0"><kendo-datepicker class="form-control b-datepicker-no-border b-datepicker-ic"></kendo-datepicker></td>
                         <td>52</td>
                     </tr>
                 </tbody>
