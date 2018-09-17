@@ -172,13 +172,16 @@ export class EmailService {
   }
 
   // gửi thư thông báo triển khai
-  sendEmailDeployment(data: SendEmailModel) {
+  sendEmailDeployment(data: SendEmailModel,  file: File[]) {
     const url = `bidopportunity/hsdt/guithuthongbaotrienkhai`;
     const dataObj = new FormData();
     dataObj.append('BidOpportunityId', data.bidOpportunityId + '');
     dataObj.append('Subject', data.subject);
     data.recipientEmails.forEach((item, index) => {
       dataObj.append('RecipientEmails[' + index + ']', item);
+    });
+    file.forEach( item => {
+      dataObj.append('AttachmentFiles', item);
     });
     dataObj.append('Content', data.content);
     return this.apiService.postFile(url, dataObj);

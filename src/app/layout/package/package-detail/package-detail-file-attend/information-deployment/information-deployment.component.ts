@@ -12,11 +12,11 @@ import { Router } from '@angular/router';
 import { DATATABLE_CONFIG } from '../../../../../shared/configs';
 import { Observable, BehaviorSubject, Subject } from '../../../../../../../node_modules/rxjs';
 import { ConfirmationService, AlertService } from '../../../../../shared/services';
-import { NgxSpinnerService } from 'ngx-spinner';
 import { SendEmailModel } from '../../../../../shared/models/send-email-model';
 import { EmailService } from '../../../../../shared/services/email.service';
 import { COMMON_CONSTANTS } from '../../../../../shared/configs/common.config';
 import { SearchEmailModel } from '../../../../../shared/models/search-email.model';
+import { NgxSpinnerService } from '../../../../../../../node_modules/ngx-spinner';
 
 @Component({
   selector: 'app-information-deployment',
@@ -24,7 +24,7 @@ import { SearchEmailModel } from '../../../../../shared/models/search-email.mode
   styleUrls: ['./information-deployment.component.scss']
 })
 export class InformationDeploymentComponent implements OnInit {
-  file;
+  file = [];
   public gridView: GridDataResult;
   public items: any[] = listUsers;
   public mySelection: number[] = [];
@@ -151,10 +151,10 @@ export class InformationDeploymentComponent implements OnInit {
     this.modalViewListData = this.modalService.show(template);
   }
   SendInformation() {
-    console.log('this.emailModel', this.emailModel);
     if (this.emailModel && this.emailModel.to) {
       this.emailModel.bidOpportunityId = this.packageId;
-      this.emailService.sendEmailDeployment(this.emailModel).subscribe(result => {
+      this.spinner.show();
+      this.emailService.sendEmailDeployment(this.emailModel, this.file).subscribe(result => {
         this.isSendInformation = !this.isSendInformation;
         this.isTeamPlate = !this.isTeamPlate;
         this.dowloadTem = true;
@@ -163,7 +163,13 @@ export class InformationDeploymentComponent implements OnInit {
           : 'Bạn cần phải thông báo triển khai trước khi phân công tiến độ';
         this.alertService.success('Gửi thông báo triển khai thành công!');
         this.modalRef.hide();
-      });
+        this.spinner.hide();
+      },
+        err => {
+          this.alertService.error('Đã xảy ra lỗi. Gửi thông báo triển khai không thành công!');
+          this.modalRef.hide();
+          this.spinner.hide();
+        });
     }
   }
 
@@ -251,17 +257,18 @@ export class InformationDeploymentComponent implements OnInit {
   }
 
   uploadfile(event) {
-    console.log(event);
+    console.log('event', event);
     const fileList: FileList = event.target.files;
     if (fileList.length > 0) {
-      console.log(fileList);
-      this.file = fileList;
+      for (let i = 0; i < fileList.length; i++) {
+        this.file.push(fileList[i]);
+      }
       event.target.value = null;
     }
   }
 
-  deleteFileUpload() {
-    this.file = null;
+  deleteFileUpload(index: number) {
+    this.file.splice(index, 1);
   }
 }
 
