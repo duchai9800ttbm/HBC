@@ -29,37 +29,37 @@ export class ServiceConstructionComponent implements OnInit {
     this.initData();
     this.serviceConstructionForm = this.fb.group({
       heThongNuocHienHuuDesc: [
-        this.serviceConstructionModel.heThongNuoc.heThongHienHuu
-        && this.serviceConstructionModel.heThongNuoc.heThongHienHuu.description
+        this.serviceConstructionModel.heThongNuocHeThongHienHuu
+        && this.serviceConstructionModel.heThongNuocHeThongHienHuu.description
       ],
       heThongNuocHienHuuList: null,
       heThongNuocDiemDauNoiDesc: [
-        this.serviceConstructionModel.heThongNuoc.diemDauNoi
-        && this.serviceConstructionModel.heThongNuoc.diemDauNoi.description
+        this.serviceConstructionModel.heThongNuocDiemDauNoi
+        && this.serviceConstructionModel.heThongNuocDiemDauNoi.description
       ],
       heThongNuocDiemDauNoiList: null,
       heThongNuocThoatHienHuuDesc: [
-        this.serviceConstructionModel.heThongNuocThoat.heThongHienHuu
-        && this.serviceConstructionModel.heThongNuocThoat.heThongHienHuu.description
+        this.serviceConstructionModel.heThongNuocThoatHeThongHienHuu
+        && this.serviceConstructionModel.heThongNuocThoatHeThongHienHuu.description
       ],
       heThongNuocThoatHienHuuList: null,
       heThongNuocThoatDiemDauNoiDesc: [
-        this.serviceConstructionModel.heThongNuocThoat.diemDauNoi
-        && this.serviceConstructionModel.heThongNuocThoat.diemDauNoi.description
+        this.serviceConstructionModel.heThongNuocThoatDiemDauNoi
+        && this.serviceConstructionModel.heThongNuocThoatDiemDauNoi.description
       ],
       heThongNuocThoatDiemDauNoiList: null,
       tramHaTheDesc: [
-        this.serviceConstructionModel.heThongDien.tramHaThe
-        && this.serviceConstructionModel.heThongDien.tramHaThe.description
+        this.serviceConstructionModel.heThongDienTramHaThe
+        && this.serviceConstructionModel.heThongDienTramHaThe.description
       ],
       tramHaTheList: null,
       duongDayTrungTheDesc: [
-        this.serviceConstructionModel.heThongDien.duongDayTrungThe
-        && this.serviceConstructionModel.heThongDien.duongDayTrungThe.description],
+        this.serviceConstructionModel.heThongDienDuongDayTrungThe
+        && this.serviceConstructionModel.heThongDienDuongDayTrungThe.description],
       duongDayTrungTheList: null,
       heThongDienKhacDesc: [
-        this.serviceConstructionModel.heThongDien
-        && this.serviceConstructionModel.heThongDien.thongTinKhac.description
+        this.serviceConstructionModel.heThongDienThongTinKhac
+        && this.serviceConstructionModel.heThongDienThongTinKhac.description
       ],
       heThongDienKhacList: null
     });
@@ -70,86 +70,80 @@ export class ServiceConstructionComponent implements OnInit {
   initData() {
     const obj = EditComponent.formModel.serviceConstruction;
     if (obj) {
-      this.serviceConstructionModel.heThongNuoc.heThongHienHuu = obj.heThongNuoc.heThongHienHuu && {
-        description: obj.heThongNuoc.heThongHienHuu.description,
-        images: obj.heThongNuoc.heThongHienHuu.images
+      this.serviceConstructionModel.heThongNuocHeThongHienHuu = obj.heThongNuocHeThongHienHuu && {
+        description: obj.heThongNuocHeThongHienHuu.description,
+        images: obj.heThongNuocHeThongHienHuu.images
       };
-      this.serviceConstructionModel.heThongNuoc.diemDauNoi = obj.heThongNuoc.diemDauNoi && {
-        description: obj.heThongNuoc.diemDauNoi.description,
-        images: obj.heThongNuoc.diemDauNoi.images
+      this.serviceConstructionModel.heThongNuocDiemDauNoi = obj.heThongNuocDiemDauNoi && {
+        description: obj.heThongNuocDiemDauNoi.description,
+        images: obj.heThongNuocDiemDauNoi.images
       };
-      this.serviceConstructionModel.heThongNuocThoat.heThongHienHuu = obj.heThongNuocThoat.heThongHienHuu && {
-        description: obj.heThongNuocThoat.heThongHienHuu.description,
-        images: obj.heThongNuocThoat.heThongHienHuu.images
+      this.serviceConstructionModel.heThongNuocThoatHeThongHienHuu = obj.heThongNuocThoatHeThongHienHuu && {
+        description: obj.heThongNuocThoatHeThongHienHuu.description,
+        images: obj.heThongNuocThoatHeThongHienHuu.images
       };
-      this.serviceConstructionModel.heThongNuocThoat.diemDauNoi = obj.heThongNuocThoat.diemDauNoi && {
-        description: obj.heThongNuocThoat.diemDauNoi.description,
-        images: obj.heThongNuocThoat.diemDauNoi.images
+      this.serviceConstructionModel.heThongNuocThoatDiemDauNoi = obj.heThongNuocThoatDiemDauNoi && {
+        description: obj.heThongNuocThoatDiemDauNoi.description,
+        images: obj.heThongNuocThoatDiemDauNoi.images
       };
-      this.serviceConstructionModel.heThongDien.tramHaThe = obj.heThongDien.tramHaThe && {
-        description: obj.heThongDien.tramHaThe.description,
-        images: obj.heThongDien.tramHaThe.images
+      this.serviceConstructionModel.heThongDienTramHaThe = obj.heThongDienTramHaThe && {
+        description: obj.heThongDienTramHaThe.description,
+        images: obj.heThongDienTramHaThe.images
       };
-      this.serviceConstructionModel.heThongDien.duongDayTrungThe = obj.heThongDien.duongDayTrungThe && {
-        description: obj.heThongDien.duongDayTrungThe.description,
-        images: obj.heThongDien.duongDayTrungThe.images
+      this.serviceConstructionModel.heThongDienDuongDayTrungThe = obj.heThongDienDuongDayTrungThe && {
+        description: obj.heThongDienDuongDayTrungThe.description,
+        images: obj.heThongDienDuongDayTrungThe.images
       };
-      this.serviceConstructionModel.heThongDien.thongTinKhac = obj.heThongDien.thongTinKhac && {
-        description: obj.heThongDien.thongTinKhac.description,
-        images: obj.heThongDien.thongTinKhac.images
+      this.serviceConstructionModel.heThongDienThongTinKhac = obj.heThongDienThongTinKhac && {
+        description: obj.heThongDienThongTinKhac.description,
+        images: obj.heThongDienThongTinKhac.images
       };
-      this.supplySystemImageUrls = this.serviceConstructionModel.heThongNuoc.heThongHienHuu ?
-        this.serviceConstructionModel.heThongNuoc.heThongHienHuu.images : [];
-      this.supplyPointImageUrls = this.serviceConstructionModel.heThongNuoc.diemDauNoi ?
-        this.serviceConstructionModel.heThongNuoc.diemDauNoi.images : [];
-      this.drainageSystemImageUrls = this.serviceConstructionModel.heThongNuocThoat.heThongHienHuu ?
-        this.serviceConstructionModel.heThongNuocThoat.heThongHienHuu.images : [];
-      this.drainagePointImageUrls = this.serviceConstructionModel.heThongNuocThoat.diemDauNoi ?
-        this.serviceConstructionModel.heThongNuocThoat.diemDauNoi.images : [];
-      this.powerStationImageUrls = this.serviceConstructionModel.heThongDien.tramHaThe ?
-        this.serviceConstructionModel.heThongDien.tramHaThe.images : [];
-      this.mediumVoltageSystemImageUrls = this.serviceConstructionModel.heThongDien.duongDayTrungThe ?
-        this.serviceConstructionModel.heThongDien.duongDayTrungThe.images : [];
-      this.powerOtherImageUrls = this.serviceConstructionModel.heThongDien.thongTinKhac ?
-        this.serviceConstructionModel.heThongDien.thongTinKhac.images : [];
+      this.supplySystemImageUrls = this.serviceConstructionModel.heThongNuocHeThongHienHuu ?
+        this.serviceConstructionModel.heThongNuocHeThongHienHuu.images : [];
+      this.supplyPointImageUrls = this.serviceConstructionModel.heThongNuocDiemDauNoi ?
+        this.serviceConstructionModel.heThongNuocDiemDauNoi.images : [];
+      this.drainageSystemImageUrls = this.serviceConstructionModel.heThongNuocThoatHeThongHienHuu ?
+        this.serviceConstructionModel.heThongNuocThoatHeThongHienHuu.images : [];
+      this.drainagePointImageUrls = this.serviceConstructionModel.heThongNuocThoatDiemDauNoi ?
+        this.serviceConstructionModel.heThongNuocThoatDiemDauNoi.images : [];
+      this.powerStationImageUrls = this.serviceConstructionModel.heThongDienTramHaThe ?
+        this.serviceConstructionModel.heThongDienTramHaThe.images : [];
+      this.mediumVoltageSystemImageUrls = this.serviceConstructionModel.heThongDienDuongDayTrungThe ?
+        this.serviceConstructionModel.heThongDienDuongDayTrungThe.images : [];
+      this.powerOtherImageUrls = this.serviceConstructionModel.heThongDienThongTinKhac ?
+        this.serviceConstructionModel.heThongDienThongTinKhac.images : [];
     }
   }
 
   mappingToLiveFormData(data) {
     EditComponent.formModel.serviceConstruction = new ServiceConstruction;
-    EditComponent.formModel.serviceConstruction.heThongNuoc = {
-      heThongHienHuu: {
-        description: data.heThongNuocHienHuuDesc,
-        images: this.supplySystemImageUrls
-      },
-      diemDauNoi: {
-        description: data.heThongNuocDiemDauNoiDesc,
-        images: this.supplyPointImageUrls
-      }
+    EditComponent.formModel.serviceConstruction.heThongNuocHeThongHienHuu = {
+      description: data.heThongNuocHienHuuDesc,
+      images: this.supplySystemImageUrls
     };
-    EditComponent.formModel.serviceConstruction.heThongNuocThoat = {
-      heThongHienHuu: {
-        description: data.heThongNuocThoatHienHuuDesc,
-        images: this.drainageSystemImageUrls
-      },
-      diemDauNoi: {
-        description: data.heThongNuocThoatDiemDauNoiDesc,
-        images: this.drainagePointImageUrls
-      }
+    EditComponent.formModel.serviceConstruction.heThongNuocDiemDauNoi = {
+      description: data.heThongNuocDiemDauNoi,
+      images: this.supplyPointImageUrls
     };
-    EditComponent.formModel.serviceConstruction.heThongDien = {
-      tramHaThe: {
-        description: data.tramHaTheDesc,
-        images: this.powerStationImageUrls
-      },
-      duongDayTrungThe: {
-        description: data.duongDayTrungTheDesc,
-        images: this.mediumVoltageSystemImageUrls
-      },
-      thongTinKhac: {
-        description: data.heThongDienKhacDesc,
-        images: this.powerOtherImageUrls
-      }
+    EditComponent.formModel.serviceConstruction.heThongNuocThoatHeThongHienHuu = {
+      description: data.heThongNuocThoatHienHuuDesc,
+      images: this.drainageSystemImageUrls
+    };
+    EditComponent.formModel.serviceConstruction.heThongNuocThoatDiemDauNoi = {
+      description: data.heThongNuocThoatDiemDauNoiDesc,
+      images: this.drainagePointImageUrls
+    };
+    EditComponent.formModel.serviceConstruction.heThongDienTramHaThe = {
+      description: data.tramHaTheDesc,
+      images: this.powerStationImageUrls
+    };
+    EditComponent.formModel.serviceConstruction.heThongDienDuongDayTrungThe = {
+      description: data.duongDayTrungTheDesc,
+      images: this.mediumVoltageSystemImageUrls
+    };
+    EditComponent.formModel.serviceConstruction.heThongDienThongTinKhac = {
+      description: data.heThongDienKhacDesc,
+      images: this.powerOtherImageUrls
     };
   }
 

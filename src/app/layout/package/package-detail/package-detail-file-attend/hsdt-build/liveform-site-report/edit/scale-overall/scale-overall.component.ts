@@ -28,12 +28,100 @@ import {
 })
 export class ScaleOverallComponent implements OnInit {
   scaleOverallForm: FormGroup;
-
   siteArea;
   totalBuildArea;
   floorNumbers;
   progress;
 
+  loaiCongTrinhList = [
+    {
+      value: 'Văn phòng (Office)',
+      text: '',
+      checked: false
+    },
+    {
+      value: 'Nhà công nghiệp (Industrial))',
+      text: '',
+      checked: false
+    },
+    {
+      value: 'MEP',
+      text: '',
+      checked: false
+    },
+    {
+      value: 'Khu dân cư (Residential)',
+      text: '',
+      checked: false
+    },
+    {
+      value: 'Tổ hợp (Mixed use)',
+      text: '',
+      checked: false
+    },
+    {
+      value: 'Sân bay',
+      text: '',
+      checked: false
+    },
+    {
+      value: 'TT Thương mại (Commercial)',
+      text: '',
+      checked: false
+    },
+    {
+      value: 'Căn hộ',
+      text: '',
+      checked: false
+    },
+    {
+      value: 'Nhà phố, biệt thự',
+      text: '',
+      checked: false
+    },
+    {
+      value: 'Khách sạn/Resort (Hotel/Resort)',
+      text: '',
+      checked: false
+    },
+    {
+      value: 'Hạ tầng',
+      text: '',
+      checked: false
+    },
+    {
+      value: 'Trường học',
+      text: '',
+      checked: false
+    }
+  ];
+
+  trangthaiCongTrinhList = [
+    {
+      value: 'Mới (New)',
+      text: '',
+      checked: false
+    },
+    {
+      value: 'Thay đổi & bổ sung (Alteration & Additional)',
+      text: '',
+      checked: false
+    },
+    {
+      value: 'Khác (Other)',
+      text: '',
+      checked: false
+    },
+    {
+      value: 'Nâng cấp, cải tiến (Renovation)',
+      text: '',
+      checked: false
+    }, {
+      value: 'Tháo dỡ & cải tiến (Demolishment & Renovation)',
+      text: '',
+      checked: false
+    }
+  ];
   perspectiveImageUrls = [];
   structureImageUrls = [];
   requirementsImageUrls = [];
@@ -42,30 +130,16 @@ export class ScaleOverallComponent implements OnInit {
   constructor(
     private router: Router,
     private fb: FormBuilder
-  ) { }
+  ) {}
 
   ngOnInit() {
     this.initData();
+    console.log(EditComponent.formModel.scaleOverall);
     this.scaleOverallForm = this.fb.group({
       tenTaiLieu: [this.scaleModel.tenTaiLieu],
       lanPhongVan: [this.scaleModel.lanPhongVan],
-      vanPhong: [this.scaleModel.loaiCongTrinh && this.scaleModel.loaiCongTrinh.vanPhong],
-      nhaCongNghiep: [this.scaleModel.loaiCongTrinh && this.scaleModel.loaiCongTrinh.nhaCongNghiep],
-      mep: [this.scaleModel.loaiCongTrinh && this.scaleModel.loaiCongTrinh.mep],
-      khuDanCu: [this.scaleModel.loaiCongTrinh && this.scaleModel.loaiCongTrinh.khuDanCu],
-      toHop: [this.scaleModel.loaiCongTrinh && this.scaleModel.loaiCongTrinh.toHop],
-      sanBay: [this.scaleModel.loaiCongTrinh && this.scaleModel.loaiCongTrinh.sanBay],
-      trungTamThuongMai: [this.scaleModel.loaiCongTrinh && this.scaleModel.loaiCongTrinh.trungTamThuongMai],
-      canHo: [this.scaleModel.loaiCongTrinh && this.scaleModel.loaiCongTrinh.canHo],
-      nhaphoBietThu: [this.scaleModel.loaiCongTrinh && this.scaleModel.loaiCongTrinh.nhaphoBietThu],
-      khachSan: [this.scaleModel.loaiCongTrinh && this.scaleModel.loaiCongTrinh.khachSan],
-      haTang: [this.scaleModel.loaiCongTrinh && this.scaleModel.loaiCongTrinh.haTang],
-      truongHoc: [this.scaleModel.loaiCongTrinh && this.scaleModel.loaiCongTrinh.truongHoc],
-      congtrinhMoi: [this.scaleModel.loaiCongTrinh && this.scaleModel.loaiCongTrinh.congtrinhMoi],
-      thayDoiBoSung: [this.scaleModel.loaiCongTrinh && this.scaleModel.loaiCongTrinh.thayDoiBoSung],
-      nangCapCaiTien: [this.scaleModel.loaiCongTrinh && this.scaleModel.loaiCongTrinh.nangCapCaiTien],
-      thaoDoCaiTien: [this.scaleModel.loaiCongTrinh && this.scaleModel.loaiCongTrinh.thaoDoCaiTien],
-      khac: [this.scaleModel.loaiCongTrinh && this.scaleModel.loaiCongTrinh.khac],
+      loaiCongTrinhList: [this.scaleModel.loaiCongTrinh],
+      trangthaiCongTrinhList: this.trangthaiCongTrinhList,
       dienTichCongTruong: [this.scaleModel.quyMoDuAn && this.scaleModel.quyMoDuAn.dienTichCongTruong],
       tongDienTichXayDung: [this.scaleModel.quyMoDuAn && this.scaleModel.quyMoDuAn.tongDienTichXayDung],
       soTang: [this.scaleModel.quyMoDuAn && this.scaleModel.quyMoDuAn.soTang],
@@ -85,25 +159,8 @@ export class ScaleOverallComponent implements OnInit {
     if (obj) {
       this.scaleModel.tenTaiLieu = obj.tenTaiLieu ? obj.tenTaiLieu : '';
       this.scaleModel.lanPhongVan = obj.lanPhongVan ? obj.lanPhongVan : 0;
-      this.scaleModel.loaiCongTrinh = obj.loaiCongTrinh && {
-        vanPhong: obj.loaiCongTrinh.vanPhong,
-        nhaCongNghiep: obj.loaiCongTrinh.nhaCongNghiep,
-        mep: obj.loaiCongTrinh.mep,
-        khuDanCu: obj.loaiCongTrinh.khuDanCu,
-        toHop: obj.loaiCongTrinh.toHop,
-        sanBay: obj.loaiCongTrinh.sanBay,
-        trungTamThuongMai: obj.loaiCongTrinh.trungTamThuongMai,
-        canHo: obj.loaiCongTrinh.canHo,
-        nhaphoBietThu: obj.loaiCongTrinh.nhaphoBietThu,
-        khachSan: obj.loaiCongTrinh.khachSan,
-        haTang: obj.loaiCongTrinh.haTang,
-        truongHoc: obj.loaiCongTrinh.truongHoc,
-        congtrinhMoi: obj.loaiCongTrinh.congtrinhMoi,
-        thayDoiBoSung: obj.loaiCongTrinh.thayDoiBoSung,
-        nangCapCaiTien: obj.loaiCongTrinh.nangCapCaiTien,
-        thaoDoCaiTien: obj.loaiCongTrinh.thaoDoCaiTien,
-        khac: obj.loaiCongTrinh.khac
-      };
+      this.scaleModel.loaiCongTrinh = obj.loaiCongTrinh ? obj.loaiCongTrinh : this.loaiCongTrinhList;
+      this.trangthaiCongTrinhList = this.trangthaiCongTrinhList;
       this.scaleModel.quyMoDuAn = obj.quyMoDuAn && {
         dienTichCongTruong: obj.quyMoDuAn.dienTichCongTruong,
         tongDienTichXayDung: obj.quyMoDuAn.tongDienTichXayDung,
@@ -132,25 +189,8 @@ export class ScaleOverallComponent implements OnInit {
     EditComponent.formModel.scaleOverall = new ScaleOverall;
     EditComponent.formModel.scaleOverall.tenTaiLieu = data.tenTaiLieu;
     EditComponent.formModel.scaleOverall.lanPhongVan = data.lanPhongVan;
-    EditComponent.formModel.scaleOverall.loaiCongTrinh = {
-      vanPhong: data.vanPhong,
-      khuDanCu: data.khuDanCu,
-      trungTamThuongMai: data.trungTamThuongMai,
-      khachSan: data.khachSan,
-      nhaCongNghiep: data.nhaCongNghiep,
-      toHop: data.toHop,
-      canHo: data.canHo,
-      haTang: data.haTang,
-      mep: data.mep,
-      sanBay: data.sanBay,
-      nhaphoBietThu: data.nhaphoBietThu,
-      truongHoc: data.truongHoc,
-      congtrinhMoi: data.congtrinhMoi,
-      nangCapCaiTien: data.nangCapCaiTien,
-      thayDoiBoSung: data.thayDoiBoSung,
-      thaoDoCaiTien: data.thaoDoCaiTien,
-      khac: data.khac
-    };
+    EditComponent.formModel.scaleOverall.loaiCongTrinh = this.loaiCongTrinhList; // TODO mapping
+    EditComponent.formModel.scaleOverall.trangthaiCongTrinh = this.trangthaiCongTrinhList;
     EditComponent.formModel.scaleOverall.quyMoDuAn = {
       dienTichCongTruong: data.dienTichCongTruong,
       tongDienTichXayDung: data.tongDienTichXayDung,

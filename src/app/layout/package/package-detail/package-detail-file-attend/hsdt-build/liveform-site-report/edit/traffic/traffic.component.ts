@@ -26,20 +26,20 @@ export class TrafficComponent implements OnInit {
   ngOnInit() {
     this.initData();
     this.trafficForm = this.fb.group({
-      chiTietDiaHinhKhoKhanDesc: [this.trafficModel.chiTietDiaHinh.khoKhan && this.trafficModel.chiTietDiaHinh.khoKhan.description],
+      chiTietDiaHinhKhoKhanDesc: [this.trafficModel.chiTietDiaHinhKhoKhan && this.trafficModel.chiTietDiaHinhKhoKhan.description],
       chiTietDiaHinhKhoKhanList: [null],
-      chiTietDiaHinhThuanLoiDesc: [this.trafficModel.chiTietDiaHinh.thuanLoi && this.trafficModel.chiTietDiaHinh.thuanLoi.description],
+      chiTietDiaHinhThuanLoiDesc: [this.trafficModel.chiTietDiaHinhThuanLoi && this.trafficModel.chiTietDiaHinhThuanLoi.description],
       chiTietDiaHinhThuanLoiList: [null],
-      huongVaoCongTruongDesc: [this.trafficModel.loiVaoCongTrinh.huongVao && this.trafficModel.loiVaoCongTrinh.huongVao.description],
+      huongVaoCongTruongDesc: [this.trafficModel.loiVaoCongTrinhHuongVao && this.trafficModel.loiVaoCongTrinhHuongVao.description],
       huongVaoCongTruongList: [null],
-      duongHienCoTrenCongTruongDesc: [this.trafficModel.loiVaoCongTrinh.duongHienCo
-        && this.trafficModel.loiVaoCongTrinh.duongHienCo.description],
+      duongHienCoTrenCongTruongDesc: [this.trafficModel.loiVaoCongTrinhDuongHienCo
+        && this.trafficModel.loiVaoCongTrinhDuongHienCo.description],
       duongHienCoTrenCongTruongList: null,
-      yeuCauDuongTamDesc: [this.trafficModel.loiVaoCongTrinh.yeuCauDuongTam
-        && this.trafficModel.loiVaoCongTrinh.yeuCauDuongTam.description],
+      yeuCauDuongTamDesc: [this.trafficModel.loiVaoCongTrinhYeuCauDuongTam
+        && this.trafficModel.loiVaoCongTrinhYeuCauDuongTam.description],
       yeuCauDuongTamList: null,
-      yeuCauHangRaoDesc: [this.trafficModel.loiVaoCongTrinh.yeuCauHangRao
-        && this.trafficModel.loiVaoCongTrinh.yeuCauHangRao.description],
+      yeuCauHangRaoDesc: [this.trafficModel.loiVaoCongTrinhYeuCauHangRao
+        && this.trafficModel.loiVaoCongTrinhYeuCauHangRao.description],
       yeuCauHangRaoList: null
     });
     this.trafficForm.valueChanges.subscribe(data => this.mappingToLiveFormData(data));
@@ -49,68 +49,64 @@ export class TrafficComponent implements OnInit {
   initData() {
     const obj = EditComponent.formModel.traffic;
     if (obj) {
-      this.trafficModel.chiTietDiaHinh.khoKhan = obj.chiTietDiaHinh.khoKhan && {
-        description: obj.chiTietDiaHinh.khoKhan.description,
-        images: obj.chiTietDiaHinh.khoKhan.images
+      this.trafficModel.chiTietDiaHinhKhoKhan = obj.chiTietDiaHinhKhoKhan && {
+        description: obj.chiTietDiaHinhKhoKhan.description,
+        images: obj.chiTietDiaHinhKhoKhan.images
       };
-      this.trafficModel.chiTietDiaHinh.thuanLoi = obj.chiTietDiaHinh.thuanLoi && {
-        description: obj.chiTietDiaHinh.thuanLoi.description,
-        images: obj.chiTietDiaHinh.thuanLoi.images
+      this.trafficModel.chiTietDiaHinhThuanLoi = obj.chiTietDiaHinhThuanLoi && {
+        description: obj.chiTietDiaHinhThuanLoi.description,
+        images: obj.chiTietDiaHinhThuanLoi.images
       };
-      this.trafficModel.loiVaoCongTrinh.huongVao = obj.loiVaoCongTrinh.huongVao && {
-        description: obj.loiVaoCongTrinh.huongVao.description,
-        images: obj.loiVaoCongTrinh.huongVao.images
+      this.trafficModel.loiVaoCongTrinhHuongVao = obj.loiVaoCongTrinhHuongVao && {
+        description: obj.loiVaoCongTrinhHuongVao.description,
+        images: obj.loiVaoCongTrinhHuongVao.images
       };
-      this.trafficModel.loiVaoCongTrinh.duongHienCo = obj.loiVaoCongTrinh.duongHienCo && {
-        description: obj.loiVaoCongTrinh.duongHienCo.description,
-        images: obj.loiVaoCongTrinh.duongHienCo.images
+      this.trafficModel.loiVaoCongTrinhDuongHienCo = obj.loiVaoCongTrinhDuongHienCo && {
+        description: obj.loiVaoCongTrinhDuongHienCo.description,
+        images: obj.loiVaoCongTrinhDuongHienCo.images
       };
-      this.trafficModel.loiVaoCongTrinh.yeuCauDuongTam = obj.loiVaoCongTrinh.yeuCauDuongTam && {
-        description: obj.loiVaoCongTrinh.yeuCauDuongTam.description,
-        images: obj.loiVaoCongTrinh.yeuCauDuongTam.images
+      this.trafficModel.loiVaoCongTrinhYeuCauDuongTam = obj.loiVaoCongTrinhYeuCauDuongTam && {
+        description: obj.loiVaoCongTrinhYeuCauDuongTam.description,
+        images: obj.loiVaoCongTrinhYeuCauDuongTam.images
       };
-      this.trafficModel.loiVaoCongTrinh.yeuCauHangRao = obj.loiVaoCongTrinh.yeuCauHangRao && {
-        description: obj.loiVaoCongTrinh.yeuCauHangRao.description,
-        images: obj.loiVaoCongTrinh.yeuCauHangRao.images
+      this.trafficModel.loiVaoCongTrinhYeuCauHangRao = obj.loiVaoCongTrinhYeuCauHangRao && {
+        description: obj.loiVaoCongTrinhYeuCauHangRao.description,
+        images: obj.loiVaoCongTrinhYeuCauHangRao.images
       };
-      this.disadvantageImageUrls = this.trafficModel.chiTietDiaHinh.khoKhan ? this.trafficModel.chiTietDiaHinh.khoKhan.images : [];
-      this.advantageImageUrls = this.trafficModel.chiTietDiaHinh.thuanLoi ? this.trafficModel.chiTietDiaHinh.thuanLoi.images : [];
-      this.directionImageUrls = this.trafficModel.loiVaoCongTrinh.huongVao ? this.trafficModel.loiVaoCongTrinh.huongVao.images : [];
-      this.existingImageUrls = this.trafficModel.loiVaoCongTrinh.duongHienCo ? this.trafficModel.loiVaoCongTrinh.duongHienCo.images : [];
-      this.roadImageUrls = this.trafficModel.loiVaoCongTrinh.yeuCauDuongTam ? this.trafficModel.loiVaoCongTrinh.yeuCauDuongTam.images : [];
-      this.fenceImageUrls = this.trafficModel.loiVaoCongTrinh.yeuCauHangRao ? this.trafficModel.loiVaoCongTrinh.yeuCauHangRao.images : [];
+      this.disadvantageImageUrls = this.trafficModel.chiTietDiaHinhKhoKhan ? this.trafficModel.chiTietDiaHinhKhoKhan.images : [];
+      this.advantageImageUrls = this.trafficModel.chiTietDiaHinhThuanLoi ? this.trafficModel.chiTietDiaHinhThuanLoi.images : [];
+      this.directionImageUrls = this.trafficModel.loiVaoCongTrinhHuongVao ? this.trafficModel.loiVaoCongTrinhHuongVao.images : [];
+      this.existingImageUrls = this.trafficModel.loiVaoCongTrinhDuongHienCo ? this.trafficModel.loiVaoCongTrinhDuongHienCo.images : [];
+      this.roadImageUrls = this.trafficModel.loiVaoCongTrinhYeuCauDuongTam ? this.trafficModel.loiVaoCongTrinhYeuCauDuongTam.images : [];
+      this.fenceImageUrls = this.trafficModel.loiVaoCongTrinhYeuCauHangRao ? this.trafficModel.loiVaoCongTrinhYeuCauHangRao.images : [];
     }
   }
 
   mappingToLiveFormData(data) {
     EditComponent.formModel.traffic = new Traffic;
-    EditComponent.formModel.traffic.chiTietDiaHinh = {
-      khoKhan: {
-        description: data.chiTietDiaHinhKhoKhanDesc,
-        images: this.disadvantageImageUrls
-      },
-      thuanLoi: {
-        description: data.chiTietDiaHinhThuanLoiDesc,
-        images: this.advantageImageUrls
-      }
+    EditComponent.formModel.traffic.chiTietDiaHinhKhoKhan = {
+      description: data.chiTietDiaHinhKhoKhanDesc,
+      images: this.disadvantageImageUrls
     };
-    EditComponent.formModel.traffic.loiVaoCongTrinh = {
-      huongVao: {
-        description: data.huongVaoCongTruongDesc,
-        images: this.directionImageUrls
-      },
-      duongHienCo: {
-        description: data.duongHienCoTrenCongTruongDesc,
-        images: this.existingImageUrls
-      },
-      yeuCauDuongTam: {
-        description: data.yeuCauDuongTamDesc,
-        images: this.roadImageUrls
-      },
-      yeuCauHangRao: {
-        description: data.yeuCauHangRaoDesc,
-        images: this.fenceImageUrls
-      }
+    EditComponent.formModel.traffic.chiTietDiaHinhThuanLoi = {
+      description: data.chiTietDiaHinhKhoKhanDesc,
+      images: this.advantageImageUrls
+    };
+    EditComponent.formModel.traffic.loiVaoCongTrinhHuongVao = {
+      description: data.huongVaoCongTruongDesc,
+      images: this.directionImageUrls
+    };
+    EditComponent.formModel.traffic.loiVaoCongTrinhDuongHienCo = {
+      description: data.duongHienCoTrenCongTruongDesc,
+      images: this.existingImageUrls
+    };
+    EditComponent.formModel.traffic.loiVaoCongTrinhYeuCauDuongTam = {
+      description: data.yeuCauDuongTamDesc,
+      images: this.roadImageUrls
+    };
+    EditComponent.formModel.traffic.loiVaoCongTrinhYeuCauHangRao = {
+      description: data.yeuCauHangRaoDesc,
+      images: this.fenceImageUrls
     };
   }
 

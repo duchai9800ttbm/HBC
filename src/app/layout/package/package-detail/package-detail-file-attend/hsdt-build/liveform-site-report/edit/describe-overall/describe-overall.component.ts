@@ -25,9 +25,9 @@ export class DescribeOverallComponent implements OnInit {
     this.describeForm = this.fb.group({
       chiTietDiaHinhDesc: [this.describeModel.chiTietDiaHinh && this.describeModel.chiTietDiaHinh.description],
       chiTietDiaHinhList: [null],
-      kienTrucHienHuuDesc: [this.describeModel.chiTietDiaHinh && this.describeModel.chiTietDiaHinh.description],
+      kienTrucHienHuuDesc: [this.describeModel.kienTrucHienHuu && this.describeModel.kienTrucHienHuu.description],
       kienTrucHienHuuList: [null],
-      yeuCauChuongNgaiDesc: [this.describeModel.chiTietDiaHinh && this.describeModel.chiTietDiaHinh.description],
+      yeuCauChuongNgaiDesc: [this.describeModel.yeuCauChuongNgai && this.describeModel.yeuCauChuongNgai.description],
       yeuCauChuongNgaiList: [null],
     });
     this.describeForm.valueChanges.subscribe(data => this.mappingToLiveFormData(data));
@@ -57,15 +57,15 @@ export class DescribeOverallComponent implements OnInit {
   mappingToLiveFormData(data) {
     EditComponent.formModel.describeOverall = new DescribeOverall;
     EditComponent.formModel.describeOverall.chiTietDiaHinh = {
-      description: data.hinhAnhPhoiCanhDesc,
+      description: data.chiTietDiaHinhDesc,
       images: this.topographyImageUrls
     };
     EditComponent.formModel.describeOverall.kienTrucHienHuu = {
-      description: data.thongTinVeKetCauDesc,
+      description: data.kienTrucHienHuuDesc,
       images: this.existingBuildImageUrls
     };
     EditComponent.formModel.describeOverall.yeuCauChuongNgai = {
-      description: data.nhungYeuCauDacBietDesc,
+      description: data.yeuCauChuongNgaiDesc,
       images: this.stacaleImageUrls
     };
   }

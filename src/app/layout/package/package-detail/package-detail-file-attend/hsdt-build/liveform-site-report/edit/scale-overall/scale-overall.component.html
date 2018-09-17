@@ -3,11 +3,11 @@
         <div id="info-docs">
             <div class="label-info" style="margin-bottom: 15px;">
                 <label for="">Tên tài liệu</label>
-                <input type="text" formControlName="tenTaiLieu">
+                <input type="text" formControlName="tenTaiLieu" autofocus tabindex="1">
             </div>
             <div class="label-info">
                 <label for="">Lần phỏng vấn</label>
-                <input type="text" formControlName="lanPhongVan">
+                <input type="text" formControlName="lanPhongVan" tabindex="2">
             </div>
         </div>
         <h5 class="big-title">1.&nbsp;quy mô tổng quan công trình (project statistic/scale)</h5>
@@ -15,72 +15,17 @@
             <div class="detail-each-title">
                 <h6 class="small-title">1.1 Loại công trình xây dựng</h6>
                 <div class="main-detail">
-                    <div class="single-row">
-                        <label class="child0 childcheck">Văn phòng (Office)
-                            <input type="checkbox" name="classifyBuild" formControlName="vanPhong"><span class="checkmark"></span>
-                        </label>
-                        <label class="child1 childcheck">Nhà công nghiệp (Industrial)
-                            <input type="checkbox" name="classifyBuild" formControlName="nhaCongNghiep"><span class="checkmark"></span>
-                        </label>
-                        <label class="child2 childcheck">MEP
-                            <input type="checkbox" name="classifyBuild" formControlName="mep"><span class="checkmark"></span>
-                        </label>
-                    </div>
-                    <div class="single-row">
-                        <label class="child0 childcheck">Khu dân cư (Residential)
-                            <input type="checkbox" name="classifyBuild" formControlName="khuDanCu"><span class="checkmark"></span>
-                        </label>
-                        <label class="child1 childcheck">Tổ hợp (Mixed use)
-                            <input type="checkbox" name="classifyBuild" formControlName="toHop"><span class="checkmark"></span>
-                        </label>
-                        <label class="child2 childcheck">Sân bay
-                            <input type="checkbox" name="classifyBuild" formControlName="sanBay"><span class="checkmark"></span>
-                        </label>
-                    </div>
-                    <div class="single-row">
-                        <label class="child0 childcheck">TT Thương mại (Commercial)
-                            <input type="checkbox" name="classifyBuild" formControlName="trungTamThuongMai"><span class="checkmark"></span>
-                        </label>
-                        <label class="child1 childcheck">Căn hộ
-                            <input type="checkbox" name="classifyBuild" formControlName="canHo"><span class="checkmark"></span>
-                        </label>
-                        <label class="child2 childcheck">Nhà phố, biệt thự
-                            <input type="checkbox" name="classifyBuild" formControlName="nhaphoBietThu"><span class="checkmark"></span>
-                        </label>
-                    </div>
-                    <div class="single-row">
-                        <label class="child0 childcheck">Khách sạn/Resort (Hotel/Resort)
-                            <input type="checkbox" name="classifyBuild" formControlName="khachSan"><span class="checkmark"></span>
-                        </label>
-                        <label class="child1 childcheck">Hạ tầng
-                            <input type="checkbox" name="classifyBuild" formControlName="haTang"><span class="checkmark"></span>
-                        </label>
-                        <label class="child2 childcheck">Trường học
-                            <input type="checkbox" name="classifyBuild" formControlName="truongHoc"><span class="checkmark"></span>
-                        </label>
-                    </div>
+                        <div class="single-row">
+                            <div class="child childcheck" *ngFor="let item of loaiCongTrinhList">
+                                <input type="checkbox" name="construcType"><span class="checkmark" tabindex="3"></span>
+                                {{ item.value}}
+                            </div>
+                        </div>
                     <hr style="margin-right: 13%" />
                     <div class="single-row">
-                        <label class="child0 childcheck">Mới (New)
-                            <input type="checkbox" name="classifyType" formControlName="congtrinhMoi"><span class="checkmark"></span>
-                        </label>
-                        <label class="child1 childcheck">Thay đổi & bổ sung (Alteration & Additional)
-                            <input type="checkbox" name="classifyType" formControlName="thayDoiBoSung"><span class="checkmark"></span>
-                        </label>
-                        <label class="child2 childcheck">Khác (Other)
-                            <input type="checkbox" name="classifyType"><span class="checkmark"></span>
-                        </label>
-                    </div>
-                    <div class="single-row">
-                        <label class="child0 childcheck">Nâng cấp, cải tiến (Renovation)
-                            <input type="checkbox" name="classifyType" formControlName="nangCapCaiTien"><span class="checkmark"></span>
-                        </label>
-                        <label class="child1 childcheck">Tháo dỡ & cải tiến (Demolishment & Renovation)
-                            <input type="checkbox" name="classifyType" formControlName="thaoDoCaiTien"><span class="checkmark"></span>
-                        </label>
-                        <div class="child2">
-                            <input type="checkbox" style="visibility: hidden;">
-                            <input type="text" value="Khác" class="input-text-other" formControlName="khac">
+                        <div class="child childcheck" *ngFor="let item of trangthaiCongTrinhList">
+                            {{ item.value}}
+                            <input type="checkbox" name="construcStatus"><span class="checkmark" tabindex="4"></span>
                         </div>
                     </div>
                 </div>
@@ -91,27 +36,30 @@
                     <div>
                         <div class="label-project-scale">
                             <label for="">Diện tích công trường/ Site area (m2)</label>
-                            <input class="no-boder" type="text" formControlName="dienTichCongTruong">
+                            <input class="no-boder cus-input text-right align-placeholder" type="text" appInputArea
+                                formControlName="dienTichCongTruong" tabindex="6">
 
                         </div>
                         <div class="label-project-scale">
                             <label for="">Tổng diện tích xây dựng/ Gross floor area (m2)</label>
-                            <input class="no-boder" type="text" formControlName="tongDienTichXayDung">
+                            <input class="no-boder cus-input text-right align-placeholder" type="text" appInputArea
+                                formControlName="tongDienTichXayDung" tabindex="7">
 
                         </div>
                         <div class="label-project-scale">
                             <label for="">Số tầng/ Total number of floor</label>
-                            <input class="no-boder" type="text" formControlName="soTang">
+                            <input class="no-boder cus-input text-right align-placeholder" type="text" formControlName="soTang" tabindex="8">
                         </div>
                         <div class="label-project-scale">
                             <label for="">Tiến độ dự kiến/ Construction period (ngày)</label>
-                            <input class="no-boder" type="text" formControlName="tienDo">
+                            <input class="no-boder cus-input text-right align-placeholder" type="text" appInputNumber
+                                formControlName="tienDo" tabindex="9">
                         </div>
                     </div>
                     <div>
                         <p style="text-decoration: underline;">Hình ảnh phối cảnh dự án/ Perspective image of project</p>
                         <div class="text-des-input">
-                            <input type="text" value="Text" formControlName="hinhAnhPhoiCanhDesc">
+                            <input type="text" value="Text" formControlName="hinhAnhPhoiCanhDesc" tabindex="10">
                         </div>
                         <div class="image-demo-img">
                             <input type="file" #uploadPerspective (change)="uploadPerspectiveImage($event)">
@@ -121,7 +69,7 @@
                                     <i class="fa fa-times delete-icon" aria-hidden="true"></i>
                                 </div>
                             </div>
-                            <div class="perspective-image" (click)="uploadPerspective.click()">
+                            <div class="perspective-image" (click)="uploadPerspective.click()" tabindex="11">
                                 <i class="fa fa-plus" aria-hidden="true"></i>
                                 <p>Image</p>
                             </div>
@@ -134,7 +82,7 @@
                     package structure)</h6>
                 <div class="main-detail">
                     <div class="text-des-input">
-                        <input type="text" value="Thông tin kết cấu" formControlName="thongTinVeKetCauDesc">
+                        <input type="text" value="Thông tin kết cấu" formControlName="thongTinVeKetCauDesc" tabindex="12">
                     </div>
                     <div>
                         <div class="image-demo-img">
@@ -145,7 +93,7 @@
                                     <i class="fa fa-times delete-icon" aria-hidden="true"></i>
                                 </div>
                             </div>
-                            <div class="perspective-image" (click)="uploadStructure.click()">
+                            <div class="perspective-image" (click)="uploadStructure.click()" tabindex="13">
                                 <i class="fa fa-plus" aria-hidden="true"></i>
                                 <p>Image</p>
                             </div>
@@ -157,7 +105,7 @@
                 <h6 class="small-title">1.4 Những yêu cầu đặc biệt (Special Requirements)</h6>
                 <div class="main-detail">
                     <div class="text-des-input">
-                        <input type="text" value="Special Requirements" formControlName="nhungYeuCauDacBietDesc">
+                        <input type="text" value="Special Requirements" formControlName="nhungYeuCauDacBietDesc" tabindex="14">
                     </div>
                     <div class="image-demo-img">
                         <input type="file" #uploadRequirements (change)="uploadRequirementsImage($event)">
@@ -167,7 +115,7 @@
                                 <i class="fa fa-times delete-icon" aria-hidden="true"></i>
                             </div>
                         </div>
-                        <div class="perspective-image" (click)="uploadRequirements.click()">
+                        <div class="perspective-image" (click)="uploadRequirements.click()" tabindex="15">
                             <i class="fa fa-plus" aria-hidden="true"></i>
                             <p>Image</p>
                         </div>

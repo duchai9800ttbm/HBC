@@ -15,6 +15,7 @@ export class LiveformSiteReportComponent implements OnInit {
   bidOpportunityId: number;
   isData;
   documentData = new SiteSurveyReport();
+  idx: number;
   constructor(
     private documentService: DocumentService,
     private spinner: NgxSpinnerService,
@@ -28,6 +29,7 @@ export class LiveformSiteReportComponent implements OnInit {
     elem.forEach(e => { (<HTMLElement>e).style.visibility = 'hidden'; (<HTMLElement>e).style.position = 'absolute'; });
     this.documentService.tenderSiteSurveyingReport(this.bidOpportunityId).subscribe(res => {
       this.documentData = res;
+      this.isData = (this.documentData.id) ?  true : false;
     });
   }
 }

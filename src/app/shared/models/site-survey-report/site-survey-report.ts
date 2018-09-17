@@ -9,11 +9,17 @@ import { UsefulInfo } from './useful-info.model';
 export class SiteSurveyReport {
     id: number;
     bidOpportunityId: number;
-    nguoiTao: string;
+    nguoiTao: {
+        id: number;
+        name: string;
+    };
     ngayTao: string;
     lanCapNhat: number;
-    nguoiCapNhat: string;
-    ngayCapNhat: string;
+    nguoiCapNhat: {
+        id: number;
+        name: string;
+    };
+    ngayCapNhat: number;
     noiDungCapNhat: string;
     tenTaiLieu: string;
     lanPhongVan: number;

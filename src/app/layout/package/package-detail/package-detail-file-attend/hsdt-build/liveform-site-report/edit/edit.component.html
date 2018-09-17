@@ -57,11 +57,11 @@
             <table>
                 <tr>
                     <td class="titleHeader">Công trình (Project):</td>
-                    <td class="infoHeader">Riviera Point</td>
+                    <td class="infoHeader">{{ packageData.projectName }}</td>
                 </tr>
                 <tr>
                     <td class="titleHeader">Địa điểm (Location):</td>
-                    <td class="infoHeader">584 Huỳnh Tán Phát, Quận 7, TP.HCM</td>
+                    <td class="infoHeader">{{ packageData.place }}</td>
                 </tr>
                 <tr>
                     <td class="titleHeader">Ban CHCT/Phòng ban:</td>
@@ -69,13 +69,13 @@
                 </tr>
                 <tr>
                     <td class="titleHeader">Người khảo sát/liên hệ:</td>
-                    <td class="infoHeader">Nguyễn Đình Giang</td>
+                    <td class="infoHeader">{{ packageData.customerContact?.text }}</td>
                 </tr>
             </table>
             <table>
                 <tr>
                     <td class="titleHeader">Gói thầu (Package):</td>
-                    <td class="infoHeader">Main Building Work</td>
+                    <td class="infoHeader">{{ packageData.opportunityName }}</td>
                 </tr>
                 <tr>
                     <td class="titleHeader"></td>

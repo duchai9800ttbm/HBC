@@ -6,7 +6,6 @@ import { Router } from '@angular/router';
 import { AlertService, SessionService } from '../../../../../../../shared/services';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { SiteSurveyReport } from '../../../../../../../shared/models/site-survey-report/site-survey-report';
-import { LiveformDataReportService } from '../../../../../../../shared/services/liveform-data-report.service';
 import { DocumentService } from '../../../../../../../shared/services/document.service';
 import { LiveformSiteReportComponent } from '../liveform-site-report.component';
 import { PackageDetailComponent } from '../../../../package-detail.component';
@@ -18,6 +17,8 @@ import { ServiceConstruction } from '../../../../../../../shared/models/site-sur
 import { SoilCondition } from '../../../../../../../shared/models/site-survey-report/soil-condition.model';
 import { UsefulInfo, ContentItem } from '../../../../../../../shared/models/site-survey-report/useful-info.model';
 import { Image } from '../../../../../../../shared/models/site-survey-report/image';
+import { PackageService } from '../../../../../../../shared/services/package.service';
+import { PackageInfoModel } from '../../../../../../../shared/models/package/package-info.model';
 
 @Component({
   selector: 'app-edit',
@@ -34,23 +35,26 @@ export class EditComponent implements OnInit {
   showPopupConfirm = false;
   datePickerConfig = DATETIME_PICKER_CONFIG;
   currentBidOpportunityId: number;
-
+  packageData = new PackageInfoModel();
   bidDocumentGroupListItem: SiteSurveyReport[];
   bidDocumentGroupListItemSearchResult: SiteSurveyReport[];
 
   constructor(
     private documentService: DocumentService,
+    private packageService: PackageService,
     private router: Router,
     private alertService: AlertService,
     private spinner: NgxSpinnerService,
-    private sessionService: SessionService,
-    private liveformDataReportService: LiveformDataReportService
+    private sessionService: SessionService
   ) { }
 
   ngOnInit() {
     const elem = Array.from(document.querySelectorAll('#header-table, #toggle-menu'));
     elem.forEach(e => { (<HTMLElement>e).style.visibility = 'hidden'; (<HTMLElement>e).style.position = 'absolute'; });
     this.currentBidOpportunityId = +PackageDetailComponent.packageId;
+    this.packageService.getInforPackageID(this.currentBidOpportunityId).subscribe(result => {
+      this.packageData = result;
+    });
     this.documentService.tenderSiteSurveyingReport(this.currentBidOpportunityId).subscribe(data => {
       EditComponent.formModel = data;
     });

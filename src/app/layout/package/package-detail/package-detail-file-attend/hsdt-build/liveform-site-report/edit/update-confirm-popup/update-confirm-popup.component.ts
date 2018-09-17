@@ -1,4 +1,5 @@
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+import { EditComponent } from '../edit.component';
 
 @Component({
   selector: 'app-update-confirm-popup',
@@ -14,12 +15,15 @@ export class UpdateConfirmPopupComponent implements OnInit {
     document.addEventListener('keyup', e => {
       if (e.keyCode === 27) { this.closed.emit(false); }
     });
-    console.log(this.descriptionUpdate);
   }
   close() {
     this.closed.emit(false);
   }
   submit() {
+    this.mappingToLiveFormData();
     this.closed.emit(true);
+  }
+  mappingToLiveFormData() {
+    EditComponent.formModel.updateDescription = this.descriptionUpdate;
   }
 }

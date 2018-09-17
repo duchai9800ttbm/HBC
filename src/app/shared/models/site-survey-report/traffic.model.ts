@@ -1,14 +1,10 @@
 import { Image } from './image';
 
 export class Traffic {
-    chiTietDiaHinh: {
-        khoKhan: Image;
-        thuanLoi: Image;
-    };
-    loiVaoCongTrinh: {
-        huongVao: Image;
-        duongHienCo: Image;
-        yeuCauDuongTam: Image;
-        yeuCauHangRao: Image;
-    };
+    chiTietDiaHinhKhoKhan: Image;
+    chiTietDiaHinhThuanLoi: Image;
+    loiVaoCongTrinhHuongVao: Image;
+    loiVaoCongTrinhDuongHienCo: Image;
+    loiVaoCongTrinhYeuCauDuongTam: Image;
+    loiVaoCongTrinhYeuCauHangRao: Image;
 }

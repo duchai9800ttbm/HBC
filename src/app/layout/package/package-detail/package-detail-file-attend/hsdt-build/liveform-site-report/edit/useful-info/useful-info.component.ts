@@ -14,7 +14,7 @@ export class UsefulInfoComponent implements OnInit {
   usefulInfoForm: FormGroup;
   topicLists = [];
   url;
-  usefulInfoData: UsefulInfo[];
+  usefulInfoData = [new UsefulInfo()];
   constructor(
     private fb: FormBuilder,
     private confirmationService: ConfirmationService,

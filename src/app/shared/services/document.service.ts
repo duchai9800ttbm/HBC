@@ -335,451 +335,601 @@ export class DocumentService {
 
     tenderSiteSurveyingReport(bidOpportunityId: number): Observable<SiteSurveyReport> {
         const url = `bidopportunity/${bidOpportunityId}/tendersitesurveyingreport`;
-        return this.apiService.get(url).map(res => {
-            let newModel = new SiteSurveyReport();
-            if (res.result) {
-                newModel = res.result;
-            }
-            return newModel;
-        });
+        return this.apiService.get(url).map(res => this.toSiteSurveyReport(res.result));
     }
 
-    toSiteSurveyReport(model: any): SiteSurveyReport {
-        return {
-            id: model.id ? model.id : null,
-            bidOpportunityId: model.bidOpportunityId,
-            nguoiTao: model.createdEmployee.employeeName,
-            ngayTao: model.createdEmployee.employeeNo,
-            lanCapNhat: 1, // ?
-            nguoiCapNhat: model.updatedEmployee.employeeName,
-            ngayCapNhat: model.updatedEmployee.employeeNo,
-            noiDungCapNhat: 'string', // ?
-            tenTaiLieu: model.documentName,
-            lanPhongVan: model.interviewTimes,
-            scaleOverall: model.projectStatistic && {
-                tenTaiLieu: model.documentName,
-                lanPhongVan: model.interviewTimes,
-                loaiCongTrinh: {
-                    vanPhong: false,
-                    khuDanCu: false,
-                    trungTamThuongMai: false,
-                    khachSan: false,
-                    nhaCongNghiep: false,
-                    toHop: false,
-                    canHo: false,
-                    haTang: false,
-                    mep: false,
-                    sanBay: false,
-                    nhaphoBietThu: false,
-                    truongHoc: false,
-                    congtrinhMoi: false,
-                    nangCapCaiTien: false,
-                    thayDoiBoSung: false,
-                    thaoDoCaiTien: false,
-                    khac: '',
-                },
-                quyMoDuAn: model.projectStatistic.projectStatistic && {
-                    dienTichCongTruong: model.projectStatistic.projectStatistic.siteArea,
-                    tongDienTichXayDung: model.projectStatistic.projectStatistic.grossFloorArea,
-                    soTang: model.projectStatistic.projectStatistic.totalNumberOfFloor,
-                    tienDo: model.projectStatistic.projectStatistic.constructionPeriod
-
-                },
-                hinhAnhPhoiCanh: model.projectStatistic.perspectiveImageOfProject && {
-                    description: model.projectStatistic.perspectiveImageOfProject.desc,
-                    images: model.projectStatistic.perspectiveImageOfProject.imageUrls ?
-                        model.projectStatistic.perspectiveImageOfProject.imageUrls.map(x => ({
-                            id: x.guid,
-                            image: x.largeSizeUrl
-                        })) : []
-                },
-                thongTinVeKetCau: model.projectStatistic.existingStructure && {
-                    description: model.projectStatistic.existingStructure.desc,
-                    images: (model.projectStatistic.existingStructure.imageUrls || []).map(x => ({
-                        id: x.guid,
-                        image: x.largeSizeUrl
-                    }))
-                },
-                nhungYeuCauDacBiet: model.projectStatistic.specialRequirement && {
-                    description: model.projectStatistic.specialRequirement.desc,
-                    images: (model.projectStatistic.specialRequirement.imageUrls || []).map(x => ({
-                        id: x.guid,
-                        image: x.largeSizeUrl
-                    }))
-                }
-            },
-            describeOverall: model.siteInformation && {
-                chiTietDiaHinh: model.siteInformation.topography && {
-                    description: model.siteInformation.topography.desc,
-                    images: (model.siteInformation.topography.imageUrls || []).map(x => ({
-                        id: x.guid,
-                        image: x.largeSizeUrl
-                    }))
-                },
-                kienTrucHienHuu: model.siteInformation.existBuildingOnTheSite && {
-                    description: model.siteInformation.existBuildingOnTheSite.desc,
-                    images: (model.siteInformation.existBuildingOnTheSite.imageUrls || []).map(x => ({
-                        id: x.guid,
-                        image: x.largeSizeUrl
-                    }))
-                },
-                yeuCauChuongNgai: model.siteInformation.existObstacleOnTheSite && {
-                    description: model.siteInformation.existObstacleOnTheSite.desc,
-                    images: (model.siteInformation.existObstacleOnTheSite.imageUrls || []).map(x => ({
-                        id: x.guid,
-                        image: x.largeSizeUrl
-                    }))
-                }
-            },
-            traffic: model.transportationAndSiteEntranceCondition && {
-                chiTietDiaHinh: model.transportationAndSiteEntranceCondition && {
-                    khoKhan: model.transportationAndSiteEntranceCondition.disadvantage && {
-                        description: model.transportationAndSiteEntranceCondition.disadvantage.desc,
-                        images: (model.transportationAndSiteEntranceCondition.disadvantage.imageUrls || []).map(x => ({
-                            id: x.guid,
-                            image: x.largeSizeUrl
-                        }))
-                    },
-                    thuanLoi: model.transportationAndSiteEntranceCondition.advantage && {
-                        description: model.transportationAndSiteEntranceCondition.advantage.desc,
-                        images: (model.transportationAndSiteEntranceCondition.advantage.imageUrls || []).map(x => ({
-                            id: x.guid,
-                            image: x.largeSizeUrl
-                        }))
-                    }
-                },
-                loiVaoCongTrinh: model.transportationAndSiteEntranceCondition && {
-                    huongVao: model.transportationAndSiteEntranceCondition.directionOfSiteEntrance && {
-                        description: model.transportationAndSiteEntranceCondition.directionOfSiteEntrance.desc,
-                        images: (model.transportationAndSiteEntranceCondition.directionOfSiteEntrance.imageUrls || []).map(x => ({
-                            id: x.guid,
-                            image: x.largeSizeUrl
-                        }))
-                    },
-                    duongHienCo: model.transportationAndSiteEntranceCondition.existingRoadOnSite && {
-                        description: model.transportationAndSiteEntranceCondition.existingRoadOnSite.desc,
-                        images: (model.transportationAndSiteEntranceCondition.existingRoadOnSite.imageUrls || []).map(x => ({
-                            id: x.guid,
-                            image: x.largeSizeUrl
-                        }))
-                    },
-                    yeuCauDuongTam: model.transportationAndSiteEntranceCondition.temporatyRoadRequirement && {
-                        description: model.transportationAndSiteEntranceCondition.temporatyRoadRequirement.desc,
-                        images: (model.transportationAndSiteEntranceCondition.temporatyRoadRequirement.imageUrls || []).map(x => ({
-                            id: x.guid,
-                            image: x.largeSizeUrl
-                        }))
-                    },
-                    yeuCauHangRao: model.transportationAndSiteEntranceCondition.temporaryFenceRequirement && {
-                        description: model.transportationAndSiteEntranceCondition.temporaryFenceRequirement.desc,
-                        images: (model.transportationAndSiteEntranceCondition.temporaryFenceRequirement.imageUrls || []).map(x => ({
-                            id: x.guid,
-                            image: x.largeSizeUrl
-                        }))
-                    }
-                }
-            },
-            demoConso: model.demobilisationAndConsolidation && {
-                phaVoKetCau: model.demobilisationAndConsolidation.demobilisationExistingStructureOrBuilding && {
-                    description: model.demobilisationAndConsolidation.demobilisationExistingStructureOrBuilding.desc,
-                    images: (model.demobilisationAndConsolidation.demobilisationExistingStructureOrBuilding.imageUrls || []).map(x => ({
-                        id: x.guid,
-                        image: x.largeSizeUrl
-                    }))
-                },
-                giaCoKetCau: model.demobilisationAndConsolidation.consolidationExistingStructureOrBuilding && {
-                    description: model.demobilisationAndConsolidation.consolidationExistingStructureOrBuilding.desc,
-                    images: (model.demobilisationAndConsolidation.consolidationExistingStructureOrBuilding.imageUrls || []).map(x => ({
-                        id: x.guid,
-                        image: x.largeSizeUrl
-                    }))
-                },
-                dieuKien: model.demobilisationAndConsolidation.adjacentBuildingConditions && {
-                    description: model.demobilisationAndConsolidation.adjacentBuildingConditions.desc,
-                    images: (model.demobilisationAndConsolidation.adjacentBuildingConditions.imageUrls || []).map(x => ({
-                        id: x.guid,
-                        image: x.largeSizeUrl
-                    }))
-                }
-            },
-            serviceConstruction: model.temporaryBuildingServiceForConstruction && {
-                heThongNuoc: model.temporaryBuildingServiceForConstruction && {
-                    heThongHienHuu: model.temporaryBuildingServiceForConstruction.supplyWaterSystemExistingSystem && {
-                        description: model.temporaryBuildingServiceForConstruction.supplyWaterSystemExistingSystem.desc,
-                        images: (model.temporaryBuildingServiceForConstruction.supplyWaterSystemExistingSystem.imageUrls || []).map(x => ({
-                            id: x.guid,
-                            image: x.largeSizeUrl
-                        }))
-                    },
-                    diemDauNoi: model.temporaryBuildingServiceForConstruction.supplyWaterSystemExistingConnectionPoint && {
-                        description: model.temporaryBuildingServiceForConstruction.supplyWaterSystemExistingConnectionPoint.desc,
-                        images: (model.temporaryBuildingServiceForConstruction.supplyWaterSystemExistingConnectionPoint.imageUrls || [])
-                            .map(x => ({
-                                id: x.guid,
-                                image: x.largeSizeUrl
-                            }))
-                    }
-                },
-                heThongNuocThoat: model.temporaryBuildingServiceForConstruction && {
-                    heThongHienHuu: model.temporaryBuildingServiceForConstruction.drainageWaterSystemExistingSystem && {
-                        description: model.temporaryBuildingServiceForConstruction.drainageWaterSystemExistingSystem.desc,
-                        images: (model.temporaryBuildingServiceForConstruction.drainageWaterSystemExistingSystem.imageUrls || [])
-                            .map(x => ({
-                                id: x.guid,
-                                image: x.largeSizeUrl
-                            }))
-                    },
-                    diemDauNoi: model.temporaryBuildingServiceForConstruction.drainageWaterSystemExistingConnectionPoint && {
-                        description: model.temporaryBuildingServiceForConstruction.drainageWaterSystemExistingConnectionPoint.desc,
-                        images: (model.temporaryBuildingServiceForConstruction.drainageWaterSystemExistingConnectionPoint.imageUrls || [])
-                            .map(x => ({
-                                id: x.guid,
-                                image: x.largeSizeUrl
-                            }))
-                    }
-                },
-                heThongDien: model.temporaryBuildingServiceForConstruction && {
-                    tramHaThe: model.temporaryBuildingServiceForConstruction.transformerStation && {
-                        description: model.temporaryBuildingServiceForConstruction.transformerStation.desc,
-                        images: (model.temporaryBuildingServiceForConstruction.transformerStation.imageUrls || []).map(x => ({
-                            id: x.guid,
-                            image: x.largeSizeUrl
-                        }))
-                    },
-                    duongDayTrungThe: model.temporaryBuildingServiceForConstruction.existingMediumVoltageSystem && {
-                        description: model.temporaryBuildingServiceForConstruction.existingMediumVoltageSystem.desc,
-                        images: (model.temporaryBuildingServiceForConstruction.existingMediumVoltageSystem.imageUrls || []).map(x => ({
-                            id: x.guid,
-                            image: x.largeSizeUrl
-                        }))
-                    },
-                    thongTinKhac: model.temporaryBuildingServiceForConstruction.others && {
-                        description: model.temporaryBuildingServiceForConstruction.others.desc,
-                        images: (model.temporaryBuildingServiceForConstruction.others.imageUrls || []).map(x => ({
-                            id: x.guid,
-                            image: x.largeSizeUrl
-                        }))
-                    }
-                }
-            },
-            soilCondition: model.reportExistingSoilCondition && {
-                nenMongHienCo: model.reportExistingSoilCondition.existingFooting && {
-                    description: model.reportExistingSoilCondition.existingFooting.desc,
-                    images: (model.reportExistingSoilCondition.existingFooting.imageUrls || []).map(x => ({
-                        id: guid,
-                        image: x.largeSizeUrl
-                    }))
-                },
-                thongTinCongTrinhGanDo: model.reportExistingSoilCondition.soilInvestigation && {
-                    description: model.reportExistingSoilCondition.soilInvestigation.desc,
-                    images: (model.reportExistingSoilCondition.soilInvestigation.imageUrls || []).map(x => ({
-                        id: guid,
-                        image: x.largeSizeUrl
-                    }))
-                }
-            },
-            usefulInfo: (model.usefulInFormations || []).map(x => ({
-                title: x.title,
-                content: x.content.map(i => ({
-                    name: i.name,
-                    detail: i.detail,
-                    images: i.imageUrls.map(e => ({
-                        id: e.guid,
-                        image: e.largeSizeUrl
-                    }))
-                }))
-            })),
-            updateDescription: '' // TODO: Map
+    toSiteSurveyReport(model: any) {
+        const dataFormated = new SiteSurveyReport();
+        dataFormated.id = model.id ? model.id : null;
+        dataFormated.bidOpportunityId = model.bidOpportunityId;
+        dataFormated.nguoiTao = model.createdEmployee && {
+            id: model.createdEmployee.employeeId,
+            name: model.createdEmployee.employeeName
         };
+        dataFormated.ngayTao = model.createTime;
+        dataFormated.lanCapNhat = null;
+        dataFormated.nguoiCapNhat = model.updatedEmployee && {
+            id: model.updatedEmployee.employeeId,
+            name: model.updatedEmployee.employeeName
+        };
+        dataFormated.ngayCapNhat = model.updateTime;
+        dataFormated.noiDungCapNhat = '';
+        dataFormated.tenTaiLieu = model.projectStatistic.projectStatistic.projectScale.documentName;
+        dataFormated.lanPhongVan = model.projectStatistic.projectStatistic.projectScale.interviewTimes;
+        dataFormated.scaleOverall = {
+            tenTaiLieu: model.projectStatistic.projectStatistic.projectScale.documentName,
+            lanPhongVan: model.projectStatistic.projectStatistic.projectScale.interviewTimes,
+            loaiCongTrinh: (model.projectStatistic.projectStatistic.constructionType || []).map(x => x({
+                value: x.value,
+                text: x.text,
+                checked: x.checked
+            })),
+            trangthaiCongTrinh: (model.projectStatistic.projectStatistic.constructionStatus || []).map(x => ({
+                value: x.value,
+                text: x.text,
+                checked: x.checked
+            })),
+            quyMoDuAn: model.projectStatistic.projectStatistic.projectScale && {
+                dienTichCongTruong: model.projectStatistic.projectStatistic.projectScale.siteArea,
+                tongDienTichXayDung: model.projectStatistic.projectStatistic.projectScale.grossFloorArea,
+                soTang: model.projectStatistic.projectStatistic.projectScale.totalNumberOfFloor,
+                tienDo: model.projectStatistic.projectStatistic.projectScale.constructionPeriod
+            },
+            hinhAnhPhoiCanh: model.projectStatistic.perspectiveImageOfProject && {
+                description: (model.projectStatistic.perspectiveImageOfProject.desc),
+                images: (model.projectStatistic.perspectiveImageOfProject.imageUrls || []).map(x => ({
+                    id: x.guid,
+                    image: x.largeSizeUrl
+                }))
+            },
+            thongTinVeKetCau: model.projectStatistic.existingStructure && {
+                description: model.projectStatistic.existingStructure.desc,
+                images: (model.projectStatistic.existingStructure.imageUrls || []).map(x => ({
+                    id: x.guid,
+                    image: x.largeSizeUrl
+                }))
+            },
+            nhungYeuCauDacBiet: model.projectStatistic.specialRequirement && {
+                description: model.projectStatistic.specialRequirement.desc,
+                images: (model.projectStatistic.specialRequirement.imageUrls || []).map(x => ({
+                    id: x.guid,
+                    image: x.largeSizeUrl
+                }))
+            }
+        };
+        dataFormated.describeOverall = model.siteInformation && {
+            chiTietDiaHinh: model.siteInformation.topography && {
+                description: model.siteInformation.topography.desc,
+                images: (model.siteInformation.topography.imageUrls || []).map(x => ({
+                    id: x.guid,
+                    image: x.largeSizeUrl
+                }))
+            },
+            kienTrucHienHuu: model.siteInformation.existBuildingOnTheSite && {
+                description: model.siteInformation.existBuildingOnTheSite.desc,
+                images: (model.siteInformation.existBuildingOnTheSite.imageUrls || []).map(x => ({
+                    id: x.guid,
+                    image: x.largeSizeUrl
+                }))
+            },
+            yeuCauChuongNgai: model.siteInformation.existObstacleOnTheSite && {
+                description: model.siteInformation.existObstacleOnTheSite.desc,
+                images: (model.siteInformation.existObstacleOnTheSite.imageUrls || []).map(x => ({
+                    id: x.guid,
+                    image: x.largeSizeUrl
+                }))
+            }
+        };
+        dataFormated.traffic = model.transportationAndSiteEntranceCondition && {
+            chiTietDiaHinhKhoKhan: model.transportationAndSiteEntranceCondition.disadvantage && {
+                description: model.transportationAndSiteEntranceCondition.disadvantage.desc,
+                images: (model.transportationAndSiteEntranceCondition.disadvantage.imageUrls || []).map(x => ({
+                    id: x.guid,
+                    image: x.largeSizeUrl
+                }))
+            },
+            chiTietDiaHinhThuanLoi: model.transportationAndSiteEntranceCondition.advantage && {
+                description: model.transportationAndSiteEntranceCondition.advantage.desc,
+                images: (model.transportationAndSiteEntranceCondition.advantage.imageUrls || []).map(x => ({
+                    id: x.guid,
+                    image: x.largeSizeUrl
+                }))
+            },
+            loiVaoCongTrinhHuongVao: model.transportationAndSiteEntranceCondition.directionOfSiteEntrance && {
+                description: model.transportationAndSiteEntranceCondition.directionOfSiteEntrance.desc,
+                images: (model.transportationAndSiteEntranceCondition.directionOfSiteEntrance.imageUrls || []).map(x => ({
+                    id: x.guid,
+                    image: x.largeSizeUrl
+                }))
+            },
+            loiVaoCongTrinhDuongHienCo: model.transportationAndSiteEntranceCondition.existingRoadOnSite && {
+                description: model.transportationAndSiteEntranceCondition.existingRoadOnSite.desc,
+                images: (model.transportationAndSiteEntranceCondition.existingRoadOnSite.imageUrls || []).map(x => ({
+                    id: x.guid,
+                    image: x.largeSizeUrl
+                }))
+            },
+            loiVaoCongTrinhYeuCauDuongTam: model.transportationAndSiteEntranceCondition.temporatyRoadRequirement && {
+                description: model.transportationAndSiteEntranceCondition.temporatyRoadRequirement.desc,
+                images: (model.transportationAndSiteEntranceCondition.temporatyRoadRequirement.imageUrls || []).map(x => ({
+                    id: x.guid,
+                    image: x.largeSizeUrl
+                }))
+            },
+            loiVaoCongTrinhYeuCauHangRao: model.transportationAndSiteEntranceCondition.temporaryFenceRequirement && {
+                description: model.transportationAndSiteEntranceCondition.temporaryFenceRequirement.desc,
+                images: (model.transportationAndSiteEntranceCondition.temporaryFenceRequirement.imageUrls || []).map(x => ({
+                    id: x.guid,
+                    image: x.largeSizeUrl
+                }))
+            },
+        };
+        dataFormated.demoConso = model.demobilisationAndConsolidation && {
+            phaVoKetCau: model.demobilisationAndConsolidation.demobilisationExistingStructureOrBuilding && {
+                description: model.demobilisationAndConsolidation.demobilisationExistingStructureOrBuilding.desc,
+                images: (model.demobilisationAndConsolidation.demobilisationExistingStructureOrBuilding.imageUrls || []).map(x => ({
+                    id: x.guid,
+                    image: x.largeSizeUrl
+                }))
+            },
+            giaCoKetCau: model.demobilisationAndConsolidation.consolidationExistingStructureOrBuilding && {
+                description: model.demobilisationAndConsolidation.consolidationExistingStructureOrBuilding.desc,
+                images: (model.demobilisationAndConsolidation.consolidationExistingStructureOrBuilding.imageUrls || []).map(x => ({
+                    id: x.guid,
+                    image: x.largeSizeUrl
+                }))
+            },
+            dieuKien: model.demobilisationAndConsolidation.adjacentBuildingConditions && {
+                description: model.demobilisationAndConsolidation.adjacentBuildingConditions.desc,
+                images: (model.demobilisationAndConsolidation.adjacentBuildingConditions.imageUrls || []).map(x => ({
+                    id: x.guid,
+                    image: x.largeSizeUrl
+                }))
+            }
+        };
+        dataFormated.serviceConstruction = model.temporaryBuildingServiceForConstruction && {
+            heThongNuocHeThongHienHuu: model.temporaryBuildingServiceForConstruction.supplyWaterSystemExistingSystem && {
+                description: model.temporaryBuildingServiceForConstruction.supplyWaterSystemExistingSystem.desc,
+                images: (model.temporaryBuildingServiceForConstruction.supplyWaterSystemExistingSystem.imageUrls || []).map(x => ({
+                    id: x.guid,
+                    image: x.largeSizeUrl
+                }))
+            },
+            heThongNuocDiemDauNoi: model.temporaryBuildingServiceForConstruction.supplyWaterSystemExistingConnectionPoint && {
+                description: model.temporaryBuildingServiceForConstruction.supplyWaterSystemExistingConnectionPoint.desc,
+                images: (model.temporaryBuildingServiceForConstruction.supplyWaterSystemExistingConnectionPoint.imageUrls || [])
+                    .map(x => ({
+                        id: x.guid,
+                        image: x.largeSizeUrl
+                    }))
+            },
+            heThongNuocThoatHeThongHienHuu: model.temporaryBuildingServiceForConstruction.drainageWaterSystemExistingSystem && {
+                description: model.temporaryBuildingServiceForConstruction.drainageWaterSystemExistingSystem.desc,
+                images: (model.temporaryBuildingServiceForConstruction.drainageWaterSystemExistingSystem.imageUrls || [])
+                    .map(x => ({
+                        id: x.guid,
+                        image: x.largeSizeUrl
+                    }))
+            },
+            heThongNuocThoatDiemDauNoi: model.temporaryBuildingServiceForConstruction.drainageWaterSystemExistingConnectionPoint && {
+                description: model.temporaryBuildingServiceForConstruction.drainageWaterSystemExistingConnectionPoint.desc,
+                images: (model.temporaryBuildingServiceForConstruction.drainageWaterSystemExistingConnectionPoint.imageUrls || [])
+                    .map(x => ({
+                        id: x.guid,
+                        image: x.largeSizeUrl
+                    }))
+            },
+            heThongDienTramHaThe: model.temporaryBuildingServiceForConstruction.transformerStation && {
+                description: model.temporaryBuildingServiceForConstruction.transformerStation.desc,
+                images: (model.temporaryBuildingServiceForConstruction.transformerStation.imageUrls || []).map(x => ({
+                    id: x.guid,
+                    image: x.largeSizeUrl
+                }))
+            },
+            heThongDienDuongDayTrungThe: model.temporaryBuildingServiceForConstruction.existingMediumVoltageSystem && {
+                description: model.temporaryBuildingServiceForConstruction.existingMediumVoltageSystem.desc,
+                images: (model.temporaryBuildingServiceForConstruction.existingMediumVoltageSystem.imageUrls || []).map(x => ({
+                    id: x.guid,
+                    image: x.largeSizeUrl
+                }))
+            },
+            heThongDienThongTinKhac: model.temporaryBuildingServiceForConstruction.others && {
+                description: model.temporaryBuildingServiceForConstruction.others.desc,
+                images: (model.temporaryBuildingServiceForConstruction.others.imageUrls || []).map(x => ({
+                    id: x.guid,
+                    image: x.largeSizeUrl
+                }))
+            }
+        };
+        dataFormated.soilCondition = model.reportExistingSoilCondition && {
+            nenMongHienCo: model.reportExistingSoilCondition.existingFooting && {
+                description: model.reportExistingSoilCondition.existingFooting.desc,
+                images: (model.reportExistingSoilCondition.existingFooting.imageUrls || []).map(x => ({
+                    id: guid,
+                    image: x.largeSizeUrl
+                }))
+            },
+            thongTinCongTrinhGanDo: model.reportExistingSoilCondition.soilInvestigation && {
+                description: model.reportExistingSoilCondition.soilInvestigation.desc,
+                images: (model.reportExistingSoilCondition.soilInvestigation.imageUrls || []).map(x => ({
+                    id: guid,
+                    image: x.largeSizeUrl
+                }))
+            }
+        };
+        dataFormated.usefulInfo = (model.usefulInFormations || []).map(x => ({
+            title: x.title,
+            content: x.content.map(i => ({
+                name: i.name,
+                detail: i.detail,
+                images: i.imageUrls.map(e => ({
+                    id: e.guid,
+                    image: e.largeSizeUrl
+                }))
+            }))
+        }));
+        dataFormated.updateDescription = '';
+        return dataFormated;
     }
 
     createOrUpdateSiteSurveyingReport(obj: SiteSurveyReport) {
         const url = `bidopportunity/tendersitesurveyingreport/createorupdate`;
         const objDataSiteReport = new FormData();
         objDataSiteReport.append('BidOpportunityId', `${obj.bidOpportunityId}`);
-        objDataSiteReport.append('CreatedEmployeeId', `${obj.nguoiTao}`);
-        objDataSiteReport.append('UpdatedEmployeeId', `${obj.nguoiCapNhat}`);
-        objDataSiteReport.append('DocumentName', obj.tenTaiLieu);
-        objDataSiteReport.append('InterviewTimes', `${obj.lanCapNhat}`);
-        objDataSiteReport.append('ProjectStatistic.ProjectStatistic.ProjectScale.SiteArea',
-            `${obj.scaleOverall.quyMoDuAn.dienTichCongTruong}`);
-        objDataSiteReport.append('ProjectStatistic.ProjectStatistic.ProjectScale.GrossFloorArea',
-            `${obj.scaleOverall.quyMoDuAn.tongDienTichXayDung}`);
-        objDataSiteReport.append('ProjectStatistic.ProjectStatistic.ProjectScale.TotalNumberOfFloor',
-            obj.scaleOverall.quyMoDuAn.soTang);
-        objDataSiteReport.append('ProjectStatistic.ProjectStatistic.ProjectScale.ConstructionPeriod',
-            `${obj.scaleOverall.quyMoDuAn.tienDo}`);
-        objDataSiteReport.append('ProjectStatistic.PerspectiveImageOfProject.Desc',
-            obj.scaleOverall.hinhAnhPhoiCanh.description);
-        obj.scaleOverall.hinhAnhPhoiCanh.images.forEach(x => {
-            (x.id) ?
-                objDataSiteReport.append('ProjectStatistic.PerspectiveImageOfProject.ImageUrls', x.id) :
-                objDataSiteReport.append('ProjectStatistic.PerspectiveImageOfProject.Images', x.image);
+        objDataSiteReport.append('CreatedEmployeeId', `${obj.nguoiTao.id}`);
+        (obj.nguoiCapNhat) ? objDataSiteReport.append('UpdatedEmployeeId', `${obj.nguoiCapNhat.id}`) :
+            objDataSiteReport.append('UpdatedEmployeeId', `${obj.nguoiTao.id}`);
+        objDataSiteReport.append('DocumentName', obj.scaleOverall.tenTaiLieu);
+        objDataSiteReport.append('InterviewTimes', `${obj.scaleOverall.lanPhongVan}`);
+        obj.scaleOverall.loaiCongTrinh.forEach(x => {
+            objDataSiteReport.append('ProjectStatistic.ProjectStatistic.ConstructionType', JSON.stringify(x));
         });
-        objDataSiteReport.append('ProjectStatistic.ExistingStructure.Desc',
-            obj.scaleOverall.thongTinVeKetCau.description);
-        obj.scaleOverall.thongTinVeKetCau.images.forEach(x => {
-            (x.id) ?
-                objDataSiteReport.append('ProjectStatistic.ExistingStructure.ImageUrls', x.id) :
-                objDataSiteReport.append('ProjectStatistic.ExistingStructure.Images', x.image);
+        obj.scaleOverall.trangthaiCongTrinh.forEach(x => {
+            objDataSiteReport.append('ProjectStatistic.ProjectStatistic.ConstructionStatus', JSON.stringify(x));
         });
-        objDataSiteReport.append('ProjectStatistic.SpecialRequirement.Desc',
-            obj.scaleOverall.nhungYeuCauDacBiet.description);
-        obj.scaleOverall.nhungYeuCauDacBiet.images.forEach(x => {
-            (x.id) ?
-                objDataSiteReport.append('ProjectStatistic.SpecialRequirement.ImageUrls', x.id) :
-                objDataSiteReport.append('ProjectStatistic.SpecialRequirement.Images', x.image);
+        if (obj.scaleOverall.quyMoDuAn.dienTichCongTruong) {
+            objDataSiteReport.append('ProjectStatistic.ProjectStatistic.ProjectScale.SiteArea',
+                `${obj.scaleOverall.quyMoDuAn.dienTichCongTruong}`);
+        } else {
+            objDataSiteReport.append('ProjectStatistic.ProjectStatistic.ProjectScale.SiteArea', `${0}`);
+        }
+        if (obj.scaleOverall.quyMoDuAn.tongDienTichXayDung) {
+            objDataSiteReport.append('ProjectStatistic.ProjectStatistic.ProjectScale.GrossFloorArea',
+                `${obj.scaleOverall.quyMoDuAn.tongDienTichXayDung}`);
+        } else {
+            objDataSiteReport.append('ProjectStatistic.ProjectStatistic.ProjectScale.GrossFloorArea', `${0}`);
+        }
+        if (obj.scaleOverall.quyMoDuAn.tienDo) {
+            objDataSiteReport.append('ProjectStatistic.ProjectStatistic.ProjectScale.ConstructionPeriod',
+                `${obj.scaleOverall.quyMoDuAn.tienDo}`);
+        } else {
+            objDataSiteReport.append('ProjectStatistic.ProjectStatistic.ProjectScale.ConstructionPeriod', `${0}`);
+        }
+        if (obj.scaleOverall.quyMoDuAn.soTang) {
+            objDataSiteReport.append('ProjectStatistic.ProjectStatistic.ProjectScale.TotalNumberOfFloor',
+                obj.scaleOverall.quyMoDuAn.soTang);
+        } else {
+            objDataSiteReport.append('ProjectStatistic.ProjectStatistic.ProjectScale.TotalNumberOfFloor',
+                '');
+        }
+        if (obj.scaleOverall.hinhAnhPhoiCanh) {
+            objDataSiteReport.append('ProjectStatistic.PerspectiveImageOfProject.Desc', obj.scaleOverall.hinhAnhPhoiCanh.description);
+            obj.scaleOverall.hinhAnhPhoiCanh.images.forEach(x => {
+                (x.id) ?
+                    objDataSiteReport.append('ProjectStatistic.PerspectiveImageOfProject.ImageUrls', x.id) :
+                    objDataSiteReport.append('ProjectStatistic.PerspectiveImageOfProject.Images', x.image);
+            });
+        } else {
+            objDataSiteReport.append('ProjectStatistic.PerspectiveImageOfProject.Desc', '');
+            objDataSiteReport.append('ProjectStatistic.PerspectiveImageOfProject.ImageUrls', null);
+            objDataSiteReport.append('ProjectStatistic.PerspectiveImageOfProject.Images', null);
+        }
+        if (obj.scaleOverall.thongTinVeKetCau) {
+            objDataSiteReport.append('ProjectStatistic.ExistingStructure.Desc', obj.scaleOverall.thongTinVeKetCau.description);
+            obj.scaleOverall.thongTinVeKetCau.images.forEach(x => {
+                (x.id) ?
+                    objDataSiteReport.append('ProjectStatistic.ExistingStructure.ImageUrls', x.id) :
+                    objDataSiteReport.append('ProjectStatistic.ExistingStructure.Images', x.image);
+            });
+        } else {
+            objDataSiteReport.append('ProjectStatistic.ExistingStructure.Desc', '');
+            objDataSiteReport.append('ProjectStatistic.ExistingStructure.ImageUrls', null);
+            objDataSiteReport.append('ProjectStatistic.ExistingStructure.Images', null);
+        }
+        if (obj.scaleOverall.nhungYeuCauDacBiet) {
+            objDataSiteReport.append('ProjectStatistic.SpecialRequirement.Desc', obj.scaleOverall.nhungYeuCauDacBiet.description);
+            obj.scaleOverall.nhungYeuCauDacBiet.images.forEach(x => {
+                (x.id) ?
+                    objDataSiteReport.append('ProjectStatistic.SpecialRequirement.ImageUrls', x.id) :
+                    objDataSiteReport.append('ProjectStatistic.SpecialRequirement.Images', x.image);
+            });
+        } else {
+            objDataSiteReport.append('ProjectStatistic.SpecialRequirement.Desc', '');
+            objDataSiteReport.append('ProjectStatistic.SpecialRequirement.ImageUrls', null);
+            objDataSiteReport.append('ProjectStatistic.SpecialRequirement.Images', null);
+        }
+        if (obj.describeOverall.chiTietDiaHinh) {
+            objDataSiteReport.append('SiteInformation.Topography.Desc', obj.describeOverall.chiTietDiaHinh.description);
+            obj.describeOverall.chiTietDiaHinh.images.forEach(x => {
+                (x.id) ?
+                    objDataSiteReport.append('SiteInformation.Topography.ImageUrls', x.id) :
+                    objDataSiteReport.append('SiteInformation.Topography.Images', x.image);
+            });
+        } else {
+            objDataSiteReport.append('SiteInformation.Topography.Desc', '');
+            objDataSiteReport.append('SiteInformation.Topography.ImageUrls', null);
+            objDataSiteReport.append('SiteInformation.Topography.Images', null);
+        }
+        if (obj.describeOverall.kienTrucHienHuu) {
+            objDataSiteReport.append('SiteInformation.ExistBuildingOnTheSite.Desc', obj.describeOverall.kienTrucHienHuu.description);
+            obj.describeOverall.kienTrucHienHuu.images.forEach(x => {
+                (x.id) ?
+                    objDataSiteReport.append('SiteInformation.ExistBuildingOnTheSite.ImageUrls', x.id) :
+                    objDataSiteReport.append('SiteInformation.ExistBuildingOnTheSite.Images', x.image);
+            });
+        } else {
+            objDataSiteReport.append('SiteInformation.ExistBuildingOnTheSite.Desc', '');
+            objDataSiteReport.append('SiteInformation.ExistBuildingOnTheSite.ImageUrls', null);
+            objDataSiteReport.append('SiteInformation.ExistBuildingOnTheSite.Images', null);
+        }
+        if (obj.describeOverall.yeuCauChuongNgai) {
+            objDataSiteReport.append('SiteInformation.ExistObstacleOnTheSite.Desc', obj.describeOverall.yeuCauChuongNgai.description);
+            obj.describeOverall.yeuCauChuongNgai.images.forEach(x => {
+                (x.id) ?
+                    objDataSiteReport.append('SiteInformation.ExistObstacleOnTheSite.ImageUrls', x.id) :
+                    objDataSiteReport.append('SiteInformation.ExistObstacleOnTheSite.Images', x.image);
+            });
+        } else {
+            objDataSiteReport.append('SiteInformation.ExistObstacleOnTheSite.Desc', '');
+            objDataSiteReport.append('SiteInformation.ExistObstacleOnTheSite.ImageUrls', null);
+            objDataSiteReport.append('SiteInformation.ExistObstacleOnTheSite.Images', null);
+        }
+        if (obj.traffic.chiTietDiaHinhKhoKhan) {
+            objDataSiteReport.append('TransportationAndSiteEntranceCondition.Disadvantage.Desc',
+                obj.traffic.chiTietDiaHinhKhoKhan.description);
+            obj.traffic.chiTietDiaHinhKhoKhan.images.forEach(x => {
+                (x.id) ?
+                    objDataSiteReport.append('TransportationAndSiteEntranceCondition.Disadvantage.ImageUrls', x.id) :
+                    objDataSiteReport.append('TransportationAndSiteEntranceCondition.Disadvantage.Images', x.image);
+            });
+        } else {
+            objDataSiteReport.append('TransportationAndSiteEntranceCondition.Disadvantage.Desc', '');
+            objDataSiteReport.append('TransportationAndSiteEntranceCondition.Disadvantage.ImageUrls', null);
+            objDataSiteReport.append('TransportationAndSiteEntranceCondition.Disadvantage.Images', null);
+        }
+        if (obj.traffic.chiTietDiaHinhThuanLoi) {
+            objDataSiteReport.append('TransportationAndSiteEntranceCondition.Advantage.Desc',
+                obj.traffic.chiTietDiaHinhThuanLoi.description);
+            obj.traffic.chiTietDiaHinhThuanLoi.images.forEach(x => {
+                (x.id) ?
+                    objDataSiteReport.append('TransportationAndSiteEntranceCondition.Advantage.ImageUrls', x.id) :
+                    objDataSiteReport.append('TransportationAndSiteEntranceCondition.Advantage.Images', x.image);
+            });
+        } else {
+            objDataSiteReport.append('TransportationAndSiteEntranceCondition.Advantage.Desc', '');
+            objDataSiteReport.append('TransportationAndSiteEntranceCondition.Advantage.ImageUrls', null);
+            objDataSiteReport.append('TransportationAndSiteEntranceCondition.Advantage.Images', null);
+        }
+        if (obj.traffic.loiVaoCongTrinhHuongVao) {
+            objDataSiteReport.append('TransportationAndSiteEntranceCondition.DirectionOfSiteEntrance.Desc',
+                obj.traffic.loiVaoCongTrinhHuongVao.description);
+            obj.traffic.loiVaoCongTrinhHuongVao.images.forEach(x => {
+                (x.id) ?
+                    objDataSiteReport.append('TransportationAndSiteEntranceCondition.DirectionOfSiteEntrance.ImageUrls', x.id) :
+                    objDataSiteReport.append('TransportationAndSiteEntranceCondition.DirectionOfSiteEntrance.Images', x.image);
+            });
+        } else {
+            objDataSiteReport.append('TransportationAndSiteEntranceCondition.DirectionOfSiteEntrance.Desc', '');
+            objDataSiteReport.append('TransportationAndSiteEntranceCondition.DirectionOfSiteEntrance.ImageUrls', null);
+            objDataSiteReport.append('TransportationAndSiteEntranceCondition.DirectionOfSiteEntrance.Images', null);
+        }
+        if (obj.traffic.loiVaoCongTrinhDuongHienCo) {
+            objDataSiteReport.append('TransportationAndSiteEntranceCondition.ExistingRoadOnSite.Desc',
+                obj.traffic.loiVaoCongTrinhDuongHienCo.description);
+            obj.traffic.loiVaoCongTrinhDuongHienCo.images.forEach(x => {
+                (x.id) ?
+                    objDataSiteReport.append('TransportationAndSiteEntranceCondition.ExistingRoadOnSite.ImageUrls', x.id) :
+                    objDataSiteReport.append('TransportationAndSiteEntranceCondition.ExistingRoadOnSite.Images', x.image);
+            });
+        } else {
+            objDataSiteReport.append('TransportationAndSiteEntranceCondition.ExistingRoadOnSite.Desc', '');
+            objDataSiteReport.append('TransportationAndSiteEntranceCondition.ExistingRoadOnSite.ImageUrls', null);
+            objDataSiteReport.append('TransportationAndSiteEntranceCondition.ExistingRoadOnSite.Images', null);
+        }
+        if (obj.traffic.loiVaoCongTrinhYeuCauDuongTam) {
+            objDataSiteReport.append('TransportationAndSiteEntranceCondition.TemporatyRoadRequirement.Desc',
+                obj.traffic.loiVaoCongTrinhYeuCauDuongTam.description);
+            obj.traffic.loiVaoCongTrinhYeuCauDuongTam.images.forEach(x => {
+                (x.id) ?
+                    objDataSiteReport.append('TransportationAndSiteEntranceCondition.TemporatyRoadRequirement.ImageUrls', x.id) :
+                    objDataSiteReport.append('TransportationAndSiteEntranceCondition.TemporatyRoadRequirement.Images', x.image);
+            });
+        } else {
+            objDataSiteReport.append('TransportationAndSiteEntranceCondition.TemporatyRoadRequirement.Desc', '');
+            objDataSiteReport.append('TransportationAndSiteEntranceCondition.TemporatyRoadRequirement.ImageUrls', null);
+            objDataSiteReport.append('TransportationAndSiteEntranceCondition.TemporatyRoadRequirement.Images', null);
+        }
+        if (obj.traffic.loiVaoCongTrinhYeuCauHangRao) {
+            objDataSiteReport.append('TransportationAndSiteEntranceCondition.TemporaryFenceRequirement.Desc',
+                obj.traffic.loiVaoCongTrinhYeuCauHangRao.description);
+            obj.traffic.loiVaoCongTrinhYeuCauHangRao.images.forEach(x => {
+                (x.id) ?
+                    objDataSiteReport.append('TransportationAndSiteEntranceCondition.TemporaryFenceRequirement.ImageUrls', x.id) :
+                    objDataSiteReport.append('TransportationAndSiteEntranceCondition.TemporaryFenceRequirement.Images', x.image);
+            });
+        } else {
+            objDataSiteReport.append('TransportationAndSiteEntranceCondition.TemporaryFenceRequirement.Desc', '');
+            objDataSiteReport.append('TransportationAndSiteEntranceCondition.TemporaryFenceRequirement.ImageUrls', null);
+            objDataSiteReport.append('TransportationAndSiteEntranceCondition.TemporaryFenceRequirement.Images', null);
+        }
+        if (obj.demoConso.phaVoKetCau) {
+            objDataSiteReport.append('DemobilisationAndConsolidation.DemobilisationExistingStructureOrBuilding.Desc',
+                obj.demoConso.phaVoKetCau.description);
+            obj.demoConso.phaVoKetCau.images.forEach(x => {
+                (x.id) ?
+                    objDataSiteReport.append('DemobilisationAndConsolidation.DemobilisationExistingStructureOrBuilding.ImageUrls', x.id) :
+                    objDataSiteReport.append('DemobilisationAndConsolidation.DemobilisationExistingStructureOrBuilding.Images', x.image);
+            });
+        } else {
+            objDataSiteReport.append('DemobilisationAndConsolidation.DemobilisationExistingStructureOrBuilding.Desc', '');
+            objDataSiteReport.append('DemobilisationAndConsolidation.DemobilisationExistingStructureOrBuilding.ImageUrls', null);
+            objDataSiteReport.append('DemobilisationAndConsolidation.DemobilisationExistingStructureOrBuilding.Images', null);
+        }
+        if (obj.demoConso.giaCoKetCau) {
+            objDataSiteReport.append('DemobilisationAndConsolidation.ConsolidationExistingStructureOrBuilding.Desc',
+                obj.demoConso.giaCoKetCau.description);
+            obj.demoConso.giaCoKetCau.images.forEach(x => {
+                (x.id) ?
+                    objDataSiteReport.append('DemobilisationAndConsolidation.ConsolidationExistingStructureOrBuilding.ImageUrls', x.id) :
+                    objDataSiteReport.append('DemobilisationAndConsolidation.ConsolidationExistingStructureOrBuilding.Images', x.image);
+            });
+        } else {
+            objDataSiteReport.append('DemobilisationAndConsolidation.ConsolidationExistingStructureOrBuilding.Desc', '');
+            objDataSiteReport.append('DemobilisationAndConsolidation.ConsolidationExistingStructureOrBuilding.ImageUrls', null);
+            objDataSiteReport.append('DemobilisationAndConsolidation.ConsolidationExistingStructureOrBuilding.Images', null);
+        }
+        if (obj.demoConso.dieuKien) {
+            objDataSiteReport.append('DemobilisationAndConsolidation.AdjacentBuildingConditions.Desc',
+                obj.demoConso.dieuKien.description);
+            obj.demoConso.dieuKien.images.forEach(x => {
+                (x.id) ?
+                    objDataSiteReport.append('DemobilisationAndConsolidation.AdjacentBuildingConditions.ImageUrls', x.id) :
+                    objDataSiteReport.append('DemobilisationAndConsolidation.AdjacentBuildingConditions.Images', x.image);
+            });
+        } else {
+            objDataSiteReport.append('DemobilisationAndConsolidation.AdjacentBuildingConditions.Desc', '');
+            objDataSiteReport.append('DemobilisationAndConsolidation.AdjacentBuildingConditions.ImageUrls', null);
+            objDataSiteReport.append('DemobilisationAndConsolidation.AdjacentBuildingConditions.Images', null);
+        }
+        if (obj.serviceConstruction.heThongNuocHeThongHienHuu) {
+            objDataSiteReport.append('TemporaryBuildingServiceForConstruction.SupplyWaterSystemExistingSystem.Desc',
+                obj.serviceConstruction.heThongNuocHeThongHienHuu.description);
+            obj.serviceConstruction.heThongNuocHeThongHienHuu.images.forEach(x => {
+                (x.id) ?
+                    objDataSiteReport.append('TemporaryBuildingServiceForConstruction.SupplyWaterSystemExistingSystem.ImageUrls', x.id) :
+                    objDataSiteReport.append('TemporaryBuildingServiceForConstruction.SupplyWaterSystemExistingSystem.Images', x.image);
+            });
+        } else {
+            objDataSiteReport.append('TemporaryBuildingServiceForConstruction.SupplyWaterSystemExistingSystem.Desc', '');
+            objDataSiteReport.append('TemporaryBuildingServiceForConstruction.SupplyWaterSystemExistingSystem.ImageUrls', null);
+            objDataSiteReport.append('TemporaryBuildingServiceForConstruction.SupplyWaterSystemExistingSystem.Images', null);
+        }
+        if (obj.serviceConstruction.heThongNuocDiemDauNoi) {
+            objDataSiteReport.append('TemporaryBuildingServiceForConstruction.SupplyWaterSystemExistingConnectionPoint.Desc',
+                obj.serviceConstruction.heThongNuocDiemDauNoi.description);
+            obj.serviceConstruction.heThongNuocDiemDauNoi.images.forEach(x => {
+                (x.id) ?
+                    objDataSiteReport.append('TemporaryBuildingServiceForConstruction.SupplyWaterSystemExistingConnectionPoint.ImageUrls',
+                        x.id) :
+                    objDataSiteReport.append('TemporaryBuildingServiceForConstruction.SupplyWaterSystemExistingConnectionPoint.Images',
+                        x.image);
+            });
+        } else {
+            objDataSiteReport.append('TemporaryBuildingServiceForConstruction.SupplyWaterSystemExistingConnectionPoint.Desc', '');
+            objDataSiteReport.append('TemporaryBuildingServiceForConstruction.SupplyWaterSystemExistingConnectionPoint.ImageUrls',
+                null);
+            objDataSiteReport.append('TemporaryBuildingServiceForConstruction.SupplyWaterSystemExistingConnectionPoint.Images',
+                null);
+        }
+        if (obj.serviceConstruction.heThongNuocThoatHeThongHienHuu) {
+            objDataSiteReport.append('TemporaryBuildingServiceForConstruction.DrainageWaterSystemExistingSystem.Desc',
+                obj.serviceConstruction.heThongNuocThoatHeThongHienHuu.description);
+            obj.serviceConstruction.heThongNuocThoatHeThongHienHuu.images.forEach(x => {
+                (x.id) ?
+                    objDataSiteReport.append('TemporaryBuildingServiceForConstruction.DrainageWaterSystemExistingSystem.ImageUrls', x.id) :
+                    objDataSiteReport.append('TemporaryBuildingServiceForConstruction.DrainageWaterSystemExistingSystem.Images', x.image);
+            });
+        } else {
+            objDataSiteReport.append('TemporaryBuildingServiceForConstruction.DrainageWaterSystemExistingSystem.Desc', '');
+            objDataSiteReport.append('TemporaryBuildingServiceForConstruction.DrainageWaterSystemExistingSystem.ImageUrls', null);
+            objDataSiteReport.append('TemporaryBuildingServiceForConstruction.DrainageWaterSystemExistingSystem.Images', null);
+        }
+        if (obj.serviceConstruction.heThongNuocThoatDiemDauNoi) {
+            objDataSiteReport.append('TemporaryBuildingServiceForConstruction.DrainageWaterSystemExistingConnectionPoint.Desc',
+                obj.serviceConstruction.heThongNuocThoatDiemDauNoi.description);
+            obj.serviceConstruction.heThongNuocThoatDiemDauNoi.images.forEach(x => {
+                (x.id) ?
+                    objDataSiteReport.append('TemporaryBuildingServiceForConstruction.DrainageWaterSystemExistingConnectionPoint.ImageUrls',
+                        x.id) :
+                    objDataSiteReport.append('TemporaryBuildingServiceForConstruction.DrainageWaterSystemExistingConnectionPoint.Images',
+                        x.image);
+            });
+        } else {
+            objDataSiteReport.append('TemporaryBuildingServiceForConstruction.DrainageWaterSystemExistingConnectionPoint.Desc', '');
+            objDataSiteReport.append('TemporaryBuildingServiceForConstruction.DrainageWaterSystemExistingConnectionPoint.ImageUrls',
+                null);
+            objDataSiteReport.append('TemporaryBuildingServiceForConstruction.DrainageWaterSystemExistingConnectionPoint.Images',
+                null);
+        }
+        if (obj.serviceConstruction.heThongDienTramHaThe) {
+            objDataSiteReport.append('TemporaryBuildingServiceForConstruction.TransformerStation.Desc',
+                obj.serviceConstruction.heThongDienTramHaThe.description);
+            obj.serviceConstruction.heThongDienTramHaThe.images.forEach(x => {
+                (x.id) ?
+                    objDataSiteReport.append('TemporaryBuildingServiceForConstruction.TransformerStation.ImageUrls', x.id) :
+                    objDataSiteReport.append('TemporaryBuildingServiceForConstruction.TransformerStation.Images', x.image);
+            });
+        } else {
+            objDataSiteReport.append('TemporaryBuildingServiceForConstruction.TransformerStation.Desc', '');
+            objDataSiteReport.append('TemporaryBuildingServiceForConstruction.TransformerStation.ImageUrls', null);
+            objDataSiteReport.append('TemporaryBuildingServiceForConstruction.TransformerStation.Images', null);
+        }
+        if (obj.serviceConstruction.heThongDienDuongDayTrungThe) {
+            objDataSiteReport.append('TemporaryBuildingServiceForConstruction.ExistingMediumVoltageSystem.Desc',
+                obj.serviceConstruction.heThongDienDuongDayTrungThe.description);
+            obj.serviceConstruction.heThongDienDuongDayTrungThe.images.forEach(x => {
+                (x.id) ?
+                    objDataSiteReport.append('TemporaryBuildingServiceForConstruction.ExistingMediumVoltageSystem.ImageUrls', x.id) :
+                    objDataSiteReport.append('TemporaryBuildingServiceForConstruction.ExistingMediumVoltageSystem.Images', x.image);
+            });
+        } else {
+            objDataSiteReport.append('TemporaryBuildingServiceForConstruction.ExistingMediumVoltageSystem.Desc', '');
+            objDataSiteReport.append('TemporaryBuildingServiceForConstruction.ExistingMediumVoltageSystem.ImageUrls', null);
+            objDataSiteReport.append('TemporaryBuildingServiceForConstruction.ExistingMediumVoltageSystem.Images', null);
+        }
+        if (obj.serviceConstruction.heThongDienThongTinKhac) {
+            objDataSiteReport.append('TemporaryBuildingServiceForConstruction.Others.Desc',
+                obj.serviceConstruction.heThongDienThongTinKhac.description);
+            obj.serviceConstruction.heThongDienThongTinKhac.images.forEach(x => {
+                (x.id) ?
+                    objDataSiteReport.append('TemporaryBuildingServiceForConstruction.Others.ImageUrls', x.id) :
+                    objDataSiteReport.append('TemporaryBuildingServiceForConstruction.Others.Images', x.image);
+            });
+        } else {
+            objDataSiteReport.append('TemporaryBuildingServiceForConstruction.Others.Desc', '');
+            objDataSiteReport.append('TemporaryBuildingServiceForConstruction.Others.ImageUrls', null);
+            objDataSiteReport.append('TemporaryBuildingServiceForConstruction.Others.Images', null);
+        }
+        if (obj.soilCondition.nenMongHienCo) {
+            objDataSiteReport.append('ExistingSoilCondition.ExistingFooting.Desc',
+                obj.soilCondition.nenMongHienCo.description);
+            obj.soilCondition.nenMongHienCo.images.forEach(x => {
+                (x.id) ?
+                    objDataSiteReport.append('ExistingSoilCondition.ExistingFooting.ImageUrls', x.id) :
+                    objDataSiteReport.append('ExistingSoilCondition.ExistingFooting.Images', x.image);
+            });
+        } else {
+            objDataSiteReport.append('ExistingSoilCondition.ExistingFooting.Desc', '');
+            objDataSiteReport.append('ExistingSoilCondition.ExistingFooting.ImageUrls', null);
+            objDataSiteReport.append('ExistingSoilCondition.ExistingFooting.Images', null);
+        }
+        if (obj.soilCondition.thongTinCongTrinhGanDo) {
+            objDataSiteReport.append('ExistingSoilCondition.SoilInvestigation.Desc',
+                obj.soilCondition.thongTinCongTrinhGanDo.description);
+            obj.soilCondition.thongTinCongTrinhGanDo.images.forEach(x => {
+                (x.id) ?
+                    objDataSiteReport.append('ExistingSoilCondition.SoilInvestigation.ImageUrls', x.id) :
+                    objDataSiteReport.append('ExistingSoilCondition.SoilInvestigation.Images', x.image);
+            });
+        } else {
+            objDataSiteReport.append('ExistingSoilCondition.SoilInvestigation.Desc', '');
+            objDataSiteReport.append('ExistingSoilCondition.SoilInvestigation.ImageUrls', null);
+            objDataSiteReport.append('ExistingSoilCondition.SoilInvestigation.Images', null);
+        }
+
+        obj.usefulInfo.forEach(subject => {
+            objDataSiteReport.append('UsefulInFormations', JSON.stringify(subject));
         });
-        objDataSiteReport.append('SiteInformation.Topography.Desc', obj.describeOverall.chiTietDiaHinh.description);
-        obj.describeOverall.chiTietDiaHinh.images.forEach(x => {
-            (x.id) ?
-                objDataSiteReport.append('SiteInformation.Topography.ImageUrls', x.id) :
-                objDataSiteReport.append('SiteInformation.Topography.Images', x.image);
-        });
-        objDataSiteReport.append('SiteInformation.ExistBuildingOnTheSite.Desc', obj.describeOverall.kienTrucHienHuu.description);
-        obj.describeOverall.kienTrucHienHuu.images.forEach(x => {
-            (x.id) ?
-                objDataSiteReport.append('SiteInformation.ExistBuildingOnTheSite.ImageUrls', x.id) :
-                objDataSiteReport.append('SiteInformation.ExistBuildingOnTheSite.Images', x.image);
-        });
-        objDataSiteReport.append('SiteInformation.ExistObstacleOnTheSite.Desc', obj.describeOverall.yeuCauChuongNgai.description);
-        obj.describeOverall.yeuCauChuongNgai.images.forEach(x => {
-            (x.id) ?
-                objDataSiteReport.append('SiteInformation.ExistObstacleOnTheSite.ImageUrls', x.id) :
-                objDataSiteReport.append('SiteInformation.ExistObstacleOnTheSite.Images', x.image);
-        });
-        objDataSiteReport.append('TransportationAndSiteEntranceCondition.Disadvantage.Desc',
-            obj.traffic.chiTietDiaHinh.khoKhan.description);
-        obj.traffic.chiTietDiaHinh.khoKhan.images.forEach(x => {
-            (x.id) ?
-                objDataSiteReport.append('TransportationAndSiteEntranceCondition.Disadvantage.ImageUrls', x.id) :
-                objDataSiteReport.append('TransportationAndSiteEntranceCondition.Disadvantage.Images', x.image);
-        });
-        objDataSiteReport.append('TransportationAndSiteEntranceCondition.Advantage.Desc', obj.traffic.chiTietDiaHinh.thuanLoi.description);
-        obj.traffic.chiTietDiaHinh.thuanLoi.images.forEach(x => {
-            (x.id) ?
-                objDataSiteReport.append('TransportationAndSiteEntranceCondition.Advantage.ImageUrls', x.id) :
-                objDataSiteReport.append('TransportationAndSiteEntranceCondition.Advantage.Images', x.image);
-        });
-        objDataSiteReport.append('TransportationAndSiteEntranceCondition.DirectionOfSiteEntrance.Desc',
-            obj.traffic.loiVaoCongTrinh.huongVao.description);
-        obj.traffic.loiVaoCongTrinh.huongVao.images.forEach(x => {
-            (x.id) ?
-                objDataSiteReport.append('TransportationAndSiteEntranceCondition.DirectionOfSiteEntrance.ImageUrls', x.id) :
-                objDataSiteReport.append('TransportationAndSiteEntranceCondition.DirectionOfSiteEntrance.Images', x.image);
-        });
-        objDataSiteReport.append('TransportationAndSiteEntranceCondition.ExistingRoadOnSite.Desc',
-            obj.traffic.loiVaoCongTrinh.duongHienCo.description);
-        obj.traffic.loiVaoCongTrinh.duongHienCo.images.forEach(x => {
-            (x.id) ?
-                objDataSiteReport.append('TransportationAndSiteEntranceCondition.ExistingRoadOnSite.ImageUrls', x.id) :
-                objDataSiteReport.append('TransportationAndSiteEntranceCondition.ExistingRoadOnSite.Images', x.image);
-        });
-        objDataSiteReport.append('TransportationAndSiteEntranceCondition.TemporatyRoadRequirement.Desc',
-            obj.traffic.loiVaoCongTrinh.yeuCauDuongTam.description);
-        obj.traffic.loiVaoCongTrinh.yeuCauDuongTam.images.forEach(x => {
-            (x.id) ?
-                objDataSiteReport.append('TransportationAndSiteEntranceCondition.TemporatyRoadRequirement.ImageUrls', x.id) :
-                objDataSiteReport.append('TransportationAndSiteEntranceCondition.TemporatyRoadRequirement.Images', x.image);
-        });
-        objDataSiteReport.append('TransportationAndSiteEntranceCondition.TemporaryFenceRequirement.Desc',
-            obj.traffic.loiVaoCongTrinh.yeuCauHangRao.description);
-        obj.traffic.loiVaoCongTrinh.yeuCauHangRao.images.forEach(x => {
-            (x.id) ?
-                objDataSiteReport.append('TransportationAndSiteEntranceCondition.TemporaryFenceRequirement.ImageUrls', x.id) :
-                objDataSiteReport.append('TransportationAndSiteEntranceCondition.TemporaryFenceRequirement.Images', x.image);
-        });
-        objDataSiteReport.append('DemobilisationAndConsolidation.DemobilisationExistingStructureOrBuilding.Desc',
-            obj.demoConso.phaVoKetCau.description);
-        obj.demoConso.phaVoKetCau.images.forEach(x => {
-            (x.id) ?
-                objDataSiteReport.append('DemobilisationAndConsolidation.DemobilisationExistingStructureOrBuilding.ImageUrls', x.id) :
-                objDataSiteReport.append('DemobilisationAndConsolidation.DemobilisationExistingStructureOrBuilding.Images', x.image);
-        });
-        objDataSiteReport.append('DemobilisationAndConsolidation.ConsolidationExistingStructureOrBuilding.Desc',
-            obj.demoConso.giaCoKetCau.description);
-        obj.demoConso.giaCoKetCau.images.forEach(x => {
-            (x.id) ?
-                objDataSiteReport.append('DemobilisationAndConsolidation.ConsolidationExistingStructureOrBuilding.ImageUrls', x.id) :
-                objDataSiteReport.append('DemobilisationAndConsolidation.ConsolidationExistingStructureOrBuilding.Images', x.image);
-        });
-        objDataSiteReport.append('DemobilisationAndConsolidation.AdjacentBuildingConditions.Desc',
-            obj.demoConso.dieuKien.description);
-        obj.demoConso.dieuKien.images.forEach(x => {
-            (x.id) ?
-                objDataSiteReport.append('DemobilisationAndConsolidation.AdjacentBuildingConditions.ImageUrls', x.id) :
-                objDataSiteReport.append('DemobilisationAndConsolidation.AdjacentBuildingConditions.Images', x.image);
-        });
-        objDataSiteReport.append('TemporaryBuildingServiceForConstruction.SupplyWaterSystemExistingSystem.Desc',
-            obj.serviceConstruction.heThongNuoc.heThongHienHuu.description);
-        obj.serviceConstruction.heThongNuoc.heThongHienHuu.images.forEach(x => {
-            (x.id) ?
-                objDataSiteReport.append('TemporaryBuildingServiceForConstruction.SupplyWaterSystemExistingSystem.ImageUrls', x.id) :
-                objDataSiteReport.append('TemporaryBuildingServiceForConstruction.SupplyWaterSystemExistingSystem.Images', x.image);
-        });
-        objDataSiteReport.append('TemporaryBuildingServiceForConstruction.SupplyWaterSystemExistingConnectionPoint.Desc',
-            obj.serviceConstruction.heThongNuoc.diemDauNoi.description);
-        obj.serviceConstruction.heThongNuoc.diemDauNoi.images.forEach(x => {
-            (x.id) ?
-                objDataSiteReport.append('TemporaryBuildingServiceForConstruction.SupplyWaterSystemExistingConnectionPoint.ImageUrls',
-                    x.id) :
-                objDataSiteReport.append('TemporaryBuildingServiceForConstruction.SupplyWaterSystemExistingConnectionPoint.Images',
-                    x.image);
-        });
-        objDataSiteReport.append('TemporaryBuildingServiceForConstruction.DrainageWaterSystemExistingSystem.Desc',
-            obj.serviceConstruction.heThongNuocThoat.heThongHienHuu.description);
-        obj.serviceConstruction.heThongNuocThoat.heThongHienHuu.images.forEach(x => {
-            (x.id) ?
-                objDataSiteReport.append('TemporaryBuildingServiceForConstruction.DrainageWaterSystemExistingSystem.ImageUrls', x.id) :
-                objDataSiteReport.append('TemporaryBuildingServiceForConstruction.DrainageWaterSystemExistingSystem.Images', x.image);
-        });
-        objDataSiteReport.append('TemporaryBuildingServiceForConstruction.DrainageWaterSystemExistingConnectionPoint.Desc',
-            obj.serviceConstruction.heThongNuocThoat.diemDauNoi.description);
-        obj.serviceConstruction.heThongNuocThoat.diemDauNoi.images.forEach(x => {
-            (x.id) ?
-                objDataSiteReport.append('TemporaryBuildingServiceForConstruction.DrainageWaterSystemExistingConnectionPoint.ImageUrls',
-                    x.id) :
-                objDataSiteReport.append('TemporaryBuildingServiceForConstruction.DrainageWaterSystemExistingConnectionPoint.Images',
-                    x.image);
-        });
-        objDataSiteReport.append('TemporaryBuildingServiceForConstruction.TransformerStation.Desc',
-            obj.serviceConstruction.heThongDien.tramHaThe.description);
-        obj.serviceConstruction.heThongDien.tramHaThe.images.forEach(x => {
-            (x.id) ?
-                objDataSiteReport.append('TemporaryBuildingServiceForConstruction.TransformerStation.ImageUrls', x.id) :
-                objDataSiteReport.append('TemporaryBuildingServiceForConstruction.TransformerStation.Images', x.image);
-        });
-        objDataSiteReport.append('TemporaryBuildingServiceForConstruction.ExistingMediumVoltageSystem.Desc',
-            obj.serviceConstruction.heThongDien.duongDayTrungThe.description);
-        obj.serviceConstruction.heThongDien.duongDayTrungThe.images.forEach(x => {
-            (x.id) ?
-                objDataSiteReport.append('TemporaryBuildingServiceForConstruction.ExistingMediumVoltageSystem.ImageUrls', x.id) :
-                objDataSiteReport.append('TemporaryBuildingServiceForConstruction.ExistingMediumVoltageSystem.Images', x.image);
-        });
-        objDataSiteReport.append('TemporaryBuildingServiceForConstruction.Others.Desc',
-            obj.serviceConstruction.heThongDien.thongTinKhac.description);
-        obj.serviceConstruction.heThongDien.thongTinKhac.images.forEach(x => {
-            (x.id) ?
-                objDataSiteReport.append('TemporaryBuildingServiceForConstruction.Others.ImageUrls', x.id) :
-                objDataSiteReport.append('TemporaryBuildingServiceForConstruction.Others.Images', x.image);
-        });
-        objDataSiteReport.append('ExistingSoilCondition.ExistingFooting.Desc',
-            obj.soilCondition.nenMongHienCo.description);
-        obj.soilCondition.nenMongHienCo.images.forEach(x => {
-            (x.id) ?
-                objDataSiteReport.append('ExistingSoilCondition.ExistingFooting.ImageUrls', x.id) :
-                objDataSiteReport.append('ExistingSoilCondition.ExistingFooting.Images', x.image);
-        });
-        objDataSiteReport.append('ExistingSoilCondition.SoilInvestigation.Desc',
-            obj.soilCondition.thongTinCongTrinhGanDo.description);
-        obj.soilCondition.thongTinCongTrinhGanDo.images.forEach(x => {
-            (x.id) ?
-                objDataSiteReport.append('ExistingSoilCondition.SoilInvestigation.ImageUrls', x.id) :
-                objDataSiteReport.append('ExistingSoilCondition.SoilInvestigation.Images', x.image);
-        });
-        objDataSiteReport.append('UsefulInFormations',
-            null
-        );
         objDataSiteReport.append('UpdatedDescription', obj.updateDescription);
         return this.apiService.postFile(url, objDataSiteReport).map(res => res).share();
     }
