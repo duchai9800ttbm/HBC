@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder } from '@angular/forms';
 import { NeedCreateTenderFormComponent } from '../need-create-tender-form.component';
 import { ActivatedRoute } from '@angular/router';
+import { NeedCreateTenderComponent } from '../../need-create-tender.component';
 
 @Component({
   selector: 'app-need-create-tender-form-analysis',
@@ -11,12 +12,14 @@ import { ActivatedRoute } from '@angular/router';
 export class NeedCreateTenderFormAnalysisComponent implements OnInit {
 
   analysisForm: FormGroup;
+  routerAction: string;
   constructor(
     private fb: FormBuilder,
     private route: ActivatedRoute
   ) { }
 
   ngOnInit() {
+    this.routerAction = NeedCreateTenderComponent.routerAction;
     this.createForm();
     this.analysisForm.valueChanges.subscribe(data => this.mappingToLiveFormData(data));
   }

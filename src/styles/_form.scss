@@ -2,3 +2,12 @@
     display: block !important;
     font-size: 90%;
 }
+
+.b-form-readonly {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 60px;
+    z-index: 1000;
+}

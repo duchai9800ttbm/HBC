@@ -6,11 +6,14 @@ import { FeeTenderInvitationDocument } from '../../package/fee-tender-invitation
 import { ContractConditionTenderParticipate } from '../../package/contract-condition-tender-participate';
 import { TenderDirectorProposal } from '../../package/tender-director-proposal';
 import { DecisionBoardGeneralDirector } from '../../package/decision-board-general-director';
+import { EmployeeModel } from '../../employee/employee-model';
 
 export class ProposeTenderParticipateRequest {
     id: number;
     bidOpportunityId: number;
     createdEmployeeId: number;
+    createdEmployee: EmployeeModel;
+    updatedEmployee: EmployeeModel;
     updatedEmployeeId: number;
     documentName: string;
     isDraftVersion: boolean;
@@ -22,4 +25,5 @@ export class ProposeTenderParticipateRequest {
     contractCondition: ContractConditionTenderParticipate;
     tenderDirectorProposal: TenderDirectorProposal;
     decisionOfBoardOfGeneralDirector: DecisionBoardGeneralDirector;
+    isAgreedParticipating: boolean;
 }

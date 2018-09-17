@@ -5,10 +5,10 @@
             <span class="font-weight-bold reject">Nội dung thư</span>
         </div>
         <div class="center-parent">
-            <!-- <div>
-                <i class="fa fa-chevron-left mr-2 icon" aria-hidden="true"></i>
-                <i class="fa fa-chevron-right ml-2 icon" aria-hidden="true"></i>
-            </div> -->
+            <div>
+                <i *ngIf="afterId" class="fa fa-chevron-left mr-2 icon" (click)="after()" aria-hidden="true"></i>
+                <i *ngIf="beforeId" class="fa fa-chevron-right ml-2 icon" (click)="before()" aria-hidden="true"></i>
+            </div>
         </div>
     </div>
 </div>
@@ -16,7 +16,21 @@
     <div>{{email?.subject}}</div>
 </div>
 <div class="title-item d-flex align-items-center">
-    <div>To: {{email?.to}}</div>
+    <div class="to">To: {{email?.to}}</div>
+    <div class="date-time d-flex justify-content-end align-items-center">
+        <div>
+            <span *ngIf="email?.sentDate">{{email?.sentDate*1000 | date:'dd/MM/yyyy HH:mm': '+0000'}}</span>
+        </div>
+        <div class="ml-2">
+            <button class="custom-btn" (click)="print()">
+                <i class="fa fa-print" aria-hidden="true"></i>
+            </button>
+            <button class="custom-btn" (click)="delete()">
+                <i class="fa fa-trash" aria-hidden="true"></i>
+            </button>
+
+        </div>
+    </div>
 </div>
 
 <div class="content-email">

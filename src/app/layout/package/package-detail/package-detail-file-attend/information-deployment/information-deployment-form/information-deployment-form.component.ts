@@ -21,6 +21,7 @@ export class InformationDeploymentFormComponent implements OnInit {
   packageInfo: PackageInfoModel;
   dtOptions: any = DATATABLE_CONFIG;
   dtTrigger: Subject<any> = new Subject();
+  fakeArr = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
   private readonly serviceRoot = 'https://demos.telerik.com/kendo-ui/service';
   private readonly tasksDataSource = new kendo.data.GanttDataSource({
       transport: {
@@ -119,7 +120,7 @@ export class InformationDeploymentFormComponent implements OnInit {
                     console.log(this.packageInfo);
                 });
     kendo.jQuery(this.ganttChart.nativeElement).kendoGantt({
-      // dataSource: this.tasksDataSource,
+    //   dataSource: this.tasksDataSource,
       dataSource: [
         {
           id: 1,
@@ -144,7 +145,79 @@ export class InformationDeploymentFormComponent implements OnInit {
           title: 'Task3',
           start: new Date('2014/6/17 13:00'),
           end: new Date('2014/6/17 15:00')
-        }
+        },
+        {
+            id: 1,
+            orderId: 0,
+            parentId: null,
+            title: 'Task1',
+            start: new Date('2014/6/17 9:00'),
+            end: new Date('2014/6/17 11:00')
+          },
+          {
+            id: 2,
+            orderId: 1,
+            parentId: null,
+            title: 'Task2',
+            start: new Date('2014/6/17 12:00'),
+            end: new Date('2014/6/17 14:00')
+          },
+          {
+            id: 3,
+            orderId: 2,
+            parentId: null,
+            title: 'Task3',
+            start: new Date('2014/6/17 13:00'),
+            end: new Date('2014/6/17 15:00')
+          },
+          {
+            id: 1,
+            orderId: 0,
+            parentId: null,
+            title: 'Task1',
+            start: new Date('2014/6/17 9:00'),
+            end: new Date('2014/6/17 11:00')
+          },
+          {
+            id: 2,
+            orderId: 1,
+            parentId: null,
+            title: 'Task2',
+            start: new Date('2014/6/17 12:00'),
+            end: new Date('2014/6/17 14:00')
+          },
+          {
+            id: 3,
+            orderId: 2,
+            parentId: null,
+            title: 'Task3',
+            start: new Date('2014/6/17 13:00'),
+            end: new Date('2014/6/17 15:00')
+          },
+          {
+            id: 1,
+            orderId: 0,
+            parentId: null,
+            title: 'Task1',
+            start: new Date('2014/6/17 9:00'),
+            end: new Date('2014/6/17 11:00')
+          },
+          {
+            id: 2,
+            orderId: 1,
+            parentId: null,
+            title: 'Task2',
+            start: new Date('2014/6/17 12:00'),
+            end: new Date('2014/6/17 14:00')
+          },
+          {
+            id: 3,
+            orderId: 2,
+            parentId: null,
+            title: 'Task3',
+            start: new Date('2014/6/17 13:00'),
+            end: new Date('2014/6/17 15:00')
+          }
       ],
       // dependencies: this.dependenciesDataSource,
       views: [

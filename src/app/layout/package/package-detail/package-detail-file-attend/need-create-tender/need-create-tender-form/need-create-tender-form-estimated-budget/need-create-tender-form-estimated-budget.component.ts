@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder } from '@angular/forms';
 import { NeedCreateTenderFormComponent } from '../need-create-tender-form.component';
+import { NeedCreateTenderComponent } from '../../need-create-tender.component';
 
 @Component({
   selector: 'app-need-create-tender-form-estimated-budget',
@@ -9,6 +10,7 @@ import { NeedCreateTenderFormComponent } from '../need-create-tender-form.compon
 })
 export class NeedCreateTenderFormEstimatedBudgetComponent implements OnInit {
 
+  routerAction: string;
   listCurrency: Array<string> = ['VNĐ', 'USD'];
   currency = 'VNĐ';
   estimatedBudgetForm: FormGroup;
@@ -17,6 +19,7 @@ export class NeedCreateTenderFormEstimatedBudgetComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+    this.routerAction = NeedCreateTenderComponent.routerAction;
     this.createForm();
     this.estimatedBudgetForm.valueChanges.subscribe(data => this.mappingToLiveFormData(data));
   }

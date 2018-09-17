@@ -1,5 +1,6 @@
 <form [formGroup]="directorProposalForm">
-    <div class="p-3">
+    <div class="p-3 position-relative">
+        <div *ngIf="routerAction == 'view'" class="b-form-readonly"></div>
         <div>
             <h5 class="text-uppercase">VII. ý kiến đề xuất của giám đốc dự thầu (tender director proposal)</h5>
         </div>
