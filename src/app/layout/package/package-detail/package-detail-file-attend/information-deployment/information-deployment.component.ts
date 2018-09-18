@@ -76,11 +76,14 @@ export class InformationDeploymentComponent implements OnInit {
     { id: 3, rom: 'Phòng lưu trữ', username: 'Huy Nhat', email: 'huynhat@gmail.com', checkboxSelected: 'checkboxSelected' }
   ];
   emailModel: SendEmailModel = new SendEmailModel();
+
   ckeConfig: any;
   @ViewChild('ckeditor') ckeditor: any;
   listEmailSearchTo;
+  listEmailSearchToEmail;
   listEmailSearchCc;
   listEmailSearchBcc;
+  toEmployeeEmail;
   searchTermTo$ = new BehaviorSubject<string>('');
   searchTermCc$ = new BehaviorSubject<string>('');
   searchTermBcc$ = new BehaviorSubject<string>('');
@@ -128,15 +131,16 @@ export class InformationDeploymentComponent implements OnInit {
   }))
 
   ngOnInit() {
-    this.searchTermCc$
-      .debounceTime(COMMON_CONSTANTS.SearchDelayTimeInMs)
-      .distinctUntilChanged()
-      .subscribe(term => {
-        console.log('searchTermCc', term);
-        this.emailService.searchbymail(term).subscribe(response => {
-          this.listEmailSearchCc = response;
-        });
-      });
+    // this.searchTermCc$
+    //   .debounceTime(COMMON_CONSTANTS.SearchDelayTimeInMs)
+    //   .distinctUntilChanged()
+    //   .subscribe(term => {
+    //     console.log('searchTermCc', term, this.listEmailSearchCc);
+    //     this.emailService.searchbymail(term).subscribe(response => {
+    //       this.listEmailSearchCc = response;
+    //     });
+    //   });
+    this.changeValueTo('');
     this.searchTermBcc$
       .debounceTime(COMMON_CONSTANTS.SearchDelayTimeInMs)
       .distinctUntilChanged()
@@ -180,13 +184,11 @@ export class InformationDeploymentComponent implements OnInit {
   }
 
   changeValueTo(event) {
-    event.target.value
-    .debounceTime(COMMON_CONSTANTS.SearchEmailDelayTimeInMs)
-    .distinctUntilChanged()
-    .subscribe(term => {
-      this.emailService.searchbymail(term).subscribe(response => {
-        this.listEmailSearchTo = response;
-      });
+    console.log('event', event);
+    this.emailService.searchbymail(event).subscribe(response => {
+      this.listEmailSearchTo = response;
+      // this.listEmailSearchToEmail = response.map(i => i.employeeEmail);
+      // console.log('this.listEmailSearchTo', this.listEmailSearchToEmail);
     });
   }
 

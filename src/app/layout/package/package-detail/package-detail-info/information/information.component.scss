@@ -31,12 +31,30 @@
     text-transform: uppercase;
     font-size: 0.875rem !important;
 }
-#status-package0 {
+.status-hsmt--background {
     background-color: #2ecc71 !important;
     color: #FFFFFF !important;
 }
-#status-package1 {
+.status-dt--background{
+    background-color: #ff9300;
+    color: #FFFFFF !important;
+}
+.status-kqdt--background{
+    background-color: #ed145b;
+    color: #FFFFFF !important;
+}
+.phase-hsmt--background {
     background-color: #eafaf1 !important;
+    color: #000000 !important;
+    font-size: 80% !important;
+}
+.phase-dt--background {
+    background-color: #fff4e5 !important;
+    color: #000000 !important;
+    font-size: 80% !important;
+}
+.phase-kqdt--background {
+    background-color: #fde7ee !important;
     color: #000000 !important;
     font-size: 80% !important;
 }

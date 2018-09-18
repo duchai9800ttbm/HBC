@@ -1,8 +1,17 @@
 $primary: #00a0e3;
 $topnav-background-color: $primary;
 .notification {
+    .dropdown-menu-right{
+        top: 2rem;
+        .fa-ellipsis{
+            color: #07afed;
+            font-size: 1rem;
+            padding: 0.25rem 1.5rem;
+            cursor: pointer;
+        }
+    }
     .dropdown-menu {
-        width: 450px;
+        width: 375px;
     }
     .main-badge {
         position: absolute;
@@ -52,10 +61,25 @@ a {
 
 .dropdown-menu-header {
     display: block;
-    width: 100%;
+    // width: 100%;
     padding: 0.25rem 1.5rem;
     text-align: inherit;
     white-space: nowrap;
     background: none;
     border: 0;
+}
+
+.image-bell--width{
+    width: 1.3rem;
+    height: auto;
+}
+.beeperNub{
+    width: 0;
+    height: 0;
+    position: absolute;
+    border-left: 5px solid transparent;
+    border-right: 5px solid transparent;
+    border-bottom: 7px solid #fff;
+    right: inherit;
+    transform: translate(-244%, -198%);
 }

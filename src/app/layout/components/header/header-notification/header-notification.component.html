@@ -1,16 +1,19 @@
 <li class="nav-item dropdown notification" ngbDropdown>
     <a href="javascript:void(0)" class="dropdown-no-icon nav-link text-white mr-3" ngbDropdownToggle>
-        <i class="fa fa-bell"></i>
+        <!-- <i class="fa fa-bell"></i> -->
+        <img class="class-image image-bell--width d-inline-block" src="assets\images\ic-bell.png" alt="">
         <!-- <span *ngIf="(notificationCount$ | async)" class="badge badge-danger main-badge">{{notificationCount$ | async}}</span> -->
         <span class="badge badge-danger main-badge">10</span>
         <b class="caret"></b>
         <span class="sr-only">(current)</span>
     </a>
     <ul class="dropdown-menu dropdown-menu-right">
-        <div class="notification-item">
+        <div class="beeperNub"></div>
+        <div class="notification-item d-flex justify-content-between">
             <div class="dropdown-menu-header font-weight-bold mb-2">
                 THÔNG BÁO
             </div>
+            <i class="fa fa-ellipsis-v fa-ellipsis" aria-hidden="true"></i>
         </div>
         <!-- *ngIf="notificationItems" -->
         <div>
@@ -37,18 +40,11 @@
         <div>
             <div class="notification-item">
                 <a class="dropdown-item py-2" (click)="read(item)">
-                    <span class="last">Bạn có 1
-                        <strong>Dự án Xây dựng khách sạn Novotel</strong>
-                        diễn ra
-                        <strong>tại Đà Nẵng</strong>
-                        từ ngày
-                        <strong>20/09/2018</strong>
-                        đến ngày
-                        <strong>20/09/2020</strong>.
+                    <span class="last">Bạn có 1 Dự án Xây dựng khách sạn Novotel diễn ra tại Đà Nẵng từ ngày 20/09/2018 đến ngày 20/09/2020
                         <span class="badge badge-info">Chi tiết</span>
                     </span>
                     <p class="small text-muted">
-                        Cách đây 2 giờ
+                        <em>Cách đây 2 giờ</em>
                     </p>
                     <!-- <li class="dropdown-divider"></li> -->
                 </a>
