@@ -128,18 +128,11 @@ export class InformationDeploymentComponent implements OnInit {
   }))
 
   ngOnInit() {
-    this.searchTermTo$
-      .debounceTime(COMMON_CONSTANTS.SearchEmailDelayTimeInMs)
-      .distinctUntilChanged()
-      .subscribe(term => {
-        this.emailService.searchbymail(term).subscribe(response => {
-          this.listEmailSearchTo = response;
-        });
-      });
     this.searchTermCc$
       .debounceTime(COMMON_CONSTANTS.SearchDelayTimeInMs)
       .distinctUntilChanged()
       .subscribe(term => {
+        console.log('searchTermCc', term);
         this.emailService.searchbymail(term).subscribe(response => {
           this.listEmailSearchCc = response;
         });
@@ -186,6 +179,17 @@ export class InformationDeploymentComponent implements OnInit {
 
   }
 
+  changeValueTo(event) {
+    event.target.value
+    .debounceTime(COMMON_CONSTANTS.SearchEmailDelayTimeInMs)
+    .distinctUntilChanged()
+    .subscribe(term => {
+      this.emailService.searchbymail(term).subscribe(response => {
+        this.listEmailSearchTo = response;
+      });
+    });
+  }
+
   openModalDeployment(template: TemplateRef<any>) {
     this.modalRef = this.modalService.show(
       template,
@@ -218,7 +222,6 @@ export class InformationDeploymentComponent implements OnInit {
         this.spinner.hide();
       },
         err => {
-          console.log('err', err, err.json().errorCode);
           if (err.json().errorCode === 'BusinessException') {
             this.alertService.error('Đã xảy ra lỗi. Hồ sơ mời thầu này đã được gửi thư thông báo triển khai!');
           } else {

@@ -245,7 +245,6 @@ export class PackageListComponent implements OnInit, AfterViewChecked {
         this.searchTerm$.debounceTime(600)
         .distinctUntilChanged()
         .subscribe(term => {
-            console.log(term);
             this.filter(false);
             // return Observable.create(x => x.next(''));
         });
@@ -290,7 +289,6 @@ export class PackageListComponent implements OnInit, AfterViewChecked {
 
     refreshPopupConfig() {
         this.packageService.getListFields(this.getUserId).subscribe(data => {
-            console.log('data', data);
             this.listField = data;
             this.listFieldNomarlized = [...this.listField].filter(x => x.hidden === true).map(x => x.fieldName);
             this.sum = [...this.listField].filter(x => x.hidden === true).length;

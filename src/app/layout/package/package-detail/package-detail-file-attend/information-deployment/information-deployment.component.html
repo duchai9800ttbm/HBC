@@ -72,8 +72,6 @@
             <div class="input-group-prepend">
                 <span class="input-group-text">To:</span>
             </div>
-            <!-- <input type="text" [(ngModel)]="emailModel.to" class="form-control boder-left-none" [ngClass]="{ 'bd-r' : isSendCc === false ||isSendBcc===false }"
-                aria-label="To" autofocus> -->
             <kendo-multiselect [allowCustom]="true" [data]="listEmailSearchTo" [(ngModel)]="emailModel.to" [textField]="'employeeName'" [valueField]="'employeeEmail'"
                 [ngClass]="{ 'bd-r' : isSendCc === false ||isSendBcc===false }" aria-label="To" autofocus (keyup)="searchTermTo$.next($event.target.value)"
                 [valueNormalizer]="valueNormalizerTo">

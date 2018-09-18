@@ -6,7 +6,7 @@ import { NgxSpinnerService } from '../../../../../../../../node_modules/ngx-spin
 import { InterviewInvitationService } from '../../../../../../shared/services/interview-invitation.service';
 import { InterviewInvitationFilterReport } from '../../../../../../shared/models/interview-invitation/interview-invitation-filter-report';
 import { PagedResult } from '../../../../../../shared/models';
-import { Subject } from '../../../../../../../../node_modules/rxjs';
+import { Subject, BehaviorSubject } from '../../../../../../../../node_modules/rxjs';
 @Component({
   selector: 'app-end-interview',
   templateUrl: './end-interview.component.html',
@@ -15,7 +15,7 @@ import { Subject } from '../../../../../../../../node_modules/rxjs';
 export class EndInterviewComponent implements OnInit {
   dialog;
   currentPackageId: number;
-  searchTerm$;
+  searchTerm$ = new BehaviorSubject<string>('');
   filterModel = new InterviewInvitationFilterReport();
   pagedResult: PagedResult<InterviewInvitationFilterReport> = new PagedResult<InterviewInvitationFilterReport>();
   dtTrigger: Subject<any> = new Subject();
