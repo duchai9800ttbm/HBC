@@ -26,7 +26,7 @@
             <button type="button" *ngIf="isconfirmProgress" class="btn btn-up disable">Upload file</button>
             <button type="button" *ngIf="!isconfirmProgress" [ngClass]="{ 'btn-dep': dowloadTem === true,'disable': dowloadTem === false }"
                 (click)="openModalUpload(Upload)" class="btn btn-up ">Upload file</button>
-            <button type="button" class="btn btn-primary">
+            <button type="button" class="btn btn-primary ">
                 <i class="fa fa-refresh" aria-hidden="true"></i>
             </button>
         </div>

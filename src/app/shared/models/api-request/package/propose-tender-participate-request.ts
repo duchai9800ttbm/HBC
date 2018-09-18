@@ -16,7 +16,7 @@ export class ProposeTenderParticipateRequest {
     updatedEmployee: EmployeeModel;
     updatedEmployeeId: number;
     documentName: string;
-    isDraftVersion: boolean;
+    isDraftVersion = true;
     employerAnalysis: EmployeeAnalys;
     consultantAnalysis: ConsultantAnalys;
     internalResourcesEvaluation: InternalResourceesEvaluation;

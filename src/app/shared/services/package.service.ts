@@ -902,4 +902,11 @@ export class PackageService {
             expectedAcceptanceDate: date
         }).map(response => response.result);
     }
+    // duyệt đề nghị dự thầu
+    approveBidProposal(bidOpportunityId: number, reason: string): Observable<any> {
+        const url = `bidopportunity/hsdt/${bidOpportunityId}/duyetdenghiduthau`;
+        return this.apiService.post(url, {
+            reason: reason
+        }).map(response => response.result);
+    }
 }

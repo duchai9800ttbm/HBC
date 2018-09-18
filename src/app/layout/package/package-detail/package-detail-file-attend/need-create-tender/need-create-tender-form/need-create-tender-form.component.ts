@@ -10,6 +10,7 @@ import { PackageDetailComponent } from '../../../package-detail.component';
 import { Router, ActivatedRoute, ParamMap } from '@angular/router';
 import { PackageInfoModel } from '../../../../../../shared/models/package/package-info.model';
 import { switchMap } from 'rxjs/operators';
+import { NeedCreateTenderComponent } from '../need-create-tender.component';
 
 @Component({
     selector: 'app-need-create-tender-form',
@@ -20,6 +21,8 @@ export class NeedCreateTenderFormComponent implements OnInit {
     static formModel: ProposeTenderParticipateRequest;
     bidOpportunityId;
     packageInfo: PackageInfoModel;
+    routerAction: string;
+    dataModel: ProposeTenderParticipateRequest;
     constructor(
         private packageService: PackageService,
         private alertService: AlertService,
@@ -30,6 +33,9 @@ export class NeedCreateTenderFormComponent implements OnInit {
     ) {}
 
     ngOnInit() {
+        this.routerAction = NeedCreateTenderComponent.routerAction;
+        this.dataModel = NeedCreateTenderFormComponent.formModel;
+        console.log('this.dataModel: ', this.dataModel);
         this.bidOpportunityId = PackageDetailComponent.packageId;
         if (!NeedCreateTenderFormComponent.formModel) {
             this.router.navigate([
