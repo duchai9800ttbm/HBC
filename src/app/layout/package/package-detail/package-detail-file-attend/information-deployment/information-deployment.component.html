@@ -26,7 +26,7 @@
             <button type="button" *ngIf="isconfirmProgress" class="btn btn-up disable">Upload file</button>
             <button type="button" *ngIf="!isconfirmProgress" [ngClass]="{ 'btn-dep': dowloadTem === true,'disable': dowloadTem === false }"
                 (click)="openModalUpload(Upload)" class="btn btn-up ">Upload file</button>
-            <button type="button" class="btn btn-primary ">
+            <button type="button" class="btn btn-primary">
                 <i class="fa fa-refresh" aria-hidden="true"></i>
             </button>
         </div>
@@ -68,26 +68,6 @@
         </div>
     </div>
     <div class="modal-body">
-        <!-- <div class="input-group mb-3">
-            <div class="input-group-prepend">
-                <span class="input-group-text">To:</span>
-            </div>
-        
-
-            <span class="ui-fluid" style="width:100%">
-                <p-autoComplete [(ngModel)]="emailModel.to" [suggestions]="listEmailSearchTo" (completeMethod)="changeValueTo($event.query)"
-                    styleClass="wid100" [minLength]="1" placeholder="Nhập email" field="employeeEmail" [multiple]="true">
-                </p-autoComplete>
-            </span>
-
-            <div class="input-group-append" *ngIf="!isSendCc || !isSendBcc">
-                <span class="input-group-text">
-                    <span *ngIf="!isSendCc" title="Thêm người nhận Cc" class="send-cc" (click)="sendCc()">Cc</span>
-                    <span *ngIf="!isSendBcc" title="Thêm người nhận Bcc" class="send-cc" (click)="sendBcc()">Bcc</span>
-                </span>
-            </div>
-        </div> -->
-
         <div class="input-group mb-3">
             <span class="input-group-addon">To:</span>
             <div style="width:100%">
@@ -97,35 +77,22 @@
                     </p-autoComplete>
                 </span>
             </div>
-            
-
         </div>
 
-
-
         <div class="input-group mb-3" *ngIf="isSendCc">
-            <div class="input-group-prepend">
-                <span class="input-group-text" id="basic-addon1">Cc:</span>
+            <span class="input-group-addon" id="basic-addon1">Cc:</span>
+            <div style="width:100%">
+                <span class="ui-fluid">
+                    <p-autoComplete [(ngModel)]="emailModel.cc" [suggestions]="listEmailSearchCc" (completeMethod)="changeValueCc($event.query)"
+                        styleClass="wid100" placeholder="Nhập email" field="employeeEmail" [multiple]="true">
+                    </p-autoComplete>
+                </span>
             </div>
-            <kendo-multiselect [allowCustom]="true" [data]="listEmailSearchCc" [(ngModel)]="emailModel.cc" [textField]="'employeeName'"
-                [valueField]="'employeeEmail'" [ngClass]="{ 'bd-r' : isSendCc === false ||isSendBcc===false }" aria-label="To"
-                autofocus (keyup)="searchTermCc$.next($event.target.value)" [valueNormalizer]="valueNormalizerCc">
-                <ng-template kendoMultiSelectItemTemplate let-dataItem>
-                    <table>
-                        <tr>{{ dataItem.employeeName }}</tr>
-                        <tr class="text-muted">{{ dataItem.employeeEmail}}</tr>
-                    </table>
-                </ng-template>
-            </kendo-multiselect>
         </div>
 
         <div class="input-group mb-3" *ngIf="isSendBcc">
-            <div class="input-group-prepend">
-                <span class="input-group-text" id="basic-addon1">Bcc:</span>
-            </div>
-            <!-- <input type="text" [(ngModel)]="emailModel.bcc" class="form-control boder-left-none" placeholder="" aria-label="To" aria-describedby="basic-addon1"
-                autofocus> -->
-            <kendo-multiselect [allowCustom]="true" [data]="listEmailSearchBcc" [(ngModel)]="emailModel.bcc" [textField]="'employeeName'"
+            <span class="input-group-addon" id="basic-addon1">Bcc:</span>
+            <!-- <kendo-multiselect [allowCustom]="true" [data]="listEmailSearchBcc" [(ngModel)]="emailModel.bcc" [textField]="'employeeName'"
                 [valueField]="'employeeEmail'" [ngClass]="{ 'bd-r' : isSendCc === false ||isSendBcc===false }" aria-label="To"
                 autofocus (keyup)="searchTermBcc$.next($event.target.value)" [valueNormalizer]="valueNormalizerBcc">
                 <ng-template kendoMultiSelectItemTemplate let-dataItem>
@@ -134,15 +101,23 @@
                         <tr class="text-muted">{{ dataItem.employeeEmail}}</tr>
                     </table>
                 </ng-template>
-            </kendo-multiselect>
+            </kendo-multiselect> -->
+            <div style="width:100%">
+                    <span class="ui-fluid">
+                        <p-autoComplete [(ngModel)]="emailModel.bcc" [suggestions]="listEmailSearchBcc" (completeMethod)="changeValueBcc($event.query)"
+                            styleClass="wid100" placeholder="Nhập email" field="employeeEmail" [multiple]="true">
+                        </p-autoComplete>
+                    </span>
+                </div>
         </div>
 
         <div class="mb-3 ml-2" *ngIf="!isSendCc || !isSendBcc">
-                <span class="">
-                    <span *ngIf="!isSendCc" title="Thêm người nhận Cc" class="send-cc" (click)="sendCc()">Thêm Cc | </span>
-                    <span *ngIf="!isSendBcc" title="Thêm người nhận Bcc" class="send-cc" (click)="sendBcc()">Thêm Bcc</span>
-                </span>
-            </div>
+            <span class="">
+                <span *ngIf="!isSendCc" title="Thêm người nhận Cc" class="send-cc" (click)="sendCc()">Thêm Cc</span>
+                <span *ngIf="!isSendCc && !isSendBcc" class="send-cc"> | </span>
+                <span *ngIf="!isSendBcc" title="Thêm người nhận Bcc" class="send-cc" (click)="sendBcc()">Thêm Bcc</span>
+            </span>
+        </div>
 
         <div class="input-group mb-3">
             <div class="input-group-prepend">
