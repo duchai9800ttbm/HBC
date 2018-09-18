@@ -8,6 +8,8 @@ import { AlertService } from '../../../../../shared/services';
 import { DATATABLE_CONFIG } from '../../../../../shared/configs';
 import { Subject } from 'rxjs';
 import DateTimeConvertHelper from '../../../../../shared/helpers/datetime-convert-helper';
+import { PackageInfoModel } from '../../../../../shared/models/package/package-info.model';
+import { BidStatus } from '../../../../../shared/constants/bid-status';
 
 @Component({
   selector: 'app-need-create-tender',
@@ -22,8 +24,11 @@ export class NeedCreateTenderComponent implements OnInit {
   bidOpportunityId;
   proposedTender: ProposeTenderParticipateRequest;
   isShowDialog = false;
-  isNotAgreeParticipating: boolean;
+  isNotAgreeParticipating = false;
   dateApproveBid = new Date();
+  packageInfo: PackageInfoModel;
+  bidStatus = BidStatus;
+  reasonApproveBid = '';
   constructor(
     private packageService: PackageService,
     private spinner: NgxSpinnerService,
@@ -49,13 +54,17 @@ export class NeedCreateTenderComponent implements OnInit {
       this.spinner.hide();
       this.alertService.error('Lấy thông tin phiếu đề nghị dự thầu thất bại!');
     });
+    this.getPackageInfo();
+  }
+
+  getPackageInfo() {
     this.packageService
-                .getInforPackageID(this.bidOpportunityId)
-                .subscribe(data => {
-                    // this.packageInfo = data;
-                    this.spinner.hide();
-                    console.log(data);
-                });
+    .getInforPackageID(this.bidOpportunityId)
+    .subscribe(data => {
+        this.packageInfo = data;
+        this.spinner.hide();
+        console.log(data);
+    });
   }
 
   changeAction(data: string) {
@@ -91,16 +100,39 @@ export class NeedCreateTenderComponent implements OnInit {
 
   sendApproveBidProposal() {
     this.spinner.show();
-    this.packageService.sendApproveBidProposal(this.bidOpportunityId, DateTimeConvertHelper.fromDtObjectToTimestamp(this.dateApproveBid))
+    this.packageService.sendApproveBidProposal(this.bidOpportunityId, DateTimeConvertHelper.fromDtObjectToSecon(this.dateApproveBid))
       .subscribe(data => {
         this.spinner.hide();
         this.alertService.success('Gửi duyệt đề nghị dự thầu thành công!');
         this.isShowDialog = false;
+        this.getPackageInfo();
       }, err => {
         this.spinner.hide();
         this.alertService.error('Gửi duyệt đề nghị dự thầu thất bại!');
         this.isShowDialog = false;
       });
+  }
+
+  approveBidProposal() {
+    this.spinner.show();
+    this.packageService.approveBidProposal(this.bidOpportunityId, this.reasonApproveBid)
+      .subscribe(data => {
+        this.spinner.hide();
+        this.alertService.success('Duyệt đề nghị dự thầu thành công!');
+        this.isShowDialog = false;
+        this.reasonApproveBid = '';
+        this.getPackageInfo();
+      }, err => {
+        this.spinner.hide();
+        this.alertService.error('Duyệt đề nghị dự thầu thất bại!');
+        this.isShowDialog = false;
+        this.reasonApproveBid = '';
+      });
+  }
+
+  closeDialog() {
+    this.isShowDialog = false;
+    this.isNotAgreeParticipating = false;
   }
 
 }
