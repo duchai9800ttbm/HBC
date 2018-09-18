@@ -487,6 +487,9 @@ table.dataTable td{
         }
     }
 }
+.h-12{
+    height: 1.2rem;
+}
 .h-25{
     height: 2.5rem;
 }
@@ -498,4 +501,11 @@ table.dataTable td{
 }
 .mw-18{
     min-width: 1.8rem;
+}
+.no-content__image--pad{
+    padding-top: 4.5rem;
+    .image--width{
+        width: 250px;
+        height: auto;
+    }
 }

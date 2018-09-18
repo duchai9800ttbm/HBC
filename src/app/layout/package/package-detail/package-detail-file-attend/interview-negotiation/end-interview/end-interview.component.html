@@ -50,7 +50,7 @@
         id="ipad-res">
         <div class="mr-auto align-items-end list-package mb-2 w-40">
           <div class="d-flex justify-content-start h-25">
-            <div class="rule mr-2">
+            <div class="rule mr-2 h-12">
             </div>
             <div class="center-parent mr-4 fz-12">
               <div>Đã chốt công tác chuẩn bị phỏng vấn</div>
@@ -62,9 +62,9 @@
         <div class="w-60">
           <div class="btn-toolbar mt-2 mb-2 d-flex flex-row-reverse">
             <div>
-              <button class="btn btn-primary ml-2">
+              <!-- <button class="btn btn-primary ml-2">
                 <i class="fa fa-refresh" aria-hidden="true"></i>
-              </button>
+              </button> -->
             </div>
           </div>
         </div>
@@ -99,9 +99,9 @@
         </div>
       </div>
     </div>
-    <div class="center-parent row set-width-image" *ngIf="false">
+    <div class="center-parent row set-width-image no-content__image--pad" *ngIf="pagedResult.items?.length === 0">
       <div class="col-md-12 center-parent">
-        <img class="class-image" src="\assets\images\chotPhongVan.png" width="300" height="200" class="d-inline-block" alt="">
+        <img class="class-image" src="\assets\images\chotPhongVan.png" width="250" class="d-inline-block" alt="">
       </div>
       <div class="col-md-12 center-parent message-create-interview">XÁC NHẬN NẾU BẠN ĐÃ THỰC HIỆN PHỎNG VẤN VÀ THƯƠNG THẢO HỒ SƠ DỰ THẦU?</div>
       <div class="col-md-12 center-parent">
