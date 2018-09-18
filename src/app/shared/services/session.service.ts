@@ -19,7 +19,7 @@ export class SessionService {
 
         return {
             userId: this.currentSession.userId,
-            employeeId: this.currentSession.objectId,
+            employeeId: this.currentSession.employeeId,
             userName: this.currentSession.userName
 
         };

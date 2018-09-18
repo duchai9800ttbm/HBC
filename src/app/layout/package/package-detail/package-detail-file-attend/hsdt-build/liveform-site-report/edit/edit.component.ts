@@ -49,14 +49,12 @@ export class EditComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    const elem = Array.from(document.querySelectorAll('#header-table, #toggle-menu'));
-    elem.forEach(e => { (<HTMLElement>e).style.visibility = 'hidden'; (<HTMLElement>e).style.position = 'absolute'; });
     this.currentBidOpportunityId = +PackageDetailComponent.packageId;
     this.packageService.getInforPackageID(this.currentBidOpportunityId).subscribe(result => {
       this.packageData = result;
     });
     this.documentService.tenderSiteSurveyingReport(this.currentBidOpportunityId).subscribe(data => {
-      EditComponent.formModel = data;
+      LiveformSiteReportComponent.formModel = data;
     });
   }
 
@@ -64,7 +62,8 @@ export class EditComponent implements OnInit {
     if (!event) {
       this.showPopupConfirm = false;
     } else {
-      const objData = EditComponent.formModel;
+      const objData = LiveformSiteReportComponent.formModel;
+      console.log(objData);
       this.documentService
         .createOrUpdateSiteSurveyingReport(objData)
         .subscribe();

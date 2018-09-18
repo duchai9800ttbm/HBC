@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ServiceConstruction } from '../../../../../../../../shared/models/site-survey-report/service-construction.model';
 import { FormGroup, FormBuilder } from '@angular/forms';
 import { EditComponent } from '../edit.component';
+import { LiveformSiteReportComponent } from '../../liveform-site-report.component';
 
 @Component({
   selector: 'app-service-construction',
@@ -68,7 +69,7 @@ export class ServiceConstructionComponent implements OnInit {
   }
 
   initData() {
-    const obj = EditComponent.formModel.serviceConstruction;
+    const obj = LiveformSiteReportComponent.formModel.serviceConstruction;
     if (obj) {
       this.serviceConstructionModel.heThongNuocHeThongHienHuu = obj.heThongNuocHeThongHienHuu && {
         description: obj.heThongNuocHeThongHienHuu.description,
@@ -116,32 +117,32 @@ export class ServiceConstructionComponent implements OnInit {
   }
 
   mappingToLiveFormData(data) {
-    EditComponent.formModel.serviceConstruction = new ServiceConstruction;
-    EditComponent.formModel.serviceConstruction.heThongNuocHeThongHienHuu = {
+    LiveformSiteReportComponent.formModel.serviceConstruction = new ServiceConstruction;
+    LiveformSiteReportComponent.formModel.serviceConstruction.heThongNuocHeThongHienHuu = {
       description: data.heThongNuocHienHuuDesc,
       images: this.supplySystemImageUrls
     };
-    EditComponent.formModel.serviceConstruction.heThongNuocDiemDauNoi = {
+    LiveformSiteReportComponent.formModel.serviceConstruction.heThongNuocDiemDauNoi = {
       description: data.heThongNuocDiemDauNoi,
       images: this.supplyPointImageUrls
     };
-    EditComponent.formModel.serviceConstruction.heThongNuocThoatHeThongHienHuu = {
+    LiveformSiteReportComponent.formModel.serviceConstruction.heThongNuocThoatHeThongHienHuu = {
       description: data.heThongNuocThoatHienHuuDesc,
       images: this.drainageSystemImageUrls
     };
-    EditComponent.formModel.serviceConstruction.heThongNuocThoatDiemDauNoi = {
+    LiveformSiteReportComponent.formModel.serviceConstruction.heThongNuocThoatDiemDauNoi = {
       description: data.heThongNuocThoatDiemDauNoiDesc,
       images: this.drainagePointImageUrls
     };
-    EditComponent.formModel.serviceConstruction.heThongDienTramHaThe = {
+    LiveformSiteReportComponent.formModel.serviceConstruction.heThongDienTramHaThe = {
       description: data.tramHaTheDesc,
       images: this.powerStationImageUrls
     };
-    EditComponent.formModel.serviceConstruction.heThongDienDuongDayTrungThe = {
+    LiveformSiteReportComponent.formModel.serviceConstruction.heThongDienDuongDayTrungThe = {
       description: data.duongDayTrungTheDesc,
       images: this.mediumVoltageSystemImageUrls
     };
-    EditComponent.formModel.serviceConstruction.heThongDienThongTinKhac = {
+    LiveformSiteReportComponent.formModel.serviceConstruction.heThongDienThongTinKhac = {
       description: data.heThongDienKhacDesc,
       images: this.powerOtherImageUrls
     };

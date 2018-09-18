@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { DescribeOverall } from '../../../../../../../../shared/models/site-survey-report/describe-overall.model';
 import { FormGroup, FormBuilder } from '@angular/forms';
 import { EditComponent } from '../edit.component';
+import { LiveformSiteReportComponent } from '../../liveform-site-report.component';
 
 @Component({
   selector: 'app-describe-overall',
@@ -34,7 +35,7 @@ export class DescribeOverallComponent implements OnInit {
   }
 
   initData() {
-    const obj = EditComponent.formModel.describeOverall;
+    const obj = LiveformSiteReportComponent.formModel.describeOverall;
     if (obj) {
       this.describeModel.chiTietDiaHinh = obj.chiTietDiaHinh && {
         description: obj.chiTietDiaHinh.description,
@@ -55,16 +56,16 @@ export class DescribeOverallComponent implements OnInit {
   }
 
   mappingToLiveFormData(data) {
-    EditComponent.formModel.describeOverall = new DescribeOverall;
-    EditComponent.formModel.describeOverall.chiTietDiaHinh = {
+    LiveformSiteReportComponent.formModel.describeOverall = new DescribeOverall;
+    LiveformSiteReportComponent.formModel.describeOverall.chiTietDiaHinh = {
       description: data.chiTietDiaHinhDesc,
       images: this.topographyImageUrls
     };
-    EditComponent.formModel.describeOverall.kienTrucHienHuu = {
+    LiveformSiteReportComponent.formModel.describeOverall.kienTrucHienHuu = {
       description: data.kienTrucHienHuuDesc,
       images: this.existingBuildImageUrls
     };
-    EditComponent.formModel.describeOverall.yeuCauChuongNgai = {
+    LiveformSiteReportComponent.formModel.describeOverall.yeuCauChuongNgai = {
       description: data.yeuCauChuongNgaiDesc,
       images: this.stacaleImageUrls
     };

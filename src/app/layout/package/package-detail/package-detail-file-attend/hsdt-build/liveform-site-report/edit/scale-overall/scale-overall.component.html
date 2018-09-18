@@ -7,7 +7,7 @@
             </div>
             <div class="label-info">
                 <label for="">Lần phỏng vấn</label>
-                <input type="text" formControlName="lanPhongVan" tabindex="2">
+                <input type="text" appInputNumber formControlName="lanPhongVan" tabindex="2">
             </div>
         </div>
         <h5 class="big-title">1.&nbsp;quy mô tổng quan công trình (project statistic/scale)</h5>
@@ -15,19 +15,29 @@
             <div class="detail-each-title">
                 <h6 class="small-title">1.1 Loại công trình xây dựng</h6>
                 <div class="main-detail">
+                    <form [formGroup]="loaiCongTrinhForm">
                         <div class="single-row">
-                            <div class="child childcheck" *ngFor="let item of loaiCongTrinhList">
-                                <input type="checkbox" name="construcType"><span class="checkmark" tabindex="3"></span>
-                                {{ item.value}}
+                            <div class="child childcheck" formArrayName="loaiCongTrinhList" *ngFor="let item of loaiCongTrinhForm.controls.loaiCongTrinhList.controls; let i = index">
+                                <input [formControlName]="i" type="checkbox" [checked]="loaiCongTrinhList[i].checked"
+                                    (change)="loaiCongTrinhList[i].checked = !loaiCongTrinhList[i].checked; loaiCongTrinhChange($event)"
+                                    name="construcType">
+                                {{ loaiCongTrinhList[i].value }}
+                                <span class="checkmark" tabindex="3"></span>
                             </div>
                         </div>
+                    </form>
                     <hr style="margin-right: 13%" />
-                    <div class="single-row">
-                        <div class="child childcheck" *ngFor="let item of trangthaiCongTrinhList">
-                            {{ item.value}}
-                            <input type="checkbox" name="construcStatus"><span class="checkmark" tabindex="4"></span>
+                    <form [formGroup]="trangThaiCongTrinhForm">
+                        <div class="single-row">
+                            <div class="child childcheck" formArrayName="trangthaiCongTrinhList" *ngFor="let item of trangThaiCongTrinhForm.controls.trangthaiCongTrinhList.controls; let i = index">
+                                <input [formControlName]="i" type="checkbox" [checked]="trangthaiCongTrinhList[i].checked"
+                                    (change)="trangthaiCongTrinhList[i].checked = !trangthaiCongTrinhList[i].checked; trangThaiCongTrinhChange($event)"
+                                    name="construcStatus">
+                                {{ trangthaiCongTrinhList[i].value }}
+                                <span class="checkmark" tabindex="4"></span>
+                            </div>
                         </div>
-                    </div>
+                    </form>
                 </div>
             </div>
             <div class="detail-each-title">
@@ -48,7 +58,8 @@
                         </div>
                         <div class="label-project-scale">
                             <label for="">Số tầng/ Total number of floor</label>
-                            <input class="no-boder cus-input text-right align-placeholder" type="text" formControlName="soTang" tabindex="8">
+                            <input class="no-boder cus-input text-right align-placeholder" type="text" formControlName="soTang"
+                                tabindex="8">
                         </div>
                         <div class="label-project-scale">
                             <label for="">Tiến độ dự kiến/ Construction period (ngày)</label>
@@ -63,8 +74,8 @@
                         </div>
                         <div class="image-demo-img">
                             <input type="file" #uploadPerspective (change)="uploadPerspectiveImage($event)">
-                            <div class="display-img" *ngFor="let url of perspectiveImageUrls">
-                                <img [src]="url">
+                            <div class="display-img" *ngFor="let url of perspectiveImageUrls | slice:1; index as i">
+                                <img [src]="url.base64">
                                 <div class="toppp" (click)="deletePerspectiveImage(url)">
                                     <i class="fa fa-times delete-icon" aria-hidden="true"></i>
                                 </div>
@@ -105,7 +116,8 @@
                 <h6 class="small-title">1.4 Những yêu cầu đặc biệt (Special Requirements)</h6>
                 <div class="main-detail">
                     <div class="text-des-input">
-                        <input type="text" value="Special Requirements" formControlName="nhungYeuCauDacBietDesc" tabindex="14">
+                        <input type="text" value="Special Requirements" formControlName="nhungYeuCauDacBietDesc"
+                            tabindex="14">
                     </div>
                     <div class="image-demo-img">
                         <input type="file" #uploadRequirements (change)="uploadRequirementsImage($event)">

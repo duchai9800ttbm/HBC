@@ -12,6 +12,7 @@ import { PackageDetailComponent } from '../../../package-detail.component';
   styleUrls: ['./liveform-site-report.component.scss']
 })
 export class LiveformSiteReportComponent implements OnInit {
+  static formModel: SiteSurveyReport = new SiteSurveyReport();
   bidOpportunityId: number;
   isData;
   documentData = new SiteSurveyReport();
@@ -23,11 +24,8 @@ export class LiveformSiteReportComponent implements OnInit {
 
   ngOnInit() {
     this.bidOpportunityId = +PackageDetailComponent.packageId;
-    const elem = Array.from(document.querySelectorAll
-      ('#searchButton, #agreeButton, #addNewButton, #printButton, #deleteButton, #downloadButton')
-    );
-    elem.forEach(e => { (<HTMLElement>e).style.visibility = 'hidden'; (<HTMLElement>e).style.position = 'absolute'; });
     this.documentService.tenderSiteSurveyingReport(this.bidOpportunityId).subscribe(res => {
+      LiveformSiteReportComponent.formModel = res;
       this.documentData = res;
       this.isData = (this.documentData.id) ?  true : false;
     });

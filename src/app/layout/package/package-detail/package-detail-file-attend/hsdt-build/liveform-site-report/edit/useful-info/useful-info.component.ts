@@ -3,6 +3,7 @@ import { AlertService, ConfirmationService } from '../../../../../../../../share
 import { FormGroup, FormBuilder, FormArray } from '@angular/forms';
 import { UsefulInfo, ContentItem } from '../../../../../../../../shared/models/site-survey-report/useful-info.model';
 import { EditComponent } from '../edit.component';
+import { LiveformSiteReportComponent } from '../../liveform-site-report.component';
 
 
 @Component({
@@ -50,7 +51,7 @@ export class UsefulInfoComponent implements OnInit {
   }
 
   initdata() {
-    const obj = EditComponent.formModel.usefulInfo;
+    const obj = LiveformSiteReportComponent.formModel.usefulInfo;
     if (obj) {
       this.usefulInfoData = obj;
     }
@@ -59,6 +60,6 @@ export class UsefulInfoComponent implements OnInit {
     const model = this.usefulInfoData[index];
     model.title = obj.title;
     model.content = obj.content;
-    EditComponent.formModel.usefulInfo = [...this.usefulInfoData];
+    LiveformSiteReportComponent.formModel.usefulInfo = [...this.usefulInfoData];
   }
 }

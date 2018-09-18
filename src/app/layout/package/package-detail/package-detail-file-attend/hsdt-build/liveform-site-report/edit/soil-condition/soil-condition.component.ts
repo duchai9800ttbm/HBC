@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { SoilCondition } from '../../../../../../../../shared/models/site-survey-report/soil-condition.model';
 import { FormGroup, FormBuilder } from '@angular/forms';
 import { EditComponent } from '../edit.component';
+import { LiveformSiteReportComponent } from '../../liveform-site-report.component';
 
 @Component({
   selector: 'app-soil-condition',
@@ -32,7 +33,7 @@ export class SoilConditionComponent implements OnInit {
   }
 
   initData() {
-    const obj = EditComponent.formModel.soilCondition;
+    const obj = LiveformSiteReportComponent.formModel.soilCondition;
     if (obj) {
       this.soilConditionModel.nenMongHienCo = obj.nenMongHienCo && {
         description: obj.nenMongHienCo.description,
@@ -49,12 +50,12 @@ export class SoilConditionComponent implements OnInit {
   }
 
   mappingToLiveFormData(data) {
-    EditComponent.formModel.soilCondition = new SoilCondition;
-    EditComponent.formModel.soilCondition.nenMongHienCo = {
+    LiveformSiteReportComponent.formModel.soilCondition = new SoilCondition;
+    LiveformSiteReportComponent.formModel.soilCondition.nenMongHienCo = {
       description: data.nenMongHienCoDesc,
       images: this.footingImageUrls
     };
-    EditComponent.formModel.soilCondition.thongTinCongTrinhGanDo = {
+    LiveformSiteReportComponent.formModel.soilCondition.thongTinCongTrinhGanDo = {
       description: data.thongTinCongTrinhGanDoDesc,
       images: this.investigationImageUrls
     };

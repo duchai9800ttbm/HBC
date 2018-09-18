@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Traffic } from '../../../../../../../../shared/models/site-survey-report/traffic.model';
 import { EditComponent } from '../edit.component';
 import { FormBuilder, FormGroup } from '@angular/forms';
+import { LiveformSiteReportComponent } from '../../liveform-site-report.component';
 
 @Component({
   selector: 'app-traffic',
@@ -47,7 +48,7 @@ export class TrafficComponent implements OnInit {
   }
 
   initData() {
-    const obj = EditComponent.formModel.traffic;
+    const obj = LiveformSiteReportComponent.formModel.traffic;
     if (obj) {
       this.trafficModel.chiTietDiaHinhKhoKhan = obj.chiTietDiaHinhKhoKhan && {
         description: obj.chiTietDiaHinhKhoKhan.description,
@@ -83,28 +84,28 @@ export class TrafficComponent implements OnInit {
   }
 
   mappingToLiveFormData(data) {
-    EditComponent.formModel.traffic = new Traffic;
-    EditComponent.formModel.traffic.chiTietDiaHinhKhoKhan = {
+    LiveformSiteReportComponent.formModel.traffic = new Traffic;
+    LiveformSiteReportComponent.formModel.traffic.chiTietDiaHinhKhoKhan = {
       description: data.chiTietDiaHinhKhoKhanDesc,
       images: this.disadvantageImageUrls
     };
-    EditComponent.formModel.traffic.chiTietDiaHinhThuanLoi = {
+    LiveformSiteReportComponent.formModel.traffic.chiTietDiaHinhThuanLoi = {
       description: data.chiTietDiaHinhKhoKhanDesc,
       images: this.advantageImageUrls
     };
-    EditComponent.formModel.traffic.loiVaoCongTrinhHuongVao = {
+    LiveformSiteReportComponent.formModel.traffic.loiVaoCongTrinhHuongVao = {
       description: data.huongVaoCongTruongDesc,
       images: this.directionImageUrls
     };
-    EditComponent.formModel.traffic.loiVaoCongTrinhDuongHienCo = {
+    LiveformSiteReportComponent.formModel.traffic.loiVaoCongTrinhDuongHienCo = {
       description: data.duongHienCoTrenCongTruongDesc,
       images: this.existingImageUrls
     };
-    EditComponent.formModel.traffic.loiVaoCongTrinhYeuCauDuongTam = {
+    LiveformSiteReportComponent.formModel.traffic.loiVaoCongTrinhYeuCauDuongTam = {
       description: data.yeuCauDuongTamDesc,
       images: this.roadImageUrls
     };
-    EditComponent.formModel.traffic.loiVaoCongTrinhYeuCauHangRao = {
+    LiveformSiteReportComponent.formModel.traffic.loiVaoCongTrinhYeuCauHangRao = {
       description: data.yeuCauHangRaoDesc,
       images: this.fenceImageUrls
     };
