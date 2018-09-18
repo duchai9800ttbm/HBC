@@ -8,6 +8,7 @@ import { AlertService } from '../../../../../../../shared/services';
 import { InterviewInvitationService } from '../../../../../../../shared/services/interview-invitation.service';
 import { CustomerModel } from '../../../../../../../shared/models/interview-invitation/customer.model';
 import ValidationHelper from '../../../../../../../shared/helpers/validation.helper';
+import DateTimeConvertHelper from '../../../../../../../shared/helpers/datetime-convert-helper';
 @Component({
   selector: 'app-create-new-invitation',
   templateUrl: './create-new-invitation.component.html',
@@ -53,9 +54,10 @@ export class CreateNewInvitationComponent implements OnInit {
     this.createFormNewInvitation = this.fb.group({
       customerName: [this.interviewInvitation.customer && this.interviewInvitation.customer.customerName ?
         this.interviewInvitation.customer.customerName : ''],
-      approvedDate: [this.interviewInvitation.approvedDate ? new Date(1000 * this.interviewInvitation.approvedDate) : null
-        , [Validators.required]],
-      interviewDate: [this.interviewInvitation.interviewDate ? new Date(1000 * this.interviewInvitation.interviewDate) : null
+      approvedDate: [this.interviewInvitation.approvedDate ?
+        DateTimeConvertHelper.fromTimestampToDtObject(this.interviewInvitation.approvedDate) : null, [Validators.required]],
+      interviewDate: [this.interviewInvitation.interviewDate ?
+        DateTimeConvertHelper.fromTimestampToDtObject(this.interviewInvitation.interviewDate) : null
         , [Validators.required]],
       place: [this.interviewInvitation.place, [Validators.required]],
       interviewTimes: [this.interviewInvitation.interviewTimes, [Validators.required]],
