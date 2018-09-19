@@ -2,7 +2,12 @@
     width: 100% !important;
     counter-reset: step;
     padding: 0.5rem 0 1rem 0;
-
+    li.allow::before {
+        cursor: pointer;
+    }
+    li.no-allow::before {
+        cursor: not-allowed;
+    }
     li {
         list-style-type: none;
         width: 20%;
@@ -26,7 +31,7 @@
             border-radius: 10%;
             background-color: #ebebeb;
             z-index: 30;
-            cursor: pointer;
+           
         }
 
         &::after {

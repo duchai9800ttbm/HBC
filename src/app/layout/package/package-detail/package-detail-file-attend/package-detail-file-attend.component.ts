@@ -13,7 +13,7 @@ export class PackageDetailFileAttendComponent implements OnInit {
   packageId: number;
   packageData: PackageInfoModel;
   currentUrl;
-  statusPackage = 0;
+  statusPackage;
   bidProposal = ['CanLapDeNghiDuThau', 'ChoDuyet', 'ThamGiaDuThau', 'DaTuChoi'];
   deployment = ['ChuaThongBaoTrienKhai', 'DaThongBaoTrienKhai', 'DaXacNhanPhanCong', 'DaGuiPhanCongTienDo'];
   setHSDT = ['DangLapHSDT'];
@@ -30,15 +30,15 @@ export class PackageDetailFileAttendComponent implements OnInit {
       if ((val instanceof NavigationEnd) === true) {
         this.activeRouter.firstChild.url.subscribe(url => {
           this.currentUrl = url[0].path;
-          console.log('this.currentUrl', this.currentUrl);
           this.packageService.getInforPackageID(this.packageId).subscribe(result => {
             this.packageData = result;
-            this.listStatusPackage.forEach((list, index) => {
-              if (list.find(item => item === this.packageData.stageStatus.id)) {
-                this.statusPackage = index;
+            for (let i = 0; i < this.listStatusPackage.length; i++) {
+              if (this.listStatusPackage[i].some(item => item === this.packageData.stageStatus.id)) {
                 console.log('this.statusPackage', this.statusPackage);
+                this.statusPackage = i;
+                break;
               }
-            });
+            }
           });
         });
       }
@@ -49,12 +49,6 @@ export class PackageDetailFileAttendComponent implements OnInit {
     this.packageId = +PackageDetailComponent.packageId;
     this.packageService.getInforPackageID(this.packageId).subscribe(result => {
       this.packageData = result;
-      // this.listStatusPackage.forEach((list, index) => {
-      //   if (list.find(item => item === this.packageData.stageStatus.id)) {
-      //     this.statusPackage = index;
-      //     console.log('this.statusPackage 2', this.statusPackage);
-      //   }
-      // });
       switch (this.packageData.stageStatus.id) {
         case 'CanLapDeNghiDuThau': {
           this.router.navigate([`/package/detail/${this.packageId}/attend/create-request`]);
