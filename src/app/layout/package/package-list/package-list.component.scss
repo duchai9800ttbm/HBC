@@ -75,7 +75,12 @@ input.icon {
 }
 
  @media only screen and (max-width: 3000px) {
-   
+    .main-table{
+        height: 100%;
+        padding-left: 15px;
+        padding-right: 15px;
+        padding-top: 90px;
+    }
     .HSMT{
         max-width: 300px;
     }
@@ -180,6 +185,12 @@ input.icon {
 }
 
 @media only screen and (max-width: 1150px) {
+    .main-table{
+        height: 100%;
+        padding-left: 15px;
+        padding-right: 15px;
+        padding-top: 80px;
+    }
     table.dataTable{
         zoom: 0.72;
     }
@@ -211,6 +222,12 @@ input.icon {
 
 
 @media only screen and (max-width: 1024px) {
+    .main-table{
+        height: 100%;
+        padding-left: 15px;
+        padding-right: 15px;
+        padding-top: 70px;
+    }
     .btn-toolbar {
         zoom: 0.85;
     }
@@ -224,7 +241,12 @@ input.icon {
 }
 
 @media only screen and (max-width: 1010px) {
-
+    .main-table{
+        height: 100%;
+        padding-left: 15px;
+        padding-right: 15px;
+        padding-top: 65px;
+    }
     .status-filter{
         zoom: 0.65;
     }
@@ -234,10 +256,13 @@ input.icon {
 }
 
 @media only screen and (max-width: 997px) {
-
+    .main-table{
+        height: 100%;
+        padding-left: 15px;
+        padding-right: 15px;
+        padding-top: 50px;
+    }
     .status-filter{
-
-        
         zoom: 0.45;
     }
     .custom-filter-bar{
@@ -281,6 +306,7 @@ a{
     color:#2ed573;
 }
 .title-list-package{
+    position: absolute;
     box-shadow: 0 1pt 12pt rgba(0, 0, 0, .15);
     min-height: 70px;
     padding: 0 15px;
@@ -288,20 +314,15 @@ a{
         font-size: 120%;
         font-weight: 400;
     }
-    position: fixed;
+    // position: fixed;
     transition: margin 0.5s; /* IE 10+, Fx 29+ */
-    width: calc(100% - 200px);
+    // width: calc(100% - 200px);
+    width: 100%;
   //  min-width: calc(100% - 70px);
     background-color: #ffff;
     z-index: 10000;
 }
-.main-table{
-    height: 100%;
-    //padding: 15px 15px;
-    padding-left: 15px;
-    padding-right: 15px;
-    padding-top: 90px;
-}
+
 
 select.form-control:not([size]):not([multiple]){
     height: auto!important;
@@ -351,9 +372,13 @@ select.form-control:not([size]):not([multiple]){
 }
 ::-webkit-scrollbar {
     width: 6px;
+    cursor: pointer;
+
 }
  #style-scroll::-webkit-scrollbar {
     height: 8px;
+    cursor: pointer;
+
  }
 
 ::-webkit-scrollbar-track {
@@ -460,7 +485,8 @@ select.form-control:not([size]):not([multiple]){
 
 
 .title-detail-toggle{
-    width: calc(100% - 55px)!important;
+    // width: calc(100% - 55px)!important;
+    width: 100%;
     transition: margin 0.5s; /* IE 10+, Fx 29+ */
 
 }
@@ -503,4 +529,50 @@ select.form-control:not([size]):not([multiple]){
 
 :host /deep/ .dataTables_empty {
     display: none !important;
+}
+.set-height-table{
+    height: calc(100vh - 305px);
+}
+:host /deep/ .flex-row{
+    flex-direction: row !important;
+    height: 20px !important;
+}
+
+.zui-wrapper {
+    position: relative;
+    overflow-x: scroll;
+    height: calc(100vh - 305px);
+}
+.zui-scroller {
+    margin-left: 72px;
+    margin-right: 112px;
+    overflow-x: scroll;
+    overflow-y: visible;
+    width: auto;
+}
+.zui-table .zui-sticky-col {
+    left: 0;
+    position: absolute;
+    top: auto;
+    width: 120px;
+    label {
+        margin-top: .5rem;
+    }
+}
+
+.zui-table .zui-sticky-col-right {
+    right: 0;
+    position: absolute;
+    top: auto;
+    width: 100px;
+    padding: 22px 0 !important;
+    background-color: white;
+}
+
+:host /deep/ .dataTables_wrapper {
+    position: inherit !important;
+}
+
+.d-none {
+    padding: 0 !important;
 }

@@ -16,7 +16,7 @@ import { TenderSiteSurveyingReport } from '../models/api-request/package/tender-
 import { guid } from '@progress/kendo-angular-grid/dist/es2015/utils';
 import { ScaleOverall } from '../models/site-survey-report/scale-overall.model';
 import { Image, ImageItem } from '../models/site-survey-report/image';
-
+import { DictionaryItem } from '../models';
 
 @Injectable()
 export class DocumentService {
@@ -230,12 +230,37 @@ export class DocumentService {
             }
             return prev;
         }, {});
-        return Object.keys(groupedObj).map(documentType => (
+        const groupBeforeSort = Object.keys(groupedObj).map(documentType => (
             {
                 documentType,
-                items: groupedObj[documentType]
+                items: groupedObj[documentType],
+                id: 0
             }
         ));
+        // Sorted by design
+        groupBeforeSort.forEach(item => {
+            switch (item.documentType) {
+                case 'Quyển HSMT':
+                    item['id'] = 0;
+                    break;
+                case 'Bản vẽ thuyết minh':
+                    item['id'] = 1;
+                    break;
+                case 'BOQ':
+                    item['id'] = 2;
+                    break;
+                case 'Tiêu chí kĩ thuật (Specs)':
+                    item['id'] = 3;
+                    break;
+                case 'Các báo cáo và các tài liệu khác (KSDQ)':
+                    item['id'] = 4;
+                    break;
+            }
+        });
+        groupBeforeSort.sort(function (a, b) {
+            return a.id - b.id;
+        });
+        return groupBeforeSort;
     }
 
     convertNestedJson(source: any[]) {
@@ -1093,5 +1118,20 @@ export class DocumentService {
             objDataSiteReport.append('UpdatedDescription', obj.updateDescription);
         } else { objDataSiteReport.append('UpdatedDescription', ''); }
         return this.apiService.postFile(url, objDataSiteReport).map(res => res).share();
+    }
+    // Danh sách loại tài liệu cần kiểm tra bản chính thức
+    getListBiddocumenttypes(): Observable<DictionaryItem[]> {
+        const url = `biddocumenttypes`;
+        return this.apiService
+            .get(url)
+            .map(response =>
+                response.result.map(x => {
+                    return {
+                        id: x.key,
+                        text: `${x.value}`
+                    };
+                })
+            )
+            .share();
     }
 }

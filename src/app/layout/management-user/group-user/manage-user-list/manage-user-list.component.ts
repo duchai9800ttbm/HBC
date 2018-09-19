@@ -1,7 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { GroupUserModel } from '../../../../shared/models/user/group-user.model';
 import { GridDataResult, PageChangeEvent } from '@progress/kendo-angular-grid';
-import { GroupUserService } from '../../../../shared/services/group-user.service'
+import { GroupUserService } from '../../../../shared/services/group-user.service';
 import { Router } from '@angular/router';
 import { UserModel } from '../../../../shared/models/user/user.model';
 import { SessionService } from '../../../../shared/services';
@@ -11,7 +11,7 @@ import { SessionService } from '../../../../shared/services';
   templateUrl: './manage-user-list.component.html',
   styleUrls: ['./manage-user-list.component.scss']
 })
-export class ManageUserListComponent implements OnInit {
+export class ManageUserListComponent implements OnInit, OnDestroy {
 
   userModel: UserModel;
   listPrivileges = [];
@@ -19,6 +19,7 @@ export class ManageUserListComponent implements OnInit {
   constructor(
     private router: Router,
     private sessionService: SessionService,
+    private groupUserService: GroupUserService,
   ) {
 
   }
@@ -34,6 +35,8 @@ export class ManageUserListComponent implements OnInit {
     }
   }
 
-
+  ngOnDestroy() {
+    this.groupUserService.destroySearchTerm();
+  }
 
 }

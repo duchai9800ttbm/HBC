@@ -11,13 +11,15 @@ $enable-transitions: true !default;
 // Fonts
 
 /// Base font size across all components.
-$font-size: 14px !default;
+$font-size: 0.8rem !default;
 
 /// Font family across all components.
 $font-family: inherit !default;
 
 /// Font family for monospaced text. Used for styling the code.
-$font-family-monospace:  Consolas, "Ubuntu Mono", "Lucida Console", "Courier New", monospace !default;
+/// $font-family-monospace:  Consolas, "Ubuntu Mono", "Lucida Console", "Courier New", monospace !default;
+
+$font-family-monospace:  "Open Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol" !default;
 
 /// Base location of fonts used during PDF export
 $pdf-export-fonts-location: 'https://kendo.cdn.telerik.com/2018.1.117/styles/fonts/DejaVu/' !default;

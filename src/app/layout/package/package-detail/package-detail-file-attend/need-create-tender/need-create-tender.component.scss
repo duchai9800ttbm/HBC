@@ -16,3 +16,35 @@
 .h-40 {
     height: 40px;
 }
+
+.ic-print-color {
+    color: #EF6127;
+}
+
+.logo-hbc {
+    max-width: 50%;
+    object-fit: contain;
+    max-height: 10em;
+}
+
+.ic-close {
+    position: absolute;
+    right: 1rem;
+    top: 1.5rem;
+}
+
+.color-black {
+    color: black;
+}
+
+.b-btn {
+    min-width: 5rem;
+}
+
+.disable {
+    cursor: default;
+    i {
+        color: gray;
+        cursor: default;
+    }
+}

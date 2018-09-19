@@ -354,7 +354,7 @@ export class PackageService {
                 };
             });
     }
-
+    // get chi tiết gói thầu
     getInforPackageID(
         bidOpportunityId: number | string
     ): Observable<PackageInfoModel> {
@@ -860,11 +860,13 @@ export class PackageService {
     }
 
     exportExcel(
+        idUser: number,
         searchTerm: string,
         filter: PackageFilter,
     ) {
-        const filterUrl = `bidopportunity/export?searchTerm=`;
+        const filterUrl = `bidopportunity/export?userId=${idUser}`;
         const urlParams = PackageService.createFilterParams(filter);
+        urlParams.append('searchTerm', searchTerm);
         return this.apiService.getFileHBC(filterUrl, urlParams).map(response => {
             return FileSaver.saveAs(
                 new Blob([response.file], {
@@ -882,5 +884,29 @@ export class PackageService {
     createOrUpdateTenderConditionSummary(data): Observable<any> {
         const url = `tenderconditionalsummary/createorupdate`;
         return this.apiService.post(url, data).map(response => response.result);
+    }
+    // tạo mới or update phiếu đề nghị dự thầu
+    createOrUpdateProposedTenderParticipateReport(data): Observable<any> {
+        const url = `proposedtenderparticipatinngreport/createorupdate`;
+        return this.apiService.post(url, data).map(response => response.result);
+    }
+    // get chi tiết phiếu đề nghị dự thầu
+    getProposedTenderParticipateReport(bidOpportunityId: number): Observable<any> {
+        const url = `${bidOpportunityId}/bidopportunity/proposedtenderparticipatinngreport`;
+        return this.apiService.get(url).map(response => response.result);
+    }
+    // gửi duyệt đề nghị dự thầu
+    sendApproveBidProposal(bidOpportunityId: number, date: number): Observable<any> {
+        const url = `bidopportunity/hsdt/${bidOpportunityId}/guiduyetdenghiduthau`;
+        return this.apiService.post(url, {
+            expectedAcceptanceDate: date
+        }).map(response => response.result);
+    }
+    // duyệt đề nghị dự thầu
+    approveBidProposal(bidOpportunityId: number, reason: string): Observable<any> {
+        const url = `bidopportunity/hsdt/${bidOpportunityId}/duyetdenghiduthau`;
+        return this.apiService.post(url, {
+            reason: reason
+        }).map(response => response.result);
     }
 }

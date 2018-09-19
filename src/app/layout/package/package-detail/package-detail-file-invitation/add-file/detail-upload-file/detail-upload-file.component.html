@@ -1,68 +1,193 @@
 <div class="example-wrapper">
-    <kendo-dialog (close)="close('cancel')" [width]="700" class="width-kendo-dialog">
+    <kendo-dialog (close)="close('cancel')" [width]="600" class="width-kendo-dialog">
+        <div class="title-detail center-parent mb-1">
+            <div style="width: 20%;">
+
+            </div>
+            <div style="width: 80%;">
+
+            </div>
+            <div style="width: 20%;" class="d-flex justify-content-end">
+                <div>
+                    <div>
+                        <img (click)="close('cancel')" width="15" height="15" class="cursor-pointer not-outline" src="assets\images\close.png">
+                    </div>
+                </div>
+            </div>
+        </div>
         <div class="d-flex">
             <div class="w-100  mr-auto">
                 <div>
                     <div class="body cus-header" id="info-main">
 
-                        <table class="w-100 table">
 
-                            <tbody>
-                                <tr *ngIf="model.url">
-                                    <td class="w-30 label no-boder bold-title">Đường dẫn link</td>
-                                    <td class="w-70 no-boder">
-                                        <a class="color-link color-link" target="_blank" [href]="model?.url">{{
-                                            model?.url }}</a>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td class="w-30 label no-boder bold-title">Loại HSMT</td>
-                                    <td class="no-boder d-flex">
-                                        {{model?.documentType}}
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td class="w-30 label no-boder bold-title required">Tên</td>
-                                    <td class="w-70 no-boder">
-                                        <span>
-                                            {{model?.documentName}}
+                        <div class="d-flex w-100" *ngIf="model.url">
+                            <div class="w-40 font-weight-bold">
 
-                                        </span>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td class="w-30 label no-boder bold-title">Phiên bản</td>
-                                    <td class="w-70 no-boder">
-                                        {{model?.version}}
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td class="w-30 label no-boder bold-title">Ngày nhận HSMT</td>
-                                    <td class="no-boder d-flex">
-                                        <span *ngIf="model.receivedDate">{{model?.receivedDate*1000 | date:'dd/MM/yyyy
-                                            HH:mm': '+0000'}}</span>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td class="w-30 label no-boder bold-title">Mô tả/Nội dung cập nhật</td>
-                                    <td class="w-70 no-boder">
-                                        {{model?.desc}}
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
+                                <div class="d-flex justify-content-between">
+                                    <div>
+                                        Đường dẫn link
+                                    </div>
+                                    <div>:&nbsp;&nbsp;</div>
+                                </div>
+
+                            </div>
+                            <div class="w-60">
+                                <a class="color-link color-link" target="_blank" [href]="model?.url">
+                                    <span class="word-wrap">{{ model?.url }}</span>
+                                </a>
+                            </div>
+                        </div>
+                        <div class="d-flex w-100 mt-2">
+                            <div class="w-40 font-weight-bold">
+                                <div class="d-flex justify-content-between">
+                                    <div>
+                                        Loại HSMT
+                                    </div>
+                                    <div>:&nbsp;&nbsp;</div>
+                                </div>
+                            </div>
+
+                            <div class="w-60">
+                                <span class="word-wrap">
+                                    {{model?.documentType}}
+
+                                </span>
+                            </div>
+                        </div>
+                        <div class="d-flex w-100 mt-2">
+                            <div class="w-40 font-weight-bold">
+                                <div class="d-flex justify-content-between">
+                                    <div>
+                                        Tên
+                                    </div>
+                                    <div>:&nbsp;&nbsp;</div>
+                                </div>
+                            </div>
+
+                            <div class="w-60">
+                                <span class="word-wrap">
+                                    {{model?.documentName}}
+
+                                </span>
+                            </div>
+                        </div>
+                        <div class="d-flex w-100 mt-2">
+                            <div class="w-40 font-weight-bold">
+                                <div class="d-flex justify-content-between">
+                                    <div>
+                                        Phiên bản
+                                    </div>
+                                    <div>:&nbsp;&nbsp;</div>
+                                </div>
+                            </div>
+
+
+                            <div class="w-60">
+                                <span class="word-wrap">
+                                    {{model?.version}}
+
+                                </span>
+                            </div>
+                        </div>
+                        <div class="d-flex w-100 mt-2">
+                            <div class="w-40 font-weight-bold">
+                                <div class="d-flex justify-content-between">
+                                    <div>
+                                        Tình trạng
+                                    </div>
+                                    <div>:&nbsp;&nbsp;</div>
+                                </div>
+                            </div>
+
+                            <div class="w-60">
+                                <span class="word-wrap">
+                                    {{model?.status | translate}}
+
+                                </span>
+                            </div>
+                        </div>
+                        <div class="d-flex w-100 mt-2">
+                            <div class="w-40 font-weight-bold">
+                                <div class="d-flex justify-content-between">
+                                    <div>
+                                        Ngày upload
+                                    </div>
+                                    <div>:&nbsp;&nbsp;</div>
+                                </div>
+                            </div>
+
+                            <div class="w-60">
+                                <span class="word-wrap" *ngIf="model.createdDate">
+                                    {{model?.createdDate *1000 | date:'dd/MM/yyyy HH:mm':'+0000'}}
+
+                                </span>
+                            </div>
+                        </div>
+                        <div class="d-flex w-100 mt-2">
+                            <div class="w-40 font-weight-bold">
+                                <div class="d-flex justify-content-between">
+                                    <div>
+                                        Người upload
+                                    </div>
+                                    <div>:&nbsp;&nbsp;</div>
+                                </div>
+                            </div>
+
+                            <div class="w-60">
+                                <span class="word-wrap">
+                                    {{model?.uploadedBy?.employeeName}}
+
+                                </span>
+                            </div>
+                        </div>
+                        <div class="d-flex w-100 mt-2">
+                            <div class="w-40 font-weight-bold">
+                                <div class="d-flex justify-content-between">
+                                    <div>
+                                        Ngày nhận
+                                    </div>
+                                    <div>:&nbsp;&nbsp;</div>
+                                </div>
+                            </div>
+
+                            <div class="w-60">
+                                <span class="word-wrap" *ngIf="model.receivedDate">
+                                    {{model?.receivedDate *1000 | date:'dd/MM/yyyy'}}
+                                </span>
+                            </div>
+                        </div>
+                        <div class="d-flex w-100 mt-2">
+                            <div class="w-40 font-weight-bold">
+                                <div class="d-flex justify-content-between">
+                                    <div>
+                                        Mô tả/Nội dung cập nhật
+                                    </div>
+                                    <div>:&nbsp;&nbsp;</div>
+                                </div>
+                            </div>
+
+                            <div class="w-60">
+                                <span class="word-wrap">
+                                    {{model?.desc}}
+
+                                </span>
+                            </div>
+                        </div>
+                        <div class="d-flex w-100 mt-3">
+                            <div class="w-40 font-weight-bold">
+                            </div>
+                            <div class="w-60">
+                                <button class="btn btn-primary" *ngIf="!model.url" (click)="dowloadDocument(model.id)">
+                                    Tải File &nbsp;&nbsp; &nbsp;&nbsp;
+                                    <i class="fa fa-download icon-download" aria-hidden="true"></i>
+                                </button>
+                            </div>
+                        </div>
                     </div>
 
                 </div>
-                <div class="action-bar alignment-but center-parent">
-                    <!-- <button type="submit" class="btn btn-primary ml-2 cus-but-cs">Upload
-                    </button> -->
-                    <button class="btn btn-primary" *ngIf="!model.url" (click)="dowloadDocument(model.id)">
-                        Tải File &nbsp; &nbsp; <i class="fa fa-download icon-download" aria-hidden="true"></i>
-                    </button>
-                    <button class="btn btn-secondary ml-2 cus-but-cs" (click)="close()">Hủy
-                    </button>
-                </div>
+
             </div>
         </div>
     </kendo-dialog>

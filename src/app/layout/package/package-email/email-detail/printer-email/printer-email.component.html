@@ -1,0 +1,19 @@
+<div class="mb-2">
+  <button (click)="pdf.saveAs('pos.pdf')">
+    Lưu
+  </button>
+  <button (click)="printToCart('printSectionId')">
+    In
+  </button>
+</div>
+<div class="example-config">
+
+
+</div>
+<div class="d-flex justify-content-around">
+  <div>
+    <kendo-pdf-export #pdf paperSize="A4">
+
+    </kendo-pdf-export>
+  </div>
+</div>

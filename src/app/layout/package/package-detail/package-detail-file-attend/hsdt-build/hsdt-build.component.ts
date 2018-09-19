@@ -64,7 +64,7 @@ export class HsdtBuildComponent implements OnInit {
     showDialogUploadFile(name: string) {
         this.dialog = this.dialogService.open({
             content: UploadFileHsdtComponent,
-            width: 493,
+            width: 500,
             minWidth: 250
         });
         const instance = this.dialog.content.instance;

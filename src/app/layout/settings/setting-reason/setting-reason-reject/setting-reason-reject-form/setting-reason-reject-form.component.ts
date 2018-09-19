@@ -45,13 +45,14 @@ export class SettingReasonRejectFormComponent implements OnInit {
   }
 
   submitForm() {
+    const reasonName = this.reasonRejectForm.get('bidOpportunityReasonName').value;
     this.isSubmitted = true;
     const valid = this.validateForm();
     if (valid) {
       this.settingService.createOrUpdateOpportunityReason(this.reasonRejectForm.value, SETTING_REASON.Cancel).subscribe(data => {
         const message = this.reasonReject.id
-          ? 'Lý do hủy thầu đã được cập nhật thành công.'
-          : 'Lý do hủy thầu đã được tạo mới thành công.';
+          ? `Lý do hủy thầu ${reasonName} đã được cập nhật thành công.`
+          : `Lý do hủy thầu ${reasonName} đã được tạo mới thành công.`;
         this.router.navigate([`/settings/reason/reject`]);
         this.alertService.success(message);
       });

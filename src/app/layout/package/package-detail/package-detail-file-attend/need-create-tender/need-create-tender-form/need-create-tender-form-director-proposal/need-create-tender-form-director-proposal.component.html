@@ -1,3 +1,66 @@
-<p>
-  need-create-tender-form-director-proposal works!
-</p>
+<form [formGroup]="directorProposalForm">
+    <div class="p-3 position-relative">
+        <div *ngIf="routerAction == 'view'" class="b-form-readonly"></div>
+        <div>
+            <h5 class="text-uppercase">VII. ý kiến đề xuất của giám đốc dự thầu (tender director proposal)</h5>
+        </div>
+        <div class="row mt-4">
+            <div class="col-md-4">
+                Tham gia dự thầu
+            </div>
+            <div class="col-md-8 row">
+                <div class="col-md-6">
+                    <input type="radio" [value]="true" formControlName="isAgreedParticipating"> Đồng ý tham gia/ Agree
+                </div>
+                <div class="col-md-6">
+                    <input type="radio" [value]="false" formControlName="isAgreedParticipating"> Không đồng ý tham gia/ No agree
+                </div>
+            </div>
+        </div>
+        <div class="row mt-3">
+            <div class="col-md-4 d-flex align-items-center">
+                Lý do/ Reason
+            </div>
+            <div class="col-md-8">
+                <textarea class="form-control" formControlName="reason" rows="2"></textarea>
+            </div>
+        </div>
+        <div class="row mt-3">
+            <div class="col-md-4 d-flex align-items-center">
+                Ngày/ Date
+            </div>
+            <div class="col-md-8">
+                <kendo-datepicker formControlName="date" class="form-control"></kendo-datepicker>
+            </div>
+        </div>
+        <div class="row mt-3">
+            <div class="col-md-4 d-flex align-items-center">
+                Thời gian mong đợi được duyệt
+            </div>
+            <div class="col-md-8">
+                <kendo-datepicker formControlName="expectedTime" class="form-control"></kendo-datepicker>
+            </div>
+        </div>
+        <div class="row mt-3">
+            <div class="col-md-4 d-flex align-items-center">
+                Ký tên/ Signing
+            </div>
+            <div class="col-md-8">
+                <button *ngIf="!directorProposalForm.get('isSigned').value" class="btn btn-primary btn-sign" (click)="clickSigned()">Xác nhận ký</button>
+                <button *ngIf="directorProposalForm.get('isSigned').value" class="btn btn-primary btn-sign position-relative">
+                        <i class="fa fa-check-square icon-check" aria-hidden="true"></i> Đã ký
+                </button>
+            </div>
+        </div>
+        <div class="text-center mt-4">
+            <button class="btn border" routerLink="../contract-condition">
+                <i class="fa font-size-3 mr-3 fa-angle-left" aria-hidden="true"></i>
+                Trở về
+            </button>
+            <button class="btn btn-primary ml-2" routerLink="../descion-board">
+                Tiếp
+                <i class="fa font-size-3 ml-3 fa-angle-right" aria-hidden="true"></i>
+            </button>
+        </div>
+    </div>
+</form>

@@ -1,8 +1,15 @@
+
+
+.k-dropdown, .k-datepicker{
 .k-select{
     width: 40px!important;
     color: #ffffff;
     background-color: #00a0e3!important;
+    font-size: 0.875rem!important;
 }
+}
+
+
 .k-icon{
     color: #ffffff;
 }
@@ -10,12 +17,16 @@
 .k-state-selected{
     color: #00a0e3!important;
     background-color: #f2f2f2!important;
+    font-size: 0.875rem!important;
+
     border: none!important;
     outline: none!important;
 }
 
 .k-dropdown .k-dropdown-wrap .k-state-default{
     background-color: #ffffff!important;
+    font-size: 0.875rem!important;
+
     outline: none!important;
     border: none!important;
 
@@ -26,6 +37,18 @@
 
 .k-input{
     background-color: #ffffff!important;
+    font-size: 0.875rem!important;
+
     border: none!important;
     outline: none!important;
+}
+.k-widget{
+    font-size: 0.875rem!important;
+}
+
+:host(){
+    font-size: 0.875rem!important;
+}
+kendo-popup{
+    font-size: 0.875rem!important;
 }

@@ -1,5 +1,6 @@
-<form>
-    <div class="p-3">
+<form [formGroup]="consultantAnalysForm">
+    <div class="p-3 position-relative">
+            <div *ngIf="routerAction == 'view'" class="b-form-readonly"></div>
         <div>
             <h5 class="text-uppercase">II. phân tích nhà tư vấn (consultant analysis)</h5>
         </div>
@@ -12,19 +13,19 @@
             </div>
         </div>
         <div class="row mt-3">
-            <div class="col-md-6">
+            <div class="col-md-6 d-flex align-items-center">
                 1. Tiếng tăm, danh tiếng (Reputation)
             </div>
             <div class="col-md-6">
-                <input type="text" class="form-control">
+                <input type="text" formControlName="reputation" class="form-control">
             </div>
         </div>
         <div class="row mt-3">
-            <div class="col-md-6">
+            <div class="col-md-6 d-flex align-items-center">
                 2. Kinh nghiệm công trình đã làm với họ (Past working experience)
             </div>
             <div class="col-md-6">
-                <input type="text" class="form-control">
+                <input type="text" formControlName="pastWorkingExperience" class="form-control">
             </div>
         </div>
         <div class="text-center mt-4">

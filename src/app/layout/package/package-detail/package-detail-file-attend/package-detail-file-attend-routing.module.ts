@@ -14,12 +14,13 @@ const routes: Routes = [
         component: PackageDetailFileAttendComponent,
         children: [
             { path: '', redirectTo: 'create-request' },
-            { path: 'infomation-deployment', component: InformationDeploymentComponent },
+            {
+                path: 'infomation-deployment',
+                loadChildren: './information-deployment/information-deployment.module#InformationDeploymentModule' },
             {
                 path: 'build',
                 loadChildren: './hsdt-build/hsdt-build.module#HsdtBuildModule'
             },
-            { path: 'price-review', component: PriceReviewComponent },
             { path: 'price-report', component: PriceReportSubmitedComponent },
             { path: 'price-report-create', component: PriceReportCreateComponent },
             { path: 'pending', component: HsdtPendingComponent },
@@ -28,6 +29,10 @@ const routes: Routes = [
             {
                 path: 'interview-negotiation',
                 loadChildren: './interview-negotiation/interview-negotiation.module#InterviewNegotiationModule'
+            },
+            {
+                path: 'price-review',
+                loadChildren: './price-review/price-review.module#PriceReviewModule'
             },
             {
                 path: 'create-request',

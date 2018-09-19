@@ -1,3 +1,33 @@
-<p>
-  need-create-tender-form-decision-board works!
-</p>
+<form [formGroup]="decisionBoardForm">
+    <div class="p-3 position-relative">
+        <div *ngIf="routerAction == 'view'" class="b-form-readonly"></div>
+        <div>
+            <h5 class="text-uppercase">VIII. quyết định của ban tổng giám đốc (decision of board of general director)</h5>
+        </div>
+        <div class="row mt-4">
+            <div class="col-md-4 d-flex align-items-center">
+                Thời gian mong đợi được duyệt
+            </div>
+            <div class="col-md-8">
+                <kendo-datepicker [readonly]="false" class="form-control"></kendo-datepicker>
+            </div>
+        </div>
+        <div class="row mt-3">
+            <div class="col-md-4 d-flex align-items-center">
+                Ký tên/ Signing
+            </div>
+            <div class="col-md-8">
+                    <button *ngIf="!decisionBoardForm.get('isSigned').value" class="btn btn-primary btn-sign" (click)="clickSigned()">Xác nhận ký</button>
+                    <button *ngIf="decisionBoardForm.get('isSigned').value" class="btn btn-primary btn-sign position-relative">
+                            <i class="fa fa-check-square icon-check" aria-hidden="true"></i> Đã ký
+                    </button>
+            </div>
+        </div>
+        <div class="text-center mt-4">
+            <button class="btn border" routerLink="../director-proposal">
+                <i class="fa font-size-3 mr-3 fa-angle-left" aria-hidden="true"></i>
+                Trở về
+            </button>
+        </div>
+    </div>
+</form>

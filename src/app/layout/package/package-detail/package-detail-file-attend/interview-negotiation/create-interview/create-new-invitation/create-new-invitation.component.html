@@ -34,6 +34,9 @@
                 </div>
             </div>
         </div>
+        <div class="invalid-feedback width-content-field pl-0 content-form-err" *ngIf="formErrors.approvedDate">
+            {{formErrors.approvedDate}}
+        </div>
         <div class="w-100 d-flex pad-row">
             <div class="width-name-field name-field p-2 bold-title">
                 Thời gian phỏng vấn
@@ -44,6 +47,9 @@
                 </div>
             </div>
         </div>
+        <div class="invalid-feedback width-content-field pl-0 content-form-err" *ngIf="formErrors.interviewDate">
+            {{formErrors.interviewDate}}
+        </div>
         <div class="w-100 d-flex pad-row">
             <div class="width-name-field name-field p-2 bold-title">
                 Địa điểm
@@ -52,6 +58,9 @@
                 <input class="font-size-control w-100" kendoTextBox formControlName="place" type="text">
             </div>
         </div>
+        <div class="invalid-feedback width-content-field pl-0 content-form-err" *ngIf="formErrors.place">
+            {{formErrors.place}}
+        </div>
         <div class="w-100 d-flex pad-row">
             <div class="width-name-field name-field p-2 bold-title">
                 Lần phỏng vấn
@@ -59,6 +68,9 @@
             <div class="width-content-field" style="padding-left: 0px">
                 <input appInputNumber class="font-size-control w-100" kendoTextBox formControlName="interviewTimes" type="text">
             </div>
+        </div>
+        <div class="invalid-feedback width-content-field pl-0 content-form-err" *ngIf="formErrors.interviewTimes">
+            {{formErrors.interviewTimes}}
         </div>
         <div class="w-100 d-flex pad-row">
             <div class="width-name-field name-field p-2 bold-title">
@@ -79,7 +91,7 @@
                             <i class="fa fa-cloud-upload" aria-hidden="true"></i>&nbsp;&nbsp; Chọn File</button>
                         <input type="file" class="upload" (change)="fileChange($event)" />
                     </div>
-                    <div style="width: calc(100% - 120px);" class="d-flex justify-content-between font-size-control">
+                    <div class="d-flex justify-content-between font-size-control center-parent width-name-file">
                         <div>{{this.createFormNewInvitation.get('attachedFiles')?.value}}</div>
                     </div>
                 </div>

@@ -6,6 +6,8 @@ import { URLSearchParams } from '@angular/http';
 import { PagedResult } from '../models';
 import * as FileSaver from 'file-saver';
 import { Subject } from 'rxjs/Subject';
+import { SendEmailModel } from '../models/send-email-model';
+import { SearchEmailModel } from '../models/search-email.model';
 
 @Injectable()
 export class EmailService {
@@ -59,7 +61,6 @@ export class EmailService {
   constructor(
     private apiService: ApiService,
     private instantSearchService: InstantSearchService,
-    private sessionService: SessionService,
   ) { }
 
   watchEmailSubject(): Observable<any> {
@@ -78,11 +79,12 @@ export class EmailService {
     const url = `bidopportunitys/${bidOpportunityId}/emails/filter/${page}/${pageSize}/`;
     const urlParams = EmailService.createFilterParams(filter);
     urlParams.append('searchTerm', terms);
-    return this.apiService.get(url, urlParams).map(result => {
+    return this.apiService.get(url, urlParams).map(res => {
+      const result = res.result;
       return {
         currentPage: result.pageIndex,
         pageSize: result.pageSize,
-        pageCount: result.pageCount,
+        pageCount: result.totalPages,
         total: result.totalCount,
         items: (result.items || []).map(
           EmailService.toEmailListItem
@@ -101,11 +103,10 @@ export class EmailService {
     const url = `bidopportunitys/${bidOpportunityId}/emails/filter/${page}/${pageSize}/?searchTerm=`;
     return this.instantSearchService.searchWithFilter(url, terms, EmailService.createFilterParams(filter))
       .map(result => {
-        console.log(result);
         return {
           currentPage: result.pageIndex,
           pageSize: result.pageSize,
-          pageCount: result.pageCount,
+          pageCount: result.totalPages,
           total: result.totalCount,
           items: (result.items || []).map(
             EmailService.toEmailListItem
@@ -163,10 +164,66 @@ export class EmailService {
       .map(response => response);
   }
 
-  maskAsImportant(bidEmailId: number) {
-    const url = `emails/${bidEmailId}/markasimportant`;
+  important(bidEmailId: number) {
+    const url = `emails/${bidEmailId}/important`;
     return this.apiService.post(url)
       .map(response => response);
+  }
+
+  unImportant(bidEmailId: number) {
+    const url = `emails/${bidEmailId}/unimportant`;
+    return this.apiService.post(url)
+      .map(response => response);
+  }
+
+  // gửi thư thông báo triển khai
+  sendEmailDeployment(data: SendEmailModel,  file: File[]) {
+    const url = `bidopportunity/hsdt/guithuthongbaotrienkhai`;
+    const dataObj = new FormData();
+    dataObj.append('BidOpportunityId', data.bidOpportunityId + '');
+    dataObj.append('Subject', data.subject);
+    data.recipientEmails.forEach((item, index) => {
+      dataObj.append('RecipientEmails[' + index + ']', item);
+    });
+    file.forEach( item => {
+      dataObj.append('AttachmentFiles', item);
+    });
+    dataObj.append('Content', data.content);
+    return this.apiService.postFile(url, dataObj);
+  }
+
+  // Danh sách search email
+  searchbymail(search: string): Observable<SearchEmailModel[]> {
+    const url = `employee/searchbymail?searchTerm=${search}`;
+    return this.apiService.get(url)
+      .map(response => {
+        return response.result.map(item => {
+          return {
+            employeeId: item.employeeId,
+            employeeNo: item.employeeNo,
+            employeeName: item.employeeName,
+            employeeAvatar: item.employeeAvatar,
+            employeeEmail: item.employeeEmail,
+          };
+        });
+      });
+  }
+
+  // gửi thư thông báo phỏng vấn
+  sendEmailInterview(data: SendEmailModel,  file: File[]) {
+    console.log('data-phỏng vấn', data, file);
+    const url = `bidopportunity/hsdt/sendmailtostakeholders`;
+    const dataObj = new FormData();
+    dataObj.append('BidOpportunityId', data.bidOpportunityId + '');
+    dataObj.append('Subject', data.subject);
+    data.recipientEmails.forEach((item, index) => {
+      dataObj.append('RecipientEmails[' + index + ']', item);
+    });
+    file.forEach( item => {
+      dataObj.append('AttachmentFiles', item);
+    });
+    dataObj.append('Content', data.content);
+    return this.apiService.postFile(url, dataObj);
   }
 }
 

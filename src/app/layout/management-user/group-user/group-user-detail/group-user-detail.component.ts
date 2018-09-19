@@ -244,7 +244,7 @@ export class GroupUserDetailComponent implements OnInit {
     };
     this.groupUserService.deleteListGroupUser(request).subscribe(response => {
       this.alertService.success('Xóa nhóm người dùng thành công!');
-      this.refesh();
+      this.refesh(false);
     },
       err => {
         this.alertService.success('Đã gặp sự cố. Xóa nhóm người dùng thất bại!');
@@ -344,7 +344,7 @@ export class GroupUserDetailComponent implements OnInit {
     }
   }
 
-  refesh() {
+  refesh(isAlert: boolean) {
     // Danh sách quyền
     this.dataService.getListPrivileges().subscribe(response => {
       this.listPrivilegesData = response;
@@ -360,15 +360,21 @@ export class GroupUserDetailComponent implements OnInit {
           const stringFilter = toStringListPrivilegesData.filter(i => !toStringElement.includes(i));
           element['notPrivileges'] = stringFilter.map(i => JSON.parse(i));
         });
-        this.alertService.success('Dữ liệu được cập nhật mới nhất!');
+        if (isAlert) {
+          this.alertService.success('Dữ liệu được cập nhật mới nhất!');
+        }
       },
         err => {
           this.spinner.hide();
-          this.alertService.error('Đã xảy ra lỗi, dữ liệu không được cập nhật');
+          if (isAlert) {
+            this.alertService.error('Đã xảy ra lỗi, dữ liệu không được cập nhật');
+          }
         });
     },
       err => {
-        this.alertService.error('Đã xảy ra lỗi, dữ liệu không được cập nhật');
+        if (isAlert) {
+          this.alertService.error('Đã xảy ra lỗi, dữ liệu không được cập nhật');
+        }
       });
   }
 
@@ -652,11 +658,9 @@ export class GroupUserDetailComponent implements OnInit {
       deleteIds = {
         ids: [ids],
       };
-
     }
     this.groupSlected = this.listGroupUser.filter(elemnt => elemnt.id === ids)[0];
     this.confirmationService.confirm(
-      // this.pagedResult.items ? 'Bạn có chắc chắn muốn xóa nhóm người dùng này?' : 'Nhóm người dùng $'
       (this.groupSlected.isUsing === true) ? `Nhóm người dùng "${this.groupSlected.name}" đã được sử dụng, bạn có chắc chắn muốn xóa?`
         : 'Bạn có chắc chắn muốn xóa nhóm người dùng này?',
       () => {
@@ -699,6 +703,7 @@ export class GroupUserDetailComponent implements OnInit {
     );
   }
 
+
   closedPopup() {
     this.submitted = false;
     this.modalRef.hide();
@@ -717,7 +722,20 @@ export class GroupUserDetailComponent implements OnInit {
         'Bạn phải chọn ít nhất một đối tượng để xóa!'
       );
     } else {
-      this.delete(deleteIds);
+      const request = {
+        ids: deleteIds.map(x => x.id),
+      };
+      this.confirmationService.confirm(
+        'Bạn có chắc chắn muốn xóa những nhóm người dùng được chọn?',
+        () => {
+          this.groupUserService.deleteListGroupUser(request).subscribe(response => {
+            this.alertService.success('Xóa nhóm người dùng thành công!');
+            this.refesh(false);
+          },
+            err => {
+              this.alertService.error('Đã gặp sự cố. Xóa nhóm người dùng thất bại!');
+            });
+        });
     }
   }
 

@@ -46,15 +46,15 @@ export class SettingReasonWinListComponent implements OnInit {
     public onSelectedKeysChange(e) {
     }
 
-    deleteReasonWin(id: number) {
+    deleteReasonWin(item) {
         this.confirmationService.confirm(
             'Bạn có chắc chắn muốn xóa lý do trúng thầu này?',
             () => {
                 this.settingService
-                    .deleteOpportunityReason(id, SETTING_REASON.Win)
+                    .deleteOpportunityReason(item.id, SETTING_REASON.Win)
                     .subscribe(
                         result => {
-                            this.alertService.success('Đã xóa thành công lý do trúng thầu!');
+                            this.alertService.success(`Đã xóa thành công lý do trúng thầu ${item.reasonName}!`);
                             this.refresh(0, this.pagedResult.pageSize);
                         },
                         err => {

@@ -37,7 +37,9 @@ import { SettingService } from './shared/services/setting.service';
 import { PackageSuccessService } from './shared/services/package-success.service';
 import { EmailService } from './shared/services/email.service';
 import { LayoutService } from './shared/services/layout.service';
-registerLocaleData(localeFrCa, localeFrCaExtra);
+import '@progress/kendo-ui';
+import { NG_SELECT_DEFAULT_CONFIG } from '../../node_modules/@ng-select/ng-select';
+
 // AoT requires an exported function for factories
 export function createTranslateLoader(http: HttpClient) {
     // for development
@@ -97,6 +99,12 @@ export function createTranslateLoader(http: HttpClient) {
             provide: LOCALE_ID, useValue: 'vi'
         },
         { provide: MessageService, useClass: MyMessageService },
+        {
+            provide: NG_SELECT_DEFAULT_CONFIG,
+            useValue: {
+                notFoundText: 'Custom not found'
+            }
+        }
     ],
 })
 export class AppModule { }

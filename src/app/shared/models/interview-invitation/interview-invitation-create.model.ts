@@ -1,5 +1,5 @@
 import { CustomerModel } from './customer.model';
-export class InterviewInvitationCreate {
+export class InterviewInvitation {
     id: number;
     customer: CustomerModel;
     approvedDate: number;

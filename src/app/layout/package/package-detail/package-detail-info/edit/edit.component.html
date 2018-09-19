@@ -1,10 +1,12 @@
 <div class="main-form" *ngIf="packageForm" class="boder-table" style="margin-left: 20px; margin-right: 20px">
     <form [formGroup]="packageForm">
         <div class="d-flex">
-            <div class="mr-auto">
+            <div class="mr-auto w-100">
                 <div class="card-collapse">
                     <div class="header" (click)="isCollapsedMain = !isCollapsedMain" [attr.aria-expanded]="!isCollapsedMain" aria-controls="info-main">
-                        <i class="fa fa-caret-down mr-3"></i>Thông tin chi tiết
+                        <i *ngIf="!isCollapsedMain" class="fa fa-caret-down mr-3"></i>
+                        <i *ngIf="isCollapsedMain" class="fa fa-caret-right mr-3"></i>
+                        Thông tin chi tiết
                     </div>
                     <div class="body" id="info-main" [ngbCollapse]="isCollapsedMain">
                         <table class="w-100 table table-bordered layout-table">
@@ -149,7 +151,10 @@
                                     <td class="w-15 bg-light text-right label no-boder">Tổng giá trị</td>
                                     <td class="w-35 no-boder">
                                         <input appEnterPreventDefault appInputMoney class="w-75 form-control text-right align-placeholder" tabindex="20" placeholder=""
-                                            type="text" formControlName="amount">
+                                            type="text" formControlName="amount" [class.is-invalid]="formErrors.amount">
+                                        <div class="invalid-feedback" *ngIf="formErrors.amount">
+                                            {{formErrors.amount}}
+                                        </div>
                                     </td>
 
                                 </tr>
@@ -260,23 +265,25 @@
                                             <span class="input-group-addon">
                                                 <i class="fa fa-calendar"></i>
                                             </span> -->
-                                            <input [placeholder]="datePickerConfig.datePlaceHolder" class="input-date-time" readonly formControlName="startTrackingDate"
+                                            <!-- <input [placeholder]="datePickerConfig.datePlaceHolder" class="input-date-time" readonly formControlName="startTrackingDate"
                                                 tabindex="27" [owlDateTimeTrigger]="dtStartTrackingDate" [owlDateTime]="dtStartTrackingDate">
                                             <owl-date-time #dtStartTrackingDate pickerType="calendar"></owl-date-time>
                                             <span [owlDateTimeTrigger]="dtStartTrackingDate" class="input-group-addon">
                                                 <i class="fa fa-calendar"></i>
-                                            </span>
+                                            </span> -->
+                                            <kendo-datepicker appEnterPreventDefault class="w-100" tabindex="27" formControlName="startTrackingDate"></kendo-datepicker>
                                         </div>
                                     </td>
                                     <td class="w-15 bg-light text-right label no-boder" style="padding-top: 20px!important;">Ngày khởi công dự án</td>
                                     <td class="w-35 no-boder" style="padding-top: 20px!important;">
                                         <div class="input-group w-75">
-                                            <input [placeholder]="datePickerConfig.datePlaceHolder" class="input-date-time" readonly formControlName="projectEstimatedStartDate"
+                                            <!-- <input [placeholder]="datePickerConfig.datePlaceHolder" class="input-date-time" readonly formControlName="projectEstimatedStartDate"
                                                 tabindex="30" [owlDateTimeTrigger]="dtProjectEstimatedStartDate" [owlDateTime]="dtProjectEstimatedStartDate">
                                             <owl-date-time #dtProjectEstimatedStartDate pickerType="calendar"></owl-date-time>
                                             <span [owlDateTimeTrigger]="dtProjectEstimatedStartDate" class="input-group-addon">
                                                 <i class="fa fa-calendar"></i>
-                                            </span>
+                                            </span> -->
+                                            <kendo-datepicker appEnterPreventDefault class="w-100" tabindex="30" formControlName="projectEstimatedStartDate"></kendo-datepicker>
                                         </div>
                                     </td>
                                 </tr>
@@ -284,12 +291,13 @@
                                     <td class="w-15 bg-light text-right label no-boder">Ngày nộp hồ sơ mời thầu</td>
                                     <td class="w-35 no-boder">
                                         <div class="input-group w-75">
-                                            <input [placeholder]="datePickerConfig.datePlaceHolder" class="input-date-time" readonly formControlName="submissionDate"
+                                            <!-- <input [placeholder]="datePickerConfig.datePlaceHolder" class="input-date-time" readonly formControlName="submissionDate"
                                                 tabindex="28" [owlDateTimeTrigger]="dtSubmissionDate" [owlDateTime]="dtSubmissionDate">
                                             <owl-date-time #dtSubmissionDate pickerType="calendar"></owl-date-time>
                                             <span [owlDateTimeTrigger]="dtSubmissionDate" class="input-group-addon">
                                                 <i class="fa fa-calendar"></i>
-                                            </span>
+                                            </span> -->
+                                            <kendo-datepicker appEnterPreventDefault class="w-100" tabindex="28" formControlName="submissionDate"></kendo-datepicker>
                                         </div>
                                         <div class="invalid-feedback" *ngIf="formErrors.submissionDate">
                                             {{formErrors.submitPackageDate}}
@@ -303,12 +311,13 @@
                                             <span class="input-group-addon">
                                                 <i class="fa fa-calendar"></i>
                                             </span> -->
-                                            <input [placeholder]="datePickerConfig.datePlaceHolder" class="input-date-time" readonly formControlName="projectEstimatedEndDate"
+                                            <!-- <input [placeholder]="datePickerConfig.datePlaceHolder" class="input-date-time" readonly formControlName="projectEstimatedEndDate"
                                                 tabindex="31" [owlDateTimeTrigger]="dtProjectEstimatedEndDate" [owlDateTime]="dtProjectEstimatedEndDate">
                                             <owl-date-time #dtProjectEstimatedEndDate pickerType="calendar"></owl-date-time>
                                             <span [owlDateTimeTrigger]="dtProjectEstimatedEndDate" class="input-group-addon">
                                                 <i class="fa fa-calendar"></i>
-                                            </span>
+                                            </span> -->
+                                            <kendo-datepicker appEnterPreventDefault class="w-100" tabindex="31" formControlName="projectEstimatedEndDate"></kendo-datepicker>
                                         </div>
                                     </td>
                                 </tr>
@@ -324,12 +333,14 @@
                                             <span class="input-group-addon">
                                                 <i class="fa fa-calendar"></i>
                                             </span> -->
-                                            <input [placeholder]="datePickerConfig.datePlaceHolder" class="input-date-time" readonly formControlName="resultEstimatedDate"
+                                            <!-- <input [placeholder]="datePickerConfig.datePlaceHolder" class="input-date-time" readonly formControlName="resultEstimatedDate"
                                                 tabindex="29" [owlDateTimeTrigger]="dtResultEstimatedDate" [owlDateTime]="dtResultEstimatedDate">
                                             <owl-date-time #dtResultEstimatedDate pickerType="calendar"></owl-date-time>
                                             <span [owlDateTimeTrigger]="dtResultEstimatedDate" class="input-group-addon">
                                                 <i class="fa fa-calendar"></i>
-                                            </span>
+                                            </span> -->
+
+                                            <kendo-datepicker appEnterPreventDefault class="w-100" tabindex="29" formControlName="resultEstimatedDate"></kendo-datepicker>
                                         </div>
                                         <div class="invalid-feedback" *ngIf="formErrors.expectedResultPackageDate">
                                             {{formErrors.expectedResultPackageDate}}
@@ -346,7 +357,10 @@
                 </div>
                 <div class="mr-auto card-collapse">
                     <div class="header" (click)="isCollapsedDesc = !isCollapsedDesc" [attr.aria-expanded]="!isCollapsedDesc" aria-controls="info-desc">
-                        <i class="fa fa-caret-down mr-3"></i>Mô tả chi tiết</div>
+                        <i *ngIf="!isCollapsedDesc" class="fa fa-caret-down mr-3"></i>
+                        <i *ngIf="isCollapsedDesc" class="fa fa-caret-right mr-3"></i>
+                        Mô tả chi tiết
+                    </div>
                     <div class="body" id="info-desc" [ngbCollapse]="isCollapsedDesc">
                         <table class="w-100 table table-bordered layout-table">
                             <tbody>
@@ -367,9 +381,8 @@
                 </div>
             </div>
             <div class=" zoom-button" style="width: auto; margin-right: 20px;  margin-left: 20px">
-                <div class="media-header" style="">
+                <div class="media-header">
                     <!-- <span class="action-bar alignment-but">
-                       
                     </span> -->
                     <div class="d-flex justify-content-between">
                         <div class="p-1">

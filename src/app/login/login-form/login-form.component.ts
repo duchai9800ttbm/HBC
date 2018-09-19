@@ -95,10 +95,13 @@ export class LoginFormComponent implements OnInit {
                                 }
                             }
                         }, 300);
-
                     },
                     err => {
-                        this.apiErrorCode = 'Nhập sai tên người dùng hoặc mật khẩu!';
+                        if (err._body && JSON.parse(err._body).errorCode === 'UserLoginIsNotActive') {
+                            this.apiErrorCode = 'Tài khoản này đã bị khoá hoạt động, vui lòng liên hệ admin để được hỗ trợ!';
+                        } else {
+                            this.apiErrorCode = 'Nhập sai tên người dùng hoặc mật khẩu!';
+                        }
                     }
                 );
         }

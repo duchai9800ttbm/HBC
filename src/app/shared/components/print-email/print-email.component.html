@@ -9,8 +9,61 @@
 <div class="d-flex justify-content-around">
   <div>
     <kendo-pdf-export #pdf paperSize="A4">
-      <div class="A4-landscape" id="printSectionId">
-
+      <div *ngIf="email" class="A4-landscape" id="printSectionId">
+          <div class="title-item d-flex align-items-center">
+              <div>{{email?.subject}}</div>
+          </div>
+          <div class="title-item d-flex align-items-center">
+              <div class="to">To: {{email?.to}}</div>
+              <div class="date-time d-flex justify-content-end align-items-center">
+                  <div>
+                      <span *ngIf="email?.sentDate">{{email?.sentDate*1000 | date:'dd/MM/yyyy HH:mm': '+0000'}}</span>
+                  </div>
+                  <div class="ml-2">
+                     
+          
+                  </div>
+              </div>
+          </div>
+          
+          <div class="content-email">
+              <pre [innerHTML]="email?.content">
+              <!-- {{email?.content}} -->
+            </pre>
+          </div>
+          <div class="attach">
+              <div style="margin: 5px 20px; margin-top: 20px;">
+                  <span>
+                      <i class="fa fa-paperclip" aria-hidden="true"></i>
+                  </span>
+                  <span>
+                      Attachments ({{email?.emailAttatchments?.length}})
+                  </span>
+              </div>
+              <!-- <div class="attach-file d-flex flex-wrap">
+                  <div class="file-item mr-1" *ngFor="let item of email?.emailAttatchments">
+                      <div style="width: 150px; height: 130px;" class="center-parent">
+                          <div>
+                              <img width="50" height="50" class="not-outline" src="assets\images\file.png">
+                          </div>
+                      </div>
+                      <div class="file-name d-flex" style="width: 150px; padding: 5px 5px;">
+                          <div style="width: calc(100% - 30px);" class="d-flex align-items-center">
+                              <div class="w-100">
+                                  <div class="text-truncate">{{item.fileName}}</div>
+                              </div>
+                          </div>
+                          <div style="width: 30px;" class="d-flex align-items-end">
+                              <div>
+                                  <button class="custom-btn" (click)="download(item.id)" [title]="'Tải file'">
+                                      <i class="fa fa-cloud-download" aria-hidden="true"></i>
+                                  </button>
+                              </div>
+                          </div>
+                      </div>
+                  </div>
+              </div> -->
+          </div>
       </div>
     </kendo-pdf-export>
   </div>

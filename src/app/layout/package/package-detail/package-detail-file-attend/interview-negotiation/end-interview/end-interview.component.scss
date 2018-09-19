@@ -314,12 +314,21 @@ table.dataTable{
     border-bottom: 1px solid #dddddd !important;
     box-shadow: none;
     border-collapse: collapse;
+    border-spacing: 0;
+    tbody {
+        .image--width{
+            width: 16px;
+            height: auto;
+        }
+    }
 }
 table.dataTable th {
     border-bottom: 1px solid #dddddd !important;
-    background-color: #ffff !important;
     border: 1px solid #dddddd;
+    background-color: #f68e56!important;
     font-size: 12px;
+    vertical-align: middle;
+    text-align: center !important;
 }
 table.dataTable td{
     font-size: 12px;
@@ -429,6 +438,74 @@ table.dataTable td{
     border-right: 3px solid #00a0e3;
 }
 .position-absolute-image{
-    position: absolute;
+    // position: absolute;
     left: 0;
+}
+
+.set-width-menu-left{
+    width: 17%;
+}
+.content--width{
+    width: 83%;
+    padding-left: 15px;
+    .title--text-transform{
+        text-transform: uppercase;
+    }
+}
+.set-width-image{
+    width: 83%;
+    margin: -8.5%;
+}
+.set-width-stt{
+    width: 15px;
+}
+.set-width-manipulation{
+    min-width: 75px;
+}
+.filter--background{
+    background-color: #fafbfc;
+}
+.w-60{
+    width: 60%;
+}
+.w-40{
+    width: 40%;
+}
+.w-35{
+    width: 35%;
+}
+.w-15{
+    width: 15%;
+}
+.w-10{
+    width: 10%;
+}
+.table-small{
+    .list-package{
+        .satus-title--height{
+            height: 2.5rem;
+        }
+    }
+}
+.h-12{
+    height: 1.2rem;
+}
+.h-25{
+    height: 2.5rem;
+}
+.fz-12{
+    font-size: 1.2rem;
+}
+.fz-10{
+    font-size: 1rem;
+}
+.mw-18{
+    min-width: 1.8rem;
+}
+.no-content__image--pad{
+    padding-top: 4.5rem;
+    .image--width{
+        width: 250px;
+        height: auto;
+    }
 }

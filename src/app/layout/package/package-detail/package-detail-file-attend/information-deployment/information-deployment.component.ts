@@ -1,4 +1,4 @@
-import { Component, OnInit, TemplateRef } from '@angular/core';
+import { Component, OnInit, TemplateRef, ViewChild, ElementRef } from '@angular/core';
 import { BsModalService } from 'ngx-bootstrap/modal';
 import { BsModalRef } from 'ngx-bootstrap/modal/bs-modal-ref.service';
 import { PackageDetailComponent } from '../../package-detail.component';
@@ -12,14 +12,19 @@ import { Router } from '@angular/router';
 import { DATATABLE_CONFIG } from '../../../../../shared/configs';
 import { Observable, BehaviorSubject, Subject } from '../../../../../../../node_modules/rxjs';
 import { ConfirmationService, AlertService } from '../../../../../shared/services';
-import { NgxSpinnerService } from 'ngx-spinner';
-
+import { SendEmailModel } from '../../../../../shared/models/send-email-model';
+import { EmailService } from '../../../../../shared/services/email.service';
+import { COMMON_CONSTANTS } from '../../../../../shared/configs/common.config';
+import { SearchEmailModel } from '../../../../../shared/models/search-email.model';
+import { NgxSpinnerService } from '../../../../../../../node_modules/ngx-spinner';
+import { map } from 'rxjs/operators/map';
 @Component({
   selector: 'app-information-deployment',
   templateUrl: './information-deployment.component.html',
   styleUrls: ['./information-deployment.component.scss']
 })
 export class InformationDeploymentComponent implements OnInit {
+  file = [];
   public gridView: GridDataResult;
   public items: any[] = listUsers;
   public mySelection: number[] = [];
@@ -50,7 +55,6 @@ export class InformationDeploymentComponent implements OnInit {
   packageId: number;
   dtTrigger: Subject<any> = new Subject();
   dtOptions: any = DATATABLE_CONFIG;
-  ckeditorContent: string = '<p>Dear All!</p>';
   datePickerConfig = DATETIME_PICKER_CONFIG;
   public skip = 0;
   pageSize = 5;
@@ -70,19 +74,51 @@ export class InformationDeploymentComponent implements OnInit {
     { id: 1, rom: 'Phòng Giám đốc', username: 'Oliver Dinh', email: 'oliverdinh@gmail.com', checkboxSelected: 'checkboxSelected' },
     { id: 2, rom: 'Phòng Hành chính', username: 'Van Dinh', email: 'vandinh@gmail.com', checkboxSelected: 'checkboxSelected' },
     { id: 3, rom: 'Phòng lưu trữ', username: 'Huy Nhat', email: 'huynhat@gmail.com', checkboxSelected: 'checkboxSelected' }
-  ]
+  ];
+  emailModel: SendEmailModel = new SendEmailModel();
+
+  ckeConfig: any;
+  @ViewChild('ckeditor') ckeditor: any;
+  @ViewChild('informationDeployment') informationDeployment;
+  listEmailSearchTo;
+  listEmailSearchToEmail;
+  listEmailSearchCc;
+  listEmailSearchBcc;
+  toEmployeeEmail;
+  searchTermTo$ = new BehaviorSubject<string>('');
+  searchTermCc$ = new BehaviorSubject<string>('');
+  searchTermBcc$ = new BehaviorSubject<string>('');
+  public selectedSizes: Array<string> = [];
   constructor(
     private modalService: BsModalService,
     private formBuilder: FormBuilder,
     private router: Router,
     private confirmationService: ConfirmationService,
     private spinner: NgxSpinnerService,
-    private alertService: AlertService
+    private alertService: AlertService,
+    private emailService: EmailService,
   ) {
     this.loadItems();
   }
 
   ngOnInit() {
+    this.emailService.searchbymail('').subscribe(response => {
+      this.listEmailSearchTo = response;
+    });
+    this.emailService.searchbymail('').subscribe(response => {
+      this.listEmailSearchCc = response;
+    });
+    this.emailService.searchbymail('').subscribe(response => {
+      this.listEmailSearchBcc = response;
+    });
+    this.ckeConfig = {
+      toolbar: [
+        { name: 'basicstyles', items: ['Bold', 'Italic', 'Underline', 'Strike'] },
+        { name: 'justify', items: ['JustifyLeft', 'JustifyCenter', 'JustifyRight', 'JustifyBlock'] },
+        { name: 'styles', items: ['Styles', 'Format', 'FontSize', '-', 'TextColor', 'BGColor'] },
+      ]
+    };
+
     this.packageId = +PackageDetailComponent.packageId;
     this.formUpload = this.formBuilder.group({
       name: ['', Validators.required],
@@ -108,6 +144,7 @@ export class InformationDeploymentComponent implements OnInit {
     this.currentPackageId = +PackageDetailComponent.packageId;
 
   }
+
   openModalDeployment(template: TemplateRef<any>) {
     this.modalRef = this.modalService.show(
       template,
@@ -125,14 +162,30 @@ export class InformationDeploymentComponent implements OnInit {
     this.modalViewListData = this.modalService.show(template);
   }
   SendInformation() {
-    this.isSendInformation = !this.isSendInformation;
-    this.isTeamPlate = !this.isTeamPlate;
-    this.dowloadTem = true;
-    this.textInformation = 'Đã thông báo triển khai';
-    this.toggleTextUpFile = this.isSendInformation ? 'Chưa có tài liệu phân công tiến độ. Vui lòng upload file'
-      : 'Bạn cần phải thông báo triển khai trước khi phân công tiến độ';
-    this.alertService.success('Gửi thông báo triển khai thành công!');
-    this.modalRef.hide();
+    if (this.emailModel && this.emailModel.to) {
+      this.emailModel.bidOpportunityId = this.packageId;
+      this.spinner.show();
+      this.emailService.sendEmailDeployment(this.emailModel, this.file).subscribe(result => {
+        this.isSendInformation = !this.isSendInformation;
+        this.isTeamPlate = !this.isTeamPlate;
+        this.dowloadTem = true;
+        this.textInformation = 'Đã thông báo triển khai';
+        this.toggleTextUpFile = this.isSendInformation ? 'Chưa có tài liệu phân công tiến độ. Vui lòng upload file'
+          : 'Bạn cần phải thông báo triển khai trước khi phân công tiến độ';
+        this.alertService.success('Gửi thông báo triển khai thành công!');
+        this.modalRef.hide();
+        this.spinner.hide();
+      },
+        err => {
+          if (err.json().errorCode === 'BusinessException') {
+            this.alertService.error('Đã xảy ra lỗi. Hồ sơ mời thầu này đã được gửi thư thông báo triển khai!');
+          } else {
+            this.alertService.error('Đã xảy ra lỗi. Gửi thông báo triển khai không thành công!');
+          }
+          this.modalRef.hide();
+          this.spinner.hide();
+        });
+    }
   }
 
   get f() { return this.formUpload.controls; }
@@ -218,7 +271,21 @@ export class InformationDeploymentComponent implements OnInit {
     );
   }
 
+  uploadfile(event) {
+    const fileList: FileList = event.target.files;
+    if (fileList.length > 0) {
+      for (let i = 0; i < fileList.length; i++) {
+        this.file.push(fileList[i]);
+      }
+      event.target.value = null;
+    }
+  }
+
+  deleteFileUpload(index: number) {
+    this.file.splice(index, 1);
+  }
 }
+
 const listUsers = [
   {
     id: 1,

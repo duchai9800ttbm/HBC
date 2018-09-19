@@ -21,6 +21,9 @@
             }
 
             .k-multiselect-wrap {
+
+
+
                 padding-left: ($padding-x * 3);
                 padding-right: 0;
 
@@ -51,6 +54,10 @@
         min-height: calc( #{$input-inner-calc-size} );
         padding-right: ($padding-x * 3);
         cursor: text;
+        
+        display: flex;
+        justify-content: center;
+        align-items: center;
 
         // Token list
         ul {

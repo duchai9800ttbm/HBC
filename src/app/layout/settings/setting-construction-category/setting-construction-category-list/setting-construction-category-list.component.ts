@@ -41,13 +41,13 @@ export class SettingConstructionCategoryListComponent implements OnInit {
     public onSelectedKeysChange(e) {
     }
 
-    deleteConstructionCategory(id: number) {
+    deleteConstructionCategory(item) {
         this.confirmationService.confirm(
             'Bạn có chắc chắn muốn xóa hạng mục thi công công trình này?',
             () => {
-                this.settingService.deleteConstructionCategory(id).subscribe(
+                this.settingService.deleteConstructionCategory(item.id).subscribe(
                     _ => {
-                        this.alertService.success('Đã xóa thành công hạng mục thi công công trình!');
+                        this.alertService.success(`Đã xóa thành công hạng mục thi công công trình ${item.constructionCategoryName}!`);
                         this.refresh(0, this.pagedResult.pageSize);
                     },
                     _ => {

@@ -151,6 +151,7 @@ export class PackageListComponent implements OnInit, AfterViewChecked {
     orderBy = '';
     currentSort = '';
     isShowPopup = false;
+    userProfile: UserModel;
     constructor(
         private activityService: ActivityService,
         private alertService: AlertService,
@@ -234,17 +235,16 @@ export class PackageListComponent implements OnInit, AfterViewChecked {
         //         this.spinner.hide();
         //     });
         // this.filter(false);
-        this.layoutService.watchLayoutSubject().subscribe(data => {
-            if (data) {
-                this.isToggle = true;
-            } else {
-                this.isToggle = false;
-            }
-        });
+        // this.layoutService.watchLayoutSubject().subscribe(data => {
+        //     if (data) {
+        //         this.isToggle = true;
+        //     } else {
+        //         this.isToggle = false;
+        //     }
+        // });
         this.searchTerm$.debounceTime(600)
         .distinctUntilChanged()
         .subscribe(term => {
-            console.log(term);
             this.filter(false);
             // return Observable.create(x => x.next(''));
         });
@@ -268,16 +268,22 @@ export class PackageListComponent implements OnInit, AfterViewChecked {
     }
 
     orderByField(fieldName: string) {
-        if (fieldName === this.currentSort && this.orderBy === 'Desc') {
+        if (fieldName !== this.currentSort) {
+            this.currentSort = fieldName;
+            this.orderBy = 'NoSort';
+        }
+        if (fieldName === this.currentSort && this.orderBy === 'NoSort') {
             this.orderBy = 'Asc';
         } else if (fieldName === this.currentSort && this.orderBy === 'Asc') {
             this.orderBy = 'Desc';
+        }  else if (fieldName === this.currentSort && this.orderBy === 'Desc') {
+            this.orderBy = 'NoSort';
         }
-        if (fieldName !== this.currentSort) {
-            this.currentSort = fieldName;
-            this.orderBy = 'Asc';
+        if ( this.orderBy !== 'NoSort') {
+            this.filterModel.sorting = fieldName + this.orderBy;
+        } else {
+            this.filterModel.sorting = '';
         }
-        this.filterModel.sorting = fieldName + this.orderBy;
         this.refresh(false);
     }
 
@@ -467,6 +473,8 @@ export class PackageListComponent implements OnInit, AfterViewChecked {
         // }
         setTimeout(() => {
             this.dtTrigger.next();
+            const table = document.getElementById('tableId') as HTMLTableElement;
+            table.style.width = 'auto';
         });
     }
 
@@ -551,8 +559,12 @@ export class PackageListComponent implements OnInit, AfterViewChecked {
     }
 
     exportFileExcel() {
-        this.packageService.exportExcel(this.searchTerm$.value, this.filterModel)
-            .subscribe(result => result);
+        this.userProfile = this.sessionService.userInfo;
+        this.packageService.exportExcel(this.userProfile.id, this.searchTerm$.value, this.filterModel)
+            .subscribe(result => {
+                // result;
+                this.closeDropToll(this.DropTool);
+            });
     }
 
     chooseAll() {

@@ -118,7 +118,7 @@ export class AddUserComponent implements OnInit {
       levelId: null,
       userGroupId: null,
       departmentId: [null , Validators.required],
-      isActive: [false],
+      isActive: [true],
       phoneNumber: ['', [CustomValidator.phoneNumber]],
       address: '',
     });
@@ -163,6 +163,10 @@ export class AddUserComponent implements OnInit {
         err => {
           if (JSON.parse(err._body).errorMessage === 'Tên đăng nhập của bạn trùng với tên đăng nhập của nhân viên khác!') {
             this.formErrors.userName = 'Tên đăng nhập trùng với tên đăng nhập của nhân viên khác!';
+          }
+          if (JSON.parse(err._body).errorMessage === 'Email trùng với email của user khác.') {
+            console.log('err email');
+            this.formErrors.email = 'Email trùng với email của user khác.';
           }
         });
     }

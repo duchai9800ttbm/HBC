@@ -2,14 +2,14 @@
   <div class="table-body">
     <div class="row menu">
       <div class="col-md-6">
-          <h5 class="d-inline mb-0 mr-auto text-dark text-uppercase">danh sách nhóm người dùng </h5>
+        <h5 class="d-inline mb-0 mr-auto text-dark text-uppercase">danh sách nhóm người dùng </h5>
 
       </div>
       <div class="col-md-6">
         <div class="btn-toolbar pull-right menu" style="flex-wrap: nowrap;">
           <div class="input-group btn-rg">
             <span class="input-group-addon">Tìm kiếm</span>
-            <input type="text" class="form-control icon" placeholder="&#xf002; Nhập tên" (keyup)="searchTerm$.next($event.target.value)">
+            <input type="text" class="form-control icon" placeholder="&#xf002; Nhập tên, mô tả" (keyup)="searchTerm$.next($event.target.value)">
           </div>
           <button type="submit" class="btn btn-primary btn-rg w-80 pull-right" [disabled]="loading" (click)="openModalCreate(edit)">
             Tạo mới
@@ -18,7 +18,7 @@
             Xóa
           </button>
 
-          <button type="button" class="btn btn-primary btn-rg pull-right" (click)="refesh()">
+          <button type="button" class="btn btn-primary btn-rg pull-right" (click)="refesh(true)">
             <i class="fa fa-refresh" aria-hidden="true"></i>
           </button>
         </div>
@@ -26,32 +26,37 @@
     </div>
 
     <div class="data-list menu" style="padding-top: 10px;">
-    
-      <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="table-selection stripe hover">
+
+      <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="table-selection stripe hover fix-layout-table">
         <thead *ngIf="pagedResult.items">
           <tr style="width: 100%">
-            <th class="text-center" style="width: 15px; padding-left: 7px;">
+            <th class="text-center min-width-stt">
               <label class="custom-control custom-checkbox">
                 <input type="checkbox" class="custom-control-input input-checkbox" [(ngModel)]="checkboxSeclectAll" (change)="onSelectAll($event.target.checked)">
                 <span class="custom-control-indicator"></span>
               </label>
             </th>
-            <th style="width: 33%">
+            <th class="w-25">
               <div class="d-flex justify-content-start">
                 <div style="margin-right: 10px">Tên</div>
               </div>
             </th>
-            <th style="width: 33%">
+            <th class="w-25">
               <div class="d-flex justify-content-start">
                 <div style="margin-right: 10px">Mô tả</div>
               </div>
             </th>
-            <th style="width: 33%">
+            <th class="w-25">
+              <div class="d-flex justify-content-start">
+                <div style="margin-right: 10px">Ngày tạo</div>
+              </div>
+            </th>
+            <th class="w-25">
               <div class="d-flex justify-content-start">
                 <div style="margin-right: 10px">Trạng thái</div>
               </div>
             </th>
-            <th class="text-center" style="width: calc(10% - 7px); min-width: 60px!important;">
+            <th class="text-center min-width-manipulation">
               Thao tác
             </th>
           </tr>
@@ -71,18 +76,21 @@
               {{item.desc}}
             </td>
             <td class="text-truncate">
+              {{ item.createdTime === 0 ? '' : (item.createdTime)*1000 | date:'dd/MM/yyyy'}}
+            </td>
+            <td class="text-truncate">
               {{item.isUsing === true ? 'Đã sử dụng' : 'Chưa sử dụng'}}
             </td>
             <td class="text-truncate">
               <div class="center-parent w-100 h-100">
-                  <div class="col-md-6 center-parent cursor-pointer" (click)="openModalEdit(item.id, edit)">
-                      <i [title]="'Sửa'" class="fa fa-pencil cursor-pointer" style="color: #1e7e34"></i>
-                    </div>
-                    <div class="col-md-6 center-parent cursor-pointer" (click)="delete(item.id)">
-                      <i [title]="'Xóa'" class="fa fa-trash-o point cursor-pointer"></i>
-                    </div>
+                <div class="col-md-6 center-parent cursor-pointer" (click)="openModalEdit(item.id, edit)">
+                  <i [title]="'Sửa'" class="fa fa-pencil cursor-pointer" style="color: #1e7e34"></i>
+                </div>
+                <div class="col-md-6 center-parent cursor-pointer" (click)="delete(item.id)">
+                  <i [title]="'Xóa'" class="fa fa-trash-o point cursor-pointer"></i>
+                </div>
               </div>
-             
+
             </td>
           </tr>
         </tbody>
@@ -152,7 +160,8 @@
   <div class="modal-header no-boder-bottom">
     <div class="col-md-5 form-group">
       <div class="title-action" for="exampleFormControlSelect2">Danh sách chức năng</div>
-      <select multiple class="form-control form-select" id="exampleFormControlSelect2" style="height: 150px;" [(ngModel)]="changeTemp" (ngModelChange)="selectEachFieldEditNotUser($event)">
+      <select multiple class="form-control form-select" id="exampleFormControlSelect2" style="height: 150px;" [(ngModel)]="changeTemp"
+        (ngModelChange)="selectEachFieldEditNotUser($event)">
         <option [ngValue]="notPrivilege" *ngFor="let notPrivilege of groupEditOrCreate.notPrivileges">
           {{notPrivilege.text | translate}}
         </option>
