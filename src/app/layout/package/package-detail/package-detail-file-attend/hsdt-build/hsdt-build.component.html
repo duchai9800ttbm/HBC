@@ -1,6 +1,6 @@
 <div id="outer-table">
     <div class="table-small mt-3">
-        <div id="header-table" class=" title-list-package d-flex flex-wrap align-items-center status-filter" *ngIf="!isShowMenu">
+        <div id="header-table-build" class=" title-list-package d-flex flex-wrap align-items-center status-filter" *ngIf="!isShowMenu">
             <div class="mr-auto d-flex align-items-end list-package mt-2 mb-2">
                 <div class="d-flex justify-content-start" style="height: 40px;" id="res-header">
                     <div class="rule mr-2">
@@ -66,26 +66,38 @@
         </div>
         <div id="main-content">
             <div id="toggle-menu" *ngIf="!isShowMenu">
-                <div class="button-click" (click)="toggleClick()">
-                    <div class="iconButton iconN1"></div>
-                    <div class="iconButton iconN2" style="margin: 3px 0;"></div>
-                    <div class="iconButton iconN3"></div>
-                </div>
-                <div id="toggle-menu-item">
-                    <div class="toggle-menu-item" [routerLink]="['./summary']" routerLinkActive="active-link">Bảng tóm
-                        tắt ĐKDT</div>
-                    <div class="toggle-menu-item">Yêu cầu báo giá vật tư, thầu phụ</div>
-                    <div class="toggle-menu-item" routerLink="./site-survey" routerLinkActive="active-link">Báo cáo
-                        tham quan công trình</div>
-                    <div class="toggle-menu-item">Bảng tổng hợp dự toán</div>
-                    <div class="toggle-menu-item">Bảng tính chi phí chung</div>
-                    <div class="toggle-menu-item">Bảng câu hỏi làm rõ HSMT</div>
-                    <div class="toggle-menu-item" [routerLink]="['hskt']">Các HSKT có liên quan</div>
-                    <div class="toggle-menu-item">Hồ sơ pháp lý</div>
-                    <div class="toggle-menu-item">Hồ sơ khác</div>
+
+                <div class="d-flex">
+                    <div id="toggle-menu-item">
+                        <div class="toggle-menu-item" [routerLink]="['./summary']" routerLinkActive="active-link">Bảng
+                            tóm
+                            tắt ĐKDT</div>
+                        <div class="toggle-menu-item">Yêu cầu báo giá vật tư, thầu phụ</div>
+                        <div class="toggle-menu-item" routerLink="./liveformsite" routerLinkActive="active-link">Báo
+                            cáo
+                            tham quan công trình</div>
+                        <div class="toggle-menu-item">Bảng tổng hợp dự toán</div>
+                        <div class="toggle-menu-item">Bảng tính chi phí chung</div>
+                        <div class="toggle-menu-item">Bảng câu hỏi làm rõ HSMT</div>
+                        <div class="toggle-menu-item" [routerLink]="['hskt']">Các HSKT có liên quan</div>
+                        <div class="toggle-menu-item">Hồ sơ pháp lý</div>
+                        <div class="toggle-menu-item">Hồ sơ khác</div>
+                        <!-- <div class="line" *ngIf="!(majorTypeListItem.length == i+1)" style="width: calc(100% - 10px); border-top: #ccecf9 solid 1px; height: 1px; border-left: 1px; margin-left: 10px;"></div> -->
+                    </div>
+                    <div class="button-click mb-auto" (click)="toggleClick()">
+                        <div class="center-parent">
+                            <div>
+                                <div class="iconButton iconN1"></div>
+                                <div class="iconButton iconN2" style="margin: 3.5px 0;"></div>
+                                <div class="iconButton iconN3"></div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
-            <router-outlet></router-outlet>
+            <div class="w-100">
+                <router-outlet></router-outlet>
+            </div>
         </div>
     </div>
 </div>
