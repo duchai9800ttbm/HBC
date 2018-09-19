@@ -538,6 +538,14 @@ table.dataTable th {
     width: calc(100% - 105px);
 }
 
-.ui-autocomplete-multiple-container{
-    border: none !important;
+:host /deep/ p-autocomplete{
+    input{
+        line-height: initial !important;
+    }
+    .ui-autocomplete-input-token {
+        input {
+            line-height: initial !important;
+
+        }
+    }
 }

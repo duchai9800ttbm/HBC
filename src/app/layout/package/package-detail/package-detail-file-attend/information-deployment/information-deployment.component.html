@@ -74,6 +74,12 @@
                 <span class="ui-fluid">
                     <p-autoComplete [(ngModel)]="emailModel.to" [suggestions]="listEmailSearchTo" (completeMethod)="changeValueTo($event.query)"
                         styleClass="wid100" placeholder="Nhập email" field="employeeEmail" [multiple]="true">
+                        <ng-template let-dataItem pTemplate="item">
+                            <table>
+                                <tr>{{dataItem.employeeName}}</tr>
+                                <tr>{{dataItem.employeeEmail}}</tr>
+                            </table>
+                        </ng-template>
                     </p-autoComplete>
                 </span>
             </div>
@@ -85,6 +91,12 @@
                 <span class="ui-fluid">
                     <p-autoComplete [(ngModel)]="emailModel.cc" [suggestions]="listEmailSearchCc" (completeMethod)="changeValueCc($event.query)"
                         styleClass="wid100" placeholder="Nhập email" field="employeeEmail" [multiple]="true">
+                        <ng-template let-dataItem pTemplate="item">
+                            <table>
+                                <tr>{{dataItem.employeeName}}</tr>
+                                <tr>{{dataItem.employeeEmail}}</tr>
+                            </table>
+                        </ng-template>
                     </p-autoComplete>
                 </span>
             </div>
@@ -94,7 +106,7 @@
             <span class="input-group-addon" id="basic-addon1">Bcc:</span>
             <!-- <kendo-multiselect [allowCustom]="true" [data]="listEmailSearchBcc" [(ngModel)]="emailModel.bcc" [textField]="'employeeName'"
                 [valueField]="'employeeEmail'" [ngClass]="{ 'bd-r' : isSendCc === false ||isSendBcc===false }" aria-label="To"
-                autofocus (keyup)="searchTermBcc$.next($event.target.value)" [valueNormalizer]="valueNormalizerBcc">
+                autofocus (input)="changeValueBcc($event.target.value)" [valueNormalizer]="valueNormalizerBcc">
                 <ng-template kendoMultiSelectItemTemplate let-dataItem>
                     <table>
                         <tr>{{ dataItem.employeeName }}</tr>
@@ -103,12 +115,18 @@
                 </ng-template>
             </kendo-multiselect> -->
             <div style="width:100%">
-                    <span class="ui-fluid">
-                        <p-autoComplete [(ngModel)]="emailModel.bcc" [suggestions]="listEmailSearchBcc" (completeMethod)="changeValueBcc($event.query)"
-                            styleClass="wid100" placeholder="Nhập email" field="employeeEmail" [multiple]="true">
-                        </p-autoComplete>
-                    </span>
-                </div>
+                <span class="ui-fluid">
+                    <p-autoComplete [(ngModel)]="emailModel.bcc" [suggestions]="listEmailSearchBcc" (completeMethod)="changeValueBcc($event.query)"
+                        styleClass="wid100" placeholder="Nhập email" field="employeeEmail" [multiple]="true">
+                        <ng-template let-dataItem pTemplate="item">
+                            <table>
+                                <tr>{{dataItem.employeeName}}</tr>
+                                <tr>{{dataItem.employeeEmail}}</tr>
+                            </table>
+                        </ng-template>
+                    </p-autoComplete>
+                </span>
+            </div>
         </div>
 
         <div class="mb-3 ml-2" *ngIf="!isSendCc || !isSendBcc">
