@@ -43,16 +43,12 @@
     }
 }
 
-.text-color {
-    color: #7d7d7d;
-    cursor: pointer;
-}
+// .text-color {
+//     color: #7d7d7d;
+//     cursor: pointer;
+// }
 
-.active {
-    .text-color {
-        color: #00a0e3;
-    }
-}
+
 
 .arrow-down {
     width: 0;
@@ -78,12 +74,32 @@ li.triangle::before {
     color: white;
 
     &::before {
-        border-color: #00a0e3;
-        background-color: #00a0e3;
+        // border-color: #00a0e3;
+        background-color: #2bb7f1;
     }
 
     .arrow-down {
-        border-top: 8px solid #00a0e3 !important;
+        border-top: 8px solid #2bb7f1 !important;
+    }
+    .text-color {
+        color: #00a0e3;
+    }
+}
+
+.progressbar li.noActive {
+    color: #1ba6e5;
+
+    &::before {
+        // border-color: #00a0e3;
+        background-color: #cceffc;
+    }
+
+    .arrow-down {
+        border-top: 8px solid #cceffc !important;
+    }
+
+    .text-color {
+        color: #00a0e3;
     }
 }
 
