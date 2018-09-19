@@ -42,6 +42,7 @@ export class NeedCreateTenderComponent implements OnInit {
       if (data) {
         NeedCreateTenderFormComponent.formModel = data;
         this.proposedTender = data;
+        // this.dateApproveBid = this.proposedTender.tenderDirectorProposal.
         setTimeout(() => {
           this.dtTrigger.next();
         });

@@ -45,10 +45,10 @@
         <thead>
             <tr>
                 <th>
-                    <label class="custom-control custom-checkbox">
+                    <!-- <label class="custom-control custom-checkbox">
                         <input type="checkbox" class="custom-control-input input-checkbox">
                         <span class="custom-control-indicator"></span>
-                    </label>
+                    </label> -->
                 </th>
                 <th>Tên tài liệu</th>
                 <th>Tình trạng</th>
@@ -60,10 +60,10 @@
         <tbody>
             <tr>
                 <td>
-                    <label class="custom-control custom-checkbox">
+                    <!-- <label class="custom-control custom-checkbox">
                         <input type="checkbox" class="custom-control-input input-checkbox">
                         <span class="custom-control-indicator"></span>
-                    </label>
+                    </label> -->
                 </td>
                 <td>{{proposedTender.documentName}}</td>
                 <td>{{proposedTender.isDraftVersion ? 'Bản nháp' : 'Chính thức'}}</td>
@@ -75,7 +75,7 @@
                             <a [routerLink]="['./form/view']" (click)="changeAction('view')">
                                 <i class="fa fa-eye text-warning" aria-hidden="true"></i>
                             </a>
-                            <a class=" text-success ml-3" [routerLink]="['./form/edit']" (click)="changeAction('edit')">
+                            <a class=" text-success ml-3" [class.disable]="packageInfo?.stageStatus.id == bidStatus.TuChoiDuThau" [routerLink]="packageInfo?.stageStatus.id == bidStatus.TuChoiDuThau ? [] : ['./form/edit']" (click)="changeAction('edit')">
                                 <i class="fa fa-pencil cursor-pointer" aria-hidden="true"> </i>
                             </a>
                             <a class=" text-dark ml-3">

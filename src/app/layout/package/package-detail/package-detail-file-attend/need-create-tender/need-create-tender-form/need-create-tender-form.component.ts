@@ -11,6 +11,8 @@ import { Router, ActivatedRoute, ParamMap } from '@angular/router';
 import { PackageInfoModel } from '../../../../../../shared/models/package/package-info.model';
 import { switchMap } from 'rxjs/operators';
 import { NeedCreateTenderComponent } from '../need-create-tender.component';
+import { BidStatus } from '../../../../../../shared/constants/bid-status';
+import DateTimeConvertHelper from '../../../../../../shared/helpers/datetime-convert-helper';
 
 @Component({
     selector: 'app-need-create-tender-form',
@@ -23,6 +25,9 @@ export class NeedCreateTenderFormComponent implements OnInit {
     packageInfo: PackageInfoModel;
     routerAction: string;
     dataModel: ProposeTenderParticipateRequest;
+    bidStatus = BidStatus;
+    isShowDialog = false;
+    dateApproveBid = new Date();
     constructor(
         private packageService: PackageService,
         private alertService: AlertService,
@@ -44,15 +49,19 @@ export class NeedCreateTenderFormComponent implements OnInit {
                 }/attend/create-request`
             ]);
         } else {
-            this.spinner.show();
-            this.packageService
-                .getInforPackageID(this.bidOpportunityId)
-                .subscribe(data => {
-                    this.packageInfo = data;
-                    this.spinner.hide();
-                    console.log(this.packageInfo);
-                });
+            this.getPackageInfo();
         }
+    }
+
+    getPackageInfo() {
+        this.spinner.show();
+        this.packageService
+            .getInforPackageID(this.bidOpportunityId)
+            .subscribe(data => {
+                this.packageInfo = data;
+                this.spinner.hide();
+                console.log(this.packageInfo);
+            });
     }
 
     onSubmit(isDraf: boolean) {
@@ -99,5 +108,41 @@ export class NeedCreateTenderFormComponent implements OnInit {
                     this.spinner.hide();
                 }
             );
+    }
+
+    cancel() {
+        NeedCreateTenderComponent.routerAction = 'view';
+        this.routerAction = 'view';
+    }
+
+    sendApproveBidProposal() {
+        this.spinner.show();
+        this.packageService
+            .sendApproveBidProposal(
+                this.bidOpportunityId,
+                DateTimeConvertHelper.fromDtObjectToSecon(this.dateApproveBid)
+            )
+            .subscribe(
+                data => {
+                    this.spinner.hide();
+                    this.alertService.success(
+                        'Gửi duyệt đề nghị dự thầu thành công!'
+                    );
+                    this.isShowDialog = false;
+                    this.getPackageInfo();
+                },
+                err => {
+                    this.spinner.hide();
+                    this.alertService.error(
+                        'Gửi duyệt đề nghị dự thầu thất bại!'
+                    );
+                    this.isShowDialog = false;
+                }
+            );
+    }
+
+    closeDialog() {
+        this.isShowDialog = false;
+        // this.isNotAgreeParticipating = false;
     }
 }

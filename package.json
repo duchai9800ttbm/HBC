@@ -50,6 +50,7 @@
     "angular-datatables": "^4.4.1",
     "angular-star-rating": "^2.0.0-rc.5",
     "angular2-moment": "^1.7.1",
+    "angular2-notifications": "^1.0.4",
     "chart.js": "^2.7.1",
     "core-js": "^2.5.1",
     "datatables.net": "^1.10.16",
