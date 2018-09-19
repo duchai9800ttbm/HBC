@@ -66,8 +66,9 @@
 }
 
 li.triangle::before {
-    background-color: red;
+    background-color: red;   
 }
+
 
 .progressbar li:first-child:after {
     content: none;
@@ -90,6 +91,13 @@ li.triangle::before {
     // background-color: #00a0e3;
     border-top: 1px dashed #00a0e3 !important;
 }
+
+// .progressbar li:hover {
+//     zoom: 120%;
+//     // font-size: 140%;
+//     // font-weight: 400;
+//     // box-shadow: 0 16px 38px -12px rgb(204, 202, 202), 0 4px 25px 0 rgb(204, 202, 202), 0 8px 10px -5px rgb(204, 202, 202),
+// }
 
 .mx-20 {
     margin-left: 20px;
