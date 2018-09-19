@@ -13,13 +13,13 @@ export class PackageDetailFileAttendComponent implements OnInit {
   packageId: number;
   packageData: PackageInfoModel;
   currentUrl;
-  statusPackage;
+  statusPackage = 0;
   bidProposal = ['CanLapDeNghiDuThau', 'ChoDuyet', 'ThamGiaDuThau', 'DaTuChoi'];
   deployment = ['ChuaThongBaoTrienKhai', 'DaThongBaoTrienKhai', 'DaXacNhanPhanCong', 'DaGuiPhanCongTienDo'];
   setHSDT = ['DangLapHSDT'];
   priceReview = ['CanLapTrinhDuyetGia', 'DaGuiDuyetTrinhDuyetGia',
     'CanDieuChinhTrinhDuyetGia', 'DaDuyetTrinhDuyetGia', 'ChotHoSo', 'DaNopHSDT'];
-  interview = ['DaNhanLoiMoi', 'ChuanBiPhongVan', 'DaChotCongTacChuanBiPhongVan', 'DaPhongVan' ];
+  interview = ['DaNhanLoiMoi', 'ChuanBiPhongVan', 'DaChotCongTacChuanBiPhongVan', 'DaPhongVan'];
   listStatusPackage = [this.bidProposal, this.deployment, this.setHSDT, this.priceReview, this.interview];
   constructor(
     private packageService: PackageService,
@@ -33,8 +33,8 @@ export class PackageDetailFileAttendComponent implements OnInit {
           console.log('this.currentUrl', this.currentUrl);
           this.packageService.getInforPackageID(this.packageId).subscribe(result => {
             this.packageData = result;
-            this.listStatusPackage.forEach( (list, index) => {
-              if ( list.find( item => item === this.packageData.stageStatus.id) ) {
+            this.listStatusPackage.forEach((list, index) => {
+              if (list.find(item => item === this.packageData.stageStatus.id)) {
                 this.statusPackage = index;
                 console.log('this.statusPackage', this.statusPackage);
               }
@@ -49,8 +49,12 @@ export class PackageDetailFileAttendComponent implements OnInit {
     this.packageId = +PackageDetailComponent.packageId;
     this.packageService.getInforPackageID(this.packageId).subscribe(result => {
       this.packageData = result;
-      this.statusPackage = this.packageData.stageStatus.id;
-      this.router.navigate([`/package/detail/${this.packageId}/attend/interview-negotiation/`]);
+      // this.listStatusPackage.forEach((list, index) => {
+      //   if (list.find(item => item === this.packageData.stageStatus.id)) {
+      //     this.statusPackage = index;
+      //     console.log('this.statusPackage 2', this.statusPackage);
+      //   }
+      // });
       switch (this.packageData.stageStatus.id) {
         case 'CanLapDeNghiDuThau': {
           this.router.navigate([`/package/detail/${this.packageId}/attend/create-request`]);
@@ -133,11 +137,6 @@ export class PackageDetailFileAttendComponent implements OnInit {
         }
       }
     });
-  }
-
-  routerLink() {
-    console.log('router.navigate');
-    this.router.navigate([`/package/detail/${this.packageId}/attend/create-request']`]);
   }
 
 }
