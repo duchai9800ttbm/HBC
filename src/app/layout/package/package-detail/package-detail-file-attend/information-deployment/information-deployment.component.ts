@@ -102,6 +102,15 @@ export class InformationDeploymentComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.emailService.searchbymail('').subscribe(response => {
+      this.listEmailSearchTo = response;
+    });
+    this.emailService.searchbymail('').subscribe(response => {
+      this.listEmailSearchCc = response;
+    });
+    this.emailService.searchbymail('').subscribe(response => {
+      this.listEmailSearchBcc = response;
+    });
     this.ckeConfig = {
       toolbar: [
         { name: 'basicstyles', items: ['Bold', 'Italic', 'Underline', 'Strike'] },
@@ -134,55 +143,6 @@ export class InformationDeploymentComponent implements OnInit {
     this.textInformation = 'Chưa thông báo triển khai';
     this.currentPackageId = +PackageDetailComponent.packageId;
 
-  }
-
-  changeValueTo(event) {
-    console.log('eventTo', event);
-    this.emailService.searchbymail(event).subscribe(response => {
-      this.listEmailSearchTo = response;
-    });
-    if (event.substr(event.length - 1, 1) === ',' || event.substr(event.length - 1, 1) === ';') {
-      const emailModelTo = new SearchEmailModel();
-      emailModelTo.employeeName = event.substr(0, event.length - 1);
-      emailModelTo.employeeEmail = event.substr(0, event.length - 1);
-      if (!this.emailModel.to) {
-        this.emailModel.to = [];
-      }
-      this.emailModel.to.push(emailModelTo);
-      this.informationDeployment.elementRef.nativeElement.nextElementSibling.attributes[0].ownerDocument.activeElement.value = '';
-    }
-  }
-
-  changeValueCc(event) {
-    this.emailService.searchbymail(event).subscribe(response => {
-      this.listEmailSearchCc = response;
-    });
-    if (event.substr(event.length - 1, 1) === ',' || event.substr(event.length - 1, 1) === ';') {
-      const emailModelCc = new SearchEmailModel();
-      emailModelCc.employeeName = event.substr(0, event.length - 1);
-      emailModelCc.employeeEmail = event.substr(0, event.length - 1);
-      if (!this.emailModel.cc) {
-        this.emailModel.cc = [];
-      }
-      this.emailModel.cc.push(emailModelCc);
-      this.informationDeployment.elementRef.nativeElement.nextElementSibling.attributes[1].ownerDocument.activeElement.value = '';
-    }
-  }
-
-  changeValueBcc(event) {
-    this.emailService.searchbymail(event).subscribe(response => {
-      this.listEmailSearchBcc = response;
-    });
-    if (event.substr(event.length - 1, 1) === ',' || event.substr(event.length - 1, 1) === ';') {
-      const emailModelBcc = new SearchEmailModel();
-      emailModelBcc.employeeName = event.substr(0, event.length - 1);
-      emailModelBcc.employeeEmail = event.substr(0, event.length - 1);
-      if (!this.emailModel.bcc) {
-        this.emailModel.bcc = [];
-      }
-      this.emailModel.bcc.push(emailModelBcc);
-      this.informationDeployment.elementRef.nativeElement.nextElementSibling.attributes[2].ownerDocument.activeElement.value = '';
-    }
   }
 
   openModalDeployment(template: TemplateRef<any>) {

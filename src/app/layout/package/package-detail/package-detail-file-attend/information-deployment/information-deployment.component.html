@@ -70,63 +70,41 @@
     <div class="modal-body">
         <div class="input-group mb-3">
             <span class="input-group-addon">To:</span>
-            <div style="width:100%">
-                <span class="ui-fluid">
-                    <p-autoComplete [(ngModel)]="emailModel.to" [suggestions]="listEmailSearchTo" (completeMethod)="changeValueTo($event.query)"
-                        styleClass="wid100" placeholder="Nhập email" field="employeeEmail" [multiple]="true">
-                        <ng-template let-dataItem pTemplate="item">
-                            <table>
-                                <tr>{{dataItem.employeeName}}</tr>
-                                <tr>{{dataItem.employeeEmail}}</tr>
-                            </table>
-                        </ng-template>
-                    </p-autoComplete>
-                </span>
-            </div>
+            <ng-select class="w-100" [items]="listEmailSearchTo" typeToSearchText="Nhập email" addTagText="Thêm email:" clearAllText="Xóa tất cả"
+                [addTag]="true" [hideSelected]="true" multiple="true" bindLabel="employeeEmail" [(ngModel)]="emailModel.to">
+                <ng-template ng-option-tmp let-item="item" let-index="index" let-search="searchTerm">
+                    <table>
+                        <tr>{{item.employeeName}}</tr>
+                        <tr>{{item.employeeEmail}}</tr>
+                    </table>
+                </ng-template>
+            </ng-select>
         </div>
 
         <div class="input-group mb-3" *ngIf="isSendCc">
             <span class="input-group-addon" id="basic-addon1">Cc:</span>
-            <div style="width:100%">
-                <span class="ui-fluid">
-                    <p-autoComplete [(ngModel)]="emailModel.cc" [suggestions]="listEmailSearchCc" (completeMethod)="changeValueCc($event.query)"
-                        styleClass="wid100" placeholder="Nhập email" field="employeeEmail" [multiple]="true">
-                        <ng-template let-dataItem pTemplate="item">
-                            <table>
-                                <tr>{{dataItem.employeeName}}</tr>
-                                <tr>{{dataItem.employeeEmail}}</tr>
-                            </table>
-                        </ng-template>
-                    </p-autoComplete>
-                </span>
-            </div>
+            <ng-select class="w-100" [items]="listEmailSearchCc" addTagText="Thêm email:" clearAllText="Xóa tất cả" [addTag]="true" [hideSelected]="true"
+                multiple="true" bindLabel="employeeEmail" [(ngModel)]="emailModel.cc">
+                <ng-template ng-option-tmp let-item="item" let-index="index" let-search="searchTerm">
+                    <table>
+                        <tr>{{item.employeeName}}</tr>
+                        <tr>{{item.employeeEmail}}</tr>
+                    </table>
+                </ng-template>
+            </ng-select>
         </div>
 
         <div class="input-group mb-3" *ngIf="isSendBcc">
             <span class="input-group-addon" id="basic-addon1">Bcc:</span>
-            <!-- <kendo-multiselect [allowCustom]="true" [data]="listEmailSearchBcc" [(ngModel)]="emailModel.bcc" [textField]="'employeeName'"
-                [valueField]="'employeeEmail'" [ngClass]="{ 'bd-r' : isSendCc === false ||isSendBcc===false }" aria-label="To"
-                autofocus (input)="changeValueBcc($event.target.value)" [valueNormalizer]="valueNormalizerBcc">
-                <ng-template kendoMultiSelectItemTemplate let-dataItem>
+            <ng-select class="w-100" [items]="listEmailSearchBcc" addTagText="Thêm email:" clearAllText="Xóa tất cả" [addTag]="true"
+                [hideSelected]="true" multiple="true" bindLabel="employeeEmail" [(ngModel)]="emailModel.bcc">
+                <ng-template ng-option-tmp let-item="item" let-index="index" let-search="searchTerm">
                     <table>
-                        <tr>{{ dataItem.employeeName }}</tr>
-                        <tr class="text-muted">{{ dataItem.employeeEmail}}</tr>
+                        <tr>{{item.employeeName}}</tr>
+                        <tr>{{item.employeeEmail}}</tr>
                     </table>
                 </ng-template>
-            </kendo-multiselect> -->
-            <div style="width:100%">
-                <span class="ui-fluid">
-                    <p-autoComplete [(ngModel)]="emailModel.bcc" [suggestions]="listEmailSearchBcc" (completeMethod)="changeValueBcc($event.query)"
-                        styleClass="wid100" placeholder="Nhập email" field="employeeEmail" [multiple]="true">
-                        <ng-template let-dataItem pTemplate="item">
-                            <table>
-                                <tr>{{dataItem.employeeName}}</tr>
-                                <tr>{{dataItem.employeeEmail}}</tr>
-                            </table>
-                        </ng-template>
-                    </p-autoComplete>
-                </span>
-            </div>
+            </ng-select>
         </div>
 
         <div class="mb-3 ml-2" *ngIf="!isSendCc || !isSendBcc">
