@@ -19,7 +19,7 @@ export class PackageDetailFileAttendComponent implements OnInit {
   setHSDT = ['DangLapHSDT'];
   priceReview = ['CanLapTrinhDuyetGia', 'DaGuiDuyetTrinhDuyetGia',
     'CanDieuChinhTrinhDuyetGia', 'DaDuyetTrinhDuyetGia', 'ChotHoSo', 'DaNopHSDT'];
-  interview = ['DaNhanLoiMoi', 'ChuanBiPhongVan', 'DaChotCongTacChuanBiPhongVan', 'DaPhongVan' ];
+  interview = ['DaNhanLoiMoi', 'ChuanBiPhongVan', 'DaChotCongTacChuanBiPhongVan', 'DaPhongVan'];
   listStatusPackage = [this.bidProposal, this.deployment, this.setHSDT, this.priceReview, this.interview];
   constructor(
     private packageService: PackageService,
@@ -30,15 +30,15 @@ export class PackageDetailFileAttendComponent implements OnInit {
       if ((val instanceof NavigationEnd) === true) {
         this.activeRouter.firstChild.url.subscribe(url => {
           this.currentUrl = url[0].path;
-          console.log('this.currentUrl', this.currentUrl);
           this.packageService.getInforPackageID(this.packageId).subscribe(result => {
             this.packageData = result;
-            this.listStatusPackage.forEach( (list, index) => {
-              if ( list.find( item => item === this.packageData.stageStatus.id) ) {
-                this.statusPackage = index;
+            for (let i = 0; i < this.listStatusPackage.length; i++) {
+              if (this.listStatusPackage[i].some(item => item === this.packageData.stageStatus.id)) {
                 console.log('this.statusPackage', this.statusPackage);
+                this.statusPackage = i;
+                break;
               }
-            });
+            }
           });
         });
       }
@@ -49,8 +49,6 @@ export class PackageDetailFileAttendComponent implements OnInit {
     this.packageId = +PackageDetailComponent.packageId;
     this.packageService.getInforPackageID(this.packageId).subscribe(result => {
       this.packageData = result;
-      this.statusPackage = this.packageData.stageStatus.id;
-      this.router.navigate([`/package/detail/${this.packageId}/attend/interview-negotiation/`]);
       switch (this.packageData.stageStatus.id) {
         case 'CanLapDeNghiDuThau': {
           this.router.navigate([`/package/detail/${this.packageId}/attend/create-request`]);
@@ -133,11 +131,6 @@ export class PackageDetailFileAttendComponent implements OnInit {
         }
       }
     });
-  }
-
-  routerLink() {
-    console.log('router.navigate');
-    this.router.navigate([`/package/detail/${this.packageId}/attend/create-request']`]);
   }
 
 }

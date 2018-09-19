@@ -1,7 +1,8 @@
 <div class="mx-20 detail-container">
     <div class="d-flex">
         <ul class="progressbar">
-            <li class="triangle" [routerLink]="['./create-request']" [class.noActive]="(currentUrl !== 'create-request') && (statusPackage > -1)" routerLinkActive="active">
+            <li class="triangle" [routerLink]="['./create-request']" [class.noActive]="(currentUrl !== 'create-request') && (statusPackage > -1)"
+                [class.active]="currentUrl === 'create-request'" [class.allow]="(statusPackage > -1)">
                 <div style="width: 100%" class="center-parent">
                     <div class="arrow-down"></div>
                 </div>
@@ -9,7 +10,8 @@
                     <strong>Cần lập đề nghị dự thầu</strong>
                 </span>
             </li>
-            <li class="triangle" [routerLink]="['./infomation-deployment']" [class.noActive]="(currentUrl !== 'infomation-deployment') && statusPackage > 0" routerLinkActive="active">
+            <li class="triangle" [routerLink]="(statusPackage > 0) ? ['./infomation-deployment'] : []" [class.noActive]="(currentUrl !== 'infomation-deployment') && statusPackage > 0"
+                [class.active]="currentUrl === 'infomation-deployment'" [class.allow]="(statusPackage > 0)" [class.no-allow]="(statusPackage < 1)">
                 <div style="width: 100%" class="center-parent">
                     <div class="arrow-down"></div>
                 </div>
@@ -17,15 +19,17 @@
                     <strong>Triển khai &amp; phân công tiến độ</strong>
                 </span>
             </li>
-            <li class="triangle" (click)="routerLink()" [class.noActive]="currentUrl !== 'build' && statusPackage > 1" routerLinkActive="active">
-                <div style="width: 100%" class="center-parent"> 
+            <li class="triangle" [routerLink]="(statusPackage > 1) ? ['./build'] : []" [class.noActive]="currentUrl !== 'build' && statusPackage > 1"
+                [class.active]="currentUrl === 'build'" [class.allow]="(statusPackage > 1)" [class.no-allow]="(statusPackage < 2)">
+                <div style="width: 100%" class="center-parent">
                     <div class="arrow-down"></div>
                 </div>
                 <span class="text-color ">
                     <strong>Lập HSDT</strong>
                 </span>
             </li>
-            <li class="triangle" [routerLink]="['./price-review']" [class.noActive]="currentUrl !== 'price-review' && statusPackage > 2" routerLinkActive="active">
+            <li class="triangle" [routerLink]="(statusPackage > 2) ? ['./price-review'] : []" [class.noActive]="currentUrl !== 'price-review' && statusPackage > 2"
+                [class.active]="currentUrl === 'price-review'" [class.allow]="(statusPackage > 2)" [class.no-allow]="(statusPackage < 3)">
                 <div style="width: 100%" class="center-parent">
                     <div class="arrow-down"></div>
                 </div>
@@ -33,7 +37,8 @@
                     <strong>Trình duyệt giá</strong>
                 </span>
             </li>
-            <li class="triangle" [routerLink]="['./interview-negotiation']" [class.noActive]="currentUrl !== 'interview-negotiation' && statusPackage > 3" routerLinkActive="active">
+            <li class="triangle" [routerLink]="(statusPackage > 3)  ? ['./interview-negotiation'] : []" [class.noActive]="currentUrl !== 'interview-negotiation' && statusPackage > 3"
+                [class.active]="currentUrl === 'interview-negotiation'" [class.allow]="(statusPackage > 3)" [class.no-allow]="(statusPackage < 4)">
                 <div style="width: 100%" class="center-parent">
                     <div class="arrow-down"></div>
                 </div>
