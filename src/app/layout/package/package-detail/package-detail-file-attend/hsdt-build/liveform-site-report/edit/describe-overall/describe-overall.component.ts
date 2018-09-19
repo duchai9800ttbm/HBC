@@ -3,6 +3,8 @@ import { DescribeOverall } from '../../../../../../../../shared/models/site-surv
 import { FormGroup, FormBuilder } from '@angular/forms';
 import { EditComponent } from '../edit.component';
 import { LiveformSiteReportComponent } from '../../liveform-site-report.component';
+import { PackageDetailComponent } from '../../../../../package-detail.component';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-describe-overall',
@@ -16,12 +18,17 @@ export class DescribeOverallComponent implements OnInit {
   existingBuildImageUrls = [];
   stacaleImageUrls = [];
   url;
+  viewMode;
+  currentBidOpportunityId: number;
   describeModel = new DescribeOverall();
   constructor(
+    private router: Router,
     private fb: FormBuilder
   ) { }
 
   ngOnInit() {
+    this.currentBidOpportunityId = +PackageDetailComponent.packageId;
+    this.checkFlag();
     this.initData();
     this.describeForm = this.fb.group({
       chiTietDiaHinhDesc: [this.describeModel.chiTietDiaHinh && this.describeModel.chiTietDiaHinh.description],
@@ -32,6 +39,14 @@ export class DescribeOverallComponent implements OnInit {
       yeuCauChuongNgaiList: [null],
     });
     this.describeForm.valueChanges.subscribe(data => this.mappingToLiveFormData(data));
+  }
+  checkFlag() {
+    if (LiveformSiteReportComponent.formModel.id) {
+      const flag = LiveformSiteReportComponent.formModel.viewFlag;
+      this.viewMode = flag;
+    } else {
+      this.router.navigate([`/package/detail/${this.currentBidOpportunityId}/attend/build/liveformsite`]);
+    }
   }
 
   initData() {
@@ -76,15 +91,24 @@ export class DescribeOverallComponent implements OnInit {
     if (files) {
       for (const file of files) {
         const reader = new FileReader();
-        reader.onload = (e: any) => this.topographyImageUrls.push(e.target.result);
+        reader.onload = (e: any) => {
+          this.topographyImageUrls.push({
+            id: null,
+            image: {
+              file: file,
+              base64: e.target.result
+            }
+          });
+          this.describeForm.get('chiTietDiaHinhList').patchValue(this.topographyImageUrls);
+        };
         reader.readAsDataURL(file);
       }
-      this.describeForm.get('chiTietDiaHinhList').patchValue(this.topographyImageUrls);
     }
   }
   deleteTopographyImage(i) {
     const index = this.topographyImageUrls.indexOf(i);
     this.topographyImageUrls.splice(index, 1);
+    this.describeForm.get('chiTietDiaHinhList').patchValue(this.topographyImageUrls);
   }
 
   uploadExistingBuildImage(event) {
@@ -92,15 +116,24 @@ export class DescribeOverallComponent implements OnInit {
     if (files) {
       for (const file of files) {
         const reader = new FileReader();
-        reader.onload = (e: any) => this.existingBuildImageUrls.push(e.target.result);
+        reader.onload = (e: any) => {
+          this.existingBuildImageUrls.push({
+            id: null,
+            image: {
+              file: file,
+              base64: e.target.result
+            }
+          });
+          this.describeForm.get('kienTrucHienHuuList').patchValue(this.existingBuildImageUrls);
+        };
         reader.readAsDataURL(file);
       }
-      this.describeForm.get('kienTrucHienHuuList').patchValue(this.existingBuildImageUrls);
     }
   }
   deleteExistingBuildImage(i) {
     const index = this.existingBuildImageUrls.indexOf(i);
     this.existingBuildImageUrls.splice(index, 1);
+    this.describeForm.get('kienTrucHienHuuList').patchValue(this.existingBuildImageUrls);
   }
 
   uploadStacaleImage(event) {
@@ -108,14 +141,23 @@ export class DescribeOverallComponent implements OnInit {
     if (files) {
       for (const file of files) {
         const reader = new FileReader();
-        reader.onload = (e: any) => this.stacaleImageUrls.push(e.target.result);
+        reader.onload = (e: any) => {
+          this.stacaleImageUrls.push({
+            id: null,
+            image: {
+              file: file,
+              base64: e.target.result
+            }
+          });
+          this.describeForm.get('yeuCauChuongNgaiList').patchValue(this.stacaleImageUrls);
+        };
         reader.readAsDataURL(file);
       }
-      this.describeForm.get('yeuCauChuongNgaiList').patchValue(this.stacaleImageUrls);
     }
   }
   deleteStacaleImage(i) {
     const index = this.stacaleImageUrls.indexOf(i);
     this.stacaleImageUrls.splice(index, 1);
+    this.describeForm.get('yeuCauChuongNgaiList').patchValue(this.stacaleImageUrls);
   }
 }

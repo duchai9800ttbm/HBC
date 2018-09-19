@@ -22,6 +22,7 @@ import {
   ImageItem
 } from '../../../../../../../../shared/models/site-survey-report/image';
 import { LiveformSiteReportComponent } from '../../liveform-site-report.component';
+import { PackageDetailComponent } from '../../../../../package-detail.component';
 
 @Component({
   selector: 'app-scale-overall',
@@ -38,18 +39,22 @@ export class ScaleOverallComponent implements OnInit {
   loaiCongTrinhList = [];
   trangThaiCongTrinhForm: FormGroup;
   trangthaiCongTrinhList = [];
-  perspectiveImageUrls = [{ file: null, base64: null }];
+  perspectiveImageUrls = [];
   structureImageUrls = [];
   requirementsImageUrls = [];
   url;
+  viewMode;
+  currentBidOpportunityId: number;
   scaleModel = new ScaleOverall();
   constructor(
     private router: Router,
-    private fb: FormBuilder,
+    private fb: FormBuilder
 
   ) { }
 
   ngOnInit() {
+    this.currentBidOpportunityId = +PackageDetailComponent.packageId;
+    this.checkFlag();
     this.initData();
     this.scaleOverallForm = this.fb.group({
       tenTaiLieu: [this.scaleModel.tenTaiLieu],
@@ -61,7 +66,7 @@ export class ScaleOverallComponent implements OnInit {
       soTang: [this.scaleModel.quyMoDuAn && this.scaleModel.quyMoDuAn.soTang],
       tienDo: [this.scaleModel.quyMoDuAn && this.scaleModel.quyMoDuAn.tienDo],
       hinhAnhPhoiCanhDesc: [this.scaleModel.hinhAnhPhoiCanh && this.scaleModel.hinhAnhPhoiCanh.description],
-      hinhAnhPhoiCanhList: [null],
+      hinhAnhPhoiCanhList: [{ file: null, base64: null }],
       thongTinVeKetCauDesc: [this.scaleModel.thongTinVeKetCau && this.scaleModel.thongTinVeKetCau.description],
       thongTinVeKetCauList: [null],
       nhungYeuCauDacBietDesc: [this.scaleModel.nhungYeuCauDacBiet && this.scaleModel.nhungYeuCauDacBiet.description],
@@ -79,11 +84,20 @@ export class ScaleOverallComponent implements OnInit {
     this.scaleOverallForm.valueChanges.subscribe(data => this.mappingToLiveFormData(data));
   }
 
+  checkFlag() {
+    if (LiveformSiteReportComponent.formModel.id) {
+      const flag = LiveformSiteReportComponent.formModel.viewFlag;
+      this.viewMode = flag;
+    } else {
+      this.router.navigate([`/package/detail/${this.currentBidOpportunityId}/attend/build/liveformsite`]);
+    }
+  }
+
   initData() {
     const obj = LiveformSiteReportComponent.formModel.scaleOverall;
     if (obj) {
       this.scaleModel.tenTaiLieu = obj.tenTaiLieu ? obj.tenTaiLieu : '';
-      this.scaleModel.lanPhongVan = obj.lanPhongVan ? obj.lanPhongVan : 0;
+      this.scaleModel.lanPhongVan = obj.lanPhongVan ? obj.lanPhongVan : null;
       this.loaiCongTrinhList = (obj.loaiCongTrinh.length) ? obj.loaiCongTrinh : [
         {
           value: 'Văn phòng (Office)',
@@ -190,7 +204,6 @@ export class ScaleOverallComponent implements OnInit {
         description: obj.nhungYeuCauDacBiet.description,
         images: obj.nhungYeuCauDacBiet.images
       };
-      // array.map(function(currentValue, index, arr), thisValue)
       this.perspectiveImageUrls = this.scaleModel.hinhAnhPhoiCanh ? this.scaleModel.hinhAnhPhoiCanh.images : [];
       this.structureImageUrls = this.scaleModel.thongTinVeKetCau ? this.scaleModel.thongTinVeKetCau.images : [];
       this.requirementsImageUrls = this.scaleModel.nhungYeuCauDacBiet ? this.scaleModel.nhungYeuCauDacBiet.images : [];
@@ -211,7 +224,7 @@ export class ScaleOverallComponent implements OnInit {
     };
     LiveformSiteReportComponent.formModel.scaleOverall.hinhAnhPhoiCanh = {
       description: data.hinhAnhPhoiCanhDesc,
-      images: this.perspectiveImageUrls.map() // TODO map lên 1 object
+      images: this.perspectiveImageUrls
     };
     LiveformSiteReportComponent.formModel.scaleOverall.thongTinVeKetCau = {
       description: data.thongTinVeKetCauDesc,
@@ -228,14 +241,18 @@ export class ScaleOverallComponent implements OnInit {
     if (files) {
       for (const file of files) {
         const reader = new FileReader();
-        reader.onload = (e: any) => this.perspectiveImageUrls.push({
-          file: file,
-          base64: e.target.result
-        });
+        reader.onload = (e: any) => {
+          this.perspectiveImageUrls.push({
+            id: null,
+            image: {
+              file: file,
+              base64: e.target.result
+            }
+          });
+          this.scaleOverallForm.get('hinhAnhPhoiCanhList').patchValue(this.perspectiveImageUrls);
+        };
         reader.readAsDataURL(file);
       }
-      this.scaleOverallForm.get('hinhAnhPhoiCanhList').patchValue(this.perspectiveImageUrls);
-      console.log(this.perspectiveImageUrls);
     }
   }
 
@@ -249,10 +266,18 @@ export class ScaleOverallComponent implements OnInit {
     if (files) {
       for (const file of files) {
         const reader = new FileReader();
-        reader.onload = (e: any) => this.structureImageUrls.push(e.target.result);
+        reader.onload = (e: any) => {
+          this.structureImageUrls.push({
+            id: null,
+            image: {
+              file: file,
+              base64: e.target.result
+            }
+          });
+          this.scaleOverallForm.get('thongTinVeKetCauList').patchValue(this.structureImageUrls);
+        };
         reader.readAsDataURL(file);
       }
-      this.scaleOverallForm.get('thongTinVeKetCauList').patchValue(this.structureImageUrls);
     }
   }
   deleteStructureImage(i) {
@@ -265,10 +290,18 @@ export class ScaleOverallComponent implements OnInit {
     if (files) {
       for (const file of files) {
         const reader = new FileReader();
-        reader.onload = (e: any) => this.requirementsImageUrls.push(e.target.result);
+        reader.onload = (e: any) => {
+          this.requirementsImageUrls.push({
+            id: null,
+            image: {
+              file: file,
+              base64: e.target.result
+            }
+          });
+          this.scaleOverallForm.get('nhungYeuCauDacBietList').patchValue(this.requirementsImageUrls);
+        };
         reader.readAsDataURL(file);
       }
-      this.scaleOverallForm.get('nhungYeuCauDacBietList').patchValue(this.requirementsImageUrls);
 
     }
   }

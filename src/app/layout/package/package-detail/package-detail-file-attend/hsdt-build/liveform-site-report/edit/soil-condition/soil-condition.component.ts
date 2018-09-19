@@ -3,6 +3,8 @@ import { SoilCondition } from '../../../../../../../../shared/models/site-survey
 import { FormGroup, FormBuilder } from '@angular/forms';
 import { EditComponent } from '../edit.component';
 import { LiveformSiteReportComponent } from '../../liveform-site-report.component';
+import { PackageDetailComponent } from '../../../../../package-detail.component';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-soil-condition',
@@ -15,12 +17,17 @@ export class SoilConditionComponent implements OnInit {
   footingImageUrls = [];
   investigationImageUrls = [];
   url;
+  viewMode;
+  currentBidOpportunityId: number;
   soilConditionModel = new SoilCondition();
   constructor(
+    private router: Router,
     private fb: FormBuilder
   ) { }
 
   ngOnInit() {
+    this.currentBidOpportunityId = +PackageDetailComponent.packageId;
+    this.checkFlag();
     this.initData();
     this.soilConditionForm = this.fb.group({
       nenMongHienCoDesc: [this.soilConditionModel.nenMongHienCo && this.soilConditionModel.nenMongHienCo.description],
@@ -30,6 +37,14 @@ export class SoilConditionComponent implements OnInit {
       thongTinCongTrinhGanDoList: null
     });
     this.soilConditionForm.valueChanges.subscribe(data => this.mappingToLiveFormData(data));
+  }
+  checkFlag() {
+    if (LiveformSiteReportComponent.formModel.id) {
+      const flag = LiveformSiteReportComponent.formModel.viewFlag;
+      this.viewMode = flag;
+    } else {
+      this.router.navigate([`/package/detail/${this.currentBidOpportunityId}/attend/build/liveformsite`]);
+    }
   }
 
   initData() {
@@ -66,15 +81,24 @@ export class SoilConditionComponent implements OnInit {
     if (files) {
       for (const file of files) {
         const reader = new FileReader();
-        reader.onload = (e: any) => this.footingImageUrls.push(e.target.result);
+        reader.onload = (e: any) => {
+          this.footingImageUrls.push({
+            id: null,
+            image: {
+              file: file,
+              base64: e.target.result
+            }
+          });
+          this.soilConditionForm.get('nenMongHienCoList').patchValue(this.footingImageUrls);
+        };
         reader.readAsDataURL(file);
       }
-      this.soilConditionForm.get('nenMongHienCoList').patchValue(this.footingImageUrls);
     }
   }
   deleteFootingImage(i) {
     const index = this.footingImageUrls.indexOf(i);
     this.footingImageUrls.splice(index, 1);
+    this.soilConditionForm.get('nenMongHienCoList').patchValue(this.footingImageUrls);
   }
 
   uploadInvestigationImage(event) {
@@ -82,14 +106,23 @@ export class SoilConditionComponent implements OnInit {
     if (files) {
       for (const file of files) {
         const reader = new FileReader();
-        reader.onload = (e: any) => this.investigationImageUrls.push(e.target.result);
+        reader.onload = (e: any) => {
+          this.investigationImageUrls.push({
+            id: null,
+            image: {
+              file: file,
+              base64: e.target.result
+            }
+          });
+          this.soilConditionForm.get('thongTinCongTrinhGanDoList').patchValue(this.investigationImageUrls);
+        };
         reader.readAsDataURL(file);
       }
-      this.soilConditionForm.get('thongTinCongTrinhGanDoList').patchValue(this.investigationImageUrls);
     }
   }
   deleteInvestigationImage(i) {
     const index = this.investigationImageUrls.indexOf(i);
     this.investigationImageUrls.splice(index, 1);
+    this.soilConditionForm.get('thongTinCongTrinhGanDoList').patchValue(this.investigationImageUrls);
   }
 }

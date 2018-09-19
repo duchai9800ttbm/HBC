@@ -3,6 +3,8 @@ import { ServiceConstruction } from '../../../../../../../../shared/models/site-
 import { FormGroup, FormBuilder } from '@angular/forms';
 import { EditComponent } from '../edit.component';
 import { LiveformSiteReportComponent } from '../../liveform-site-report.component';
+import { Router } from '@angular/router';
+import { PackageDetailComponent } from '../../../../../package-detail.component';
 
 @Component({
   selector: 'app-service-construction',
@@ -19,14 +21,19 @@ export class ServiceConstructionComponent implements OnInit {
   mediumVoltageSystemImageUrls = [];
   powerOtherImageUrls = [];
   url;
+  viewMode;
+  currentBidOpportunityId: number;
   serviceConstructionModel = new ServiceConstruction();
   constructor(
+    private router: Router,
     private fb: FormBuilder
   ) {
 
   }
 
   ngOnInit() {
+    this.currentBidOpportunityId = +PackageDetailComponent.packageId;
+    this.checkFlag();
     this.initData();
     this.serviceConstructionForm = this.fb.group({
       heThongNuocHienHuuDesc: [
@@ -67,7 +74,14 @@ export class ServiceConstructionComponent implements OnInit {
     this.serviceConstructionForm.valueChanges.subscribe(data => this.mappingToLiveFormData(data));
 
   }
-
+  checkFlag() {
+    if (LiveformSiteReportComponent.formModel.id) {
+      const flag = LiveformSiteReportComponent.formModel.viewFlag;
+      this.viewMode = flag;
+    } else {
+      this.router.navigate([`/package/detail/${this.currentBidOpportunityId}/attend/build/liveformsite`]);
+    }
+  }
   initData() {
     const obj = LiveformSiteReportComponent.formModel.serviceConstruction;
     if (obj) {
@@ -154,15 +168,24 @@ export class ServiceConstructionComponent implements OnInit {
     if (files) {
       for (const file of files) {
         const reader = new FileReader();
-        reader.onload = (e: any) => this.supplySystemImageUrls.push(e.target.result);
+        reader.onload = (e: any) => {
+          this.supplySystemImageUrls.push({
+            id: null,
+            image: {
+              file: file,
+              base64: e.target.result
+            }
+          });
+          this.serviceConstructionForm.get('heThongNuocHienHuuList').patchValue(this.supplySystemImageUrls);
+        };
         reader.readAsDataURL(file);
       }
-      this.serviceConstructionForm.get('heThongNuocHienHuuList').patchValue(this.supplySystemImageUrls);
     }
   }
   deleteSupplySystemImage(i) {
     const index = this.supplySystemImageUrls.indexOf(i);
     this.supplySystemImageUrls.splice(index, 1);
+    this.serviceConstructionForm.get('heThongNuocHienHuuList').patchValue(this.supplySystemImageUrls);
   }
 
   uploadSupplyPointImage(event) {
@@ -170,15 +193,25 @@ export class ServiceConstructionComponent implements OnInit {
     if (files) {
       for (const file of files) {
         const reader = new FileReader();
-        reader.onload = (e: any) => this.supplyPointImageUrls.push(e.target.result);
+        reader.onload = (e: any) => {
+          this.supplyPointImageUrls.push({
+            id: null,
+            image: {
+              file: file,
+              base64: e.target.result
+            }
+          });
+          this.serviceConstructionForm.get('heThongNuocDiemDauNoiList').patchValue(this.supplyPointImageUrls);
+        };
         reader.readAsDataURL(file);
       }
-      this.serviceConstructionForm.get('heThongNuocDiemDauNoiList').patchValue(this.supplyPointImageUrls);
+
     }
   }
   deleteSupplyPointImage(i) {
     const index = this.supplyPointImageUrls.indexOf(i);
     this.supplyPointImageUrls.splice(index, 1);
+    this.serviceConstructionForm.get('heThongNuocDiemDauNoiList').patchValue(this.supplyPointImageUrls);
   }
 
 
@@ -187,15 +220,24 @@ export class ServiceConstructionComponent implements OnInit {
     if (files) {
       for (const file of files) {
         const reader = new FileReader();
-        reader.onload = (e: any) => this.drainageSystemImageUrls.push(e.target.result);
+        reader.onload = (e: any) => {
+          this.drainageSystemImageUrls.push({
+            id: null,
+            image: {
+              file: file,
+              base64: e.target.result
+            }
+          });
+          this.serviceConstructionForm.get('heThongNuocThoatHienHuuList').patchValue(this.drainageSystemImageUrls);
+        };
         reader.readAsDataURL(file);
       }
-      this.serviceConstructionForm.get('heThongNuocThoatHienHuuList').patchValue(this.drainageSystemImageUrls);
     }
   }
   deleteDrainageSystemImage(i) {
     const index = this.drainageSystemImageUrls.indexOf(i);
     this.drainageSystemImageUrls.splice(index, 1);
+    this.serviceConstructionForm.get('heThongNuocThoatHienHuuList').patchValue(this.drainageSystemImageUrls);
   }
 
   uploadDrainagePointImage(event) {
@@ -203,15 +245,24 @@ export class ServiceConstructionComponent implements OnInit {
     if (files) {
       for (const file of files) {
         const reader = new FileReader();
-        reader.onload = (e: any) => this.drainagePointImageUrls.push(e.target.result);
+        reader.onload = (e: any) => {
+          this.drainagePointImageUrls.push({
+            id: null,
+            image: {
+              file: file,
+              base64: e.target.result
+            }
+          });
+          this.serviceConstructionForm.get('heThongNuocThoatDiemDauNoiList').patchValue(this.drainagePointImageUrls);
+        };
         reader.readAsDataURL(file);
       }
-      this.serviceConstructionForm.get('heThongNuocThoatDiemDauNoiList').patchValue(this.drainagePointImageUrls);
     }
   }
   deleteDrainagePointImage(i) {
     const index = this.drainagePointImageUrls.indexOf(i);
     this.drainagePointImageUrls.splice(index, 1);
+    this.serviceConstructionForm.get('heThongNuocThoatDiemDauNoiList').patchValue(this.drainagePointImageUrls);
   }
 
   uploadPowerStationImage(event) {
@@ -219,15 +270,24 @@ export class ServiceConstructionComponent implements OnInit {
     if (files) {
       for (const file of files) {
         const reader = new FileReader();
-        reader.onload = (e: any) => this.powerStationImageUrls.push(e.target.result);
+        reader.onload = (e: any) => {
+          this.powerStationImageUrls.push({
+            id: null,
+            image: {
+              file: file,
+              base64: e.target.result
+            }
+          });
+          this.serviceConstructionForm.get('tramHaTheList').patchValue(this.powerStationImageUrls);
+        };
         reader.readAsDataURL(file);
       }
-      this.serviceConstructionForm.get('tramHaTheList').patchValue(this.powerStationImageUrls);
     }
   }
   deletePowerStationImage(i) {
     const index = this.powerStationImageUrls.indexOf(i);
     this.powerStationImageUrls.splice(index, 1);
+    this.serviceConstructionForm.get('tramHaTheList').patchValue(this.powerStationImageUrls);
   }
 
   uploadMediumVoltageSystemImage(event) {
@@ -235,15 +295,24 @@ export class ServiceConstructionComponent implements OnInit {
     if (files) {
       for (const file of files) {
         const reader = new FileReader();
-        reader.onload = (e: any) => this.mediumVoltageSystemImageUrls.push(e.target.result);
+        reader.onload = (e: any) => {
+          this.mediumVoltageSystemImageUrls.push({
+            id: null,
+            image: {
+              file: file,
+              base64: e.target.result
+            }
+          });
+          this.serviceConstructionForm.get('duongDayTrungTheList').patchValue(this.mediumVoltageSystemImageUrls);
+        };
         reader.readAsDataURL(file);
       }
-      this.serviceConstructionForm.get('duongDayTrungTheList').patchValue(this.mediumVoltageSystemImageUrls);
     }
   }
   deleteMediumVoltageSystemImage(i) {
     const index = this.mediumVoltageSystemImageUrls.indexOf(i);
     this.mediumVoltageSystemImageUrls.splice(index, 1);
+    this.serviceConstructionForm.get('duongDayTrungTheList').patchValue(this.mediumVoltageSystemImageUrls);
   }
 
   uploadPowerOtherImage(event) {
@@ -251,14 +320,23 @@ export class ServiceConstructionComponent implements OnInit {
     if (files) {
       for (const file of files) {
         const reader = new FileReader();
-        reader.onload = (e: any) => this.powerOtherImageUrls.push(e.target.result);
+        reader.onload = (e: any) => {
+          this.powerOtherImageUrls.push({
+            id: null,
+            image: {
+              file: file,
+              base64: e.target.result
+            }
+          });
+          this.serviceConstructionForm.get('heThongDienKhacList').patchValue(this.powerOtherImageUrls);
+        };
         reader.readAsDataURL(file);
       }
-      this.serviceConstructionForm.get('heThongDienKhacList').patchValue(this.powerOtherImageUrls);
     }
   }
   deletePowerOtherImage(i) {
     const index = this.powerOtherImageUrls.indexOf(i);
     this.powerOtherImageUrls.splice(index, 1);
+    this.serviceConstructionForm.get('heThongDienKhacList').patchValue(this.powerOtherImageUrls);
   }
 }

@@ -87,12 +87,14 @@
                             <td class="text-center">
                                 <div class="d-flex justify-content-center">
                                     <div class="icon-mg">
-                                        <a title="Xem file" style="color: #00B21E" [routerLink]="['./info']">
+                                        <a title="Xem file" style="color: #00B21E" (click)="onActivate($event, true)"
+                                            [routerLink]="['./info']">
                                             <i class="fa fa-eye" aria-hidden="true"></i>
                                         </a>
                                     </div>
                                     <div class="icon-mg">
-                                        <a title="Sửa file" style="color: #004FA4" [routerLink]="['./edit']">
+                                        <a title="Edit file" style="color: #004FA4" (click)="onActivate($event, false)"
+                                            [routerLink]="['./edit']" name='edit'>
                                             <i class="fa fa-pencil" aria-hidden="true"></i>
                                         </a>
                                     </div>

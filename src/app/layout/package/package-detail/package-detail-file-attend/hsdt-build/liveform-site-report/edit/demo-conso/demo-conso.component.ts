@@ -3,6 +3,8 @@ import { DemoConso } from '../../../../../../../../shared/models/site-survey-rep
 import { FormGroup, FormBuilder } from '@angular/forms';
 import { EditComponent } from '../edit.component';
 import { LiveformSiteReportComponent } from '../../liveform-site-report.component';
+import { PackageDetailComponent } from '../../../../../package-detail.component';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-demo-conso',
@@ -16,22 +18,35 @@ export class DemoConsoComponent implements OnInit {
   consolidationImageUrls = [];
   adjacentImageUrls = [];
   url;
+  viewMode;
+  currentBidOpportunityId: number;
   demoConsoModel = new DemoConso();
   constructor(
+    private router: Router,
     private fb: FormBuilder
   ) { }
 
   ngOnInit() {
+    this.currentBidOpportunityId = +PackageDetailComponent.packageId;
+    this.checkFlag();
     this.initData();
     this.demoConsoForm = this.fb.group({
       phaVoKetCauDesc: [this.demoConsoModel.phaVoKetCau && this.demoConsoModel.phaVoKetCau.description],
-      chiTietDiaHinhKhoKhanList: [null],
+      phaVoKetCauList: [null],
       giaCoKetCauDesc: [this.demoConsoModel.giaCoKetCau && this.demoConsoModel.giaCoKetCau.description],
-      chiTietDiaHinhThuanLoiList: [null],
+      giaCoKetCauList: [null],
       dieuKienHinhAnhDesc: [this.demoConsoModel.dieuKien && this.demoConsoModel.dieuKien.description],
-      huongVaoCongTruongList: [null]
+      dieuKienHinhAnhList: [null]
     });
     this.demoConsoForm.valueChanges.subscribe(data => this.mappingToLiveFormData(data));
+  }
+  checkFlag() {
+    if (LiveformSiteReportComponent.formModel.id) {
+      const flag = LiveformSiteReportComponent.formModel.viewFlag;
+      this.viewMode = flag;
+    } else {
+      this.router.navigate([`/package/detail/${this.currentBidOpportunityId}/attend/build/liveformsite`]);
+    }
   }
 
   initData() {
@@ -78,7 +93,16 @@ export class DemoConsoComponent implements OnInit {
     if (files) {
       for (const file of files) {
         const reader = new FileReader();
-        reader.onload = (e: any) => this.demobilisationImageUrls.push(e.target.result);
+        reader.onload = (e: any) => {
+          this.demobilisationImageUrls.push({
+            id: null,
+            image: {
+              file: file,
+              base64: e.target.result
+            }
+          });
+          this.demoConsoForm.get('phaVoKetCauList').patchValue(this.demobilisationImageUrls);
+        };
         reader.readAsDataURL(file);
       }
     }
@@ -86,6 +110,7 @@ export class DemoConsoComponent implements OnInit {
   deleteDemobilisationImage(i) {
     const index = this.demobilisationImageUrls.indexOf(i);
     this.demobilisationImageUrls.splice(index, 1);
+    this.demoConsoForm.get('phaVoKetCauList').patchValue(this.demobilisationImageUrls);
   }
 
   uploadConsolidationImage(event) {
@@ -93,7 +118,16 @@ export class DemoConsoComponent implements OnInit {
     if (files) {
       for (const file of files) {
         const reader = new FileReader();
-        reader.onload = (e: any) => this.consolidationImageUrls.push(e.target.result);
+        reader.onload = (e: any) => {
+          this.consolidationImageUrls.push({
+            id: null,
+            image: {
+              file: file,
+              base64: e.target.result
+            }
+          });
+          this.demoConsoForm.get('giaCoKetCauList').patchValue(this.consolidationImageUrls);
+        };
         reader.readAsDataURL(file);
       }
     }
@@ -101,6 +135,7 @@ export class DemoConsoComponent implements OnInit {
   deleteConsolidationImage(i) {
     const index = this.consolidationImageUrls.indexOf(i);
     this.consolidationImageUrls.splice(index, 1);
+    this.demoConsoForm.get('giaCoKetCauList').patchValue(this.consolidationImageUrls);
   }
 
   uploaAdjacentImage(event) {
@@ -108,7 +143,16 @@ export class DemoConsoComponent implements OnInit {
     if (files) {
       for (const file of files) {
         const reader = new FileReader();
-        reader.onload = (e: any) => this.adjacentImageUrls.push(e.target.result);
+        reader.onload = (e: any) => {
+          this.adjacentImageUrls.push({
+            id: null,
+            image: {
+              file: file,
+              base64: e.target.result
+            }
+          });
+          this.demoConsoForm.get('dieuKienHinhAnhList').patchValue(this.adjacentImageUrls);
+        };
         reader.readAsDataURL(file);
       }
     }
@@ -116,7 +160,6 @@ export class DemoConsoComponent implements OnInit {
   deleteAdjacentImage(i) {
     const index = this.adjacentImageUrls.indexOf(i);
     this.adjacentImageUrls.splice(index, 1);
+    this.demoConsoForm.get('dieuKienHinhAnhList').patchValue(this.adjacentImageUrls);
   }
-
-
 }

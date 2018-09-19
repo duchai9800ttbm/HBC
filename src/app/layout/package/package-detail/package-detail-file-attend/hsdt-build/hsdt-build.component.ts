@@ -18,6 +18,7 @@ export class HsdtBuildComponent implements OnInit {
     dtTrigger: Subject<any> = new Subject();
     dialog;
     packageId;
+    isShowSideMenu = false;
     isShowMenu = false;
     notShow = false;
     constructor(
@@ -42,11 +43,14 @@ export class HsdtBuildComponent implements OnInit {
     }
 
     toggleClick() {
+        this.isShowSideMenu = !this.isShowSideMenu;
         $('.toggle-menu-item').toggleClass('resize');
-        // setTimeout( () => ($('.toggle-menu-item').toggleClass('hidden')), 2100);
-        $('.iconN01').toggleClass('iconN1');
-        $('.iconN02').toggleClass('iconN2');
-        $('.iconN03').toggleClass('iconN3');
+        $('.iconN1').toggleClass('iconN01');
+        $('.iconN2').toggleClass('iconN02');
+        $('.iconN3').toggleClass('iconN03');
+        $('.line').toggleClass('resize');
+        $('#toggle-menu-item').toggleClass('hidden');
+        $('#toggle-menu-item').toggleClass('resize');
     }
 
 

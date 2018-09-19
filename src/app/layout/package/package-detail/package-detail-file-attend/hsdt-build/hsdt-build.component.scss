@@ -180,7 +180,7 @@ li.triangle::before {
     padding: 20px 15px 0 0;
 }
 
-#header-table {
+#header-table-build {
     padding-left: 55px;
 }
 
@@ -416,54 +416,44 @@ table.dataTable th {
 }
 
 .resize {
-    transition: width 600ms;
+    transition: width 300ms;
     pointer-events: none;
     width: 0px !important;
     color: transparent !important;
     background-color: transparent !important;
     border: none !important;
+    box-shadow: none !important;
+    display: none;
 }
 
 .iconButton {
-    width: 19px;
     height: 3px;
     background-color: #fff;
     border: none;
     border-radius: 10px;
 }
 
-.iconN01 {
-    transition-duration: 600ms;
-}
-
 .iconN1 {
     width: 25px;
-    transform: none;
+    transform: rotate(45deg) translate(5px, 5px);
     transition-duration: 600ms;
 }
 
-.iconN03 {
+.iconN2 {
+    transform: none;
+    background-color: transparent;
     transition-duration: 600ms;
 }
 
 .iconN3 {
     width: 25px;
+    transform: rotate(-45deg) translate(4px, -4px);
+    transition-duration: 600ms;
+}
+
+.iconN01, .iconN02, .iconN03 {
+    background-color: #fff !important;
     transform: none;
-    transition-duration: 600ms;
-}
-
-.iconN02 {
-    transition-duration: 600ms;
-}
-
-.iconN2 {
-    transform: rotateY(90deg);
-    transition-duration: 600ms;
-}
-
-.iconN02 {
-    transform: none;
-    width: 25px;
     transition-duration: 600ms;
 }
 
@@ -477,7 +467,7 @@ table.dataTable th {
         padding-top: 0 !important;
     }
 
-    #header-table {
+    #header-table-build {
         zoom: 0.8 !important;
         padding-left: 20px;
 

@@ -15,7 +15,7 @@
                             <input type="file" #uploadFooting (change)="uploadFootingImage($event)">
 
                             <div class="display-img" *ngFor="let url of footingImageUrls">
-                                <img [src]="url">
+                                <img [src]="(url.image?.base64) || url.image.file">
                                 <div class="toppp" (click)="deleteFootingImage(url)">
                                     <i class="fa fa-times delete-icon" aria-hidden="true"></i>
                                 </div>
@@ -41,7 +41,7 @@
                             <input type="file" #uploadInvestigation (change)="uploadInvestigationImage($event)">
 
                             <div class="display-img" *ngFor="let url of investigationImageUrls">
-                                <img [src]="url">
+                                <img [src]="(url.image?.base64) || url.image.file">
                                 <div class="toppp" (click)="deleteInvestigationImage(url)">
                                     <i class="fa fa-times delete-icon" aria-hidden="true"></i>
                                 </div>

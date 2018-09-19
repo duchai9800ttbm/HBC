@@ -42,16 +42,6 @@ export class ContentItemComponent implements OnInit {
     obj.images = this.contentItemImageList;
     this.valueChange.emit(obj);
   }
-
-  // change() {
-  //   const obj = new ContentItem();
-  //   const valueForm = this.contentItemForm.value;
-  //   obj.name = valueForm.tenNoidung;
-  //   obj.detail = valueForm.chiTietNoiDung;
-  //   obj.images = this.contentItemImageList;
-  //   this.valueChange.emit(obj);
-  // }
-
   uploadContentImage(event) {
     const files = event.target.files;
     if (files) {

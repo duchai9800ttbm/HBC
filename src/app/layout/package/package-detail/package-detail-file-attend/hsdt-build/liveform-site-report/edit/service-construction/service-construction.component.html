@@ -14,7 +14,7 @@
                             <input type="file" #uploadSupplySystem (change)="uploadSupplySystemImage($event)">
 
                             <div class="display-img" *ngFor="let url of supplySystemImageUrls">
-                                <img [src]="url">
+                                <img [src]="(url.image?.base64) || url.image.file">
                                 <div class="toppp" (click)="deleteSupplySystemImage(url)">
                                     <i class="fa fa-times delete-icon" aria-hidden="true"></i>
                                 </div>
@@ -34,7 +34,7 @@
                             <input type="file" #uploadSupplyPoint (change)="uploadSupplyPointImage($event)">
 
                             <div class="display-img" *ngFor="let url of supplyPointImageUrls">
-                                <img [src]="url">
+                                <img [src]="(url.image?.base64) || url.image.file">
                                 <div class="toppp" (click)="deleteSupplyPointImage(url)">
                                     <i class="fa fa-times delete-icon" aria-hidden="true"></i>
                                 </div>
@@ -59,7 +59,7 @@
                             <input type="file" #uploadDrainageSystem (change)="uploadDrainageSystemImage($event)">
 
                             <div class="display-img" *ngFor="let url of drainageSystemImageUrls">
-                                <img [src]="url">
+                                <img [src]="(url.image?.base64) || url.image.file">
                                 <div class="toppp" (click)="deleteDrainageSystemImage(url)">
                                     <i class="fa fa-times delete-icon" aria-hidden="true"></i>
                                 </div>
@@ -79,7 +79,7 @@
                             <input type="file" #uploadDrainagePoint (change)="uploadDrainagePointImage($event)">
 
                             <div class="display-img" *ngFor="let url of drainagePointImageUrls">
-                                <img [src]="url">
+                                <img [src]="(url.image?.base64) || url.image.file">
                                 <div class="toppp" (click)="deleteDrainagePointImage(url)">
                                     <i class="fa fa-times delete-icon" aria-hidden="true"></i>
                                 </div>
@@ -104,7 +104,7 @@
                             <input type="file" #uploadPowerStation (change)="uploadPowerStationImage($event)">
 
                             <div class="display-img" *ngFor="let url of powerStationImageUrls">
-                                <img [src]="url">
+                                <img [src]="(url.image?.base64) || url.image.file">
                                 <div class="toppp" (click)="deletePowerStationImage(url)">
                                     <i class="fa fa-times delete-icon" aria-hidden="true"></i>
                                 </div>
@@ -124,7 +124,7 @@
                             <input type="file" #uploadMediumVoltageSystem (change)="uploadMediumVoltageSystemImage($event)">
 
                             <div class="display-img" *ngFor="let url of mediumVoltageSystemImageUrls">
-                                <img [src]="url">
+                                <img [src]="(url.image?.base64) || url.image.file">
                                 <div class="toppp" (click)="deleteMediumVoltageSystemImage(url)">
                                     <i class="fa fa-times delete-icon" aria-hidden="true"></i>
                                 </div>
@@ -144,7 +144,7 @@
                             <input type="file" #uploadPowerOther (change)="uploadPowerOtherImage($event)">
 
                             <div class="display-img" *ngFor="let url of powerOtherImageUrls">
-                                <img [src]="url">
+                                <img [src]="(url.image?.base64) || url.image.file">
                                 <div class="toppp" (click)="deletePowerOtherImage(url)">
                                     <i class="fa fa-times delete-icon" aria-hidden="true"></i>
                                 </div>

@@ -235,3 +235,13 @@ input[type=text] {
 label {
     font-size: 11px;
 }
+
+.view-mode {
+    width: 100% !important;
+    height: 75%;
+    position: absolute;
+    z-index: 8000 !important;
+    background-color: transparent;
+    opacity: 0;
+    bottom: 0;
+}

@@ -17,6 +17,7 @@ import { guid } from '@progress/kendo-angular-grid/dist/es2015/utils';
 import { ScaleOverall } from '../models/site-survey-report/scale-overall.model';
 import { Image, ImageItem } from '../models/site-survey-report/image';
 
+
 @Injectable()
 export class DocumentService {
     constructor(
@@ -73,6 +74,9 @@ export class DocumentService {
     }
     get employeeId() {
         return this.sessionService.currentUser.employeeId;
+    }
+    get userId() {
+        return this.sessionService.currentUser.userId;
     }
 
     read(opportunityId: number | string, bidDocumentMajorTypeId: number | string): Observable<BidDocumentGroupModel[]> {
@@ -349,239 +353,343 @@ export class DocumentService {
                 id: this.employeeId,
                 name: ''
             };
+            dataFormated.scaleOverall = new ScaleOverall();
+            dataFormated.scaleOverall.loaiCongTrinh = [
+                {
+                    value: 'Văn phòng (Office)',
+                    text: '',
+                    checked: false
+                },
+                {
+                    value: 'Nhà công nghiệp (Industrial))',
+                    text: '',
+                    checked: false
+                },
+                {
+                    value: 'MEP',
+                    text: '',
+                    checked: false
+                },
+                {
+                    value: 'Khu dân cư (Residential)',
+                    text: '',
+                    checked: false
+                },
+                {
+                    value: 'Tổ hợp (Mixed use)',
+                    text: '',
+                    checked: false
+                },
+                {
+                    value: 'Sân bay',
+                    text: '',
+                    checked: false
+                },
+                {
+                    value: 'TT Thương mại (Commercial)',
+                    text: '',
+                    checked: false
+                },
+                {
+                    value: 'Căn hộ',
+                    text: '',
+                    checked: false
+                },
+                {
+                    value: 'Nhà phố, biệt thự',
+                    text: '',
+                    checked: false
+                },
+                {
+                    value: 'Khách sạn/Resort (Hotel/Resort)',
+                    text: '',
+                    checked: false
+                },
+                {
+                    value: 'Hạ tầng',
+                    text: '',
+                    checked: false
+                },
+                {
+                    value: 'Trường học',
+                    text: '',
+                    checked: false
+                }
+            ];
+            dataFormated.scaleOverall.trangthaiCongTrinh = [
+                {
+                    value: 'Mới (New)',
+                    text: '',
+                    checked: false
+                },
+                {
+                    value: 'Thay đổi & bổ sung (Alteration & Additional)',
+                    text: '',
+                    checked: false
+                },
+                {
+                    value: 'Khác (Other)',
+                    text: '',
+                    checked: false
+                },
+                {
+                    value: 'Nâng cấp, cải tiến (Renovation)',
+                    text: '',
+                    checked: false
+                }, {
+                    value: 'Tháo dỡ & cải tiến (Demolishment & Renovation)',
+                    text: '',
+                    checked: false
+                }
+            ];
+            console.log(`khong co data`);
+            return dataFormated;
+        } else {
+            // case: EDIT
+            dataFormated.id = model.id;
+            dataFormated.bidOpportunityId = model.bidOpportunityId;
+            dataFormated.nguoiTao = model.createdEmployee && {
+                id: model.createdEmployee.employeeId,
+                name: model.createdEmployee.employeeName
+            };
+            dataFormated.ngayTao = model.createTime;
+            dataFormated.lanCapNhat = null;
+            dataFormated.nguoiCapNhat = model.updatedEmployee && {
+                id: model.updatedEmployee.employeeId,
+                name: model.updatedEmployee.employeeName
+            };
+            dataFormated.ngayCapNhat = model.updateTime;
+            dataFormated.noiDungCapNhat = '';
+            dataFormated.tenTaiLieu = (model.projectStatistic.projectStatistic) ?
+                model.projectStatistic.projectStatistic.projectScale.documentName : '';
+            dataFormated.lanPhongVan = (model.projectStatistic.projectStatistic) ?
+                model.projectStatistic.projectStatistic.projectScale.interviewTimes : null;
+            dataFormated.scaleOverall = {
+                tenTaiLieu: (model.projectStatistic.projectStatistic) ?
+                    model.projectStatistic.projectStatistic.projectScale.documentName : '',
+                lanPhongVan: (model.projectStatistic.projectStatistic) ?
+                    model.projectStatistic.projectStatistic.projectScale.interviewTimes : null,
+                loaiCongTrinh: (model.projectStatistic.projectStatistic.constructionType || []).map(x => x({
+                    value: x.value,
+                    text: x.text,
+                    checked: x.checked
+                })),
+                trangthaiCongTrinh: (model.projectStatistic.projectStatistic.constructionStatus || []).map(x => ({
+                    value: x.value,
+                    text: x.text,
+                    checked: x.checked
+                })),
+                quyMoDuAn: model.projectStatistic.projectStatistic.projectScale && {
+                    dienTichCongTruong: model.projectStatistic.projectStatistic.projectScale.siteArea,
+                    tongDienTichXayDung: model.projectStatistic.projectStatistic.projectScale.grossFloorArea,
+                    soTang: model.projectStatistic.projectStatistic.projectScale.totalNumberOfFloor,
+                    tienDo: model.projectStatistic.projectStatistic.projectScale.constructionPeriod
+                },
+                hinhAnhPhoiCanh: model.projectStatistic.perspectiveImageOfProject && {
+                    description: (model.projectStatistic.perspectiveImageOfProject.desc),
+                    images: (model.projectStatistic.perspectiveImageOfProject.imageUrls || []).map(x => ({
+                        id: x.guid,
+                        image: { file: x.largeSizeUrl, base64: null }
+                    }))
+                },
+                thongTinVeKetCau: model.projectStatistic.existingStructure && {
+                    description: model.projectStatistic.existingStructure.desc,
+                    images: (model.projectStatistic.existingStructure.imageUrls || []).map(x => ({
+                        id: x.guid,
+                        image: { file: x.largeSizeUrl, base64: null }
+                    }))
+                },
+                nhungYeuCauDacBiet: model.projectStatistic.specialRequirement && {
+                    description: model.projectStatistic.specialRequirement.desc,
+                    images: (model.projectStatistic.specialRequirement.imageUrls || []).map(x => ({
+                        id: x.guid,
+                        image: { file: x.largeSizeUrl, base64: null }
+                    }))
+                }
+            };
+            dataFormated.describeOverall = model.siteInformation && {
+                chiTietDiaHinh: model.siteInformation.topography && {
+                    description: model.siteInformation.topography.desc,
+                    images: (model.siteInformation.topography.imageUrls || []).map(x => ({
+                        id: x.guid,
+                        image: { file: x.largeSizeUrl, base64: null }
+                    }))
+                },
+                kienTrucHienHuu: model.siteInformation.existBuildingOnTheSite && {
+                    description: model.siteInformation.existBuildingOnTheSite.desc,
+                    images: (model.siteInformation.existBuildingOnTheSite.imageUrls || []).map(x => ({
+                        id: x.guid,
+                        image: { file: x.largeSizeUrl, base64: null }
+                    }))
+                },
+                yeuCauChuongNgai: model.siteInformation.existObstacleOnTheSite && {
+                    description: model.siteInformation.existObstacleOnTheSite.desc,
+                    images: (model.siteInformation.existObstacleOnTheSite.imageUrls || []).map(x => ({
+                        id: x.guid,
+                        image: { file: x.largeSizeUrl, base64: null }
+                    }))
+                }
+            };
+            dataFormated.traffic = model.transportationAndSiteEntranceCondition && {
+                chiTietDiaHinhKhoKhan: model.transportationAndSiteEntranceCondition.disadvantage && {
+                    description: model.transportationAndSiteEntranceCondition.disadvantage.desc,
+                    images: (model.transportationAndSiteEntranceCondition.disadvantage.imageUrls || []).map(x => ({
+                        id: x.guid,
+                        image: { file: x.largeSizeUrl, base64: null }
+                    }))
+                },
+                chiTietDiaHinhThuanLoi: model.transportationAndSiteEntranceCondition.advantage && {
+                    description: model.transportationAndSiteEntranceCondition.advantage.desc,
+                    images: (model.transportationAndSiteEntranceCondition.advantage.imageUrls || []).map(x => ({
+                        id: x.guid,
+                        image: { file: x.largeSizeUrl, base64: null }
+                    }))
+                },
+                loiVaoCongTrinhHuongVao: model.transportationAndSiteEntranceCondition.directionOfSiteEntrance && {
+                    description: model.transportationAndSiteEntranceCondition.directionOfSiteEntrance.desc,
+                    images: (model.transportationAndSiteEntranceCondition.directionOfSiteEntrance.imageUrls || []).map(x => ({
+                        id: x.guid,
+                        image: { file: x.largeSizeUrl, base64: null }
+                    }))
+                },
+                loiVaoCongTrinhDuongHienCo: model.transportationAndSiteEntranceCondition.existingRoadOnSite && {
+                    description: model.transportationAndSiteEntranceCondition.existingRoadOnSite.desc,
+                    images: (model.transportationAndSiteEntranceCondition.existingRoadOnSite.imageUrls || []).map(x => ({
+                        id: x.guid,
+                        image: { file: x.largeSizeUrl, base64: null }
+                    }))
+                },
+                loiVaoCongTrinhYeuCauDuongTam: model.transportationAndSiteEntranceCondition.temporatyRoadRequirement && {
+                    description: model.transportationAndSiteEntranceCondition.temporatyRoadRequirement.desc,
+                    images: (model.transportationAndSiteEntranceCondition.temporatyRoadRequirement.imageUrls || []).map(x => ({
+                        id: x.guid,
+                        image: { file: x.largeSizeUrl, base64: null }
+                    }))
+                },
+                loiVaoCongTrinhYeuCauHangRao: model.transportationAndSiteEntranceCondition.temporaryFenceRequirement && {
+                    description: model.transportationAndSiteEntranceCondition.temporaryFenceRequirement.desc,
+                    images: (model.transportationAndSiteEntranceCondition.temporaryFenceRequirement.imageUrls || []).map(x => ({
+                        id: x.guid,
+                        image: { file: x.largeSizeUrl, base64: null }
+                    }))
+                },
+            };
+            dataFormated.demoConso = model.demobilisationAndConsolidation && {
+                phaVoKetCau: model.demobilisationAndConsolidation.demobilisationExistingStructureOrBuilding && {
+                    description: model.demobilisationAndConsolidation.demobilisationExistingStructureOrBuilding.desc,
+                    images: (model.demobilisationAndConsolidation.demobilisationExistingStructureOrBuilding.imageUrls || []).map(x => ({
+                        id: x.guid,
+                        image: { file: x.largeSizeUrl, base64: null }
+                    }))
+                },
+                giaCoKetCau: model.demobilisationAndConsolidation.consolidationExistingStructureOrBuilding && {
+                    description: model.demobilisationAndConsolidation.consolidationExistingStructureOrBuilding.desc,
+                    images: (model.demobilisationAndConsolidation.consolidationExistingStructureOrBuilding.imageUrls || []).map(x => ({
+                        id: x.guid,
+                        image: { file: x.largeSizeUrl, base64: null }
+                    }))
+                },
+                dieuKien: model.demobilisationAndConsolidation.adjacentBuildingConditions && {
+                    description: model.demobilisationAndConsolidation.adjacentBuildingConditions.desc,
+                    images: (model.demobilisationAndConsolidation.adjacentBuildingConditions.imageUrls || []).map(x => ({
+                        id: x.guid,
+                        image: { file: x.largeSizeUrl, base64: null }
+                    }))
+                }
+            };
+            dataFormated.serviceConstruction = model.temporaryBuildingServiceForConstruction && {
+                heThongNuocHeThongHienHuu: model.temporaryBuildingServiceForConstruction.supplyWaterSystemExistingSystem && {
+                    description: model.temporaryBuildingServiceForConstruction.supplyWaterSystemExistingSystem.desc,
+                    images: (model.temporaryBuildingServiceForConstruction.supplyWaterSystemExistingSystem.imageUrls || []).map(x => ({
+                        id: x.guid,
+                        image: { file: x.largeSizeUrl, base64: null }
+                    }))
+                },
+                heThongNuocDiemDauNoi: model.temporaryBuildingServiceForConstruction.supplyWaterSystemExistingConnectionPoint && {
+                    description: model.temporaryBuildingServiceForConstruction.supplyWaterSystemExistingConnectionPoint.desc,
+                    images: (model.temporaryBuildingServiceForConstruction.supplyWaterSystemExistingConnectionPoint.imageUrls || [])
+                        .map(x => ({
+                            id: x.guid,
+                            image: { file: x.largeSizeUrl, base64: null }
+                        }))
+                },
+                heThongNuocThoatHeThongHienHuu: model.temporaryBuildingServiceForConstruction.drainageWaterSystemExistingSystem && {
+                    description: model.temporaryBuildingServiceForConstruction.drainageWaterSystemExistingSystem.desc,
+                    images: (model.temporaryBuildingServiceForConstruction.drainageWaterSystemExistingSystem.imageUrls || [])
+                        .map(x => ({
+                            id: x.guid,
+                            image: { file: x.largeSizeUrl, base64: null }
+                        }))
+                },
+                heThongNuocThoatDiemDauNoi: model.temporaryBuildingServiceForConstruction.drainageWaterSystemExistingConnectionPoint && {
+                    description: model.temporaryBuildingServiceForConstruction.drainageWaterSystemExistingConnectionPoint.desc,
+                    images: (model.temporaryBuildingServiceForConstruction.drainageWaterSystemExistingConnectionPoint.imageUrls || [])
+                        .map(x => ({
+                            id: x.guid,
+                            image: { file: x.largeSizeUrl, base64: null }
+                        }))
+                },
+                heThongDienTramHaThe: model.temporaryBuildingServiceForConstruction.transformerStation && {
+                    description: model.temporaryBuildingServiceForConstruction.transformerStation.desc,
+                    images: (model.temporaryBuildingServiceForConstruction.transformerStation.imageUrls || []).map(x => ({
+                        id: x.guid,
+                        image: { file: x.largeSizeUrl, base64: null }
+                    }))
+                },
+                heThongDienDuongDayTrungThe: model.temporaryBuildingServiceForConstruction.existingMediumVoltageSystem && {
+                    description: model.temporaryBuildingServiceForConstruction.existingMediumVoltageSystem.desc,
+                    images: (model.temporaryBuildingServiceForConstruction.existingMediumVoltageSystem.imageUrls || []).map(x => ({
+                        id: x.guid,
+                        image: { file: x.largeSizeUrl, base64: null }
+                    }))
+                },
+                heThongDienThongTinKhac: model.temporaryBuildingServiceForConstruction.others && {
+                    description: model.temporaryBuildingServiceForConstruction.others.desc,
+                    images: (model.temporaryBuildingServiceForConstruction.others.imageUrls || []).map(x => ({
+                        id: x.guid,
+                        image: { file: x.largeSizeUrl, base64: null }
+                    }))
+                }
+            };
+            dataFormated.soilCondition = model.reportExistingSoilCondition && {
+                nenMongHienCo: model.reportExistingSoilCondition.existingFooting && {
+                    description: model.reportExistingSoilCondition.existingFooting.desc,
+                    images: (model.reportExistingSoilCondition.existingFooting.imageUrls || []).map(x => ({
+                        id: guid,
+                        image: { file: x.largeSizeUrl, base64: null }
+                    }))
+                },
+                thongTinCongTrinhGanDo: model.reportExistingSoilCondition.soilInvestigation && {
+                    description: model.reportExistingSoilCondition.soilInvestigation.desc,
+                    images: (model.reportExistingSoilCondition.soilInvestigation.imageUrls || []).map(x => ({
+                        id: guid,
+                        image: { file: x.largeSizeUrl, base64: null }
+                    }))
+                }
+            };
+            dataFormated.usefulInfo = (model.usefulInFormations || []).map(x => ({
+                title: x.title,
+                content: x.content.map(i => ({
+                    name: i.name,
+                    detail: i.detail,
+                    images: i.imageUrls.map(e => ({
+                        id: e.guid,
+                        image: e.largeSizeUrl
+                    }))
+                }))
+            }));
+            dataFormated.updateDescription = '';
             return dataFormated;
         }
-        // case: EDIT
-        dataFormated.id = model.id;
-        dataFormated.bidOpportunityId = model.bidOpportunityId;
-        dataFormated.nguoiTao = model.createdEmployee && {
-            id: model.createdEmployee.employeeId,
-            name: model.createdEmployee.employeeName
-        };
-        dataFormated.ngayTao = model.createTime;
-        dataFormated.lanCapNhat = null;
-        dataFormated.nguoiCapNhat = model.updatedEmployee && {
-            id: model.updatedEmployee.employeeId,
-            name: model.updatedEmployee.employeeName
-        };
-        dataFormated.ngayCapNhat = model.updateTime;
-        dataFormated.noiDungCapNhat = '';
-        dataFormated.tenTaiLieu = model.projectStatistic.projectStatistic.projectScale.documentName;
-        dataFormated.lanPhongVan = model.projectStatistic.projectStatistic.projectScale.interviewTimes;
-        dataFormated.scaleOverall = {
-            tenTaiLieu: model.projectStatistic.projectStatistic.projectScale.documentName,
-            lanPhongVan: model.projectStatistic.projectStatistic.projectScale.interviewTimes,
-            loaiCongTrinh: (model.projectStatistic.projectStatistic.constructionType || []).map(x => x({
-                value: x.value,
-                text: x.text,
-                checked: x.checked
-            })),
-            trangthaiCongTrinh: (model.projectStatistic.projectStatistic.constructionStatus || []).map(x => ({
-                value: x.value,
-                text: x.text,
-                checked: x.checked
-            })),
-            quyMoDuAn: model.projectStatistic.projectStatistic.projectScale && {
-                dienTichCongTruong: model.projectStatistic.projectStatistic.projectScale.siteArea,
-                tongDienTichXayDung: model.projectStatistic.projectStatistic.projectScale.grossFloorArea,
-                soTang: model.projectStatistic.projectStatistic.projectScale.totalNumberOfFloor,
-                tienDo: model.projectStatistic.projectStatistic.projectScale.constructionPeriod
-            },
-            hinhAnhPhoiCanh: model.projectStatistic.perspectiveImageOfProject && {
-                description: (model.projectStatistic.perspectiveImageOfProject.desc),
-                images: (model.projectStatistic.perspectiveImageOfProject.imageUrls || []).map(x => ({
-                    id: x.guid,
-                    image: x.largeSizeUrl
-                }))
-            },
-            thongTinVeKetCau: model.projectStatistic.existingStructure && {
-                description: model.projectStatistic.existingStructure.desc,
-                images: (model.projectStatistic.existingStructure.imageUrls || []).map(x => ({
-                    id: x.guid,
-                    image: x.largeSizeUrl
-                }))
-            },
-            nhungYeuCauDacBiet: model.projectStatistic.specialRequirement && {
-                description: model.projectStatistic.specialRequirement.desc,
-                images: (model.projectStatistic.specialRequirement.imageUrls || []).map(x => ({
-                    id: x.guid,
-                    image: x.largeSizeUrl
-                }))
-            }
-        };
-        dataFormated.describeOverall = model.siteInformation && {
-            chiTietDiaHinh: model.siteInformation.topography && {
-                description: model.siteInformation.topography.desc,
-                images: (model.siteInformation.topography.imageUrls || []).map(x => ({
-                    id: x.guid,
-                    image: x.largeSizeUrl
-                }))
-            },
-            kienTrucHienHuu: model.siteInformation.existBuildingOnTheSite && {
-                description: model.siteInformation.existBuildingOnTheSite.desc,
-                images: (model.siteInformation.existBuildingOnTheSite.imageUrls || []).map(x => ({
-                    id: x.guid,
-                    image: x.largeSizeUrl
-                }))
-            },
-            yeuCauChuongNgai: model.siteInformation.existObstacleOnTheSite && {
-                description: model.siteInformation.existObstacleOnTheSite.desc,
-                images: (model.siteInformation.existObstacleOnTheSite.imageUrls || []).map(x => ({
-                    id: x.guid,
-                    image: x.largeSizeUrl
-                }))
-            }
-        };
-        dataFormated.traffic = model.transportationAndSiteEntranceCondition && {
-            chiTietDiaHinhKhoKhan: model.transportationAndSiteEntranceCondition.disadvantage && {
-                description: model.transportationAndSiteEntranceCondition.disadvantage.desc,
-                images: (model.transportationAndSiteEntranceCondition.disadvantage.imageUrls || []).map(x => ({
-                    id: x.guid,
-                    image: x.largeSizeUrl
-                }))
-            },
-            chiTietDiaHinhThuanLoi: model.transportationAndSiteEntranceCondition.advantage && {
-                description: model.transportationAndSiteEntranceCondition.advantage.desc,
-                images: (model.transportationAndSiteEntranceCondition.advantage.imageUrls || []).map(x => ({
-                    id: x.guid,
-                    image: x.largeSizeUrl
-                }))
-            },
-            loiVaoCongTrinhHuongVao: model.transportationAndSiteEntranceCondition.directionOfSiteEntrance && {
-                description: model.transportationAndSiteEntranceCondition.directionOfSiteEntrance.desc,
-                images: (model.transportationAndSiteEntranceCondition.directionOfSiteEntrance.imageUrls || []).map(x => ({
-                    id: x.guid,
-                    image: x.largeSizeUrl
-                }))
-            },
-            loiVaoCongTrinhDuongHienCo: model.transportationAndSiteEntranceCondition.existingRoadOnSite && {
-                description: model.transportationAndSiteEntranceCondition.existingRoadOnSite.desc,
-                images: (model.transportationAndSiteEntranceCondition.existingRoadOnSite.imageUrls || []).map(x => ({
-                    id: x.guid,
-                    image: x.largeSizeUrl
-                }))
-            },
-            loiVaoCongTrinhYeuCauDuongTam: model.transportationAndSiteEntranceCondition.temporatyRoadRequirement && {
-                description: model.transportationAndSiteEntranceCondition.temporatyRoadRequirement.desc,
-                images: (model.transportationAndSiteEntranceCondition.temporatyRoadRequirement.imageUrls || []).map(x => ({
-                    id: x.guid,
-                    image: x.largeSizeUrl
-                }))
-            },
-            loiVaoCongTrinhYeuCauHangRao: model.transportationAndSiteEntranceCondition.temporaryFenceRequirement && {
-                description: model.transportationAndSiteEntranceCondition.temporaryFenceRequirement.desc,
-                images: (model.transportationAndSiteEntranceCondition.temporaryFenceRequirement.imageUrls || []).map(x => ({
-                    id: x.guid,
-                    image: x.largeSizeUrl
-                }))
-            },
-        };
-        dataFormated.demoConso = model.demobilisationAndConsolidation && {
-            phaVoKetCau: model.demobilisationAndConsolidation.demobilisationExistingStructureOrBuilding && {
-                description: model.demobilisationAndConsolidation.demobilisationExistingStructureOrBuilding.desc,
-                images: (model.demobilisationAndConsolidation.demobilisationExistingStructureOrBuilding.imageUrls || []).map(x => ({
-                    id: x.guid,
-                    image: x.largeSizeUrl
-                }))
-            },
-            giaCoKetCau: model.demobilisationAndConsolidation.consolidationExistingStructureOrBuilding && {
-                description: model.demobilisationAndConsolidation.consolidationExistingStructureOrBuilding.desc,
-                images: (model.demobilisationAndConsolidation.consolidationExistingStructureOrBuilding.imageUrls || []).map(x => ({
-                    id: x.guid,
-                    image: x.largeSizeUrl
-                }))
-            },
-            dieuKien: model.demobilisationAndConsolidation.adjacentBuildingConditions && {
-                description: model.demobilisationAndConsolidation.adjacentBuildingConditions.desc,
-                images: (model.demobilisationAndConsolidation.adjacentBuildingConditions.imageUrls || []).map(x => ({
-                    id: x.guid,
-                    image: x.largeSizeUrl
-                }))
-            }
-        };
-        dataFormated.serviceConstruction = model.temporaryBuildingServiceForConstruction && {
-            heThongNuocHeThongHienHuu: model.temporaryBuildingServiceForConstruction.supplyWaterSystemExistingSystem && {
-                description: model.temporaryBuildingServiceForConstruction.supplyWaterSystemExistingSystem.desc,
-                images: (model.temporaryBuildingServiceForConstruction.supplyWaterSystemExistingSystem.imageUrls || []).map(x => ({
-                    id: x.guid,
-                    image: x.largeSizeUrl
-                }))
-            },
-            heThongNuocDiemDauNoi: model.temporaryBuildingServiceForConstruction.supplyWaterSystemExistingConnectionPoint && {
-                description: model.temporaryBuildingServiceForConstruction.supplyWaterSystemExistingConnectionPoint.desc,
-                images: (model.temporaryBuildingServiceForConstruction.supplyWaterSystemExistingConnectionPoint.imageUrls || [])
-                    .map(x => ({
-                        id: x.guid,
-                        image: x.largeSizeUrl
-                    }))
-            },
-            heThongNuocThoatHeThongHienHuu: model.temporaryBuildingServiceForConstruction.drainageWaterSystemExistingSystem && {
-                description: model.temporaryBuildingServiceForConstruction.drainageWaterSystemExistingSystem.desc,
-                images: (model.temporaryBuildingServiceForConstruction.drainageWaterSystemExistingSystem.imageUrls || [])
-                    .map(x => ({
-                        id: x.guid,
-                        image: x.largeSizeUrl
-                    }))
-            },
-            heThongNuocThoatDiemDauNoi: model.temporaryBuildingServiceForConstruction.drainageWaterSystemExistingConnectionPoint && {
-                description: model.temporaryBuildingServiceForConstruction.drainageWaterSystemExistingConnectionPoint.desc,
-                images: (model.temporaryBuildingServiceForConstruction.drainageWaterSystemExistingConnectionPoint.imageUrls || [])
-                    .map(x => ({
-                        id: x.guid,
-                        image: x.largeSizeUrl
-                    }))
-            },
-            heThongDienTramHaThe: model.temporaryBuildingServiceForConstruction.transformerStation && {
-                description: model.temporaryBuildingServiceForConstruction.transformerStation.desc,
-                images: (model.temporaryBuildingServiceForConstruction.transformerStation.imageUrls || []).map(x => ({
-                    id: x.guid,
-                    image: x.largeSizeUrl
-                }))
-            },
-            heThongDienDuongDayTrungThe: model.temporaryBuildingServiceForConstruction.existingMediumVoltageSystem && {
-                description: model.temporaryBuildingServiceForConstruction.existingMediumVoltageSystem.desc,
-                images: (model.temporaryBuildingServiceForConstruction.existingMediumVoltageSystem.imageUrls || []).map(x => ({
-                    id: x.guid,
-                    image: x.largeSizeUrl
-                }))
-            },
-            heThongDienThongTinKhac: model.temporaryBuildingServiceForConstruction.others && {
-                description: model.temporaryBuildingServiceForConstruction.others.desc,
-                images: (model.temporaryBuildingServiceForConstruction.others.imageUrls || []).map(x => ({
-                    id: x.guid,
-                    image: x.largeSizeUrl
-                }))
-            }
-        };
-        dataFormated.soilCondition = model.reportExistingSoilCondition && {
-            nenMongHienCo: model.reportExistingSoilCondition.existingFooting && {
-                description: model.reportExistingSoilCondition.existingFooting.desc,
-                images: (model.reportExistingSoilCondition.existingFooting.imageUrls || []).map(x => ({
-                    id: guid,
-                    image: x.largeSizeUrl
-                }))
-            },
-            thongTinCongTrinhGanDo: model.reportExistingSoilCondition.soilInvestigation && {
-                description: model.reportExistingSoilCondition.soilInvestigation.desc,
-                images: (model.reportExistingSoilCondition.soilInvestigation.imageUrls || []).map(x => ({
-                    id: guid,
-                    image: x.largeSizeUrl
-                }))
-            }
-        };
-        dataFormated.usefulInfo = (model.usefulInFormations || []).map(x => ({
-            title: x.title,
-            content: x.content.map(i => ({
-                name: i.name,
-                detail: i.detail,
-                images: i.imageUrls.map(e => ({
-                    id: e.guid,
-                    image: e.largeSizeUrl
-                }))
-            }))
-        }));
-        dataFormated.updateDescription = '';
-        return dataFormated;
+    }
+
+    objectToFormdata(obj: SiteSurveyReport) {
+        const objectToFormData = require('object-to-formdata');
+        const object = obj;
+        const formData = objectToFormData(
+            object
+        );
+        console.log(formData);
     }
 
     createOrUpdateSiteSurveyingReport(obj: SiteSurveyReport) {
@@ -590,10 +698,10 @@ export class DocumentService {
         objDataSiteReport.append('BidOpportunityId', `${obj.bidOpportunityId}`);
         if (obj.nguoiTao) {
             objDataSiteReport.append('CreatedEmployeeId', `${obj.nguoiTao.id}`);
-        } else { objDataSiteReport.append('CreatedEmployeeId', `${this.employeeId}`); }
+        } else { objDataSiteReport.append('CreatedEmployeeId', `${this.userId}`); }
         if (obj.nguoiCapNhat) {
             objDataSiteReport.append('UpdatedEmployeeId', `${obj.nguoiCapNhat.id}`);
-        } else { objDataSiteReport.append('UpdatedEmployeeId', `${this.employeeId}`); }
+        } else { objDataSiteReport.append('UpdatedEmployeeId', `${this.userId}`); }
         obj.scaleOverall.loaiCongTrinh.forEach(x => {
             objDataSiteReport.append('ProjectStatistic.ProjectStatistic.ConstructionType', JSON.stringify(x));
         });
@@ -605,7 +713,7 @@ export class DocumentService {
         } else { objDataSiteReport.append('ProjectStatistic.ProjectStatistic.ProjectScale.DocumentName', ''); }
         if (obj.scaleOverall) {
             objDataSiteReport.append('ProjectStatistic.ProjectStatistic.ProjectScale.InterviewTimes',
-                `${(obj.scaleOverall.lanPhongVan) ? obj.scaleOverall.lanPhongVan : 0}`);
+                `${(obj.scaleOverall.lanPhongVan) ? obj.scaleOverall.lanPhongVan : null}`);
         } else {
             objDataSiteReport.append('ProjectStatistic.ProjectStatistic.ProjectScale.InterviewTimes', `${0}`);
         }
@@ -635,20 +743,11 @@ export class DocumentService {
         }
         if (obj.scaleOverall.hinhAnhPhoiCanh) {
             objDataSiteReport.append('ProjectStatistic.PerspectiveImageOfProject.Desc', obj.scaleOverall.hinhAnhPhoiCanh.description);
-            for (let i = 0; i < obj.scaleOverall.hinhAnhPhoiCanh.images.length; i++) {
-                if (obj.scaleOverall.hinhAnhPhoiCanh.images[i].id) {
-                    objDataSiteReport.append('ProjectStatistic.PerspectiveImageOfProject.ImageUrls',
-                        obj.scaleOverall.hinhAnhPhoiCanh.images[i].id);
-                } else {
-                    objDataSiteReport.append('ProjectStatistic.PerspectiveImageOfProject.Images',
-                        obj.scaleOverall.hinhAnhPhoiCanh.images[i].image);
-                }
-            }
-            // obj.scaleOverall.hinhAnhPhoiCanh.images.forEach(x => {
-            //     if (x.id) {
-            //         objDataSiteReport.append('ProjectStatistic.PerspectiveImageOfProject.ImageUrls', x.id);
-            //     } else { objDataSiteReport.append('ProjectStatistic.PerspectiveImageOfProject.Images', x.image); }
-            // });
+            obj.scaleOverall.hinhAnhPhoiCanh.images.forEach(x => {
+                (x.id) ?
+                    objDataSiteReport.append('ProjectStatistic.PerspectiveImageOfProject.ImageUrls', x.id) :
+                    objDataSiteReport.append('ProjectStatistic.PerspectiveImageOfProject.Images', x.image.file);
+            });
         } else {
             objDataSiteReport.append('ProjectStatistic.PerspectiveImageOfProject.Desc', '');
             objDataSiteReport.append('ProjectStatistic.PerspectiveImageOfProject.ImageUrls', null);
@@ -659,7 +758,7 @@ export class DocumentService {
             obj.scaleOverall.thongTinVeKetCau.images.forEach(x => {
                 (x.id) ?
                     objDataSiteReport.append('ProjectStatistic.ExistingStructure.ImageUrls', x.id) :
-                    objDataSiteReport.append('ProjectStatistic.ExistingStructure.Images', x.image);
+                    objDataSiteReport.append('ProjectStatistic.ExistingStructure.Images', x.image.file);
             });
         } else {
             objDataSiteReport.append('ProjectStatistic.ExistingStructure.Desc', '');
@@ -671,7 +770,7 @@ export class DocumentService {
             obj.scaleOverall.nhungYeuCauDacBiet.images.forEach(x => {
                 (x.id) ?
                     objDataSiteReport.append('ProjectStatistic.SpecialRequirement.ImageUrls', x.id) :
-                    objDataSiteReport.append('ProjectStatistic.SpecialRequirement.Images', x.image);
+                    objDataSiteReport.append('ProjectStatistic.SpecialRequirement.Images', x.image.file);
             });
         } else {
             objDataSiteReport.append('ProjectStatistic.SpecialRequirement.Desc', '');
@@ -685,7 +784,7 @@ export class DocumentService {
                 obj.describeOverall.chiTietDiaHinh.images.forEach(x => {
                     (x.id) ?
                         objDataSiteReport.append('SiteInformation.Topography.ImageUrls', x.id) :
-                        objDataSiteReport.append('SiteInformation.Topography.Images', x.image);
+                        objDataSiteReport.append('SiteInformation.Topography.Images', x.image.file);
                 });
             } else {
                 objDataSiteReport.append('SiteInformation.Topography.Desc', '');
@@ -699,7 +798,7 @@ export class DocumentService {
                 obj.describeOverall.kienTrucHienHuu.images.forEach(x => {
                     (x.id) ?
                         objDataSiteReport.append('SiteInformation.ExistBuildingOnTheSite.ImageUrls', x.id) :
-                        objDataSiteReport.append('SiteInformation.ExistBuildingOnTheSite.Images', x.image);
+                        objDataSiteReport.append('SiteInformation.ExistBuildingOnTheSite.Images', x.image.file);
                 });
             } else {
                 objDataSiteReport.append('SiteInformation.ExistBuildingOnTheSite.Desc', '');
@@ -713,7 +812,7 @@ export class DocumentService {
                 obj.describeOverall.yeuCauChuongNgai.images.forEach(x => {
                     (x.id) ?
                         objDataSiteReport.append('SiteInformation.ExistObstacleOnTheSite.ImageUrls', x.id) :
-                        objDataSiteReport.append('SiteInformation.ExistObstacleOnTheSite.Images', x.image);
+                        objDataSiteReport.append('SiteInformation.ExistObstacleOnTheSite.Images', x.image.file);
                 });
             } else {
                 objDataSiteReport.append('SiteInformation.ExistObstacleOnTheSite.Desc', '');
@@ -729,7 +828,7 @@ export class DocumentService {
                 obj.traffic.chiTietDiaHinhKhoKhan.images.forEach(x => {
                     (x.id) ?
                         objDataSiteReport.append('TransportationAndSiteEntranceCondition.Disadvantage.ImageUrls', x.id) :
-                        objDataSiteReport.append('TransportationAndSiteEntranceCondition.Disadvantage.Images', x.image);
+                        objDataSiteReport.append('TransportationAndSiteEntranceCondition.Disadvantage.Images', x.image.file);
                 });
             } else {
                 objDataSiteReport.append('TransportationAndSiteEntranceCondition.Disadvantage.Desc', '');
@@ -744,7 +843,7 @@ export class DocumentService {
                 obj.traffic.chiTietDiaHinhThuanLoi.images.forEach(x => {
                     (x.id) ?
                         objDataSiteReport.append('TransportationAndSiteEntranceCondition.Advantage.ImageUrls', x.id) :
-                        objDataSiteReport.append('TransportationAndSiteEntranceCondition.Advantage.Images', x.image);
+                        objDataSiteReport.append('TransportationAndSiteEntranceCondition.Advantage.Images', x.image.file);
                 });
             } else {
                 objDataSiteReport.append('TransportationAndSiteEntranceCondition.Advantage.Desc', '');
@@ -757,7 +856,7 @@ export class DocumentService {
                 obj.traffic.loiVaoCongTrinhHuongVao.images.forEach(x => {
                     (x.id) ?
                         objDataSiteReport.append('TransportationAndSiteEntranceCondition.DirectionOfSiteEntrance.ImageUrls', x.id) :
-                        objDataSiteReport.append('TransportationAndSiteEntranceCondition.DirectionOfSiteEntrance.Images', x.image);
+                        objDataSiteReport.append('TransportationAndSiteEntranceCondition.DirectionOfSiteEntrance.Images', x.image.file);
                 });
             } else {
                 objDataSiteReport.append('TransportationAndSiteEntranceCondition.DirectionOfSiteEntrance.Desc', '');
@@ -770,7 +869,7 @@ export class DocumentService {
                 obj.traffic.loiVaoCongTrinhDuongHienCo.images.forEach(x => {
                     (x.id) ?
                         objDataSiteReport.append('TransportationAndSiteEntranceCondition.ExistingRoadOnSite.ImageUrls', x.id) :
-                        objDataSiteReport.append('TransportationAndSiteEntranceCondition.ExistingRoadOnSite.Images', x.image);
+                        objDataSiteReport.append('TransportationAndSiteEntranceCondition.ExistingRoadOnSite.Images', x.image.file);
                 });
             } else {
                 objDataSiteReport.append('TransportationAndSiteEntranceCondition.ExistingRoadOnSite.Desc', '');
@@ -783,7 +882,7 @@ export class DocumentService {
                 obj.traffic.loiVaoCongTrinhYeuCauDuongTam.images.forEach(x => {
                     (x.id) ?
                         objDataSiteReport.append('TransportationAndSiteEntranceCondition.TemporatyRoadRequirement.ImageUrls', x.id) :
-                        objDataSiteReport.append('TransportationAndSiteEntranceCondition.TemporatyRoadRequirement.Images', x.image);
+                        objDataSiteReport.append('TransportationAndSiteEntranceCondition.TemporatyRoadRequirement.Images', x.image.file);
                 });
             } else {
                 objDataSiteReport.append('TransportationAndSiteEntranceCondition.TemporatyRoadRequirement.Desc', '');
@@ -796,7 +895,7 @@ export class DocumentService {
                 obj.traffic.loiVaoCongTrinhYeuCauHangRao.images.forEach(x => {
                     (x.id) ?
                         objDataSiteReport.append('TransportationAndSiteEntranceCondition.TemporaryFenceRequirement.ImageUrls', x.id) :
-                        objDataSiteReport.append('TransportationAndSiteEntranceCondition.TemporaryFenceRequirement.Images', x.image);
+                        objDataSiteReport.append('TransportationAndSiteEntranceCondition.TemporaryFenceRequirement.Images', x.image.file);
                 });
             } else {
                 objDataSiteReport.append('TransportationAndSiteEntranceCondition.TemporaryFenceRequirement.Desc', '');
@@ -828,7 +927,8 @@ export class DocumentService {
                     (x.id) ?
                         objDataSiteReport.append('DemobilisationAndConsolidation.ConsolidationExistingStructureOrBuilding.ImageUrls',
                             x.id) :
-                        objDataSiteReport.append('DemobilisationAndConsolidation.ConsolidationExistingStructureOrBuilding.Images', x.image);
+                        objDataSiteReport.append('DemobilisationAndConsolidation.ConsolidationExistingStructureOrBuilding.Images',
+                            x.image.file);
                 });
             } else {
                 objDataSiteReport.append('DemobilisationAndConsolidation.ConsolidationExistingStructureOrBuilding.Desc', '');
@@ -841,7 +941,7 @@ export class DocumentService {
                 obj.demoConso.dieuKien.images.forEach(x => {
                     (x.id) ?
                         objDataSiteReport.append('DemobilisationAndConsolidation.AdjacentBuildingConditions.ImageUrls', x.id) :
-                        objDataSiteReport.append('DemobilisationAndConsolidation.AdjacentBuildingConditions.Images', x.image);
+                        objDataSiteReport.append('DemobilisationAndConsolidation.AdjacentBuildingConditions.Images', x.image.file);
                 });
             } else {
                 objDataSiteReport.append('DemobilisationAndConsolidation.AdjacentBuildingConditions.Desc', '');
@@ -858,7 +958,8 @@ export class DocumentService {
                     (x.id) ?
                         objDataSiteReport.append('TemporaryBuildingServiceForConstruction.SupplyWaterSystemExistingSystem.ImageUrls',
                             x.id) :
-                        objDataSiteReport.append('TemporaryBuildingServiceForConstruction.SupplyWaterSystemExistingSystem.Images', x.image);
+                        objDataSiteReport.append('TemporaryBuildingServiceForConstruction.SupplyWaterSystemExistingSystem.Images',
+                            x.image.file);
                 });
             } else {
                 objDataSiteReport.append('TemporaryBuildingServiceForConstruction.SupplyWaterSystemExistingSystem.Desc', '');
@@ -890,7 +991,7 @@ export class DocumentService {
                         objDataSiteReport.append
                             ('TemporaryBuildingServiceForConstruction.DrainageWaterSystemExistingSystem.ImageUrls', x.id) :
                         objDataSiteReport.append
-                            ('TemporaryBuildingServiceForConstruction.DrainageWaterSystemExistingSystem.Images', x.image);
+                            ('TemporaryBuildingServiceForConstruction.DrainageWaterSystemExistingSystem.Images', x.image.file);
                 });
             } else {
                 objDataSiteReport.append('TemporaryBuildingServiceForConstruction.DrainageWaterSystemExistingSystem.Desc', '');
@@ -905,7 +1006,7 @@ export class DocumentService {
                         objDataSiteReport.append
                             ('TemporaryBuildingServiceForConstruction.DrainageWaterSystemExistingConnectionPoint.ImageUrls', x.id) :
                         objDataSiteReport.append
-                            ('TemporaryBuildingServiceForConstruction.DrainageWaterSystemExistingConnectionPoint.Images', x.image);
+                            ('TemporaryBuildingServiceForConstruction.DrainageWaterSystemExistingConnectionPoint.Images', x.image.file);
                 });
             } else {
                 objDataSiteReport.append('TemporaryBuildingServiceForConstruction.DrainageWaterSystemExistingConnectionPoint.Desc', '');
@@ -920,7 +1021,7 @@ export class DocumentService {
                 obj.serviceConstruction.heThongDienTramHaThe.images.forEach(x => {
                     (x.id) ?
                         objDataSiteReport.append('TemporaryBuildingServiceForConstruction.TransformerStation.ImageUrls', x.id) :
-                        objDataSiteReport.append('TemporaryBuildingServiceForConstruction.TransformerStation.Images', x.image);
+                        objDataSiteReport.append('TemporaryBuildingServiceForConstruction.TransformerStation.Images', x.image.file);
                 });
             } else {
                 objDataSiteReport.append('TemporaryBuildingServiceForConstruction.TransformerStation.Desc', '');
@@ -933,7 +1034,8 @@ export class DocumentService {
                 obj.serviceConstruction.heThongDienDuongDayTrungThe.images.forEach(x => {
                     (x.id) ?
                         objDataSiteReport.append('TemporaryBuildingServiceForConstruction.ExistingMediumVoltageSystem.ImageUrls', x.id) :
-                        objDataSiteReport.append('TemporaryBuildingServiceForConstruction.ExistingMediumVoltageSystem.Images', x.image);
+                        objDataSiteReport.append('TemporaryBuildingServiceForConstruction.ExistingMediumVoltageSystem.Images',
+                            x.image.file);
                 });
             } else {
                 objDataSiteReport.append('TemporaryBuildingServiceForConstruction.ExistingMediumVoltageSystem.Desc', '');
@@ -946,7 +1048,7 @@ export class DocumentService {
                 obj.serviceConstruction.heThongDienThongTinKhac.images.forEach(x => {
                     (x.id) ?
                         objDataSiteReport.append('TemporaryBuildingServiceForConstruction.Others.ImageUrls', x.id) :
-                        objDataSiteReport.append('TemporaryBuildingServiceForConstruction.Others.Images', x.image);
+                        objDataSiteReport.append('TemporaryBuildingServiceForConstruction.Others.Images', x.image.file);
                 });
             } else {
                 objDataSiteReport.append('TemporaryBuildingServiceForConstruction.Others.Desc', '');
@@ -961,7 +1063,7 @@ export class DocumentService {
                 obj.soilCondition.nenMongHienCo.images.forEach(x => {
                     (x.id) ?
                         objDataSiteReport.append('ExistingSoilCondition.ExistingFooting.ImageUrls', x.id) :
-                        objDataSiteReport.append('ExistingSoilCondition.ExistingFooting.Images', x.image);
+                        objDataSiteReport.append('ExistingSoilCondition.ExistingFooting.Images', x.image.file);
                 });
             } else {
                 objDataSiteReport.append('ExistingSoilCondition.ExistingFooting.Desc', '');
@@ -974,7 +1076,7 @@ export class DocumentService {
                 obj.soilCondition.thongTinCongTrinhGanDo.images.forEach(x => {
                     (x.id) ?
                         objDataSiteReport.append('ExistingSoilCondition.SoilInvestigation.ImageUrls', x.id) :
-                        objDataSiteReport.append('ExistingSoilCondition.SoilInvestigation.Images', x.image);
+                        objDataSiteReport.append('ExistingSoilCondition.SoilInvestigation.Images', x.image.file);
                 });
             } else {
                 objDataSiteReport.append('ExistingSoilCondition.SoilInvestigation.Desc', '');

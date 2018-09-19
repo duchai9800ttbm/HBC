@@ -3,6 +3,8 @@ import { Traffic } from '../../../../../../../../shared/models/site-survey-repor
 import { EditComponent } from '../edit.component';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { LiveformSiteReportComponent } from '../../liveform-site-report.component';
+import { Router } from '@angular/router';
+import { PackageDetailComponent } from '../../../../../package-detail.component';
 
 @Component({
   selector: 'app-traffic',
@@ -19,12 +21,17 @@ export class TrafficComponent implements OnInit {
   roadImageUrls = [];
   fenceImageUrls = [];
   url;
+  viewMode;
+  currentBidOpportunityId: number;
   trafficModel = new Traffic();
   constructor(
+    private router: Router,
     private fb: FormBuilder
   ) { }
 
   ngOnInit() {
+    this.currentBidOpportunityId = +PackageDetailComponent.packageId;
+    this.checkFlag();
     this.initData();
     this.trafficForm = this.fb.group({
       chiTietDiaHinhKhoKhanDesc: [this.trafficModel.chiTietDiaHinhKhoKhan && this.trafficModel.chiTietDiaHinhKhoKhan.description],
@@ -46,7 +53,14 @@ export class TrafficComponent implements OnInit {
     this.trafficForm.valueChanges.subscribe(data => this.mappingToLiveFormData(data));
 
   }
-
+  checkFlag() {
+    if (LiveformSiteReportComponent.formModel.id) {
+      const flag = LiveformSiteReportComponent.formModel.viewFlag;
+      this.viewMode = flag;
+    } else {
+      this.router.navigate([`/package/detail/${this.currentBidOpportunityId}/attend/build/liveformsite`]);
+    }
+  }
   initData() {
     const obj = LiveformSiteReportComponent.formModel.traffic;
     if (obj) {
@@ -116,15 +130,24 @@ export class TrafficComponent implements OnInit {
     if (files) {
       for (const file of files) {
         const reader = new FileReader();
-        reader.onload = (e: any) => this.disadvantageImageUrls.push(e.target.result);
+        reader.onload = (e: any) => {
+          this.disadvantageImageUrls.push({
+            id: null,
+            image: {
+              file: file,
+              base64: e.target.result
+            }
+          });
+          this.trafficForm.get('chiTietDiaHinhKhoKhanList').patchValue(this.disadvantageImageUrls);
+        };
         reader.readAsDataURL(file);
       }
-      this.trafficForm.get('chiTietDiaHinhKhoKhanList').patchValue(this.disadvantageImageUrls);
     }
   }
   deleteDisadvantageImage(i) {
     const index = this.disadvantageImageUrls.indexOf(i);
     this.disadvantageImageUrls.splice(index, 1);
+    this.trafficForm.get('chiTietDiaHinhKhoKhanList').patchValue(this.disadvantageImageUrls);
   }
 
   uploaAdvantageImage(event) {
@@ -132,15 +155,24 @@ export class TrafficComponent implements OnInit {
     if (files) {
       for (const file of files) {
         const reader = new FileReader();
-        reader.onload = (e: any) => this.advantageImageUrls.push(e.target.result);
+        reader.onload = (e: any) => {
+          this.advantageImageUrls.push({
+            id: null,
+            image: {
+              file: file,
+              base64: e.target.result
+            }
+          });
+          this.trafficForm.get('chiTietDiaHinhThuanLoiList').patchValue(this.advantageImageUrls);
+        };
         reader.readAsDataURL(file);
       }
-      this.trafficForm.get('chiTietDiaHinhThuanLoiList').patchValue(this.advantageImageUrls);
     }
   }
   deleteAdvantageImage(i) {
     const index = this.advantageImageUrls.indexOf(i);
     this.advantageImageUrls.splice(index, 1);
+    this.trafficForm.get('chiTietDiaHinhThuanLoiList').patchValue(this.advantageImageUrls);
   }
 
   uploadDirectionImage(event) {
@@ -148,15 +180,24 @@ export class TrafficComponent implements OnInit {
     if (files) {
       for (const file of files) {
         const reader = new FileReader();
-        reader.onload = (e: any) => this.directionImageUrls.push(e.target.result);
+        reader.onload = (e: any) => {
+          this.directionImageUrls.push({
+            id: null,
+            image: {
+              file: file,
+              base64: e.target.result
+            }
+          });
+          this.trafficForm.get('huongVaoCongTruongList').patchValue(this.directionImageUrls);
+        };
         reader.readAsDataURL(file);
       }
-      this.trafficForm.get('huongVaoCongTruongList').patchValue(this.directionImageUrls);
     }
   }
   deleteDirectionImage(i) {
     const index = this.directionImageUrls.indexOf(i);
     this.directionImageUrls.splice(index, 1);
+    this.trafficForm.get('huongVaoCongTruongList').patchValue(this.directionImageUrls);
   }
 
   uploadExistingImage(event) {
@@ -164,10 +205,18 @@ export class TrafficComponent implements OnInit {
     if (files) {
       for (const file of files) {
         const reader = new FileReader();
-        reader.onload = (e: any) => this.existingImageUrls.push(e.target.result);
+        reader.onload = (e: any) => {
+          this.existingImageUrls.push({
+            id: null,
+            image: {
+              file: file,
+              base64: e.target.result
+            }
+          });
+          this.trafficForm.get('duongHienCoTrenCongTruongList').patchValue(this.existingImageUrls);
+        };
         reader.readAsDataURL(file);
       }
-      this.trafficForm.get('duongHienCoTrenCongTruongList').patchValue(this.existingImageUrls);
     }
   }
   deleteExistingImage(i) {
@@ -180,15 +229,24 @@ export class TrafficComponent implements OnInit {
     if (files) {
       for (const file of files) {
         const reader = new FileReader();
-        reader.onload = (e: any) => this.roadImageUrls.push(e.target.result);
+        reader.onload = (e: any) => {
+          this.roadImageUrls.push({
+            id: null,
+            image: {
+              file: file,
+              base64: e.target.result
+            }
+          });
+          this.trafficForm.get('yeuCauDuongTamList').patchValue(this.roadImageUrls);
+        };
         reader.readAsDataURL(file);
       }
-      this.trafficForm.get('yeuCauDuongTamList').patchValue(this.roadImageUrls);
     }
   }
   deleteRoadImage(i) {
     const index = this.roadImageUrls.indexOf(i);
     this.roadImageUrls.splice(index, 1);
+    this.trafficForm.get('yeuCauDuongTamList').patchValue(this.roadImageUrls);
   }
 
   uploadFenceImage(event) {
@@ -196,14 +254,23 @@ export class TrafficComponent implements OnInit {
     if (files) {
       for (const file of files) {
         const reader = new FileReader();
-        reader.onload = (e: any) => this.fenceImageUrls.push(e.target.result);
+        reader.onload = (e: any) => {
+          this.fenceImageUrls.push({
+            id: null,
+            image: {
+              file: file,
+              base64: e.target.result
+            }
+          });
+          this.trafficForm.get('yeuCauHangRaoList').patchValue(this.fenceImageUrls);
+        };
         reader.readAsDataURL(file);
       }
-      this.trafficForm.get('yeuCauHangRaoList').patchValue(this.fenceImageUrls);
     }
   }
   deleteFenceImage(i) {
     const index = this.fenceImageUrls.indexOf(i);
     this.fenceImageUrls.splice(index, 1);
+    this.trafficForm.get('yeuCauHangRaoList').patchValue(this.fenceImageUrls);
   }
 }

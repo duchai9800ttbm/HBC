@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { DATETIME_PICKER_CONFIG } from '../../../../../../../shared/configs/datepicker.config';
 // tslint:disable-next-line:import-blacklist
 import { Subject } from 'rxjs';
@@ -9,24 +9,17 @@ import { SiteSurveyReport } from '../../../../../../../shared/models/site-survey
 import { DocumentService } from '../../../../../../../shared/services/document.service';
 import { LiveformSiteReportComponent } from '../liveform-site-report.component';
 import { PackageDetailComponent } from '../../../../package-detail.component';
-import { ScaleOverall } from '../../../../../../../shared/models/site-survey-report/scale-overall.model';
-import { DescribeOverall } from '../../../../../../../shared/models/site-survey-report/describe-overall.model';
-import { Traffic } from '../../../../../../../shared/models/site-survey-report/traffic.model';
-import { DemoConso } from '../../../../../../../shared/models/site-survey-report/demo-conso.model';
-import { ServiceConstruction } from '../../../../../../../shared/models/site-survey-report/service-construction.model';
-import { SoilCondition } from '../../../../../../../shared/models/site-survey-report/soil-condition.model';
-import { UsefulInfo, ContentItem } from '../../../../../../../shared/models/site-survey-report/useful-info.model';
-import { Image } from '../../../../../../../shared/models/site-survey-report/image';
 import { PackageService } from '../../../../../../../shared/services/package.service';
 import { PackageInfoModel } from '../../../../../../../shared/models/package/package-info.model';
+// const objectToFormData = require('object-to-formdata');
 
 @Component({
   selector: 'app-edit',
   templateUrl: './edit.component.html',
   styleUrls: ['./edit.component.scss']
 })
-export class EditComponent implements OnInit {
-  static formModel: SiteSurveyReport = new SiteSurveyReport();
+export class EditComponent implements OnInit, OnDestroy {
+  // static onload;
 
   dtTrigger: Subject<any> = new Subject();
   showBeforeLogin: any = true;
@@ -44,8 +37,7 @@ export class EditComponent implements OnInit {
     private packageService: PackageService,
     private router: Router,
     private alertService: AlertService,
-    private spinner: NgxSpinnerService,
-    private sessionService: SessionService
+    private spinner: NgxSpinnerService
   ) { }
 
   ngOnInit() {
@@ -63,15 +55,16 @@ export class EditComponent implements OnInit {
       this.showPopupConfirm = false;
     } else {
       const objData = LiveformSiteReportComponent.formModel;
-      console.log(objData);
+      // const objData = objectToFormData(LiveformSiteReportComponent.formModel);
+      // const testFD = new FormData();
+      // this.documentService.objectToFormdata(objData);
       this.documentService
         .createOrUpdateSiteSurveyingReport(objData)
         .subscribe();
       this.showPopupConfirm = false;
       this.alertService.success('Đã cập nhật thành công!');
       this.spinner.hide();
-      setTimeout(
-        this.router.navigate([`/package/detail/${this.currentBidOpportunityId}/attend/build/liveformsite/info/scale`]), 300);
+      this.router.navigate([`/package/detail/${this.currentBidOpportunityId}/attend/build/liveformsite/info/scale`]);
     }
   }
 
@@ -84,5 +77,20 @@ export class EditComponent implements OnInit {
 
   updateliveform() {
     this.showPopupConfirm = true;
+  }
+
+  disableSideMenu(event) {
+    const elem = document.getElementById('toggle-menu');
+    const elemm = document.getElementById('header-table-build');
+    elem.style.display = 'none';
+    elemm.style.visibility = 'hidden';
+    elemm.style.position = 'absolute';
+  }
+  ngOnDestroy() {
+    const elem = document.getElementById('toggle-menu');
+    const elemm = document.getElementById('header-table-build');
+    elem.style.display = 'unset';
+    elemm.style.visibility = 'unset';
+    elemm.style.position = 'static';
   }
 }

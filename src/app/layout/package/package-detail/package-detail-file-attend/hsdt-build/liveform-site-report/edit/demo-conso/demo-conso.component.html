@@ -12,7 +12,7 @@
                         <div class="image-demo-img">
                             <input type="file" #uploadDemobilisation (change)="uploadDemobilisationImage($event)">
                             <div class="display-img" *ngFor="let url of demobilisationImageUrls">
-                                <img [src]="url">
+                                <img [src]="(url.image?.base64) || url.image.file">
                                 <div class="toppp" (click)="deleteDemobilisationImage(url)">
                                     <i class="fa fa-times delete-icon" aria-hidden="true"></i>
                                 </div>
@@ -36,7 +36,7 @@
                             <input type="file" #uploadConsolidation (change)="uploadConsolidationImage($event)">
 
                             <div class="display-img" *ngFor="let url of consolidationImageUrls">
-                                <img [src]="url">
+                                <img [src]="(url.image?.base64) || url.image.file">
                                 <div class="toppp" (click)="deleteConsolidationImage(url)">
                                     <i class="fa fa-times delete-icon" aria-hidden="true"></i>
                                 </div>
@@ -61,7 +61,7 @@
                             <input type="file" #uploaAdjacent (change)="uploaAdjacentImage($event)">
 
                             <div class="display-img" *ngFor="let url of adjacentImageUrls">
-                                <img [src]="url">
+                                <img [src]="(url.image?.base64) || url.image.file">
                                 <div class="toppp" (click)="deleteAdjacentImage(url)">
                                     <i class="fa fa-times delete-icon" aria-hidden="true"></i>
                                 </div>

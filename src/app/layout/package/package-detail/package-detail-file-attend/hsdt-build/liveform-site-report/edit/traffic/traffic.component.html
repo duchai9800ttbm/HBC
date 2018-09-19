@@ -14,7 +14,7 @@
                             <input type="file" #uploaDisadvantage (change)="uploaDisadvantageImage($event)">
 
                             <div class="display-img" *ngFor="let url of disadvantageImageUrls">
-                                <img [src]="url">
+                                <img [src]="(url.image?.base64) || url.image.file">
                                 <div class="toppp" (click)="deleteDisadvantageImage(url)">
                                     <i class="fa fa-times delete-icon" aria-hidden="true"></i>
                                 </div>
@@ -34,7 +34,7 @@
                             <input type="file" #uploaAdvantage (change)="uploaAdvantageImage($event)">
 
                             <div class="display-img" *ngFor="let url of advantageImageUrls">
-                                <img [src]="url">
+                                <img [src]="(url.image?.base64) || url.image.file">
                                 <div class="toppp" (click)="deleteAdvantageImage(url)">
                                     <i class="fa fa-times delete-icon" aria-hidden="true"></i>
                                 </div>
@@ -59,7 +59,7 @@
                             <input type="file" #uploadDirection (change)="uploadDirectionImage($event)">
 
                             <div class="display-img" *ngFor="let url of directionImageUrls">
-                                <img [src]="url">
+                                <img [src]="(url.image?.base64) || url.image.file">
                                 <div class="toppp" (click)="deleteDirectionImage(url)">
                                     <i class="fa fa-times delete-icon" aria-hidden="true"></i>
                                 </div>
@@ -79,7 +79,7 @@
                             <input type="file" #uploadExisting (change)="uploadExistingImage($event)">
 
                             <div class="display-img" *ngFor="let url of existingImageUrls">
-                                <img [src]="url">
+                                <img [src]="(url.image?.base64) || url.image.file">
                                 <div class="toppp" (click)="deleteExistingImage(url)">
                                     <i class="fa fa-times delete-icon" aria-hidden="true"></i>
                                 </div>
@@ -99,7 +99,7 @@
                             <input type="file" #uploadRoad (change)="uploadRoadImage($event)">
 
                             <div class="display-img" *ngFor="let url of roadImageUrls">
-                                <img [src]="url">
+                                <img [src]="(url.image?.base64) || url.image.file">
                                 <div class="toppp" (click)="deleteRoadImage(url)">
                                     <i class="fa fa-times delete-icon" aria-hidden="true"></i>
                                 </div>
@@ -119,7 +119,7 @@
                             <input type="file" #uploadFence (change)="uploadFenceImage($event)">
 
                             <div class="display-img" *ngFor="let url of fenceImageUrls">
-                                <img [src]="url">
+                                <img [src]="(url.image?.base64) || url.image.file">
                                 <div class="toppp" (click)="deleteFenceImage(url)">
                                     <i class="fa fa-times delete-icon" aria-hidden="true"></i>
                                 </div>

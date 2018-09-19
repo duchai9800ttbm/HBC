@@ -27,7 +27,11 @@ export class LiveformSiteReportComponent implements OnInit {
     this.documentService.tenderSiteSurveyingReport(this.bidOpportunityId).subscribe(res => {
       LiveformSiteReportComponent.formModel = res;
       this.documentData = res;
-      this.isData = (this.documentData.id) ?  true : false;
+      this.isData = (this.documentData.id) ? true : false;
     });
+  }
+
+  onActivate(event, view) {
+    LiveformSiteReportComponent.formModel.viewFlag = view;
   }
 }
