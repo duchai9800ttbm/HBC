@@ -451,7 +451,9 @@ table.dataTable th {
     transition-duration: 600ms;
 }
 
-.iconN01, .iconN02, .iconN03 {
+.iconN01,
+.iconN02,
+.iconN03 {
     background-color: #fff !important;
     transform: none;
     transition-duration: 600ms;
@@ -544,4 +546,8 @@ table.dataTable th {
     span {
         font-style: italic;
     }
+}
+
+.no-action {
+    color: #7b7b7b !important;
 }

@@ -1,6 +1,7 @@
 <div id="outer-table">
     <div class="table-small mt-3">
-        <div id="header-table-build" class=" title-list-package d-flex flex-wrap align-items-center status-filter" *ngIf="!isShowMenu">
+        <div id="header-table-build" class=" title-list-package d-flex flex-wrap align-items-center status-filter"
+            *ngIf="!isShowMenu">
             <div class="mr-auto d-flex align-items-end list-package mt-2 mb-2">
                 <div class="d-flex justify-content-start" style="height: 40px;" id="res-header">
                     <div class="rule mr-2">
@@ -38,7 +39,8 @@
                             <button class="btn btn-primary ml-2" id="dropdownBasic1" ngbDropdownToggle>Thêm mới HSDT</button>
                             <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
                                 <button class="dropdown-item">Bảng tóm tắt ĐKDT</button>
-                                <button class="dropdown-item" (click)="showDialogUploadFile('Yêu cầu báo giá vật tư, thầu phụ')">Yêu cầu báo giá vật tư, thầu phụ</button>
+                                <button class="dropdown-item" (click)="showDialogUploadFile('Yêu cầu báo giá vật tư, thầu phụ')">Yêu
+                                    cầu báo giá vật tư, thầu phụ</button>
                                 <button class="dropdown-item" (click)="showDialogUploadFile('Báo cáo tham quan công trình')">Báo
                                     cáo tham quan công trình</button>
                                 <button class="dropdown-item" (click)="showDialogUploadFile('Bản tổng hợp dự toán')">Bản
@@ -69,20 +71,44 @@
 
                 <div class="d-flex">
                     <div id="toggle-menu-item">
-                        <div class="toggle-menu-item" [routerLink]="['./summary']" routerLinkActive="active-link">Bảng
-                            tóm
-                            tắt ĐKDT</div>
-                        <div class="toggle-menu-item">Yêu cầu báo giá vật tư, thầu phụ</div>
-                        <div class="toggle-menu-item" routerLink="./liveformsite" routerLinkActive="active-link">Báo
-                            cáo
-                            tham quan công trình</div>
-                        <div class="toggle-menu-item">Bảng tổng hợp dự toán</div>
-                        <div class="toggle-menu-item">Bảng tính chi phí chung</div>
-                        <div class="toggle-menu-item">Bảng câu hỏi làm rõ HSMT</div>
-                        <div class="toggle-menu-item" [routerLink]="['hskt']">Các HSKT có liên quan</div>
-                        <div class="toggle-menu-item">Hồ sơ pháp lý</div>
-                        <div class="toggle-menu-item">Hồ sơ khác</div>
-                        <!-- <div class="line" *ngIf="!(majorTypeListItem.length == i+1)" style="width: calc(100% - 10px); border-top: #ccecf9 solid 1px; height: 1px; border-left: 1px; margin-left: 10px;"></div> -->
+                        <div class="toggle-menu-item d-flex flex-column align-items-start" [routerLink]="['./summary']"
+                            routerLinkActive="active-link">
+                            <div>Bảng tóm tắt ĐKDT</div>
+                            <span class="font-italic">LiveForm</span>
+                        </div>
+                        <div class="toggle-menu-item d-flex flex-column align-items-start">
+                            <div>Yêu cầu báo giá vật tư, thầu phụ</div>
+                            <span class="font-italic">Upload</span>
+                        </div>
+                        <div class="toggle-menu-item d-flex flex-column align-items-start" routerLink="./liveformsite"
+                            routerLinkActive="active-link">
+                            <div>Báo cáo tham quan công trình</div>
+                            <span class="font-italic">LiveForm</span>
+                        </div>
+                        <div class="toggle-menu-item d-flex flex-column align-items-start">
+                            <div>Bảng tổng hợp dự toán</div>
+                            <span class="font-italic">Upload</span>
+                        </div>
+                        <div class="toggle-menu-item d-flex flex-column align-items-start">
+                            <div>Bảng tính chi phí chung</div>
+                            <span class="font-italic">Upload</span>
+                        </div>
+                        <div class="toggle-menu-item d-flex flex-column align-items-start">
+                            <div>Bảng câu hỏi làm rõ HSMT</div>
+                            <span class="font-italic">Upload</span>
+                        </div>
+                        <div class="toggle-menu-item d-flex flex-column align-items-start" [routerLink]="['hskt']">
+                            <div>Các HSKT có liên quan</div>
+                            <span class="font-italic">Upload</span>
+                        </div>
+                        <div class="toggle-menu-item d-flex flex-column align-items-start">
+                            <div>Hồ sơ pháp lý</div>
+                            <span class="font-italic">Upload</span>
+                        </div>
+                        <div class="no-action toggle-menu-item d-flex flex-column align-items-start">
+                            <div>Hồ sơ khác</div>
+                            <span class="font-italic">Upload</span>
+                        </div>
                     </div>
                     <div class="button-click mb-auto" (click)="toggleClick()">
                         <div class="center-parent">
