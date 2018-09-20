@@ -1,8 +1,8 @@
 <div class="mx-20 detail-container">
     <div class="d-flex">
         <ul class="progressbar">
-            <li class="triangle" [routerLink]="['./create-request']" [class.noActive]="(currentUrl !== 'create-request') && (statusPackage > -1)"
-                [class.active]="currentUrl === 'create-request'" [class.allow]="(statusPackage > -1)">
+            <li class="triangle" [routerLink]="['./create-request']" [class.noActive]="(currentUrl !== 'create-request') && (statusPackageID > -1)"
+                [class.active]="currentUrl === 'create-request'" [class.allow]="(statusPackageID > -1)">
                 <div style="width: 100%" class="center-parent">
                     <div class="arrow-down"></div>
                 </div>
@@ -10,8 +10,12 @@
                     <strong>Cần lập đề nghị dự thầu</strong>
                 </span>
             </li>
-            <li class="triangle" [routerLink]="(statusPackage > 0) ? ['./infomation-deployment'] : []" [class.noActive]="(currentUrl !== 'infomation-deployment') && statusPackage > 0"
-                [class.active]="currentUrl === 'infomation-deployment'" [class.allow]="(statusPackage > 0)" [class.no-allow]="(statusPackage < 1)">
+            <!-- (statusPackageID > 0) || statusPackageName === 'ThamGiaDuThau' ? ['./infomation-deployment'] : [] -->
+            <li class="triangle" [routerLink]="['./infomation-deployment']"
+                [class.noActive]="( (currentUrl !== 'infomation-deployment') && statusPackageID > 0) ||  ( currentUrl === 'create-request' && statusPackageName === 'ThamGiaDuThau' )"
+                [class.active]="currentUrl === 'infomation-deployment'"
+                [class.allow]="(statusPackageID > 0) || statusPackageName === 'ThamGiaDuThau'"
+                [class.no-allow]="(statusPackageID < 1) && statusPackageName !== 'ThamGiaDuThau'">
                 <div style="width: 100%" class="center-parent">
                     <div class="arrow-down"></div>
                 </div>
@@ -19,8 +23,9 @@
                     <strong>Triển khai &amp; phân công tiến độ</strong>
                 </span>
             </li>
-            <li class="triangle" [routerLink]="(statusPackage > 1) ? ['./build'] : []" [class.noActive]="currentUrl !== 'build' && statusPackage > 1"
-                [class.active]="currentUrl === 'build'" [class.allow]="(statusPackage > 1)" [class.no-allow]="(statusPackage < 2)">
+            <!-- (statusPackageID > 1) ? ['./build'] : [] -->
+            <li class="triangle" [routerLink]="['./build']" [class.noActive]="currentUrl !== 'build' && statusPackageID > 1"
+                [class.active]="currentUrl === 'build'" [class.allow]="(statusPackageID > 1)" [class.no-allow]="(statusPackageID < 2)">
                 <div style="width: 100%" class="center-parent">
                     <div class="arrow-down"></div>
                 </div>
@@ -28,8 +33,9 @@
                     <strong>Lập HSDT</strong>
                 </span>
             </li>
-            <li class="triangle" [routerLink]="(statusPackage > 2) ? ['./price-review'] : []" [class.noActive]="currentUrl !== 'price-review' && statusPackage > 2"
-                [class.active]="currentUrl === 'price-review'" [class.allow]="(statusPackage > 2)" [class.no-allow]="(statusPackage < 3)">
+            <!-- (statusPackageID > 2) ? ['./price-review'] : [] -->
+            <li class="triangle" [routerLink]="['./price-review']" [class.noActive]="currentUrl !== 'price-review' && statusPackageID > 2"
+                [class.active]="currentUrl === 'price-review'" [class.allow]="(statusPackageID > 2)" [class.no-allow]="(statusPackageID < 3)">
                 <div style="width: 100%" class="center-parent">
                     <div class="arrow-down"></div>
                 </div>
@@ -37,8 +43,9 @@
                     <strong>Trình duyệt giá</strong>
                 </span>
             </li>
-            <li class="triangle" [routerLink]="(statusPackage > 3)  ? ['./interview-negotiation'] : []" [class.noActive]="currentUrl !== 'interview-negotiation' && statusPackage > 3"
-                [class.active]="currentUrl === 'interview-negotiation'" [class.allow]="(statusPackage > 3)" [class.no-allow]="(statusPackage < 4)">
+            <!-- (statusPackageID > 3)  ? ['./interview-negotiation'] : [] -->
+            <li class="triangle" [routerLink]="['./interview-negotiation']" [class.noActive]="currentUrl !== 'interview-negotiation' && statusPackageID > 3"
+                [class.active]="currentUrl === 'interview-negotiation'" [class.allow]="(statusPackageID > 3)" [class.no-allow]="(statusPackageID < 4)">
                 <div style="width: 100%" class="center-parent">
                     <div class="arrow-down"></div>
                 </div>

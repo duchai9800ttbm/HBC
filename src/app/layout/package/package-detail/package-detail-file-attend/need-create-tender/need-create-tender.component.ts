@@ -10,6 +10,7 @@ import { Subject } from 'rxjs';
 import DateTimeConvertHelper from '../../../../../shared/helpers/datetime-convert-helper';
 import { PackageInfoModel } from '../../../../../shared/models/package/package-info.model';
 import { BidStatus } from '../../../../../shared/constants/bid-status';
+import { StatusObservableHsdtService } from '../../../../../shared/services/status-observable-hsdt.service';
 
 @Component({
   selector: 'app-need-create-tender',
@@ -32,7 +33,8 @@ export class NeedCreateTenderComponent implements OnInit {
   constructor(
     private packageService: PackageService,
     private spinner: NgxSpinnerService,
-    private alertService: AlertService
+    private alertService: AlertService,
+    private statusObservableHsdtService: StatusObservableHsdtService,
   ) { }
 
   ngOnInit() {
@@ -120,6 +122,7 @@ export class NeedCreateTenderComponent implements OnInit {
     this.packageService.approveBidProposal(this.bidOpportunityId, this.reasonApproveBid)
       .subscribe(data => {
         this.spinner.hide();
+        this.statusObservableHsdtService.change();
         this.alertService.success('Duyệt đề nghị dự thầu thành công!');
         this.isShowDialog = false;
         this.reasonApproveBid = '';
