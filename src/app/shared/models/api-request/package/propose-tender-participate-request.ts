@@ -25,5 +25,5 @@ export class ProposeTenderParticipateRequest {
     contractCondition: ContractConditionTenderParticipate;
     tenderDirectorProposal: TenderDirectorProposal;
     decisionOfBoardOfGeneralDirector: DecisionBoardGeneralDirector;
-    isAgreedParticipating: boolean;
+    isAgreedParticipating = true;
 }

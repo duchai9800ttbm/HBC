@@ -40,7 +40,7 @@ export class NeedCreateTenderFormComponent implements OnInit {
     ngOnInit() {
         this.routerAction = NeedCreateTenderComponent.routerAction;
         this.dataModel = NeedCreateTenderFormComponent.formModel;
-        console.log('this.dataModel: ', this.dataModel);
+        this.dateApproveBid = DateTimeConvertHelper.fromTimestampToDtObject(this.dataModel.tenderDirectorProposal.expectedTime);
         this.bidOpportunityId = PackageDetailComponent.packageId;
         if (!NeedCreateTenderFormComponent.formModel) {
             this.router.navigate([
@@ -60,7 +60,7 @@ export class NeedCreateTenderFormComponent implements OnInit {
             .subscribe(data => {
                 this.packageInfo = data;
                 this.spinner.hide();
-                console.log(this.packageInfo);
+                // console.log(this.packageInfo);
             });
     }
 
