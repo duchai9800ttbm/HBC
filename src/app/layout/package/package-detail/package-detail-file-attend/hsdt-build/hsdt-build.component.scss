@@ -1,9 +1,10 @@
 .boder-table {
     border: 1px solid #ebebeb;
-    padding-bottom: 35px;
+    // padding-bottom: 35px;
     margin-top: 10px;
     border-radius: 4px;
     box-shadow: 0 0 10px 3px #f1f1f1;
+    height: auto;
     background-color: #fff;
 }
 
@@ -106,6 +107,7 @@ li.triangle::before {
 .progressbar li.active:before {
     border-color: #00a0e3;
     background-color: #00a0e3;
+
     .arrow-down {
         width: 0;
         height: 0;
@@ -175,10 +177,10 @@ li.triangle::before {
 }
 
 #outer-table {
-    padding: 20px 15px 20px 0;
+    padding: 20px 15px 0 0;
 }
 
-#header-table {
+#header-table-build {
     padding-left: 55px;
 }
 
@@ -322,14 +324,17 @@ table.dataTable th {
 
 #main-content {
     display: flex;
+
     #toggle-menu {
         // box-shadow: ;
         display: flex;
         flex-direction: column;
-        padding-top: 30px;
+        padding-top: 15px;
+
         #toggle-menu-item {
             display: flex;
             flex-direction: column;
+
             .toggle-menu-item {
                 cursor: pointer;
                 outline: none;
@@ -344,24 +349,29 @@ table.dataTable th {
                 align-items: center;
                 font-size: 0.95em;
                 transition: 600ms;
+
                 &:hover {
                     background-color: #009CE2;
                     color: #FFFFFF;
                 }
+
                 &:first-child {
                     border-top: #009CE2 solid 1px;
                     border-top-right-radius: 5px;
                 }
+
                 &:last-child {
                     border-bottom: #009CE2 solid 1px;
                     border-bottom-right-radius: 5px;
                 }
             }
+
             .active-link {
                 background-color: #009CE2;
                 color: white;
             }
         }
+
         .toggle-menu-item {
             cursor: pointer;
             outline: none;
@@ -377,15 +387,18 @@ table.dataTable th {
             align-items: center;
             font-size: 0.95em;
             transition: 600ms;
+
             &:hover {
                 background-color: #009CE2;
                 color: #FFFFFF;
             }
+
             .router-link-active {
                 background-color: #009CE2;
                 color: #FFFFFF;
             }
         }
+
         .button-click {
             cursor: pointer;
             display: flex;
@@ -403,16 +416,17 @@ table.dataTable th {
 }
 
 .resize {
-    transition: width 600ms;
+    transition: width 300ms;
     pointer-events: none;
     width: 0px !important;
     color: transparent !important;
     background-color: transparent !important;
     border: none !important;
+    box-shadow: none !important;
+    display: none;
 }
 
 .iconButton {
-    width: 19px;
     height: 3px;
     background-color: #fff;
     border: none;
@@ -420,35 +434,26 @@ table.dataTable th {
 }
 
 .iconN1 {
+    width: 25px;
     transform: rotate(45deg) translate(5px, 5px);
     transition-duration: 600ms;
 }
 
-.iconN01 {
-    width: 25px;
+.iconN2 {
     transform: none;
+    background-color: transparent;
     transition-duration: 600ms;
 }
 
 .iconN3 {
+    width: 25px;
     transform: rotate(-45deg) translate(4px, -4px);
     transition-duration: 600ms;
 }
 
-.iconN03 {
-    width: 25px;
+.iconN01, .iconN02, .iconN03 {
+    background-color: #fff !important;
     transform: none;
-    transition-duration: 600ms;
-}
-
-.iconN2 {
-    transform: rotateY(90deg);
-    transition-duration: 600ms;
-}
-
-.iconN02 {
-    transform: none;
-    width: 25px;
     transition-duration: 600ms;
 }
 
@@ -457,33 +462,41 @@ table.dataTable th {
         width: 150px !important;
         font-size: 12px !important;
     }
+
     #outer-table {
         padding-top: 0 !important;
     }
-    #header-table {
+
+    #header-table-build {
         zoom: 0.8 !important;
         padding-left: 20px;
+
         :first-child {
             #res-header {
                 position: relative;
                 top: -30px;
             }
         }
+
         :last-child {
             div {
                 display: flex;
                 flex-direction: column;
                 align-items: flex-end;
+
                 :first-child {
                     margin-bottom: 5px;
+
                     div {
                         justify-content: flex-end;
                         align-items: flex-start;
+
                         span {
                             padding-bottom: 10px;
                         }
                     }
                 }
+
                 :last-child {
                     flex-direction: row;
                     align-items: flex-start;
@@ -493,24 +506,42 @@ table.dataTable th {
         }
     }
 }
+
 .dropdown-toggle::after {
     content: none !important;
     border: none !important;
 }
-.dropdown-item{
+
+.dropdown-item {
     cursor: pointer;
 }
-.dropdown-menu{
+
+.dropdown-menu {
     transform: translateX(-56%) !important;
 }
-.dropdown-menu::before{
+
+.dropdown-menu::before {
     position: absolute;
     top: -12px;
     left: 572px;
     display: inline-block;
     border-right: 12px solid transparent;
-    border-bottom: 12px solid #CCC;
+    border-bottom: 12px solid #CCCCCC;
     border-left: 12px solid transparent;
     border-bottom-color: rgba(0, 0, 0, 0.2);
     content: '';
+}
+
+.router-link-active {
+    background-color: #00a0e3 !important;
+    color: #fff !important;
+}
+
+.itemDisplay {
+    flex-direction: column;
+    align-items: flex-start !important;
+
+    span {
+        font-style: italic;
+    }
 }

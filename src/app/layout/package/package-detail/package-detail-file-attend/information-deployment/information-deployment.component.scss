@@ -537,3 +537,19 @@ table.dataTable th {
 .width-add-file-upload{
     width: calc(100% - 105px);
 }
+
+:host /deep/ p-autocomplete{
+    input{
+        line-height: initial !important;
+    }
+    .ui-autocomplete-input-token {
+        input {
+            line-height: initial !important;
+
+        }
+    }
+}
+
+.icon-filter {
+    width: 116px;
+}

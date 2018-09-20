@@ -8,6 +8,7 @@ import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
+// tslint:disable-next-line:max-line-length
 import { AuthGuard, SessionService, ConfirmationService, InstantSearchService, UserNotificationService, ApiService, DataService, UserService } from './shared/services';
 import { AlertService } from './shared/services';
 import { HttpModule } from '@angular/http';
@@ -17,6 +18,7 @@ import { NgxSpinnerModule } from 'ngx-spinner';
 import { StarRatingModule } from 'angular-star-rating';
 import { DataUploadService } from './shared/services/data-upload.service';
 import { GroupUserService } from './shared/services/group-user.service';
+import { LiveformDataReportService } from './shared/services/liveform-data-report.service';
 import '@progress/kendo-angular-intl/locales/vi/all';
 import { IntlModule } from '@progress/kendo-angular-intl';
 import '@angular/common/locales/vi';
@@ -35,8 +37,8 @@ import { SettingService } from './shared/services/setting.service';
 import { PackageSuccessService } from './shared/services/package-success.service';
 import { EmailService } from './shared/services/email.service';
 import { LayoutService } from './shared/services/layout.service';
-registerLocaleData(localeFrCa, localeFrCaExtra);
 import '@progress/kendo-ui';
+import { NG_SELECT_DEFAULT_CONFIG } from '../../node_modules/@ng-select/ng-select';
 
 // AoT requires an exported function for factories
 export function createTranslateLoader(http: HttpClient) {
@@ -44,6 +46,8 @@ export function createTranslateLoader(http: HttpClient) {
     // return new TranslateHttpLoader(http, '/start-angular/SB-Admin-BS4-Angular-5/master/dist/assets/i18n/', '.json');
     return new TranslateHttpLoader(http, './assets/i18n/', '.json');
 }
+
+registerLocaleData(localeFrCa, localeFrCaExtra);
 
 @NgModule({
     imports: [
@@ -73,6 +77,7 @@ export function createTranslateLoader(http: HttpClient) {
         ConfirmationService,
         InstantSearchService,
         UserNotificationService,
+        LiveformDataReportService,
         DataUploadService,
         TranslateService,
         AuthGuard,
@@ -96,6 +101,12 @@ export function createTranslateLoader(http: HttpClient) {
             provide: LOCALE_ID, useValue: 'vi'
         },
         { provide: MessageService, useClass: MyMessageService },
+        {
+            provide: NG_SELECT_DEFAULT_CONFIG,
+            useValue: {
+                notFoundText: 'Custom not found'
+            }
+        }
     ],
 })
 export class AppModule { }

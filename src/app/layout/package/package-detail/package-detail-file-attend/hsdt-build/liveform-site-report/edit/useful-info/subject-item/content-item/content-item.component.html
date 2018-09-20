@@ -1,0 +1,24 @@
+<form [formGroup]="contentItemForm" class="fix-position-form">
+    <div class="img-demo-des">
+        <label class="label-hide"> </label>
+        <input type="text" class="input-name-content" formControlName="tenNoidung">
+        <i (click)="deleteContentItem($event)" class="fa fa-times-circle remove-content-button" aria-hidden="true"></i>
+    </div>
+    <div class="img-demo-des">
+        <label for="" style="visibility: hidden">Nội dung</label>
+        <textarea class="desc-content" cols="20" rows="5" formControlName="chiTietNoiDung"></textarea>
+    </div>
+    <div class="image-demo-img">
+        <input type="file" #uploadContent (change)="uploadContentImage($event)">
+        <div class="display-img" *ngFor="let url of contentItemImageList">
+            <img [src]="url">
+            <div class="toppp" (click)="deleteContentImage(url)">
+                <i class="fa fa-times delete-icon" aria-hidden="true"></i>
+            </div>
+        </div>
+        <div class="perspective-image" (click)="uploadContent.click()">
+            <i class="fa fa-plus" aria-hidden="true"></i>
+            <p>Image</p>
+        </div>
+    </div>
+</form>

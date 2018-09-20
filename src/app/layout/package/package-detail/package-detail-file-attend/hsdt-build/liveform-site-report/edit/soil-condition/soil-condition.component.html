@@ -1,0 +1,59 @@
+<form [formGroup]="soilConditionForm" class="detail-info">
+    <div id="step5" class="step-info">
+        <h5 class="big-title">6.&nbsp;điều kiện về đất nền hiện hữu (có thể thấy được)/ existing soil condition
+            (seeable)</h5>
+        <div>
+            <div class="detail-each-title">
+                <h6 class="small-title">6.1 Nền móng hiện có hoặc công trình lân cận/ Existing footing (or adjacent
+                    building if seeable))</h6>
+                <div class="main-detail">
+                    <div class="text-des-input">
+                        <input type="text" formControlName="nenMongHienCoDesc">
+                    </div>
+                    <div>
+                        <div class="image-demo-img">
+                            <input type="file" #uploadFooting (change)="uploadFootingImage($event)">
+
+                            <div class="display-img" *ngFor="let url of footingImageUrls">
+                                <img [src]="(url.image?.base64) || url.image.file">
+                                <div class="toppp" (click)="deleteFootingImage(url)">
+                                    <i class="fa fa-times delete-icon" aria-hidden="true"></i>
+                                </div>
+                            </div>
+                            <div class="perspective-image" (click)="uploadFooting.click()">
+                                <i class="fa fa-plus" aria-hidden="true"></i>
+                                <p>Image</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="detail-each-title">
+                <h6 class="small-title">6.2 Địa tầng lớp đất (trong trường hợp Design và Build)/ Soil investigation (in
+                    case Design and Build))</h6>
+                <div class="main-detail">
+                    <div class="text-des-input">
+                        <div class="img-demo-des">
+                            <label for="">Thông tin công trình gần đó/ Soil investigation of similar project</label>
+                            <input type="text" formControlName="thongTinCongTrinhGanDoDesc">
+                        </div>
+                        <div class="image-demo-img">
+                            <input type="file" #uploadInvestigation (change)="uploadInvestigationImage($event)">
+
+                            <div class="display-img" *ngFor="let url of investigationImageUrls">
+                                <img [src]="(url.image?.base64) || url.image.file">
+                                <div class="toppp" (click)="deleteInvestigationImage(url)">
+                                    <i class="fa fa-times delete-icon" aria-hidden="true"></i>
+                                </div>
+                            </div>
+                            <div class="perspective-image" (click)="uploadInvestigation.click()">
+                                <i class="fa fa-plus" aria-hidden="true"></i>
+                                <p>Image</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>

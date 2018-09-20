@@ -1,0 +1,29 @@
+<div class="list-detail">
+    <div class="img-demo-des">
+        <label class="label-hide"></label>
+        <span class="custom-dropdown w-30">
+            <select class="form-control" [(ngModel)]="usefulInfo.title" (change)="selectedChange()">
+                <option>---Chọn---</option>
+                <option [value]="subject" *ngFor="let subject of subjectList">{{ subject }}</option>
+            </select>
+        </span>
+        <i (click)="deleteSubject($event)" class="fa fa-times-circle" aria-hidden="true" style="position: relative;color: #BEBEBE;font-size: 30px;left: 30px;top: 6px;"></i>
+    </div>
+    <div class="topic7" *ngFor="let content of usefulInfo.content; let i = index">
+        <ng-container>
+
+            <div class="img-demo-des">
+                <label>Nội dung {{ i+1 }}
+                    <span class="add-content-button" (click)="addContent($event)" *ngIf="(i+1) == usefulInfo.content.length">
+                        <i class="fa fa-plus-square-o" aria-hidden="true"></i>
+                    </span>
+                </label>
+
+            </div>
+
+            <app-content-item [contentItemModel]="content" (valueChange)="trackingChange($event, i)"
+                (deleteContent)="deleteContentItem(i)"></app-content-item>
+
+        </ng-container>
+    </div>
+</div>

@@ -53,6 +53,7 @@ import { LayoutService } from './services/layout.service';
 import { InputsModule } from '@progress/kendo-angular-inputs';
 import { HttpClientModule } from '@angular/common/http';
 import { UploadModule } from '@progress/kendo-angular-upload';
+import { NgSelectModule } from '@ng-select/ng-select';
 @NgModule({
     imports: [
         HttpClientModule,
@@ -97,7 +98,8 @@ import { UploadModule } from '@progress/kendo-angular-upload';
         DropDownsModule,
         MenuModule,
         ModalModule.forRoot(),
-        CKEditorModule
+        CKEditorModule,
+        NgSelectModule,
         // ScrollToTopService
     ],
     exports: [
@@ -139,7 +141,8 @@ import { UploadModule } from '@progress/kendo-angular-upload';
         DialogsModule,
         GridModule,
         DropDownsModule,
-        MenuModule
+        MenuModule,
+        NgSelectModule,
         // ScrollToTopService
     ]
 })

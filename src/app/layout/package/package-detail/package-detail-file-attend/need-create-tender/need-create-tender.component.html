@@ -4,14 +4,17 @@
             <div class="rule mr-2">
             </div>
             <div class="center-parent mr-4">
-                <h4 class="mb-0">Cần lập đề nghị dự thầu</h4>
+                <h4 class="mb-0" *ngIf="packageInfo?.stageStatus.id == bidStatus.CanLapDeNghiDuThau">Cần lập đề nghị dự thầu</h4>
+                <h4 class="mb-0" *ngIf="packageInfo?.stageStatus.id == bidStatus.ChoDuyetDeNghiDuThau">Chờ duyệt</h4>
+                <h4 class="mb-0" *ngIf="packageInfo?.stageStatus.id == bidStatus.ThamGiaDuThau">Tham gia dự thầu</h4>
+                <h4 class="mb-0" *ngIf="packageInfo?.stageStatus.id == bidStatus.TuChoiDuThau">Từ chối dự thầu</h4>
             </div>
         </div>
     </div>
     <div>
         <div class="btn-toolbar mt-2 mb-2">
-            <button type="button" class="btn btn-primary ml-2" (click)="isShowDialog = true" *ngIf="proposedTender">Chấp thuận đề nghị DT</button>
-            <button type="button" class="btn btn-primary ml-2" (click)="isShowDialog = true" *ngIf="proposedTender">Gửi duyệt đề nghị DT</button>
+            <button type="button" class="btn btn-primary ml-2" (click)="isShowDialog = true" *ngIf="proposedTender && packageInfo?.stageStatus.id == bidStatus.ChoDuyetDeNghiDuThau">Chấp thuận đề nghị DT</button>
+            <button type="button" class="btn btn-primary ml-2" (click)="isShowDialog = true" *ngIf="proposedTender && packageInfo?.stageStatus.id == bidStatus.CanLapDeNghiDuThau">Gửi duyệt đề nghị DT</button>
             <button type="button" class="btn btn-primary ml-2">Tải
                 Template</button>
             <button type="button" class="btn btn-primary ml-2">
@@ -42,10 +45,10 @@
         <thead>
             <tr>
                 <th>
-                    <label class="custom-control custom-checkbox">
+                    <!-- <label class="custom-control custom-checkbox">
                         <input type="checkbox" class="custom-control-input input-checkbox">
                         <span class="custom-control-indicator"></span>
-                    </label>
+                    </label> -->
                 </th>
                 <th>Tên tài liệu</th>
                 <th>Tình trạng</th>
@@ -57,10 +60,10 @@
         <tbody>
             <tr>
                 <td>
-                    <label class="custom-control custom-checkbox">
+                    <!-- <label class="custom-control custom-checkbox">
                         <input type="checkbox" class="custom-control-input input-checkbox">
                         <span class="custom-control-indicator"></span>
-                    </label>
+                    </label> -->
                 </td>
                 <td>{{proposedTender.documentName}}</td>
                 <td>{{proposedTender.isDraftVersion ? 'Bản nháp' : 'Chính thức'}}</td>
@@ -72,15 +75,15 @@
                             <a [routerLink]="['./form/view']" (click)="changeAction('view')">
                                 <i class="fa fa-eye text-warning" aria-hidden="true"></i>
                             </a>
-                            <a class=" text-success ml-3" [routerLink]="['./form/edit']" (click)="changeAction('edit')">
+                            <a class=" text-success ml-3" [class.disable]="packageInfo?.stageStatus.id == bidStatus.TuChoiDuThau" [routerLink]="packageInfo?.stageStatus.id == bidStatus.TuChoiDuThau ? [] : ['./form/edit']" (click)="changeAction('edit')">
                                 <i class="fa fa-pencil cursor-pointer" aria-hidden="true"> </i>
                             </a>
                             <a class=" text-dark ml-3">
                                 <i class="fa fa-trash-o" aria-hidden="true"></i>
                             </a>
-                            <a class="ml-3" (click)="printForm()">
+                            <!-- <a class="ml-3" (click)="printForm()">
                                 <i class="fa fa-print ic-print-color" aria-hidden="true"></i>
-                            </a>
+                            </a> -->
                         </div>
                     </div>
                 </td>
@@ -100,10 +103,10 @@
     </div>
 </div>
 <kendo-dialog [width]="550" *ngIf="isShowDialog">
-    <div *ngIf="proposedTender">
+    <div *ngIf="packageInfo?.stageStatus.id == bidStatus.CanLapDeNghiDuThau">
         <div class="dialog-header mt-2">
             <h3 class="text-center text-uppercase color-black">gửi duyệt đề nghị dự thầu</h3>
-            <span class="ic-close pointer" (click)="isShowDialog = false">
+            <span class="ic-close pointer" (click)="closeDialog()">
                 <img src="assets/images/ic-close.svg">
             </span>
         </div>
@@ -121,10 +124,10 @@
             <button class="btn b-btn btn-primary" (click)="sendApproveBidProposal()">Đồng ý</button>
         </div>
     </div>
-    <div *ngIf="proposedTender">
+    <div *ngIf="packageInfo?.stageStatus.id == bidStatus.ChoDuyetDeNghiDuThau  && !isNotAgreeParticipating">
         <div class="dialog-header mt-2">
             <h3 class="text-center text-uppercase color-black">chấp thuận đề nghị dự thầu</h3>
-            <span class="ic-close pointer" (click)="isShowDialog = false">
+            <span class="ic-close pointer" (click)="closeDialog()">
                 <img src="assets/images/ic-close.svg">
             </span>
         </div>
@@ -134,14 +137,14 @@
             Bạn có muốn chấp thuận đề nghị dự thầu này?
         </div>
         <div class="mt-5 text-center mb-2">
-            <button class="btn b-btn btn-primary">Có</button>
+            <button class="btn b-btn btn-primary" (click)="approveBidProposal()">Có</button>
             <button class="btn b-btn btn-secondary ml-2" (click)="isNotAgreeParticipating = true">Không</button>
         </div>
     </div>
-    <div *ngIf="isNotAgreeParticipating">
+    <div *ngIf="packageInfo?.stageStatus.id == bidStatus.ChoDuyetDeNghiDuThau && isNotAgreeParticipating">
         <div class="dialog-header mt-2">
             <h3 class="text-center text-uppercase color-black">không chấp thuận đề nghị dự thầu</h3>
-            <span class="ic-close pointer" (click)="isShowDialog = false">
+            <span class="ic-close pointer" (click)="closeDialog()">
                 <img src="assets/images/ic-close.svg">
             </span>
         </div>
@@ -151,13 +154,14 @@
                     Lý do
                 </div>
                 <div class="col-md-7">
-                    <textarea class="form-control" rows="2"></textarea>
+                    <textarea [(ngModel)]="reasonApproveBid" class="form-control" rows="2"></textarea>
                 </div>
             </div>
         </div>
         <div class="mt-5 text-center mb-2">
-                <button class="btn b-btn btn-primary">Gửi</button>
+                <button class="btn b-btn btn-primary" (click)="approveBidProposal()">Gửi</button>
         </div>
     </div>
 
 </kendo-dialog>
+<ngx-spinner bdColor="rgba(51, 51, 51, 0.7)" size="medium" color="#fff" type="ball-clip-rotate-multiple"></ngx-spinner>

@@ -16,7 +16,7 @@ export class ProposeTenderParticipateRequest {
     updatedEmployee: EmployeeModel;
     updatedEmployeeId: number;
     documentName: string;
-    isDraftVersion: boolean;
+    isDraftVersion = true;
     employerAnalysis: EmployeeAnalys;
     consultantAnalysis: ConsultantAnalys;
     internalResourcesEvaluation: InternalResourceesEvaluation;
@@ -25,5 +25,5 @@ export class ProposeTenderParticipateRequest {
     contractCondition: ContractConditionTenderParticipate;
     tenderDirectorProposal: TenderDirectorProposal;
     decisionOfBoardOfGeneralDirector: DecisionBoardGeneralDirector;
-    isAgreedParticipating: boolean;
+    isAgreedParticipating = true;
 }

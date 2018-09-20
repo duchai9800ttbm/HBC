@@ -97,6 +97,8 @@ export class SidebarComponent implements OnInit {
 
     onResize(e) {
         const width = document.getElementById('sidebar').offsetWidth;
+        // console.log(e);
+        // console.log(width);
         if (width < 200) {
             // document.getElementById('logo').setAttribute('Width', '55');
             // this.toggleMenuFromSidebar.emit(false);

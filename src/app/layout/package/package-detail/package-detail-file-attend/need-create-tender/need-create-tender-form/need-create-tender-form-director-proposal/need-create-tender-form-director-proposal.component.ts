@@ -26,12 +26,13 @@ export class NeedCreateTenderFormDirectorProposalComponent implements OnInit {
   createForm() {
     const formData = NeedCreateTenderFormComponent.formModel.tenderDirectorProposal;
     this.directorProposalForm = this.fb.group({
-      isAgreedParticipating: formData ? NeedCreateTenderFormComponent.formModel.isAgreedParticipating : true,
+      isAgreedParticipating: NeedCreateTenderFormComponent.formModel.isAgreedParticipating,
       reason: formData ? formData.reason : '',
       date: formData ? DateTimeConvertHelper.fromTimestampToDtObject(formData.date) : new Date(),
       expectedTime: formData ? DateTimeConvertHelper.fromTimestampToDtObject(formData.expectedTime) : new Date(),
       isSigned: formData ? formData.isSigned : false
     });
+    console.log(this.directorProposalForm.value);
   }
 
   clickSigned() {

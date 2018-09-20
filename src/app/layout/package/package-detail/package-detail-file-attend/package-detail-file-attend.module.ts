@@ -18,6 +18,7 @@ import { CreateNewInvitationComponent } from './interview-negotiation/create-int
 import { ReportEndInterviewComponent } from './interview-negotiation/end-interview/report-end-interview/report-end-interview.component';
 import { InterviewNoticeComponent } from './interview-negotiation/create-interview/interview-notice/interview-notice.component';
 import { TagInputModule } from 'ngx-chips';
+import { StatusObservableHsdtService } from '../../../../shared/services/status-observable-hsdt.service';
 TagInputModule.withDefaults({
   tagInput: {
     placeholder: 'Nhập địa chỉ email',
@@ -57,7 +58,8 @@ TagInputModule.withDefaults({
     InterviewNoticeComponent
   ],
   providers: [
-    DocumentPriceReviewService
+    DocumentPriceReviewService,
+    StatusObservableHsdtService
   ]
 })
 export class PackageDetailFileAttendModule { }
