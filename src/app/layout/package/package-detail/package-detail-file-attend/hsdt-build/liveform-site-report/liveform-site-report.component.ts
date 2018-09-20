@@ -28,7 +28,6 @@ export class LiveformSiteReportComponent implements OnInit {
       LiveformSiteReportComponent.formModel = res;
       this.documentData = res;
       this.isData = (this.documentData.id) ? true : false;
-      console.log(this.documentData);
     });
   }
 

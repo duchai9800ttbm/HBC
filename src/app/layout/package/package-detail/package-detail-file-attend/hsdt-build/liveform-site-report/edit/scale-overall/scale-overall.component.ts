@@ -241,7 +241,6 @@ export class ScaleOverallComponent implements OnInit {
       description: data.nhungYeuCauDacBietDesc,
       images: this.requirementsImageUrls
     };
-    console.log(LiveformSiteReportComponent.formModel.scaleOverall.trangthaiCongTrinh);
   }
 
   uploadPerspectiveImage(event) {
