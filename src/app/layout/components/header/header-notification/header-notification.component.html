@@ -11,21 +11,21 @@
             <div class="dropdown-menu-header font-weight-bold mb-2">
                 THÔNG BÁO
             </div>
-            <li role="menuitem" dropdown  placement="right" container="body">
+            <li role="menuitem" dropdown placement="right" container="body">
                 <a dropdownToggle (click)="false">
                     <i class="fa fa-ellipsis-v fa-ellipsis" aria-hidden="true"></i>
                 </a>
-                <ul *dropdownMenu class="dropdown-menu ul-chirld--index" role="menu">
+                <ul *dropdownMenu class="dropdown-menu ul-chirld--index" role="menu" style="min-width: 0;">
                     <li role="menuitem">
-                        <a class="dropdown-item">Đánh dấu tất cả là đã đọc</a>
+                        <a class="dropdown-item" style="padding: 0.25rem 0.5rem;">Đánh dấu tất cả là đã đọc</a>
                     </li>
                     <li role="menuitem">
-                        <a class="dropdown-item">Xóa tất cả thông báo</a>
+                        <a class="dropdown-item" style="padding: 0.25rem 0.5rem;">Xóa tất cả thông báo</a>
                     </li>
                 </ul>
             </li>
         </div>
-        <div>
+        <!-- <div>
             <div class="notification-item" *ngFor="let item of notificationItems" [class.unread]="item.unread">
                 <a class="dropdown-item py-2" (click)="read(item)">
                     <pre class="last">Bạn có 1 {{item.moduleName | translate}}
@@ -37,22 +37,47 @@
                         đến ngày
                         <strong>{{item.endDate | date: 'dd/MM/yyyy'}}</strong>.
                     </pre><pre class="badge badge-info">Chi tiết</pre>
-                    <!-- <p class="small text-muted">
-                          Cách đây 2 giờ
-                      </p> -->
-                    <!-- <li class="dropdown-divider"></li> -->
                 </a>
             </div>
-        </div>
+        </div> -->
 
-        <div>
+        <div class="force-scroll">
             <div class="notification-item">
                 <a class="dropdown-item py-2" (click)="read(item)">
                     <pre class="last">Bạn có 1 Dự án Xây dựng khách sạn Novotel diễn ra tại Đà Nẵng từ ngày 20/09/2018 đến ngày 20/09/2020<span class="badge badge-info pre--margin">Chi tiết</span></pre>
                     <p class="small text-muted">
                         <em>Cách đây 2 giờ</em>
                     </p>
-                    <!-- <li class="dropdown-divider"></li> -->
+                </a>
+                <a class="dropdown-item py-2" (click)="read(item)">
+                    <pre class="last">Bạn có 1 Dự án Xây dựng khách sạn Novotel diễn ra tại Đà Nẵng từ ngày 20/09/2018 đến ngày 20/09/2020<span class="badge badge-info pre--margin">Chi tiết</span></pre>
+                    <p class="small text-muted">
+                        <em>Cách đây 2 giờ</em>
+                    </p>
+                </a>
+                <a class="dropdown-item py-2" (click)="read(item)">
+                    <pre class="last">Bạn có 1 Dự án Xây dựng khách sạn Novotel diễn ra tại Đà Nẵng từ ngày 20/09/2018 đến ngày 20/09/2020<span class="badge badge-info pre--margin">Chi tiết</span></pre>
+                    <p class="small text-muted">
+                        <em>Cách đây 2 giờ</em>
+                    </p>
+                </a>
+                <a class="dropdown-item py-2" (click)="read(item)">
+                    <pre class="last">Bạn có 1 Dự án Xây dựng khách sạn Novotel diễn ra tại Đà Nẵng từ ngày 20/09/2018 đến ngày 20/09/2020<span class="badge badge-info pre--margin">Chi tiết</span></pre>
+                    <p class="small text-muted">
+                        <em>Cách đây 2 giờ</em>
+                    </p>
+                </a>
+                <a class="dropdown-item py-2" (click)="read(item)">
+                    <pre class="last">Bạn có 1 Dự án Xây dựng khách sạn Novotel diễn ra tại Đà Nẵng từ ngày 20/09/2018 đến ngày 20/09/2020<span class="badge badge-info pre--margin">Chi tiết</span></pre>
+                    <p class="small text-muted">
+                        <em>Cách đây 2 giờ</em>
+                    </p>
+                </a>
+                <a class="dropdown-item py-2" (click)="read(item)">
+                    <pre class="last">Bạn có 1 Dự án Xây dựng khách sạn Novotel diễn ra tại Đà Nẵng từ ngày 20/09/2018 đến ngày 20/09/2020<span class="badge badge-info pre--margin">Chi tiết</span></pre>
+                    <p class="small text-muted">
+                        <em>Cách đây 2 giờ</em>
+                    </p>
                 </a>
             </div>
         </div>
