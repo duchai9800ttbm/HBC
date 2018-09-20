@@ -54,6 +54,7 @@ import { InputsModule } from '@progress/kendo-angular-inputs';
 import { HttpClientModule } from '@angular/common/http';
 import { UploadModule } from '@progress/kendo-angular-upload';
 import { NgSelectModule } from '@ng-select/ng-select';
+import { BsDropdownModule } from '../../../node_modules/ngx-bootstrap';
 @NgModule({
     imports: [
         HttpClientModule,
@@ -100,6 +101,7 @@ import { NgSelectModule } from '@ng-select/ng-select';
         ModalModule.forRoot(),
         CKEditorModule,
         NgSelectModule,
+        BsDropdownModule.forRoot(),
         // ScrollToTopService
     ],
     exports: [
@@ -143,6 +145,7 @@ import { NgSelectModule } from '@ng-select/ng-select';
         DropDownsModule,
         MenuModule,
         NgSelectModule,
+        BsDropdownModule,
         // ScrollToTopService
     ]
 })
