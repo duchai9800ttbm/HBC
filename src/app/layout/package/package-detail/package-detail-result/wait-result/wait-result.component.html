@@ -21,9 +21,9 @@
         <img src="assets/images/icon-wailt.png" alt="">
         <h5>bạn đã nhận kết quả dự thầu từ khách hàng?</h5>
         <div class="confirm-button">
-            <button class="btn btn-primary" id="success" (click)="modalTrungThau(trungthau)">trúng thầu</button>
-            <button class="btn btn-primary" id="fail" (click)="modalTratThau(trungthau)">trật thầu</button>
-            <button class="btn btn-primary" id="cancel" (click)="modalHuyThau(trungthau)">hủy thầu</button>
+            <button class="btn btn-primary" id="success" (click)="modalTrungThau(trungthau, 'trúng')">trúng thầu</button>
+            <button class="btn btn-primary" id="fail" (click)="modalTrungThau(trungthau, 'trật')">trật thầu</button>
+            <button class="btn btn-primary" id="cancel" (click)="modalTrungThau(trungthau, 'hủy')">hủy thầu</button>
         </div>
     </div>
 </div>
@@ -32,9 +32,9 @@
     <form [formGroup]="reasonForm" novalidate (ngSubmit)="submitForm(uploadFile)">
         <div class="modal-header no-boder-bottom">
             <div class="col-md-10 offset-md-1 text-center">
-                <h4 class="modal-title text-model" *ngIf="btnTrungThau">Kết quả dự thầu: {{textTrungThau}} thầu</h4>
-                <h4 class="modal-title text-model" *ngIf="btnTratThau">Kết quả dự thầu: {{textTratThau}} thầu</h4>
-                <h4 class="modal-title text-model" *ngIf="btnHuyThau">Kết quả dự thầu: {{textHuyThau}} thầu</h4>
+                <h4 class="modal-title text-model">Kết quả dự thầu: {{textTrungThau}} thầu</h4>
+                <!-- <h4 class="modal-title text-model" *ngIf="btnTratThau">Kết quả dự thầu: {{textTratThau}} thầu</h4>
+                <h4 class="modal-title text-model" *ngIf="btnHuyThau">Kết quả dự thầu: {{textHuyThau}} thầu</h4> -->
             </div>
             <div class="col-md-1">
                 <button type="button" class="close pull-right" aria-label="Close" (click)="closeModel()">
@@ -44,9 +44,9 @@
         </div>
         <div class="modal-body">
             <div class="row" style="padding-bottom: 40px;font-weight: 700">
-                <div class="col-md-3 offset-md-1 lh" *ngIf="btnTrungThau">Lý do {{textTrungThau}} thầu</div>
-                <div class="col-md-3 offset-md-1 lh" *ngIf="btnTratThau">Lý do {{textTratThau}} thầu</div>
-                <div class="col-md-3 offset-md-1 lh" *ngIf="btnHuyThau">Lý do {{textHuyThau}} thầu</div>
+                <div class="col-md-3 offset-md-1 lh">Lý do {{textTrungThau}} thầu</div>
+                <!-- <div class="col-md-3 offset-md-1 lh" *ngIf="btnTratThau">Lý do {{textTratThau}} thầu</div>
+                <div class="col-md-3 offset-md-1 lh" *ngIf="btnHuyThau">Lý do {{textHuyThau}} thầu</div> -->
                 <div class="col-md-6">
                     <span class="custom-dropdown" style="width: 100%">
                         <select class="form-control" tabindex="5" formControlName="reasonName" [class.is-invalid]="formErrors.reasonName">
@@ -152,3 +152,5 @@
         </div>
     </form>
 </ng-template>
+
+<ngx-spinner bdColor="rgba(51, 51, 51, 0.7)" size="medium" color="#fff" type="ball-clip-rotate-multiple"></ngx-spinner>

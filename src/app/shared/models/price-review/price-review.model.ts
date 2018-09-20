@@ -15,55 +15,55 @@ export class TenderPriceApproval {
         employeeAvatar: string;
         employeeEmail: string
     };
-    isDraftVersion: true;
+    isDraftVersion: boolean;
     approvalDate: number;
     approvalTimes: number;
-    isApprovedByTenderLeader: true;
-    isApprovedByTenderManager: true;
-    isApprovedByBoardOfDirector: true;
+    isApprovedByTenderLeader: boolean;
+    isApprovedByTenderManager: boolean;
+    isApprovedByBoardOfDirector: boolean;
     projectInformation: {
         foudationPart: {
-            scopeOfWorkIsInclude: true;
+            scopeOfWorkIsInclude: boolean;
             scopeOfWorkDesc: string;
             gfa: number
         };
         basementPart: {
-            scopeOfWorkIsInclude: true;
+            scopeOfWorkIsInclude: boolean;
             scopeOfWorkDesc: string;
             gfa: number
         };
         basementPartConstructionStructure: {
-            scopeOfWorkIsInclude: true;
+            scopeOfWorkIsInclude: boolean;
             scopeOfWorkDesc: string;
             gfa: number
         };
         basementPartConstructionCompletion: {
-            scopeOfWorkIsInclude: true;
+            scopeOfWorkIsInclude: boolean;
             scopeOfWorkDesc: string;
             gfa: number
         };
         basementPartOtherWork: {
-            scopeOfWorkIsInclude: true;
+            scopeOfWorkIsInclude: boolean;
             scopeOfWorkDesc: string;
             gfa: number
         };
         bodyPart: {
-            scopeOfWorkIsInclude: true;
+            scopeOfWorkIsInclude: boolean;
             scopeOfWorkDesc: string;
             gfa: number
         };
         bodyPartConstructionStructure: {
-            scopeOfWorkIsInclude: true;
+            scopeOfWorkIsInclude: boolean;
             scopeOfWorkDesc: string;
             gfa: number
         };
         bodyPartConstructionCompletion: {
-            scopeOfWorkIsInclude: true;
+            scopeOfWorkIsInclude: boolean;
             scopeOfWorkDesc: string;
             gfa: number
         };
         bodyPartOtherWork: {
-            scopeOfWorkIsInclude: true;
+            scopeOfWorkIsInclude: boolean;
             scopeOfWorkDesc: string;
             gfa: number
         }

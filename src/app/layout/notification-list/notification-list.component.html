@@ -1,30 +1,65 @@
-<div [@routerTransition] class="wrapper">
+<!-- <div [@routerTransition] class="wrapper">
   <div class="page-header">
     <h1 id="timeline">THÔNG BÁO</h1>
     <hr>
   </div>
-  <div *ngIf="notificationItems">
-    <ul *ngFor="let item of notificationItems">
+  <div>
+    <ul>
       <li (click)="read(item)"  [class.unread]="item.unread" class="cursor-pointer">
         <div>
-          <div class="title">Bạn có 1 {{item.moduleName | translate}} :  <strong>{{item.moduleItemName}}</strong></div>
-          <div class="info">{{item.moduleName | translate}} bắt đầu:&nbsp;
-              <strong>{{item.startDate | fromNow}}</strong>
+          <div class="title">Bạn có 1  <strong></strong></div>
+          <div class="info"> bắt đầu:&nbsp;
+              <strong></strong>
             </div>
           <div class="type">Thời gian diễn ra:&nbsp;
-            <strong>{{item.startDate | date: 'dd/MM/yyyy HH:mm'}}</strong>
+            <strong></strong>
             đến ngày
-            <strong>{{item.endDate | date: 'dd/MM/yyyy HH:mm'}}</strong>.
+            <strong></strong>.
           </div>
         </div>
         <span class="number">
-          <span>{{item.startDate | date: 'dd/MM/yyyy HH:mm'}}</span>
-          <span>{{item.endDate | date: 'dd/MM/yyyy HH:mm'}}</span>
+          <span></span>
+          <span></span>
         </span>
       </li>
     </ul>
-    <div  class="text-center cursor-pointer mt-5" *ngIf="showButton">
+    <div  class="text-center cursor-pointer mt-5" >
       <a class="text-primary" (click)="onLoadMore()">Xem thêm</a>
+    </div>
+  </div>
+</div> -->
+
+<div [@routerTransition]>
+  <div class="title-detail center-parent" [class.title-detail-toggle]="isToggle">
+    <div class="mr-auto col-md-12">
+      <div class="media-header header-title p-0">
+        <div class="d-flex justify-content-between">
+          <div class="text-truncate ellipsis">
+            <h4 class="d-inline mb-0 text-dark">
+              <span>
+                THÔNG BÁO CỦA BẠN
+              </span>
+            </h4>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="main-detail">
+    <div class="menu" id="bigMenu">
+    </div>
+    <div>
+      <div class="boder-table">
+        <div class="d-flex">
+          <div class="mr-auto">
+            <div>
+              <div>
+                <i class="fa fa-ellipsis-v fa-ellipsis" aria-hidden="true"></i>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </div>

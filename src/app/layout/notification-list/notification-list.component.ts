@@ -23,45 +23,45 @@ export class NotificationListComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.userNotificationService.list(0, 5)
-      .subscribe(pagedResult => {
-        this.pagedResult = pagedResult;
-        this.notificationItems = pagedResult.items;
-        this.showButton = pagedResult.pageCount !== 1;
-      });
+    // this.userNotificationService.list(0, 5)
+    //   .subscribe(pagedResult => {
+    //     this.pagedResult = pagedResult;
+    //     this.notificationItems = pagedResult.items;
+    //     this.showButton = pagedResult.pageCount !== 1;
+    //   });
   }
 
-  read(item: NotificationItem) {
-    this.userNotificationService
-      .read(item.id)
-      .subscribe(result => {
-        this.notificationCount$ = this.userNotificationService.count();
-        this.userNotificationService.list(0, 5)
-          .subscribe(pagedResult => this.notificationItems = pagedResult.items);
-        this.gotoDetailPage(item);
-      });
-  }
+  // read(item: NotificationItem) {
+  //   this.userNotificationService
+  //     .read(item.id)
+  //     .subscribe(result => {
+  //       this.notificationCount$ = this.userNotificationService.count();
+  //       this.userNotificationService.list(0, 5)
+  //         .subscribe(pagedResult => this.notificationItems = pagedResult.items);
+  //       this.gotoDetailPage(item);
+  //     });
+  // }
 
-  onLoadMore() {
-    this.userNotificationService.list(+this.pagedResult.currentPage + 1, +this.pagedResult.pageSize)
-      .subscribe(pagedResult => {
-        this.showButton = (pagedResult.items.length > 0) && (+pagedResult.currentPage + 1 < pagedResult.pageCount);
-        this.pagedResult = pagedResult;
-        this.notificationItems = this.notificationItems.concat(pagedResult.items);
-      });
-  }
+  // onLoadMore() {
+  //   this.userNotificationService.list(+this.pagedResult.currentPage + 1, +this.pagedResult.pageSize)
+  //     .subscribe(pagedResult => {
+  //       this.showButton = (pagedResult.items.length > 0) && (+pagedResult.currentPage + 1 < pagedResult.pageCount);
+  //       this.pagedResult = pagedResult;
+  //       this.notificationItems = this.notificationItems.concat(pagedResult.items);
+  //     });
+  // }
 
 
-  gotoDetailPage(item: NotificationItem) {
-    const moduleUrl = item.moduleName === 'Event'
-      ? 'activity/event'
-      : item.moduleName === 'Work'
-        ? 'activity/task'
-        : item.moduleName.toLowerCase();
+  // gotoDetailPage(item: NotificationItem) {
+  //   const moduleUrl = item.moduleName === 'Event'
+  //     ? 'activity/event'
+  //     : item.moduleName === 'Work'
+  //       ? 'activity/task'
+  //       : item.moduleName.toLowerCase();
 
-    const detailUrl = `${moduleUrl}/detail`;
+  //   const detailUrl = `${moduleUrl}/detail`;
 
-    this.router.navigate([detailUrl, item.moduleItemId]);
-  }
+  //   this.router.navigate([detailUrl, item.moduleItemId]);
+  // }
 
 }

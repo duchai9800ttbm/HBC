@@ -38,7 +38,7 @@ export class NeedCreateTenderFormContractConditionComponent implements OnInit {
         // tslint:disable-next-line:max-line-length
         displayText: formValue && formValue.timeForCompletionUnit ? formValue.timeForCompletionUnit.displayText : this.listTime[0]
       }),
-      commencementDate: formValue ? DateTimeConvertHelper.fromTimestampToDtObject(formValue.commencementDate) : new Date(),
+      commencementDate: formValue ? DateTimeConvertHelper.fromTimestampToDtObject(formValue.commencementDate * 1000) : new Date(),
       warrantyPeriod: formValue ? formValue.warrantyPeriod : 0,
       warrantyPeriodUnit: this.fb.group({
         key: formValue && formValue.warrantyPeriodUnit ? formValue.warrantyPeriodUnit.key : this.listTime[0],
@@ -71,7 +71,7 @@ export class NeedCreateTenderFormContractConditionComponent implements OnInit {
   mappingToLiveFormData(data) {
     NeedCreateTenderFormComponent.formModel.contractCondition = data;
     // tslint:disable-next-line:max-line-length
-    NeedCreateTenderFormComponent.formModel.contractCondition.commencementDate = DateTimeConvertHelper.fromDtObjectToTimestamp(data.commencementDate);
+    NeedCreateTenderFormComponent.formModel.contractCondition.commencementDate = DateTimeConvertHelper.fromDtObjectToSecon(data.commencementDate);
   }
 
 }
