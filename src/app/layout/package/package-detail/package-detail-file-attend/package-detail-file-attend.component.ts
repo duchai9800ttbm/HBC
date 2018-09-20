@@ -3,6 +3,7 @@ import { PackageDetailComponent } from '../package-detail.component';
 import { PackageService } from '../../../../shared/services/package.service';
 import { PackageInfoModel } from '../../../../shared/models/package/package-info.model';
 import { Router, ActivatedRoute, NavigationEnd } from '../../../../../../node_modules/@angular/router';
+import { StatusObservableHsdtService } from '../../../../shared/services/status-observable-hsdt.service';
 
 @Component({
   selector: 'app-package-detail-file-attend',
@@ -13,8 +14,10 @@ export class PackageDetailFileAttendComponent implements OnInit {
   packageId: number;
   packageData: PackageInfoModel;
   currentUrl;
-  statusPackage;
-  bidProposal = ['CanLapDeNghiDuThau', 'ChoDuyet', 'ThamGiaDuThau', 'DaTuChoi'];
+  statusPackageID;
+  statusPackageName;
+  urlChirld = ['create-request', 'infomation-deployment', 'build', 'price-review', 'interview-negotiation'];
+  bidProposal = ['CanLapDeNghiDuThau', 'ChoDuyetDeNghiDuThau', 'ThamGiaDuThau', 'DaTuChoi'];
   deployment = ['ChuaThongBaoTrienKhai', 'DaThongBaoTrienKhai', 'DaXacNhanPhanCong', 'DaGuiPhanCongTienDo'];
   setHSDT = ['DangLapHSDT'];
   priceReview = ['CanLapTrinhDuyetGia', 'DaGuiDuyetTrinhDuyetGia',
@@ -25,16 +28,28 @@ export class PackageDetailFileAttendComponent implements OnInit {
     private packageService: PackageService,
     private router: Router,
     private activeRouter: ActivatedRoute,
+    private statusObservableHsdtService: StatusObservableHsdtService,
   ) {
     this.checkStatusPackage();
+    this.statusObservableHsdtService.statusPackageService.subscribe(value => {
+      this.packageService.getInforPackageID(this.packageId).subscribe(result => {
+        this.packageData = result;
+        this.statusPackageName = this.packageData.stageStatus.id;
+        for (let i = 0; i < this.listStatusPackage.length; i++) {
+          if (this.listStatusPackage[i].find(item => item === this.packageData.stageStatus.id)) {
+            this.statusPackageID = i;
+            break;
+          }
+        }
+      });
+    });
   }
 
   ngOnInit() {
-    // this.checkStatusPackage();
-    console.log('ngOnInit');
     this.packageId = +PackageDetailComponent.packageId;
     this.packageService.getInforPackageID(this.packageId).subscribe(result => {
       this.packageData = result;
+      this.statusPackageName = this.packageData.stageStatus.id;
       switch (this.packageData.stageStatus.id) {
         case 'CanLapDeNghiDuThau': {
           this.router.navigate([`/package/detail/${this.packageId}/attend/create-request`]);
@@ -125,17 +140,22 @@ export class PackageDetailFileAttendComponent implements OnInit {
       if ((val instanceof NavigationEnd) === true) {
         this.activeRouter.firstChild.url.subscribe(url => {
           this.currentUrl = url[0].path;
-          this.packageService.getInforPackageID(this.packageId).subscribe(result => {
-            this.packageData = result;
-            for (let i = 0; i < this.listStatusPackage.length; i++) {
-              if (this.listStatusPackage[i].find(item => item === this.packageData.stageStatus.id)) {
-                this.statusPackage = i;
-                break;
+          console.log('gọi API');
+          if (this.urlChirld.find( item => item === this.currentUrl)) {
+            this.packageService.getInforPackageID(this.packageId).subscribe(result => {
+              this.packageData = result;
+              this.statusPackageName = this.packageData.stageStatus.id;
+              for (let i = 0; i < this.listStatusPackage.length; i++) {
+                if (this.listStatusPackage[i].find(item => item === this.packageData.stageStatus.id)) {
+                  this.statusPackageID = i;
+                  break;
+                }
               }
-            }
-          });
+            });
+          }
         });
       }
     });
   }
+
 }
