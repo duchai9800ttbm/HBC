@@ -9,8 +9,8 @@ const routes: Routes = [
   { path: '', redirectTo: 'summary' },
   { path: 'summary', pathMatch: 'full', component: PriceReviewSummaryComponent },
   { path: 'create', component: PriceReviewCreateComponent },
-  { path: 'edit/:id', component: PriceReviewEditComponent },
-  { path: 'detail/:id', component: PriceReviewDetailComponent },
+  { path: 'edit', component: PriceReviewEditComponent },
+  { path: 'detail', component: PriceReviewDetailComponent },
 ];
 
 @NgModule({

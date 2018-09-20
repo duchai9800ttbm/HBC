@@ -99,7 +99,7 @@ import { NgSelectModule } from '@ng-select/ng-select';
         MenuModule,
         ModalModule.forRoot(),
         CKEditorModule,
-        NgSelectModule
+        NgSelectModule,
         // ScrollToTopService
     ],
     exports: [
@@ -142,7 +142,7 @@ import { NgSelectModule } from '@ng-select/ng-select';
         GridModule,
         DropDownsModule,
         MenuModule,
-        NgSelectModule
+        NgSelectModule,
         // ScrollToTopService
     ]
 })

@@ -18,6 +18,9 @@ import { COMMON_CONSTANTS } from '../../../../../shared/configs/common.config';
 import { SearchEmailModel } from '../../../../../shared/models/search-email.model';
 import { NgxSpinnerService } from '../../../../../../../node_modules/ngx-spinner';
 import { map } from 'rxjs/operators/map';
+import { PackageService } from '../../../../../shared/services/package.service';
+import { PackageInfoModel } from '../../../../../shared/models/package/package-info.model';
+import { BidStatus } from '../../../../../shared/constants/bid-status';
 @Component({
   selector: 'app-information-deployment',
   templateUrl: './information-deployment.component.html',
@@ -89,6 +92,9 @@ export class InformationDeploymentComponent implements OnInit {
   searchTermCc$ = new BehaviorSubject<string>('');
   searchTermBcc$ = new BehaviorSubject<string>('');
   public selectedSizes: Array<string> = [];
+  bidOpportunityId;
+  packageInfo: PackageInfoModel;
+  bidStatus = BidStatus;
   constructor(
     private modalService: BsModalService,
     private formBuilder: FormBuilder,
@@ -97,11 +103,13 @@ export class InformationDeploymentComponent implements OnInit {
     private spinner: NgxSpinnerService,
     private alertService: AlertService,
     private emailService: EmailService,
+    private packageService: PackageService
   ) {
     this.loadItems();
   }
 
   ngOnInit() {
+    this.bidOpportunityId = PackageDetailComponent.packageId;
     this.emailService.searchbymail('').subscribe(response => {
       this.listEmailSearchTo = response;
     });
@@ -111,6 +119,7 @@ export class InformationDeploymentComponent implements OnInit {
     this.emailService.searchbymail('').subscribe(response => {
       this.listEmailSearchBcc = response;
     });
+    this.getPackageInfo();
     this.ckeConfig = {
       toolbar: [
         { name: 'basicstyles', items: ['Bold', 'Italic', 'Underline', 'Strike'] },
@@ -139,10 +148,25 @@ export class InformationDeploymentComponent implements OnInit {
     this.isShowTable = true;
     this.showButtonAssignmet = false;
     this.textConfirmProgress = 'Gửi phân công tiến độ';
-    this.toggleTextUpFile = 'Bạn cần phải thông báo triển khai trước khi phân công tiến độ';
-    this.textInformation = 'Chưa thông báo triển khai';
+    this.toggleTextUpFile = '';
+    this.textInformation = '';
     this.currentPackageId = +PackageDetailComponent.packageId;
 
+  }
+
+  getPackageInfo() {
+    this.spinner.show();
+    this.packageService
+    .getInforPackageID(this.bidOpportunityId)
+    .subscribe(data => {
+        this.packageInfo = data;
+        this.spinner.hide();
+        const isTrienKhai = this.packageInfo.stageStatus.id === this.bidStatus.DaThongBaoTrienKhai;
+        // tslint:disable-next-line:max-line-length
+        this.toggleTextUpFile = isTrienKhai ? 'Hiện chưa có bảng phân công tiến độ nào' : 'Bạn cần phải thông báo triển khai trước khi phân công tiến độ';
+        this.textInformation = isTrienKhai ? 'Đã thông báo triển khai' : 'Chưa thông báo triển khai';
+        console.log(data);
+    });
   }
 
   openModalDeployment(template: TemplateRef<any>) {
@@ -169,9 +193,6 @@ export class InformationDeploymentComponent implements OnInit {
         this.isSendInformation = !this.isSendInformation;
         this.isTeamPlate = !this.isTeamPlate;
         this.dowloadTem = true;
-        this.textInformation = 'Đã thông báo triển khai';
-        this.toggleTextUpFile = this.isSendInformation ? 'Chưa có tài liệu phân công tiến độ. Vui lòng upload file'
-          : 'Bạn cần phải thông báo triển khai trước khi phân công tiến độ';
         this.alertService.success('Gửi thông báo triển khai thành công!');
         this.modalRef.hide();
         this.spinner.hide();
