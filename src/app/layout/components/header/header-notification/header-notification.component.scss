@@ -1,17 +1,30 @@
 $primary: #00a0e3;
 $topnav-background-color: $primary;
-.notification {
+.fa-ellipsis{
+    color: #07afed;
+    font-size: 1rem;
+    padding: 0.25rem 1.5rem;
+    cursor: pointer;
+}
+.ul-parent--index{
+    z-index: 30000;
+    .ul-chirld--index{
+        z-index: 99999900;
+        transform: translate(-18%, 0%);
+    }
+}
+
+    .drop-menu{
+        margin-top: 10px;
+        padding-right: .5rem;
+    }
     .dropdown-menu-right{
         top: 2rem;
-        .fa-ellipsis{
-            color: #07afed;
-            font-size: 1rem;
-            padding: 0.25rem 1.5rem;
-            cursor: pointer;
-        }
     }
     .dropdown-menu {
-        width: 375px;
+        position: fixed;
+        width: 20rem;
+        transform: translate(-25%, 8%);
     }
     .main-badge {
         position: absolute;
@@ -27,7 +40,7 @@ $topnav-background-color: $primary;
     a.dropdown-toggle {
         margin-top: 0.65rem;
     }
-}
+
 
 h5 {
     font-size: 13px;
@@ -49,6 +62,9 @@ h5 {
 
 .notification-item {
     border-bottom: 1px solid #cccccc;
+    .pre--margin{
+        margin: 0rem 0rem 0rem 0.3rem;
+    }
 }
 
 .unread {
