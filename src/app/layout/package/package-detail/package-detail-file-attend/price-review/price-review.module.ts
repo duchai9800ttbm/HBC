@@ -9,12 +9,15 @@ import { PriceReviewEditComponent } from './price-review-edit/price-review-edit.
 import { PriceReviewCreateComponent } from './price-review-create/price-review-create.component';
 import { SharedModule } from '../../../../../shared/shared.module';
 import { PriceReviewComponent } from './price-review.component';
+import { InputTextareaModule } from 'primeng/inputtextarea';
+import { CommentComponent } from './price-review-form/comment/comment.component';
 
 @NgModule({
   imports: [
     CommonModule,
     SharedModule,
-    PriceReviewRoutingModule
+    PriceReviewRoutingModule,
+    InputTextareaModule
   ],
   declarations: [
     PriceReviewSummaryComponent,
@@ -22,7 +25,8 @@ import { PriceReviewComponent } from './price-review.component';
     PriceReviewFormComponent,
     PriceReviewEditComponent,
     PriceReviewCreateComponent,
-    PriceReviewComponent
+    PriceReviewComponent,
+    CommentComponent
   ]
 })
 export class PriceReviewModule { }

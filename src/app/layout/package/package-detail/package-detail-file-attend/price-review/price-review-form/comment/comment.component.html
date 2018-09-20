@@ -1,0 +1,56 @@
+<div class="comment">
+    <div class="header center-parent">
+        <div class="font-weight-bold">BÌNH LUẬN</div>
+    </div>
+    <div class="editor center-parent">
+        <div class="editor-keyboard d-flex ">
+            <div class="editor-input center-parent">
+                <div class="mt-1">
+                    <textarea [placeholder]="'Viết bình luận'" (keyup.enter)="addCommentByKeyUpEnter($event)" [(ngModel)]="commentEditor"
+                        pInputTextarea autoResize="autoResize"></textarea>
+                </div>
+            </div>
+            <div class="logo center-parent mt-1">
+                <div>
+                    <img src="assets\images\icon_send.png" (click)="addCommentByIcon()">
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="list-comment">
+        <div class="mt-2">
+            <div style="display: flex" class="row">
+                <div class="col-sm-2">
+                    <img src="assets/images/no-avatar.png" width="30" height="30" alt="">
+                </div>
+                <div class="col-sm-10">
+                    <p class="last">
+                        <strong>Admin </strong></p>
+                    <p style="font-style: italic; color: #a8b9bf; font-size: 10px;"> Hôm qua</p>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-sm-2"></div>
+                <div class="col-sm-10"><span class="">Du an moi ne cac ban oi</span></div>
+            </div>
+        </div>
+        <div class="mt-2">
+            <div style="display: flex" class="row">
+                <div class="col-sm-2">
+                    <img src="assets/images/no-avatar.png" width="30" height="30" alt="">
+                </div>
+                <div class="col-sm-10">
+                    <p class="last">
+                        <strong>Admin </strong></p>
+                    <p style="font-style: italic; color: #a8b9bf; font-size: 10px;"> Hôm qua</p>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-sm-2"></div>
+                <div class="col-sm-10"><span class="">Du an moi ne cac ban oi</span></div>
+            </div>
+        </div>
+    </div>
+</div>
