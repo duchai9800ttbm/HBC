@@ -381,89 +381,89 @@ export class DocumentService {
             dataFormated.scaleOverall = new ScaleOverall();
             dataFormated.scaleOverall.loaiCongTrinh = [
                 {
-                    value: 'Văn phòng (Office)',
-                    text: '',
+                    text: 'Văn phòng (Office)',
+                    value: '',
                     checked: false
                 },
                 {
-                    value: 'Nhà công nghiệp (Industrial))',
-                    text: '',
+                    text: 'Nhà công nghiệp (Industrial))',
+                    value: '',
                     checked: false
                 },
                 {
-                    value: 'MEP',
-                    text: '',
+                    text: 'MEP',
+                    value: '',
                     checked: false
                 },
                 {
-                    value: 'Khu dân cư (Residential)',
-                    text: '',
+                    text: 'Khu dân cư (Residential)',
+                    value: '',
                     checked: false
                 },
                 {
-                    value: 'Tổ hợp (Mixed use)',
-                    text: '',
+                    text: 'Tổ hợp (Mixed use)',
+                    value: '',
                     checked: false
                 },
                 {
-                    value: 'Sân bay',
-                    text: '',
+                    text: 'Sân bay',
+                    value: '',
                     checked: false
                 },
                 {
-                    value: 'TT Thương mại (Commercial)',
-                    text: '',
+                    text: 'TT Thương mại (Commercial)',
+                    value: '',
                     checked: false
                 },
                 {
-                    value: 'Căn hộ',
-                    text: '',
+                    text: 'Căn hộ',
+                    value: '',
                     checked: false
                 },
                 {
-                    value: 'Nhà phố, biệt thự',
-                    text: '',
+                    text: 'Nhà phố, biệt thự',
+                    value: '',
                     checked: false
                 },
                 {
-                    value: 'Khách sạn/Resort (Hotel/Resort)',
-                    text: '',
+                    text: 'Khách sạn/Resort (Hotel/Resort)',
+                    value: '',
                     checked: false
                 },
                 {
-                    value: 'Hạ tầng',
-                    text: '',
+                    text: 'Hạ tầng',
+                    value: '',
                     checked: false
                 },
                 {
-                    value: 'Trường học',
-                    text: '',
+                    text: 'Trường học',
+                    value: '',
                     checked: false
                 }
             ];
             dataFormated.scaleOverall.trangthaiCongTrinh = [
                 {
-                    value: 'Mới (New)',
-                    text: '',
+                    text: 'Mới (New)',
+                    value: '',
                     checked: false
                 },
                 {
-                    value: 'Thay đổi & bổ sung (Alteration & Additional)',
-                    text: '',
+                    text: 'Thay đổi & bổ sung (Alteration & Additional)',
+                    value: '',
                     checked: false
                 },
                 {
-                    value: 'Khác (Other)',
-                    text: '',
+                    text: 'Khác (Other)',
+                    value: '',
                     checked: false
                 },
                 {
-                    value: 'Nâng cấp, cải tiến (Renovation)',
-                    text: '',
+                    text: 'Nâng cấp, cải tiến (Renovation)',
+                    value: '',
                     checked: false
                 }, {
-                    value: 'Tháo dỡ & cải tiến (Demolishment & Renovation)',
-                    text: '',
+                    text: 'Tháo dỡ & cải tiến (Demolishment & Renovation)',
+                    value: '',
                     checked: false
                 }
             ];
@@ -494,7 +494,7 @@ export class DocumentService {
                     model.projectStatistic.projectStatistic.projectScale.documentName : '',
                 lanPhongVan: (model.projectStatistic.projectStatistic) ?
                     model.projectStatistic.projectStatistic.projectScale.interviewTimes : null,
-                loaiCongTrinh: (model.projectStatistic.projectStatistic.constructionType || []).map(x => x({
+                loaiCongTrinh: (model.projectStatistic.projectStatistic.constructionType || []).map(x => ({
                     value: x.value,
                     text: x.text,
                     checked: x.checked
@@ -699,7 +699,7 @@ export class DocumentService {
                     detail: i.detail,
                     images: i.imageUrls.map(e => ({
                         id: e.guid,
-                        image: e.largeSizeUrl
+                        image: { file: e.largeSizeUrl, base64: null }
                     }))
                 }))
             }));
@@ -727,11 +727,21 @@ export class DocumentService {
         if (obj.nguoiCapNhat) {
             objDataSiteReport.append('UpdatedEmployeeId', `${obj.nguoiCapNhat.id}`);
         } else { objDataSiteReport.append('UpdatedEmployeeId', `${this.userId}`); }
-        obj.scaleOverall.loaiCongTrinh.forEach(x => {
-            objDataSiteReport.append('ProjectStatistic.ProjectStatistic.ConstructionType', JSON.stringify(x));
+        obj.scaleOverall.loaiCongTrinh.forEach((x, i) => {
+            const paramAppendText = `ProjectStatistic.ProjectStatistic.ConstructionType[${i}].Text`;
+            const paramAppendValue = `ProjectStatistic.ProjectStatistic.ConstructionType[${i}].Value`;
+            const paramAppendChecked = `ProjectStatistic.ProjectStatistic.ConstructionType[${i}].Checked`;
+            objDataSiteReport.append(paramAppendText, x.text);
+            objDataSiteReport.append(paramAppendValue, x.value);
+            objDataSiteReport.append(paramAppendChecked, `${x.checked}`);
         });
-        obj.scaleOverall.trangthaiCongTrinh.forEach(x => {
-            objDataSiteReport.append('ProjectStatistic.ProjectStatistic.ConstructionStatus', JSON.stringify(x));
+        obj.scaleOverall.trangthaiCongTrinh.forEach((x, i) => {
+            const paramAppendText = `ProjectStatistic.ProjectStatistic.ConstructionStatus[${i}].Text`;
+            const paramAppendValue = `ProjectStatistic.ProjectStatistic.ConstructionStatus[${i}].Value`;
+            const paramAppendChecked = `ProjectStatistic.ProjectStatistic.ConstructionStatus[${i}].Checked`;
+            objDataSiteReport.append(paramAppendText, x.text);
+            objDataSiteReport.append(paramAppendValue, x.value);
+            objDataSiteReport.append(paramAppendChecked, `${x.checked}`);
         });
         if (obj.scaleOverall) {
             objDataSiteReport.append('ProjectStatistic.ProjectStatistic.ProjectScale.DocumentName', obj.scaleOverall.tenTaiLieu);
@@ -1110,8 +1120,22 @@ export class DocumentService {
             }
         }
         if (obj.usefulInfo) {
-            obj.usefulInfo.forEach(subject => {
-                objDataSiteReport.append('UsefulInFormations', JSON.stringify(subject));
+            obj.usefulInfo.forEach((subject, indexSubject) => {
+                const titleSubject = `UsefulInFormations[${indexSubject}].Title`;
+                objDataSiteReport.append(titleSubject, subject.title);
+                for (let indexContent = 0, len = obj.usefulInfo[indexSubject].content.length; indexContent < len; indexContent++) {
+                    const nameContent = `UsefulInFormations[${indexSubject}].Content[${indexContent}].Name`;
+                    objDataSiteReport.append(nameContent, subject.content[indexContent].name);
+                    const detailContent = `UsefulInFormations[${indexSubject}].Content[${indexContent}].Detail`;
+                    objDataSiteReport.append(detailContent, subject.content[indexContent].detail);
+                    if (subject.content[indexContent].images) {
+                        // tslint:disable-next-line:max-line-length
+                        for (let indexImage = 0, length = obj.usefulInfo[indexSubject].content[indexContent].images.length; indexImage < length; indexImage++) {
+                            const imageContent = `UsefulInFormations[${indexSubject}].Content[${indexContent}].Images`;
+                            objDataSiteReport.append(imageContent, subject.content[indexContent].images[indexImage].image.file);
+                        }
+                    }
+                }
             });
         }
         if (obj) {

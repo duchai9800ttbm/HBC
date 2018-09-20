@@ -47,11 +47,20 @@ export class ContentItemComponent implements OnInit {
     if (files) {
       for (const file of files) {
         const reader = new FileReader();
-        reader.onload = (e: any) => this.contentItemImageList.push(e.target.result);
+        reader.onload = (e: any) => {
+          this.contentItemImageList.push({
+            id: null,
+            image: {
+              file: file,
+              base64: e.target.result
+            }
+          });
+          this.contentItemForm.get('chiTietNoiDungList').patchValue(this.contentItemImageList);
+        };
         reader.readAsDataURL(file);
       }
-      this.contentItemForm.get('chiTietNoiDungList').patchValue(this.contentItemImageList);
     }
+    console.log(this.contentItemImageList);
   }
   deleteContentImage(i) {
     const index = this.contentItemImageList.indexOf(i);

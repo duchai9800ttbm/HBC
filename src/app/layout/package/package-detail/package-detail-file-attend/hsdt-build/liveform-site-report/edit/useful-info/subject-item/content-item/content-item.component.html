@@ -11,7 +11,7 @@
     <div class="image-demo-img">
         <input type="file" #uploadContent (change)="uploadContentImage($event)">
         <div class="display-img" *ngFor="let url of contentItemImageList">
-            <img [src]="url">
+            <img [src]="(url.image?.base64) || url.image.file">
             <div class="toppp" (click)="deleteContentImage(url)">
                 <i class="fa fa-times delete-icon" aria-hidden="true"></i>
             </div>

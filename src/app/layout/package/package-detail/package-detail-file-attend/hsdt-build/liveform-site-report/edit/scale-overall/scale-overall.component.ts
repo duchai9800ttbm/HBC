@@ -39,6 +39,8 @@ export class ScaleOverallComponent implements OnInit {
   loaiCongTrinhList = [];
   trangThaiCongTrinhForm: FormGroup;
   trangthaiCongTrinhList = [];
+  valueOfOthers;
+  showValueOfOther;
   perspectiveImageUrls = [];
   structureImageUrls = [];
   requirementsImageUrls = [];
@@ -66,7 +68,7 @@ export class ScaleOverallComponent implements OnInit {
       soTang: [this.scaleModel.quyMoDuAn && this.scaleModel.quyMoDuAn.soTang],
       tienDo: [this.scaleModel.quyMoDuAn && this.scaleModel.quyMoDuAn.tienDo],
       hinhAnhPhoiCanhDesc: [this.scaleModel.hinhAnhPhoiCanh && this.scaleModel.hinhAnhPhoiCanh.description],
-      hinhAnhPhoiCanhList: [{ file: null, base64: null }],
+      hinhAnhPhoiCanhList: [null],
       thongTinVeKetCauDesc: [this.scaleModel.thongTinVeKetCau && this.scaleModel.thongTinVeKetCau.description],
       thongTinVeKetCauList: [null],
       nhungYeuCauDacBietDesc: [this.scaleModel.nhungYeuCauDacBiet && this.scaleModel.nhungYeuCauDacBiet.description],
@@ -100,89 +102,89 @@ export class ScaleOverallComponent implements OnInit {
       this.scaleModel.lanPhongVan = obj.lanPhongVan ? obj.lanPhongVan : null;
       this.loaiCongTrinhList = (obj.loaiCongTrinh.length) ? obj.loaiCongTrinh : [
         {
-          value: 'Văn phòng (Office)',
-          text: '',
+          text: 'Văn phòng (Office)',
+          value: '',
           checked: false
         },
         {
-          value: 'Nhà công nghiệp (Industrial))',
-          text: '',
+          text: 'Nhà công nghiệp (Industrial))',
+          value: '',
           checked: false
         },
         {
-          value: 'MEP',
-          text: '',
+          text: 'MEP',
+          value: '',
           checked: false
         },
         {
-          value: 'Khu dân cư (Residential)',
-          text: '',
+          text: 'Khu dân cư (Residential)',
+          value: '',
           checked: false
         },
         {
-          value: 'Tổ hợp (Mixed use)',
-          text: '',
+          text: 'Tổ hợp (Mixed use)',
+          value: '',
           checked: false
         },
         {
-          value: 'Sân bay',
-          text: '',
+          text: 'Sân bay',
+          value: '',
           checked: false
         },
         {
-          value: 'TT Thương mại (Commercial)',
-          text: '',
+          text: 'TT Thương mại (Commercial)',
+          value: '',
           checked: false
         },
         {
-          value: 'Căn hộ',
-          text: '',
+          text: 'Căn hộ',
+          value: '',
           checked: false
         },
         {
-          value: 'Nhà phố, biệt thự',
-          text: '',
+          text: 'Nhà phố, biệt thự',
+          value: '',
           checked: false
         },
         {
-          value: 'Khách sạn/Resort (Hotel/Resort)',
-          text: '',
+          text: 'Khách sạn/Resort (Hotel/Resort)',
+          value: '',
           checked: false
         },
         {
-          value: 'Hạ tầng',
-          text: '',
+          text: 'Hạ tầng',
+          value: '',
           checked: false
         },
         {
-          value: 'Trường học',
-          text: '',
+          text: 'Trường học',
+          value: '',
           checked: false
         }
       ];
       this.trangthaiCongTrinhList = (obj.trangthaiCongTrinh.length) ? obj.trangthaiCongTrinh : [
         {
-          value: 'Mới (New)',
-          text: '',
+          text: 'Mới (New)',
+          value: '',
           checked: false
         },
         {
-          value: 'Thay đổi & bổ sung (Alteration & Additional)',
-          text: '',
+          text: 'Thay đổi & bổ sung (Alteration & Additional)',
+          value: '',
           checked: false
         },
         {
-          value: 'Khác (Other)',
-          text: '',
+          text: 'Khác (Other)',
+          value: '',
           checked: false
         },
         {
-          value: 'Nâng cấp, cải tiến (Renovation)',
-          text: '',
+          text: 'Nâng cấp, cải tiến (Renovation)',
+          value: '',
           checked: false
         }, {
-          value: 'Tháo dỡ & cải tiến (Demolishment & Renovation)',
-          text: '',
+          text: 'Tháo dỡ & cải tiến (Demolishment & Renovation)',
+          value: '',
           checked: false
         }
       ];
@@ -208,6 +210,11 @@ export class ScaleOverallComponent implements OnInit {
       this.structureImageUrls = this.scaleModel.thongTinVeKetCau ? this.scaleModel.thongTinVeKetCau.images : [];
       this.requirementsImageUrls = this.scaleModel.nhungYeuCauDacBiet ? this.scaleModel.nhungYeuCauDacBiet.images : [];
     }
+    const res = this.trangthaiCongTrinhList.find(other => {
+      return other.text === 'Khác (Other)';
+    });
+    this.valueOfOthers = (res.value !== 'null') ? res.value : '';
+    this.showValueOfOther = res.checked;
   }
 
   mappingToLiveFormData(data) {
@@ -234,6 +241,7 @@ export class ScaleOverallComponent implements OnInit {
       description: data.nhungYeuCauDacBietDesc,
       images: this.requirementsImageUrls
     };
+    console.log(LiveformSiteReportComponent.formModel.scaleOverall.trangthaiCongTrinh);
   }
 
   uploadPerspectiveImage(event) {
@@ -315,5 +323,16 @@ export class ScaleOverallComponent implements OnInit {
   }
   trangThaiCongTrinhChange() {
     this.scaleOverallForm.get('trangthaiCongTrinhList').patchValue(this.trangthaiCongTrinhList);
+    const result = this.trangthaiCongTrinhList.find(obj => {
+      return obj.text === 'Khác (Other)';
+    });
+    this.showValueOfOther = result.checked;
+  }
+  valueOfOther(event) {
+    const result = this.trangthaiCongTrinhList.find(obj => {
+      return obj.text === 'Khác (Other)';
+    });
+    result.value = this.valueOfOthers;
+    this.trangThaiCongTrinhChange();
   }
 }

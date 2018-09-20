@@ -18,7 +18,7 @@ export class ScaleOverall {
 
 
 export class ConstructionItem {
-    value: string;
     text: string;
+    value: string;
     checked: boolean;
 }

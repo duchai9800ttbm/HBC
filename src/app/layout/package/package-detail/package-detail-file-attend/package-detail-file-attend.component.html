@@ -19,7 +19,7 @@
                     <strong>Triển khai &amp; phân công tiến độ</strong>
                 </span>
             </li>
-            <li class="triangle" [routerLink]="(statusPackage > 1) ? ['./build'] : []" [class.noActive]="currentUrl !== 'build' && statusPackage > 1"
+            <li class="triangle" [routerLink]="(statusPackage > 1) ? ['./build'] : []" [class.noActive]="(currentUrl !== 'build') && statusPackage > 1"
                 [class.active]="currentUrl === 'build'" [class.allow]="(statusPackage > 1)" [class.no-allow]="(statusPackage < 2)">
                 <div style="width: 100%" class="center-parent">
                     <div class="arrow-down"></div>

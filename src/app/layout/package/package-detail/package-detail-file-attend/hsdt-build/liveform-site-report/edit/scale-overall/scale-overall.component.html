@@ -21,7 +21,7 @@
                                 <input [formControlName]="i" type="checkbox" [checked]="loaiCongTrinhList[i].checked"
                                     (change)="loaiCongTrinhList[i].checked = !loaiCongTrinhList[i].checked; loaiCongTrinhChange($event)"
                                     name="construcType">
-                                {{ loaiCongTrinhList[i].value }}
+                                {{ loaiCongTrinhList[i].text }}
                                 <span class="checkmark" tabindex="3"></span>
                             </div>
                         </div>
@@ -33,9 +33,10 @@
                                 <input [formControlName]="i" type="checkbox" [checked]="trangthaiCongTrinhList[i].checked"
                                     (change)="trangthaiCongTrinhList[i].checked = !trangthaiCongTrinhList[i].checked; trangThaiCongTrinhChange($event)"
                                     name="construcStatus">
-                                {{ trangthaiCongTrinhList[i].value }}
+                                {{ trangthaiCongTrinhList[i].text }}
                                 <span class="checkmark" tabindex="4"></span>
                             </div>
+                            <div *ngIf="showValueOfOther"><input type="text" [(ngModel)]="valueOfOthers" (ngModelChange)="valueOfOther($event)" [ngModelOptions]="{standalone: true}"></div>
                         </div>
                     </form>
                 </div>
