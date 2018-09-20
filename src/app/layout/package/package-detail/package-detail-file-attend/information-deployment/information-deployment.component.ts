@@ -148,8 +148,8 @@ export class InformationDeploymentComponent implements OnInit {
     this.isShowTable = true;
     this.showButtonAssignmet = false;
     this.textConfirmProgress = 'Gửi phân công tiến độ';
-    this.toggleTextUpFile = 'Bạn cần phải thông báo triển khai trước khi phân công tiến độ';
-    this.textInformation = 'Chưa thông báo triển khai';
+    this.toggleTextUpFile = '';
+    this.textInformation = '';
     this.currentPackageId = +PackageDetailComponent.packageId;
 
   }
@@ -161,7 +161,10 @@ export class InformationDeploymentComponent implements OnInit {
     .subscribe(data => {
         this.packageInfo = data;
         this.spinner.hide();
-        // this.toggleTextUpFile = this.packageInfo.stageStatus.id !== this.bidStatus.DaThongBaoTrienKhai ? ''
+        const isTrienKhai = this.packageInfo.stageStatus.id === this.bidStatus.DaThongBaoTrienKhai;
+        // tslint:disable-next-line:max-line-length
+        this.toggleTextUpFile = isTrienKhai ? 'Hiện chưa có bảng phân công tiến độ nào' : 'Bạn cần phải thông báo triển khai trước khi phân công tiến độ';
+        this.textInformation = isTrienKhai ? 'Đã thông báo triển khai' : 'Chưa thông báo triển khai';
         console.log(data);
     });
   }
@@ -190,9 +193,6 @@ export class InformationDeploymentComponent implements OnInit {
         this.isSendInformation = !this.isSendInformation;
         this.isTeamPlate = !this.isTeamPlate;
         this.dowloadTem = true;
-        this.textInformation = 'Đã thông báo triển khai';
-        this.toggleTextUpFile = this.isSendInformation ? 'Chưa có tài liệu phân công tiến độ. Vui lòng upload file'
-          : 'Bạn cần phải thông báo triển khai trước khi phân công tiến độ';
         this.alertService.success('Gửi thông báo triển khai thành công!');
         this.modalRef.hide();
         this.spinner.hide();
