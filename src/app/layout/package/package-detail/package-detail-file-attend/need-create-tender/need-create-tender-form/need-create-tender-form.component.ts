@@ -40,7 +40,8 @@ export class NeedCreateTenderFormComponent implements OnInit {
     ngOnInit() {
         this.routerAction = NeedCreateTenderComponent.routerAction;
         this.dataModel = NeedCreateTenderFormComponent.formModel;
-        this.dateApproveBid = DateTimeConvertHelper.fromTimestampToDtObject(this.dataModel.tenderDirectorProposal.expectedTime);
+        // tslint:disable-next-line:max-line-length
+        this.dateApproveBid = this.dataModel.tenderDirectorProposal && this.dataModel.tenderDirectorProposal.expectedTime ? DateTimeConvertHelper.fromTimestampToDtObject(this.dataModel.tenderDirectorProposal.expectedTime) : new Date();
         this.bidOpportunityId = PackageDetailComponent.packageId;
         if (!NeedCreateTenderFormComponent.formModel) {
             this.router.navigate([

@@ -18,6 +18,9 @@ import { COMMON_CONSTANTS } from '../../../../../shared/configs/common.config';
 import { SearchEmailModel } from '../../../../../shared/models/search-email.model';
 import { NgxSpinnerService } from '../../../../../../../node_modules/ngx-spinner';
 import { map } from 'rxjs/operators/map';
+import { PackageService } from '../../../../../shared/services/package.service';
+import { PackageInfoModel } from '../../../../../shared/models/package/package-info.model';
+import { BidStatus } from '../../../../../shared/constants/bid-status';
 @Component({
   selector: 'app-information-deployment',
   templateUrl: './information-deployment.component.html',
@@ -89,6 +92,9 @@ export class InformationDeploymentComponent implements OnInit {
   searchTermCc$ = new BehaviorSubject<string>('');
   searchTermBcc$ = new BehaviorSubject<string>('');
   public selectedSizes: Array<string> = [];
+  bidOpportunityId;
+  packageInfo: PackageInfoModel;
+  bidStatus = BidStatus;
   constructor(
     private modalService: BsModalService,
     private formBuilder: FormBuilder,
@@ -97,11 +103,13 @@ export class InformationDeploymentComponent implements OnInit {
     private spinner: NgxSpinnerService,
     private alertService: AlertService,
     private emailService: EmailService,
+    private packageService: PackageService
   ) {
     this.loadItems();
   }
 
   ngOnInit() {
+    this.bidOpportunityId = PackageDetailComponent.packageId;
     this.emailService.searchbymail('').subscribe(response => {
       this.listEmailSearchTo = response;
     });
@@ -111,6 +119,7 @@ export class InformationDeploymentComponent implements OnInit {
     this.emailService.searchbymail('').subscribe(response => {
       this.listEmailSearchBcc = response;
     });
+    this.getPackageInfo();
     this.ckeConfig = {
       toolbar: [
         { name: 'basicstyles', items: ['Bold', 'Italic', 'Underline', 'Strike'] },
@@ -143,6 +152,18 @@ export class InformationDeploymentComponent implements OnInit {
     this.textInformation = 'Chưa thông báo triển khai';
     this.currentPackageId = +PackageDetailComponent.packageId;
 
+  }
+
+  getPackageInfo() {
+    this.spinner.show();
+    this.packageService
+    .getInforPackageID(this.bidOpportunityId)
+    .subscribe(data => {
+        this.packageInfo = data;
+        this.spinner.hide();
+        // this.toggleTextUpFile = this.packageInfo.stageStatus.id !== this.bidStatus.DaThongBaoTrienKhai ? ''
+        console.log(data);
+    });
   }
 
   openModalDeployment(template: TemplateRef<any>) {
