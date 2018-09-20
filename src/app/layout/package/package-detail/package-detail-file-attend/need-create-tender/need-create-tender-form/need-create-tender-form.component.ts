@@ -41,7 +41,7 @@ export class NeedCreateTenderFormComponent implements OnInit {
         this.routerAction = NeedCreateTenderComponent.routerAction;
         this.dataModel = NeedCreateTenderFormComponent.formModel;
         // tslint:disable-next-line:max-line-length
-        this.dateApproveBid = this.dataModel.tenderDirectorProposal && this.dataModel.tenderDirectorProposal.expectedTime ? DateTimeConvertHelper.fromTimestampToDtObject(this.dataModel.tenderDirectorProposal.expectedTime) : new Date();
+        this.dateApproveBid = this.dataModel.tenderDirectorProposal && this.dataModel.tenderDirectorProposal.expectedTime ? DateTimeConvertHelper.fromTimestampToDtObject(this.dataModel.tenderDirectorProposal.expectedTime * 1000) : new Date();
         this.bidOpportunityId = PackageDetailComponent.packageId;
         if (!NeedCreateTenderFormComponent.formModel) {
             this.router.navigate([
@@ -126,11 +126,12 @@ export class NeedCreateTenderFormComponent implements OnInit {
             .subscribe(
                 data => {
                     this.spinner.hide();
+                    this.isShowDialog = false;
+                    // this.getPackageInfo();
+                    this.router.navigate([`package/detail/${this.bidOpportunityId}/attend/create-request`]);
                     this.alertService.success(
                         'Gửi duyệt đề nghị dự thầu thành công!'
                     );
-                    this.isShowDialog = false;
-                    this.getPackageInfo();
                 },
                 err => {
                     this.spinner.hide();

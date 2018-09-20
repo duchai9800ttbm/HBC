@@ -28,8 +28,8 @@ export class NeedCreateTenderFormDirectorProposalComponent implements OnInit {
     this.directorProposalForm = this.fb.group({
       isAgreedParticipating: NeedCreateTenderFormComponent.formModel.isAgreedParticipating,
       reason: formData ? formData.reason : '',
-      date: formData ? DateTimeConvertHelper.fromTimestampToDtObject(formData.date) : new Date(),
-      expectedTime: formData ? DateTimeConvertHelper.fromTimestampToDtObject(formData.expectedTime) : new Date(),
+      date: formData ? DateTimeConvertHelper.fromTimestampToDtObject(formData.date * 1000) : new Date(),
+      expectedTime: formData ? DateTimeConvertHelper.fromTimestampToDtObject(formData.expectedTime * 1000) : new Date(),
       isSigned: formData ? formData.isSigned : false
     });
     console.log(this.directorProposalForm.value);
@@ -43,8 +43,8 @@ export class NeedCreateTenderFormDirectorProposalComponent implements OnInit {
     NeedCreateTenderFormComponent.formModel.tenderDirectorProposal = data;
     NeedCreateTenderFormComponent.formModel.isAgreedParticipating = data.isAgreedParticipating;
     // tslint:disable-next-line:max-line-length
-    NeedCreateTenderFormComponent.formModel.tenderDirectorProposal.date = DateTimeConvertHelper.fromDtObjectToTimestamp(data.date);
-    NeedCreateTenderFormComponent.formModel.tenderDirectorProposal.expectedTime = DateTimeConvertHelper.fromDtObjectToTimestamp(data.expectedTime);
+    NeedCreateTenderFormComponent.formModel.tenderDirectorProposal.date = DateTimeConvertHelper.fromDtObjectToSecon(data.date);
+    NeedCreateTenderFormComponent.formModel.tenderDirectorProposal.expectedTime = DateTimeConvertHelper.fromDtObjectToSecon(data.expectedTime);
   }
 
 }

@@ -1,25 +1,34 @@
-<li class="nav-item dropdown notification" ngbDropdown>
-    <a href="javascript:void(0)" class="dropdown-no-icon nav-link text-white mr-3" ngbDropdownToggle>
-        <!-- <i class="fa fa-bell"></i> -->
+<div class="nav-item dropdown notification" dropdown [autoClose]="false" container="body">
+    <a id="button-nested" dropdownToggle class="dropdown-no-icon nav-link text-white mr-3 drop-menu" aria-controls="dropdown-nested">
         <img class="class-image image-bell--width d-inline-block" src="assets\images\ic-bell.png" alt="">
-        <!-- <span *ngIf="(notificationCount$ | async)" class="badge badge-danger main-badge">{{notificationCount$ | async}}</span> -->
         <span class="badge badge-danger main-badge">10</span>
         <b class="caret"></b>
         <span class="sr-only">(current)</span>
     </a>
-    <ul class="dropdown-menu dropdown-menu-right">
+    <ul id="dropdown-nested" *dropdownMenu class="dropdown-menu dropdown-menu-right ul-parent--index" role="menu" aria-labelledby="button-nested">
         <div class="beeperNub"></div>
         <div class="notification-item d-flex justify-content-between">
             <div class="dropdown-menu-header font-weight-bold mb-2">
                 THÔNG BÁO
             </div>
-            <i class="fa fa-ellipsis-v fa-ellipsis" aria-hidden="true"></i>
+            <li role="menuitem" dropdown  placement="right" container="body">
+                <a dropdownToggle (click)="false">
+                    <i class="fa fa-ellipsis-v fa-ellipsis" aria-hidden="true"></i>
+                </a>
+                <ul *dropdownMenu class="dropdown-menu ul-chirld--index" role="menu">
+                    <li role="menuitem">
+                        <a class="dropdown-item">Đánh dấu tất cả là đã đọc</a>
+                    </li>
+                    <li role="menuitem">
+                        <a class="dropdown-item">Xóa tất cả thông báo</a>
+                    </li>
+                </ul>
+            </li>
         </div>
-        <!-- *ngIf="notificationItems" -->
         <div>
             <div class="notification-item" *ngFor="let item of notificationItems" [class.unread]="item.unread">
                 <a class="dropdown-item py-2" (click)="read(item)">
-                    <span class="last">Bạn có 1 {{item.moduleName | translate}}
+                    <pre class="last">Bạn có 1 {{item.moduleName | translate}}
                         <strong>{{item.moduleItemName}}</strong>
                         diễn ra
                         <strong>{{item.startDate | fromNow}}</strong>
@@ -27,11 +36,10 @@
                         <strong>{{item.startDate | date: 'dd/MM/yyyy'}}</strong>
                         đến ngày
                         <strong>{{item.endDate | date: 'dd/MM/yyyy'}}</strong>.
-                        <span class="badge badge-info">Chi tiết</span>
-                    </span>
+                    </pre><pre class="badge badge-info">Chi tiết</pre>
                     <!-- <p class="small text-muted">
-                      Cách đây 2 giờ
-                  </p> -->
+                          Cách đây 2 giờ
+                      </p> -->
                     <!-- <li class="dropdown-divider"></li> -->
                 </a>
             </div>
@@ -40,9 +48,7 @@
         <div>
             <div class="notification-item">
                 <a class="dropdown-item py-2" (click)="read(item)">
-                    <span class="last">Bạn có 1 Dự án Xây dựng khách sạn Novotel diễn ra tại Đà Nẵng từ ngày 20/09/2018 đến ngày 20/09/2020
-                        <span class="badge badge-info">Chi tiết</span>
-                    </span>
+                    <pre class="last">Bạn có 1 Dự án Xây dựng khách sạn Novotel diễn ra tại Đà Nẵng từ ngày 20/09/2018 đến ngày 20/09/2020<span class="badge badge-info pre--margin">Chi tiết</span></pre>
                     <p class="small text-muted">
                         <em>Cách đây 2 giờ</em>
                     </p>
@@ -58,4 +64,4 @@
         </div>
 
     </ul>
-</li>
+</div>
