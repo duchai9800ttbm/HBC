@@ -27,7 +27,7 @@ export class NeedCreateTenderFormDecisionBoardComponent implements OnInit {
     const formData = NeedCreateTenderFormComponent.formModel.decisionOfBoardOfGeneralDirector;
     this.decisionBoardForm = this.fb.group({
       isSigned: formData ? formData.isSigned : false,
-      expectedTime: formData ? DateTimeConvertHelper.fromTimestampToDtObject(formData.expectedTime) : new Date()
+      expectedTime: formData ? DateTimeConvertHelper.fromTimestampToDtObject(formData.expectedTime * 1000) : new Date()
     });
   }
 
@@ -38,7 +38,7 @@ export class NeedCreateTenderFormDecisionBoardComponent implements OnInit {
   mappingToLiveFormData(data) {
     NeedCreateTenderFormComponent.formModel.decisionOfBoardOfGeneralDirector = data;
     // tslint:disable-next-line:max-line-length
-    NeedCreateTenderFormComponent.formModel.decisionOfBoardOfGeneralDirector.expectedTime = DateTimeConvertHelper.fromDtObjectToTimestamp(data.expectedTime);
+    NeedCreateTenderFormComponent.formModel.decisionOfBoardOfGeneralDirector.expectedTime = DateTimeConvertHelper.fromDtObjectToSecon(data.expectedTime);
   }
 
 }

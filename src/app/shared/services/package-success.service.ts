@@ -1,14 +1,20 @@
 import { Injectable } from '@angular/core';
 import { ApiService } from './api.service';
-import { DocumentItem } from '../models/document-item'
-import { dateFieldName } from '@progress/kendo-angular-intl';
-import { Observable, Subject } from 'rxjs/Rx';
+import { Observable } from 'rxjs/Rx';
 import { PagedResult } from '../models/paging-result.model';
-import { CancelItem } from '../models/reason/cancel-item'
+import { CancelItem } from '../models/reason/cancel-item';
+import { DocumentItem } from '../models/document-item';
+import { SETTING_REASON } from '../configs/common.config';
 
 @Injectable()
 export class PackageSuccessService {
-    documentType = ['Bảo vệ', 'Cuốn hồ sơ mới', 'Tiêu chuẩn kỹ thuật', 'BOQ', 'Khảo sát địa chật'];
+    documentType = [
+        'Bảo vệ',
+        'Cuốn hồ sơ mới',
+        'Tiêu chuẩn kỹ thuật',
+        'BOQ',
+        'Khảo sát địa chật'
+    ];
     documentRom = ['Phòng hành chính', 'Phòng lưu trữ'];
     documentNumber = ['30 Ngày', '30 Ngày'];
     dateNo = ['30 ngày'];
@@ -18,46 +24,32 @@ export class PackageSuccessService {
     documentData = [];
     status = [];
     type = [1, 2];
-    version =[1,1.1];
+    version = [1, 1.1];
     employeeName = ['Oliver Dinh', 'Van Dinh'];
     dataDocuments: DocumentItem[] = [];
-    constructor(
-        private apiService: ApiService
-    ) {
-        for (let i = 1; i < 6; i++) {
-            this.dataDocuments.unshift({
-                id: i,
-                documentName: this.documentName[Math.floor(Math.random() * (this.documentName.length))],
-                documentRom: this.documentRom[Math.floor(Math.random() * (this.documentRom.length))],
-                documentNumber: this.documentNumber[Math.floor(Math.random() * (this.documentNumber.length))],
-                interviewNo: this.interviewNo[Math.floor(Math.random() * (this.interviewNo.length))],
-                dateNo: this.dateNo[Math.floor(Math.random() * (this.dateNo.length))],
-                documentType: this.documentType[Math.floor(Math.random() * (this.documentType.length))],
-                documentData: this.documentData[Math.floor(Math.random() * (this.documentData.length))],
-                timeTransfer: this.timeTransfer[Math.floor(Math.random() * (this.timeTransfer.length))],
-                status: this.status[Math.floor(Math.random() * (this.status.length))],
-                type: this.type[Math.floor(Math.random() * (this.type.length))],
-                version:this.version[Math.floor(Math.random() * (this.version.length))],
-                employeeName:this.employeeName[Math.floor(Math.random() * (this.employeeName.length))]
-            });
-        }
-    }
-    ngOnInit() {
-    }
-    getdataDocuments() {
-        return this.dataDocuments;
-    }
-    getdataGetDocument() {
-        return this.dataGetDocument;
-    }
-    getDataResult () {
-        return this.resultData;
-    }
     resultData: any = [
-        { id: 1, documentName: 'Tài liệu cung cấp vật tư', version: 1, description: 'Danh sách tài liệu cung cấp vật tư  ', employeeName: 'Oliver Dinh', createdDate: '01/01/2018 ,09:00', upDate: '01/01/2018', interview: 1 },
-        { id: 2, documentName: 'Tài liệu cung cấp giấy tờ liên quan', version: 1.1, description: '', employeeName: 'Van Dinh', createdDate: '02/02/2018,09:00', upDate: '02/02/2018', interview: 1 }
+        {
+            id: 1,
+            documentName: 'Tài liệu cung cấp vật tư',
+            version: 1,
+            description: 'Danh sách tài liệu cung cấp vật tư  ',
+            employeeName: 'Oliver Dinh',
+            createdDate: '01/01/2018 ,09:00',
+            upDate: '01/01/2018',
+            interview: 1
+        },
+        {
+            id: 2,
+            documentName: 'Tài liệu cung cấp giấy tờ liên quan',
+            version: 1.1,
+            description: '',
+            employeeName: 'Van Dinh',
+            createdDate: '02/02/2018,09:00',
+            upDate: '02/02/2018',
+            interview: 1
+        }
     ];
-   
+
     dataGetDocument: any = [
         {
             id: 1,
@@ -70,7 +62,6 @@ export class PackageSuccessService {
             documentData: 'Cuốn hồ sơ mời thầu',
             status: 1,
             type: 1
-
         },
         {
             id: 2,
@@ -83,9 +74,7 @@ export class PackageSuccessService {
             documentData: 'kho sản xuất vật tư',
             status: 1,
             type: 1
-
         },
-
 
         {
             id: 3,
@@ -110,18 +99,45 @@ export class PackageSuccessService {
             documentData: 'Maketing online',
             status: 2,
             type: 2
+        }
+    ];
+    constructor(private apiService: ApiService) {
+        // for (let i = 1; i < 6; i++) {
+        //     this.dataDocuments.unshift({
+        //         id: i,
+        //         documentName: this.documentName[Math.floor(Math.random() * (this.documentName.length))],
+        //         documentRom: this.documentRom[Math.floor(Math.random() * (this.documentRom.length))],
+        //         documentNumber: this.documentNumber[Math.floor(Math.random() * (this.documentNumber.length))],
+        //         interviewNo: this.interviewNo[Math.floor(Math.random() * (this.interviewNo.length))],
+        //         dateNo: this.dateNo[Math.floor(Math.random() * (this.dateNo.length))],
+        //         documentType: this.documentType[Math.floor(Math.random() * (this.documentType.length))],
+        //         documentData: this.documentData[Math.floor(Math.random() * (this.documentData.length))],
+        //         timeTransfer: this.timeTransfer[Math.floor(Math.random() * (this.timeTransfer.length))],
+        //         status: this.status[Math.floor(Math.random() * (this.status.length))],
+        //         type: this.type[Math.floor(Math.random() * (this.type.length))],
+        //         version:this.version[Math.floor(Math.random() * (this.version.length))],
+        //         employeeName:this.employeeName[Math.floor(Math.random() * (this.employeeName.length))]
+        //     });
+        // }
+    }
 
-
-        },
-
-    ]
+    getdataDocuments() {
+        return this.dataDocuments;
+    }
+    getdataGetDocument() {
+        return this.dataGetDocument;
+    }
+    getDataResult() {
+        return this.resultData;
+    }
     // Get ds lý do  hủy thầu
     getReasonCancel(
         page: number | string,
         pageSize: number | string
     ): Observable<PagedResult<CancelItem>> {
         const url = `bidopportunitycancelreason/getall/${page}/${pageSize}`;
-        return this.apiService.get(url)
+        return this.apiService
+            .get(url)
             .map(response => {
                 const result = response.result;
                 return {
@@ -129,9 +145,10 @@ export class PackageSuccessService {
                     pageSize: result.pageSize,
                     pageCount: result.totalPages,
                     total: result.totalCount,
-                    items: result.items,
+                    items: result.items
                 };
-            }).share();
+            })
+            .share();
     }
 
     // get ds lý tro trật thầu
@@ -140,7 +157,8 @@ export class PackageSuccessService {
         pageSize: number | string
     ): Observable<PagedResult<CancelItem>> {
         const url = `bidopportunitylosereason/getall/${page}/${pageSize}`;
-        return this.apiService.get(url)
+        return this.apiService
+            .get(url)
             .map(response => {
                 const result = response.result;
                 return {
@@ -148,9 +166,10 @@ export class PackageSuccessService {
                     pageSize: result.pageSize,
                     pageCount: result.totalPages,
                     total: result.totalCount,
-                    items: result.items,
+                    items: result.items
                 };
-            }).share();
+            })
+            .share();
     }
     // Det ds lý do trúng thầu
     getReasonWin(
@@ -158,7 +177,8 @@ export class PackageSuccessService {
         pageSize: number | string
     ): Observable<PagedResult<CancelItem>> {
         const url = `bidopportunitywinreason/getall/${page}/${pageSize}`;
-        return this.apiService.get(url)
+        return this.apiService
+            .get(url)
             .map(response => {
                 const result = response.result;
                 return {
@@ -166,8 +186,26 @@ export class PackageSuccessService {
                     pageSize: result.pageSize,
                     pageCount: result.totalPages,
                     total: result.totalCount,
-                    items: result.items,
+                    items: result.items
                 };
-            }).share();
+            })
+            .share();
+    }
+
+    // kết quả dự thầu: trúng/trật/hủy thầu
+    sendBidResult(bidOpportunityId: number, reasonId: number, type: string): Observable<any> {
+        let url = `bidopportunity/kqdt/${bidOpportunityId}/`;
+        switch (type) {
+            case SETTING_REASON.Win:
+                url += `trungthau/${reasonId}`;
+                break;
+            case SETTING_REASON.Lose:
+                url += `tratthau/${reasonId}`;
+                break;
+            case SETTING_REASON.Cancel:
+                url += `huythau/${reasonId}`;
+                break;
+        }
+        return this.apiService.post(url).map(response => response.result);
     }
 }
