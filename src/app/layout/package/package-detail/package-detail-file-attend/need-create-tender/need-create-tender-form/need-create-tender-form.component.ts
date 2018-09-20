@@ -126,11 +126,12 @@ export class NeedCreateTenderFormComponent implements OnInit {
             .subscribe(
                 data => {
                     this.spinner.hide();
+                    this.isShowDialog = false;
+                    // this.getPackageInfo();
+                    this.router.navigate([`package/detail/${this.bidOpportunityId}/attend/create-request`]);
                     this.alertService.success(
                         'Gửi duyệt đề nghị dự thầu thành công!'
                     );
-                    this.isShowDialog = false;
-                    this.getPackageInfo();
                 },
                 err => {
                     this.spinner.hide();

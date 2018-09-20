@@ -5,12 +5,12 @@ import { Router, ActivatedRoute, ParamMap } from '@angular/router';
 import { PackageDetailComponent } from '../../package-detail.component';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { DATETIME_PICKER_CONFIG } from '../../../../../shared/configs/datepicker.config';
-import { ConfirmationService, AlertService } from '../../../../../shared/services';
+import { AlertService } from '../../../../../shared/services';
 import { NgxSpinnerService } from 'ngx-spinner';
-import { PackageSuccessService } from '../../../../../shared/services/package-success.service'
+import { PackageSuccessService } from '../../../../../shared/services/package-success.service';
 import { PagedResult } from '../../../../../shared/models/paging-result.model';
-import { BehaviorSubject, Observable, Subject } from '../../../../../../../node_modules/rxjs';
-import { CancelItem } from '../../../../../shared/models/reason/cancel-item'
+import { Subject } from '../../../../../../../node_modules/rxjs';
+import { CancelItem } from '../../../../../shared/models/reason/cancel-item';
 import ValidationHelper from '../../../../../shared/helpers/validation.helper';
 
 @Component({
