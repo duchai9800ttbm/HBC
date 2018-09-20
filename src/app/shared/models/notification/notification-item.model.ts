@@ -9,6 +9,7 @@
 // }
 export class NotificationItem {
     id: number;
+    notificationType: string;
     notificationName: string;
     notificationMessage: string;
     sendEmployee: {
@@ -19,11 +20,12 @@ export class NotificationItem {
         employeeEmail: string;
     };
     notificationState: {
-        key: string;
-        value: string;
+        id: string;
+        text: string;
         displayText: string;
     };
     bidOpportunityId: number;
+    bidOpportunityName: string;
     liveFormType: {
         key: string;
         value: string;

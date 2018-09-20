@@ -65,8 +65,14 @@ h5 {
 
 .notification-item {
     border-bottom: 1px solid #cccccc;
-    .pre--margin{
-        margin: 0rem 0rem 0rem 0.3rem;
+    .span--margin{
+        margin: 0rem 0.3rem 0rem 0rem;
+    }
+    .content--bold{
+        font-weight: 600;
+    }
+    .notification--not-read{
+        background-color: #f7f8fa;
     }
 }
 

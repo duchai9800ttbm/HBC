@@ -13,25 +13,27 @@ export class NotificationService {
   private static toNotificationList(result: any): NotificationItem {
     return {
       id: result.id,
+      notificationType: result.notificationType,
       notificationName: result.notificationName,
       notificationMessage: result.notificationMessage,
       sendEmployee: {
-        employeeId: result.employeeId,
-        employeeNo: result.employeeNo,
-        employeeName: result.employeeName,
-        employeeAvatar: result.employeeAvatar,
-        employeeEmail: result.employeeEmail,
+        employeeId: result.sendEmployee.employeeId,
+        employeeNo: result.sendEmployee.employeeNo,
+        employeeName: result.sendEmployee.employeeName,
+        employeeAvatar: result.sendEmployee.employeeAvatar,
+        employeeEmail: result.sendEmployee.employeeEmail,
       },
       notificationState: {
-        key: result.id,
-        value: result.text,
-        displayText: result.displayText,
+        id: result.notificationState.key,
+        text: result.notificationState.value,
+        displayText: result.notificationState.displayText,
       },
       bidOpportunityId: result.bidOpportunityId,
+      bidOpportunityName: result.bidOpportunityName,
       liveFormType: {
-        key: result.id,
-        value: result.text,
-        displayText: result.displayText,
+        key: result.liveFormType.id,
+        value: result.liveFormType.text,
+        displayText: result.liveFormType.displayText,
       },
       sendDate: result.sendDate,
     };
@@ -46,4 +48,11 @@ export class NotificationService {
     });
   }
 
+  // Đọc thông báo
+  readNotification(bidUserNotificationId: number) {
+    const url = `bidusernotification/${bidUserNotificationId}/readnotification`;
+    return this.apiService.get(url).map(response =>  {
+      return response;
+    });
+  }
 }
