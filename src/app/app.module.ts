@@ -47,6 +47,8 @@ export function createTranslateLoader(http: HttpClient) {
     return new TranslateHttpLoader(http, './assets/i18n/', '.json');
 }
 
+registerLocaleData(localeFrCa, localeFrCaExtra);
+
 @NgModule({
     imports: [
         IntlModule,
