@@ -43,7 +43,8 @@ export class NeedCreateTenderComponent implements OnInit {
         NeedCreateTenderFormComponent.formModel = data;
         this.proposedTender = data;
         console.log(data);
-        this.dateApproveBid = DateTimeConvertHelper.fromTimestampToDtObject(this.proposedTender.tenderDirectorProposal.expectedTime);
+        // tslint:disable-next-line:max-line-length
+        this.dateApproveBid = this.proposedTender.tenderDirectorProposal && this.proposedTender.tenderDirectorProposal.expectedTime ? DateTimeConvertHelper.fromTimestampToDtObject(this.proposedTender.tenderDirectorProposal.expectedTime) : new Date();
         setTimeout(() => {
           this.dtTrigger.next();
         });
