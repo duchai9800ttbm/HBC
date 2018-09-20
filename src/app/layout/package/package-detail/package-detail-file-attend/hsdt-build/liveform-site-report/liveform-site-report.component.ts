@@ -13,6 +13,7 @@ import { PackageDetailComponent } from '../../../package-detail.component';
 })
 export class LiveformSiteReportComponent implements OnInit {
   static formModel: SiteSurveyReport = new SiteSurveyReport();
+  static viewFlag: boolean;
   bidOpportunityId: number;
   isData;
   documentData = new SiteSurveyReport();
@@ -28,10 +29,14 @@ export class LiveformSiteReportComponent implements OnInit {
       LiveformSiteReportComponent.formModel = res;
       this.documentData = res;
       this.isData = (this.documentData.id) ? true : false;
+      console.log(this.documentData.id);
     });
+  }
+  createMode() {
+    LiveformSiteReportComponent.formModel.id = 1;
   }
 
   onActivate(event, view) {
-    LiveformSiteReportComponent.formModel.viewFlag = view;
+    LiveformSiteReportComponent.viewFlag = view;
   }
 }

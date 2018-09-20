@@ -12,11 +12,11 @@
         <input type="file" #uploadContent (change)="uploadContentImage($event)">
         <div class="display-img" *ngFor="let url of contentItemImageList">
             <img [src]="(url.image?.base64) || url.image.file">
-            <div class="toppp" (click)="deleteContentImage(url)">
+            <div class="toppp"  [ngClass]="{'view-mode-control': viewMode}" (click)="deleteContentImage(url)">
                 <i class="fa fa-times delete-icon" aria-hidden="true"></i>
             </div>
         </div>
-        <div class="perspective-image" (click)="uploadContent.click()">
+        <div class="perspective-image"  [ngClass]="{'view-mode-control': viewMode}" (click)="uploadContent.click()">
             <i class="fa fa-plus" aria-hidden="true"></i>
             <p>Image</p>
         </div>

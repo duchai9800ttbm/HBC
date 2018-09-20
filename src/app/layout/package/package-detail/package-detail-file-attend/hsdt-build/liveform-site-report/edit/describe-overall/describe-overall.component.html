@@ -13,11 +13,11 @@
                             <input type="file" #uploadTopography (change)="uploadTopographyImage($event)">
                             <div class="display-img" *ngFor="let url of topographyImageUrls">
                                 <img [src]="(url.image?.base64) || url.image.file">
-                                <div class="toppp" (click)="deleteTopographyImage(url)">
+                                <div class="toppp"  [ngClass]="{'view-mode-control': viewMode}" (click)="deleteTopographyImage(url)">
                                     <i class="fa fa-times delete-icon" aria-hidden="true"></i>
                                 </div>
                             </div>
-                            <div class="perspective-image" (click)="uploadTopography.click()">
+                            <div class="perspective-image" [ngClass]="{'view-mode-control': viewMode}" (click)="uploadTopography.click()">
                                 <i class="fa fa-plus" aria-hidden="true"></i>
                                 <p>Image</p>
                             </div>
@@ -36,11 +36,11 @@
                             <input type="file" #uploadExistingBuild (change)="uploadExistingBuildImage($event)">
                             <div class="display-img" *ngFor="let url of existingBuildImageUrls">
                                 <img [src]="(url.image?.base64) || url.image.file">
-                                <div class="toppp" (click)="deleteExistingBuildImage(url)">
+                                <div class="toppp"  [ngClass]="{'view-mode-control': viewMode}" (click)="deleteExistingBuildImage(url)">
                                     <i class="fa fa-times delete-icon" aria-hidden="true"></i>
                                 </div>
                             </div>
-                            <div class="perspective-image" (click)="uploadExistingBuild.click()">
+                            <div class="perspective-image" [ngClass]="{'view-mode-control': viewMode}" (click)="uploadExistingBuild.click()">
                                 <i class="fa fa-plus" aria-hidden="true"></i>
                                 <p>Image</p>
                             </div>
@@ -60,11 +60,11 @@
                             <input type="file" #uploadStacale (change)="uploadStacaleImage($event)">
                             <div class="display-img" *ngFor="let url of stacaleImageUrls">
                                 <img [src]="(url.image?.base64) || url.image.file">
-                                <div class="toppp" (click)="deleteStacaleImage(url)">
+                                <div class="toppp"  [ngClass]="{'view-mode-control': viewMode}" (click)="deleteStacaleImage(url)">
                                     <i class="fa fa-times delete-icon" aria-hidden="true"></i>
                                 </div>
                             </div>
-                            <div class="perspective-image" (click)="uploadStacale.click()">
+                            <div class="perspective-image" [ngClass]="{'view-mode-control': viewMode}" (click)="uploadStacale.click()">
                                 <i class="fa fa-plus" aria-hidden="true"></i>
                                 <p>Image</p>
                             </div>

@@ -13,11 +13,11 @@
                             <input type="file" #uploadDemobilisation (change)="uploadDemobilisationImage($event)">
                             <div class="display-img" *ngFor="let url of demobilisationImageUrls">
                                 <img [src]="(url.image?.base64) || url.image.file">
-                                <div class="toppp" (click)="deleteDemobilisationImage(url)">
+                                <div class="toppp"  [ngClass]="{'view-mode-control': viewMode}" (click)="deleteDemobilisationImage(url)">
                                     <i class="fa fa-times delete-icon" aria-hidden="true"></i>
                                 </div>
                             </div>
-                            <div class="perspective-image" (click)="uploadDemobilisation.click()">
+                            <div class="perspective-image" [ngClass]="{'view-mode-control': viewMode}" (click)="uploadDemobilisation.click()">
                                 <i class="fa fa-plus" aria-hidden="true"></i>
                                 <p>Image</p>
                             </div>
@@ -37,11 +37,11 @@
 
                             <div class="display-img" *ngFor="let url of consolidationImageUrls">
                                 <img [src]="(url.image?.base64) || url.image.file">
-                                <div class="toppp" (click)="deleteConsolidationImage(url)">
+                                <div class="toppp"  [ngClass]="{'view-mode-control': viewMode}" (click)="deleteConsolidationImage(url)">
                                     <i class="fa fa-times delete-icon" aria-hidden="true"></i>
                                 </div>
                             </div>
-                            <div class="perspective-image" (click)="uploadConsolidation.click()">
+                            <div class="perspective-image" [ngClass]="{'view-mode-control': viewMode}" (click)="uploadConsolidation.click()">
                                 <i class="fa fa-plus" aria-hidden="true"></i>
                                 <p>Image</p>
                             </div>
@@ -62,11 +62,11 @@
 
                             <div class="display-img" *ngFor="let url of adjacentImageUrls">
                                 <img [src]="(url.image?.base64) || url.image.file">
-                                <div class="toppp" (click)="deleteAdjacentImage(url)">
+                                <div class="toppp"  [ngClass]="{'view-mode-control': viewMode}" (click)="deleteAdjacentImage(url)">
                                     <i class="fa fa-times delete-icon" aria-hidden="true"></i>
                                 </div>
                             </div>
-                            <div class="perspective-image" (click)="uploaAdjacent.click()">
+                            <div class="perspective-image" [ngClass]="{'view-mode-control': viewMode}" (click)="uploaAdjacent.click()">
                                 <i class="fa fa-plus" aria-hidden="true"></i>
                                 <p>Image</p>
                             </div>

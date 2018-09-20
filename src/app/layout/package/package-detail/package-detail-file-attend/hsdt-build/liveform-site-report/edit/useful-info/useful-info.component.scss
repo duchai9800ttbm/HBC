@@ -115,6 +115,7 @@ input[type=text] {
         }
     }
 }
+
 .img-demo-des {
     margin-bottom: 15px;
 }
@@ -158,4 +159,8 @@ input[type=text] {
 
 label {
     font-size: 11px;
+}
+
+.view-mode-control {
+    display: none;
 }

@@ -467,7 +467,6 @@ export class DocumentService {
                     checked: false
                 }
             ];
-            console.log(`khong co data`);
             return dataFormated;
         } else {
             // case: EDIT
@@ -706,15 +705,6 @@ export class DocumentService {
             dataFormated.updateDescription = '';
             return dataFormated;
         }
-    }
-
-    objectToFormdata(obj: SiteSurveyReport) {
-        const objectToFormData = require('object-to-formdata');
-        const object = obj;
-        const formData = objectToFormData(
-            object
-        );
-        console.log(formData);
     }
 
     createOrUpdateSiteSurveyingReport(obj: SiteSurveyReport) {
@@ -1131,8 +1121,13 @@ export class DocumentService {
                     if (subject.content[indexContent].images) {
                         // tslint:disable-next-line:max-line-length
                         for (let indexImage = 0, length = obj.usefulInfo[indexSubject].content[indexContent].images.length; indexImage < length; indexImage++) {
-                            const imageContent = `UsefulInFormations[${indexSubject}].Content[${indexContent}].Images`;
-                            objDataSiteReport.append(imageContent, subject.content[indexContent].images[indexImage].image.file);
+                            if (subject.content[indexContent].images[indexImage].id) {
+                                const imageContentId = `UsefulInFormations[${indexSubject}].Content[${indexContent}].ImageUrls`;
+                                objDataSiteReport.append(imageContentId, subject.content[indexContent].images[indexImage].id);
+                            } else {
+                                const imageContent = `UsefulInFormations[${indexSubject}].Content[${indexContent}].Images`;
+                                objDataSiteReport.append(imageContent, subject.content[indexContent].images[indexImage].image.file);
+                            }
                         }
                     }
                 }

@@ -88,8 +88,14 @@ export class ScaleOverallComponent implements OnInit {
 
   checkFlag() {
     if (LiveformSiteReportComponent.formModel.id) {
-      const flag = LiveformSiteReportComponent.formModel.viewFlag;
+      const flag = LiveformSiteReportComponent.viewFlag;
       this.viewMode = flag;
+      if (flag) {
+        const inputs = document.getElementsByTagName('input');
+        for (let i = 0; i < inputs.length; i++) {
+          inputs[i].disabled = true;
+        }
+      }
     } else {
       this.router.navigate([`/package/detail/${this.currentBidOpportunityId}/attend/build/liveformsite`]);
     }

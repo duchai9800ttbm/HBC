@@ -30,13 +30,13 @@
                     <form [formGroup]="trangThaiCongTrinhForm">
                         <div class="single-row">
                             <div class="child childcheck" formArrayName="trangthaiCongTrinhList" *ngFor="let item of trangThaiCongTrinhForm.controls.trangthaiCongTrinhList.controls; let i = index">
-                                <input [formControlName]="i" type="checkbox" [checked]="trangthaiCongTrinhList[i].checked"
+                                <input [formControlName]="i" type="checkbox" [disabled]="viewMode" [checked]="trangthaiCongTrinhList[i].checked"
                                     (change)="trangthaiCongTrinhList[i].checked = !trangthaiCongTrinhList[i].checked; trangThaiCongTrinhChange($event)"
                                     name="construcStatus">
                                 {{ trangthaiCongTrinhList[i].text }}
                                 <span class="checkmark" tabindex="4"></span>
                             </div>
-                            <div *ngIf="showValueOfOther"><input type="text" [(ngModel)]="valueOfOthers" (ngModelChange)="valueOfOther($event)" [ngModelOptions]="{standalone: true}"></div>
+                            <div *ngIf="showValueOfOther"><input [disabled]="viewMode" type="text" [(ngModel)]="valueOfOthers" (ngModelChange)="valueOfOther($event)" [ngModelOptions]="{standalone: true}"></div>
                         </div>
                     </form>
                 </div>
@@ -77,11 +77,11 @@
                             <input type="file" #uploadPerspective (change)="uploadPerspectiveImage($event)">
                             <div class="display-img" *ngFor="let url of perspectiveImageUrls">
                                 <img [src]="(url.image?.base64) || url.image.file">
-                                <div class="toppp" (click)="deletePerspectiveImage(url)">
+                                <div class="toppp"  [ngClass]="{'view-mode-control': viewMode}" (click)="deletePerspectiveImage(url)">
                                     <i class="fa fa-times delete-icon" aria-hidden="true"></i>
                                 </div>
                             </div>
-                            <div class="perspective-image" (click)="uploadPerspective.click()" tabindex="11">
+                            <div class="perspective-image" [ngClass]="{'view-mode-control': viewMode}" (click)="uploadPerspective.click()" tabindex="11">
                                 <i class="fa fa-plus" aria-hidden="true"></i>
                                 <p>Image</p>
                             </div>
@@ -101,11 +101,11 @@
                             <input type="file" #uploadStructure (change)="uploadStructureImage($event)">
                             <div class="display-img" *ngFor="let url of structureImageUrls">
                                 <img [src]="(url.image?.base64) || url.image.file">
-                                <div class="toppp" (click)="deleteStructureImage(url)">
+                                <div class="toppp"  [ngClass]="{'view-mode-control': viewMode}" (click)="deleteStructureImage(url)">
                                     <i class="fa fa-times delete-icon" aria-hidden="true"></i>
                                 </div>
                             </div>
-                            <div class="perspective-image" (click)="uploadStructure.click()" tabindex="13">
+                            <div class="perspective-image" [ngClass]="{'view-mode-control': viewMode}" (click)="uploadStructure.click()" tabindex="13">
                                 <i class="fa fa-plus" aria-hidden="true"></i>
                                 <p>Image</p>
                             </div>
@@ -124,11 +124,11 @@
                         <input type="file" #uploadRequirements (change)="uploadRequirementsImage($event)">
                         <div class="display-img" *ngFor="let url of requirementsImageUrls">
                             <img [src]="(url.image?.base64) || url.image.file">
-                            <div class="toppp" (click)="deleteRequirementsImage(url)">
+                            <div class="toppp"  [ngClass]="{'view-mode-control': viewMode}" (click)="deleteRequirementsImage(url)">
                                 <i class="fa fa-times delete-icon" aria-hidden="true"></i>
                             </div>
                         </div>
-                        <div class="perspective-image" (click)="uploadRequirements.click()" tabindex="15">
+                        <div class="perspective-image" [ngClass]="{'view-mode-control': viewMode}" (click)="uploadRequirements.click()" tabindex="15">
                             <i class="fa fa-plus" aria-hidden="true"></i>
                             <p>Image</p>
                         </div>
@@ -137,5 +137,4 @@
             </div>
         </div>
     </div>
-    <div *ngIf="viewMode" class="view-mode"></div>
 </form>

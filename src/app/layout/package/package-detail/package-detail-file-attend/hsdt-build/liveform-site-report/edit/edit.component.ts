@@ -55,16 +55,15 @@ export class EditComponent implements OnInit, OnDestroy {
       this.showPopupConfirm = false;
     } else {
       const objData = LiveformSiteReportComponent.formModel;
-      // const objData = objectToFormData(LiveformSiteReportComponent.formModel);
-      // const testFD = new FormData();
-      // this.documentService.objectToFormdata(objData);
       this.documentService
         .createOrUpdateSiteSurveyingReport(objData)
-        .subscribe();
-      this.showPopupConfirm = false;
-      this.alertService.success('Đã cập nhật thành công!');
-      this.spinner.hide();
-      this.router.navigate([`/package/detail/${this.currentBidOpportunityId}/attend/build/liveformsite/info/scale`]);
+        .subscribe(() => {
+          this.showPopupConfirm = false;
+          this.spinner.hide();
+          this.router.navigate([`/package/detail/${this.currentBidOpportunityId}/attend/build/liveformsite/info/scale`]);
+          this.alertService.success('Đã cập nhật thành công!');
+        });
+      LiveformSiteReportComponent.viewFlag = true;
     }
   }
 

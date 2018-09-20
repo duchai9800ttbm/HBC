@@ -15,11 +15,11 @@
 
                             <div class="display-img" *ngFor="let url of supplySystemImageUrls">
                                 <img [src]="(url.image?.base64) || url.image.file">
-                                <div class="toppp" (click)="deleteSupplySystemImage(url)">
+                                <div class="toppp"  [ngClass]="{'view-mode-control': viewMode}" (click)="deleteSupplySystemImage(url)">
                                     <i class="fa fa-times delete-icon" aria-hidden="true"></i>
                                 </div>
                             </div>
-                            <div class="perspective-image" (click)="uploadSupplySystem.click()">
+                            <div class="perspective-image" [ngClass]="{'view-mode-control': viewMode}" (click)="uploadSupplySystem.click()">
                                 <i class="fa fa-plus" aria-hidden="true"></i>
                                 <p>Image</p>
                             </div>
@@ -35,11 +35,11 @@
 
                             <div class="display-img" *ngFor="let url of supplyPointImageUrls">
                                 <img [src]="(url.image?.base64) || url.image.file">
-                                <div class="toppp" (click)="deleteSupplyPointImage(url)">
+                                <div class="toppp"  [ngClass]="{'view-mode-control': viewMode}" (click)="deleteSupplyPointImage(url)">
                                     <i class="fa fa-times delete-icon" aria-hidden="true"></i>
                                 </div>
                             </div>
-                            <div class="perspective-image" (click)="uploadSupplyPoint.click()">
+                            <div class="perspective-image" [ngClass]="{'view-mode-control': viewMode}" (click)="uploadSupplyPoint.click()">
                                 <i class="fa fa-plus" aria-hidden="true"></i>
                                 <p>Image</p>
                             </div>
@@ -60,11 +60,11 @@
 
                             <div class="display-img" *ngFor="let url of drainageSystemImageUrls">
                                 <img [src]="(url.image?.base64) || url.image.file">
-                                <div class="toppp" (click)="deleteDrainageSystemImage(url)">
+                                <div class="toppp"  [ngClass]="{'view-mode-control': viewMode}" (click)="deleteDrainageSystemImage(url)">
                                     <i class="fa fa-times delete-icon" aria-hidden="true"></i>
                                 </div>
                             </div>
-                            <div class="perspective-image" (click)="uploadDrainageSystem.click()">
+                            <div class="perspective-image" [ngClass]="{'view-mode-control': viewMode}" (click)="uploadDrainageSystem.click()">
                                 <i class="fa fa-plus" aria-hidden="true"></i>
                                 <p>Image</p>
                             </div>
@@ -80,11 +80,11 @@
 
                             <div class="display-img" *ngFor="let url of drainagePointImageUrls">
                                 <img [src]="(url.image?.base64) || url.image.file">
-                                <div class="toppp" (click)="deleteDrainagePointImage(url)">
+                                <div class="toppp"  [ngClass]="{'view-mode-control': viewMode}" (click)="deleteDrainagePointImage(url)">
                                     <i class="fa fa-times delete-icon" aria-hidden="true"></i>
                                 </div>
                             </div>
-                            <div class="perspective-image" (click)="uploadDrainagePoint.click()">
+                            <div class="perspective-image" [ngClass]="{'view-mode-control': viewMode}" (click)="uploadDrainagePoint.click()">
                                 <i class="fa fa-plus" aria-hidden="true"></i>
                                 <p>Image</p>
                             </div>
@@ -105,11 +105,11 @@
 
                             <div class="display-img" *ngFor="let url of powerStationImageUrls">
                                 <img [src]="(url.image?.base64) || url.image.file">
-                                <div class="toppp" (click)="deletePowerStationImage(url)">
+                                <div class="toppp"  [ngClass]="{'view-mode-control': viewMode}" (click)="deletePowerStationImage(url)">
                                     <i class="fa fa-times delete-icon" aria-hidden="true"></i>
                                 </div>
                             </div>
-                            <div class="perspective-image" (click)="uploadPowerStation.click()">
+                            <div class="perspective-image" [ngClass]="{'view-mode-control': viewMode}" (click)="uploadPowerStation.click()">
                                 <i class="fa fa-plus" aria-hidden="true"></i>
                                 <p>Image</p>
                             </div>
@@ -125,11 +125,11 @@
 
                             <div class="display-img" *ngFor="let url of mediumVoltageSystemImageUrls">
                                 <img [src]="(url.image?.base64) || url.image.file">
-                                <div class="toppp" (click)="deleteMediumVoltageSystemImage(url)">
+                                <div class="toppp"  [ngClass]="{'view-mode-control': viewMode}" (click)="deleteMediumVoltageSystemImage(url)">
                                     <i class="fa fa-times delete-icon" aria-hidden="true"></i>
                                 </div>
                             </div>
-                            <div class="perspective-image" (click)="uploadMediumVoltageSystem.click()">
+                            <div class="perspective-image" [ngClass]="{'view-mode-control': viewMode}" (click)="uploadMediumVoltageSystem.click()">
                                 <i class="fa fa-plus" aria-hidden="true"></i>
                                 <p>Image</p>
                             </div>
@@ -145,12 +145,11 @@
 
                             <div class="display-img" *ngFor="let url of powerOtherImageUrls">
                                 <img [src]="(url.image?.base64) || url.image.file">
-                                <div class="toppp" (click)="deletePowerOtherImage(url)">
+                                <div class="toppp"  [ngClass]="{'view-mode-control': viewMode}" (click)="deletePowerOtherImage(url)">
                                     <i class="fa fa-times delete-icon" aria-hidden="true"></i>
                                 </div>
                             </div>
-                            <div class="perspective-image" (click)="uploadPowerOther.click()">
-
+                            <div class="perspective-image" [ngClass]="{'view-mode-control': viewMode}" (click)="uploadPowerOther.click()">
                                 <i class="fa fa-plus" aria-hidden="true"></i>
                                 <p>Image</p>
                             </div>
