@@ -26,26 +26,11 @@ export class PackageDetailFileAttendComponent implements OnInit {
     private router: Router,
     private activeRouter: ActivatedRoute,
   ) {
-    router.events.subscribe((val) => {
-      if ((val instanceof NavigationEnd) === true) {
-        this.activeRouter.firstChild.url.subscribe(url => {
-          this.currentUrl = url[0].path;
-          this.packageService.getInforPackageID(this.packageId).subscribe(result => {
-            this.packageData = result;
-            for (let i = 0; i < this.listStatusPackage.length; i++) {
-              if (this.listStatusPackage[i].some(item => item === this.packageData.stageStatus.id)) {
-                console.log('this.statusPackage', this.statusPackage);
-                this.statusPackage = i;
-                break;
-              }
-            }
-          });
-        });
-      }
-    });
+    this.checkStatusPackage();
   }
 
   ngOnInit() {
+    // this.checkStatusPackage();
     this.packageId = +PackageDetailComponent.packageId;
     this.packageService.getInforPackageID(this.packageId).subscribe(result => {
       this.packageData = result;
@@ -133,4 +118,24 @@ export class PackageDetailFileAttendComponent implements OnInit {
     });
   }
 
+  checkStatusPackage() {
+    this.router.events.subscribe((val) => {
+      if ((val instanceof NavigationEnd) === true) {
+        this.activeRouter.firstChild.url.subscribe(url => {
+          this.currentUrl = url[0].path;
+          this.packageService.getInforPackageID(this.packageId).subscribe(result => {
+            this.packageData = result;
+            for (let i = 0; i < this.listStatusPackage.length; i++) {
+              console.log('i', i);
+              if (this.listStatusPackage[i].find(item => item === this.packageData.stageStatus.id)) {
+                this.statusPackage = i;
+                console.log('this.statusPackage', this.statusPackage, this.currentUrl);
+                break;
+              }
+            }
+          });
+        });
+      }
+    });
+  }
 }
