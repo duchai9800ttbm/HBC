@@ -1,3 +1,9 @@
+:host /deep/ {
+    .k-widget[disabled] {
+        opacity: 1;
+    }
+}
+
 .btn-sign {
     min-width: 100px;
 }

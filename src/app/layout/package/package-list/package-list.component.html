@@ -62,8 +62,7 @@
                     <label for="" class="form-label">Tổng giá trị</label>
                 </div>
                 <div style="width: 280px; margin-left: 10px; margin-right: 15px; zoom: 0.8;padding: 5px; ">
-
-                    <nouislider [config]="someKeyboardConfig" [step]="1000" [min]="0" [max]="1000000000000" (ngModelChange)="changeValueRange($event)"
+                    <nouislider [config]="someKeyboardConfig" [step]="1000" [min]="0" [max]="maxValue" (ngModelChange)="changeValueRange($event)"
                         [(ngModel)]="someRange"></nouislider>
                     <div class="d-flex justify-content-between range text-truncate">
                         <div class="min">{{ someRange[0] | vnCurrency }}</div>

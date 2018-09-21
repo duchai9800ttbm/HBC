@@ -12,6 +12,7 @@ import { TextEllipsisDirective } from './text-ellipsis.directive';
 import { EnterPreventDefaultDirective } from './enter-prevent-default.directive';
 import { InputNumberIntegerDirective } from './input-number-integer.directive';
 import { WidthAutoDirective } from './width-auto.directive';
+import { AutoFocusDirective } from './auto-focus.directive';
 
 @NgModule({
     imports: [
@@ -27,7 +28,8 @@ import { WidthAutoDirective } from './width-auto.directive';
         TextEllipsisDirective,
         EnterPreventDefaultDirective,
         InputNumberIntegerDirective,
-        WidthAutoDirective
+        WidthAutoDirective,
+        AutoFocusDirective
     ],
     exports: [
         InputNumberDirective,
@@ -39,7 +41,8 @@ import { WidthAutoDirective } from './width-auto.directive';
         TextEllipsisDirective,
         EnterPreventDefaultDirective,
         InputNumberIntegerDirective,
-        WidthAutoDirective
+        WidthAutoDirective,
+        AutoFocusDirective
     ],
     providers: [
         VnCurrencyPipe,
