@@ -1,6 +1,8 @@
 import { Component, OnInit, AfterViewInit, Input } from '@angular/core';
 import { TenderPriceApproval } from '../../../../../../shared/models/price-review/price-review.model';
 import { FormBuilder, FormGroup } from '@angular/forms';
+import DateTimeConvertHelper from '../../../../../../shared/helpers/datetime-convert-helper';
+import { PriceReviewService } from '../../../../../../shared/services/price-review.service';
 
 @Component({
   selector: 'app-price-review-form',
@@ -12,13 +14,15 @@ export class PriceReviewFormComponent implements OnInit, AfterViewInit {
   priceReviewForm: FormGroup;
 
   constructor(
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private priceReviewService: PriceReviewService
   ) { }
-
+  isModelView = true;
   phanMong = false;
   @Input() model: TenderPriceApproval;
   @Input() type: string;
   ngOnInit() {
+    this.isModelView = this.type === 'detail';
     this.createForm();
   }
 
@@ -162,47 +166,209 @@ export class PriceReviewFormComponent implements OnInit, AfterViewInit {
 
 
       thoiGianYC: this.model.contractCondition
-      && this.model.contractCondition.paymentTime
-      && this.model.contractCondition.paymentTime.tenderDocumentRequirementDay,
+        && this.model.contractCondition.paymentTime
+        && this.model.contractCondition.paymentTime.tenderDocumentRequirementDay,
 
       thoiGianDX: this.model.contractCondition
-      && this.model.contractCondition.paymentTime
-      && this.model.contractCondition.paymentTime.suggestionDay,
+        && this.model.contractCondition.paymentTime
+        && this.model.contractCondition.paymentTime.suggestionDay,
 
-      thoiGianCY:   this.model.contractCondition
-      && this.model.contractCondition.paymentTime
-      && this.model.contractCondition.paymentTime.note,
+      thoiGianCY: this.model.contractCondition
+        && this.model.contractCondition.paymentTime
+        && this.model.contractCondition.paymentTime.note,
 
 
 
 
       tienGiuLaiYCPercent: this.model.contractCondition
-      && this.model.contractCondition.retainedMoney
-      && this.model.contractCondition.retainedMoney.tenderDocumentRequirementPercent,
+        && this.model.contractCondition.retainedMoney
+        && this.model.contractCondition.retainedMoney.tenderDocumentRequirementPercent,
 
       tienGiuLaiYCKhauTru: this.model.contractCondition
-      && this.model.contractCondition.retainedMoney
-      && this.model.contractCondition.retainedMoney.tenderDocumentRequirementMaxPercent,
+        && this.model.contractCondition.retainedMoney
+        && this.model.contractCondition.retainedMoney.tenderDocumentRequirementMaxPercent,
 
       tienGiuLaiDXPercent: this.model.contractCondition
-      && this.model.contractCondition.retainedMoney
-      && this.model.contractCondition.retainedMoney.requirementPercent,
+        && this.model.contractCondition.retainedMoney
+        && this.model.contractCondition.retainedMoney.requirementPercent,
 
       tienGiuLaiDXKhauTru: this.model.contractCondition
-      && this.model.contractCondition.retainedMoney
-      && this.model.contractCondition.retainedMoney.requirementMaxPercent,
+        && this.model.contractCondition.retainedMoney
+        && this.model.contractCondition.retainedMoney.requirementMaxPercent,
 
 
       phatTienDoYCPercent: this.model.contractCondition
-      && this.model.contractCondition.punishDelay
-      && this.model.contractCondition.punishDelay.tenderDocumentRequirementPercent,
+        && this.model.contractCondition.punishDelay
+        && this.model.contractCondition.punishDelay.tenderDocumentRequirementPercent,
 
       phatTienDoYCMax: this.model.contractCondition
-      && this.model.contractCondition.punishDelay
-      && this.model.contractCondition.punishDelay.tenderDocumentRequirementMax
+        && this.model.contractCondition.punishDelay
+        && this.model.contractCondition.punishDelay.tenderDocumentRequirementMax,
 
+      phatTienDoDXPercent: this.model.contractCondition
+        && this.model.contractCondition.punishDelay
+        && this.model.contractCondition.punishDelay.suggestionPercent,
+
+      phatTienDoDXMax: this.model.contractCondition
+        && this.model.contractCondition.punishDelay
+        && this.model.contractCondition.punishDelay.suggestionMax,
+
+      phatTienDoCY: this.model.contractCondition
+        && this.model.contractCondition.punishDelay
+        && this.model.contractCondition.punishDelay.note,
+
+      thoiGianBHYCPercent: this.model.contractCondition
+        && this.model.contractCondition.constructionWarrantyTime
+        && this.model.contractCondition.constructionWarrantyTime.percent,
+      thoiGianBHYCAmount: this.model.contractCondition
+        && this.model.contractCondition.constructionWarrantyTime
+        && this.model.contractCondition.constructionWarrantyTime.money,
+      thoiGianBHDXBond: this.model.contractCondition
+        && this.model.contractCondition.constructionWarrantyTime
+        && this.model.contractCondition.constructionWarrantyTime.bond,
+      thoiGianBHMonth: this.model.contractCondition
+        && this.model.contractCondition.constructionWarrantyTime
+        && this.model.contractCondition.constructionWarrantyTime.month,
+      thoiGianBHCY: this.model.contractCondition
+        && this.model.contractCondition.constructionWarrantyTime
+        && this.model.contractCondition.constructionWarrantyTime.note,
+
+      dieuKienDacBiet: this.model.contractCondition
+        && this.model.contractCondition.disadvantage
+        && this.model.contractCondition.disadvantage.disadvantageName,
+      dieuKienDacBietCY: this.model.contractCondition
+        && this.model.contractCondition.disadvantage
+        && this.model.contractCondition.disadvantage.note,
+
+      // Gia thau
+
+      giaVonBaseAmount: this.model.tentativeTenderPrice
+        && this.model.tentativeTenderPrice.costOfCapital
+        && this.model.tentativeTenderPrice.costOfCapital.baseTenderAmount,
+      giaVonBaseGfa: this.model.tentativeTenderPrice
+        && this.model.tentativeTenderPrice.costOfCapital
+        && this.model.tentativeTenderPrice.costOfCapital.baseTenderGFA,
+      giaVonAlterAmount: this.model.tentativeTenderPrice
+        && this.model.tentativeTenderPrice.costOfCapital
+        && this.model.tentativeTenderPrice.costOfCapital.alternativeTenderAmount,
+      giaVonAlterGfa: this.model.tentativeTenderPrice
+        && this.model.tentativeTenderPrice.costOfCapital
+        && this.model.tentativeTenderPrice.costOfCapital.alternativeTenderGFA,
+      giaVonCY: this.model.tentativeTenderPrice
+        && this.model.tentativeTenderPrice.costOfCapital
+        && this.model.tentativeTenderPrice.costOfCapital.note,
+
+      chiPhiBaseAmount: this.model.tentativeTenderPrice
+        && this.model.tentativeTenderPrice.costOfCapitalGeneralCost
+        && this.model.tentativeTenderPrice.costOfCapitalGeneralCost.baseTenderAmount,
+      chiPhiBaseGfa: this.model.tentativeTenderPrice
+        && this.model.tentativeTenderPrice.costOfCapitalGeneralCost
+        && this.model.tentativeTenderPrice.costOfCapitalGeneralCost.baseTenderGFA,
+      chiPhiAlterAmount: this.model.tentativeTenderPrice
+        && this.model.tentativeTenderPrice.costOfCapitalGeneralCost
+        && this.model.tentativeTenderPrice.costOfCapitalGeneralCost.alternativeTenderAmount,
+      chiPhiAlterGfa: this.model.tentativeTenderPrice
+        && this.model.tentativeTenderPrice.costOfCapitalGeneralCost
+        && this.model.tentativeTenderPrice.costOfCapitalGeneralCost.alternativeTenderGFA,
+      chiPhiAlterNote: this.model.tentativeTenderPrice
+        && this.model.tentativeTenderPrice.costOfCapitalGeneralCost
+        && this.model.tentativeTenderPrice.costOfCapitalGeneralCost.note,
+
+      giaTriBaseAmount: this.model.tentativeTenderPrice
+        && this.model.tentativeTenderPrice.costOfCapitalValue
+        && this.model.tentativeTenderPrice.costOfCapitalValue.baseTenderAmount,
+      giaTriBaseGfa: this.model.tentativeTenderPrice
+        && this.model.tentativeTenderPrice.costOfCapitalValue
+        && this.model.tentativeTenderPrice.costOfCapitalValue.baseTenderGFA,
+      giaTriAlterAmount: this.model.tentativeTenderPrice
+        && this.model.tentativeTenderPrice.costOfCapitalValue
+        && this.model.tentativeTenderPrice.costOfCapitalValue.alternativeTenderAmount,
+      giaTriAlterGfa: this.model.tentativeTenderPrice
+        && this.model.tentativeTenderPrice.costOfCapitalValue
+        && this.model.tentativeTenderPrice.costOfCapitalValue.alternativeTenderGFA,
+      giaTriNote: this.model.tentativeTenderPrice
+        && this.model.tentativeTenderPrice.costOfCapitalValue
+        && this.model.tentativeTenderPrice.costOfCapitalValue.note,
+
+
+      giaTriPCBaseAmount: this.model.tentativeTenderPrice
+        && this.model.tentativeTenderPrice.costOfCapitalPCPSValue
+        && this.model.tentativeTenderPrice.costOfCapitalPCPSValue.baseTenderAmount,
+      giaTriPCBaseGfa: this.model.tentativeTenderPrice
+        && this.model.tentativeTenderPrice.costOfCapitalPCPSValue
+        && this.model.tentativeTenderPrice.costOfCapitalPCPSValue.baseTenderGFA,
+      giaTriPCAlterAmount: this.model.tentativeTenderPrice
+        && this.model.tentativeTenderPrice.costOfCapitalPCPSValue
+        && this.model.tentativeTenderPrice.costOfCapitalPCPSValue.alternativeTenderAmount,
+      giaTriPCAlterGfa: this.model.tentativeTenderPrice
+        && this.model.tentativeTenderPrice.costOfCapitalPCPSValue
+        && this.model.tentativeTenderPrice.costOfCapitalPCPSValue.alternativeTenderGFA,
+      giaTriPCNote: this.model.tentativeTenderPrice
+        && this.model.tentativeTenderPrice.costOfCapitalPCPSValue
+        && this.model.tentativeTenderPrice.costOfCapitalPCPSValue.note,
+
+
+      totalGiaVonAmount: this.model.tentativeTenderPrice
+        && this.model.tentativeTenderPrice.totalCostOfCapital
+        && this.model.tentativeTenderPrice.totalCostOfCapital.baseTenderAmount,
+      totalGiaVonGfa: this.model.tentativeTenderPrice
+        && this.model.tentativeTenderPrice.totalCostOfCapital
+        && this.model.tentativeTenderPrice.totalCostOfCapital.baseTenderGFA,
+      totalGiaVonNote: this.model.tentativeTenderPrice
+        && this.model.tentativeTenderPrice.totalCostOfCapital
+        && this.model.tentativeTenderPrice.totalCostOfCapital.note,
+
+
+      chiPhiLoiNhuanAmountGfa: this.model.tentativeTenderPrice
+        && this.model.tentativeTenderPrice.totalCostOfCapitalProfitCost
+        && this.model.tentativeTenderPrice.totalCostOfCapitalProfitCost.baseTenderProfitCost,
+
+      chiPhiLoiNhuanAlterAmountGfa: this.model.tentativeTenderPrice
+        && this.model.tentativeTenderPrice.totalCostOfCapitalProfitCost
+        && this.model.tentativeTenderPrice.totalCostOfCapitalProfitCost.alternativeProfitCost,
+
+      chiPhiLoiNhuanNote: this.model.tentativeTenderPrice
+        && this.model.tentativeTenderPrice.totalCostOfCapitalProfitCost
+        && this.model.tentativeTenderPrice.totalCostOfCapitalProfitCost.note,
+
+      giaDiNopThauAmount: this.model.tentativeTenderPrice
+        && this.model.tentativeTenderPrice.totalCostOfSubmission
+        && this.model.tentativeTenderPrice.totalCostOfSubmission.baseTenderAmount,
+      giaDiNopThauGfa: this.model.tentativeTenderPrice
+        && this.model.tentativeTenderPrice.totalCostOfSubmission
+        && this.model.tentativeTenderPrice.totalCostOfSubmission.baseTenderGFA,
+      giaDiNopThauAlterAmount: this.model.tentativeTenderPrice
+        && this.model.tentativeTenderPrice.totalCostOfSubmission
+        && this.model.tentativeTenderPrice.totalCostOfSubmission.alternativeTenderAmount,
+      giaDiNopThauAlterGfa: this.model.tentativeTenderPrice
+        && this.model.tentativeTenderPrice.totalCostOfSubmission
+        && this.model.tentativeTenderPrice.totalCostOfSubmission.alternativeTenderGFA,
+      giaDiNopThauNote: this.model.tentativeTenderPrice
+        && this.model.tentativeTenderPrice.totalCostOfSubmission
+        && this.model.tentativeTenderPrice.totalCostOfSubmission.note,
+
+
+      tyLeGfa: this.model.tentativeTenderPrice
+        && this.model.tentativeTenderPrice.oAndPPercentOfTotalCost
+        && this.model.tentativeTenderPrice.oAndPPercentOfTotalCost.alternativeTenderAmount,
+      tyLeNote: this.model.tentativeTenderPrice
+        && this.model.tentativeTenderPrice.oAndPPercentOfTotalCost
+        && this.model.tentativeTenderPrice.oAndPPercentOfTotalCost.note,
+
+      approvalDate: [
+        DateTimeConvertHelper.fromTimestampToDtObject(
+          this.model.approvalDate * 1000
+        )],
+      approvalTimes: this.model.approvalTimes,
+      isApprovedByTenderLeader: this.model.isApprovedByBoardOfDirector,
+      isApprovedByTenderManager: this.model.isApprovedByTenderManager,
+      isApprovedByBoardOfDirector: this.model.isApprovedByBoardOfDirector,
+      bidOpportunityId: this.model.bidOpportunityId,
+      createdEmployeeId: this.model.createdEmployee && this.model.createdEmployee.employeeId,
+      updatedEmployeeId: this.model.updatedEmployee && this.model.updatedEmployee.employeeId
 
     });
+    console.log(this.priceReviewForm.value);
   }
 
 
@@ -212,6 +378,7 @@ export class PriceReviewFormComponent implements OnInit, AfterViewInit {
 
   submit() {
     console.log(this.priceReviewForm.value);
+    this.priceReviewService.createOrEdit(this.priceReviewForm.value).subscribe();
   }
 
 }

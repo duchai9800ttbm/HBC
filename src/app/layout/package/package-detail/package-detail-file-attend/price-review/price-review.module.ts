@@ -11,6 +11,7 @@ import { SharedModule } from '../../../../../shared/shared.module';
 import { PriceReviewComponent } from './price-review.component';
 import { InputTextareaModule } from 'primeng/inputtextarea';
 import { CommentComponent } from './price-review-form/comment/comment.component';
+import { PriceReviewService } from '../../../../../shared/services/price-review.service';
 
 @NgModule({
   imports: [
@@ -27,6 +28,9 @@ import { CommentComponent } from './price-review-form/comment/comment.component'
     PriceReviewCreateComponent,
     PriceReviewComponent,
     CommentComponent
+  ],
+  providers: [
+    PriceReviewService
   ]
 })
 export class PriceReviewModule { }

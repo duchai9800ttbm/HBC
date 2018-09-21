@@ -19,6 +19,77 @@ export class PriceReviewService {
   createOrEdit(formValue: any) {
     const url = `tenderpriceapproval/createorupdate`;
     const modelRequest = new TenderPriceApproval();
+    modelRequest.bidOpportunityId = 238;
+    modelRequest.projectInformation = {
+      foudationPart: {
+        scopeOfWorkIsInclude: formValue.phanMongCheck,
+        scopeOfWorkDesc: formValue.phanMongDesc,
+        gfa: 0
+      },
+      basementPart: {
+        scopeOfWorkIsInclude: formValue.phanHamCheck,
+        scopeOfWorkDesc: formValue.phanHamDesc,
+        gfa: 0
+      },
+      basementPartConstructionStructure: {
+        scopeOfWorkIsInclude: formValue.ketCauCheck,
+        scopeOfWorkDesc: formValue.ketCauDesc,
+        gfa: 0
+      },
+      basementPartConstructionCompletion: {
+        scopeOfWorkIsInclude: formValue.hoanThienCheck,
+        scopeOfWorkDesc: formValue.hoanThienDesc,
+        gfa: 0
+      },
+      basementPartOtherWork: {
+        scopeOfWorkIsInclude: formValue.congViecKhacCheck,
+        scopeOfWorkDesc: formValue.congViecKhacDesc,
+        gfa: 0
+      },
+      bodyPart: {
+        scopeOfWorkIsInclude: formValue.phanThanCheck,
+        scopeOfWorkDesc: formValue.phanThanDesc,
+        gfa: 0
+      },
+      bodyPartConstructionStructure: {
+        scopeOfWorkIsInclude: formValue.phanThanKetCauCheck,
+        scopeOfWorkDesc: formValue.phanThanKetCauDesc,
+        gfa: 0
+      },
+      bodyPartConstructionCompletion: {
+        scopeOfWorkIsInclude: formValue.phanThanHoanThienCheck,
+        scopeOfWorkDesc: formValue.phanThanhoanThienDesc,
+        gfa: 0
+      },
+      bodyPartOtherWork: {
+        scopeOfWorkIsInclude: formValue.phanThancongViecKhacCheck,
+        scopeOfWorkDesc: formValue.phanThancongViecKhacDesc,
+        gfa: 0
+      }
+    };
+    modelRequest.technique = {
+      constructionProgress: {
+        folowTenderDocumentRequirement: formValue.tienDoThiCongYC,
+        suggestion: formValue.tienDoThiCongDX,
+        note: formValue.tienDoThiCongCY
+      },
+      specialFeatureOfConstructionMethod: {
+        folowTenderDocumentRequirement: formValue.bienPhapThiCongYC,
+        suggestion: formValue.bienPhapThiCongDX,
+        note: formValue.bienPhapThiCongCY
+      },
+      safetyRequirement: {
+        folowTenderDocumentRequirement: formValue.yeuCauAnToanYC,
+        suggestion: formValue.yeuCauAntoanDX,
+        note: formValue.yeuCauAnToanCY
+      },
+      otherSpecialRequirement: {
+        folowTenderDocumentRequirement: formValue.yeuCauKhacYC,
+        suggestion: null,
+        note: formValue.yeuCauKhacCY
+      }
+    };
+    console.log(modelRequest);
     return this.apiService.post(url, modelRequest)
       .map(response => this.toTenderPriceApproval(response.result));
   }
