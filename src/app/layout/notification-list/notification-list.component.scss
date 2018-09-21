@@ -142,3 +142,16 @@
   margin-right: 1.3rem;
   margin-bottom: 0.3rem;
 }
+
+.ul-chirld--index{
+  z-index: 99999900;
+  transform: translate(-40%, -10%);
+  font-size: 0.6rem;
+  min-width: none;
+  .ul-chirld-of-chirl--pad{
+      padding: 0.25rem 0.5rem;
+  }
+}
+.min-width-none{
+  min-width: 0;
+}
