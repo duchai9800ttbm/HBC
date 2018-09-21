@@ -1,7 +1,20 @@
 <div class="d-flex main-layout">
     <div class="content">
-        <div>
-            <button (click)="submit()">Lưu</button>
+        <div class="title d-flex align-items-center justify-content-between">
+            <div class="icon d-flex">
+                <a routerLink="../summary" style="cursor: pointer;">
+                    <img width="12" height="12" class="pointer not-outline" src="assets\images\nghia.png" style="margin-bottom: 1px;">
+                </a>
+                <h4 class="tieu-de ml-1" style="font-size: 130%">BẢNG TÓM TẮT THÔNG TIN DỰ ÁN - TRÌNH DUYỆT GIÁ THẦU</h4>
+            </div>
+            <div class="action">
+                <button class="btn btn-primary" (click)="submit(true)">Lưu bản nháp</button>
+                <button class="btn btn-primary" (click)="submit(false)">Lưu</button>
+                <button class="btn btn-secondary">Hủy</button>
+                <button class="btn btn-primary" (click)="refresh()">
+                    <i class="fa fa-refresh" aria-hidden="true"></i>
+                </button>
+            </div>
         </div>
         <form [formGroup]="priceReviewForm" novalidate>
             <div class="price-review">
@@ -40,20 +53,31 @@
                 </div>
                 <div class="content">
                     <div class="d-flex row-header">
-                        <div class="label-document">
-                            <div class="cell-left d-flex align-items-center font-weight-bold">
-                                <div class="ml-3">
-                                    Tên tài liệu
-                                </div>
-                            </div>
+                        <div class="d-flex ten-tai-lieu">
+                                <div class="label-document">
+                                        <div class="cell-left d-flex align-items-center font-weight-bold">
+                                            <div class="ml-3">
+                                                Tên tài liệu
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="name-document">
+                                        <div class="cell-right d-flex align-items-center font-weight-bold">
+                                            <div class="ml-3">
+                                                Trình duyệt giá
+                                            </div>
+                                        </div>
+                                    </div>
                         </div>
-                        <div class="name-document">
-                            <div class="cell-right d-flex align-items-center font-weight-bold">
-                                <div class="ml-3">
-                                    Trình duyệt giá
-                                </div>
+                        <div class="d-flex lan-phong-van">
+                            <div class="name font-weight-bold align-items-center d-flex">
+                               <div class="ml-3">Lần phỏng vấn</div> 
                             </div>
+                            <div class="value center-parent">
+                                <div class="font-weight-bold">2</div>
+                                </div>
                         </div>
+                        
                     </div>
 
                     <div class="d-flex row-title">
@@ -110,7 +134,7 @@
                                         <div class="two-col-1 center-parent">
                                             <div>
                                                 <label class="childcheck">
-                                                    <input type="radio"  [value]=true name="phanMongCheck" formControlName="phanMongCheck">
+                                                    <input type="radio" [value]=true name="phanMongCheck" formControlName="phanMongCheck">
                                                     <span class="checkmark"></span>
                                                 </label>
                                             </div>
@@ -389,6 +413,7 @@
 
                         </div>
                         <div class="gfa">
+                                <input appInputArea formControlName="infoGfa">
 
                         </div>
                     </div>
@@ -581,7 +606,7 @@
                                     </div>
                                     <div class="item item-below d-flex center-parent">
                                         <div class="w-100">
-                                            <input formControlName="tamUngYCPercent">
+                                            <input formControlName="tamUngYCPercent" appInputNumber>
 
                                         </div>
 
@@ -593,7 +618,7 @@
                                     </div>
                                     <div class="item item-below d-flex center-parent">
                                         <div class="w-100">
-                                            <input formControlName="tamUngYCKhauTru">
+                                            <input formControlName="tamUngYCKhauTru" appInputNumber>
 
                                         </div>
 
@@ -607,7 +632,7 @@
                                     </div>
                                     <div class="item item-below d-flex center-parent">
                                         <div class="w-100">
-                                            <input formControlName="tamUngDXPercent">
+                                            <input formControlName="tamUngDXPercent" appInputNumber>
 
                                         </div>
 
@@ -619,7 +644,7 @@
                                     </div>
                                     <div class="item item-below d-flex center-parent">
                                         <div class="w-100">
-                                            <input formControlName="tamUngDXKhauTru">
+                                            <input formControlName="tamUngDXKhauTru" appInputNumber>
 
                                         </div>
 
@@ -649,7 +674,7 @@
                                     </div>
                                     <div class="item item-below d-flex center-parent">
                                         <div class="w-100">
-                                            <input formControlName="thoiGianYC">
+                                            <input formControlName="thoiGianYC" appInputNumber>
 
                                         </div>
 
@@ -739,7 +764,7 @@
                             </div>
                         </div>
                         <div class="three">
-                            <textarea name="" id=""></textarea>
+                            <textarea name="" id="" formControlName="tienGiuLaiCY"></textarea>
                         </div>
                     </div>
 
@@ -1181,20 +1206,20 @@
                             </div>
                             <div class="item-2 d-flex align-items-center">
                                 <div class="center-parent w-100">
-                                   <div>/</div>
+                                    <div>/</div>
                                 </div>
                             </div>
 
                             <div class="item-3 d-flex align-items-center">
                                 <div class="center-parent w-100">
                                     <div>/</div>
-                                 </div>
+                                </div>
 
                             </div>
                             <div class="item-4 d-flex align-items-center">
                                 <div class="center-parent w-100">
                                     <div>/</div>
-                                 </div>
+                                </div>
                             </div>
 
                         </div>
@@ -1220,7 +1245,7 @@
                             <div class="item-1 d-flex align-items-center">
                                 <div class="center-parent w-100">
                                     <div>/</div>
-                                 </div>
+                                </div>
                             </div>
                             <div class="item-2 d-flex align-items-center">
                                 <div>
@@ -1231,13 +1256,13 @@
                             <div class="item-3 d-flex align-items-center">
                                 <div class="center-parent w-100">
                                     <div>/</div>
-                                 </div>
+                                </div>
 
                             </div>
                             <div class="item-4 d-flex align-items-center">
                                 <div class="center-parent w-100">
                                     <div>/</div>
-                                 </div>
+                                </div>
                             </div>
 
                         </div>
@@ -1246,151 +1271,154 @@
 
                         </div>
                     </div>
-                    <div class="d-flex row-last-header">
 
-                    </div>
+                    <ng-container *ngIf="!isModeCreate">
+                        <div class="d-flex row-last-header">
 
-                    <div class="d-flex align-items-center row-last-item">
-                        <div class="one d-flex align-items-center">
-                            <div class="ml-1 font-weight-bold">Ngày trình duyệt</div>
                         </div>
-                        <div class="two d-flex align-items-center">
-                            <div class="w-100 p-1">
-                                <kendo-datepicker class="w-100" formControlName="approvalDate"></kendo-datepicker>
-
+                        <div class="d-flex align-items-center row-last-item">
+                            <div class="one d-flex align-items-center">
+                                <div class="ml-1 font-weight-bold">Ngày trình duyệt</div>
                             </div>
-
-                        </div>
-                        <div class="three d-flex align-items-center">
-                            <div class="ml-1 font-weight-bold">Lần duyệt</div>
-
-                        </div>
-
-                        <div class="four d-flex align-items-center">
-                            <div class="center-parent w-100">
-                                <div class="w-100">
-                                    <input formControlName="approvalTimes">
-
-                                </div>
-                            </div>
-
-                        </div>
-
-                    </div>
-
-
-
-                    <div class="d-flex row-last-item-2">
-                        <div class="first font-weight-bold d-flex align-items-center">
-                            <div class="ml-1">
-                                Trưởng nhóm dự thầu
-                            </div>
-                        </div>
-                        <div class="two d-flex">
-                            <div class="ml-3 d-flex align-items-center item-1">
-                                <div>
-                                    <label class="childcheck">
-                                        <input type="radio" [value]=true name="isApprovedByTenderLeader" formControlName="isApprovedByTenderLeader">
-                                        <span class="checkmark"></span>
-                                    </label>
+                            <div class="two d-flex align-items-center">
+                                <div class="w-100 p-1">
+                                    <kendo-datepicker class="w-100" formControlName="approvalDate"></kendo-datepicker>
 
                                 </div>
 
                             </div>
-                            <div class="pass d-flex align-items-center">
-                                <div class="font-weight-bold">Duyệt</div>
+                            <div class="three d-flex align-items-center">
+                                <div class="ml-1 font-weight-bold">Lần duyệt</div>
+
                             </div>
 
-                            <div class="ml-3 d-flex align-items-center item-1 mg-left">
-                                <div>
-                                    <label class="childcheck">
-                                        <input type="radio" [value]=false name="isApprovedByTenderLeader" formControlName="isApprovedByTenderLeader">
-                                        <span class="checkmark"></span>
-                                    </label>
+                            <div class="four d-flex align-items-center">
+                                <div class="center-parent w-100">
+                                    <div class="w-100">
+                                        <input formControlName="approvalTimes">
 
+                                    </div>
                                 </div>
 
                             </div>
-                            <div class="pass d-flex align-items-center">
-                                <div class="font-weight-bold">Không duyệt</div>
-                            </div>
 
                         </div>
-                    </div>
-                    <div class="d-flex row-last-item-2">
-                        <div class="first font-weight-bold d-flex align-items-center">
-                            <div class="ml-1">
-                                Trưởng phòng DT
-                            </div>
-                        </div>
-                        <div class="two d-flex">
-                            <div class="ml-3 d-flex align-items-center item-1">
-                                <div>
-                                    <label class="childcheck">
-                                        <input type="radio" [value]=true name="isApprovedByTenderManager" formControlName="isApprovedByTenderManager">
-                                        <span class="checkmark"></span>
-                                    </label>
 
+
+
+                        <div class="d-flex row-last-item-2">
+                            <div class="first font-weight-bold d-flex align-items-center">
+                                <div class="ml-1">
+                                    Trưởng nhóm dự thầu
+                                </div>
+                            </div>
+                            <div class="two d-flex">
+                                <div class="ml-3 d-flex align-items-center item-1">
+                                    <div>
+                                        <label class="childcheck">
+                                            <input type="radio" (click)="truongNhomDuyet()" [value]=true name="isApprovedByTenderLeader" formControlName="isApprovedByTenderLeader">
+                                            <span class="checkmark"></span>
+                                        </label>
+
+                                    </div>
+
+                                </div>
+                                <div class="pass d-flex align-items-center">
+                                    <div class="font-weight-bold">Duyệt</div>
+                                </div>
+
+                                <div class="ml-3 d-flex align-items-center item-1 mg-left">
+                                    <div>
+                                        <label class="childcheck">
+                                            <input type="radio" (click)="truongNhomKhongDuyet()" [value]=false name="isApprovedByTenderLeader" formControlName="isApprovedByTenderLeader">
+                                            <span class="checkmark"></span>
+                                        </label>
+
+                                    </div>
+
+                                </div>
+                                <div class="pass d-flex align-items-center">
+                                    <div class="font-weight-bold">Không duyệt</div>
                                 </div>
 
                             </div>
-                            <div class="pass d-flex align-items-center">
-                                <div class="font-weight-bold">Duyệt</div>
+                        </div>
+                        <div class="d-flex row-last-item-2">
+                            <div class="first font-weight-bold d-flex align-items-center">
+                                <div class="ml-1">
+                                    Trưởng phòng DT
+                                </div>
                             </div>
+                            <div class="two d-flex">
+                                <div class="ml-3 d-flex align-items-center item-1">
+                                    <div>
+                                        <label class="childcheck">
+                                            <input type="radio" (click)="truongPhongDuyet()" [value]=true name="isApprovedByTenderManager" formControlName="isApprovedByTenderManager">
+                                            <span class="checkmark"></span>
+                                        </label>
 
-                            <div class="ml-3 d-flex align-items-center item-1 mg-left">
-                                <div>
-                                    <label class="childcheck">
-                                        <input type="radio" [value]=false name="isApprovedByTenderManager" formControlName="isApprovedByTenderManager">
-                                        <span class="checkmark"></span>
-                                    </label>
+                                    </div>
 
+                                </div>
+                                <div class="pass d-flex align-items-center">
+                                    <div class="font-weight-bold">Duyệt</div>
+                                </div>
+
+                                <div class="ml-3 d-flex align-items-center item-1 mg-left">
+                                    <div>
+                                        <label class="childcheck">
+                                            <input type="radio" (click)="truongPhongKhongDuyet()" [value]=false name="isApprovedByTenderManager" formControlName="isApprovedByTenderManager">
+                                            <span class="checkmark"></span>
+                                        </label>
+
+                                    </div>
+
+                                </div>
+                                <div class="pass d-flex align-items-center">
+                                    <div class="font-weight-bold">Không duyệt</div>
                                 </div>
 
                             </div>
-                            <div class="pass d-flex align-items-center">
-                                <div class="font-weight-bold">Không duyệt</div>
-                            </div>
-
                         </div>
-                    </div>
-                    <div class="d-flex row-last-item-2">
-                        <div class="first font-weight-bold d-flex align-items-center">
-                            <div class="ml-1">
-                                Ban Tổng giám đốc
+                        <div class="d-flex row-last-item-2">
+                            <div class="first font-weight-bold d-flex align-items-center">
+                                <div class="ml-1">
+                                    Ban Tổng giám đốc
+                                </div>
                             </div>
-                        </div>
-                        <div class="two d-flex">
-                            <div class="ml-3 d-flex align-items-center item-1">
-                                <div>
-                                    <label class="childcheck">
-                                        <input type="radio" [value]=true name="isApprovedByBoardOfDirector" formControlName="isApprovedByBoardOfDirector">
-                                        <span class="checkmark"></span>
-                                    </label>
+                            <div class="two d-flex">
+                                <div class="ml-3 d-flex align-items-center item-1">
+                                    <div>
+                                        <label class="childcheck">
+                                            <input type="radio" (click)="giamDocDuyet()" [value]=true name="isApprovedByBoardOfDirector" formControlName="isApprovedByBoardOfDirector">
+                                            <span class="checkmark"></span>
+                                        </label>
 
+                                    </div>
+
+                                </div>
+                                <div class="pass d-flex align-items-center">
+                                    <div class="font-weight-bold">Duyệt</div>
+                                </div>
+
+                                <div class="ml-3 d-flex align-items-center item-1 mg-left">
+                                    <div>
+                                        <label class="childcheck">
+                                            <input type="radio" (click)="giamDocKhongDuyet()" [value]=false name="isApprovedByBoardOfDirector">
+                                            <span class="checkmark"></span>
+                                        </label>
+
+                                    </div>
+
+                                </div>
+                                <div class="pass d-flex align-items-center">
+                                    <div class="font-weight-bold">Không duyệt</div>
                                 </div>
 
                             </div>
-                            <div class="pass d-flex align-items-center">
-                                <div class="font-weight-bold">Duyệt</div>
-                            </div>
-
-                            <div class="ml-3 d-flex align-items-center item-1 mg-left">
-                                <div>
-                                    <label class="childcheck">
-                                        <input type="radio" [value]=false name="isApprovedByBoardOfDirector">
-                                        <span class="checkmark"></span>
-                                    </label>
-
-                                </div>
-
-                            </div>
-                            <div class="pass d-flex align-items-center">
-                                <div class="font-weight-bold">Không duyệt</div>
-                            </div>
-
                         </div>
-                    </div>
+
+                    </ng-container>
 
                 </div>
             </div>

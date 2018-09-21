@@ -17,11 +17,13 @@
         }
         .gfa{
             width: 20%;
+            border-right: 1px solid #d4d4d4;
+
         }
     }
     .content {
         padding-top: 25px;
-
+    
         .row-item-group{
             .item-2{
                 border-bottom: 1px solid #d4d4d4;
@@ -78,15 +80,31 @@
         .row-header {
             font-weight: 400;
             height: auto;
-
-            .label-document {
-                height: inherit;
-                width: 140px;
+            .ten-tai-lieu{
+                width: 40%;
+                .label-document {
+                    height: 100%;
+                    width: 140px;
+                }
+                .name-document {
+                    height: 100%;
+                    width: calc(100% - 140px);
+                }
+            
             }
+            .lan-phong-van{
+                width: 60%;
+                border-top: 1px solid #d4d4d4;
+                border-right: 1px solid #d4d4d4;
 
-            .name-document {
-                height: inherit;
-                width: calc(100% - 140px);
+                .name{
+                    width: 16.667%;
+                    border-right: 1px solid #d4d4d4;
+                }
+                .value{
+                    width: 16.667%;
+
+                }
             }
         }
 
@@ -684,12 +702,14 @@
     border-right: 1px solid #d4d4d4;
     border-top: 1px solid #d4d4d4;
     border-bottom: 1px solid #d4d4d4;
-    height: 30px;
+    height: 100%;
+    min-width: 30px;
 }
 
 .cell-left {
     border: 1px solid #d4d4d4;
-    height: 30px;
+    height: 100%;
+    min-width: 30px;
 
 }
 
@@ -769,10 +789,30 @@ textarea {
     width: 100%;
     .content{
         width: 100%;
+        .title{
+            margin-left: 1rem;
+            height: 50px;
+        }
+        .icon{
+            width: calc(100% - 260px);
+        }
+        .action{
+            width: 260px;
+            margin-left: 10px;
+        }
     }
     .sidebar{
+        margin-top: 50px;
         margin-left: 5px;
-       
-        width: 280px;
+        width: 280px!important;
+    }
+}
+
+.header-price-review{
+    .content{
+        width: calc(100% - 280px);
+        .tieu-de{
+            font-size: 150%!important;
+        }
     }
 }

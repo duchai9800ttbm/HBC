@@ -9,10 +9,45 @@ export class PriceReviewService {
     private apiService: ApiService
   ) { }
 
+  truongNhomDuyet(bidOpportunityId: number) {
+    const url = `bidopportunity/${bidOpportunityId}/approvedbytenderleader`;
+    return this.apiService.post(url);
+  }
+
+  truongNhomKhongDuyet(bidOpportunityId: number) {
+    const url = `bidopportunity/${bidOpportunityId}/unapprovedbytenderleader`;
+    return this.apiService.post(url);
+  }
+
+  truongPhongDuyet(bidOpportunityId: number) {
+    const url = `bidopportunity/${bidOpportunityId}/approvedbytendermanager`;
+    return this.apiService.post(url);
+  }
+
+  truongPhongKhongDuyet(bidOpportunityId: number) {
+    const url = `bidopportunity/${bidOpportunityId}/unapprovedbytendermanager`;
+    return this.apiService.post(url);
+  }
+
+  giamDocDuyet(bidOpportunityId: number) {
+    const url = `bidopportunity/${bidOpportunityId}/approvedbyboardofdirector`;
+    return this.apiService.post(url);
+  }
+
+  giamDocKhongDuyet(bidOpportunityId: number) {
+    const url = `bidopportunity/${bidOpportunityId}/unapprovedbyboardofdirector`;
+    return this.apiService.post(url);
+  }
+
   view(bidOpportunityId: number) {
     const url = `bidopportunity/${bidOpportunityId}/tenderpriceapproval`;
-    return this.apiService.get(url).map(response =>
-      this.toTenderPriceApproval(response.result));
+    return this.apiService.get(url).map(response => {
+      if (response.result) {
+        this.toTenderPriceApproval(response.result);
+      } else {
+        return null;
+      }
+    });
   }
 
 
@@ -22,47 +57,47 @@ export class PriceReviewService {
     modelRequest.bidOpportunityId = 238;
     modelRequest.projectInformation = {
       foudationPart: {
-        scopeOfWorkIsInclude: formValue.phanMongCheck,
+        scopeOfWorkIsInclude: formValue.phanMongCheck ? formValue.phanMongCheck : false,
         scopeOfWorkDesc: formValue.phanMongDesc,
         gfa: 0
       },
       basementPart: {
-        scopeOfWorkIsInclude: formValue.phanHamCheck,
+        scopeOfWorkIsInclude: formValue.phanHamCheck ? formValue.phanHamCheck : false,
         scopeOfWorkDesc: formValue.phanHamDesc,
         gfa: 0
       },
       basementPartConstructionStructure: {
-        scopeOfWorkIsInclude: formValue.ketCauCheck,
+        scopeOfWorkIsInclude: formValue.ketCauCheck ? formValue.ketCauCheck : false,
         scopeOfWorkDesc: formValue.ketCauDesc,
         gfa: 0
       },
       basementPartConstructionCompletion: {
-        scopeOfWorkIsInclude: formValue.hoanThienCheck,
+        scopeOfWorkIsInclude: formValue.hoanThienCheck ? formValue.hoanThienCheck : false,
         scopeOfWorkDesc: formValue.hoanThienDesc,
         gfa: 0
       },
       basementPartOtherWork: {
-        scopeOfWorkIsInclude: formValue.congViecKhacCheck,
+        scopeOfWorkIsInclude: formValue.congViecKhacCheck ? formValue.congViecKhacCheck : false,
         scopeOfWorkDesc: formValue.congViecKhacDesc,
         gfa: 0
       },
       bodyPart: {
-        scopeOfWorkIsInclude: formValue.phanThanCheck,
+        scopeOfWorkIsInclude: formValue.phanThanCheck ? formValue.phanThanCheck : false,
         scopeOfWorkDesc: formValue.phanThanDesc,
         gfa: 0
       },
       bodyPartConstructionStructure: {
-        scopeOfWorkIsInclude: formValue.phanThanKetCauCheck,
+        scopeOfWorkIsInclude: formValue.phanThanKetCauCheck ? formValue.phanThanKetCauCheck : false,
         scopeOfWorkDesc: formValue.phanThanKetCauDesc,
         gfa: 0
       },
       bodyPartConstructionCompletion: {
-        scopeOfWorkIsInclude: formValue.phanThanHoanThienCheck,
+        scopeOfWorkIsInclude: formValue.phanThanHoanThienCheck ? formValue.phanThanHoanThienCheck : false,
         scopeOfWorkDesc: formValue.phanThanhoanThienDesc,
         gfa: 0
       },
       bodyPartOtherWork: {
-        scopeOfWorkIsInclude: formValue.phanThancongViecKhacCheck,
+        scopeOfWorkIsInclude: formValue.phanThancongViecKhacCheck ? formValue.phanThancongViecKhacCheck : false,
         scopeOfWorkDesc: formValue.phanThancongViecKhacDesc,
         gfa: 0
       }
