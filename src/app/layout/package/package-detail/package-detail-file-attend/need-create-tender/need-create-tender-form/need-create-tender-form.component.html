@@ -17,7 +17,7 @@
                 Import dữ liệu theo mẫu
             </button> -->
             <button type="button" class="btn btn-primary ml-2" (click)="isShowDialog = true" *ngIf="routerAction == 'view' && packageInfo?.stageStatus.id == bidStatus.CanLapDeNghiDuThau">Gửi duyệt đề nghị DT</button>
-            <button class="btn btn-primary ml-2" (click)="onSubmit(true)" *ngIf="routerAction != 'view' && dataModel.isDraftVersion">
+            <button class="btn btn-primary ml-2" (click)="onSubmit(true)" *ngIf="routerAction != 'view' && dataModel?.isDraftVersion">
                 Lưu nháp
             </button>
             <button class="btn btn-primary ml-2" (click)="onSubmit(false)" *ngIf="routerAction != 'view'">
