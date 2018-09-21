@@ -148,7 +148,6 @@
                                     </div>
                                 </div>
                             </th>
-
                             <th style="width: 18%;background-color: #f68e56!important;">
                                 <div class="d-flex justify-content-center">
                                     <div class="center-parent">
@@ -184,34 +183,36 @@
                                     </div>
                                 </div>
                             </th>
-
                         </tr>
                     </thead>
-
                     <tbody>
-                        <tr>
-                            <td class="stt d-flex justify-content-around">
-                                <div class="center-parent">
+                        <tr *ngFor="let updateInfo of updateInfoList; index as i">
+                            <td class="stt">
+                                <div class="center-parent d-inline-block">
                                     <label class="custom-control custom-checkbox">
                                         <input type="checkbox" class="custom-control-input">
                                         <span class="custom-control-indicator"></span>
                                     </label>
                                 </div>
-                                <div class="center-parent">
-                                    <div>{{ item }}</div>
+                                <div class="center-parent d-inline-block">
+                                    <div>{{ i+1 }}</div>
                                 </div>
                             </td>
-                            <td class="text-center">{{ documentData.lanCapNhat }}</td>
-                            <td class="text-center">{{ documentData.nguoiCapNhat?.name }}</td>
-                            <td class="text-center">{{ (documentData.ngayCapNhat)*1000 | date:'dd/MM/yyyy' }}</td>
-                            <td class="text-center">{{ documentData.updateDescription }}</td>
-                            <td class="text-center"></td>
+                            <td class="text-center">{{ updateInfo.changedTimes }}</td>
+                            <td class="text-center">{{ updateInfo.employee?.employeeName }}</td>
+                            <td class="text-center">{{ (updateInfo.changedTime)*1000 | date:'dd/MM/yyyy' }}</td>
+                            <td class="text-center">
+                                {{ (updateInfo?.updateDesc != 'undefined') ? updateInfo.updateDesc : '' }}
+                            </td>
+                            <td class="text-center d-flex flex-column align-items-start">
+                                <p *ngFor="let item of updateInfo.liveFormChangeds; index as j">{{ item.liveFormTitle |translate }}: {{ item.oldValue }} --- {{ item.newValue }}</p>
+                            </td>
                         </tr>
                     </tbody>
                 </table>
             </div>
+            <app-pagination [(pagedResult)]="pagedResult" (pagedResultChange)="pagedResultChange($event)"></app-pagination>
         </div>
-
     </div>
 </ng-container>
 <ng-template #elseTemplate>

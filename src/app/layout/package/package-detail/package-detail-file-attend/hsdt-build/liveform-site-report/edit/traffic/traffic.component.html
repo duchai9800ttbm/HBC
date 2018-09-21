@@ -15,11 +15,11 @@
 
                             <div class="display-img" *ngFor="let url of disadvantageImageUrls">
                                 <img [src]="(url.image?.base64) || url.image.file">
-                                <div class="toppp"  [ngClass]="{'view-mode-control': viewMode}" (click)="deleteDisadvantageImage(url)">
+                                <div class="toppp"  [ngClass]="{'d-none': viewMode}" (click)="deleteDisadvantageImage(url)">
                                     <i class="fa fa-times delete-icon" aria-hidden="true"></i>
                                 </div>
                             </div>
-                            <div class="perspective-image" [ngClass]="{'view-mode-control': viewMode}" (click)="uploaDisadvantage.click()">
+                            <div class="perspective-image" [ngClass]="{'d-none': viewMode}" (click)="uploaDisadvantage.click()">
                                 <i class="fa fa-plus" aria-hidden="true"></i>
                                 <p>Image</p>
                             </div>
@@ -35,11 +35,11 @@
 
                             <div class="display-img" *ngFor="let url of advantageImageUrls">
                                 <img [src]="(url.image?.base64) || url.image.file">
-                                <div class="toppp"  [ngClass]="{'view-mode-control': viewMode}" (click)="deleteAdvantageImage(url)">
+                                <div class="toppp"  [ngClass]="{'d-none': viewMode}" (click)="deleteAdvantageImage(url)">
                                     <i class="fa fa-times delete-icon" aria-hidden="true"></i>
                                 </div>
                             </div>
-                            <div class="perspective-image" [ngClass]="{'view-mode-control': viewMode}" (click)="uploaAdvantage.click()">
+                            <div class="perspective-image" [ngClass]="{'d-none': viewMode}" (click)="uploaAdvantage.click()">
                                 <i class="fa fa-plus" aria-hidden="true"></i>
                                 <p>Image</p>
                             </div>
@@ -60,11 +60,11 @@
 
                             <div class="display-img" *ngFor="let url of directionImageUrls">
                                 <img [src]="(url.image?.base64) || url.image.file">
-                                <div class="toppp"  [ngClass]="{'view-mode-control': viewMode}" (click)="deleteDirectionImage(url)">
+                                <div class="toppp"  [ngClass]="{'d-none': viewMode}" (click)="deleteDirectionImage(url)">
                                     <i class="fa fa-times delete-icon" aria-hidden="true"></i>
                                 </div>
                             </div>
-                            <div class="perspective-image" [ngClass]="{'view-mode-control': viewMode}" (click)="uploadDirection.click()">
+                            <div class="perspective-image" [ngClass]="{'d-none': viewMode}" (click)="uploadDirection.click()">
                                 <i class="fa fa-plus" aria-hidden="true"></i>
                                 <p>Image</p>
                             </div>
@@ -80,11 +80,11 @@
 
                             <div class="display-img" *ngFor="let url of existingImageUrls">
                                 <img [src]="(url.image?.base64) || url.image.file">
-                                <div class="toppp"  [ngClass]="{'view-mode-control': viewMode}" (click)="deleteExistingImage(url)">
+                                <div class="toppp"  [ngClass]="{'d-none': viewMode}" (click)="deleteExistingImage(url)">
                                     <i class="fa fa-times delete-icon" aria-hidden="true"></i>
                                 </div>
                             </div>
-                            <div class="perspective-image" [ngClass]="{'view-mode-control': viewMode}" (click)="uploadExisting.click()">
+                            <div class="perspective-image" [ngClass]="{'d-none': viewMode}" (click)="uploadExisting.click()">
                                 <i class="fa fa-plus" aria-hidden="true"></i>
                                 <p>Image</p>
                             </div>
@@ -100,11 +100,11 @@
 
                             <div class="display-img" *ngFor="let url of roadImageUrls">
                                 <img [src]="(url.image?.base64) || url.image.file">
-                                <div class="toppp"  [ngClass]="{'view-mode-control': viewMode}" (click)="deleteRoadImage(url)">
+                                <div class="toppp"  [ngClass]="{'d-none': viewMode}" (click)="deleteRoadImage(url)">
                                     <i class="fa fa-times delete-icon" aria-hidden="true"></i>
                                 </div>
                             </div>
-                            <div class="perspective-image" [ngClass]="{'view-mode-control': viewMode}" (click)="uploadRoad.click()">
+                            <div class="perspective-image" [ngClass]="{'d-none': viewMode}" (click)="uploadRoad.click()">
                                 <i class="fa fa-plus" aria-hidden="true"></i>
                                 <p>Image</p>
                             </div>
@@ -120,11 +120,11 @@
 
                             <div class="display-img" *ngFor="let url of fenceImageUrls">
                                 <img [src]="(url.image?.base64) || url.image.file">
-                                <div class="toppp"  [ngClass]="{'view-mode-control': viewMode}" (click)="deleteFenceImage(url)">
+                                <div class="toppp"  [ngClass]="{'d-none': viewMode}" (click)="deleteFenceImage(url)">
                                     <i class="fa fa-times delete-icon" aria-hidden="true"></i>
                                 </div>
                             </div>
-                            <div class="perspective-image" [ngClass]="{'view-mode-control': viewMode}" (click)="uploadFence.click()">
+                            <div class="perspective-image" [ngClass]="{'d-none': viewMode}" (click)="uploadFence.click()">
                                 <i class="fa fa-plus" aria-hidden="true"></i>
                                 <p>Image</p>
                             </div>

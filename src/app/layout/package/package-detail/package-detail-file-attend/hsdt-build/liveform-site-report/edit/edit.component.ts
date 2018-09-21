@@ -45,9 +45,6 @@ export class EditComponent implements OnInit, OnDestroy {
     this.packageService.getInforPackageID(this.currentBidOpportunityId).subscribe(result => {
       this.packageData = result;
     });
-    this.documentService.tenderSiteSurveyingReport(this.currentBidOpportunityId).subscribe(data => {
-      LiveformSiteReportComponent.formModel = data;
-    });
   }
 
   submitLiveForm(event) {
@@ -62,6 +59,10 @@ export class EditComponent implements OnInit, OnDestroy {
           this.spinner.hide();
           this.router.navigate([`/package/detail/${this.currentBidOpportunityId}/attend/build/liveformsite/info/scale`]);
           this.alertService.success('Đã cập nhật thành công!');
+        }, err => {
+          this.showPopupConfirm = false;
+          this.spinner.hide();
+          this.alertService.error('Đã xảy ra lỗi. Cập nhật không thành công!');
         });
       LiveformSiteReportComponent.viewFlag = true;
     }

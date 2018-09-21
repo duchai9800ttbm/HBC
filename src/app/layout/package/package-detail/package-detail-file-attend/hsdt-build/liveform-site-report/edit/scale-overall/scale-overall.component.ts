@@ -106,68 +106,7 @@ export class ScaleOverallComponent implements OnInit {
     if (obj) {
       this.scaleModel.tenTaiLieu = obj.tenTaiLieu ? obj.tenTaiLieu : '';
       this.scaleModel.lanPhongVan = obj.lanPhongVan ? obj.lanPhongVan : null;
-      this.loaiCongTrinhList = (obj.loaiCongTrinh.length) ? obj.loaiCongTrinh : [
-        {
-          text: 'Văn phòng (Office)',
-          value: '',
-          checked: false
-        },
-        {
-          text: 'Nhà công nghiệp (Industrial))',
-          value: '',
-          checked: false
-        },
-        {
-          text: 'MEP',
-          value: '',
-          checked: false
-        },
-        {
-          text: 'Khu dân cư (Residential)',
-          value: '',
-          checked: false
-        },
-        {
-          text: 'Tổ hợp (Mixed use)',
-          value: '',
-          checked: false
-        },
-        {
-          text: 'Sân bay',
-          value: '',
-          checked: false
-        },
-        {
-          text: 'TT Thương mại (Commercial)',
-          value: '',
-          checked: false
-        },
-        {
-          text: 'Căn hộ',
-          value: '',
-          checked: false
-        },
-        {
-          text: 'Nhà phố, biệt thự',
-          value: '',
-          checked: false
-        },
-        {
-          text: 'Khách sạn/Resort (Hotel/Resort)',
-          value: '',
-          checked: false
-        },
-        {
-          text: 'Hạ tầng',
-          value: '',
-          checked: false
-        },
-        {
-          text: 'Trường học',
-          value: '',
-          checked: false
-        }
-      ];
+      this.loaiCongTrinhList = obj.loaiCongTrinh;
       this.trangthaiCongTrinhList = (obj.trangthaiCongTrinh.length) ? obj.trangthaiCongTrinh : [
         {
           text: 'Mới (New)',

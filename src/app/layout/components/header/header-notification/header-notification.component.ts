@@ -24,7 +24,7 @@ export class HeaderNotificationComponent implements OnInit {
   ) { }
   @HostListener('document:click', ['$event'])
   public documentClick(event: any): void {
-    console.log('document');
+    // console.log('document');
     if (!this.containsDropTool(event.target)) {
       this.getListNotification();
       // this.DropTool2.close();
@@ -46,7 +46,7 @@ export class HeaderNotificationComponent implements OnInit {
       .readNotification(item.id)
       .subscribe(result => {
         this.getListNotification();
-        console.log('Đã đọc thành công');
+        // console.log('Đã đọc thành công');
       },
         err => {
           this.alertService.error('Đã xảy ra lỗi!');
@@ -69,7 +69,7 @@ export class HeaderNotificationComponent implements OnInit {
   getListNotification() {
     this.notificationService.getListNotification().subscribe(response => {
       this.notificationList = response;
-      console.log('this.notificationList', response);
+      // console.log('this.notificationList', response);
     });
   }
 

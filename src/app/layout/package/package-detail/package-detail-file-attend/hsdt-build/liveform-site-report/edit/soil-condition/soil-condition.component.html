@@ -16,11 +16,11 @@
 
                             <div class="display-img" *ngFor="let url of footingImageUrls">
                                 <img [src]="(url.image?.base64) || url.image.file">
-                                <div class="toppp"  [ngClass]="{'view-mode-control': viewMode}" (click)="deleteFootingImage(url)">
+                                <div class="toppp"  [ngClass]="{'d-none': viewMode}" (click)="deleteFootingImage(url)">
                                     <i class="fa fa-times delete-icon" aria-hidden="true"></i>
                                 </div>
                             </div>
-                            <div class="perspective-image" [ngClass]="{'view-mode-control': viewMode}" (click)="uploadFooting.click()">
+                            <div class="perspective-image" [ngClass]="{'d-none': viewMode}" (click)="uploadFooting.click()">
                                 <i class="fa fa-plus" aria-hidden="true"></i>
                                 <p>Image</p>
                             </div>
@@ -42,11 +42,11 @@
 
                             <div class="display-img" *ngFor="let url of investigationImageUrls">
                                 <img [src]="(url.image?.base64) || url.image.file">
-                                <div class="toppp"  [ngClass]="{'view-mode-control': viewMode}" (click)="deleteInvestigationImage(url)">
+                                <div class="toppp"  [ngClass]="{'d-none': viewMode}" (click)="deleteInvestigationImage(url)">
                                     <i class="fa fa-times delete-icon" aria-hidden="true"></i>
                                 </div>
                             </div>
-                            <div class="perspective-image" [ngClass]="{'view-mode-control': viewMode}" (click)="uploadInvestigation.click()">
+                            <div class="perspective-image" [ngClass]="{'d-none': viewMode}" (click)="uploadInvestigation.click()">
                                 <i class="fa fa-plus" aria-hidden="true"></i>
                                 <p>Image</p>
                             </div>

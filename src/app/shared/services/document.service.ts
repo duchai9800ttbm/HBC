@@ -17,6 +17,7 @@ import { guid } from '@progress/kendo-angular-grid/dist/es2015/utils';
 import { ScaleOverall } from '../models/site-survey-report/scale-overall.model';
 import { Image, ImageItem } from '../models/site-survey-report/image';
 import { DictionaryItem } from '../models';
+import { SiteReportChangedHistory } from '../models/site-survey-report/site-report-changed-history';
 
 @Injectable()
 export class DocumentService {
@@ -364,6 +365,33 @@ export class DocumentService {
                 });
     }
 
+    getListConstructionType(): Observable<DictionaryItem> {
+        const url = `bidconstructiontype/constructiontypes`;
+        return this.apiService.get(url).map(res =>
+            res.result.map(response => ({
+                text: response.value,
+                value: '',
+                checked: false
+            }))
+        );
+    }
+
+    changedHistoryTenderSiteReport(bidOpportunityId: number, page: number, pageSize: number)
+        : Observable<PagedResult<SiteReportChangedHistory>> {
+        const url = `bidopportunity/${bidOpportunityId}/tendersitesurveyingreport/changedhistory/${page}/${pageSize}`;
+        return this.apiService.get(url).map(res => {
+            const response = res.result;
+            console.log(response);
+            return {
+                currentPage: response.pageIndex,
+                pageSize: response.pageSize,
+                pageCount: response.totalPages,
+                total: response.totalCount,
+                items: (response.items || [])
+            };
+        });
+    }
+
     tenderSiteSurveyingReport(bidOpportunityId: number): Observable<SiteSurveyReport> {
         const url = `bidopportunity/${bidOpportunityId}/tendersitesurveyingreport`;
         return this.apiService.get(url).map(res => this.toSiteSurveyReport(res.result, bidOpportunityId));
@@ -375,72 +403,11 @@ export class DocumentService {
         if (!model) {
             dataFormated.bidOpportunityId = bidOpportunityId;
             dataFormated.nguoiTao = {
-                id: this.employeeId,
+                id: this.userId,
                 name: ''
             };
             dataFormated.scaleOverall = new ScaleOverall();
-            dataFormated.scaleOverall.loaiCongTrinh = [
-                {
-                    text: 'Văn phòng (Office)',
-                    value: '',
-                    checked: false
-                },
-                {
-                    text: 'Nhà công nghiệp (Industrial))',
-                    value: '',
-                    checked: false
-                },
-                {
-                    text: 'MEP',
-                    value: '',
-                    checked: false
-                },
-                {
-                    text: 'Khu dân cư (Residential)',
-                    value: '',
-                    checked: false
-                },
-                {
-                    text: 'Tổ hợp (Mixed use)',
-                    value: '',
-                    checked: false
-                },
-                {
-                    text: 'Sân bay',
-                    value: '',
-                    checked: false
-                },
-                {
-                    text: 'TT Thương mại (Commercial)',
-                    value: '',
-                    checked: false
-                },
-                {
-                    text: 'Căn hộ',
-                    value: '',
-                    checked: false
-                },
-                {
-                    text: 'Nhà phố, biệt thự',
-                    value: '',
-                    checked: false
-                },
-                {
-                    text: 'Khách sạn/Resort (Hotel/Resort)',
-                    value: '',
-                    checked: false
-                },
-                {
-                    text: 'Hạ tầng',
-                    value: '',
-                    checked: false
-                },
-                {
-                    text: 'Trường học',
-                    value: '',
-                    checked: false
-                }
-            ];
+            dataFormated.scaleOverall.loaiCongTrinh = new Array;
             dataFormated.scaleOverall.trangthaiCongTrinh = [
                 {
                     text: 'Mới (New)',
@@ -716,7 +683,13 @@ export class DocumentService {
         } else { objDataSiteReport.append('CreatedEmployeeId', `${this.userId}`); }
         if (obj.nguoiCapNhat) {
             objDataSiteReport.append('UpdatedEmployeeId', `${obj.nguoiCapNhat.id}`);
-        } else { objDataSiteReport.append('UpdatedEmployeeId', `${this.userId}`); }
+        } else {
+            if (obj.nguoiTao) {
+                objDataSiteReport.append('UpdatedEmployeeId', `${obj.nguoiTao.id}`);
+            } else {
+                objDataSiteReport.append('UpdatedEmployeeId', `${this.userId}`);
+            }
+        }
         obj.scaleOverall.loaiCongTrinh.forEach((x, i) => {
             const paramAppendText = `ProjectStatistic.ProjectStatistic.ConstructionType[${i}].Text`;
             const paramAppendValue = `ProjectStatistic.ProjectStatistic.ConstructionType[${i}].Value`;
