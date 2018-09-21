@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ProposeTenderParticipateRequest } from '../../../../../../shared/models/api-request/package/propose-tender-participate-request';
 import { PackageService } from '../../../../../../shared/services/package.service';
 import {
@@ -13,13 +13,14 @@ import { switchMap } from 'rxjs/operators';
 import { NeedCreateTenderComponent } from '../need-create-tender.component';
 import { BidStatus } from '../../../../../../shared/constants/bid-status';
 import DateTimeConvertHelper from '../../../../../../shared/helpers/datetime-convert-helper';
+import { ScrollToTopService } from '../../../../../../shared/services/scroll-to-top.service';
 
 @Component({
     selector: 'app-need-create-tender-form',
     templateUrl: './need-create-tender-form.component.html',
     styleUrls: ['./need-create-tender-form.component.scss']
 })
-export class NeedCreateTenderFormComponent implements OnInit {
+export class NeedCreateTenderFormComponent implements OnInit, OnDestroy {
     static formModel: ProposeTenderParticipateRequest;
     bidOpportunityId;
     packageInfo: PackageInfoModel;
@@ -34,10 +35,12 @@ export class NeedCreateTenderFormComponent implements OnInit {
         private spinner: NgxSpinnerService,
         private router: Router,
         private sessionService: SessionService,
-        private route: ActivatedRoute
+        private route: ActivatedRoute,
+        private scrollTopService: ScrollToTopService
     ) {}
 
     ngOnInit() {
+        this.scrollTopService.isScrollTop = false;
         this.routerAction = NeedCreateTenderComponent.routerAction;
         this.dataModel = NeedCreateTenderFormComponent.formModel;
         // tslint:disable-next-line:max-line-length
@@ -146,5 +149,9 @@ export class NeedCreateTenderFormComponent implements OnInit {
     closeDialog() {
         this.isShowDialog = false;
         // this.isNotAgreeParticipating = false;
+    }
+
+    ngOnDestroy() {
+        this.scrollTopService.isScrollTop = true;
     }
 }

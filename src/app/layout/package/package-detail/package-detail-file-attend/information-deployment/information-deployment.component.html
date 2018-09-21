@@ -19,7 +19,7 @@
             <button type="button" *ngIf="isconfirmProgress" [ngClass]="{'btn-dep':isconfirmProgress == true}" class="btn btn-up" (click)="openModeSendAssignment(SendAssignment)">{{textConfirmProgress}}</button>
             <button type="button" *ngIf="isSendInformation" [ngClass]="{'btn-dep':showButtonAssignmet == true,'disable':showButtonAssignmet == false}"
                 class="btn btn-up" (click)="confirmProgress()">Xác nhận phân công tiến độ</button>
-            <button type="button" *ngIf="packageInfo.stageStatus.id != bidStatus.DaThongBaoTrienKhai" class="btn btn-up btn-dep"
+            <button type="button" *ngIf="packageInfo?.stageStatus.id != bidStatus.DaThongBaoTrienKhai" class="btn btn-up btn-dep"
                 (click)="openModalDeployment(informationDeployment)">Thông báo triển khai</button>
             <button type="button" *ngIf="isTeamPlate" [ngClass]="{ 'btn-dep': isSendInformation === true }" class="btn btn-up ">Tải Template
             </button>

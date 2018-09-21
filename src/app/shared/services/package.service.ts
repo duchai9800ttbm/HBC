@@ -909,4 +909,10 @@ export class PackageService {
             reason: reason
         }).map(response => response.result);
     }
+
+    // get thông tin LiveForm phân công tiến độ
+    getTenderPreparationPlanning(bidOpportunityId: number): Observable<any> {
+        const url = `bidopportunity/${bidOpportunityId}/tenderpreparationplanningassignment`;
+        return this.apiService.get(url).map(data => data.result);
+    }
 }
