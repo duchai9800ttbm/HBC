@@ -111,14 +111,8 @@ export class InformationDeploymentFormComponent implements OnInit {
       this.dtTrigger.next();
     });
     this.bidOpportunityId = PackageDetailComponent.packageId;
-    this.spinner.show();
-            this.packageService
-                .getInforPackageID(this.bidOpportunityId)
-                .subscribe(data => {
-                    this.packageInfo = data;
-                    this.spinner.hide();
-                    console.log(this.packageInfo);
-                });
+    this.getPackageInfo();
+    this.packageService.getTenderPreparationPlanning(this.bidOpportunityId).subscribe(data => console.log(data));
     kendo.jQuery(this.ganttChart.nativeElement).kendoGantt({
     //   dataSource: this.tasksDataSource,
       dataSource: [
@@ -246,6 +240,17 @@ export class InformationDeploymentFormComponent implements OnInit {
 
       snap: false
   });
+  }
+
+  getPackageInfo() {
+    this.spinner.show();
+    this.packageService
+        .getInforPackageID(this.bidOpportunityId)
+        .subscribe(data => {
+            this.packageInfo = data;
+            this.spinner.hide();
+            console.log(this.packageInfo);
+        });
   }
 
 }
