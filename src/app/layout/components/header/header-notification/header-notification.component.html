@@ -1,115 +1,135 @@
-<div #DropTool2>
-    <div class="nav-item dropdown notification" dropdown [autoClose]="false" container="body">
+<div id="notificationID"  >
+    <div #DropTooldiv class="nav-item dropdown notification" dropdown [autoClose]="isShow" container="body">
         <a id="button-nested" dropdownToggle class="dropdown-no-icon nav-link text-white mr-3 drop-menu" aria-controls="dropdown-nested">
             <img class="class-image image-bell--width d-inline-block" src="assets\images\ic-bell.png" alt="">
-            <span class="badge badge-danger main-badge">10</span>
+            <span class="badge badge-danger main-badge" *ngIf="notificationList && notificationList.length !== 0">{{notificationList.length}}</span>
             <b class="caret"></b>
             <span class="sr-only">(current)</span>
         </a>
-        <ul id="dropdown-nested" *dropdownMenu class="dropdown-menu dropdown-menu-right ul-parent--index" role="menu" aria-labelledby="button-nested">
-            <div class="beeperNub"></div>
-            <div class="notification-item d-flex justify-content-between">
-                <div class="dropdown-menu-header font-weight-bold mb-2">
-                    THÔNG BÁO
+        <div>
+            <ul id="dropdown-nested" *dropdownMenu class="dropdown-menu dropdown-menu-right" role="menu"
+                aria-labelledby="button-nested" [class.ul-parent-data--index]="notificationList.length !== 0" [class.ul-parent-no-data--index]="notificationList.length === 0" >
+                <div class="beeperNub"></div>
+                <!-- #DropToolThongBao -->
+                <div class="notification-item d-flex justify-content-between">
+                    <div  class="dropdown-menu-header font-weight-bold mb-2">
+                        THÔNG BÁO
+                    </div>
+                    <!-- <span class="tick-readed">Đánh dấu tất cả là đã đọc</span> -->
+                    <li #DropToolThongBao222222 *ngIf="notificationList.length !== 0" role="menuitem" dropdown placement="right" container="body">
+                        <a dropdownToggle (click)="noClosePopup()">
+                            <i class="fa fa-ellipsis-v fa-ellipsis" aria-hidden="true"></i>
+                        </a>
+                        <ul #DropTool2 *dropdownMenu class="dropdown-menu ul-chirld--index min-width-none" role="menu">
+                            <li role="menuitem">
+                                <a class="dropdown-item ul-chirld-of-chirl--pad" (click)="readAllNotification()">Đánh dấu tất cả là đã đọc</a>
+                            </li>
+                            <li role="menuitem">
+                                <a class="dropdown-item ul-chirld-of-chirl--pad" (click)="deleteAllNotification()">Xóa tất cả thông báo</a>
+                            </li>
+                        </ul>
+                    </li>
                 </div>
-                <li role="menuitem" dropdown placement="right" container="body">
-                    <a dropdownToggle (click)="false">
-                        <i class="fa fa-ellipsis-v fa-ellipsis" aria-hidden="true"></i>
-                    </a>
-                    <ul *dropdownMenu class="dropdown-menu ul-chirld--index" role="menu" style="min-width: 0;">
-                        <li role="menuitem">
-                            <a class="dropdown-item" style="padding: 0.25rem 0.5rem;">Đánh dấu tất cả là đã đọc</a>
-                        </li>
-                        <li role="menuitem">
-                            <a class="dropdown-item" style="padding: 0.25rem 0.5rem;">Xóa tất cả thông báo</a>
-                        </li>
-                    </ul>
-                </li>
-            </div>
 
-            <div class="force-scroll">
-                <div class="notification-item" *ngFor="let item of notificationList">
-                    <a *ngIf="item.notificationType === 'GuiDuyetDeNghiDuThau'" class="dropdown-item py-2" (click)="read(item)" [class.notification--not-read]="item.notificationState?.id === 'UnRead'">
-                        <strong>Gói thầu: {{item.bidOpportunityName}}</strong>
-                        <div>
-                            <span class="last span--margin">Bạn vừa nhận được yêu cầu Duyệt Đề nghị dự thầu từ
-                                <span class="content--bold">{{item.sendEmployee?.employeeName}} </span>, thời gian mong đợi được duyệt trước ngày
-                                <span class="content--bold">"thời gian mong đợi duyệt"</span>
-                            </span>
-                            <span class="badge badge-info">Chi tiết</span>
-                        </div>
+                <div *ngIf="notificationList.length !== 0" class="force-scroll">
+                    <div class="notification-item" *ngFor="let item of notificationList">
+                        <a *ngIf="item.notificationType === 'GuiDuyetDeNghiDuThau'" class="dropdown-item py-2" (click)="read(item)" [class.notification--not-read]="item.notificationState?.id === 'UnRead'">
+                            <strong>Gói thầu: {{item.bidOpportunityName}}</strong>
+                            <div>
+                                <span class="last span--margin">Bạn vừa nhận được yêu cầu Duyệt Đề nghị dự thầu từ
+                                    <span class="content--bold">{{item.sendEmployee?.employeeName}} </span>, thời gian mong đợi được duyệt trước ngày
+                                    <span class="content--bold">"thời gian mong đợi duyệt"</span>
+                                </span>
+                                <span class="badge badge-info">Chi tiết</span>
+                            </div>
 
-                        <p class="small text-muted">
-                            <em>{{item.sendDate*1000 | date:'dd/MM/yyyy HH:mm'}}</em>
-                        </p>
-                    </a>
-                    <a *ngIf="item.notificationType === 'NhacDuyetDeNghiDuThauTruoc3Ngay'" class="dropdown-item py-2" (click)="read(item)" [class.notification--not-read]="item.notificationState?.id === 'UnRead'">
-                        <strong>Gói thầu: {{item.bidOpportunityName}}</strong>
-                        <div>
-                            <span class="last span--margin">Nếu chưa duyệt ĐNDT, dựa vào thời gian mong đợi được duyệt để thông báo đến ban giám đốc duyệt</span>
-                            <span class="badge badge-info ">Chi tiết</span>
-                        </div>
-                        <p class="small text-muted">
-                            <em>{{item.sendDate*1000 | date:'dd/MM/yyyy HH:mm'}}</em>
-                        </p>
-                    </a>
+                            <p class="small text-muted">
+                                <em>{{item.sendDate*1000 | date:'dd/MM/yyyy HH:mm'}}</em>
+                            </p>
+                        </a>
+                        <a *ngIf="item.notificationType === 'NhacDuyetDeNghiDuThauTruoc3Ngay'" class="dropdown-item py-2" (click)="read(item)" [class.notification--not-read]="item.notificationState?.id === 'UnRead'">
+                            <strong>Gói thầu: {{item.bidOpportunityName}}</strong>
+                            <div>
+                                <span class="last span--margin">Nếu chưa duyệt ĐNDT, dựa vào thời gian mong đợi được duyệt để thông báo đến ban giám đốc
+                                    duyệt
+                                </span>
+                                <span class="badge badge-info ">Chi tiết</span>
+                            </div>
+                            <p class="small text-muted">
+                                <em>{{item.sendDate*1000 | date:'dd/MM/yyyy HH:mm'}}</em>
+                            </p>
+                        </a>
 
-                    <a *ngIf="item.notificationType === 'GuiPhanCongTienDo'" class="dropdown-item py-2" (click)="read(item)" [class.notification--not-read]="item.notificationState?.id === 'UnRead'">
-                        <div>
-                            <span class="last span--margin">Bạn được phân công nhiệm vụ ở gói thầu
-                                <span class="content--bold">{{item.bidOpportunityName}}</span>
-                            </span>
-                            <span class="badge badge-info">Chi tiết</span>
-                        </div>
-                        <p class="small text-muted">
-                            <em>{{item.sendDate*1000 | date:'dd/MM/yyyy HH:mm'}}</em>
-                        </p>
-                    </a>
-                    <a *ngIf="item === 'GuiDuyetTrinhDuyetGia'" class="dropdown-item py-2" (click)="read(item)" [class.notification--not-read]="item.notificationState?.id === 'UnRead'">
-                        <strong>Gói thầu: {{item.bidOpportunityName}}</strong>
-                        <div>
-                            <span class="last span--margin">Bạn vừa nhận được yêu cầu Duyệt Trình duyệt giá từ
-                                <span class="content--bold">{{item.sendEmployee?.employeeName}}</span>
-                            </span>
-                            <span class="badge badge-info pre--margin">Chi tiết</span>
+                        <a *ngIf="item.notificationType === 'GuiPhanCongTienDo'" class="dropdown-item py-2" (click)="read(item)" [class.notification--not-read]="item.notificationState?.id === 'UnRead'">
+                            <div>
+                                <span class="last span--margin">Bạn được phân công nhiệm vụ ở gói thầu
+                                    <span class="content--bold">{{item.bidOpportunityName}}</span>
+                                </span>
+                                <span class="badge badge-info">Chi tiết</span>
+                            </div>
+                            <p class="small text-muted">
+                                <em>{{item.sendDate*1000 | date:'dd/MM/yyyy HH:mm'}}</em>
+                            </p>
+                        </a>
+                        <a *ngIf="item === 'GuiDuyetTrinhDuyetGia'" class="dropdown-item py-2" (click)="read(item)" [class.notification--not-read]="item.notificationState?.id === 'UnRead'">
+                            <strong>Gói thầu: {{item.bidOpportunityName}}</strong>
+                            <div>
+                                <span class="last span--margin">Bạn vừa nhận được yêu cầu Duyệt Trình duyệt giá từ
+                                    <span class="content--bold">{{item.sendEmployee?.employeeName}}</span>
+                                </span>
+                                <span class="badge badge-info pre--margin">Chi tiết</span>
 
-                        </div>
-                        <p class="small text-muted">
-                            <em>{{item.sendDate*1000 | date:'dd/MM/yyyy HH:mm'}}</em>
-                        </p>
-                    </a>
-                    <a *ngIf="item.notificationType === 'GuiLaiTrinhDuyetGia'" class="dropdown-item py-2" (click)="read(item)" [class.notification--not-read]="item.notificationState?.id === 'UnRead'">
-                        <strong>Gói thầu: {{item.bidOpportunityName}}</strong>
-                        <div>
-                            <span class="last span--margin">Trình duyệt giá đã được điều chỉnh bởi
-                                <span class="content--bold">{{item.sendEmployee?.employeeName}}</span>, vui lòng xem xét phê duyệt trình duyệt giá</span>
-                            <span class="badge badge-info pre--margin">Chi tiết</span>
-                        </div>
-                        <p class="small text-muted">
-                            <em>{{item.sendDate*1000 | date:'dd/MM/yyyy HH:mm'}}</em>
-                        </p>
-                    </a>
-                    <a *ngIf="item.notificationType === 'ChuyenGiaoTaiLieu'" class="dropdown-item py-2" (click)="read(item)" [class.notification--not-read]="item.notificationState?.id === 'UnRead'">
-                        <div>
-                            <span class="last span--margin">Bạn vừa nhận được tài liệu chuyển giao từ
-                                <span class="content--bold">{{item.sendEmployee?.employeeName}}</span> ở gói thầu
-                                <span class="content--bold">{{item.bidOpportunityName}}</span>
-                            </span>
-                            <span class="badge badge-info pre--margin">Chi tiết</span>
-                        </div>
-                        <p class="small text-muted">
-                            <em>{{item.sendDate*1000 | date:'dd/MM/yyyy HH:mm'}}</em>
-                        </p>
+                            </div>
+                            <p class="small text-muted">
+                                <em>{{item.sendDate*1000 | date:'dd/MM/yyyy HH:mm'}}</em>
+                            </p>
+                        </a>
+                        <a *ngIf="item.notificationType === 'GuiLaiTrinhDuyetGia'" class="dropdown-item py-2" (click)="read(item)" [class.notification--not-read]="item.notificationState?.id === 'UnRead'">
+                            <strong>Gói thầu: {{item.bidOpportunityName}}</strong>
+                            <div>
+                                <span class="last span--margin">Trình duyệt giá đã được điều chỉnh bởi
+                                    <span class="content--bold">{{item.sendEmployee?.employeeName}}</span>, vui lòng xem xét phê duyệt trình duyệt giá</span>
+                                <span class="badge badge-info pre--margin">Chi tiết</span>
+                            </div>
+                            <p class="small text-muted">
+                                <em>{{item.sendDate*1000 | date:'dd/MM/yyyy HH:mm'}}</em>
+                            </p>
+                        </a>
+                        <a *ngIf="item.notificationType === 'ChuyenGiaoTaiLieu'" class="dropdown-item py-2" (click)="read(item)" [class.notification--not-read]="item.notificationState?.id === 'UnRead'">
+                            <div>
+                                <span class="last span--margin">Bạn vừa nhận được tài liệu chuyển giao từ
+                                    <span class="content--bold">{{item.sendEmployee?.employeeName}}</span> ở gói thầu
+                                    <span class="content--bold">{{item.bidOpportunityName}}</span>
+                                </span>
+                                <span class="badge badge-info pre--margin">Chi tiết</span>
+                            </div>
+                            <p class="small text-muted">
+                                <em>{{item.sendDate*1000 | date:'dd/MM/yyyy HH:mm'}}</em>
+                            </p>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div *ngIf="notificationList.length === 0">
+                    <div class="notification-item">
+                        <a class="dropdown-item py-2 center-parent" (click)="read(item)">
+                            <div>
+                                <span class="last span--margin">Không có thông báo
+                                </span>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+
+                <div class="text-center mt-3 mb-2" *ngIf="notificationList.length !== 0">
+                    <a class="text-primary" [routerLink]="['/notification-list']">
+                        Xem tất cả
                     </a>
                 </div>
-            </div>
 
-            <div class="text-center mt-3 mb-2">
-                <a class="text-primary" [routerLink]="['/notification-list']">
-                    Xem tất cả
-                </a>
-            </div>
+            </ul>
+        </div>
 
-        </ul>
     </div>
 </div>

@@ -6,17 +6,34 @@ $topnav-background-color: $primary;
     padding: 0.25rem 1.5rem;
     cursor: pointer;
 }
-.ul-parent--index{
+.tick-readed{
+    color: #00a0e3;
+    padding: 0.25rem 1.5rem;
+    cursor: pointer;
+}
+.ul-parent-data--index{
     z-index: 30000;
     position: fixed;
-    width: 20rem;
-    transform: translate(-25%, 5%);
+    width: 30rem;
+    transform: translate(-17%, 5%);
+}
+.ul-parent-no-data--index{
+    z-index: 30000;
+    position: fixed;
+    width: 30rem;
+    transform: translate(-17%, 17%);
 }
 .ul-chirld--index{
     z-index: 99999900;
     transform: translate(-73%, 0%);
     font-size: 0.6rem;
     min-width: none;
+    .ul-chirld-of-chirl--pad{
+        padding: 0.25rem 0.5rem;
+    }
+}
+.min-width-none{
+    min-width: 0;
 }
 .drop-menu{
     margin-top: 10px;

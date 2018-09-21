@@ -51,10 +51,48 @@
     <div>
       <div class="boder-table">
         <div class="d-flex">
-          <div class="mr-auto">
+          <div class="mr-auto w-100">
             <div>
+              <div class="w-100">
+                <li role="menuitem" dropdown placement="right" container="body">
+                  <a dropdownToggle (click)="false">
+                    <i class="fa fa-ellipsis-v fa-ellipsis text-right" aria-hidden="true"></i>
+                  </a>
+                  <ul #DropToolThongBao222222 *dropdownMenu class="dropdown-menu ul-chirld--index min-width-none" role="menu">
+                    <li role="menuitem">
+                      <a class="dropdown-item ul-chirld-of-chirl--pad" (click)="readAllNotification()">Đánh dấu tất cả là đã đọc</a>
+                    </li>
+                    <li role="menuitem">
+                      <a class="dropdown-item ul-chirld-of-chirl--pad" (click)="deleteAllNotification()">Xóa tất cả thông báo</a>
+                    </li>
+                  </ul>
+                </li>
+              </div>
               <div>
-                <i class="fa fa-ellipsis-v fa-ellipsis" aria-hidden="true"></i>
+                Content
+              </div>
+              <div>
+                <ul>
+                  <li (click)="read(item)" class="cursor-pointer">
+                    <div>
+                      <div class="title">Bạn có 1
+                        <strong></strong>
+                      </div>
+                      <div class="info"> bắt đầu:&nbsp;
+                        <strong></strong>
+                      </div>
+                      <div class="type">Thời gian diễn ra:&nbsp;
+                        <strong></strong>
+                        đến ngày
+                        <strong></strong>.
+                      </div>
+                    </div>
+                    <span class="number">
+                      <span></span>
+                      <span></span>
+                    </span>
+                  </li>
+                </ul>
               </div>
             </div>
           </div>
@@ -62,4 +100,3 @@
       </div>
     </div>
   </div>
-</div>
