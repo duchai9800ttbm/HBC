@@ -17,6 +17,7 @@ export class HeaderNotificationComponent implements OnInit {
   notificationItems: NotificationItem[];
   pagedResult: PagedResult<NotificationItem>;
   notificationList: NotificationItem[];
+  amountNotificationNotRead;
   @ViewChild('DropTool2') DropTool2: ElementRef;
   @ViewChild('DropTooldiv') DropTooldiv: ElementRef;
   @ViewChild('DropToolThongBao') DropToolThongBao: ElementRef;
@@ -67,7 +68,7 @@ export class HeaderNotificationComponent implements OnInit {
     //   }
     // }
 
-    if (this.containsDropToolThongBao2222(event.target) || this.containsDropTool(event.target) ) {
+    if (this.containsDropToolThongBao2222(event.target) || this.containsDropTool(event.target)) {
       console.log('this.isShow = false;');
       this.isShow = false;
     } else {
@@ -172,7 +173,15 @@ export class HeaderNotificationComponent implements OnInit {
   getListNotification() {
     this.notificationService.getListNotification().subscribe(response => {
       this.notificationList = response;
-      console.log('this.notificationList', response);
+      // this.notificationList.forEach( item => {
+      //   this.amountNotificationNotRead = item
+      // });
+      this.amountNotificationNotRead = 0;
+      this.notificationList.forEach(item => {
+        if (item.notificationState.id === 'UnRead') {
+          this.amountNotificationNotRead = this.amountNotificationNotRead + 1;
+        }
+      });
     });
   }
 
