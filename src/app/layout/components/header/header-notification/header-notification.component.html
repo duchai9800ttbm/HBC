@@ -33,7 +33,7 @@
 
                 <div *ngIf="notificationList.length !== 0" class="force-scroll">
                     <div class="notification-item" *ngFor="let item of notificationList">
-                        <a *ngIf="item.notificationType === 'GuiDuyetDeNghiDuThau'" class="dropdown-item py-2" (click)="read(item)" [class.notification--not-read]="item.notificationState?.id === 'UnRead'">
+                        <a class="dropdown-item py-2" (click)="read(item)" [class.notification--not-read]="item.notificationState?.id === 'UnRead'">
                             <strong>Gói thầu: {{item.bidOpportunityName}}</strong>
                             <div>
                                 <span class="last span--margin">Bạn vừa nhận được yêu cầu Duyệt Đề nghị dự thầu từ

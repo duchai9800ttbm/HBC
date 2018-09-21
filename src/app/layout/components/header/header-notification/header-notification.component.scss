@@ -15,7 +15,9 @@ $topnav-background-color: $primary;
     z-index: 30000;
     position: fixed;
     width: 30rem;
-    transform: translate(-17%, 5%);
+    // transform: translate(-17%, 5%);
+    right: 4rem !important;
+    top: 3rem !important;
 }
 .ul-parent-no-data--index{
     z-index: 30000;
@@ -123,7 +125,7 @@ a {
     border-right: 5px solid transparent;
     border-bottom: 7px solid #fff;
     right: inherit;
-    transform: translate(-244%, -198%);
+    transform: translate(240%, -198%);
 }
 .force-scroll {
     overflow-y: scroll;

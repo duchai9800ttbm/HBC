@@ -86,31 +86,91 @@
                   </ul>
                 </div>
               </div>
-              <div>
-                Content
-              </div>
-              <div>
-                <ul>
-                  <li (click)="read(item)" class="cursor-pointer">
+              <div class="w-100 d-flex notification-item" *ngFor="let item of notificationList">
+                <div class="d-flex" [class.center-parent]="showSidebarContent" style="padding: 0.25rem 1.5rem;">
+                  <div class="action" width="">
                     <div>
-                      <div class="title">Bạn có 1
-                        <strong></strong>
-                      </div>
-                      <div class="info"> bắt đầu:&nbsp;
-                        <strong></strong>
-                      </div>
-                      <div class="type">Thời gian diễn ra:&nbsp;
-                        <strong></strong>
-                        đến ngày
-                        <strong></strong>.
-                      </div>
+                      <img (click)="toggleSidebar()" src="assets/images/no-avatar.png" width="30" height="30" style="cursor: pointer;">
                     </div>
-                    <span class="number">
-                      <span></span>
-                      <span></span>
+                  </div>
+                </div>
+                <a class="w-100" (click)="read(item)" [class.notification--not-read]="item.notificationState?.id === 'UnRead'">
+                  <strong>Gói thầu: {{item.bidOpportunityName}}</strong>
+                  <div>
+                    <span class="last span--margin">Bạn vừa nhận được yêu cầu Duyệt Đề nghị dự thầu từ
+                      <span class="content--bold">{{item.sendEmployee?.employeeName}} </span>, thời gian mong đợi được duyệt trước ngày
+                      <span class="content--bold">"thời gian mong đợi duyệt"</span>
                     </span>
-                  </li>
-                </ul>
+                    <span class="badge badge-info">Chi tiết</span>
+                  </div>
+
+                  <p class="small text-muted">
+                    <em>{{item.sendDate*1000 | date:'dd/MM/yyyy HH:mm'}}</em>
+                  </p>
+                </a>
+                <a *ngIf="item.notificationType === 'NhacDuyetDeNghiDuThauTruoc3Ngay'" class="w-100" (click)="read(item)" [class.notification--not-read]="item.notificationState?.id === 'UnRead'">
+                  <strong>Gói thầu: {{item.bidOpportunityName}}</strong>
+                  <div>
+                    <span class="last span--margin">Nếu chưa duyệt ĐNDT, dựa vào thời gian mong đợi được duyệt để thông báo đến ban giám đốc duyệt
+                    </span>
+                    <span class="badge badge-info ">Chi tiết</span>
+                  </div>
+                  <p class="small text-muted">
+                    <em>{{item.sendDate*1000 | date:'dd/MM/yyyy HH:mm'}}</em>
+                  </p>
+                </a>
+
+                <a *ngIf="item.notificationType === 'GuiPhanCongTienDo'" class="w-100" (click)="read(item)" [class.notification--not-read]="item.notificationState?.id === 'UnRead'">
+                  <div>
+                    <span class="last span--margin">Bạn được phân công nhiệm vụ ở gói thầu
+                      <span class="content--bold">{{item.bidOpportunityName}}</span>
+                    </span>
+                    <span class="badge badge-info">Chi tiết</span>
+                  </div>
+                  <p class="small text-muted">
+                    <em>{{item.sendDate*1000 | date:'dd/MM/yyyy HH:mm'}}</em>
+                  </p>
+                </a>
+                <a *ngIf="item === 'GuiDuyetTrinhDuyetGia'" class="w-100" (click)="read(item)" [class.notification--not-read]="item.notificationState?.id === 'UnRead'">
+                  <strong>Gói thầu: {{item.bidOpportunityName}}</strong>
+                  <div>
+                    <span class="last span--margin">Bạn vừa nhận được yêu cầu Duyệt Trình duyệt giá từ
+                      <span class="content--bold">{{item.sendEmployee?.employeeName}}</span>
+                    </span>
+                    <span class="badge badge-info pre--margin">Chi tiết</span>
+
+                  </div>
+                  <p class="small text-muted">
+                    <em>{{item.sendDate*1000 | date:'dd/MM/yyyy HH:mm'}}</em>
+                  </p>
+                </a>
+                <a *ngIf="item.notificationType === 'GuiLaiTrinhDuyetGia'" class="w-100" (click)="read(item)" [class.notification--not-read]="item.notificationState?.id === 'UnRead'">
+                  <strong>Gói thầu: {{item.bidOpportunityName}}</strong>
+                  <div>
+                    <span class="last span--margin">Trình duyệt giá đã được điều chỉnh bởi
+                      <span class="content--bold">{{item.sendEmployee?.employeeName}}</span>, vui lòng xem xét phê duyệt trình duyệt giá</span>
+                    <span class="badge badge-info pre--margin">Chi tiết</span>
+                  </div>
+                  <p class="small text-muted">
+                    <em>{{item.sendDate*1000 | date:'dd/MM/yyyy HH:mm'}}</em>
+                  </p>
+                </a>
+                <a *ngIf="item.notificationType === 'ChuyenGiaoTaiLieu'" class="w-100" (click)="read(item)" [class.notification--not-read]="item.notificationState?.id === 'UnRead'">
+                  <div>
+                    <span class="last span--margin">Bạn vừa nhận được tài liệu chuyển giao từ
+                      <span class="content--bold">{{item.sendEmployee?.employeeName}}</span> ở gói thầu
+                      <span class="content--bold">{{item.bidOpportunityName}}</span>
+                    </span>
+                    <span class="badge badge-info pre--margin">Chi tiết</span>
+                  </div>
+                  <p class="small text-muted">
+                    <em>{{item.sendDate*1000 | date:'dd/MM/yyyy HH:mm'}}</em>
+                  </p>
+                </a>
+                <div style="padding: 0.25rem 0rem 0.25rem 1rem; min-width: 10rem; color: #019cff; font-weight: bold;">
+                  Đánh dấu đã đọc
+                </div>
+                <div style="padding: 0.25rem 1.4rem 0.25rem 0rem;color: #ff1717; font-weight: bold;">Xóa</div>
               </div>
             </div>
           </div>
