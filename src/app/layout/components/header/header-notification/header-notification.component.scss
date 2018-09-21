@@ -14,7 +14,8 @@ $topnav-background-color: $primary;
 .ul-parent-data--index{
     z-index: 30000;
     position: fixed;
-    width: 30rem;
+    // width: 30rem;
+    width: 80vh;
     // transform: translate(-17%, 5%);
     right: 4rem !important;
     top: 3rem !important;
@@ -28,7 +29,7 @@ $topnav-background-color: $primary;
 .ul-chirld--index{
     z-index: 99999900;
     transform: translate(-73%, 0%);
-    font-size: 0.6rem;
+    font-size: 80%;
     min-width: none;
     .ul-chirld-of-chirl--pad{
         padding: 0.25rem 0.5rem;
@@ -129,5 +130,7 @@ a {
 }
 .force-scroll {
     overflow-y: scroll;
-    max-height: 15rem;
+    // max-height: 15rem;
+    // max-height: 50%;
+    max-height: 50vh; 
 }

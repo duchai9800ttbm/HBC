@@ -7,8 +7,8 @@
             <span class="sr-only">(current)</span>
         </a>
         <div>
-            <ul id="dropdown-nested" *dropdownMenu class="dropdown-menu dropdown-menu-right" role="menu"
-                aria-labelledby="button-nested" [class.ul-parent-data--index]="notificationList.length !== 0" [class.ul-parent-no-data--index]="notificationList.length === 0" >
+            <ul id="dropdown-nested" *dropdownMenu class="dropdown-menu dropdown-menu-right ul-parent-data--index" role="menu"
+                aria-labelledby="button-nested">
                 <div class="beeperNub"></div>
                 <!-- #DropToolThongBao -->
                 <div class="notification-item d-flex justify-content-between">
@@ -38,7 +38,7 @@
                             <div>
                                 <span class="last span--margin">Bạn vừa nhận được yêu cầu Duyệt Đề nghị dự thầu từ
                                     <span class="content--bold">{{item.sendEmployee?.employeeName}} </span>, thời gian mong đợi được duyệt trước ngày
-                                    <span class="content--bold">"thời gian mong đợi duyệt"</span>
+                                    <span class="content--bold">{{item.data*1000 | date:'dd/MM/yyyy HH:mm'}}</span>
                                 </span>
                                 <span class="badge badge-info">Chi tiết</span>
                             </div>

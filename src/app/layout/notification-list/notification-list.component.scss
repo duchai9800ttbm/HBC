@@ -119,7 +119,7 @@
 
 .boder-table{
   // border: 1px solid #dadada;
-  padding: 20px 35px 35px 30px;
+  padding: 20px 0px 35px 0px;
   // border-top: none;
   background-color: white;
   margin-left: 1.3rem;
@@ -163,7 +163,13 @@
   .content--bold{
       font-weight: 600;
   }
-  .notification--not-read{
-      background-color: #f7f8fa;
-  }
+}
+.bot-when-have-data{
+  border-bottom: 1px solid #cccccc;
+}
+a {
+  cursor: pointer;
+}
+.notification--not-read{
+  background-color: #f7f8fa;
 }

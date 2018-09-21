@@ -32,4 +32,5 @@ export class NotificationItem {
         displayText: string;
     };
     sendDate: number;
+    data: number;
 }

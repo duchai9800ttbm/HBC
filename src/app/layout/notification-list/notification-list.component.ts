@@ -5,6 +5,8 @@ import { UserNotificationService } from '../../shared/services/user-notification
 import { Router } from '@angular/router';
 import { routerTransition } from '../../router.animations';
 import { NotificationService } from '../../shared/services/notification.service';
+import { NotificationStatus } from '../../shared/constants/notification-status';
+import { AlertService, ConfirmationService } from '../../shared/services';
 
 @Component({
   selector: 'app-notification-list',
@@ -24,6 +26,8 @@ export class NotificationListComponent implements OnInit {
     private router: Router,
     private userNotificationService: UserNotificationService,
     private notificationService: NotificationService,
+    private alertService: AlertService,
+    private confirmationService: ConfirmationService,
   ) { }
 
   ngOnInit() {
@@ -79,4 +83,97 @@ export class NotificationListComponent implements OnInit {
   //   this.router.navigate([detailUrl, item.moduleItemId]);
   // }
 
+  tickReaded(item: NotificationItem) {
+    this.notificationService
+      .readNotification(item.id)
+      .subscribe(result => {
+        this.notificationService.change();
+        this.getListNotification();
+      },
+        err => {
+          this.alertService.error('Đã xảy ra lỗi!');
+        });
+  }
+
+  deleteOneNotification(item: NotificationItem) {
+    this.confirmationService.confirm(
+      'Bạn có chắc chắn muốn xóa thông báo này?',
+      () => {
+        this.notificationService
+          .deleteOneNotification(item.id)
+          .subscribe(result => {
+            this.notificationService.change();
+            this.getListNotification();
+            this.alertService.success('Đã xóa thông báo thành công!');
+          },
+            err => {
+              this.alertService.error('Đã xảy ra lỗi, chưa xóa được thông báo!');
+            });
+      });
+  }
+
+  read(item: NotificationItem) {
+    switch (item.notificationType) {
+      case NotificationStatus.GuiDuyetDeNghiDuThau: {
+        console.log('GuiDuyetDeNghiDuThau');
+        this.router.navigate([`/package/detail/${item.bidOpportunityId}/attend/create-request`]);
+        break;
+      }
+      case NotificationStatus.NhacDuyetDeNghiDuThauTruoc3Ngay: {
+        this.router.navigate([`/package/detail/${item.bidOpportunityId}/attend/create-request`]);
+        break;
+      }
+      case NotificationStatus.GuiPhanCongTienDo: {
+        console.log('GuiPhanCongTienDo', item.bidOpportunityId);
+        this.router.navigate([`/package/detail/${item.bidOpportunityId}/attend/infomation-deployment`]);
+        break;
+      }
+      case NotificationStatus.GuiDuyetTrinhDuyetGia: {
+        this.router.navigate([`/package/detail/${item.bidOpportunityId}/attend/price-review`]);
+        break;
+      }
+      case NotificationStatus.GuiLaiTrinhDuyetGia: {
+        this.router.navigate([`/package/detail/${item.bidOpportunityId}/attend/price-review`]);
+        break;
+      }
+      case NotificationStatus.ChuyenGiaoTaiLieu: {
+        // this.router.navigate([`/package/detail/${item.bidOpportunityId}/attend/price-review`]);
+        break;
+      }
+    }
+    this.notificationService
+      .readNotification(item.id)
+      .subscribe(result => {
+        this.notificationService.change();
+        this.getListNotification();
+      },
+        err => {
+          this.alertService.error('Đã xảy ra lỗi!');
+        });
+  }
+
+  readAllNotification() {
+    this.notificationService.readAllNotification().subscribe(response => {
+      this.notificationService.change();
+      this.getListNotification();
+      this.alertService.success('Đã xóa thông báo thành công!');
+    },
+      err => {
+        this.alertService.error('Đã xảy ra lỗi!');
+      });
+  }
+
+  deleteAllNotification() {
+    this.confirmationService.confirm(
+      'Bạn có chắc chắn muốn xóa tất cả thông báo?',
+      () => {
+        this.notificationService.deleteAllNotification().subscribe(response => {
+          this.notificationService.change();
+          this.getListNotification();
+        },
+          err => {
+            this.alertService.error('Đã xảy ra lỗi!');
+          });
+      });
+  }
 }

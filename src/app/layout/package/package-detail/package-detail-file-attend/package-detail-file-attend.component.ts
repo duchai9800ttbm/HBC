@@ -50,87 +50,87 @@ export class PackageDetailFileAttendComponent implements OnInit {
     this.packageService.getInforPackageID(this.packageId).subscribe(result => {
       this.packageData = result;
       this.statusPackageName = this.packageData.stageStatus.id;
-      // switch (this.packageData.stageStatus.id) {
-      //   case 'CanLapDeNghiDuThau': {
-      //     this.router.navigate([`/package/detail/${this.packageId}/attend/create-request`]);
-      //     break;
-      //   }
-      //   case 'ChoDuyet': {
-      //     this.router.navigate([`/package/detail/${this.packageId}/attend/create-request`]);
-      //     break;
-      //   }
-      //   case 'ThamGiaDuThau': {
-      //     this.router.navigate([`/package/detail/${this.packageId}/attend/create-request`]);
-      //     break;
-      //   }
-      //   case 'DaTuChoi': {
-      //     this.router.navigate([`/package/detail/${this.packageId}/attend/create-request`]);
-      //     break;
-      //   }
-      //   case 'ChuaThongBaoTrienKhai': {
-      //     this.router.navigate([`/package/detail/${this.packageId}/attend/infomation-deployment`]);
-      //     break;
-      //   }
-      //   case 'DaThongBaoTrienKhai': {
-      //     this.router.navigate([`/package/detail/${this.packageId}/attend/infomation-deployment`]);
-      //     break;
-      //   }
-      //   case 'DaXacNhanPhanCong': {
-      //     this.router.navigate([`/package/detail/${this.packageId}/attend/infomation-deployment`]);
-      //     break;
-      //   }
-      //   case 'DaGuiPhanCongTienDo': {
-      //     this.router.navigate([`/package/detail/${this.packageId}/attend/infomation-deployment`]);
-      //     break;
-      //   }
-      //   case 'DangLapHSDT': {
-      //     this.router.navigate([`/package/detail/${this.packageId}/attend/build`]);
-      //     break;
-      //   }
-      //   case 'CanLapTrinhDuyetGia': {
-      //     this.router.navigate([`/package/detail/${this.packageId}/attend/price-review`]);
-      //     break;
-      //   }
-      //   case 'DaGuiDuyetTrinhDuyetGia': {
-      //     this.router.navigate([`/package/detail/${this.packageId}/attend/price-review`]);
-      //     break;
-      //   }
-      //   case 'CanDieuChinhTrinhDuyetGia': {
-      //     this.router.navigate([`/package/detail/${this.packageId}/attend/price-review`]);
-      //     break;
-      //   }
-      //   case 'DaDuyetTrinhDuyetGia': {
-      //     this.router.navigate([`/package/detail/${this.packageId}/attend/price-review`]);
-      //     break;
-      //   }
-      //   case 'ChotHoSo': {
-      //     this.router.navigate([`/package/detail/${this.packageId}/attend/price-review`]);
-      //     break;
-      //   }
-      //   case 'DaNopHSDT': {
-      //     this.router.navigate([`/package/detail/${this.packageId}/attend/price-review`]);
-      //     break;
-      //   }
-      //   case 'DaNhanLoiMoi': {
-      //     this.router.navigate([`/package/detail/${this.packageId}/attend/interview-negotiation`]);
-      //     break;
-      //   }
-      //   case 'ChuanBiPhongVan': {
-      //     this.router.navigate([`/package/detail/${this.packageId}/attend/interview-negotiation`]);
-      //     break;
-      //   }
-      //   case 'DaChotCongTacChuanBiPhongVan': {
-      //     this.router.navigate([`/package/detail/${this.packageId}/attend/interview-negotiation`]);
-      //     break;
-      //   }
-      //   case 'DaPhongVan': {
-      //     this.router.navigate([`/package/detail/${this.packageId}/attend/interview-negotiation`]);
-      //     break;
-      //   }
-      //   default: {
-      //     break;
-      //   }
-      // }
+      switch (this.packageData.stageStatus.id) {
+        case 'CanLapDeNghiDuThau': {
+          this.router.navigate([`/package/detail/${this.packageId}/attend/create-request`]);
+          break;
+        }
+        case 'ChoDuyet': {
+          this.router.navigate([`/package/detail/${this.packageId}/attend/create-request`]);
+          break;
+        }
+        case 'ThamGiaDuThau': {
+          this.router.navigate([`/package/detail/${this.packageId}/attend/create-request`]);
+          break;
+        }
+        case 'DaTuChoi': {
+          this.router.navigate([`/package/detail/${this.packageId}/attend/create-request`]);
+          break;
+        }
+        case 'ChuaThongBaoTrienKhai': {
+          this.router.navigate([`/package/detail/${this.packageId}/attend/infomation-deployment`]);
+          break;
+        }
+        case 'DaThongBaoTrienKhai': {
+          this.router.navigate([`/package/detail/${this.packageId}/attend/infomation-deployment`]);
+          break;
+        }
+        case 'DaXacNhanPhanCong': {
+          this.router.navigate([`/package/detail/${this.packageId}/attend/infomation-deployment`]);
+          break;
+        }
+        case 'DaGuiPhanCongTienDo': {
+          this.router.navigate([`/package/detail/${this.packageId}/attend/infomation-deployment`]);
+          break;
+        }
+        case 'DangLapHSDT': {
+          this.router.navigate([`/package/detail/${this.packageId}/attend/build`]);
+          break;
+        }
+        case 'CanLapTrinhDuyetGia': {
+          this.router.navigate([`/package/detail/${this.packageId}/attend/price-review`]);
+          break;
+        }
+        case 'DaGuiDuyetTrinhDuyetGia': {
+          this.router.navigate([`/package/detail/${this.packageId}/attend/price-review`]);
+          break;
+        }
+        case 'CanDieuChinhTrinhDuyetGia': {
+          this.router.navigate([`/package/detail/${this.packageId}/attend/price-review`]);
+          break;
+        }
+        case 'DaDuyetTrinhDuyetGia': {
+          this.router.navigate([`/package/detail/${this.packageId}/attend/price-review`]);
+          break;
+        }
+        case 'ChotHoSo': {
+          this.router.navigate([`/package/detail/${this.packageId}/attend/price-review`]);
+          break;
+        }
+        case 'DaNopHSDT': {
+          this.router.navigate([`/package/detail/${this.packageId}/attend/price-review`]);
+          break;
+        }
+        case 'DaNhanLoiMoi': {
+          this.router.navigate([`/package/detail/${this.packageId}/attend/interview-negotiation`]);
+          break;
+        }
+        case 'ChuanBiPhongVan': {
+          this.router.navigate([`/package/detail/${this.packageId}/attend/interview-negotiation`]);
+          break;
+        }
+        case 'DaChotCongTacChuanBiPhongVan': {
+          this.router.navigate([`/package/detail/${this.packageId}/attend/interview-negotiation`]);
+          break;
+        }
+        case 'DaPhongVan': {
+          this.router.navigate([`/package/detail/${this.packageId}/attend/interview-negotiation`]);
+          break;
+        }
+        default: {
+          break;
+        }
+      }
     });
   }
 

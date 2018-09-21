@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewChild, ElementRef, HostListener } from '@angular/core';
 import { Observable } from "rxjs/Observable";
 import { NotificationItem, PagedResult } from '../../../../shared/models/index';
-import { UserNotificationService, AlertService } from '../../../../shared/services/index';
+import { UserNotificationService, AlertService, ConfirmationService } from '../../../../shared/services/index';
 import { Router } from '@angular/router';
 import { NotificationService } from '../../../../shared/services/notification.service';
 import { NotificationStatus } from '../../../../shared/constants/notification-status';
@@ -28,9 +28,13 @@ export class HeaderNotificationComponent implements OnInit {
     private router: Router,
     private notificationService: NotificationService,
     private alertService: AlertService,
+    private confirmationService: ConfirmationService,
     config: NgbDropdownConfig
   ) {
     config.autoClose = false;
+    this.notificationService.notificationAmont.subscribe( value => {
+      this.getListNotification();
+    });
   }
   @HostListener('document:click', ['$event'])
   public documentClick(event: any): void {
@@ -147,10 +151,7 @@ export class HeaderNotificationComponent implements OnInit {
     this.notificationService
       .readNotification(item.id)
       .subscribe(result => {
-        console.log('this.isShow = true;');
-        // this.isShow = true;
         this.getListNotification();
-        console.log('Đã đọc thành công');
       },
         err => {
           this.alertService.error('Đã xảy ra lỗi!');
@@ -186,9 +187,25 @@ export class HeaderNotificationComponent implements OnInit {
   }
 
   readAllNotification() {
+    this.notificationService.readAllNotification().subscribe(response => {
+      this.getListNotification();
+    },
+      err => {
+        this.alertService.error('Đã xảy ra lỗi!');
+      });
   }
 
   deleteAllNotification() {
+    this.confirmationService.confirm(
+      'Bạn có chắc chắn muốn xóa tất cả thông báo?',
+      () => {
+        this.notificationService.deleteAllNotification().subscribe(response => {
+          this.getListNotification();
+        },
+          err => {
+            this.alertService.error('Đã xảy ra lỗi!');
+          });
+      });
   }
 
   // cancel(myDrop) {
