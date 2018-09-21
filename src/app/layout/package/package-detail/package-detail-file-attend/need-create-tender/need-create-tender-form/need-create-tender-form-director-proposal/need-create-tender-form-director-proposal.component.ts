@@ -21,6 +21,7 @@ export class NeedCreateTenderFormDirectorProposalComponent implements OnInit {
     this.routerAction = NeedCreateTenderComponent.routerAction;
     this.createForm();
     this.directorProposalForm.valueChanges.subscribe(data => this.mappingToLiveFormData(data));
+    this.mappingToLiveFormData(this.directorProposalForm.value);
   }
 
   createForm() {

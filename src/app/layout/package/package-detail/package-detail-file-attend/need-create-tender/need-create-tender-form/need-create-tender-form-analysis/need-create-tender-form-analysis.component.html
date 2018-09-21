@@ -3,7 +3,7 @@
         <div *ngIf="routerAction == 'view'" class="b-form-readonly"></div>
         <div class="row">
             <div class="col-md-3 d-flex align-items-center">Tên tài liệu</div>
-            <div class="col-md-9"><input formControlName="documentName" type="text" class="form-control"></div>
+            <div class="col-md-9"><input tabindex="1" appAutoFocus formControlName="documentName" type="text" class="form-control"></div>
         </div>
         <div class="mt-4">
             <h5 class="text-uppercase">I. phân tích chủ đầu tư (employer analysis)</h5>
@@ -22,7 +22,7 @@
                     1. Tiếng tăm, danh tiếng (Reputation)
                 </div>
                 <div class="col-md-6">
-                    <input type="text" formControlName="reputation" class="form-control">
+                    <input type="text" tabindex="2" formControlName="reputation" class="form-control">
                 </div>
             </div>
             <div class="row mt-3">
@@ -30,7 +30,7 @@
                     2. Khả năng tài chính (Finance capacity)
                 </div>
                 <div class="col-md-6">
-                    <input type="text" formControlName="financeCapacity" class="form-control">
+                    <input type="text" tabindex="3" formControlName="financeCapacity" class="form-control">
                 </div>
             </div>
             <div class="row mt-3">
@@ -38,7 +38,7 @@
                     3. Tính khả thi của công trình (Project realizable)
                 </div>
                 <div class="col-md-6">
-                    <input type="text" formControlName="projectRealizable" class="form-control">
+                    <input type="text" tabindex="4" formControlName="projectRealizable" class="form-control">
                 </div>
             </div>
         </div>
@@ -47,7 +47,7 @@
                 <i class="fa font-size-3 mr-3 fa-angle-left" aria-hidden="true"></i>
                 Trở về
             </button>
-            <button class="btn btn-primary ml-2" routerLink="../consultant-analys">
+            <button class="btn btn-primary ml-2" tabindex="5" routerLink="../consultant-analys">
                 Tiếp
                 <i class="fa font-size-3 ml-3 fa-angle-right" aria-hidden="true"></i>
             </button>

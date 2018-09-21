@@ -17,9 +17,9 @@
                 1. Giá gói thầu tạm tính (Draft budget of package)
             </div>
             <div class="col-md-6">
-                <input type="number" formControlName="draftBudgetOfPackage" class="form-control input-dropdown-group">
+                <input type="number" appAutoFocus tabindex="1" formControlName="draftBudgetOfPackage" class="form-control input-dropdown-group">
                 <div formGroupName="draftBudgetOfPackageCurrency">
-                    <kendo-dropdownlist name="currency" formControlName="value" [data]="listCurrency" [valuePrimitive]="true">
+                    <kendo-dropdownlist name="currency" tabindex="2" formControlName="value" [data]="listCurrency" [valuePrimitive]="true">
                     </kendo-dropdownlist>
                 </div>
             </div>
@@ -29,15 +29,15 @@
                 2. Ghi chú thêm (Additional notes)
             </div>
             <div class="col-md-6">
-                <input type="text" formControlName="additionalNote" class="form-control">
+                <input type="text" tabindex="3" formControlName="additionalNote" class="form-control">
             </div>
         </div>
         <div class="text-center mt-4">
-            <button class="btn border" routerLink="../internal-resource">
+            <button class="btn border" tabindex="5" routerLink="../internal-resource">
                 <i class="fa font-size-3 mr-3 fa-angle-left" aria-hidden="true"></i>
                 Trở về
             </button>
-            <button class="btn btn-primary ml-2" routerLink="../fee-tender">
+            <button class="btn btn-primary ml-2" tabindex="4" routerLink="../fee-tender">
                 Tiếp
                 <i class="fa font-size-3 ml-3 fa-angle-right" aria-hidden="true"></i>
             </button>

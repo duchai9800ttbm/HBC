@@ -13,9 +13,10 @@ export class NeedCreateTenderFormContractConditionComponent implements OnInit {
 
   routerAction: string;
   listCurrency: Array<string> = ['VNĐ', 'USD'];
-  currency = 'VNĐ';
-  listTime: Array<string> = ['Tháng', 'Năm'];
-  time = 'Tháng';
+  // currency = 'VNĐ';
+  listTime: Array<string> = ['Ngày', 'Tháng', 'Năm'];
+  // time = 'Tháng';
+  listPayment = ['Theo tháng (Monthly Payment)', 'Theo giai đoạn (Milestone)'];
   contractConditionForm: FormGroup;
   constructor(
     private fb: FormBuilder
@@ -38,7 +39,7 @@ export class NeedCreateTenderFormContractConditionComponent implements OnInit {
         // tslint:disable-next-line:max-line-length
         displayText: formValue && formValue.timeForCompletionUnit ? formValue.timeForCompletionUnit.displayText : this.listTime[0]
       }),
-      commencementDate: formValue ? DateTimeConvertHelper.fromTimestampToDtObject(formValue.commencementDate * 1000) : new Date(),
+      commencementDate: formValue ? DateTimeConvertHelper.fromTimestampToDtObject(formValue.commencementDate * 1000) : null,
       warrantyPeriod: formValue ? formValue.warrantyPeriod : 0,
       warrantyPeriodUnit: this.fb.group({
         key: formValue && formValue.warrantyPeriodUnit ? formValue.warrantyPeriodUnit.key : this.listTime[0],
@@ -59,7 +60,7 @@ export class NeedCreateTenderFormContractConditionComponent implements OnInit {
       advancePayment: formValue ? formValue.advancePayment : 0,
       monthlyPaymentOrMilestone: this.fb.group({
         key: formValue && formValue.monthlyPaymentOrMilestone ? formValue.monthlyPaymentOrMilestone.key : '',
-        value: formValue && formValue.monthlyPaymentOrMilestone ? formValue.monthlyPaymentOrMilestone.value : '',
+        value: formValue && formValue.monthlyPaymentOrMilestone ? formValue.monthlyPaymentOrMilestone.value : null,
         // tslint:disable-next-line:max-line-length
         displayText: formValue && formValue.monthlyPaymentOrMilestone ? formValue.monthlyPaymentOrMilestone.displayText : ''
       }),
@@ -71,7 +72,7 @@ export class NeedCreateTenderFormContractConditionComponent implements OnInit {
   mappingToLiveFormData(data) {
     NeedCreateTenderFormComponent.formModel.contractCondition = data;
     // tslint:disable-next-line:max-line-length
-    NeedCreateTenderFormComponent.formModel.contractCondition.commencementDate = DateTimeConvertHelper.fromDtObjectToSecon(data.commencementDate);
+    NeedCreateTenderFormComponent.formModel.contractCondition.commencementDate = data.commencementDate ? DateTimeConvertHelper.fromDtObjectToSecon(data.commencementDate) : 0;
   }
 
 }

@@ -25,3 +25,17 @@
 .mt-025 {
     margin-top: .25rem;
 }
+
+.input-percent {
+    padding-right: 2rem;
+    appearance: none;
+    &::-webkit-outer-spin-button, &::-webkit-inner-spin-button {
+        -webkit-appearance: none;
+    }
+}
+
+.input-unit {
+    position: absolute;
+    top: .4rem;
+    right: 1.5rem;
+}

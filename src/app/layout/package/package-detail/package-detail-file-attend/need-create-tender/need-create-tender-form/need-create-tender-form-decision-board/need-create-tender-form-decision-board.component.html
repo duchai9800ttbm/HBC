@@ -9,7 +9,8 @@
                 Thời gian mong đợi được duyệt
             </div>
             <div class="col-md-8">
-                <kendo-datepicker [readonly]="false" formControlName="expectedTime" class="form-control"></kendo-datepicker>
+                <!-- <kendo-datepicker appAutoFocus tabindex="1" disabled formControlName="expectedTime" class="form-control"></kendo-datepicker> -->
+                {{expectedTimeStr}}
             </div>
         </div>
         <div class="row mt-3">
@@ -17,18 +18,18 @@
                 Ký tên/ Signing
             </div>
             <div class="col-md-8">
-                    <button *ngIf="!decisionBoardForm.get('isSigned').value" class="btn btn-primary btn-sign" (click)="clickSigned()">Xác nhận ký</button>
-                    <button *ngIf="decisionBoardForm.get('isSigned').value" class="btn btn-primary btn-sign position-relative">
+                    <button *ngIf="!decisionBoardForm.get('isSigned').value" tabindex="2" class="btn btn-primary btn-sign" (click)="clickSigned()">Xác nhận ký</button>
+                    <button *ngIf="decisionBoardForm.get('isSigned').value" tabindex="3" class="btn btn-primary btn-sign position-relative">
                             <i class="fa fa-check-square icon-check" aria-hidden="true"></i> Đã ký
                     </button>
             </div>
         </div>
         <div class="text-center mt-4">
-            <button class="btn border" routerLink="../director-proposal">
+            <button class="btn border" tabindex="5" routerLink="../director-proposal">
                 <i class="fa font-size-3 mr-3 fa-angle-left" aria-hidden="true"></i>
                 Trở về
             </button>
-            <button class="btn btn-primary ml-2 cursor-cancel" disabled>
+            <button class="btn btn-primary ml-2 cursor-cancel" tabindex="4" disabled>
                 Tiếp
                 <i class="fa font-size-3 ml-3 fa-angle-right" aria-hidden="true"></i>
             </button>

@@ -29,6 +29,7 @@ export class NeedCreateTenderFormComponent implements OnInit, OnDestroy {
     bidStatus = BidStatus;
     isShowDialog = false;
     dateApproveBid = new Date();
+    totalTime = '';
     constructor(
         private packageService: PackageService,
         private alertService: AlertService,
@@ -64,7 +65,12 @@ export class NeedCreateTenderFormComponent implements OnInit, OnDestroy {
             .subscribe(data => {
                 this.packageInfo = data;
                 this.spinner.hide();
-                // console.log(this.packageInfo);
+                console.log(this.packageInfo);
+                this.totalTime = '';
+                if (this.packageInfo.submissionDate && this.packageInfo.startTrackingDate) {
+                    const day = Math.abs(this.packageInfo.submissionDate - this.packageInfo.startTrackingDate) / (60 * 60 * 24);
+                    this.totalTime = `${day} ngày`;
+                }
             });
     }
 
@@ -117,6 +123,13 @@ export class NeedCreateTenderFormComponent implements OnInit, OnDestroy {
     cancel() {
         NeedCreateTenderComponent.routerAction = 'view';
         this.routerAction = 'view';
+        this.router.navigate([`package/detail/${this.bidOpportunityId}/attend/create-request/form/view`]);
+    }
+
+    edit() {
+        NeedCreateTenderComponent.routerAction = 'edit';
+        this.routerAction = 'edit';
+        this.router.navigate([`package/detail/${this.bidOpportunityId}/attend/create-request/form/edit`]);
     }
 
     sendApproveBidProposal() {
