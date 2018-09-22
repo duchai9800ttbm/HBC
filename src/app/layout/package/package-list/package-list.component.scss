@@ -79,7 +79,7 @@ input.icon {
         height: 100%;
         padding-left: 15px;
         padding-right: 15px;
-        padding-top: 90px;
+        padding-top: 70px;
     }
     .HSMT{
         max-width: 300px;
@@ -189,7 +189,7 @@ input.icon {
         height: 100%;
         padding-left: 15px;
         padding-right: 15px;
-        padding-top: 80px;
+        padding-top: 70px;
     }
     table.dataTable{
         zoom: 0.72;
@@ -226,7 +226,7 @@ input.icon {
         height: 100%;
         padding-left: 15px;
         padding-right: 15px;
-        padding-top: 70px;
+        padding-top: 55px;
     }
     .btn-toolbar {
         zoom: 0.85;
@@ -308,7 +308,7 @@ a{
 .title-list-package{
     position: absolute;
     box-shadow: 0 1pt 12pt rgba(0, 0, 0, .15);
-    min-height: 70px;
+    height: 55px;
     padding: 0 15px;
     .list-package{
         font-size: 120%;
@@ -330,6 +330,7 @@ select.form-control:not([size]):not([multiple]){
 
 .parent{
     width: 100%;
+    height: 100%;
 }
 .input-checkbox{
     background-color: #ffff!important;

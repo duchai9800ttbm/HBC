@@ -100,7 +100,7 @@
   width: 100%;
   box-shadow: 0 16px 3px -12px #F5F5F5, 0 4px 25px 0 #F5F5F5, 0 8px 10px -5px #F5F5F5;
   height: 55px;
-  background-color: #ffff; // z-index: 50;
+  background-color: white; // z-index: 50;
   right: 0; //left: auto;
   z-index: 50;
 }
@@ -119,9 +119,9 @@
 
 .boder-table{
   // border: 1px solid #dadada;
-  padding: 20px 0px 35px 30px;
+  padding: 20px 0px 35px 0px;
   // border-top: none;
-  background-color: #ffff;
+  background-color: white;
   margin-left: 1.3rem;
   margin-right: 1.3rem
 }
@@ -141,4 +141,35 @@
   margin-left: 1.3rem;
   margin-right: 1.3rem;
   margin-bottom: 0.3rem;
+}
+
+.ul-chirld--index{
+  z-index: 99999900;
+  transform: translate(-40%, -10%) !important;
+  font-size: 0.6rem;
+  min-width: none;
+  .ul-chirld-of-chirl--pad{
+      padding: 0.25rem 0.5rem;
+  }
+}
+.min-width-none{
+  min-width: 0;
+}
+.notification-item {
+  border-bottom: 1px solid #cccccc;
+  .span--margin{
+      margin: 0rem 0.3rem 0rem 0rem;
+  }
+  .content--bold{
+      font-weight: 600;
+  }
+}
+.bot-when-have-data{
+  border-bottom: 1px solid #cccccc;
+}
+a {
+  cursor: pointer;
+}
+.notification--not-read{
+  background-color: #f7f8fa;
 }

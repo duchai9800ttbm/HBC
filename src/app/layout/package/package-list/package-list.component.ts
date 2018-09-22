@@ -54,7 +54,7 @@ export class PackageListComponent implements OnInit, AfterViewChecked {
         endDate: '',
     };
     min = 0;
-    max = 500000000;
+    maxValue = 1000000000000;
     isSubmitted: boolean;
     invalidMessages: string[];
     listClassifyCustomer: Observable<DictionaryItem[]>;
@@ -194,6 +194,11 @@ export class PackageListComponent implements OnInit, AfterViewChecked {
             (this.DropTool2 ? this.DropTool2.nativeElement.contains(target) : false);
     }
     ngOnInit() {
+        this.dataService.getMaxopporunityamount().subscribe( response => {
+            console.log(response);
+            this.maxValue = response;
+            this.someRange = [0, this.maxValue];
+        });
         this.filterModel.opportunityClassify = '';
         this.filterModel.stage = '';
         this.filterModel.chairEmployeeId = '';
@@ -394,7 +399,7 @@ export class PackageListComponent implements OnInit, AfterViewChecked {
         this.filterModel.chairEmployeeId = '';
         this.filterModel.minCost = 0;
         this.filterModel.maxCost = 1000000000000;
-        this.someRange = [0, 1000000000000];
+        this.someRange = [0, this.maxValue];
         this.filterModel.sorting = '';
         this.filter(true);
     }

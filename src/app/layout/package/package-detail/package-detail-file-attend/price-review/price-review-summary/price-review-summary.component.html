@@ -10,15 +10,16 @@
   </div>
   <div>
       <div class="btn-toolbar mt-2 mb-2">
-          <!-- <button type="button" class="btn btn-primary ">Tải
-              Template</button> -->
+            <button type="button" class="btn btn-primary" (click)="guiDuyet()">Gửi duyệt trình duyệt giá</button>
+          <button type="button" class="btn btn-primary" (click)="taiTemplate()">Tải
+              Template</button>
           <button type="button" class="btn btn-primary ml-2">
               <i class="fa fa-refresh" aria-hidden="true"></i>
           </button>
       </div>
   </div>
 </div>
-<div class="mt-5 screen-empty">
+<div class="mt-5 screen-empty" *ngIf="!priceReview">
   <div class="text-center">
       <img class="icon-filter" src="assets/images/ic-file0.png" alt="">
   </div>
@@ -29,8 +30,9 @@
       <button class="btn btn-primary" routerLink="../create">
           Tạo thủ công
       </button>
-      <!-- <button class="btn btn-primary ml-2">
-          Tạo bằng import theo mẫu
-      </button> -->
   </div>
+</div>
+
+<div *ngIf="priceReview">
+
 </div>

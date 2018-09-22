@@ -12,14 +12,15 @@ import { NeedCreateTenderComponent } from '../../need-create-tender.component';
 export class NeedCreateTenderFormAnalysisComponent implements OnInit {
 
   analysisForm: FormGroup;
-  routerAction: string;
+  routerAction = NeedCreateTenderComponent.routerAction;
   constructor(
     private fb: FormBuilder,
     private route: ActivatedRoute
   ) { }
 
   ngOnInit() {
-    this.routerAction = NeedCreateTenderComponent.routerAction;
+    // this.routerAction = NeedCreateTenderComponent.routerAction;
+    console.log(this.routerAction);
     this.createForm();
     this.analysisForm.valueChanges.subscribe(data => this.mappingToLiveFormData(data));
   }

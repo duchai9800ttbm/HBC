@@ -11,7 +11,7 @@
                 </span>
             </li>
             <!-- (statusPackageID > 0) || statusPackageName === 'ThamGiaDuThau' ? ['./infomation-deployment'] : [] -->
-            <li class="triangle" [routerLink]="['./infomation-deployment']"
+            <li class="triangle" [routerLink]="(statusPackageID > 0) || statusPackageName === 'ThamGiaDuThau' ? ['./infomation-deployment'] : []"
                 [class.noActive]="( (currentUrl !== 'infomation-deployment') && statusPackageID > 0) ||  ( currentUrl === 'create-request' && statusPackageName === 'ThamGiaDuThau' )"
                 [class.active]="currentUrl === 'infomation-deployment'"
                 [class.allow]="(statusPackageID > 0) || statusPackageName === 'ThamGiaDuThau'"
@@ -24,7 +24,7 @@
                 </span>
             </li>
             <!-- (statusPackageID > 1) ? ['./build'] : [] -->
-            <li class="triangle" [routerLink]="['./build']" [class.noActive]="currentUrl !== 'build' && statusPackageID > 1"
+            <li class="triangle" [routerLink]="(statusPackageID > 1) ? ['./build'] : []" [class.noActive]="currentUrl !== 'build' && statusPackageID > 1"
                 [class.active]="currentUrl === 'build'" [class.allow]="(statusPackageID > 1)" [class.no-allow]="(statusPackageID < 2)">
                 <div style="width: 100%" class="center-parent">
                     <div class="arrow-down"></div>
@@ -34,7 +34,7 @@
                 </span>
             </li>
             <!-- (statusPackageID > 2) ? ['./price-review'] : [] -->
-            <li class="triangle" [routerLink]="['./price-review']" [class.noActive]="currentUrl !== 'price-review' && statusPackageID > 2"
+            <li class="triangle" [routerLink]="(statusPackageID > 2) ? ['./price-review'] : []" [class.noActive]="currentUrl !== 'price-review' && statusPackageID > 2"
                 [class.active]="currentUrl === 'price-review'" [class.allow]="(statusPackageID > 2)" [class.no-allow]="(statusPackageID < 3)">
                 <div style="width: 100%" class="center-parent">
                     <div class="arrow-down"></div>
@@ -44,7 +44,7 @@
                 </span>
             </li>
             <!-- (statusPackageID > 3)  ? ['./interview-negotiation'] : [] -->
-            <li class="triangle" [routerLink]="['./interview-negotiation']" [class.noActive]="currentUrl !== 'interview-negotiation' && statusPackageID > 3"
+            <li class="triangle" [routerLink]="(statusPackageID > 3)  ? ['./interview-negotiation'] : []" [class.noActive]="currentUrl !== 'interview-negotiation' && statusPackageID > 3"
                 [class.active]="currentUrl === 'interview-negotiation'" [class.allow]="(statusPackageID > 3)" [class.no-allow]="(statusPackageID < 4)">
                 <div style="width: 100%" class="center-parent">
                     <div class="arrow-down"></div>

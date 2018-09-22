@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ProposeTenderParticipateRequest } from '../../../../../../shared/models/api-request/package/propose-tender-participate-request';
 import { PackageService } from '../../../../../../shared/services/package.service';
 import {
@@ -13,13 +13,14 @@ import { switchMap } from 'rxjs/operators';
 import { NeedCreateTenderComponent } from '../need-create-tender.component';
 import { BidStatus } from '../../../../../../shared/constants/bid-status';
 import DateTimeConvertHelper from '../../../../../../shared/helpers/datetime-convert-helper';
+import { ScrollToTopService } from '../../../../../../shared/services/scroll-to-top.service';
 
 @Component({
     selector: 'app-need-create-tender-form',
     templateUrl: './need-create-tender-form.component.html',
     styleUrls: ['./need-create-tender-form.component.scss']
 })
-export class NeedCreateTenderFormComponent implements OnInit {
+export class NeedCreateTenderFormComponent implements OnInit, OnDestroy {
     static formModel: ProposeTenderParticipateRequest;
     bidOpportunityId;
     packageInfo: PackageInfoModel;
@@ -28,20 +29,23 @@ export class NeedCreateTenderFormComponent implements OnInit {
     bidStatus = BidStatus;
     isShowDialog = false;
     dateApproveBid = new Date();
+    totalTime = '';
     constructor(
         private packageService: PackageService,
         private alertService: AlertService,
         private spinner: NgxSpinnerService,
         private router: Router,
         private sessionService: SessionService,
-        private route: ActivatedRoute
+        private route: ActivatedRoute,
+        private scrollTopService: ScrollToTopService
     ) {}
 
     ngOnInit() {
+        this.scrollTopService.isScrollTop = false;
         this.routerAction = NeedCreateTenderComponent.routerAction;
         this.dataModel = NeedCreateTenderFormComponent.formModel;
         // tslint:disable-next-line:max-line-length
-        this.dateApproveBid = this.dataModel.tenderDirectorProposal && this.dataModel.tenderDirectorProposal.expectedTime ? DateTimeConvertHelper.fromTimestampToDtObject(this.dataModel.tenderDirectorProposal.expectedTime * 1000) : new Date();
+        this.dateApproveBid = this.dataModel && this.dataModel.tenderDirectorProposal && this.dataModel.tenderDirectorProposal.expectedTime ? DateTimeConvertHelper.fromTimestampToDtObject(this.dataModel.tenderDirectorProposal.expectedTime * 1000) : new Date();
         this.bidOpportunityId = PackageDetailComponent.packageId;
         if (!NeedCreateTenderFormComponent.formModel) {
             this.router.navigate([
@@ -61,7 +65,12 @@ export class NeedCreateTenderFormComponent implements OnInit {
             .subscribe(data => {
                 this.packageInfo = data;
                 this.spinner.hide();
-                // console.log(this.packageInfo);
+                console.log(this.packageInfo);
+                this.totalTime = '';
+                if (this.packageInfo.submissionDate && this.packageInfo.startTrackingDate) {
+                    const day = Math.abs(this.packageInfo.submissionDate - this.packageInfo.startTrackingDate) / (60 * 60 * 24);
+                    this.totalTime = `${day} ngày`;
+                }
             });
     }
 
@@ -114,6 +123,13 @@ export class NeedCreateTenderFormComponent implements OnInit {
     cancel() {
         NeedCreateTenderComponent.routerAction = 'view';
         this.routerAction = 'view';
+        this.router.navigate([`package/detail/${this.bidOpportunityId}/attend/create-request/form/view`]);
+    }
+
+    edit() {
+        NeedCreateTenderComponent.routerAction = 'edit';
+        this.routerAction = 'edit';
+        this.router.navigate([`package/detail/${this.bidOpportunityId}/attend/create-request/form/edit`]);
     }
 
     sendApproveBidProposal() {
@@ -146,5 +162,9 @@ export class NeedCreateTenderFormComponent implements OnInit {
     closeDialog() {
         this.isShowDialog = false;
         // this.isNotAgreeParticipating = false;
+    }
+
+    ngOnDestroy() {
+        this.scrollTopService.isScrollTop = true;
     }
 }

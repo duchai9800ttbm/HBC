@@ -3,6 +3,7 @@ import { FormGroup, FormBuilder } from '@angular/forms';
 import { NeedCreateTenderFormComponent } from '../need-create-tender-form.component';
 import { NeedCreateTenderComponent } from '../../need-create-tender.component';
 import DateTimeConvertHelper from '../../../../../../../shared/helpers/datetime-convert-helper';
+import * as moment from 'moment';
 
 @Component({
   selector: 'app-need-create-tender-form-decision-board',
@@ -13,6 +14,7 @@ export class NeedCreateTenderFormDecisionBoardComponent implements OnInit {
 
   routerAction: string;
   decisionBoardForm: FormGroup;
+  expectedTimeStr;
   constructor(
     private fb: FormBuilder
   ) { }
@@ -25,9 +27,12 @@ export class NeedCreateTenderFormDecisionBoardComponent implements OnInit {
 
   createForm() {
     const formData = NeedCreateTenderFormComponent.formModel.decisionOfBoardOfGeneralDirector;
+    const directorData = NeedCreateTenderFormComponent.formModel.tenderDirectorProposal;
+    this.expectedTimeStr = directorData && directorData.expectedTime ? moment(directorData.expectedTime * 1000).format('DD/MM/YYYY') : '';
     this.decisionBoardForm = this.fb.group({
       isSigned: formData ? formData.isSigned : false,
-      expectedTime: formData ? DateTimeConvertHelper.fromTimestampToDtObject(formData.expectedTime * 1000) : new Date()
+      // tslint:disable-next-line:max-line-length
+      expectedTime: directorData && directorData.expectedTime ? DateTimeConvertHelper.fromTimestampToDtObject(directorData.expectedTime * 1000) : null
     });
   }
 
@@ -37,8 +42,9 @@ export class NeedCreateTenderFormDecisionBoardComponent implements OnInit {
 
   mappingToLiveFormData(data) {
     NeedCreateTenderFormComponent.formModel.decisionOfBoardOfGeneralDirector = data;
+    const directorData = NeedCreateTenderFormComponent.formModel.tenderDirectorProposal;
     // tslint:disable-next-line:max-line-length
-    NeedCreateTenderFormComponent.formModel.decisionOfBoardOfGeneralDirector.expectedTime = DateTimeConvertHelper.fromDtObjectToSecon(data.expectedTime);
+    NeedCreateTenderFormComponent.formModel.decisionOfBoardOfGeneralDirector.expectedTime = directorData && directorData.expectedTime ? directorData.expectedTime : 0;
   }
 
 }

@@ -295,7 +295,7 @@ export class AddFileComponent implements OnInit {
                         that.spinner.hide();
 
                         if (err.json().errorCode === 'BusinessException') {
-                            that.alertService.error('Không đủ bản chính thức trong các bộ hồ sơ mời thầu!');
+                            that.alertService.error(`${err.json().errorMessage}!`);
                         } else {
                             that.alertService.error('Chuyển đánh giá không thành công. Bạn vui lòng kiểm tra lại!');
                         }

@@ -1,7 +1,20 @@
 <div class="d-flex main-layout">
     <div class="content">
-        <div>
-            <button (click)="submit()">Lưu</button>
+        <div class="title d-flex align-items-center justify-content-between">
+            <div class="icon d-flex">
+                <a routerLink="../summary" style="cursor: pointer;">
+                    <img width="12" height="12" class="pointer not-outline" src="assets\images\nghia.png" style="margin-bottom: 1px;">
+                </a>
+                <h4 class="tieu-de ml-1" style="font-size: 130%">BẢNG TÓM TẮT THÔNG TIN DỰ ÁN - TRÌNH DUYỆT GIÁ THẦU</h4>
+            </div>
+            <div class="action">
+                <button class="btn btn-primary" (click)="submit(true)">Lưu bản nháp</button>
+                <button class="btn btn-primary" (click)="submit(false)">Lưu</button>
+                <button class="btn btn-secondary">Hủy</button>
+                <button class="btn btn-primary" (click)="refresh()">
+                    <i class="fa fa-refresh" aria-hidden="true"></i>
+                </button>
+            </div>
         </div>
         <form [formGroup]="priceReviewForm" novalidate>
             <div class="price-review">
@@ -40,20 +53,31 @@
                 </div>
                 <div class="content">
                     <div class="d-flex row-header">
-                        <div class="label-document">
-                            <div class="cell-left d-flex align-items-center font-weight-bold">
-                                <div class="ml-3">
-                                    Tên tài liệu
-                                </div>
-                            </div>
+                        <div class="d-flex ten-tai-lieu">
+                                <div class="label-document">
+                                        <div class="cell-left d-flex align-items-center font-weight-bold">
+                                            <div class="ml-3">
+                                                Tên tài liệu
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="name-document">
+                                        <div class="cell-right d-flex align-items-center font-weight-bold">
+                                            <div class="ml-3">
+                                                Trình duyệt giá
+                                            </div>
+                                        </div>
+                                    </div>
                         </div>
-                        <div class="name-document">
-                            <div class="cell-right d-flex align-items-center font-weight-bold">
-                                <div class="ml-3">
-                                    Trình duyệt giá
-                                </div>
+                        <div class="d-flex lan-phong-van">
+                            <div class="name font-weight-bold align-items-center d-flex">
+                               <div class="ml-3">Lần phỏng vấn</div> 
                             </div>
+                            <div class="value center-parent">
+                                <div class="font-weight-bold">2</div>
+                                </div>
                         </div>
+                        
                     </div>
 
                     <div class="d-flex row-title">
@@ -110,7 +134,7 @@
                                         <div class="two-col-1 center-parent">
                                             <div>
                                                 <label class="childcheck">
-                                                    <input type="radio" value="true" name="phanMongCheck" formControlName="phanMongCheck">
+                                                    <input type="radio" [value]=true name="phanMongCheck" formControlName="phanMongCheck">
                                                     <span class="checkmark"></span>
                                                 </label>
                                             </div>
@@ -118,7 +142,7 @@
                                         <div class="two-col-2 center-parent">
                                             <div>
                                                 <label class="childcheck">
-                                                    <input type="radio" value="false" name="phanMongCheck" formControlName="phanMongCheck">
+                                                    <input type="radio" [value]=false name="phanMongCheck" formControlName="phanMongCheck">
                                                     <span class="checkmark"></span>
                                                 </label>
                                             </div>
@@ -142,7 +166,7 @@
                                         <div class="two-col-1 center-parent">
                                             <div>
                                                 <label class="childcheck">
-                                                    <input type="radio" value="true" name="phanHamCheck" formControlName="phanHamCheck">
+                                                    <input type="radio" [value]=true name="phanHamCheck" formControlName="phanHamCheck">
                                                     <span class="checkmark"></span>
                                                 </label>
                                             </div>
@@ -150,7 +174,7 @@
                                         <div class="two-col-2 center-parent">
                                             <div>
                                                 <label class="childcheck">
-                                                    <input type="radio" value="false" name="phanHamCheck" formControlName="phanHamCheck">
+                                                    <input type="radio" [value]=false name="phanHamCheck" formControlName="phanHamCheck">
                                                     <span class="checkmark"></span>
                                                 </label>
                                             </div>
@@ -174,7 +198,7 @@
                                         <div class="two-col-1 center-parent">
                                             <div>
                                                 <label class="childcheck">
-                                                    <input type="radio" value="true" name="ketCauCheck" formControlName="ketCauCheck">
+                                                    <input type="radio" [value]=true name="ketCauCheck" formControlName="ketCauCheck">
                                                     <span class="checkmark"></span>
                                                 </label>
                                             </div>
@@ -182,7 +206,7 @@
                                         <div class="two-col-2 center-parent">
                                             <div>
                                                 <label class="childcheck">
-                                                    <input type="radio" value="false" name="ketCauCheck" formControlName="ketCauCheck">
+                                                    <input type="radio" [value]=false name="ketCauCheck" formControlName="ketCauCheck">
                                                     <span class="checkmark"></span>
                                                 </label>
                                             </div>
@@ -206,7 +230,7 @@
                                         <div class="two-col-1 center-parent">
                                             <div>
                                                 <label class="childcheck">
-                                                    <input type="radio" value="true" name="hoanThienCheck" formControlName="hoanThienCheck">
+                                                    <input type="radio" [value]=true name="hoanThienCheck" formControlName="hoanThienCheck">
                                                     <span class="checkmark"></span>
                                                 </label>
                                             </div>
@@ -214,7 +238,7 @@
                                         <div class="two-col-2 center-parent">
                                             <div>
                                                 <label class="childcheck">
-                                                    <input type="radio" value="false" name="hoanThienCheck" formControlName="hoanThienCheck">
+                                                    <input type="radio" [value]=false name="hoanThienCheck" formControlName="hoanThienCheck">
                                                     <span class="checkmark"></span>
                                                 </label>
                                             </div>
@@ -238,7 +262,7 @@
                                         <div class="two-col-1 center-parent">
                                             <div>
                                                 <label class="childcheck">
-                                                    <input type="radio" value="true" name="congViecKhacCheck" formControlName="congViecKhacCheck">
+                                                    <input type="radio" [value]=true name="congViecKhacCheck" formControlName="congViecKhacCheck">
                                                     <span class="checkmark"></span>
                                                 </label>
                                             </div>
@@ -246,7 +270,7 @@
                                         <div class="two-col-2 center-parent">
                                             <div>
                                                 <label class="childcheck">
-                                                    <input type="radio" value="false" name="congViecKhacCheck" formControlName="congViecKhacCheck">
+                                                    <input type="radio" [value]=false name="congViecKhacCheck" formControlName="congViecKhacCheck">
                                                     <span class="checkmark"></span>
                                                 </label>
                                             </div>
@@ -270,7 +294,7 @@
                                         <div class="two-col-1 center-parent">
                                             <div>
                                                 <label class="childcheck">
-                                                    <input type="radio" value="true" name="phanThanCheck" formControlName="phanThanCheck">
+                                                    <input type="radio" [value]=true name="phanThanCheck" formControlName="phanThanCheck">
                                                     <span class="checkmark"></span>
                                                 </label>
                                             </div>
@@ -278,7 +302,7 @@
                                         <div class="two-col-2 center-parent">
                                             <div>
                                                 <label class="childcheck">
-                                                    <input type="radio" value="false" name="phanThanCheck" formControlName="phanThanCheck">
+                                                    <input type="radio" [value]=false name="phanThanCheck" formControlName="phanThanCheck">
                                                     <span class="checkmark"></span>
                                                 </label>
                                             </div>
@@ -302,7 +326,7 @@
                                         <div class="two-col-1 center-parent">
                                             <div>
                                                 <label class="childcheck">
-                                                    <input type="radio" value="true" name="phanThanKetCauCheck" formControlName="phanThanKetCauCheck">
+                                                    <input type="radio" [value]=true name="phanThanKetCauCheck" formControlName="phanThanKetCauCheck">
                                                     <span class="checkmark"></span>
                                                 </label>
                                             </div>
@@ -310,7 +334,7 @@
                                         <div class="two-col-2 center-parent">
                                             <div>
                                                 <label class="childcheck">
-                                                    <input type="radio" value="false" name="phanThanKetCauCheck" formControlName="phanThanKetCauCheck">
+                                                    <input type="radio" [value]=false name="phanThanKetCauCheck" formControlName="phanThanKetCauCheck">
                                                     <span class="checkmark"></span>
                                                 </label>
                                             </div>
@@ -334,7 +358,7 @@
                                         <div class="two-col-1 center-parent">
                                             <div>
                                                 <label class="childcheck">
-                                                    <input type="radio" value="true" name="phanThanHoanThienCheck" formControlName="phanThanHoanThienCheck">
+                                                    <input type="radio" [value]=true name="phanThanHoanThienCheck" formControlName="phanThanHoanThienCheck">
                                                     <span class="checkmark"></span>
                                                 </label>
                                             </div>
@@ -342,7 +366,7 @@
                                         <div class="two-col-2 center-parent">
                                             <div>
                                                 <label class="childcheck">
-                                                    <input type="radio" value="false" name="phanThanHoanThienCheck" formControlName="phanThanHoanThienCheck">
+                                                    <input type="radio" [value]=false name="phanThanHoanThienCheck" formControlName="phanThanHoanThienCheck">
                                                     <span class="checkmark"></span>
                                                 </label>
                                             </div>
@@ -366,7 +390,7 @@
                                         <div class="two-col-1 center-parent">
                                             <div>
                                                 <label class="childcheck">
-                                                    <input type="radio" value="true" name="phanThancongViecKhacCheck" formControlName="phanThancongViecKhacCheck">
+                                                    <input type="radio" [value]=true name="phanThancongViecKhacCheck" formControlName="phanThancongViecKhacCheck">
                                                     <span class="checkmark"></span>
                                                 </label>
                                             </div>
@@ -374,7 +398,7 @@
                                         <div class="two-col-2 center-parent">
                                             <div>
                                                 <label class="childcheck">
-                                                    <input type="radio" value="false" name="phanThancongViecKhacCheck" formControlName="phanThancongViecKhacCheck">
+                                                    <input type="radio" [value]=false name="phanThancongViecKhacCheck" formControlName="phanThancongViecKhacCheck">
                                                     <span class="checkmark"></span>
                                                 </label>
                                             </div>
@@ -389,284 +413,12 @@
 
                         </div>
                         <div class="gfa">
+                                <input appInputArea formControlName="infoGfa">
 
                         </div>
                     </div>
 
 
-
-
-                    <!-- <div class="d-flex row-item">
-                                <div class="info d-flex align-items-center font-weight-bold">
-                                    <div class="stt center-parent">
-                                        <div>2.1</div>
-                                    </div>
-                                    <div class="name d-flex align-items-center">
-                                        <div class="ml-1">Thi công kết cấu</div>
-                                    </div>
-                                </div>
-                                <div class="scope-of-works d-flex align-items-center">
-                                    <div class="success center-parent">
-                                        <div>
-                                            <label class="childcheck">
-                                                <input type="checkbox" value="true">
-                                                <span class="checkmark"></span>
-                                            </label>
-                                        </div>
-                                    </div>
-                                    <div class="error center-parent">
-                                        <div>
-                                            <label class="childcheck">
-                                                <input type="checkbox" value="false">
-                                                <span class="checkmark"></span>
-                                            </label>
-                                        </div>
-                                    </div>
-                                    <div class="desc">
-                                        <textarea name="" id=""></textarea>
-            
-                                    </div>
-                                </div>
-                                <div class="gfa center-parent">
-                                    <div class="w-100">
-                                        <input appInputArea >
-            
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="d-flex row-item">
-                                <div class="info d-flex align-items-center font-weight-bold">
-                                    <div class="stt center-parent">
-                                        <div>2.2</div>
-                                    </div>
-                                    <div class="name d-flex align-items-center">
-                                        <div class="ml-1">Thi công hoàn thiện</div>
-                                    </div>
-                                </div>
-                                <div class="scope-of-works d-flex align-items-center">
-                                    <div class="success center-parent">
-                                        <div>
-                                            <label class="childcheck">
-                                                <input type="checkbox" value="true">
-                                                <span class="checkmark"></span>
-                                            </label>
-                                        </div>
-                                    </div>
-                                    <div class="error center-parent">
-                                        <div>
-                                            <label class="childcheck">
-                                                <input type="checkbox" value="false">
-                                                <span class="checkmark"></span>
-                                            </label>
-                                        </div>
-                                    </div>
-                                    <div class="desc">
-                                        <textarea name="" id=""></textarea>
-            
-                                    </div>
-                                </div>
-                                <div class="gfa center-parent">
-                                    <div class="w-100">
-                                        <input appInputArea >
-            
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="d-flex row-item">
-                                <div class="info d-flex align-items-center font-weight-bold">
-                                    <div class="stt center-parent">
-                                        <div>2.3</div>
-                                    </div>
-                                    <div class="name d-flex align-items-center">
-                                        <div class="ml-1">Phần công việc khác</div>
-                                    </div>
-                                </div>
-                                <div class="scope-of-works d-flex align-items-center">
-                                    <div class="success center-parent">
-                                        <div>
-                                            <label class="childcheck">
-                                                <input type="checkbox" value="true">
-                                                <span class="checkmark"></span>
-                                            </label>
-                                        </div>
-                                    </div>
-                                    <div class="error center-parent">
-                                        <div>
-                                            <label class="childcheck">
-                                                <input type="checkbox" value="false">
-                                                <span class="checkmark"></span>
-                                            </label>
-                                        </div>
-                                    </div>
-                                    <div class="desc">
-                                        <textarea name="" id=""></textarea>
-            
-                                    </div>
-                                </div>
-                                <div class="gfa center-parent">
-                                    <div class="w-100">
-                                        <input appInputArea >
-            
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="d-flex row-item">
-                                <div class="info d-flex align-items-center font-weight-bold">
-                                    <div class="stt center-parent">
-                                        <div>3</div>
-                                    </div>
-                                    <div class="name d-flex align-items-center">
-                                        <div class="ml-1">Phần thân</div>
-                                    </div>
-                                </div>
-                                <div class="scope-of-works d-flex align-items-center">
-                                    <div class="success center-parent">
-                                        <div>
-                                            <label class="childcheck">
-                                                <input type="checkbox" value="true">
-                                                <span class="checkmark"></span>
-                                            </label>
-                                        </div>
-                                    </div>
-                                    <div class="error center-parent">
-                                        <div>
-                                            <label class="childcheck">
-                                                <input type="checkbox" value="false">
-                                                <span class="checkmark"></span>
-                                            </label>
-                                        </div>
-                                    </div>
-                                    <div class="desc">
-                                        <textarea name="" id=""></textarea>
-            
-                                    </div>
-                                </div>
-                                <div class="gfa center-parent">
-                                    <div class="w-100">
-                                        <input appInputArea >
-            
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="d-flex row-item">
-                                <div class="info d-flex align-items-center font-weight-bold">
-                                    <div class="stt center-parent">
-                                        <div>3.1</div>
-                                    </div>
-                                    <div class="name d-flex align-items-center">
-                                        <div class="ml-1">Thi công kết cấu</div>
-                                    </div>
-                                </div>
-                                <div class="scope-of-works d-flex align-items-center">
-                                    <div class="success center-parent">
-                                        <div>
-                                            <label class="childcheck">
-                                                <input type="checkbox" value="true">
-                                                <span class="checkmark"></span>
-                                            </label>
-                                        </div>
-                                    </div>
-                                    <div class="error center-parent">
-                                        <div>
-                                            <label class="childcheck">
-                                                <input type="checkbox" value="false">
-                                                <span class="checkmark"></span>
-                                            </label>
-                                        </div>
-                                    </div>
-                                    <div class="desc">
-                                        <textarea name="" id=""></textarea>
-            
-                                    </div>
-                                </div>
-                                <div class="gfa center-parent">
-                                    <div class="w-100">
-                                        <input appInputArea >
-            
-                                    </div>
-                                </div>
-                            </div>
-            
-                            <div class="d-flex row-item">
-                                <div class="info d-flex align-items-center font-weight-bold">
-                                    <div class="stt center-parent">
-                                        <div>3.2</div>
-                                    </div>
-                                    <div class="name d-flex align-items-center">
-                                        <div class="ml-1">Thi công hoàn thiện</div>
-                                    </div>
-                                </div>
-                                <div class="scope-of-works d-flex align-items-center">
-                                    <div class="success center-parent">
-                                        <div>
-                                            <label class="childcheck">
-                                                <input type="checkbox" value="true">
-                                                <span class="checkmark"></span>
-                                            </label>
-                                        </div>
-                                    </div>
-                                    <div class="error center-parent">
-                                        <div>
-                                            <label class="childcheck">
-                                                <input type="checkbox" value="false">
-                                                <span class="checkmark"></span>
-                                            </label>
-                                        </div>
-                                    </div>
-                                    <div class="desc">
-                                        <textarea name="" id=""></textarea>
-            
-                                    </div>
-                                </div>
-                                <div class="gfa center-parent">
-                                    <div class="w-100">
-                                        <input appInputArea >
-            
-                                    </div>
-                                </div>
-                            </div>
-            
-                            <div class="d-flex row-item">
-                                <div class="info d-flex align-items-center font-weight-bold">
-                                    <div class="stt center-parent">
-                                        <div>3.3</div>
-                                    </div>
-                                    <div class="name d-flex align-items-center">
-                                        <div class="ml-1">Công việc khác</div>
-                                    </div>
-                                </div>
-                                <div class="scope-of-works d-flex align-items-center">
-                                    <div class="success center-parent">
-                                        <div>
-                                            <label class="childcheck">
-                                                <input type="checkbox" value="true">
-                                                <span class="checkmark"></span>
-                                            </label>
-                                        </div>
-                                    </div>
-                                    <div class="error center-parent">
-                                        <div>
-                                            <label class="childcheck">
-                                                <input type="checkbox" value="false">
-                                                <span class="checkmark"></span>
-                                            </label>
-                                        </div>
-                                    </div>
-                                    <div class="desc">
-                                        <textarea name="" id=""></textarea>
-            
-                                    </div>
-                                </div>
-                                <div class="gfa center-parent">
-                                    <div class="w-100">
-                                        <input appInputArea >
-            
-                                    </div>
-                                </div>
-                            </div> -->
-                    <!-- 
-                                  II Kỹ thuật
-                                -->
                     <div class="d-flex row-technical">
                         <div class="first d-flex align-items-center">
                             <div class="stt center-parent">
@@ -854,7 +606,7 @@
                                     </div>
                                     <div class="item item-below d-flex center-parent">
                                         <div class="w-100">
-                                            <input formControlName="tamUngYCPercent">
+                                            <input formControlName="tamUngYCPercent" appInputNumber>
 
                                         </div>
 
@@ -866,7 +618,7 @@
                                     </div>
                                     <div class="item item-below d-flex center-parent">
                                         <div class="w-100">
-                                            <input formControlName="tamUngYCKhauTru">
+                                            <input formControlName="tamUngYCKhauTru" appInputNumber>
 
                                         </div>
 
@@ -880,7 +632,7 @@
                                     </div>
                                     <div class="item item-below d-flex center-parent">
                                         <div class="w-100">
-                                            <input formControlName="tamUngDXPercent">
+                                            <input formControlName="tamUngDXPercent" appInputNumber>
 
                                         </div>
 
@@ -892,7 +644,7 @@
                                     </div>
                                     <div class="item item-below d-flex center-parent">
                                         <div class="w-100">
-                                            <input formControlName="tamUngDXKhauTru">
+                                            <input formControlName="tamUngDXKhauTru" appInputNumber>
 
                                         </div>
 
@@ -922,7 +674,7 @@
                                     </div>
                                     <div class="item item-below d-flex center-parent">
                                         <div class="w-100">
-                                            <input>
+                                            <input formControlName="thoiGianYC" appInputNumber>
 
                                         </div>
 
@@ -934,7 +686,7 @@
                                     </div>
                                     <div class="item item-below d-flex center-parent">
                                         <div class="w-100">
-                                            <input>
+                                            <input formControlName="thoiGianDX">
 
                                         </div>
 
@@ -944,7 +696,7 @@
 
                         </div>
                         <div class="three">
-                            <textarea name="" id=""></textarea>
+                            <textarea name="" id="" formControlName="thoiGianCY"></textarea>
                         </div>
                     </div>
 
@@ -965,7 +717,7 @@
                                     </div>
                                     <div class="item item-below d-flex center-parent">
                                         <div class="w-100">
-                                            <input>
+                                            <input formControlName="tienGiuLaiYCPercent">
 
                                         </div>
 
@@ -977,7 +729,7 @@
                                     </div>
                                     <div class="item item-below d-flex center-parent">
                                         <div class="w-100">
-                                            <input>
+                                            <input formControlName="tienGiuLaiYCKhauTru">
 
                                         </div>
 
@@ -991,7 +743,7 @@
                                     </div>
                                     <div class="item item-below d-flex center-parent">
                                         <div class="w-100">
-                                            <input>
+                                            <input formControlName="tienGiuLaiDXPercent">
 
                                         </div>
 
@@ -1003,7 +755,7 @@
                                     </div>
                                     <div class="item item-below d-flex center-parent">
                                         <div class="w-100">
-                                            <input>
+                                            <input formControlName="tienGiuLaiDXKhauTru">
 
                                         </div>
 
@@ -1012,7 +764,7 @@
                             </div>
                         </div>
                         <div class="three">
-                            <textarea name="" id=""></textarea>
+                            <textarea name="" id="" formControlName="tienGiuLaiCY"></textarea>
                         </div>
                     </div>
 
@@ -1033,7 +785,7 @@
                                     </div>
                                     <div class="item item-below d-flex center-parent">
                                         <div class="w-100">
-                                            <input>
+                                            <input formControlName="phatTienDoYCPercent">
 
                                         </div>
 
@@ -1045,7 +797,7 @@
                                     </div>
                                     <div class="item item-below d-flex center-parent">
                                         <div class="w-100">
-                                            <input>
+                                            <input formControlName="phatTienDoYCMax">
 
                                         </div>
 
@@ -1059,7 +811,7 @@
                                     </div>
                                     <div class="item item-below d-flex center-parent">
                                         <div class="w-100">
-                                            <input>
+                                            <input formControlName="phatTienDoDXPercent">
 
                                         </div>
 
@@ -1071,7 +823,7 @@
                                     </div>
                                     <div class="item item-below d-flex center-parent">
                                         <div class="w-100">
-                                            <input>
+                                            <input formControlName="phatTienDoDXMax">
 
                                         </div>
 
@@ -1080,7 +832,7 @@
                             </div>
                         </div>
                         <div class="three">
-                            <textarea name="" id=""></textarea>
+                            <textarea name="" id="" formControlName="phatTienDoCY"></textarea>
                         </div>
                     </div>
 
@@ -1101,7 +853,7 @@
                                     </div>
                                     <div class="item item-below d-flex center-parent">
                                         <div class="w-100">
-                                            <input>
+                                            <input formControlName="thoiGianBHYCPercent">
 
                                         </div>
 
@@ -1113,7 +865,7 @@
                                     </div>
                                     <div class="item item-below d-flex center-parent">
                                         <div class="w-100">
-                                            <input>
+                                            <input formControlName="thoiGianBHYCAmount">
 
                                         </div>
 
@@ -1127,7 +879,7 @@
                                     </div>
                                     <div class="item item-below d-flex center-parent">
                                         <div class="w-100">
-                                            <input>
+                                            <input formControlName="thoiGianBHDXBond">
 
                                         </div>
 
@@ -1139,7 +891,7 @@
                                     </div>
                                     <div class="item item-below d-flex center-parent">
                                         <div class="w-100">
-                                            <input>
+                                            <input formControlName="thoiGianBHMonth">
 
                                         </div>
 
@@ -1148,7 +900,7 @@
                             </div>
                         </div>
                         <div class="three">
-                            <textarea name="" id=""></textarea>
+                            <textarea name="" id="" formControlName="thoiGianBHCY"></textarea>
                         </div>
                     </div>
 
@@ -1162,10 +914,10 @@
                             </div>
                         </div>
                         <div class="two two-2">
-                            <textarea name="" id=""></textarea>
+                            <textarea name="" id="" formControlName="dieuKienDacBiet"></textarea>
                         </div>
                         <div class="three">
-                            <textarea name="" id=""></textarea>
+                            <textarea name="" id="" formControlName="dieuKienDacBietCY"></textarea>
                         </div>
                     </div>
 
@@ -1224,30 +976,30 @@
                         <div class="two d-flex">
                             <div class="item-1 d-flex align-items-center">
                                 <div>
-                                    <input>
+                                    <input formControlName="giaVonBaseAmount">
                                 </div>
                             </div>
                             <div class="item-2 d-flex align-items-center">
                                 <div>
-                                    <input>
+                                    <input formControlName="giaVonBaseGfa">
                                 </div>
                             </div>
 
                             <div class="item-3 d-flex align-items-center">
                                 <div>
-                                    <input>
+                                    <input formControlName="giaVonAlterAmount">
                                 </div>
 
                             </div>
                             <div class="item-4 d-flex align-items-center">
                                 <div>
-                                    <input>
+                                    <input formControlName="giaVonAlterGfa">
                                 </div>
                             </div>
 
                         </div>
                         <div class="three">
-                            <textarea name="" id=""></textarea>
+                            <textarea name="" id="" formControlName="giaVonCY"></textarea>
 
                         </div>
                     </div>
@@ -1266,30 +1018,30 @@
                         <div class="two d-flex">
                             <div class="item-1 d-flex align-items-center">
                                 <div>
-                                    <input>
+                                    <input formControlName="chiPhiBaseAmount">
                                 </div>
                             </div>
                             <div class="item-2 d-flex align-items-center">
                                 <div>
-                                    <input>
+                                    <input formControlName="chiPhiBaseGfa">
                                 </div>
                             </div>
 
                             <div class="item-3 d-flex align-items-center">
                                 <div>
-                                    <input>
+                                    <input formControlName="chiPhiAlterAmount">
                                 </div>
 
                             </div>
                             <div class="item-4 d-flex align-items-center">
                                 <div>
-                                    <input>
+                                    <input formControlName="chiPhiAlterGfa">
                                 </div>
                             </div>
 
                         </div>
                         <div class="three">
-                            <textarea name="" id=""></textarea>
+                            <textarea name="" id="" formControlName="chiPhiAlterNote"></textarea>
 
                         </div>
                     </div>
@@ -1308,30 +1060,30 @@
                         <div class="two d-flex">
                             <div class="item-1 d-flex align-items-center">
                                 <div>
-                                    <input>
+                                    <input formControlName="giaTriBaseAmount">
                                 </div>
                             </div>
                             <div class="item-2 d-flex align-items-center">
                                 <div>
-                                    <input>
+                                    <input formControlName="giaTriBaseGfa">
                                 </div>
                             </div>
 
                             <div class="item-3 d-flex align-items-center">
                                 <div>
-                                    <input>
+                                    <input formControlName="giaTriAlterAmount">
                                 </div>
 
                             </div>
                             <div class="item-4 d-flex align-items-center">
                                 <div>
-                                    <input>
+                                    <input formControlName="giaTriAlterGfa">
                                 </div>
                             </div>
 
                         </div>
                         <div class="three">
-                            <textarea name="" id=""></textarea>
+                            <textarea name="" id="" formControlName="giaTriNote"></textarea>
 
                         </div>
                     </div>
@@ -1350,30 +1102,30 @@
                         <div class="two d-flex">
                             <div class="item-1 d-flex align-items-center">
                                 <div>
-                                    <input>
+                                    <input formControlName="giaTriPCBaseAmount">
                                 </div>
                             </div>
                             <div class="item-2 d-flex align-items-center">
                                 <div>
-                                    <input>
+                                    <input formControlName="giaTriPCBaseGfa">
                                 </div>
                             </div>
 
                             <div class="item-3 d-flex align-items-center">
                                 <div>
-                                    <input>
+                                    <input formControlName="giaTriPCAlterAmount">
                                 </div>
 
                             </div>
                             <div class="item-4 d-flex align-items-center">
                                 <div>
-                                    <input>
+                                    <input formControlName="giaTriPCAlterGfa">
                                 </div>
                             </div>
 
                         </div>
                         <div class="three">
-                            <textarea name="" id=""></textarea>
+                            <textarea name="" id="" formControlName="giaTriPCNote"></textarea>
 
                         </div>
                     </div>
@@ -1384,30 +1136,30 @@
                         <div class="two d-flex">
                             <div class="item-1 d-flex align-items-center">
                                 <div>
-                                    <input>
+                                    <input formControlName="totalGiaVonAmount">
                                 </div>
                             </div>
                             <div class="item-2 d-flex align-items-center">
                                 <div>
-                                    <input>
+                                    <input formControlName="totalGiaVonGfa">
                                 </div>
                             </div>
 
                             <div class="item-3 d-flex align-items-center">
-                                <div>
-                                    <input>
+                                <div class="center-parent w-100">
+                                    <div>/</div>
                                 </div>
 
                             </div>
                             <div class="item-4 d-flex align-items-center">
-                                <div>
-                                    <input>
+                                <div class="center-parent w-100">
+                                    <div>/</div>
                                 </div>
                             </div>
 
                         </div>
                         <div class="three">
-                            <textarea name="" id=""></textarea>
+                            <textarea name="" id="" formControlName="totalGiaVonNote"></textarea>
 
                         </div>
                     </div>
@@ -1426,18 +1178,18 @@
                         <div class="two d-flex">
                             <div class="border-right w-50 d-flex align-items-center">
                                 <div class="w-100">
-                                    <input>
+                                    <input formControlName="chiPhiLoiNhuanAmountGfa">
                                 </div>
                             </div>
                             <div class="w-50 d-flex align-items-center">
                                 <div class="w-100">
-                                    <input>
+                                    <input formControlName="chiPhiLoiNhuanAlterAmountGfa">
                                 </div>
                             </div>
 
                         </div>
                         <div class="three">
-                            <textarea name="" id=""></textarea>
+                            <textarea name="" id="" formControlName="chiPhiLoiNhuanNote"></textarea>
 
                         </div>
                     </div>
@@ -1449,30 +1201,30 @@
                         <div class="two d-flex">
                             <div class="item-1 d-flex align-items-center">
                                 <div>
-                                    <input>
+                                    <input formControlName="giaDiNopThauAmount">
                                 </div>
                             </div>
                             <div class="item-2 d-flex align-items-center">
-                                <div>
-                                    <input>
+                                <div class="center-parent w-100">
+                                    <div>/</div>
                                 </div>
                             </div>
 
                             <div class="item-3 d-flex align-items-center">
-                                <div>
-                                    <input>
+                                <div class="center-parent w-100">
+                                    <div>/</div>
                                 </div>
 
                             </div>
                             <div class="item-4 d-flex align-items-center">
-                                <div>
-                                    <input>
+                                <div class="center-parent w-100">
+                                    <div>/</div>
                                 </div>
                             </div>
 
                         </div>
                         <div class="three">
-                            <textarea name="" id=""></textarea>
+                            <textarea name="" id="" formControlName="giaDiNopThauNote"></textarea>
 
                         </div>
                     </div>
@@ -1491,179 +1243,182 @@
                         </div>
                         <div class="two d-flex">
                             <div class="item-1 d-flex align-items-center">
-                                <div>
-                                    <input>
+                                <div class="center-parent w-100">
+                                    <div>/</div>
                                 </div>
                             </div>
                             <div class="item-2 d-flex align-items-center">
                                 <div>
-                                    <input>
+                                    <input formControlName="tyLeGfa">
                                 </div>
                             </div>
 
                             <div class="item-3 d-flex align-items-center">
-                                <div>
-                                    <input>
+                                <div class="center-parent w-100">
+                                    <div>/</div>
                                 </div>
 
                             </div>
                             <div class="item-4 d-flex align-items-center">
-                                <div>
-                                    <input>
+                                <div class="center-parent w-100">
+                                    <div>/</div>
                                 </div>
                             </div>
 
                         </div>
                         <div class="three">
-                            <textarea name="" id=""></textarea>
+                            <textarea name="" id="" formControlName="tyLeNote"></textarea>
 
                         </div>
                     </div>
-                    <div class="d-flex row-last-header">
 
-                    </div>
+                    <ng-container *ngIf="!isModeCreate">
+                        <div class="d-flex row-last-header">
 
-                    <div class="d-flex align-items-center row-last-item">
-                        <div class="one d-flex align-items-center">
-                            <div class="ml-1 font-weight-bold">Ngày trình duyệt</div>
                         </div>
-                        <div class="two d-flex align-items-center">
-                            <div class="w-100 p-1">
-                                <kendo-datepicker class="w-100"></kendo-datepicker>
-
+                        <div class="d-flex align-items-center row-last-item">
+                            <div class="one d-flex align-items-center">
+                                <div class="ml-1 font-weight-bold">Ngày trình duyệt</div>
                             </div>
-
-                        </div>
-                        <div class="three d-flex align-items-center">
-                            <div class="ml-1 font-weight-bold">Lần duyệt</div>
-
-                        </div>
-
-                        <div class="four d-flex align-items-center">
-                            <div class="center-parent w-100">
-                                <div class="w-100">
-                                    <input>
-
-                                </div>
-                            </div>
-
-                        </div>
-
-                    </div>
-
-
-
-                    <div class="d-flex row-last-item-2">
-                        <div class="first font-weight-bold d-flex align-items-center">
-                            <div class="ml-1">
-                                Trưởng nhóm dự thầu
-                            </div>
-                        </div>
-                        <div class="two d-flex">
-                            <div class="ml-3 d-flex align-items-center item-1">
-                                <div>
-                                    <label class="childcheck">
-                                        <input type="checkbox">
-                                        <span class="checkmark"></span>
-                                    </label>
+                            <div class="two d-flex align-items-center">
+                                <div class="w-100 p-1">
+                                    <kendo-datepicker class="w-100" formControlName="approvalDate"></kendo-datepicker>
 
                                 </div>
 
                             </div>
-                            <div class="pass d-flex align-items-center">
-                                <div class="font-weight-bold">Duyệt</div>
+                            <div class="three d-flex align-items-center">
+                                <div class="ml-1 font-weight-bold">Lần duyệt</div>
+
                             </div>
 
-                            <div class="ml-3 d-flex align-items-center item-1 mg-left">
-                                <div>
-                                    <label class="childcheck">
-                                        <input type="checkbox">
-                                        <span class="checkmark"></span>
-                                    </label>
+                            <div class="four d-flex align-items-center">
+                                <div class="center-parent w-100">
+                                    <div class="w-100">
+                                        <input formControlName="approvalTimes">
 
+                                    </div>
                                 </div>
 
                             </div>
-                            <div class="pass d-flex align-items-center">
-                                <div class="font-weight-bold">Không duyệt</div>
-                            </div>
 
                         </div>
-                    </div>
-                    <div class="d-flex row-last-item-2">
-                        <div class="first font-weight-bold d-flex align-items-center">
-                            <div class="ml-1">
-                                Trưởng phòng DT
-                            </div>
-                        </div>
-                        <div class="two d-flex">
-                            <div class="ml-3 d-flex align-items-center item-1">
-                                <div>
-                                    <label class="childcheck">
-                                        <input type="checkbox">
-                                        <span class="checkmark"></span>
-                                    </label>
 
+
+
+                        <div class="d-flex row-last-item-2">
+                            <div class="first font-weight-bold d-flex align-items-center">
+                                <div class="ml-1">
+                                    Trưởng nhóm dự thầu
+                                </div>
+                            </div>
+                            <div class="two d-flex">
+                                <div class="ml-3 d-flex align-items-center item-1">
+                                    <div>
+                                        <label class="childcheck">
+                                            <input type="radio" (click)="truongNhomDuyet()" [value]=true name="isApprovedByTenderLeader" formControlName="isApprovedByTenderLeader">
+                                            <span class="checkmark"></span>
+                                        </label>
+
+                                    </div>
+
+                                </div>
+                                <div class="pass d-flex align-items-center">
+                                    <div class="font-weight-bold">Duyệt</div>
+                                </div>
+
+                                <div class="ml-3 d-flex align-items-center item-1 mg-left">
+                                    <div>
+                                        <label class="childcheck">
+                                            <input type="radio" (click)="truongNhomKhongDuyet()" [value]=false name="isApprovedByTenderLeader" formControlName="isApprovedByTenderLeader">
+                                            <span class="checkmark"></span>
+                                        </label>
+
+                                    </div>
+
+                                </div>
+                                <div class="pass d-flex align-items-center">
+                                    <div class="font-weight-bold">Không duyệt</div>
                                 </div>
 
                             </div>
-                            <div class="pass d-flex align-items-center">
-                                <div class="font-weight-bold">Duyệt</div>
+                        </div>
+                        <div class="d-flex row-last-item-2">
+                            <div class="first font-weight-bold d-flex align-items-center">
+                                <div class="ml-1">
+                                    Trưởng phòng DT
+                                </div>
                             </div>
+                            <div class="two d-flex">
+                                <div class="ml-3 d-flex align-items-center item-1">
+                                    <div>
+                                        <label class="childcheck">
+                                            <input type="radio" (click)="truongPhongDuyet()" [value]=true name="isApprovedByTenderManager" formControlName="isApprovedByTenderManager">
+                                            <span class="checkmark"></span>
+                                        </label>
 
-                            <div class="ml-3 d-flex align-items-center item-1 mg-left">
-                                <div>
-                                    <label class="childcheck">
-                                        <input type="checkbox">
-                                        <span class="checkmark"></span>
-                                    </label>
+                                    </div>
 
+                                </div>
+                                <div class="pass d-flex align-items-center">
+                                    <div class="font-weight-bold">Duyệt</div>
+                                </div>
+
+                                <div class="ml-3 d-flex align-items-center item-1 mg-left">
+                                    <div>
+                                        <label class="childcheck">
+                                            <input type="radio" (click)="truongPhongKhongDuyet()" [value]=false name="isApprovedByTenderManager" formControlName="isApprovedByTenderManager">
+                                            <span class="checkmark"></span>
+                                        </label>
+
+                                    </div>
+
+                                </div>
+                                <div class="pass d-flex align-items-center">
+                                    <div class="font-weight-bold">Không duyệt</div>
                                 </div>
 
                             </div>
-                            <div class="pass d-flex align-items-center">
-                                <div class="font-weight-bold">Không duyệt</div>
-                            </div>
-
                         </div>
-                    </div>
-                    <div class="d-flex row-last-item-2">
-                        <div class="first font-weight-bold d-flex align-items-center">
-                            <div class="ml-1">
-                                Ban Tổng giám đốc
+                        <div class="d-flex row-last-item-2">
+                            <div class="first font-weight-bold d-flex align-items-center">
+                                <div class="ml-1">
+                                    Ban Tổng giám đốc
+                                </div>
                             </div>
-                        </div>
-                        <div class="two d-flex">
-                            <div class="ml-3 d-flex align-items-center item-1">
-                                <div>
-                                    <label class="childcheck">
-                                        <input type="checkbox">
-                                        <span class="checkmark"></span>
-                                    </label>
+                            <div class="two d-flex">
+                                <div class="ml-3 d-flex align-items-center item-1">
+                                    <div>
+                                        <label class="childcheck">
+                                            <input type="radio" (click)="giamDocDuyet()" [value]=true name="isApprovedByBoardOfDirector" formControlName="isApprovedByBoardOfDirector">
+                                            <span class="checkmark"></span>
+                                        </label>
 
+                                    </div>
+
+                                </div>
+                                <div class="pass d-flex align-items-center">
+                                    <div class="font-weight-bold">Duyệt</div>
+                                </div>
+
+                                <div class="ml-3 d-flex align-items-center item-1 mg-left">
+                                    <div>
+                                        <label class="childcheck">
+                                            <input type="radio" (click)="giamDocKhongDuyet()" [value]=false name="isApprovedByBoardOfDirector">
+                                            <span class="checkmark"></span>
+                                        </label>
+
+                                    </div>
+
+                                </div>
+                                <div class="pass d-flex align-items-center">
+                                    <div class="font-weight-bold">Không duyệt</div>
                                 </div>
 
                             </div>
-                            <div class="pass d-flex align-items-center">
-                                <div class="font-weight-bold">Duyệt</div>
-                            </div>
-
-                            <div class="ml-3 d-flex align-items-center item-1 mg-left">
-                                <div>
-                                    <label class="childcheck">
-                                        <input type="checkbox">
-                                        <span class="checkmark"></span>
-                                    </label>
-
-                                </div>
-
-                            </div>
-                            <div class="pass d-flex align-items-center">
-                                <div class="font-weight-bold">Không duyệt</div>
-                            </div>
-
                         </div>
-                    </div>
+
+                    </ng-container>
 
                 </div>
             </div>

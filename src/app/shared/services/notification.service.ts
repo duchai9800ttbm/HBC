@@ -1,11 +1,11 @@
 import { Injectable } from '@angular/core';
 import { ApiService } from './api.service';
 import { NotificationItem } from '../models/notification/notification-item.model';
-import { Observable } from '../../../../node_modules/rxjs';
+import { Observable, Subject } from '../../../../node_modules/rxjs';
 
 @Injectable()
 export class NotificationService {
-
+  notificationAmont: Subject<string> = new Subject<string>();
   constructor(
     private apiService: ApiService,
   ) { }
@@ -36,12 +36,13 @@ export class NotificationService {
         displayText: result.liveFormType.displayText,
       },
       sendDate: result.sendDate,
+      data: result.data,
     };
   }
 
   // Danh sách các thông báo của người dùng
   getListNotification(): Observable<NotificationItem[]> {
-    const url = `/bidusernotification`;
+    const url = `bidusernotification`;
     return this.apiService.get(url).map(response => {
       const result = response.result;
       return (result || []).map(NotificationService.toNotificationList);
@@ -51,8 +52,36 @@ export class NotificationService {
   // Đọc thông báo
   readNotification(bidUserNotificationId: number) {
     const url = `bidusernotification/${bidUserNotificationId}/readnotification`;
-    return this.apiService.get(url).map(response =>  {
+    return this.apiService.get(url).map(response => {
       return response;
     });
+  }
+
+  // Đánh dấu tất cả đã đọc
+  readAllNotification() {
+    const url = `bidusernotification/readall`;
+    return this.apiService.get(url).map(response => {
+      return response;
+    });
+  }
+
+  // Xóa tất cả thông báo
+  deleteAllNotification() {
+    const url = `bidusernotification/deleteall`;
+    return this.apiService.get(url).map(response => {
+      return response;
+    });
+  }
+
+  // Xóa 1 thông báo
+  deleteOneNotification(bidUserNotificationId: number) {
+    const url = `bidusernotification/${bidUserNotificationId}/delete`;
+    return this.apiService.get(url).map(response => {
+      return response;
+    });
+  }
+
+  change() {
+    this.notificationAmont.next();
   }
 }
