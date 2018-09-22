@@ -381,7 +381,6 @@ export class DocumentService {
         const url = `bidopportunity/${bidOpportunityId}/tendersitesurveyingreport/changedhistory/${page}/${pageSize}`;
         return this.apiService.get(url).map(res => {
             const response = res.result;
-            console.log(response);
             return {
                 currentPage: response.pageIndex,
                 pageSize: response.pageSize,

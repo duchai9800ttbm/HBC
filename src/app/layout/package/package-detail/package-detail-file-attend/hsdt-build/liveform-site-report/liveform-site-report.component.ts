@@ -8,7 +8,6 @@ import { AlertService } from '../../../../../../shared/services';
 import { Subject } from 'rxjs/Subject';
 import { SiteReportChangedHistory } from '../../../../../../shared/models/site-survey-report/site-report-changed-history';
 
-
 @Component({
   selector: 'app-liveform-site-report',
   templateUrl: './liveform-site-report.component.html',
@@ -52,9 +51,6 @@ export class LiveformSiteReportComponent implements OnInit {
       this.documentData = res;
       this.isData = (this.documentData.id) ? true : false;
     });
-  }
-  pagedResultChange(pagedResult: any) {
-    this.refresh(false);
   }
   refresh(displayAlert: boolean = false): void {
     this.spinner.show();

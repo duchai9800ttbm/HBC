@@ -211,17 +211,17 @@
                     </tbody>
                 </table>
             </div>
-            <app-pagination [(pagedResult)]="pagedResult" (pagedResultChange)="pagedResultChange($event)"></app-pagination>
+            <app-pagination [(pagedResult)]="pagedResult"></app-pagination>
         </div>
     </div>
 </ng-container>
 <ng-template #elseTemplate>
     <div style="padding-left: 50px;" id="template1">
         <div class=" title-list-package d-flex flex-wrap align-items-center status-filter">
-            <div class="mr-auto d-flex align-items-end list-package mt-2 mb-2" style="padding-top: 0!important;">
-                <div class="d-flex justify-content-start" style="height: 40px;">
+            <div class="mr-auto d-flex align-items-end list-package mt-2 mb-2">
+                <div class="d-flex justify-content-start">
                     <div class="mr-4">
-                        <div style="text-transform: uppercase; font-size: 15px"> báo cáo khảo sát công trường (site
+                        <div class="text-uppercase title-report"> báo cáo khảo sát công trường (site
                             surveying report)</div>
                     </div>
                 </div>
