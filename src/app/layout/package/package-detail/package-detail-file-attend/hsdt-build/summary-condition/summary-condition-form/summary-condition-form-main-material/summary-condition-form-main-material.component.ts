@@ -13,6 +13,10 @@ import { DictionaryItemText } from '../../../../../../../../shared/models';
 export class SummaryConditionFormMainMaterialComponent implements OnInit {
 
   mainMaterialForm: FormGroup;
+
+  get materialsFA(): FormArray {
+    return this.mainMaterialForm.get('materials') as FormArray;
+  }
   constructor(
     private fb: FormBuilder
   ) { }

@@ -14,11 +14,11 @@ import { SharedModule } from '../../shared/shared.module';
 import { PackageComponent } from './package.component';
 import { CustomerFormComponent } from './package-form/customer-form/customer-form.component';
 import { NouisliderModule } from 'ng2-nouislider';
-import { StarRatingModule } from '../../../../node_modules/angular-star-rating/dist';
+// import { StarRatingModule } from '../../../../node_modules/angular-star-rating/dist';
 import { PerfectScrollbarModule } from 'ngx-perfect-scrollbar';
 import { PERFECT_SCROLLBAR_CONFIG } from 'ngx-perfect-scrollbar';
 import { PerfectScrollbarConfigInterface } from 'ngx-perfect-scrollbar';
-import { PackageEmailComponent } from './package-email/package-email.component';
+// import { PackageEmailComponent } from './package-email/package-email.component';
 import { UserFormComponent } from './package-form/user-form/user-form.component';
 import { GroupUserFormComponent } from './package-form/user-form/group-user-form/group-user-form.component';
 
@@ -27,7 +27,7 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
 };
 @NgModule({
   imports: [
-    StarRatingModule,
+    // StarRatingModule,
     CommonModule,
     PackageRoutingModule,
     SharedModule,

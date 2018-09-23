@@ -1,5 +1,5 @@
 <div class="example-wrapper">
-  <kendo-dialog (close)="close('cancel')" [minWidth]="250" [width]="600">
+  <kendo-dialog (close)="close()" [minWidth]="250" [width]="600">
     <form [formGroup]="refusalApproval" novalidate>
       <div class="title-detail center-parent">
         <div class="col-md-1"></div>
@@ -9,7 +9,7 @@
           </div>
         </div>
         <div class="col-md-1 close-popup">
-          <span (click)="close('cancel')">X</span>
+          <span (click)="close()">X</span>
         </div>
       </div>
       <hr>
@@ -19,7 +19,7 @@
             <div class="cus-header bold-title">
               Bạn đang từ chối HSMT của gói thầu: "Khách sạn Biển Đông Phương"
             </div>
-            <div class="body cus-header" id="info-main" [ngbCollapse]="isCollapsedMain">
+            <div class="body cus-header" id="info-main">
               <table class="w-100 table">
                 <tbody>
                   <tr>
@@ -47,7 +47,7 @@
           <div class="action-bar alignment-but center-parent">
             <button type="submit" class="btn btn-primary ml-2 cus-but-cs" (click)="submitForm()">Từ chối
             </button>
-            <button class="btn btn-secondary ml-2 cus-but-cs" (click)="close('cancel')">Hủy
+            <button class="btn btn-secondary ml-2 cus-but-cs" (click)="close()">Hủy
             </button>
           </div>
         </div>

@@ -17,10 +17,10 @@
         <div class="d-flex boder-table">
             <div class="w-100  mr-auto">
                 <div class="card-collapse">
-                    <div class="header" (click)="isCollapsedMain = !isCollapsedMain" [attr.aria-expanded]="!isCollapsedMain" aria-controls="info-main">
+                    <div class="header"  aria-controls="info-main">
                         <i class="fa fa-caret-down mr-3"></i>Thông tin chi tiết
                     </div>
-                    <div class="body" id="info-main" [ngbCollapse]="isCollapsedMain">
+                    <div class="body" id="info-main">
                         <table class="w-100 table table-bordered layout-table">
                             <tbody>
                                 <tr>
@@ -34,7 +34,7 @@
                                     <td class="w-15 bg-light text-right label no-boder">Đánh giá</td>
                                     <td class="w-35 no-boder">
                                         <div style="display: flex; justify-content: flex-start; align-items: start">
-                                            <star-rating-comp class="w-75" [starType]="'svg'" [(rating)]="evaluate" tabindex="46" (onRatingChange)="onRatingChange($event)"></star-rating-comp>
+                                            <!-- <star-rating-comp class="w-75" [starType]="'svg'" [(rating)]="evaluate" tabindex="46" (onRatingChange)="onRatingChange($event)"></star-rating-comp> -->
                                         </div>
                                         <!-- <input class="w-75 form-control" autofocus tabindex="1"  type="text" formControlName="rating"> -->
                                     </td>
@@ -231,9 +231,9 @@
                     </div>
                 </div>
                 <div class="card-collapse">
-                    <div class="header" (click)="isCollapsedDesc = !isCollapsedDesc" [attr.aria-expanded]="!isCollapsedDesc" aria-controls="info-desc">
+                    <div class="header"  aria-controls="info-desc">
                         <i class="fa fa-caret-down mr-3"></i>Mô tả chi tiết</div>
-                    <div class="body" id="info-desc" [ngbCollapse]="isCollapsedDesc">
+                    <div class="body" id="info-desc">
                         <table class="w-100 table table-bordered">
                             <tbody>
                                 <tr>

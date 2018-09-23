@@ -26,7 +26,7 @@
           <button class="btn btn-primary ml-2">
             Tải xuống tài liệu
           </button>
-          <button class="btn btn-primary ml-2" (click)="refresh(true)">
+          <button class="btn btn-primary ml-2" (click)="refresh()">
             <i class="fa fa-refresh" aria-hidden="true"></i>
           </button>
         </div>
@@ -268,7 +268,7 @@
             <input type="text" class="form-control icon" placeholder="&#xf002; Tên tài liệu" (keyup)="search2($event.target.value)">
           </div>
 
-          <button class="btn btn-primary ml-2" (click)="refresh(true)">
+          <button class="btn btn-primary ml-2" (click)="refresh()">
             <i class="fa fa-refresh" aria-hidden="true"></i>
           </button>
         </div>

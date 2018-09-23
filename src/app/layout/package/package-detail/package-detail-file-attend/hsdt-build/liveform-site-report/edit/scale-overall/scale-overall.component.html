@@ -17,7 +17,7 @@
                 <div class="main-detail">
                     <form [formGroup]="loaiCongTrinhForm">
                         <div class="single-row">
-                            <div class="child childcheck" formArrayName="loaiCongTrinhList" *ngFor="let item of loaiCongTrinhForm.controls.loaiCongTrinhList.controls; let i = index">
+                            <div class="child childcheck" formArrayName="loaiCongTrinhList" *ngFor="let item of loaiCongTrinhListFA.controls; let i = index">
                                 <input [formControlName]="i" type="checkbox" [checked]="loaiCongTrinhList[i].checked"
                                     (change)="loaiCongTrinhList[i].checked = !loaiCongTrinhList[i].checked; loaiCongTrinhChange($event)"
                                     name="construcType">
@@ -29,7 +29,7 @@
                     <hr style="margin-right: 13%" />
                     <form [formGroup]="trangThaiCongTrinhForm">
                         <div class="single-row">
-                            <div class="child childcheck" formArrayName="trangthaiCongTrinhList" *ngFor="let item of trangThaiCongTrinhForm.controls.trangthaiCongTrinhList.controls; let i = index">
+                            <div class="child childcheck" formArrayName="trangthaiCongTrinhList" *ngFor="let item of trangthaiCongTrinhListFA.controls; let i = index">
                                 <input [formControlName]="i" type="checkbox" [checked]="trangthaiCongTrinhList[i].checked"
                                     (change)="trangthaiCongTrinhList[i].checked = !trangthaiCongTrinhList[i].checked; trangThaiCongTrinhChange($event)"
                                     name="construcStatus">

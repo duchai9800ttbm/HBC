@@ -10,6 +10,11 @@ import DateTimeConvertHelper from '../../../../../../../../shared/helpers/dateti
 })
 export class SummaryConditionFormConditionContractComponent implements OnInit {
     conditionContractForm: FormGroup;
+
+    get insurancesFA(): FormArray {
+        const contractCondition = this.conditionContractForm.get('contractCondition') as FormArray;
+        return contractCondition.get('insurances') as FormArray;
+    }
     constructor(private fb: FormBuilder) {}
 
     ngOnInit() {

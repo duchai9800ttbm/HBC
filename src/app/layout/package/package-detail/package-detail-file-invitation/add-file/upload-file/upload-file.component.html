@@ -1,5 +1,5 @@
 <div class="example-wrapper">
-    <kendo-dialog (close)="close('cancel')" [width]="700" class="width-kendo-dialog">
+    <kendo-dialog (close)="close()" [width]="700" class="width-kendo-dialog">
         <form [formGroup]="uploadForm" novalidate>
             <div class="title-detail center-parent">
                 <div style="width: 20%;">
@@ -13,7 +13,7 @@
                 <div style="width: 20%;" class="d-flex justify-content-end">
                     <div>
                         <div>
-                            <img (click)="close('cancel')" width="15" height="15" class="cursor-pointer not-outline"
+                            <img (click)="close()" width="15" height="15" class="cursor-pointer not-outline"
                                 src="assets\images\close.png">
                         </div>
                     </div>
@@ -23,7 +23,7 @@
             <div class="d-flex">
                 <div class="w-100  mr-auto">
                     <div>
-                        <div class="body cus-header" id="info-main" [ngbCollapse]="isCollapsedMain">
+                        <div class="body cus-header" id="info-main">
                             <div class="w-100 center-parent" *ngIf="errorMess" class="alert alert-danger" role="alert">
                                 <span> {{errorMess}}</span>
                             </div>
@@ -103,7 +103,7 @@
                     <div class="action-bar alignment-but center-parent">
                         <button type="submit" class="btn btn-primary ml-2 cus-but-cs" (click)="submitForm()">Upload
                         </button>
-                        <button class="btn btn-secondary ml-2 cus-but-cs" (click)="close('cancel')">Hủy
+                        <button class="btn btn-secondary ml-2 cus-but-cs" (click)="close()">Hủy
                         </button>
                     </div>
                 </div>

@@ -12,6 +12,10 @@ import { TenderOtherSpecRequirement } from '../../../../../../../../shared/model
 export class SummaryConditionFormSpecialRequirementComponent implements OnInit {
 
   specialRequirementForm: FormGroup;
+
+  get requirementsFA(): FormArray {
+    return this.specialRequirementForm.get('requirements') as FormArray;
+  }
   constructor(
     private fb: FormBuilder
   ) { }
