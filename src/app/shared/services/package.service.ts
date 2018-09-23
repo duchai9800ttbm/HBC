@@ -25,6 +25,9 @@ export class PackageService {
     public isSummaryConditionForm$ = this.isSummaryConditionForm.asObservable();
     private userIdSub = new Subject<any>();
     public kickOff = new Subject<any>();
+    public routerAction = '';
+    private routerActionSub = new Subject<string>();
+    routerAction$ = this.routerActionSub.asObservable();
     userId$ = this.userIdSub.asObservable();
     kickOff$ = this.kickOff.asObservable();
     private static createFilterParams(filter: PackageFilter): URLSearchParams {
@@ -171,6 +174,11 @@ export class PackageService {
         private instantSearchService: InstantSearchService,
         private apiService: ApiService
     ) { }
+
+    setRouterAction(data: string) {
+        this.routerAction = data;
+        this.routerActionSub.next(data);
+    }
 
     // active step
     setUserId(data: boolean) {

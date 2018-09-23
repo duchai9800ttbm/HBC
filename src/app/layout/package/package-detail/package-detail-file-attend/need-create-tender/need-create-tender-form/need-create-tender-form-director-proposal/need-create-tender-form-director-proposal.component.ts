@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder } from '@angular/forms';
 import { NeedCreateTenderFormComponent } from '../need-create-tender-form.component';
 import DateTimeConvertHelper from '../../../../../../../shared/helpers/datetime-convert-helper';
-import { NeedCreateTenderComponent } from '../../need-create-tender.component';
+import { PackageService } from '../../../../../../../shared/services/package.service';
 
 @Component({
   selector: 'app-need-create-tender-form-director-proposal',
@@ -14,11 +14,13 @@ export class NeedCreateTenderFormDirectorProposalComponent implements OnInit {
   routerAction: string;
   directorProposalForm: FormGroup;
   constructor(
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private packageService: PackageService
   ) { }
 
   ngOnInit() {
-    this.routerAction = NeedCreateTenderComponent.routerAction;
+    this.routerAction = this.packageService.routerAction;
+    this.packageService.routerAction$.subscribe(router => this.routerAction = router);
     this.createForm();
     this.directorProposalForm.valueChanges.subscribe(data => this.mappingToLiveFormData(data));
     this.mappingToLiveFormData(this.directorProposalForm.value);

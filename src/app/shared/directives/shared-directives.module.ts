@@ -13,6 +13,7 @@ import { EnterPreventDefaultDirective } from './enter-prevent-default.directive'
 import { InputNumberIntegerDirective } from './input-number-integer.directive';
 import { WidthAutoDirective } from './width-auto.directive';
 import { AutoFocusDirective } from './auto-focus.directive';
+import { InputNumberNegativeDecimalDirective } from './input-number-negative-decimal.directive';
 
 @NgModule({
     imports: [
@@ -29,7 +30,8 @@ import { AutoFocusDirective } from './auto-focus.directive';
         EnterPreventDefaultDirective,
         InputNumberIntegerDirective,
         WidthAutoDirective,
-        AutoFocusDirective
+        AutoFocusDirective,
+        InputNumberNegativeDecimalDirective,
     ],
     exports: [
         InputNumberDirective,
@@ -42,7 +44,8 @@ import { AutoFocusDirective } from './auto-focus.directive';
         EnterPreventDefaultDirective,
         InputNumberIntegerDirective,
         WidthAutoDirective,
-        AutoFocusDirective
+        AutoFocusDirective,
+        InputNumberNegativeDecimalDirective
     ],
     providers: [
         VnCurrencyPipe,
