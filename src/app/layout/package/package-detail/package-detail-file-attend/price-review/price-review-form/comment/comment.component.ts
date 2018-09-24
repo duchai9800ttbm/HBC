@@ -1,4 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
+import { CommentService } from '../../../../../../../shared/services/comment.service';
+import { PackageDetailComponent } from '../../../../package-detail.component';
+import { moment } from '../../../../../../../../../node_modules/ngx-bootstrap/chronos/test/chain';
 
 @Component({
   selector: 'app-comment-editor',
@@ -7,15 +10,19 @@ import { Component, OnInit } from '@angular/core';
 })
 export class CommentComponent implements OnInit {
   commentEditor: string;
-
-  constructor() { }
+  @Input() packageId: number;
+  constructor(private commentService: CommentService) { }
 
   ngOnInit() {
+    this.packageId = PackageDetailComponent.packageId;
   }
   addCommentByKeyUpEnter(e) {
-    const comment = e.target.value;
-    console.log(this.commentEditor.trim().length);
-    this.commentEditor = comment;
+    const comment = e.target.value.trim();
+    this.commentEditor = null;
+    this.commentService.createComment(this.packageId, comment)
+      .subscribe(data => {
+        
+      });
   }
 
   addCommentByIcon() {

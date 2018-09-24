@@ -26,7 +26,8 @@
 }
 
 .content {
-    margin-left: 1rem;
+    margin-left: 2rem;
+    margin-right: 1rem;
 }
 
 .icon-view {
@@ -43,4 +44,11 @@
 
 .icon-print {
     color: #f26522;
+}
+
+input.icon {
+    font-family: FontAwesome, "Open Sans", Verdana, sans-serif;
+    font-style: normal;
+    font-weight: normal;
+    text-decoration: inherit;
 }

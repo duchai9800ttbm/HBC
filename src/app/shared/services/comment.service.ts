@@ -1,88 +1,73 @@
-import { Injectable } from "@angular/core";
-import { BehaviorSubject } from "rxjs";
-import { ApiService, SessionService } from "./index";
-import { CommentModel } from "../modules/comments/comment.model";
-import { Observable } from "rxjs/Observable";
-import { PagedResult } from "../models/index";
+import { Injectable } from '@angular/core';
+import { SessionService, ApiService } from '.';
+import { CommentModel } from '../modules/comments/comment.model';
+import { CommentItem } from '../models/comment/comment.model';
+import { Observable } from '../../../../node_modules/rxjs/Observable';
+import { PagedResult } from '../models';
 
 @Injectable()
 export class CommentService {
+
     constructor(
         private apiService: ApiService,
         private sessionService: SessionService
-    ) {}
+    ) { }
 
     get employeeId() {
         return this.sessionService.currentUser.employeeId;
     }
 
-    read(
-        moduleName: string,
-        moduleItemId: number,
-        page: number | string,
-        pageSize: number | string
-    ): Observable<PagedResult<CommentModel>> {
-        const url = `/employee/${
-            this.employeeId
-        }/comments/${moduleName}/${moduleItemId}/${page}/${pageSize}`;
-        return this.apiService
-            .get(url)
-            .map(response => {
-                const result = response.result;
-                return {
-                    currentPage: result.page,
-                    pageSize: pageSize,
-                    pageCount: result.pageCount,
-                    total: result.recordCount,
-                    items: (result.data || []).map(
-                        CommentService.toCommentModel
-                    )
-                };
-            })
-            .share();
-    }
-
-    create(moduleName: string, moduleItemId: number, newComment: CommentModel) {
-        const url = `/employee/${this.employeeId}/comment`;
-
-        const requestModel = {
-            type: moduleName,
-            objectId: moduleItemId,
-            description: newComment.content,
-            parentId: newComment.parentId
+    createComment(bidOpportunityId: number, commentContent: string) {
+        const url = `tenderpriceapproval/comment/create`;
+        const model = {
+            bidOpportunityId,
+            commentContent
         };
-
-        return this.apiService
-            .post(url, requestModel)
-            .map(response => response.result);
+        return this.apiService.post(url, model).map(response => this.toCommentItemModel(response.result));
     }
 
-    // tslint:disable-next-line:member-ordering
-    private static toCommentModel(resultItem: any): CommentModel {
-        const comment = CommentService.toCommentItem(resultItem);
-
-        if (resultItem.children && resultItem.children.length > 0) {
-            comment.replyComments = resultItem.children
-                .sort((d1, d2) => d1.createdDate - d2.createdDate)
-                .map(CommentService.toCommentItem);
-        }
-
-        return comment;
+    getComment(bidOpportunityId: number, page: number, pageSize: number): Observable<PagedResult<CommentItem>> {
+        const url = `${bidOpportunityId}/tenderpriceapproval/comments/${page}/${pageSize}`;
+        return this.apiService.get(url).map(response => {
+            const result = response.result;
+            return{
+                currentPage: result.pageIndex,
+                pageSize: result.pageSize,
+                pageCount: result.totalPages,
+                total: result.totalCount,
+                items: (result.items || []).map(
+                    this.toCommentItemModel
+                )
+            };
+        });
     }
 
-    // tslint:disable-next-line:member-ordering
-    private static toCommentItem(item: any) {
+    toCommentItemModel(result: any): CommentItem {
         return {
-            id: item.id,
-            parentId: item.parentId,
-            time: item.createdDate,
-            content: item.description,
-            user: item.employee && {
-                userId: item.employee.id,
-                userName: item.employee.name
+            id: result.id,
+            author: result.author && {
+                id: result.author.id,
+                employeeId: result.author.employeeId,
+                employeeNo: result.author.employeeNo,
+                employeeName: result.author.employeeName,
+                employeeAddress: result.author.employeeAddress,
+                employeeDob: result.author.employeeDob,
+                employeeTel: result.author.employeeTel,
+                employeeTel1: result.author.employeeTel1,
+                departmentName: result.author.departmentName,
+                levelName: result.author.levelName,
+                employeeAvatar: result.author.employeeAvatar,
+                departmentRoomName: result.author.departmentRoomName,
+                branchName: result.author.branchName,
+                employeeBirthPlace: result.author.employeeBirthPlace,
+                employeeIDNumber: result.author.employeeIDNumber,
+                employeeGender: result.author.employeeGender,
+                employeeTaxNumber: result.author.employeeTaxNumber,
+                employeeBankAccount: result.author.employeeBankAccount,
             },
-            replyComments: [],
-            avatar: ""
+            createdTime: result.createdTime,
+            commentContent: result.commentContent
         };
     }
+
 }

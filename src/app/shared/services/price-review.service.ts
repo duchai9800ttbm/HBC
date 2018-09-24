@@ -1,14 +1,19 @@
 import { Injectable } from '@angular/core';
 import { ApiService } from './api.service';
 import { TenderPriceApproval } from '../models/price-review/price-review.model';
+import { SessionService } from './session.service';
+import DateTimeConvertHelper from '../helpers/datetime-convert-helper';
 
 @Injectable()
 export class PriceReviewService {
 
   constructor(
-    private apiService: ApiService
+    private apiService: ApiService,
+    private sessionService: SessionService
   ) { }
-
+  get employeeId() {
+    return this.sessionService.currentUser.employeeId;
+  }
   truongNhomDuyet(bidOpportunityId: number) {
     const url = `bidopportunity/${bidOpportunityId}/approvedbytenderleader`;
     return this.apiService.post(url);
@@ -39,22 +44,34 @@ export class PriceReviewService {
     return this.apiService.post(url);
   }
 
+  guiDuyetTrinhDuyetGia(bidOpportunityId: number) {
+    const url = `bidopportunity/hsdt/${bidOpportunityId}/guiduyettrinhduyetgia`;
+    return this.apiService.post(url);
+  }
   view(bidOpportunityId: number) {
     const url = `bidopportunity/${bidOpportunityId}/tenderpriceapproval`;
     return this.apiService.get(url).map(response => {
-      if (response.result) {
-        this.toTenderPriceApproval(response.result);
-      } else {
+      if (!response.result) {
         return null;
       }
+      return this.toTenderPriceApproval(response.result);
     });
   }
 
+  delete(bidOpportunityId: number) {
+    const url = `bidopportunity/${bidOpportunityId}/tenderpriceapproval/delete`;
+    return this.apiService.post(url);
+  }
 
-  createOrEdit(formValue: any) {
+  createOrEdit(formValue: any, bidopportunityId: number) {
     const url = `tenderpriceapproval/createorupdate`;
     const modelRequest = new TenderPriceApproval();
-    modelRequest.bidOpportunityId = 238;
+    modelRequest.bidOpportunityId = bidopportunityId;
+    modelRequest.createdEmployeeId = formValue.id ? formValue.createdEmployeeId : this.employeeId;
+    modelRequest.updatedEmployeeId = this.employeeId;
+    modelRequest.isDraftVersion = formValue.isDraftVersion ? formValue.isDraftVersion : false;
+    modelRequest.approvalDate = DateTimeConvertHelper.fromDtObjectToTimestamp(formValue.approvalDate) / 1000;
+    modelRequest.approvalTimes = formValue.approvalTimes;
     modelRequest.projectInformation = {
       foudationPart: {
         scopeOfWorkIsInclude: formValue.phanMongCheck ? formValue.phanMongCheck : false,
@@ -114,6 +131,101 @@ export class PriceReviewService {
         folowTenderDocumentRequirement: formValue.yeuCauKhacYC,
         suggestion: null,
         note: formValue.yeuCauKhacCY
+      }
+    };
+    modelRequest.contractCondition = {
+      advanceMoney: {
+        tenderDocumentRequirementPercent: formValue.tamUngYCPercent,
+        tenderDocumentRequirementDiscountPercent: formValue.tamUngYCKhauTru,
+        suggestionPercent: formValue.tamUngDXPercent,
+        suggestionDiscountPercent: formValue.tamUngDXKhauTru,
+        note: formValue.tamUngCY,
+      },
+      paymentTime: {
+        tenderDocumentRequirementDay: formValue.thoiGianYC,
+        suggestionDay: formValue.thoiGianDX,
+        note: formValue.thoiGianCY
+      },
+      retainedMoney: {
+        tenderDocumentRequirementPercent: formValue.tienGiuLaiYCPercent,
+        tenderDocumentRequirementMaxPercent: formValue.tienGiuLaiYCKhauTru,
+        requirementPercent: formValue.tienGiuLaiDXPercent,
+        requirementMaxPercent: formValue.tienGiuLaiDXKhauTru,
+        note: formValue.tienGiuLaiCY
+      },
+      punishDelay: {
+        tenderDocumentRequirementPercent: formValue.phatTienDoYCPercent,
+        tenderDocumentRequirementMax: formValue.phatTienDoYCMax,
+        suggestionPercent: formValue.phatTienDoDXPercent,
+        suggestionMax: formValue.phatTienDoDXMax,
+        note: formValue.phatTienDoCY
+      },
+      constructionWarrantyTime: {
+        percent: formValue.thoiGianBHYCPercent,
+        money: formValue.thoiGianBHYCAmount,
+        bond: formValue.thoiGianBHDXBond,
+        month: formValue.thoiGianBHMonth,
+        note: formValue.thoiGianBHCY,
+      },
+      disadvantage: {
+        disadvantageName: formValue.dieuKienDacBiet,
+        note: formValue.dieuKienDacBietCY
+      }
+
+    };
+
+    modelRequest.tentativeTenderPrice = {
+      costOfCapital: {
+        baseTenderAmount: formValue.giaVonBaseAmount,
+        baseTenderGFA: formValue.giaVonBaseGfa,
+        alternativeTenderAmount: formValue.giaVonAlterAmount,
+        alternativeTenderGFA: formValue.giaVonAlterGfa,
+        note: formValue.giaVonCY
+      },
+      costOfCapitalGeneralCost: {
+        baseTenderAmount: formValue.chiPhiBaseAmount,
+        baseTenderGFA: formValue.chiPhiBaseGfa,
+        alternativeTenderAmount: formValue.chiPhiAlterAmount,
+        alternativeTenderGFA: formValue.chiPhiAlterGfa,
+        note: formValue.chiPhiAlterNote
+      },
+      costOfCapitalValue: {
+        baseTenderAmount: formValue.giaTriBaseAmount,
+        baseTenderGFA: formValue.giaTriBaseGfa,
+        alternativeTenderAmount: formValue.giaTriAlterAmount,
+        alternativeTenderGFA: formValue.giaTriAlterGfa,
+        note: formValue.giaTriNote
+      },
+      costOfCapitalPCPSValue: {
+        baseTenderAmount: formValue.giaTriPCBaseAmount,
+        baseTenderGFA: formValue.giaTriPCBaseGfa,
+        alternativeTenderAmount: formValue.giaTriPCAlterAmount,
+        alternativeTenderGFA: formValue.giaTriPCAlterGfa,
+        note: formValue.giaTriPCNote
+      },
+      totalCostOfCapital: {
+        baseTenderAmount: formValue.totalGiaVonAmount,
+        baseTenderGFA: formValue.totalGiaVonGfa,
+        alternativeTenderAmount: null,
+        alternativeTenderGFA: null,
+        note: formValue.totalGiaVonNote
+      },
+      totalCostOfCapitalProfitCost: {
+        baseTenderProfitCost: formValue.chiPhiLoiNhuanAmountGfa,
+        alternativeProfitCost: formValue.chiPhiLoiNhuanAlterAmountGfa,
+        note: formValue.chiPhiLoiNhuanNote
+      },
+      totalCostOfSubmission: {
+        baseTenderAmount: formValue.giaDiNopThauAmount,
+        baseTenderGFA: formValue.giaDiNopThauGfa,
+        alternativeTenderAmount: formValue.giaDiNopThauAlterAmount,
+        alternativeTenderGFA: formValue.giaDiNopThauAlterGfa,
+        note: formValue.giaDiNopThauNote
+      },
+      oAndPPercentOfTotalCost: {
+        baseTenderAmount: formValue.tyLeGfa,
+        alternativeTenderAmount: null,
+        note: formValue.tyLeNote
       }
     };
     console.log(modelRequest);
@@ -224,7 +336,7 @@ export class PriceReviewService {
           tenderDocumentRequirementMaxPercent: model.contractCondition.retainedMoney.tenderDocumentRequirementMaxPercent,
           requirementPercent: model.contractCondition.retainedMoney.requirementPercent,
           requirementMaxPercent: model.contractCondition.retainedMoney.requirementMaxPercent,
-          note: model.contractCondition.retainedMoney.requirementMaxPercent.note
+          note: model.contractCondition.retainedMoney.note
         },
         punishDelay: model.contractCondition.punishDelay && {
           tenderDocumentRequirementPercent: model.contractCondition.punishDelay.tenderDocumentRequirementPercent,

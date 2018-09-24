@@ -1,6 +1,8 @@
 export class TenderPriceApproval {
     id: number;
     bidOpportunityId: number;
+    createdEmployeeId?: number;
+    updatedEmployeeId?: number;
     createdEmployee: {
         employeeId: number;
         employeeNo: string;
@@ -175,4 +177,5 @@ export class TenderPriceApproval {
             note: string
         }
     };
+    
 }
