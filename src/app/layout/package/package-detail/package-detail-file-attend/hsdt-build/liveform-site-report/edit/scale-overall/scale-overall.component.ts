@@ -54,7 +54,7 @@ export class ScaleOverallComponent implements OnInit {
   }
 
   get trangthaiCongTrinhListFA(): FormArray {
-    return this.loaiCongTrinhForm.get('trangthaiCongTrinhList') as FormArray;
+    return this.trangThaiCongTrinhForm.get('trangthaiCongTrinhList') as FormArray;
   }
   constructor(
     private router: Router,

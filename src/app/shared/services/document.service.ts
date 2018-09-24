@@ -375,7 +375,9 @@ export class DocumentService {
             }))
         );
     }
-
+    // Xóa ảnh báo cáo công trình - view UseFulInfo
+    deleteImageSiteReport() { }
+    // Lịch sử thay đổi báo cáo công trình
     changedHistoryTenderSiteReport(bidOpportunityId: number, page: number, pageSize: number)
         : Observable<PagedResult<SiteReportChangedHistory>> {
         const url = `bidopportunity/${bidOpportunityId}/tendersitesurveyingreport/changedhistory/${page}/${pageSize}`;
@@ -390,12 +392,12 @@ export class DocumentService {
             };
         });
     }
-
+    // Thông tin bảng báo cáo công trình
     tenderSiteSurveyingReport(bidOpportunityId: number): Observable<SiteSurveyReport> {
         const url = `bidopportunity/${bidOpportunityId}/tendersitesurveyingreport`;
         return this.apiService.get(url).map(res => this.toSiteSurveyReport(res.result, bidOpportunityId));
     }
-
+    // Mapping data - thông tin bảng báo cáo công trình
     toSiteSurveyReport(model: any, bidOpportunityId: number) {
         const dataFormated = new SiteSurveyReport();
         // case: CREATE
@@ -672,7 +674,7 @@ export class DocumentService {
             return dataFormated;
         }
     }
-
+    // Tạo mới - cập nhật báo cáo công trình
     createOrUpdateSiteSurveyingReport(obj: SiteSurveyReport) {
         const url = `bidopportunity/tendersitesurveyingreport/createorupdate`;
         const objDataSiteReport = new FormData();
