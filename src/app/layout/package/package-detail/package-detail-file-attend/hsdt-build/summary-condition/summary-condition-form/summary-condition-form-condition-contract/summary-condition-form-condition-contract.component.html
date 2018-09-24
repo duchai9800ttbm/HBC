@@ -131,9 +131,9 @@
                 <div class="col-md-3 pl-2r"><strong><u>2.7 Bảo hiểm</u></strong></div>
             </div>
             <div formArrayName="insurances">
-                <div class="row mt-3" *ngFor="let fControl of conditionContractForm.get('contractCondition').get('insurances').controls; let i = index">
+                <div class="row mt-3" *ngFor="let fControl of insurancesFA.controls; let i = index">
                     <div class="col-md-3 text-nowrap pl-2r">BH máy móc thiết bị nhà thầu <i class="fa fa-plus-square-o ml-3 pointer"
-                            aria-hidden="true" (click)="addFormArrayControl('insurances')" *ngIf="(i + 1) === conditionContractForm.get('contractCondition').get('insurances').length"></i></div>
+                            aria-hidden="true" (click)="addFormArrayControl('insurances')" *ngIf="(i + 1) === insurancesFA.length"></i></div>
                     <div class="col-md-8 custom-col-8">
                         <span class="custom-dropdown w-100">
                             <select class="form-control">

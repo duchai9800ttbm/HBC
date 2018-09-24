@@ -49,15 +49,7 @@
                                     <td class="w-25 bg-light text-right label">Ngày bắt đầu</td>
                                     <td class="w-25">
                                         <div class="input-group w-75">
-                                                <owl-date-time #startDate  formControlName="campaignDateStart" 
-                                                 
-                                                
-                                                 
-                                                [max] = "endDate.value"
-                                                
-                                                [tabIndex]="'6'">
-    
-                                                </owl-date-time>
+                                                <owl-date-time #startDate  formControlName="campaignDateStart" [tabIndex]="'6'"></owl-date-time>
                                                 <span class="input-group-addon">
                                                     <i class="fa fa-calendar"></i>
                                                 </span> 
@@ -81,9 +73,6 @@
                                         <div class="input-group w-75">
                                                 <owl-date-time #endDate  formControlName="campaignDateStop" 
                                                  
-                                                
-                                                 
-                                                [min] = "startDate.value"
                                                 
                                                 [tabIndex]="'7'">
     

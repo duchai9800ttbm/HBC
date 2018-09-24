@@ -12,6 +12,10 @@ import { WorkPackage } from '../../../../../../../../shared/models/package/work-
 export class SummaryConditionFormNonminatedSubConstructorComponent implements OnInit {
 
   nonminateForm: FormGroup;
+
+  get packageWorkFA(): FormArray {
+    return this.nonminateForm.get('packageWork') as FormArray;
+  }
   constructor(
     private fb: FormBuilder
   ) { }

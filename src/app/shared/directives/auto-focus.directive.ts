@@ -1,19 +1,22 @@
-import { Directive, ElementRef, Input, OnInit } from '@angular/core';
+import { Directive, ElementRef, Input, OnInit, Attribute } from '@angular/core';
 
 @Directive({
-  selector: '[appAutoFocus]'
+    selector: '[appAutoFocus]'
 })
 export class AutoFocusDirective implements OnInit {
+  @Input('appAutoFocus') appAutoFocus: boolean;
+    private el: any;
+    constructor(
+        private elementRef: ElementRef
+    ) {
+        this.el = this.elementRef.nativeElement;
+    }
 
-  @Input() appAutofocus: boolean;
-  private el: any;
-  constructor(
-    private elementRef: ElementRef,
-  ) {
-    this.el = this.elementRef.nativeElement;
-  }
-
-  ngOnInit() {
-    // this.el.focus();
-  }
+    ngOnInit() {
+        if (this.appAutoFocus + '' === '') {
+          this.el.focus();
+        } else if (this.appAutoFocus) {
+          this.el.focus();
+        }
+    }
 }

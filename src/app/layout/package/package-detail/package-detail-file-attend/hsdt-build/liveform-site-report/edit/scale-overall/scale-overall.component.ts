@@ -46,6 +46,14 @@ export class ScaleOverallComponent implements OnInit {
   viewMode;
   currentBidOpportunityId: number;
   scaleModel = new ScaleOverall();
+
+  get loaiCongTrinhListFA(): FormArray {
+    return this.loaiCongTrinhForm.get('loaiCongTrinhList') as FormArray;
+  }
+
+  get trangthaiCongTrinhListFA(): FormArray {
+    return this.loaiCongTrinhForm.get('trangthaiCongTrinhList') as FormArray;
+  }
   constructor(
     private router: Router,
     private fb: FormBuilder

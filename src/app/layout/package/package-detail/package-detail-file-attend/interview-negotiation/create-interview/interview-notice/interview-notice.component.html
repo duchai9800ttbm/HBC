@@ -45,7 +45,7 @@
 <div class="modal-header no-boder-bottom">
     <div class="pull-left ">
         <div class="text-title icon-arrow">
-            <img width="15" height="15" class="img-back pointer" src="assets\images\nghia.png" (click)="ClosePopup()" />
+            <img width="15" height="15" class="img-back pointer" src="assets\images\nghia.png" (click)="closePopup()" />
             <h4 class="modal-title text-dark d-inline text-send-noti"> GỬI THÔNG THÔNG BÁO PHỎNG VẤN ĐẾN CÁC BÊN LIÊN QUAN</h4>
         </div>
     </div>
@@ -120,7 +120,7 @@
     </div>
     <div class="body-ckeditor">
         <ckeditor [(ngModel)]="emailModel.content" [config]="ckeConfig" #ckeditor>
-            <ckbutton [name]="'saveButton'" [command]="'saveCmd'" (click)="save($event)" [icon]="'save.png'" [label]="'Save Document'"
+            <ckbutton [name]="'saveButton'" [command]="'saveCmd'" [icon]="'save.png'" [label]="'Save Document'"
                 [toolbar]="'clipboard,1'">
             </ckbutton>
         </ckeditor>

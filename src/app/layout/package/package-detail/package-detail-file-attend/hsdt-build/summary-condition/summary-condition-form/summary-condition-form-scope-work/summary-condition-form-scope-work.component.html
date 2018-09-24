@@ -8,10 +8,10 @@
             </span>
         </div>
         <div formArrayName="scopeInclude">
-            <div *ngFor="let fControl of scopeWorkForm.get('scopeInclude').controls; let i = index" [formGroupName]="i">
+            <div *ngFor="let fControl of scopeIncludeFA.controls; let i = index" [formGroupName]="i">
                 <div class="row mt-3">
                     <div class="col-md-3">{{i + 1}}.<span class="ml-3">Công tác {{i + 1}}</span><i class="fa fa-plus-square-o ml-3 pointer"
-                            aria-hidden="true" (click)="addFormArrayControl('scopeInclude')" *ngIf="(i + 1) === scopeWorkForm.get('scopeInclude').length"></i></div>
+                            aria-hidden="true" (click)="addFormArrayControl('scopeInclude')" *ngIf="(i + 1) === scopeIncludeFA.length"></i></div>
                     <div class="col-md-8">
                         <input class="form-control" formControlName="name" placeholder="Công tác {{i + 1}}">
                     </div>
@@ -32,10 +32,10 @@
             </span>
         </div>
         <div formArrayName="scopeNotInclude">
-            <div *ngFor="let fControl of scopeWorkForm.get('scopeNotInclude').controls; let i = index" [formGroupName]="i">
+            <div *ngFor="let fControl of scopeNotIncludeFA.controls; let i = index" [formGroupName]="i">
                 <div class="row mt-3">
                     <div class="col-md-3">{{i + 1}}.<span class="ml-3">Công tác {{i + 1}}</span><i class="fa fa-plus-square-o ml-3 pointer"
-                            aria-hidden="true" (click)="addFormArrayControl('scopeNotInclude')" *ngIf="(i + 1) === scopeWorkForm.get('scopeNotInclude').length"></i></div>
+                            aria-hidden="true" (click)="addFormArrayControl('scopeNotInclude')" *ngIf="(i + 1) === scopeNotIncludeFA.length"></i></div>
                     <div class="col-md-8">
                         <input class="form-control" formControlName="name" placeholder="Công tác {{i + 1}}">
                     </div>

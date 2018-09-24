@@ -42,7 +42,8 @@ export class NeedCreateTenderFormComponent implements OnInit, OnDestroy {
 
     ngOnInit() {
         this.scrollTopService.isScrollTop = false;
-        this.routerAction = NeedCreateTenderComponent.routerAction;
+        this.routerAction = this.packageService.routerAction;
+        this.packageService.routerAction$.subscribe(router => this.routerAction = router);
         this.dataModel = NeedCreateTenderFormComponent.formModel;
         // tslint:disable-next-line:max-line-length
         this.dateApproveBid = this.dataModel && this.dataModel.tenderDirectorProposal && this.dataModel.tenderDirectorProposal.expectedTime ? DateTimeConvertHelper.fromTimestampToDtObject(this.dataModel.tenderDirectorProposal.expectedTime * 1000) : new Date();
@@ -121,14 +122,12 @@ export class NeedCreateTenderFormComponent implements OnInit, OnDestroy {
     }
 
     cancel() {
-        NeedCreateTenderComponent.routerAction = 'view';
-        this.routerAction = 'view';
+        this.packageService.setRouterAction('view');
         this.router.navigate([`package/detail/${this.bidOpportunityId}/attend/create-request/form/view`]);
     }
 
     edit() {
-        NeedCreateTenderComponent.routerAction = 'edit';
-        this.routerAction = 'edit';
+        this.packageService.setRouterAction('edit');
         this.router.navigate([`package/detail/${this.bidOpportunityId}/attend/create-request/form/edit`]);
     }
 

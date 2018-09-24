@@ -3,6 +3,7 @@ import { FormGroup, FormBuilder } from '@angular/forms';
 import { NeedCreateTenderFormComponent } from '../need-create-tender-form.component';
 import { ActivatedRoute } from '@angular/router';
 import { NeedCreateTenderComponent } from '../../need-create-tender.component';
+import { PackageService } from '../../../../../../../shared/services/package.service';
 
 @Component({
   selector: 'app-need-create-tender-form-analysis',
@@ -12,15 +13,16 @@ import { NeedCreateTenderComponent } from '../../need-create-tender.component';
 export class NeedCreateTenderFormAnalysisComponent implements OnInit {
 
   analysisForm: FormGroup;
-  routerAction = NeedCreateTenderComponent.routerAction;
+  routerAction;
   constructor(
     private fb: FormBuilder,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private packageService: PackageService
   ) { }
 
   ngOnInit() {
-    // this.routerAction = NeedCreateTenderComponent.routerAction;
-    console.log(this.routerAction);
+    this.routerAction = this.packageService.routerAction;
+    this.packageService.routerAction$.subscribe(router => this.routerAction = router);
     this.createForm();
     this.analysisForm.valueChanges.subscribe(data => this.mappingToLiveFormData(data));
   }

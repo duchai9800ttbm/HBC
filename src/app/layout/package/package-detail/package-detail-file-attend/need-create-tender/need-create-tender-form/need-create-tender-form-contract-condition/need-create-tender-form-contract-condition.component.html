@@ -25,7 +25,7 @@
                 2. Thời hạn hoàn thành (Time for completion)
             </div>
             <div class="col-md-6">
-                <input type="number" tabindex="2" formControlName="timeForCompletion" class="form-control input-dropdown-group">
+                <input tabindex="2" appInputNumberNegativeDecimal [decimal]="true" formControlName="timeForCompletion" class="form-control input-dropdown-group">
                 <div formGroupName="timeForCompletionUnit">
                     <kendo-dropdownlist formControlName="value" tabindex="3" [data]="listTime" [valuePrimitive]="true">
                     </kendo-dropdownlist>
@@ -45,7 +45,7 @@
                 4. Thời hạn bảo hành (Warranty period)
             </div>
             <div class="col-md-6">
-                <input type="number" tabindex="5" formControlName="warrantyPeriod" class="form-control input-dropdown-group">
+                <input appInputNumberNegativeDecimal [decimal]="true" tabindex="5" formControlName="warrantyPeriod" class="form-control input-dropdown-group">
                 <div formGroupName="warrantyPeriodUnit">
                     <kendo-dropdownlist formControlName="value" tabindex="6" [data]="listTime" [valuePrimitive]="true">
                     </kendo-dropdownlist>
@@ -57,7 +57,7 @@
                 5. Bảo lãnh dự thầu (Tender security)
             </div>
             <div class="col-md-6">
-                <input type="number" tabindex="7" formControlName="tenderSecurity" class="form-control input-dropdown-group">
+                <input appInputNumberNegativeDecimal [decimal]="true" tabindex="7" formControlName="tenderSecurity" class="form-control input-dropdown-group">
                 <div formGroupName="tenderSecurityCurrency">
                     <kendo-dropdownlist formControlName="value" tabindex="8" [data]="listCurrency" [valuePrimitive]="true">
                     </kendo-dropdownlist>
@@ -69,7 +69,7 @@
                 6. Bảo lãnh hợp đồng (Performance security)
             </div>
             <div class="col-md-6">
-                <input type="number" tabindex="9" formControlName="performanceSecurity" class="form-control input-percent">
+                <input appInputNumberNegativeDecimal [min]="0" [max]="100" tabindex="9" formControlName="performanceSecurity" class="form-control input-percent">
                 <span class="input-unit">%</span>
             </div>
         </div>
@@ -78,7 +78,7 @@
                 7. Phạt trễ tiến độ (Delay damages for the works)
             </div>
             <div class="col-md-6">
-                <input type="number" tabindex="10" formControlName="delayDamagesForTheWorks" class="form-control input-percent">
+                <input appInputNumberNegativeDecimal [min]="0" [max]="100" tabindex="10" formControlName="delayDamagesForTheWorks" class="form-control input-percent">
                 <span class="input-unit">%</span>
             </div>
         </div>
@@ -104,7 +104,8 @@
                 Tiền tạm ứng (Advance payment)
             </div>
             <div class="col-md-6">
-                <input type="number" tabindex="12" formControlName="advancePayment" class="form-control">
+                <input appInputNumberNegativeDecimal [min]="0" [max]="100" tabindex="12" formControlName="advancePayment" class="form-control input-percent">
+                <span class="input-unit">%</span>
             </div>
         </div>
         <div class="row mt-3">
@@ -127,7 +128,7 @@
                 Tiền giữ lại (Retention money)
             </div>
             <div class="col-md-6">
-                <input type="number" tabindex="14" formControlName="retentionMoney" class="form-control">
+                <input appInputNumberNegativeDecimal [decimal]="true" tabindex="14" formControlName="retentionMoney" class="form-control">
             </div>
         </div>
         <div class="row mt-3">

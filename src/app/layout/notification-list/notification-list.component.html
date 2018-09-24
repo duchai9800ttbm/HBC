@@ -38,7 +38,7 @@
                 </div>
               </div>
               <div class="w-100 d-flex notification-item" *ngFor="let item of notificationList" style="padding: 0.4rem 0rem;" [class.notification--not-read]="item.notificationState?.id === 'UnRead'">
-                <div class="d-flex" [class.center-parent]="showSidebarContent" style="padding: 0.25rem 1.5rem;">
+                <div class="d-flex" style="padding: 0.25rem 1.5rem;">
                   <div class="action" width="">
                     <div>
                       <img [src]="item.sendEmployee.employeeAvatar" width="30" height="30">

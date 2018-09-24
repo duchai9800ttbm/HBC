@@ -28,7 +28,8 @@ export class CustomerFormComponent implements OnInit {
         email: '',
         taxNumber: '',
         type: '',
-        customerContactId: ''
+        customerContactId: '',
+        website: ''
     };
     customer = new CustomerModel();
     rating = 0;

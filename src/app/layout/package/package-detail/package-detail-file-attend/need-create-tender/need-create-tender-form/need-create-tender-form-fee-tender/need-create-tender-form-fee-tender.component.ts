@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder } from '@angular/forms';
 import { NeedCreateTenderFormComponent } from '../need-create-tender-form.component';
-import { NeedCreateTenderComponent } from '../../need-create-tender.component';
+import { PackageService } from '../../../../../../../shared/services/package.service';
 
 @Component({
   selector: 'app-need-create-tender-form-fee-tender',
@@ -15,11 +15,13 @@ export class NeedCreateTenderFormFeeTenderComponent implements OnInit {
   currency = 'VNĐ';
   feeTenderForm: FormGroup;
   constructor(
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private packageService: PackageService
   ) { }
 
   ngOnInit() {
-    this.routerAction = NeedCreateTenderComponent.routerAction;
+    this.routerAction = this.packageService.routerAction;
+    this.packageService.routerAction$.subscribe(router => this.routerAction = router);
     this.createForm();
     this.feeTenderForm.valueChanges.subscribe(data => this.mappingToLiveFormData(data));
   }

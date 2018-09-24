@@ -15,9 +15,9 @@ import { HttpModule } from '@angular/http';
 import { SharedModule } from './shared/shared.module';
 import { AlertComponent } from './shared/components/alert/alert.component';
 import { NgxSpinnerModule } from 'ngx-spinner';
-import { StarRatingModule } from 'angular-star-rating';
+// import { StarRatingModule } from 'angular-star-rating';
 import { DataUploadService } from './shared/services/data-upload.service';
-import { GroupUserService } from './shared/services/group-user.service';
+// import { GroupUserService } from './shared/services/group-user.service';
 import { LiveformDataReportService } from './shared/services/liveform-data-report.service';
 import '@progress/kendo-angular-intl/locales/vi/all';
 import { IntlModule } from '@progress/kendo-angular-intl';
@@ -53,7 +53,7 @@ registerLocaleData(localeFrCa, localeFrCaExtra);
 @NgModule({
     imports: [
         IntlModule,
-        StarRatingModule.forRoot(),
+        // StarRatingModule.forRoot(),
         CommonModule,
         SharedModule,
         BrowserModule,

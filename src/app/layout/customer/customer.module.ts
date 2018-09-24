@@ -22,12 +22,12 @@ import { CustomerOpportunityComponent } from './customer-detail/customer-opportu
 import { OpportunityTableModule } from '../../shared/modules/opportunity-table/opportunity-table.module';
 import { DownloadTemplateService } from '../../shared/services/download-template.service';
 import { ListContactComponent } from './customer-detail/customer-overview/list-contact/list-contact.component';
-import { StarRatingModule } from 'angular-star-rating';
+// import { StarRatingModule } from 'angular-star-rating';
 
 
 @NgModule({
     imports: [
-        StarRatingModule,
+        // StarRatingModule,
         SharedModule,
         CustomerRoutingModule,
         ActivityTableModule,
