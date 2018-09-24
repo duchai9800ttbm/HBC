@@ -664,7 +664,7 @@ export class PriceReviewFormComponent implements OnInit, AfterViewInit {
       this.priceReviewForm.get('isDraftVersion').patchValue(true);
     }
     this.priceReviewService.createOrEdit(this.priceReviewForm.value, this.packageId).subscribe(() => {
-      this.router.navigate([`../detail`]);
+      this.router.navigate([`/package/detail/${this.packageId}/attend/price-review/detail`]);
     });
   }
 
