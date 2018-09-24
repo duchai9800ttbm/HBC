@@ -41,7 +41,7 @@
                 <div class="d-flex" style="padding: 0.25rem 1.5rem;">
                   <div class="action" width="">
                     <div>
-                      <img [src]="item.sendEmployee.employeeAvatar" width="30" height="30">
+                      <img [src]="item.sendEmployee.employeeAvatar ? item.sendEmployee.employeeAvatar : 'assets/images/no-avatar.png'" width="30" height="30">
                     </div>
                   </div>
                 </div>
