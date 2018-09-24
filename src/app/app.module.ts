@@ -39,6 +39,7 @@ import { EmailService } from './shared/services/email.service';
 import { LayoutService } from './shared/services/layout.service';
 import '@progress/kendo-ui';
 import { NG_SELECT_DEFAULT_CONFIG } from '../../node_modules/@ng-select/ng-select';
+import { NotificationService } from './shared/services/notification.service';
 
 // AoT requires an exported function for factories
 export function createTranslateLoader(http: HttpClient) {
@@ -77,6 +78,7 @@ registerLocaleData(localeFrCa, localeFrCaExtra);
         ConfirmationService,
         InstantSearchService,
         UserNotificationService,
+        NotificationService,
         LiveformDataReportService,
         DataUploadService,
         TranslateService,

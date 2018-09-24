@@ -10,7 +10,7 @@ import { NgbDropdownConfig } from '../../../../../../node_modules/@ng-bootstrap/
   selector: 'app-header-notification',
   templateUrl: './header-notification.component.html',
   styleUrls: ['./header-notification.component.scss'],
-  providers: [NotificationService, NgbDropdownConfig],
+  providers: [NgbDropdownConfig],
 })
 export class HeaderNotificationComponent implements OnInit {
   notificationCount$: Observable<number>;
@@ -29,12 +29,9 @@ export class HeaderNotificationComponent implements OnInit {
     private notificationService: NotificationService,
     private alertService: AlertService,
     private confirmationService: ConfirmationService,
-    config: NgbDropdownConfig
+    config: NgbDropdownConfig,
   ) {
     config.autoClose = false;
-    this.notificationService.notificationAmont.subscribe( value => {
-      this.getListNotification();
-    });
   }
   @HostListener('document:click', ['$event'])
   public documentClick(event: any): void {
@@ -73,7 +70,6 @@ export class HeaderNotificationComponent implements OnInit {
     // }
 
     if (this.containsDropToolThongBao2222(event.target) || this.containsDropTool(event.target)) {
-      console.log('this.isShow = false;');
       this.isShow = false;
     } else {
       this.isShow = true;
@@ -82,11 +78,10 @@ export class HeaderNotificationComponent implements OnInit {
   }
 
   ngOnInit() {
-    console.log('ngOnInit');
+    this.notificationService.watchNotificationAmontSubject().subscribe( value => {
+      this.getListNotification();
+    });
     this.getListNotification();
-    // this.notificationCount$ = this.userNotificationService.count();
-    // this.userNotificationService.list(0, 5)
-    // .subscribe(pagedResult => this.notificationItems = pagedResult.items);
   }
 
   containsDropToolThongBao2222(target: any): boolean {
