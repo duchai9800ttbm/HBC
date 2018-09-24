@@ -4,6 +4,8 @@ import { NeedCreateTenderFormComponent } from '../need-create-tender-form.compon
 import DateTimeConvertHelper from '../../../../../../../shared/helpers/datetime-convert-helper';
 import * as moment from 'moment';
 import { PackageService } from '../../../../../../../shared/services/package.service';
+import { AlertService, SessionService } from '../../../../../../../shared/services';
+import { NgxSpinnerService } from 'ngx-spinner';
 
 @Component({
   selector: 'app-need-create-tender-form-decision-board',
@@ -17,7 +19,10 @@ export class NeedCreateTenderFormDecisionBoardComponent implements OnInit {
   expectedTimeStr;
   constructor(
     private fb: FormBuilder,
-    private packageService: PackageService
+    private packageService: PackageService,
+    private sessionService: SessionService,
+    private spinner: NgxSpinnerService,
+    private alertService: AlertService,
   ) { }
 
   ngOnInit() {
@@ -40,6 +45,10 @@ export class NeedCreateTenderFormDecisionBoardComponent implements OnInit {
 
   clickSigned() {
     this.decisionBoardForm.get('isSigned').patchValue(true);
+    // khi view có thể ký
+    if (this.routerAction === 'view') {
+      this.onSubmit();
+    }
   }
 
   mappingToLiveFormData(data) {
@@ -48,5 +57,46 @@ export class NeedCreateTenderFormDecisionBoardComponent implements OnInit {
     // tslint:disable-next-line:max-line-length
     NeedCreateTenderFormComponent.formModel.decisionOfBoardOfGeneralDirector.expectedTime = directorData && directorData.expectedTime ? directorData.expectedTime : 0;
   }
+
+  onSubmit() {
+    // NeedCreateTenderFormComponent.formModel.isDraftVersion = isDraf;
+    // NeedCreateTenderFormComponent.formModel.bidOpportunityId = this.bidOpportunityId;
+    if (NeedCreateTenderFormComponent.formModel.createdEmployeeId) {
+        NeedCreateTenderFormComponent.formModel.updatedEmployeeId = this.sessionService.currentUser.userId;
+    } else {
+        NeedCreateTenderFormComponent.formModel.createdEmployeeId = this.sessionService.currentUser.userId;
+    }
+    this.spinner.show();
+    this.packageService
+        .createOrUpdateProposedTenderParticipateReport(
+            NeedCreateTenderFormComponent.formModel
+        )
+        .subscribe(
+            data => {
+                this.spinner.hide();
+                if (NeedCreateTenderFormComponent.formModel.id) {
+                    this.alertService.success(
+                        'Cập nhật phiếu đề nghị dự thầu thành công!'
+                    );
+                } else {
+                    this.alertService.success(
+                        'Tạo phiếu đề nghị dự thầu thành công!'
+                    );
+                }
+            },
+            err => {
+                if (NeedCreateTenderFormComponent.formModel.id) {
+                    this.alertService.error(
+                        'Cập nhật phiếu đề nghị dự thầu thất bại!'
+                    );
+                } else {
+                    this.alertService.error(
+                        'Tạo phiếu đề nghị dự thầu thất bại!'
+                    );
+                }
+                this.spinner.hide();
+            }
+        );
+}
 
 }

@@ -1,10 +1,31 @@
 <form [formGroup]="decisionBoardForm">
     <div class="p-3 position-relative">
-        <div *ngIf="routerAction == 'view'" class="b-form-readonly"></div>
+        <div *ngIf="routerAction == 'view' || decisionBoardForm.get('isSigned').value" class="b-form-readonly"></div>
         <div>
             <h5 class="text-uppercase">VIII. quyết định của ban tổng giám đốc (decision of board of general director)</h5>
         </div>
         <div class="row mt-4">
+            <div class="col-md-4">
+                Duyệt
+            </div>
+            <div class="col-md-8 row">
+                <div class="col-md-6">
+                    <input type="radio" [appAutoFocus]="routerAction != 'view'" tabindex="1" [value]="true"> Đồng ý/ Agree
+                </div>
+                <div class="col-md-6">
+                    <input type="radio" tabindex="2" [value]="false"> Không đồng ý/ No agree
+                </div>
+            </div>
+        </div>
+        <div class="row mt-3">
+            <div class="col-md-4 d-flex align-items-center">
+                Lý do/ Reason
+            </div>
+            <div class="col-md-8">
+                <textarea class="form-control" tabindex="3" rows="2"></textarea>
+            </div>
+        </div>
+        <div class="row mt-3">
             <div class="col-md-4 d-flex align-items-center">
                 Thời gian mong đợi được duyệt
             </div>
@@ -18,18 +39,18 @@
                 Ký tên/ Signing
             </div>
             <div class="col-md-8">
-                    <button *ngIf="!decisionBoardForm.get('isSigned').value" tabindex="2" class="btn btn-primary btn-sign" (click)="clickSigned()">Xác nhận ký</button>
-                    <button *ngIf="decisionBoardForm.get('isSigned').value" tabindex="3" class="btn btn-primary btn-sign position-relative">
+                    <button *ngIf="!decisionBoardForm.get('isSigned').value" tabindex="4" class="btn btn-primary btn-sign" (click)="clickSigned()">Xác nhận ký</button>
+                    <button *ngIf="decisionBoardForm.get('isSigned').value" tabindex="5" class="btn btn-primary btn-sign position-relative">
                             <i class="fa fa-check-square icon-check" aria-hidden="true"></i> Đã ký
                     </button>
             </div>
         </div>
         <div class="text-center mt-4">
-            <button class="btn border" tabindex="5" routerLink="../director-proposal">
+            <button class="btn border" tabindex="7" routerLink="../director-proposal">
                 <i class="fa font-size-3 mr-3 fa-angle-left" aria-hidden="true"></i>
                 Trở về
             </button>
-            <button class="btn btn-primary ml-2 cursor-cancel" tabindex="4" disabled>
+            <button class="btn btn-primary ml-2 cursor-cancel" tabindex="6" disabled>
                 Tiếp
                 <i class="fa font-size-3 ml-3 fa-angle-right" aria-hidden="true"></i>
             </button>

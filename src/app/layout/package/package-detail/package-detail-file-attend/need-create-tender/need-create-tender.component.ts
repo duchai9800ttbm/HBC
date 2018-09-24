@@ -4,7 +4,7 @@ import { NeedCreateTenderFormComponent } from './need-create-tender-form/need-cr
 import { ProposeTenderParticipateRequest } from '../../../../../shared/models/api-request/package/propose-tender-participate-request';
 import { PackageService } from '../../../../../shared/services/package.service';
 import { NgxSpinnerService } from 'ngx-spinner';
-import { AlertService } from '../../../../../shared/services';
+import { AlertService, ConfirmationService } from '../../../../../shared/services';
 import { DATATABLE_CONFIG } from '../../../../../shared/configs';
 import { Subject } from 'rxjs';
 import DateTimeConvertHelper from '../../../../../shared/helpers/datetime-convert-helper';
@@ -34,16 +34,26 @@ export class NeedCreateTenderComponent implements OnInit {
     private spinner: NgxSpinnerService,
     private alertService: AlertService,
     private statusObservableHsdtService: StatusObservableHsdtService,
+    private confirmService: ConfirmationService
   ) { }
 
   ngOnInit() {
     this.bidOpportunityId = PackageDetailComponent.packageId;
+    this.getProposedTenderParticipateReportInfo();
+    this.getPackageInfo();
+  }
+
+  refresh() {
+    this.getProposedTenderParticipateReportInfo();
+    this.getPackageInfo();
+  }
+
+  getProposedTenderParticipateReportInfo() {
     this.spinner.show();
     this.packageService.getProposedTenderParticipateReport(this.bidOpportunityId).subscribe(data => {
       if (data) {
         NeedCreateTenderFormComponent.formModel = data;
         this.proposedTender = data;
-        console.log(data);
         // tslint:disable-next-line:max-line-length
         this.dateApproveBid = this.proposedTender && this.proposedTender.tenderDirectorProposal && this.proposedTender.tenderDirectorProposal.expectedTime ? DateTimeConvertHelper.fromTimestampToDtObject(this.proposedTender.tenderDirectorProposal.expectedTime * 1000) : new Date();
         setTimeout(() => {
@@ -57,7 +67,6 @@ export class NeedCreateTenderComponent implements OnInit {
       this.spinner.hide();
       this.alertService.error('Lấy thông tin phiếu đề nghị dự thầu thất bại!');
     });
-    this.getPackageInfo();
   }
 
   getPackageInfo() {
@@ -66,7 +75,6 @@ export class NeedCreateTenderComponent implements OnInit {
     .subscribe(data => {
         this.packageInfo = data;
         this.spinner.hide();
-        console.log(data);
     });
   }
 
@@ -132,6 +140,21 @@ export class NeedCreateTenderComponent implements OnInit {
         this.isShowDialog = false;
         this.reasonApproveBid = '';
       });
+  }
+
+  deleteProposedTenderParticipateReport() {
+    this.confirmService.confirm('Bạn có chắc chắn muốn xóa phiếu đề nghị dự thầu này?', () => {
+      this.spinner.show();
+      this.packageService.deleteProposedTenderParticipateReport(this.bidOpportunityId).subscribe(data => {
+        this.alertService.success('Xóa phiếu đề nghị dự thầu thành công!');
+        this.spinner.hide();
+        this.proposedTender = null;
+        this.getProposedTenderParticipateReportInfo();
+      }, err => {
+        this.alertService.error('Xóa phiếu đề nghị dự thầu thất bại');
+        this.spinner.hide();
+      });
+    });
   }
 
   closeDialog() {

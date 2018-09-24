@@ -8,3 +8,7 @@
     position: absolute;
     top: 3px;
 }
+
+:host /deep/ .b-form-readonly {
+    bottom: 120px;
+}
