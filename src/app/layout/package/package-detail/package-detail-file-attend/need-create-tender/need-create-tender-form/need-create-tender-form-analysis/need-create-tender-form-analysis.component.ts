@@ -22,13 +22,17 @@ export class NeedCreateTenderFormAnalysisComponent implements OnInit {
 
   ngOnInit() {
     this.routerAction = this.packageService.routerAction;
-    this.packageService.routerAction$.subscribe(router => this.routerAction = router);
+    this.packageService.routerAction$.subscribe(router => {
+      this.routerAction = router;
+      this.createForm();
+    });
     this.createForm();
     this.analysisForm.valueChanges.subscribe(data => this.mappingToLiveFormData(data));
   }
 
   createForm() {
     const value = NeedCreateTenderFormComponent.formModel;
+    // console.log(value);
     this.analysisForm = this.fb.group({
       documentName: value && value.documentName ? value.documentName : '',
       employerAnalysis: this.fb.group({

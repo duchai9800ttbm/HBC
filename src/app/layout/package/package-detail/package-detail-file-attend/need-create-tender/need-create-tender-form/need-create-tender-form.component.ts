@@ -26,6 +26,7 @@ export class NeedCreateTenderFormComponent implements OnInit, OnDestroy {
     packageInfo: PackageInfoModel;
     routerAction: string;
     dataModel: ProposeTenderParticipateRequest;
+    dataModelCopy: ProposeTenderParticipateRequest;
     bidStatus = BidStatus;
     isShowDialog = false;
     dateApproveBid = new Date();
@@ -36,17 +37,26 @@ export class NeedCreateTenderFormComponent implements OnInit, OnDestroy {
         private spinner: NgxSpinnerService,
         private router: Router,
         private sessionService: SessionService,
-        private route: ActivatedRoute,
         private scrollTopService: ScrollToTopService
     ) {}
 
     ngOnInit() {
         this.scrollTopService.isScrollTop = false;
         this.routerAction = this.packageService.routerAction;
-        this.packageService.routerAction$.subscribe(router => this.routerAction = router);
+        this.packageService.routerAction$.subscribe(
+            router => (this.routerAction = router)
+        );
         this.dataModel = NeedCreateTenderFormComponent.formModel;
+        this.dataModelCopy = Object.assign({}, this.dataModel);
         // tslint:disable-next-line:max-line-length
-        this.dateApproveBid = this.dataModel && this.dataModel.tenderDirectorProposal && this.dataModel.tenderDirectorProposal.expectedTime ? DateTimeConvertHelper.fromTimestampToDtObject(this.dataModel.tenderDirectorProposal.expectedTime * 1000) : new Date();
+        this.dateApproveBid =
+            this.dataModel &&
+            this.dataModel.tenderDirectorProposal &&
+            this.dataModel.tenderDirectorProposal.expectedTime
+                ? DateTimeConvertHelper.fromTimestampToDtObject(
+                      this.dataModel.tenderDirectorProposal.expectedTime * 1000
+                  )
+                : new Date();
         this.bidOpportunityId = PackageDetailComponent.packageId;
         if (!NeedCreateTenderFormComponent.formModel) {
             this.router.navigate([
@@ -59,6 +69,28 @@ export class NeedCreateTenderFormComponent implements OnInit, OnDestroy {
         }
     }
 
+    refresh() {
+        this.getPackageInfo();
+        this.packageService
+            .getProposedTenderParticipateReport(this.bidOpportunityId)
+            .subscribe(
+                data => {
+                    if (data) {
+                        NeedCreateTenderFormComponent.formModel = data;
+                    } else {
+                        NeedCreateTenderFormComponent.formModel = new ProposeTenderParticipateRequest();
+                    }
+                    this.spinner.hide();
+                },
+                err => {
+                    this.spinner.hide();
+                    this.alertService.error(
+                        'Lấy thông tin phiếu đề nghị dự thầu thất bại!'
+                    );
+                }
+            );
+    }
+
     getPackageInfo() {
         this.spinner.show();
         this.packageService
@@ -66,10 +98,17 @@ export class NeedCreateTenderFormComponent implements OnInit, OnDestroy {
             .subscribe(data => {
                 this.packageInfo = data;
                 this.spinner.hide();
-                console.log(this.packageInfo);
                 this.totalTime = '';
-                if (this.packageInfo.submissionDate && this.packageInfo.startTrackingDate) {
-                    const day = Math.abs(this.packageInfo.submissionDate - this.packageInfo.startTrackingDate) / (60 * 60 * 24);
+                if (
+                    this.packageInfo.submissionDate &&
+                    this.packageInfo.startTrackingDate
+                ) {
+                    const day =
+                        Math.abs(
+                            this.packageInfo.submissionDate -
+                                this.packageInfo.startTrackingDate
+                        ) /
+                        (60 * 60 * 24);
                     this.totalTime = `${day} ngày`;
                 }
             });
@@ -122,13 +161,25 @@ export class NeedCreateTenderFormComponent implements OnInit, OnDestroy {
     }
 
     cancel() {
+        NeedCreateTenderFormComponent.formModel = Object.assign(
+            {},
+            this.dataModelCopy
+        );
         this.packageService.setRouterAction('view');
-        this.router.navigate([`package/detail/${this.bidOpportunityId}/attend/create-request/form/view`]);
+        this.router.navigate([
+            `package/detail/${
+                this.bidOpportunityId
+            }/attend/create-request/form/view`
+        ]);
     }
 
     edit() {
         this.packageService.setRouterAction('edit');
-        this.router.navigate([`package/detail/${this.bidOpportunityId}/attend/create-request/form/edit`]);
+        this.router.navigate([
+            `package/detail/${
+                this.bidOpportunityId
+            }/attend/create-request/form/edit`
+        ]);
     }
 
     sendApproveBidProposal() {
@@ -143,7 +194,11 @@ export class NeedCreateTenderFormComponent implements OnInit, OnDestroy {
                     this.spinner.hide();
                     this.isShowDialog = false;
                     // this.getPackageInfo();
-                    this.router.navigate([`package/detail/${this.bidOpportunityId}/attend/create-request`]);
+                    this.router.navigate([
+                        `package/detail/${
+                            this.bidOpportunityId
+                        }/attend/create-request`
+                    ]);
                     this.alertService.success(
                         'Gửi duyệt đề nghị dự thầu thành công!'
                     );

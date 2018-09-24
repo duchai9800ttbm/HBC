@@ -17,7 +17,7 @@
                 1. Giá gói thầu tạm tính (Draft budget of package)
             </div>
             <div class="col-md-6">
-                <input appInputNumberNegativeDecimal [decimal]="true" appAutoFocus tabindex="1" formControlName="draftBudgetOfPackage" class="form-control input-dropdown-group">
+                <input appInputNumberNegativeDecimal [decimal]="true" [appAutoFocus]="routerAction != 'view'" tabindex="1" formControlName="draftBudgetOfPackage" class="form-control input-dropdown-group">
                 <div formGroupName="draftBudgetOfPackageCurrency">
                     <kendo-dropdownlist name="currency" tabindex="2" formControlName="value" [data]="listCurrency" [valuePrimitive]="true">
                     </kendo-dropdownlist>
