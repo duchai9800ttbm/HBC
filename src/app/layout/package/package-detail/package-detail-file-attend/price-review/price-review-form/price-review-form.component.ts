@@ -57,7 +57,7 @@ export class PriceReviewFormComponent implements OnInit, AfterViewInit {
     this.priceReviewForm = this.fb.group({
       // Thông tin dự án
       infoGfa: {
-        value: 50,
+        value: this.model.projectInformation && this.model.projectInformation.gfa,
         disabled: this.isModelView
       },
       phanMongCheck: {

@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { TenderPriceApproval } from '../../../../../../shared/models/price-review/price-review.model';
 import { PackageDetailComponent } from '../../../package-detail.component';
 import { PriceReviewService } from '../../../../../../shared/services/price-review.service';
+import { DATATABLE_CONFIG2 } from '../../../../../../shared/configs';
+import { Subject } from 'rxjs/Subject';
 
 @Component({
   selector: 'app-price-review-summary',
@@ -11,6 +13,8 @@ import { PriceReviewService } from '../../../../../../shared/services/price-revi
 export class PriceReviewSummaryComponent implements OnInit {
   packageId;
   priceReview: TenderPriceApproval;
+  dtOptions: any = DATATABLE_CONFIG2;
+  dtTrigger: Subject<any> = new Subject();
   constructor(
     private priceReviewService: PriceReviewService
   ) { }
@@ -27,6 +31,14 @@ export class PriceReviewSummaryComponent implements OnInit {
   }
 
   taiTemplate() {
+
+  }
+
+  delete() {
+
+  }
+
+  print() {
 
   }
 }
