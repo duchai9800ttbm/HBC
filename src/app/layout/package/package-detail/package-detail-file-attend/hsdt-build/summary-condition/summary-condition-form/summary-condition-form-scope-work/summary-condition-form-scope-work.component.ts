@@ -12,6 +12,14 @@ import { TenderScopeOfWork } from '../../../../../../../../shared/models/package
 export class SummaryConditionFormScopeWorkComponent implements OnInit {
 
   scopeWorkForm: FormGroup;
+
+  get scopeIncludeFA(): FormArray {
+    return this.scopeWorkForm.get('scopeInclude') as FormArray;
+  }
+
+  get scopeNotIncludeFA(): FormArray {
+    return this.scopeWorkForm.get('scopeNotInclude') as FormArray;
+  }
   constructor(
     private fb: FormBuilder
   ) { }

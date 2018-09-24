@@ -3,7 +3,7 @@
         <div *ngIf="routerAction == 'view'" class="b-form-readonly"></div>
         <div class="row">
             <div class="col-md-3 d-flex align-items-center">Tên tài liệu</div>
-            <div class="col-md-9"><input tabindex="1" appAutoFocus formControlName="documentName" type="text" class="form-control"></div>
+            <div class="col-md-9"><input tabindex="1" [appAutoFocus]="routerAction != 'view'" formControlName="documentName" type="text" class="form-control"></div>
         </div>
         <div class="mt-4">
             <h5 class="text-uppercase">I. phân tích chủ đầu tư (employer analysis)</h5>

@@ -19,7 +19,6 @@ import { StatusObservableHsdtService } from '../../../../../shared/services/stat
 })
 export class NeedCreateTenderComponent implements OnInit {
 
-  static routerAction = '';
   dtOptions: any = DATATABLE_CONFIG;
   dtTrigger: Subject<any> = new Subject();
   bidOpportunityId;
@@ -72,7 +71,7 @@ export class NeedCreateTenderComponent implements OnInit {
   }
 
   changeAction(data: string) {
-    NeedCreateTenderComponent.routerAction = data;
+    this.packageService.setRouterAction(data);
   }
 
   printForm() {

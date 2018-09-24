@@ -34,7 +34,8 @@ export class UserFormComponent implements OnInit {
         departmentId: '',
         password: '',
         rePassword: '',
-        phoneNumber: ''
+        phoneNumber: '',
+        address: ''
     };
     invalidMessages: string[];
     isError;

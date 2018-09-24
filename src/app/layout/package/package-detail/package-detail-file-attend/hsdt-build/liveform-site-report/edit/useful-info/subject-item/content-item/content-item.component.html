@@ -2,7 +2,7 @@
     <div class="img-demo-des">
         <label class="label-hide"> </label>
         <input type="text" class="input-name-content" [ngClass]="{'view-mode-text': viewMode}" formControlName="tenNoidung">
-        <i (click)="deleteContentItem($event)" [ngClass]="{'d-none': viewMode}" class="fa fa-times-circle remove-content-button" aria-hidden="true"></i>
+        <i (click)="deleteContentItem()" [ngClass]="{'d-none': viewMode}" class="fa fa-times-circle remove-content-button" aria-hidden="true"></i>
     </div>
     <div class="img-demo-des">
         <label for="" style="visibility: hidden">Nội dung</label>
@@ -12,11 +12,11 @@
         <input type="file" #uploadContent [ngClass]="{'view-mode-text': viewMode}" (change)="uploadContentImage($event)">
         <div class="display-img" *ngFor="let url of contentItemImageList">
             <img [src]="(url.image?.base64) || url.image.file">
-            <div class="toppp"  [ngClass]="{'d-none': viewMode}" (click)="deleteContentImage(url)">
+            <div class="toppp" [ngClass]="{'d-none': viewMode}" (click)="deleteContentImage(url)">
                 <i class="fa fa-times delete-icon" aria-hidden="true"></i>
             </div>
         </div>
-        <div class="perspective-image"  [ngClass]="{'d-none': viewMode}" (click)="uploadContent.click()">
+        <div class="perspective-image" [ngClass]="{'d-none': viewMode}" (click)="uploadContent.click()">
             <i class="fa fa-plus" aria-hidden="true"></i>
             <p>Image</p>
         </div>

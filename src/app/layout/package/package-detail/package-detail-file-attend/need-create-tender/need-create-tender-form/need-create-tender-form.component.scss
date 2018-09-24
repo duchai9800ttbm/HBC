@@ -79,3 +79,14 @@
 .b-btn {
     min-width: 5rem;
 }
+
+.lf-custom-header {
+    div:first-child {
+        width: 230px;
+        padding-left: 1rem;
+    }
+    div:last-child {
+        width: calc(100% - 230px);
+        padding-left: 1rem;
+    }
+}

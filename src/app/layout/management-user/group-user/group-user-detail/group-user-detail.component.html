@@ -11,7 +11,7 @@
             <span class="input-group-addon">Tìm kiếm</span>
             <input type="text" class="form-control icon" placeholder="&#xf002; Nhập tên, mô tả" (keyup)="searchTerm$.next($event.target.value)">
           </div>
-          <button type="submit" class="btn btn-primary btn-rg w-80 pull-right" [disabled]="loading" (click)="openModalCreate(edit)">
+          <button type="submit" class="btn btn-primary btn-rg w-80 pull-right" (click)="openModalCreate(edit)">
             Tạo mới
           </button>
           <button class="btn btn-primary btn-rg pull-right" (click)="multiDelete()">
@@ -32,7 +32,7 @@
           <tr style="width: 100%">
             <th class="text-center min-width-stt">
               <label class="custom-control custom-checkbox">
-                <input type="checkbox" class="custom-control-input input-checkbox" [(ngModel)]="checkboxSeclectAll" (change)="onSelectAll($event.target.checked)">
+                <input type="checkbox" class="custom-control-input input-checkbox" (change)="onSelectAll($event.target.checked)">
                 <span class="custom-control-indicator"></span>
               </label>
             </th>
@@ -65,7 +65,7 @@
           <tr *ngFor="let item of pagedResult.items">
             <td class="text-center" style="width: 15px; padding-left: 7px;">
               <label class="custom-control custom-checkbox">
-                <input type="checkbox" class="custom-control-input" [(ngModel)]="item.checkboxSelected">
+                <input type="checkbox" class="custom-control-input" >
                 <span class="custom-control-indicator"></span>
               </label>
             </td>
