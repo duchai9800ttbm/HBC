@@ -48,6 +48,21 @@ export class PriceReviewService {
     const url = `bidopportunity/hsdt/${bidOpportunityId}/guiduyettrinhduyetgia`;
     return this.apiService.post(url);
   }
+
+  guiDuyetLaiTrinhDuyetGia(bidOpportunityId: number) {
+    const url = `bidopportunity/hsdt/${bidOpportunityId}/guilaiduyettrinhduyetgia`;
+    return this.apiService.post(url);
+  }
+
+  chotHoSo(bidOpportunityId: number) {
+    const url = `bidopportunity/hsdt/${bidOpportunityId}/chothoso`;
+    return this.apiService.post(url);
+  }
+
+  hieuChinhHSDT(bidOpportunityId: number) {
+    const url = `bidopportunity/hsdt/${bidOpportunityId}/hieuchinhhsdt`;
+    return this.apiService.post(url);
+  }
   view(bidOpportunityId: number) {
     const url = `bidopportunity/${bidOpportunityId}/tenderpriceapproval`;
     return this.apiService.get(url).map(response => {

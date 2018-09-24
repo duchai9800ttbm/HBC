@@ -99,13 +99,11 @@ export class CommentItemComponent implements OnInit {
 
     }
 
-    this.commentService
-      .create(this.moduleName, this.moduleItemId, newComment)
-      .subscribe(result => {
-        // if (this.isReplyComment) {
-        //   this.commentList[0].id = result.id;
-        // }
-      });
+    // this.commentService
+    //   .create(this.moduleName, this.moduleItemId, newComment)
+    //   .subscribe(result => {
+      
+    //   });
 
     // We reset the content of the editor
     this.newCommentEditor.setEditableContent('');

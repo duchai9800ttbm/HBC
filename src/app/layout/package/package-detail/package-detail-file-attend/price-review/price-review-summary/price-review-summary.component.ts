@@ -32,7 +32,6 @@ export class PriceReviewSummaryComponent implements OnInit {
     this.packageId = PackageDetailComponent.packageId;
     this.packageService.getInforPackageID(this.packageId).subscribe(result => {
       this.package = result;
-      console.log(this.package);
 
     }, err => {
     });
@@ -56,20 +55,51 @@ export class PriceReviewSummaryComponent implements OnInit {
     this.confirmService.confirm('Bạn có chắc muốn gửi duyệt trình duyệt giá?', () => {
       this.priceReviewService.guiDuyetTrinhDuyetGia(this.packageId).subscribe(data => {
         that.refresh();
-        that.alertService.success('Xóa thành công!');
+        that.alertService.success('Gửi duyệt trình duyệt giá thành công!');
       }, err => {
-        that.alertService.error('Xóa thất bại, vui lòng thử lại sau!');
+        that.alertService.error('Gửi duyệt trình duyệt giá thất bại, vui lòng thử lại sau!');
       });
     });
 
   }
 
-  chotHoSo() {
+  guiDuyetLai() {
+    const that = this;
+    if (this.priceReview.isDraftVersion) {
+      this.alertService.error('Chưa đủ bản chính thức!');
+      return null;
+    }
+    this.confirmService.confirm('Bạn có chắc muốn gửi duyệt lại trình duyệt giá?', () => {
+      this.priceReviewService.guiDuyetLaiTrinhDuyetGia(this.packageId).subscribe(data => {
+        that.refresh();
+        that.alertService.success('Gửi duyệt lại trình duyệt giá thành công!');
+      }, err => {
+        that.alertService.error('Gửi duyệt lại trình duyệt giá thất bại, vui lòng thử lại sau!');
+      });
+    });
+  }
 
+  chotHoSo() {
+    const that = this;
+    this.confirmService.confirm('Bạn có chắc muốn chốt hồ sơ?', () => {
+      this.priceReviewService.chotHoSo(this.packageId).subscribe(data => {
+        that.refresh();
+        that.alertService.success('Chốt hồ sơ thành công!');
+      }, err => {
+        that.alertService.error('Chốt hồ sơ thất bại, vui lòng thử lại sau!');
+      });
+    });
   }
 
   hieuChinhHSDT() {
-
+    const that = this;
+    this.confirmService.confirm('Bạn có chắc muốn hiệu chỉnh HSDT?', () => {
+      this.priceReviewService.hieuChinhHSDT(this.packageId).subscribe(data => {
+        that.refresh();
+      }, err => {
+        that.alertService.error('Thất bại, vui lòng thử lại sau!');
+      });
+    });
   }
 
 

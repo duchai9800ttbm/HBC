@@ -49,52 +49,21 @@ export class CommentsComponent implements OnInit {
     this.avatarSrc = this.userProfile.avatarUrl ? `data:image/jpeg;base64,${this.userProfile.avatarUrl}` : defaultAvatarSrc;
     this.showButtonViewAll = this.viewMode !== 'all';
     this.showButtonLoadMore = this.viewMode === 'all';
-    this.commentService
-      .read(this.moduleName, this.moduleItemId, 0, 5)
-      .subscribe(pagedResult => {
-        this.pagedResult = pagedResult;
-        this.comments = pagedResult.items;
-
-        // if (pagedResult.items) {
-        //   pagedResult.items.forEach((element) => {
-        //     this.avatars.push(element.user.userId);
-        //     if (element.replyComments) {
-        //       element.replyComments.forEach(e => {
-        //         this.avatars.push(e.user.userId);
-        //       });
-        //     }
-        //   });
-        //   this.avatars = this.avatars.filter((v, i, a) => a.indexOf(v) === i);
-        // }
-
-        this.showButtonLoadMore = (pagedResult.pageCount !== 1) && (this.viewMode === 'all');
-      }, err => {
-        this.init = true;
-      });
+   
   }
 
   onLoadMore() {
     this.deleteComment = false;
     if (this.init) {
-      this.commentService.read(this.moduleName, this.moduleItemId, 0, 10)
-        .subscribe(pagedResult => {
-          this.pagedResult = pagedResult;
-          this.comments = pagedResult.items;
-          if (pagedResult.items.length < 10) {
-            this.showButtonLoadMore = false;
-          }
-          if ((pagedResult.items.length > 0) && (+pagedResult.currentPage + 1 < pagedResult.pageCount)) {
-            this.init = false;
-          }
-        });
+     
     } else {
-      this.commentService.read(this.moduleName, this.moduleItemId, +this.pagedResult.currentPage + 1,
-        +this.pagedResult.pageSize)
-        .subscribe(pagedResult => {
-          this.showButtonLoadMore = (pagedResult.items.length > 0) && (+pagedResult.currentPage + 1 < pagedResult.pageCount);
-          this.pagedResult = pagedResult;
-          this.comments = this.comments.concat(pagedResult.items);
-        });
+      // this.commentService.read(this.moduleName, this.moduleItemId, +this.pagedResult.currentPage + 1,
+      //   +this.pagedResult.pageSize)
+      //   .subscribe(pagedResult => {
+      //     this.showButtonLoadMore = (pagedResult.items.length > 0) && (+pagedResult.currentPage + 1 < pagedResult.pageCount);
+      //     this.pagedResult = pagedResult;
+      //     this.comments = this.comments.concat(pagedResult.items);
+      //   });
     }
 
   }
@@ -136,9 +105,9 @@ export class CommentsComponent implements OnInit {
       };
       this.comments.splice(0, 0, newComment);
       // this.comments.splice(0, 0, newComment);
-      this.commentService
-        .create(this.moduleName, this.moduleItemId, newComment)
-        .subscribe(result => this.comments[0].id = result.id);
+      // this.commentService
+      //   .create(this.moduleName, this.moduleItemId, newComment)
+      //   .subscribe(result => this.comments[0].id = result.id);
       // Emit event so the updated comment list can be persisted
       // outside the component
       if (this.deleteComment) {
