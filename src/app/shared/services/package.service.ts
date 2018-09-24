@@ -903,6 +903,11 @@ export class PackageService {
         const url = `${bidOpportunityId}/bidopportunity/proposedtenderparticipatinngreport`;
         return this.apiService.get(url).map(response => response.result);
     }
+    // xóa phiếu đề nghị dự thầu
+    deleteProposedTenderParticipateReport(bidOpportunityId: number): Observable<any> {
+        const url = `bidopportunity/${bidOpportunityId}/proposedtenderparticipatinngreport/delete`;
+        return this.apiService.post(url).map(response => response.result);
+    }
     // gửi duyệt đề nghị dự thầu
     sendApproveBidProposal(bidOpportunityId: number, date: number): Observable<any> {
         const url = `bidopportunity/hsdt/${bidOpportunityId}/guiduyetdenghiduthau`;
@@ -916,6 +921,12 @@ export class PackageService {
         return this.apiService.post(url, {
             reason: reason
         }).map(response => response.result);
+    }
+
+    // get thông tin mặc định LiveForm phân công tiến độ
+    getDefaultTenderPreparationPlanning() {
+        const url = `tenderpreparationplanningassignment/getdefaultinformation`;
+        return this.apiService.get(url).map(data => data.result);
     }
 
     // get thông tin LiveForm phân công tiến độ

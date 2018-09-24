@@ -1,4 +1,4 @@
-:host(){
+:host() {
     height: 100%;
 }
 
@@ -20,6 +20,42 @@
 .h-40 {
     height: 40px;
 }
-.screen-empty{
+
+.screen-empty {
     height: 100%;
+}
+
+.content {
+    margin-left: 2rem;
+    margin-right: 1rem;
+}
+
+.icon-view {
+    color: #25af05;
+    outline: none;
+}
+
+.icon-edit {
+    color: #618dc1;
+    outline: none;
+
+}
+
+.icon-delete {
+    color: #c6c6c6;
+    outline: none;
+
+}
+
+.icon-print {
+    color: #f26522;
+    outline: none;
+
+}
+
+input.icon {
+    font-family: FontAwesome, "Open Sans", Verdana, sans-serif;
+    font-style: normal;
+    font-weight: normal;
+    text-decoration: inherit;
 }

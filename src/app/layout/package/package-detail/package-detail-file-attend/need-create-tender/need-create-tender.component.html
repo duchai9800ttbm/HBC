@@ -17,7 +17,7 @@
             <button type="button" class="btn btn-primary ml-2" (click)="isShowDialog = true" *ngIf="proposedTender && packageInfo?.stageStatus.id == bidStatus.CanLapDeNghiDuThau">Gửi duyệt đề nghị DT</button>
             <button type="button" class="btn btn-primary ml-2">Tải
                 Template</button>
-            <button type="button" class="btn btn-primary ml-2">
+            <button type="button" class="btn btn-primary ml-2" (click)="refresh()">
                 <i class="fa fa-refresh" aria-hidden="true"></i>
             </button>
         </div>
@@ -34,9 +34,6 @@
         <button class="btn btn-primary ml-2" routerLink="./form/create">
             Tạo mới phiếu đề nghị dự thầu
         </button>
-        <!-- <button class="btn btn-primary ml-2">
-            Tạo bằng import theo mẫu
-        </button> -->
     </div>
 </div>
 <div class="mt-5 ml-3" *ngIf="proposedTender">
@@ -45,10 +42,6 @@
         <thead>
             <tr>
                 <th>
-                    <!-- <label class="custom-control custom-checkbox">
-                        <input type="checkbox" class="custom-control-input input-checkbox">
-                        <span class="custom-control-indicator"></span>
-                    </label> -->
                 </th>
                 <th>Tên tài liệu</th>
                 <th>Tình trạng</th>
@@ -60,12 +53,8 @@
         <tbody>
             <tr>
                 <td>
-                    <!-- <label class="custom-control custom-checkbox">
-                        <input type="checkbox" class="custom-control-input input-checkbox">
-                        <span class="custom-control-indicator"></span>
-                    </label> -->
                 </td>
-                <td>{{proposedTender.documentName}}</td>
+                <td><a [routerLink]="['./form/view']" (click)="changeAction('view')">{{proposedTender.documentName}}</a></td>
                 <td>{{proposedTender.isDraftVersion ? 'Bản nháp' : 'Chính thức'}}</td>
                 <td>{{proposedTender.createdEmployee?.employeeName}}</td>
                 <td></td>
@@ -78,7 +67,7 @@
                             <a class=" text-success ml-3" [class.disable]="packageInfo?.stageStatus.id == bidStatus.TuChoiDuThau" [routerLink]="packageInfo?.stageStatus.id == bidStatus.TuChoiDuThau ? [] : ['./form/edit']" (click)="changeAction('edit')">
                                 <i class="fa fa-pencil cursor-pointer" aria-hidden="true"> </i>
                             </a>
-                            <a class=" text-dark ml-3">
+                            <a class=" text-dark ml-3" (click)="deleteProposedTenderParticipateReport()">
                                 <i class="fa fa-trash-o" aria-hidden="true"></i>
                             </a>
                             <!-- <a class="ml-3" (click)="printForm()">

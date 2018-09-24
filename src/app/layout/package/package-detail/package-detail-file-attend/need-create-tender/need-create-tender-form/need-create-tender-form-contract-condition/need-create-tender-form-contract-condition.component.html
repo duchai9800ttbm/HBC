@@ -17,7 +17,7 @@
                 1. Dạng và kiểu hợp đồng (Type of contract)
             </div>
             <div class="col-md-6">
-                <input appAutoFocus tabindex="1" formControlName="typeOfContract" class="form-control">
+                <input [appAutoFocus]="routerAction != 'view'" tabindex="1" formControlName="typeOfContract" class="form-control">
             </div>
         </div>
         <div class="row mt-3">
@@ -69,7 +69,7 @@
                 6. Bảo lãnh hợp đồng (Performance security)
             </div>
             <div class="col-md-6">
-                <input appInputNumberNegativeDecimal [min]="0" [max]="100" tabindex="9" formControlName="performanceSecurity" class="form-control input-percent">
+                <input appInputNumberNegativeDecimal [decimal]="true" [min]="0" [max]="100" tabindex="9" formControlName="performanceSecurity" class="form-control input-percent">
                 <span class="input-unit">%</span>
             </div>
         </div>
@@ -78,7 +78,7 @@
                 7. Phạt trễ tiến độ (Delay damages for the works)
             </div>
             <div class="col-md-6">
-                <input appInputNumberNegativeDecimal [min]="0" [max]="100" tabindex="10" formControlName="delayDamagesForTheWorks" class="form-control input-percent">
+                <input appInputNumberNegativeDecimal [decimal]="true" [min]="0" [max]="100" tabindex="10" formControlName="delayDamagesForTheWorks" class="form-control input-percent">
                 <span class="input-unit">%</span>
             </div>
         </div>
@@ -104,7 +104,7 @@
                 Tiền tạm ứng (Advance payment)
             </div>
             <div class="col-md-6">
-                <input appInputNumberNegativeDecimal [min]="0" [max]="100" tabindex="12" formControlName="advancePayment" class="form-control input-percent">
+                <input appInputNumberNegativeDecimal [decimal]="true" [min]="0" [max]="100" tabindex="12" formControlName="advancePayment" class="form-control input-percent">
                 <span class="input-unit">%</span>
             </div>
         </div>

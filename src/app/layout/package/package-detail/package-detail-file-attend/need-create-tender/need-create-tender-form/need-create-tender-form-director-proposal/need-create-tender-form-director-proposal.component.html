@@ -10,7 +10,7 @@
             </div>
             <div class="col-md-8 row">
                 <div class="col-md-6">
-                    <input type="radio" appAutoFocus tabindex="1" [value]="true" formControlName="isAgreedParticipating"> Đồng ý tham gia/ Agree
+                    <input type="radio" [appAutoFocus]="routerAction != 'view'" tabindex="1" [value]="true" formControlName="isAgreedParticipating"> Đồng ý tham gia/ Agree
                 </div>
                 <div class="col-md-6">
                     <input type="radio" tabindex="2" [value]="false" formControlName="isAgreedParticipating"> Không đồng ý tham gia/ No agree

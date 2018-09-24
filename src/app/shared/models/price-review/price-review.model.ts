@@ -1,6 +1,8 @@
 export class TenderPriceApproval {
     id: number;
     bidOpportunityId: number;
+    createdEmployeeId?: number;
+    updatedEmployeeId?: number;
     createdEmployee: {
         employeeId: number;
         employeeNo: string;
@@ -25,48 +27,40 @@ export class TenderPriceApproval {
         foudationPart: {
             scopeOfWorkIsInclude: boolean;
             scopeOfWorkDesc: string;
-            gfa: number
         };
         basementPart: {
             scopeOfWorkIsInclude: boolean;
             scopeOfWorkDesc: string;
-            gfa: number
         };
         basementPartConstructionStructure: {
             scopeOfWorkIsInclude: boolean;
             scopeOfWorkDesc: string;
-            gfa: number
         };
         basementPartConstructionCompletion: {
             scopeOfWorkIsInclude: boolean;
             scopeOfWorkDesc: string;
-            gfa: number
         };
         basementPartOtherWork: {
             scopeOfWorkIsInclude: boolean;
             scopeOfWorkDesc: string;
-            gfa: number
         };
         bodyPart: {
             scopeOfWorkIsInclude: boolean;
             scopeOfWorkDesc: string;
-            gfa: number
         };
         bodyPartConstructionStructure: {
             scopeOfWorkIsInclude: boolean;
             scopeOfWorkDesc: string;
-            gfa: number
         };
         bodyPartConstructionCompletion: {
             scopeOfWorkIsInclude: boolean;
             scopeOfWorkDesc: string;
-            gfa: number
         };
         bodyPartOtherWork: {
             scopeOfWorkIsInclude: boolean;
             scopeOfWorkDesc: string;
-            gfa: number
-        }
+        };
+        gfa: number;
     };
     technique: {
         constructionProgress: {
@@ -183,4 +177,5 @@ export class TenderPriceApproval {
             note: string
         }
     };
+    
 }
