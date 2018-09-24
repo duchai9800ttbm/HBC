@@ -99,7 +99,7 @@
                                         </a>
                                     </div>
                                     <div class="icon-mg">
-                                        <a title="Xóa file">
+                                        <a title="Xóa file" (click)="deleteDoc()">
                                             <i class="fa fa-trash-o" aria-hidden="true"></i>
                                         </a>
                                     </div>
@@ -205,7 +205,7 @@
                                 {{ (updateInfo?.updateDesc != 'undefined') ? updateInfo.updateDesc : '' }}
                             </td>
                             <td class="text-center d-flex flex-column align-items-start">
-                                <p *ngFor="let item of updateInfo.liveFormChangeds; index as j">{{ item.liveFormTitle |translate }}: {{ item.oldValue }} --- {{ item.newValue }}</p>
+                                <p *ngFor="let item of updateInfo.liveFormChangeds; index as j">{{ item.liveFormTitle }}: {{ item.oldValue }} --- {{ item.newValue }}</p>
                             </td>
                         </tr>
                     </tbody>

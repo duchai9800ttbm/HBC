@@ -13,7 +13,7 @@
             </div>
             <div>
                 <div class="btn-toolbar mt-2 mb-2">
-                    <div>
+                    <div [ngClass]="{'d-none': hideActionSiteReport}">
                         <div class="input-group">
                             <span class="input-group-addon">Tìm kiếm theo</span>
                             <input type="text" class="form-control icon" placeholder="&#xf002; Tên tài liệu" (keyup)="search($event.target.value)">
@@ -23,19 +23,19 @@
                         <button class="btn btn-primary ml-2">
                             Tải Template
                         </button>
-                        <button class="btn btn-primary ml-2">
+                        <button class="btn btn-primary ml-2" [ngClass]="{'d-none': hideActionSiteReport}">
                             Tải xuống tài liệu
                         </button>
-                        <button class="btn btn-primary ml-2">
+                        <button class="btn btn-primary ml-2" [ngClass]="{'d-none': hideActionSiteReport}">
                             Xóa
                         </button>
-                        <button class="btn btn-primary ml-2">
+                        <button class="btn btn-primary ml-2" [ngClass]="{'d-none': hideActionSiteReport}">
                             In
                         </button>
                         <!-- <button class="btn btn-primary ml-2" type="button" ngbDropdownToggle data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> 
                                 Thêm mới HSDT
                             </button> -->
-                        <span ngbDropdown>
+                        <span ngbDropdown [ngClass]="{'d-none': hideActionSiteReport}">
                             <button class="btn btn-primary ml-2" id="dropdownBasic1" ngbDropdownToggle>Thêm mới HSDT</button>
                             <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
                                 <button class="dropdown-item">Bảng tóm tắt ĐKDT</button>
@@ -56,7 +56,7 @@
                                 <button class="dropdown-item" (click)="showDialogUploadFile('Hồ sơ khác')">Hồ sơ khác</button>
                             </div>
                         </span>
-                        <button class="btn btn-primary ml-2">
+                        <button class="btn btn-primary ml-2" [ngClass]="{'d-none': hideActionSiteReport}">
                             Chốt HSDT
                         </button>
                         <button class="btn btn-primary ml-2">
@@ -122,7 +122,7 @@
                 </div>
             </div>
             <div class="w-100">
-                <router-outlet></router-outlet>
+                <router-outlet (activate)="onActivate($event)"></router-outlet>
             </div>
         </div>
     </div>

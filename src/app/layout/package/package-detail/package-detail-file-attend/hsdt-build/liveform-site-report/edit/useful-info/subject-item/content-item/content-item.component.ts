@@ -19,7 +19,7 @@ export class ContentItemComponent implements OnInit {
   @Output() deleteContent = new EventEmitter<boolean>();
   contentItemForm: FormGroup;
   contentItemImageList = [];
-  url;
+  deleteImageList = [];
   currentBidOpportunityId: number;
   viewMode;
 
@@ -32,6 +32,7 @@ export class ContentItemComponent implements OnInit {
     this.currentBidOpportunityId = +PackageDetailComponent.packageId;
     this.checkFlag();
     this.createForm();
+    console.log(this.contentItemImageList);
     this.contentItemForm.valueChanges.subscribe(data => this.mappingData(data));
   }
   checkFlag() {
@@ -83,11 +84,12 @@ export class ContentItemComponent implements OnInit {
         reader.readAsDataURL(file);
       }
     }
-    console.log(this.contentItemImageList);
   }
   deleteContentImage(i) {
     const index = this.contentItemImageList.indexOf(i);
     this.contentItemImageList.splice(index, 1);
+    // if () { }
+    this.contentItemForm.get('chiTietNoiDungList').patchValue(this.contentItemImageList);
   }
   deleteContentItem() {
     this.deleteContent.emit(true);

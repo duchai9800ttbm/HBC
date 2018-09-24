@@ -18,6 +18,7 @@ export class HsdtBuildComponent implements OnInit {
     dtTrigger: Subject<any> = new Subject();
     dialog;
     packageId;
+    hideActionSiteReport: boolean;
     isShowSideMenu = false;
     isShowMenu = false;
     notShow = false;
@@ -74,6 +75,9 @@ export class HsdtBuildComponent implements OnInit {
 
     closePopuup() {
         this.dialog.close();
+    }
+    onActivate(event) {
+        this.hideActionSiteReport = (event.constructor.name === 'LiveformSiteReportComponent') ? true : false;
     }
 
     // isActive(): boolean {

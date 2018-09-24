@@ -4,7 +4,7 @@ import { DocumentService } from '../../../../../../shared/services/document.serv
 import { NgxSpinnerService } from 'ngx-spinner';
 import { PackageDetailComponent } from '../../../package-detail.component';
 import { PagedResult } from '../../../../../../shared/models';
-import { AlertService } from '../../../../../../shared/services';
+import { AlertService, ConfirmationService } from '../../../../../../shared/services';
 import { Subject } from 'rxjs/Subject';
 import { SiteReportChangedHistory } from '../../../../../../shared/models/site-survey-report/site-report-changed-history';
 
@@ -28,18 +28,12 @@ export class LiveformSiteReportComponent implements OnInit {
   constructor(
     private documentService: DocumentService,
     private alertService: AlertService,
+    private confirmationService: ConfirmationService,
     private spinner: NgxSpinnerService,
   ) { }
 
   ngOnInit() {
     this.bidOpportunityId = +PackageDetailComponent.packageId;
-    this.documentService.changedHistoryTenderSiteReport(this.bidOpportunityId, 0, 10)
-      .subscribe(responseResultHistory => {
-        this.pagedResult = responseResultHistory;
-        this.updateInfoList = responseResultHistory.items;
-        this.dtTrigger.next();
-        this.spinner.hide();
-      }, err => this.spinner.hide());
     this.documentService.tenderSiteSurveyingReport(this.bidOpportunityId).subscribe(res => {
       LiveformSiteReportComponent.formModel = res;
       if (!LiveformSiteReportComponent.formModel.scaleOverall.loaiCongTrinh.length) {
@@ -51,9 +45,32 @@ export class LiveformSiteReportComponent implements OnInit {
       this.documentData = res;
       this.isData = (this.documentData.id) ? true : false;
     });
+    this.documentService.changedHistoryTenderSiteReport(this.bidOpportunityId, 0, 10)
+      .subscribe(responseResultHistory => {
+        this.pagedResult = responseResultHistory;
+        this.updateInfoList = responseResultHistory.items;
+        this.dtTrigger.next();
+        this.spinner.hide();
+      }, err => this.spinner.hide());
   }
-  refresh(displayAlert: boolean = false): void {
+  refresh() {
     this.spinner.show();
+    this.documentService.tenderSiteSurveyingReport(this.bidOpportunityId).subscribe(res => {
+      LiveformSiteReportComponent.formModel = res;
+      if (!LiveformSiteReportComponent.formModel.scaleOverall.loaiCongTrinh.length) {
+        this.documentService.getListConstructionType().subscribe(ress => {
+          this.listConstructionType = ress;
+          LiveformSiteReportComponent.formModel.scaleOverall.loaiCongTrinh = this.listConstructionType;
+        });
+      }
+      this.documentData = res;
+      this.isData = (this.documentData.id) ? true : false;
+      LiveformSiteReportComponent.viewFlag = false;
+    },
+      err => {
+        this.spinner.hide();
+        this.alertService.error('Đã xảy ra lỗi, dữ liệu không được cập nhật');
+      });
   }
   rerender(pagedResult: any) {
     this.pagedResult = pagedResult;
@@ -61,6 +78,22 @@ export class LiveformSiteReportComponent implements OnInit {
   }
   createMode() {
     LiveformSiteReportComponent.formModel.id = 1;
+  }
+  deleteDoc() {
+    const that = this;
+    this.confirmationService.confirm(
+      'Bạn có chắc chắn muốn xóa báo cáo này?',
+      () => {
+        this.documentService.deleteSiteSurveyingReport(this.bidOpportunityId).subscribe(res => {
+          that.alertService.success('Đã xóa báo cáo công trình!');
+          this.spinner.hide();
+          that.refresh();
+        },
+          err => {
+            that.alertService.error('Đã gặp lỗi, chưa xóa được báo cáo công trình!');
+          });
+      }
+    );
   }
 
   onActivate(event, view) {

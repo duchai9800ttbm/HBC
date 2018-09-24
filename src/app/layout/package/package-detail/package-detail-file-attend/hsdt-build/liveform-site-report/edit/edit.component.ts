@@ -52,6 +52,8 @@ export class EditComponent implements OnInit, OnDestroy {
       this.showPopupConfirm = false;
     } else {
       const objData = LiveformSiteReportComponent.formModel;
+      this.showPopupConfirm = false;
+      this.spinner.show();
       this.documentService
         .createOrUpdateSiteSurveyingReport(objData)
         .subscribe(() => {
@@ -77,6 +79,9 @@ export class EditComponent implements OnInit, OnDestroy {
 
   updateliveform() {
     this.showPopupConfirm = true;
+  }
+  cancelCreateUpdate() {
+    this.router.navigate([`/package/detail/${this.currentBidOpportunityId}/attend/build/liveformsite`]);
   }
 
   disableSideMenu(event) {

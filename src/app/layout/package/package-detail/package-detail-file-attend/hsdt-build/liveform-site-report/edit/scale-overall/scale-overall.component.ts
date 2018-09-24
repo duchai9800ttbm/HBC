@@ -219,7 +219,11 @@ export class ScaleOverallComponent implements OnInit {
   deletePerspectiveImage(i) {
     const index = this.perspectiveImageUrls.indexOf(i);
     this.perspectiveImageUrls.splice(index, 1);
+    console.log(this.perspectiveImageUrls);
     this.scaleOverallForm.get('hinhAnhPhoiCanhList').patchValue(this.perspectiveImageUrls);
+
+    console.log(this.perspectiveImageUrls);
+    console.log(i);
   }
   uploadStructureImage(event) {
     const files = event.target.files;
