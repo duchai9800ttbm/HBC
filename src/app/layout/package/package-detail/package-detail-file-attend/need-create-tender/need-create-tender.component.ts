@@ -11,6 +11,7 @@ import DateTimeConvertHelper from '../../../../../shared/helpers/datetime-conver
 import { PackageInfoModel } from '../../../../../shared/models/package/package-info.model';
 import { BidStatus } from '../../../../../shared/constants/bid-status';
 import { StatusObservableHsdtService } from '../../../../../shared/services/status-observable-hsdt.service';
+import { NotificationService } from '../../../../../shared/services/notification.service';
 
 @Component({
   selector: 'app-need-create-tender',
@@ -34,7 +35,8 @@ export class NeedCreateTenderComponent implements OnInit {
     private spinner: NgxSpinnerService,
     private alertService: AlertService,
     private statusObservableHsdtService: StatusObservableHsdtService,
-    private confirmService: ConfirmationService
+    private confirmService: ConfirmationService,
+    private notificationService: NotificationService,
   ) { }
 
   ngOnInit() {
@@ -113,6 +115,7 @@ export class NeedCreateTenderComponent implements OnInit {
     this.spinner.show();
     this.packageService.sendApproveBidProposal(this.bidOpportunityId, DateTimeConvertHelper.fromDtObjectToSecon(this.dateApproveBid))
       .subscribe(data => {
+        this.notificationService.change();
         this.spinner.hide();
         this.alertService.success('Gửi duyệt đề nghị dự thầu thành công!');
         this.isShowDialog = false;

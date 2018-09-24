@@ -146,7 +146,8 @@ export class HeaderNotificationComponent implements OnInit {
     this.notificationService
       .readNotification(item.id)
       .subscribe(result => {
-        this.getListNotification();
+        this.notificationService.change();
+        // this.getListNotification();
       },
         err => {
           this.alertService.error('Đã xảy ra lỗi!');
@@ -183,7 +184,8 @@ export class HeaderNotificationComponent implements OnInit {
 
   readAllNotification() {
     this.notificationService.readAllNotification().subscribe(response => {
-      this.getListNotification();
+      this.notificationService.change();
+      // this.getListNotification();
     },
       err => {
         this.alertService.error('Đã xảy ra lỗi!');
@@ -195,7 +197,8 @@ export class HeaderNotificationComponent implements OnInit {
       'Bạn có chắc chắn muốn xóa tất cả thông báo?',
       () => {
         this.notificationService.deleteAllNotification().subscribe(response => {
-          this.getListNotification();
+          this.notificationService.change();
+          // this.getListNotification();
         },
           err => {
             this.alertService.error('Đã xảy ra lỗi!');

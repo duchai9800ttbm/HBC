@@ -1,4 +1,4 @@
-:host(){
+:host() {
     height: 100%;
 }
 
@@ -20,6 +20,27 @@
 .h-40 {
     height: 40px;
 }
-.screen-empty{
+
+.screen-empty {
     height: 100%;
+}
+
+.content {
+    margin-left: 1rem;
+}
+
+.icon-view {
+    color: #25af05
+}
+
+.icon-edit {
+    color: #618dc1;
+}
+
+.icon-delete {
+    color: #c6c6c6;
+}
+
+.icon-print {
+    color: #f26522;
 }

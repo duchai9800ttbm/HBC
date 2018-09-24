@@ -59,48 +59,40 @@ export class PriceReviewService {
       foudationPart: {
         scopeOfWorkIsInclude: formValue.phanMongCheck ? formValue.phanMongCheck : false,
         scopeOfWorkDesc: formValue.phanMongDesc,
-        gfa: 0
       },
       basementPart: {
         scopeOfWorkIsInclude: formValue.phanHamCheck ? formValue.phanHamCheck : false,
         scopeOfWorkDesc: formValue.phanHamDesc,
-        gfa: 0
       },
       basementPartConstructionStructure: {
         scopeOfWorkIsInclude: formValue.ketCauCheck ? formValue.ketCauCheck : false,
         scopeOfWorkDesc: formValue.ketCauDesc,
-        gfa: 0
       },
       basementPartConstructionCompletion: {
         scopeOfWorkIsInclude: formValue.hoanThienCheck ? formValue.hoanThienCheck : false,
         scopeOfWorkDesc: formValue.hoanThienDesc,
-        gfa: 0
       },
       basementPartOtherWork: {
         scopeOfWorkIsInclude: formValue.congViecKhacCheck ? formValue.congViecKhacCheck : false,
         scopeOfWorkDesc: formValue.congViecKhacDesc,
-        gfa: 0
       },
       bodyPart: {
         scopeOfWorkIsInclude: formValue.phanThanCheck ? formValue.phanThanCheck : false,
         scopeOfWorkDesc: formValue.phanThanDesc,
-        gfa: 0
       },
       bodyPartConstructionStructure: {
         scopeOfWorkIsInclude: formValue.phanThanKetCauCheck ? formValue.phanThanKetCauCheck : false,
         scopeOfWorkDesc: formValue.phanThanKetCauDesc,
-        gfa: 0
       },
       bodyPartConstructionCompletion: {
         scopeOfWorkIsInclude: formValue.phanThanHoanThienCheck ? formValue.phanThanHoanThienCheck : false,
         scopeOfWorkDesc: formValue.phanThanhoanThienDesc,
-        gfa: 0
       },
       bodyPartOtherWork: {
         scopeOfWorkIsInclude: formValue.phanThancongViecKhacCheck ? formValue.phanThancongViecKhacCheck : false,
         scopeOfWorkDesc: formValue.phanThancongViecKhacDesc,
-        gfa: 0
-      }
+      },
+      gfa: formValue.infoGfa
     };
     modelRequest.technique = {
       constructionProgress: {
@@ -157,48 +149,40 @@ export class PriceReviewService {
         foudationPart: model.projectInformation.foudationPart && {
           scopeOfWorkIsInclude: model.projectInformation.foudationPart.scopeOfWorkIsInclude,
           scopeOfWorkDesc: model.projectInformation.foudationPart.scopeOfWorkDesc,
-          gfa: model.projectInformation.foudationPart.gfa
         },
         basementPart: model.projectInformation.basementPart && {
           scopeOfWorkIsInclude: model.projectInformation.basementPart.scopeOfWorkIsInclude,
           scopeOfWorkDesc: model.projectInformation.basementPart.scopeOfWorkDesc,
-          gfa: model.projectInformation.basementPart.gfa,
         },
         basementPartConstructionStructure: model.projectInformation.basementPartConstructionStructure && {
           scopeOfWorkIsInclude: model.projectInformation.basementPartConstructionStructure.scopeOfWorkIsInclude,
           scopeOfWorkDesc: model.projectInformation.basementPartConstructionStructure.scopeOfWorkDesc,
-          gfa: model.projectInformation.basementPartConstructionStructure.gfa
         },
         basementPartConstructionCompletion: model.projectInformation.basementPartConstructionCompletion && {
           scopeOfWorkIsInclude: model.projectInformation.basementPartConstructionCompletion.scopeOfWorkIsInclude,
           scopeOfWorkDesc: model.projectInformation.basementPartConstructionCompletion.scopeOfWorkDesc,
-          gfa: model.projectInformation.basementPartConstructionCompletion.gfa
         },
         basementPartOtherWork: model.projectInformation.basementPartOtherWork && {
           scopeOfWorkIsInclude: model.projectInformation.basementPartOtherWork.scopeOfWorkIsInclude,
           scopeOfWorkDesc: model.projectInformation.basementPartOtherWork.scopeOfWorkDesc,
-          gfa: model.projectInformation.basementPartOtherWork.gfa
         },
         bodyPart: model.projectInformation.bodyPart && {
           scopeOfWorkIsInclude: model.projectInformation.bodyPart.scopeOfWorkIsInclude,
           scopeOfWorkDesc: model.projectInformation.bodyPart.scopeOfWorkDesc,
-          gfa: model.projectInformation.bodyPart.gfa
         },
         bodyPartConstructionStructure: model.projectInformation.bodyPartConstructionStructure && {
           scopeOfWorkIsInclude: model.projectInformation.bodyPartConstructionStructure.scopeOfWorkIsInclude,
           scopeOfWorkDesc: model.projectInformation.bodyPartConstructionStructure.scopeOfWorkDesc,
-          gfa: model.projectInformation.bodyPartConstructionStructure.gfa
         },
         bodyPartConstructionCompletion: model.projectInformation.bodyPartConstructionCompletion && {
           scopeOfWorkIsInclude: model.projectInformation.bodyPartConstructionCompletion.scopeOfWorkIsInclude,
           scopeOfWorkDesc: model.projectInformation.bodyPartConstructionCompletion.scopeOfWorkDesc,
-          gfa: model.projectInformation.bodyPartConstructionCompletion.gfa
         },
         bodyPartOtherWork: model.projectInformation.bodyPartConstructionCompletion && {
           scopeOfWorkIsInclude: model.projectInformation.bodyPartConstructionCompletion.scopeOfWorkIsInclude,
           scopeOfWorkDesc: model.projectInformation.bodyPartConstructionCompletion.scopeOfWorkDesc,
-          gfa: model.projectInformation.bodyPartConstructionCompletion.gfa
-        }
+        },
+        gfa: model.projectInformation.gfa
       },
       technique: model.technique && {
         constructionProgress: model.technique.constructionProgress && {
