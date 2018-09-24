@@ -1,37 +1,6 @@
-<!-- <div [@routerTransition] class="wrapper">
-  <div class="page-header">
-    <h1 id="timeline">THÔNG BÁO</h1>
-    <hr>
-  </div>
-  <div>
-    <ul>
-      <li (click)="read(item)"  [class.unread]="item.unread" class="cursor-pointer">
-        <div>
-          <div class="title">Bạn có 1  <strong></strong></div>
-          <div class="info"> bắt đầu:&nbsp;
-              <strong></strong>
-            </div>
-          <div class="type">Thời gian diễn ra:&nbsp;
-            <strong></strong>
-            đến ngày
-            <strong></strong>.
-          </div>
-        </div>
-        <span class="number">
-          <span></span>
-          <span></span>
-        </span>
-      </li>
-    </ul>
-    <div  class="text-center cursor-pointer mt-5" >
-      <a class="text-primary" (click)="onLoadMore()">Xem thêm</a>
-    </div>
-  </div>
-</div> -->
-
 <div [@routerTransition]>
-  <div class="title-detail center-parent">
-    <div class="mr-auto col-md-12">
+  <div class="title-detail center-parent" [class.title-detail-toggle]="isToggle">
+    <div class="mr-auto col-md-12 pl-16">
       <div class="media-header header-title p-0">
         <div class="d-flex justify-content-between">
           <div class="text-truncate ellipsis">
@@ -54,25 +23,7 @@
           <div class="mr-auto w-100">
             <div>
               <div class="w-100 text-right" [class.bot-when-have-data]="notificationList && notificationList.length !== 0">
-                <!-- <li role="menuitem" dropdown placement="right" container="body">
-                  <a dropdownToggle (click)="false">
-                    <i class="fa fa-ellipsis-v fa-ellipsis text-right" aria-hidden="true"></i>
-                  </a>
-                  <ul #DropToolThongBao222222 *dropdownMenu class="dropdown-menu ul-chirld--index min-width-none" role="menu">
-                    <li role="menuitem">
-                      <a class="dropdown-item ul-chirld-of-chirl--pad" (click)="readAllNotification()">Đánh dấu tất cả là đã đọc</a>
-                    </li>
-                    <li role="menuitem">
-                      <a class="dropdown-item ul-chirld-of-chirl--pad" (click)="deleteAllNotification()">Xóa tất cả thông báo</a>
-                    </li>
-                  </ul>
-                </li> -->
-
                 <div class="btn-group" dropdown>
-                  <!-- <button id="button-basic" dropdownToggle type="button" class="btn btn-primary dropdown-toggle" aria-controls="dropdown-basic">
-                    Button dropdown
-                    <span class="caret"></span>
-                  </button> -->
                   <a dropdownToggle (click)="false">
                     <i class="fa fa-ellipsis-v fa-ellipsis" aria-hidden="true"></i>
                   </a>
@@ -90,8 +41,7 @@
                 <div class="d-flex" style="padding: 0.25rem 1.5rem;">
                   <div class="action" width="">
                     <div>
-                      <img [src]="item.sendEmployee.employeeAvatar" width="30" height="30">
-                      <!-- <img *ngIf="item.sendEmployee.employeeAvatar ==== ''"(click)="toggleSidebar()" [src]="assets/images/no-avatar.png" width="30" height="30"> -->
+                      <img [src]="item.sendEmployee.employeeAvatar ? item.sendEmployee.employeeAvatar : 'assets/images/no-avatar.png'" width="30" height="30">
                     </div>
                   </div>
                 </div>
@@ -168,10 +118,10 @@
                     <em>{{item.sendDate*1000 | date:'dd/MM/yyyy HH:mm'}}</em>
                   </p>
                 </a>
-                <div [hidden]="item.notificationState.key === Read" style="padding: 0.25rem 0rem 0.25rem 1rem; min-width: 10rem; color: #019cff; font-weight: bold; cursor: pointer" (click)="tickReaded(item)">
-                  Đánh dấu đã đọc
+                <div style="padding: 0.25rem 0rem 0.25rem 1rem; min-width: 10rem; color: #019cff; font-weight: bold;">
+                  <span *ngIf="item.notificationState.id === 'UnRead'" style="cursor: pointer" (click)="tickReaded(item)">Đánh dấu đã đọc</span> 
                 </div>
-                <div style="padding: 0.25rem 1.4rem 0.25rem 0rem;color: #ff1717; font-weight: bold; cursor: pointer" (click)="deleteOneNotification(item)">Xóa</div>
+                <div style="padding: 0.25rem 1.5rem 0.25rem 0rem;color: #ff1717; font-weight: bold; cursor: pointer" (click)="deleteOneNotification(item)">Xóa</div>
               </div>
             </div>
           </div>

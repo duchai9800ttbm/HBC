@@ -1,15 +1,11 @@
 import { Injectable } from '@angular/core';
 import { ApiService } from './api.service';
 import { NotificationItem } from '../models/notification/notification-item.model';
-import { Observable, Subject } from '../../../../node_modules/rxjs';
+import { Observable, Subject, BehaviorSubject } from '../../../../node_modules/rxjs';
 
 @Injectable()
 export class NotificationService {
-  notificationAmont: Subject<string> = new Subject<string>();
-  constructor(
-    private apiService: ApiService,
-  ) { }
-
+  static notificationAmont = new Subject<any>();
   private static toNotificationList(result: any): NotificationItem {
     return {
       id: result.id,
@@ -38,6 +34,10 @@ export class NotificationService {
       sendDate: result.sendDate,
       data: result.data,
     };
+  }
+  constructor(
+    private apiService: ApiService,
+  ) {
   }
 
   // Danh sách các thông báo của người dùng
@@ -82,6 +82,10 @@ export class NotificationService {
   }
 
   change() {
-    this.notificationAmont.next();
+    NotificationService.notificationAmont.next();
+  }
+
+  watchNotificationAmontSubject(): Observable<boolean> {
+    return NotificationService.notificationAmont;
   }
 }
