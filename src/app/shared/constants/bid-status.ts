@@ -3,5 +3,7 @@ export enum BidStatus {
     ChoDuyetDeNghiDuThau = 'ChoDuyetDeNghiDuThau',
     ThamGiaDuThau = 'ThamGiaDuThau',
     TuChoiDuThau = 'DaTuChoi',
-    DaThongBaoTrienKhai = 'DaThongBaoTrienKhai'
+    DaThongBaoTrienKhai = 'DaThongBaoTrienKhai',
+    DaChotCongTacChuanBiPhongVan = 'DaChotCongTacChuanBiPhongVan',
+    DaPhongVan = 'DaPhongVan',
 }

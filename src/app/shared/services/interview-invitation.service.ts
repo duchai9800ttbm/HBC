@@ -8,9 +8,37 @@ import * as moment from 'moment';
 import { InterviewInvitationFilter } from '../models/interview-invitation/interview-invitation-filter.model';
 import { URLSearchParams } from '@angular/http';
 import { InterviewInvitationFilterReport } from '../models/interview-invitation/interview-invitation-filter-report';
+import { InterviewInvitationReportList } from '../models/interview-invitation/interview-invitation-report-list.model';
 @Injectable()
 export class InterviewInvitationService {
-
+  // map theo model danh sách biên bản phỏng vấn
+  private static toInterviewInvitationReportList(result: any): InterviewInvitationReportList {
+    return {
+      id: result.id,
+      // documentType: {
+      //   key: result.documentType.key,
+      //   value: result.documentType.value,
+      //   displayText: result.documentType.displayText,
+      // },
+      documentName: result.documentName,
+      version: result.version,
+      // status: result.status,
+      uploadedBy: {
+        employeeId: result.uploadedBy.employeeId,
+        employeeNo: result.uploadedBy.employeeNo,
+        employeeName: result.uploadedBy.employeeName,
+        employeeAvatar: result.uploadedBy.employeeAvatar,
+        employeeEmail: result.uploadedBy.employeeEmail,
+      },
+      createdDate: result.createdDate,
+      interviewTimes: result.interviewTimes,
+      desc: result.desc
+      // fileGuid: result.fileGuid,
+      // receivedDate: result.receivedDate,
+      // url: result.url,
+      // description: result.description,
+    };
+  }
   constructor(
     private instantSearchService: InstantSearchService,
     private apiService: ApiService
@@ -183,8 +211,9 @@ export class InterviewInvitationService {
     filter: InterviewInvitationFilterReport,
     page: number | string,
     pageSize: number | string
-  ): Observable<PagedResult<InterviewInvitationList>> {
+  ): Observable<PagedResult<InterviewInvitationReportList>> {
     const searchUrl = `/bidopportunity/${bidOpportunityId}/bidinterviewreportdocs/filter/${page}/${pageSize}/?searchTerm=`;
+    console.log('searchUrl', searchUrl);
     return this.instantSearchService
       .searchWithFilter(
         searchUrl,
@@ -192,43 +221,23 @@ export class InterviewInvitationService {
         InterviewInvitationService.createFilterParamsReport(filter)
       )
       .map(result => {
+        console.log('ressult-biên bản', result);
+        // return result;
         return {
-          currentPage: result.page,
-          pageSize: pageSize,
-          pageCount: result.pageCount,
-          total: result.recordCount,
-          items: (result.items || []).map(this.toInterviewInvitationReportList)
+          currentPage: result.pageIndex,
+          pageSize: result.pageSize,
+          pageCount: result.totalCount,
+          total: result.totalPages,
+          items: (result.items || []).map(InterviewInvitationService.toInterviewInvitationReportList)
         };
       });
   }
 
-  // map theo model danh sách biên bản phỏng vấn
-  toInterviewInvitationReportList(result: any): InterviewInvitationList {
-    return {
-      id: result.id,
-      customer: {
-        id: result.customer.id,
-        customerId: result.customer.customerId,
-        customerName: result.customer.customerName,
-        customerNo: result.customer.customerNo,
-        customerDesc: result.customer.customerDesc,
-        customerClassify: result.customer.customerClassify,
-        customerNewOldType: result.customer.customerNewOldType,
-        customerPhone: result.customer.customerPhone,
-        customerAddress: result.customer.customerAddress,
-      },
-      approvedDate: result.approvedDate,
-      interviewDate: result.interviewDate,
-      place: result.place,
-      content: result.content,
-      interviewTimes: result.interviewTimes,
-      status: {
-        key: result.status.key,
-        value: result.status.value,
-        displayText: result.status.displayText,
-      },
-      remainningDay: result.remainningDay,
-    };
+  // Chuyển trạng thái đã chốt công tác phỏng vấn => đã phỏng vấn
+  submitPrepareInterviews(bidOpportunityId: number) {
+    const url = `bidopportunity/hsdt/${bidOpportunityId}/daphongvan`;
+    return this.apiService.post(url).map(response => {
+      return response;
+    });
   }
 }
-

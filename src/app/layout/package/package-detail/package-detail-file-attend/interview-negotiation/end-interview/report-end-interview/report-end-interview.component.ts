@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, EventEmitter, Output } from '@angular/core';
 import { FormGroup, FormBuilder } from '../../../../../../../../../node_modules/@angular/forms';
 import { InterviewInvitationReport } from '../../../../../../../shared/models/interview-invitation/interview-invitation-report.model';
 import { AlertService } from '../../../../../../../shared/services/alert.service';
@@ -11,6 +11,7 @@ import { PackageDetailComponent } from '../../../../package-detail.component';
 })
 export class ReportEndInterviewComponent implements OnInit {
   @Input() callBack: Function;
+  @Input() reloadData: Function;
   createFormReport: FormGroup;
   interviewInvitationReport = new InterviewInvitationReport();
   file: File;
@@ -58,6 +59,7 @@ export class ReportEndInterviewComponent implements OnInit {
     this.interviewInvitationService.UploadReportInterview(this.currentPackageId, this.createFormReport.value, this.file)
       .subscribe(response => {
         this.closePopup();
+        this.reloadData();
         this.alertService.success('Thêm mới lời mời thành công!');
       },
         err => {

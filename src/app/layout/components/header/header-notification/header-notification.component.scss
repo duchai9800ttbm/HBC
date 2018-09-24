@@ -127,7 +127,9 @@ a {
     border-right: 5px solid transparent;
     border-bottom: 7px solid #fff;
     right: inherit;
-    transform: translate(240%, -198%);
+    top: -0.4rem;
+    right: 2.5rem;
+    // transform: translate(240%, -198%);
 }
 .force-scroll {
     overflow-y: scroll;

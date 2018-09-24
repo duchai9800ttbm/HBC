@@ -457,10 +457,7 @@ table.dataTable td{
     margin: -8.5%;
 }
 .set-width-stt{
-    width: 15px;
-}
-.set-width-manipulation{
-    min-width: 75px;
+    min-width: 3rem !important;
 }
 .filter--background{
     background-color: #fafbfc;
@@ -474,12 +471,25 @@ table.dataTable td{
 .w-35{
     width: 35%;
 }
+.w-30{
+    width: 30%;
+}
+.w-20{
+    width: 20%;
+}
+.w-16{
+    width: 16%;
+}
 .w-15{
     width: 15%;
+}
+.w-12{
+    width: 12%;
 }
 .w-10{
     width: 10%;
 }
+
 .table-small{
     .list-package{
         .satus-title--height{
@@ -499,8 +509,8 @@ table.dataTable td{
 .fz-10{
     font-size: 1rem;
 }
-.mw-18{
-    min-width: 1.8rem;
+.set-width-manipulation{
+    min-width: 4rem !important;
 }
 .no-content__image--pad{
     padding-top: 4.5rem;
@@ -508,4 +518,13 @@ table.dataTable td{
         width: 250px;
         height: auto;
     }
+}
+.icon-download--color{
+    color: #21ae00;
+}
+.icon-print--color{
+    color: #f26522;
+}
+.font-nodata{
+    font-size: 0.8%;
 }
