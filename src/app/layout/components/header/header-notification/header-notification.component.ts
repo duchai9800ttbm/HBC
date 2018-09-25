@@ -10,7 +10,7 @@ import { NgbDropdownConfig } from '../../../../../../node_modules/@ng-bootstrap/
   selector: 'app-header-notification',
   templateUrl: './header-notification.component.html',
   styleUrls: ['./header-notification.component.scss'],
-  providers: [NotificationService, NgbDropdownConfig],
+  providers: [NgbDropdownConfig],
 })
 export class HeaderNotificationComponent implements OnInit {
   notificationCount$: Observable<number>;
@@ -29,69 +29,60 @@ export class HeaderNotificationComponent implements OnInit {
     private notificationService: NotificationService,
     private alertService: AlertService,
     private confirmationService: ConfirmationService,
-    config: NgbDropdownConfig
+    config: NgbDropdownConfig,
   ) {
     config.autoClose = false;
-    this.notificationService.notificationAmont.subscribe(value => {
-      this.getListNotification();
-    });
   }
   @HostListener('document:click', ['$event'])
   public documentClick(event: any): void {
-    // console.log('document');
-    if (!this.containsDropTool(event.target)) {
-      this.getListNotification();
-      // this.DropTool2.close();
-      // this.cancel(this.myDrop);
+    // this.cancel(this.myDrop);
 
-      // console.log('div-big', this.containsDropTool(event.target) );
-      // console.log('div', this.containsDropTooldiv(event.target));
-      // console.log('thognbao', this.containsDropToolThongBao(event.target));
-      // console.log('thognbao', this.containsDropToolThongBao2222(event.target));
-      // if (!this.containsDropTool(event.target)) {
-      //   this.getListNotification();
-      // }
-      // if ( this.containsDropTooldiv(event.target)
-      //   || ( !this.containsDropTooldiv(event.target) &&  this.containsDropToolThongBao(event.target) )
-      //   ||  (!this.containsDropTooldiv(event.target) && !this.containsDropToolThongBao(event.target)
-      //   && this.containsDropToolThongBao2222(event.target)) ) {
-      //     this.isShow = !this.isShow;
-      //     // this.DropToolThongBao.colse();
-      //   } else {
-      //     this.isShow = false;
-      //   }
+    // console.log('div-big', this.containsDropTool(event.target) );
+    // console.log('div', this.containsDropTooldiv(event.target));
+    // console.log('thognbao', this.containsDropToolThongBao(event.target));
+    // console.log('thognbao', this.containsDropToolThongBao2222(event.target));
+    // if (!this.containsDropTool(event.target)) {
+    //   this.getListNotification();
+    // }
+    // if ( this.containsDropTooldiv(event.target)
+    //   || ( !this.containsDropTooldiv(event.target) &&  this.containsDropToolThongBao(event.target) )
+    //   ||  (!this.containsDropTooldiv(event.target) && !this.containsDropToolThongBao(event.target)
+    //   && this.containsDropToolThongBao2222(event.target)) ) {
+    //     this.isShow = !this.isShow;
+    //     // this.DropToolThongBao.colse();
+    //   } else {
+    //     this.isShow = false;
+    //   }
 
-      // if (this.containsDropTooldiv(event.target)) {
-      //   this.isShow = !this.isShow;
-      // } else {
-      //   if (!this.containsDropTooldiv(event.target) && this.containsDropToolThongBao(event.target)) {
-      //     this.isShow = !this.isShow;
-      //   } else {
-      //     if ((!this.containsDropTooldiv(event.target) && !this.containsDropToolThongBao(event.target)
-      //       && this.containsDropToolThongBao2222(event.target))) {
-      //       this.isShow = !this.isShow;
-      //     } else {
-      //       this.isShow = false;
-      //     }
-      //   }
-      // }
+    // if (this.containsDropTooldiv(event.target)) {
+    //   this.isShow = !this.isShow;
+    // } else {
+    //   if (!this.containsDropTooldiv(event.target) && this.containsDropToolThongBao(event.target)) {
+    //     this.isShow = !this.isShow;
+    //   } else {
+    //     if ((!this.containsDropTooldiv(event.target) && !this.containsDropToolThongBao(event.target)
+    //       && this.containsDropToolThongBao2222(event.target))) {
+    //       this.isShow = !this.isShow;
+    //     } else {
+    //       this.isShow = false;
+    //     }
+    //   }
+    // }
 
-      if (this.containsDropToolThongBao2222(event.target) || this.containsDropTool(event.target)) {
-        console.log('this.isShow = false;');
-        this.isShow = false;
-      } else {
-        this.isShow = true;
-      }
+    if (this.containsDropToolThongBao2222(event.target) || this.containsDropTool(event.target)) {
+      this.isShow = false;
+    } else {
+      this.isShow = true;
+    }
 
     }
   }
 
   ngOnInit() {
-    console.log('ngOnInit');
+    this.notificationService.watchNotificationAmontSubject().subscribe( value => {
+      this.getListNotification();
+    });
     this.getListNotification();
-    // this.notificationCount$ = this.userNotificationService.count();
-    // this.userNotificationService.list(0, 5)
-    // .subscribe(pagedResult => this.notificationItems = pagedResult.items);
   }
 
   containsDropToolThongBao2222(target: any): boolean {
@@ -156,7 +147,8 @@ export class HeaderNotificationComponent implements OnInit {
     this.notificationService
       .readNotification(item.id)
       .subscribe(result => {
-        this.getListNotification();
+        this.notificationService.change();
+        // this.getListNotification();
       },
         err => {
           this.alertService.error('Đã xảy ra lỗi!');
@@ -193,7 +185,8 @@ export class HeaderNotificationComponent implements OnInit {
 
   readAllNotification() {
     this.notificationService.readAllNotification().subscribe(response => {
-      this.getListNotification();
+      this.notificationService.change();
+      // this.getListNotification();
     },
       err => {
         this.alertService.error('Đã xảy ra lỗi!');
@@ -205,7 +198,8 @@ export class HeaderNotificationComponent implements OnInit {
       'Bạn có chắc chắn muốn xóa tất cả thông báo?',
       () => {
         this.notificationService.deleteAllNotification().subscribe(response => {
-          this.getListNotification();
+          this.notificationService.change();
+          // this.getListNotification();
         },
           err => {
             this.alertService.error('Đã xảy ra lỗi!');

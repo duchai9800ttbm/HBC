@@ -1,14 +1,19 @@
 import { Injectable } from '@angular/core';
 import { ApiService } from './api.service';
 import { TenderPriceApproval } from '../models/price-review/price-review.model';
+import { SessionService } from './session.service';
+import DateTimeConvertHelper from '../helpers/datetime-convert-helper';
 
 @Injectable()
 export class PriceReviewService {
 
   constructor(
-    private apiService: ApiService
+    private apiService: ApiService,
+    private sessionService: SessionService
   ) { }
-
+  get employeeId() {
+    return this.sessionService.currentUser.employeeId;
+  }
   truongNhomDuyet(bidOpportunityId: number) {
     const url = `bidopportunity/${bidOpportunityId}/approvedbytenderleader`;
     return this.apiService.post(url);
@@ -39,68 +44,87 @@ export class PriceReviewService {
     return this.apiService.post(url);
   }
 
+  guiDuyetTrinhDuyetGia(bidOpportunityId: number) {
+    const url = `bidopportunity/hsdt/${bidOpportunityId}/guiduyettrinhduyetgia`;
+    return this.apiService.post(url);
+  }
+
+  guiDuyetLaiTrinhDuyetGia(bidOpportunityId: number) {
+    const url = `bidopportunity/hsdt/${bidOpportunityId}/guilaiduyettrinhduyetgia`;
+    return this.apiService.post(url);
+  }
+
+  chotHoSo(bidOpportunityId: number) {
+    const url = `bidopportunity/hsdt/${bidOpportunityId}/chothoso`;
+    return this.apiService.post(url);
+  }
+
+  hieuChinhHSDT(bidOpportunityId: number) {
+    const url = `bidopportunity/hsdt/${bidOpportunityId}/hieuchinhhsdt`;
+    return this.apiService.post(url);
+  }
   view(bidOpportunityId: number) {
     const url = `bidopportunity/${bidOpportunityId}/tenderpriceapproval`;
     return this.apiService.get(url).map(response => {
-      if (response.result) {
-        this.toTenderPriceApproval(response.result);
-      } else {
+      if (!response.result) {
         return null;
       }
+      return this.toTenderPriceApproval(response.result);
     });
   }
 
+  delete(bidOpportunityId: number) {
+    const url = `bidopportunity/${bidOpportunityId}/tenderpriceapproval/delete`;
+    return this.apiService.post(url);
+  }
 
-  createOrEdit(formValue: any) {
+  createOrEdit(formValue: any, bidopportunityId: number) {
     const url = `tenderpriceapproval/createorupdate`;
     const modelRequest = new TenderPriceApproval();
-    modelRequest.bidOpportunityId = 238;
+    modelRequest.bidOpportunityId = bidopportunityId;
+    modelRequest.createdEmployeeId = formValue.id ? formValue.createdEmployeeId : this.employeeId;
+    modelRequest.updatedEmployeeId = this.employeeId;
+    modelRequest.isDraftVersion = formValue.isDraftVersion ? formValue.isDraftVersion : false;
+    modelRequest.approvalDate = DateTimeConvertHelper.fromDtObjectToTimestamp(formValue.approvalDate) / 1000;
+    modelRequest.approvalTimes = formValue.approvalTimes;
     modelRequest.projectInformation = {
       foudationPart: {
         scopeOfWorkIsInclude: formValue.phanMongCheck ? formValue.phanMongCheck : false,
         scopeOfWorkDesc: formValue.phanMongDesc,
-        gfa: 0
       },
       basementPart: {
         scopeOfWorkIsInclude: formValue.phanHamCheck ? formValue.phanHamCheck : false,
         scopeOfWorkDesc: formValue.phanHamDesc,
-        gfa: 0
       },
       basementPartConstructionStructure: {
         scopeOfWorkIsInclude: formValue.ketCauCheck ? formValue.ketCauCheck : false,
         scopeOfWorkDesc: formValue.ketCauDesc,
-        gfa: 0
       },
       basementPartConstructionCompletion: {
         scopeOfWorkIsInclude: formValue.hoanThienCheck ? formValue.hoanThienCheck : false,
         scopeOfWorkDesc: formValue.hoanThienDesc,
-        gfa: 0
       },
       basementPartOtherWork: {
         scopeOfWorkIsInclude: formValue.congViecKhacCheck ? formValue.congViecKhacCheck : false,
         scopeOfWorkDesc: formValue.congViecKhacDesc,
-        gfa: 0
       },
       bodyPart: {
         scopeOfWorkIsInclude: formValue.phanThanCheck ? formValue.phanThanCheck : false,
         scopeOfWorkDesc: formValue.phanThanDesc,
-        gfa: 0
       },
       bodyPartConstructionStructure: {
         scopeOfWorkIsInclude: formValue.phanThanKetCauCheck ? formValue.phanThanKetCauCheck : false,
         scopeOfWorkDesc: formValue.phanThanKetCauDesc,
-        gfa: 0
       },
       bodyPartConstructionCompletion: {
         scopeOfWorkIsInclude: formValue.phanThanHoanThienCheck ? formValue.phanThanHoanThienCheck : false,
         scopeOfWorkDesc: formValue.phanThanhoanThienDesc,
-        gfa: 0
       },
       bodyPartOtherWork: {
         scopeOfWorkIsInclude: formValue.phanThancongViecKhacCheck ? formValue.phanThancongViecKhacCheck : false,
         scopeOfWorkDesc: formValue.phanThancongViecKhacDesc,
-        gfa: 0
-      }
+      },
+      gfa: formValue.infoGfa
     };
     modelRequest.technique = {
       constructionProgress: {
@@ -122,6 +146,101 @@ export class PriceReviewService {
         folowTenderDocumentRequirement: formValue.yeuCauKhacYC,
         suggestion: null,
         note: formValue.yeuCauKhacCY
+      }
+    };
+    modelRequest.contractCondition = {
+      advanceMoney: {
+        tenderDocumentRequirementPercent: formValue.tamUngYCPercent,
+        tenderDocumentRequirementDiscountPercent: formValue.tamUngYCKhauTru,
+        suggestionPercent: formValue.tamUngDXPercent,
+        suggestionDiscountPercent: formValue.tamUngDXKhauTru,
+        note: formValue.tamUngCY,
+      },
+      paymentTime: {
+        tenderDocumentRequirementDay: formValue.thoiGianYC,
+        suggestionDay: formValue.thoiGianDX,
+        note: formValue.thoiGianCY
+      },
+      retainedMoney: {
+        tenderDocumentRequirementPercent: formValue.tienGiuLaiYCPercent,
+        tenderDocumentRequirementMaxPercent: formValue.tienGiuLaiYCKhauTru,
+        requirementPercent: formValue.tienGiuLaiDXPercent,
+        requirementMaxPercent: formValue.tienGiuLaiDXKhauTru,
+        note: formValue.tienGiuLaiCY
+      },
+      punishDelay: {
+        tenderDocumentRequirementPercent: formValue.phatTienDoYCPercent,
+        tenderDocumentRequirementMax: formValue.phatTienDoYCMax,
+        suggestionPercent: formValue.phatTienDoDXPercent,
+        suggestionMax: formValue.phatTienDoDXMax,
+        note: formValue.phatTienDoCY
+      },
+      constructionWarrantyTime: {
+        percent: formValue.thoiGianBHYCPercent,
+        money: formValue.thoiGianBHYCAmount,
+        bond: formValue.thoiGianBHDXBond,
+        month: formValue.thoiGianBHMonth,
+        note: formValue.thoiGianBHCY,
+      },
+      disadvantage: {
+        disadvantageName: formValue.dieuKienDacBiet,
+        note: formValue.dieuKienDacBietCY
+      }
+
+    };
+
+    modelRequest.tentativeTenderPrice = {
+      costOfCapital: {
+        baseTenderAmount: formValue.giaVonBaseAmount,
+        baseTenderGFA: formValue.giaVonBaseGfa,
+        alternativeTenderAmount: formValue.giaVonAlterAmount,
+        alternativeTenderGFA: formValue.giaVonAlterGfa,
+        note: formValue.giaVonCY
+      },
+      costOfCapitalGeneralCost: {
+        baseTenderAmount: formValue.chiPhiBaseAmount,
+        baseTenderGFA: formValue.chiPhiBaseGfa,
+        alternativeTenderAmount: formValue.chiPhiAlterAmount,
+        alternativeTenderGFA: formValue.chiPhiAlterGfa,
+        note: formValue.chiPhiAlterNote
+      },
+      costOfCapitalValue: {
+        baseTenderAmount: formValue.giaTriBaseAmount,
+        baseTenderGFA: formValue.giaTriBaseGfa,
+        alternativeTenderAmount: formValue.giaTriAlterAmount,
+        alternativeTenderGFA: formValue.giaTriAlterGfa,
+        note: formValue.giaTriNote
+      },
+      costOfCapitalPCPSValue: {
+        baseTenderAmount: formValue.giaTriPCBaseAmount,
+        baseTenderGFA: formValue.giaTriPCBaseGfa,
+        alternativeTenderAmount: formValue.giaTriPCAlterAmount,
+        alternativeTenderGFA: formValue.giaTriPCAlterGfa,
+        note: formValue.giaTriPCNote
+      },
+      totalCostOfCapital: {
+        baseTenderAmount: formValue.totalGiaVonAmount,
+        baseTenderGFA: formValue.totalGiaVonGfa,
+        alternativeTenderAmount: null,
+        alternativeTenderGFA: null,
+        note: formValue.totalGiaVonNote
+      },
+      totalCostOfCapitalProfitCost: {
+        baseTenderProfitCost: formValue.chiPhiLoiNhuanAmountGfa,
+        alternativeProfitCost: formValue.chiPhiLoiNhuanAlterAmountGfa,
+        note: formValue.chiPhiLoiNhuanNote
+      },
+      totalCostOfSubmission: {
+        baseTenderAmount: formValue.giaDiNopThauAmount,
+        baseTenderGFA: formValue.giaDiNopThauGfa,
+        alternativeTenderAmount: formValue.giaDiNopThauAlterAmount,
+        alternativeTenderGFA: formValue.giaDiNopThauAlterGfa,
+        note: formValue.giaDiNopThauNote
+      },
+      oAndPPercentOfTotalCost: {
+        baseTenderAmount: formValue.tyLeGfa,
+        alternativeTenderAmount: null,
+        note: formValue.tyLeNote
       }
     };
     console.log(modelRequest);
@@ -157,48 +276,40 @@ export class PriceReviewService {
         foudationPart: model.projectInformation.foudationPart && {
           scopeOfWorkIsInclude: model.projectInformation.foudationPart.scopeOfWorkIsInclude,
           scopeOfWorkDesc: model.projectInformation.foudationPart.scopeOfWorkDesc,
-          gfa: model.projectInformation.foudationPart.gfa
         },
         basementPart: model.projectInformation.basementPart && {
           scopeOfWorkIsInclude: model.projectInformation.basementPart.scopeOfWorkIsInclude,
           scopeOfWorkDesc: model.projectInformation.basementPart.scopeOfWorkDesc,
-          gfa: model.projectInformation.basementPart.gfa,
         },
         basementPartConstructionStructure: model.projectInformation.basementPartConstructionStructure && {
           scopeOfWorkIsInclude: model.projectInformation.basementPartConstructionStructure.scopeOfWorkIsInclude,
           scopeOfWorkDesc: model.projectInformation.basementPartConstructionStructure.scopeOfWorkDesc,
-          gfa: model.projectInformation.basementPartConstructionStructure.gfa
         },
         basementPartConstructionCompletion: model.projectInformation.basementPartConstructionCompletion && {
           scopeOfWorkIsInclude: model.projectInformation.basementPartConstructionCompletion.scopeOfWorkIsInclude,
           scopeOfWorkDesc: model.projectInformation.basementPartConstructionCompletion.scopeOfWorkDesc,
-          gfa: model.projectInformation.basementPartConstructionCompletion.gfa
         },
         basementPartOtherWork: model.projectInformation.basementPartOtherWork && {
           scopeOfWorkIsInclude: model.projectInformation.basementPartOtherWork.scopeOfWorkIsInclude,
           scopeOfWorkDesc: model.projectInformation.basementPartOtherWork.scopeOfWorkDesc,
-          gfa: model.projectInformation.basementPartOtherWork.gfa
         },
         bodyPart: model.projectInformation.bodyPart && {
           scopeOfWorkIsInclude: model.projectInformation.bodyPart.scopeOfWorkIsInclude,
           scopeOfWorkDesc: model.projectInformation.bodyPart.scopeOfWorkDesc,
-          gfa: model.projectInformation.bodyPart.gfa
         },
         bodyPartConstructionStructure: model.projectInformation.bodyPartConstructionStructure && {
           scopeOfWorkIsInclude: model.projectInformation.bodyPartConstructionStructure.scopeOfWorkIsInclude,
           scopeOfWorkDesc: model.projectInformation.bodyPartConstructionStructure.scopeOfWorkDesc,
-          gfa: model.projectInformation.bodyPartConstructionStructure.gfa
         },
         bodyPartConstructionCompletion: model.projectInformation.bodyPartConstructionCompletion && {
           scopeOfWorkIsInclude: model.projectInformation.bodyPartConstructionCompletion.scopeOfWorkIsInclude,
           scopeOfWorkDesc: model.projectInformation.bodyPartConstructionCompletion.scopeOfWorkDesc,
-          gfa: model.projectInformation.bodyPartConstructionCompletion.gfa
         },
         bodyPartOtherWork: model.projectInformation.bodyPartConstructionCompletion && {
           scopeOfWorkIsInclude: model.projectInformation.bodyPartConstructionCompletion.scopeOfWorkIsInclude,
           scopeOfWorkDesc: model.projectInformation.bodyPartConstructionCompletion.scopeOfWorkDesc,
-          gfa: model.projectInformation.bodyPartConstructionCompletion.gfa
-        }
+        },
+        gfa: model.projectInformation.gfa
       },
       technique: model.technique && {
         constructionProgress: model.technique.constructionProgress && {
@@ -240,7 +351,7 @@ export class PriceReviewService {
           tenderDocumentRequirementMaxPercent: model.contractCondition.retainedMoney.tenderDocumentRequirementMaxPercent,
           requirementPercent: model.contractCondition.retainedMoney.requirementPercent,
           requirementMaxPercent: model.contractCondition.retainedMoney.requirementMaxPercent,
-          note: model.contractCondition.retainedMoney.requirementMaxPercent.note
+          note: model.contractCondition.retainedMoney.note
         },
         punishDelay: model.contractCondition.punishDelay && {
           tenderDocumentRequirementPercent: model.contractCondition.punishDelay.tenderDocumentRequirementPercent,

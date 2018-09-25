@@ -31,64 +31,23 @@ export class NotificationListComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+    this.notificationService.watchNotificationAmontSubject().subscribe(value => {
+      this.getListNotification();
+    });
     this.getListNotification();
-    // this.userNotificationService.list(0, 5)
-    //   .subscribe(pagedResult => {
-    //     this.pagedResult = pagedResult;
-    //     this.notificationItems = pagedResult.items;
-    //     this.showButton = pagedResult.pageCount !== 1;
-    //   });
   }
 
   getListNotification() {
     this.notificationService.getListNotification().subscribe(response => {
       this.notificationList = response;
-      console.log(this.notificationList);
-      // this.notificationList.forEach( item => {
-      //   this.amountNotificationNotRead = item
-      // });
     });
   }
-
-  // read(item: NotificationItem) {
-  //   this.userNotificationService
-  //     .read(item.id)
-  //     .subscribe(result => {
-  //       this.notificationCount$ = this.userNotificationService.count();
-  //       this.userNotificationService.list(0, 5)
-  //         .subscribe(pagedResult => this.notificationItems = pagedResult.items);
-  //       this.gotoDetailPage(item);
-  //     });
-  // }
-
-  // onLoadMore() {
-  //   this.userNotificationService.list(+this.pagedResult.currentPage + 1, +this.pagedResult.pageSize)
-  //     .subscribe(pagedResult => {
-  //       this.showButton = (pagedResult.items.length > 0) && (+pagedResult.currentPage + 1 < pagedResult.pageCount);
-  //       this.pagedResult = pagedResult;
-  //       this.notificationItems = this.notificationItems.concat(pagedResult.items);
-  //     });
-  // }
-
-
-  // gotoDetailPage(item: NotificationItem) {
-  //   const moduleUrl = item.moduleName === 'Event'
-  //     ? 'activity/event'
-  //     : item.moduleName === 'Work'
-  //       ? 'activity/task'
-  //       : item.moduleName.toLowerCase();
-
-  //   const detailUrl = `${moduleUrl}/detail`;
-
-  //   this.router.navigate([detailUrl, item.moduleItemId]);
-  // }
 
   tickReaded(item: NotificationItem) {
     this.notificationService
       .readNotification(item.id)
       .subscribe(result => {
         this.notificationService.change();
-        this.getListNotification();
       },
         err => {
           this.alertService.error('Đã xảy ra lỗi!');
@@ -103,7 +62,6 @@ export class NotificationListComponent implements OnInit {
           .deleteOneNotification(item.id)
           .subscribe(result => {
             this.notificationService.change();
-            this.getListNotification();
             this.alertService.success('Đã xóa thông báo thành công!');
           },
             err => {
@@ -145,7 +103,6 @@ export class NotificationListComponent implements OnInit {
       .readNotification(item.id)
       .subscribe(result => {
         this.notificationService.change();
-        this.getListNotification();
       },
         err => {
           this.alertService.error('Đã xảy ra lỗi!');
@@ -155,7 +112,6 @@ export class NotificationListComponent implements OnInit {
   readAllNotification() {
     this.notificationService.readAllNotification().subscribe(response => {
       this.notificationService.change();
-      this.getListNotification();
       this.alertService.success('Đã xóa thông báo thành công!');
     },
       err => {
@@ -169,7 +125,6 @@ export class NotificationListComponent implements OnInit {
       () => {
         this.notificationService.deleteAllNotification().subscribe(response => {
           this.notificationService.change();
-          this.getListNotification();
         },
           err => {
             this.alertService.error('Đã xảy ra lỗi!');

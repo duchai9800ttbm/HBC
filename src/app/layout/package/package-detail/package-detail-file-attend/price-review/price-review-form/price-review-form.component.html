@@ -7,14 +7,19 @@
                 </a>
                 <h4 class="tieu-de ml-1" style="font-size: 130%">BẢNG TÓM TẮT THÔNG TIN DỰ ÁN - TRÌNH DUYỆT GIÁ THẦU</h4>
             </div>
-            <div class="action">
-                <button class="btn btn-primary" (click)="submit(true)">Lưu bản nháp</button>
-                <button class="btn btn-primary" (click)="submit(false)">Lưu</button>
-                <button class="btn btn-secondary">Hủy</button>
-                <button class="btn btn-primary" (click)="refresh()">
+            <div class="action d-flex flex-row-reverse">
+                <button *ngIf="isModeCreate || isModeEdit || isModeView" class="btn btn-primary ml-1" (click)="refresh()">
                     <i class="fa fa-refresh" aria-hidden="true"></i>
                 </button>
+                <button *ngIf="isModeView" class="btn btn-primary ml-1" routerLink="../edit">Chỉnh sửa</button>
+                <button *ngIf="isModeCreate || isModeEdit" class="btn btn-secondary ml-1" routerLink="../summary">Hủy</button>
+                <button *ngIf="isModeCreate || isModeEdit" class="btn btn-primary ml-1" (click)="submit(false)">Lưu</button>
+
+                <button *ngIf="isModeCreate || isModeEdit" class="btn btn-primary ml-1" (click)="submit(true)">Lưu bản nháp</button>
+
+
             </div>
+
         </div>
         <form [formGroup]="priceReviewForm" novalidate>
             <div class="price-review">
@@ -22,62 +27,62 @@
 
                     <div class="row no-gutters row-item">
                         <div class="col-md-6">
-                            Công trình (Project):&nbsp;&nbsp;&nbsp;&nbsp; Riviera Point
+                            Công trình (Project):&nbsp;&nbsp;&nbsp;&nbsp; {{package?.projectName}}
                         </div>
                         <div class="col-md-6">
-                            Prepare by:&nbsp;&nbsp;&nbsp;&nbsp; Riviera Point
-                        </div>
-                    </div>
-
-                    <div class="row no-gutters row-item">
-                        <div class="col-md-6">
-                            Địa điểm (Location):&nbsp;&nbsp;&nbsp;&nbsp; 584 Huỳnh Tấn Phát, Quận 7, TP.HCM
-                        </div>
-                        <div class="col-md-6">
-                            Date:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 12/10/2017
+                            Prepare by:&nbsp;&nbsp;&nbsp;&nbsp; 
                         </div>
                     </div>
 
                     <div class="row no-gutters row-item">
                         <div class="col-md-6">
-                            Gói thầu (Package):&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Main Building Work
+                            Địa điểm (Location):&nbsp;&nbsp;&nbsp;&nbsp; {{package?.place}}
+                        </div>
+                        <div class="col-md-6">
+                            Date:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        </div>
+                    </div>
+
+                    <div class="row no-gutters row-item">
+                        <div class="col-md-6">
+                            Gói thầu (Package):&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; {{package?.opportunityName}}
                         </div>
                         <div class="col-md-6">
                         </div>
                     </div>
                     <div class="row no-gutters row-item">
                         <div class="col-md-12">
-                            Thông tin về công ty khác tham gia thầu:&nbsp;&nbsp;&nbsp;&nbsp; Main Building Work
+                            Thông tin về công ty khác tham gia thầu:&nbsp;&nbsp;&nbsp;&nbsp;
                         </div>
                     </div>
                 </div>
                 <div class="content">
                     <div class="d-flex row-header">
                         <div class="d-flex ten-tai-lieu">
-                                <div class="label-document">
-                                        <div class="cell-left d-flex align-items-center font-weight-bold">
-                                            <div class="ml-3">
-                                                Tên tài liệu
-                                            </div>
-                                        </div>
+                            <div class="label-document">
+                                <div class="cell-left d-flex align-items-center font-weight-bold">
+                                    <div class="ml-3">
+                                        Tên tài liệu
                                     </div>
-                                    <div class="name-document">
-                                        <div class="cell-right d-flex align-items-center font-weight-bold">
-                                            <div class="ml-3">
-                                                Trình duyệt giá
-                                            </div>
-                                        </div>
+                                </div>
+                            </div>
+                            <div class="name-document">
+                                <div class="cell-right d-flex align-items-center font-weight-bold">
+                                    <div class="ml-3">
+                                        Trình duyệt giá
                                     </div>
+                                </div>
+                            </div>
                         </div>
                         <div class="d-flex lan-phong-van">
                             <div class="name font-weight-bold align-items-center d-flex">
-                               <div class="ml-3">Lần phỏng vấn</div> 
+                                <div class="ml-3">Lần phỏng vấn</div>
                             </div>
                             <div class="value center-parent">
-                                <div class="font-weight-bold">2</div>
-                                </div>
+                                <div class="font-weight-bold">{{model?.approvalTimes}}</div>
+                            </div>
                         </div>
-                        
+
                     </div>
 
                     <div class="d-flex row-title">
@@ -413,7 +418,7 @@
 
                         </div>
                         <div class="gfa">
-                                <input appInputArea formControlName="infoGfa">
+                            <input appInputArea formControlName="infoGfa">
 
                         </div>
                     </div>

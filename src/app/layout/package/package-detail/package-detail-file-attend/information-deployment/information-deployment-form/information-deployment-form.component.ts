@@ -112,7 +112,8 @@ export class InformationDeploymentFormComponent implements OnInit {
     });
     this.bidOpportunityId = PackageDetailComponent.packageId;
     this.getPackageInfo();
-    this.packageService.getTenderPreparationPlanning(this.bidOpportunityId).subscribe(data => console.log(data));
+    this.packageService.getDefaultTenderPreparationPlanning().subscribe(data => console.log(data));
+    // this.packageService.getTenderPreparationPlanning(this.bidOpportunityId).subscribe(data => console.log(data));
     kendo.jQuery(this.ganttChart.nativeElement).kendoGantt({
     //   dataSource: this.tasksDataSource,
       dataSource: [

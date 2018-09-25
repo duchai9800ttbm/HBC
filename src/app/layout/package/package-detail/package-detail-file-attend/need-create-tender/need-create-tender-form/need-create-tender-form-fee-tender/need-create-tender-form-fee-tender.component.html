@@ -17,7 +17,7 @@
                 1. Tiền mua hồ sơ (Fee of tender invitation document)
             </div>
             <div class="col-md-6">
-                <input appInputNumberNegativeDecimal [decimal]="true" appAutoFocus tabindex="1" formControlName="feeOfTenderInvitationDocument" class="form-control input-dropdown-group">
+                <input appInputNumberNegativeDecimal [decimal]="true" [appAutoFocus]="routerAction != 'view'" tabindex="1" formControlName="feeOfTenderInvitationDocument" class="form-control input-dropdown-group">
                 <div formGroupName="feeOfTenderInvitationDocumentCurrency">
                     <kendo-dropdownlist formControlName="value" tabindex="2" [data]="listCurrency" [valuePrimitive]="true">
                     </kendo-dropdownlist>
