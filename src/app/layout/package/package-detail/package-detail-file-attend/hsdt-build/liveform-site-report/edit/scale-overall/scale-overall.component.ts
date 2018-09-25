@@ -39,6 +39,8 @@ export class ScaleOverallComponent implements OnInit {
   loaiCongTrinhList = [];
   trangThaiCongTrinhForm: FormGroup;
   trangthaiCongTrinhList = [];
+  valueOfOthers;
+  showValueOfOther;
   perspectiveImageUrls = [];
   structureImageUrls = [];
   requirementsImageUrls = [];
@@ -52,7 +54,7 @@ export class ScaleOverallComponent implements OnInit {
   }
 
   get trangthaiCongTrinhListFA(): FormArray {
-    return this.loaiCongTrinhForm.get('trangthaiCongTrinhList') as FormArray;
+    return this.trangThaiCongTrinhForm.get('trangthaiCongTrinhList') as FormArray;
   }
   constructor(
     private router: Router,
@@ -74,7 +76,7 @@ export class ScaleOverallComponent implements OnInit {
       soTang: [this.scaleModel.quyMoDuAn && this.scaleModel.quyMoDuAn.soTang],
       tienDo: [this.scaleModel.quyMoDuAn && this.scaleModel.quyMoDuAn.tienDo],
       hinhAnhPhoiCanhDesc: [this.scaleModel.hinhAnhPhoiCanh && this.scaleModel.hinhAnhPhoiCanh.description],
-      hinhAnhPhoiCanhList: [{ file: null, base64: null }],
+      hinhAnhPhoiCanhList: [null],
       thongTinVeKetCauDesc: [this.scaleModel.thongTinVeKetCau && this.scaleModel.thongTinVeKetCau.description],
       thongTinVeKetCauList: [null],
       nhungYeuCauDacBietDesc: [this.scaleModel.nhungYeuCauDacBiet && this.scaleModel.nhungYeuCauDacBiet.description],
@@ -94,8 +96,14 @@ export class ScaleOverallComponent implements OnInit {
 
   checkFlag() {
     if (LiveformSiteReportComponent.formModel.id) {
-      const flag = LiveformSiteReportComponent.formModel.viewFlag;
+      const flag = LiveformSiteReportComponent.viewFlag;
       this.viewMode = flag;
+      if (flag) {
+        const inputs = document.getElementsByTagName('input');
+        for (let i = 0; i < inputs.length; i++) {
+          inputs[i].style.pointerEvents = 'none';
+        }
+      }
     } else {
       this.router.navigate([`/package/detail/${this.currentBidOpportunityId}/attend/build/liveformsite`]);
     }
@@ -106,91 +114,30 @@ export class ScaleOverallComponent implements OnInit {
     if (obj) {
       this.scaleModel.tenTaiLieu = obj.tenTaiLieu ? obj.tenTaiLieu : '';
       this.scaleModel.lanPhongVan = obj.lanPhongVan ? obj.lanPhongVan : null;
-      this.loaiCongTrinhList = (obj.loaiCongTrinh.length) ? obj.loaiCongTrinh : [
-        {
-          value: 'Văn phòng (Office)',
-          text: '',
-          checked: false
-        },
-        {
-          value: 'Nhà công nghiệp (Industrial))',
-          text: '',
-          checked: false
-        },
-        {
-          value: 'MEP',
-          text: '',
-          checked: false
-        },
-        {
-          value: 'Khu dân cư (Residential)',
-          text: '',
-          checked: false
-        },
-        {
-          value: 'Tổ hợp (Mixed use)',
-          text: '',
-          checked: false
-        },
-        {
-          value: 'Sân bay',
-          text: '',
-          checked: false
-        },
-        {
-          value: 'TT Thương mại (Commercial)',
-          text: '',
-          checked: false
-        },
-        {
-          value: 'Căn hộ',
-          text: '',
-          checked: false
-        },
-        {
-          value: 'Nhà phố, biệt thự',
-          text: '',
-          checked: false
-        },
-        {
-          value: 'Khách sạn/Resort (Hotel/Resort)',
-          text: '',
-          checked: false
-        },
-        {
-          value: 'Hạ tầng',
-          text: '',
-          checked: false
-        },
-        {
-          value: 'Trường học',
-          text: '',
-          checked: false
-        }
-      ];
+      this.loaiCongTrinhList = obj.loaiCongTrinh;
       this.trangthaiCongTrinhList = (obj.trangthaiCongTrinh.length) ? obj.trangthaiCongTrinh : [
         {
-          value: 'Mới (New)',
-          text: '',
+          text: 'Mới (New)',
+          value: '',
           checked: false
         },
         {
-          value: 'Thay đổi & bổ sung (Alteration & Additional)',
-          text: '',
+          text: 'Thay đổi & bổ sung (Alteration & Additional)',
+          value: '',
           checked: false
         },
         {
-          value: 'Khác (Other)',
-          text: '',
+          text: 'Khác (Other)',
+          value: '',
           checked: false
         },
         {
-          value: 'Nâng cấp, cải tiến (Renovation)',
-          text: '',
+          text: 'Nâng cấp, cải tiến (Renovation)',
+          value: '',
           checked: false
         }, {
-          value: 'Tháo dỡ & cải tiến (Demolishment & Renovation)',
-          text: '',
+          text: 'Tháo dỡ & cải tiến (Demolishment & Renovation)',
+          value: '',
           checked: false
         }
       ];
@@ -216,6 +163,11 @@ export class ScaleOverallComponent implements OnInit {
       this.structureImageUrls = this.scaleModel.thongTinVeKetCau ? this.scaleModel.thongTinVeKetCau.images : [];
       this.requirementsImageUrls = this.scaleModel.nhungYeuCauDacBiet ? this.scaleModel.nhungYeuCauDacBiet.images : [];
     }
+    const res = this.trangthaiCongTrinhList.find(other => {
+      return other.text === 'Khác (Other)';
+    });
+    this.valueOfOthers = (res.value !== 'null') ? res.value : '';
+    this.showValueOfOther = res.checked;
   }
 
   mappingToLiveFormData(data) {
@@ -267,7 +219,11 @@ export class ScaleOverallComponent implements OnInit {
   deletePerspectiveImage(i) {
     const index = this.perspectiveImageUrls.indexOf(i);
     this.perspectiveImageUrls.splice(index, 1);
+    console.log(this.perspectiveImageUrls);
     this.scaleOverallForm.get('hinhAnhPhoiCanhList').patchValue(this.perspectiveImageUrls);
+
+    console.log(this.perspectiveImageUrls);
+    console.log(i);
   }
   uploadStructureImage(event) {
     const files = event.target.files;
@@ -323,5 +279,16 @@ export class ScaleOverallComponent implements OnInit {
   }
   trangThaiCongTrinhChange() {
     this.scaleOverallForm.get('trangthaiCongTrinhList').patchValue(this.trangthaiCongTrinhList);
+    const result = this.trangthaiCongTrinhList.find(obj => {
+      return obj.text === 'Khác (Other)';
+    });
+    this.showValueOfOther = result.checked;
+  }
+  valueOfOther(event) {
+    const result = this.trangthaiCongTrinhList.find(obj => {
+      return obj.text === 'Khác (Other)';
+    });
+    result.value = this.valueOfOthers;
+    this.trangThaiCongTrinhChange();
   }
 }

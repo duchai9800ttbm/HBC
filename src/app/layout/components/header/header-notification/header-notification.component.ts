@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild, ElementRef, HostListener } from '@angular/core';
-import { Observable } from "rxjs/Observable";
+import { Observable } from 'rxjs/Observable';
 import { NotificationItem, PagedResult } from '../../../../shared/models/index';
 import { UserNotificationService, AlertService, ConfirmationService } from '../../../../shared/services/index';
 import { Router } from '@angular/router';
@@ -74,8 +74,7 @@ export class HeaderNotificationComponent implements OnInit {
     } else {
       this.isShow = true;
     }
-
-  }
+    }
 
   ngOnInit() {
     this.notificationService.watchNotificationAmontSubject().subscribe( value => {
@@ -214,3 +213,4 @@ export class HeaderNotificationComponent implements OnInit {
     console.log('noClosePopup');
   }
 }
+

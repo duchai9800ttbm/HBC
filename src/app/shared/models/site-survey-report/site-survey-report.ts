@@ -31,5 +31,4 @@ export class SiteSurveyReport {
     soilCondition: SoilCondition;
     usefulInfo: UsefulInfo[];
     updateDescription: string;
-    viewFlag;
 }

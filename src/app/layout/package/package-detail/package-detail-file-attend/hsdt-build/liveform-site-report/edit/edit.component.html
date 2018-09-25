@@ -17,13 +17,13 @@
     <div class="controll-bar">
         <div class="btn-toolbar mt-2 mb-2">
             <div>
-                <button id="printButton" class="btn btn-primary ml-2" (click)="updateliveform()">
+                <button id="printButton" class="btn btn-primary ml-2">
                     Lưu bản nháp
                 </button>
                 <button id="printButton" class="btn btn-primary ml-2" (click)="updateliveform()">
                     Lưu
                 </button>
-                <button type="button" class="btn btn-up disable ml-2">
+                <button type="button" class="btn btn-up disable ml-2" (click)="cancelCreateUpdate()">
                     Hủy
                 </button>
                 <button class="btn btn-primary ml-2" (click)="refresh()">
@@ -69,7 +69,7 @@
                 </tr>
                 <tr>
                     <td class="titleHeader">Người khảo sát/liên hệ:</td>
-                    <td class="infoHeader">{{ packageData.customerContact?.text }}</td>
+                    <td class="infoHeader"></td>
                 </tr>
             </table>
             <table>
@@ -83,7 +83,7 @@
                 </tr>
                 <tr>
                     <td class="titleHeader">Ngày khảo sát (Date):</td>
-                    <td class="infoHeader">20/09/2018</td>
+                    <td class="infoHeader"></td>
                 </tr>
                 <tr>
                     <td class="titleHeader"></td>
@@ -95,3 +95,4 @@
     </div>
 </div>
 <app-update-confirm-popup *ngIf="showPopupConfirm" (closed)="submitLiveForm($event)"></app-update-confirm-popup>
+<ngx-spinner bdColor="rgba(51, 51, 51, 0.7)" size="medium" color="#fff" type="ball-clip-rotate-multiple"></ngx-spinner>

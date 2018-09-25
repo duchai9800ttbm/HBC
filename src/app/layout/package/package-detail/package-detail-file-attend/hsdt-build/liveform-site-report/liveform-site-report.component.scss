@@ -91,14 +91,7 @@ li.triangle::before {
     border-top: 1px dashed #8c8b8b;
     top: 15px;
     left: calc(-50% + 15px);
-    z-index: 1; // background-color: #00a0e3;
-    // bottom: 5px;
-    // content: "";
-    // height: 38px;
-    // position: absolute;
-    // left: 50%;
-    // margin-left: -44px;
-    // width: 44px;
+    z-index: 1;
 }
 
 .progressbar li:first-child:after {
@@ -129,7 +122,6 @@ li.triangle::before {
 }
 
 .progressbar li.active:after {
-    // background-color: #00a0e3;
     border-top: 1px dashed #00a0e3 !important;
 }
 
@@ -341,6 +333,12 @@ table.dataTable th {
     #buttons {
         flex-direction: row
     }
+}
+.title-report {
+    font-size: 15px;
+}
+.title-report-bar {
+    height: 40px;
 }
 
 #toggle-menu-child {

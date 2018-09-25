@@ -10,14 +10,14 @@
                     </div>
                     <div>
                         <div class="image-demo-img">
-                            <input type="file" #uploadDemobilisation (change)="uploadDemobilisationImage($event)">
+                            <input type="file" multiple #uploadDemobilisation (change)="uploadDemobilisationImage($event)">
                             <div class="display-img" *ngFor="let url of demobilisationImageUrls">
                                 <img [src]="(url.image?.base64) || url.image.file">
-                                <div class="toppp" (click)="deleteDemobilisationImage(url)">
+                                <div class="toppp"  [ngClass]="{'d-none': viewMode}" (click)="deleteDemobilisationImage(url)">
                                     <i class="fa fa-times delete-icon" aria-hidden="true"></i>
                                 </div>
                             </div>
-                            <div class="perspective-image" (click)="uploadDemobilisation.click()">
+                            <div class="perspective-image" [ngClass]="{'d-none': viewMode}" (click)="uploadDemobilisation.click()">
                                 <i class="fa fa-plus" aria-hidden="true"></i>
                                 <p>Image</p>
                             </div>
@@ -33,15 +33,15 @@
                     </div>
                     <div>
                         <div class="image-demo-img">
-                            <input type="file" #uploadConsolidation (change)="uploadConsolidationImage($event)">
+                            <input type="file" multiple #uploadConsolidation (change)="uploadConsolidationImage($event)">
 
                             <div class="display-img" *ngFor="let url of consolidationImageUrls">
                                 <img [src]="(url.image?.base64) || url.image.file">
-                                <div class="toppp" (click)="deleteConsolidationImage(url)">
+                                <div class="toppp"  [ngClass]="{'d-none': viewMode}" (click)="deleteConsolidationImage(url)">
                                     <i class="fa fa-times delete-icon" aria-hidden="true"></i>
                                 </div>
                             </div>
-                            <div class="perspective-image" (click)="uploadConsolidation.click()">
+                            <div class="perspective-image" [ngClass]="{'d-none': viewMode}" (click)="uploadConsolidation.click()">
                                 <i class="fa fa-plus" aria-hidden="true"></i>
                                 <p>Image</p>
                             </div>
@@ -62,11 +62,11 @@
 
                             <div class="display-img" *ngFor="let url of adjacentImageUrls">
                                 <img [src]="(url.image?.base64) || url.image.file">
-                                <div class="toppp" (click)="deleteAdjacentImage(url)">
+                                <div class="toppp"  [ngClass]="{'d-none': viewMode}" (click)="deleteAdjacentImage(url)">
                                     <i class="fa fa-times delete-icon" aria-hidden="true"></i>
                                 </div>
                             </div>
-                            <div class="perspective-image" (click)="uploaAdjacent.click()">
+                            <div class="perspective-image" [ngClass]="{'d-none': viewMode}" (click)="uploaAdjacent.click()">
                                 <i class="fa fa-plus" aria-hidden="true"></i>
                                 <p>Image</p>
                             </div>

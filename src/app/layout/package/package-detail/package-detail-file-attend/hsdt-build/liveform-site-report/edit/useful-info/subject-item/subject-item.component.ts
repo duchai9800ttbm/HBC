@@ -1,5 +1,8 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { UsefulInfo, ContentItem } from '../../../../../../../../../shared/models/site-survey-report/useful-info.model';
+import { PackageDetailComponent } from '../../../../../../package-detail.component';
+import { LiveformSiteReportComponent } from '../../../liveform-site-report.component';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-subject-item',
@@ -12,6 +15,10 @@ export class SubjectItemComponent implements OnInit {
   @Output() addContentItem = new EventEmitter<boolean>();
   @Output() deleteContent = new EventEmitter<number>();
   @Output() deleteSubjectEmit = new EventEmitter<boolean>();
+
+  viewMode;
+  currentBidOpportunityId: number;
+
   subjectList = [
     'Quy mô tổng quan công trình',
     'Mô tả tổng quát công trường',
@@ -20,9 +27,25 @@ export class SubjectItemComponent implements OnInit {
     'Dịch vụ cơ điện phục vụ thi công',
     'Điều kiện đất nền hiện hữu'
   ];
-  constructor() { }
+  constructor(private router: Router) { }
 
   ngOnInit() {
+    this.currentBidOpportunityId = +PackageDetailComponent.packageId;
+    this.checkFlag();
+  }
+  checkFlag() {
+    if (LiveformSiteReportComponent.formModel.id) {
+      const flag = LiveformSiteReportComponent.viewFlag;
+      this.viewMode = flag;
+      if (flag) {
+        const inputs = document.getElementsByTagName('input');
+        for (let i = 0; i < inputs.length; i++) {
+          inputs[i].style.pointerEvents = 'none';
+        }
+      }
+    } else {
+      this.router.navigate([`/package/detail/${this.currentBidOpportunityId}/attend/build/liveformsite`]);
+    }
   }
 
   addContent() {

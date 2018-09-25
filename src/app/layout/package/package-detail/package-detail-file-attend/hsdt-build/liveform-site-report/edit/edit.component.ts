@@ -45,9 +45,6 @@ export class EditComponent implements OnInit, OnDestroy {
     this.packageService.getInforPackageID(this.currentBidOpportunityId).subscribe(result => {
       this.packageData = result;
     });
-    this.documentService.tenderSiteSurveyingReport(this.currentBidOpportunityId).subscribe(data => {
-      LiveformSiteReportComponent.formModel = data;
-    });
   }
 
   submitLiveForm(event) {
@@ -55,16 +52,21 @@ export class EditComponent implements OnInit, OnDestroy {
       this.showPopupConfirm = false;
     } else {
       const objData = LiveformSiteReportComponent.formModel;
-      // const objData = objectToFormData(LiveformSiteReportComponent.formModel);
-      // const testFD = new FormData();
-      // this.documentService.objectToFormdata(objData);
+      this.showPopupConfirm = false;
+      this.spinner.show();
       this.documentService
         .createOrUpdateSiteSurveyingReport(objData)
-        .subscribe();
-      this.showPopupConfirm = false;
-      this.alertService.success('Đã cập nhật thành công!');
-      this.spinner.hide();
-      this.router.navigate([`/package/detail/${this.currentBidOpportunityId}/attend/build/liveformsite/info/scale`]);
+        .subscribe(() => {
+          this.showPopupConfirm = false;
+          this.spinner.hide();
+          this.router.navigate([`/package/detail/${this.currentBidOpportunityId}/attend/build/liveformsite/info/scale`]);
+          this.alertService.success('Đã cập nhật thành công!');
+        }, err => {
+          this.showPopupConfirm = false;
+          this.spinner.hide();
+          this.alertService.error('Đã xảy ra lỗi. Cập nhật không thành công!');
+        });
+      LiveformSiteReportComponent.viewFlag = true;
     }
   }
 
@@ -77,6 +79,9 @@ export class EditComponent implements OnInit, OnDestroy {
 
   updateliveform() {
     this.showPopupConfirm = true;
+  }
+  cancelCreateUpdate() {
+    this.router.navigate([`/package/detail/${this.currentBidOpportunityId}/attend/build/liveformsite`]);
   }
 
   disableSideMenu(event) {
