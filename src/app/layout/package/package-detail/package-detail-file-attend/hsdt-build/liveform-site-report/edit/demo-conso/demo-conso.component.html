@@ -10,7 +10,7 @@
                     </div>
                     <div>
                         <div class="image-demo-img">
-                            <input type="file" #uploadDemobilisation (change)="uploadDemobilisationImage($event)">
+                            <input type="file" multiple #uploadDemobilisation (change)="uploadDemobilisationImage($event)">
                             <div class="display-img" *ngFor="let url of demobilisationImageUrls">
                                 <img [src]="(url.image?.base64) || url.image.file">
                                 <div class="toppp"  [ngClass]="{'d-none': viewMode}" (click)="deleteDemobilisationImage(url)">
@@ -33,7 +33,7 @@
                     </div>
                     <div>
                         <div class="image-demo-img">
-                            <input type="file" #uploadConsolidation (change)="uploadConsolidationImage($event)">
+                            <input type="file" multiple #uploadConsolidation (change)="uploadConsolidationImage($event)">
 
                             <div class="display-img" *ngFor="let url of consolidationImageUrls">
                                 <img [src]="(url.image?.base64) || url.image.file">

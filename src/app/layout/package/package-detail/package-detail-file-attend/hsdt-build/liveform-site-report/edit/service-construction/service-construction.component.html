@@ -11,7 +11,7 @@
                             <input type="text" formControlName="heThongNuocHienHuuDesc">
                         </div>
                         <div class="image-demo-img">
-                            <input type="file" #uploadSupplySystem (change)="uploadSupplySystemImage($event)">
+                            <input type="file" multiple #uploadSupplySystem (change)="uploadSupplySystemImage($event)">
 
                             <div class="display-img" *ngFor="let url of supplySystemImageUrls">
                                 <img [src]="(url.image?.base64) || url.image.file">
@@ -31,7 +31,7 @@
                             <input type="text" formControlName="heThongNuocDiemDauNoiDesc">
                         </div>
                         <div class="image-demo-img">
-                            <input type="file" #uploadSupplyPoint (change)="uploadSupplyPointImage($event)">
+                            <input type="file" multiple #uploadSupplyPoint (change)="uploadSupplyPointImage($event)">
 
                             <div class="display-img" *ngFor="let url of supplyPointImageUrls">
                                 <img [src]="(url.image?.base64) || url.image.file">
@@ -56,7 +56,7 @@
                             <input type="text" formControlName="heThongNuocThoatHienHuuDesc">
                         </div>
                         <div class="image-demo-img">
-                            <input type="file" #uploadDrainageSystem (change)="uploadDrainageSystemImage($event)">
+                            <input type="file" multiple #uploadDrainageSystem (change)="uploadDrainageSystemImage($event)">
 
                             <div class="display-img" *ngFor="let url of drainageSystemImageUrls">
                                 <img [src]="(url.image?.base64) || url.image.file">
@@ -76,7 +76,7 @@
                             <input type="text" formControlName="heThongNuocThoatDiemDauNoiDesc">
                         </div>
                         <div class="image-demo-img">
-                            <input type="file" #uploadDrainagePoint (change)="uploadDrainagePointImage($event)">
+                            <input type="file" multiple #uploadDrainagePoint (change)="uploadDrainagePointImage($event)">
 
                             <div class="display-img" *ngFor="let url of drainagePointImageUrls">
                                 <img [src]="(url.image?.base64) || url.image.file">
@@ -101,7 +101,7 @@
                             <input type="text" formControlName="tramHaTheDesc">
                         </div>
                         <div class="image-demo-img">
-                            <input type="file" #uploadPowerStation (change)="uploadPowerStationImage($event)">
+                            <input type="file" multiple #uploadPowerStation (change)="uploadPowerStationImage($event)">
 
                             <div class="display-img" *ngFor="let url of powerStationImageUrls">
                                 <img [src]="(url.image?.base64) || url.image.file">
@@ -121,7 +121,7 @@
                             <input type="text" formControlName="duongDayTrungTheDesc">
                         </div>
                         <div class="image-demo-img">
-                            <input type="file" #uploadMediumVoltageSystem (change)="uploadMediumVoltageSystemImage($event)">
+                            <input type="file" multiple #uploadMediumVoltageSystem (change)="uploadMediumVoltageSystemImage($event)">
 
                             <div class="display-img" *ngFor="let url of mediumVoltageSystemImageUrls">
                                 <img [src]="(url.image?.base64) || url.image.file">
@@ -141,7 +141,7 @@
                             <input type="text" formControlName="heThongDienKhacDesc">
                         </div>
                         <div class="image-demo-img">
-                            <input type="file" #uploadPowerOther (change)="uploadPowerOtherImage($event)">
+                            <input type="file" multiple #uploadPowerOther (change)="uploadPowerOtherImage($event)">
 
                             <div class="display-img" *ngFor="let url of powerOtherImageUrls">
                                 <img [src]="(url.image?.base64) || url.image.file">

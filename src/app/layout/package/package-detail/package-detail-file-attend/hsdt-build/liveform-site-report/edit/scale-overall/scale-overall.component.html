@@ -75,7 +75,7 @@
                             <input type="text" value="Text" formControlName="hinhAnhPhoiCanhDesc" tabindex="10">
                         </div>
                         <div class="image-demo-img">
-                            <input type="file" #uploadPerspective (change)="uploadPerspectiveImage($event)">
+                            <input type="file" multiple #uploadPerspective (change)="uploadPerspectiveImage($event)">
                             <div class="display-img" *ngFor="let url of perspectiveImageUrls">
                                 <img [src]="(url.image?.base64) || url.image.file">
                                 <div class="toppp" [ngClass]="{'d-none': viewMode}" (click)="deletePerspectiveImage(url)">
@@ -100,7 +100,7 @@
                     </div>
                     <div>
                         <div class="image-demo-img">
-                            <input type="file" #uploadStructure (change)="uploadStructureImage($event)">
+                            <input type="file" multiple #uploadStructure (change)="uploadStructureImage($event)">
                             <div class="display-img" *ngFor="let url of structureImageUrls">
                                 <img [src]="(url.image?.base64) || url.image.file">
                                 <div class="toppp" [ngClass]="{'d-none': viewMode}" (click)="deleteStructureImage(url)">
@@ -124,7 +124,7 @@
                             tabindex="14">
                     </div>
                     <div class="image-demo-img">
-                        <input type="file" #uploadRequirements (change)="uploadRequirementsImage($event)">
+                        <input type="file" multiple #uploadRequirements (change)="uploadRequirementsImage($event)">
                         <div class="display-img" *ngFor="let url of requirementsImageUrls">
                             <img [src]="(url.image?.base64) || url.image.file">
                             <div class="toppp" [ngClass]="{'d-none': viewMode}" (click)="deleteRequirementsImage(url)">
