@@ -33,7 +33,6 @@ export class InformationComponent implements OnInit {
     this.packageService.getInforPackageID(this.currentPackageId).subscribe(result => {
       this.package = result;
       // this.package.documentLink = this.sanitizer.bypassSecurityTrustResourceUrl(this.package.documentLink);
-      console.log(this.package);
       this.spinner.hide();
     }, err => {
       this.spinner.hide();

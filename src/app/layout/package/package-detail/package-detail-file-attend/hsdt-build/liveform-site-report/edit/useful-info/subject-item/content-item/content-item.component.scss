@@ -61,8 +61,7 @@ input[type=text] {
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
-    position: relative;
-    right: -20%;
+    margin-left: 20%;
 
     input[type=file] {
         display: none;
@@ -215,4 +214,7 @@ label {
     position: relative;
     z-index: 1;
     bottom: 50px;
+}
+.view-mode-text {
+    pointer-events: none;
 }

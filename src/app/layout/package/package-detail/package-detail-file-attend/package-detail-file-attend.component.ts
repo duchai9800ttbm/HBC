@@ -31,7 +31,7 @@ export class PackageDetailFileAttendComponent implements OnInit {
     private activeRouter: ActivatedRoute,
     private statusObservableHsdtService: StatusObservableHsdtService,
   ) {
-    this.checkStatusPackage();
+    // this.checkStatusPackage();
     this.statusObservableHsdtService.statusPackageService.subscribe(value => {
       this.packageService.getInforPackageID(this.packageId).subscribe(result => {
         this.packageData = result;
@@ -135,28 +135,28 @@ export class PackageDetailFileAttendComponent implements OnInit {
     });
   }
 
-  checkStatusPackage() {
-    this.packageId = +PackageDetailComponent.packageId;
-    this.router.events.subscribe((val) => {
-      if ((val instanceof NavigationEnd) === true) {
-        this.activeRouter.firstChild.url.subscribe(url => {
-          this.currentUrl = url[0].path;
-          console.log('gọi API');
-          if (this.urlChirld.find( item => item === this.currentUrl)) {
-            this.packageService.getInforPackageID(this.packageId).subscribe(result => {
-              this.packageData = result;
-              this.statusPackageName = this.packageData.stageStatus.id;
-              for (let i = 0; i < this.listStatusPackage.length; i++) {
-                if (this.listStatusPackage[i].find(item => item === this.packageData.stageStatus.id)) {
-                  this.statusPackageID = i;
-                  break;
-                }
-              }
-            });
-          }
-        });
-      }
-    });
-  }
+  // checkStatusPackage() {
+  //   this.packageId = +PackageDetailComponent.packageId;
+  //   this.router.events.subscribe((val) => {
+  //     if ((val instanceof NavigationEnd) === true) {
+  //       this.activeRouter.firstChild.url.subscribe(url => {
+  //         this.currentUrl = url[0].path;
+  //         console.log('gọi API');
+  //         if (this.urlChirld.find( item => item === this.currentUrl)) {
+  //           this.packageService.getInforPackageID(this.packageId).subscribe(result => {
+  //             this.packageData = result;
+  //             this.statusPackageName = this.packageData.stageStatus.id;
+  //             for (let i = 0; i < this.listStatusPackage.length; i++) {
+  //               if (this.listStatusPackage[i].find(item => item === this.packageData.stageStatus.id)) {
+  //                 this.statusPackageID = i;
+  //                 break;
+  //               }
+  //             }
+  //           });
+  //         }
+  //       });
+  //     }
+  //   });
+  // }
 
 }
