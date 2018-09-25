@@ -927,6 +927,17 @@ export class PackageService {
             reason: reason
         }).map(response => response.result);
     }
+    // tải template phiếu đề nghị dự thầu
+    downloadProposedTenderParticipateReport() {
+        const url = `proposedtenderparticipatinngreport/template/downoad`;
+        return this.apiService.getFile(url).map(response => {
+            return FileSaver.saveAs(
+                new Blob([response.file], {
+                    type: `${response.file.type}`,
+                }), response.fileName
+            );
+        });
+    }
 
     // get thông tin mặc định LiveForm phân công tiến độ
     getDefaultTenderPreparationPlanning() {

@@ -109,7 +109,7 @@ export class NeedCreateTenderFormComponent implements OnInit, OnDestroy {
                                 this.packageInfo.startTrackingDate
                         ) /
                         (60 * 60 * 24);
-                    this.totalTime = `${day} ngày`;
+                    this.totalTime = `${day} ngày (days)`;
                 }
             });
     }
@@ -169,7 +169,7 @@ export class NeedCreateTenderFormComponent implements OnInit, OnDestroy {
         this.router.navigate([
             `package/detail/${
                 this.bidOpportunityId
-            }/attend/create-request/form/view`
+            }/attend/create-request`
         ]);
     }
 

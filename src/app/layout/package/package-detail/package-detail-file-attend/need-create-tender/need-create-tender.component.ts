@@ -85,6 +85,10 @@ export class NeedCreateTenderComponent implements OnInit {
     this.packageService.setRouterAction(data);
   }
 
+  downloadTemplate() {
+    this.packageService.downloadProposedTenderParticipateReport().subscribe(data => console.log());
+  }
+
   printForm() {
     const printContent = document.getElementById('divPrint');
     const WindowPrt = window.open('', '', 'left=0,top=0,width=900,height=900,toolbar=0,scrollbars=0,status=0');
