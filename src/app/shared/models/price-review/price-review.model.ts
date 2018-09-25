@@ -218,3 +218,28 @@ export class ItemHSDTChinhThuc {
     };
     childs?: ItemHSDTChinhThuc;
 }
+
+
+
+
+export class PriceReviewItemChangedHistory {
+    employee: {
+        employeeId: number;
+        employeeNo: string;
+        employeeName: string;
+        employeeAvatar: string;
+        employeeEmail: string
+    };
+    changedTime: number;
+    changedTimes: number;
+    updateDesc: string;
+    liveFormChangeds: PriceReviewLiveFormChangedHistory[];
+}
+
+export class PriceReviewLiveFormChangedHistory {
+    liveFormStep: string;
+    liveFormSubject: string;
+    liveFormTitle: string;
+    oldValue: string;
+    newValue: string;
+}
