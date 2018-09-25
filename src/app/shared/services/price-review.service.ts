@@ -1,8 +1,9 @@
 import { Injectable } from '@angular/core';
 import { ApiService } from './api.service';
-import { TenderPriceApproval } from '../models/price-review/price-review.model';
+import { TenderPriceApproval, TenderPriceApprovalShort, ItemHSDTChinhThuc } from '../models/price-review/price-review.model';
 import { SessionService } from './session.service';
 import DateTimeConvertHelper from '../helpers/datetime-convert-helper';
+import * as FileSaver from 'file-saver';
 
 @Injectable()
 export class PriceReviewService {
@@ -11,9 +12,11 @@ export class PriceReviewService {
     private apiService: ApiService,
     private sessionService: SessionService
   ) { }
+
   get employeeId() {
     return this.sessionService.currentUser.employeeId;
   }
+
   truongNhomDuyet(bidOpportunityId: number) {
     const url = `bidopportunity/${bidOpportunityId}/approvedbytenderleader`;
     return this.apiService.post(url);
@@ -63,6 +66,63 @@ export class PriceReviewService {
     const url = `bidopportunity/hsdt/${bidOpportunityId}/hieuchinhhsdt`;
     return this.apiService.post(url);
   }
+
+  getDanhSachHSDTChinhThuc(bidOpportunityId: number) {
+    const url = `bidopportunity/${bidOpportunityId}/approvaltenderdocs`;
+    return this.apiService.get(url).map(response => response.result.map(this.toItemHSDTChinhThuc));
+  }
+
+  toItemHSDTChinhThuc(model: any): ItemHSDTChinhThuc {
+    return {
+      typeName: model.typeName,
+      document: model.document && {
+        type: model.document.type,
+        id: model.document.id,
+        name: model.document.name,
+        interviewTime: model.interviewTime
+      },
+      childs: model.childs && {
+        typeName: model.childs.typeName,
+        document: model.childs.document && {
+          type: model.childs.document.type,
+          id: model.childs.document.id,
+          name: model.childs.document.name,
+          interviewTime: model.childs.document.interviewTime
+        }
+      }
+    };
+  }
+
+  upload(
+    id: number,
+    documentName: string,
+    description: string,
+    file: File,
+    link: string,
+  ) {
+    const url = `tenderpriceapproval/document/upload`;
+    const formData = new FormData();
+    formData.append('BidOpportunityId', `${id}`);
+    formData.append('Name', documentName);
+    formData.append('Desc', description);
+    formData.append('File', file);
+    formData.append('Url', link);
+    return this.apiService.postFile(url, formData)
+      .map(response => response)
+      .share();
+  }
+
+  download(tenderPriceApprovalDocumentId: number) {
+    const url = `tenderpriceapproval/document/${tenderPriceApprovalDocumentId}/download`;
+    return this.apiService.getFile(url).map(response => {
+      return FileSaver.saveAs(
+        new Blob([response.file], {
+          type: `${response.file.type}`,
+        }), response.fileName
+      );
+    });
+  }
+
   view(bidOpportunityId: number) {
     const url = `bidopportunity/${bidOpportunityId}/tenderpriceapproval`;
     return this.apiService.get(url).map(response => {
@@ -70,6 +130,16 @@ export class PriceReviewService {
         return null;
       }
       return this.toTenderPriceApproval(response.result);
+    });
+  }
+
+  viewShort(bidOpportunityId: number) {
+    const url = `bidopportunity/${bidOpportunityId}/tenderpriceapproval/getshortinformation`;
+    return this.apiService.get(url).map(response => {
+      if (!response.result) {
+        return null;
+      }
+      return this.toTenderPriceApprovalShort(response.result);
     });
   }
 
@@ -246,6 +316,31 @@ export class PriceReviewService {
     console.log(modelRequest);
     return this.apiService.post(url, modelRequest)
       .map(response => this.toTenderPriceApproval(response.result));
+  }
+
+  toTenderPriceApprovalShort(model: any): TenderPriceApprovalShort {
+    return {
+      id: model.id,
+      name: model.name,
+      files: model.files.map(x => ({
+        id: x.id,
+        name: x.name,
+        guid: x.guid,
+        url: x.url,
+        desc: x.desc
+      })),
+      interviewTimes: model.interviewTimes,
+      isDraftVersion: model.isDraftVersion,
+      approvalTimes: model.approvalTimes,
+      createdEmployee: model.createdEmployee && {
+        employeeId: model.createdEmployee.employeeId,
+        employeeNo: model.createdEmployee.employeeNo,
+        employeeName: model.createdEmployee.employeeName,
+        employeeAvatar: model.createdEmployee.employeeAvatar,
+        employeeEmail: model.createdEmployee.employeeEmail
+      },
+      createdDate: model.createdDate
+    };
   }
 
   toTenderPriceApproval(model: any): TenderPriceApproval {

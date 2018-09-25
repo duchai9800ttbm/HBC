@@ -1,0 +1,50 @@
+:host(){
+    font-size: 80%;
+}
+.close-popup{
+    font-size: 20px;
+    font-weight: bold;
+    cursor: pointer;
+}
+.center-parent {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.bold-title{
+    font-weight: bold;    
+    }
+.cus-but-cs{
+    width: 13%;
+}
+.cus-header{
+    padding: 0.75rem 1.25rem;
+}
+.no-boder{
+    border: none;
+}
+.no-resize-textarea{
+    resize: none;
+}
+.boder-input-choose-file{
+    border-radius: 0.25rem 0rem 0rem 0.25rem;
+}
+.fileUpload {
+    position: relative;
+    overflow: hidden;
+    cursor: pointer;
+    width: auto;
+
+}
+.fileUpload input.upload {
+    position: absolute;
+    top: 0;
+    right: 0;
+    margin: 0;
+    padding: 0;
+    font-size: 20px;
+    cursor: pointer;
+    opacity: 0;
+    filter: alpha(opacity=0);
+}
+
