@@ -39,6 +39,7 @@ export class PackageDetailFileAttendComponent implements OnInit {
         for (let i = 0; i < this.listStatusPackage.length; i++) {
           if (this.listStatusPackage[i].find(item => item === this.packageData.stageStatus.id)) {
             this.statusPackageID = i;
+            console.log('this.statusPackageID', this.statusPackageID);
             break;
           }
         }
@@ -48,91 +49,91 @@ export class PackageDetailFileAttendComponent implements OnInit {
 
   ngOnInit() {
     this.packageId = +PackageDetailComponent.packageId;
-    // this.packageService.getInforPackageID(this.packageId).subscribe(result => {
-    //   this.packageData = result;
-    //   this.statusPackageName = this.packageData.stageStatus.id;
-    //   switch (this.packageData.stageStatus.id) {
-    //     case 'CanLapDeNghiDuThau': {
-    //       this.router.navigate([`/package/detail/${this.packageId}/attend/create-request`]);
-    //       break;
-    //     }
-    //     case 'ChoDuyet': {
-    //       this.router.navigate([`/package/detail/${this.packageId}/attend/create-request`]);
-    //       break;
-    //     }
-    //     case 'ThamGiaDuThau': {
-    //       this.router.navigate([`/package/detail/${this.packageId}/attend/create-request`]);
-    //       break;
-    //     }
-    //     case 'DaTuChoi': {
-    //       this.router.navigate([`/package/detail/${this.packageId}/attend/create-request`]);
-    //       break;
-    //     }
-    //     case 'ChuaThongBaoTrienKhai': {
-    //       this.router.navigate([`/package/detail/${this.packageId}/attend/infomation-deployment`]);
-    //       break;
-    //     }
-    //     case 'DaThongBaoTrienKhai': {
-    //       this.router.navigate([`/package/detail/${this.packageId}/attend/infomation-deployment`]);
-    //       break;
-    //     }
-    //     case 'DaXacNhanPhanCong': {
-    //       this.router.navigate([`/package/detail/${this.packageId}/attend/infomation-deployment`]);
-    //       break;
-    //     }
-    //     case 'DaGuiPhanCongTienDo': {
-    //       this.router.navigate([`/package/detail/${this.packageId}/attend/infomation-deployment`]);
-    //       break;
-    //     }
-    //     case 'DangLapHSDT': {
-    //       this.router.navigate([`/package/detail/${this.packageId}/attend/build`]);
-    //       break;
-    //     }
-    //     case 'CanLapTrinhDuyetGia': {
-    //       this.router.navigate([`/package/detail/${this.packageId}/attend/price-review`]);
-    //       break;
-    //     }
-    //     case 'DaGuiDuyetTrinhDuyetGia': {
-    //       this.router.navigate([`/package/detail/${this.packageId}/attend/price-review`]);
-    //       break;
-    //     }
-    //     case 'CanDieuChinhTrinhDuyetGia': {
-    //       this.router.navigate([`/package/detail/${this.packageId}/attend/price-review`]);
-    //       break;
-    //     }
-    //     case 'DaDuyetTrinhDuyetGia': {
-    //       this.router.navigate([`/package/detail/${this.packageId}/attend/price-review`]);
-    //       break;
-    //     }
-    //     case 'ChotHoSo': {
-    //       this.router.navigate([`/package/detail/${this.packageId}/attend/price-review`]);
-    //       break;
-    //     }
-    //     case 'DaNopHSDT': {
-    //       this.router.navigate([`/package/detail/${this.packageId}/attend/price-review`]);
-    //       break;
-    //     }
-    //     case 'DaNhanLoiMoi': {
-    //       this.router.navigate([`/package/detail/${this.packageId}/attend/interview-negotiation`]);
-    //       break;
-    //     }
-    //     case 'ChuanBiPhongVan': {
-    //       this.router.navigate([`/package/detail/${this.packageId}/attend/interview-negotiation`]);
-    //       break;
-    //     }
-    //     case 'DaChotCongTacChuanBiPhongVan': {
-    //       this.router.navigate([`/package/detail/${this.packageId}/attend/interview-negotiation`]);
-    //       break;
-    //     }
-    //     case 'DaPhongVan': {
-    //       this.router.navigate([`/package/detail/${this.packageId}/attend/interview-negotiation`]);
-    //       break;
-    //     }
-    //     default: {
-    //       break;
-    //     }
-    //   }
-    // });
+    this.packageService.getInforPackageID(this.packageId).subscribe(result => {
+      this.packageData = result;
+      this.statusPackageName = this.packageData.stageStatus.id;
+      switch (this.packageData.stageStatus.id) {
+        case 'CanLapDeNghiDuThau': {
+          this.router.navigate([`/package/detail/${this.packageId}/attend/create-request`]);
+          break;
+        }
+        case 'ChoDuyet': {
+          this.router.navigate([`/package/detail/${this.packageId}/attend/create-request`]);
+          break;
+        }
+        case 'ThamGiaDuThau': {
+          this.router.navigate([`/package/detail/${this.packageId}/attend/create-request`]);
+          break;
+        }
+        case 'DaTuChoi': {
+          this.router.navigate([`/package/detail/${this.packageId}/attend/create-request`]);
+          break;
+        }
+        case 'ChuaThongBaoTrienKhai': {
+          this.router.navigate([`/package/detail/${this.packageId}/attend/infomation-deployment`]);
+          break;
+        }
+        case 'DaThongBaoTrienKhai': {
+          this.router.navigate([`/package/detail/${this.packageId}/attend/infomation-deployment`]);
+          break;
+        }
+        case 'DaXacNhanPhanCong': {
+          this.router.navigate([`/package/detail/${this.packageId}/attend/infomation-deployment`]);
+          break;
+        }
+        case 'DaGuiPhanCongTienDo': {
+          this.router.navigate([`/package/detail/${this.packageId}/attend/infomation-deployment`]);
+          break;
+        }
+        case 'DangLapHSDT': {
+          this.router.navigate([`/package/detail/${this.packageId}/attend/build`]);
+          break;
+        }
+        case 'CanLapTrinhDuyetGia': {
+          this.router.navigate([`/package/detail/${this.packageId}/attend/price-review`]);
+          break;
+        }
+        case 'DaGuiDuyetTrinhDuyetGia': {
+          this.router.navigate([`/package/detail/${this.packageId}/attend/price-review`]);
+          break;
+        }
+        case 'CanDieuChinhTrinhDuyetGia': {
+          this.router.navigate([`/package/detail/${this.packageId}/attend/price-review`]);
+          break;
+        }
+        case 'DaDuyetTrinhDuyetGia': {
+          this.router.navigate([`/package/detail/${this.packageId}/attend/price-review`]);
+          break;
+        }
+        case 'ChotHoSo': {
+          this.router.navigate([`/package/detail/${this.packageId}/attend/price-review`]);
+          break;
+        }
+        case 'DaNopHSDT': {
+          this.router.navigate([`/package/detail/${this.packageId}/attend/price-review`]);
+          break;
+        }
+        case 'DaNhanLoiMoi': {
+          this.router.navigate([`/package/detail/${this.packageId}/attend/interview-negotiation`]);
+          break;
+        }
+        case 'ChuanBiPhongVan': {
+          this.router.navigate([`/package/detail/${this.packageId}/attend/interview-negotiation`]);
+          break;
+        }
+        case 'DaChotCongTacChuanBiPhongVan': {
+          this.router.navigate([`/package/detail/${this.packageId}/attend/interview-negotiation`]);
+          break;
+        }
+        case 'DaPhongVan': {
+          this.router.navigate([`/package/detail/${this.packageId}/attend/interview-negotiation`]);
+          break;
+        }
+        default: {
+          break;
+        }
+      }
+    });
   }
 
   checkStatusPackage() {
@@ -141,7 +142,6 @@ export class PackageDetailFileAttendComponent implements OnInit {
       if ((val instanceof NavigationEnd) === true) {
         this.activeRouter.firstChild.url.subscribe(url => {
           this.currentUrl = url[0].path;
-          console.log('gọi API');
           if (this.urlChirld.find( item => item === this.currentUrl)) {
             this.packageService.getInforPackageID(this.packageId).subscribe(result => {
               this.packageData = result;

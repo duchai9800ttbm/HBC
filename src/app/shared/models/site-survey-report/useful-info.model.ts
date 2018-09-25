@@ -1,4 +1,4 @@
-import { Image } from './image';
+import { ImageItem } from './image';
 
 export class UsefulInfo {
     title: string;
@@ -8,5 +8,5 @@ export class UsefulInfo {
 export class ContentItem {
     name: string;
     detail: string;
-    images: any;
+    images: ImageItem[];
 }

@@ -1,4 +1,4 @@
-import { Component, OnInit, OnChanges, AfterViewChecked, ViewChild, ElementRef, ChangeDetectorRef, NgZone, HostListener } from '@angular/core';
+import { Component, OnInit, AfterViewChecked, ViewChild, ElementRef, ChangeDetectorRef, NgZone, HostListener } from '@angular/core';
 import { Observable } from '../../../../../node_modules/rxjs/Observable';
 import { DictionaryItem } from '../../../shared/models/dictionary-item.model';
 import { Subject } from '../../../../../node_modules/rxjs/Subject';
@@ -27,6 +27,7 @@ import { FieldModel } from '../../../shared/models/package/field.model';
 import { LayoutService } from '../../../shared/services/layout.service';
 import { NgbDropdownConfig } from '@ng-bootstrap/ng-bootstrap';
 import { PackageListItem } from '../../../shared/models/package/package-list-item';
+import { AdministeredPackageList } from '../../../shared/constants/administered-package';
 @Component({
     selector: 'app-package-list',
     templateUrl: './package-list.component.html',
@@ -46,9 +47,7 @@ export class PackageListComponent implements OnInit, AfterViewChecked {
     // dtOptions: any = {};
     dtTrigger: Subject<any> = new Subject();
     filterModel = new PackageFilter();
-    pagedResult: PagedResult<PackageListItem> = new PagedResult<
-        PackageListItem
-        >();
+    pagedResult: PagedResult<PackageListItem> = new PagedResult<PackageListItem>();
     datePickerConfig = DATETIME_PICKER_CONFIG;
     activityForm: FormGroup;
     formErrors = {
@@ -109,38 +108,38 @@ export class PackageListComponent implements OnInit, AfterViewChecked {
         //     },
         // }
     };
-    tenDuAn = false; // ok
-    maDuAn = false; // ok
-    tenGoithau = false; // ok
-    congViec = false; // ok
-    diaDiem = false; // ok
-    loaiKhachHang = false; // ok
-    donViTuVan = false; // ok
-    diaChiDVTV = false; // ok
-    soDienThoaiDVTV = false; // ok
-    quyMo = false; // ok
-    quy = false; // ok
-    lyDoTrungThau = false; // ok
-    lyDoTratThau = false; // ok
-    tongThoiGian = false; // ok
-    ngayKetThucDuAn = false; // ok
-    ngayKhoiCongDuAn = false; // ok
-    linkTaiLieu = false; // ok
-    vaiTro = false; // ok
-    tienDoThucHien = false; // ok
-    giaiDoan = false; // ok
-    khuVuc = false; // ok
-    tenKhachHang = false; // ok
-    lienHe = false; // ok
-    ngayBatDau = false; // ok
-    ngayNhanHoSoMoiThau = false; // ok
-    ngayDuKienKetQuaThau = false; // ok
-    moTa = false; // ok
-    chuTri = false; // ok
-    loaiCongTrinh = false; // ok
-    hangMucCongTrinh = false; // ok
-    tongGiaTri = false; // ok
-    danhGiaDuAn = false; // ok
+    tenDuAn = false;
+    maDuAn = false;
+    tenGoithau = false;
+    congViec = false;
+    diaDiem = false;
+    loaiKhachHang = false;
+    donViTuVan = false;
+    diaChiDVTV = false;
+    soDienThoaiDVTV = false;
+    quyMo = false;
+    quy = false;
+    lyDoTrungThau = false;
+    lyDoTratThau = false;
+    tongThoiGian = false;
+    ngayKetThucDuAn = false;
+    ngayKhoiCongDuAn = false;
+    linkTaiLieu = false;
+    vaiTro = false;
+    tienDoThucHien = false;
+    giaiDoan = false;
+    khuVuc = false;
+    tenKhachHang = false;
+    lienHe = false;
+    ngayBatDau = false;
+    ngayNhanHoSoMoiThau = false;
+    ngayDuKienKetQuaThau = false;
+    moTa = false;
+    chuTri = false;
+    loaiCongTrinh = false;
+    hangMucCongTrinh = false;
+    tongGiaTri = false;
+    danhGiaDuAn = false;
     dienTichSan = false;
     trangThaiGoiThau = false;
     ngayBatDauTheoDoi = false;
@@ -152,6 +151,7 @@ export class PackageListComponent implements OnInit, AfterViewChecked {
     currentSort = '';
     isShowPopup = false;
     userProfile: UserModel;
+    administeredPackageList = AdministeredPackageList;
     constructor(
         private activityService: ActivityService,
         private alertService: AlertService,
@@ -219,7 +219,8 @@ export class PackageListComponent implements OnInit, AfterViewChecked {
             this.userModel = this.sessionService.userInfo;
             this.listPrivileges = this.userModel.privileges;
             if (this.listPrivileges) {
-                this.isManageBidOpportunitys = this.listPrivileges.some(x => x === 'ManageBidOpportunitys');
+                // this.isManageBidOpportunitys = this.listPrivileges.some(x => x === 'ManageBidOpportunitys');
+                this.isManageBidOpportunitys = this.administeredPackageList.some( r => this.listPrivileges.includes(r));
                 this.isViewBidOpportunitys = this.listPrivileges.some(x => x === 'ViewBidOpportunitys');
                 this.isCreateBidOpportunity = this.listPrivileges.some(x => x === 'CreateBidOpportunity');
                 this.isDeleteBidOpportunity = this.listPrivileges.some(x => x === 'DeleteBidOpportunity');
@@ -248,11 +249,11 @@ export class PackageListComponent implements OnInit, AfterViewChecked {
         //     }
         // });
         this.searchTerm$.debounceTime(600)
-        .distinctUntilChanged()
-        .subscribe(term => {
-            this.filter(false);
-            // return Observable.create(x => x.next(''));
-        });
+            .distinctUntilChanged()
+            .subscribe(term => {
+                this.filter(false);
+                // return Observable.create(x => x.next(''));
+            });
         // this.dtOptions = {
         //     scrollX:        true,
         //     fixedColumns:   {
@@ -281,10 +282,10 @@ export class PackageListComponent implements OnInit, AfterViewChecked {
             this.orderBy = 'Asc';
         } else if (fieldName === this.currentSort && this.orderBy === 'Asc') {
             this.orderBy = 'Desc';
-        }  else if (fieldName === this.currentSort && this.orderBy === 'Desc') {
+        } else if (fieldName === this.currentSort && this.orderBy === 'Desc') {
             this.orderBy = 'NoSort';
         }
-        if ( this.orderBy !== 'NoSort') {
+        if (this.orderBy !== 'NoSort') {
             this.filterModel.sorting = fieldName + this.orderBy;
         } else {
             this.filterModel.sorting = '';
@@ -461,11 +462,11 @@ export class PackageListComponent implements OnInit, AfterViewChecked {
             .subscribe(result => {
                 this.rerender(result);
                 this.spinner.hide();
-                    if (displayAlert) {
-                        this.alertService.success(
-                            'Dữ liệu đã được cập nhật mới nhất'
-                        );
-                    }
+                if (displayAlert) {
+                    this.alertService.success(
+                        'Dữ liệu đã được cập nhật mới nhất'
+                    );
+                }
             }, err => this.spinner.hide());
     }
 

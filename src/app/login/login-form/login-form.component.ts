@@ -6,6 +6,7 @@ import { FormBuilder, Validators, FormGroup } from '@angular/forms';
 import ValidationHelper from '../../shared/helpers/validation.helper';
 import { UserModel } from '../../shared/models/user/user.model';
 import { NgxSpinnerComponent, NgxSpinnerService } from 'ngx-spinner';
+import { AdministeredPackageList } from '../../shared/constants/administered-package';
 
 @Component({
     selector: 'app-login-form',
@@ -29,6 +30,7 @@ export class LoginFormComponent implements OnInit {
         username: '',
         password: '',
     };
+    administeredPackageList = AdministeredPackageList;
     constructor(
         private route: ActivatedRoute,
         private router: Router,
@@ -73,7 +75,7 @@ export class LoginFormComponent implements OnInit {
                             this.userModel = this.sessionService.userInfo;
                             this.listPrivileges = this.userModel.privileges;
                             if (this.listPrivileges) {
-                                this.isManageBidOpportunitys = this.listPrivileges.some(x => x === 'ManageBidOpportunitys');
+                                this.isManageBidOpportunitys = this.administeredPackageList.some( r => this.listPrivileges.includes(r));
                                 this.isManageUsers = this.listPrivileges.some(x => x === 'ManagerUsers');
                                 this.isManageSettings = this.listPrivileges.some(x => x === 'ManageSettings');
                                 this.isManageUserGroups = this.listPrivileges.some(x => x === 'ManageUserGroups');
