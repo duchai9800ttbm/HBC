@@ -9,7 +9,8 @@
     "gitbuild": "ng build --prod --base /start-angular/SB-Admin-BS4-Angular-5/master/dist/",
     "test": "ng test",
     "lint": "ng lint",
-    "e2e": "ng e2e"
+    "e2e": "ng e2e",
+    "prod": "node --max-old-space-size=4096 ./node_modules/@angular/cli/bin/ng build --prod --build-optimizer --oh all"
   },
   "private": true,
   "dependencies": {
