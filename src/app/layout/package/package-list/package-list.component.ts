@@ -27,6 +27,7 @@ import { FieldModel } from '../../../shared/models/package/field.model';
 import { LayoutService } from '../../../shared/services/layout.service';
 import { NgbDropdownConfig } from '@ng-bootstrap/ng-bootstrap';
 import { PackageListItem } from '../../../shared/models/package/package-list-item';
+import { AdministeredPackageList } from '../../../shared/constants/administered-package';
 @Component({
     selector: 'app-package-list',
     templateUrl: './package-list.component.html',
@@ -150,6 +151,7 @@ export class PackageListComponent implements OnInit, AfterViewChecked {
     currentSort = '';
     isShowPopup = false;
     userProfile: UserModel;
+    administeredPackageList = AdministeredPackageList;
     constructor(
         private activityService: ActivityService,
         private alertService: AlertService,
@@ -217,7 +219,8 @@ export class PackageListComponent implements OnInit, AfterViewChecked {
             this.userModel = this.sessionService.userInfo;
             this.listPrivileges = this.userModel.privileges;
             if (this.listPrivileges) {
-                this.isManageBidOpportunitys = this.listPrivileges.some(x => x === 'ManageBidOpportunitys');
+                // this.isManageBidOpportunitys = this.listPrivileges.some(x => x === 'ManageBidOpportunitys');
+                this.isManageBidOpportunitys = this.administeredPackageList.some( r => this.listPrivileges.includes(r));
                 this.isViewBidOpportunitys = this.listPrivileges.some(x => x === 'ViewBidOpportunitys');
                 this.isCreateBidOpportunity = this.listPrivileges.some(x => x === 'CreateBidOpportunity');
                 this.isDeleteBidOpportunity = this.listPrivileges.some(x => x === 'DeleteBidOpportunity');

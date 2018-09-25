@@ -36,7 +36,7 @@ export class PackageDetailComponent implements OnInit {
   };
   userModel: UserModel;
   listPrivileges = [];
-  isManageBidOpportunitys;
+  // isManageBidOpportunitys;
   isEditBidOpportunity;
   isViewBidOpportunityDetail;
   isToggle = false;
@@ -45,7 +45,6 @@ export class PackageDetailComponent implements OnInit {
       this.userModel = this.sessionService.userInfo;
       this.listPrivileges = this.userModel.privileges;
       if (this.listPrivileges) {
-        this.isManageBidOpportunitys = this.listPrivileges.some(x => x === 'ManageBidOpportunitys');
         this.isEditBidOpportunity = this.listPrivileges.some(x => x === 'EditBidOpportunity');
         this.isViewBidOpportunityDetail = this.listPrivileges.some(x => x === 'ViewBidOpportunityDetail');
         if (!this.isEditBidOpportunity && !this.isViewBidOpportunityDetail) {
