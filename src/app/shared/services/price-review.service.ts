@@ -75,7 +75,7 @@ export class PriceReviewService {
     return this.apiService.get(url).map(response => response.result.map(this.toItemHSDTChinhThuc));
   }
 
-  changedHistoryPriceReview(bidOpportunityId: number, page: number, pageSize: number)
+  changedHistoryPriceReview(bidOpportunityId: number, page: string | number, pageSize: number | string)
     : Observable<PagedResult<PriceReviewItemChangedHistory>> {
     const url = `${bidOpportunityId}/tenderpriceapproval/changedhistory/${page}/${pageSize}`;
     return this.apiService.get(url).map(res => {
@@ -132,6 +132,17 @@ export class PriceReviewService {
 
   download(tenderPriceApprovalDocumentId: number) {
     const url = `tenderpriceapproval/document/${tenderPriceApprovalDocumentId}/download`;
+    return this.apiService.getFile(url).map(response => {
+      return FileSaver.saveAs(
+        new Blob([response.file], {
+          type: `${response.file.type}`,
+        }), response.fileName
+      );
+    });
+  }
+
+  downloadTemplate() {
+    const url = `tenderpriceapproval/template`;
     return this.apiService.getFile(url).map(response => {
       return FileSaver.saveAs(
         new Blob([response.file], {
@@ -345,7 +356,8 @@ export class PriceReviewService {
         name: x.name,
         guid: x.guid,
         url: x.url,
-        desc: x.desc
+        desc: x.desc,
+        uploadDate: x.uploadDate
       })),
       interviewTimes: model.interviewTimes,
       isDraftVersion: model.isDraftVersion,
