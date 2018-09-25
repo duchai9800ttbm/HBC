@@ -23,7 +23,8 @@ import {
 } from '../../../../../../../../shared/models/site-survey-report/image';
 import { LiveformSiteReportComponent } from '../../liveform-site-report.component';
 import { PackageDetailComponent } from '../../../../../package-detail.component';
-
+import { AlertService } from '../../../../../../../../shared/services';
+import { SiteSurveyReportService } from '../../../../../../../../shared/services/site-survey-report.service';
 @Component({
   selector: 'app-scale-overall',
   templateUrl: './scale-overall.component.html',
@@ -57,6 +58,8 @@ export class ScaleOverallComponent implements OnInit {
     return this.trangThaiCongTrinhForm.get('trangthaiCongTrinhList') as FormArray;
   }
   constructor(
+    private siteSurveyReportService: SiteSurveyReportService,
+    private alertService: AlertService,
     private router: Router,
     private fb: FormBuilder
 
@@ -95,7 +98,7 @@ export class ScaleOverallComponent implements OnInit {
   }
 
   checkFlag() {
-    if (LiveformSiteReportComponent.formModel.id) {
+    if (LiveformSiteReportComponent.formModel.isCreateOrEdit) {
       const flag = LiveformSiteReportComponent.viewFlag;
       this.viewMode = flag;
       if (flag) {
@@ -200,52 +203,97 @@ export class ScaleOverallComponent implements OnInit {
     const files = event.target.files;
     if (files) {
       for (const file of files) {
-        const reader = new FileReader();
-        reader.onload = (e: any) => {
-          this.perspectiveImageUrls.push({
-            id: null,
-            image: {
+        if (file.size < 10485760) {
+          const reader = new FileReader();
+          reader.onload = (e: any) => {
+            this.perspectiveImageUrls.push({
+              id: null,
+              thumbSizeUrl: null,
+              largeSizeUrl: null,
               file: file,
               base64: e.target.result
-            }
-          });
-          this.scaleOverallForm.get('hinhAnhPhoiCanhList').patchValue(this.perspectiveImageUrls);
-        };
-        reader.readAsDataURL(file);
+            });
+            this.scaleOverallForm.get('hinhAnhPhoiCanhList').patchValue(this.perspectiveImageUrls);
+          };
+          reader.readAsDataURL(file);
+        } else {
+          this.alertService.error(`Hình ảnh ${file.name} quá lớn! Vui lòng chọn hình ảnh khác`);
+        }
       }
     }
+    this.siteSurveyReportService
+      .uploadImageSiteSurveyingReport(this.perspectiveImageUrls, this.currentBidOpportunityId)
+      .subscribe(res => {
+        this.perspectiveImageUrls = res;
+      }, err => {
+        this.alertService.error('Upload hình ảnh thất bại. Xin vui lòng thử lại!');
+        this.perspectiveImageUrls.forEach(x => {
+          if (!x.id) {
+            const index = this.perspectiveImageUrls.indexOf(x);
+            this.perspectiveImageUrls.splice(index, 1);
+          }
+        });
+      });
   }
 
   deletePerspectiveImage(i) {
     const index = this.perspectiveImageUrls.indexOf(i);
-    this.perspectiveImageUrls.splice(index, 1);
-    console.log(this.perspectiveImageUrls);
-    this.scaleOverallForm.get('hinhAnhPhoiCanhList').patchValue(this.perspectiveImageUrls);
+    if (i.id) {
+      this.siteSurveyReportService.deleteImageSiteSurveyingReport(i.id).subscribe(res => {
 
-    console.log(this.perspectiveImageUrls);
-    console.log(i);
+      }, err => {
+        this.alertService.error('Đã xảy ra lỗi, hình ảnh xóa không thành công');
+      });
+    }
+    this.perspectiveImageUrls.splice(index, 1);
+    this.scaleOverallForm.get('hinhAnhPhoiCanhList').patchValue(this.perspectiveImageUrls);
   }
+
   uploadStructureImage(event) {
     const files = event.target.files;
     if (files) {
       for (const file of files) {
-        const reader = new FileReader();
-        reader.onload = (e: any) => {
-          this.structureImageUrls.push({
-            id: null,
-            image: {
+        if (file.size < 10485760) {
+          const reader = new FileReader();
+          reader.onload = (e: any) => {
+            this.structureImageUrls.push({
+              id: null,
+              thumbSizeUrl: null,
+              largeSizeUrl: null,
               file: file,
               base64: e.target.result
-            }
-          });
-          this.scaleOverallForm.get('thongTinVeKetCauList').patchValue(this.structureImageUrls);
-        };
-        reader.readAsDataURL(file);
+            });
+            this.scaleOverallForm.get('thongTinVeKetCauList').patchValue(this.structureImageUrls);
+          };
+          reader.readAsDataURL(file);
+        } else {
+          this.alertService.error(`Hình ảnh ${file.name} quá lớn! Vui lòng chọn hình ảnh khác`);
+        }
       }
     }
+    this.siteSurveyReportService
+      .uploadImageSiteSurveyingReport(this.structureImageUrls, this.currentBidOpportunityId)
+      .subscribe(res => {
+        this.structureImageUrls = res;
+      }, err => {
+        this.alertService.error('Upload hình ảnh thất bại. Xin vui lòng thử lại!');
+        this.structureImageUrls.forEach(x => {
+          if (!x.id) {
+            const index = this.structureImageUrls.indexOf(x);
+            this.structureImageUrls.splice(index, 1);
+          }
+        });
+      });
   }
   deleteStructureImage(i) {
     const index = this.structureImageUrls.indexOf(i);
+    if (i.id) {
+      this.siteSurveyReportService.deleteImageSiteSurveyingReport(i.id).subscribe(res => {
+
+      }, err => {
+        this.alertService.error('Đã xảy ra lỗi, hình ảnh xóa không thành công');
+      });
+    }
     this.structureImageUrls.splice(index, 1);
     this.scaleOverallForm.get('thongTinVeKetCauList').patchValue(this.structureImageUrls);
   }
@@ -253,24 +301,47 @@ export class ScaleOverallComponent implements OnInit {
     const files = event.target.files;
     if (files) {
       for (const file of files) {
-        const reader = new FileReader();
-        reader.onload = (e: any) => {
-          this.requirementsImageUrls.push({
-            id: null,
-            image: {
+        if (file.size < 10485760) {
+          const reader = new FileReader();
+          reader.onload = (e: any) => {
+            this.requirementsImageUrls.push({
+              id: null,
+              thumbSizeUrl: null,
+              largeSizeUrl: null,
               file: file,
               base64: e.target.result
-            }
-          });
-          this.scaleOverallForm.get('nhungYeuCauDacBietList').patchValue(this.requirementsImageUrls);
-        };
-        reader.readAsDataURL(file);
+            });
+            this.scaleOverallForm.get('nhungYeuCauDacBietList').patchValue(this.requirementsImageUrls);
+          };
+          reader.readAsDataURL(file);
+        } else {
+          this.alertService.error(`Hình ảnh ${file.name} quá lớn! Vui lòng chọn hình ảnh khác`);
+        }
       }
-
     }
+    this.siteSurveyReportService
+      .uploadImageSiteSurveyingReport(this.requirementsImageUrls, this.currentBidOpportunityId)
+      .subscribe(res => {
+        this.requirementsImageUrls = res;
+      }, err => {
+        this.alertService.error('Upload hình ảnh thất bại. Xin vui lòng thử lại!');
+        this.requirementsImageUrls.forEach(x => {
+          if (!x.id) {
+            const index = this.requirementsImageUrls.indexOf(x);
+            this.requirementsImageUrls.splice(index, 1);
+          }
+        });
+      });
   }
   deleteRequirementsImage(i) {
     const index = this.requirementsImageUrls.indexOf(i);
+    if (i.id) {
+      this.siteSurveyReportService.deleteImageSiteSurveyingReport(i.id).subscribe(res => {
+
+      }, err => {
+        this.alertService.error('Đã xảy ra lỗi, hình ảnh xóa không thành công');
+      });
+    }
     this.requirementsImageUrls.splice(index, 1);
     this.scaleOverallForm.get('nhungYeuCauDacBietList').patchValue(this.requirementsImageUrls);
   }

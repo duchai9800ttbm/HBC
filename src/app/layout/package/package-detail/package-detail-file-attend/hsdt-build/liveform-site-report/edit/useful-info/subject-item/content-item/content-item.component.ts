@@ -7,6 +7,8 @@ import { userInfo } from 'os';
 import { LiveformSiteReportComponent } from '../../../../liveform-site-report.component';
 import { Router } from '@angular/router';
 import { PackageDetailComponent } from '../../../../../../../package-detail.component';
+import { AlertService } from '../../../../../../../../../../shared/services';
+import { SiteSurveyReportService } from '../../../../../../../../../../shared/services/site-survey-report.service';
 
 @Component({
   selector: 'app-content-item',
@@ -24,6 +26,8 @@ export class ContentItemComponent implements OnInit {
   viewMode;
 
   constructor(
+    private siteSurveyReportService: SiteSurveyReportService,
+    private alertService: AlertService,
     private fb: FormBuilder,
     private router: Router,
   ) { }
@@ -32,11 +36,10 @@ export class ContentItemComponent implements OnInit {
     this.currentBidOpportunityId = +PackageDetailComponent.packageId;
     this.checkFlag();
     this.createForm();
-    console.log(this.contentItemImageList);
     this.contentItemForm.valueChanges.subscribe(data => this.mappingData(data));
   }
   checkFlag() {
-    if (LiveformSiteReportComponent.formModel.id) {
+    if ((LiveformSiteReportComponent.formModel.isCreateOrEdit)) {
       const flag = LiveformSiteReportComponent.viewFlag;
       this.viewMode = flag;
       if (flag) {
@@ -70,25 +73,48 @@ export class ContentItemComponent implements OnInit {
     const files = event.target.files;
     if (files) {
       for (const file of files) {
-        const reader = new FileReader();
-        reader.onload = (e: any) => {
-          this.contentItemImageList.push({
-            id: null,
-            image: {
-              file: file,
-              base64: e.target.result
-            }
-          });
-          this.contentItemForm.get('chiTietNoiDungList').patchValue(this.contentItemImageList);
-        };
-        reader.readAsDataURL(file);
+        if (file.size < 10485760) {
+          const reader = new FileReader();
+          reader.onload = (e: any) => {
+            this.contentItemImageList.push({
+              id: null,
+              image: {
+                file: file,
+                base64: e.target.result
+              }
+            });
+            this.contentItemForm.get('chiTietNoiDungList').patchValue(this.contentItemImageList);
+          };
+          reader.readAsDataURL(file);
+        } else {
+          this.alertService.error(`Hình ảnh ${file.name} quá lớn! Vui lòng chọn hình ảnh khác`);
+        }
       }
     }
+    this.siteSurveyReportService
+      .uploadImageSiteSurveyingReport(this.contentItemImageList, this.currentBidOpportunityId)
+      .subscribe(res => {
+        this.contentItemImageList = res;
+      }, err => {
+        this.alertService.error('Upload hình ảnh thất bại. Xin vui lòng thử lại!');
+        this.contentItemImageList.forEach(x => {
+          if (!x.id) {
+            const index = this.contentItemImageList.indexOf(x);
+            this.contentItemImageList.splice(index, 1);
+          }
+        });
+      });
   }
   deleteContentImage(i) {
     const index = this.contentItemImageList.indexOf(i);
+    if (i.id) {
+      this.siteSurveyReportService.deleteImageSiteSurveyingReport(i.id).subscribe(res => {
+
+      }, err => {
+        this.alertService.error('Đã xảy ra lỗi, hình ảnh xóa không thành công');
+      });
+    }
     this.contentItemImageList.splice(index, 1);
-    // if () { }
     this.contentItemForm.get('chiTietNoiDungList').patchValue(this.contentItemImageList);
   }
   deleteContentItem() {

@@ -7,6 +7,7 @@ import { SoilCondition } from './soil-condition.model';
 import { UsefulInfo } from './useful-info.model';
 
 export class SiteSurveyReport {
+    isCreateOrEdit: boolean;
     id: number;
     bidOpportunityId: number;
     nguoiTao: {

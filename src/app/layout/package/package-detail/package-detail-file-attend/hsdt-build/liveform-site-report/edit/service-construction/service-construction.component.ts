@@ -5,6 +5,8 @@ import { EditComponent } from '../edit.component';
 import { LiveformSiteReportComponent } from '../../liveform-site-report.component';
 import { Router } from '@angular/router';
 import { PackageDetailComponent } from '../../../../../package-detail.component';
+import { AlertService } from '../../../../../../../../shared/services';
+import { SiteSurveyReportService } from '../../../../../../../../shared/services/site-survey-report.service';
 
 @Component({
   selector: 'app-service-construction',
@@ -25,6 +27,8 @@ export class ServiceConstructionComponent implements OnInit {
   currentBidOpportunityId: number;
   serviceConstructionModel = new ServiceConstruction();
   constructor(
+    private siteSurveyReportService: SiteSurveyReportService,
+    private alertService: AlertService,
     private router: Router,
     private fb: FormBuilder
   ) {
@@ -75,7 +79,7 @@ export class ServiceConstructionComponent implements OnInit {
 
   }
   checkFlag() {
-    if (LiveformSiteReportComponent.formModel.id) {
+    if ((LiveformSiteReportComponent.formModel.isCreateOrEdit)) {
       const flag = LiveformSiteReportComponent.viewFlag;
       this.viewMode = flag;
       if (flag) {
@@ -173,23 +177,47 @@ export class ServiceConstructionComponent implements OnInit {
     const files = event.target.files;
     if (files) {
       for (const file of files) {
-        const reader = new FileReader();
-        reader.onload = (e: any) => {
-          this.supplySystemImageUrls.push({
-            id: null,
-            image: {
-              file: file,
-              base64: e.target.result
-            }
-          });
-          this.serviceConstructionForm.get('heThongNuocHienHuuList').patchValue(this.supplySystemImageUrls);
-        };
-        reader.readAsDataURL(file);
+        if (file.size < 10485760) {
+          const reader = new FileReader();
+          reader.onload = (e: any) => {
+            this.supplySystemImageUrls.push({
+              id: null,
+              image: {
+                file: file,
+                base64: e.target.result
+              }
+            });
+            this.serviceConstructionForm.get('heThongNuocHienHuuList').patchValue(this.supplySystemImageUrls);
+          };
+          reader.readAsDataURL(file);
+        } else {
+          this.alertService.error(`Hình ảnh ${file.name} quá lớn! Vui lòng chọn hình ảnh khác`);
+        }
       }
     }
+    this.siteSurveyReportService
+      .uploadImageSiteSurveyingReport(this.supplySystemImageUrls, this.currentBidOpportunityId)
+      .subscribe(res => {
+        this.supplySystemImageUrls = res;
+      }, err => {
+        this.alertService.error('Upload hình ảnh thất bại. Xin vui lòng thử lại!');
+        this.supplySystemImageUrls.forEach(x => {
+          if (!x.id) {
+            const index = this.supplySystemImageUrls.indexOf(x);
+            this.supplySystemImageUrls.splice(index, 1);
+          }
+        });
+      });
   }
   deleteSupplySystemImage(i) {
     const index = this.supplySystemImageUrls.indexOf(i);
+    if (i.id) {
+      this.siteSurveyReportService.deleteImageSiteSurveyingReport(i.id).subscribe(res => {
+
+      }, err => {
+        this.alertService.error('Đã xảy ra lỗi, hình ảnh xóa không thành công');
+      });
+    }
     this.supplySystemImageUrls.splice(index, 1);
     this.serviceConstructionForm.get('heThongNuocHienHuuList').patchValue(this.supplySystemImageUrls);
   }
@@ -198,24 +226,47 @@ export class ServiceConstructionComponent implements OnInit {
     const files = event.target.files;
     if (files) {
       for (const file of files) {
-        const reader = new FileReader();
-        reader.onload = (e: any) => {
-          this.supplyPointImageUrls.push({
-            id: null,
-            image: {
-              file: file,
-              base64: e.target.result
-            }
-          });
-          this.serviceConstructionForm.get('heThongNuocDiemDauNoiList').patchValue(this.supplyPointImageUrls);
-        };
-        reader.readAsDataURL(file);
+        if (file.size < 10485760) {
+          const reader = new FileReader();
+          reader.onload = (e: any) => {
+            this.supplyPointImageUrls.push({
+              id: null,
+              image: {
+                file: file,
+                base64: e.target.result
+              }
+            });
+            this.serviceConstructionForm.get('heThongNuocDiemDauNoiList').patchValue(this.supplyPointImageUrls);
+          };
+          reader.readAsDataURL(file);
+        } else {
+          this.alertService.error(`Hình ảnh ${file.name} quá lớn! Vui lòng chọn hình ảnh khác`);
+        }
       }
-
     }
+    this.siteSurveyReportService
+      .uploadImageSiteSurveyingReport(this.supplyPointImageUrls, this.currentBidOpportunityId)
+      .subscribe(res => {
+        this.supplyPointImageUrls = res;
+      }, err => {
+        this.alertService.error('Upload hình ảnh thất bại. Xin vui lòng thử lại!');
+        this.supplyPointImageUrls.forEach(x => {
+          if (!x.id) {
+            const index = this.supplyPointImageUrls.indexOf(x);
+            this.supplyPointImageUrls.splice(index, 1);
+          }
+        });
+      });
   }
   deleteSupplyPointImage(i) {
     const index = this.supplyPointImageUrls.indexOf(i);
+    if (i.id) {
+      this.siteSurveyReportService.deleteImageSiteSurveyingReport(i.id).subscribe(res => {
+
+      }, err => {
+        this.alertService.error('Đã xảy ra lỗi, hình ảnh xóa không thành công');
+      });
+    }
     this.supplyPointImageUrls.splice(index, 1);
     this.serviceConstructionForm.get('heThongNuocDiemDauNoiList').patchValue(this.supplyPointImageUrls);
   }
@@ -225,23 +276,47 @@ export class ServiceConstructionComponent implements OnInit {
     const files = event.target.files;
     if (files) {
       for (const file of files) {
-        const reader = new FileReader();
-        reader.onload = (e: any) => {
-          this.drainageSystemImageUrls.push({
-            id: null,
-            image: {
-              file: file,
-              base64: e.target.result
-            }
-          });
-          this.serviceConstructionForm.get('heThongNuocThoatHienHuuList').patchValue(this.drainageSystemImageUrls);
-        };
-        reader.readAsDataURL(file);
+        if (file.size < 10485760) {
+          const reader = new FileReader();
+          reader.onload = (e: any) => {
+            this.drainageSystemImageUrls.push({
+              id: null,
+              image: {
+                file: file,
+                base64: e.target.result
+              }
+            });
+            this.serviceConstructionForm.get('heThongNuocThoatHienHuuList').patchValue(this.drainageSystemImageUrls);
+          };
+          reader.readAsDataURL(file);
+        } else {
+          this.alertService.error(`Hình ảnh ${file.name} quá lớn! Vui lòng chọn hình ảnh khác`);
+        }
       }
     }
+    this.siteSurveyReportService
+      .uploadImageSiteSurveyingReport(this.drainageSystemImageUrls, this.currentBidOpportunityId)
+      .subscribe(res => {
+        this.drainageSystemImageUrls = res;
+      }, err => {
+        this.alertService.error('Upload hình ảnh thất bại. Xin vui lòng thử lại!');
+        this.drainageSystemImageUrls.forEach(x => {
+          if (!x.id) {
+            const index = this.drainageSystemImageUrls.indexOf(x);
+            this.drainageSystemImageUrls.splice(index, 1);
+          }
+        });
+      });
   }
   deleteDrainageSystemImage(i) {
     const index = this.drainageSystemImageUrls.indexOf(i);
+    if (i.id) {
+      this.siteSurveyReportService.deleteImageSiteSurveyingReport(i.id).subscribe(res => {
+
+      }, err => {
+        this.alertService.error('Đã xảy ra lỗi, hình ảnh xóa không thành công');
+      });
+    }
     this.drainageSystemImageUrls.splice(index, 1);
     this.serviceConstructionForm.get('heThongNuocThoatHienHuuList').patchValue(this.drainageSystemImageUrls);
   }
@@ -250,23 +325,47 @@ export class ServiceConstructionComponent implements OnInit {
     const files = event.target.files;
     if (files) {
       for (const file of files) {
-        const reader = new FileReader();
-        reader.onload = (e: any) => {
-          this.drainagePointImageUrls.push({
-            id: null,
-            image: {
-              file: file,
-              base64: e.target.result
-            }
-          });
-          this.serviceConstructionForm.get('heThongNuocThoatDiemDauNoiList').patchValue(this.drainagePointImageUrls);
-        };
-        reader.readAsDataURL(file);
+        if (file.size < 10485760) {
+          const reader = new FileReader();
+          reader.onload = (e: any) => {
+            this.drainagePointImageUrls.push({
+              id: null,
+              image: {
+                file: file,
+                base64: e.target.result
+              }
+            });
+            this.serviceConstructionForm.get('heThongNuocThoatDiemDauNoiList').patchValue(this.drainagePointImageUrls);
+          };
+          reader.readAsDataURL(file);
+        } else {
+          this.alertService.error(`Hình ảnh ${file.name} quá lớn! Vui lòng chọn hình ảnh khác`);
+        }
       }
     }
+    this.siteSurveyReportService
+      .uploadImageSiteSurveyingReport(this.drainagePointImageUrls, this.currentBidOpportunityId)
+      .subscribe(res => {
+        this.drainagePointImageUrls = res;
+      }, err => {
+        this.alertService.error('Upload hình ảnh thất bại. Xin vui lòng thử lại!');
+        this.drainagePointImageUrls.forEach(x => {
+          if (!x.id) {
+            const index = this.drainagePointImageUrls.indexOf(x);
+            this.drainagePointImageUrls.splice(index, 1);
+          }
+        });
+      });
   }
   deleteDrainagePointImage(i) {
     const index = this.drainagePointImageUrls.indexOf(i);
+    if (i.id) {
+      this.siteSurveyReportService.deleteImageSiteSurveyingReport(i.id).subscribe(res => {
+
+      }, err => {
+        this.alertService.error('Đã xảy ra lỗi, hình ảnh xóa không thành công');
+      });
+    }
     this.drainagePointImageUrls.splice(index, 1);
     this.serviceConstructionForm.get('heThongNuocThoatDiemDauNoiList').patchValue(this.drainagePointImageUrls);
   }
@@ -275,23 +374,47 @@ export class ServiceConstructionComponent implements OnInit {
     const files = event.target.files;
     if (files) {
       for (const file of files) {
-        const reader = new FileReader();
-        reader.onload = (e: any) => {
-          this.powerStationImageUrls.push({
-            id: null,
-            image: {
-              file: file,
-              base64: e.target.result
-            }
-          });
-          this.serviceConstructionForm.get('tramHaTheList').patchValue(this.powerStationImageUrls);
-        };
-        reader.readAsDataURL(file);
+        if (file.size < 10485760) {
+          const reader = new FileReader();
+          reader.onload = (e: any) => {
+            this.powerStationImageUrls.push({
+              id: null,
+              image: {
+                file: file,
+                base64: e.target.result
+              }
+            });
+            this.serviceConstructionForm.get('tramHaTheList').patchValue(this.powerStationImageUrls);
+          };
+          reader.readAsDataURL(file);
+        } else {
+          this.alertService.error(`Hình ảnh ${file.name} quá lớn! Vui lòng chọn hình ảnh khác`);
+        }
       }
     }
+    this.siteSurveyReportService
+      .uploadImageSiteSurveyingReport(this.powerStationImageUrls, this.currentBidOpportunityId)
+      .subscribe(res => {
+        this.powerStationImageUrls = res;
+      }, err => {
+        this.alertService.error('Upload hình ảnh thất bại. Xin vui lòng thử lại!');
+        this.powerStationImageUrls.forEach(x => {
+          if (!x.id) {
+            const index = this.powerStationImageUrls.indexOf(x);
+            this.powerStationImageUrls.splice(index, 1);
+          }
+        });
+      });
   }
   deletePowerStationImage(i) {
     const index = this.powerStationImageUrls.indexOf(i);
+    if (i.id) {
+      this.siteSurveyReportService.deleteImageSiteSurveyingReport(i.id).subscribe(res => {
+
+      }, err => {
+        this.alertService.error('Đã xảy ra lỗi, hình ảnh xóa không thành công');
+      });
+    }
     this.powerStationImageUrls.splice(index, 1);
     this.serviceConstructionForm.get('tramHaTheList').patchValue(this.powerStationImageUrls);
   }
@@ -300,23 +423,47 @@ export class ServiceConstructionComponent implements OnInit {
     const files = event.target.files;
     if (files) {
       for (const file of files) {
-        const reader = new FileReader();
-        reader.onload = (e: any) => {
-          this.mediumVoltageSystemImageUrls.push({
-            id: null,
-            image: {
-              file: file,
-              base64: e.target.result
-            }
-          });
-          this.serviceConstructionForm.get('duongDayTrungTheList').patchValue(this.mediumVoltageSystemImageUrls);
-        };
-        reader.readAsDataURL(file);
+        if (file.size < 10485760) {
+          const reader = new FileReader();
+          reader.onload = (e: any) => {
+            this.mediumVoltageSystemImageUrls.push({
+              id: null,
+              image: {
+                file: file,
+                base64: e.target.result
+              }
+            });
+            this.serviceConstructionForm.get('duongDayTrungTheList').patchValue(this.mediumVoltageSystemImageUrls);
+          };
+          reader.readAsDataURL(file);
+        } else {
+          this.alertService.error(`Hình ảnh ${file.name} quá lớn! Vui lòng chọn hình ảnh khác`);
+        }
       }
     }
+    this.siteSurveyReportService
+      .uploadImageSiteSurveyingReport(this.mediumVoltageSystemImageUrls, this.currentBidOpportunityId)
+      .subscribe(res => {
+        this.mediumVoltageSystemImageUrls = res;
+      }, err => {
+        this.alertService.error('Upload hình ảnh thất bại. Xin vui lòng thử lại!');
+        this.mediumVoltageSystemImageUrls.forEach(x => {
+          if (!x.id) {
+            const index = this.mediumVoltageSystemImageUrls.indexOf(x);
+            this.mediumVoltageSystemImageUrls.splice(index, 1);
+          }
+        });
+      });
   }
   deleteMediumVoltageSystemImage(i) {
     const index = this.mediumVoltageSystemImageUrls.indexOf(i);
+    if (i.id) {
+      this.siteSurveyReportService.deleteImageSiteSurveyingReport(i.id).subscribe(res => {
+
+      }, err => {
+        this.alertService.error('Đã xảy ra lỗi, hình ảnh xóa không thành công');
+      });
+    }
     this.mediumVoltageSystemImageUrls.splice(index, 1);
     this.serviceConstructionForm.get('duongDayTrungTheList').patchValue(this.mediumVoltageSystemImageUrls);
   }
@@ -325,23 +472,47 @@ export class ServiceConstructionComponent implements OnInit {
     const files = event.target.files;
     if (files) {
       for (const file of files) {
-        const reader = new FileReader();
-        reader.onload = (e: any) => {
-          this.powerOtherImageUrls.push({
-            id: null,
-            image: {
-              file: file,
-              base64: e.target.result
-            }
-          });
-          this.serviceConstructionForm.get('heThongDienKhacList').patchValue(this.powerOtherImageUrls);
-        };
-        reader.readAsDataURL(file);
+        if (file.size < 10485760) {
+          const reader = new FileReader();
+          reader.onload = (e: any) => {
+            this.powerOtherImageUrls.push({
+              id: null,
+              image: {
+                file: file,
+                base64: e.target.result
+              }
+            });
+            this.serviceConstructionForm.get('heThongDienKhacList').patchValue(this.powerOtherImageUrls);
+          };
+          reader.readAsDataURL(file);
+        } else {
+          this.alertService.error(`Hình ảnh ${file.name} quá lớn! Vui lòng chọn hình ảnh khác`);
+        }
       }
     }
+    this.siteSurveyReportService
+      .uploadImageSiteSurveyingReport(this.powerOtherImageUrls, this.currentBidOpportunityId)
+      .subscribe(res => {
+        this.powerOtherImageUrls = res;
+      }, err => {
+        this.alertService.error('Upload hình ảnh thất bại. Xin vui lòng thử lại!');
+        this.powerOtherImageUrls.forEach(x => {
+          if (!x.id) {
+            const index = this.powerOtherImageUrls.indexOf(x);
+            this.powerOtherImageUrls.splice(index, 1);
+          }
+        });
+      });
   }
   deletePowerOtherImage(i) {
     const index = this.powerOtherImageUrls.indexOf(i);
+    if (i.id) {
+      this.siteSurveyReportService.deleteImageSiteSurveyingReport(i.id).subscribe(res => {
+
+      }, err => {
+        this.alertService.error('Đã xảy ra lỗi, hình ảnh xóa không thành công');
+      });
+    }
     this.powerOtherImageUrls.splice(index, 1);
     this.serviceConstructionForm.get('heThongDienKhacList').patchValue(this.powerOtherImageUrls);
   }

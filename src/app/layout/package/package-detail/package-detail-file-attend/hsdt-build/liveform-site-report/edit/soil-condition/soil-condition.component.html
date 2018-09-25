@@ -12,10 +12,10 @@
                     </div>
                     <div>
                         <div class="image-demo-img">
-                            <input type="file" multiple #uploadFooting (change)="uploadFootingImage($event)">
+                            <input type="file" accept="image/*" multiple #uploadFooting (change)="uploadFootingImage($event)">
 
                             <div class="display-img" *ngFor="let url of footingImageUrls">
-                                <img [src]="(url.image?.base64) || url.image.file">
+                                <img [src]="url.largeSizeUrl || url.base64">
                                 <div class="toppp"  [ngClass]="{'d-none': viewMode}" (click)="deleteFootingImage(url)">
                                     <i class="fa fa-times delete-icon" aria-hidden="true"></i>
                                 </div>
@@ -38,10 +38,10 @@
                             <input type="text" formControlName="thongTinCongTrinhGanDoDesc">
                         </div>
                         <div class="image-demo-img">
-                            <input type="file" multiple #uploadInvestigation (change)="uploadInvestigationImage($event)">
+                            <input type="file" accept="image/*" multiple #uploadInvestigation (change)="uploadInvestigationImage($event)">
 
                             <div class="display-img" *ngFor="let url of investigationImageUrls">
-                                <img [src]="(url.image?.base64) || url.image.file">
+                                <img [src]="url.largeSizeUrl || url.base64">
                                 <div class="toppp"  [ngClass]="{'d-none': viewMode}" (click)="deleteInvestigationImage(url)">
                                     <i class="fa fa-times delete-icon" aria-hidden="true"></i>
                                 </div>

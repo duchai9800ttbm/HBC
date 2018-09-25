@@ -5,5 +5,8 @@ export class Image {
 
 export class ImageItem {
     id: string;
-    image: any;
+    thumbSizeUrl: string;
+    largeSizeUrl: string;
+    file: any;
+    base64: any;
 }

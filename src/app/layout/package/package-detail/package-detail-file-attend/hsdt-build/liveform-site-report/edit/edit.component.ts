@@ -11,6 +11,7 @@ import { LiveformSiteReportComponent } from '../liveform-site-report.component';
 import { PackageDetailComponent } from '../../../../package-detail.component';
 import { PackageService } from '../../../../../../../shared/services/package.service';
 import { PackageInfoModel } from '../../../../../../../shared/models/package/package-info.model';
+import { SiteSurveyReportService } from '../../../../../../../shared/services/site-survey-report.service';
 // const objectToFormData = require('object-to-formdata');
 
 @Component({
@@ -19,8 +20,6 @@ import { PackageInfoModel } from '../../../../../../../shared/models/package/pac
   styleUrls: ['./edit.component.scss']
 })
 export class EditComponent implements OnInit, OnDestroy {
-  // static onload;
-
   dtTrigger: Subject<any> = new Subject();
   showBeforeLogin: any = true;
   showAfterLogin: any;
@@ -29,11 +28,10 @@ export class EditComponent implements OnInit, OnDestroy {
   datePickerConfig = DATETIME_PICKER_CONFIG;
   currentBidOpportunityId: number;
   packageData = new PackageInfoModel();
-  bidDocumentGroupListItem: SiteSurveyReport[];
-  bidDocumentGroupListItemSearchResult: SiteSurveyReport[];
 
   constructor(
     private documentService: DocumentService,
+    private siteSurveyReportService: SiteSurveyReportService,
     private packageService: PackageService,
     private router: Router,
     private alertService: AlertService,
@@ -46,7 +44,6 @@ export class EditComponent implements OnInit, OnDestroy {
       this.packageData = result;
     });
   }
-
   submitLiveForm(event) {
     if (!event) {
       this.showPopupConfirm = false;
@@ -54,7 +51,8 @@ export class EditComponent implements OnInit, OnDestroy {
       const objData = LiveformSiteReportComponent.formModel;
       this.showPopupConfirm = false;
       this.spinner.show();
-      this.documentService
+      const hinhAnhPhoiCanhList = objData.scaleOverall.hinhAnhPhoiCanh.images;
+      this.siteSurveyReportService
         .createOrUpdateSiteSurveyingReport(objData)
         .subscribe(() => {
           this.showPopupConfirm = false;
