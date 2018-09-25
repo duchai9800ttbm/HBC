@@ -1,9 +1,12 @@
 import { Injectable } from '@angular/core';
 import { ApiService } from './api.service';
-import { TenderPriceApproval, TenderPriceApprovalShort, ItemHSDTChinhThuc } from '../models/price-review/price-review.model';
+import { TenderPriceApproval, TenderPriceApprovalShort, ItemHSDTChinhThuc, PriceReviewItemChangedHistory } from '../models/price-review/price-review.model';
 import { SessionService } from './session.service';
 import DateTimeConvertHelper from '../helpers/datetime-convert-helper';
 import * as FileSaver from 'file-saver';
+import { Observable } from '../../../../node_modules/rxjs/Observable';
+import { PagedResult } from '../models';
+import { SiteReportChangedHistory } from '../models/site-survey-report/site-report-changed-history';
 
 @Injectable()
 export class PriceReviewService {
@@ -70,6 +73,21 @@ export class PriceReviewService {
   getDanhSachHSDTChinhThuc(bidOpportunityId: number) {
     const url = `bidopportunity/${bidOpportunityId}/approvaltenderdocs`;
     return this.apiService.get(url).map(response => response.result.map(this.toItemHSDTChinhThuc));
+  }
+
+  changedHistoryPriceReview(bidOpportunityId: number, page: number, pageSize: number)
+    : Observable<PagedResult<PriceReviewItemChangedHistory>> {
+    const url = `${bidOpportunityId}/tenderpriceapproval/changedhistory/${page}/${pageSize}`;
+    return this.apiService.get(url).map(res => {
+      const response = res.result;
+      return {
+        currentPage: response.pageIndex,
+        pageSize: response.pageSize,
+        pageCount: response.totalPages,
+        total: response.totalCount,
+        items: (response.items || [])
+      };
+    });
   }
 
   toItemHSDTChinhThuc(model: any): ItemHSDTChinhThuc {

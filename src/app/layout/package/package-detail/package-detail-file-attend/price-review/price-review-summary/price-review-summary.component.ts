@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { TenderPriceApproval, TenderPriceApprovalShort, ItemHSDTChinhThuc } from '../../../../../../shared/models/price-review/price-review.model';
+import { TenderPriceApproval, TenderPriceApprovalShort, ItemHSDTChinhThuc, PriceReviewItemChangedHistory } from '../../../../../../shared/models/price-review/price-review.model';
 import { PackageDetailComponent } from '../../../package-detail.component';
 import { PriceReviewService } from '../../../../../../shared/services/price-review.service';
 import { DATATABLE_CONFIG2 } from '../../../../../../shared/configs';
@@ -7,6 +7,7 @@ import { Subject } from 'rxjs/Subject';
 import { AlertService, ConfirmationService } from '../../../../../../shared/services';
 import { PackageService } from '../../../../../../shared/services/package.service';
 import { PackageInfoModel } from '../../../../../../shared/models/package/package-info.model';
+import { PagedResult } from '../../../../../../shared/models';
 
 @Component({
   selector: 'app-price-review-summary',
@@ -21,6 +22,8 @@ export class PriceReviewSummaryComponent implements OnInit {
   dtOptions: any = DATATABLE_CONFIG2;
   dtTrigger: Subject<any> = new Subject();
   showPopupAdd;
+  pagedResult: PagedResult<PriceReviewItemChangedHistory> = new PagedResult<PriceReviewItemChangedHistory>();
+
   constructor(
     private priceReviewService: PriceReviewService,
     private alertService: AlertService,
@@ -45,6 +48,12 @@ export class PriceReviewSummaryComponent implements OnInit {
       this.listItemHSDTChinhThuc = data;
       console.log(this.listItemHSDTChinhThuc);
     });
+
+    this.priceReviewService.changedHistoryPriceReview(this.packageId, 0, 10)
+      .subscribe(data => {
+        this.pagedResult = data;
+        console.log(data);
+      });
   }
 
   open() {
