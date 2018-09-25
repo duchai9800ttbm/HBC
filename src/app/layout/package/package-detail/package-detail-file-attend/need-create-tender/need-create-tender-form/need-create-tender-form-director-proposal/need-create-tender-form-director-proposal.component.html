@@ -10,10 +10,10 @@
             </div>
             <div class="col-md-8 row">
                 <div class="col-md-6">
-                    <input type="radio" [appAutoFocus]="routerAction != 'view'" tabindex="1" [value]="true" formControlName="isAgreedParticipating"> Đồng ý tham gia/ Agree
+                    <input type="radio" [appAutoFocus]="routerAction != 'view'" appEnterPreventDefault tabindex="1" [value]="true" formControlName="isAgreedParticipating"> Đồng ý tham gia/ Agree
                 </div>
                 <div class="col-md-6">
-                    <input type="radio" tabindex="2" [value]="false" formControlName="isAgreedParticipating"> Không đồng ý tham gia/ No agree
+                    <input type="radio" appEnterPreventDefault tabindex="2" [value]="false" formControlName="isAgreedParticipating"> Không đồng ý tham gia/ No agree
                 </div>
             </div>
         </div>
@@ -22,7 +22,7 @@
                 Lý do/ Reason
             </div>
             <div class="col-md-8">
-                <textarea class="form-control" tabindex="3" formControlName="reason" rows="2"></textarea>
+                <textarea class="form-control" appEnterPreventDefault tabindex="3" formControlName="reason" rows="2"></textarea>
             </div>
         </div>
         <div class="row mt-3">

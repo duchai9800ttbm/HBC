@@ -400,6 +400,10 @@ export class PackageService {
                     id: result.stageStatus.key,
                     text: result.stageStatus.value
                 },
+                hsmtStatus: {
+                    id: result.hsmtStatus.key,
+                    text: result.hsmtStatus.value
+                },
                 location: result.location && {
                     id: result.location.key,
                     text: result.location.value

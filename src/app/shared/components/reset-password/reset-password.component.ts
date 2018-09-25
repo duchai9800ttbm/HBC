@@ -1,5 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { NgbActiveModal } from '../../../../../node_modules/@ng-bootstrap/ng-bootstrap';
+import { AlertService } from '../../services';
 
 @Component({
   selector: 'app-reset-password',
@@ -9,7 +10,8 @@ import { NgbActiveModal } from '../../../../../node_modules/@ng-bootstrap/ng-boo
 export class ResetPasswordComponent implements OnInit {
   @Input() message: any;
   constructor(
-    public activeModal: NgbActiveModal
+    public activeModal: NgbActiveModal,
+    private alertService: AlertService,
   ) { }
 
   ngOnInit() {
@@ -27,5 +29,6 @@ export class ResetPasswordComponent implements OnInit {
     selBox.select();
     document.execCommand('copy');
     document.body.removeChild(selBox);
+    this.alertService.success('Mật khẩu đặt lại đã được sao chép vào khay nhớ tạm!');
   }
 }

@@ -38,17 +38,17 @@
         <img class="icon-filter" src="assets/images/ic-file0.png" alt="">
     </div>
     <div class="text-center mt-3">
-        Hiện chưa có phiếu đề nghị dự thầu nào
+        Hiện chưa có trình duyệt giá nào
     </div>
     <div class="text-center mt-3">
         <button class="btn btn-primary" routerLink="../create">
-            Tạo thủ công
+            Tạo mới trình duyệt giá
         </button>
     </div>
 </div>
 
 <div class="content" *ngIf="priceReview">
-    <div class="mb-2">
+    <div class="mb-4 mt-1">
         <h5>BẢNG TÓM TẮT THÔNG TIN DỰ ÁN - TRÌNH DUYỆT GIÁ THẦU</h5>
     </div>
     <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="table-selection stripe row-border hover cell-border dataTable">
@@ -64,8 +64,11 @@
                 </th>
                 <th class="bg-default" style="background-color: #f68e56!important;">
                     <div class="d-flex">
-                        <div class="center-parent">
+                        <div class="d-flex justify-content-between w-100">
                             <div>File đính kèm</div>
+                            <div class="w-25" (click)="open()" style="cursor: pointer" title="Upload tài liệu">
+                                <img width="25" height="25" src="assets\images\file-upload.png">
+                            </div>
                         </div>
                     </div>
                 </th>
@@ -116,15 +119,39 @@
         </thead>
         <tbody>
             <tr>
-                <td class="select-filter">Trình duyệt giá</td>
-                <td class="select-filter"></td>
-                <td class="select-filter"></td>
-                <td class="select-filter">{{priceReview?.isDraftVersion ? 'Bản nháp' : 'Chính thức'}}</td>
+                <td class="select-filter" valign="baseline">Trình duyệt giá</td>
+                <td style="padding: 0!important">
+                    <div class="attach-file">
+                        <div class="item d-flex align-items-center" *ngFor="let item of priceReview.files">
+                            <div class="ml-2 mt-1 mb-1 mr-2 d-flex justify-content-between w-100">
+                                <div class=" text-truncate">
+                                    <div class="name text-truncate">
+                                        {{item.name}}
+                                    </div>
+                                    <div class="time">
+                                        12/12/2017
+                                    </div>
+                                </div>
+                                <div>
+                                    <a (click)="downloadFileAttach(item.id)" *ngIf="!item.url">
+                                        <i class="fa fa-download color-item-down" aria-hidden="true"></i>
+                                    </a>
+                                    <a [href]="item.url" target="_blank" *ngIf="item.url">
+                                        <i class="fa fa-external-link color-item-down" aria-hidden="true"></i>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
 
-                <td class="select-filter">{{priceReview?.approvalTimes}}</td>
-                <td class="select-filter">{{priceReview?.createdEmployee?.employeeName}}</td>
-                <td class="select-filter"></td>
-                <td class="select-filter">
+                </td>
+                <td class="select-filter" valign="baseline">{{priceReview?.interviewTimes}}</td>
+                <td class="select-filter" valign="baseline">{{priceReview?.isDraftVersion ? 'Bản nháp' : 'Chính thức'}}</td>
+
+                <td class="select-filter" valign="baseline">{{priceReview?.approvalTimes}}</td>
+                <td class="select-filter" valign="baseline">{{priceReview?.createdEmployee?.employeeName}}</td>
+                <td class="select-filter" valign="baseline">{{priceReview?.createdDate*1000 | date:'dd/MM/yyyy HH:mm': '+0000' }}</td>
+                <td class="select-filter" valign="baseline">
                     <div class="d-flex justify-content-around">
                         <div style="cursor: pointer;" title="Xem" routerLink="../detail">
                             <a>
@@ -153,3 +180,98 @@
         </tbody>
     </table>
 </div>
+
+
+
+<div class="content mt-4">
+    <div class="mb-4 mt-1">
+        <h5>BẢNG TÓM TẮT THÔNG TIN DỰ ÁN - TRÌNH DUYỆT GIÁ THẦU</h5>
+    </div>
+    <div class="bot-table">
+        <table class="table-selection  row-border hover cell-border dataTable">
+            <thead>
+                <tr>
+                    <th class="stt" style="background-color: #f68e56!important;">
+                        <div class="d-flex justify-content-around">
+                            <!-- <div style="width: 40%;">
+                                        <div class="center-parent">
+                                            <label class="custom-control custom-checkbox">
+                                                <input type="checkbox" class="custom-control-input">
+                                                <span class="custom-control-indicator"></span>
+                                            </label>
+                                        </div>
+                                    </div> -->
+                            <div class="center-parent">
+                                <div>STT</div>
+                            </div>
+                        </div>
+                    </th>
+                    <th style="width: 18%;background-color: #f68e56!important;">
+                        <div class="d-flex justify-content-center">
+                            <div class="center-parent">
+                                <div>Lần cập nhật</div>
+                            </div>
+                        </div>
+                    </th>
+                    <th style="width: 18%;background-color: #f68e56!important;">
+                        <div class="d-flex justify-content-center">
+                            <div class="center-parent">
+                                <div>Người cập nhật</div>
+                            </div>
+                        </div>
+                    </th>
+                    <th style="width: 18%; background-color: #f68e56!important;">
+                        <div class="d-flex justify-content-center">
+                            <div class="center-parent">
+                                <div>Ngày cập nhật</div>
+                            </div>
+                        </div>
+                    </th>
+                    <th style="width: 18%; background-color: #f68e56!important;">
+                        <div class="d-flex justify-content-center">
+                            <div class="center-parent">
+                                <div>Nội dung cập nhật</div>
+                            </div>
+                        </div>
+                    </th>
+                    <th style="width: 24%; background-color: #f68e56!important;">
+                        <div class="d-flex justify-content-center">
+                            <div class="center-parent">
+                                <div>Chi tiết cập nhật</div>
+                            </div>
+                        </div>
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let updateInfo of pagedResult.items; index as i">
+                    <td class="stt" valign="baseline">
+                        <!-- <div class="center-parent d-inline-block">
+                                    <label class="custom-control custom-checkbox">
+                                        <input type="checkbox" class="custom-control-input">
+                                        <span class="custom-control-indicator"></span>
+                                    </label>
+                                </div> -->
+                        <div class="center-parent">
+                            <div>{{ i+1 }}</div>
+                        </div>
+                    </td>
+                    <td class="text-center" valign="baseline">{{ updateInfo.changedTimes }}</td>
+                    <td class="text-center" valign="baseline">{{ updateInfo.employee?.employeeName }}</td>
+                    <td class="text-center" valign="baseline">{{ (updateInfo.changedTime)*1000 | date:'dd/MM/yyyy' }}</td>
+                    <td class="text-center">
+                        {{ (updateInfo?.updateDesc != 'undefined') ? updateInfo.updateDesc : '' }}
+                    </td>
+                    <td class="text-center d-flex flex-column align-items-start">
+                        <p *ngFor="let item of updateInfo.liveFormChangeds; index as j">{{ item.liveFormTitle }}: {{ item.oldValue }} --- {{ item.newValue }}</p>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <app-pagination [(pagedResult)]="pagedResult"></app-pagination>
+</div>
+
+
+
+<app-upload-file-attach *ngIf="showPopupAdd" (closed)="closePopup($event)" [packageId]="packageId"></app-upload-file-attach>

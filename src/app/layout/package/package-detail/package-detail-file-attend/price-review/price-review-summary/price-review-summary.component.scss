@@ -59,3 +59,20 @@ input.icon {
     font-weight: normal;
     text-decoration: inherit;
 }
+.attach-file{
+    width: 100%;
+    .item{
+        border-bottom: 1px solid #d4d4d4;
+        .time{
+            font-size: 70%;
+        }
+        .name{
+        }
+    }
+    .item{
+        min-height: 30px;
+    }
+    .item:last-child{
+        border-bottom: none!important;
+    }
+}

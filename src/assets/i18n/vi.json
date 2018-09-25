@@ -299,7 +299,7 @@
 
     "Active":"Hoạt động",
     "Deactive": "Không hoạt động",
-    "ViewBidOpportunitys": "Xem gói danh sách gói thầu",
+    "ViewBidOpportunitys": "Xem danh sách gói thầu",
     "ViewBidOpportunityDetail": "Xem chi tiết gói thầu",
     "CreateBidOpportunity": "Tạo mới gói thầu",
     "EditBidOpportunity": "Sửa gói thầu",
@@ -310,5 +310,18 @@
     "ManageSettings": "Quản lý cài đặt",
     "New": "Khách hàng mới",
     "Old" : "Khách hàng cũ",
-    "HSMT": "Hồ sơ mời thầu"
+    "HSMT": "Hồ sơ mời thầu",
+
+
+
+    "foudationPart":"Phần móng",
+    "basementPart":"Phần hầm",
+    "basementPartConstructionStructure":"Thi công kết cấu",
+    "basementPartConstructionCompletion":"Thi công hoàn thiện",
+    "basementPartOtherWork":"Phần công việc khác",
+    "bodyPart":"Phần thân",
+    "bodyPartConstructionStructure":"Thi công kết cấu",
+    "bodyPartConstructionCompletion":"Thi công hoàn thiện",
+    "bodyPartOtherWork":"Phần công việc khác"
+
 }

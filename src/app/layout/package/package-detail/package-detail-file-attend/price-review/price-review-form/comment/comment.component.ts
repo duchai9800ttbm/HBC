@@ -50,4 +50,8 @@ export class CommentComponent implements OnInit {
         });
       });
   }
+
+  loadMore() {
+    
+  }
 }

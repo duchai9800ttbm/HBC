@@ -29,6 +29,10 @@ export class PackageInfoModel {
         id: string;
         text: string
     };
+    hsmtStatus: {
+        id: string;
+        text: string
+    };
     location: {
         id: number;
         text: string

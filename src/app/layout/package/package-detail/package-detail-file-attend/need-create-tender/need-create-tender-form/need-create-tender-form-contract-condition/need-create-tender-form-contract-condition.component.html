@@ -17,7 +17,7 @@
                 1. Dạng và kiểu hợp đồng (Type of contract)
             </div>
             <div class="col-md-6">
-                <input [appAutoFocus]="routerAction != 'view'" tabindex="1" formControlName="typeOfContract" class="form-control">
+                <input [appAutoFocus]="routerAction != 'view'" appEnterPreventDefault tabindex="1" formControlName="typeOfContract" class="form-control">
             </div>
         </div>
         <div class="row mt-3">
@@ -25,7 +25,7 @@
                 2. Thời hạn hoàn thành (Time for completion)
             </div>
             <div class="col-md-6">
-                <input tabindex="2" appInputNumberNegativeDecimal [decimal]="true" formControlName="timeForCompletion" class="form-control input-dropdown-group">
+                <input appEnterPreventDefault tabindex="2" appInputNumberNegativeDecimal [decimal]="true" formControlName="timeForCompletion" class="form-control input-dropdown-group">
                 <div formGroupName="timeForCompletionUnit">
                     <kendo-dropdownlist formControlName="value" tabindex="3" [data]="listTime" [valuePrimitive]="true">
                     </kendo-dropdownlist>
@@ -37,7 +37,7 @@
                 3. Ngày bắt đầu thi công (Commencement date)
             </div>
             <div class="col-md-6">
-                <kendo-datepicker placeholder="TBC" formControlName="commencementDate" tabindex="4" class="form-control"></kendo-datepicker>
+                <kendo-datepicker placeholder="TBC" formControlName="commencementDate" appEnterPreventDefault tabindex="4" class="form-control"></kendo-datepicker>
             </div>
         </div>
         <div class="row mt-3">
@@ -45,7 +45,7 @@
                 4. Thời hạn bảo hành (Warranty period)
             </div>
             <div class="col-md-6">
-                <input appInputNumberNegativeDecimal [decimal]="true" tabindex="5" formControlName="warrantyPeriod" class="form-control input-dropdown-group">
+                <input appInputNumberNegativeDecimal [decimal]="true" appEnterPreventDefault tabindex="5" formControlName="warrantyPeriod" class="form-control input-dropdown-group">
                 <div formGroupName="warrantyPeriodUnit">
                     <kendo-dropdownlist formControlName="value" tabindex="6" [data]="listTime" [valuePrimitive]="true">
                     </kendo-dropdownlist>
@@ -57,7 +57,7 @@
                 5. Bảo lãnh dự thầu (Tender security)
             </div>
             <div class="col-md-6">
-                <input appInputNumberNegativeDecimal [decimal]="true" tabindex="7" formControlName="tenderSecurity" class="form-control input-dropdown-group">
+                <input appInputNumberNegativeDecimal [decimal]="true" appEnterPreventDefault tabindex="7" formControlName="tenderSecurity" class="form-control input-dropdown-group">
                 <div formGroupName="tenderSecurityCurrency">
                     <kendo-dropdownlist formControlName="value" tabindex="8" [data]="listCurrency" [valuePrimitive]="true">
                     </kendo-dropdownlist>
@@ -69,7 +69,7 @@
                 6. Bảo lãnh hợp đồng (Performance security)
             </div>
             <div class="col-md-6">
-                <input appInputNumberNegativeDecimal [decimal]="true" [min]="0" [max]="100" tabindex="9" formControlName="performanceSecurity" class="form-control input-percent">
+                <input appInputNumberNegativeDecimal [decimal]="true" [min]="0" [max]="100" appEnterPreventDefault tabindex="9" formControlName="performanceSecurity" class="form-control input-percent">
                 <span class="input-unit">%</span>
             </div>
         </div>
@@ -78,7 +78,7 @@
                 7. Phạt trễ tiến độ (Delay damages for the works)
             </div>
             <div class="col-md-6">
-                <input appInputNumberNegativeDecimal [decimal]="true" [min]="0" [max]="100" tabindex="10" formControlName="delayDamagesForTheWorks" class="form-control input-percent">
+                <input appInputNumberNegativeDecimal [decimal]="true" [min]="0" [max]="100" appEnterPreventDefault tabindex="10" formControlName="delayDamagesForTheWorks" class="form-control input-percent">
                 <span class="input-unit">%</span>
             </div>
         </div>
@@ -87,7 +87,7 @@
                 8. Yêu cầu bảo hiểm (Insurance)
             </div>
             <div class="col-md-6">
-                <input tabindex="11" formControlName="insurance" class="form-control">
+                <input appEnterPreventDefault tabindex="11" formControlName="insurance" class="form-control">
             </div>
         </div>
         <div class="row mt-3">
@@ -104,7 +104,7 @@
                 Tiền tạm ứng (Advance payment)
             </div>
             <div class="col-md-6">
-                <input appInputNumberNegativeDecimal [decimal]="true" [min]="0" [max]="100" tabindex="12" formControlName="advancePayment" class="form-control input-percent">
+                <input appInputNumberNegativeDecimal [decimal]="true" [min]="0" [max]="100" appEnterPreventDefault tabindex="12" formControlName="advancePayment" class="form-control input-percent">
                 <span class="input-unit">%</span>
             </div>
         </div>
@@ -128,7 +128,7 @@
                 Tiền giữ lại (Retention money)
             </div>
             <div class="col-md-6">
-                <input appInputNumberNegativeDecimal [decimal]="true" tabindex="14" formControlName="retentionMoney" class="form-control">
+                <input appInputNumberNegativeDecimal [decimal]="true" appEnterPreventDefault tabindex="14" formControlName="retentionMoney" class="form-control">
             </div>
         </div>
         <div class="row mt-3">
@@ -136,7 +136,7 @@
                 10. Điều kiện đặc biệt khác (Special conditions)
             </div>
             <div class="col-md-6">
-              <textarea rows="2" tabindex="15" formControlName="specialCondition" class="form-control"></textarea>
+              <textarea rows="2" appEnterPreventDefault tabindex="15" formControlName="specialCondition" class="form-control"></textarea>
             </div>
         </div>
         <div class="text-center mt-4">

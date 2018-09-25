@@ -255,14 +255,14 @@ export class PriceReviewFormComponent implements OnInit, AfterViewInit {
 
       yeuCauKhacYC: {
         value: this.model.technique
-          && this.model.technique.safetyRequirement
-          && this.model.technique.safetyRequirement.folowTenderDocumentRequirement,
+          && this.model.technique.otherSpecialRequirement
+          && this.model.technique.otherSpecialRequirement.folowTenderDocumentRequirement,
         disabled: this.isModeView
       },
       yeuCauKhacCY: {
         value: this.model.technique
-          && this.model.technique.safetyRequirement
-          && this.model.technique.safetyRequirement.suggestion,
+          && this.model.technique.otherSpecialRequirement
+          && this.model.technique.otherSpecialRequirement.suggestion,
         disabled: this.isModeView
       },
 

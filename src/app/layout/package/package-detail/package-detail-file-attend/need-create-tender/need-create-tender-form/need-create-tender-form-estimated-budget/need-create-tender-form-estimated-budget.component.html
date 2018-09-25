@@ -17,7 +17,7 @@
                 1. Giá gói thầu tạm tính (Draft budget of package)
             </div>
             <div class="col-md-6">
-                <input appInputNumberNegativeDecimal [decimal]="true" [appAutoFocus]="routerAction != 'view'" tabindex="1" formControlName="draftBudgetOfPackage" class="form-control input-dropdown-group">
+                <input appInputNumberNegativeDecimal [decimal]="true" [appAutoFocus]="routerAction != 'view'" appEnterPreventDefault tabindex="1" formControlName="draftBudgetOfPackage" class="form-control input-dropdown-group">
                 <div formGroupName="draftBudgetOfPackageCurrency">
                     <kendo-dropdownlist name="currency" tabindex="2" formControlName="value" [data]="listCurrency" [valuePrimitive]="true">
                     </kendo-dropdownlist>
@@ -29,7 +29,7 @@
                 2. Ghi chú thêm (Additional notes)
             </div>
             <div class="col-md-6">
-                <input type="text" tabindex="3" formControlName="additionalNote" class="form-control">
+                <input type="text" appEnterPreventDefault tabindex="3" formControlName="additionalNote" class="form-control">
             </div>
         </div>
         <div class="text-center mt-4">

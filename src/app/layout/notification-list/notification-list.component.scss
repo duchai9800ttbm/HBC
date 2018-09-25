@@ -171,9 +171,22 @@ a {
   cursor: pointer;
 }
 .notification--not-read{
-  background-color: #f7f8fa;
+  background-color: #edf2fa;
 }
 
 .pl-16{
   padding-left: 1.6rem;
+}
+.toolbar{
+  display: flex;
+  justify-content: flex-end;
+  padding: 0rem 1.5rem 0.25rem 0rem;
+  .toolbar-list-notification--color{
+    color: #019cff;
+    cursor: pointer;
+  }
+  .dot--color{
+    color: #019cff;
+    font-size: 20%;
+  }
 }
