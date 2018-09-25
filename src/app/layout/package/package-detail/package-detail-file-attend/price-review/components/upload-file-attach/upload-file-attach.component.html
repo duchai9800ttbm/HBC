@@ -1,0 +1,94 @@
+<div class="example-wrapper">
+  <kendo-dialog (close)="close()" [width]="700" class="width-kendo-dialog">
+      <form [formGroup]="uploadForm" novalidate>
+          <div class="title-detail center-parent">
+              <div style="width: 20%;">
+
+              </div>
+              <div style="width: 80%;">
+                  <div class="media-header center-parent">
+                      <h3 class="d-inline mb-0 text-dark bold-title">TẢI LÊN FILE ĐÍNH KÈM</h3>
+                  </div>
+              </div>
+              <div style="width: 20%;" class="d-flex justify-content-end">
+                  <div>
+                      <div>
+                          <img (click)="close()" width="15" height="15" class="cursor-pointer not-outline"
+                              src="assets\images\close.png">
+                      </div>
+                  </div>
+              </div>
+          </div>
+          <hr>
+          <div class="d-flex">
+              <div class="w-100  mr-auto">
+                  <div>
+                      <div class="body cus-header" id="info-main">
+                          <div class="w-100 center-parent" *ngIf="errorMess" class="alert alert-danger" role="alert">
+                              <span> {{errorMess}}</span>
+                          </div>
+                          <table class="w-100 table">
+
+                              <tbody>
+                                  <tr>
+                                      <td class="w-30 label no-boder bold-title">Đường dẫn link</td>
+                                      <td class="w-70 no-boder">
+                                          <input (change)="inputChange()" class="w-100" class="form-control"
+                                              formControlName="link" tabindex="1" type="text">
+                                      </td>
+                                  </tr>
+                                  <tr>
+                                      <td class="w-30 label no-boder bold-title">Hoặc</td>
+                                      <td class="no-boder d-flex justify-content-between">
+                                          <div class="fileUpload">
+                                              <button class="btn btn-primary" [disabled]="uploadForm.get('link').value">
+                                                  <i class="fa fa-cloud-upload" aria-hidden="true"></i>&nbsp;&nbsp;
+                                                  Chọn File</button>
+                                              <input type="file" class="upload" tabindex="2" [disabled]="uploadForm.get('link').value"
+                                                  (change)="fileChange($event)" />
+                                          </div>
+                                          <div style="width: calc(100% - 120px);" class="d-flex justify-content-between">
+                                              <div> <span class="text-truncate">{{file?.name}}</span></div>
+                                              <div *ngIf="file">
+                                                  <button (click)="deleteFileUpload()" class="btn btn-secondary">X</button>
+                                              </div>
+                                          </div>
+                                      </td>
+                                  </tr>
+                                
+                                  <tr>
+                                      <td class="w-30 label no-boder bold-title required">Tên</td>
+                                      <td class="w-70 no-boder">
+                                          <input class="w-100" kendoTextBox tabindex="4" type="text" formControlName="editName"
+                                              [class.is-invalid]="formErrors.editName">
+                                          <div class="invalid-feedback" *ngIf="formErrors.editName">
+                                              {{formErrors.editName}}
+                                          </div>
+                                      </td>
+                                  </tr>
+                                  
+                                
+                                  <tr>
+                                      <td class="w-30 label no-boder bold-title">Mô tả/Nội dung cập nhật</td>
+                                      <td class="w-70 no-boder">
+                                          <textarea kendoTextArea tabindex="7" cols="3" rows="3" class="w-100 form-control no-resize-textarea"
+                                              formControlName="description"></textarea>
+                                      </td>
+                                  </tr>
+                              </tbody>
+                          </table>
+                      </div>
+
+                  </div>
+                  <div class="action-bar alignment-but center-parent">
+                      <button type="submit" class="btn btn-primary ml-2 cus-but-cs" (click)="submitForm()">Upload
+                      </button>
+                      <button class="btn btn-secondary ml-2 cus-but-cs" (click)="close()">Hủy
+                      </button>
+                  </div>
+              </div>
+          </div>
+      </form>
+  </kendo-dialog>
+</div>
+<ngx-spinner bdColor="rgba(51, 51, 51, 0.7)" size="medium" color="#fff" type="ball-clip-rotate-multiple"></ngx-spinner>

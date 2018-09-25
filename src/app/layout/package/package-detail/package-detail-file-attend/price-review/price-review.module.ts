@@ -12,6 +12,7 @@ import { PriceReviewComponent } from './price-review.component';
 import { InputTextareaModule } from 'primeng/inputtextarea';
 import { CommentComponent } from './price-review-form/comment/comment.component';
 import { PriceReviewService } from '../../../../../shared/services/price-review.service';
+import { UploadFileAttachComponent } from './components/upload-file-attach/upload-file-attach.component';
 
 @NgModule({
   imports: [
@@ -27,10 +28,11 @@ import { PriceReviewService } from '../../../../../shared/services/price-review.
     PriceReviewEditComponent,
     PriceReviewCreateComponent,
     PriceReviewComponent,
-    CommentComponent
+    CommentComponent,
+    UploadFileAttachComponent
   ],
   providers: [
     PriceReviewService
-  ]
+  ],
 })
 export class PriceReviewModule { }

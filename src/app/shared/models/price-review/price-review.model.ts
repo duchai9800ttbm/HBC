@@ -177,5 +177,44 @@ export class TenderPriceApproval {
             note: string
         }
     };
-    
+
+}
+
+
+
+export class TenderPriceApprovalShort {
+    id: number;
+    name: string;
+    files: FileAttach[];
+    interviewTimes: number;
+    isDraftVersion: boolean;
+    approvalTimes: number;
+    createdEmployee: {
+        employeeId: number,
+        employeeNo: string,
+        employeeName: string,
+        employeeAvatar: string,
+        employeeEmail: string
+    };
+    createdDate: number;
+}
+
+export class FileAttach {
+    id: number;
+    name: string;
+    guid: string;
+    url: string;
+    desc: string;
+}
+
+
+export class ItemHSDTChinhThuc {
+    typeName: string;
+    document: {
+        type: string,
+        id: number,
+        name: string,
+        interviewTime: number,
+    };
+    childs?: ItemHSDTChinhThuc;
 }
