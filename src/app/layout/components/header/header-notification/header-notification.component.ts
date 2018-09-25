@@ -74,9 +74,7 @@ export class HeaderNotificationComponent implements OnInit {
     } else {
       this.isShow = true;
     }
-
     }
-  }
 
   ngOnInit() {
     this.notificationService.watchNotificationAmontSubject().subscribe( value => {
@@ -215,5 +213,4 @@ export class HeaderNotificationComponent implements OnInit {
     console.log('noClosePopup');
   }
 }
-
 
