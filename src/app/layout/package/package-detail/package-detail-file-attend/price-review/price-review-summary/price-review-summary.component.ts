@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { TenderPriceApproval } from '../../../../../../shared/models/price-review/price-review.model';
+import { TenderPriceApproval, TenderPriceApprovalShort, ItemHSDTChinhThuc, PriceReviewItemChangedHistory } from '../../../../../../shared/models/price-review/price-review.model';
 import { PackageDetailComponent } from '../../../package-detail.component';
 import { PriceReviewService } from '../../../../../../shared/services/price-review.service';
 import { DATATABLE_CONFIG2 } from '../../../../../../shared/configs';
@@ -7,6 +7,7 @@ import { Subject } from 'rxjs/Subject';
 import { AlertService, ConfirmationService } from '../../../../../../shared/services';
 import { PackageService } from '../../../../../../shared/services/package.service';
 import { PackageInfoModel } from '../../../../../../shared/models/package/package-info.model';
+import { PagedResult } from '../../../../../../shared/models';
 
 @Component({
   selector: 'app-price-review-summary',
@@ -15,11 +16,13 @@ import { PackageInfoModel } from '../../../../../../shared/models/package/packag
 })
 export class PriceReviewSummaryComponent implements OnInit {
   packageId;
-  priceReview: TenderPriceApproval;
+  priceReview: TenderPriceApprovalShort;
   package = new PackageInfoModel();
-
+  listItemHSDTChinhThuc: ItemHSDTChinhThuc[];
   dtOptions: any = DATATABLE_CONFIG2;
   dtTrigger: Subject<any> = new Subject();
+  showPopupAdd;
+  pagedResult: PagedResult<PriceReviewItemChangedHistory> = new PagedResult<PriceReviewItemChangedHistory>();
 
   constructor(
     private priceReviewService: PriceReviewService,
@@ -28,6 +31,8 @@ export class PriceReviewSummaryComponent implements OnInit {
     private packageService: PackageService
   ) { }
 
+
+
   ngOnInit() {
     this.packageId = PackageDetailComponent.packageId;
     this.packageService.getInforPackageID(this.packageId).subscribe(result => {
@@ -35,13 +40,33 @@ export class PriceReviewSummaryComponent implements OnInit {
 
     }, err => {
     });
-    this.priceReviewService.view(this.packageId).subscribe(data => {
+    this.priceReviewService.viewShort(this.packageId).subscribe(data => {
       this.priceReview = data;
+      console.log(this.priceReview);
     });
+    this.priceReviewService.getDanhSachHSDTChinhThuc(230).subscribe(data => {
+      this.listItemHSDTChinhThuc = data;
+      console.log(this.listItemHSDTChinhThuc);
+    });
+
+    this.priceReviewService.changedHistoryPriceReview(this.packageId, 0, 10)
+      .subscribe(data => {
+        this.pagedResult = data;
+        console.log(data);
+      });
+  }
+
+  open() {
+    this.showPopupAdd = true;
+
+  }
+  closePopup(params) {
+    this.showPopupAdd = false;
+    this.refresh();
   }
 
   refresh() {
-    this.priceReviewService.view(this.packageId).subscribe(data => {
+    this.priceReviewService.viewShort(this.packageId).subscribe(data => {
       this.priceReview = data;
     });
   }
@@ -123,5 +148,9 @@ export class PriceReviewSummaryComponent implements OnInit {
 
   print() {
 
+  }
+
+  downloadFileAttach(id: number) {
+    this.priceReviewService.download(id).subscribe();
   }
 }

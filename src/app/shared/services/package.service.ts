@@ -400,6 +400,10 @@ export class PackageService {
                     id: result.stageStatus.key,
                     text: result.stageStatus.value
                 },
+                hsmtStatus: {
+                    id: result.hsmtStatus.key,
+                    text: result.hsmtStatus.value
+                },
                 location: result.location && {
                     id: result.location.key,
                     text: result.location.value
@@ -585,6 +589,7 @@ export class PackageService {
     // Tạo mới gói thầu
     createOpportunity(formValue: any): Observable<any> {
         const url = `bidopportunity/create`;
+        console.log('formValue.projectEstimatedStartDate', formValue.projectEstimatedStartDate);
         const inforPackage = {
             projectName: formValue.projectName,
             projectNo: formValue.projectNo,
@@ -921,6 +926,17 @@ export class PackageService {
         return this.apiService.post(url, {
             reason: reason
         }).map(response => response.result);
+    }
+    // tải template phiếu đề nghị dự thầu
+    downloadProposedTenderParticipateReport() {
+        const url = `proposedtenderparticipatinngreport/template/downoad`;
+        return this.apiService.getFile(url).map(response => {
+            return FileSaver.saveAs(
+                new Blob([response.file], {
+                    type: `${response.file.type}`,
+                }), response.fileName
+            );
+        });
     }
 
     // get thông tin mặc định LiveForm phân công tiến độ

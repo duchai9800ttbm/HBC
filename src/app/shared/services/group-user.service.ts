@@ -137,7 +137,7 @@ export class GroupUserService implements OnInit {
           userGroup: result.userGroup ? {
             id: result.userGroup.key,
             value: result.userGroup.key,
-          } : null ,
+          } : null,
           isActive: result.isActive,
           phoneNumber: result.phoneNumber,
           address: result.address,
@@ -175,7 +175,7 @@ export class GroupUserService implements OnInit {
   createOrUpdateUser(data): Observable<any> {
     const url = data.id ? `user/edit` : `user/create`;
     return this.apiService.post(url, data)
-      .map( res => res.result);
+      .map(res => res.result);
   }
 
   // Search
@@ -199,6 +199,26 @@ export class GroupUserService implements OnInit {
         };
       });
   }
+
+  // Danh sách người dùng tìm kiếm theo tên không Observable terms
+  getListSearchGroupUser(
+    terms: string,
+    page: number | string,
+    pageSize: number | string
+  ): Observable<PagedResult<ListUserItem>> {
+    const searchUrl = `user/${page}/${pageSize}?searchTerm=${terms}`;
+    return this.apiService.get(searchUrl)
+      .map(result => {
+        return {
+          currentPage: result.pageIndex,
+          pageSize: result.pageSize,
+          pageCount: result.totalPages,
+          total: result.totalCount,
+          items: result.items,
+        };
+      });
+  }
+
   // Xóa nhiều người dùng
   deleteMulti(arrayIdUser: any): Observable<any> {
     const url = `user/delete-multi`;

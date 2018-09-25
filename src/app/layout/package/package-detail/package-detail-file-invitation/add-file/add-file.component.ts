@@ -56,7 +56,7 @@ export class AddFileComponent implements OnInit {
     showTable = false;
     get titleStr() {
         if (this.majorTypeListItem && this.majorTypeListItem.length > 0) {
-            return this.majorTypeListItem.find(i => i.id == this.currentMajorTypeId).text;
+            return this.majorTypeListItem.find(i => i.id === this.currentMajorTypeId).text;
         }
     }
     constructor(
@@ -75,8 +75,8 @@ export class AddFileComponent implements OnInit {
         this.packageId = +PackageDetailComponent.packageId;
         this.packageService.getInforPackageID(this.packageId).subscribe(result => {
             this.packageData = result;
-            switch (this.packageData.stageStatus.id) {
-                case 'DaCoHSMT': {
+            switch (this.packageData.hsmtStatus.id) {
+                case 'DaDuHSMT': {
                     this.router.navigate([`/package/detail/${this.packageId}/invitation/full-file`]);
                     break;
                 }
@@ -415,7 +415,7 @@ export class AddFileComponent implements OnInit {
                 }, err => {
                     this.spinner.hide();
                     if (err.json().errorCode === 'BusinessException') {
-                        that.alertService.error('Không đủ bản chính thức trong các bộ hồ sơ mời thầu!');
+                        that.alertService.error('Không có tài liệu trong các bộ hồ sơ mời thầu!');
                     } else {
                         that.alertService.error('Chuyển sang trạng thái đã có HSMT thất bại!');
                     }

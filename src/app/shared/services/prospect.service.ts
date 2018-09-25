@@ -1,22 +1,20 @@
-import { DictionaryItem } from "../models/dictionary-item.model";
-import { Injectable } from "@angular/core";
-import { URLSearchParams } from "@angular/http";
+import { DictionaryItem } from '../models/dictionary-item.model';
+import { Injectable } from '@angular/core';
+import { URLSearchParams } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
 
-import "rxjs/add/operator/map";
-import "rxjs/add/operator/catch";
+import 'rxjs/add/operator/map';
+import 'rxjs/add/operator/catch';
 
-import { API_URL } from "../configs";
+import { API_URL } from '../configs';
 import {
     ProspectListItem,
     ProspectModel,
     PagedResult,
     ProspectFilter
-} from "../models";
-import { ApiService, SessionService, InstantSearchService } from "../services";
-import { ProspectListComponent } from "../../layout/prospect/prospect-list/prospect-list.component";
-import Utils from "../helpers/utils.helper";
-import { Response } from "@angular/http/src/static_response";
+} from '../models';
+import { ApiService, SessionService, InstantSearchService } from '../services';
+import Utils from '../helpers/utils.helper';
 
 @Injectable()
 export class ProspectService {
@@ -51,7 +49,7 @@ export class ProspectService {
 
     createOrUpdate(prospectFromValue: any) {
         let url = `/employee/${this.employeeId}/prospect`;
-        url = prospectFromValue.id ? url + "/edit" : url;
+        url = prospectFromValue.id ? url + '/edit' : url;
 
         const assignTo = Utils.parseAssignTo(prospectFromValue.assignTo);
 
@@ -81,13 +79,13 @@ export class ProspectService {
             country: prospectFromValue.country,
             revenue: prospectFromValue.revenue,
             employee:
-                assignTo.assignToType === "employee"
+                assignTo.assignToType === 'employee'
                     ? {
                           id: assignTo.assignToId
                       }
                     : null,
             employeeGroup:
-                assignTo.assignToType === "group"
+                assignTo.assignToType === 'group'
                     ? {
                           id: assignTo.assignToId
                       }
@@ -110,7 +108,7 @@ export class ProspectService {
                 const prospectModel = new ProspectModel();
 
                 prospectModel.id = result.id;
-                prospectModel.name = result.title || "";
+                prospectModel.name = result.title || '';
                 prospectModel.statusSource = result.potentialStatus;
                 prospectModel.firstName = result.firstName;
                 prospectModel.lastName = result.lastName;
@@ -159,7 +157,7 @@ export class ProspectService {
                 const prospectModel = new ProspectModel();
 
                 prospectModel.id = result.id;
-                prospectModel.name = result.title || "";
+                prospectModel.name = result.title || '';
                 prospectModel.statusSource = result.potentialStatus;
                 prospectModel.firstName = result.firstName;
                 prospectModel.lastName = result.lastName;
@@ -281,7 +279,7 @@ export class ProspectService {
         }/prospects/filter/${page}/${pageSize}/`;
 
         const urlParams = ProspectService.createFilterParams(filter);
-        urlParams.append("search", searchTerm);
+        urlParams.append('search', searchTerm);
 
         return this.apiService.get(filterUrl, urlParams).map(response => {
             const result = response.result;
@@ -298,9 +296,9 @@ export class ProspectService {
     // tslint:disable-next-line:member-ordering
     private static createFilterParams(filter: ProspectFilter): URLSearchParams {
         const urlFilterParams = new URLSearchParams();
-        urlFilterParams.append("rate", filter.rate);
-        urlFilterParams.append("prospectSource", filter.prospectSource);
-        urlFilterParams.append("business", filter.business);
+        urlFilterParams.append('rate', filter.rate);
+        urlFilterParams.append('prospectSource', filter.prospectSource);
+        urlFilterParams.append('business', filter.business);
 
         return urlFilterParams;
     }
@@ -312,7 +310,7 @@ export class ProspectService {
             id: convertProspectFormValue.id,
             createCustomer: convertProspectFormValue.isNewCustomer ? 1 : 0,
             customerName: convertProspectFormValue.customerName,
-            customerType: "Individual",
+            customerType: 'Individual',
             createContact: convertProspectFormValue.isNewContact ? 1 : 0,
             business: convertProspectFormValue.customerBusiness,
             title: convertProspectFormValue.contactSalutation,
@@ -320,13 +318,13 @@ export class ProspectService {
             lastName: convertProspectFormValue.contactLastName,
             email: convertProspectFormValue.contactEmail,
             employee:
-                assignTo.assignToType === "employee"
+                assignTo.assignToType === 'employee'
                     ? {
                           id: assignTo.assignToId
                       }
                     : null,
             employeeGroup:
-                assignTo.assignToType === "group"
+                assignTo.assignToType === 'group'
                     ? {
                           id: assignTo.assignToId
                       }
@@ -341,7 +339,7 @@ export class ProspectService {
     toProspectListItem(result: any): ProspectListItem {
         return {
             id: result.id,
-            salutation: result.title || "",
+            salutation: result.title || '',
             firstName: result.firstName,
             lastName: result.lastName,
             evaluation: result.rate,
@@ -361,7 +359,7 @@ export class ProspectService {
     importFile(file: File) {
         const url = `/employee/${this.employeeId}/prospects`;
         const formData = new FormData();
-        formData.append("filePath", file, "file xlsx");
+        formData.append('filePath', file, 'file xlsx');
         return this.apiService
             .postFile(url, formData)
             .map(response => {

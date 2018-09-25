@@ -1,5 +1,5 @@
 <div [@routerTransition]>
-  <div class="title-detail center-parent" [class.title-detail-toggle]="isToggle">
+  <div class="title-detail center-parent">
     <div class="mr-auto col-md-12 pl-16">
       <div class="media-header header-title p-0">
         <div class="d-flex justify-content-between">
@@ -22,8 +22,8 @@
         <div class="d-flex">
           <div class="mr-auto w-100">
             <div>
-              <div class="w-100 text-right" [class.bot-when-have-data]="notificationList && notificationList.length !== 0">
-                <div class="btn-group" dropdown>
+              <div class="w-100 d-flex toolbar" [class.bot-when-have-data]="notificationList && notificationList.length !== 0" *ngIf="notificationList && notificationList.length !== 0">
+                <!-- <div class="btn-group" dropdown>
                   <a dropdownToggle (click)="false">
                     <i class="fa fa-ellipsis-v fa-ellipsis" aria-hidden="true"></i>
                   </a>
@@ -35,7 +35,12 @@
                       <a class="dropdown-item ul-chirld-of-chirl--pad" (click)="deleteAllNotification()">Xóa tất cả thông báo</a>
                     </li>
                   </ul>
-                </div>
+                </div> -->
+                <span class="toolbar-list-notification--color pr-2" (click)="readAllNotification()">Đánh dấu tất cả là đã đọc</span>
+                <span class="center-parent pr-2">
+                  <i class="fa fa-circle dot--color" aria-hidden="true"></i>
+                </span> 
+                <span class="toolbar-list-notification--color" (click)="deleteAllNotification()">Xóa tất cả thông báo</span>
               </div>
               <div class="w-100 d-flex notification-item" *ngFor="let item of notificationList" style="padding: 0.4rem 0rem;" [class.notification--not-read]="item.notificationState?.id === 'UnRead'">
                 <div class="d-flex" style="padding: 0.25rem 1.5rem;">
@@ -50,7 +55,7 @@
                   <div>
                     <span class="last span--margin">Bạn vừa nhận được yêu cầu Duyệt Đề nghị dự thầu từ
                       <span class="content--bold">{{item.sendEmployee?.employeeName}} </span>, thời gian mong đợi được duyệt trước ngày
-                      <span class="content--bold">"thời gian mong đợi duyệt"</span>
+                      <span class="content--bold">{{item.data*1000 | date:'dd/MM/yyyy HH:mm'}}</span>
                     </span>
                     <span class="badge badge-info">Chi tiết</span>
                   </div>
@@ -124,6 +129,17 @@
                 <div style="padding: 0.25rem 1.5rem 0.25rem 0rem;color: #ff1717; font-weight: bold; cursor: pointer" (click)="deleteOneNotification(item)">Xóa</div>
               </div>
             </div>
+
+            <div *ngIf="notificationList && notificationList.length === 0">
+              <div class="notification-item">
+                  <a class="dropdown-item py-2 center-parent">
+                      <div>
+                          <span class="last span--margin">Không có thông báo
+                          </span>
+                      </div>
+                  </a>
+              </div>
+          </div>
           </div>
         </div>
       </div>

@@ -186,10 +186,19 @@ export class ManageUserComponent implements OnInit {
   changeActive(idUser: number, isActive: boolean) {
     this.groupUserService.activeOrDeactiveUser(idUser, isActive).subscribe(response => {
       // this.spinner.show();
-      this.groupUserService.getdataGroupUser(this.pagedResult.currentPage, this.pagedResult.pageSize).subscribe(data => {
-        this.pagedResult = data;
-        // this.spinner.hide();
+      // this.groupUserService.getdataGroupUser(this.pagedResult.currentPage, this.pagedResult.pageSize).subscribe(data => {
+      //   this.pagedResult = data;
+      //   // this.spinner.hide();
+      //   this.alertService.success('Thay đổi tình trạng người dùng thành công!');
+      // });
+
+      this.groupUserService
+      .searchKeyWord(this.searchTerm$, this.pagedResult.currentPage, this.pagedResult.pageSize)
+      .subscribe(result => {
+        this.rerender(result);
         this.alertService.success('Thay đổi tình trạng người dùng thành công!');
+      }, err => {
+        this.alertService.error('Đã xảy ra lỗi. Reload trang không thành công!');
       });
     },
       err => {

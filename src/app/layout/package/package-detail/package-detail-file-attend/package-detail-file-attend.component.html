@@ -25,7 +25,7 @@
                 </span>
             </li>
             <!-- (statusPackageID > 1) ? ['./build'] : [] -->
-            <li class="triangle" [routerLink]="['./build']" [class.noActive]="currentUrl !== 'build' && statusPackageID > 1"
+            <li class="triangle" [routerLink]="(statusPackageID > 1) ? ['./build'] : []" [class.noActive]="currentUrl !== 'build' && statusPackageID > 1"
                 [class.active]="currentUrl === 'build'" [class.allow]="(statusPackageID > 1)" [class.no-allow]="(statusPackageID < 2)">
                 <div style="width: 100%" class="center-parent">
                     <div class="arrow-down"></div>

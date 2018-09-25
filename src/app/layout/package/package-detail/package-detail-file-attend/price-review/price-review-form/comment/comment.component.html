@@ -3,9 +3,9 @@
         <div class="font-weight-bold">BÌNH LUẬN</div>
     </div>
     <div class="editor center-parent">
-        <div class="editor-keyboard d-flex ">
+        <div class="editor-keyboard d-flex">
             <div class="editor-input center-parent">
-                <div class="mt-1">
+                <div class="mt-1 w-100">
                     <textarea class="editor-comment" [placeholder]="'Viết bình luận...'" (keyup.enter)="addCommentByKeyUpEnter($event)"
                         [(ngModel)]="commentEditor" pInputTextarea autoResize="autoResize"></textarea>
                 </div>
@@ -37,5 +37,10 @@
             </div>
         </div>
 
+    </div>
+    <div class="center-parent mt-2">
+        <div class="link">
+            <a (click)="loadMore()" class="cursor-pointer link">Xem thêm</a>
+        </div>
     </div>
 </div>
