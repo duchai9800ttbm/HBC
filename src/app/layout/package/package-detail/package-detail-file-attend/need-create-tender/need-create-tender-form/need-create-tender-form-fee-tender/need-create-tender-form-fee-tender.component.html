@@ -17,7 +17,7 @@
                 1. Tiền mua hồ sơ (Fee of tender invitation document)
             </div>
             <div class="col-md-6">
-                <input appInputNumberNegativeDecimal [decimal]="true" [appAutoFocus]="routerAction != 'view'" tabindex="1" formControlName="feeOfTenderInvitationDocument" class="form-control input-dropdown-group">
+                <input appInputNumberNegativeDecimal [decimal]="true" [appAutoFocus]="routerAction != 'view'" appEnterPreventDefault tabindex="1" formControlName="feeOfTenderInvitationDocument" class="form-control input-dropdown-group">
                 <div formGroupName="feeOfTenderInvitationDocumentCurrency">
                     <kendo-dropdownlist formControlName="value" tabindex="2" [data]="listCurrency" [valuePrimitive]="true">
                     </kendo-dropdownlist>
@@ -29,7 +29,7 @@
                 2. Tiền đặt cọc mua hồ sơ mời thầu (Tender document deposit (or money))
             </div>
             <div class="col-md-6">
-                <input appInputNumberNegativeDecimal [decimal]="true" tabindex="3" formControlName="tenderDocumentDeposit" class="form-control input-dropdown-group">
+                <input appInputNumberNegativeDecimal [decimal]="true" appEnterPreventDefault tabindex="3" formControlName="tenderDocumentDeposit" class="form-control input-dropdown-group">
                 <div formGroupName="feeOfTenderInvitationDocumentCurrency">
                     <kendo-dropdownlist formControlName="value" tabindex="4" [data]="listCurrency" [valuePrimitive]="true">
                     </kendo-dropdownlist>
