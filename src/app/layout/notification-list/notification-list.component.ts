@@ -112,7 +112,7 @@ export class NotificationListComponent implements OnInit {
   readAllNotification() {
     this.notificationService.readAllNotification().subscribe(response => {
       this.notificationService.change();
-      this.alertService.success('Đã xóa thông báo thành công!');
+      this.alertService.success('Tất cả các thông báo đã được đọc!');
     },
       err => {
         this.alertService.error('Đã xảy ra lỗi!');

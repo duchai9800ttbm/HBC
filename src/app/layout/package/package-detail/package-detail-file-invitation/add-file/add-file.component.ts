@@ -56,7 +56,7 @@ export class AddFileComponent implements OnInit {
     showTable = false;
     get titleStr() {
         if (this.majorTypeListItem && this.majorTypeListItem.length > 0) {
-            return this.majorTypeListItem.find(i => i.id == this.currentMajorTypeId).text;
+            return this.majorTypeListItem.find(i => i.id === this.currentMajorTypeId).text;
         }
     }
     constructor(

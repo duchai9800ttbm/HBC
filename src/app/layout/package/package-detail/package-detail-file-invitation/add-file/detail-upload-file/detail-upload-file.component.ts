@@ -13,6 +13,7 @@ export class DetailUploadFileComponent implements OnInit {
 
   @Output() closed = new EventEmitter<boolean>();
   @Input() model: any;
+  @Input() currentMajorType: number;
 
   file;
   icon = `<i class="fa fa-search" aria-hidden="true"></i>`;
@@ -31,7 +32,8 @@ export class DetailUploadFileComponent implements OnInit {
   }
 
   ngOnInit() {
-
+    console.log('model', this.model);
+    console.log('currentMajorType', this.currentMajorType);
   }
 
   dowloadDocument(id) {
