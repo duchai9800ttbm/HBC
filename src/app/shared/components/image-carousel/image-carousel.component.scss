@@ -1,12 +1,10 @@
 #modal-container {
-    border: 1px solid #ced4da;
     border-radius: 0.25rem;
     position: fixed;
     z-index: 801;
-    right: 30%;
-    top: 20%;
-    background-color: #FFF;
-    width: 40%;
+    right: 15%;
+    top: 10%;
+    width: 60%;
     padding: 35px;
     display: flex;
     flex-direction: column;
@@ -28,6 +26,63 @@
         right: 0;
         font-size: 30px;
     }
+}
+
+.close-button {
+    color: #FFFFFF;
+    position: absolute;
+    font-size: 50px;
+    top: 0;
+    right: -10%;
+}
+
+.hideSlides {
+    display: none;
+}
+
+.show {
+    display: unset;
+}
+
+.noShow {
+    display: none;
+}
+
+.thumb {
+    display: unset;
+}
+
+.noThumb {
+    display: none;
+}
+
+.shining {
+    border: #F37171 solid 2px;
+}
+
+.thumbImage {
+    img {
+        transform: scale(0.8);
+    }
+}
+
+.button-thumb {
+    background: transparent;
+    border: none;
+    font-size: 3rem;
+    color: #FFFFFF;
+}
+
+.button-control {
+    margin-top: 20px;
+}
+
+.button-view {
+    margin: 0 20px;
+}
+
+.text-view {
+    color: #FFFFFF;
 }
 
 .content-confirm {

@@ -96,8 +96,19 @@ export class LiveformSiteReportComponent implements OnInit {
       }
     );
   }
+  pagedResultChange(pagedResult: any) {
+    this.siteSurveyReportService
+      .changedHistoryTenderSiteReport(this.bidOpportunityId, pagedResult.currentPage, pagedResult.pageSize)
+      .subscribe(result => {
+        this.rerender(result);
+        this.spinner.hide();
+      }, err => {
+        this.spinner.hide();
+      });
+  }
 
   onActivate(event, view) {
     LiveformSiteReportComponent.viewFlag = view;
+      this.createMode();
   }
 }

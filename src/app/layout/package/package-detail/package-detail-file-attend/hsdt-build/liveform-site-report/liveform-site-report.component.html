@@ -217,8 +217,11 @@
                             <td class="text-center">{{ updateInfo.employee?.employeeName }}</td>
                             <td class="text-center">{{ (updateInfo.changedTime)*1000 | date:'dd/MM/yyyy' }}</td>
                             <td class="text-center d-flex flex-column align-items-start">
-                                <p *ngFor="let item of updateInfo.liveFormChangeds; index as j">{{ item.liveFormTitle
-                                    }}: {{ item.oldValue }} --- {{ item.newValue }}</p>
+                                <p *ngIf="isData">Cập nhật tài liệu</p>
+                                <p *ngIf="!isData">Xóa tài liệu</p>
+                                <p *ngFor="let item of updateInfo.liveFormChangeds; index as j">
+                                    {{ item.liveFormTitle }}: {{ item.oldValue }} --- {{ item.newValue }}
+                                </p>
                             </td>
                             <td class="text-center">
                                 {{ (updateInfo?.updateDesc != 'undefined') ? updateInfo.updateDesc : '' }}
@@ -227,7 +230,7 @@
                     </tbody>
                 </table>
             </div>
-            <app-pagination [(pagedResult)]="pagedResult"></app-pagination>
+            <app-pagination [(pagedResult)]="pagedResult" (pagedResultChange)="pagedResultChange($event)"></app-pagination>
         </div>
     </div>
 </ng-container>

@@ -13,8 +13,8 @@
                         <div class="image-demo-img">
                             <input type="file" accept="image/*" multiple #uploadSupplySystem (change)="uploadSupplySystemImage($event)">
 
-                            <div class="display-img" *ngFor="let url of supplySystemImageUrls">
-                                <img [src]="url.largeSizeUrl || url.base64">
+                            <div class="display-img" *ngFor="let url of supplySystemImageUrls" (click)="viewFullScreenImage(supplySystemImageUrls)">
+                                <img [src]="url.largeSizeUrl">
                                 <div class="toppp"  [ngClass]="{'d-none': viewMode}" (click)="deleteSupplySystemImage(url)">
                                     <i class="fa fa-times delete-icon" aria-hidden="true"></i>
                                 </div>
@@ -33,8 +33,8 @@
                         <div class="image-demo-img">
                             <input type="file" accept="image/*" multiple #uploadSupplyPoint (change)="uploadSupplyPointImage($event)">
 
-                            <div class="display-img" *ngFor="let url of supplyPointImageUrls">
-                                <img [src]="url.largeSizeUrl || url.base64">
+                            <div class="display-img" *ngFor="let url of supplyPointImageUrls" (click)="viewFullScreenImage(supplyPointImageUrls)">
+                                <img [src]="url.largeSizeUrl">
                                 <div class="toppp"  [ngClass]="{'d-none': viewMode}" (click)="deleteSupplyPointImage(url)">
                                     <i class="fa fa-times delete-icon" aria-hidden="true"></i>
                                 </div>
@@ -58,8 +58,8 @@
                         <div class="image-demo-img">
                             <input type="file" accept="image/*" multiple #uploadDrainageSystem (change)="uploadDrainageSystemImage($event)">
 
-                            <div class="display-img" *ngFor="let url of drainageSystemImageUrls">
-                                <img [src]="url.largeSizeUrl || url.base64">
+                            <div class="display-img" *ngFor="let url of drainageSystemImageUrls" (click)="viewFullScreenImage(drainageSystemImageUrls)">
+                                <img [src]="url.largeSizeUrl">
                                 <div class="toppp"  [ngClass]="{'d-none': viewMode}" (click)="deleteDrainageSystemImage(url)">
                                     <i class="fa fa-times delete-icon" aria-hidden="true"></i>
                                 </div>
@@ -78,8 +78,8 @@
                         <div class="image-demo-img">
                             <input type="file" accept="image/*" multiple #uploadDrainagePoint (change)="uploadDrainagePointImage($event)">
 
-                            <div class="display-img" *ngFor="let url of drainagePointImageUrls">
-                                <img [src]="url.largeSizeUrl || url.base64">
+                            <div class="display-img" *ngFor="let url of drainagePointImageUrls" (click)="viewFullScreenImage(drainagePointImageUrls)">
+                                <img [src]="url.largeSizeUrl">
                                 <div class="toppp"  [ngClass]="{'d-none': viewMode}" (click)="deleteDrainagePointImage(url)">
                                     <i class="fa fa-times delete-icon" aria-hidden="true"></i>
                                 </div>
@@ -103,8 +103,8 @@
                         <div class="image-demo-img">
                             <input type="file" accept="image/*" multiple #uploadPowerStation (change)="uploadPowerStationImage($event)">
 
-                            <div class="display-img" *ngFor="let url of powerStationImageUrls">
-                                <img [src]="url.largeSizeUrl || url.base64">
+                            <div class="display-img" *ngFor="let url of powerStationImageUrls" (click)="viewFullScreenImage(powerStationImageUrls)">
+                                <img [src]="url.largeSizeUrl">
                                 <div class="toppp"  [ngClass]="{'d-none': viewMode}" (click)="deletePowerStationImage(url)">
                                     <i class="fa fa-times delete-icon" aria-hidden="true"></i>
                                 </div>
@@ -123,8 +123,8 @@
                         <div class="image-demo-img">
                             <input type="file" accept="image/*" multiple #uploadMediumVoltageSystem (change)="uploadMediumVoltageSystemImage($event)">
 
-                            <div class="display-img" *ngFor="let url of mediumVoltageSystemImageUrls">
-                                <img [src]="url.largeSizeUrl || url.base64">
+                            <div class="display-img" *ngFor="let url of mediumVoltageSystemImageUrls" (click)="viewFullScreenImage(mediumVoltageSystemImageUrls)">
+                                <img [src]="url.largeSizeUrl">
                                 <div class="toppp"  [ngClass]="{'d-none': viewMode}" (click)="deleteMediumVoltageSystemImage(url)">
                                     <i class="fa fa-times delete-icon" aria-hidden="true"></i>
                                 </div>
@@ -143,8 +143,8 @@
                         <div class="image-demo-img">
                             <input type="file" accept="image/*" multiple #uploadPowerOther (change)="uploadPowerOtherImage($event)">
 
-                            <div class="display-img" *ngFor="let url of powerOtherImageUrls">
-                                <img [src]="url.largeSizeUrl || url.base64">
+                            <div class="display-img" *ngFor="let url of powerOtherImageUrls" (click)="viewFullScreenImage(powerOtherImageUrls)">
+                                <img [src]="url.largeSizeUrl">
                                 <div class="toppp"  [ngClass]="{'d-none': viewMode}" (click)="deletePowerOtherImage(url)">
                                     <i class="fa fa-times delete-icon" aria-hidden="true"></i>
                                 </div>
@@ -160,3 +160,5 @@
         </div>
     </div>
 </form>
+
+<app-image-carousel class="d-flex justify-content-center align-items-center" *ngIf="showPopupViewImage" [(imageUrlArray)]="imageUrlArray" (closed)="closeView()"></app-image-carousel>

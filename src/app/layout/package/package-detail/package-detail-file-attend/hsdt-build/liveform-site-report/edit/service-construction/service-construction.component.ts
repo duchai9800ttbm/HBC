@@ -24,6 +24,8 @@ export class ServiceConstructionComponent implements OnInit {
   powerOtherImageUrls = [];
   url;
   viewMode;
+  imageUrlArray = [];
+  showPopupViewImage = false;
   currentBidOpportunityId: number;
   serviceConstructionModel = new ServiceConstruction();
   constructor(
@@ -175,30 +177,10 @@ export class ServiceConstructionComponent implements OnInit {
 
   uploadSupplySystemImage(event) {
     const files = event.target.files;
-    if (files) {
-      for (const file of files) {
-        if (file.size < 10485760) {
-          const reader = new FileReader();
-          reader.onload = (e: any) => {
-            this.supplySystemImageUrls.push({
-              id: null,
-              image: {
-                file: file,
-                base64: e.target.result
-              }
-            });
-            this.serviceConstructionForm.get('heThongNuocHienHuuList').patchValue(this.supplySystemImageUrls);
-          };
-          reader.readAsDataURL(file);
-        } else {
-          this.alertService.error(`Hình ảnh ${file.name} quá lớn! Vui lòng chọn hình ảnh khác`);
-        }
-      }
-    }
     this.siteSurveyReportService
-      .uploadImageSiteSurveyingReport(this.supplySystemImageUrls, this.currentBidOpportunityId)
+      .uploadImageSiteSurveyingReport(files, this.currentBidOpportunityId)
       .subscribe(res => {
-        this.supplySystemImageUrls = res;
+        this.supplySystemImageUrls = [...this.supplySystemImageUrls, ...res];
       }, err => {
         this.alertService.error('Upload hình ảnh thất bại. Xin vui lòng thử lại!');
         this.supplySystemImageUrls.forEach(x => {
@@ -224,30 +206,10 @@ export class ServiceConstructionComponent implements OnInit {
 
   uploadSupplyPointImage(event) {
     const files = event.target.files;
-    if (files) {
-      for (const file of files) {
-        if (file.size < 10485760) {
-          const reader = new FileReader();
-          reader.onload = (e: any) => {
-            this.supplyPointImageUrls.push({
-              id: null,
-              image: {
-                file: file,
-                base64: e.target.result
-              }
-            });
-            this.serviceConstructionForm.get('heThongNuocDiemDauNoiList').patchValue(this.supplyPointImageUrls);
-          };
-          reader.readAsDataURL(file);
-        } else {
-          this.alertService.error(`Hình ảnh ${file.name} quá lớn! Vui lòng chọn hình ảnh khác`);
-        }
-      }
-    }
     this.siteSurveyReportService
-      .uploadImageSiteSurveyingReport(this.supplyPointImageUrls, this.currentBidOpportunityId)
+      .uploadImageSiteSurveyingReport(files, this.currentBidOpportunityId)
       .subscribe(res => {
-        this.supplyPointImageUrls = res;
+        this.supplyPointImageUrls = [...this.supplyPointImageUrls, ...res];
       }, err => {
         this.alertService.error('Upload hình ảnh thất bại. Xin vui lòng thử lại!');
         this.supplyPointImageUrls.forEach(x => {
@@ -274,30 +236,10 @@ export class ServiceConstructionComponent implements OnInit {
 
   uploadDrainageSystemImage(event) {
     const files = event.target.files;
-    if (files) {
-      for (const file of files) {
-        if (file.size < 10485760) {
-          const reader = new FileReader();
-          reader.onload = (e: any) => {
-            this.drainageSystemImageUrls.push({
-              id: null,
-              image: {
-                file: file,
-                base64: e.target.result
-              }
-            });
-            this.serviceConstructionForm.get('heThongNuocThoatHienHuuList').patchValue(this.drainageSystemImageUrls);
-          };
-          reader.readAsDataURL(file);
-        } else {
-          this.alertService.error(`Hình ảnh ${file.name} quá lớn! Vui lòng chọn hình ảnh khác`);
-        }
-      }
-    }
     this.siteSurveyReportService
-      .uploadImageSiteSurveyingReport(this.drainageSystemImageUrls, this.currentBidOpportunityId)
+      .uploadImageSiteSurveyingReport(files, this.currentBidOpportunityId)
       .subscribe(res => {
-        this.drainageSystemImageUrls = res;
+        this.drainageSystemImageUrls = [...this.drainageSystemImageUrls, ...res];
       }, err => {
         this.alertService.error('Upload hình ảnh thất bại. Xin vui lòng thử lại!');
         this.drainageSystemImageUrls.forEach(x => {
@@ -323,30 +265,10 @@ export class ServiceConstructionComponent implements OnInit {
 
   uploadDrainagePointImage(event) {
     const files = event.target.files;
-    if (files) {
-      for (const file of files) {
-        if (file.size < 10485760) {
-          const reader = new FileReader();
-          reader.onload = (e: any) => {
-            this.drainagePointImageUrls.push({
-              id: null,
-              image: {
-                file: file,
-                base64: e.target.result
-              }
-            });
-            this.serviceConstructionForm.get('heThongNuocThoatDiemDauNoiList').patchValue(this.drainagePointImageUrls);
-          };
-          reader.readAsDataURL(file);
-        } else {
-          this.alertService.error(`Hình ảnh ${file.name} quá lớn! Vui lòng chọn hình ảnh khác`);
-        }
-      }
-    }
     this.siteSurveyReportService
-      .uploadImageSiteSurveyingReport(this.drainagePointImageUrls, this.currentBidOpportunityId)
+      .uploadImageSiteSurveyingReport(files, this.currentBidOpportunityId)
       .subscribe(res => {
-        this.drainagePointImageUrls = res;
+        this.drainagePointImageUrls = [...this.drainagePointImageUrls, ...res];
       }, err => {
         this.alertService.error('Upload hình ảnh thất bại. Xin vui lòng thử lại!');
         this.drainagePointImageUrls.forEach(x => {
@@ -372,30 +294,10 @@ export class ServiceConstructionComponent implements OnInit {
 
   uploadPowerStationImage(event) {
     const files = event.target.files;
-    if (files) {
-      for (const file of files) {
-        if (file.size < 10485760) {
-          const reader = new FileReader();
-          reader.onload = (e: any) => {
-            this.powerStationImageUrls.push({
-              id: null,
-              image: {
-                file: file,
-                base64: e.target.result
-              }
-            });
-            this.serviceConstructionForm.get('tramHaTheList').patchValue(this.powerStationImageUrls);
-          };
-          reader.readAsDataURL(file);
-        } else {
-          this.alertService.error(`Hình ảnh ${file.name} quá lớn! Vui lòng chọn hình ảnh khác`);
-        }
-      }
-    }
     this.siteSurveyReportService
-      .uploadImageSiteSurveyingReport(this.powerStationImageUrls, this.currentBidOpportunityId)
+      .uploadImageSiteSurveyingReport(files, this.currentBidOpportunityId)
       .subscribe(res => {
-        this.powerStationImageUrls = res;
+        this.powerStationImageUrls = [...this.powerStationImageUrls, ...res];
       }, err => {
         this.alertService.error('Upload hình ảnh thất bại. Xin vui lòng thử lại!');
         this.powerStationImageUrls.forEach(x => {
@@ -421,30 +323,10 @@ export class ServiceConstructionComponent implements OnInit {
 
   uploadMediumVoltageSystemImage(event) {
     const files = event.target.files;
-    if (files) {
-      for (const file of files) {
-        if (file.size < 10485760) {
-          const reader = new FileReader();
-          reader.onload = (e: any) => {
-            this.mediumVoltageSystemImageUrls.push({
-              id: null,
-              image: {
-                file: file,
-                base64: e.target.result
-              }
-            });
-            this.serviceConstructionForm.get('duongDayTrungTheList').patchValue(this.mediumVoltageSystemImageUrls);
-          };
-          reader.readAsDataURL(file);
-        } else {
-          this.alertService.error(`Hình ảnh ${file.name} quá lớn! Vui lòng chọn hình ảnh khác`);
-        }
-      }
-    }
     this.siteSurveyReportService
-      .uploadImageSiteSurveyingReport(this.mediumVoltageSystemImageUrls, this.currentBidOpportunityId)
+      .uploadImageSiteSurveyingReport(files, this.currentBidOpportunityId)
       .subscribe(res => {
-        this.mediumVoltageSystemImageUrls = res;
+        this.mediumVoltageSystemImageUrls = [...this.mediumVoltageSystemImageUrls, ...res];
       }, err => {
         this.alertService.error('Upload hình ảnh thất bại. Xin vui lòng thử lại!');
         this.mediumVoltageSystemImageUrls.forEach(x => {
@@ -470,30 +352,10 @@ export class ServiceConstructionComponent implements OnInit {
 
   uploadPowerOtherImage(event) {
     const files = event.target.files;
-    if (files) {
-      for (const file of files) {
-        if (file.size < 10485760) {
-          const reader = new FileReader();
-          reader.onload = (e: any) => {
-            this.powerOtherImageUrls.push({
-              id: null,
-              image: {
-                file: file,
-                base64: e.target.result
-              }
-            });
-            this.serviceConstructionForm.get('heThongDienKhacList').patchValue(this.powerOtherImageUrls);
-          };
-          reader.readAsDataURL(file);
-        } else {
-          this.alertService.error(`Hình ảnh ${file.name} quá lớn! Vui lòng chọn hình ảnh khác`);
-        }
-      }
-    }
     this.siteSurveyReportService
-      .uploadImageSiteSurveyingReport(this.powerOtherImageUrls, this.currentBidOpportunityId)
+      .uploadImageSiteSurveyingReport(files, this.currentBidOpportunityId)
       .subscribe(res => {
-        this.powerOtherImageUrls = res;
+        this.powerOtherImageUrls = [...this.powerOtherImageUrls, ...res];
       }, err => {
         this.alertService.error('Upload hình ảnh thất bại. Xin vui lòng thử lại!');
         this.powerOtherImageUrls.forEach(x => {
@@ -515,5 +377,12 @@ export class ServiceConstructionComponent implements OnInit {
     }
     this.powerOtherImageUrls.splice(index, 1);
     this.serviceConstructionForm.get('heThongDienKhacList').patchValue(this.powerOtherImageUrls);
+  }
+  viewFullScreenImage(listImage) {
+    this.showPopupViewImage = true;
+    this.imageUrlArray = [...listImage];
+  }
+  closeView() {
+    this.showPopupViewImage = false;
   }
 }

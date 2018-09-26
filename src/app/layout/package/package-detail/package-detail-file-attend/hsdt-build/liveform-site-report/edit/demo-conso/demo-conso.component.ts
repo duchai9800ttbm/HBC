@@ -21,6 +21,8 @@ export class DemoConsoComponent implements OnInit {
   adjacentImageUrls = [];
   url;
   viewMode;
+  imageUrlArray = [];
+  showPopupViewImage = false;
   currentBidOpportunityId: number;
   demoConsoModel = new DemoConso();
   constructor(
@@ -100,30 +102,10 @@ export class DemoConsoComponent implements OnInit {
 
   uploadDemobilisationImage(event) {
     const files = event.target.files;
-    if (files) {
-      for (const file of files) {
-        if (file.size < 10485760) {
-          const reader = new FileReader();
-          reader.onload = (e: any) => {
-            this.demobilisationImageUrls.push({
-              id: null,
-              thumbSizeUrl: null,
-              largeSizeUrl: null,
-              file: file,
-              base64: e.target.result
-            });
-            this.demoConsoForm.get('phaVoKetCauList').patchValue(this.demobilisationImageUrls);
-          };
-          reader.readAsDataURL(file);
-        } else {
-          this.alertService.error(`Hình ảnh ${file.name} quá lớn! Vui lòng chọn hình ảnh khác`);
-        }
-      }
-    }
     this.siteSurveyReportService
-      .uploadImageSiteSurveyingReport(this.demobilisationImageUrls, this.currentBidOpportunityId)
+      .uploadImageSiteSurveyingReport(files, this.currentBidOpportunityId)
       .subscribe(res => {
-        this.demobilisationImageUrls = res;
+        this.demobilisationImageUrls = [...this.demobilisationImageUrls, ...res];
       }, err => {
         this.alertService.error('Upload hình ảnh thất bại. Xin vui lòng thử lại!');
         this.demobilisationImageUrls.forEach(x => {
@@ -149,30 +131,10 @@ export class DemoConsoComponent implements OnInit {
 
   uploadConsolidationImage(event) {
     const files = event.target.files;
-    if (files) {
-      for (const file of files) {
-        if (file.size < 10485760) {
-          const reader = new FileReader();
-          reader.onload = (e: any) => {
-            this.consolidationImageUrls.push({
-              id: null,
-              image: {
-                file: file,
-                base64: e.target.result
-              }
-            });
-            this.demoConsoForm.get('giaCoKetCauList').patchValue(this.consolidationImageUrls);
-          };
-          reader.readAsDataURL(file);
-        } else {
-          this.alertService.error(`Hình ảnh ${file.name} quá lớn! Vui lòng chọn hình ảnh khác`);
-        }
-      }
-    }
     this.siteSurveyReportService
-      .uploadImageSiteSurveyingReport(this.consolidationImageUrls, this.currentBidOpportunityId)
+      .uploadImageSiteSurveyingReport(files, this.currentBidOpportunityId)
       .subscribe(res => {
-        this.consolidationImageUrls = res;
+        this.consolidationImageUrls = [...this.consolidationImageUrls, ...res];
       }, err => {
         this.alertService.error('Upload hình ảnh thất bại. Xin vui lòng thử lại!');
         this.consolidationImageUrls.forEach(x => {
@@ -198,30 +160,10 @@ export class DemoConsoComponent implements OnInit {
 
   uploaAdjacentImage(event) {
     const files = event.target.files;
-    if (files) {
-      for (const file of files) {
-        if (file.size < 10485760) {
-          const reader = new FileReader();
-          reader.onload = (e: any) => {
-            this.adjacentImageUrls.push({
-              id: null,
-              image: {
-                file: file,
-                base64: e.target.result
-              }
-            });
-            this.demoConsoForm.get('dieuKienHinhAnhList').patchValue(this.adjacentImageUrls);
-          };
-          reader.readAsDataURL(file);
-        } else {
-          this.alertService.error(`Hình ảnh ${file.name} quá lớn! Vui lòng chọn hình ảnh khác`);
-        }
-      }
-    }
     this.siteSurveyReportService
-      .uploadImageSiteSurveyingReport(this.adjacentImageUrls, this.currentBidOpportunityId)
+      .uploadImageSiteSurveyingReport(files, this.currentBidOpportunityId)
       .subscribe(res => {
-        this.adjacentImageUrls = res;
+        this.adjacentImageUrls = [...this.adjacentImageUrls, ...res];
       }, err => {
         this.alertService.error('Upload hình ảnh thất bại. Xin vui lòng thử lại!');
         this.adjacentImageUrls.forEach(x => {
@@ -243,5 +185,12 @@ export class DemoConsoComponent implements OnInit {
     }
     this.adjacentImageUrls.splice(index, 1);
     this.demoConsoForm.get('dieuKienHinhAnhList').patchValue(this.adjacentImageUrls);
+  }
+  viewFullScreenImage(listImage) {
+    this.showPopupViewImage = true;
+    this.imageUrlArray = [...listImage];
+  }
+  closeView() {
+    this.showPopupViewImage = false;
   }
 }

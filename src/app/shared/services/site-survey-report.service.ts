@@ -41,7 +41,7 @@ export class SiteSurveyReportService {
   // Xóa ảnh báo cáo công trình
   deleteImageSiteSurveyingReport(guid): Observable<any> {
     const url = `bidopportunity/tendersitesurveyingreport/deleteimage`;
-    return this.apiService.post(url, guid).map(res => res).share();
+    return this.apiService.post(url, guid);
   }
 
   // Upload ảnh
@@ -50,26 +50,14 @@ export class SiteSurveyReportService {
     bidOpportunityId: number
   ) {
     const url = `bidopportunity/tendersitesurveyingreport/uploadimage`;
-    const tempList = [];
-    const listImageFile = [];
-    listImage.forEach(x => {
-      listImageFile.push(x.file);
-    });
     const imageUploadForm = new FormData();
-    for (const image of listImageFile) {
+    for (const image of listImage) {
       imageUploadForm.append('Images', image);
     }
     imageUploadForm.append('BidOpportunityId', `${bidOpportunityId}`);
     return this.apiService
       .postFile(url, imageUploadForm)
-      .map(res =>
-        res.result.map(response => ({
-          id: response.guid,
-          thumbSizeUrl: res.thumbSizeUrl,
-          largeSizeUrl: res.largeSizeUrl,
-          file: null,
-          base64: null
-        })))
+      .map(res => res.result)
       .share();
   }
 
@@ -79,241 +67,141 @@ export class SiteSurveyReportService {
     const infoReport = {
       bidOpportunityId: obj.bidOpportunityId,
       createdEmployeeId: obj.nguoiTao.id,
-      updatedEmployeeId: obj.nguoiCapNhat.id,
-      projectStatistic: {
+      updatedEmployeeId: (obj.nguoiCapNhat) ? obj.nguoiCapNhat.id : this.employeeId,
+      projectStatistic: obj.scaleOverall && {
         projectStatistic: {
-          constructionType: obj.scaleOverall.loaiCongTrinh.forEach(x => ({
+          constructionType: obj.scaleOverall.loaiCongTrinh && obj.scaleOverall.loaiCongTrinh.forEach(x => ({
             value: x.value,
             text: x.text,
             checked: x.checked
           })),
-          constructionStatus: obj.scaleOverall.trangthaiCongTrinh.forEach(x => ({
+          constructionStatus: obj.scaleOverall.trangthaiCongTrinh && obj.scaleOverall.trangthaiCongTrinh.forEach(x => ({
             value: x.value,
             text: x.value,
             checked: x.checked
           })),
-          projectScale: {
-            documentName: obj.scaleOverall.tenTaiLieu,
-            interviewTimes: obj.scaleOverall.lanPhongVan,
-            siteArea: obj.scaleOverall.quyMoDuAn.dienTichCongTruong,
-            grossFloorArea: obj.scaleOverall.quyMoDuAn.tongDienTichXayDung,
-            totalNumberOfFloor: obj.scaleOverall.quyMoDuAn.soTang,
-            constructionPeriod: obj.scaleOverall.quyMoDuAn.tienDo
+          projectScale: obj.scaleOverall.quyMoDuAn && {
+            documentName: (obj.scaleOverall.tenTaiLieu) ? obj.scaleOverall.tenTaiLieu : '',
+            interviewTimes: (obj.scaleOverall.lanPhongVan) ? obj.scaleOverall.lanPhongVan : 0,
+            siteArea: (obj.scaleOverall.quyMoDuAn.dienTichCongTruong) ? obj.scaleOverall.quyMoDuAn.dienTichCongTruong : 0,
+            grossFloorArea: (obj.scaleOverall.quyMoDuAn.tongDienTichXayDung) ? obj.scaleOverall.quyMoDuAn.tongDienTichXayDung : 0,
+            totalNumberOfFloor: (obj.scaleOverall.quyMoDuAn.soTang) ? obj.scaleOverall.quyMoDuAn.soTang : '',
+            constructionPeriod: (obj.scaleOverall.quyMoDuAn.tienDo) ? obj.scaleOverall.quyMoDuAn.tienDo : 0
           }
         },
-        perspectiveImageOfProject: {
+        perspectiveImageOfProject: obj.scaleOverall.hinhAnhPhoiCanh && {
           desc: obj.scaleOverall.hinhAnhPhoiCanh.description,
-          imageUrls: obj.scaleOverall.hinhAnhPhoiCanh.images.forEach(x => ({
-            guid: x.id,
-            thumbSizeUrl: x.thumbSizeUrl,
-            largeSizeUrl: x.largeSizeUrl
-          }))
+          imageUrls: obj.scaleOverall.hinhAnhPhoiCanh.images
         },
-        existingStructure: {
+        existingStructure: obj.scaleOverall.thongTinVeKetCau && {
           desc: obj.scaleOverall.thongTinVeKetCau.description,
-          imageUrls: obj.scaleOverall.thongTinVeKetCau.images.forEach(x => ({
-            guid: x.id,
-            thumbSizeUrl: x.thumbSizeUrl,
-            largeSizeUrl: x.largeSizeUrl
-          }))
+          imageUrls: obj.scaleOverall.thongTinVeKetCau.images
         },
-        specialRequirement: {
+        specialRequirement: obj.scaleOverall.nhungYeuCauDacBiet && {
           desc: obj.scaleOverall.nhungYeuCauDacBiet.description,
-          imageUrls: obj.scaleOverall.nhungYeuCauDacBiet.images.forEach(x => ({
-            guid: x.id,
-            thumbSizeUrl: x.thumbSizeUrl,
-            largeSizeUrl: x.largeSizeUrl
-          }))
+          imageUrls: obj.scaleOverall.nhungYeuCauDacBiet.images
         }
       },
       siteInformation: obj.describeOverall && {
         topography: obj.describeOverall.chiTietDiaHinh && {
           desc: obj.describeOverall.chiTietDiaHinh.description,
-          imageUrls: obj.describeOverall.chiTietDiaHinh.images.forEach(x => ({
-            guid: x.id,
-            thumbSizeUrl: x.thumbSizeUrl,
-            largeSizeUrl: x.largeSizeUrl
-          }))
+          imageUrls: obj.describeOverall.chiTietDiaHinh.images
         },
         existBuildingOnTheSite: obj.describeOverall.kienTrucHienHuu && {
           desc: obj.describeOverall.kienTrucHienHuu.description,
-          imageUrls: obj.describeOverall.kienTrucHienHuu.images.forEach(x => ({
-            guid: x.id,
-            thumbSizeUrl: x.thumbSizeUrl,
-            largeSizeUrl: x.largeSizeUrl
-          }))
+          imageUrls: obj.describeOverall.kienTrucHienHuu.images
         },
         existObstacleOnTheSite: obj.describeOverall.yeuCauChuongNgai && {
           desc: obj.describeOverall.yeuCauChuongNgai.description,
-          imageUrls: obj.describeOverall.yeuCauChuongNgai.images.forEach(x => ({
-            guid: x.id,
-            thumbSizeUrl: x.thumbSizeUrl,
-            largeSizeUrl: x.largeSizeUrl
-          }))
+          imageUrls: obj.describeOverall.yeuCauChuongNgai.images
         }
       },
       transportationAndSiteEntranceCondition: obj.traffic && {
         disadvantage: obj.traffic.chiTietDiaHinhKhoKhan && {
           desc: obj.traffic.chiTietDiaHinhKhoKhan.description,
-          imageUrls: obj.traffic.chiTietDiaHinhKhoKhan.images.forEach(x => ({
-            guid: x.id,
-            thumbSizeUrl: x.thumbSizeUrl,
-            largeSizeUrl: x.largeSizeUrl
-          }))
+          imageUrls: obj.traffic.chiTietDiaHinhKhoKhan.images
         },
         advantage: obj.traffic.chiTietDiaHinhThuanLoi && {
           desc: obj.traffic.chiTietDiaHinhThuanLoi.description,
-          imageUrls: obj.traffic.chiTietDiaHinhThuanLoi.images.forEach(x => ({
-            guid: x.id,
-            thumbSizeUrl: x.thumbSizeUrl,
-            largeSizeUrl: x.largeSizeUrl
-          }))
+          imageUrls: obj.traffic.chiTietDiaHinhThuanLoi.images
         },
         directionOfSiteEntrance: obj.traffic.loiVaoCongTrinhHuongVao && {
           desc: obj.traffic.loiVaoCongTrinhHuongVao.description,
-          imageUrls: obj.traffic.loiVaoCongTrinhHuongVao.images.forEach(x => ({
-            guid: x.id,
-            thumbSizeUrl: x.thumbSizeUrl,
-            largeSizeUrl: x.largeSizeUrl
-          }))
+          imageUrls: obj.traffic.loiVaoCongTrinhHuongVao.images
         },
         existingRoadOnSite: obj.traffic.loiVaoCongTrinhDuongHienCo && {
           desc: obj.traffic.loiVaoCongTrinhDuongHienCo.description,
-          imageUrls: obj.traffic.loiVaoCongTrinhDuongHienCo.images.forEach(x => ({
-            guid: x.id,
-            thumbSizeUrl: x.thumbSizeUrl,
-            largeSizeUrl: x.largeSizeUrl
-          }))
+          imageUrls: obj.traffic.loiVaoCongTrinhDuongHienCo.images
         },
         temporatyRoadRequirement: obj.traffic.loiVaoCongTrinhYeuCauDuongTam && {
           desc: obj.traffic.loiVaoCongTrinhYeuCauDuongTam.description,
-          imageUrls: obj.traffic.loiVaoCongTrinhYeuCauDuongTam.images.forEach(x => ({
-            guid: x.id,
-            thumbSizeUrl: x.thumbSizeUrl,
-            largeSizeUrl: x.largeSizeUrl
-          }))
+          imageUrls: obj.traffic.loiVaoCongTrinhYeuCauDuongTam.images
         },
         temporaryFenceRequirement: obj.traffic.loiVaoCongTrinhYeuCauHangRao && {
           desc: obj.traffic.loiVaoCongTrinhYeuCauHangRao.description,
-          imageUrls: obj.traffic.loiVaoCongTrinhYeuCauHangRao.images.forEach(x => ({
-            guid: x.id,
-            thumbSizeUrl: x.thumbSizeUrl,
-            largeSizeUrl: x.largeSizeUrl
-          }))
+          imageUrls: obj.traffic.loiVaoCongTrinhYeuCauHangRao.images
         }
       },
       demobilisationAndConsolidation: obj.demoConso && {
         demobilisationExistingStructureOrBuilding: obj.demoConso.phaVoKetCau && {
           desc: obj.demoConso.phaVoKetCau.description,
-          imageUrls: obj.demoConso.phaVoKetCau.images.forEach(x => ({
-            guid: x.id,
-            thumbSizeUrl: x.thumbSizeUrl,
-            largeSizeUrl: x.largeSizeUrl
-          }))
+          imageUrls: obj.demoConso.phaVoKetCau.images
         },
         consolidationExistingStructureOrBuilding: obj.demoConso.giaCoKetCau && {
           desc: obj.demoConso.giaCoKetCau.description,
-          imageUrls: obj.demoConso.giaCoKetCau.images.forEach(x => ({
-            guid: x.id,
-            thumbSizeUrl: x.thumbSizeUrl,
-            largeSizeUrl: x.largeSizeUrl
-          }))
+          imageUrls: obj.demoConso.giaCoKetCau.images
         },
         adjacentBuildingConditions: obj.demoConso.dieuKien && {
           desc: obj.demoConso.dieuKien.description,
-          imageUrls: obj.demoConso.dieuKien.images.forEach(x => ({
-            guid: x.id,
-            thumbSizeUrl: x.thumbSizeUrl,
-            largeSizeUrl: x.largeSizeUrl
-          }))
+          imageUrls: obj.demoConso.dieuKien.images
         }
       },
       temporaryBuildingServiceForConstruction: obj.serviceConstruction && {
         supplyWaterSystemExistingSystem: obj.serviceConstruction.heThongNuocHeThongHienHuu && {
           desc: obj.serviceConstruction.heThongNuocHeThongHienHuu.description,
-          imageUrls: obj.serviceConstruction.heThongNuocHeThongHienHuu.images.forEach(x => ({
-            guid: x.id,
-            thumbSizeUrl: x.thumbSizeUrl,
-            largeSizeUrl: x.largeSizeUrl
-          }))
+          imageUrls: obj.serviceConstruction.heThongNuocHeThongHienHuu.images
         },
         supplyWaterSystemExistingConnectionPoint: obj.serviceConstruction.heThongNuocDiemDauNoi && {
           desc: obj.serviceConstruction.heThongNuocDiemDauNoi.description,
-          imageUrls: obj.serviceConstruction.heThongNuocDiemDauNoi.images.forEach(x => ({
-            guid: x.id,
-            thumbSizeUrl: x.thumbSizeUrl,
-            largeSizeUrl: x.largeSizeUrl
-          }))
+          imageUrls: obj.serviceConstruction.heThongNuocDiemDauNoi.images
         },
         drainageWaterSystemExistingSystem: obj.serviceConstruction.heThongNuocThoatHeThongHienHuu && {
           desc: obj.serviceConstruction.heThongNuocThoatHeThongHienHuu.description,
-          imageUrls: obj.serviceConstruction.heThongNuocThoatHeThongHienHuu.images.forEach(x => ({
-            guid: x.id,
-            thumbSizeUrl: x.thumbSizeUrl,
-            largeSizeUrl: x.largeSizeUrl
-          }))
+          imageUrls: obj.serviceConstruction.heThongNuocThoatHeThongHienHuu.images
         },
         drainageWaterSystemExistingConnectionPoint: obj.serviceConstruction.heThongNuocThoatDiemDauNoi && {
           desc: obj.serviceConstruction.heThongNuocThoatDiemDauNoi.description,
-          imageUrls: obj.serviceConstruction.heThongNuocThoatDiemDauNoi.images.forEach(x => ({
-            guid: x.id,
-            thumbSizeUrl: x.thumbSizeUrl,
-            largeSizeUrl: x.largeSizeUrl
-          }))
+          imageUrls: obj.serviceConstruction.heThongNuocThoatDiemDauNoi.images
         },
         transformerStation: obj.serviceConstruction.heThongDienTramHaThe && {
           desc: obj.serviceConstruction.heThongDienTramHaThe.description,
-          imageUrls: obj.serviceConstruction.heThongDienTramHaThe.images.forEach(x => ({
-            guid: x.id,
-            thumbSizeUrl: x.thumbSizeUrl,
-            largeSizeUrl: x.largeSizeUrl
-          }))
+          imageUrls: obj.serviceConstruction.heThongDienTramHaThe.images
         },
         existingMediumVoltageSystem: obj.serviceConstruction.heThongDienDuongDayTrungThe && {
           desc: obj.serviceConstruction.heThongDienDuongDayTrungThe.description,
-          imageUrls: obj.serviceConstruction.heThongDienDuongDayTrungThe.images.forEach(x => ({
-            guid: x.id,
-            thumbSizeUrl: x.thumbSizeUrl,
-            largeSizeUrl: x.largeSizeUrl
-          }))
+          imageUrls: obj.serviceConstruction.heThongDienDuongDayTrungThe.images
         },
         others: obj.serviceConstruction.heThongDienThongTinKhac && {
           desc: obj.serviceConstruction.heThongDienThongTinKhac.description,
-          imageUrls: obj.serviceConstruction.heThongDienThongTinKhac.images.forEach(x => ({
-            guid: x.id,
-            thumbSizeUrl: x.thumbSizeUrl,
-            largeSizeUrl: x.largeSizeUrl
-          }))
+          imageUrls: obj.serviceConstruction.heThongDienThongTinKhac.images
         }
       },
       existingSoilCondition: obj.soilCondition && {
         existingFooting: obj.soilCondition.nenMongHienCo && {
           desc: obj.soilCondition.nenMongHienCo.description,
-          imageUrls: obj.soilCondition.nenMongHienCo.images.forEach(x => ({
-            guid: x.id,
-            thumbSizeUrl: x.thumbSizeUrl,
-            largeSizeUrl: x.largeSizeUrl
-          }))
+          imageUrls: obj.soilCondition.nenMongHienCo.images
         },
         soilInvestigation: obj.soilCondition.thongTinCongTrinhGanDo && {
           desc: obj.soilCondition.thongTinCongTrinhGanDo.description,
-          imageUrls: obj.soilCondition.thongTinCongTrinhGanDo.images.forEach(x => ({
-            guid: x.id,
-            thumbSizeUrl: x.thumbSizeUrl,
-            largeSizeUrl: x.largeSizeUrl
-          }))
+          imageUrls: obj.soilCondition.thongTinCongTrinhGanDo.images
         }
       },
-      usefulInFormations: obj.usefulInfo.forEach(x => ({
+      usefulInFormations: obj.usefulInfo && obj.usefulInfo.forEach(x => ({
         title: x.title,
         content: x.content.forEach(item => ({
           name: item.name,
           detail: item.detail,
-          imageUrls: item.images.forEach(i => ({
-            guid: i.id,
-            thumbSizeUrl: i.thumbSizeUrl,
-            largeSizeUrl: i.largeSizeUrl
-          }))
+          imageUrls: item.images
         }))
       }))
       ,
@@ -321,8 +209,7 @@ export class SiteSurveyReportService {
     };
     return this.apiService
       .post(url, infoReport)
-      .map(response => response)
-      .share();
+      .map(response => response);
   }
 
 

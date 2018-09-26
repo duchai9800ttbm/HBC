@@ -14,8 +14,8 @@
                         <div class="image-demo-img">
                             <input type="file" accept="image/*" multiple #uploadFooting (change)="uploadFootingImage($event)">
 
-                            <div class="display-img" *ngFor="let url of footingImageUrls">
-                                <img [src]="url.largeSizeUrl || url.base64">
+                            <div class="display-img" *ngFor="let url of footingImageUrls" (click)="viewFullScreenImage(footingImageUrls)">
+                                <img [src]="url.largeSizeUrl">
                                 <div class="toppp"  [ngClass]="{'d-none': viewMode}" (click)="deleteFootingImage(url)">
                                     <i class="fa fa-times delete-icon" aria-hidden="true"></i>
                                 </div>
@@ -40,8 +40,8 @@
                         <div class="image-demo-img">
                             <input type="file" accept="image/*" multiple #uploadInvestigation (change)="uploadInvestigationImage($event)">
 
-                            <div class="display-img" *ngFor="let url of investigationImageUrls">
-                                <img [src]="url.largeSizeUrl || url.base64">
+                            <div class="display-img" *ngFor="let url of investigationImageUrls" (click)="viewFullScreenImage(investigationImageUrls)">
+                                <img [src]="url.largeSizeUrl">
                                 <div class="toppp"  [ngClass]="{'d-none': viewMode}" (click)="deleteInvestigationImage(url)">
                                     <i class="fa fa-times delete-icon" aria-hidden="true"></i>
                                 </div>
@@ -57,3 +57,5 @@
         </div>
     </div>
 </form>
+
+<app-image-carousel class="d-flex justify-content-center align-items-center" *ngIf="showPopupViewImage" [(imageUrlArray)]="imageUrlArray" (closed)="closeView()"></app-image-carousel>

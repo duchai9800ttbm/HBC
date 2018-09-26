@@ -20,6 +20,8 @@ export class SoilConditionComponent implements OnInit {
   investigationImageUrls = [];
   url;
   viewMode;
+  imageUrlArray = [];
+  showPopupViewImage = false;
   currentBidOpportunityId: number;
   soilConditionModel = new SoilCondition();
   constructor(
@@ -88,30 +90,10 @@ export class SoilConditionComponent implements OnInit {
 
   uploadFootingImage(event) {
     const files = event.target.files;
-    if (files) {
-      for (const file of files) {
-        if (file.size < 10485760) {
-          const reader = new FileReader();
-          reader.onload = (e: any) => {
-            this.footingImageUrls.push({
-              id: null,
-              image: {
-                file: file,
-                base64: e.target.result
-              }
-            });
-            this.soilConditionForm.get('nenMongHienCoList').patchValue(this.footingImageUrls);
-          };
-          reader.readAsDataURL(file);
-        } else {
-          this.alertService.error(`Hình ảnh ${file.name} quá lớn! Vui lòng chọn hình ảnh khác`);
-        }
-      }
-    }
     this.siteSurveyReportService
-      .uploadImageSiteSurveyingReport(this.footingImageUrls, this.currentBidOpportunityId)
+      .uploadImageSiteSurveyingReport(files, this.currentBidOpportunityId)
       .subscribe(res => {
-        this.footingImageUrls = res;
+        this.footingImageUrls = [...this.footingImageUrls, ...res];
       }, err => {
         this.alertService.error('Upload hình ảnh thất bại. Xin vui lòng thử lại!');
         this.footingImageUrls.forEach(x => {
@@ -137,30 +119,10 @@ export class SoilConditionComponent implements OnInit {
 
   uploadInvestigationImage(event) {
     const files = event.target.files;
-    if (files) {
-      for (const file of files) {
-        if (file.size < 10485760) {
-          const reader = new FileReader();
-          reader.onload = (e: any) => {
-            this.investigationImageUrls.push({
-              id: null,
-              image: {
-                file: file,
-                base64: e.target.result
-              }
-            });
-            this.soilConditionForm.get('thongTinCongTrinhGanDoList').patchValue(this.investigationImageUrls);
-          };
-          reader.readAsDataURL(file);
-        } else {
-          this.alertService.error(`Hình ảnh ${file.name} quá lớn! Vui lòng chọn hình ảnh khác`);
-        }
-      }
-    }
     this.siteSurveyReportService
-      .uploadImageSiteSurveyingReport(this.investigationImageUrls, this.currentBidOpportunityId)
+      .uploadImageSiteSurveyingReport(files, this.currentBidOpportunityId)
       .subscribe(res => {
-        this.investigationImageUrls = res;
+        this.investigationImageUrls = [...this.investigationImageUrls, ...res];
       }, err => {
         this.alertService.error('Upload hình ảnh thất bại. Xin vui lòng thử lại!');
         this.investigationImageUrls.forEach(x => {
@@ -182,5 +144,12 @@ export class SoilConditionComponent implements OnInit {
     }
     this.investigationImageUrls.splice(index, 1);
     this.soilConditionForm.get('thongTinCongTrinhGanDoList').patchValue(this.investigationImageUrls);
+  }
+  viewFullScreenImage(listImage) {
+    this.showPopupViewImage = true;
+    this.imageUrlArray = [...listImage];
+  }
+  closeView() {
+    this.showPopupViewImage = false;
   }
 }

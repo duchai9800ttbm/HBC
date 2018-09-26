@@ -21,6 +21,8 @@ export class DescribeOverallComponent implements OnInit {
   stacaleImageUrls = [];
   url;
   viewMode;
+  imageUrlArray = [];
+  showPopupViewImage = false;
   currentBidOpportunityId: number;
   describeModel = new DescribeOverall();
   constructor(
@@ -98,30 +100,10 @@ export class DescribeOverallComponent implements OnInit {
 
   uploadTopographyImage(event) {
     const files = event.target.files;
-    if (files) {
-      for (const file of files) {
-        if (file.size < 10485760) {
-          const reader = new FileReader();
-          reader.onload = (e: any) => {
-            this.topographyImageUrls.push({
-              id: null,
-              image: {
-                file: file,
-                base64: e.target.result
-              }
-            });
-            this.describeForm.get('chiTietDiaHinhList').patchValue(this.topographyImageUrls);
-          };
-          reader.readAsDataURL(file);
-        } else {
-          this.alertService.error(`Hình ảnh ${file.name} quá lớn! Vui lòng chọn hình ảnh khác`);
-        }
-      }
-    }
     this.siteSurveyReportService
-      .uploadImageSiteSurveyingReport(this.topographyImageUrls, this.currentBidOpportunityId)
+      .uploadImageSiteSurveyingReport(files, this.currentBidOpportunityId)
       .subscribe(res => {
-        this.topographyImageUrls = res;
+        this.topographyImageUrls = [...this.topographyImageUrls, ...res];
       }, err => {
         this.alertService.error('Upload hình ảnh thất bại. Xin vui lòng thử lại!');
         this.topographyImageUrls.forEach(x => {
@@ -147,30 +129,10 @@ export class DescribeOverallComponent implements OnInit {
 
   uploadExistingBuildImage(event) {
     const files = event.target.files;
-    if (files) {
-      for (const file of files) {
-        if (file.size < 10485760) {
-          const reader = new FileReader();
-          reader.onload = (e: any) => {
-            this.existingBuildImageUrls.push({
-              id: null,
-              image: {
-                file: file,
-                base64: e.target.result
-              }
-            });
-            this.describeForm.get('kienTrucHienHuuList').patchValue(this.existingBuildImageUrls);
-          };
-          reader.readAsDataURL(file);
-        } else {
-          this.alertService.error(`Hình ảnh ${file.name} quá lớn! Vui lòng chọn hình ảnh khác`);
-        }
-      }
-    }
     this.siteSurveyReportService
-      .uploadImageSiteSurveyingReport(this.existingBuildImageUrls, this.currentBidOpportunityId)
+      .uploadImageSiteSurveyingReport(files, this.currentBidOpportunityId)
       .subscribe(res => {
-        this.existingBuildImageUrls = res;
+        this.existingBuildImageUrls = [...this.existingBuildImageUrls, ...res];
       }, err => {
         this.alertService.error('Upload hình ảnh thất bại. Xin vui lòng thử lại!');
         this.existingBuildImageUrls.forEach(x => {
@@ -196,30 +158,10 @@ export class DescribeOverallComponent implements OnInit {
 
   uploadStacaleImage(event) {
     const files = event.target.files;
-    if (files) {
-      for (const file of files) {
-        if (file.size < 10485760) {
-          const reader = new FileReader();
-          reader.onload = (e: any) => {
-            this.stacaleImageUrls.push({
-              id: null,
-              image: {
-                file: file,
-                base64: e.target.result
-              }
-            });
-            this.describeForm.get('yeuCauChuongNgaiList').patchValue(this.stacaleImageUrls);
-          };
-          reader.readAsDataURL(file);
-        } else {
-          this.alertService.error(`Hình ảnh ${file.name} quá lớn! Vui lòng chọn hình ảnh khác`);
-        }
-      }
-    }
     this.siteSurveyReportService
-      .uploadImageSiteSurveyingReport(this.stacaleImageUrls, this.currentBidOpportunityId)
+      .uploadImageSiteSurveyingReport(files, this.currentBidOpportunityId)
       .subscribe(res => {
-        this.stacaleImageUrls = res;
+        this.stacaleImageUrls = [...this.stacaleImageUrls, ...res];
       }, err => {
         this.alertService.error('Upload hình ảnh thất bại. Xin vui lòng thử lại!');
         this.stacaleImageUrls.forEach(x => {
@@ -241,5 +183,12 @@ export class DescribeOverallComponent implements OnInit {
     }
     this.stacaleImageUrls.splice(index, 1);
     this.describeForm.get('yeuCauChuongNgaiList').patchValue(this.stacaleImageUrls);
+  }
+  viewFullScreenImage(listImage) {
+    this.showPopupViewImage = true;
+    this.imageUrlArray = [...listImage];
+  }
+  closeView() {
+    this.showPopupViewImage = false;
   }
 }

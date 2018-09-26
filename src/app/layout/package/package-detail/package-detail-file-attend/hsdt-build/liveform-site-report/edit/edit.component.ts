@@ -51,7 +51,7 @@ export class EditComponent implements OnInit, OnDestroy {
       const objData = LiveformSiteReportComponent.formModel;
       this.showPopupConfirm = false;
       this.spinner.show();
-      const hinhAnhPhoiCanhList = objData.scaleOverall.hinhAnhPhoiCanh.images;
+      console.log(objData);
       this.siteSurveyReportService
         .createOrUpdateSiteSurveyingReport(objData)
         .subscribe(() => {
@@ -64,7 +64,7 @@ export class EditComponent implements OnInit, OnDestroy {
           this.spinner.hide();
           this.alertService.error('Đã xảy ra lỗi. Cập nhật không thành công!');
         });
-      LiveformSiteReportComponent.viewFlag = true;
+      // LiveformSiteReportComponent.viewFlag = true;
     }
   }
 

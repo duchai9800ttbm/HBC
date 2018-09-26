@@ -13,8 +13,8 @@
                         <div class="image-demo-img">
                             <input type="file" #uploaDisadvantage (change)="uploaDisadvantageImage($event)">
 
-                            <div class="display-img" *ngFor="let url of disadvantageImageUrls">
-                                <img [src]="url.largeSizeUrl || url.base64">
+                            <div class="display-img" *ngFor="let url of disadvantageImageUrls" (click)="viewFullScreenImage(disadvantageImageUrls)">
+                                <img [src]="url.largeSizeUrl">
                                 <div class="toppp"  [ngClass]="{'d-none': viewMode}" (click)="deleteDisadvantageImage(url)">
                                     <i class="fa fa-times delete-icon" aria-hidden="true"></i>
                                 </div>
@@ -33,8 +33,8 @@
                         <div class="image-demo-img">
                             <input type="file" #uploaAdvantage (change)="uploaAdvantageImage($event)">
 
-                            <div class="display-img" *ngFor="let url of advantageImageUrls">
-                                <img [src]="url.largeSizeUrl || url.base64">
+                            <div class="display-img" *ngFor="let url of advantageImageUrls" (click)="viewFullScreenImage(advantageImageUrls)">
+                                <img [src]="url.largeSizeUrl">
                                 <div class="toppp"  [ngClass]="{'d-none': viewMode}" (click)="deleteAdvantageImage(url)">
                                     <i class="fa fa-times delete-icon" aria-hidden="true"></i>
                                 </div>
@@ -58,8 +58,8 @@
                         <div class="image-demo-img">
                             <input type="file" accept="image/*" multiple #uploadDirection (change)="uploadDirectionImage($event)">
 
-                            <div class="display-img" *ngFor="let url of directionImageUrls">
-                                <img [src]="url.largeSizeUrl || url.base64">
+                            <div class="display-img" *ngFor="let url of directionImageUrls" (click)="viewFullScreenImage(directionImageUrls)">
+                                <img [src]="url.largeSizeUrl">
                                 <div class="toppp"  [ngClass]="{'d-none': viewMode}" (click)="deleteDirectionImage(url)">
                                     <i class="fa fa-times delete-icon" aria-hidden="true"></i>
                                 </div>
@@ -78,8 +78,8 @@
                         <div class="image-demo-img">
                             <input type="file" accept="image/*" multiple #uploadExisting (change)="uploadExistingImage($event)">
 
-                            <div class="display-img" *ngFor="let url of existingImageUrls">
-                                <img [src]="url.largeSizeUrl || url.base64">
+                            <div class="display-img" *ngFor="let url of existingImageUrls" (click)="viewFullScreenImage(existingImageUrls)">
+                                <img [src]="url.largeSizeUrl">
                                 <div class="toppp"  [ngClass]="{'d-none': viewMode}" (click)="deleteExistingImage(url)">
                                     <i class="fa fa-times delete-icon" aria-hidden="true"></i>
                                 </div>
@@ -98,8 +98,8 @@
                         <div class="image-demo-img">
                             <input type="file" accept="image/*" multiple #uploadRoad (change)="uploadRoadImage($event)">
 
-                            <div class="display-img" *ngFor="let url of roadImageUrls">
-                                <img [src]="url.largeSizeUrl || url.base64">
+                            <div class="display-img" *ngFor="let url of roadImageUrls" (click)="viewFullScreenImage(roadImageUrls)">
+                                <img [src]="url.largeSizeUrl">
                                 <div class="toppp"  [ngClass]="{'d-none': viewMode}" (click)="deleteRoadImage(url)">
                                     <i class="fa fa-times delete-icon" aria-hidden="true"></i>
                                 </div>
@@ -118,8 +118,8 @@
                         <div class="image-demo-img">
                             <input type="file" accept="image/*" multiple #uploadFence (change)="uploadFenceImage($event)">
 
-                            <div class="display-img" *ngFor="let url of fenceImageUrls">
-                                <img [src]="url.largeSizeUrl || url.base64">
+                            <div class="display-img" *ngFor="let url of fenceImageUrls" (click)="viewFullScreenImage(fenceImageUrls)">
+                                <img [src]="url.largeSizeUrl">
                                 <div class="toppp"  [ngClass]="{'d-none': viewMode}" (click)="deleteFenceImage(url)">
                                     <i class="fa fa-times delete-icon" aria-hidden="true"></i>
                                 </div>
@@ -135,3 +135,5 @@
         </div>
     </div>
 </form>
+
+<app-image-carousel class="d-flex justify-content-center align-items-center" *ngIf="showPopupViewImage" [(imageUrlArray)]="imageUrlArray" (closed)="closeView()"></app-image-carousel>

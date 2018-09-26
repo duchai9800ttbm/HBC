@@ -24,6 +24,8 @@ export class TrafficComponent implements OnInit {
   fenceImageUrls = [];
   url;
   viewMode;
+  imageUrlArray = [];
+  showPopupViewImage = false;
   currentBidOpportunityId: number;
   trafficModel = new Traffic();
   constructor(
@@ -137,30 +139,10 @@ export class TrafficComponent implements OnInit {
 
   uploaDisadvantageImage(event) {
     const files = event.target.files;
-    if (files) {
-      for (const file of files) {
-        if (file.size < 10485760) {
-          const reader = new FileReader();
-          reader.onload = (e: any) => {
-            this.disadvantageImageUrls.push({
-              id: null,
-              image: {
-                file: file,
-                base64: e.target.result
-              }
-            });
-            this.trafficForm.get('chiTietDiaHinhKhoKhanList').patchValue(this.disadvantageImageUrls);
-          };
-          reader.readAsDataURL(file);
-        } else {
-          this.alertService.error(`Hình ảnh ${file.name} quá lớn! Vui lòng chọn hình ảnh khác`);
-        }
-      }
-    }
     this.siteSurveyReportService
-      .uploadImageSiteSurveyingReport(this.disadvantageImageUrls, this.currentBidOpportunityId)
+      .uploadImageSiteSurveyingReport(files, this.currentBidOpportunityId)
       .subscribe(res => {
-        this.disadvantageImageUrls = res;
+        this.disadvantageImageUrls = [...this.disadvantageImageUrls, ...res];
       }, err => {
         this.alertService.error('Upload hình ảnh thất bại. Xin vui lòng thử lại!');
         this.disadvantageImageUrls.forEach(x => {
@@ -186,30 +168,10 @@ export class TrafficComponent implements OnInit {
 
   uploaAdvantageImage(event) {
     const files = event.target.files;
-    if (files) {
-      for (const file of files) {
-        if (file.size < 10485760) {
-          const reader = new FileReader();
-          reader.onload = (e: any) => {
-            this.advantageImageUrls.push({
-              id: null,
-              image: {
-                file: file,
-                base64: e.target.result
-              }
-            });
-            this.trafficForm.get('chiTietDiaHinhThuanLoiList').patchValue(this.advantageImageUrls);
-          };
-          reader.readAsDataURL(file);
-        } else {
-          this.alertService.error(`Hình ảnh ${file.name} quá lớn! Vui lòng chọn hình ảnh khác`);
-        }
-      }
-    }
     this.siteSurveyReportService
-      .uploadImageSiteSurveyingReport(this.advantageImageUrls, this.currentBidOpportunityId)
+      .uploadImageSiteSurveyingReport(files, this.currentBidOpportunityId)
       .subscribe(res => {
-        this.advantageImageUrls = res;
+        this.advantageImageUrls = [...this.advantageImageUrls, ...res];
       }, err => {
         this.alertService.error('Upload hình ảnh thất bại. Xin vui lòng thử lại!');
         this.advantageImageUrls.forEach(x => {
@@ -235,30 +197,10 @@ export class TrafficComponent implements OnInit {
 
   uploadDirectionImage(event) {
     const files = event.target.files;
-    if (files) {
-      for (const file of files) {
-        if (file.size < 10485760) {
-          const reader = new FileReader();
-          reader.onload = (e: any) => {
-            this.directionImageUrls.push({
-              id: null,
-              image: {
-                file: file,
-                base64: e.target.result
-              }
-            });
-            this.trafficForm.get('huongVaoCongTruongList').patchValue(this.directionImageUrls);
-          };
-          reader.readAsDataURL(file);
-        } else {
-          this.alertService.error(`Hình ảnh ${file.name} quá lớn! Vui lòng chọn hình ảnh khác`);
-        }
-      }
-    }
     this.siteSurveyReportService
-      .uploadImageSiteSurveyingReport(this.directionImageUrls, this.currentBidOpportunityId)
+      .uploadImageSiteSurveyingReport(files, this.currentBidOpportunityId)
       .subscribe(res => {
-        this.directionImageUrls = res;
+        this.directionImageUrls = [...this.directionImageUrls, ...res];
       }, err => {
         this.alertService.error('Upload hình ảnh thất bại. Xin vui lòng thử lại!');
         this.directionImageUrls.forEach(x => {
@@ -284,30 +226,10 @@ export class TrafficComponent implements OnInit {
 
   uploadExistingImage(event) {
     const files = event.target.files;
-    if (files) {
-      for (const file of files) {
-        if (file.size < 10485760) {
-          const reader = new FileReader();
-          reader.onload = (e: any) => {
-            this.existingImageUrls.push({
-              id: null,
-              image: {
-                file: file,
-                base64: e.target.result
-              }
-            });
-            this.trafficForm.get('duongHienCoTrenCongTruongList').patchValue(this.existingImageUrls);
-          };
-          reader.readAsDataURL(file);
-        } else {
-          this.alertService.error(`Hình ảnh ${file.name} quá lớn! Vui lòng chọn hình ảnh khác`);
-        }
-      }
-    }
     this.siteSurveyReportService
-      .uploadImageSiteSurveyingReport(this.existingImageUrls, this.currentBidOpportunityId)
+      .uploadImageSiteSurveyingReport(files, this.currentBidOpportunityId)
       .subscribe(res => {
-        this.existingImageUrls = res;
+        this.existingImageUrls = [...this.existingImageUrls, ...res];
       }, err => {
         this.alertService.error('Upload hình ảnh thất bại. Xin vui lòng thử lại!');
         this.existingImageUrls.forEach(x => {
@@ -333,30 +255,10 @@ export class TrafficComponent implements OnInit {
 
   uploadRoadImage(event) {
     const files = event.target.files;
-    if (files) {
-      for (const file of files) {
-        if (file.size < 10485760) {
-          const reader = new FileReader();
-          reader.onload = (e: any) => {
-            this.roadImageUrls.push({
-              id: null,
-              image: {
-                file: file,
-                base64: e.target.result
-              }
-            });
-            this.trafficForm.get('yeuCauDuongTamList').patchValue(this.roadImageUrls);
-          };
-          reader.readAsDataURL(file);
-        } else {
-          this.alertService.error(`Hình ảnh ${file.name} quá lớn! Vui lòng chọn hình ảnh khác`);
-        }
-      }
-    }
     this.siteSurveyReportService
-      .uploadImageSiteSurveyingReport(this.roadImageUrls, this.currentBidOpportunityId)
+      .uploadImageSiteSurveyingReport(files, this.currentBidOpportunityId)
       .subscribe(res => {
-        this.roadImageUrls = res;
+        this.roadImageUrls = [...this.roadImageUrls, ...res];
       }, err => {
         this.alertService.error('Upload hình ảnh thất bại. Xin vui lòng thử lại!');
         this.roadImageUrls.forEach(x => {
@@ -382,30 +284,10 @@ export class TrafficComponent implements OnInit {
 
   uploadFenceImage(event) {
     const files = event.target.files;
-    if (files) {
-      for (const file of files) {
-        if (file.size < 10485760) {
-          const reader = new FileReader();
-          reader.onload = (e: any) => {
-            this.fenceImageUrls.push({
-              id: null,
-              image: {
-                file: file,
-                base64: e.target.result
-              }
-            });
-            this.trafficForm.get('yeuCauHangRaoList').patchValue(this.fenceImageUrls);
-          };
-          reader.readAsDataURL(file);
-        } else {
-          this.alertService.error(`Hình ảnh ${file.name} quá lớn! Vui lòng chọn hình ảnh khác`);
-        }
-      }
-    }
     this.siteSurveyReportService
-      .uploadImageSiteSurveyingReport(this.fenceImageUrls, this.currentBidOpportunityId)
+      .uploadImageSiteSurveyingReport(files, this.currentBidOpportunityId)
       .subscribe(res => {
-        this.fenceImageUrls = res;
+        this.fenceImageUrls = [...this.fenceImageUrls, ...res];
       }, err => {
         this.alertService.error('Upload hình ảnh thất bại. Xin vui lòng thử lại!');
         this.fenceImageUrls.forEach(x => {
@@ -427,5 +309,12 @@ export class TrafficComponent implements OnInit {
     }
     this.fenceImageUrls.splice(index, 1);
     this.trafficForm.get('yeuCauHangRaoList').patchValue(this.fenceImageUrls);
+  }
+  viewFullScreenImage(listImage) {
+    this.showPopupViewImage = true;
+    this.imageUrlArray = [...listImage];
+  }
+  closeView() {
+    this.showPopupViewImage = false;
   }
 }

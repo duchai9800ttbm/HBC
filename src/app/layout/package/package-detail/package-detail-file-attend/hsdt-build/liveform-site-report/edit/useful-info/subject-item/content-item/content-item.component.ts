@@ -22,6 +22,8 @@ export class ContentItemComponent implements OnInit {
   contentItemForm: FormGroup;
   contentItemImageList = [];
   deleteImageList = [];
+  imageUrlArray = [];
+  showPopupViewImage = false;
   currentBidOpportunityId: number;
   viewMode;
 
@@ -71,30 +73,10 @@ export class ContentItemComponent implements OnInit {
   }
   uploadContentImage(event) {
     const files = event.target.files;
-    if (files) {
-      for (const file of files) {
-        if (file.size < 10485760) {
-          const reader = new FileReader();
-          reader.onload = (e: any) => {
-            this.contentItemImageList.push({
-              id: null,
-              image: {
-                file: file,
-                base64: e.target.result
-              }
-            });
-            this.contentItemForm.get('chiTietNoiDungList').patchValue(this.contentItemImageList);
-          };
-          reader.readAsDataURL(file);
-        } else {
-          this.alertService.error(`Hình ảnh ${file.name} quá lớn! Vui lòng chọn hình ảnh khác`);
-        }
-      }
-    }
     this.siteSurveyReportService
-      .uploadImageSiteSurveyingReport(this.contentItemImageList, this.currentBidOpportunityId)
+      .uploadImageSiteSurveyingReport(files, this.currentBidOpportunityId)
       .subscribe(res => {
-        this.contentItemImageList = res;
+        this.contentItemImageList = [...this.contentItemImageList, ...res];
       }, err => {
         this.alertService.error('Upload hình ảnh thất bại. Xin vui lòng thử lại!');
         this.contentItemImageList.forEach(x => {
@@ -119,5 +101,13 @@ export class ContentItemComponent implements OnInit {
   }
   deleteContentItem() {
     this.deleteContent.emit(true);
+  }
+
+  viewFullScreenImage(listImage) {
+    this.showPopupViewImage = true;
+    this.imageUrlArray = [...listImage];
+  }
+  closeView() {
+    this.showPopupViewImage = false;
   }
 }
