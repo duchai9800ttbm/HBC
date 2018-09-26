@@ -9,7 +9,7 @@ const routes: Routes = [
     component: InformationDeploymentComponent
   },
   {
-    path: 'create',
+    path: ':action',
     component: InformationDeploymentFormComponent
   }
 ];

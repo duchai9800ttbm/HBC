@@ -5,20 +5,13 @@
             <div class="rule mr-2">
             </div>
             <div class="center-parent mr-4" style="font-size: 18px">
-                <div> {{textInformation}}
-                    <button type="button" class="btn btn-primary setHSDT" *ngIf="setHSDT" (click)="openModelViewListData(ViewListData)">
-                        Xem danh sách phân công
-                    </button>
-                </div>
+                <div>{{textInformation}}</div>
             </div>
         </div>
     </div>
     <div>
         <div class="btn-toolbar mt-2 mb-2">
-            <button type="button" *ngIf="setHSDT" [ngClass]="{'btn-dep':setHSDT == true}" class="btn btn-up " (click)="lapHSDT()">Bắt đầu lập HSDT</button>
             <button type="button" *ngIf="isconfirmProgress" [ngClass]="{'btn-dep':isconfirmProgress == true}" class="btn btn-up" (click)="openModeSendAssignment(SendAssignment)">{{textConfirmProgress}}</button>
-            <button type="button" *ngIf="isSendInformation" [ngClass]="{'btn-dep':showButtonAssignmet == true,'disable':showButtonAssignmet == false}"
-                class="btn btn-up" (click)="confirmProgress()">Xác nhận phân công tiến độ</button>
             <button type="button" *ngIf="packageInfo?.stageStatus.id != bidStatus.DaThongBaoTrienKhai" class="btn btn-up btn-dep"
                 (click)="openModalDeployment(informationDeployment)">Thông báo triển khai</button>
             <button type="button" *ngIf="isTeamPlate" [ngClass]="{ 'btn-dep': isSendInformation === true }" class="btn btn-up ">Tải Template
@@ -26,6 +19,7 @@
             <!-- <button type="button" *ngIf="isconfirmProgress" class="btn btn-up disable">Upload file</button>
             <button type="button" *ngIf="!isconfirmProgress" [ngClass]="{ 'btn-dep': dowloadTem === true,'disable': dowloadTem === false }"
                 (click)="openModalUpload(Upload)" class="btn btn-up ">Upload file</button> -->
+            <button *ngIf="tenderPlan?.isDraftVersion" class="btn btn-primary mr-2">Xác nhận phân công tiến độ</button>
             <button type="button" class="btn btn-primary ">
                 <i class="fa fa-refresh" aria-hidden="true"></i>
             </button>
@@ -35,18 +29,63 @@
 </div>
 
 
-<div class="mt-5" *ngIf="!showTabelAssignment">
+<div class="mt-5" *ngIf="!tenderPlan">
     <div class="text-center">
         <img class="icon-filter" src="assets/images/ic-file0.png" alt="">
     </div>
     <div class="text-center mt-3">
         {{toggleTextUpFile}}
     </div>
-    <!-- <div class="text-center mt-3">
-        <button class="btn btn-primary ml-2" routerLink="./create">
+    <div class="text-center mt-3" *ngIf="packageInfo?.stageStatus.id == bidStatus.DaThongBaoTrienKhai && !tenderPlan">
+        <button class="btn btn-primary ml-2" routerLink="./create" (click)="changeAction('create')">
             Tạo mới
         </button>
-    </div> -->
+    </div>
+</div>
+
+<div class="ml-3" *ngIf="tenderPlan">
+    <h5 class="text-uppercase mb-3">bảng phân công tiến độ (tender preparation planning assignment)</h5>
+    <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger">
+        <thead>
+            <tr>
+                <th>
+                </th>
+                <th>Tên tài liệu</th>
+                <th>Người duyệt</th>
+                <th>Người tạo</th>
+                <th>Ngày tạo</th>
+                <th class="text-center">Thao tác</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>
+                </td>
+                <td><a [routerLink]="['./view']" (click)="changeAction('view')"></a></td>
+                <td>Chưa có</td>
+                <td>{{tenderPlan.createdEmployee?.employeeName}}</td>
+                <td></td>
+                <td>
+                    <div class="d-flex justify-content-center">
+                        <div>
+                            <a [routerLink]="['./view']" (click)="changeAction('view')">
+                                <i class="fa fa-eye text-warning" aria-hidden="true"></i>
+                            </a>
+                            <a class=" text-success ml-3" [routerLink]="['./edit']" (click)="changeAction('edit')">
+                                <i class="fa fa-pencil cursor-pointer" aria-hidden="true"> </i>
+                            </a>
+                            <a class=" text-dark ml-3" (click)="deleteTenderPlan()">
+                                <i class="fa fa-trash-o" aria-hidden="true"></i>
+                            </a>
+                            <!-- <a class="ml-3" (click)="printForm()">
+                                <i class="fa fa-print ic-print-color" aria-hidden="true"></i>
+                            </a> -->
+                        </div>
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
 </div>
 
 <!-- <app-assignment-progress *ngIf="showTabelAssignment && isShowTable" [dataConfirm]="dataConfirm" [hideButon]="hideButon"

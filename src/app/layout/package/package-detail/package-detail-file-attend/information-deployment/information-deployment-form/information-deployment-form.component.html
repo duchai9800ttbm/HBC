@@ -17,10 +17,10 @@
                 <!-- <button class="btn btn-primary ml-2">
               Import dữ liệu theo mẫu
           </button> -->
-                <button class="btn btn-primary ml-2">
+                <button class="btn btn-primary ml-2" (click)="submitForm(true)">
                     Lưu nháp
                 </button>
-                <button class="btn btn-primary ml-2">
+                <button class="btn btn-primary ml-2" (click)="submitForm(false)">
                     Lưu
                 </button>
                 <button class="btn btn-secondary ml-2">
@@ -89,63 +89,68 @@
                         <td>Project Director</td>
                         <td>
                             <span class="custom-dropdown w-100 b-dropdown-no-border">
-                                <select class="form-control">
-                                    <option>--Chọn--</option>
-                                    <option selected [ngValue]="null">Michael Tran</option>
+                                <select class="form-control" formControlName="projectDirectorEmployeeId">
+                                    <option [ngValue]="null">--Chọn--</option>
+                                    <option *ngFor="let user of userList | async" [value]="user.id">{{user.employeeName}}</option>
                                 </select>
                             </span>
                         </td>
-                        <td><a href="mailto:michael.tran@hbcr.vn">michael.tran@hbcr.vn</a></td>
+                        <td class="mw-12"></td>
                         <td>Start</td>
-                        <td>
-                            <kendo-datepicker class="form-control b-datepicker-no-border"></kendo-datepicker>
+                        <td class="mw-12">
+                            <!-- <kendo-datepicker class="form-control b-datepicker-no-border"></kendo-datepicker> -->
+                            {{getDateStr(packageInfo?.startTrackingDate)}}
                         </td>
                     </tr>
                     <tr>
                         <td>Tender Dept</td>
                         <td>
                             <span class="custom-dropdown w-100 b-dropdown-no-border">
-                                <select class="form-control">
-                                    <option>--Chọn--</option>
-                                    <option selected [ngValue]="null">Giang - Tender leader</option>
+                                <select class="form-control" formControlName="tenderDepartmentEmployeeId">
+                                    <option [ngValue]="null">--Chọn--</option>
+                                    <option *ngFor="let user of userList | async" [value]="user.id">{{user.employeeName}}</option>
                                 </select>
                             </span>
                         </td>
-                        <td><a href="mailto:giang.nguyendinh@hbcr.vn">giang.nguyendinh@hbcr.vn</a></td>
+                        <td></td>
                         <td>Tender Duration</td>
                         <td>
-                            <kendo-datepicker class="form-control b-datepicker-no-border"></kendo-datepicker>
+                            <!-- <kendo-datepicker class="form-control b-datepicker-no-border"></kendo-datepicker> -->
+                            <!-- {{(packageInfo?.startTrackingDate)}} -->
                         </td>
                     </tr>
                     <tr>
                         <td>Technical Dept</td>
                         <td>
                             <span class="custom-dropdown w-100 b-dropdown-no-border">
-                                <select class="form-control">
-                                    <option>--Chọn--</option>
-                                    <option selected [ngValue]="null">Viet - Technical leader</option>
+                                <select class="form-control" formControlName="technicalDepartmentEmployeeId">
+                                    <option [ngValue]="null">--Chọn--</option>
+                                    <option *ngFor="let user of userList | async" [value]="user.id">{{user.employeeName}}</option>
                                 </select>
                             </span>
                         </td>
-                        <td><a href="mailto:viet.nguyen@hbcr.vn">viet.nguyen@hbcr.vn</a></td>
+                        <td></td>
                         <td>Query's Deadline</td>
                         <td>
-                            <kendo-datepicker class="form-control b-datepicker-no-border"></kendo-datepicker>
+                            <!-- <kendo-datepicker class="form-control b-datepicker-no-border"></kendo-datepicker> -->
+                            {{getDateStr(packageInfo?.projectEstimatedEndDate)}}
                         </td>
                     </tr>
                     <tr>
                         <td>BIM Dept</td>
                         <td>
                             <span class="custom-dropdown w-100 b-dropdown-no-border">
-                                <select class="form-control">
-                                    <option selected [ngValue]="null">--Chọn--</option>
+                                <select class="form-control" formControlName="bimDepartmentEmployeeId">
+                                    <option [ngValue]="null">--Chọn--</option>
+                                    <option *ngFor="let user of userList | async" [value]="user.id">{{user.employeeName}}</option>
                                 </select>
                             </span>
                         </td>
                         <td></td>
                         <td>Finish</td>
                         <td>
-                            <kendo-datepicker class="form-control b-datepicker-no-border"></kendo-datepicker>
+                            <!-- <kendo-datepicker class="form-control b-datepicker-no-border"></kendo-datepicker> -->
+                            {{getDateStr(packageInfo?.projectEstimatedEndDate)}}
                         </td>
                     </tr>
                 </tbody>
@@ -157,8 +162,8 @@
                     <thead class="tbl-header-bg-color">
                         <tr>
                             <th class="text-center align-middle">Stt</th>
-                            <th class="text-center align-middle">Công việc</th>
-                            <th class="text-center align-middle text-nowrap">Mô tả</th>
+                            <th class="text-center align-middle w-work">Công việc</th>
+                            <th class="text-center align-middle text-nowrap w-work">Mô tả</th>
                             <th class="text-center align-middle">Phân công cho</th>
                             <th class="text-center align-middle col-datetime">Ngày bắt đầu</th>
                             <th class="text-center align-middle col-datetime">Ngày kết thúc</th>
@@ -172,9 +177,9 @@
                             <td>{{data.get('itemDesc').value}}</td>
                             <td class="pl-0">
                                 <span class="custom-dropdown w-100 b-dropdown-no-border">
-                                    <select class="form-control">
+                                    <select class="form-control" formControlName="whoIsInChargeId">
                                         <option [ngValue]="null">--Chọn--</option>
-                                        <option *ngFor="let user of userList | async" [value]="user.id">{{user.employeeName}}</option>
+                                        <option *ngFor="let user of userList | async" [value]="user.employeeId">{{user.employeeName}}</option>
                                     </select>
                                 </span>
                             </td>
@@ -184,7 +189,7 @@
                             <td class="pl-0">
                                 <kendo-datepicker formControlName="finishDate" class="form-control b-datepicker-no-border b-datepicker-ic"></kendo-datepicker>
                             </td>
-                            <td class="text-center">52</td>
+                            <td class="text-center">{{getItemDuration(data.get('startDate').value, data.get('finishDate').value)}}</td>
                         </tr>
                     </tbody>
                 </table>
