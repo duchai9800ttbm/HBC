@@ -50,7 +50,7 @@ export class InputNumberNegativeDecimalDirective implements OnInit {
         this.ngControl.valueAccessor.writeValue(this.vnCurrencyPipe.parse(value));
     }
 
-    transformNotDenominations(value: number | string, fractionSize: number = 1): string {
+    transformNotDenominations(value: number | string, fractionSize: number = 2): string {
         if (!value) { return '0'; }
         if (isNaN(+value)) { return value.toString(); }
         let [integer, fraction = ''] = (+value).toString()
@@ -63,7 +63,7 @@ export class InputNumberNegativeDecimalDirective implements OnInit {
         return integer + fraction;
     }
 
-    parse(value: string, fractionSize: number = 1): number {
+    parse(value: string, fractionSize: number = 2): number {
         if (!isNaN(+value)) { return +value; }
         let integer = (value || '').replace(this.CURRENCY_UNIT, '');
         integer = integer.split(this.THOUSANDS_SEPARATOR).join('');
