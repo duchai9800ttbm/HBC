@@ -2,7 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { routerTransition } from '../../../router.animations';
 import { EmailService } from '../../../shared/services/email.service';
 import { EmailCategory } from '../../../shared/models/email/email-item.model';
-import { ActivatedRoute } from '../../../../../node_modules/@angular/router';
+import { ActivatedRoute, Router } from '../../../../../node_modules/@angular/router';
+import { PackageService } from '../../../shared/services/package.service';
 
 @Component({
   selector: 'app-package-email',
@@ -27,9 +28,12 @@ export class PackageEmailComponent implements OnInit {
   constructor(
     private emailService: EmailService,
     private activetedRoute: ActivatedRoute,
+    private packageService: PackageService,
+    private router: Router,
   ) { }
 
   ngOnInit() {
+    console.log('this.router-before', this.packageService.routerBeforeEmail);
     this.activetedRoute.params.subscribe(result => {
       this.packageId = +result.id;
       PackageEmailComponent.packageId = this.packageId;
@@ -107,6 +111,13 @@ export class PackageEmailComponent implements OnInit {
         }
       });
     });
+  }
+  backRouter() {
+    if (this.packageService.routerBeforeEmail) {
+      this.router.navigate([this.packageService.routerBeforeEmail]);
+    } else {
+      this.router.navigate([`/package/list`]);
+    }
   }
 
 }

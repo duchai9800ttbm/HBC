@@ -100,4 +100,9 @@ export class PackageDetailComponent implements OnInit {
   isActive(instruction: any[]): boolean {
    return this.router.isActive(this.router.createUrlTree(instruction), false);
   }
+
+  routerEmail() {
+    this.packageService.routerBeforeEmail = this.router.url;
+    this.router.navigate([`/package/email/${this.packageId}`]);
+  }
 }

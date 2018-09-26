@@ -31,6 +31,7 @@ export class PackageService {
     routerAction$ = this.routerActionSub.asObservable();
     userId$ = this.userIdSub.asObservable();
     kickOff$ = this.kickOff.asObservable();
+    routerBeforeEmail: string;
     private static createFilterParams(filter: PackageFilter): URLSearchParams {
         const urlFilterParams = new URLSearchParams();
         urlFilterParams.append('projectName', filter.projectName);
