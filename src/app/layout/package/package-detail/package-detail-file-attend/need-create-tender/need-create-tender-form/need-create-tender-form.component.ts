@@ -52,9 +52,9 @@ export class NeedCreateTenderFormComponent implements OnInit, OnDestroy {
         this.dateApproveBid =
             this.dataModel &&
             this.dataModel.tenderDirectorProposal &&
-            this.dataModel.tenderDirectorProposal.expectedTime
+            this.dataModel.tenderDirectorProposal.expectedDate
                 ? DateTimeConvertHelper.fromTimestampToDtObject(
-                      this.dataModel.tenderDirectorProposal.expectedTime * 1000
+                      this.dataModel.tenderDirectorProposal.expectedDate * 1000
                   )
                 : new Date();
         this.bidOpportunityId = PackageDetailComponent.packageId;

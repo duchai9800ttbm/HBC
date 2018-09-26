@@ -1,6 +1,6 @@
 export class TenderDirectorProposal {
     reason: string;
     date: number;
-    expectedTime: number;
+    expectedDate: number;
     isSigned: boolean;
 }

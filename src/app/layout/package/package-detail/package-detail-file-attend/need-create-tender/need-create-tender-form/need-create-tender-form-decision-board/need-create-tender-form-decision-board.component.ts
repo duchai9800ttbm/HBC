@@ -45,8 +45,8 @@ export class NeedCreateTenderFormDecisionBoardComponent implements OnInit {
         const directorData =
             NeedCreateTenderFormComponent.formModel.tenderDirectorProposal;
         this.expectedTimeStr =
-            directorData && directorData.expectedTime
-                ? moment(directorData.expectedTime * 1000).format('DD/MM/YYYY')
+            directorData && directorData.expectedDate
+                ? moment(directorData.expectedDate * 1000).format('DD/MM/YYYY')
                 : '';
         this.decisionBoardForm = this.fb.group({
             isAgreed: formData ? formData.isAgreed : true,
@@ -54,9 +54,9 @@ export class NeedCreateTenderFormDecisionBoardComponent implements OnInit {
             isSigned: formData ? formData.isSigned : false,
             // tslint:disable-next-line:max-line-length
             expectedTime:
-                directorData && directorData.expectedTime
+                directorData && directorData.expectedDate
                     ? DateTimeConvertHelper.fromTimestampToDtObject(
-                          directorData.expectedTime * 1000
+                          directorData.expectedDate * 1000
                       )
                     : null
         });
@@ -76,8 +76,8 @@ export class NeedCreateTenderFormDecisionBoardComponent implements OnInit {
             NeedCreateTenderFormComponent.formModel.tenderDirectorProposal;
         // tslint:disable-next-line:max-line-length
         NeedCreateTenderFormComponent.formModel.decisionOfBoardOfGeneralDirector.expectedTime =
-            directorData && directorData.expectedTime
-                ? directorData.expectedTime
+            directorData && directorData.expectedDate
+                ? directorData.expectedDate
                 : 0;
     }
 

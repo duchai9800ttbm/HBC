@@ -18,6 +18,7 @@ import { BidUserGroupMemberResponsive } from '../models/api-response/setting/bid
 import { SETTING_BID_USER, SETTING_BID_STAGE } from '../configs/common.config';
 import { BidPermissionGroupResponsive } from '../models/api-response/setting/bid-permission-group-responsive';
 import * as FileSaver from 'file-saver';
+import { TenderPreparationPlanningRequest } from '../models/api-request/package/tender-preparation-planning-request';
 
 @Injectable()
 export class PackageService {
@@ -939,8 +940,8 @@ export class PackageService {
     }
 
     // get thông tin mặc định LiveForm phân công tiến độ
-    getDefaultTenderPreparationPlanning() {
-        const url = `tenderpreparationplanningassignment/getdefaultinformation`;
+    getDefaultTenderPreparationPlanning(): Observable<TenderPreparationPlanningRequest> {
+        const url = `tenderpreparationplanningassignment/getdefault`;
         return this.apiService.get(url).map(data => data.result);
     }
 

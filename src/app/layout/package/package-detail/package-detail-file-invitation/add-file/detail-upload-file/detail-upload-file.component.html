@@ -49,11 +49,11 @@
                             </div>
 
                             <div class="w-60">
-                                <span class="word-wrap" *ngIf="currentMajorType.currentMajorTypeId === '1'">
+                                <span class="word-wrap" *ngIf="currentMajorType === 1">
                                     {{model?.documentType}}
                                 </span>
-                                <span class="word-wrap" *ngIf="currentMajorType.currentMajorTypeId !== '1'">
-                                    {{currentMajorType?.currentMajorTypeText}}
+                                <span class="word-wrap" *ngIf="currentMajorType !== 1">
+                                    {{currentMajorType}}
                                 </span>
                             </div>
                         </div>

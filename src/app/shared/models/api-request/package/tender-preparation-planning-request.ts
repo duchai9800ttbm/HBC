@@ -1,9 +1,4 @@
-import { TenderControlBidInfo } from '../../package/tender-control-bid-info';
-import { TenderSurveyConstruction } from '../../package/tender-survey-construction';
-import { TenderPreparationPlanEstimate } from '../../package/tender-preparation-plan-estimate';
-import { TenderTechniqueBptc } from '../../package/tender-technique-bptc';
-import { TenderLegalRecord } from '../../package/tender-legal-record';
-import { TenderPreparationPlanCondition } from '../../package/tender-preparation-plan-condition';
+import { TenderPreparationPlanItem } from '../../package/tender-preparation-plan-item';
 
 export class TenderPreparationPlanningRequest {
     bidOpportunityId: number;
@@ -18,10 +13,5 @@ export class TenderPreparationPlanningRequest {
     deadline: number;
     duration: number;
     isDraftVersion: boolean;
-    controlBidInformation: TenderControlBidInfo;
-    surveyConstruction: TenderSurveyConstruction;
-    estimate: TenderPreparationPlanEstimate;
-    techniqueAndBPTC: TenderTechniqueBptc;
-    legalRecord: TenderLegalRecord;
-    contractCondition: TenderPreparationPlanCondition;
+    tasks: TenderPreparationPlanItem[];
 }

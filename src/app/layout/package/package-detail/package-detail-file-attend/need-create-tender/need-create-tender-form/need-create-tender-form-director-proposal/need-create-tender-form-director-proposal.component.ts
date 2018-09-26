@@ -46,9 +46,9 @@ export class NeedCreateTenderFormDirectorProposalComponent implements OnInit {
                       formData.date * 1000
                   )
                 : new Date(),
-            expectedTime: formData
+                expectedDate: formData
                 ? DateTimeConvertHelper.fromTimestampToDtObject(
-                      formData.expectedTime * 1000
+                      formData.expectedDate * 1000
                   )
                 : new Date(),
             isSigned: formData ? formData.isSigned : false
@@ -71,7 +71,7 @@ export class NeedCreateTenderFormDirectorProposalComponent implements OnInit {
         NeedCreateTenderFormComponent.formModel.tenderDirectorProposal.date = DateTimeConvertHelper.fromDtObjectToSecon(
             data.date
         );
-        NeedCreateTenderFormComponent.formModel.tenderDirectorProposal.expectedTime = DateTimeConvertHelper.fromDtObjectToSecon(
+        NeedCreateTenderFormComponent.formModel.tenderDirectorProposal.expectedDate = DateTimeConvertHelper.fromDtObjectToSecon(
             data.expectedTime
         );
     }
