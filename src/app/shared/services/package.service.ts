@@ -590,6 +590,7 @@ export class PackageService {
     // Tạo mới gói thầu
     createOpportunity(formValue: any): Observable<any> {
         const url = `bidopportunity/create`;
+        console.log('formValue.projectEstimatedStartDate', formValue.projectEstimatedStartDate);
         const inforPackage = {
             projectName: formValue.projectName,
             projectNo: formValue.projectNo,

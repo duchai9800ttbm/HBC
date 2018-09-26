@@ -210,7 +210,7 @@ export class PriceReviewFormComponent implements OnInit, AfterViewInit {
       tienDoThiCongCY: {
         value: this.model.technique
           && this.model.technique.constructionProgress
-          && this.model.technique.constructionProgress.suggestion,
+          && this.model.technique.constructionProgress.note,
         disabled: this.isModeView
       },
 
@@ -231,7 +231,7 @@ export class PriceReviewFormComponent implements OnInit, AfterViewInit {
       bienPhapThiCongCY: {
         value: this.model.technique
           && this.model.technique.specialFeatureOfConstructionMethod
-          && this.model.technique.specialFeatureOfConstructionMethod.suggestion,
+          && this.model.technique.specialFeatureOfConstructionMethod.note,
         disabled: this.isModeView
       },
       yeuCauAnToanYC: {
@@ -249,7 +249,7 @@ export class PriceReviewFormComponent implements OnInit, AfterViewInit {
       yeuCauAnToanCY: {
         value: this.model.technique
           && this.model.technique.safetyRequirement
-          && this.model.technique.safetyRequirement.suggestion,
+          && this.model.technique.safetyRequirement.note,
         disabled: this.isModeView
       },
 
@@ -262,7 +262,7 @@ export class PriceReviewFormComponent implements OnInit, AfterViewInit {
       yeuCauKhacCY: {
         value: this.model.technique
           && this.model.technique.otherSpecialRequirement
-          && this.model.technique.otherSpecialRequirement.suggestion,
+          && this.model.technique.otherSpecialRequirement.note,
         disabled: this.isModeView
       },
 
