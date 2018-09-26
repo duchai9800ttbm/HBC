@@ -5,9 +5,16 @@ import {
     Input,
     OnInit
 } from '@angular/core';
-
+import { NgControl } from '../../../../node_modules/@angular/forms';
+import { VnCurrencyPipe } from '../pipes/vn-currency-pipe.module';
+const PADDING = '000000';
 @Directive({
-    selector: '[appInputNumberNegativeDecimal]'
+    selector: '[appInputNumberNegativeDecimal]',
+    // tslint:disable-next-line:use-host-property-decorator
+    host: {
+        '(blur)': 'formatInputValue($event.target.value)',
+        '(focus)': 'formatToNumber($event.target.value)',
+    }
 })
 export class InputNumberNegativeDecimalDirective implements OnInit {
     @Input('negative')
@@ -18,9 +25,50 @@ export class InputNumberNegativeDecimalDirective implements OnInit {
     min: number;
     @Input('max')
     max: number;
-    constructor(private _el: ElementRef) {}
+    private DECIMAL_SEPARATOR: string;
+    private THOUSANDS_SEPARATOR: string;
+    private CURRENCY_UNIT: string;
+    constructor(
+        private _el: ElementRef,
+        private ngControl: NgControl,
+        private vnCurrencyPipe: VnCurrencyPipe,
+    ) {
+        this.DECIMAL_SEPARATOR = '.';
+        this.THOUSANDS_SEPARATOR = ',';
+        this.CURRENCY_UNIT = ' đ';
+    }
 
-    ngOnInit() {}
+    ngOnInit() {
+        this.ngControl.valueAccessor.writeValue(this.transformNotDenominations(this.ngControl.value));
+    }
+
+    formatInputValue(value) {
+        this.ngControl.valueAccessor.writeValue(this.transformNotDenominations(value));
+    }
+
+    formatToNumber(value) {
+        this.ngControl.valueAccessor.writeValue(this.vnCurrencyPipe.parse(value));
+    }
+
+    transformNotDenominations(value: number | string, fractionSize: number = 1): string {
+        if (!value) { return '0'; }
+        if (isNaN(+value)) { return value.toString(); }
+        let [integer, fraction = ''] = (+value).toString()
+            .split(this.DECIMAL_SEPARATOR);
+        fraction = fractionSize > 0
+            ? this.DECIMAL_SEPARATOR + (fraction + PADDING).substring(0, fractionSize)
+            : '';
+        integer = integer.replace(/\B(?=(\d{3})+(?!\d))/g, this.THOUSANDS_SEPARATOR);
+        console.log('integer', integer, fraction);
+        return integer + fraction;
+    }
+
+    parse(value: string, fractionSize: number = 1): number {
+        if (!isNaN(+value)) { return +value; }
+        let integer = (value || '').replace(this.CURRENCY_UNIT, '');
+        integer = integer.split(this.THOUSANDS_SEPARATOR).join('');
+        return +integer;
+      }
 
     @HostListener('input', ['$event'])
     onInputChange(event) {
