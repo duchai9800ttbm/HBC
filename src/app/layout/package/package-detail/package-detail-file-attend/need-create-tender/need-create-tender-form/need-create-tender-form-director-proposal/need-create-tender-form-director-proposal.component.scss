@@ -12,3 +12,7 @@
 :host /deep/ .b-form-readonly {
     bottom: 120px;
 }
+
+.but--disabled{
+    cursor: default;
+}

@@ -1,6 +1,8 @@
 <form [formGroup]="decisionBoardForm">
     <div class="p-3 position-relative">
-        <div *ngIf="routerAction == 'view' || decisionBoardForm.get('isSigned').value" class="b-form-readonly"></div>
+        <!-- <div *ngIf="routerAction == 'view' || decisionBoardForm.get('isSigned').value" class="b-form-readonly"></div> -->
+        <!-- <div *ngIf="routerAction === (!isDirector || !(packageInfo?.stageStatus.id === bidStatus.ChoDuyetDeNghiDuThau) || decisionBoardForm.get('isSigned').value)" class="b-form-readonly"></div> -->
+        <div *ngIf="!isDirector || !(packageInfo?.stageStatus.id === bidStatus.ChoDuyetDeNghiDuThau) || decisionBoardForm.get('isSigned').value" class="b-form-readonly"></div>
         <div>
             <h5 class="text-uppercase">VIII. quyết định của ban tổng giám đốc (decision of board of general director)</h5>
         </div>
@@ -10,10 +12,12 @@
             </div>
             <div class="col-md-8 row">
                 <div class="col-md-6">
-                    <input type="radio" [appAutoFocus]="routerAction != 'view'" tabindex="1" formControlName="isAgreed" [value]="true"> Đồng ý/ Agree
+                    <input [value]="true" 
+                        type="radio" [appAutoFocus]="routerAction != 'view'" tabindex="1" formControlName="isAgreed" > Đồng ý/ Agree
                 </div>
                 <div class="col-md-6">
-                    <input type="radio" tabindex="2" appEnterPreventDefault formControlName="isAgreed" [value]="false"> Không đồng ý/ No agree
+                    <input [value]="false"
+                        type="radio" tabindex="2" appEnterPreventDefault formControlName="isAgreed"> Không đồng ý/ No agree
                 </div>
             </div>
         </div>
@@ -22,7 +26,9 @@
                 Lý do/ Reason
             </div>
             <div class="col-md-8">
-                <textarea class="form-control" appEnterPreventDefault tabindex="3" [attr.disabled]="decisionBoardForm.get('isAgreed').value ? '' : null" formControlName="reason" rows="2"></textarea>
+                <textarea class="form-control"
+                    appEnterPreventDefault tabindex="3" [attr.disabled]="decisionBoardForm.get('isAgreed').value ? '' : null"
+                    formControlName="reason" rows="2"></textarea>
             </div>
         </div>
         <div class="row mt-3">
@@ -39,12 +45,13 @@
                 Ký tên/ Signing
             </div>
             <div class="col-md-8">
-                    <button *ngIf="!(packageInfo?.stageStatus.id === bidStatus.ThamGiaDuThau) && !decisionBoardForm.get('isSigned').value" tabindex="4" class="btn btn-primary btn-sign" (click)="clickSigned()"
-                    [disabled]="!(packageInfo?.stageStatus.id === bidStatus.ChoDuyetDeNghiDuThau)"
+                <button *ngIf="!(packageInfo?.stageStatus.id === bidStatus.ThamGiaDuThau) && !decisionBoardForm.get('isSigned').value" tabindex="4"
+                    class="btn btn-primary btn-sign" (click)="clickSigned()" [disabled]="!(packageInfo?.stageStatus.id === bidStatus.ChoDuyetDeNghiDuThau)"
                     [class.cursor-cancel]="!(packageInfo?.stageStatus.id === bidStatus.ChoDuyetDeNghiDuThau)">Xác nhận ký</button>
-                    <button *ngIf="packageInfo?.stageStatus.id === bidStatus.ThamGiaDuThau || decisionBoardForm.get('isSigned').value" tabindex="5" class="btn btn-primary btn-sign position-relative">
-                            <i class="fa fa-check-square icon-check" aria-hidden="true"></i> Đã ký
-                    </button>
+                <button *ngIf="packageInfo?.stageStatus.id === bidStatus.ThamGiaDuThau || decisionBoardForm.get('isSigned').value" tabindex="5"
+                    class="btn btn-primary btn-sign position-relative">
+                    <i class="fa fa-check-square icon-check" aria-hidden="true"></i> Đã ký
+                </button>
             </div>
         </div>
         <div class="text-center mt-4">

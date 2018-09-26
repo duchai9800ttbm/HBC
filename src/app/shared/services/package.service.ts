@@ -928,6 +928,13 @@ export class PackageService {
             reason: reason
         }).map(response => response.result);
     }
+     // Không duyệt đề nghị dự thầu
+     notApproveBidProposal(bidOpportunityId: number, reason: string): Observable<any> {
+        const url = `bidopportunity/hsdt/${bidOpportunityId}/khongduyetdenghiduthau`;
+        return this.apiService.post(url, {
+            reason: reason
+        }).map(response => response.result);
+    }
     // tải template phiếu đề nghị dự thầu
     downloadProposedTenderParticipateReport() {
         const url = `proposedtenderparticipatinngreport/template/downoad`;

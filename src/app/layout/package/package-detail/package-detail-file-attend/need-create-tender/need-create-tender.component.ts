@@ -156,6 +156,24 @@ export class NeedCreateTenderComponent implements OnInit {
       });
   }
 
+  notApproveBidProposal() {
+    this.spinner.show();
+    this.packageService.notApproveBidProposal(this.bidOpportunityId, this.reasonApproveBid)
+      .subscribe(data => {
+        this.spinner.hide();
+        this.statusObservableHsdtService.change();
+        this.alertService.success('Không duyệt đề nghị dự thầu thành công!');
+        this.isShowDialog = false;
+        this.reasonApproveBid = '';
+        this.getPackageInfo();
+      }, err => {
+        this.spinner.hide();
+        this.alertService.error('Không duyệt đề nghị dự thầu thất bại!');
+        this.isShowDialog = false;
+        this.reasonApproveBid = '';
+      });
+  }
+
   deleteProposedTenderParticipateReport() {
     this.confirmService.confirm('Bạn có chắc chắn muốn xóa phiếu đề nghị dự thầu này?', () => {
       this.spinner.show();

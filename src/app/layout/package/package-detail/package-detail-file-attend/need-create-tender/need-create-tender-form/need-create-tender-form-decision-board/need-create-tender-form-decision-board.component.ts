@@ -12,6 +12,7 @@ import { NgxSpinnerService } from 'ngx-spinner';
 import { PackageDetailComponent } from '../../../../package-detail.component';
 import { PackageInfoModel } from '../../../../../../../shared/models/package/package-info.model';
 import { BidStatus } from '../../../../../../../shared/constants/bid-status';
+import { StatusObservableHsdtService } from '../../../../../../../shared/services/status-observable-hsdt.service';
 
 @Component({
     selector: 'app-need-create-tender-form-decision-board',
@@ -25,16 +26,19 @@ export class NeedCreateTenderFormDecisionBoardComponent implements OnInit {
     bidOpportunityId = PackageDetailComponent.packageId;
     packageInfo: PackageInfoModel;
     bidStatus = BidStatus;
+    isDirector = false;
     constructor(
         private fb: FormBuilder,
         private packageService: PackageService,
         private sessionService: SessionService,
         private spinner: NgxSpinnerService,
-        private alertService: AlertService
+        private alertService: AlertService,
+        private statusObservableHsdtService: StatusObservableHsdtService,
     ) {}
 
     ngOnInit() {
         this.getPackageInfo();
+        this.isDirector = (this.sessionService.currentUserInfo && this.sessionService.currentUserInfo.department.id === '42');
         this.routerAction = this.packageService.routerAction;
         this.packageService.routerAction$.subscribe(
             router => (this.routerAction = router)
@@ -73,9 +77,45 @@ export class NeedCreateTenderFormDecisionBoardComponent implements OnInit {
         this.decisionBoardForm.get('isSigned').patchValue(true);
         // khi view có thể ký
         if (this.routerAction === 'view') {
+            // console.log('VII', NeedCreateTenderFormComponent.formModel.tenderDirectorProposal.isSigned);
+            // console.log('VIII', this.decisionBoardForm.get('isAgreed').value);
             this.onSubmit();
+            if (this.decisionBoardForm.get('isAgreed').value) {
+                this.approveBidProposal();
+            } else {
+                this.notApproveBidProposal();
+            }
         }
     }
+
+    approveBidProposal() {
+        this.spinner.show();
+        this.packageService.approveBidProposal(this.bidOpportunityId, this.decisionBoardForm.get('reason').value)
+          .subscribe(data => {
+            this.spinner.hide();
+            this.statusObservableHsdtService.change();
+            this.alertService.success('Duyệt đề nghị dự thầu thành công!');
+            this.getPackageInfo();
+          }, err => {
+            this.spinner.hide();
+            this.alertService.error('Duyệt đề nghị dự thầu thất bại!');
+
+          });
+      }
+
+      notApproveBidProposal() {
+        this.spinner.show();
+        this.packageService.notApproveBidProposal(this.bidOpportunityId, this.decisionBoardForm.get('reason').value)
+          .subscribe(data => {
+            this.spinner.hide();
+            this.statusObservableHsdtService.change();
+            this.alertService.success('Không duyệt đề nghị dự thầu thành công!');
+            this.getPackageInfo();
+          }, err => {
+            this.spinner.hide();
+            this.alertService.error('Không duyệt đề nghị dự thầu thất bại!');
+          });
+      }
 
     mappingToLiveFormData(data) {
         NeedCreateTenderFormComponent.formModel.decisionOfBoardOfGeneralDirector = data;
@@ -134,7 +174,6 @@ export class NeedCreateTenderFormDecisionBoardComponent implements OnInit {
           .getInforPackageID(this.bidOpportunityId)
           .subscribe(data => {
             this.packageInfo = data;
-            console.log(this.packageInfo.stageStatus.id);
           });
       }
 }
