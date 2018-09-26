@@ -954,8 +954,20 @@ export class PackageService {
     }
 
     // get thông tin LiveForm phân công tiến độ
-    getTenderPreparationPlanning(bidOpportunityId: number): Observable<any> {
+    getTenderPreparationPlanning(bidOpportunityId: number): Observable<TenderPreparationPlanningRequest> {
         const url = `bidopportunity/${bidOpportunityId}/tenderpreparationplanningassignment`;
         return this.apiService.get(url).map(data => data.result);
+    }
+
+    // tạo mới/ sửa LiveForm phân công tiến độ
+    createOrUpdateTenderPreparationPlanning(data: TenderPreparationPlanningRequest): Observable<any> {
+        const url = `tenderpreparationplanningassignment/createorupdate`;
+        return this.apiService.post(url, data).map(response => response.result);
+    }
+
+    // xóa LiveForm phân công tiến độ
+    deleteTenderPreparationPlanning(bidOpportunityId: number): Observable<any> {
+        const url = `bidopportunity/${bidOpportunityId}/tenderpreparationplanningassignment/delete`;
+        return this.apiService.post(url).map(data => data.result);
     }
 }

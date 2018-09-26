@@ -9,10 +9,11 @@ import { Subject, Observable } from 'rxjs';
 import { FormBuilder, FormGroup, FormArray } from '@angular/forms';
 import { TenderPreparationPlanItem } from '../../../../../../shared/models/package/tender-preparation-plan-item';
 import DateTimeConvertHelper from '../../../../../../shared/helpers/datetime-convert-helper';
-import { UserService } from '../../../../../../shared/services';
+import { UserService, AlertService, SessionService } from '../../../../../../shared/services';
 import { UserItemModel } from '../../../../../../shared/models/user/user-item.model';
 import { TenderPreparationPlanningRequest } from '../../../../../../shared/models/api-request/package/tender-preparation-planning-request';
-
+import * as moment from 'moment';
+import { Router } from '@angular/router';
 declare let kendo: any;
 
 @Component({
@@ -30,34 +31,44 @@ export class InformationDeploymentFormComponent implements OnInit {
     dtTrigger: Subject<any> = new Subject();
     fakeArr = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
     userList: Observable<UserItemModel[]>;
+    routerAction: string;
 
     get tasksFA(): FormArray {
         return this.planForm.get('tasks') as FormArray;
     }
+
     constructor(
         private spinner: NgxSpinnerService,
         private packageService: PackageService,
         private userService: UserService,
-        private fb: FormBuilder
+        private fb: FormBuilder,
+        private router: Router,
+        private alertService: AlertService,
+        private sessionService: SessionService
     ) {}
 
     ngOnInit() {
         setTimeout(() => {
             this.dtTrigger.next();
         });
+        this.routerAction = this.packageService.routerAction;
         this.bidOpportunityId = PackageDetailComponent.packageId;
         this.userList = this.userService.getAllUser('');
         this.getPackageInfo();
-        this.packageService
+        if (this.routerAction === 'create') {
+            this.packageService
             .getDefaultTenderPreparationPlanning()
             .subscribe(data => this.createForm(data));
-        // this.packageService.getTenderPreparationPlanning(this.bidOpportunityId).subscribe(data => console.log(data));
+        } else {
+            this.packageService.getTenderPreparationPlanning(this.bidOpportunityId).subscribe(data => this.createForm(data));
+        }
     }
 
     createForm(planModel: TenderPreparationPlanningRequest) {
         const taskArr = [];
         planModel.tasks.forEach(i => taskArr.push(this.createTaskItemFG(i)));
         this.planForm = this.fb.group({
+            id: planModel.id,
             projectDirectorEmployeeId: planModel.projectDirectorEmployeeId,
             tenderDepartmentEmployeeId: planModel.tenderDepartmentEmployeeId,
             technicalDepartmentEmployeeId: planModel.technicalDepartmentEmployeeId,
@@ -66,56 +77,22 @@ export class InformationDeploymentFormComponent implements OnInit {
         });
         setTimeout(() => {
             kendo.jQuery(this.ganttChart.nativeElement).kendoGantt({
-                //   dataSource: this.tasksDataSource,
                 dataSource: planModel.tasks.map(i => {
                     return {
                         id: i.itemId,
                         orderId: i.itemId,
                         parentId: null,
                         title: i.itemName,
-                        start: new Date(),
-                        end: new Date()
+                        start: moment(i.startDate * 1000).startOf('day').toDate(),
+                        end: moment(i.finishDate * 1000).add(1, 'd').startOf('day').toDate()
                     };
                 }),
-                // dependencies: this.dependenciesDataSource,
                 views: [
                     { type: 'day', selected: true },
                     { type: 'week' },
                     'month'
                 ],
-                // columns: [
-                //     { field: 'id', title: 'ID', width: 60 },
-                //     {
-                //         field: 'title',
-                //         title: 'Title',
-                //         editable: true,
-                //         sortable: true
-                //     },
-                //     {
-                //         field: 'start',
-                //         title: 'Start Time',
-                //         format: '{0:MM/dd/yyyy}',
-                //         width: 100,
-                //         editable: true,
-                //         sortable: true
-                //     },
-                //     {
-                //         field: 'end',
-                //         title: 'End Time',
-                //         format: '{0:MM/dd/yyyy}',
-                //         width: 100,
-                //         editable: true,
-                //         sortable: true
-                //     }
-                // ],
-                // dependencies: [
-                //     {
-                //         predecessorId: 1,
-                //         successorId: 3,
-                //         type: 1
-                //     }
-                // ],
-                height: 2291,
+                height: 2832,
                 listWidth: 0,
                 showWorkHours: false,
                 showWorkDays: false,
@@ -153,5 +130,60 @@ export class InformationDeploymentFormComponent implements OnInit {
                 this.spinner.hide();
                 console.log(this.packageInfo);
             });
+    }
+
+    getFormData(): TenderPreparationPlanningRequest {
+        const formData = this.planForm.value;
+        formData.tasks.forEach(element => {
+            element.startDate = DateTimeConvertHelper.fromDtObjectToSecon(element.startDate);
+            element.finishDate = DateTimeConvertHelper.fromDtObjectToSecon(element.finishDate);
+            element.whoIsInChargeId = Number(element.whoIsInChargeId);
+            if (element.startDate && element.finishDate) {
+                element.duration = Math.abs(element.startDate - element.finishDate) / (60 * 60 * 24);
+            }
+        });
+        return formData as TenderPreparationPlanningRequest;
+    }
+
+    submitForm(isDraft: boolean) {
+        this.spinner.show();
+        const data = this.getFormData();
+        data.isDraftVersion = isDraft;
+        data.bidOpportunityId = this.bidOpportunityId;
+        if (data.createdEmployeeId) {
+            data.updatedEmployeeId = this.sessionService.currentUser.employeeId;
+        } else {
+            data.createdEmployeeId = this.sessionService.currentUser.employeeId;
+        }
+        console.log(data);
+        this.packageService.createOrUpdateTenderPreparationPlanning(data).subscribe(res => {
+            this.spinner.hide();
+            this.router.navigateByUrl(`package/detail/${this.bidOpportunityId}/attend/infomation-deployment`);
+            if (data.id) {
+                this.alertService.success('Cập nhật bảng phân công tiến độ thành công!');
+            } else {
+                this.alertService.success('Tạo mới bảng phân công tiến độ thành công!');
+            }
+        }, err => {
+            this.spinner.hide();
+            if (data.id) {
+                this.alertService.error('Cập nhật bảng phân công tiến độ thất bại');
+            } else {
+                this.alertService.error('Tạo mới bảng phân công tiến độ thất bại');
+            }
+        });
+    }
+
+    getItemDuration(start: Date, end: Date): string {
+        if (start && end) {
+            // tslint:disable-next-line:max-line-length
+            return Math.abs(DateTimeConvertHelper.fromDtObjectToSecon(start) - DateTimeConvertHelper.fromDtObjectToSecon(end)) / (60 * 60 * 24) + '';
+        } else {
+            return '';
+        }
+    }
+
+    getDateStr(data: number) {
+        return data ? DateTimeConvertHelper.fromTimestampToDtStr(data) : '';
     }
 }
