@@ -205,6 +205,8 @@ export class FileAttach {
     guid: string;
     url: string;
     desc: string;
+    uploadDate: number;
+
 }
 
 

@@ -11,23 +11,28 @@
     <div>
         <div class="btn-toolbar mt-2 mb-2">
             <div>
-                <div class="input-group ml-auto" style="width: 250px" *ngIf="package?.stageStatus?.id === 'DaNopHSDT' || package?.stageStatus?.id === 'ChotHoSo'">
+                <div class="input-group ml-auto max-width-name-document" *ngIf="package?.stageStatus?.id === 'DaNopHSDT' || package?.stageStatus?.id === 'ChotHoSo'">
                     <span class="input-group-addon">Tìm kiếm theo</span>
                     <input type="text" class="form-control icon" placeholder="&#xf002; Tên tài liệu">
                 </div>
             </div>
-            <button type="button" class="btn btn-primary ml-1" *ngIf="package?.stageStatus?.id === 'CanLapTrinhDuyetGia'" (click)="guiDuyet()">Gửi duyệt trình duyệt giá</button>
-            <button type="button" class="btn btn-primary ml-1" *ngIf="package?.stageStatus?.id === 'DaDuyetTrinhDuyetGia'" (click)="chotHoSo()">Chốt hồ sơ</button>
-            <button type="button" class="btn btn-primary ml-1" *ngIf="package?.stageStatus?.id === 'CanDieuChinhTrinhDuyetGia'" (click)="guiDuyet()">Gửi lại trình duyệt giá</button>
+            <button type="button" class="btn btn-primary ml-1" *ngIf="package?.stageStatus?.id === 'CanLapTrinhDuyetGia'"
+                (click)="guiDuyet()">Gửi duyệt trình duyệt giá</button>
+            <button type="button" class="btn btn-primary ml-1" *ngIf="package?.stageStatus?.id === 'DaDuyetTrinhDuyetGia'"
+                (click)="chotHoSo()">Chốt hồ sơ</button>
+            <button type="button" class="btn btn-primary ml-1" *ngIf="package?.stageStatus?.id === 'CanDieuChinhTrinhDuyetGia'"
+                (click)="guiDuyet()">Gửi lại trình duyệt giá</button>
             <button type="button" class="btn btn-primary ml-1" *ngIf="package?.stageStatus?.id === 'DaNopHSDT' || package?.stageStatus?.id === 'ChotHoSo'"
                 (click)="downloadAll()">Tải xuống tài liệu</button>
 
             <button type="button" class="btn btn-primary ml-1" (click)="taiTemplate()">Tải Template
             </button>
-            <button type="button" class="btn btn-primary ml-1" *ngIf="package?.stageStatus?.id === 'ChotHoSo'" (click)="chotHoSo()">Nộp HSDT</button>
-            <button type="button" class="btn btn-primary ml-1" *ngIf="package?.stageStatus?.id === 'DaNopHSDT'" (click)="hieuChinhHSDT()">Hiệu chỉnh HSDT</button>
+            <button type="button" class="btn btn-primary ml-1" *ngIf="package?.stageStatus?.id === 'ChotHoSo'" (click)="chotHoSo()">Nộp
+                HSDT</button>
+            <button type="button" class="btn btn-primary ml-1" *ngIf="package?.stageStatus?.id === 'DaNopHSDT'" (click)="hieuChinhHSDT()">Hiệu
+                chỉnh HSDT</button>
 
-            <button type="button" class="btn btn-primary ml-1">
+            <button type="button" class="btn btn-primary ml-1" (click)="refresh()">
                 <i class="fa fa-refresh" aria-hidden="true"></i>
             </button>
         </div>
@@ -66,7 +71,7 @@
                     <div class="d-flex">
                         <div class="d-flex justify-content-between w-100">
                             <div>File đính kèm</div>
-                            <div class="w-25" (click)="open()" style="cursor: pointer" title="Upload tài liệu">
+                            <div class="w-25 d-flex flex-row-reverse" (click)="open()" style="cursor: pointer" title="Upload tài liệu">
                                 <img width="25" height="25" src="assets\images\file-upload.png">
                             </div>
                         </div>
@@ -120,17 +125,16 @@
         <tbody>
             <tr>
                 <td class="select-filter" valign="baseline">Trình duyệt giá</td>
-                <td style="padding: 0!important">
+                <td style="padding: 0!important; max-width: 200px;">
                     <div class="attach-file">
-                        <div class="item d-flex align-items-center" *ngFor="let item of priceReview.files">
-                            <div class="ml-2 mt-1 mb-1 mr-2 d-flex justify-content-between w-100">
-                                <div class=" text-truncate">
-                                    <div class="name text-truncate">
-                                        {{item.name}}
+                        <div class="item d-flex align-items-center" style="box-sizing: border-box" *ngFor="let item of priceReview.files">
+                            <div class="ml-2 mt-1 mb-1 mr-2 d-flex justify-content-between w-90">
+                                <div class="">
+                                    <div class="name">
+                                       <span class="xuong-dong-2">{{item?.name}}</span> 
                                     </div>
                                     <div class="time">
-                                        12/12/2017
-                                    </div>
+                                        {{ item?.uploadDate*1000 | date:'dd/MM/yyyy HH:mm': '+0000' }} </div>
                                 </div>
                                 <div>
                                     <a (click)="downloadFileAttach(item.id)" *ngIf="!item.url">
@@ -150,8 +154,9 @@
 
                 <td class="select-filter" valign="baseline">{{priceReview?.approvalTimes}}</td>
                 <td class="select-filter" valign="baseline">{{priceReview?.createdEmployee?.employeeName}}</td>
-                <td class="select-filter" valign="baseline">{{priceReview?.createdDate*1000 | date:'dd/MM/yyyy HH:mm': '+0000' }}</td>
-                <td class="select-filter" valign="baseline">
+                <td class="select-filter" valign="baseline">{{priceReview?.createdDate*1000 | date:'dd/MM/yyyy HH:mm':
+                    '+0000' }}</td>
+                <td class="select-filter min-width-action" valign="baseline">
                     <div class="d-flex justify-content-around">
                         <div style="cursor: pointer;" title="Xem" routerLink="../detail">
                             <a>
@@ -258,18 +263,20 @@
                     </td>
                     <td class="text-center" valign="baseline">{{ updateInfo.changedTimes }}</td>
                     <td class="text-center" valign="baseline">{{ updateInfo.employee?.employeeName }}</td>
-                    <td class="text-center" valign="baseline">{{ (updateInfo.changedTime)*1000 | date:'dd/MM/yyyy' }}</td>
+                    <td class="text-center" valign="baseline">{{ updateInfo?.changedTime*1000 | date:'dd/MM/yyyy
+                        HH:mm': '+0000' }}</td>
                     <td class="text-center">
                         {{ (updateInfo?.updateDesc != 'undefined') ? updateInfo.updateDesc : '' }}
                     </td>
-                    <td class="text-center d-flex flex-column align-items-start">
-                        <p *ngFor="let item of updateInfo.liveFormChangeds; index as j">{{ item.liveFormTitle }}: {{ item.oldValue }} --- {{ item.newValue }}</p>
+                    <td class="align-baseline d-flex flex-column align-items-start xuong-dong">
+                        <p *ngFor="let item of updateInfo.liveFormChangeds; index as j">{{ item.liveFormTitle |
+                            translate }}: {{ item.oldValue }} --- {{ item.newValue }}</p>
                     </td>
                 </tr>
             </tbody>
         </table>
     </div>
-    <app-pagination [(pagedResult)]="pagedResult"></app-pagination>
+    <app-pagination [(pagedResult)]="pagedResult" (pagedResultChange)="pagedResultChange($event)"></app-pagination>
 </div>
 
 

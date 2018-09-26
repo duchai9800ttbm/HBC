@@ -68,6 +68,7 @@ export class PriceReviewSummaryComponent implements OnInit {
   refresh() {
     this.priceReviewService.viewShort(this.packageId).subscribe(data => {
       this.priceReview = data;
+      this.alertService.success('Dữ liệu đã được cập nhật mới nhất!');
     });
   }
 
@@ -131,7 +132,7 @@ export class PriceReviewSummaryComponent implements OnInit {
 
   downloadAll() { }
   taiTemplate() {
-
+    this.priceReviewService.downloadTemplate().subscribe();
   }
 
   delete() {
@@ -145,7 +146,13 @@ export class PriceReviewSummaryComponent implements OnInit {
       });
     });
   }
-
+  pagedResultChange(){
+    this.priceReviewService.changedHistoryPriceReview(this.packageId, this.pagedResult.currentPage, this.pagedResult.pageSize)
+    .subscribe(data => {
+      this.pagedResult = data;
+      console.log(data);
+    });
+  }
   print() {
 
   }
