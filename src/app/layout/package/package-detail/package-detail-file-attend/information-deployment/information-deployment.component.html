@@ -183,8 +183,8 @@
                     <i class="fa fa-paperclip" aria-hidden="true"></i>&nbsp;&nbsp; Đính kèm file</button>
                 <input type="file" class="upload" tabindex="2" (change)="uploadfile($event)" multiple />
             </div>
-            <div class="width-add-file-upload pt-2 d-flex">
-                <div *ngFor="let item of file; let i = index" class="d-flex pl-2">
+            <div class="width-add-file-upload">
+                <div *ngFor="let item of file; let i = index" class="d-flex pl-2 pt-2 float-left">
                     <div class="center-parent">
                         <span class="text-truncate">{{item?.name}}</span>
                     </div>

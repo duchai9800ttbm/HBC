@@ -7,7 +7,7 @@ const routes: Routes = [
     path: '',
     component: PackageEmailComponent,
     children: [
-      { path: '', redirectTo: 'give-up' },
+      { path: '', redirectTo: 'deploy' },
       {
         path: 'give-up',
         loadChildren: './give-up/give-up.module#GiveUpModule'

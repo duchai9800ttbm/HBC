@@ -56,7 +56,7 @@ export class NeedCreateTenderComponent implements OnInit {
       if (data) {
         NeedCreateTenderFormComponent.formModel = data;
         this.proposedTender = data;
-        // console.log(data);
+        console.log('this.proposedTender', this.proposedTender);
         // tslint:disable-next-line:max-line-length
         this.dateApproveBid = this.proposedTender && this.proposedTender.tenderDirectorProposal && this.proposedTender.tenderDirectorProposal.expectedDate ? DateTimeConvertHelper.fromTimestampToDtObject(this.proposedTender.tenderDirectorProposal.expectedDate * 1000) : new Date();
         setTimeout(() => {
@@ -74,11 +74,11 @@ export class NeedCreateTenderComponent implements OnInit {
 
   getPackageInfo() {
     this.packageService
-    .getInforPackageID(this.bidOpportunityId)
-    .subscribe(data => {
+      .getInforPackageID(this.bidOpportunityId)
+      .subscribe(data => {
         this.packageInfo = data;
         this.spinner.hide();
-    });
+      });
   }
 
   changeAction(data: string) {
@@ -117,19 +117,25 @@ export class NeedCreateTenderComponent implements OnInit {
   }
 
   sendApproveBidProposal() {
-    this.spinner.show();
-    this.packageService.sendApproveBidProposal(this.bidOpportunityId, DateTimeConvertHelper.fromDtObjectToSecon(this.dateApproveBid))
-      .subscribe(data => {
-        this.notificationService.change();
-        this.spinner.hide();
-        this.alertService.success('Gửi duyệt đề nghị dự thầu thành công!');
-        this.isShowDialog = false;
-        this.getPackageInfo();
-      }, err => {
-        this.spinner.hide();
-        this.alertService.error('Gửi duyệt đề nghị dự thầu thất bại!');
-        this.isShowDialog = false;
-      });
+    if (NeedCreateTenderFormComponent.formModel.tenderDirectorProposal.isSigned) {
+      this.spinner.show();
+      this.packageService.sendApproveBidProposal(this.bidOpportunityId, DateTimeConvertHelper.fromDtObjectToSecon(this.dateApproveBid))
+        .subscribe(data => {
+          this.notificationService.change();
+          this.spinner.hide();
+          this.alertService.success('Gửi duyệt đề nghị dự thầu thành công!');
+          this.isShowDialog = false;
+          this.getPackageInfo();
+        }, err => {
+          this.spinner.hide();
+          this.alertService.error('Gửi duyệt đề nghị dự thầu thất bại!');
+          this.isShowDialog = false;
+        });
+    } else {
+      this.isShowDialog = false;
+      this.confirmService.missAction('Đề nghị dự thầu chưa được xác nhân ký bởi giám đốc dự thầu',
+        `/package/detail/${this.bidOpportunityId}/attend/create-request/form/edit/director-proposal`);
+    }
   }
 
   approveBidProposal() {

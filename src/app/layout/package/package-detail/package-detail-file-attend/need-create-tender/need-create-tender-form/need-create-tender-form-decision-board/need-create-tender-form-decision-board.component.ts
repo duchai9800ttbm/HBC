@@ -9,6 +9,9 @@ import {
     SessionService
 } from '../../../../../../../shared/services';
 import { NgxSpinnerService } from 'ngx-spinner';
+import { PackageDetailComponent } from '../../../../package-detail.component';
+import { PackageInfoModel } from '../../../../../../../shared/models/package/package-info.model';
+import { BidStatus } from '../../../../../../../shared/constants/bid-status';
 
 @Component({
     selector: 'app-need-create-tender-form-decision-board',
@@ -19,6 +22,9 @@ export class NeedCreateTenderFormDecisionBoardComponent implements OnInit {
     routerAction: string;
     decisionBoardForm: FormGroup;
     expectedTimeStr;
+    bidOpportunityId = PackageDetailComponent.packageId;
+    packageInfo: PackageInfoModel;
+    bidStatus = BidStatus;
     constructor(
         private fb: FormBuilder,
         private packageService: PackageService,
@@ -28,6 +34,7 @@ export class NeedCreateTenderFormDecisionBoardComponent implements OnInit {
     ) {}
 
     ngOnInit() {
+        this.getPackageInfo();
         this.routerAction = this.packageService.routerAction;
         this.packageService.routerAction$.subscribe(
             router => (this.routerAction = router)
@@ -85,9 +92,9 @@ export class NeedCreateTenderFormDecisionBoardComponent implements OnInit {
         // NeedCreateTenderFormComponent.formModel.isDraftVersion = isDraf;
         // NeedCreateTenderFormComponent.formModel.bidOpportunityId = this.bidOpportunityId;
         if (NeedCreateTenderFormComponent.formModel.createdEmployeeId) {
-            NeedCreateTenderFormComponent.formModel.updatedEmployeeId = this.sessionService.currentUser.userId;
+            NeedCreateTenderFormComponent.formModel.updatedEmployeeId = this.sessionService.currentUser.employeeId;
         } else {
-            NeedCreateTenderFormComponent.formModel.createdEmployeeId = this.sessionService.currentUser.userId;
+            NeedCreateTenderFormComponent.formModel.createdEmployeeId = this.sessionService.currentUser.employeeId;
         }
         this.spinner.show();
         this.packageService
@@ -121,4 +128,13 @@ export class NeedCreateTenderFormDecisionBoardComponent implements OnInit {
                 }
             );
     }
+
+    getPackageInfo() {
+        this.packageService
+          .getInforPackageID(this.bidOpportunityId)
+          .subscribe(data => {
+            this.packageInfo = data;
+            console.log(this.packageInfo.stageStatus.id);
+          });
+      }
 }

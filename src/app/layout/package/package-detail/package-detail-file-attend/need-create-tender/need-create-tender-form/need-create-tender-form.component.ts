@@ -118,9 +118,9 @@ export class NeedCreateTenderFormComponent implements OnInit, OnDestroy {
         NeedCreateTenderFormComponent.formModel.isDraftVersion = isDraf;
         NeedCreateTenderFormComponent.formModel.bidOpportunityId = this.bidOpportunityId;
         if (NeedCreateTenderFormComponent.formModel.createdEmployeeId) {
-            NeedCreateTenderFormComponent.formModel.updatedEmployeeId = this.sessionService.currentUser.userId;
+            NeedCreateTenderFormComponent.formModel.updatedEmployeeId = this.sessionService.currentUser.employeeId;
         } else {
-            NeedCreateTenderFormComponent.formModel.createdEmployeeId = this.sessionService.currentUser.userId;
+            NeedCreateTenderFormComponent.formModel.createdEmployeeId = this.sessionService.currentUser.employeeId;
         }
         this.spinner.show();
         this.packageService

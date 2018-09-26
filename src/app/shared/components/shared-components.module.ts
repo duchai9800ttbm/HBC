@@ -24,6 +24,7 @@ import { ButtonModule } from '@progress/kendo-angular-buttons';
 // Imports the ButtonGroup module
 import { ButtonGroupModule } from '@progress/kendo-angular-buttons';
 import { PDFExportModule } from '@progress/kendo-angular-pdf-export';
+import { MissActionComponent } from './miss-action/miss-action.component';
 @NgModule({
     imports: [
         PDFExportModule,
@@ -54,6 +55,7 @@ import { PDFExportModule } from '@progress/kendo-angular-pdf-export';
         PopupCreateChairComponent,
         ResetPasswordComponent,
         PrintEmailComponent,
+        MissActionComponent,
     ],
     exports: [
         // AlertComponent,
@@ -68,7 +70,8 @@ import { PDFExportModule } from '@progress/kendo-angular-pdf-export';
         PopupCreateAssignerComponent,
         PopupCreateChairComponent,
         ResetPasswordComponent,
-        PrintEmailComponent
+        PrintEmailComponent,
+        MissActionComponent
     ],
     entryComponents: [
         ConfirmationPopupComponent,
@@ -79,7 +82,8 @@ import { PDFExportModule } from '@progress/kendo-angular-pdf-export';
         PopupCreateAssignerComponent,
         PopupCreateChairComponent,
         ResetPasswordComponent,
-        PrintEmailComponent
+        PrintEmailComponent,
+        MissActionComponent
     ]
 })
 export class SharedComponentsModule { }

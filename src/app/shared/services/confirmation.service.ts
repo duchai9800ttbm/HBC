@@ -6,6 +6,7 @@ import { NgbModal } from "@ng-bootstrap/ng-bootstrap/modal/modal";
 import { ConfirmationPopupComponent } from "../components/confirmation-popup/confirmation-popup.component";
 import { ConfirmationPopupCallAwayComponent } from "../components/confirmation-popup-call-away/confirmation-popup-call-away.component";
 import { ResetPasswordComponent } from "../components/reset-password/reset-password.component";
+import { MissActionComponent } from "../components/miss-action/miss-action.component";
 @Injectable()
 export class ConfirmationService {
     constructor(private modalService: NgbModal) {}
@@ -62,6 +63,14 @@ export class ConfirmationService {
         );
         modalRef.componentInstance.message = message;
         modalRef.componentInstance.message = passreset;
+    }
+
+    missAction(message, routerLink) {
+        const modalRef = this.modalService.open(
+            MissActionComponent
+        );
+        modalRef.componentInstance.message = message;
+        modalRef.componentInstance.routerLink = routerLink;
     }
 
 }
