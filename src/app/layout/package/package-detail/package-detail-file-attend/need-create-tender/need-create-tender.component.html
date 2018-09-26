@@ -36,7 +36,11 @@
     </div>
 </div>
 <div class="mt-5 ml-3" *ngIf="proposedTender">
-    <h5 class="text-uppercase mb-3">phiếu đề nghị dự thầu (proposed tender participating report)</h5>
+    <div class="d-flex justify-content-between">
+        <h5 class="text-uppercase mb-3">phiếu đề nghị dự thầu (proposed tender participating report)</h5>
+        <div class="text-right">Thời gian mong đợt được duyệt: {{(proposedTender.tenderDirectorProposal?.expectedDate)*1000 | date:'dd/MM/yyyy'}}</div>
+    </div>
+    
     <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger">
         <thead>
             <tr>

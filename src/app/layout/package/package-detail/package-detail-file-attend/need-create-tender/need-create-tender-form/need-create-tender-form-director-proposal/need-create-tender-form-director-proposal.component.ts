@@ -20,7 +20,7 @@ export class NeedCreateTenderFormDirectorProposalComponent implements OnInit {
         private sessionService: SessionService,
         private spinner: NgxSpinnerService,
         private alertService: AlertService,
-    ) {}
+    ) { }
 
     ngOnInit() {
         this.routerAction = this.packageService.routerAction;
@@ -29,7 +29,7 @@ export class NeedCreateTenderFormDirectorProposalComponent implements OnInit {
         );
         this.createForm();
         this.directorProposalForm.valueChanges.subscribe(data =>
-            this.mappingToLiveFormData(data)
+                this.mappingToLiveFormData(data)
         );
         this.mappingToLiveFormData(this.directorProposalForm.value);
     }
@@ -43,13 +43,13 @@ export class NeedCreateTenderFormDirectorProposalComponent implements OnInit {
             reason: formData ? formData.reason : '',
             date: formData
                 ? DateTimeConvertHelper.fromTimestampToDtObject(
-                      formData.date * 1000
-                  )
+                    formData.date * 1000
+                )
                 : new Date(),
-                expectedDate: formData
+            expectedDate: formData
                 ? DateTimeConvertHelper.fromTimestampToDtObject(
-                      formData.expectedDate * 1000
-                  )
+                    formData.expectedDate * 1000
+                )
                 : new Date(),
             isSigned: formData ? formData.isSigned : false
         });
@@ -59,7 +59,7 @@ export class NeedCreateTenderFormDirectorProposalComponent implements OnInit {
         this.directorProposalForm.get('isSigned').patchValue(true);
         // khi view có thể ký
         if (this.routerAction === 'view') {
-          this.onSubmit();
+            this.onSubmit();
         }
     }
 
@@ -72,7 +72,7 @@ export class NeedCreateTenderFormDirectorProposalComponent implements OnInit {
             data.date
         );
         NeedCreateTenderFormComponent.formModel.tenderDirectorProposal.expectedDate = DateTimeConvertHelper.fromDtObjectToSecon(
-            data.expectedTime
+            data.expectedDate
         );
     }
 
