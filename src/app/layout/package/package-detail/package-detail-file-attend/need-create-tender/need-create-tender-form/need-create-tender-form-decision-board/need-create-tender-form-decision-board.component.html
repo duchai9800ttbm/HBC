@@ -39,10 +39,10 @@
                 Ký tên/ Signing
             </div>
             <div class="col-md-8">
-                    <button *ngIf="!decisionBoardForm.get('isSigned').value" tabindex="4" class="btn btn-primary btn-sign" (click)="clickSigned()"
+                    <button *ngIf="!(packageInfo?.stageStatus.id === bidStatus.ThamGiaDuThau) && !decisionBoardForm.get('isSigned').value" tabindex="4" class="btn btn-primary btn-sign" (click)="clickSigned()"
                     [disabled]="!(packageInfo?.stageStatus.id === bidStatus.ChoDuyetDeNghiDuThau)"
                     [class.cursor-cancel]="!(packageInfo?.stageStatus.id === bidStatus.ChoDuyetDeNghiDuThau)">Xác nhận ký</button>
-                    <button *ngIf="decisionBoardForm.get('isSigned').value" tabindex="5" class="btn btn-primary btn-sign position-relative">
+                    <button *ngIf="packageInfo?.stageStatus.id === bidStatus.ThamGiaDuThau || decisionBoardForm.get('isSigned').value" tabindex="5" class="btn btn-primary btn-sign position-relative">
                             <i class="fa fa-check-square icon-check" aria-hidden="true"></i> Đã ký
                     </button>
             </div>
