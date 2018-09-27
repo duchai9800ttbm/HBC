@@ -5,6 +5,8 @@ import DateTimeConvertHelper from '../../../../../../../shared/helpers/datetime-
 import { PackageService } from '../../../../../../../shared/services/package.service';
 import { SessionService, AlertService } from '../../../../../../../shared/services';
 import { NgxSpinnerService } from 'ngx-spinner';
+import { PackageDetailComponent } from '../../../../package-detail.component';
+import { Router } from '../../../../../../../../../node_modules/@angular/router';
 
 @Component({
     selector: 'app-need-create-tender-form-director-proposal',
@@ -20,6 +22,7 @@ export class NeedCreateTenderFormDirectorProposalComponent implements OnInit {
         private sessionService: SessionService,
         private spinner: NgxSpinnerService,
         private alertService: AlertService,
+        private router: Router
     ) { }
 
     ngOnInit() {
@@ -31,7 +34,7 @@ export class NeedCreateTenderFormDirectorProposalComponent implements OnInit {
         );
         this.createForm();
         this.directorProposalForm.valueChanges.subscribe(data =>
-                this.mappingToLiveFormData(data)
+            this.mappingToLiveFormData(data)
         );
         this.mappingToLiveFormData(this.directorProposalForm.value);
     }
@@ -118,5 +121,11 @@ export class NeedCreateTenderFormDirectorProposalComponent implements OnInit {
                     this.spinner.hide();
                 }
             );
+    }
+
+    routerLink(event) {
+        if (event.key === 'Enter') {
+            this.router.navigate([`/package/detail/${+PackageDetailComponent.packageId}/attend/create-request/form/create/descion-board`]);
+        }
     }
 }

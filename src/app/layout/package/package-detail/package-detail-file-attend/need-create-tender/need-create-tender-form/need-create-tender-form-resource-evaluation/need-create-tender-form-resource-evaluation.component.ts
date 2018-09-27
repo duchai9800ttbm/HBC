@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder } from '@angular/forms';
 import { NeedCreateTenderFormComponent } from '../need-create-tender-form.component';
 import { PackageService } from '../../../../../../../shared/services/package.service';
+import { PackageDetailComponent } from '../../../../package-detail.component';
+import { Router } from '../../../../../../../../../node_modules/@angular/router';
 
 @Component({
   selector: 'app-need-create-tender-form-resource-evaluation',
@@ -14,7 +16,8 @@ export class NeedCreateTenderFormResourceEvaluationComponent implements OnInit {
   resourceEvaluationForm: FormGroup;
   constructor(
     private fb: FormBuilder,
-    private packageService: PackageService
+    private packageService: PackageService,
+    private router: Router
   ) { }
 
   ngOnInit() {
@@ -38,4 +41,9 @@ export class NeedCreateTenderFormResourceEvaluationComponent implements OnInit {
     NeedCreateTenderFormComponent.formModel.internalResourcesEvaluation = data;
   }
 
+  routerLink(event) {
+    if (event.key === 'Enter') {
+      this.router.navigate([`/package/detail/${+PackageDetailComponent.packageId}/attend/create-request/form/create/estimated-budget`]);
+    }
+  }
 }

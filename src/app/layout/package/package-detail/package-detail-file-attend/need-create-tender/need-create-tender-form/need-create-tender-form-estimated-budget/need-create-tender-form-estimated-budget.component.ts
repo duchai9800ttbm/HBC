@@ -3,6 +3,8 @@ import { FormGroup, FormBuilder } from '@angular/forms';
 import { NeedCreateTenderFormComponent } from '../need-create-tender-form.component';
 import { NeedCreateTenderComponent } from '../../need-create-tender.component';
 import { PackageService } from '../../../../../../../shared/services/package.service';
+import { PackageDetailComponent } from '../../../../package-detail.component';
+import { Router } from '../../../../../../../../../node_modules/@angular/router';
 
 @Component({
   selector: 'app-need-create-tender-form-estimated-budget',
@@ -17,7 +19,8 @@ export class NeedCreateTenderFormEstimatedBudgetComponent implements OnInit {
   estimatedBudgetForm: FormGroup;
   constructor(
     private fb: FormBuilder,
-    private packageService: PackageService
+    private packageService: PackageService,
+    private router: Router
   ) { }
 
   ngOnInit() {
@@ -45,4 +48,9 @@ export class NeedCreateTenderFormEstimatedBudgetComponent implements OnInit {
     NeedCreateTenderFormComponent.formModel.estimatedBudgetOfPakage = data;
   }
 
+  routerLink(event) {
+    if (event.key === 'Enter') {
+      this.router.navigate([`/package/detail/${+PackageDetailComponent.packageId}/attend/create-request/form/create/fee-tender`]);
+    }
+  }
 }

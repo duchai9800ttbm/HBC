@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder } from '@angular/forms';
 import { NeedCreateTenderFormComponent } from '../need-create-tender-form.component';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { NeedCreateTenderComponent } from '../../need-create-tender.component';
 import { PackageService } from '../../../../../../../shared/services/package.service';
+import { PackageDetailComponent } from '../../../../package-detail.component';
 
 @Component({
   selector: 'app-need-create-tender-form-analysis',
@@ -17,7 +18,8 @@ export class NeedCreateTenderFormAnalysisComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private route: ActivatedRoute,
-    private packageService: PackageService
+    private packageService: PackageService,
+    private router: Router,
   ) { }
 
   ngOnInit() {
@@ -48,4 +50,9 @@ export class NeedCreateTenderFormAnalysisComponent implements OnInit {
     NeedCreateTenderFormComponent.formModel.employerAnalysis = data.employerAnalysis;
   }
 
+  routerLink(event) {
+    if (event.key === 'Enter') {
+      this.router.navigate([`/package/detail/${+PackageDetailComponent.packageId}/attend/create-request/form/create/consultant-analys`]);
+    }
+  }
 }

@@ -3,6 +3,8 @@ import { FormGroup, FormBuilder } from '@angular/forms';
 import { NeedCreateTenderFormComponent } from '../need-create-tender-form.component';
 import DateTimeConvertHelper from '../../../../../../../shared/helpers/datetime-convert-helper';
 import { PackageService } from '../../../../../../../shared/services/package.service';
+import { PackageDetailComponent } from '../../../../package-detail.component';
+import { Router } from '../../../../../../../../../node_modules/@angular/router';
 
 @Component({
   selector: 'app-need-create-tender-form-contract-condition',
@@ -20,7 +22,8 @@ export class NeedCreateTenderFormContractConditionComponent implements OnInit {
   contractConditionForm: FormGroup;
   constructor(
     private fb: FormBuilder,
-    private packageService: PackageService
+    private packageService: PackageService,
+    private router: Router
   ) { }
 
   ngOnInit() {
@@ -77,4 +80,9 @@ export class NeedCreateTenderFormContractConditionComponent implements OnInit {
     NeedCreateTenderFormComponent.formModel.contractCondition.commencementDate = data.commencementDate ? DateTimeConvertHelper.fromDtObjectToSecon(data.commencementDate) : 0;
   }
 
+  routerLink(event) {
+    if (event.key === 'Enter') {
+      this.router.navigate([`/package/detail/${+PackageDetailComponent.packageId}/attend/create-request/form/create/director-proposal`]);
+    }
+  }
 }
