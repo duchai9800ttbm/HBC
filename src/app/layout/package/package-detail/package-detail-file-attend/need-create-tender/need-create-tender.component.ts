@@ -149,7 +149,7 @@ export class NeedCreateTenderComponent implements OnInit {
         });
     } else {
       this.isShowDialog = false;
-      this.confirmService.missAction('Đề nghị dự thầu chưa được xác nhân ký bởi giám đốc dự thầu',
+      this.confirmService.missAction('Đề nghị dự thầu chưa được xác nhận ký bởi giám đốc dự thầu',
         `/package/detail/${this.bidOpportunityId}/attend/create-request/form/edit/director-proposal`);
     }
   }

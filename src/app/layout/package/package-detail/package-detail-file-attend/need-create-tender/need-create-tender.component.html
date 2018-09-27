@@ -6,7 +6,8 @@
             <div class="center-parent mr-4">
                 <h4 class="mb-0" *ngIf="packageInfo?.stageStatus.id == bidStatus.CanLapDeNghiDuThau">Cần lập đề nghị dự thầu</h4>
                 <h4 class="mb-0" *ngIf="packageInfo?.stageStatus.id == bidStatus.ChoDuyetDeNghiDuThau">Chờ duyệt</h4>
-                <h4 class="mb-0" *ngIf="packageInfo?.stageStatus.id !== (bidStatus.CanLapDeNghiDuThau || bidStatus.ChoDuyetDeNghiDuThau || bidStatus.TuChoiDuThau)">Tham gia dự thầu</h4>
+                <h4 class="mb-0" *ngIf="(packageInfo?.stageStatus.id !== bidStatus.CanLapDeNghiDuThau) && ( packageInfo?.stageStatus.id !== bidStatus.ChoDuyetDeNghiDuThau )  
+                    && (packageInfo?.stageStatus.id !== bidStatus.TuChoiDuThau)">Tham gia dự thầu</h4>
                 <h4 class="mb-0" *ngIf="packageInfo?.stageStatus.id == bidStatus.TuChoiDuThau">Từ chối dự thầu</h4>
             </div>
         </div>
@@ -39,7 +40,7 @@
 <div class="mt-5 ml-3" *ngIf="proposedTender">
     <div class="d-flex justify-content-between">
         <h5 class="text-uppercase mb-3">phiếu đề nghị dự thầu (proposed tender participating report)</h5>
-        <div class="text-right" *ngIf="proposedTender.tenderDirectorProposal && proposedTender.tenderDirectorProposal.expectedDate">Thời gian mong đợt được duyệt: {{(proposedTender.tenderDirectorProposal?.expectedDate)*1000 | date:'dd/MM/yyyy'}}</div>
+        <div class="text-right" *ngIf="proposedTender.tenderDirectorProposal && proposedTender.tenderDirectorProposal.expectedDate">Thời gian mong đợi được duyệt: {{(proposedTender.tenderDirectorProposal?.expectedDate)*1000 | date:'dd/MM/yyyy'}}</div>
     </div>
 
     <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger">
