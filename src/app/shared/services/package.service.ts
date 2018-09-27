@@ -1021,4 +1021,10 @@ export class PackageService {
         const url = `bidopportunity/hsdt/${bidOpportunityId}/guiphancontiendo`;
         return this.apiService.post(url).map(data => data.result);
     }
+
+    // check/bỏ check hoàn thành công việc liveform phân công tiến độ
+    checkOrUncheckTenderPreparationPlanningItem(bidOpportunityId: number, itemId: number): Observable<any> {
+        const url = `bidopportunity/${bidOpportunityId}/tenderpreparationplanningassignment/item/${itemId}/checkfinish`;
+        return this.apiService.post(url).map(data => data.result);
+    }
 }

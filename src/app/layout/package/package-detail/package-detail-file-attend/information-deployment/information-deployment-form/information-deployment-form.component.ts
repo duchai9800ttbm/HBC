@@ -198,4 +198,12 @@ export class InformationDeploymentFormComponent implements OnInit {
     getDateStr(data: number) {
         return data ? DateTimeConvertHelper.fromTimestampToDtStr(data) : '';
     }
+
+    checkFinishTenderPlanItem(itemId: number) {
+        this.packageService.checkOrUncheckTenderPreparationPlanningItem(this.bidOpportunityId, itemId).subscribe(success => {
+            console.log(success);
+        }, err => {
+            this.alertService.error('Đã có lỗi xảy ra, vui lòng thử lại!');
+        });
+    }
 }
