@@ -218,7 +218,7 @@ export class ItemHSDTChinhThuc {
         name: string,
         interviewTime: number,
     };
-    childs?: ItemHSDTChinhThuc;
+    childs?: ItemHSDTChinhThuc[];
 }
 
 

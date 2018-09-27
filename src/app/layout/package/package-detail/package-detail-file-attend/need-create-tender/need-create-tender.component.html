@@ -6,7 +6,7 @@
             <div class="center-parent mr-4">
                 <h4 class="mb-0" *ngIf="packageInfo?.stageStatus.id == bidStatus.CanLapDeNghiDuThau">Cần lập đề nghị dự thầu</h4>
                 <h4 class="mb-0" *ngIf="packageInfo?.stageStatus.id == bidStatus.ChoDuyetDeNghiDuThau">Chờ duyệt</h4>
-                <h4 class="mb-0" *ngIf="packageInfo?.stageStatus.id == bidStatus.ThamGiaDuThau">Tham gia dự thầu</h4>
+                <h4 class="mb-0" *ngIf="packageInfo?.stageStatus.id !== (bidStatus.CanLapDeNghiDuThau || bidStatus.ChoDuyetDeNghiDuThau || bidStatus.TuChoiDuThau)">Tham gia dự thầu</h4>
                 <h4 class="mb-0" *ngIf="packageInfo?.stageStatus.id == bidStatus.TuChoiDuThau">Từ chối dự thầu</h4>
             </div>
         </div>
@@ -39,9 +39,9 @@
 <div class="mt-5 ml-3" *ngIf="proposedTender">
     <div class="d-flex justify-content-between">
         <h5 class="text-uppercase mb-3">phiếu đề nghị dự thầu (proposed tender participating report)</h5>
-        <div class="text-right" *ngIf="proposedTender.tenderDirectorProposal && proposedTender.tenderDirectorProposal.expectedDate" >Thời gian mong đợt được duyệt: {{(proposedTender.tenderDirectorProposal?.expectedDate)*1000 | date:'dd/MM/yyyy'}}</div>
+        <div class="text-right" *ngIf="proposedTender.tenderDirectorProposal && proposedTender.tenderDirectorProposal.expectedDate">Thời gian mong đợt được duyệt: {{(proposedTender.tenderDirectorProposal?.expectedDate)*1000 | date:'dd/MM/yyyy'}}</div>
     </div>
-    
+
     <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger">
         <thead>
             <tr>
@@ -58,7 +58,9 @@
             <tr>
                 <td>
                 </td>
-                <td><a [routerLink]="['./form/view']" (click)="changeAction('view')">{{proposedTender.documentName}}</a></td>
+                <td>
+                    <a [routerLink]="['./form/view']" (click)="changeAction('view')">{{proposedTender.documentName}}</a>
+                </td>
                 <td>{{proposedTender.isDraftVersion ? 'Bản nháp' : 'Chính thức'}}</td>
                 <td>{{proposedTender.createdEmployee?.employeeName}}</td>
                 <td>{{ (proposedTender.createdDate)*1000 | date:'dd/MM/yyyy'}}</td>
@@ -68,7 +70,9 @@
                             <a [routerLink]="['./form/view']" (click)="changeAction('view')">
                                 <i class="fa fa-eye text-warning" aria-hidden="true"></i>
                             </a>
-                            <a *ngIf="packageInfo?.stageStatus.id == bidStatus.CanLapDeNghiDuThau" class=" text-success ml-3" [class.disable]="packageInfo?.stageStatus.id != bidStatus.CanLapDeNghiDuThau" [routerLink]="packageInfo?.stageStatus.id != bidStatus.CanLapDeNghiDuThau ? [] : ['./form/edit']" (click)="changeAction('edit')">
+                            <a *ngIf="packageInfo?.stageStatus.id == bidStatus.CanLapDeNghiDuThau" class=" text-success ml-3" [class.disable]="packageInfo?.stageStatus.id != bidStatus.CanLapDeNghiDuThau"
+                                [routerLink]="packageInfo?.stageStatus.id != bidStatus.CanLapDeNghiDuThau ? [] : ['./form/edit']"
+                                (click)="changeAction('edit')">
                                 <i class="fa fa-pencil cursor-pointer" aria-hidden="true"> </i>
                             </a>
                             <a *ngIf="packageInfo?.stageStatus.id == bidStatus.CanLapDeNghiDuThau" class=" text-dark ml-3" (click)="deleteProposedTenderParticipateReport()">
@@ -85,40 +89,67 @@
     </table>
 </div>
 
-<div class="mt-5 ml-3">
-        <div class="d-flex justify-content-between">
-            <h5 class="text-uppercase mb-3">Lịch sử cập nhật</h5>
-        </div>
-        
-        <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger">
-            <thead>
-                <tr>
-                    <th>STT</th>
-                    <th>Lần cập nhật</th>
-                    <th>Người cập nhật</th>
-                    <th>Ngày cập nhật</th>
-                    <th>Nội dung cập nhật</th>
-                    <th class="text-center">Chi tiết cập nhật</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td>
-                    </td>
-                    <td><a></a></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td>
-                        <div class="d-flex justify-content-center">
-                            <div>
+<div class="mt-5 ml-3" *ngIf="proposedTender">
+    <div class="d-flex justify-content-between">
+        <h5 class="text-uppercase mb-3">Lịch sử cập nhật</h5>
+    </div>
+
+    <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger">
+        <thead>
+            <tr>
+                <th class="table-history-stt--width">
+                    <div class="d-flex justify-content-around">
+                        <div class="w-40">
+                            <div class="center-parent">
+                                <label class="custom-control custom-checkbox">
+                                    <input type="checkbox" class="custom-control-input" (change)="onSelectAll($event.target.checked)">
+                                    <span class="custom-control-indicator"></span>
+                                </label>
                             </div>
                         </div>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
-    </div>
+                        <div class="center-parent w-35">
+                            <div>STT</div>
+                        </div>
+                    </div>
+                </th>
+                <th>Lần cập nhật</th>
+                <th>Người cập nhật</th>
+                <th>Ngày cập nhật</th>
+                <th>Nội dung cập nhật</th>
+                <th class="text-center">Chi tiết cập nhật</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let item of pagedResultChangeHistoryList.items; let i = index">
+                <td class="d-flex justify-content-around">
+                    <div class="w-40">
+                        <div class="center-parent">
+                            <label class="custom-control custom-checkbox">
+                                <input type="checkbox" class="custom-control-input" [(ngModel)]="item.checkboxSelected">
+                                <span class="custom-control-indicator"></span>
+                            </label>
+                        </div>
+                    </div>
+                    <div class="center-parent w-35">
+                        <div>{{i + 1}}</div>
+                    </div>
+                </td>
+                <td class="text-center">
+                    {{item.changedTimes}}
+                </td>
+                <td> {{item.employee?.employeeName}}</td>
+                <td>{{ (item.changedTime)*1000 | date:'dd/MM/yyyy' }}</td>
+                <td>{{item.updateDesc}}</td>
+                <td>
+                    <div class="d-flex justify-content-center">
+                        <div>
+                        </div>
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
 
 <div id="divPrint" class="d-none" *ngIf="false">
     <div class="header-print d-flex justify-content-between">
@@ -161,9 +192,8 @@
             </span>
         </div>
         <div class="dialog-body mt-4 text-center">
-            Đây là loại đề nghị dự thầu {{proposedTender.isAgreedParticipating ? 'Đồng ý tham gia' : 'Không đồng ý tham
-            gia'}}<br>
-            Bạn có muốn chấp thuận đề nghị dự thầu này?
+            Đây là loại đề nghị dự thầu {{proposedTender.isAgreedParticipating ? 'Đồng ý tham gia' : 'Không đồng ý tham gia'}}
+            <br> Bạn có muốn chấp thuận đề nghị dự thầu này?
         </div>
         <div class="mt-5 text-center mb-2">
             <button class="btn b-btn btn-primary" (click)="approveBidProposal()">Có</button>
@@ -188,7 +218,7 @@
             </div>
         </div>
         <div class="mt-5 text-center mb-2">
-                <button class="btn b-btn btn-primary" (click)="notApproveBidProposal()">Gửi</button>
+            <button class="btn b-btn btn-primary" (click)="notApproveBidProposal()">Gửi</button>
         </div>
     </div>
 
