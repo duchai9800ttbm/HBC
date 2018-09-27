@@ -1,4 +1,4 @@
-import { Component, OnInit, AfterViewInit, Input } from '@angular/core';
+import { Component, OnInit, AfterViewInit, Input, AfterViewChecked, AfterContentChecked } from '@angular/core';
 import { TenderPriceApproval } from '../../../../../../shared/models/price-review/price-review.model';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import DateTimeConvertHelper from '../../../../../../shared/helpers/datetime-convert-helper';
@@ -33,6 +33,7 @@ export class PriceReviewFormComponent implements OnInit, AfterViewInit {
   @Input() type: string;
 
   ngOnInit() {
+    //  document.getElementById('content-right').style.maxHeight = `${elementHeight}`;
     this.getModeScreen();
     this.packageId = PackageDetailComponent.packageId;
     this.getInfoPackge();
@@ -40,6 +41,16 @@ export class PriceReviewFormComponent implements OnInit, AfterViewInit {
     this.checkDuyet();
   }
 
+  ngAfterViewInit() {
+    const tableReview = $('#table-review').height();
+    $('#comment-scroll').height(tableReview + 29);
+    $('#comment-scroll').css('min-height', `${tableReview + 29}px`);
+  }
+  onResize() {
+    const tableReview = $('#table-review').height();
+    $('#comment-scroll').height(tableReview + 29);
+    $('#comment-scroll').css('min-height', `${tableReview + 29}px`);
+  }
   getModeScreen() {
     this.isModeView = this.type === 'detail';
     this.isModeCreate = this.type === 'create';
@@ -643,7 +654,14 @@ export class PriceReviewFormComponent implements OnInit, AfterViewInit {
           ),
         disabled: this.isModeView
       }],
-      approvalTimes: this.model.approvalTimes,
+      approvalTimes: {
+        value: this.model.approvalTimes,
+        disabled: this.isModeView
+      },
+      interviewTimes: {
+        value: this.model.interviewTimes,
+        disabled: this.isModeView
+      },
       isApprovedByTenderLeader: this.model.isApprovedByTenderLeader,
       isApprovedByTenderManager: this.model.isApprovedByTenderManager,
       isApprovedByBoardOfDirector: this.model.isApprovedByBoardOfDirector,
@@ -654,9 +672,6 @@ export class PriceReviewFormComponent implements OnInit, AfterViewInit {
     });
   }
 
-
-  ngAfterViewInit() {
-  }
 
 
   submit(isSaveDraft: boolean) {

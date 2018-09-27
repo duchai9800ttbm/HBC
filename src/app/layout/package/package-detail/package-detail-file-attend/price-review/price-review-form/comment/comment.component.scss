@@ -49,17 +49,41 @@
     border-top: none;
     border-top-right-radius: 5px;
     border-top-left-radius: 5px;
-    height: 100%;
 }
 
 .list-comment {
-    margin-left: 15px;
-    margin-right: 15px;
+    overflow: hide;
+    overflow-y: scroll;
+    &:hover::-webkit-scrollbar {
+        width: 8px!important;
+        height: 100px;
+        cursor: pointer;
+    }
+    &:hover::-webkit-scrollbar {
+        width: 0px;
+        cursor: pointer;
+    
+    }
+    &:hover::-webkit-scrollbar-track {
+        background-color:#f8f8f8;    
+    }
+    .danh-sach{
+        margin-left: 15px;
+        margin-right: 15px;
+    }
 }
 
+
+::-webkit-scrollbar-track {
+    background-color:#ffffff;    
+}
 .avatar {
     border-radius: 50%;
 }
+
+::-webkit-scrollbar-thumb {
+    background-color: rgba(0, 0, 0, 0.2); 
+} 
 
 .author {
     color: #36a9e1;

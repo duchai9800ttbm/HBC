@@ -97,7 +97,7 @@ export class PriceReviewService {
         type: model.document.type,
         id: model.document.id,
         name: model.document.name,
-        interviewTime: model.interviewTime
+        interviewTime: model.document.interviewTime
       },
       childs: model.childs ? model.childs : []
     };
@@ -178,6 +178,7 @@ export class PriceReviewService {
     modelRequest.isDraftVersion = formValue.isDraftVersion ? formValue.isDraftVersion : false;
     modelRequest.approvalDate = DateTimeConvertHelper.fromDtObjectToTimestamp(formValue.approvalDate) / 1000;
     modelRequest.approvalTimes = formValue.approvalTimes;
+    modelRequest.interviewTimes = formValue.interviewTimes;
     modelRequest.projectInformation = {
       foudationPart: {
         scopeOfWorkIsInclude: formValue.phanMongCheck ? formValue.phanMongCheck : false,

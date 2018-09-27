@@ -20,6 +20,7 @@ export class TenderPriceApproval {
     isDraftVersion: boolean;
     approvalDate: number;
     approvalTimes: number;
+    interviewTimes: number;
     isApprovedByTenderLeader: boolean;
     isApprovedByTenderManager: boolean;
     isApprovedByBoardOfDirector: boolean;
