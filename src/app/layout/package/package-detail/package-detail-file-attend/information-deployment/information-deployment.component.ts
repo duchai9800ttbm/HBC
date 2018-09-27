@@ -355,6 +355,17 @@ export class InformationDeploymentComponent implements OnInit {
     });
   }
 
+  sendTenderPlan() {
+    this.spinner.show();
+    this.packageService.sendTenderPreparationPlanning(this.bidOpportunityId).subscribe(success => {
+      this.spinner.hide();
+      this.alertService.success('Gửi phân công tiến độ thành công!');
+    }, err => {
+      this.spinner.hide();
+      this.alertService.error('Gửi phân công tiến độ thất bại!');
+    });
+  }
+
   // sendTenderPlan() {
   //   this.spinner.show();
   //   this.packageService.sendTenderPreparationPlanning(this.bidOpportunityId).subscribe(success => {
