@@ -163,8 +163,8 @@
                 aria-describedby="basic-addon1">
         </div>
         <div class="body-ckeditor">
-            <ckeditor [(ngModel)]="emailModel.content" [config]="ckeConfig" #ckeditor>
-                <ckbutton [name]="'saveButton'" [command]="'saveCmd'" (click)="save($event)" [icon]="'save.png'" [label]="'Save Document'"
+            <ckeditor [(ngModel)]="emailModel.content" [config]="ckeConfig" #ckeditor (change)="onChange($event)">
+                <ckbutton [name]="'saveButton'" [command]="'saveCmd'" [icon]="'save.png'" [label]="'Save Document'"
                     [toolbar]="'clipboard,1'">
                 </ckbutton>
             </ckeditor>
