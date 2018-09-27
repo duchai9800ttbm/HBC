@@ -17,7 +17,7 @@
                 <!-- <button class="btn btn-primary ml-2">
               Import dữ liệu theo mẫu
           </button> -->
-                <button class="btn btn-primary ml-2" (click)="submitForm(true)">
+                <button class="btn btn-primary ml-2" (click)="submitForm(true)" *ngIf="planForm?.get('isDraftVersion').value">
                     Lưu nháp
                 </button>
                 <button class="btn btn-primary ml-2" (click)="submitForm(false)">
@@ -165,6 +165,7 @@
                             <th class="text-center align-middle w-work">Công việc</th>
                             <th class="text-center align-middle text-nowrap w-work">Mô tả</th>
                             <th class="text-center align-middle">Phân công cho</th>
+                            <th class="text-center align-middle">Hoàn thành</th>
                             <th class="text-center align-middle col-datetime">Ngày bắt đầu</th>
                             <th class="text-center align-middle col-datetime">Ngày kết thúc</th>
                             <th class="text-center align-middle">Tổng thời gian</th>
@@ -182,6 +183,12 @@
                                         <option *ngFor="let user of userList | async" [value]="user.employeeId">{{user.employeeName}}</option>
                                     </select>
                                 </span>
+                            </td>
+                            <td class="text-center">
+                                <label class="custom-control custom-checkbox">
+                                    <input type="checkbox" class="custom-control-input input-checkbox">
+                                    <span class="custom-control-indicator"></span>
+                                </label>
                             </td>
                             <td class="pl-0">
                                 <kendo-datepicker formControlName="startDate" class="form-control b-datepicker-no-border b-datepicker-ic"></kendo-datepicker>

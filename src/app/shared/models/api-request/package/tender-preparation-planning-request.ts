@@ -16,6 +16,6 @@ export class TenderPreparationPlanningRequest {
     finishDate: number;
     deadline: number;
     duration: number;
-    isDraftVersion: boolean;
+    isDraftVersion = true;
     tasks: TenderPreparationPlanItem[];
 }

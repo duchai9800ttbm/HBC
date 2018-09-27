@@ -122,12 +122,7 @@ export class InformationDeploymentComponent implements OnInit {
       this.listEmailSearchBcc = response;
     });
     this.getPackageInfo();
-    this.packageService.getTenderPreparationPlanning(this.bidOpportunityId).subscribe(data => {
-      this.tenderPlan = data;
-      setTimeout(() => {
-        this.dtTrigger.next();
-      });
-    });
+    this.getTenderPlanInfo();
     this.ckeConfig = {
       toolbar: [
         { name: 'basicstyles', items: ['Bold', 'Italic', 'Underline', 'Strike'] },
@@ -160,6 +155,20 @@ export class InformationDeploymentComponent implements OnInit {
     this.textInformation = '';
     this.currentPackageId = +PackageDetailComponent.packageId;
 
+  }
+
+  getTenderPlanInfo() {
+    this.spinner.show();
+    this.packageService.getTenderPreparationPlanning(this.bidOpportunityId).subscribe(data => {
+      this.tenderPlan = data;
+      this.spinner.hide();
+      setTimeout(() => {
+        this.dtTrigger.next();
+      });
+    }, err => {
+      this.spinner.hide();
+      this.alertService.error('Lấy thông tin bảng phân công tiến độ thất bại');
+    });
   }
 
   getPackageInfo() {
@@ -328,9 +337,31 @@ export class InformationDeploymentComponent implements OnInit {
         this.tenderPlan = null;
         this.getPackageInfo();
       }, err => {
-        this.alertService.error('Xóa bảng phân công tiến độ thất bại');
+        this.alertService.error('Xóa bảng phân công tiến độ thất bại!');
         this.spinner.hide();
       });
+    });
+  }
+
+  confirmTenderPlan() {
+    this.tenderPlan.isDraftVersion = false;
+    this.packageService.createOrUpdateTenderPreparationPlanning(this.tenderPlan).subscribe(success => {
+      this.spinner.hide();
+      this.alertService.success('Xác nhận phân công tiến độ thành công!');
+    }, err => {
+      this.spinner.hide();
+      this.alertService.error('Xác nhận phân công tiến độ thất bại!');
+    });
+  }
+
+  sendTenderPlan() {
+    this.spinner.show();
+    this.packageService.sendTenderPreparationPlanning(this.bidOpportunityId).subscribe(success => {
+      this.spinner.hide();
+      this.alertService.success('Gửi phân công tiến độ thành công!');
+    }, err => {
+      this.spinner.hide();
+      this.alertService.error('Gửi phân công tiến độ thất bại!');
     });
   }
 }

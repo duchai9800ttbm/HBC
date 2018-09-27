@@ -971,4 +971,10 @@ export class PackageService {
         const url = `bidopportunity/${bidOpportunityId}/tenderpreparationplanningassignment/delete`;
         return this.apiService.post(url).map(data => data.result);
     }
+
+    // gửi phân công tiến độ
+    sendTenderPreparationPlanning(bidOpportunityId: number): Observable<any> {
+        const url = `bidopportunity/hsdt/${bidOpportunityId}/guiphancontiendo`;
+        return this.apiService.post(url).map(data => data.result);
+    }
 }
