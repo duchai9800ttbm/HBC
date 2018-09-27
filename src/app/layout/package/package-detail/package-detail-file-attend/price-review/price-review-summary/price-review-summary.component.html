@@ -16,21 +16,17 @@
                     <input type="text" class="form-control icon" placeholder="&#xf002; Tên tài liệu">
                 </div>
             </div>
-            <button type="button" class="btn btn-primary ml-1" *ngIf="package?.stageStatus?.id === 'CanLapTrinhDuyetGia'"
-                (click)="guiDuyet()">Gửi duyệt trình duyệt giá</button>
-            <button type="button" class="btn btn-primary ml-1" *ngIf="package?.stageStatus?.id === 'DaDuyetTrinhDuyetGia'"
-                (click)="chotHoSo()">Chốt hồ sơ</button>
-            <button type="button" class="btn btn-primary ml-1" *ngIf="package?.stageStatus?.id === 'CanDieuChinhTrinhDuyetGia'"
-                (click)="guiDuyet()">Gửi lại trình duyệt giá</button>
+            <button type="button" class="btn btn-primary ml-1" *ngIf="package?.stageStatus?.id === 'CanLapTrinhDuyetGia'" (click)="guiDuyet()">Gửi duyệt trình duyệt giá</button>
+            <button type="button" class="btn btn-primary ml-1" *ngIf="package?.stageStatus?.id === 'DaDuyetTrinhDuyetGia'" (click)="chotHoSo()">Chốt hồ sơ</button>
+            <button type="button" class="btn btn-primary ml-1" *ngIf="package?.stageStatus?.id === 'CanDieuChinhTrinhDuyetGia'" (click)="guiDuyet()">Gửi lại trình duyệt giá</button>
             <button type="button" class="btn btn-primary ml-1" *ngIf="package?.stageStatus?.id === 'DaNopHSDT' || package?.stageStatus?.id === 'ChotHoSo'"
                 (click)="downloadAll()">Tải xuống tài liệu</button>
 
             <button type="button" class="btn btn-primary ml-1" (click)="taiTemplate()">Tải Template
             </button>
-            <button type="button" class="btn btn-primary ml-1" *ngIf="package?.stageStatus?.id === 'ChotHoSo'" (click)="chotHoSo()">Nộp
-                HSDT</button>
-            <button type="button" class="btn btn-primary ml-1" *ngIf="package?.stageStatus?.id === 'DaNopHSDT'" (click)="hieuChinhHSDT()">Hiệu
-                chỉnh HSDT</button>
+            <button type="button" class="btn btn-primary ml-1" *ngIf="package?.stageStatus?.id === 'ChotHoSo'" (click)="chotHoSo()">Nộp HSDT
+            </button>
+            <button type="button" class="btn btn-primary ml-1" *ngIf="package?.stageStatus?.id === 'DaNopHSDT'" (click)="hieuChinhHSDT()">Hiệu chỉnh HSDT</button>
 
             <button type="button" class="btn btn-primary ml-1" (click)="refresh()">
                 <i class="fa fa-refresh" aria-hidden="true"></i>
@@ -131,7 +127,7 @@
                             <div class="ml-2 mt-1 mb-1 mr-2 d-flex justify-content-between w-90">
                                 <div class="">
                                     <div class="name">
-                                       <span class="xuong-dong-2">{{item?.name}}</span> 
+                                        <span class="xuong-dong-2">{{item?.name}}</span>
                                     </div>
                                     <div class="time">
                                         {{ item?.uploadDate*1000 | date:'dd/MM/yyyy HH:mm': '+0000' }} </div>
@@ -154,8 +150,7 @@
 
                 <td class="select-filter" valign="baseline">{{priceReview?.approvalTimes}}</td>
                 <td class="select-filter" valign="baseline">{{priceReview?.createdEmployee?.employeeName}}</td>
-                <td class="select-filter" valign="baseline">{{priceReview?.createdDate*1000 | date:'dd/MM/yyyy HH:mm':
-                    '+0000' }}</td>
+                <td class="select-filter" valign="baseline">{{priceReview?.createdDate*1000 | date:'dd/MM/yyyy HH:mm': '+0000' }}</td>
                 <td class="select-filter min-width-action" valign="baseline">
                     <div class="d-flex justify-content-around">
                         <div style="cursor: pointer;" title="Xem" routerLink="../detail">
@@ -188,7 +183,7 @@
 
 
 
-<div class="content mt-4">
+<div class="content mt-4" *ngIf="priceReview">
     <div class="mb-4 mt-1">
         <h5>BẢNG TÓM TẮT THÔNG TIN DỰ ÁN - TRÌNH DUYỆT GIÁ THẦU</h5>
     </div>
@@ -263,14 +258,12 @@
                     </td>
                     <td class="text-center" valign="baseline">{{ updateInfo.changedTimes }}</td>
                     <td class="text-center" valign="baseline">{{ updateInfo.employee?.employeeName }}</td>
-                    <td class="text-center" valign="baseline">{{ updateInfo?.changedTime*1000 | date:'dd/MM/yyyy
-                        HH:mm': '+0000' }}</td>
+                    <td class="text-center" valign="baseline">{{ updateInfo?.changedTime*1000 | date:'dd/MM/yyyy HH:mm': '+0000' }}</td>
                     <td class="text-center">
                         {{ (updateInfo?.updateDesc != 'undefined') ? updateInfo.updateDesc : '' }}
                     </td>
                     <td class="align-baseline d-flex flex-column align-items-start xuong-dong">
-                        <p *ngFor="let item of updateInfo.liveFormChangeds; index as j">{{ item.liveFormTitle |
-                            translate }}: {{ item.oldValue }} --- {{ item.newValue }}</p>
+                        <p *ngFor="let item of updateInfo.liveFormChangeds; index as j">{{ item.liveFormTitle | translate }}: {{ item.oldValue }} --- {{ item.newValue }}</p>
                     </td>
                 </tr>
             </tbody>
@@ -279,6 +272,164 @@
     <app-pagination [(pagedResult)]="pagedResult" (pagedResultChange)="pagedResultChange($event)"></app-pagination>
 </div>
 
+
+<div class="content mt-4">
+    <div class="mb-4 mt-1">
+        <h5>HỒ SƠ DỰ THẦU ĐÃ PHÊ DUYỆT</h5>
+    </div>
+    <div class="bot-table">
+        <table class="table-selection  row-border hover cell-border dataTable">
+            <thead>
+                <tr>
+                    <th class="stt" style="background-color: #f68e56!important;">
+                        <div class="d-flex justify-content-around">
+                            <div class="center-parent">
+                                <div>STT</div>
+                            </div>
+                        </div>
+                    </th>
+                    <th style="width: 18%;background-color: #f68e56!important;">
+                        <div class="d-flex justify-content-center">
+                            <div class="center-parent">
+                                <div>Loại tài liệu</div>
+                            </div>
+                        </div>
+                    </th>
+                    <th style="width: 18%;background-color: #f68e56!important;">
+                        <div class="d-flex justify-content-center">
+                            <div class="center-parent">
+                                <div></div>
+                            </div>
+                        </div>
+                    </th>
+                    <th style="width: 18%; background-color: #f68e56!important;">
+                        <div class="d-flex justify-content-center">
+                            <div class="center-parent">
+                                <div>Tên tài liệu</div>
+                            </div>
+                        </div>
+                    </th>
+                    <th style="width: 18%; background-color: #f68e56!important;">
+                        <div class="d-flex justify-content-center">
+                            <div class="center-parent">
+                                <div>Lần phỏng vấn</div>
+                            </div>
+                        </div>
+                    </th>
+                    <th style="width: 24%; background-color: #f68e56!important;">
+                        <div class="d-flex justify-content-center">
+                            <div class="center-parent">
+                                <div>Thao tác</div>
+                            </div>
+                        </div>
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- <tr *ngFor="let updateInfo of pagedResult.items; index as i">
+                        <td class="stt" valign="baseline">
+                            <div class="center-parent">
+                                <div>{{ i+1 }}</div>
+                            </div>
+                        </td>
+                        <td class="text-center" valign="baseline">{{ updateInfo.changedTimes }}</td>
+                        <td class="text-center" valign="baseline">{{ updateInfo.employee?.employeeName }}</td>
+                        <td class="text-center" valign="baseline">{{ updateInfo?.changedTime*1000 | date:'dd/MM/yyyy
+                            HH:mm': '+0000' }}</td>
+                        <td class="text-center">
+                            {{ (updateInfo?.updateDesc != 'undefined') ? updateInfo.updateDesc : '' }}
+                        </td>
+                        <td class="align-baseline d-flex flex-column align-items-start xuong-dong">
+                            <p *ngFor="let item of updateInfo.liveFormChangeds; index as j">{{ item.liveFormTitle |
+                                translate }}: {{ item.oldValue }} --- {{ item.newValue }}</p>
+                        </td>
+                    </tr> -->
+
+                <ng-container *ngFor="let items of listItemHSDTChinhThuc; let i = index;">
+                    <ng-container *ngIf="items.childs.length">
+                        <ng-container *ngFor="let item of items.childs; let k = index;">
+                            <tr>
+                                <td class="text-center">{{renderIndex(k,i)}}</td>
+                                <td valign="baseline" [attr.rowspan]="items.childs?.length" *ngIf="k == 0">
+                                    {{items?.typeName}}
+                                </td>
+                                <td>
+                                    {{item?.typeName}}
+                                </td>
+                                <td>
+                                    {{item?.document?.type}}
+                                </td>
+                                <td class="text-center">
+                                    {{item?.document?.interviewTime}}
+                                </td>
+                                <td class="max-width-action">
+                                    <div class="d-flex justify-content-around">
+                                        <div style="cursor: pointer;" title="Xem">
+                                            <a>
+                                                <i class="fa fa-eye cursor-pointer icon-view" aria-hidden="true"></i>
+                                            </a>
+                                        </div>
+                                        <div style="cursor: pointer;" title="download">
+                                            <a>
+                                                <i class="fa fa-download cursor-pointer icon-view" aria-hidden="true"></i>
+                                            </a>
+                                        </div>
+                                        <div style="cursor: pointer;" title="In">
+                                            <a class="text-success">
+                                                <i class="fa fa-print cursor-pointer icon-print" aria-hidden="true"></i>
+                                            </a>
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+
+                        </ng-container>
+                    </ng-container>
+
+                    <ng-container *ngIf="!items.childs.length">
+                        <tr>
+                            <td class="text-center">{{renderIndex(i,0)}}</td>
+                            <td>
+                                {{items?.typeName}}
+                            </td>
+                            <td>
+                            </td>
+                            <td>
+                                {{items?.document?.type}}
+                            </td>
+                            <td class="text-center">
+                                {{items?.document?.interviewTime}}
+                            </td>
+                            <td class="max-width-action">
+                                <div class="d-flex justify-content-around">
+                                    <div style="cursor: pointer;" title="Xem">
+                                        <a>
+                                            <i class="fa fa-eye cursor-pointer icon-view" aria-hidden="true"></i>
+                                        </a>
+                                    </div>
+
+                                    <div style="cursor: pointer;" title="download">
+                                        <a>
+                                            <i class="fa fa-download  cursor-pointer icon-view" aria-hidden="true"></i>
+                                        </a>
+                                    </div>
+
+                                    <div style="cursor: pointer;" title="In">
+                                        <a class="text-success">
+                                            <i class="fa fa-print cursor-pointer icon-print" aria-hidden="true"></i>
+                                        </a>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                    </ng-container>
+
+
+                </ng-container>
+            </tbody>
+        </table>
+    </div>
+</div>
 
 
 <app-upload-file-attach *ngIf="showPopupAdd" (closed)="closePopup($event)" [packageId]="packageId"></app-upload-file-attach>
