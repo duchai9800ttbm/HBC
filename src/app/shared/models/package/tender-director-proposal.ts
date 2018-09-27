@@ -3,4 +3,5 @@ export class TenderDirectorProposal {
     date: number;
     expectedDate: number;
     isSigned: boolean;
+    isAgreed: boolean;
 }

@@ -77,43 +77,51 @@ export class NeedCreateTenderFormDecisionBoardComponent implements OnInit {
         this.decisionBoardForm.get('isSigned').patchValue(true);
         // khi view có thể ký
         if (this.routerAction === 'view') {
-            // console.log('VII', NeedCreateTenderFormComponent.formModel.tenderDirectorProposal.isSigned);
+            // console.log('VII', NeedCreateTenderFormComponent.formModel.tenderDirectorProposal.isAgreed);
             // console.log('VIII', this.decisionBoardForm.get('isAgreed').value);
-            this.onSubmit();
+            // this.onSubmit();
             if (this.decisionBoardForm.get('isAgreed').value) {
-                this.approveBidProposal();
+                if ( NeedCreateTenderFormComponent.formModel.tenderDirectorProposal.isAgreed) {
+                    this.approveBidProposal('Xác nhận tham gia dự thầu thành công!', 'Xác nhận tham gia dự thầu không thành công!');
+                } else {
+                    this.approveBidProposal('Từ chối tham gia dự thầu thành công!', 'Từ chối tham gia dự thầu không thành công!');
+                }
             } else {
-                this.notApproveBidProposal();
+                if ( NeedCreateTenderFormComponent.formModel.tenderDirectorProposal.isAgreed ) {
+                    this.notApproveBidProposal('Từ chối tham gia dự thầu thành công!', 'Từ chối tham gia dự thầu không thành công!');
+                } else {
+                    this.notApproveBidProposal('Xác nhận tham gia dự thầu thành công!', 'Xác nhận tham gia dự thầu không thành công!');
+                }
             }
         }
     }
 
-    approveBidProposal() {
+    approveBidProposal(message: string, messageErr: string) {
         this.spinner.show();
         this.packageService.approveBidProposal(this.bidOpportunityId, this.decisionBoardForm.get('reason').value)
           .subscribe(data => {
             this.spinner.hide();
             this.statusObservableHsdtService.change();
-            this.alertService.success('Duyệt đề nghị dự thầu thành công!');
+            this.alertService.success(message);
             this.getPackageInfo();
           }, err => {
             this.spinner.hide();
-            this.alertService.error('Duyệt đề nghị dự thầu thất bại!');
+            this.alertService.error(messageErr);
 
           });
       }
 
-      notApproveBidProposal() {
+      notApproveBidProposal(message: string, messageErr: string) {
         this.spinner.show();
         this.packageService.notApproveBidProposal(this.bidOpportunityId, this.decisionBoardForm.get('reason').value)
           .subscribe(data => {
             this.spinner.hide();
             this.statusObservableHsdtService.change();
-            this.alertService.success('Không duyệt đề nghị dự thầu thành công!');
+            this.alertService.success(message);
             this.getPackageInfo();
           }, err => {
             this.spinner.hide();
-            this.alertService.error('Không duyệt đề nghị dự thầu thất bại!');
+            this.alertService.error(messageErr);
           });
       }
 
