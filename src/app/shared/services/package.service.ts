@@ -19,6 +19,7 @@ import { SETTING_BID_USER, SETTING_BID_STAGE } from '../configs/common.config';
 import { BidPermissionGroupResponsive } from '../models/api-response/setting/bid-permission-group-responsive';
 import * as FileSaver from 'file-saver';
 import { TenderPreparationPlanningRequest } from '../models/api-request/package/tender-preparation-planning-request';
+import { ProposedTenderParticipationHistory } from '../models/api-response/package/proposed-tender-participation-history.model';
 
 @Injectable()
 export class PackageService {
@@ -168,6 +169,30 @@ export class PackageService {
             projectEstimatedEndDate: result.projectEstimatedEndDate,
             totalTime: result.totalTime,
             description: result.description
+        };
+    }
+
+    private static toHistoryListProposedTender(result: any): ProposedTenderParticipationHistory {
+        return {
+            employee: {
+                employeeId: result.employee.employeeId,
+                employeeNo: result.employee.employeeNo,
+                employeeName: result.employee.employeeName,
+                employeeAvatar: result.employee.employeeAvatar,
+                employeeEmail: result.employee.employeeEmail,
+            },
+            changedTime: result.changedTime,
+            changedTimes: result.changedTimes,
+            updateDesc: result.updateDesc,
+            liveFormChangeds: result.liveFormChangeds.map( item => {
+                return {
+                    liveFormStep: item.liveFormStep,
+                    liveFormSubject: item.liveFormSubject,
+                    liveFormTitle: item.liveFormTitle,
+                    oldValue: item.oldValue,
+                    newValue: item.newValue,
+                };
+            })
         };
     }
 
@@ -914,6 +939,25 @@ export class PackageService {
     deleteProposedTenderParticipateReport(bidOpportunityId: number): Observable<any> {
         const url = `bidopportunity/${bidOpportunityId}/proposedtenderparticipatinngreport/delete`;
         return this.apiService.post(url).map(response => response.result);
+    }
+    // Lịch sử thay đổi liveform phiếu đề nghị dự thầu
+    getChangeHistoryListProposedTender (
+        bidOpportunityId: number,
+        page: number | string,
+        pageSize: number | string): Observable<PagedResult<ProposedTenderParticipationHistory[]>> {
+        const url = `${bidOpportunityId}/proposedtenderparticipatinngreport/changedhistory/${page}/${pageSize}`;
+        return this.apiService.get(url).map(response => {
+            const result = response.result;
+            return {
+                currentPage: result.pageIndex,
+                pageSize: result.pageSize,
+                pageCount: result.totalPages,
+                total: result.totalCount,
+                items: (result.items || []).map(
+                    PackageService.toHistoryListProposedTender
+                )
+            };
+        });
     }
     // gửi duyệt đề nghị dự thầu
     sendApproveBidProposal(bidOpportunityId: number, date: number): Observable<any> {
