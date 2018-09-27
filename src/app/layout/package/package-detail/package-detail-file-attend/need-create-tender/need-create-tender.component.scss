@@ -48,3 +48,12 @@
         cursor: default;
     }
 }
+.table-history-stt--width{
+    width: 2rem;
+}
+:host /deep/ .dataTables_wrapper {
+    position: inherit !important;
+}
+:host /deep/ .dataTables_empty {
+    display: none !important;
+}

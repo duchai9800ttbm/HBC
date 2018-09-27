@@ -12,6 +12,8 @@ import { PackageInfoModel } from '../../../../../shared/models/package/package-i
 import { BidStatus } from '../../../../../shared/constants/bid-status';
 import { StatusObservableHsdtService } from '../../../../../shared/services/status-observable-hsdt.service';
 import { NotificationService } from '../../../../../shared/services/notification.service';
+import { ProposedTenderParticipationHistory } from '../../../../../shared/models/api-response/package/proposed-tender-participation-history.model';
+import { PagedResult } from '../../../../../shared/models';
 
 @Component({
   selector: 'app-need-create-tender',
@@ -30,6 +32,7 @@ export class NeedCreateTenderComponent implements OnInit {
   packageInfo: PackageInfoModel;
   bidStatus = BidStatus;
   reasonApproveBid = '';
+  pagedResultChangeHistoryList: PagedResult<ProposedTenderParticipationHistory[]> = new PagedResult<ProposedTenderParticipationHistory[]>();
   constructor(
     private packageService: PackageService,
     private spinner: NgxSpinnerService,
@@ -42,12 +45,26 @@ export class NeedCreateTenderComponent implements OnInit {
   ngOnInit() {
     this.bidOpportunityId = PackageDetailComponent.packageId;
     this.getProposedTenderParticipateReportInfo();
+    this.getChangeHistory();
     this.getPackageInfo();
   }
 
   refresh() {
     this.getProposedTenderParticipateReportInfo();
+    this.getChangeHistory();
     this.getPackageInfo();
+  }
+
+  getChangeHistory() {
+    this.spinner.show();
+    this.packageService.getChangeHistoryListProposedTender(this.bidOpportunityId, 0, 1000).subscribe(respone => {
+      this.pagedResultChangeHistoryList = respone;
+      this.spinner.hide();
+    },
+      err => {
+        this.spinner.hide();
+        this.alertService.error('Lấy danh sách lịch sử thay đổi phiếu đề nghị dự thầu thất bại!');
+      });
   }
 
   getProposedTenderParticipateReportInfo() {
@@ -56,7 +73,6 @@ export class NeedCreateTenderComponent implements OnInit {
       if (data) {
         NeedCreateTenderFormComponent.formModel = data;
         this.proposedTender = data;
-        console.log('this.proposedTender', this.proposedTender);
         // tslint:disable-next-line:max-line-length
         this.dateApproveBid = this.proposedTender && this.proposedTender.tenderDirectorProposal && this.proposedTender.tenderDirectorProposal.expectedDate ? DateTimeConvertHelper.fromTimestampToDtObject(this.proposedTender.tenderDirectorProposal.expectedDate * 1000) : new Date();
         setTimeout(() => {
@@ -194,4 +210,7 @@ export class NeedCreateTenderComponent implements OnInit {
     this.isNotAgreeParticipating = false;
   }
 
+  onSelectAll(value: boolean) {
+    this.pagedResultChangeHistoryList.items.forEach(x => (x['checkboxSelected'] = value));
+  }
 }

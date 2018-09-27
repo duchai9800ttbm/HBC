@@ -89,7 +89,7 @@
     </table>
 </div>
 
-<!-- <div class="mt-5 ml-3">
+<div class="mt-5 ml-3" *ngIf="proposedTender">
     <div class="d-flex justify-content-between">
         <h5 class="text-uppercase mb-3">Lịch sử cập nhật</h5>
     </div>
@@ -97,7 +97,21 @@
     <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger">
         <thead>
             <tr>
-                <th>STT</th>
+                <th class="table-history-stt--width">
+                    <div class="d-flex justify-content-around">
+                        <div class="w-40">
+                            <div class="center-parent">
+                                <label class="custom-control custom-checkbox">
+                                    <input type="checkbox" class="custom-control-input" (change)="onSelectAll($event.target.checked)">
+                                    <span class="custom-control-indicator"></span>
+                                </label>
+                            </div>
+                        </div>
+                        <div class="center-parent w-35">
+                            <div>STT</div>
+                        </div>
+                    </div>
+                </th>
                 <th>Lần cập nhật</th>
                 <th>Người cập nhật</th>
                 <th>Ngày cập nhật</th>
@@ -106,15 +120,26 @@
             </tr>
         </thead>
         <tbody>
-            <tr>
-                <td>
+            <tr *ngFor="let item of pagedResultChangeHistoryList.items; let i = index">
+                <td class="d-flex justify-content-around">
+                    <div class="w-40">
+                        <div class="center-parent">
+                            <label class="custom-control custom-checkbox">
+                                <input type="checkbox" class="custom-control-input" [(ngModel)]="item.checkboxSelected">
+                                <span class="custom-control-indicator"></span>
+                            </label>
+                        </div>
+                    </div>
+                    <div class="center-parent w-35">
+                        <div>{{i + 1}}</div>
+                    </div>
                 </td>
-                <td>
-                    <a></a>
+                <td class="text-center">
+                    {{item.changedTimes}}
                 </td>
-                <td></td>
-                <td></td>
-                <td></td>
+                <td> {{item.employee?.employeeName}}</td>
+                <td>{{ (item.changedTime)*1000 | date:'dd/MM/yyyy' }}</td>
+                <td>{{item.updateDesc}}</td>
                 <td>
                     <div class="d-flex justify-content-center">
                         <div>
@@ -124,7 +149,7 @@
             </tr>
         </tbody>
     </table>
-</div> -->
+</div>
 
 <div id="divPrint" class="d-none" *ngIf="false">
     <div class="header-print d-flex justify-content-between">
