@@ -56,6 +56,27 @@ export class PriceReviewSummaryComponent implements OnInit {
       });
   }
 
+  renderIndex(i, k) {
+    let dem = 0;
+    let tam = -1;
+    if (+i === 0) {
+      return k + 1;
+    } else {
+      this.listItemHSDTChinhThuc.forEach(ite => {
+        if (tam < +i - 1) {
+          if (!ite.childs.length) {
+            dem++;
+          }
+          ite.childs.forEach(e => {
+            dem++;
+          });
+        }
+        tam++;
+      });
+      return dem + k + 1;
+    }
+  }
+
   open() {
     this.showPopupAdd = true;
 
@@ -146,12 +167,12 @@ export class PriceReviewSummaryComponent implements OnInit {
       });
     });
   }
-  pagedResultChange(){
+  pagedResultChange() {
     this.priceReviewService.changedHistoryPriceReview(this.packageId, this.pagedResult.currentPage, this.pagedResult.pageSize)
-    .subscribe(data => {
-      this.pagedResult = data;
-      console.log(data);
-    });
+      .subscribe(data => {
+        this.pagedResult = data;
+        console.log(data);
+      });
   }
   print() {
 

@@ -99,15 +99,7 @@ export class PriceReviewService {
         name: model.document.name,
         interviewTime: model.interviewTime
       },
-      childs: model.childs && {
-        typeName: model.childs.typeName,
-        document: model.childs.document && {
-          type: model.childs.document.type,
-          id: model.childs.document.id,
-          name: model.childs.document.name,
-          interviewTime: model.childs.document.interviewTime
-        }
-      }
+      childs: model.childs ? model.childs : []
     };
   }
 
