@@ -365,6 +365,35 @@ export class InformationDeploymentComponent implements OnInit {
       this.alertService.error('Gửi phân công tiến độ thất bại!');
     });
   }
+
+  // sendTenderPlan() {
+  //   this.spinner.show();
+  //   this.packageService.sendTenderPreparationPlanning(this.bidOpportunityId).subscribe(success => {
+  //     this.spinner.hide();
+  //     this.alertService.success('Gửi phân công tiến độ thành công!');
+  //   }, err => {
+  //     this.spinner.hide();
+  //     this.alertService.error('Gửi phân công tiến độ thất bại!');
+  //   });
+  // }
+  // onChange(e) {
+    // console.log('data', this.emailModel.content);
+    // const urlRegex = 'https://www.24h.com.vn/';
+    // console.log('replace', `<a href="${urlRegex}">${urlRegex}</a>`);
+    // this.emailModel.content = this.emailModel.content.replace(urlRegex, `<a href="${urlRegex}">${urlRegex}</a>`);
+    // this.emailModel.content = `<a href="https://www.24h.com.vn/">https://www.24h.com.vn/</a>`;
+
+    // this.ckeditor.model.change(writer => {
+    //   const insertPosition = this.ckeditor.model.document.selection.getFirstPosition();
+    //   writer.insertText('CKEditor 5 rocks!', { linkHref: 'https://ckeditor.com/' }, insertPosition);
+    // });
+    // this.emailModel.content = '123';
+    // console.log('ckeditor', this.informationDeployment, this.ckeditor);
+    // this.ckeditor.instance.setData('');
+    // console.log('this.emailModel.content', this.emailModel.content);
+    // .elementRef.nativeElement.nextElementSibling
+  //   this.emailModel.content = '<p>123</p>';
+  // }
 }
 
 const listUsers = [

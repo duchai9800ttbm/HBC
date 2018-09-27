@@ -31,6 +31,8 @@ export class NeedCreateTenderFormComponent implements OnInit, OnDestroy {
     isShowDialog = false;
     dateApproveBid = new Date();
     totalTime = '';
+    draftsOrOfficially = true;
+    isShowChanges = false;
     constructor(
         private packageService: PackageService,
         private alertService: AlertService,
@@ -218,7 +220,25 @@ export class NeedCreateTenderFormComponent implements OnInit, OnDestroy {
         // this.isNotAgreeParticipating = false;
     }
 
+    closeShowChanges() {
+        this.isShowChanges = false;
+    }
+
     ngOnDestroy() {
         this.scrollTopService.isScrollTop = true;
+    }
+
+    saveDrafts() {
+        this.isShowChanges = true;
+        this.draftsOrOfficially = true;
+    }
+
+    saveOfficially() {
+        this.isShowChanges = true;
+        this.draftsOrOfficially = false;
+    }
+
+    saveChangesLiveForm() {
+        this.onSubmit(this.draftsOrOfficially);
     }
 }

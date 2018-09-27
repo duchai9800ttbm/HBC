@@ -42,17 +42,14 @@ export class PriceReviewSummaryComponent implements OnInit {
     });
     this.priceReviewService.viewShort(this.packageId).subscribe(data => {
       this.priceReview = data;
-      console.log(this.priceReview);
     });
     this.priceReviewService.getDanhSachHSDTChinhThuc(230).subscribe(data => {
       this.listItemHSDTChinhThuc = data;
-      console.log(this.listItemHSDTChinhThuc);
     });
 
     this.priceReviewService.changedHistoryPriceReview(this.packageId, 0, 10)
       .subscribe(data => {
         this.pagedResult = data;
-        console.log(data);
       });
   }
 
