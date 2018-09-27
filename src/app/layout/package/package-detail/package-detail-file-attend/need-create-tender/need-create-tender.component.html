@@ -6,7 +6,7 @@
             <div class="center-parent mr-4">
                 <h4 class="mb-0" *ngIf="packageInfo?.stageStatus.id == bidStatus.CanLapDeNghiDuThau">Cần lập đề nghị dự thầu</h4>
                 <h4 class="mb-0" *ngIf="packageInfo?.stageStatus.id == bidStatus.ChoDuyetDeNghiDuThau">Chờ duyệt</h4>
-                <h4 class="mb-0" *ngIf="packageInfo?.stageStatus.id == bidStatus.ThamGiaDuThau">Tham gia dự thầu</h4>
+                <h4 class="mb-0" *ngIf="packageInfo?.stageStatus.id !== (bidStatus.CanLapDeNghiDuThau || bidStatus.ChoDuyetDeNghiDuThau || bidStatus.TuChoiDuThau)">Tham gia dự thầu</h4>
                 <h4 class="mb-0" *ngIf="packageInfo?.stageStatus.id == bidStatus.TuChoiDuThau">Từ chối dự thầu</h4>
             </div>
         </div>

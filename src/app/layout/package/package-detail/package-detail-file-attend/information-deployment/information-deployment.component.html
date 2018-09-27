@@ -19,7 +19,8 @@
             <!-- <button type="button" *ngIf="isconfirmProgress" class="btn btn-up disable">Upload file</button>
             <button type="button" *ngIf="!isconfirmProgress" [ngClass]="{ 'btn-dep': dowloadTem === true,'disable': dowloadTem === false }"
                 (click)="openModalUpload(Upload)" class="btn btn-up ">Upload file</button> -->
-            <button *ngIf="tenderPlan?.isDraftVersion" class="btn btn-primary mr-2">Xác nhận phân công tiến độ</button>
+            <button class="btn btn-primary mr-2" (click)="sendTenderPlan()">Gửi phân công tiến độ</button>
+            <button *ngIf="tenderPlan?.isDraftVersion" class="btn btn-primary mr-2" (click)="confirmTenderPlan()">Xác nhận phân công tiến độ</button>
             <button type="button" class="btn btn-primary ">
                 <i class="fa fa-refresh" aria-hidden="true"></i>
             </button>
@@ -163,8 +164,8 @@
                 aria-describedby="basic-addon1">
         </div>
         <div class="body-ckeditor">
-            <ckeditor [(ngModel)]="emailModel.content" [config]="ckeConfig" #ckeditor>
-                <ckbutton [name]="'saveButton'" [command]="'saveCmd'" (click)="save($event)" [icon]="'save.png'" [label]="'Save Document'"
+            <ckeditor [(ngModel)]="emailModel.content" [config]="ckeConfig" #ckeditor (change)="onChange($event)">
+                <ckbutton [name]="'saveButton'" [command]="'saveCmd'" [icon]="'save.png'" [label]="'Save Document'"
                     [toolbar]="'clipboard,1'">
                 </ckbutton>
             </ckeditor>

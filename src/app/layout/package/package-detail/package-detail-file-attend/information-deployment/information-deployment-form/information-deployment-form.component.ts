@@ -5,6 +5,7 @@ import { PackageService } from '../../../../../../shared/services/package.servic
 import { PackageInfoModel } from '../../../../../../shared/models/package/package-info.model';
 import { PackageDetailComponent } from '../../../package-detail.component';
 import { DATATABLE_CONFIG } from '../../../../../../shared/configs';
+// tslint:disable-next-line:import-blacklist
 import { Subject, Observable } from 'rxjs';
 import { FormBuilder, FormGroup, FormArray } from '@angular/forms';
 import { TenderPreparationPlanItem } from '../../../../../../shared/models/package/tender-preparation-plan-item';
@@ -58,35 +59,27 @@ export class InformationDeploymentFormComponent implements OnInit {
         if (this.routerAction === 'create') {
             this.packageService
             .getDefaultTenderPreparationPlanning()
-            .subscribe(data => this.createForm(data));
+            .subscribe(data => this.createForm(data, true));
         } else {
             this.packageService.getTenderPreparationPlanning(this.bidOpportunityId).subscribe(data => this.createForm(data));
         }
     }
 
-    createForm(planModel: TenderPreparationPlanningRequest) {
+    createForm(planModel: TenderPreparationPlanningRequest, isCreate?) {
         const taskArr = [];
         planModel.tasks.forEach(i => taskArr.push(this.createTaskItemFG(i)));
         this.planForm = this.fb.group({
             id: planModel.id,
+            isDraftVersion: isCreate ? true : planModel.isDraftVersion,
             projectDirectorEmployeeId: planModel.projectDirectorEmployeeId,
             tenderDepartmentEmployeeId: planModel.tenderDepartmentEmployeeId,
             technicalDepartmentEmployeeId: planModel.technicalDepartmentEmployeeId,
             bimDepartmentEmployeeId: planModel.bimDepartmentEmployeeId,
             tasks: this.fb.array(taskArr)
         });
+        console.log(this.planForm.value);
         setTimeout(() => {
             kendo.jQuery(this.ganttChart.nativeElement).kendoGantt({
-                dataSource: planModel.tasks.map(i => {
-                    return {
-                        id: i.itemId,
-                        orderId: i.itemId,
-                        parentId: null,
-                        title: i.itemName,
-                        start: moment(i.startDate * 1000).startOf('day').toDate(),
-                        end: moment(i.finishDate * 1000).add(1, 'd').startOf('day').toDate()
-                    };
-                }),
                 views: [
                     { type: 'day', selected: true },
                     { type: 'week' },
@@ -97,8 +90,27 @@ export class InformationDeploymentFormComponent implements OnInit {
                 showWorkHours: false,
                 showWorkDays: false,
                 snap: false
-            });
+            }).data('kendoGantt');
+            this.updateGantt();
+            this.planForm.valueChanges.subscribe(_ => this.updateGantt());
         }, 500);
+    }
+
+    updateGantt() {
+        const dataSource = new kendo.data.GanttDataSource({
+            data: this.planForm.value.tasks.map(i => {
+                return {
+                    id: i.itemId,
+                    orderId: i.itemId,
+                    // parentId: i.itemId,
+                    title: i.itemName,
+                    start: i.startDate,
+                    end: i.finishDate
+                };
+            })
+        });
+        const gantt = kendo.jQuery(this.ganttChart.nativeElement).data('kendoGantt');
+        gantt.setDataSource(dataSource);
     }
 
     createTaskItemFG(data: TenderPreparationPlanItem): FormGroup {
@@ -111,12 +123,12 @@ export class InformationDeploymentFormComponent implements OnInit {
                 ? DateTimeConvertHelper.fromTimestampToDtObject(
                       data.startDate * 1000
                   )
-                : new Date(),
+                : null,
             finishDate: data.finishDate
                 ? DateTimeConvertHelper.fromTimestampToDtObject(
                       data.finishDate * 1000
                   )
-                : new Date(),
+                : null,
             duration: data.duration
         });
     }
