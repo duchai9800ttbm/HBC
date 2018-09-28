@@ -5,253 +5,205 @@ import { PackageService } from '../../../../../../shared/services/package.servic
 import { PackageInfoModel } from '../../../../../../shared/models/package/package-info.model';
 import { PackageDetailComponent } from '../../../package-detail.component';
 import { DATATABLE_CONFIG } from '../../../../../../shared/configs';
-import { Subject } from 'rxjs';
-
+// tslint:disable-next-line:import-blacklist
+import { Subject, Observable } from 'rxjs';
+import { FormBuilder, FormGroup, FormArray } from '@angular/forms';
+import { TenderPreparationPlanItem } from '../../../../../../shared/models/package/tender-preparation-plan-item';
+import DateTimeConvertHelper from '../../../../../../shared/helpers/datetime-convert-helper';
+import { UserService, AlertService, SessionService } from '../../../../../../shared/services';
+import { UserItemModel } from '../../../../../../shared/models/user/user-item.model';
+import { TenderPreparationPlanningRequest } from '../../../../../../shared/models/api-request/package/tender-preparation-planning-request';
+import * as moment from 'moment';
+import { Router } from '@angular/router';
 declare let kendo: any;
 
 @Component({
-  selector: 'app-information-deployment-form',
-  templateUrl: './information-deployment-form.component.html',
-  styleUrls: ['./information-deployment-form.component.scss']
+    selector: 'app-information-deployment-form',
+    templateUrl: './information-deployment-form.component.html',
+    styleUrls: ['./information-deployment-form.component.scss']
 })
 export class InformationDeploymentFormComponent implements OnInit {
+    @ViewChild('ganttChart')
+    ganttChart: ElementRef;
+    bidOpportunityId;
+    packageInfo: PackageInfoModel;
+    dtOptions: any = DATATABLE_CONFIG;
+    planForm: FormGroup;
+    dtTrigger: Subject<any> = new Subject();
+    fakeArr = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
+    userList: Observable<UserItemModel[]>;
+    routerAction: string;
 
-  @ViewChild('ganttChart') ganttChart: ElementRef;
-  bidOpportunityId;
-  packageInfo: PackageInfoModel;
-  dtOptions: any = DATATABLE_CONFIG;
-  dtTrigger: Subject<any> = new Subject();
-  fakeArr = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
-  private readonly serviceRoot = 'https://demos.telerik.com/kendo-ui/service';
-  private readonly tasksDataSource = new kendo.data.GanttDataSource({
-      transport: {
-          read: {
-              url: this.serviceRoot + '/GanttTasks',
-              dataType: 'jsonp'
-          },
-          update: {
-              url: this.serviceRoot + '/GanttTasks/Update',
-              dataType: 'jsonp'
-          },
-          destroy: {
-              url: this.serviceRoot + '/GanttTasks/Destroy',
-              dataType: 'jsonp'
-          },
-          create: {
-              url: this.serviceRoot + '/GanttTasks/Create',
-              dataType: 'jsonp'
-          },
-          parameterMap: function(options, operation) {
-              if (operation !== 'read') {
-                  return { models: kendo.stringify(options.models || [options]) };
-              }
-          }
-      },
-      schema: {
-          model: {
-              id: 'id',
-              fields: {
-                  id: { from: 'ID', type: 'number' },
-                  orderId: { from: 'OrderID', type: 'number', validation: { required: true } },
-                  parentId: { from: 'ParentID', type: 'number', defaultValue: null, validation: { required: true } },
-                  start: { from: 'Start', type: 'date' },
-                  end: { from: 'End', type: 'date' },
-                  title: { from: 'Title', defaultValue: '', type: 'string' },
-                  percentComplete: { from: 'PercentComplete', type: 'number' },
-                  summary: { from: 'Summary', type: 'boolean' },
-                  expanded: { from: 'Expanded', type: 'boolean', defaultValue: true }
-              }
-          }
-      }
-  });
+    get tasksFA(): FormArray {
+        return this.planForm.get('tasks') as FormArray;
+    }
 
-  private readonly dependenciesDataSource = new kendo.data.GanttDependencyDataSource({
-      transport: {
-          read: {
-              url: this.serviceRoot + '/GanttDependencies',
-              dataType: 'jsonp'
-          },
-          update: {
-              url: this.serviceRoot + '/GanttDependencies/Update',
-              dataType: 'jsonp'
-          },
-          destroy: {
-              url: this.serviceRoot + '/GanttDependencies/Destroy',
-              dataType: 'jsonp'
-          },
-          create: {
-              url: this.serviceRoot + '/GanttDependencies/Create',
-              dataType: 'jsonp'
-          },
-          parameterMap: function(options, operation) {
-              if (operation !== 'read') {
-                  return { models: kendo.stringify(options.models || [options]) };
-              }
-          }
-      },
-      schema: {
-          model: {
-              id: 'id',
-              fields: {
-                  id: { from: 'ID', type: 'number' },
-                  predecessorId: { from: 'PredecessorID', type: 'number' },
-                  successorId: { from: 'SuccessorID', type: 'number' },
-                  type: { from: 'Type', type: 'number' }
-              }
-          }
-      }
-  });
-  constructor(
-    private spinner: NgxSpinnerService,
-    private packageService: PackageService
-  ) { }
+    constructor(
+        private spinner: NgxSpinnerService,
+        private packageService: PackageService,
+        private userService: UserService,
+        private fb: FormBuilder,
+        private router: Router,
+        private alertService: AlertService,
+        private sessionService: SessionService
+    ) {}
 
-  ngOnInit() {
-    setTimeout(() => {
-      this.dtTrigger.next();
-    });
-    this.bidOpportunityId = PackageDetailComponent.packageId;
-    this.getPackageInfo();
-    this.packageService.getDefaultTenderPreparationPlanning().subscribe(data => console.log(data));
-    // this.packageService.getTenderPreparationPlanning(this.bidOpportunityId).subscribe(data => console.log(data));
-    kendo.jQuery(this.ganttChart.nativeElement).kendoGantt({
-    //   dataSource: this.tasksDataSource,
-      dataSource: [
-        {
-          id: 1,
-          orderId: 0,
-          parentId: null,
-          title: 'Task1',
-          start: new Date('2014/6/17 9:00'),
-          end: new Date('2014/6/17 11:00')
-        },
-        {
-          id: 2,
-          orderId: 1,
-          parentId: null,
-          title: 'Task2',
-          start: new Date('2014/6/17 12:00'),
-          end: new Date('2014/6/17 14:00')
-        },
-        {
-          id: 3,
-          orderId: 2,
-          parentId: null,
-          title: 'Task3',
-          start: new Date('2014/6/17 13:00'),
-          end: new Date('2014/6/17 15:00')
-        },
-        {
-            id: 1,
-            orderId: 0,
-            parentId: null,
-            title: 'Task1',
-            start: new Date('2014/6/17 9:00'),
-            end: new Date('2014/6/17 11:00')
-          },
-          {
-            id: 2,
-            orderId: 1,
-            parentId: null,
-            title: 'Task2',
-            start: new Date('2014/6/17 12:00'),
-            end: new Date('2014/6/17 14:00')
-          },
-          {
-            id: 3,
-            orderId: 2,
-            parentId: null,
-            title: 'Task3',
-            start: new Date('2014/6/17 13:00'),
-            end: new Date('2014/6/17 15:00')
-          },
-          {
-            id: 1,
-            orderId: 0,
-            parentId: null,
-            title: 'Task1',
-            start: new Date('2014/6/17 9:00'),
-            end: new Date('2014/6/17 11:00')
-          },
-          {
-            id: 2,
-            orderId: 1,
-            parentId: null,
-            title: 'Task2',
-            start: new Date('2014/6/17 12:00'),
-            end: new Date('2014/6/17 14:00')
-          },
-          {
-            id: 3,
-            orderId: 2,
-            parentId: null,
-            title: 'Task3',
-            start: new Date('2014/6/17 13:00'),
-            end: new Date('2014/6/17 15:00')
-          },
-          {
-            id: 1,
-            orderId: 0,
-            parentId: null,
-            title: 'Task1',
-            start: new Date('2014/6/17 9:00'),
-            end: new Date('2014/6/17 11:00')
-          },
-          {
-            id: 2,
-            orderId: 1,
-            parentId: null,
-            title: 'Task2',
-            start: new Date('2014/6/17 12:00'),
-            end: new Date('2014/6/17 14:00')
-          },
-          {
-            id: 3,
-            orderId: 2,
-            parentId: null,
-            title: 'Task3',
-            start: new Date('2014/6/17 13:00'),
-            end: new Date('2014/6/17 15:00')
-          }
-      ],
-      // dependencies: this.dependenciesDataSource,
-      views: [
-          { type: 'day', selected: true },
-          { type: 'week'},
-          'month'
-      ],
-      columns: [
-          { field: 'id', title: 'ID', width: 60 },
-          { field: 'title', title: 'Title', editable: true, sortable: true },
-          { field: 'start', title: 'Start Time', format: '{0:MM/dd/yyyy}', width: 100, editable: true, sortable: true },
-          { field: 'end', title: 'End Time', format: '{0:MM/dd/yyyy}', width: 100, editable: true, sortable: true }
-      ],
-      dependencies: [
-        {
-          predecessorId: 1,
-          successorId: 3,
-          type: 1
-        }
-      ],
-      // height: 700,
-      listWidth: 0,
-
-      showWorkHours: false,
-      showWorkDays: false,
-
-      snap: false
-  });
-  }
-
-  getPackageInfo() {
-    this.spinner.show();
-    this.packageService
-        .getInforPackageID(this.bidOpportunityId)
-        .subscribe(data => {
-            this.packageInfo = data;
-            this.spinner.hide();
-            console.log(this.packageInfo);
+    ngOnInit() {
+        setTimeout(() => {
+            this.dtTrigger.next();
         });
-  }
+        this.routerAction = this.packageService.routerAction;
+        this.bidOpportunityId = PackageDetailComponent.packageId;
+        this.userList = this.userService.getAllUser('');
+        this.getPackageInfo();
+        if (this.routerAction === 'create') {
+            this.packageService
+            .getDefaultTenderPreparationPlanning()
+            .subscribe(data => this.createForm(data, true));
+        } else {
+            this.packageService.getTenderPreparationPlanning(this.bidOpportunityId).subscribe(data => this.createForm(data));
+        }
+    }
 
+    createForm(planModel: TenderPreparationPlanningRequest, isCreate?) {
+        const taskArr = [];
+        planModel.tasks.forEach(i => taskArr.push(this.createTaskItemFG(i)));
+        this.planForm = this.fb.group({
+            id: planModel.id,
+            isDraftVersion: isCreate ? true : planModel.isDraftVersion,
+            projectDirectorEmployeeId: planModel.projectDirectorEmployeeId,
+            tenderDepartmentEmployeeId: planModel.tenderDepartmentEmployeeId,
+            technicalDepartmentEmployeeId: planModel.technicalDepartmentEmployeeId,
+            bimDepartmentEmployeeId: planModel.bimDepartmentEmployeeId,
+            tasks: this.fb.array(taskArr)
+        });
+        console.log(this.planForm.value);
+        setTimeout(() => {
+            kendo.jQuery(this.ganttChart.nativeElement).kendoGantt({
+                views: [
+                    { type: 'day', selected: true },
+                    { type: 'week' },
+                    'month'
+                ],
+                height: 2832,
+                listWidth: 0,
+                showWorkHours: false,
+                showWorkDays: false,
+                snap: false
+            }).data('kendoGantt');
+            this.updateGantt();
+            this.planForm.valueChanges.subscribe(_ => this.updateGantt());
+        }, 500);
+    }
+
+    updateGantt() {
+        const dataSource = new kendo.data.GanttDataSource({
+            data: this.planForm.value.tasks.map(i => {
+                return {
+                    id: i.itemId,
+                    orderId: i.itemId,
+                    // parentId: i.itemId,
+                    title: i.itemName,
+                    start: i.startDate,
+                    end: i.finishDate
+                };
+            })
+        });
+        const gantt = kendo.jQuery(this.ganttChart.nativeElement).data('kendoGantt');
+        gantt.setDataSource(dataSource);
+    }
+
+    createTaskItemFG(data: TenderPreparationPlanItem): FormGroup {
+        return this.fb.group({
+            itemId: data.itemId,
+            itemName: data.itemName,
+            itemDesc: data.itemDesc,
+            whoIsInChargeId: data.whoIsInChargeId,
+            startDate: data.startDate
+                ? DateTimeConvertHelper.fromTimestampToDtObject(
+                      data.startDate * 1000
+                  )
+                : null,
+            finishDate: data.finishDate
+                ? DateTimeConvertHelper.fromTimestampToDtObject(
+                      data.finishDate * 1000
+                  )
+                : null,
+            duration: data.duration
+        });
+    }
+
+    getPackageInfo() {
+        this.spinner.show();
+        this.packageService
+            .getInforPackageID(this.bidOpportunityId)
+            .subscribe(data => {
+                this.packageInfo = data;
+                this.spinner.hide();
+                console.log(this.packageInfo);
+            });
+    }
+
+    getFormData(): TenderPreparationPlanningRequest {
+        const formData = this.planForm.value;
+        formData.tasks.forEach(element => {
+            element.startDate = DateTimeConvertHelper.fromDtObjectToSecon(element.startDate);
+            element.finishDate = DateTimeConvertHelper.fromDtObjectToSecon(element.finishDate);
+            element.whoIsInChargeId = Number(element.whoIsInChargeId);
+            if (element.startDate && element.finishDate) {
+                element.duration = Math.abs(element.startDate - element.finishDate) / (60 * 60 * 24);
+            }
+        });
+        return formData as TenderPreparationPlanningRequest;
+    }
+
+    submitForm(isDraft: boolean) {
+        this.spinner.show();
+        const data = this.getFormData();
+        data.isDraftVersion = isDraft;
+        data.bidOpportunityId = this.bidOpportunityId;
+        if (data.createdEmployeeId) {
+            data.updatedEmployeeId = this.sessionService.currentUser.employeeId;
+        } else {
+            data.createdEmployeeId = this.sessionService.currentUser.employeeId;
+        }
+        console.log(data);
+        this.packageService.createOrUpdateTenderPreparationPlanning(data).subscribe(res => {
+            this.spinner.hide();
+            this.router.navigateByUrl(`package/detail/${this.bidOpportunityId}/attend/infomation-deployment`);
+            if (data.id) {
+                this.alertService.success('Cập nhật bảng phân công tiến độ thành công!');
+            } else {
+                this.alertService.success('Tạo mới bảng phân công tiến độ thành công!');
+            }
+        }, err => {
+            this.spinner.hide();
+            if (data.id) {
+                this.alertService.error('Cập nhật bảng phân công tiến độ thất bại');
+            } else {
+                this.alertService.error('Tạo mới bảng phân công tiến độ thất bại');
+            }
+        });
+    }
+
+    getItemDuration(start: Date, end: Date): string {
+        if (start && end) {
+            // tslint:disable-next-line:max-line-length
+            return Math.abs(DateTimeConvertHelper.fromDtObjectToSecon(start) - DateTimeConvertHelper.fromDtObjectToSecon(end)) / (60 * 60 * 24) + '';
+        } else {
+            return '';
+        }
+    }
+
+    getDateStr(data: number) {
+        return data ? DateTimeConvertHelper.fromTimestampToDtStr(data) : '';
+    }
+
+    checkFinishTenderPlanItem(itemId: number) {
+        this.packageService.checkOrUncheckTenderPreparationPlanningItem(this.bidOpportunityId, itemId).subscribe(success => {
+            console.log(success);
+        }, err => {
+            this.alertService.error('Đã có lỗi xảy ra, vui lòng thử lại!');
+        });
+    }
 }

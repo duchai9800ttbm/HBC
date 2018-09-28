@@ -18,6 +18,8 @@ import { BidUserGroupMemberResponsive } from '../models/api-response/setting/bid
 import { SETTING_BID_USER, SETTING_BID_STAGE } from '../configs/common.config';
 import { BidPermissionGroupResponsive } from '../models/api-response/setting/bid-permission-group-responsive';
 import * as FileSaver from 'file-saver';
+import { TenderPreparationPlanningRequest } from '../models/api-request/package/tender-preparation-planning-request';
+import { ProposedTenderParticipationHistory } from '../models/api-response/package/proposed-tender-participation-history.model';
 
 @Injectable()
 export class PackageService {
@@ -30,6 +32,7 @@ export class PackageService {
     routerAction$ = this.routerActionSub.asObservable();
     userId$ = this.userIdSub.asObservable();
     kickOff$ = this.kickOff.asObservable();
+    routerBeforeEmail: string;
     private static createFilterParams(filter: PackageFilter): URLSearchParams {
         const urlFilterParams = new URLSearchParams();
         urlFilterParams.append('projectName', filter.projectName);
@@ -166,6 +169,30 @@ export class PackageService {
             projectEstimatedEndDate: result.projectEstimatedEndDate,
             totalTime: result.totalTime,
             description: result.description
+        };
+    }
+
+    private static toHistoryListProposedTender(result: any): ProposedTenderParticipationHistory {
+        return {
+            employee: {
+                employeeId: result.employee.employeeId,
+                employeeNo: result.employee.employeeNo,
+                employeeName: result.employee.employeeName,
+                employeeAvatar: result.employee.employeeAvatar,
+                employeeEmail: result.employee.employeeEmail,
+            },
+            changedTime: result.changedTime,
+            changedTimes: result.changedTimes,
+            updateDesc: result.updateDesc,
+            liveFormChangeds: result.liveFormChangeds.map( item => {
+                return {
+                    liveFormStep: item.liveFormStep,
+                    liveFormSubject: item.liveFormSubject,
+                    liveFormTitle: item.liveFormTitle,
+                    oldValue: item.oldValue,
+                    newValue: item.newValue,
+                };
+            })
         };
     }
 
@@ -913,6 +940,25 @@ export class PackageService {
         const url = `bidopportunity/${bidOpportunityId}/proposedtenderparticipatinngreport/delete`;
         return this.apiService.post(url).map(response => response.result);
     }
+    // Lịch sử thay đổi liveform phiếu đề nghị dự thầu
+    getChangeHistoryListProposedTender (
+        bidOpportunityId: number,
+        page: number | string,
+        pageSize: number | string): Observable<PagedResult<ProposedTenderParticipationHistory[]>> {
+        const url = `${bidOpportunityId}/proposedtenderparticipatinngreport/changedhistory/${page}/${pageSize}`;
+        return this.apiService.get(url).map(response => {
+            const result = response.result;
+            return {
+                currentPage: result.pageIndex,
+                pageSize: result.pageSize,
+                pageCount: result.totalPages,
+                total: result.totalCount,
+                items: (result.items || []).map(
+                    PackageService.toHistoryListProposedTender
+                )
+            };
+        });
+    }
     // gửi duyệt đề nghị dự thầu
     sendApproveBidProposal(bidOpportunityId: number, date: number): Observable<any> {
         const url = `bidopportunity/hsdt/${bidOpportunityId}/guiduyetdenghiduthau`;
@@ -923,6 +969,13 @@ export class PackageService {
     // duyệt đề nghị dự thầu
     approveBidProposal(bidOpportunityId: number, reason: string): Observable<any> {
         const url = `bidopportunity/hsdt/${bidOpportunityId}/duyetdenghiduthau`;
+        return this.apiService.post(url, {
+            reason: reason
+        }).map(response => response.result);
+    }
+     // Không duyệt đề nghị dự thầu
+     notApproveBidProposal(bidOpportunityId: number, reason: string): Observable<any> {
+        const url = `bidopportunity/hsdt/${bidOpportunityId}/khongduyetdenghiduthau`;
         return this.apiService.post(url, {
             reason: reason
         }).map(response => response.result);
@@ -940,14 +993,38 @@ export class PackageService {
     }
 
     // get thông tin mặc định LiveForm phân công tiến độ
-    getDefaultTenderPreparationPlanning() {
-        const url = `tenderpreparationplanningassignment/getdefaultinformation`;
+    getDefaultTenderPreparationPlanning(): Observable<TenderPreparationPlanningRequest> {
+        const url = `tenderpreparationplanningassignment/getdefault`;
         return this.apiService.get(url).map(data => data.result);
     }
 
     // get thông tin LiveForm phân công tiến độ
-    getTenderPreparationPlanning(bidOpportunityId: number): Observable<any> {
+    getTenderPreparationPlanning(bidOpportunityId: number): Observable<TenderPreparationPlanningRequest> {
         const url = `bidopportunity/${bidOpportunityId}/tenderpreparationplanningassignment`;
         return this.apiService.get(url).map(data => data.result);
+    }
+
+    // tạo mới/ sửa LiveForm phân công tiến độ
+    createOrUpdateTenderPreparationPlanning(data: TenderPreparationPlanningRequest): Observable<any> {
+        const url = `tenderpreparationplanningassignment/createorupdate`;
+        return this.apiService.post(url, data).map(response => response.result);
+    }
+
+    // xóa LiveForm phân công tiến độ
+    deleteTenderPreparationPlanning(bidOpportunityId: number): Observable<any> {
+        const url = `bidopportunity/${bidOpportunityId}/tenderpreparationplanningassignment/delete`;
+        return this.apiService.post(url).map(data => data.result);
+    }
+
+    // gửi phân công tiến độ
+    sendTenderPreparationPlanning(bidOpportunityId: number): Observable<any> {
+        const url = `bidopportunity/hsdt/${bidOpportunityId}/guiphancontiendo`;
+        return this.apiService.post(url).map(data => data.result);
+    }
+
+    // check/bỏ check hoàn thành công việc liveform phân công tiến độ
+    checkOrUncheckTenderPreparationPlanningItem(bidOpportunityId: number, itemId: number): Observable<any> {
+        const url = `bidopportunity/${bidOpportunityId}/tenderpreparationplanningassignment/item/${itemId}/checkfinish`;
+        return this.apiService.post(url).map(data => data.result);
     }
 }

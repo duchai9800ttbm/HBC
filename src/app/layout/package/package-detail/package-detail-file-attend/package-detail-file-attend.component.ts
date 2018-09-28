@@ -39,7 +39,6 @@ export class PackageDetailFileAttendComponent implements OnInit {
         for (let i = 0; i < this.listStatusPackage.length; i++) {
           if (this.listStatusPackage[i].find(item => item === this.packageData.stageStatus.id)) {
             this.statusPackageID = i;
-            console.log('this.statusPackageID', this.statusPackageID);
             break;
           }
         }
@@ -53,79 +52,79 @@ export class PackageDetailFileAttendComponent implements OnInit {
       this.packageData = result;
       this.statusPackageName = this.packageData.stageStatus.id;
       switch (this.packageData.stageStatus.id) {
-        case 'CanLapDeNghiDuThau': {
+        case this.bidStatus.CanLapDeNghiDuThau: {
           this.router.navigate([`/package/detail/${this.packageId}/attend/create-request`]);
           break;
         }
-        case 'ChoDuyet': {
+        case this.bidStatus.ChoDuyetDeNghiDuThau: {
           this.router.navigate([`/package/detail/${this.packageId}/attend/create-request`]);
           break;
         }
-        case 'ThamGiaDuThau': {
+        case this.bidStatus.ThamGiaDuThau: {
           this.router.navigate([`/package/detail/${this.packageId}/attend/create-request`]);
           break;
         }
-        case 'DaTuChoi': {
+        case this.bidStatus.TuChoiDuThau: {
           this.router.navigate([`/package/detail/${this.packageId}/attend/create-request`]);
           break;
         }
-        case 'ChuaThongBaoTrienKhai': {
+        case this.bidStatus.ChuaThongBaoTrienKhai: {
           this.router.navigate([`/package/detail/${this.packageId}/attend/infomation-deployment`]);
           break;
         }
-        case 'DaThongBaoTrienKhai': {
+        case this.bidStatus.DaThongBaoTrienKhai: {
           this.router.navigate([`/package/detail/${this.packageId}/attend/infomation-deployment`]);
           break;
         }
-        case 'DaXacNhanPhanCong': {
+        case this.bidStatus.DaXacNhanPhanCong: {
           this.router.navigate([`/package/detail/${this.packageId}/attend/infomation-deployment`]);
           break;
         }
-        case 'DaGuiPhanCongTienDo': {
+        case this.bidStatus.DaGuiPhanCongTienDo: {
           this.router.navigate([`/package/detail/${this.packageId}/attend/infomation-deployment`]);
           break;
         }
-        case 'DangLapHSDT': {
+        case this.bidStatus.DangLapHSDT: {
           this.router.navigate([`/package/detail/${this.packageId}/attend/build`]);
           break;
         }
-        case 'CanLapTrinhDuyetGia': {
+        case this.bidStatus.CanLapTrinhDuyetGia: {
           this.router.navigate([`/package/detail/${this.packageId}/attend/price-review`]);
           break;
         }
-        case 'DaGuiDuyetTrinhDuyetGia': {
+        case this.bidStatus.DaGuiDuyetTrinhDuyetGia: {
           this.router.navigate([`/package/detail/${this.packageId}/attend/price-review`]);
           break;
         }
-        case 'CanDieuChinhTrinhDuyetGia': {
+        case this.bidStatus.CanDieuChinhTrinhDuyetGia: {
           this.router.navigate([`/package/detail/${this.packageId}/attend/price-review`]);
           break;
         }
-        case 'DaDuyetTrinhDuyetGia': {
+        case this.bidStatus.DaDuyetTrinhDuyetGia: {
           this.router.navigate([`/package/detail/${this.packageId}/attend/price-review`]);
           break;
         }
-        case 'ChotHoSo': {
+        case this.bidStatus.ChotHoSo: {
           this.router.navigate([`/package/detail/${this.packageId}/attend/price-review`]);
           break;
         }
-        case 'DaNopHSDT': {
+        case this.bidStatus.DaNopHSDT: {
           this.router.navigate([`/package/detail/${this.packageId}/attend/price-review`]);
           break;
         }
-        case 'DaNhanLoiMoi': {
+        case this.bidStatus.DaNhanLoiMoi: {
           this.router.navigate([`/package/detail/${this.packageId}/attend/interview-negotiation`]);
           break;
         }
-        case 'ChuanBiPhongVan': {
+        case this.bidStatus.ChuanBiPhongVan: {
           this.router.navigate([`/package/detail/${this.packageId}/attend/interview-negotiation`]);
           break;
         }
-        case 'DaChotCongTacChuanBiPhongVan': {
+        case this.bidStatus.DaChotCongTacChuanBiPhongVan: {
           this.router.navigate([`/package/detail/${this.packageId}/attend/interview-negotiation`]);
           break;
         }
-        case 'DaPhongVan': {
+        case this.bidStatus.DaPhongVan: {
           this.router.navigate([`/package/detail/${this.packageId}/attend/interview-negotiation`]);
           break;
         }

@@ -30,7 +30,7 @@
     }
     .k-gantt-rows, .k-gantt-columns, .k-gantt-tasks {
         tr {
-            height: 38px;
+            height: 77px;
         }
     }
     .b-k-alt {
@@ -42,6 +42,12 @@
                 background-color: #f6f7f8 !important;
             }
         }
+    }
+    .custom-control {
+        padding-left: 1.5rem;
+        margin-left: .5rem;
+        margin-top: .5rem;
+        margin-right: 0;
     }
 }
 
@@ -69,7 +75,7 @@ table, thead, tbody, tfoot {
     font-size: 0.7rem;
     td {
         padding: 0 .8rem;
-        height: 38px;
+        // height: 77px;
     }
 }
 
@@ -81,13 +87,25 @@ table, thead, tbody, tfoot {
 .tbl-data-gantt {
     thead {
         tr {
-            height: 83px;
+            height: 121px;
         }
     }
+    td {
+        padding: 0 .8rem;
+        height: 77px;
+    }
+}
+
+.mw-12 {
+    min-width: 12rem;
 }
 
 .col-datetime {
     max-width: 178px;
+}
+
+.w-work {
+    width: 172px;
 }
 
 .b-k-alt {

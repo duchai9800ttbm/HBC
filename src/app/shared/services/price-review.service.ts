@@ -75,7 +75,7 @@ export class PriceReviewService {
     return this.apiService.get(url).map(response => response.result.map(this.toItemHSDTChinhThuc));
   }
 
-  changedHistoryPriceReview(bidOpportunityId: number, page: number, pageSize: number)
+  changedHistoryPriceReview(bidOpportunityId: number, page: string | number, pageSize: number | string)
     : Observable<PagedResult<PriceReviewItemChangedHistory>> {
     const url = `${bidOpportunityId}/tenderpriceapproval/changedhistory/${page}/${pageSize}`;
     return this.apiService.get(url).map(res => {
@@ -97,17 +97,9 @@ export class PriceReviewService {
         type: model.document.type,
         id: model.document.id,
         name: model.document.name,
-        interviewTime: model.interviewTime
+        interviewTime: model.document.interviewTime
       },
-      childs: model.childs && {
-        typeName: model.childs.typeName,
-        document: model.childs.document && {
-          type: model.childs.document.type,
-          id: model.childs.document.id,
-          name: model.childs.document.name,
-          interviewTime: model.childs.document.interviewTime
-        }
-      }
+      childs: model.childs ? model.childs : []
     };
   }
 
@@ -132,6 +124,17 @@ export class PriceReviewService {
 
   download(tenderPriceApprovalDocumentId: number) {
     const url = `tenderpriceapproval/document/${tenderPriceApprovalDocumentId}/download`;
+    return this.apiService.getFile(url).map(response => {
+      return FileSaver.saveAs(
+        new Blob([response.file], {
+          type: `${response.file.type}`,
+        }), response.fileName
+      );
+    });
+  }
+
+  downloadTemplate() {
+    const url = `tenderpriceapproval/template`;
     return this.apiService.getFile(url).map(response => {
       return FileSaver.saveAs(
         new Blob([response.file], {
@@ -175,6 +178,7 @@ export class PriceReviewService {
     modelRequest.isDraftVersion = formValue.isDraftVersion ? formValue.isDraftVersion : false;
     modelRequest.approvalDate = DateTimeConvertHelper.fromDtObjectToTimestamp(formValue.approvalDate) / 1000;
     modelRequest.approvalTimes = formValue.approvalTimes;
+    modelRequest.interviewTimes = formValue.interviewTimes;
     modelRequest.projectInformation = {
       foudationPart: {
         scopeOfWorkIsInclude: formValue.phanMongCheck ? formValue.phanMongCheck : false,
@@ -345,7 +349,8 @@ export class PriceReviewService {
         name: x.name,
         guid: x.guid,
         url: x.url,
-        desc: x.desc
+        desc: x.desc,
+        uploadDate: x.uploadDate
       })),
       interviewTimes: model.interviewTimes,
       isDraftVersion: model.isDraftVersion,

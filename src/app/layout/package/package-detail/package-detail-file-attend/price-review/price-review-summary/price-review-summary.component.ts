@@ -42,18 +42,36 @@ export class PriceReviewSummaryComponent implements OnInit {
     });
     this.priceReviewService.viewShort(this.packageId).subscribe(data => {
       this.priceReview = data;
-      console.log(this.priceReview);
     });
     this.priceReviewService.getDanhSachHSDTChinhThuc(230).subscribe(data => {
       this.listItemHSDTChinhThuc = data;
-      console.log(this.listItemHSDTChinhThuc);
     });
 
     this.priceReviewService.changedHistoryPriceReview(this.packageId, 0, 10)
       .subscribe(data => {
         this.pagedResult = data;
-        console.log(data);
       });
+  }
+
+  renderIndex(i, k) {
+    let dem = 0;
+    let tam = -1;
+    if (+i === 0) {
+      return k + 1;
+    } else {
+      this.listItemHSDTChinhThuc.forEach(ite => {
+        if (tam < +i - 1) {
+          if (!ite.childs.length) {
+            dem++;
+          }
+          ite.childs.forEach(e => {
+            dem++;
+          });
+        }
+        tam++;
+      });
+      return dem + k + 1;
+    }
   }
 
   open() {
@@ -68,6 +86,7 @@ export class PriceReviewSummaryComponent implements OnInit {
   refresh() {
     this.priceReviewService.viewShort(this.packageId).subscribe(data => {
       this.priceReview = data;
+      this.alertService.success('Dữ liệu đã được cập nhật mới nhất!');
     });
   }
 
@@ -131,7 +150,7 @@ export class PriceReviewSummaryComponent implements OnInit {
 
   downloadAll() { }
   taiTemplate() {
-
+    this.priceReviewService.downloadTemplate().subscribe();
   }
 
   delete() {
@@ -145,7 +164,13 @@ export class PriceReviewSummaryComponent implements OnInit {
       });
     });
   }
-
+  pagedResultChange() {
+    this.priceReviewService.changedHistoryPriceReview(this.packageId, this.pagedResult.currentPage, this.pagedResult.pageSize)
+      .subscribe(data => {
+        this.pagedResult = data;
+        console.log(data);
+      });
+  }
   print() {
 
   }

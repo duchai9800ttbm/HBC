@@ -20,6 +20,7 @@ export class TenderPriceApproval {
     isDraftVersion: boolean;
     approvalDate: number;
     approvalTimes: number;
+    interviewTimes: number;
     isApprovedByTenderLeader: boolean;
     isApprovedByTenderManager: boolean;
     isApprovedByBoardOfDirector: boolean;
@@ -205,6 +206,8 @@ export class FileAttach {
     guid: string;
     url: string;
     desc: string;
+    uploadDate: number;
+
 }
 
 
@@ -216,7 +219,7 @@ export class ItemHSDTChinhThuc {
         name: string,
         interviewTime: number,
     };
-    childs?: ItemHSDTChinhThuc;
+    childs?: ItemHSDTChinhThuc[];
 }
 
 

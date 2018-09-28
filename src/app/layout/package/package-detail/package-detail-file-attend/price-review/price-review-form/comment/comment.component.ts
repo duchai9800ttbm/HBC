@@ -13,7 +13,8 @@ import { PagedResult } from '../../../../../../../shared/models';
 export class CommentComponent implements OnInit {
   commentEditor: string;
   @Input() packageId: number;
-
+  comments: CommentItem[] = [];
+  public showButtonLoadMore = false;
   pagedResult: PagedResult<CommentItem> = new PagedResult<CommentItem>();
   constructor(private commentService: CommentService) { }
 
@@ -21,8 +22,14 @@ export class CommentComponent implements OnInit {
     this.packageId = PackageDetailComponent.packageId;
     this.commentService.getComment(this.packageId, 0, 10).subscribe(data => {
       this.pagedResult = data;
+      this.comments = this.pagedResult.items;
+      this.showButtonLoadMore = (this.pagedResult.items.length > 0) &&
+        (+this.pagedResult.currentPage + 1 < +this.pagedResult.pageCount);
+      console.log(this.showButtonLoadMore);
+      console.log(this.pagedResult);
     });
   }
+
   addCommentByKeyUpEnter(e) {
     const comment = e.target.value.trim();
     this.commentEditor = null;
@@ -31,8 +38,13 @@ export class CommentComponent implements OnInit {
     }
     this.commentService.createComment(this.packageId, comment)
       .subscribe(data => {
-        this.commentService.getComment(this.packageId, 0, 30).subscribe(result => {
+        this.commentService.getComment(this.packageId, 0, 10).subscribe(result => {
           this.pagedResult = result;
+          this.showButtonLoadMore = (this.pagedResult.items.length > 0) &&
+            (+this.pagedResult.currentPage + 1 < +this.pagedResult.pageCount);
+          this.comments = this.pagedResult.items;
+          console.log(this.showButtonLoadMore);
+          console.log(this.pagedResult);
         });
       });
   }
@@ -47,11 +59,20 @@ export class CommentComponent implements OnInit {
       .subscribe(data => {
         this.commentService.getComment(this.packageId, 0, 10).subscribe(result => {
           this.pagedResult = result;
+          this.comments = this.pagedResult.items;
         });
       });
   }
 
   loadMore() {
-    
+
+    this.commentService.getComment(this.packageId, +this.pagedResult.currentPage + 1, +this.pagedResult.pageSize).subscribe(result => {
+      this.pagedResult = result;
+      this.showButtonLoadMore = (this.pagedResult.items.length > 0) && (+this.pagedResult.currentPage + 1 < this.pagedResult.pageCount);
+      this.comments = this.comments.concat(this.pagedResult.items);
+      console.log(this.showButtonLoadMore);
+      console.log(this.pagedResult);
+    });
+
   }
 }

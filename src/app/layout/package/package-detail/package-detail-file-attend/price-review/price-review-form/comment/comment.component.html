@@ -6,8 +6,8 @@
         <div class="editor-keyboard d-flex">
             <div class="editor-input center-parent">
                 <div class="mt-1 w-100">
-                    <textarea class="editor-comment" [placeholder]="'Viết bình luận...'" (keyup.enter)="addCommentByKeyUpEnter($event)"
-                        [(ngModel)]="commentEditor" pInputTextarea autoResize="autoResize"></textarea>
+                    <textarea class="editor-comment" [placeholder]="'Viết bình luận...'" (keyup.enter)="addCommentByKeyUpEnter($event)" [(ngModel)]="commentEditor"
+                        pInputTextarea autoResize="autoResize"></textarea>
                 </div>
             </div>
             <div class="logo center-parent mt-1">
@@ -17,30 +17,42 @@
             </div>
         </div>
     </div>
-    <div class="list-comment">
-        <div class="mt-3" *ngFor="let comment of pagedResult.items">
-            <div  class="row d-flex">
-                <div class="col-sm-2 mt-1">
-                    <img class="avatar" [src]="comment?.author?.employeeAvatar" width="30" height="30" alt="">
-                </div>
-                <div class="col-sm-10">
-                    <span><strong class="author">{{comment?.author?.employeeName}} </strong></span>
-                    <br>
-                    <span class="amCalendar">{{comment?.createdTime*1000 |
-                        amCalendar}}</span>
-                </div>
-            </div>
-
-            <div class="row mt-2">
-                <div class="col-sm-2"></div>
-                <div class="col-sm-10"><span class="comment-content">{{comment?.commentContent}}</span></div>
+    <div class="list-comment" id="comment-scroll">
+        <div class="danh-sach">
+                <div class="mt-3" *ngFor="let comment of comments">
+                        <div class="row no-gutters d-flex">
+                            <div class="col-sm-2 mt-1">
+                                <img class="avatar" [src]="comment?.author?.employeeAvatar" width="30" height="30" alt="">
+                            </div>
+                            <div class="col-sm-10">
+                                <div class="ml-1">
+                                    <span>
+                                        <strong class="author">{{comment?.author?.employeeName}} </strong>
+                                    </span>
+                                    <br>
+                                    <span class="amCalendar">{{comment?.createdTime*1000 - 25200000 | amCalendar }}
+                                    </span>
+                                </div>
+            
+                            </div>
+                        </div>
+            
+                        <div class="row no-gutters mt-2">
+                            <div class="col-sm-2"></div>
+                            <div class="col-sm-10">
+                                <div class="ml-1">
+                                    <span class="comment-content">{{comment?.commentContent}}</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+        </div>
+       
+        <div class="center-parent mt-3 mb-3" *ngIf="showButtonLoadMore">
+            <div class="link">
+                <a (click)="loadMore()" class="cursor-pointer link">Xem thêm</a>
             </div>
         </div>
+    </div>
 
-    </div>
-    <div class="center-parent mt-2">
-        <div class="link">
-            <a (click)="loadMore()" class="cursor-pointer link">Xem thêm</a>
-        </div>
-    </div>
 </div>

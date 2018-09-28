@@ -1,5 +1,5 @@
-<div class="d-flex main-layout">
-    <div class="content">
+<div class="d-flex main-layout" (window:resize)="onResize($event)">
+    <div class="content" id="content-left">
         <div class="title d-flex align-items-center justify-content-between">
             <div class="icon d-flex">
                 <a routerLink="../summary" style="cursor: pointer;">
@@ -8,10 +8,10 @@
                 <h4 class="tieu-de ml-1" style="font-size: 130%">BẢNG TÓM TẮT THÔNG TIN DỰ ÁN - TRÌNH DUYỆT GIÁ THẦU</h4>
             </div>
             <div class="action d-flex flex-row-reverse">
-                <button *ngIf="isModeCreate || isModeEdit || isModeView" class="btn btn-primary ml-1" (click)="refresh()">
+                <button *ngIf="isModeCreate || isModeEdit || isModeView" class="btn btn-primary ml-1 mr-1" (click)="refresh()">
                     <i class="fa fa-refresh" aria-hidden="true"></i>
                 </button>
-                <button *ngIf="isModeView" class="btn btn-primary ml-1" routerLink="../edit">Chỉnh sửa</button>
+                <button *ngIf="isModeView" class="btn btn-primary" routerLink="../edit">Chỉnh sửa</button>
                 <button *ngIf="isModeCreate || isModeEdit" class="btn btn-secondary ml-1" routerLink="../summary">Hủy</button>
                 <button *ngIf="isModeCreate || isModeEdit" class="btn btn-primary ml-1" (click)="submit(false)">Lưu</button>
 
@@ -30,7 +30,7 @@
                             Công trình (Project):&nbsp;&nbsp;&nbsp;&nbsp; {{package?.projectName}}
                         </div>
                         <div class="col-md-6">
-                            Prepare by:&nbsp;&nbsp;&nbsp;&nbsp; 
+                            Prepare by:&nbsp;&nbsp;&nbsp;&nbsp;
                         </div>
                     </div>
 
@@ -56,7 +56,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="content">
+                <div class="content" id="table-review">
                     <div class="d-flex row-header">
                         <div class="d-flex ten-tai-lieu">
                             <div class="label-document">
@@ -79,14 +79,18 @@
                                 <div class="ml-3">Lần phỏng vấn</div>
                             </div>
                             <div class="value center-parent">
-                                <div class="font-weight-bold">{{model?.approvalTimes}}</div>
+                                <div class="font-weight-bold center-parent">
+                                    <div>
+                                            <input formControlName="interviewTimes">
+                                    </div>
+                                </div>
                             </div>
                         </div>
 
                     </div>
 
-                    <div class="d-flex row-title">
-                        <div class="info-package d-flex align-items-center">
+                    <div class="d-flex row-title align-self-stretch">
+                        <div class="info-package d-flex align-items-center align-self-stretch">
                             <div class="stt center-parent">
                                 <div>
                                     I
@@ -94,7 +98,7 @@
 
                             </div>
                             <div class=" name text-uppercase d-flex align-items-center">
-                                <span class="ml-1">THÔNG TIN VỀ DỰ ÁN - GÓI THẦU</span>
+                                <span class="ml-1 mr-1 mr-1">THÔNG TIN VỀ DỰ ÁN - GÓI THẦU</span>
                             </div>
                         </div>
                         <div class="scope-of-works">
@@ -111,12 +115,12 @@
                                     <div>Không</div>
                                 </div>
                                 <div class="desc d-flex align-items-center">
-                                    <span class="ml-1">Diễn giải sơ bộ về p.vi cv</span>
+                                    <span class="ml-1 mr-1 mr-1">Diễn giải sơ bộ về p.vi cv</span>
                                 </div>
                             </div>
                         </div>
                         <div class="gfa d-flex align-items-center">
-                            <span class="ml-1">GFA (m2)</span>
+                            <span class="ml-1 mr-1">GFA (m2)</span>
                         </div>
                     </div>
 
@@ -132,7 +136,7 @@
                                             <div>1</div>
                                         </div>
                                         <div class="one-col-2 d-flex align-items-center font-weight-bold">
-                                            <div class="ml-1">Phần móng</div>
+                                            <div class="ml-1 mr-1">Phần móng</div>
                                         </div>
                                     </div>
                                     <div class="two d-flex  align-self-stretch">
@@ -164,7 +168,7 @@
                                             <div>2</div>
                                         </div>
                                         <div class="one-col-2 d-flex align-items-center font-weight-bold">
-                                            <div class="ml-1">Phần hầm</div>
+                                            <div class="ml-1 mr-1">Phần hầm</div>
                                         </div>
                                     </div>
                                     <div class="two d-flex  align-self-stretch">
@@ -196,7 +200,7 @@
                                             <div>2.1</div>
                                         </div>
                                         <div class="one-col-2 d-flex align-items-center font-weight-bold">
-                                            <div class="ml-1">Thi công kết cấu</div>
+                                            <div class="ml-1 mr-1">Thi công kết cấu</div>
                                         </div>
                                     </div>
                                     <div class="two d-flex  align-self-stretch">
@@ -228,7 +232,7 @@
                                             <div>2.2</div>
                                         </div>
                                         <div class="one-col-2 d-flex align-items-center font-weight-bold">
-                                            <div class="ml-1">Thi công hoàn thiện</div>
+                                            <div class="ml-1 mr-1">Thi công hoàn thiện</div>
                                         </div>
                                     </div>
                                     <div class="two d-flex  align-self-stretch">
@@ -260,7 +264,7 @@
                                             <div>2.3</div>
                                         </div>
                                         <div class="one-col-2 d-flex align-items-center font-weight-bold">
-                                            <div class="ml-1">Phần công việc khác</div>
+                                            <div class="ml-1 mr-1">Phần công việc khác</div>
                                         </div>
                                     </div>
                                     <div class="two d-flex  align-self-stretch">
@@ -292,7 +296,7 @@
                                             <div>3</div>
                                         </div>
                                         <div class="one-col-2 d-flex align-items-center font-weight-bold">
-                                            <div class="ml-1">Phần thân</div>
+                                            <div class="ml-1 mr-1">Phần thân</div>
                                         </div>
                                     </div>
                                     <div class="two d-flex  align-self-stretch">
@@ -324,7 +328,7 @@
                                             <div>3.1</div>
                                         </div>
                                         <div class="one-col-2 d-flex align-items-center font-weight-bold">
-                                            <div class="ml-1">Thi công kết cấu</div>
+                                            <div class="ml-1 mr-1">Thi công kết cấu</div>
                                         </div>
                                     </div>
                                     <div class="two d-flex  align-self-stretch">
@@ -356,7 +360,7 @@
                                             <div>3.2</div>
                                         </div>
                                         <div class="one-col-2 d-flex align-items-center font-weight-bold">
-                                            <div class="ml-1">Thi công hoàn thiện</div>
+                                            <div class="ml-1 mr-1">Thi công hoàn thiện</div>
                                         </div>
                                     </div>
                                     <div class="two d-flex  align-self-stretch">
@@ -388,7 +392,7 @@
                                             <div>3.3</div>
                                         </div>
                                         <div class="one-col-2 d-flex align-items-center font-weight-bold">
-                                            <div class="ml-1">Phần công việc khác</div>
+                                            <div class="ml-1 mr-1">Phần công việc khác</div>
                                         </div>
                                     </div>
                                     <div class="two d-flex  align-self-stretch">
@@ -432,20 +436,20 @@
                                 </div>
                             </div>
                             <div class="name d-flex align-items-center">
-                                <div class="ml-1">KỸ THUẬT</div>
+                                <div class="ml-1 mr-1">KỸ THUẬT</div>
                             </div>
                         </div>
                         <div class="two d-flex align-items-center">
                             <div class="required-2 d-flex align-items-center">
-                                <div class="ml-1">Theo Y.cầu HSMT</div>
+                                <div class="ml-1 mr-1">Theo Y.cầu HSMT</div>
                             </div>
                             <div class="request d-flex align-items-center">
-                                <div class="ml-1">HBC đề xuất</div>
+                                <div class="ml-1 mr-1">HBC đề xuất</div>
 
                             </div>
                         </div>
                         <div class="three  d-flex align-items-center">
-                            <div class="ml-1">Ghi chú</div>
+                            <div class="ml-1 mr-1">Ghi chú</div>
                         </div>
                     </div>
 
@@ -457,7 +461,7 @@
                                 </div>
                             </div>
                             <div class="name d-flex align-items-center">
-                                <div class="ml-1">Tiến độ thi công</div>
+                                <div class="ml-1 mr-1">Tiến độ thi công</div>
                             </div>
                         </div>
                         <div class="two d-flex align-items-center">
@@ -480,7 +484,7 @@
                         </div>
                     </div>
 
-                    <div class="d-flex row-technical-item">
+                    <div class="d-flex row-technical-item align-self-stretch">
                         <div class="first d-flex align-items-center font-weight-bold">
                             <div class="stt center-parent">
                                 <div>
@@ -488,7 +492,7 @@
                                 </div>
                             </div>
                             <div class="name d-flex align-items-center">
-                                <div class="ml-1">Điểm đặc biệt của biện pháp thi công</div>
+                                <div class="ml-1 mr-1">Điểm đặc biệt của biện pháp thi công</div>
                             </div>
                         </div>
                         <div class="two d-flex align-items-center">
@@ -504,7 +508,7 @@
 
                             </div>
                         </div>
-                        <div class="three  d-flex align-items-center">
+                        <div class="three  d-flex align-items-center align-self-stretch">
                             <div class="w-100">
                                 <textarea name="" id="" formControlName="bienPhapThiCongCY"></textarea>
                             </div>
@@ -519,7 +523,7 @@
                                 </div>
                             </div>
                             <div class="name d-flex align-items-center">
-                                <div class="ml-1">Yêu cầu an toàn theo y.c HSMT hay thông tin tìm hiểu được</div>
+                                <div class="ml-1 mr-1">Yêu cầu an toàn theo y.c HSMT hay thông tin tìm hiểu được</div>
                             </div>
                         </div>
                         <div class="two d-flex align-items-center">
@@ -550,7 +554,7 @@
                                 </div>
                             </div>
                             <div class="name d-flex align-items-center">
-                                <div class="ml-1">Yêu cầu đặc biệt khác của dự án</div>
+                                <div class="ml-1 mr-1">Yêu cầu đặc biệt khác của dự án</div>
                             </div>
                         </div>
                         <div class="two specify d-flex align-items-center">
@@ -576,91 +580,86 @@
                                 </div>
                             </div>
                             <div class="name d-flex align-items-center">
-                                <div class="ml-1">ĐIỀU KIỆN HĐ</div>
+                                <div class="ml-1 mr-1">ĐIỀU KIỆN HĐ</div>
                             </div>
                         </div>
                         <div class="two d-flex align-items-center">
                             <div class="required-2 d-flex align-items-center">
-                                <div class="ml-1">Theo Y.cầu HSMT</div>
+                                <div class="ml-1 mr-1">Theo Y.cầu HSMT</div>
                             </div>
                             <div class="request d-flex align-items-center">
-                                <div class="ml-1">HBC đề xuất</div>
+                                <div class="ml-1 mr-1">HBC đề xuất</div>
 
                             </div>
                         </div>
                         <div class="three  d-flex align-items-center">
-                            <div class="ml-1">Ghi chú</div>
+                            <div class="ml-1 mr-1">Ghi chú</div>
                         </div>
                     </div>
 
-
-                    <div class="d-flex row-condition-1 ">
-                        <div class="first d-flex align-items-center font-weight-bold">
+                    <div class="d-flex row-condition-3">
+                        <div class="colu-1 d-flex font-weight-bold">
                             <div class="stt center-parent">
                                 <div>1</div>
                             </div>
                             <div class="name d-flex align-items-center">
-                                <div class="ml-1">Tạm ứng</div>
+                                <div>
+                                    <div class="ml-1 mr-1">Tạm ứng</div>
+                                </div>
                             </div>
                         </div>
-                        <div class="two d-flex">
-                            <div class="required-2  d-flex">
-                                <div class="one">
-                                    <div class="item item-above font-weight-bold d-flex align-items-center">
-                                        <div class="ml-1">%</div>
+                        <div class="colu-2 d-flex align-items-center align-self-stretch">
+                            <div class="yeu-cau d-flex flex-column">
+                                <div class="above d-flex align-items-center font-weight-bold">
+                                    <div class="column-1 d-flex align-items-center">
+                                        <div class="ml-1 mr-1">%</div>
                                     </div>
-                                    <div class="item item-below d-flex center-parent">
-                                        <div class="w-100">
-                                            <input formControlName="tamUngYCPercent" appInputNumber>
-
-                                        </div>
+                                    <div class="column-2 d-flex align-items-center">
+                                        <div class="ml-1 mr-1">% Khấu trừ</div>
 
                                     </div>
                                 </div>
-                                <div class="two">
-                                    <div class="item item-above font-weight-bold d-flex align-items-center">
-                                        <div class="ml-1">% khấu trừ</div>
-                                    </div>
-                                    <div class="item item-below d-flex center-parent">
-                                        <div class="w-100">
-                                            <input formControlName="tamUngYCKhauTru" appInputNumber>
+                                <div class="below d-flex">
+                                    <div class="column-1 d-flex align-items-center">
+                                        <input formControlName="tamUngYCPercent" appInputNumber>
 
-                                        </div>
+                                    </div>
+                                    <div class="column-2 d-flex align-items-center">
+                                        <input formControlName="tamUngYCKhauTru" appInputNumber>
 
                                     </div>
                                 </div>
                             </div>
-                            <div class="request  d-flex">
-                                <div class="one">
-                                    <div class="item item-above font-weight-bold d-flex align-items-center">
-                                        <div class="ml-1">%</div>
-                                    </div>
-                                    <div class="item item-below d-flex center-parent">
-                                        <div class="w-100">
-                                            <input formControlName="tamUngDXPercent" appInputNumber>
+                            <div class="de-xuat d-flex flex-column">
+                                <div class="above d-flex align-items-center font-weight-bold">
+                                    <div class="column-1 d-flex align-items-center">
+                                        <div class="ml-1 mr-1">%</div>
 
-                                        </div>
+                                    </div>
+                                    <div class="column-2 d-flex align-items-center">
+                                        <div class="ml-1 mr-1">% Khấu trừ</div>
 
                                     </div>
                                 </div>
-                                <div class="two">
-                                    <div class="item item-above font-weight-bold d-flex align-items-center">
-                                        <div class="ml-1">% khấu trừ</div>
-                                    </div>
-                                    <div class="item item-below d-flex center-parent">
-                                        <div class="w-100">
-                                            <input formControlName="tamUngDXKhauTru" appInputNumber>
+                                <div class="below d-flex">
+                                    <div class="column-1 d-flex align-items-center">
+                                        <input formControlName="tamUngDXPercent" appInputNumber>
 
-                                        </div>
+                                    </div>
+                                    <div class="column-2 d-flex align-items-center">
+                                        <input formControlName="tamUngDXKhauTru" appInputNumber>
 
                                     </div>
                                 </div>
                             </div>
                         </div>
-                        <div class="three">
+                        <div class="colu-3">
                             <textarea name="" id="" formControlName="tamUngCY"></textarea>
+
                         </div>
                     </div>
+
+
 
                     <div class="d-flex row-condition-2 ">
                         <div class="first d-flex align-items-center font-weight-bold">
@@ -668,14 +667,14 @@
                                 <div>2</div>
                             </div>
                             <div class="name d-flex align-items-center">
-                                <div class="ml-1">Thời gian thanh toán</div>
+                                <div class="ml-1 mr-1">Thời gian thanh toán</div>
                             </div>
                         </div>
                         <div class="two d-flex">
                             <div class="required-2  d-flex">
                                 <div class="one">
                                     <div class="item item-above font-weight-bold d-flex align-items-center">
-                                        <div class="ml-1">Thời gian (Ngày)</div>
+                                        <div class="ml-1 mr-1">Thời gian (Ngày)</div>
                                     </div>
                                     <div class="item item-below d-flex center-parent">
                                         <div class="w-100">
@@ -687,7 +686,7 @@
                                 </div>
                                 <div class="two">
                                     <div class="item item-above font-weight-bold d-flex align-items-center">
-                                        <div class="ml-1">Thời gian (Ngày)</div>
+                                        <div class="ml-1 mr-1">Thời gian (Ngày)</div>
                                     </div>
                                     <div class="item item-below d-flex center-parent">
                                         <div class="w-100">
@@ -711,14 +710,14 @@
                                 <div>3</div>
                             </div>
                             <div class="name d-flex align-items-center">
-                                <div class="ml-1">Tiền giữ lại cho mỗi đợt thanh toán</div>
+                                <div class="ml-1 mr-1">Tiền giữ lại cho mỗi đợt thanh toán</div>
                             </div>
                         </div>
                         <div class="two d-flex">
                             <div class="required-2  d-flex">
                                 <div class="one">
                                     <div class="item item-above font-weight-bold d-flex align-items-center">
-                                        <div class="ml-1">%</div>
+                                        <div class="ml-1 mr-1">%</div>
                                     </div>
                                     <div class="item item-below d-flex center-parent">
                                         <div class="w-100">
@@ -730,7 +729,7 @@
                                 </div>
                                 <div class="two">
                                     <div class="item item-above font-weight-bold d-flex align-items-center">
-                                        <div class="ml-1">% max dữ lại</div>
+                                        <div class="ml-1 mr-1">% max dữ lại</div>
                                     </div>
                                     <div class="item item-below d-flex center-parent">
                                         <div class="w-100">
@@ -744,7 +743,7 @@
                             <div class="request  d-flex">
                                 <div class="one">
                                     <div class="item item-above font-weight-bold d-flex align-items-center">
-                                        <div class="ml-1">%</div>
+                                        <div class="ml-1 mr-1">%</div>
                                     </div>
                                     <div class="item item-below d-flex center-parent">
                                         <div class="w-100">
@@ -756,7 +755,7 @@
                                 </div>
                                 <div class="two">
                                     <div class="item item-above font-weight-bold d-flex align-items-center">
-                                        <div class="ml-1">% max dữ lại</div>
+                                        <div class="ml-1 mr-1">% max dữ lại</div>
                                     </div>
                                     <div class="item item-below d-flex center-parent">
                                         <div class="w-100">
@@ -779,14 +778,14 @@
                                 <div>4</div>
                             </div>
                             <div class="name d-flex align-items-center">
-                                <div class="ml-1">Phạt tiến độ bị chậm</div>
+                                <div class="ml-1 mr-1">Phạt tiến độ bị chậm</div>
                             </div>
                         </div>
                         <div class="two d-flex">
                             <div class="required-2  d-flex">
                                 <div class="one">
                                     <div class="item item-above font-weight-bold d-flex align-items-center">
-                                        <div class="ml-1">%HĐ/ngày</div>
+                                        <div class="ml-1 mr-1">%HĐ/ngày</div>
                                     </div>
                                     <div class="item item-below d-flex center-parent">
                                         <div class="w-100">
@@ -798,7 +797,7 @@
                                 </div>
                                 <div class="two">
                                     <div class="item item-above font-weight-bold d-flex align-items-center">
-                                        <div class="ml-1">Phạt max</div>
+                                        <div class="ml-1 mr-1">Phạt max</div>
                                     </div>
                                     <div class="item item-below d-flex center-parent">
                                         <div class="w-100">
@@ -812,7 +811,7 @@
                             <div class="request  d-flex">
                                 <div class="one">
                                     <div class="item item-above font-weight-bold d-flex align-items-center">
-                                        <div class="ml-1">%HĐ/ngày</div>
+                                        <div class="ml-1 mr-1">%HĐ/ngày</div>
                                     </div>
                                     <div class="item item-below d-flex center-parent">
                                         <div class="w-100">
@@ -824,7 +823,7 @@
                                 </div>
                                 <div class="two">
                                     <div class="item item-above font-weight-bold d-flex align-items-center">
-                                        <div class="ml-1">Phạt max</div>
+                                        <div class="ml-1 mr-1">Phạt max</div>
                                     </div>
                                     <div class="item item-below d-flex center-parent">
                                         <div class="w-100">
@@ -847,14 +846,14 @@
                                 <div>5</div>
                             </div>
                             <div class="name d-flex align-items-center">
-                                <div class="ml-1">Thời gian bảo hành ct</div>
+                                <div class="ml-1 mr-1">Thời gian bảo hành ct</div>
                             </div>
                         </div>
                         <div class="two d-flex">
                             <div class="required-2  d-flex">
                                 <div class="one">
                                     <div class="item item-above font-weight-bold d-flex align-items-center">
-                                        <div class="ml-1">%</div>
+                                        <div class="ml-1 mr-1">%</div>
                                     </div>
                                     <div class="item item-below d-flex center-parent">
                                         <div class="w-100">
@@ -866,7 +865,7 @@
                                 </div>
                                 <div class="two">
                                     <div class="item item-above font-weight-bold d-flex align-items-center">
-                                        <div class="ml-1">Bằng tiền</div>
+                                        <div class="ml-1 mr-1">Bằng tiền</div>
                                     </div>
                                     <div class="item item-below d-flex center-parent">
                                         <div class="w-100">
@@ -880,7 +879,7 @@
                             <div class="request  d-flex">
                                 <div class="one">
                                     <div class="item item-above font-weight-bold d-flex align-items-center">
-                                        <div class="ml-1">Bằng bond</div>
+                                        <div class="ml-1 mr-1">Bằng bond</div>
                                     </div>
                                     <div class="item item-below d-flex center-parent">
                                         <div class="w-100">
@@ -892,7 +891,7 @@
                                 </div>
                                 <div class="two">
                                     <div class="item item-above font-weight-bold d-flex align-items-center">
-                                        <div class="ml-1">T.g bh (tháng)</div>
+                                        <div class="ml-1 mr-1">T.g bh (tháng)</div>
                                     </div>
                                     <div class="item item-below d-flex center-parent">
                                         <div class="w-100">
@@ -915,7 +914,7 @@
                                 <div>6</div>
                             </div>
                             <div class="name d-flex align-items-center">
-                                <div class="ml-1">Điều kiện đặc biệt - bất lợi cho HĐ</div>
+                                <div class="ml-1 mr-1">Điều kiện đặc biệt - bất lợi cho HĐ</div>
                             </div>
                         </div>
                         <div class="two two-2">
@@ -932,7 +931,7 @@
                                 <div>IV</div>
                             </div>
                             <div class="name d-flex align-items-center">
-                                <div class="ml-1">
+                                <div class="ml-1 mr-1">
                                     GIÁ DỰ THẦU DỰ KIẾN NỘP
                                 </div>
                             </div>
@@ -940,35 +939,35 @@
                         <div class="two d-flex">
                             <div class="item-1">
                                 <div class="above d-flex align-items-center">
-                                    <div class="ml-1">Base tender</div>
+                                    <div class="ml-1 mr-1">Base tender</div>
                                 </div>
                                 <div class="below d-flex">
                                     <div class="below-1">
-                                        <div class="ml-1">Amount</div>
+                                        <div class="ml-1 mr-1">Amount</div>
                                     </div>
                                     <div class="below-2">
-                                        <div class="ml-1">/GFA</div>
+                                        <div class="ml-1 mr-1">/GFA</div>
                                     </div>
 
                                 </div>
                             </div>
                             <div class="item-2">
                                 <div class="above d-flex align-items-center">
-                                    <div class="ml-1">Alternative tender</div>
+                                    <div class="ml-1 mr-1">Alternative tender</div>
                                 </div>
                                 <div class="below d-flex">
                                     <div class="below-1">
-                                        <div class="ml-1">Amount</div>
+                                        <div class="ml-1 mr-1">Amount</div>
                                     </div>
                                     <div class="below-2">
-                                        <div class="ml-1">/GFA</div>
+                                        <div class="ml-1 mr-1">/GFA</div>
                                     </div>
 
                                 </div>
                             </div>
                         </div>
                         <div class="three d-flex align-items-center">
-                            <div class="ml-1">
+                            <div class="ml-1 mr-1">
                                 Ghi chú
                             </div>
                         </div>
@@ -976,7 +975,7 @@
 
                     <div class="d-flex row-gia-von">
                         <div class="one d-flex align-items-center font-weight-bold">
-                            <div class="ml-1">GIÁ VỐN (CHƯA CÓ HỆ SỐ)</div>
+                            <div class="ml-1 mr-1">GIÁ VỐN (CHƯA CÓ HỆ SỐ)</div>
                         </div>
                         <div class="two d-flex">
                             <div class="item-1 d-flex align-items-center">
@@ -1015,7 +1014,7 @@
 
                             </div>
                             <div class="name d-flex align-items-center">
-                                <div class="ml-1">
+                                <div class="ml-1 mr-1">
                                     Chi phí chung
                                 </div>
                             </div>
@@ -1057,7 +1056,7 @@
 
                             </div>
                             <div class="name d-flex align-items-center">
-                                <div class="ml-1">
+                                <div class="ml-1 mr-1">
                                     Giá trị Hòa Bình làm trực tiếp
                                 </div>
                             </div>
@@ -1099,7 +1098,7 @@
 
                             </div>
                             <div class="name d-flex align-items-center">
-                                <div class="ml-1">
+                                <div class="ml-1 mr-1">
                                     Giá trị PC/PS
                                 </div>
                             </div>
@@ -1136,7 +1135,7 @@
                     </div>
                     <div class="d-flex row-gia-von">
                         <div class="one d-flex align-items-center font-weight-bold">
-                            <div class="ml-1">TOTAL GIÁ VỐN</div>
+                            <div class="ml-1 mr-1">TOTAL GIÁ VỐN</div>
                         </div>
                         <div class="two d-flex">
                             <div class="item-1 d-flex align-items-center">
@@ -1175,7 +1174,7 @@
 
                             </div>
                             <div class="name d-flex align-items-center">
-                                <div class="ml-1">
+                                <div class="ml-1 mr-1">
                                     Chi phí lợi nhuận (O&P)
                                 </div>
                             </div>
@@ -1201,7 +1200,7 @@
 
                     <div class="d-flex row-gia-von">
                         <div class="one d-flex align-items-center font-weight-bold">
-                            <div class="ml-1">TOTAL GIÁ ĐI NỘP THẦU</div>
+                            <div class="ml-1 mr-1">TOTAL GIÁ ĐI NỘP THẦU</div>
                         </div>
                         <div class="two d-flex">
                             <div class="item-1 d-flex align-items-center">
@@ -1241,7 +1240,7 @@
 
                             </div>
                             <div class="name d-flex align-items-center">
-                                <div class="ml-1">
+                                <div class="ml-1 mr-1">
                                     Tỷ lệ % (O&P) trên giá tổng dự thầu
                                 </div>
                             </div>
@@ -1283,7 +1282,7 @@
                         </div>
                         <div class="d-flex align-items-center row-last-item">
                             <div class="one d-flex align-items-center">
-                                <div class="ml-1 font-weight-bold">Ngày trình duyệt</div>
+                                <div class="ml-1 mr-1 font-weight-bold">Ngày trình duyệt</div>
                             </div>
                             <div class="two d-flex align-items-center">
                                 <div class="w-100 p-1">
@@ -1293,7 +1292,7 @@
 
                             </div>
                             <div class="three d-flex align-items-center">
-                                <div class="ml-1 font-weight-bold">Lần duyệt</div>
+                                <div class="ml-1 mr-1 font-weight-bold">Lần duyệt</div>
 
                             </div>
 
@@ -1313,7 +1312,7 @@
 
                         <div class="d-flex row-last-item-2">
                             <div class="first font-weight-bold d-flex align-items-center">
-                                <div class="ml-1">
+                                <div class="ml-1 mr-1">
                                     Trưởng nhóm dự thầu
                                 </div>
                             </div>
@@ -1350,7 +1349,7 @@
                         </div>
                         <div class="d-flex row-last-item-2">
                             <div class="first font-weight-bold d-flex align-items-center">
-                                <div class="ml-1">
+                                <div class="ml-1 mr-1">
                                     Trưởng phòng DT
                                 </div>
                             </div>
@@ -1387,7 +1386,7 @@
                         </div>
                         <div class="d-flex row-last-item-2">
                             <div class="first font-weight-bold d-flex align-items-center">
-                                <div class="ml-1">
+                                <div class="ml-1 mr-1">
                                     Ban Tổng giám đốc
                                 </div>
                             </div>
@@ -1430,7 +1429,7 @@
         </form>
 
     </div>
-    <div class="sidebar" *ngIf="type !== 'create'">
+    <div class="sidebar-review" id="content-right" *ngIf="type !== 'create'">
         <app-comment-editor></app-comment-editor>
     </div>
 </div>

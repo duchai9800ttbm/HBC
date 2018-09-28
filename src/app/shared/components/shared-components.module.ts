@@ -25,6 +25,7 @@ import { ButtonModule } from '@progress/kendo-angular-buttons';
 import { ButtonGroupModule } from '@progress/kendo-angular-buttons';
 import { PDFExportModule } from '@progress/kendo-angular-pdf-export';
 import { ImageCarouselComponent } from './image-carousel/image-carousel.component';
+import { MissActionComponent } from './miss-action/miss-action.component';
 @NgModule({
     imports: [
         PDFExportModule,
@@ -56,6 +57,7 @@ import { ImageCarouselComponent } from './image-carousel/image-carousel.componen
         ResetPasswordComponent,
         PrintEmailComponent,
         ImageCarouselComponent,
+        MissActionComponent,
     ],
     exports: [
         // AlertComponent,
@@ -71,7 +73,8 @@ import { ImageCarouselComponent } from './image-carousel/image-carousel.componen
         PopupCreateChairComponent,
         ResetPasswordComponent,
         PrintEmailComponent,
-        ImageCarouselComponent
+        ImageCarouselComponent,
+        MissActionComponent
     ],
     entryComponents: [
         ConfirmationPopupComponent,
@@ -82,7 +85,8 @@ import { ImageCarouselComponent } from './image-carousel/image-carousel.componen
         PopupCreateAssignerComponent,
         PopupCreateChairComponent,
         ResetPasswordComponent,
-        PrintEmailComponent
+        PrintEmailComponent,
+        MissActionComponent
     ]
 })
 export class SharedComponentsModule { }

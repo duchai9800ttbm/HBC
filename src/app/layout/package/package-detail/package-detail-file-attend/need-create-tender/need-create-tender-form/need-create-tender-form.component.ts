@@ -31,6 +31,8 @@ export class NeedCreateTenderFormComponent implements OnInit, OnDestroy {
     isShowDialog = false;
     dateApproveBid = new Date();
     totalTime = '';
+    draftsOrOfficially = true;
+    isShowChanges = false;
     constructor(
         private packageService: PackageService,
         private alertService: AlertService,
@@ -52,9 +54,9 @@ export class NeedCreateTenderFormComponent implements OnInit, OnDestroy {
         this.dateApproveBid =
             this.dataModel &&
             this.dataModel.tenderDirectorProposal &&
-            this.dataModel.tenderDirectorProposal.expectedTime
+            this.dataModel.tenderDirectorProposal.expectedDate
                 ? DateTimeConvertHelper.fromTimestampToDtObject(
-                      this.dataModel.tenderDirectorProposal.expectedTime * 1000
+                      this.dataModel.tenderDirectorProposal.expectedDate * 1000
                   )
                 : new Date();
         this.bidOpportunityId = PackageDetailComponent.packageId;
@@ -118,9 +120,9 @@ export class NeedCreateTenderFormComponent implements OnInit, OnDestroy {
         NeedCreateTenderFormComponent.formModel.isDraftVersion = isDraf;
         NeedCreateTenderFormComponent.formModel.bidOpportunityId = this.bidOpportunityId;
         if (NeedCreateTenderFormComponent.formModel.createdEmployeeId) {
-            NeedCreateTenderFormComponent.formModel.updatedEmployeeId = this.sessionService.currentUser.userId;
+            NeedCreateTenderFormComponent.formModel.updatedEmployeeId = this.sessionService.currentUser.employeeId;
         } else {
-            NeedCreateTenderFormComponent.formModel.createdEmployeeId = this.sessionService.currentUser.userId;
+            NeedCreateTenderFormComponent.formModel.createdEmployeeId = this.sessionService.currentUser.employeeId;
         }
         this.spinner.show();
         this.packageService
@@ -218,7 +220,25 @@ export class NeedCreateTenderFormComponent implements OnInit, OnDestroy {
         // this.isNotAgreeParticipating = false;
     }
 
+    closeShowChanges() {
+        this.isShowChanges = false;
+    }
+
     ngOnDestroy() {
         this.scrollTopService.isScrollTop = true;
+    }
+
+    saveDrafts() {
+        this.isShowChanges = true;
+        this.draftsOrOfficially = true;
+    }
+
+    saveOfficially() {
+        this.isShowChanges = true;
+        this.draftsOrOfficially = false;
+    }
+
+    saveChangesLiveForm() {
+        this.onSubmit(this.draftsOrOfficially);
     }
 }

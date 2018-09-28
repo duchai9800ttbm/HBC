@@ -1,4 +1,4 @@
-import { Component, OnInit, TemplateRef, ViewChild, ElementRef } from '@angular/core';
+import { Component, OnInit, TemplateRef, ViewChild, ElementRef, ViewChildren } from '@angular/core';
 import { BsModalService } from 'ngx-bootstrap/modal';
 import { BsModalRef } from 'ngx-bootstrap/modal/bs-modal-ref.service';
 import { PackageDetailComponent } from '../../package-detail.component';
@@ -21,6 +21,7 @@ import { map } from 'rxjs/operators/map';
 import { PackageService } from '../../../../../shared/services/package.service';
 import { PackageInfoModel } from '../../../../../shared/models/package/package-info.model';
 import { BidStatus } from '../../../../../shared/constants/bid-status';
+import { TenderPreparationPlanningRequest } from '../../../../../shared/models/api-request/package/tender-preparation-planning-request';
 @Component({
   selector: 'app-information-deployment',
   templateUrl: './information-deployment.component.html',
@@ -81,7 +82,7 @@ export class InformationDeploymentComponent implements OnInit {
   emailModel: SendEmailModel = new SendEmailModel();
 
   ckeConfig: any;
-  @ViewChild('ckeditor') ckeditor: any;
+  @ViewChildren('ckeditor') ckeditor: any;
   @ViewChild('informationDeployment') informationDeployment;
   listEmailSearchTo;
   listEmailSearchToEmail;
@@ -95,6 +96,7 @@ export class InformationDeploymentComponent implements OnInit {
   bidOpportunityId;
   packageInfo: PackageInfoModel;
   bidStatus = BidStatus;
+  tenderPlan: TenderPreparationPlanningRequest;
   constructor(
     private modalService: BsModalService,
     private formBuilder: FormBuilder,
@@ -109,6 +111,7 @@ export class InformationDeploymentComponent implements OnInit {
   }
 
   ngOnInit() {
+
     this.bidOpportunityId = PackageDetailComponent.packageId;
     this.emailService.searchbymail('').subscribe(response => {
       this.listEmailSearchTo = response;
@@ -120,6 +123,7 @@ export class InformationDeploymentComponent implements OnInit {
       this.listEmailSearchBcc = response;
     });
     this.getPackageInfo();
+    this.getTenderPlanInfo();
     this.ckeConfig = {
       toolbar: [
         { name: 'basicstyles', items: ['Bold', 'Italic', 'Underline', 'Strike'] },
@@ -154,11 +158,25 @@ export class InformationDeploymentComponent implements OnInit {
 
   }
 
+  getTenderPlanInfo() {
+    this.spinner.show();
+    this.packageService.getTenderPreparationPlanning(this.bidOpportunityId).subscribe(data => {
+      this.tenderPlan = data;
+      this.spinner.hide();
+      setTimeout(() => {
+        this.dtTrigger.next();
+      });
+    }, err => {
+      this.spinner.hide();
+      this.alertService.error('Lấy thông tin bảng phân công tiến độ thất bại');
+    });
+  }
+
   getPackageInfo() {
     this.spinner.show();
     this.packageService
-    .getInforPackageID(this.bidOpportunityId)
-    .subscribe(data => {
+      .getInforPackageID(this.bidOpportunityId)
+      .subscribe(data => {
         this.packageInfo = data;
         this.spinner.hide();
         const isTrienKhai = this.packageInfo.stageStatus.id === this.bidStatus.DaThongBaoTrienKhai;
@@ -166,7 +184,7 @@ export class InformationDeploymentComponent implements OnInit {
         this.toggleTextUpFile = isTrienKhai ? 'Hiện chưa có bảng phân công tiến độ nào' : 'Bạn cần phải thông báo triển khai trước khi phân công tiến độ';
         this.textInformation = isTrienKhai ? 'Đã thông báo triển khai' : 'Chưa thông báo triển khai';
         console.log(data);
-    });
+      });
   }
 
   openModalDeployment(template: TemplateRef<any>) {
@@ -182,9 +200,7 @@ export class InformationDeploymentComponent implements OnInit {
   openModeSendAssignment(template: TemplateRef<any>) {
     this.modelSendAssignment = this.modalService.show(template);
   }
-  openModelViewListData(template: TemplateRef<any>) {
-    this.modalViewListData = this.modalService.show(template);
-  }
+
   SendInformation() {
     if (this.emailModel && this.emailModel.to) {
       this.emailModel.bidOpportunityId = this.packageId;
@@ -196,6 +212,7 @@ export class InformationDeploymentComponent implements OnInit {
         this.alertService.success('Gửi thông báo triển khai thành công!');
         this.modalRef.hide();
         this.spinner.hide();
+        this.getPackageInfo();
       },
         err => {
           if (err.json().errorCode === 'BusinessException') {
@@ -305,6 +322,78 @@ export class InformationDeploymentComponent implements OnInit {
   deleteFileUpload(index: number) {
     this.file.splice(index, 1);
   }
+
+  changeAction(data: string) {
+    this.packageService.setRouterAction(data);
+  }
+
+  deleteTenderPlan() {
+    this.confirmationService.confirm('Bạn có chắc chắn muốn xóa bảng phân công tiến độ này?', () => {
+      this.spinner.show();
+      this.packageService.deleteTenderPreparationPlanning(this.bidOpportunityId).subscribe(data => {
+        this.alertService.success('Xóa bảng phân công tiến độ thành công!');
+        this.spinner.hide();
+        // this.proposedTender = null;
+        // this.getProposedTenderParticipateReportInfo();
+        this.tenderPlan = null;
+        this.getPackageInfo();
+      }, err => {
+        this.alertService.error('Xóa bảng phân công tiến độ thất bại!');
+        this.spinner.hide();
+      });
+    });
+  }
+
+  confirmTenderPlan() {
+    this.tenderPlan.isDraftVersion = false;
+    this.packageService.createOrUpdateTenderPreparationPlanning(this.tenderPlan).subscribe(success => {
+      this.spinner.hide();
+      this.alertService.success('Xác nhận phân công tiến độ thành công!');
+    }, err => {
+      this.spinner.hide();
+      this.alertService.error('Xác nhận phân công tiến độ thất bại!');
+    });
+  }
+
+  sendTenderPlan() {
+    this.spinner.show();
+    this.packageService.sendTenderPreparationPlanning(this.bidOpportunityId).subscribe(success => {
+      this.spinner.hide();
+      this.alertService.success('Gửi phân công tiến độ thành công!');
+    }, err => {
+      this.spinner.hide();
+      this.alertService.error('Gửi phân công tiến độ thất bại!');
+    });
+  }
+
+  // sendTenderPlan() {
+  //   this.spinner.show();
+  //   this.packageService.sendTenderPreparationPlanning(this.bidOpportunityId).subscribe(success => {
+  //     this.spinner.hide();
+  //     this.alertService.success('Gửi phân công tiến độ thành công!');
+  //   }, err => {
+  //     this.spinner.hide();
+  //     this.alertService.error('Gửi phân công tiến độ thất bại!');
+  //   });
+  // }
+  // onChange(e) {
+    // console.log('data', this.emailModel.content);
+    // const urlRegex = 'https://www.24h.com.vn/';
+    // console.log('replace', `<a href="${urlRegex}">${urlRegex}</a>`);
+    // this.emailModel.content = this.emailModel.content.replace(urlRegex, `<a href="${urlRegex}">${urlRegex}</a>`);
+    // this.emailModel.content = `<a href="https://www.24h.com.vn/">https://www.24h.com.vn/</a>`;
+
+    // this.ckeditor.model.change(writer => {
+    //   const insertPosition = this.ckeditor.model.document.selection.getFirstPosition();
+    //   writer.insertText('CKEditor 5 rocks!', { linkHref: 'https://ckeditor.com/' }, insertPosition);
+    // });
+    // this.emailModel.content = '123';
+    // console.log('ckeditor', this.informationDeployment, this.ckeditor);
+    // this.ckeditor.instance.setData('');
+    // console.log('this.emailModel.content', this.emailModel.content);
+    // .elementRef.nativeElement.nextElementSibling
+  //   this.emailModel.content = '<p>123</p>';
+  // }
 }
 
 const listUsers = [

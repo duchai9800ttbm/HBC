@@ -76,3 +76,20 @@ input.icon {
         border-bottom: none!important;
     }
 }
+
+.xuong-dong{
+    white-space: pre-line!important;
+}
+.xuong-dong-2{
+    white-space: pre-wrap;
+    overflow-wrap: break-word;
+}
+.min-width-action{
+    min-width: 100px;
+}
+.max-width-action{
+    max-width: 150px;
+}
+.max-width-name-document{
+    width: 250px;
+}

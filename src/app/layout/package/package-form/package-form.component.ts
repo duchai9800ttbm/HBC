@@ -65,7 +65,8 @@ export class PackageFormComponent implements OnInit {
     contactsSearchResults: DictionaryItem[];
     assignSearchResults: DictionaryItem[];
     userListItem: UserItemModel[];
-
+    public min: Date = new Date(1917, 0, 1);
+    public max: Date = new Date(2000, 11, 31);
     constructor(
         private fb: FormBuilder,
         private alertService: AlertService,
@@ -155,6 +156,13 @@ export class PackageFormComponent implements OnInit {
     onFormValueChanged(data?: any) {
         if (this.isSubmitted) {
             this.validateForm();
+        }
+    }
+
+    calculatedTotalTime() {
+         if (this.packageForm.get('projectEstimatedEndDate').value && this.packageForm.get('projectEstimatedStartDate').value) {
+            this.packageForm.get('totalTime').patchValue( ( (this.packageForm.get('projectEstimatedEndDate').value
+            - this.packageForm.get('projectEstimatedStartDate').value )  / (24 * 3600 * 1000) ).toString() + ' ngày' );
         }
     }
 

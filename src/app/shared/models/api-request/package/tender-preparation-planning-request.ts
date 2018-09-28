@@ -1,13 +1,12 @@
-import { TenderControlBidInfo } from '../../package/tender-control-bid-info';
-import { TenderSurveyConstruction } from '../../package/tender-survey-construction';
-import { TenderPreparationPlanEstimate } from '../../package/tender-preparation-plan-estimate';
-import { TenderTechniqueBptc } from '../../package/tender-technique-bptc';
-import { TenderLegalRecord } from '../../package/tender-legal-record';
-import { TenderPreparationPlanCondition } from '../../package/tender-preparation-plan-condition';
+import { TenderPreparationPlanItem } from '../../package/tender-preparation-plan-item';
+import { EmployeeModel } from '../../employee/employee-model';
 
 export class TenderPreparationPlanningRequest {
+    id: number;
     bidOpportunityId: number;
     createdEmployeeId: number;
+    createdEmployee: EmployeeModel;
+    updatedEmployee: EmployeeModel;
     updatedEmployeeId: number;
     projectDirectorEmployeeId: number;
     tenderDepartmentEmployeeId: number;
@@ -17,11 +16,6 @@ export class TenderPreparationPlanningRequest {
     finishDate: number;
     deadline: number;
     duration: number;
-    isDraftVersion: boolean;
-    controlBidInformation: TenderControlBidInfo;
-    surveyConstruction: TenderSurveyConstruction;
-    estimate: TenderPreparationPlanEstimate;
-    techniqueAndBPTC: TenderTechniqueBptc;
-    legalRecord: TenderLegalRecord;
-    contractCondition: TenderPreparationPlanCondition;
+    isDraftVersion = true;
+    tasks: TenderPreparationPlanItem[];
 }

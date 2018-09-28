@@ -12,11 +12,10 @@
             </li>
             <!-- (statusPackageID > 0) || statusPackageName === 'ThamGiaDuThau' ? ['./infomation-deployment'] : [] -->
             <li class="triangle" [routerLink]="(statusPackageID > 0) || statusPackageName === 'ThamGiaDuThau' ? ['./infomation-deployment'] : []"
-                [class.noActive]="( (currentUrl !== 'infomation-deployment') && statusPackageID > 0) ||  ( currentUrl === 'create-request' && statusPackageName === 'ThamGiaDuThau' )
-                || ( currentUrl === 'create-request' && statusPackageName === bidStatus.TuChoiDuThau )"
+                [class.noActive]="( (currentUrl !== 'infomation-deployment') && statusPackageID > 0) ||  ( currentUrl === 'create-request' && statusPackageName === 'ThamGiaDuThau' )"
                 [class.active]="currentUrl === 'infomation-deployment'"
-                [class.allow]="(statusPackageID > 0) || statusPackageName === 'ThamGiaDuThau' || statusPackageName === bidStatus.TuChoiDuThau"
-                [class.no-allow]="(statusPackageID < 1) && statusPackageName !== 'ThamGiaDuThau' && statusPackageName !== bidStatus.TuChoiDuThau">
+                [class.allow]="(statusPackageID > 0) || statusPackageName === 'ThamGiaDuThau'"
+                [class.no-allow]="(statusPackageID < 1) && statusPackageName !== 'ThamGiaDuThau'">
                 <div style="width: 100%" class="center-parent">
                     <div class="arrow-down"></div>
                 </div>

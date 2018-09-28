@@ -5,6 +5,8 @@ import DateTimeConvertHelper from '../../../../../../../shared/helpers/datetime-
 import { PackageService } from '../../../../../../../shared/services/package.service';
 import { SessionService, AlertService } from '../../../../../../../shared/services';
 import { NgxSpinnerService } from 'ngx-spinner';
+import { PackageDetailComponent } from '../../../../package-detail.component';
+import { Router } from '../../../../../../../../../node_modules/@angular/router';
 
 @Component({
     selector: 'app-need-create-tender-form-director-proposal',
@@ -20,9 +22,12 @@ export class NeedCreateTenderFormDirectorProposalComponent implements OnInit {
         private sessionService: SessionService,
         private spinner: NgxSpinnerService,
         private alertService: AlertService,
-    ) {}
+        private router: Router
+    ) { }
 
     ngOnInit() {
+        console.log('NeedCreateTenderFormComponent.formModel.tenderDirectorProposal',
+            NeedCreateTenderFormComponent.formModel.tenderDirectorProposal);
         this.routerAction = this.packageService.routerAction;
         this.packageService.routerAction$.subscribe(
             router => (this.routerAction = router)
@@ -38,18 +43,19 @@ export class NeedCreateTenderFormDirectorProposalComponent implements OnInit {
         const formData =
             NeedCreateTenderFormComponent.formModel.tenderDirectorProposal;
         this.directorProposalForm = this.fb.group({
-            isAgreedParticipating:
-                NeedCreateTenderFormComponent.formModel.isAgreedParticipating,
+            // isAgreedParticipating:
+            //     NeedCreateTenderFormComponent.formModel.isAgreedParticipating,
+            isAgreed: formData ? formData.isAgreed : true,
             reason: formData ? formData.reason : '',
             date: formData
                 ? DateTimeConvertHelper.fromTimestampToDtObject(
-                      formData.date * 1000
-                  )
+                    formData.date * 1000
+                )
                 : new Date(),
-            expectedTime: formData
+            expectedDate: formData
                 ? DateTimeConvertHelper.fromTimestampToDtObject(
-                      formData.expectedTime * 1000
-                  )
+                    formData.expectedDate * 1000
+                )
                 : new Date(),
             isSigned: formData ? formData.isSigned : false
         });
@@ -59,20 +65,20 @@ export class NeedCreateTenderFormDirectorProposalComponent implements OnInit {
         this.directorProposalForm.get('isSigned').patchValue(true);
         // khi view có thể ký
         if (this.routerAction === 'view') {
-          this.onSubmit();
+            this.onSubmit();
         }
     }
 
     mappingToLiveFormData(data) {
         NeedCreateTenderFormComponent.formModel.tenderDirectorProposal = data;
-        NeedCreateTenderFormComponent.formModel.isAgreedParticipating =
-            data.isAgreedParticipating;
+        // NeedCreateTenderFormComponent.formModel.isAgreedParticipating =
+        //     data.isAgreedParticipating;
         // tslint:disable-next-line:max-line-length
         NeedCreateTenderFormComponent.formModel.tenderDirectorProposal.date = DateTimeConvertHelper.fromDtObjectToSecon(
             data.date
         );
-        NeedCreateTenderFormComponent.formModel.tenderDirectorProposal.expectedTime = DateTimeConvertHelper.fromDtObjectToSecon(
-            data.expectedTime
+        NeedCreateTenderFormComponent.formModel.tenderDirectorProposal.expectedDate = DateTimeConvertHelper.fromDtObjectToSecon(
+            data.expectedDate
         );
     }
 
@@ -80,9 +86,9 @@ export class NeedCreateTenderFormDirectorProposalComponent implements OnInit {
         // NeedCreateTenderFormComponent.formModel.isDraftVersion = isDraf;
         // NeedCreateTenderFormComponent.formModel.bidOpportunityId = this.bidOpportunityId;
         if (NeedCreateTenderFormComponent.formModel.createdEmployeeId) {
-            NeedCreateTenderFormComponent.formModel.updatedEmployeeId = this.sessionService.currentUser.userId;
+            NeedCreateTenderFormComponent.formModel.updatedEmployeeId = this.sessionService.currentUser.employeeId;
         } else {
-            NeedCreateTenderFormComponent.formModel.createdEmployeeId = this.sessionService.currentUser.userId;
+            NeedCreateTenderFormComponent.formModel.createdEmployeeId = this.sessionService.currentUser.employeeId;
         }
         this.spinner.show();
         this.packageService
@@ -115,5 +121,11 @@ export class NeedCreateTenderFormDirectorProposalComponent implements OnInit {
                     this.spinner.hide();
                 }
             );
+    }
+
+    routerLink(event) {
+        if (event.key === 'Enter') {
+            this.router.navigate([`/package/detail/${+PackageDetailComponent.packageId}/attend/create-request/form/create/descion-board`]);
+        }
     }
 }

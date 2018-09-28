@@ -313,15 +313,53 @@
     "HSMT": "Hồ sơ mời thầu",
 
 
+    "projectInformation":"Thông tin về dự án - gói thầu",
 
-    "foudationPart":"Phần móng",
-    "basementPart":"Phần hầm",
-    "basementPartConstructionStructure":"Thi công kết cấu",
-    "basementPartConstructionCompletion":"Thi công hoàn thiện",
-    "basementPartOtherWork":"Phần công việc khác",
-    "bodyPart":"Phần thân",
-    "bodyPartConstructionStructure":"Thi công kết cấu",
-    "bodyPartConstructionCompletion":"Thi công hoàn thiện",
-    "bodyPartOtherWork":"Phần công việc khác"
+    "FoudationPart":"Phần móng",
+    "BasementPart":"Phần hầm",
+    "BasementPartConstructionStructure":"Thi công kết cấu",
+    "BasementPartConstructionCompletion":"Thi công hoàn thiện",
+    "BasementPartOtherWork":"Phần công việc khác",
+    "BodyPart":"Phần thân",
+    "BodyPartConstructionStructure":"Thi công kết cấu",
+    "BodyPartConstructionCompletion":"Thi công hoàn thiện",
+    "BodyPartOtherWork":"Phần công việc khác",
+
+    "Technique":"Kỹ thuật",
+
+    "ConstructionProgress":"Tiến độ thi công",
+    "SpecialFeatureOfConstructionMethod":"Điểm đặc biệt của biện pháp thi công",
+    "SafetyRequirement":"Yêu cầu an toàn theo y.c HSMT hay thông tin tìm hiểu được",
+    "OtherSpecialRequirement":"Yêu cầu đặc biệt khác của dự án",
+
+    "ContractCondition":"Điều kiện hợp đồng",
+
+    "AdvanceMoney":"Tạm ứng",
+    "PaymentTime":"Thời gian thanh toán",
+    "RetainedMoney":"Tiền giữ lại cho mỗi đợt thanh toán",
+    "PunishDelay":"Phạt tiến độ bị chậm",
+    "ConstructionWarrantyTime":"Thời gian bảo hành ct",
+    "Disadvantage":"Điều kiện đặc biệt bất lợi cho HĐ",
+
+    "TentativeTenderPrice":"Giá dự thầu dự kiến nộp",
+
+    "CostOfCapital":"Giá vốn (chưa có hệ số)",
+    "CostOfCapitalGeneralCost":"Chi phí chung",
+    "CostOfCapitalValue":"Giá trị Hòa Bình làm trực tiếp",
+    "CostOfCapitalPCPSValue":"Giá trị PC/PS",
+    "TotalCostOfCapital":"Total giá vốn",
+    "TotalCostOfCapitalProfitCost":"Chi phí lợi nhuận (O&P)",
+    "TotalCostOfSubmission":"Total giá đi nộp thầu",
+    "OAndPPercentOfTotalCost":"Tỷ lệ %(O&P) trên giá tổng dự thầu",
+
+    "ApprovalDate":"Ngày trình duyệt",
+    "IsDraftVersion": "Bản nháp",
+    "ApprovalTimes": "Lần duyệt",
+    "IsApprovedByTenderLeader": "Trưởng nhóm dự thầu",
+    "IsApprovedByTenderManager": "Trưởng phòng dự thầu",
+    "IsApprovedByBoardOfDirector": "Ban tổng giám đốc"
+
+
+
 
 }
