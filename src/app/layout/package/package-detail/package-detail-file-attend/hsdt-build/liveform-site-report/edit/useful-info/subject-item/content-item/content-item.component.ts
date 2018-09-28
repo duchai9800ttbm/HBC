@@ -7,6 +7,8 @@ import { userInfo } from 'os';
 import { LiveformSiteReportComponent } from '../../../../liveform-site-report.component';
 import { Router } from '@angular/router';
 import { PackageDetailComponent } from '../../../../../../../package-detail.component';
+import { AlertService } from '../../../../../../../../../../shared/services';
+import { SiteSurveyReportService } from '../../../../../../../../../../shared/services/site-survey-report.service';
 
 @Component({
   selector: 'app-content-item',
@@ -20,10 +22,14 @@ export class ContentItemComponent implements OnInit {
   contentItemForm: FormGroup;
   contentItemImageList = [];
   deleteImageList = [];
+  imageUrlArray = [];
+  showPopupViewImage = false;
   currentBidOpportunityId: number;
   viewMode;
 
   constructor(
+    private siteSurveyReportService: SiteSurveyReportService,
+    private alertService: AlertService,
     private fb: FormBuilder,
     private router: Router,
   ) { }
@@ -32,11 +38,10 @@ export class ContentItemComponent implements OnInit {
     this.currentBidOpportunityId = +PackageDetailComponent.packageId;
     this.checkFlag();
     this.createForm();
-    console.log(this.contentItemImageList);
     this.contentItemForm.valueChanges.subscribe(data => this.mappingData(data));
   }
   checkFlag() {
-    if (LiveformSiteReportComponent.formModel.id) {
+    if ((LiveformSiteReportComponent.formModel.isCreateOrEdit)) {
       const flag = LiveformSiteReportComponent.viewFlag;
       this.viewMode = flag;
       if (flag) {
@@ -54,44 +59,57 @@ export class ContentItemComponent implements OnInit {
     this.contentItemForm = this.fb.group({
       tenNoidung: [this.contentItemModel.name],
       chiTietNoiDung: [this.contentItemModel.detail],
-      chiTietNoiDungList: [this.contentItemModel.images]
+      chiTietNoiDungList: [this.contentItemModel.imageUrls]
     });
-    this.contentItemImageList = this.contentItemModel.images;
+    this.contentItemImageList = this.contentItemModel.imageUrls;
   }
 
   mappingData(data) {
     const obj = new ContentItem();
     obj.name = data.tenNoidung;
     obj.detail = data.chiTietNoiDung;
-    obj.images = this.contentItemImageList;
+    obj.imageUrls = this.contentItemImageList;
     this.valueChange.emit(obj);
+    console.log(obj);
   }
   uploadContentImage(event) {
     const files = event.target.files;
-    if (files) {
-      for (const file of files) {
-        const reader = new FileReader();
-        reader.onload = (e: any) => {
-          this.contentItemImageList.push({
-            id: null,
-            image: {
-              file: file,
-              base64: e.target.result
-            }
-          });
-          this.contentItemForm.get('chiTietNoiDungList').patchValue(this.contentItemImageList);
-        };
-        reader.readAsDataURL(file);
-      }
-    }
+    this.siteSurveyReportService
+      .uploadImageSiteSurveyingReport(files, this.currentBidOpportunityId)
+      .subscribe(res => {
+        this.contentItemImageList = [...this.contentItemImageList, ...res];
+        this.contentItemForm.get('chiTietNoiDungList').patchValue(this.contentItemImageList);
+      }, err => {
+        this.alertService.error('Upload hình ảnh thất bại. Xin vui lòng thử lại!');
+        this.contentItemImageList.forEach(x => {
+          if (!x.id) {
+            const index = this.contentItemImageList.indexOf(x);
+            this.contentItemImageList.splice(index, 1);
+          }
+        });
+      });
   }
   deleteContentImage(i) {
     const index = this.contentItemImageList.indexOf(i);
+    if (i.id) {
+      this.siteSurveyReportService.deleteImageSiteSurveyingReport(i.id).subscribe(res => {
+
+      }, err => {
+        this.alertService.error('Đã xảy ra lỗi, hình ảnh xóa không thành công');
+      });
+    }
     this.contentItemImageList.splice(index, 1);
-    // if () { }
     this.contentItemForm.get('chiTietNoiDungList').patchValue(this.contentItemImageList);
   }
   deleteContentItem() {
     this.deleteContent.emit(true);
+  }
+
+  viewFullScreenImage(listImage) {
+    this.showPopupViewImage = true;
+    this.imageUrlArray = [...listImage];
+  }
+  closeView() {
+    this.showPopupViewImage = false;
   }
 }

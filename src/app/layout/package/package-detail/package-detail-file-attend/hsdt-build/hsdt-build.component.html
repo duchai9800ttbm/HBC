@@ -66,7 +66,7 @@
                 </div>
             </div>
         </div>
-        <div id="main-content">
+        <div id="main-content" class="d-flex flex-row w-100">
             <div id="toggle-menu" *ngIf="!isShowMenu">
 
                 <div class="d-flex">
@@ -121,7 +121,7 @@
                     </div>
                 </div>
             </div>
-            <div class="w-100">
+            <div class="grow-in-line">
                 <router-outlet (activate)="onActivate($event)"></router-outlet>
             </div>
         </div>

@@ -10,9 +10,9 @@
                     </div>
                     <div>
                         <div class="image-demo-img">
-                            <input type="file" multiple #uploadDemobilisation (change)="uploadDemobilisationImage($event)">
-                            <div class="display-img" *ngFor="let url of demobilisationImageUrls">
-                                <img [src]="(url.image?.base64) || url.image.file">
+                            <input type="file" accept="image/*" multiple #uploadDemobilisation (change)="uploadDemobilisationImage($event)">
+                            <div class="display-img" *ngFor="let url of demobilisationImageUrls" (click)="viewFullScreenImage(demobilisationImageUrls)">
+                                <img [src]="url.largeSizeUrl">
                                 <div class="toppp"  [ngClass]="{'d-none': viewMode}" (click)="deleteDemobilisationImage(url)">
                                     <i class="fa fa-times delete-icon" aria-hidden="true"></i>
                                 </div>
@@ -33,10 +33,10 @@
                     </div>
                     <div>
                         <div class="image-demo-img">
-                            <input type="file" multiple #uploadConsolidation (change)="uploadConsolidationImage($event)">
+                            <input type="file" accept="image/*" multiple #uploadConsolidation (change)="uploadConsolidationImage($event)">
 
-                            <div class="display-img" *ngFor="let url of consolidationImageUrls">
-                                <img [src]="(url.image?.base64) || url.image.file">
+                            <div class="display-img" *ngFor="let url of consolidationImageUrls" (click)="viewFullScreenImage(consolidationImageUrls)">
+                                <img [src]="url.largeSizeUrl">
                                 <div class="toppp"  [ngClass]="{'d-none': viewMode}" (click)="deleteConsolidationImage(url)">
                                     <i class="fa fa-times delete-icon" aria-hidden="true"></i>
                                 </div>
@@ -60,8 +60,8 @@
                         <div class="image-demo-img">
                             <input type="file" #uploaAdjacent (change)="uploaAdjacentImage($event)">
 
-                            <div class="display-img" *ngFor="let url of adjacentImageUrls">
-                                <img [src]="(url.image?.base64) || url.image.file">
+                            <div class="display-img" *ngFor="let url of adjacentImageUrls" (click)="viewFullScreenImage(adjacentImageUrls)">
+                                <img [src]="url.largeSizeUrl">
                                 <div class="toppp"  [ngClass]="{'d-none': viewMode}" (click)="deleteAdjacentImage(url)">
                                     <i class="fa fa-times delete-icon" aria-hidden="true"></i>
                                 </div>
@@ -77,3 +77,5 @@
         </div>
     </div>
 </form>
+
+<app-image-carousel class="d-flex justify-content-center align-items-center" *ngIf="showPopupViewImage" [(imageUrlArray)]="imageUrlArray" (closed)="closeView()"></app-image-carousel>

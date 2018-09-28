@@ -5,6 +5,8 @@ import { EditComponent } from '../edit.component';
 import { LiveformSiteReportComponent } from '../../liveform-site-report.component';
 import { PackageDetailComponent } from '../../../../../package-detail.component';
 import { Router } from '@angular/router';
+import { AlertService } from '../../../../../../../../shared/services';
+import { SiteSurveyReportService } from '../../../../../../../../shared/services/site-survey-report.service';
 
 @Component({
   selector: 'app-soil-condition',
@@ -18,9 +20,13 @@ export class SoilConditionComponent implements OnInit {
   investigationImageUrls = [];
   url;
   viewMode;
+  imageUrlArray = [];
+  showPopupViewImage = false;
   currentBidOpportunityId: number;
   soilConditionModel = new SoilCondition();
   constructor(
+    private siteSurveyReportService: SiteSurveyReportService,
+    private alertService: AlertService,
     private router: Router,
     private fb: FormBuilder
   ) { }
@@ -39,7 +45,7 @@ export class SoilConditionComponent implements OnInit {
     this.soilConditionForm.valueChanges.subscribe(data => this.mappingToLiveFormData(data));
   }
   checkFlag() {
-    if (LiveformSiteReportComponent.formModel.id) {
+    if ((LiveformSiteReportComponent.formModel.isCreateOrEdit)) {
       const flag = LiveformSiteReportComponent.viewFlag;
       this.viewMode = flag;
       if (flag) {
@@ -84,51 +90,66 @@ export class SoilConditionComponent implements OnInit {
 
   uploadFootingImage(event) {
     const files = event.target.files;
-    if (files) {
-      for (const file of files) {
-        const reader = new FileReader();
-        reader.onload = (e: any) => {
-          this.footingImageUrls.push({
-            id: null,
-            image: {
-              file: file,
-              base64: e.target.result
-            }
-          });
-          this.soilConditionForm.get('nenMongHienCoList').patchValue(this.footingImageUrls);
-        };
-        reader.readAsDataURL(file);
-      }
-    }
+    this.siteSurveyReportService
+      .uploadImageSiteSurveyingReport(files, this.currentBidOpportunityId)
+      .subscribe(res => {
+        this.footingImageUrls = [...this.footingImageUrls, ...res];
+      }, err => {
+        this.alertService.error('Upload hình ảnh thất bại. Xin vui lòng thử lại!');
+        this.footingImageUrls.forEach(x => {
+          if (!x.id) {
+            const index = this.footingImageUrls.indexOf(x);
+            this.footingImageUrls.splice(index, 1);
+          }
+        });
+      });
   }
   deleteFootingImage(i) {
     const index = this.footingImageUrls.indexOf(i);
+    if (i.id) {
+      this.siteSurveyReportService.deleteImageSiteSurveyingReport(i.id).subscribe(res => {
+
+      }, err => {
+        this.alertService.error('Đã xảy ra lỗi, hình ảnh xóa không thành công');
+      });
+    }
     this.footingImageUrls.splice(index, 1);
     this.soilConditionForm.get('nenMongHienCoList').patchValue(this.footingImageUrls);
   }
 
   uploadInvestigationImage(event) {
     const files = event.target.files;
-    if (files) {
-      for (const file of files) {
-        const reader = new FileReader();
-        reader.onload = (e: any) => {
-          this.investigationImageUrls.push({
-            id: null,
-            image: {
-              file: file,
-              base64: e.target.result
-            }
-          });
-          this.soilConditionForm.get('thongTinCongTrinhGanDoList').patchValue(this.investigationImageUrls);
-        };
-        reader.readAsDataURL(file);
-      }
-    }
+    this.siteSurveyReportService
+      .uploadImageSiteSurveyingReport(files, this.currentBidOpportunityId)
+      .subscribe(res => {
+        this.investigationImageUrls = [...this.investigationImageUrls, ...res];
+      }, err => {
+        this.alertService.error('Upload hình ảnh thất bại. Xin vui lòng thử lại!');
+        this.investigationImageUrls.forEach(x => {
+          if (!x.id) {
+            const index = this.investigationImageUrls.indexOf(x);
+            this.investigationImageUrls.splice(index, 1);
+          }
+        });
+      });
   }
   deleteInvestigationImage(i) {
     const index = this.investigationImageUrls.indexOf(i);
+    if (i.id) {
+      this.siteSurveyReportService.deleteImageSiteSurveyingReport(i.id).subscribe(res => {
+
+      }, err => {
+        this.alertService.error('Đã xảy ra lỗi, hình ảnh xóa không thành công');
+      });
+    }
     this.investigationImageUrls.splice(index, 1);
     this.soilConditionForm.get('thongTinCongTrinhGanDoList').patchValue(this.investigationImageUrls);
+  }
+  viewFullScreenImage(listImage) {
+    this.showPopupViewImage = true;
+    this.imageUrlArray = [...listImage];
+  }
+  closeView() {
+    this.showPopupViewImage = false;
   }
 }

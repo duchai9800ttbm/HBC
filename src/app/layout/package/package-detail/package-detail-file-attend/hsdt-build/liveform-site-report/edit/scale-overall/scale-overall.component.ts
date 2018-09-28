@@ -1,6 +1,7 @@
 import {
   Component,
-  OnInit
+  OnInit,
+  TemplateRef
 } from '@angular/core';
 import {
   ScaleOverall
@@ -23,7 +24,9 @@ import {
 } from '../../../../../../../../shared/models/site-survey-report/image';
 import { LiveformSiteReportComponent } from '../../liveform-site-report.component';
 import { PackageDetailComponent } from '../../../../../package-detail.component';
-
+import { AlertService } from '../../../../../../../../shared/services';
+import { SiteSurveyReportService } from '../../../../../../../../shared/services/site-survey-report.service';
+import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 @Component({
   selector: 'app-scale-overall',
   templateUrl: './scale-overall.component.html',
@@ -46,6 +49,9 @@ export class ScaleOverallComponent implements OnInit {
   requirementsImageUrls = [];
   url;
   viewMode;
+  modalRef: BsModalRef;
+  imageUrlArray = [];
+  showPopupViewImage = false;
   currentBidOpportunityId: number;
   scaleModel = new ScaleOverall();
 
@@ -57,6 +63,9 @@ export class ScaleOverallComponent implements OnInit {
     return this.trangThaiCongTrinhForm.get('trangthaiCongTrinhList') as FormArray;
   }
   constructor(
+    private modalService: BsModalService,
+    private siteSurveyReportService: SiteSurveyReportService,
+    private alertService: AlertService,
     private router: Router,
     private fb: FormBuilder
 
@@ -95,9 +104,8 @@ export class ScaleOverallComponent implements OnInit {
   }
 
   checkFlag() {
-    if (LiveformSiteReportComponent.formModel.id) {
+    if (LiveformSiteReportComponent.formModel.isCreateOrEdit) {
       const flag = LiveformSiteReportComponent.viewFlag;
-      this.viewMode = flag;
       if (flag) {
         const inputs = document.getElementsByTagName('input');
         for (let i = 0; i < inputs.length; i++) {
@@ -198,79 +206,84 @@ export class ScaleOverallComponent implements OnInit {
 
   uploadPerspectiveImage(event) {
     const files = event.target.files;
-    if (files) {
-      for (const file of files) {
-        const reader = new FileReader();
-        reader.onload = (e: any) => {
-          this.perspectiveImageUrls.push({
-            id: null,
-            image: {
-              file: file,
-              base64: e.target.result
-            }
-          });
-          this.scaleOverallForm.get('hinhAnhPhoiCanhList').patchValue(this.perspectiveImageUrls);
-        };
-        reader.readAsDataURL(file);
-      }
-    }
+    this.siteSurveyReportService
+      .uploadImageSiteSurveyingReport(files, this.currentBidOpportunityId)
+      .subscribe(res => {
+        this.perspectiveImageUrls = [...this.perspectiveImageUrls, ...res];
+        this.scaleOverallForm.get('hinhAnhPhoiCanhList').patchValue(this.perspectiveImageUrls);
+      }, err => {
+        this.alertService.error('Upload hình ảnh thất bại. Xin vui lòng thử lại!');
+        this.perspectiveImageUrls.forEach(x => {
+          if (!x.id) {
+            const index = this.perspectiveImageUrls.indexOf(x);
+            this.perspectiveImageUrls.splice(index, 1);
+          }
+        });
+      });
   }
 
   deletePerspectiveImage(i) {
     const index = this.perspectiveImageUrls.indexOf(i);
+    this.siteSurveyReportService.deleteImageSiteSurveyingReport(i.id).subscribe(res => {
+    }, err => {
+      this.alertService.error('Đã xảy ra lỗi, hình ảnh xóa không thành công');
+    });
     this.perspectiveImageUrls.splice(index, 1);
-    console.log(this.perspectiveImageUrls);
     this.scaleOverallForm.get('hinhAnhPhoiCanhList').patchValue(this.perspectiveImageUrls);
-
-    console.log(this.perspectiveImageUrls);
-    console.log(i);
   }
+
   uploadStructureImage(event) {
     const files = event.target.files;
-    if (files) {
-      for (const file of files) {
-        const reader = new FileReader();
-        reader.onload = (e: any) => {
-          this.structureImageUrls.push({
-            id: null,
-            image: {
-              file: file,
-              base64: e.target.result
-            }
-          });
-          this.scaleOverallForm.get('thongTinVeKetCauList').patchValue(this.structureImageUrls);
-        };
-        reader.readAsDataURL(file);
-      }
-    }
+    this.siteSurveyReportService
+      .uploadImageSiteSurveyingReport(files, this.currentBidOpportunityId)
+      .subscribe(res => {
+        this.structureImageUrls = [...this.structureImageUrls, ...res];
+        this.scaleOverallForm.get('thongTinVeKetCauList').patchValue(this.structureImageUrls);
+      }, err => {
+        this.alertService.error('Upload hình ảnh thất bại. Xin vui lòng thử lại!');
+        this.structureImageUrls.forEach(x => {
+          if (!x.id) {
+            const index = this.structureImageUrls.indexOf(x);
+            this.structureImageUrls.splice(index, 1);
+          }
+        });
+      });
   }
   deleteStructureImage(i) {
     const index = this.structureImageUrls.indexOf(i);
+    this.siteSurveyReportService.deleteImageSiteSurveyingReport(i.id).subscribe(res => {
+    }, err => {
+      this.alertService.error('Đã xảy ra lỗi, hình ảnh xóa không thành công');
+    });
     this.structureImageUrls.splice(index, 1);
     this.scaleOverallForm.get('thongTinVeKetCauList').patchValue(this.structureImageUrls);
   }
   uploadRequirementsImage(event) {
     const files = event.target.files;
-    if (files) {
-      for (const file of files) {
-        const reader = new FileReader();
-        reader.onload = (e: any) => {
-          this.requirementsImageUrls.push({
-            id: null,
-            image: {
-              file: file,
-              base64: e.target.result
-            }
-          });
-          this.scaleOverallForm.get('nhungYeuCauDacBietList').patchValue(this.requirementsImageUrls);
-        };
-        reader.readAsDataURL(file);
-      }
-
-    }
+    this.siteSurveyReportService
+      .uploadImageSiteSurveyingReport(files, this.currentBidOpportunityId)
+      .subscribe(res => {
+        this.requirementsImageUrls = [...this.requirementsImageUrls, ...res];
+        this.scaleOverallForm.get('nhungYeuCauDacBietList').patchValue(this.requirementsImageUrls);
+      }, err => {
+        this.alertService.error('Upload hình ảnh thất bại. Xin vui lòng thử lại!');
+        this.requirementsImageUrls.forEach(x => {
+          if (!x.id) {
+            const index = this.requirementsImageUrls.indexOf(x);
+            this.requirementsImageUrls.splice(index, 1);
+          }
+        });
+      });
   }
   deleteRequirementsImage(i) {
     const index = this.requirementsImageUrls.indexOf(i);
+    if (i.id) {
+      this.siteSurveyReportService.deleteImageSiteSurveyingReport(i.id).subscribe(res => {
+
+      }, err => {
+        this.alertService.error('Đã xảy ra lỗi, hình ảnh xóa không thành công');
+      });
+    }
     this.requirementsImageUrls.splice(index, 1);
     this.scaleOverallForm.get('nhungYeuCauDacBietList').patchValue(this.requirementsImageUrls);
   }
@@ -290,5 +303,13 @@ export class ScaleOverallComponent implements OnInit {
     });
     result.value = this.valueOfOthers;
     this.trangThaiCongTrinhChange();
+  }
+
+  viewFullScreenImage(listImage) {
+    this.showPopupViewImage = true;
+    this.imageUrlArray = [...listImage];
+  }
+  closeView() {
+    this.showPopupViewImage = false;
   }
 }

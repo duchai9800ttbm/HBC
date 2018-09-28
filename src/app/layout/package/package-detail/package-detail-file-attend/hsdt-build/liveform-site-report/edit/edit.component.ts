@@ -11,6 +11,7 @@ import { LiveformSiteReportComponent } from '../liveform-site-report.component';
 import { PackageDetailComponent } from '../../../../package-detail.component';
 import { PackageService } from '../../../../../../../shared/services/package.service';
 import { PackageInfoModel } from '../../../../../../../shared/models/package/package-info.model';
+import { SiteSurveyReportService } from '../../../../../../../shared/services/site-survey-report.service';
 // const objectToFormData = require('object-to-formdata');
 
 @Component({
@@ -19,21 +20,28 @@ import { PackageInfoModel } from '../../../../../../../shared/models/package/pac
   styleUrls: ['./edit.component.scss']
 })
 export class EditComponent implements OnInit, OnDestroy {
-  // static onload;
-
   dtTrigger: Subject<any> = new Subject();
   showBeforeLogin: any = true;
   showAfterLogin: any;
   isData;
   showPopupConfirm = false;
   datePickerConfig = DATETIME_PICKER_CONFIG;
+  stepNameList = [
+    'ScaleOverallComponent',
+    'DescribeOverallComponent',
+    'TrafficComponent',
+    'DemoConsoComponent',
+    'ServiceConstructionComponent',
+    'SoilConditionComponent',
+    'UsefulInfoComponent'
+  ];
+  stepName;
   currentBidOpportunityId: number;
   packageData = new PackageInfoModel();
-  bidDocumentGroupListItem: SiteSurveyReport[];
-  bidDocumentGroupListItemSearchResult: SiteSurveyReport[];
 
   constructor(
     private documentService: DocumentService,
+    private siteSurveyReportService: SiteSurveyReportService,
     private packageService: PackageService,
     private router: Router,
     private alertService: AlertService,
@@ -46,7 +54,6 @@ export class EditComponent implements OnInit, OnDestroy {
       this.packageData = result;
     });
   }
-
   submitLiveForm(event) {
     if (!event) {
       this.showPopupConfirm = false;
@@ -54,7 +61,7 @@ export class EditComponent implements OnInit, OnDestroy {
       const objData = LiveformSiteReportComponent.formModel;
       this.showPopupConfirm = false;
       this.spinner.show();
-      this.documentService
+      this.siteSurveyReportService
         .createOrUpdateSiteSurveyingReport(objData)
         .subscribe(() => {
           this.showPopupConfirm = false;
@@ -66,7 +73,7 @@ export class EditComponent implements OnInit, OnDestroy {
           this.spinner.hide();
           this.alertService.error('Đã xảy ra lỗi. Cập nhật không thành công!');
         });
-      LiveformSiteReportComponent.viewFlag = true;
+      // LiveformSiteReportComponent.viewFlag = true;
     }
   }
 
@@ -85,11 +92,94 @@ export class EditComponent implements OnInit, OnDestroy {
   }
 
   disableSideMenu(event) {
+    this.stepName = event.constructor.name;
     const elem = document.getElementById('toggle-menu');
     const elemm = document.getElementById('header-table-build');
     elem.style.display = 'none';
     elemm.style.visibility = 'hidden';
     elemm.style.position = 'absolute';
+  }
+  nextStep() {
+    const index = this.stepNameList.indexOf(this.stepName);
+    switch (index) {
+      case 0: {
+        const step = `describe`;
+        const parameter = `/package/detail/${this.currentBidOpportunityId}/attend/build/liveformsite/edit/${step}`;
+        this.router.navigate([parameter]);
+        break;
+      }
+      case 1: {
+        const step = `traffic`;
+        const parameter = `/package/detail/${this.currentBidOpportunityId}/attend/build/liveformsite/edit/${step}`;
+        this.router.navigate([parameter]);
+        break;
+      }
+      case 2: {
+        const step = `demo-conso`;
+        const parameter = `/package/detail/${this.currentBidOpportunityId}/attend/build/liveformsite/edit/${step}`;
+        this.router.navigate([parameter]);
+        break;
+      }
+      case 3: {
+        const step = `service-construction`;
+        const parameter = `/package/detail/${this.currentBidOpportunityId}/attend/build/liveformsite/edit/${step}`;
+        this.router.navigate([parameter]);
+        break;
+      }
+      case 4: {
+        const step = `soil`;
+        const parameter = `/package/detail/${this.currentBidOpportunityId}/attend/build/liveformsite/edit/${step}`;
+        this.router.navigate([parameter]);
+        break;
+      }
+      case 5: {
+        const step = `moreinfo`;
+        const parameter = `/package/detail/${this.currentBidOpportunityId}/attend/build/liveformsite/edit/${step}`;
+        this.router.navigate([parameter]);
+        break;
+      }
+    }
+  }
+  preStep() {
+    const index = this.stepNameList.indexOf(this.stepName);
+    switch (index) {
+      case 2: {
+        const step = `describe`;
+        const parameter = `/package/detail/${this.currentBidOpportunityId}/attend/build/liveformsite/edit/${step}`;
+        this.router.navigate([parameter]);
+        break;
+      }
+      case 3: {
+        const step = `traffic`;
+        const parameter = `/package/detail/${this.currentBidOpportunityId}/attend/build/liveformsite/edit/${step}`;
+        this.router.navigate([parameter]);
+        break;
+      }
+      case 4: {
+        const step = `demo-conso`;
+        const parameter = `/package/detail/${this.currentBidOpportunityId}/attend/build/liveformsite/edit/${step}`;
+        this.router.navigate([parameter]);
+        break;
+      }
+      case 5: {
+        const step = `service-construction`;
+        const parameter = `/package/detail/${this.currentBidOpportunityId}/attend/build/liveformsite/edit/${step}`;
+        this.router.navigate([parameter]);
+        break;
+      }
+      case 6: {
+        const step = `soil`;
+        const parameter = `/package/detail/${this.currentBidOpportunityId}/attend/build/liveformsite/edit/${step}`;
+        this.router.navigate([parameter]);
+        break;
+      }
+      case 1: {
+        const step = `scale`;
+        const parameter = `/package/detail/${this.currentBidOpportunityId}/attend/build/liveformsite/edit/${step}`;
+        this.router.navigate([parameter]);
+        break;
+      }
+    }
   }
   ngOnDestroy() {
     const elem = document.getElementById('toggle-menu');

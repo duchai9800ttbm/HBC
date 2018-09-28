@@ -5,6 +5,8 @@ import { EditComponent } from '../edit.component';
 import { LiveformSiteReportComponent } from '../../liveform-site-report.component';
 import { PackageDetailComponent } from '../../../../../package-detail.component';
 import { Router } from '@angular/router';
+import { AlertService } from '../../../../../../../../shared/services';
+import { SiteSurveyReportService } from '../../../../../../../../shared/services/site-survey-report.service';
 
 @Component({
   selector: 'app-describe-overall',
@@ -19,9 +21,13 @@ export class DescribeOverallComponent implements OnInit {
   stacaleImageUrls = [];
   url;
   viewMode;
+  imageUrlArray = [];
+  showPopupViewImage = false;
   currentBidOpportunityId: number;
   describeModel = new DescribeOverall();
   constructor(
+    private siteSurveyReportService: SiteSurveyReportService,
+    private alertService: AlertService,
     private router: Router,
     private fb: FormBuilder
   ) { }
@@ -41,7 +47,7 @@ export class DescribeOverallComponent implements OnInit {
     this.describeForm.valueChanges.subscribe(data => this.mappingToLiveFormData(data));
   }
   checkFlag() {
-    if (LiveformSiteReportComponent.formModel.id) {
+    if ((LiveformSiteReportComponent.formModel.isCreateOrEdit)) {
       const flag = LiveformSiteReportComponent.viewFlag;
       this.viewMode = flag;
       if (flag) {
@@ -94,76 +100,95 @@ export class DescribeOverallComponent implements OnInit {
 
   uploadTopographyImage(event) {
     const files = event.target.files;
-    if (files) {
-      for (const file of files) {
-        const reader = new FileReader();
-        reader.onload = (e: any) => {
-          this.topographyImageUrls.push({
-            id: null,
-            image: {
-              file: file,
-              base64: e.target.result
-            }
-          });
-          this.describeForm.get('chiTietDiaHinhList').patchValue(this.topographyImageUrls);
-        };
-        reader.readAsDataURL(file);
-      }
-    }
+    this.siteSurveyReportService
+      .uploadImageSiteSurveyingReport(files, this.currentBidOpportunityId)
+      .subscribe(res => {
+        this.topographyImageUrls = [...this.topographyImageUrls, ...res];
+      }, err => {
+        this.alertService.error('Upload hình ảnh thất bại. Xin vui lòng thử lại!');
+        this.topographyImageUrls.forEach(x => {
+          if (!x.id) {
+            const index = this.topographyImageUrls.indexOf(x);
+            this.topographyImageUrls.splice(index, 1);
+          }
+        });
+      });
   }
   deleteTopographyImage(i) {
     const index = this.topographyImageUrls.indexOf(i);
+    if (i.id) {
+      this.siteSurveyReportService.deleteImageSiteSurveyingReport(i.id).subscribe(res => {
+
+      }, err => {
+        this.alertService.error('Đã xảy ra lỗi, hình ảnh xóa không thành công');
+      });
+    }
     this.topographyImageUrls.splice(index, 1);
     this.describeForm.get('chiTietDiaHinhList').patchValue(this.topographyImageUrls);
   }
 
   uploadExistingBuildImage(event) {
     const files = event.target.files;
-    if (files) {
-      for (const file of files) {
-        const reader = new FileReader();
-        reader.onload = (e: any) => {
-          this.existingBuildImageUrls.push({
-            id: null,
-            image: {
-              file: file,
-              base64: e.target.result
-            }
-          });
-          this.describeForm.get('kienTrucHienHuuList').patchValue(this.existingBuildImageUrls);
-        };
-        reader.readAsDataURL(file);
-      }
-    }
+    this.siteSurveyReportService
+      .uploadImageSiteSurveyingReport(files, this.currentBidOpportunityId)
+      .subscribe(res => {
+        this.existingBuildImageUrls = [...this.existingBuildImageUrls, ...res];
+      }, err => {
+        this.alertService.error('Upload hình ảnh thất bại. Xin vui lòng thử lại!');
+        this.existingBuildImageUrls.forEach(x => {
+          if (!x.id) {
+            const index = this.existingBuildImageUrls.indexOf(x);
+            this.existingBuildImageUrls.splice(index, 1);
+          }
+        });
+      });
   }
   deleteExistingBuildImage(i) {
     const index = this.existingBuildImageUrls.indexOf(i);
+    if (i.id) {
+      this.siteSurveyReportService.deleteImageSiteSurveyingReport(i.id).subscribe(res => {
+
+      }, err => {
+        this.alertService.error('Đã xảy ra lỗi, hình ảnh xóa không thành công');
+      });
+    }
     this.existingBuildImageUrls.splice(index, 1);
     this.describeForm.get('kienTrucHienHuuList').patchValue(this.existingBuildImageUrls);
   }
 
   uploadStacaleImage(event) {
     const files = event.target.files;
-    if (files) {
-      for (const file of files) {
-        const reader = new FileReader();
-        reader.onload = (e: any) => {
-          this.stacaleImageUrls.push({
-            id: null,
-            image: {
-              file: file,
-              base64: e.target.result
-            }
-          });
-          this.describeForm.get('yeuCauChuongNgaiList').patchValue(this.stacaleImageUrls);
-        };
-        reader.readAsDataURL(file);
-      }
-    }
+    this.siteSurveyReportService
+      .uploadImageSiteSurveyingReport(files, this.currentBidOpportunityId)
+      .subscribe(res => {
+        this.stacaleImageUrls = [...this.stacaleImageUrls, ...res];
+      }, err => {
+        this.alertService.error('Upload hình ảnh thất bại. Xin vui lòng thử lại!');
+        this.stacaleImageUrls.forEach(x => {
+          if (!x.id) {
+            const index = this.stacaleImageUrls.indexOf(x);
+            this.stacaleImageUrls.splice(index, 1);
+          }
+        });
+      });
   }
   deleteStacaleImage(i) {
     const index = this.stacaleImageUrls.indexOf(i);
+    if (i.id) {
+      this.siteSurveyReportService.deleteImageSiteSurveyingReport(i.id).subscribe(res => {
+
+      }, err => {
+        this.alertService.error('Đã xảy ra lỗi, hình ảnh xóa không thành công');
+      });
+    }
     this.stacaleImageUrls.splice(index, 1);
     this.describeForm.get('yeuCauChuongNgaiList').patchValue(this.stacaleImageUrls);
+  }
+  viewFullScreenImage(listImage) {
+    this.showPopupViewImage = true;
+    this.imageUrlArray = [...listImage];
+  }
+  closeView() {
+    this.showPopupViewImage = false;
   }
 }

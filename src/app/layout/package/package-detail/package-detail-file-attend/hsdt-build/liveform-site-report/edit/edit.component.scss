@@ -26,6 +26,15 @@ app-info {
     }
 }
 
+.title-header-field-left {
+    font-weight: 900;
+    padding-left: 3rem;
+}
+.title-header-field-right {
+    font-weight: 900;
+    padding-right: 3rem;
+}
+
 .detail-info {
     padding-left: 40px;
 }
@@ -270,6 +279,10 @@ input[type=text] {
     //     background-color: #009CE2;
     //     color: #FFFFFF;
     // }
+}
+
+.next-pre-button {
+    width: 5rem;
 }
 
 #info-document {

@@ -24,6 +24,7 @@ import { ButtonModule } from '@progress/kendo-angular-buttons';
 // Imports the ButtonGroup module
 import { ButtonGroupModule } from '@progress/kendo-angular-buttons';
 import { PDFExportModule } from '@progress/kendo-angular-pdf-export';
+import { ImageCarouselComponent } from './image-carousel/image-carousel.component';
 import { MissActionComponent } from './miss-action/miss-action.component';
 @NgModule({
     imports: [
@@ -55,6 +56,7 @@ import { MissActionComponent } from './miss-action/miss-action.component';
         PopupCreateChairComponent,
         ResetPasswordComponent,
         PrintEmailComponent,
+        ImageCarouselComponent,
         MissActionComponent,
     ],
     exports: [
@@ -71,6 +73,7 @@ import { MissActionComponent } from './miss-action/miss-action.component';
         PopupCreateChairComponent,
         ResetPasswordComponent,
         PrintEmailComponent,
+        ImageCarouselComponent,
         MissActionComponent
     ],
     entryComponents: [

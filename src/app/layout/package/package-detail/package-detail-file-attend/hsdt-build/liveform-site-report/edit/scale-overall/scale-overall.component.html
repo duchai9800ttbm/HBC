@@ -18,11 +18,13 @@
                     <form [formGroup]="loaiCongTrinhForm">
                         <div class="single-row">
                             <div class="child childcheck" formArrayName="loaiCongTrinhList" *ngFor="let item of loaiCongTrinhListFA.controls; let i = index">
-                                <input [formControlName]="i" type="checkbox" [ngClass]="{'view-mode-control': viewMode}"
-                                    [checked]="loaiCongTrinhList[i].checked" (change)="loaiCongTrinhList[i].checked = !loaiCongTrinhList[i].checked; loaiCongTrinhChange($event)"
-                                    name="construcType">
-                                {{ loaiCongTrinhList[i].text }}
-                                <span class="checkmark" tabindex="3"></span>
+                                <label>
+                                    <input [formControlName]="i" type="checkbox" [ngClass]="{'view-mode-control': viewMode}"
+                                        [checked]="loaiCongTrinhList[i].checked" (change)="loaiCongTrinhList[i].checked = !loaiCongTrinhList[i].checked; loaiCongTrinhChange($event)"
+                                        name="construcType">
+                                    {{ loaiCongTrinhList[i].text }}
+                                    <span class="checkmark" tabindex="3"></span>
+                                </label>
                             </div>
                         </div>
                     </form>
@@ -30,11 +32,13 @@
                     <form [formGroup]="trangThaiCongTrinhForm">
                         <div class="single-row">
                             <div class="child childcheck" formArrayName="trangthaiCongTrinhList" *ngFor="let item of trangthaiCongTrinhListFA.controls; let i = index">
-                                <input [formControlName]="i" type="checkbox" [ngClass]="{'view-mode-control': viewMode}"
-                                    [checked]="trangthaiCongTrinhList[i].checked" (change)="trangthaiCongTrinhList[i].checked = !trangthaiCongTrinhList[i].checked; trangThaiCongTrinhChange($event)"
-                                    name="construcStatus">
-                                {{ trangthaiCongTrinhList[i].text }}
-                                <span class="checkmark" tabindex="4"></span>
+                                <label>
+                                    <input [formControlName]="i" type="checkbox" [ngClass]="{'view-mode-control': viewMode}"
+                                        [checked]="trangthaiCongTrinhList[i].checked" (change)="trangthaiCongTrinhList[i].checked = !trangthaiCongTrinhList[i].checked; trangThaiCongTrinhChange($event)"
+                                        name="construcStatus">
+                                    {{ trangthaiCongTrinhList[i].text }}
+                                    <span class="checkmark" tabindex="4"></span>
+                                </label>
                             </div>
                             <div *ngIf="showValueOfOther"><input [disabled]="viewMode" type="text" [(ngModel)]="valueOfOthers"
                                     (ngModelChange)="valueOfOther($event)" [ngModelOptions]="{standalone: true}"></div>
@@ -75,9 +79,9 @@
                             <input type="text" value="Text" formControlName="hinhAnhPhoiCanhDesc" tabindex="10">
                         </div>
                         <div class="image-demo-img">
-                            <input type="file" multiple #uploadPerspective (change)="uploadPerspectiveImage($event)">
-                            <div class="display-img" *ngFor="let url of perspectiveImageUrls">
-                                <img [src]="(url.image?.base64) || url.image.file">
+                            <input type="file" accept="image/*" multiple #uploadPerspective (change)="uploadPerspectiveImage($event)">
+                            <div class="display-img" *ngFor="let url of perspectiveImageUrls" (click)="viewFullScreenImage(perspectiveImageUrls)">
+                                <img [src]="url.largeSizeUrl">
                                 <div class="toppp" [ngClass]="{'d-none': viewMode}" (click)="deletePerspectiveImage(url)">
                                     <i class="fa fa-times delete-icon" aria-hidden="true"></i>
                                 </div>
@@ -100,9 +104,9 @@
                     </div>
                     <div>
                         <div class="image-demo-img">
-                            <input type="file" multiple #uploadStructure (change)="uploadStructureImage($event)">
-                            <div class="display-img" *ngFor="let url of structureImageUrls">
-                                <img [src]="(url.image?.base64) || url.image.file">
+                            <input type="file" accept="image/*" multiple #uploadStructure (change)="uploadStructureImage($event)">
+                            <div class="display-img" *ngFor="let url of structureImageUrls" (click)="viewFullScreenImage(structureImageUrls)">
+                                <img [src]="url.largeSizeUrl">
                                 <div class="toppp" [ngClass]="{'d-none': viewMode}" (click)="deleteStructureImage(url)">
                                     <i class="fa fa-times delete-icon" aria-hidden="true"></i>
                                 </div>
@@ -124,9 +128,9 @@
                             tabindex="14">
                     </div>
                     <div class="image-demo-img">
-                        <input type="file" multiple #uploadRequirements (change)="uploadRequirementsImage($event)">
-                        <div class="display-img" *ngFor="let url of requirementsImageUrls">
-                            <img [src]="(url.image?.base64) || url.image.file">
+                        <input type="file" accept="image/*" multiple #uploadRequirements (change)="uploadRequirementsImage($event)">
+                        <div class="display-img" *ngFor="let url of requirementsImageUrls" (click)="viewFullScreenImage(requirementsImageUrls)">
+                            <img [src]="url.largeSizeUrl">
                             <div class="toppp" [ngClass]="{'d-none': viewMode}" (click)="deleteRequirementsImage(url)">
                                 <i class="fa fa-times delete-icon" aria-hidden="true"></i>
                             </div>
@@ -142,3 +146,6 @@
         </div>
     </div>
 </form>
+
+<app-image-carousel class="d-flex justify-content-center align-items-center" *ngIf="showPopupViewImage"
+    [(imageUrlArray)]="imageUrlArray" (closed)="closeView()"></app-image-carousel>

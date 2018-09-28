@@ -5,6 +5,8 @@ import { EditComponent } from '../edit.component';
 import { LiveformSiteReportComponent } from '../../liveform-site-report.component';
 import { PackageDetailComponent } from '../../../../../package-detail.component';
 import { Router } from '@angular/router';
+import { AlertService } from '../../../../../../../../shared/services';
+import { SiteSurveyReportService } from '../../../../../../../../shared/services/site-survey-report.service';
 
 @Component({
   selector: 'app-demo-conso',
@@ -19,9 +21,13 @@ export class DemoConsoComponent implements OnInit {
   adjacentImageUrls = [];
   url;
   viewMode;
+  imageUrlArray = [];
+  showPopupViewImage = false;
   currentBidOpportunityId: number;
   demoConsoModel = new DemoConso();
   constructor(
+    private siteSurveyReportService: SiteSurveyReportService,
+    private alertService: AlertService,
     private router: Router,
     private fb: FormBuilder
   ) { }
@@ -41,7 +47,7 @@ export class DemoConsoComponent implements OnInit {
     this.demoConsoForm.valueChanges.subscribe(data => this.mappingToLiveFormData(data));
   }
   checkFlag() {
-    if (LiveformSiteReportComponent.formModel.id) {
+    if ((LiveformSiteReportComponent.formModel.isCreateOrEdit)) {
       const flag = LiveformSiteReportComponent.viewFlag;
       this.viewMode = flag;
       if (flag) {
@@ -96,76 +102,95 @@ export class DemoConsoComponent implements OnInit {
 
   uploadDemobilisationImage(event) {
     const files = event.target.files;
-    if (files) {
-      for (const file of files) {
-        const reader = new FileReader();
-        reader.onload = (e: any) => {
-          this.demobilisationImageUrls.push({
-            id: null,
-            image: {
-              file: file,
-              base64: e.target.result
-            }
-          });
-          this.demoConsoForm.get('phaVoKetCauList').patchValue(this.demobilisationImageUrls);
-        };
-        reader.readAsDataURL(file);
-      }
-    }
+    this.siteSurveyReportService
+      .uploadImageSiteSurveyingReport(files, this.currentBidOpportunityId)
+      .subscribe(res => {
+        this.demobilisationImageUrls = [...this.demobilisationImageUrls, ...res];
+      }, err => {
+        this.alertService.error('Upload hình ảnh thất bại. Xin vui lòng thử lại!');
+        this.demobilisationImageUrls.forEach(x => {
+          if (!x.id) {
+            const index = this.demobilisationImageUrls.indexOf(x);
+            this.demobilisationImageUrls.splice(index, 1);
+          }
+        });
+      });
   }
   deleteDemobilisationImage(i) {
     const index = this.demobilisationImageUrls.indexOf(i);
+    if (i.id) {
+      this.siteSurveyReportService.deleteImageSiteSurveyingReport(i.id).subscribe(res => {
+
+      }, err => {
+        this.alertService.error('Đã xảy ra lỗi, hình ảnh xóa không thành công');
+      });
+    }
     this.demobilisationImageUrls.splice(index, 1);
     this.demoConsoForm.get('phaVoKetCauList').patchValue(this.demobilisationImageUrls);
   }
 
   uploadConsolidationImage(event) {
     const files = event.target.files;
-    if (files) {
-      for (const file of files) {
-        const reader = new FileReader();
-        reader.onload = (e: any) => {
-          this.consolidationImageUrls.push({
-            id: null,
-            image: {
-              file: file,
-              base64: e.target.result
-            }
-          });
-          this.demoConsoForm.get('giaCoKetCauList').patchValue(this.consolidationImageUrls);
-        };
-        reader.readAsDataURL(file);
-      }
-    }
+    this.siteSurveyReportService
+      .uploadImageSiteSurveyingReport(files, this.currentBidOpportunityId)
+      .subscribe(res => {
+        this.consolidationImageUrls = [...this.consolidationImageUrls, ...res];
+      }, err => {
+        this.alertService.error('Upload hình ảnh thất bại. Xin vui lòng thử lại!');
+        this.consolidationImageUrls.forEach(x => {
+          if (!x.id) {
+            const index = this.consolidationImageUrls.indexOf(x);
+            this.consolidationImageUrls.splice(index, 1);
+          }
+        });
+      });
   }
   deleteConsolidationImage(i) {
     const index = this.consolidationImageUrls.indexOf(i);
+    if (i.id) {
+      this.siteSurveyReportService.deleteImageSiteSurveyingReport(i.id).subscribe(res => {
+
+      }, err => {
+        this.alertService.error('Đã xảy ra lỗi, hình ảnh xóa không thành công');
+      });
+    }
     this.consolidationImageUrls.splice(index, 1);
     this.demoConsoForm.get('giaCoKetCauList').patchValue(this.consolidationImageUrls);
   }
 
   uploaAdjacentImage(event) {
     const files = event.target.files;
-    if (files) {
-      for (const file of files) {
-        const reader = new FileReader();
-        reader.onload = (e: any) => {
-          this.adjacentImageUrls.push({
-            id: null,
-            image: {
-              file: file,
-              base64: e.target.result
-            }
-          });
-          this.demoConsoForm.get('dieuKienHinhAnhList').patchValue(this.adjacentImageUrls);
-        };
-        reader.readAsDataURL(file);
-      }
-    }
+    this.siteSurveyReportService
+      .uploadImageSiteSurveyingReport(files, this.currentBidOpportunityId)
+      .subscribe(res => {
+        this.adjacentImageUrls = [...this.adjacentImageUrls, ...res];
+      }, err => {
+        this.alertService.error('Upload hình ảnh thất bại. Xin vui lòng thử lại!');
+        this.adjacentImageUrls.forEach(x => {
+          if (!x.id) {
+            const index = this.adjacentImageUrls.indexOf(x);
+            this.adjacentImageUrls.splice(index, 1);
+          }
+        });
+      });
   }
   deleteAdjacentImage(i) {
     const index = this.adjacentImageUrls.indexOf(i);
+    if (i.id) {
+      this.siteSurveyReportService.deleteImageSiteSurveyingReport(i.id).subscribe(res => {
+
+      }, err => {
+        this.alertService.error('Đã xảy ra lỗi, hình ảnh xóa không thành công');
+      });
+    }
     this.adjacentImageUrls.splice(index, 1);
     this.demoConsoForm.get('dieuKienHinhAnhList').patchValue(this.adjacentImageUrls);
+  }
+  viewFullScreenImage(listImage) {
+    this.showPopupViewImage = true;
+    this.imageUrlArray = [...listImage];
+  }
+  closeView() {
+    this.showPopupViewImage = false;
   }
 }

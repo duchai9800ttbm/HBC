@@ -53,46 +53,62 @@
     </div>
 
     <div id="info-document">
-        <div class="headerInfo">
-            <table>
-                <tr>
-                    <td class="titleHeader">Công trình (Project):</td>
-                    <td class="infoHeader">{{ packageData.projectName }}</td>
-                </tr>
-                <tr>
-                    <td class="titleHeader">Địa điểm (Location):</td>
-                    <td class="infoHeader">{{ packageData.place }}</td>
-                </tr>
-                <tr>
-                    <td class="titleHeader">Ban CHCT/Phòng ban:</td>
-                    <td class="infoHeader">Phòng dự thầu</td>
-                </tr>
-                <tr>
-                    <td class="titleHeader">Người khảo sát/liên hệ:</td>
-                    <td class="infoHeader"></td>
-                </tr>
-            </table>
-            <table>
-                <tr>
-                    <td class="titleHeader">Gói thầu (Package):</td>
-                    <td class="infoHeader">{{ packageData.opportunityName }}</td>
-                </tr>
-                <tr>
-                    <td class="titleHeader"></td>
-                    <td class="infoHeader"></td>
-                </tr>
-                <tr>
-                    <td class="titleHeader">Ngày khảo sát (Date):</td>
-                    <td class="infoHeader"></td>
-                </tr>
-                <tr>
-                    <td class="titleHeader"></td>
-                    <td class="infoHeader"></td>
-                </tr>
-            </table>
+        <div class="headerInfo d-flex flex-row">
+            <div class="title-header-field-left w-50 d-flex flex-column">
+                <div class="d-flex flex-row mt-1 mb-1 h-25 align-content-center">
+                    <div class="titleHeader w-40">Công trình (Project):</div>
+                    <div class="infoHeader">{{ packageData.projectName }}</div>
+                </div>
+
+                <div class="d-flex flex-row mt-1 mb-1 h-25 align-content-center">
+                    <div class="titleHeader w-40">Địa điểm (Location):</div>
+                    <div class="infoHeader">{{ packageData.place }}</div>
+                </div>
+
+                <div class="d-flex flex-row mt-1 mb-1 h-25 align-content-center">
+                    <div class="titleHeader w-40">Ban CHCT/Phòng ban:</div>
+                    <div class="infoHeader">Phòng dự thầu</div>
+                </div>
+
+                <div class="d-flex flex-row mt-1 mb-1 h-25 align-content-center">
+                    <div class="titleHeader w-40">Người khảo sát/liên hệ:</div>
+                    <div class="infoHeader"></div>
+                </div>
+            </div>
+            <div class="title-header-field-right w-50 d-flex flex-column">
+                <div class="d-flex flex-row mt-1 mb-1 h-25 align-content-center">
+                    <div class="titleHeader w-40">Gói thầu (Package):</div>
+                    <div class="infoHeader">{{ packageData.opportunityName }}</div>
+                </div>
+
+                <div class="d-flex flex-row mt-1 mb-1 h-25 align-content-center">
+                    <div class="titleHeader w-40"></div>
+                    <div class="infoHeader"></div>
+                </div>
+
+                <div class="d-flex flex-row mt-1 mb-1 h-25 align-content-center">
+                    <div class="titleHeader w-40">Ngày khảo sát (Date):</div>
+                    <div class="infoHeader"></div>
+                </div>
+
+                <div class="d-flex flex-row mt-1 mb-1 h-25 align-content-center">
+                    <div class="titleHeader w-40"></div>
+                    <div class="infoHeader"></div>
+                </div>
+            </div>
         </div>
         <router-outlet (activate)="disableSideMenu($event)"></router-outlet>
     </div>
+</div>
+<div class="button-change-view d-flex flex-row flex-wrap justify-content-center">
+    <button *ngIf="stepName !== 'ScaleOverallComponent'" type="button" class="next-pre-button btn btn-default ml-2 mr-2"
+        (click)="preStep()">
+        <i class="fa fa-chevron-left" aria-hidden="true"></i> Trở về
+    </button>
+    <button *ngIf="stepName !== 'UsefulInfoComponent'" type="button" class="next-pre-button btn btn-primary ml-2 mr-2"
+        (click)="nextStep()">
+        Tiếp <i class="fa fa-chevron-right" aria-hidden="true"></i>
+    </button>
 </div>
 <app-update-confirm-popup *ngIf="showPopupConfirm" (closed)="submitLiveForm($event)"></app-update-confirm-popup>
 <ngx-spinner bdColor="rgba(51, 51, 51, 0.7)" size="medium" color="#fff" type="ball-clip-rotate-multiple"></ngx-spinner>

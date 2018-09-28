@@ -25,12 +25,13 @@ export class UsefulInfoComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+    console.log(this.usefulInfoData);
     this.currentBidOpportunityId = +PackageDetailComponent.packageId;
     this.checkFlag();
     this.initdata();
   }
   checkFlag() {
-    if (LiveformSiteReportComponent.formModel.id) {
+    if ((LiveformSiteReportComponent.formModel.isCreateOrEdit)) {
       const flag = LiveformSiteReportComponent.viewFlag;
       this.viewMode = flag;
       if (flag) {
@@ -47,7 +48,7 @@ export class UsefulInfoComponent implements OnInit {
     const obj = new UsefulInfo();
     obj.content = [];
     const contObj = new ContentItem();
-    contObj.images = [];
+    contObj.imageUrls = [];
     obj.content.push(contObj);
     this.usefulInfoData.push(obj);
   }
@@ -62,7 +63,7 @@ export class UsefulInfoComponent implements OnInit {
     const obj: ContentItem = {
       name: '',
       detail: '',
-      images: []
+      imageUrls: []
     };
     this.usefulInfoData[index].content.push(obj);
   }
