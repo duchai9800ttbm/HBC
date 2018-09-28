@@ -59,6 +59,7 @@ export class NeedCreateTenderComponent implements OnInit {
     this.spinner.show();
     this.packageService.getChangeHistoryListProposedTender(this.bidOpportunityId, 0, 1000).subscribe(respone => {
       this.pagedResultChangeHistoryList = respone;
+      console.log('lich su thay doi', respone);
       this.spinner.hide();
     },
       err => {

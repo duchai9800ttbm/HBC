@@ -33,6 +33,7 @@ export class NeedCreateTenderFormComponent implements OnInit, OnDestroy {
     totalTime = '';
     draftsOrOfficially = true;
     isShowChanges = false;
+    updatedDetail = '';
     constructor(
         private packageService: PackageService,
         private alertService: AlertService,
@@ -222,6 +223,7 @@ export class NeedCreateTenderFormComponent implements OnInit, OnDestroy {
 
     closeShowChanges() {
         this.isShowChanges = false;
+        this.updatedDetail = '';
     }
 
     ngOnDestroy() {
@@ -229,16 +231,29 @@ export class NeedCreateTenderFormComponent implements OnInit, OnDestroy {
     }
 
     saveDrafts() {
-        this.isShowChanges = true;
-        this.draftsOrOfficially = true;
+        // this.isShowChanges = true;
+        // this.draftsOrOfficially = true;
+        this.onSubmit(true);
     }
 
     saveOfficially() {
-        this.isShowChanges = true;
-        this.draftsOrOfficially = false;
+        // this.draftsOrOfficially = false;
+        console.log('NeedCreateTenderFormComponent.formModel.id', NeedCreateTenderFormComponent.formModel.id,
+        NeedCreateTenderFormComponent.formModel.isDraftVersion);
+        if ( NeedCreateTenderFormComponent.formModel.id ) {
+            if ( NeedCreateTenderFormComponent.formModel && !NeedCreateTenderFormComponent.formModel.isDraftVersion) {
+                this.isShowChanges = true;
+            } else {
+                this.onSubmit(false);
+            }
+        } else {
+            this.onSubmit(false);
+        }
     }
 
     saveChangesLiveForm() {
-        this.onSubmit(this.draftsOrOfficially);
+        NeedCreateTenderFormComponent.formModel.updatedDetail = this.updatedDetail;
+        this.onSubmit(false);
+        this.updatedDetail = '';
     }
 }

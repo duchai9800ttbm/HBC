@@ -156,6 +156,18 @@ export class InformationDeploymentComponent implements OnInit {
     this.textInformation = '';
     this.currentPackageId = +PackageDetailComponent.packageId;
 
+    // this.searchTermTo$
+    //   .debounceTime(COMMON_CONSTANTS.SearchDelayTimeInMs)
+    //   .distinctUntilChanged()
+    //   .subscribe(term => {
+    //     this.emailService.searchbymail(term).subscribe(response => {
+    //       this.listEmailSearchTo = response;
+    //     });
+    //   });
+  }
+
+  searchEmailTo(event) {
+    console.log('searchEmailTo', event);
   }
 
   getTenderPlanInfo() {

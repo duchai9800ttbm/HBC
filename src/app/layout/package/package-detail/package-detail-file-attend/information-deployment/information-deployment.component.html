@@ -112,7 +112,16 @@
         <div class="input-group mb-3">
             <span class="input-group-addon">To:</span>
             <ng-select class="w-100" [items]="listEmailSearchTo" typeToSearchText="Nhập email" addTagText="Thêm email:" clearAllText="Xóa tất cả"
-                [addTag]="true" [hideSelected]="true" multiple="true" bindLabel="employeeEmail" [(ngModel)]="emailModel.to">
+                [addTag]="true" [hideSelected]="true" multiple="true" bindLabel="employeeEmail" [(ngModel)]="emailModel.to"
+                #box
+                (keyup)="searchEmailTo(box.value)"
+              >
+              <!-- (blur)="searchEmailTo($event)"
+              (change)="searchEmailTo($event)"
+              (data)="searchEmailTo($event)"
+            (selected)="searchEmailTo($event)"
+            (removed)="searchEmailTo($event)"
+            (typed)="searchEmailTo($event)" -->
                 <ng-template ng-option-tmp let-item="item" let-index="index" let-search="searchTerm">
                     <table>
                         <tr>{{item.employeeName}}</tr>
@@ -164,7 +173,8 @@
                 aria-describedby="basic-addon1">
         </div>
         <div class="body-ckeditor">
-            <ckeditor [(ngModel)]="emailModel.content" [config]="ckeConfig" #ckeditor (change)="onChange($event)">
+                <!-- (change)="onChange($event)" -->
+            <ckeditor [(ngModel)]="emailModel.content" [config]="ckeConfig" #ckeditor>
                 <ckbutton [name]="'saveButton'" [command]="'saveCmd'" [icon]="'save.png'" [label]="'Save Document'"
                     [toolbar]="'clipboard,1'">
                 </ckbutton>
