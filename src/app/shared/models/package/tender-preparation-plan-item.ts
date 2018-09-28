@@ -6,4 +6,5 @@ export class TenderPreparationPlanItem {
     startDate: number;
     finishDate: number;
     duration: number;
+    isFinish = false;
 }

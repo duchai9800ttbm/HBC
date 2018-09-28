@@ -35,42 +35,52 @@
     <div class="pl-3">
         <div class="header m-0">
             <div class="row">
-                <div class="col-md-6 row">
-                    <div class="col-md-4"><strong>Công trình (Project):</strong></div>
-                    <div class="col-md-8">{{packageInfo?.projectName}}</div>
+                <div class="col-md-6 pl-0 header-bid-info">
+                    <div class=""><strong>Công trình (Project):</strong></div>
+                    <div class="">{{packageInfo?.projectName}}</div>
                 </div>
-                <div class="col-md-6 row">
-                    <div class="col-md-4"><strong>Người lập (Prepare by):</strong></div>
-                    <div class="col-md-8"></div>
+                <div class="col-md-3 pl-0">
+                    <div class=""><strong>Người lập (Prepare by):</strong></div>
+                    <div class=""></div>
                 </div>
-            </div>
-            <div class="row mt-2">
-                <div class="col-md-6 row">
-                    <div class="col-md-4"><strong>Địa điểm (Location):</strong></div>
-                    <div class="col-md-8">{{packageInfo?.place}}</div>
-                </div>
-                <div class="col-md-6 row">
-                    <div class="col-md-4"><strong>Ngày lập (Date):</strong></div>
-                    <div class="col-md-8"></div>
+                <div class="col-md-3 pl-0">
+                    <div class=""><strong>Người duyệt (Approved by):</strong></div>
+                    <div class=""></div>
                 </div>
             </div>
             <div class="row mt-2">
-                <div class="col-md-6 row">
-                    <div class="col-md-4"><strong>Gói thầu (Package):</strong></div>
-                    <div class="col-md-8">{{packageInfo?.opportunityName}}</div>
+                <div class="col-md-6 pl-0 header-bid-info">
+                    <div class=""><strong>Địa điểm (Location):</strong></div>
+                    <div class="">{{packageInfo?.place}}</div>
                 </div>
-                <div class="col-md-6 row">
-                    <div class="col-md-4 text-nowrap"><strong>Người duyệt (Approved by):</strong></div>
-                    <div class="col-md-8"></div>
+                <div class="col-md-3 pl-0">
+                    <div class=""><strong>Ngày lập (Date):</strong></div>
+                    <div class=""></div>
+                </div>
+                <div class="col-md-3 pl-0">
+                    <div class=""><strong>Ngày duyệt (Date):</strong></div>
+                    <div class=""></div>
                 </div>
             </div>
             <div class="row mt-2">
-                <div class="col-md-6 row">
-                    <div class="col-md-4"><strong>Chủ đầu tư (Employer):</strong></div>
-                    <div class="col-md-8"></div>
+                <div class="col-md-6 pl-0 header-bid-info">
+                    <div class=""><strong>Gói thầu (Package):</strong></div>
+                    <div class="">{{packageInfo?.opportunityName}}</div>
                 </div>
-                <div class="col-md-6 row">
-                    <div class="col-md-4"><strong>Ngày duyệt (Date):</strong></div>
+                <div class="col-md-3 pl-0">
+                    <button class="btn btn-primary btn-sign position-absolute">Xác nhận ký</button>
+                </div>
+                <div class="col-md-3 pl-0">
+                    <button class="btn btn-primary btn-sign position-absolute">Xác nhận ký</button>
+                </div>
+            </div>
+            <div class="row mt-2">
+                <div class="col-md-6 pl-0 header-bid-info">
+                    <div class=""><strong>Chủ đầu tư (Employer):</strong></div>
+                    <div class=""></div>
+                </div>
+                <div class="col-md-6">
+                    <div class="col-md-4"><strong></strong></div>
                     <div class="col-md-8"></div>
                 </div>
             </div>
@@ -80,7 +90,7 @@
                 <thead>
                     <tr>
                         <th>Tên tài liệu</th>
-                        <th colspan="5">Bảng phân công tiến độ</th>
+                        <th colspan="5"><input class="form-control" formControlName="projectInformation"></th>
                     </tr>
                 </thead>
                 <tbody>
@@ -116,7 +126,7 @@
                         <td>Tender Duration</td>
                         <td>
                             <!-- <kendo-datepicker class="form-control b-datepicker-no-border"></kendo-datepicker> -->
-                            <!-- {{(packageInfo?.startTrackingDate)}} -->
+                            {{(packageInfo?.startTrackingDate - packageInfo?.submissionDate) / (60 * 60 * 24)}}
                         </td>
                     </tr>
                     <tr>
@@ -133,7 +143,7 @@
                         <td>Query's Deadline</td>
                         <td>
                             <!-- <kendo-datepicker class="form-control b-datepicker-no-border"></kendo-datepicker> -->
-                            {{getDateStr(packageInfo?.projectEstimatedEndDate)}}
+                            {{packageInfo?.submissionDate ? getDateStr(packageInfo?.submissionDate - (60 * 60 * 24 * 7)) : ''}}
                         </td>
                     </tr>
                     <tr>
@@ -150,7 +160,7 @@
                         <td>Finish</td>
                         <td>
                             <!-- <kendo-datepicker class="form-control b-datepicker-no-border"></kendo-datepicker> -->
-                            {{getDateStr(packageInfo?.projectEstimatedEndDate)}}
+                            {{getDateStr(packageInfo?.submissionDate)}}
                         </td>
                     </tr>
                 </tbody>
@@ -186,7 +196,7 @@
                             </td>
                             <td class="text-center">
                                 <label class="custom-control custom-checkbox">
-                                    <input type="checkbox" class="custom-control-input input-checkbox">
+                                    <input type="checkbox" class="custom-control-input input-checkbox" formControlName="isFinish">
                                     <span class="custom-control-indicator"></span>
                                 </label>
                             </td>

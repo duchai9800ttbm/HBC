@@ -12,10 +12,12 @@ export class TenderPreparationPlanningRequest {
     tenderDepartmentEmployeeId: number;
     technicalDepartmentEmployeeId: number;
     bimDepartmentEmployeeId: number;
+    projectInformation: string;
     startDate: number;
     finishDate: number;
     deadline: number;
     duration: number;
     isDraftVersion = true;
+    createDate: number;
     tasks: TenderPreparationPlanItem[];
 }
