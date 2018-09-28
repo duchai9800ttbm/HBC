@@ -115,13 +115,10 @@ export class InformationDeploymentComponent implements OnInit {
     this.bidOpportunityId = PackageDetailComponent.packageId;
     this.emailService.searchbymail('').subscribe(response => {
       this.listEmailSearchTo = response;
-    });
-    this.emailService.searchbymail('').subscribe(response => {
       this.listEmailSearchCc = response;
-    });
-    this.emailService.searchbymail('').subscribe(response => {
       this.listEmailSearchBcc = response;
     });
+
     this.getPackageInfo();
     this.getTenderPlanInfo();
     this.ckeConfig = {
@@ -366,6 +363,10 @@ export class InformationDeploymentComponent implements OnInit {
     });
   }
 
+  customSearchFn(term: string, item: SearchEmailModel) {
+    term = term.toLocaleLowerCase();
+    return item.employeeName.toLocaleLowerCase().indexOf(term) > -1 || item.employeeEmail.toLocaleLowerCase() === term;
+  }
   // sendTenderPlan() {
   //   this.spinner.show();
   //   this.packageService.sendTenderPreparationPlanning(this.bidOpportunityId).subscribe(success => {
@@ -377,21 +378,21 @@ export class InformationDeploymentComponent implements OnInit {
   //   });
   // }
   // onChange(e) {
-    // console.log('data', this.emailModel.content);
-    // const urlRegex = 'https://www.24h.com.vn/';
-    // console.log('replace', `<a href="${urlRegex}">${urlRegex}</a>`);
-    // this.emailModel.content = this.emailModel.content.replace(urlRegex, `<a href="${urlRegex}">${urlRegex}</a>`);
-    // this.emailModel.content = `<a href="https://www.24h.com.vn/">https://www.24h.com.vn/</a>`;
+  // console.log('data', this.emailModel.content);
+  // const urlRegex = 'https://www.24h.com.vn/';
+  // console.log('replace', `<a href="${urlRegex}">${urlRegex}</a>`);
+  // this.emailModel.content = this.emailModel.content.replace(urlRegex, `<a href="${urlRegex}">${urlRegex}</a>`);
+  // this.emailModel.content = `<a href="https://www.24h.com.vn/">https://www.24h.com.vn/</a>`;
 
-    // this.ckeditor.model.change(writer => {
-    //   const insertPosition = this.ckeditor.model.document.selection.getFirstPosition();
-    //   writer.insertText('CKEditor 5 rocks!', { linkHref: 'https://ckeditor.com/' }, insertPosition);
-    // });
-    // this.emailModel.content = '123';
-    // console.log('ckeditor', this.informationDeployment, this.ckeditor);
-    // this.ckeditor.instance.setData('');
-    // console.log('this.emailModel.content', this.emailModel.content);
-    // .elementRef.nativeElement.nextElementSibling
+  // this.ckeditor.model.change(writer => {
+  //   const insertPosition = this.ckeditor.model.document.selection.getFirstPosition();
+  //   writer.insertText('CKEditor 5 rocks!', { linkHref: 'https://ckeditor.com/' }, insertPosition);
+  // });
+  // this.emailModel.content = '123';
+  // console.log('ckeditor', this.informationDeployment, this.ckeditor);
+  // this.ckeditor.instance.setData('');
+  // console.log('this.emailModel.content', this.emailModel.content);
+  // .elementRef.nativeElement.nextElementSibling
   //   this.emailModel.content = '<p>123</p>';
   // }
 }

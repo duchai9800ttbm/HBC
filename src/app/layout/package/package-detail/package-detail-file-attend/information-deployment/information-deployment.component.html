@@ -12,8 +12,7 @@
     <div>
         <div class="btn-toolbar mt-2 mb-2">
             <button type="button" *ngIf="isconfirmProgress" [ngClass]="{'btn-dep':isconfirmProgress == true}" class="btn btn-up" (click)="openModeSendAssignment(SendAssignment)">{{textConfirmProgress}}</button>
-            <button type="button" *ngIf="packageInfo?.stageStatus.id != bidStatus.DaThongBaoTrienKhai" class="btn btn-up btn-dep"
-                (click)="openModalDeployment(informationDeployment)">Thông báo triển khai</button>
+            <button type="button" *ngIf="packageInfo?.stageStatus.id != bidStatus.DaThongBaoTrienKhai" class="btn btn-up btn-dep" (click)="openModalDeployment(informationDeployment)">Thông báo triển khai</button>
             <button type="button" *ngIf="isTeamPlate" [ngClass]="{ 'btn-dep': isSendInformation === true }" class="btn btn-up ">Tải Template
             </button>
             <!-- <button type="button" *ngIf="isconfirmProgress" class="btn btn-up disable">Upload file</button>
@@ -62,7 +61,9 @@
             <tr>
                 <td>
                 </td>
-                <td><a [routerLink]="['./view']" (click)="changeAction('view')"></a></td>
+                <td>
+                    <a [routerLink]="['./view']" (click)="changeAction('view')"></a>
+                </td>
                 <td>Chưa có</td>
                 <td>{{tenderPlan.createdEmployee?.employeeName}}</td>
                 <td></td>
@@ -112,7 +113,7 @@
         <div class="input-group mb-3">
             <span class="input-group-addon">To:</span>
             <ng-select class="w-100" [items]="listEmailSearchTo" typeToSearchText="Nhập email" addTagText="Thêm email:" clearAllText="Xóa tất cả"
-                [addTag]="true" [hideSelected]="true" multiple="true" bindLabel="employeeEmail" [(ngModel)]="emailModel.to">
+                [addTag]="true" [hideSelected]="true" multiple="true" bindLabel="employeeName" [searchFn]="customSearchFn" [(ngModel)]="emailModel.to">
                 <ng-template ng-option-tmp let-item="item" let-index="index" let-search="searchTerm">
                     <table>
                         <tr>{{item.employeeName}}</tr>
@@ -125,7 +126,7 @@
         <div class="input-group mb-3" *ngIf="isSendCc">
             <span class="input-group-addon" id="basic-addon1">Cc:</span>
             <ng-select class="w-100" [items]="listEmailSearchCc" addTagText="Thêm email:" clearAllText="Xóa tất cả" [addTag]="true" [hideSelected]="true"
-                multiple="true" bindLabel="employeeEmail" [(ngModel)]="emailModel.cc">
+                multiple="true" bindLabel="employeeEmail" [searchFn]="customSearchFn" [(ngModel)]="emailModel.cc">
                 <ng-template ng-option-tmp let-item="item" let-index="index" let-search="searchTerm">
                     <table>
                         <tr>{{item.employeeName}}</tr>
@@ -138,7 +139,7 @@
         <div class="input-group mb-3" *ngIf="isSendBcc">
             <span class="input-group-addon" id="basic-addon1">Bcc:</span>
             <ng-select class="w-100" [items]="listEmailSearchBcc" addTagText="Thêm email:" clearAllText="Xóa tất cả" [addTag]="true"
-                [hideSelected]="true" multiple="true" bindLabel="employeeEmail" [(ngModel)]="emailModel.bcc">
+                [hideSelected]="true" multiple="true" bindLabel="employeeEmail" [searchFn]="customSearchFn" [(ngModel)]="emailModel.bcc">
                 <ng-template ng-option-tmp let-item="item" let-index="index" let-search="searchTerm">
                     <table>
                         <tr>{{item.employeeName}}</tr>
@@ -165,8 +166,7 @@
         </div>
         <div class="body-ckeditor">
             <ckeditor [(ngModel)]="emailModel.content" [config]="ckeConfig" #ckeditor (change)="onChange($event)">
-                <ckbutton [name]="'saveButton'" [command]="'saveCmd'" [icon]="'save.png'" [label]="'Save Document'"
-                    [toolbar]="'clipboard,1'">
+                <ckbutton [name]="'saveButton'" [command]="'saveCmd'" [icon]="'save.png'" [label]="'Save Document'" [toolbar]="'clipboard,1'">
                 </ckbutton>
             </ckeditor>
         </div>
