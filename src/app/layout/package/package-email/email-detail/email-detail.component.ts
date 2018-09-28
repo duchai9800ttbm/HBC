@@ -18,6 +18,7 @@ export class EmailDetailComponent implements OnInit {
   @Input() page: string;
   filterModel = new EmailFilter();
   pagedResult: PagedResult<EmailItemModel> = new PagedResult<EmailItemModel>();
+
   constructor(
     private emailService: EmailService,
     private router: Router,
@@ -32,9 +33,12 @@ export class EmailDetailComponent implements OnInit {
   afterId;
   ngOnInit() {
     this.packageId = +PackageEmailComponent.packageId;
+    const that = this;
     this.emailService.view(this.emailId).subscribe(result => {
       this.email = result;
+      this.email.content = that.createTextLinks(this.email.content);
     });
+
     switch (this.page) {
       case 'trash': {
         this.filterModel.category = 'TrashCan';
@@ -161,5 +165,20 @@ export class EmailDetailComponent implements OnInit {
 
   back() {
     this.router.navigate([`package/email/${this.packageId}/${this.page}/list`]);
+  }
+
+
+  createTextLinks(text) {
+    return (text || '').replace(
+      /([^\S]|^)(((https?\:\/\/)|(www\.))(\S+))/gi,
+      function (match, space, url) {
+        let hyperlink = url;
+        if (!hyperlink.match('^https?:\/\/')) {
+          hyperlink = 'http://' + hyperlink;
+        }
+        return space + '<a href="' + hyperlink + '" >' + url + '</a>';
+      }
+    );
+
   }
 }
