@@ -116,7 +116,7 @@ export class PackageEmailComponent implements OnInit {
     if (this.packageService.routerBeforeEmail) {
       this.router.navigate([this.packageService.routerBeforeEmail]);
     } else {
-      this.router.navigate([`/package/list`]);
+      this.router.navigate([`/package/detail/${this.packageId}/info/infomation`]);
     }
   }
 

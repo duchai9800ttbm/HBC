@@ -181,7 +181,7 @@ export class EmailService {
     const url = `bidopportunity/hsdt/guithuthongbaotrienkhai`;
     const dataObj = new FormData();
     dataObj.append('BidOpportunityId', data.bidOpportunityId + '');
-    dataObj.append('Subject', data.subject);
+    dataObj.append('Subject', data.subject ? data.subject : '');
     data.recipientEmails.forEach((item, index) => {
       dataObj.append('RecipientEmails[' + index + ']', item);
     });
