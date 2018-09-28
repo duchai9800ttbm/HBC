@@ -8,6 +8,7 @@ import { AlertService, ConfirmationService } from '../../../../../../shared/serv
 import { Subject } from 'rxjs/Subject';
 import { SiteReportChangedHistory } from '../../../../../../shared/models/site-survey-report/site-report-changed-history';
 import { SiteSurveyReportService } from '../../../../../../shared/services/site-survey-report.service';
+import { DATATABLE_CONFIG, DATATABLE_CONFIG2 } from '../../../../../../shared/configs';
 
 @Component({
   selector: 'app-liveform-site-report',
@@ -24,9 +25,11 @@ export class LiveformSiteReportComponent implements OnInit {
   isHistory;
   documentData = new SiteSurveyReport();
   updateInfoList;
+  pageIndex: number | string = 0;
   listConstructionType;
   pagedResult: PagedResult<SiteReportChangedHistory> = new PagedResult<SiteReportChangedHistory>();
   dtTrigger: Subject<any> = new Subject();
+  dtOptions: any = DATATABLE_CONFIG2;
   constructor(
     private documentService: DocumentService,
     private siteSurveyReportService: SiteSurveyReportService,
@@ -97,10 +100,13 @@ export class LiveformSiteReportComponent implements OnInit {
     );
   }
   pagedResultChange(pagedResult: any) {
+    this.spinner.show();
     this.siteSurveyReportService
       .changedHistoryTenderSiteReport(this.bidOpportunityId, pagedResult.currentPage, pagedResult.pageSize)
-      .subscribe(result => {
-        this.rerender(result);
+      .subscribe(responseResultHistory => {
+        this.pagedResult = responseResultHistory;
+        this.pageIndex = responseResultHistory.currentPage;
+        this.updateInfoList = responseResultHistory.items;
         this.spinner.hide();
       }, err => {
         this.spinner.hide();
@@ -109,6 +115,6 @@ export class LiveformSiteReportComponent implements OnInit {
 
   onActivate(event, view) {
     LiveformSiteReportComponent.viewFlag = view;
-      this.createMode();
+    this.createMode();
   }
 }

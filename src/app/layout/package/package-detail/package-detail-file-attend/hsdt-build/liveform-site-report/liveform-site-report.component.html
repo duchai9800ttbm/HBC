@@ -1,6 +1,6 @@
 <ng-container *ngIf="isHistory; else elseTemplate">
-    <div id="template0">
-        <div style="padding-left: 15px;">
+    <div id="template0" class="d-flex flex-column">
+        <div class="table-report">
             <div class=" title-list-package d-flex flex-wrap align-items-center status-filter">
                 <div class="mr-auto d-flex align-items-end list-package mt-2 mb-2" style="padding-top: 0!important;">
                     <div class="d-flex justify-content-start" style="height: 40px;">
@@ -15,8 +15,9 @@
             </div>
 
             <ng-container *ngIf="isData; else elseTemplate">
-                <div class="bot-table">
-                    <table class="table-selection  row-border hover cell-border dataTable">
+                <div class="table-responsive" style="overflow-x:auto;">
+                    <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger"
+                    class="table-file-scroll table-selection row-border hover cell-border dataTable">
                         <thead>
                             <tr>
                                 <th class="stt" style="width: 4%; min-width: 15px;background-color: #f68e56!important;">
@@ -132,7 +133,7 @@
 
         </div>
 
-        <div *ngIf="isHistory" style="padding-left: 15px; margin-top: 25px">
+        <div *ngIf="isHistory" class="table-history">
             <div class=" title-list-package d-flex flex-wrap align-items-center status-filter">
                 <div class="mr-auto d-flex align-items-end list-package mt-2 mb-2" style="padding-top: 0!important;">
                     <div class="d-flex justify-content-start" style="height: 40px;">
@@ -144,8 +145,10 @@
                 <div class="btn-toolbar mt-2 mb-2">
                 </div>
             </div>
-            <div class="bot-table">
-                <table class="table-selection  row-border hover cell-border dataTable">
+
+            <div class="table-responsive">
+                <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger"
+                class="table-file-scroll table-selection row-border hover cell-border dataTable">
                     <thead>
                         <tr>
                             <th class="stt" style="width: 4%; min-width: 15px;background-color: #f68e56!important;">
@@ -210,13 +213,13 @@
                                     </label>
                                 </div>
                                 <div class="center-parent d-inline-block">
-                                    <div>{{ i+1 }}</div>
+                                    <div>{{ pageIndex*10+i+1 }}</div>
                                 </div>
                             </td>
                             <td class="text-center">{{ updateInfo.changedTimes }}</td>
                             <td class="text-center">{{ updateInfo.employee?.employeeName }}</td>
                             <td class="text-center">{{ (updateInfo.changedTime)*1000 | date:'dd/MM/yyyy' }}</td>
-                            <td class="text-center d-flex flex-column align-items-start">
+                            <td class="text-center">
                                 <p *ngIf="isData">Cập nhật tài liệu</p>
                                 <p *ngIf="!isData">Xóa tài liệu</p>
                                 <p *ngFor="let item of updateInfo.liveFormChangeds; index as j">

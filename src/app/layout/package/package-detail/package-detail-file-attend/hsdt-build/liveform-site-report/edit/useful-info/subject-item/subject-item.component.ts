@@ -58,7 +58,7 @@ export class SubjectItemComponent implements OnInit {
   trackingChange(obj: ContentItem, index) {
     const model = this.usefulInfo.content[index];
     model.name = obj.name;
-    model.images = obj.images;
+    model.imageUrls = obj.imageUrls;
     model.detail = obj.detail;
     this.watchingChild.emit(this.usefulInfo);
   }

@@ -18,11 +18,13 @@
                     <form [formGroup]="loaiCongTrinhForm">
                         <div class="single-row">
                             <div class="child childcheck" formArrayName="loaiCongTrinhList" *ngFor="let item of loaiCongTrinhListFA.controls; let i = index">
-                                <input [formControlName]="i" type="checkbox" [ngClass]="{'view-mode-control': viewMode}"
-                                    [checked]="loaiCongTrinhList[i].checked" (change)="loaiCongTrinhList[i].checked = !loaiCongTrinhList[i].checked; loaiCongTrinhChange($event)"
-                                    name="construcType">
-                                {{ loaiCongTrinhList[i].text }}
-                                <span class="checkmark" tabindex="3"></span>
+                                <label>
+                                    <input [formControlName]="i" type="checkbox" [ngClass]="{'view-mode-control': viewMode}"
+                                        [checked]="loaiCongTrinhList[i].checked" (change)="loaiCongTrinhList[i].checked = !loaiCongTrinhList[i].checked; loaiCongTrinhChange($event)"
+                                        name="construcType">
+                                    {{ loaiCongTrinhList[i].text }}
+                                    <span class="checkmark" tabindex="3"></span>
+                                </label>
                             </div>
                         </div>
                     </form>
@@ -30,11 +32,13 @@
                     <form [formGroup]="trangThaiCongTrinhForm">
                         <div class="single-row">
                             <div class="child childcheck" formArrayName="trangthaiCongTrinhList" *ngFor="let item of trangthaiCongTrinhListFA.controls; let i = index">
-                                <input [formControlName]="i" type="checkbox" [ngClass]="{'view-mode-control': viewMode}"
-                                    [checked]="trangthaiCongTrinhList[i].checked" (change)="trangthaiCongTrinhList[i].checked = !trangthaiCongTrinhList[i].checked; trangThaiCongTrinhChange($event)"
-                                    name="construcStatus">
-                                {{ trangthaiCongTrinhList[i].text }}
-                                <span class="checkmark" tabindex="4"></span>
+                                <label>
+                                    <input [formControlName]="i" type="checkbox" [ngClass]="{'view-mode-control': viewMode}"
+                                        [checked]="trangthaiCongTrinhList[i].checked" (change)="trangthaiCongTrinhList[i].checked = !trangthaiCongTrinhList[i].checked; trangThaiCongTrinhChange($event)"
+                                        name="construcStatus">
+                                    {{ trangthaiCongTrinhList[i].text }}
+                                    <span class="checkmark" tabindex="4"></span>
+                                </label>
                             </div>
                             <div *ngIf="showValueOfOther"><input [disabled]="viewMode" type="text" [(ngModel)]="valueOfOthers"
                                     (ngModelChange)="valueOfOther($event)" [ngModelOptions]="{standalone: true}"></div>

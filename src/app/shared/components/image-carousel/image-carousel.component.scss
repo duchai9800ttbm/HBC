@@ -31,9 +31,9 @@
 .close-button {
     color: #FFFFFF;
     position: absolute;
-    font-size: 50px;
+    font-size: 4rem;
     top: 0;
-    right: -10%;
+    right: -4%;
 }
 
 .hideSlides {
@@ -62,7 +62,9 @@
 
 .thumbImage {
     img {
-        transform: scale(0.8);
+        margin: 1rem 0.5rem;
+        width: 20%;
+        height: 20%;
     }
 }
 
@@ -74,7 +76,7 @@
 }
 
 .button-control {
-    margin-top: 20px;
+    margin-top: 0.2rem;
 }
 
 .button-view {

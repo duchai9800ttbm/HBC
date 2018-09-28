@@ -8,5 +8,5 @@ export class UsefulInfo {
 export class ContentItem {
     name: string;
     detail: string;
-    images: ImageItem[];
+    imageUrls: ImageItem[];
 }

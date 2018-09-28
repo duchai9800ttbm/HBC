@@ -196,14 +196,14 @@ export class SiteSurveyReportService {
           imageUrls: obj.soilCondition.thongTinCongTrinhGanDo.images
         }
       },
-      usefulInFormations: obj.usefulInfo && obj.usefulInfo.forEach(x => ({
-        title: x.title,
-        content: x.content.forEach(item => ({
-          name: item.name,
-          detail: item.detail,
-          imageUrls: item.images
+      usefulInFormations: (obj.usefulInfo) ? obj.usefulInfo.map(subject => ({
+        title: subject.title,
+        content: subject.content.map(contentItem => ({
+          name: contentItem.name,
+          detail: contentItem.detail,
+          imageUrls: contentItem.imageUrls
         }))
-      }))
+      })) : []
       ,
       updatedDescription: obj.updateDescription
     };
@@ -299,9 +299,7 @@ export class SiteSurveyReportService {
           images: (model.projectStatistic.perspectiveImageOfProject.imageUrls || []).map(x => ({
             id: x.guid,
             thumbSizeUrl: x.thumbSizeUrl,
-            largeSizeUrl: x.largeSizeUrl,
-            file: null,
-            base64: null
+            largeSizeUrl: x.largeSizeUrl
           }))
         },
         thongTinVeKetCau: model.projectStatistic.existingStructure && {
@@ -310,9 +308,7 @@ export class SiteSurveyReportService {
           images: (model.projectStatistic.existingStructure.imageUrls || []).map(x => ({
             id: x.guid,
             thumbSizeUrl: x.thumbSizeUrl,
-            largeSizeUrl: x.largeSizeUrl,
-            file: null,
-            base64: null
+            largeSizeUrl: x.largeSizeUrl
           }))
         },
         nhungYeuCauDacBiet: model.projectStatistic.specialRequirement && {
@@ -321,9 +317,7 @@ export class SiteSurveyReportService {
           images: (model.projectStatistic.specialRequirement.imageUrls || []).map(x => ({
             id: x.guid,
             thumbSizeUrl: x.thumbSizeUrl,
-            largeSizeUrl: x.largeSizeUrl,
-            file: null,
-            base64: null
+            largeSizeUrl: x.largeSizeUrl
           }))
         }
       };
@@ -334,9 +328,7 @@ export class SiteSurveyReportService {
           images: (model.siteInformation.topography.imageUrls || []).map(x => ({
             id: x.guid,
             thumbSizeUrl: x.thumbSizeUrl,
-            largeSizeUrl: x.largeSizeUrl,
-            file: null,
-            base64: null
+            largeSizeUrl: x.largeSizeUrl
           }))
         },
         kienTrucHienHuu: model.siteInformation.existBuildingOnTheSite && {
@@ -345,9 +337,7 @@ export class SiteSurveyReportService {
           images: (model.siteInformation.existBuildingOnTheSite.imageUrls || []).map(x => ({
             id: x.guid,
             thumbSizeUrl: x.thumbSizeUrl,
-            largeSizeUrl: x.largeSizeUrl,
-            file: null,
-            base64: null
+            largeSizeUrl: x.largeSizeUrl
           }))
         },
         yeuCauChuongNgai: model.siteInformation.existObstacleOnTheSite && {
@@ -356,9 +346,7 @@ export class SiteSurveyReportService {
           images: (model.siteInformation.existObstacleOnTheSite.imageUrls || []).map(x => ({
             id: x.guid,
             thumbSizeUrl: x.thumbSizeUrl,
-            largeSizeUrl: x.largeSizeUrl,
-            file: null,
-            base64: null
+            largeSizeUrl: x.largeSizeUrl
           }))
         }
       };
@@ -369,9 +357,7 @@ export class SiteSurveyReportService {
           images: (model.transportationAndSiteEntranceCondition.disadvantage.imageUrls || []).map(x => ({
             id: x.guid,
             thumbSizeUrl: x.thumbSizeUrl,
-            largeSizeUrl: x.largeSizeUrl,
-            file: null,
-            base64: null
+            largeSizeUrl: x.largeSizeUrl
           }))
         },
         chiTietDiaHinhThuanLoi: model.transportationAndSiteEntranceCondition.advantage && {
@@ -380,9 +366,7 @@ export class SiteSurveyReportService {
           images: (model.transportationAndSiteEntranceCondition.advantage.imageUrls || []).map(x => ({
             id: x.guid,
             thumbSizeUrl: x.thumbSizeUrl,
-            largeSizeUrl: x.largeSizeUrl,
-            file: null,
-            base64: null
+            largeSizeUrl: x.largeSizeUrl
           }))
         },
         loiVaoCongTrinhHuongVao: model.transportationAndSiteEntranceCondition.directionOfSiteEntrance && {
@@ -391,9 +375,7 @@ export class SiteSurveyReportService {
           images: (model.transportationAndSiteEntranceCondition.directionOfSiteEntrance.imageUrls || []).map(x => ({
             id: x.guid,
             thumbSizeUrl: x.thumbSizeUrl,
-            largeSizeUrl: x.largeSizeUrl,
-            file: null,
-            base64: null
+            largeSizeUrl: x.largeSizeUrl
           }))
         },
         loiVaoCongTrinhDuongHienCo: model.transportationAndSiteEntranceCondition.existingRoadOnSite && {
@@ -402,9 +384,7 @@ export class SiteSurveyReportService {
           images: (model.transportationAndSiteEntranceCondition.existingRoadOnSite.imageUrls || []).map(x => ({
             id: x.guid,
             thumbSizeUrl: x.thumbSizeUrl,
-            largeSizeUrl: x.largeSizeUrl,
-            file: null,
-            base64: null
+            largeSizeUrl: x.largeSizeUrl
           }))
         },
         loiVaoCongTrinhYeuCauDuongTam: model.transportationAndSiteEntranceCondition.temporatyRoadRequirement && {
@@ -413,9 +393,7 @@ export class SiteSurveyReportService {
           images: (model.transportationAndSiteEntranceCondition.temporatyRoadRequirement.imageUrls || []).map(x => ({
             id: x.guid,
             thumbSizeUrl: x.thumbSizeUrl,
-            largeSizeUrl: x.largeSizeUrl,
-            file: null,
-            base64: null
+            largeSizeUrl: x.largeSizeUrl
           }))
         },
         loiVaoCongTrinhYeuCauHangRao: model.transportationAndSiteEntranceCondition.temporaryFenceRequirement && {
@@ -424,9 +402,7 @@ export class SiteSurveyReportService {
           images: (model.transportationAndSiteEntranceCondition.temporaryFenceRequirement.imageUrls || []).map(x => ({
             id: x.guid,
             thumbSizeUrl: x.thumbSizeUrl,
-            largeSizeUrl: x.largeSizeUrl,
-            file: null,
-            base64: null
+            largeSizeUrl: x.largeSizeUrl
           }))
         },
       };
@@ -437,9 +413,7 @@ export class SiteSurveyReportService {
           images: (model.demobilisationAndConsolidation.demobilisationExistingStructureOrBuilding.imageUrls || []).map(x => ({
             id: x.guid,
             thumbSizeUrl: x.thumbSizeUrl,
-            largeSizeUrl: x.largeSizeUrl,
-            file: null,
-            base64: null
+            largeSizeUrl: x.largeSizeUrl
           }))
         },
         giaCoKetCau: model.demobilisationAndConsolidation.consolidationExistingStructureOrBuilding && {
@@ -448,9 +422,7 @@ export class SiteSurveyReportService {
           images: (model.demobilisationAndConsolidation.consolidationExistingStructureOrBuilding.imageUrls || []).map(x => ({
             id: x.guid,
             thumbSizeUrl: x.thumbSizeUrl,
-            largeSizeUrl: x.largeSizeUrl,
-            file: null,
-            base64: null
+            largeSizeUrl: x.largeSizeUrl
           }))
         },
         dieuKien: model.demobilisationAndConsolidation.adjacentBuildingConditions && {
@@ -459,9 +431,7 @@ export class SiteSurveyReportService {
           images: (model.demobilisationAndConsolidation.adjacentBuildingConditions.imageUrls || []).map(x => ({
             id: x.guid,
             thumbSizeUrl: x.thumbSizeUrl,
-            largeSizeUrl: x.largeSizeUrl,
-            file: null,
-            base64: null
+            largeSizeUrl: x.largeSizeUrl
           }))
         }
       };
@@ -472,9 +442,7 @@ export class SiteSurveyReportService {
           images: (model.temporaryBuildingServiceForConstruction.supplyWaterSystemExistingSystem.imageUrls || []).map(x => ({
             id: x.guid,
             thumbSizeUrl: x.thumbSizeUrl,
-            largeSizeUrl: x.largeSizeUrl,
-            file: null,
-            base64: null
+            largeSizeUrl: x.largeSizeUrl
           }))
         },
         heThongNuocDiemDauNoi: model.temporaryBuildingServiceForConstruction.supplyWaterSystemExistingConnectionPoint && {
@@ -484,9 +452,7 @@ export class SiteSurveyReportService {
             .map(x => ({
               id: x.guid,
               thumbSizeUrl: x.thumbSizeUrl,
-              largeSizeUrl: x.largeSizeUrl,
-              file: null,
-              base64: null
+              largeSizeUrl: x.largeSizeUrl
             }))
         },
         heThongNuocThoatHeThongHienHuu: model.temporaryBuildingServiceForConstruction.drainageWaterSystemExistingSystem && {
@@ -496,9 +462,7 @@ export class SiteSurveyReportService {
             .map(x => ({
               id: x.guid,
               thumbSizeUrl: x.thumbSizeUrl,
-              largeSizeUrl: x.largeSizeUrl,
-              file: null,
-              base64: null
+              largeSizeUrl: x.largeSizeUrl
             }))
         },
         heThongNuocThoatDiemDauNoi: model.temporaryBuildingServiceForConstruction.drainageWaterSystemExistingConnectionPoint && {
@@ -509,9 +473,7 @@ export class SiteSurveyReportService {
             .map(x => ({
               id: x.guid,
               thumbSizeUrl: x.thumbSizeUrl,
-              largeSizeUrl: x.largeSizeUrl,
-              file: null,
-              base64: null
+              largeSizeUrl: x.largeSizeUrl
             }))
         },
         heThongDienTramHaThe: model.temporaryBuildingServiceForConstruction.transformerStation && {
@@ -520,9 +482,7 @@ export class SiteSurveyReportService {
           images: (model.temporaryBuildingServiceForConstruction.transformerStation.imageUrls || []).map(x => ({
             id: x.guid,
             thumbSizeUrl: x.thumbSizeUrl,
-            largeSizeUrl: x.largeSizeUrl,
-            file: null,
-            base64: null
+            largeSizeUrl: x.largeSizeUrl
           }))
         },
         heThongDienDuongDayTrungThe: model.temporaryBuildingServiceForConstruction.existingMediumVoltageSystem && {
@@ -531,9 +491,7 @@ export class SiteSurveyReportService {
           images: (model.temporaryBuildingServiceForConstruction.existingMediumVoltageSystem.imageUrls || []).map(x => ({
             id: x.guid,
             thumbSizeUrl: x.thumbSizeUrl,
-            largeSizeUrl: x.largeSizeUrl,
-            file: null,
-            base64: null
+            largeSizeUrl: x.largeSizeUrl
           }))
         },
         heThongDienThongTinKhac: model.temporaryBuildingServiceForConstruction.others && {
@@ -542,9 +500,7 @@ export class SiteSurveyReportService {
           images: (model.temporaryBuildingServiceForConstruction.others.imageUrls || []).map(x => ({
             id: x.guid,
             thumbSizeUrl: x.thumbSizeUrl,
-            largeSizeUrl: x.largeSizeUrl,
-            file: null,
-            base64: null
+            largeSizeUrl: x.largeSizeUrl
           }))
         }
       };
@@ -555,9 +511,7 @@ export class SiteSurveyReportService {
           images: (model.reportExistingSoilCondition.existingFooting.imageUrls || []).map(x => ({
             id: x.guid,
             thumbSizeUrl: x.thumbSizeUrl,
-            largeSizeUrl: x.largeSizeUrl,
-            file: null,
-            base64: null
+            largeSizeUrl: x.largeSizeUrl
           }))
         },
         thongTinCongTrinhGanDo: model.reportExistingSoilCondition.soilInvestigation && {
@@ -566,9 +520,7 @@ export class SiteSurveyReportService {
           images: (model.reportExistingSoilCondition.soilInvestigation.imageUrls || []).map(x => ({
             id: x.guid,
             thumbSizeUrl: x.thumbSizeUrl,
-            largeSizeUrl: x.largeSizeUrl,
-            file: null,
-            base64: null
+            largeSizeUrl: x.largeSizeUrl
           }))
         }
       };
@@ -577,12 +529,10 @@ export class SiteSurveyReportService {
         content: x.content.map(i => ({
           name: (i.name !== 'null') ? i.name : '',
           detail: (i.detail !== 'null') ? i.detail : '',
-          images: i.imageUrls.map(e => ({
+          imageUrls: i.imageUrls.map(e => ({
             id: e.guid,
             thumbSizeUrl: e.thumbSizeUrl,
-            largeSizeUrl: e.largeSizeUrl,
-            file: null,
-            base64: null
+            largeSizeUrl: e.largeSizeUrl
           }))
         }))
       }));

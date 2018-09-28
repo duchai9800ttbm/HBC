@@ -59,17 +59,18 @@ export class ContentItemComponent implements OnInit {
     this.contentItemForm = this.fb.group({
       tenNoidung: [this.contentItemModel.name],
       chiTietNoiDung: [this.contentItemModel.detail],
-      chiTietNoiDungList: [this.contentItemModel.images]
+      chiTietNoiDungList: [this.contentItemModel.imageUrls]
     });
-    this.contentItemImageList = this.contentItemModel.images;
+    this.contentItemImageList = this.contentItemModel.imageUrls;
   }
 
   mappingData(data) {
     const obj = new ContentItem();
     obj.name = data.tenNoidung;
     obj.detail = data.chiTietNoiDung;
-    obj.images = this.contentItemImageList;
+    obj.imageUrls = this.contentItemImageList;
     this.valueChange.emit(obj);
+    console.log(obj);
   }
   uploadContentImage(event) {
     const files = event.target.files;
@@ -77,6 +78,7 @@ export class ContentItemComponent implements OnInit {
       .uploadImageSiteSurveyingReport(files, this.currentBidOpportunityId)
       .subscribe(res => {
         this.contentItemImageList = [...this.contentItemImageList, ...res];
+        this.contentItemForm.get('chiTietNoiDungList').patchValue(this.contentItemImageList);
       }, err => {
         this.alertService.error('Upload hình ảnh thất bại. Xin vui lòng thử lại!');
         this.contentItemImageList.forEach(x => {

@@ -6,15 +6,13 @@
                 <h6 class="small-title">Những chủ đề trên nếu thấy cần thiết thì làm riêng
                     một report cho chủ đề đó</h6>
                 <ng-container *ngFor="let subject of usefulInfoData; let i = index">
-
                     <div class="list-detail">
                         <div class="img-demo-des">
                             <label for="">7.{{ i+1 }} Chủ đề</label>
                         </div>
                     </div>
-
-                    <app-subject-item [usefulInfo]="subject" (watchingChild)="endPointValue($event, i)" (addContentItem)="addContent(i)"
-                        (deleteContent)="deleteContent($event, i)" (deleteSubjectEmit)="deleteSubject(i)"></app-subject-item>
+                    <app-subject-item [usefulInfo]="subject" (watchingChild)="endPointValue($event, i)"
+                        (addContentItem)="addContent(i)" (deleteContent)="deleteContent($event, i)" (deleteSubjectEmit)="deleteSubject(i)"></app-subject-item>
                 </ng-container>
                 <div class="main-detail">
                     <button type="button" class="btn btn-primary" (click)="addSubject()">Thêm chủ đề</button>

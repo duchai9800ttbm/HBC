@@ -67,54 +67,56 @@ input[type=text] {
     cursor: pointer;
     user-select: none;
 
-    input {
-        position: absolute;
-        opacity: 0;
-        top: 0;
-        left: 0;
-        zoom: 1.8;
-        z-index: 400;
-        cursor: pointer;
-    }
-
-    .checkmark {
-        position: absolute;
-        border-radius: 4px;
-        top: 0;
-        left: 0;
-        height: 20px;
-        width: 20px;
-        background-color: #eee;
-
-        &:after {
-            content: "";
+    label {
+        input {
             position: absolute;
-            display: none;
+            opacity: 0;
+            top: 0;
+            left: 0;
+            zoom: 1.8;
+            z-index: 400;
+            cursor: pointer;
         }
-    }
 
-    &:hover input~.checkmark {
-        background-color: #CCCCCC;
-    }
+        .checkmark {
+            position: absolute;
+            border-radius: 4px;
+            top: 0;
+            left: 0;
+            height: 20px;
+            width: 20px;
+            background-color: #eee;
 
-    input:checked~.checkmark {
-        background-color: #00B327;
-    }
+            &:after {
+                content: "";
+                position: absolute;
+                display: none;
+            }
+        }
 
-    input:checked~.checkmark:after {
-        display: block;
-    }
+        &:hover input~.checkmark {
+            background-color: #CCCCCC;
+        }
 
-    .checkmark:after {
-        left: 7px;
-        top: 4px;
-        width: 5px;
-        height: 10px;
-        border: solid #FFFFFF;
-        border-width: 0 3px 3px 0;
-        -webkit-transform: rotate(45deg);
-        -ms-transform: rotate(45deg);
-        transform: rotate(45deg);
+        input:checked~.checkmark {
+            background-color: #00B327;
+        }
+
+        input:checked~.checkmark:after {
+            display: block;
+        }
+
+        .checkmark:after {
+            left: 7px;
+            top: 4px;
+            width: 5px;
+            height: 10px;
+            border: solid #FFFFFF;
+            border-width: 0 3px 3px 0;
+            -webkit-transform: rotate(45deg);
+            -ms-transform: rotate(45deg);
+            transform: rotate(45deg);
+        }
     }
 }
 

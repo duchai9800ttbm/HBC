@@ -26,6 +26,16 @@ export class EditComponent implements OnInit, OnDestroy {
   isData;
   showPopupConfirm = false;
   datePickerConfig = DATETIME_PICKER_CONFIG;
+  stepNameList = [
+    'ScaleOverallComponent',
+    'DescribeOverallComponent',
+    'TrafficComponent',
+    'DemoConsoComponent',
+    'ServiceConstructionComponent',
+    'SoilConditionComponent',
+    'UsefulInfoComponent'
+  ];
+  stepName;
   currentBidOpportunityId: number;
   packageData = new PackageInfoModel();
 
@@ -51,7 +61,6 @@ export class EditComponent implements OnInit, OnDestroy {
       const objData = LiveformSiteReportComponent.formModel;
       this.showPopupConfirm = false;
       this.spinner.show();
-      console.log(objData);
       this.siteSurveyReportService
         .createOrUpdateSiteSurveyingReport(objData)
         .subscribe(() => {
@@ -83,11 +92,94 @@ export class EditComponent implements OnInit, OnDestroy {
   }
 
   disableSideMenu(event) {
+    this.stepName = event.constructor.name;
     const elem = document.getElementById('toggle-menu');
     const elemm = document.getElementById('header-table-build');
     elem.style.display = 'none';
     elemm.style.visibility = 'hidden';
     elemm.style.position = 'absolute';
+  }
+  nextStep() {
+    const index = this.stepNameList.indexOf(this.stepName);
+    switch (index) {
+      case 0: {
+        const step = `describe`;
+        const parameter = `/package/detail/${this.currentBidOpportunityId}/attend/build/liveformsite/edit/${step}`;
+        this.router.navigate([parameter]);
+        break;
+      }
+      case 1: {
+        const step = `traffic`;
+        const parameter = `/package/detail/${this.currentBidOpportunityId}/attend/build/liveformsite/edit/${step}`;
+        this.router.navigate([parameter]);
+        break;
+      }
+      case 2: {
+        const step = `demo-conso`;
+        const parameter = `/package/detail/${this.currentBidOpportunityId}/attend/build/liveformsite/edit/${step}`;
+        this.router.navigate([parameter]);
+        break;
+      }
+      case 3: {
+        const step = `service-construction`;
+        const parameter = `/package/detail/${this.currentBidOpportunityId}/attend/build/liveformsite/edit/${step}`;
+        this.router.navigate([parameter]);
+        break;
+      }
+      case 4: {
+        const step = `soil`;
+        const parameter = `/package/detail/${this.currentBidOpportunityId}/attend/build/liveformsite/edit/${step}`;
+        this.router.navigate([parameter]);
+        break;
+      }
+      case 5: {
+        const step = `moreinfo`;
+        const parameter = `/package/detail/${this.currentBidOpportunityId}/attend/build/liveformsite/edit/${step}`;
+        this.router.navigate([parameter]);
+        break;
+      }
+    }
+  }
+  preStep() {
+    const index = this.stepNameList.indexOf(this.stepName);
+    switch (index) {
+      case 2: {
+        const step = `describe`;
+        const parameter = `/package/detail/${this.currentBidOpportunityId}/attend/build/liveformsite/edit/${step}`;
+        this.router.navigate([parameter]);
+        break;
+      }
+      case 3: {
+        const step = `traffic`;
+        const parameter = `/package/detail/${this.currentBidOpportunityId}/attend/build/liveformsite/edit/${step}`;
+        this.router.navigate([parameter]);
+        break;
+      }
+      case 4: {
+        const step = `demo-conso`;
+        const parameter = `/package/detail/${this.currentBidOpportunityId}/attend/build/liveformsite/edit/${step}`;
+        this.router.navigate([parameter]);
+        break;
+      }
+      case 5: {
+        const step = `service-construction`;
+        const parameter = `/package/detail/${this.currentBidOpportunityId}/attend/build/liveformsite/edit/${step}`;
+        this.router.navigate([parameter]);
+        break;
+      }
+      case 6: {
+        const step = `soil`;
+        const parameter = `/package/detail/${this.currentBidOpportunityId}/attend/build/liveformsite/edit/${step}`;
+        this.router.navigate([parameter]);
+        break;
+      }
+      case 1: {
+        const step = `scale`;
+        const parameter = `/package/detail/${this.currentBidOpportunityId}/attend/build/liveformsite/edit/${step}`;
+        this.router.navigate([parameter]);
+        break;
+      }
+    }
   }
   ngOnDestroy() {
     const elem = document.getElementById('toggle-menu');
