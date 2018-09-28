@@ -16,7 +16,17 @@
     <div>{{email?.subject}}</div>
 </div>
 <div class="title-item d-flex align-items-center">
-    <div class="to">To: {{email?.to}}</div>
+    <div class="to">To:
+        <span *ngFor="let e of email?.to; let i = index">
+            <span *ngIf="i !== 0">,</span>
+            <span>{{e.email}}</span>
+            <span *ngIf="!e?.isSuccess">
+                <i class="fa fa-exclamation-triangle icon-warning" aria-hidden="true"></i>
+            </span>
+
+        </span>
+    </div>
+
     <div class="date-time d-flex justify-content-end align-items-center">
         <div>
             <span *ngIf="email?.sentDate">{{email?.sentDate*1000 | date:'dd/MM/yyyy HH:mm': '+0000'}}</span>
@@ -32,6 +42,8 @@
         </div>
     </div>
 </div>
+
+
 
 <div class="content-email">
     <pre [innerHTML]="email?.content">

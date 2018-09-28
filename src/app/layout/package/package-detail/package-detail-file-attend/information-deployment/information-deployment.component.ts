@@ -126,7 +126,13 @@ export class InformationDeploymentComponent implements OnInit {
         { name: 'basicstyles', items: ['Bold', 'Italic', 'Underline', 'Strike'] },
         { name: 'justify', items: ['JustifyLeft', 'JustifyCenter', 'JustifyRight', 'JustifyBlock'] },
         { name: 'styles', items: ['Styles', 'Format', 'FontSize', '-', 'TextColor', 'BGColor'] },
-      ]
+        { name: 'insert', items: ['Image', 'Flash', 'Table', 'HorizontalRule', 'Smiley', 'SpecialChar', 'PageBreak', 'Iframe'] },
+        { name: 'clipboard', items: ['Cut', 'Copy', 'Paste', 'PasteText', 'Undo', 'Redo'] },
+
+      ],
+      allowedContent: true,
+      extraPlugins: 'colorbutton,font,justify,print,tableresize,pastefromword,liststyle',
+      pasteFromWord_inlineImages: true
     };
 
     this.packageId = +PackageDetailComponent.packageId;
@@ -137,6 +143,9 @@ export class InformationDeploymentComponent implements OnInit {
       userId: [null],
       version: [''],
     });
+
+
+
     this.isSendCc = false;
     this.isSendBcc = false;
     this.setHSDT = false;
@@ -167,6 +176,10 @@ export class InformationDeploymentComponent implements OnInit {
       this.spinner.hide();
       this.alertService.error('Lấy thông tin bảng phân công tiến độ thất bại');
     });
+  }
+
+  onPaste(e) {
+    console.log(e);
   }
 
   getPackageInfo() {
@@ -377,24 +390,10 @@ export class InformationDeploymentComponent implements OnInit {
   //     this.alertService.error('Gửi phân công tiến độ thất bại!');
   //   });
   // }
-  // onChange(e) {
-  // console.log('data', this.emailModel.content);
-  // const urlRegex = 'https://www.24h.com.vn/';
-  // console.log('replace', `<a href="${urlRegex}">${urlRegex}</a>`);
-  // this.emailModel.content = this.emailModel.content.replace(urlRegex, `<a href="${urlRegex}">${urlRegex}</a>`);
-  // this.emailModel.content = `<a href="https://www.24h.com.vn/">https://www.24h.com.vn/</a>`;
+  onChange(e) {
+    console.log(e);
+  }
 
-  // this.ckeditor.model.change(writer => {
-  //   const insertPosition = this.ckeditor.model.document.selection.getFirstPosition();
-  //   writer.insertText('CKEditor 5 rocks!', { linkHref: 'https://ckeditor.com/' }, insertPosition);
-  // });
-  // this.emailModel.content = '123';
-  // console.log('ckeditor', this.informationDeployment, this.ckeditor);
-  // this.ckeditor.instance.setData('');
-  // console.log('this.emailModel.content', this.emailModel.content);
-  // .elementRef.nativeElement.nextElementSibling
-  //   this.emailModel.content = '<p>123</p>';
-  // }
 }
 
 const listUsers = [

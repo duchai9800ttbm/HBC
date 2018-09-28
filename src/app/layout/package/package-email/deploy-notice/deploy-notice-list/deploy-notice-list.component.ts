@@ -166,5 +166,9 @@ export class DeployNoticeListComponent implements OnInit {
     this.router.navigate([`package/email/${this.packageId}/deploy/detail`], { queryParams: { page: 'deploy', itemId: id } });
   }
 
+  renderEmailName(arr: any[]) {
+    return arr.map(x => x.email);
+  }
+
 
 }
