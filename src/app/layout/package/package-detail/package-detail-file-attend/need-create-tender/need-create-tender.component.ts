@@ -133,7 +133,6 @@ export class NeedCreateTenderComponent implements OnInit {
   }
 
   sendApproveBidProposal() {
-    if (NeedCreateTenderFormComponent.formModel.tenderDirectorProposal.isSigned) {
       this.spinner.show();
       this.packageService.sendApproveBidProposal(this.bidOpportunityId, DateTimeConvertHelper.fromDtObjectToSecon(this.dateApproveBid))
         .subscribe(data => {
@@ -147,11 +146,6 @@ export class NeedCreateTenderComponent implements OnInit {
           this.alertService.error('Gửi duyệt đề nghị dự thầu thất bại!');
           this.isShowDialog = false;
         });
-    } else {
-      this.isShowDialog = false;
-      this.confirmService.missAction('Đề nghị dự thầu chưa được xác nhận ký bởi giám đốc dự thầu',
-        `/package/detail/${this.bidOpportunityId}/attend/create-request/form/edit/director-proposal`);
-    }
   }
 
   approveBidProposal() {
@@ -212,5 +206,15 @@ export class NeedCreateTenderComponent implements OnInit {
 
   onSelectAll(value: boolean) {
     this.pagedResultChangeHistoryList.items.forEach(x => (x['checkboxSelected'] = value));
+  }
+
+  checkSigned() {
+    if (NeedCreateTenderFormComponent.formModel.tenderDirectorProposal.isSigned) {
+      this.isShowDialog = true;
+    } else {
+      this.isShowDialog = false;
+      this.confirmService.missAction('Đề nghị dự thầu chưa được xác nhận ký bởi giám đốc dự thầu',
+        `/package/detail/${this.bidOpportunityId}/attend/create-request/form/edit/director-proposal`);
+    }
   }
 }
