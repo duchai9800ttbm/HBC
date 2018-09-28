@@ -123,9 +123,9 @@ export class NeedCreateTenderFormDirectorProposalComponent implements OnInit {
             );
     }
 
-    routerLink(event) {
+    routerLink(event, link) {
         if (event.key === 'Enter') {
-            this.router.navigate([`/package/detail/${+PackageDetailComponent.packageId}/attend/create-request/form/create/descion-board`]);
+            this.router.navigate([`/package/detail/${+PackageDetailComponent.packageId}/attend/create-request/form/create/${link}`]);
         }
     }
 }

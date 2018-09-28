@@ -48,9 +48,9 @@ export class NeedCreateTenderFormEstimatedBudgetComponent implements OnInit {
     NeedCreateTenderFormComponent.formModel.estimatedBudgetOfPakage = data;
   }
 
-  routerLink(event) {
+  routerLink(event, link) {
     if (event.key === 'Enter') {
-      this.router.navigate([`/package/detail/${+PackageDetailComponent.packageId}/attend/create-request/form/create/fee-tender`]);
+      this.router.navigate([`/package/detail/${+PackageDetailComponent.packageId}/attend/create-request/form/create/${link}`]);
     }
   }
 }
