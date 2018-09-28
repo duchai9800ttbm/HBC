@@ -14,6 +14,7 @@ import { StatusObservableHsdtService } from '../../../../../shared/services/stat
 import { NotificationService } from '../../../../../shared/services/notification.service';
 import { ProposedTenderParticipationHistory } from '../../../../../shared/models/api-response/package/proposed-tender-participation-history.model';
 import { PagedResult } from '../../../../../shared/models';
+import { GroupDescriptor, DataResult, process, groupBy } from '@progress/kendo-data-query';
 
 @Component({
   selector: 'app-need-create-tender',
@@ -33,6 +34,7 @@ export class NeedCreateTenderComponent implements OnInit {
   bidStatus = BidStatus;
   reasonApproveBid = '';
   pagedResultChangeHistoryList: PagedResult<ProposedTenderParticipationHistory[]> = new PagedResult<ProposedTenderParticipationHistory[]>();
+  historyList;
   constructor(
     private packageService: PackageService,
     private spinner: NgxSpinnerService,
@@ -58,8 +60,13 @@ export class NeedCreateTenderComponent implements OnInit {
   getChangeHistory() {
     this.spinner.show();
     this.packageService.getChangeHistoryListProposedTender(this.bidOpportunityId, 0, 1000).subscribe(respone => {
-      this.pagedResultChangeHistoryList = respone;
-      console.log('lich su thay doi', respone);
+      this.historyList = respone.items;
+      // this.pagedResultChangeHistoryList = process(products, { group: this.groups });
+      // const a =   [this.pagedResultChangeHistoryList.items , { field: 'changedTimes' }];
+      this.historyList = this.historyList.sort( ( a, b ) =>  parseFloat(a.changedTimes) < parseFloat(b.changedTimes));
+      // objs.sort((a,b) => (a.last_nom > b.last_nom) ? 1 : ((b.last_nom > a.last_nom) ? -1 : 0));
+      this.historyList = groupBy(this.historyList, [{ field: 'changedTimes' }]);
+      console.log('lich su thay doi', this.historyList);
       this.spinner.hide();
     },
       err => {
@@ -206,7 +213,7 @@ export class NeedCreateTenderComponent implements OnInit {
   }
 
   onSelectAll(value: boolean) {
-    this.pagedResultChangeHistoryList.items.forEach(x => (x['checkboxSelected'] = value));
+    this.historyList.forEach(x => (x['checkboxSelected'] = value));
   }
 
   checkSigned() {

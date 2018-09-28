@@ -121,29 +121,39 @@
             </tr>
         </thead>
         <tbody>
-            <tr *ngFor="let item of pagedResultChangeHistoryList.items; let i = index">
-                <td class="d-flex justify-content-around">
-                    <div class="w-40">
-                        <div class="center-parent">
-                            <label class="custom-control custom-checkbox">
-                                <input type="checkbox" class="custom-control-input" [(ngModel)]="item.checkboxSelected">
-                                <span class="custom-control-indicator"></span>
-                            </label>
+            <tr *ngFor="let item of historyList; let i = index">
+                <td>
+                    <div class="d-flex justify-content-around">
+                        <div class="w-40">
+                            <div class="center-parent">
+                                <label class="custom-control custom-checkbox">
+                                    <input type="checkbox" class="custom-control-input" [(ngModel)]="item.checkboxSelected">
+                                    <span class="custom-control-indicator"></span>
+                                </label>
+                            </div>
                         </div>
-                    </div>
-                    <div class="center-parent w-35">
-                        <div>{{i + 1}}</div>
+                        <div class="center-parent w-35">
+                            <div>{{i + 1}}</div>
+                        </div>
                     </div>
                 </td>
                 <td class="text-center">
-                    {{item.changedTimes + 1}}
+                    {{item.value + 1}}
                 </td>
-                <td> {{item.employee?.employeeName}}</td>
-                <td>{{ (item.changedTime)*1000 | date:'dd/MM/yyyy' }}</td>
-                <td>{{item.updateDesc}}</td>
+                <td> {{item.items[0].employee?.employeeName}}</td>
+                <td>{{ (item.items[0].changedTime)*1000 | date:'dd/MM/yyyy' }}</td>
+                <td>{{item.items[0].updateDesc}}</td>
                 <td>
-                    <div class="d-flex justify-content-center">
+                    <div *ngFor="let liveFormChanged of item.items">
                         <div>
+                            <div *ngFor="let step of liveFormChanged.liveFormChangeds">
+                                <!-- {{step.liveFormStep}}  -->
+                                <div>* {{step.liveFormSubject}}
+                                    <div>
+                                        - {{step.liveFormTitle}}: từ {{step.newValue}} thành {{step.oldValue}}
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </td>
