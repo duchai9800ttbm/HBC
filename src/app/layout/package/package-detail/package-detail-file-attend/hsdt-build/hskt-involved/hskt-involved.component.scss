@@ -32,6 +32,7 @@
     outline: none;
 
 }
+
 .arrow-down {
     width: 0;
     height: 0;
@@ -42,6 +43,7 @@
     top: -10px;
     z-index: 3;
 }
+
 .arrow-down-active {
     width: 0;
     height: 0;
@@ -59,7 +61,7 @@
     content: counter(step);
     counter-increment: step;
     line-height: 30px;
-  //  border: 1px solid #b8b8b8;
+    //  border: 1px solid #b8b8b8;
     display: block;
     text-align: center;
     margin: 0 auto 10px auto;
@@ -68,10 +70,11 @@
     z-index: 30;
     cursor: pointer;
 
-   // border-top: 1px dashed #8c8b8b;
+    // border-top: 1px dashed #8c8b8b;
 
 }
-li.triangle::before{
+
+li.triangle::before {
     background-color: red;
 }
 
@@ -88,13 +91,13 @@ li.triangle::before{
     z-index: 1;
 
     // background-color: #00a0e3;
-	// bottom: 5px;
-	// content: "";
-	// height: 38px;
-	// position: absolute;
-	// left: 50%;
-	// margin-left: -44px;
-	// width: 44px;
+    // bottom: 5px;
+    // content: "";
+    // height: 38px;
+    // position: absolute;
+    // left: 50%;
+    // margin-left: -44px;
+    // width: 44px;
 }
 
 .progressbar li:first-child:after {
@@ -112,21 +115,22 @@ li.triangle::before{
 .progressbar li.active:before {
     border-color: #00a0e3;
     background-color: #00a0e3;
+
     .arrow-down {
         width: 0;
         height: 0;
         border-left: 6px solid transparent;
         border-right: 6px solid transparent;
-        border-top: 8px solid #00a0e3!important;
+        border-top: 8px solid #00a0e3 !important;
         position: relative;
         top: -10px;
         z-index: 3;
-      }
+    }
 }
 
 .progressbar li.active:after {
-   // background-color: #00a0e3;
-   border-top: 1px dashed #00a0e3!important;
+    // background-color: #00a0e3;
+    border-top: 1px dashed #00a0e3 !important;
 
 }
 
@@ -193,7 +197,8 @@ li.triangle::before{
 .no-boder-bottom {
     border-bottom: none;
 }
-input.icon{
+
+input.icon {
     font-family: FontAwesome, "Open Sans", Verdana, sans-serif;
     font-style: normal;
     font-weight: normal;
@@ -318,12 +323,53 @@ button:focus {
 
 table.dataTable th {
     border-bottom: 1px solid #dddddd !important;
-    background-color: #ffff!important;
+    background-color: #ffff !important;
     border: 1px solid #dddddd;
 }
 
-// @media only screen and (max-width: 1024px) {
-//     .bot-table, #menu-control-table {
-//         zoom: 0.8 !important;
-//     }
-// }
+::-webkit-scrollbar {
+    width: 6px;
+}
+
+#table-file-scroll {
+    tr {
+        td:first-child {
+            display: table-cell !important;
+        }
+    }
+}
+
+#table-file-scroll::-webkit-scrollbar {
+    height: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background-color: #f8f8f8;
+    // border-radius: 5px;
+}
+
+::-webkit-scrollbar-thumb {
+    background-color: #c6c6c6;
+    cursor: pointer;
+}
+
+table.dataTable {
+
+    tr:nth-child(odd) {
+        background-color: #fafbfc;
+    }
+
+    overflow-x: scroll;
+
+    th:first-child,
+    td:first-child {
+        width: 80px !important;
+        max-width: 90px;
+    }
+
+    th:not([type="check"]),
+    td:not([type="check"]) {
+        min-width: 80px;
+        max-width: 90px;
+    }
+}

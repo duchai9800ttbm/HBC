@@ -7,6 +7,7 @@ import { HsdtBuildComponent } from './hsdt-build.component';
 import { HsktInvolvedComponent } from './hskt-involved/hskt-involved.component';
 import { SharedModule } from '../../../../../shared/shared.module';
 import { SharedComponentsModule } from '../../../../../shared/components/shared-components.module';
+import { HoSoDuThauService } from '../../../../../shared/services/ho-so-du-thau.service';
 
 @NgModule({
     imports: [
@@ -19,6 +20,9 @@ import { SharedComponentsModule } from '../../../../../shared/components/shared-
         HsdtBuildComponent,
         RequirePriceComponent,
         HsktInvolvedComponent
+    ],
+    providers: [
+        HoSoDuThauService
     ]
 })
 export class HsdtBuildModule { }

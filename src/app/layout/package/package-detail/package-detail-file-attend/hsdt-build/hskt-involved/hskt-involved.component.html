@@ -66,14 +66,15 @@
                 <button type="submit" class="btn btn-primary ml-sm-2">
                     <i class="fa fa-filter" aria-hidden="true"></i>&nbsp; Lọc
                 </button>
-                <button class="btn btn-secondary ml-sm-2" >
+                <button class="btn btn-secondary ml-sm-2">
                     <i class="fa fa-times"></i>&nbsp; Xóa lọc
                 </button>
             </div>
         </div>
     </div>
-    <div class="bot-table">
-        <table class="table-selection  row-border hover cell-border dataTable">
+    <div class="table-responsive">
+        <table id="table-file-scroll" [hidden]="!showTable" datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger"
+            class="table-selection row-border cell-border ">
             <thead>
                 <tr>
                     <th class="stt" style="width: 3%; min-width: 15px;background-color: #f68e56!important;">
@@ -172,50 +173,109 @@
             </thead>
 
             <tbody>
-                <tr>
-                    <td class="stt d-flex justify-content-around">
-                        <div class="center-parent">
-                            <label class="custom-control custom-checkbox">
-                                <input type="checkbox" class="custom-control-input">
-                                <span class="custom-control-indicator"></span>
-                            </label>
-                        </div>
-                        <div class="center-parent">
-                            <div>Chưa set</div>
-                        </div>
-                    </td>
-                    <td class="text-center">Chưa set</td>
-                    <td class="text-center">Chưa set</td>
-                    <td class="text-center">Chưa set</td>
-                    <td class="text-center">Chưa set</td>
-                    <td class="text-center">Chưa set</td>
-                    <td class="text-center">Chưa set</td>
-                    <td class="text-center">Chưa set</td>
-                    <td class="text-center">Chưa set</td>
-                    <td class="text-center">Chưa set</td>
-                    <td class="text-center">
-                        <div class="d-flex justify-content-around">
-                            <div>
-                                <a title="Tải file">
-                                    <i class="fa fa-download color-item-down" aria-hidden="true"></i>
-                                </a>
-                            </div>
-                            <div>
-                                <a title="Xóa file">
-                                    <i class="fa fa-trash-o" aria-hidden="true"></i>
-                                </a>
-                            </div>
-                            <div>
-                                <a title="In">
-                                    <i class="fa fa-print color-item-print" aria-hidden="true"></i>
+                <ng-container *ngFor="let bidDocumentGroup of danhSachHoSoKT; let i = index;">
+                    <ng-container *ngFor="let item of bidDocumentGroup.items; let k = index;">
+                        <tr>
+                            <td type="check">
+                                <div class="d-flex justify-content-around">
+                                    <div style="width: 35%;">
+                                        <label class="custom-control custom-checkbox">
+                                            <input type="checkbox" class="custom-control-input" [(ngModel)]="item.checkboxSelected">
+                                            <span class="custom-control-indicator"></span>
+                                        </label>
+                                    </div>
+                                    <div style="width: 35%;" class="center-parent">
+                                        <div>{{renderIndex(i , k)}}</div>
+                                    </div>
+                                </div>
 
-                                </a>
+                            </td>
+                            <td [hidden]="currentMajorTypeId != 1" valign="baseline" [attr.rowspan]="bidDocumentGroup.items.length"
+                                *ngIf="k == 0" class="td-group">
+                                <div class="d-flex  document-type center-parent">
+                                    <div style="width: calc(100% - 25px);"> {{ item.documentType }}</div>
+                                    <div style="width: 25px;" (click)="uploadFileItem(item.documentType)" style="cursor: pointer"
+                                        title="Upload tài liệu">
+                                        <img width="25" height="25" src="assets\images\document.png">
+                                    </div>
+                                </div>
 
-                            </div>
-                        </div>
-                    </td>
+                            </td>
+                            <td *ngIf="k != 0" style="display: none">
+
+                            </td>
+                            <td [title]="item.documentName" (click)="viewDetail(item)">
+                                <a href="javascript:;"> {{ item.documentName }}
+                                </a>
+                            </td>
+                            <td class="text-center">{{ item.version }}</td>
+                            <td class="">{{ item.desc }}</td>
+
+                            <td class="td-mark-status">
+                                <div class="d-flex justify-content-between">
+                                    <div class="text-truncate text-right" [title]="item.status">
+                                        {{ item.status | translate }}
+                                    </div>
+                                    <div (click)="changeStatus(item.id, item.status, item.documentType)">
+                                        <i class="fa fa-check-square color-item-down" style="cursor: pointer;"
+                                            aria-hidden="true" *ngIf="item.status === 'Official'"></i>
+                                        <i class="fa fa-check-square color-item-test" style="cursor: pointer;"
+                                            aria-hidden="true" *ngIf="item.status === 'Draft'"></i>
+                                    </div>
+                                </div>
+
+
+                            </td>
+
+                            <td class="text-center">{{ item.createdDate*1000 | date:'dd/MM/yyyy HH:mm':
+                                '+0000'}}
+                            </td>
+                            <td class="text-center">{{ item.uploadedBy?.employeeName }}</td>
+
+                            <td class="text-center">
+                                <span *ngIf="item.receivedDate">{{ item.receivedDate*1000 |
+                                    date:'dd/MM/yyyy': '+0000' }}</span>
+                            </td>
+                            <td>
+                                <div class="d-flex justify-content-around">
+                                    <div *ngIf="!item.url" style="cursor: pointer;" title="Tải file" (click)="dowloadDocument(item.id)">
+                                        <a>
+                                            <i class="fa fa-download color-item-down" aria-hidden="true"></i>
+                                        </a>
+                                    </div>
+                                    <div style="cursor: pointer;" *ngIf="item.url">
+                                        <a [href]="item.url" target="_blank">
+                                            <i class="fa fa-external-link color-item-down" aria-hidden="true"></i>
+                                        </a>
+                                    </div>
+                                    <div (click)="deleteDocument(item.id)" style="cursor: pointer;" title="Xóa">
+                                        <a class="text-success ml-3">
+                                            <i class="fa fa-trash-o" aria-hidden="true"></i>
+                                        </a>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                    </ng-container>
+
+                </ng-container>
+                <tr *ngIf="tableEmpty">
+                    <td colspan="8">Không có dữ liệu</td>
                 </tr>
             </tbody>
         </table>
+    </div>
+    <div>
+        <div style="margin-top: 25px" *ngIf="showTable">
+            <span>Hiển thị</span>
+            <span class="font-weight-bold">&nbsp;{{sum}}&nbsp;</span>
+            <span>kết quả
+            </span>
+        </div>
+        <div style="margin-top: 15px" class="center-parent" *ngIf="!showTable">
+            <div>
+                Không có dữ liệu!
+            </div>
+        </div>
     </div>
 </div>

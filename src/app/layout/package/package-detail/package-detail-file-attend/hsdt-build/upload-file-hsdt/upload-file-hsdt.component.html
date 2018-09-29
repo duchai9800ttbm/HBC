@@ -1,80 +1,55 @@
-<div>
-  <div class="title-detail center-parent">
-    <div class="col-md-1"></div>
-    <div class="mr-auto col-md-10">
-      <div class="media-header center-parent">
-        <h3 class="d-inline mb-0 text-dark bold-title title">UPLOAD 
-          <span style="text-transform: uppercase">{{nameFile}}</span>
-        </h3>
-      </div>
+<form [formGroup]="uploadForm">
+    <div class="title-detail center-parent">
+        <div class="col-md-1"></div>
+        <div class="mr-auto col-md-10">
+            <div class="media-header center-parent">
+                <h3 class="d-inline mb-0 text-dark bold-title title">UPLOAD
+                    <span style="text-transform: uppercase">{{nameFile}}</span>
+                </h3>
+            </div>
+        </div>
+        <div class="col-md-1 close-popup close-popup-X">
+            <span (click)="closePopup()">X</span>
+        </div>
     </div>
-    <div class="col-md-1 close-popup close-popup-X">
-      <span (click)="closePopup()">X</span>
+    <div class="max-width pad-row d-flex">
+        <div class="set-width-name-field name-field">
+            File đính kèm
+        </div>
+        <div class="set-width-value-field d-flex">
+            <div class="no-boder d-flex" style="width: 100%">
+                <span class="w-100" (click)="upload.click()">
+                    <span class="text-truncate form-control boder-input-choose-file">
+                        ---Select File---
+                    </span>
+                </span>
+                <span class="input-group-addon fileUpload">
+                    <i class="fa fa-upload" aria-hidden="true"></i>
+                    <input type="file" formControlName="file" class="upload" #upload (change)="uploadFile($event)" />
+                </span>
+            </div>
+        </div>
     </div>
-  </div>
-  <div class="max-width pad-row d-flex">
-    <div class="set-width-name-field name-field">
-      File đính kèm
+    <div class="max-width pad-row d-flex">
+        <div class="set-width-name-field name-field">
+            Đường dẫn file
+        </div>
+        <div class="set-width-value-field">
+            <input class="form-control" formControlName="linkFile" type="text">
+        </div>
     </div>
-    <div class="set-width-value-field d-flex">
-      <div class="no-boder d-flex" style="width: 100%">
-        <span class="w-100">
-          <span class="form-control boder-input-choose-file">
-            {{'-- Chọn file --'}}
-          </span>
-        </span>
-        <span class="input-group-addon fileUpload">
-          <i class="fa fa-upload" aria-hidden="true"></i>
-          <input type="file" class="upload" accept=".xlsx,.xls,image/*,.doc, .docx,.ppt, .pptx,.txt,.pdf, .application/msword, application/vnd.openxmlformats-officedocument.wordprocessingml.document, application/vnd.ms-powerpoint, application/vnd.openxmlformats-officedocument.presentationml.slideshow, application/vnd.openxmlformats-officedocument.presentationml.presentation"
-          />
-        </span>
-      </div>
+    <div class="max-width pad-row d-flex">
+        <div class="set-width-name-field name-field">
+            Mô tả nội dung cập nhật
+        </div>
+        <div class="set-width-value-field">
+            <textarea formControlName="description" cols="3" rows="3" class="w-100 form-control no-resize-textarea"></textarea>
+        </div>
     </div>
-  </div>
-  <div class="max-width pad-row d-flex">
-    <div class="set-width-name-field name-field">
-      Đường dẫn file
-    </div>
-    <div class="set-width-value-field">
-      <input class="form-control" type="text">
-    </div>
-  </div>
-  <div class="max-width pad-row d-flex">
-    <div class="set-width-name-field name-field">
-      Tên
-    </div>
-    <div class="set-width-value-field">
-      <input class="form-control" type="text">
-    </div>
-  </div>
-  <div class="max-width pad-row d-flex">
-    <div class="set-width-name-field name-field">
-      Version
-    </div>
-    <div class="set-width-value-field">
-      <input class="form-control" type="text">
-    </div>
-  </div>
-  <div class="max-width pad-row d-flex">
-    <div class="set-width-name-field name-field">
-      Lần phỏng vấn
-    </div>
-    <div class="set-width-value-field">
-      <input class="form-control" type="text">
-    </div>
-  </div>
-  <div class="max-width pad-row d-flex">
-    <div class="set-width-name-field name-field">
-      Mô tả nội dung cập nhật
-    </div>
-    <div class="set-width-value-field">
-        <textarea cols="3" rows="3" class="w-100 form-control no-resize-textarea" formControlName="description"></textarea>
-    </div>
-  </div>
 
-  <div class="cus-button-popup">
-    <button type="button" class="btn btn-primary">Upload</button>
-    <button type="button" class="btn btn-secondary" (click)="closePopup()">Hủy</button>
-  </div>
+    <div class="cus-button-popup">
+        <button type="button" class="btn btn-primary" (click)="submitUpload()">Upload</button>
+        <button type="button" class="btn btn-secondary" (click)="closePopup()">Hủy</button>
+    </div>
 
-</div>
+</form>

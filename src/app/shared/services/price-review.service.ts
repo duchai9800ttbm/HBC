@@ -1,6 +1,9 @@
 import { Injectable } from '@angular/core';
 import { ApiService } from './api.service';
-import { TenderPriceApproval, TenderPriceApprovalShort, ItemHSDTChinhThuc, PriceReviewItemChangedHistory } from '../models/price-review/price-review.model';
+import {
+  TenderPriceApproval,
+  TenderPriceApprovalShort, ItemHSDTChinhThuc, PriceReviewItemChangedHistory
+} from '../models/price-review/price-review.model';
 import { SessionService } from './session.service';
 import DateTimeConvertHelper from '../helpers/datetime-convert-helper';
 import * as FileSaver from 'file-saver';
@@ -387,6 +390,7 @@ export class PriceReviewService {
       isDraftVersion: model.isDraftVersion,
       approvalDate: model.approvalDate,
       approvalTimes: model.approvalTimes,
+      interviewTimes: model.interviewTimes,
       isApprovedByTenderLeader: model.isApprovedByTenderLeader,
       isApprovedByTenderManager: model.isApprovedByTenderManager,
       isApprovedByBoardOfDirector: model.isApprovedByBoardOfDirector,
