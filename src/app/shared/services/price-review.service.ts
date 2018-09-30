@@ -548,6 +548,10 @@ export class PriceReviewService {
           note: model.tentativeTenderPrice.oAndPPercentOfTotalCost.note
         }
       },
+      // chờ Nghĩa map lại
+      interviewTimes: null,
+      createdEmployeeId: null,
+      updatedEmployeeId: null
     };
   }
 

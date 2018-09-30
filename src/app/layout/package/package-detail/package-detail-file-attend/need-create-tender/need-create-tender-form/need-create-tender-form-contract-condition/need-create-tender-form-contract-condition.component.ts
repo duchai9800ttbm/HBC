@@ -80,9 +80,9 @@ export class NeedCreateTenderFormContractConditionComponent implements OnInit {
     NeedCreateTenderFormComponent.formModel.contractCondition.commencementDate = data.commencementDate ? DateTimeConvertHelper.fromDtObjectToSecon(data.commencementDate) : 0;
   }
 
-  routerLink(event) {
+  routerLink(event, link) {
     if (event.key === 'Enter') {
-      this.router.navigate([`/package/detail/${+PackageDetailComponent.packageId}/attend/create-request/form/create/director-proposal`]);
+      this.router.navigate([`/package/detail/${+PackageDetailComponent.packageId}/attend/create-request/form/create/${link}`]);
     }
   }
 }

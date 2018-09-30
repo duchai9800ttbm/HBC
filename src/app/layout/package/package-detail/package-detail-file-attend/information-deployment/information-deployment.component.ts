@@ -43,7 +43,6 @@ export class InformationDeploymentComponent implements OnInit {
   modelSendAssignment: BsModalRef;
   modelUp: BsModalRef;
   currentPackageId: number;
-  textInformation: string;
   toggleTextUpFile: string;
   isTeamPlate: boolean;
   isSendInformation: boolean;
@@ -115,13 +114,10 @@ export class InformationDeploymentComponent implements OnInit {
     this.bidOpportunityId = PackageDetailComponent.packageId;
     this.emailService.searchbymail('').subscribe(response => {
       this.listEmailSearchTo = response;
-    });
-    this.emailService.searchbymail('').subscribe(response => {
       this.listEmailSearchCc = response;
-    });
-    this.emailService.searchbymail('').subscribe(response => {
       this.listEmailSearchBcc = response;
     });
+
     this.getPackageInfo();
     this.getTenderPlanInfo();
     this.ckeConfig = {
@@ -129,7 +125,13 @@ export class InformationDeploymentComponent implements OnInit {
         { name: 'basicstyles', items: ['Bold', 'Italic', 'Underline', 'Strike'] },
         { name: 'justify', items: ['JustifyLeft', 'JustifyCenter', 'JustifyRight', 'JustifyBlock'] },
         { name: 'styles', items: ['Styles', 'Format', 'FontSize', '-', 'TextColor', 'BGColor'] },
-      ]
+        { name: 'insert', items: ['Image', 'Flash', 'Table', 'HorizontalRule', 'Smiley', 'SpecialChar', 'PageBreak', 'Iframe'] },
+        { name: 'clipboard', items: ['Cut', 'Copy', 'Paste', 'PasteText', 'Undo', 'Redo'] },
+
+      ],
+      allowedContent: true,
+      extraPlugins: 'colorbutton,font,justify,print,tableresize,pastefromword,liststyle',
+      pasteFromWord_inlineImages: true
     };
 
     this.packageId = +PackageDetailComponent.packageId;
@@ -140,6 +142,9 @@ export class InformationDeploymentComponent implements OnInit {
       userId: [null],
       version: [''],
     });
+
+
+
     this.isSendCc = false;
     this.isSendBcc = false;
     this.setHSDT = false;
@@ -153,9 +158,20 @@ export class InformationDeploymentComponent implements OnInit {
     this.showButtonAssignmet = false;
     this.textConfirmProgress = 'Gửi phân công tiến độ';
     this.toggleTextUpFile = '';
-    this.textInformation = '';
     this.currentPackageId = +PackageDetailComponent.packageId;
 
+    // this.searchTermTo$
+    //   .debounceTime(COMMON_CONSTANTS.SearchDelayTimeInMs)
+    //   .distinctUntilChanged()
+    //   .subscribe(term => {
+    //     this.emailService.searchbymail(term).subscribe(response => {
+    //       this.listEmailSearchTo = response;
+    //     });
+    //   });
+  }
+
+  searchEmailTo(event) {
+    console.log('searchEmailTo', event);
   }
 
   getTenderPlanInfo() {
@@ -172,6 +188,10 @@ export class InformationDeploymentComponent implements OnInit {
     });
   }
 
+  onPaste(e) {
+    console.log(e);
+  }
+
   getPackageInfo() {
     this.spinner.show();
     this.packageService
@@ -182,7 +202,6 @@ export class InformationDeploymentComponent implements OnInit {
         const isTrienKhai = this.packageInfo.stageStatus.id === this.bidStatus.DaThongBaoTrienKhai;
         // tslint:disable-next-line:max-line-length
         this.toggleTextUpFile = isTrienKhai ? 'Hiện chưa có bảng phân công tiến độ nào' : 'Bạn cần phải thông báo triển khai trước khi phân công tiến độ';
-        this.textInformation = isTrienKhai ? 'Đã thông báo triển khai' : 'Chưa thông báo triển khai';
         console.log(data);
       });
   }
@@ -263,7 +282,6 @@ export class InformationDeploymentComponent implements OnInit {
     this.isShowTable = false;
     this.isTeamPlate = false;
     this.dataConfirm = !this.dataConfirm;
-    this.textInformation = 'Đã xác nhận phân công';
     this.alertService.success('Xác nhận phân công tiến độ thành công!');
   }
   sendConfirmAssignment() {
@@ -360,12 +378,17 @@ export class InformationDeploymentComponent implements OnInit {
     this.packageService.sendTenderPreparationPlanning(this.bidOpportunityId).subscribe(success => {
       this.spinner.hide();
       this.alertService.success('Gửi phân công tiến độ thành công!');
+      this.getPackageInfo();
     }, err => {
       this.spinner.hide();
       this.alertService.error('Gửi phân công tiến độ thất bại!');
     });
   }
 
+  customSearchFn(term: string, item: SearchEmailModel) {
+    term = term.toLocaleLowerCase();
+    return item.employeeName.toLocaleLowerCase().indexOf(term) > -1 || item.employeeEmail.toLocaleLowerCase() === term;
+  }
   // sendTenderPlan() {
   //   this.spinner.show();
   //   this.packageService.sendTenderPreparationPlanning(this.bidOpportunityId).subscribe(success => {
@@ -376,24 +399,10 @@ export class InformationDeploymentComponent implements OnInit {
   //     this.alertService.error('Gửi phân công tiến độ thất bại!');
   //   });
   // }
-  // onChange(e) {
-    // console.log('data', this.emailModel.content);
-    // const urlRegex = 'https://www.24h.com.vn/';
-    // console.log('replace', `<a href="${urlRegex}">${urlRegex}</a>`);
-    // this.emailModel.content = this.emailModel.content.replace(urlRegex, `<a href="${urlRegex}">${urlRegex}</a>`);
-    // this.emailModel.content = `<a href="https://www.24h.com.vn/">https://www.24h.com.vn/</a>`;
+  onChange(e) {
+    console.log(e);
+  }
 
-    // this.ckeditor.model.change(writer => {
-    //   const insertPosition = this.ckeditor.model.document.selection.getFirstPosition();
-    //   writer.insertText('CKEditor 5 rocks!', { linkHref: 'https://ckeditor.com/' }, insertPosition);
-    // });
-    // this.emailModel.content = '123';
-    // console.log('ckeditor', this.informationDeployment, this.ckeditor);
-    // this.ckeditor.instance.setData('');
-    // console.log('this.emailModel.content', this.emailModel.content);
-    // .elementRef.nativeElement.nextElementSibling
-  //   this.emailModel.content = '<p>123</p>';
-  // }
 }
 
 const listUsers = [

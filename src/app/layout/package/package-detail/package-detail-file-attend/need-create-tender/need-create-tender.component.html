@@ -16,7 +16,7 @@
         <div class="btn-toolbar mt-2 mb-2">
             <button type="button" class="btn btn-primary ml-2" (click)="isShowDialog = true" *ngIf="proposedTender && !(proposedTender.decisionOfBoardOfGeneralDirector &&  !proposedTender.decisionOfBoardOfGeneralDirector.isAgreed && proposedTender.decisionOfBoardOfGeneralDirector.isSigned) 
                 && packageInfo?.stageStatus.id == bidStatus.ChoDuyetDeNghiDuThau">Chấp thuận đề nghị DT</button>
-            <button type="button" class="btn btn-primary ml-2" (click)="isShowDialog = true" *ngIf="proposedTender && !proposedTender.isDraftVersion && packageInfo?.stageStatus.id == bidStatus.CanLapDeNghiDuThau">Gửi duyệt đề nghị DT</button>
+            <button type="button" class="btn btn-primary ml-2" (click)="checkSigned()" *ngIf="proposedTender && !proposedTender.isDraftVersion && packageInfo?.stageStatus.id == bidStatus.CanLapDeNghiDuThau">Gửi duyệt đề nghị DT</button>
             <button type="button" class="btn btn-primary ml-2" (click)="downloadTemplate()">Tải Template</button>
             <button type="button" class="btn btn-primary ml-2" (click)="refresh()">
                 <i class="fa fa-refresh" aria-hidden="true"></i>
@@ -136,7 +136,7 @@
                     </div>
                 </td>
                 <td class="text-center">
-                    {{item.changedTimes}}
+                    {{item.changedTimes + 1}}
                 </td>
                 <td> {{item.employee?.employeeName}}</td>
                 <td>{{ (item.changedTime)*1000 | date:'dd/MM/yyyy' }}</td>

@@ -544,6 +544,13 @@ button:focus {
     }
 }
 
+a.disabled {
+    i {
+        color: gray;
+        opacity: .5;
+    }
+}
+
 .icon-filter {
     width: 116px;
 }

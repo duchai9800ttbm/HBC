@@ -75,6 +75,7 @@ export class InformationDeploymentFormComponent implements OnInit {
             tenderDepartmentEmployeeId: planModel.tenderDepartmentEmployeeId,
             technicalDepartmentEmployeeId: planModel.technicalDepartmentEmployeeId,
             bimDepartmentEmployeeId: planModel.bimDepartmentEmployeeId,
+            projectInformation: planModel.projectInformation ? planModel.projectInformation : 'Bảng phân công tiến độ',
             tasks: this.fb.array(taskArr)
         });
         console.log(this.planForm.value);
@@ -129,7 +130,8 @@ export class InformationDeploymentFormComponent implements OnInit {
                       data.finishDate * 1000
                   )
                 : null,
-            duration: data.duration
+            duration: data.duration,
+            isFinish: data.isFinish
         });
     }
 
@@ -199,7 +201,12 @@ export class InformationDeploymentFormComponent implements OnInit {
         return data ? DateTimeConvertHelper.fromTimestampToDtStr(data) : '';
     }
 
+    changeFinishStatus(value) {
+        console.log(value);
+    }
+
     checkFinishTenderPlanItem(itemId: number) {
+        // tạm thời chưa dùng, khi phân quyền sẽ dùng
         this.packageService.checkOrUncheckTenderPreparationPlanningItem(this.bidOpportunityId, itemId).subscribe(success => {
             console.log(success);
         }, err => {

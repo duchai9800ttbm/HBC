@@ -40,9 +40,9 @@ export class NeedCreateTenderFormConsultantAnalysisComponent implements OnInit {
     NeedCreateTenderFormComponent.formModel.consultantAnalysis = data;
   }
 
-  routerLink(event) {
+  routerLink(event, link) {
     if (event.key === 'Enter') {
-      this.router.navigate([`/package/detail/${+PackageDetailComponent.packageId}/attend/create-request/form/create/internal-resource`]);
+      this.router.navigate([`/package/detail/${+PackageDetailComponent.packageId}/attend/create-request/form/create/${link}`]);
     }
   }
 }

@@ -53,9 +53,9 @@ export class NeedCreateTenderFormFeeTenderComponent implements OnInit {
     NeedCreateTenderFormComponent.formModel.feeOfTenderInvitationDocument = data;
   }
 
-  routerLink(event) {
+  routerLink(event, link) {
     if (event.key === 'Enter') {
-      this.router.navigate([`/package/detail/${+PackageDetailComponent.packageId}/attend/create-request/form/create/contract-condition`]);
+      this.router.navigate([`/package/detail/${+PackageDetailComponent.packageId}/attend/create-request/form/create/${link}`]);
     }
   }
 }

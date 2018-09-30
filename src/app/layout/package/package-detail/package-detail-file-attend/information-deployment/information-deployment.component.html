@@ -5,21 +5,23 @@
             <div class="rule mr-2">
             </div>
             <div class="center-parent mr-4" style="font-size: 18px">
-                <div>{{textInformation}}</div>
+                <div *ngIf="packageInfo?.stageStatus.id == bidStatus.ChuaThongBaoTrienKhai">Chưa thông báo triển khai</div>
+                <div *ngIf="packageInfo?.stageStatus.id == bidStatus.DaThongBaoTrienKhai">Đã thông báo triển khai</div>
+                <div *ngIf="packageInfo?.stageStatus.id == bidStatus.DaXacNhanPhanCong">Đã xác nhận phân công</div>
+                <div *ngIf="packageInfo?.stageStatus.id == bidStatus.DaGuiPhanCongTienDo">Đã gửi phân công tiến độ</div>
             </div>
         </div>
     </div>
     <div>
         <div class="btn-toolbar mt-2 mb-2">
             <button type="button" *ngIf="isconfirmProgress" [ngClass]="{'btn-dep':isconfirmProgress == true}" class="btn btn-up" (click)="openModeSendAssignment(SendAssignment)">{{textConfirmProgress}}</button>
-            <button type="button" *ngIf="packageInfo?.stageStatus.id != bidStatus.DaThongBaoTrienKhai" class="btn btn-up btn-dep"
-                (click)="openModalDeployment(informationDeployment)">Thông báo triển khai</button>
+            <button type="button" *ngIf="packageInfo?.stageStatus.id == bidStatus.ChuaThongBaoTrienKhai" class="btn btn-up btn-dep" (click)="openModalDeployment(informationDeployment)">Thông báo triển khai</button>
             <button type="button" *ngIf="isTeamPlate" [ngClass]="{ 'btn-dep': isSendInformation === true }" class="btn btn-up ">Tải Template
             </button>
             <!-- <button type="button" *ngIf="isconfirmProgress" class="btn btn-up disable">Upload file</button>
             <button type="button" *ngIf="!isconfirmProgress" [ngClass]="{ 'btn-dep': dowloadTem === true,'disable': dowloadTem === false }"
                 (click)="openModalUpload(Upload)" class="btn btn-up ">Upload file</button> -->
-            <button class="btn btn-primary mr-2" (click)="sendTenderPlan()">Gửi phân công tiến độ</button>
+            <button class="btn btn-primary mr-2" *ngIf="packageInfo?.stageStatus.id == bidStatus.DaXacNhanPhanCong" (click)="sendTenderPlan()">Gửi phân công tiến độ</button>
             <button *ngIf="tenderPlan?.isDraftVersion" class="btn btn-primary mr-2" (click)="confirmTenderPlan()">Xác nhận phân công tiến độ</button>
             <button type="button" class="btn btn-primary ">
                 <i class="fa fa-refresh" aria-hidden="true"></i>
@@ -62,20 +64,20 @@
             <tr>
                 <td>
                 </td>
-                <td><a [routerLink]="['./view']" (click)="changeAction('view')"></a></td>
-                <td>Chưa có</td>
+                <td><a [routerLink]="['./view']" (click)="changeAction('view')">{{tenderPlan.projectInformation}}</a></td>
+                <td>Không có</td>
                 <td>{{tenderPlan.createdEmployee?.employeeName}}</td>
-                <td></td>
+                <td>{{tenderPlan.createDate * 1000 | date: 'dd/MM/yyyy'}}</td>
                 <td>
                     <div class="d-flex justify-content-center">
                         <div>
                             <a [routerLink]="['./view']" (click)="changeAction('view')">
                                 <i class="fa fa-eye text-warning" aria-hidden="true"></i>
                             </a>
-                            <a class=" text-success ml-3" [routerLink]="['./edit']" (click)="changeAction('edit')">
+                            <a class=" text-success ml-3" [class.disabled]="packageInfo?.stageStatus.id == bidStatus.DaGuiPhanCongTienDo" [routerLink]="packageInfo?.stageStatus.id == bidStatus.DaGuiPhanCongTienDo ? [] : ['./edit']" (click)="changeAction('edit')">
                                 <i class="fa fa-pencil cursor-pointer" aria-hidden="true"> </i>
                             </a>
-                            <a class=" text-dark ml-3" (click)="deleteTenderPlan()">
+                            <a class=" text-dark ml-3" [class.disabled]="packageInfo?.stageStatus.id == bidStatus.DaGuiPhanCongTienDo" (click)="packageInfo?.stageStatus.id == bidStatus.DaGuiPhanCongTienDo ? null : deleteTenderPlan()">
                                 <i class="fa fa-trash-o" aria-hidden="true"></i>
                             </a>
                             <!-- <a class="ml-3" (click)="printForm()">
@@ -112,7 +114,7 @@
         <div class="input-group mb-3">
             <span class="input-group-addon">To:</span>
             <ng-select class="w-100" [items]="listEmailSearchTo" typeToSearchText="Nhập email" addTagText="Thêm email:" clearAllText="Xóa tất cả"
-                [addTag]="true" [hideSelected]="true" multiple="true" bindLabel="employeeEmail" [(ngModel)]="emailModel.to">
+                [addTag]="true" [hideSelected]="true" multiple="true" bindLabel="employeeName" [searchFn]="customSearchFn" [(ngModel)]="emailModel.to">
                 <ng-template ng-option-tmp let-item="item" let-index="index" let-search="searchTerm">
                     <table>
                         <tr>{{item.employeeName}}</tr>
@@ -125,7 +127,7 @@
         <div class="input-group mb-3" *ngIf="isSendCc">
             <span class="input-group-addon" id="basic-addon1">Cc:</span>
             <ng-select class="w-100" [items]="listEmailSearchCc" addTagText="Thêm email:" clearAllText="Xóa tất cả" [addTag]="true" [hideSelected]="true"
-                multiple="true" bindLabel="employeeEmail" [(ngModel)]="emailModel.cc">
+                multiple="true" bindLabel="employeeEmail" [searchFn]="customSearchFn" [(ngModel)]="emailModel.cc">
                 <ng-template ng-option-tmp let-item="item" let-index="index" let-search="searchTerm">
                     <table>
                         <tr>{{item.employeeName}}</tr>
@@ -138,7 +140,7 @@
         <div class="input-group mb-3" *ngIf="isSendBcc">
             <span class="input-group-addon" id="basic-addon1">Bcc:</span>
             <ng-select class="w-100" [items]="listEmailSearchBcc" addTagText="Thêm email:" clearAllText="Xóa tất cả" [addTag]="true"
-                [hideSelected]="true" multiple="true" bindLabel="employeeEmail" [(ngModel)]="emailModel.bcc">
+                [hideSelected]="true" multiple="true" bindLabel="employeeEmail" [searchFn]="customSearchFn" [(ngModel)]="emailModel.bcc">
                 <ng-template ng-option-tmp let-item="item" let-index="index" let-search="searchTerm">
                     <table>
                         <tr>{{item.employeeName}}</tr>
@@ -164,9 +166,8 @@
                 aria-describedby="basic-addon1">
         </div>
         <div class="body-ckeditor">
-            <ckeditor [(ngModel)]="emailModel.content" [config]="ckeConfig" #ckeditor (change)="onChange($event)">
-                <ckbutton [name]="'saveButton'" [command]="'saveCmd'" [icon]="'save.png'" [label]="'Save Document'"
-                    [toolbar]="'clipboard,1'">
+            <ckeditor [(ngModel)]="emailModel.content" [config]="ckeConfig" #ckeditor (change)="onChange($event)" (paster)="onPaste($event)">
+                <ckbutton [name]="'saveButton'" [command]="'saveCmd'" [icon]="'save.png'" [label]="'Save Document'" [toolbar]="'clipboard,1'">
                 </ckbutton>
             </ckeditor>
         </div>
