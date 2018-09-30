@@ -1,11 +1,11 @@
-<form [formGroup]="planForm" *ngIf="planForm">
+<form [formGroup]="planForm" *ngIf="planForm" class="position-relative">
     <div class="title-list-package d-flex flex-wrap align-items-center status-filter">
         <div class="mr-auto d-flex align-items-end list-package mt-2 mb-2">
             <div class="d-flex justify-content-start h-40">
                 <div class="rule mr-2">
                 </div>
                 <div class="center-parent pl-3 mr-4 live-form-title">
-                    <a [routerLink]='["../../"]'>
+                    <a [routerLink]='["../"]'>
                         <img width="12" height="12" class="pointer not-outline" src="assets\images\nghia.png">
                     </a>
                     <div class="text-uppercase ml-3">bảng phân công tiến độ (tender preparation planning assignment)</div>
@@ -17,13 +17,14 @@
                 <!-- <button class="btn btn-primary ml-2">
               Import dữ liệu theo mẫu
           </button> -->
-                <button class="btn btn-primary ml-2" (click)="submitForm(true)" *ngIf="planForm?.get('isDraftVersion').value">
+                <button class="btn btn-primary ml-2" (click)="changeRouterAction('edit')" *ngIf="routerAction == 'view' && packageInfo?.stageStatus.id != bidStatus.DaGuiPhanCongTienDo">Sửa</button>
+                <button class="btn btn-primary ml-2" (click)="submitForm(true)" *ngIf="planForm?.get('isDraftVersion').value && routerAction != 'view'">
                     Lưu nháp
                 </button>
-                <button class="btn btn-primary ml-2" (click)="submitForm(false)">
+                <button class="btn btn-primary ml-2" *ngIf="routerAction != 'view'" (click)="submitForm(false)">
                     Lưu
                 </button>
-                <button class="btn btn-secondary ml-2">
+                <button class="btn btn-secondary ml-2" *ngIf="routerAction != 'view'" routerLink="../">
                     Hủy
                 </button>
                 <button class="btn btn-primary ml-2">
@@ -85,6 +86,7 @@
                 </div>
             </div>
         </div>
+        <div class="view-readonly" *ngIf="routerAction == 'view'"></div>
         <div class="mt-3">
             <table class="table table-bordered">
                 <thead>
@@ -109,7 +111,7 @@
                         <td>Start</td>
                         <td class="mw-12">
                             <!-- <kendo-datepicker class="form-control b-datepicker-no-border"></kendo-datepicker> -->
-                            {{getDateStr(packageInfo?.startTrackingDate)}}
+                            {{getDateStr(packageInfo?.startTrackingDate * 1000)}}
                         </td>
                     </tr>
                     <tr>
@@ -126,7 +128,7 @@
                         <td>Tender Duration</td>
                         <td>
                             <!-- <kendo-datepicker class="form-control b-datepicker-no-border"></kendo-datepicker> -->
-                            {{(packageInfo?.startTrackingDate - packageInfo?.submissionDate) / (60 * 60 * 24)}}
+                            {{(packageInfo?.submissionDate - packageInfo?.startTrackingDate) / (60 * 60 * 24)}}
                         </td>
                     </tr>
                     <tr>
@@ -143,7 +145,8 @@
                         <td>Query's Deadline</td>
                         <td>
                             <!-- <kendo-datepicker class="form-control b-datepicker-no-border"></kendo-datepicker> -->
-                            {{packageInfo?.submissionDate ? getDateStr(packageInfo?.submissionDate - (60 * 60 * 24 * 7)) : ''}}
+                            {{packageInfo?.submissionDate ? getDateStr(packageInfo?.submissionDate * 1000 - (1000 * 60
+                            * 60 * 24 * 7)) : ''}}
                         </td>
                     </tr>
                     <tr>
@@ -160,7 +163,7 @@
                         <td>Finish</td>
                         <td>
                             <!-- <kendo-datepicker class="form-control b-datepicker-no-border"></kendo-datepicker> -->
-                            {{getDateStr(packageInfo?.submissionDate)}}
+                            {{getDateStr(packageInfo?.submissionDate * 1000)}}
                         </td>
                     </tr>
                 </tbody>
@@ -185,7 +188,11 @@
                         <tr *ngFor="let data of tasksFA.controls; let i = index" [formGroupName]="i" [class.b-k-alt]="i % 2 != 0">
                             <td class="text-center">{{i + 1}}</td>
                             <td>{{data.get('itemName').value}}</td>
-                            <td>{{data.get('itemDesc').value}}</td>
+                            <!-- <td>{{data.get('itemDesc').value}}</td> -->
+                            <td class="p-0 position-relative">
+                                <textarea class="form-control b-textarea h-100" formControlName="itemDesc"></textarea>
+                                <span *ngIf="!data.get('itemDesc').value" class="fake-placeholder">Nhập text</span>
+                            </td>
                             <td class="pl-0">
                                 <span class="custom-dropdown w-100 b-dropdown-no-border">
                                     <select class="form-control" formControlName="whoIsInChargeId">
@@ -206,7 +213,8 @@
                             <td class="pl-0">
                                 <kendo-datepicker formControlName="finishDate" class="form-control b-datepicker-no-border b-datepicker-ic"></kendo-datepicker>
                             </td>
-                            <td class="text-center">{{getItemDuration(data.get('startDate').value, data.get('finishDate').value)}}</td>
+                            <td class="text-center">{{getItemDuration(data.get('startDate').value,
+                                data.get('finishDate').value)}}</td>
                         </tr>
                     </tbody>
                 </table>
