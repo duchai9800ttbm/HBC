@@ -58,7 +58,7 @@
                             </owl-date-time>
                             <span class="input-group-addon">
                                 <i class="fa fa-calendar"></i>
-                            </span>
+                            </span>color-item-down
                         </div>
                     </div> -->
             <div class="form-group ml-sm-2">
@@ -173,95 +173,74 @@
             </thead>
 
             <tbody>
-                <ng-container *ngFor="let bidDocumentGroup of danhSachHoSoKT; let i = index;">
-                    <ng-container *ngFor="let item of bidDocumentGroup.items; let k = index;">
-                        <tr>
-                            <td type="check">
-                                <div class="d-flex justify-content-around">
-                                    <div style="width: 35%;">
+                <ng-container *ngFor="let hoso of danhSachHoSoKT; let i = index;">
+                    <!-- <ng-container *ngFor="let item of bidDocumentGroup.items; let k = index;"> -->
+                    <tr>
+
+                        <td>
+                            <div class="d-flex justify-content-around">
+                                <div style="width: 40%;">
+                                    <div class="center-parent">
                                         <label class="custom-control custom-checkbox">
-                                            <input type="checkbox" class="custom-control-input" [(ngModel)]="item.checkboxSelected">
+                                            <input type="checkbox" class="custom-control-input" [(ngModel)]="hoso.checkboxSelected">
                                             <span class="custom-control-indicator"></span>
                                         </label>
                                     </div>
-                                    <div style="width: 35%;" class="center-parent">
-                                        <div>{{renderIndex(i , k)}}</div>
-                                    </div>
                                 </div>
-
-                            </td>
-                            <td [hidden]="currentMajorTypeId != 1" valign="baseline" [attr.rowspan]="bidDocumentGroup.items.length"
-                                *ngIf="k == 0" class="td-group">
-                                <div class="d-flex  document-type center-parent">
-                                    <div style="width: calc(100% - 25px);"> {{ item.documentType }}</div>
-                                    <div style="width: 25px;" (click)="uploadFileItem(item.documentType)" style="cursor: pointer"
-                                        title="Upload tài liệu">
-                                        <img width="25" height="25" src="assets\images\document.png">
-                                    </div>
+                                <div style="width: 35%;" class="center-parent">
+                                    <div>{{i}}</div>
                                 </div>
-
-                            </td>
-                            <td *ngIf="k != 0" style="display: none">
-
-                            </td>
-                            <td [title]="item.documentName" (click)="viewDetail(item)">
-                                <a href="javascript:;"> {{ item.documentName }}
-                                </a>
-                            </td>
-                            <td class="text-center">{{ item.version }}</td>
-                            <td class="">{{ item.desc }}</td>
-
-                            <td class="td-mark-status">
-                                <div class="d-flex justify-content-between">
-                                    <div class="text-truncate text-right" [title]="item.status">
-                                        {{ item.status | translate }}
-                                    </div>
-                                    <div (click)="changeStatus(item.id, item.status, item.documentType)">
-                                        <i class="fa fa-check-square color-item-down" style="cursor: pointer;"
-                                            aria-hidden="true" *ngIf="item.status === 'Official'"></i>
-                                        <i class="fa fa-check-square color-item-test" style="cursor: pointer;"
-                                            aria-hidden="true" *ngIf="item.status === 'Draft'"></i>
-                                    </div>
+                            </div>
+                        </td>
+                        <td>{{ hoso.tenderDocumentType }}</td>
+                        <td>{{ hoso.documentName }}</td>
+                        <td>{{ hoso?.image }}</td>
+                        <td>{{ hoso.version }}</td>
+                        <td>{{ hoso?.desc }}</td>
+                        <td class="td-mark-status">
+                            <div class="d-flex justify-content-between">
+                                <div class="text-truncate text-right" [title]="hoso.status">
+                                    {{ hoso.status | translate }}
                                 </div>
-
-
-                            </td>
-
-                            <td class="text-center">{{ item.createdDate*1000 | date:'dd/MM/yyyy HH:mm':
-                                '+0000'}}
-                            </td>
-                            <td class="text-center">{{ item.uploadedBy?.employeeName }}</td>
-
-                            <td class="text-center">
-                                <span *ngIf="item.receivedDate">{{ item.receivedDate*1000 |
-                                    date:'dd/MM/yyyy': '+0000' }}</span>
-                            </td>
-                            <td>
-                                <div class="d-flex justify-content-around">
-                                    <div *ngIf="!item.url" style="cursor: pointer;" title="Tải file" (click)="dowloadDocument(item.id)">
-                                        <a>
-                                            <i class="fa fa-download color-item-down" aria-hidden="true"></i>
-                                        </a>
-                                    </div>
-                                    <div style="cursor: pointer;" *ngIf="item.url">
-                                        <a [href]="item.url" target="_blank">
-                                            <i class="fa fa-external-link color-item-down" aria-hidden="true"></i>
-                                        </a>
-                                    </div>
-                                    <div (click)="deleteDocument(item.id)" style="cursor: pointer;" title="Xóa">
-                                        <a class="text-success ml-3">
-                                            <i class="fa fa-trash-o" aria-hidden="true"></i>
-                                        </a>
-                                    </div>
+                                <div (click)="changeStatus(hoso.id, hoso.status)">
+                                    <i class="fa fa-check-square color-item-down" style="cursor: pointer;" aria-hidden="true"
+                                        *ngIf="hoso.status === 'Official'"></i>
+                                    <i class="fa fa-check-square color-item-test" style="cursor: pointer;" aria-hidden="true"
+                                        *ngIf="hoso.status === 'Draft'"></i>
                                 </div>
-                            </td>
-                        </tr>
-                    </ng-container>
+                            </div>
+
+
+                        </td>
+                        <td>{{ hoso?.uploadedBy }}</td>
+                        <td>{{ hoso.uploadedDate*1000 | date:'dd/MM/yyyy': '+0000' }}</td>
+                        <td>{{ hoso?.interviewTimes }}</td>
+                        <td>
+                            <div class="d-flex justify-content-around">
+                                <div (click)="downloadDocument(hoso.id)" style="cursor: pointer;" title="Tải file">
+                                    <a class="text-success ml-3">
+                                        <i class="fa fa-download color-item-down" aria-hidden="true"></i>
+                                    </a>
+                                </div>
+                                <div (click)="deleteDocument(hoso.id)" style="cursor: pointer;" title="Xóa">
+                                    <a class="ml-3">
+                                        <i class="fa fa-trash-o" aria-hidden="true"></i>
+                                    </a>
+                                </div>
+                                <div (click)="printDocument(hoso.id)" style="cursor: pointer;" title="In">
+                                    <a class="text-warning ml-3">
+                                        <i class="fa fa-print" aria-hidden="true"></i>
+                                    </a>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                    <!-- </ng-container> -->
 
                 </ng-container>
-                <tr *ngIf="tableEmpty">
+                <!-- <tr *ngIf="tableEmpty">
                     <td colspan="8">Không có dữ liệu</td>
-                </tr>
+                </tr> -->
             </tbody>
         </table>
     </div>

@@ -549,9 +549,9 @@ export class PriceReviewService {
         }
       },
       // chờ Nghĩa map lại
-      interviewTimes: null,
-      createdEmployeeId: null,
-      updatedEmployeeId: null
+      // interviewTimes: null,
+      // createdEmployeeId: null,
+      // updatedEmployeeId: null
     };
   }
 

@@ -8,6 +8,7 @@ import { VnNumberPipe } from './vn-number-pipe.module';
 import { NumberAreaPipe } from './number-area.pipe';
 import { SafeUrlPipe } from './safe-url.pipe';
 import { SortAlphabet } from './array-sorting-alphabet.pipe';
+import { StatusDocument } from './status-translate.pipe';
 
 @NgModule({
     imports: [
@@ -21,7 +22,8 @@ import { SortAlphabet } from './array-sorting-alphabet.pipe';
         VnNumberPipe,
         NumberAreaPipe,
         SafeUrlPipe,
-        SortAlphabet
+        SortAlphabet,
+        StatusDocument
     ],
     exports: [
         VnCurrencyPipe,
@@ -31,7 +33,8 @@ import { SortAlphabet } from './array-sorting-alphabet.pipe';
         VnNumberPipe,
         NumberAreaPipe,
         SafeUrlPipe,
-        SortAlphabet
+        SortAlphabet,
+        StatusDocument
     ],
 })
 export class SharedPipesModule { }

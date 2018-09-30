@@ -50,14 +50,28 @@ export class HoSoDuThauService {
     });
   }
   // Tải hồ sơ dự thầu
-  taiHoSoDuThau(tenderDocumentId: number): Observable<any> {
+  taiHoSoDuThau(tenderDocumentId: number) {
     const url = `tenderdocument/${tenderDocumentId}/download`;
-    return this.apiService.get(url).map(res => res.result);
+    return this.apiService.get(url).map(response => {
+      return FileSaver.saveAs(
+        new Blob([response.file], {
+          type: `${response.file.type}`,
+        }), response.fileName
+      );
+    });
   }
   // Xóa 1 hồ sơ dự thầu
-  xoaMotHoSoDuThau(tenderDocumentId: number): Observable<any> {
+  xoaMotHoSoDuThau(tenderDocumentId: number) {
     const url = `tenderdocument/${tenderDocumentId}/delete`;
-    return this.apiService.post(url, tenderDocumentId).map(res => res);
+    return this.apiService.post(url).map(res => res);
+  }
+  // Xóa nhiều hồ sơ dự thầu
+  xoaNhieuHoSoDuThau(tenderDocumentIds: any[]) {
+    const url = `tenderdocument/deletemultiple`;
+    const model = {
+      ids: tenderDocumentIds
+    };
+    return this.apiService.post(url, model).map(res => res);
   }
   // get Danh sách loại tài liệu hồ sơ dự thầu (kèm số lượng file của mỗi loại tài liệu) theo gói thầu
   getDanhSachLoaiTaiLieu(bidOpportunityId: number): Observable<any> {
@@ -67,8 +81,7 @@ export class HoSoDuThauService {
   // Chốt hồ sơ dự thầu
   chotHoSoDuThau(bidOpportunityId): Observable<any> {
     const url = `bidopportunity/hsdt/${bidOpportunityId}/chothosoduthau`;
-    return this.apiService.post(url, bidOpportunityId)
-      .map(res => res);
+    return this.apiService.post(url).map(res => res);
   }
   // Danh sách bộ hồ sơ dự thầu theo gói thầu; tìm kiếm theo tên tài liệu, lọc theo trạng thái, người upload, ngày upload; có phân trang
   danhSachBoHoSoDuThau(bidOpportunityId: number, page: number, pageSize: number): Observable<PagedResult<DanhSachBoHsdtItem>> {
@@ -84,4 +97,8 @@ export class HoSoDuThauService {
       };
     });
   }
+  updateStatus(tenderDocumentId: number, status: string) {
+    const url = `tenderdocument/${tenderDocumentId}/${status.toLocaleLowerCase()}`;
+    return this.apiService.post(url).map(response => response);
+}
 }

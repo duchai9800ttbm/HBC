@@ -48,7 +48,7 @@ export class HsdtBuildComponent implements OnInit {
 
     ngOnInit() {
         this.packageId = +PackageDetailComponent.packageId;
-        this.getDanhSachHoSo();
+        this.getDanhSachLoaiHoSo();
         this.getDanhSachBoHoSo();
         this.packageService.isSummaryConditionForm$.subscribe(data => {
             this.isShowMenu = data;
@@ -60,7 +60,7 @@ export class HsdtBuildComponent implements OnInit {
         // });
     }
 
-    getDanhSachHoSo() {
+    getDanhSachLoaiHoSo() {
         this.packageId = +PackageDetailComponent.packageId;
         this.hoSoDuThauService.getDanhSachLoaiTaiLieu(this.packageId).subscribe(res => {
             this.danhSachLoaiTaiLieu = res;
