@@ -143,8 +143,6 @@ export class InformationDeploymentComponent implements OnInit {
       version: [''],
     });
 
-
-
     this.isSendCc = false;
     this.isSendBcc = false;
     this.setHSDT = false;
@@ -168,6 +166,11 @@ export class InformationDeploymentComponent implements OnInit {
     //       this.listEmailSearchTo = response;
     //     });
     //   });
+  }
+
+  refresh() {
+    this.getPackageInfo();
+    this.getTenderPlanInfo();
   }
 
   searchEmailTo(event) {
@@ -367,6 +370,7 @@ export class InformationDeploymentComponent implements OnInit {
     this.packageService.createOrUpdateTenderPreparationPlanning(this.tenderPlan).subscribe(success => {
       this.spinner.hide();
       this.alertService.success('Xác nhận phân công tiến độ thành công!');
+      this.getPackageInfo();
     }, err => {
       this.spinner.hide();
       this.alertService.error('Xác nhận phân công tiến độ thất bại!');

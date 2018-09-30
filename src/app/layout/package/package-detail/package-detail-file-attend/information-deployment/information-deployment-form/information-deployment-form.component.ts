@@ -15,6 +15,7 @@ import { UserItemModel } from '../../../../../../shared/models/user/user-item.mo
 import { TenderPreparationPlanningRequest } from '../../../../../../shared/models/api-request/package/tender-preparation-planning-request';
 import * as moment from 'moment';
 import { Router } from '@angular/router';
+import { BidStatus } from '../../../../../../shared/constants/bid-status';
 declare let kendo: any;
 
 @Component({
@@ -33,6 +34,7 @@ export class InformationDeploymentFormComponent implements OnInit {
     fakeArr = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
     userList: Observable<UserItemModel[]>;
     routerAction: string;
+    bidStatus = BidStatus;
 
     get tasksFA(): FormArray {
         return this.planForm.get('tasks') as FormArray;
@@ -119,7 +121,7 @@ export class InformationDeploymentFormComponent implements OnInit {
             itemId: data.itemId,
             itemName: data.itemName,
             itemDesc: data.itemDesc,
-            whoIsInChargeId: data.whoIsInChargeId,
+            whoIsInChargeId: data.whoIsInChargeId === 0 ? null : data.whoIsInChargeId,
             startDate: data.startDate
                 ? DateTimeConvertHelper.fromTimestampToDtObject(
                       data.startDate * 1000
@@ -159,9 +161,34 @@ export class InformationDeploymentFormComponent implements OnInit {
         return formData as TenderPreparationPlanningRequest;
     }
 
+    validateForm(formData: TenderPreparationPlanningRequest): boolean {
+        if (formData.tasks.every(i => i.whoIsInChargeId === 0 || i.whoIsInChargeId == null)) {
+            this.alertService.error('Bạn chưa hoàn tất phân công tiến độ, chọn "Lưu nháp" nếu muốn thực hiện sau.');
+            return false;
+        } else {
+            return this.checkPlanItems(formData.tasks);
+        }
+    }
+
+    checkPlanItems(data: TenderPreparationPlanItem[]): boolean {
+        let i = 1;
+        data.forEach(e => {
+            if (!(e.whoIsInChargeId && e.startDate && e.finishDate)) {
+                this.alertService.error('Bạn chưa chọn thời gian bắt đầu và thời gian kết thúc cho công việc số ' + i);
+                return true;
+            } else {
+                i++;
+            }
+        });
+        return false;
+    }
+
     submitForm(isDraft: boolean) {
-        this.spinner.show();
         const data = this.getFormData();
+        if (!this.validateForm(data)) {
+            return;
+        }
+        this.spinner.show();
         data.isDraftVersion = isDraft;
         data.bidOpportunityId = this.bidOpportunityId;
         if (data.createdEmployeeId) {
@@ -212,5 +239,9 @@ export class InformationDeploymentFormComponent implements OnInit {
         }, err => {
             this.alertService.error('Đã có lỗi xảy ra, vui lòng thử lại!');
         });
+    }
+
+    changeRouterAction(data: string) {
+        this.routerAction = data;
     }
 }
