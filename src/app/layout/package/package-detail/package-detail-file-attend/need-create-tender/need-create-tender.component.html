@@ -64,7 +64,7 @@
                 </td>
                 <td>{{proposedTender.isDraftVersion ? 'Bản nháp' : 'Chính thức'}}</td>
                 <td>{{proposedTender.createdEmployee?.employeeName}}</td>
-                <td>{{ (proposedTender.createdDate)*1000 | date:'dd/MM/yyyy'}}</td>
+                <td>{{ (proposedTender.createdDate)*1000 | date:'dd/MM/yyyy , HH:mm'}}</td>
                 <td>
                     <div class="d-flex justify-content-center">
                         <div>
@@ -98,7 +98,7 @@
     <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger">
         <thead>
             <tr>
-                <th class="table-history-stt--width">
+                <!-- <th class="table-history-stt--width">
                     <div class="d-flex justify-content-around">
                         <div class="w-40">
                             <div class="center-parent">
@@ -112,41 +112,54 @@
                             <div>STT</div>
                         </div>
                     </div>
-                </th>
+                </th> -->
+                <th>STT</th>
                 <th>Lần cập nhật</th>
                 <th>Người cập nhật</th>
                 <th>Ngày cập nhật</th>
                 <th>Nội dung cập nhật</th>
-                <th class="text-center">Chi tiết cập nhật</th>
+                <!-- <th class="text-center">Chi tiết cập nhật</th> -->
             </tr>
         </thead>
         <tbody>
-            <tr *ngFor="let item of pagedResultChangeHistoryList.items; let i = index">
-                <td class="d-flex justify-content-around">
-                    <div class="w-40">
-                        <div class="center-parent">
-                            <label class="custom-control custom-checkbox">
-                                <input type="checkbox" class="custom-control-input" [(ngModel)]="item.checkboxSelected">
-                                <span class="custom-control-indicator"></span>
-                            </label>
+            <tr *ngFor="let item of historyList; let i = index">
+                <!-- <td>
+                    <div class="d-flex justify-content-around">
+                        <div class="w-40">
+                            <div class="center-parent">
+                                <label class="custom-control custom-checkbox">
+                                    <input type="checkbox" class="custom-control-input" [(ngModel)]="item.checkboxSelected">
+                                    <span class="custom-control-indicator"></span>
+                                </label>
+                            </div>
+                        </div>
+                        <div class="center-parent w-35">
+                            <div>{{i + 1}}</div>
                         </div>
                     </div>
-                    <div class="center-parent w-35">
-                        <div>{{i + 1}}</div>
-                    </div>
-                </td>
+                </td> -->
+                <td>{{i + 1}}</td>
                 <td class="text-center">
-                    {{item.changedTimes + 1}}
+                    {{item.value + 1}}
                 </td>
-                <td> {{item.employee?.employeeName}}</td>
-                <td>{{ (item.changedTime)*1000 | date:'dd/MM/yyyy' }}</td>
-                <td>{{item.updateDesc}}</td>
+                <td> {{item.items[0].employee?.employeeName}}</td>
+                <td>{{ (item.items[0].changedTime)*1000 | date:'dd/MM/yyyy , HH:mm' }}</td>
                 <td>
-                    <div class="d-flex justify-content-center">
+                    <div class="text-truncate">{{item.items[0].updateDesc}}</div>
+                </td>
+                <!-- <td>
+                    <div *ngFor="let liveFormChanged of item.items">
                         <div>
+                            <div *ngFor="let step of liveFormChanged.liveFormChangeds">
+                                <div class="text-truncate">* {{step.liveFormStep | translate}} 
+                                    <div class="text-truncate">
+                                        - {{step.liveFormTitle | translate}}: từ {{step.oldValue}}  thành {{step.newValue}}
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
-                </td>
+                </td> -->
             </tr>
         </tbody>
     </table>
