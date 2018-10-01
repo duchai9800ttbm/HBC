@@ -16,12 +16,11 @@
         <div class="set-width-name-field name-field">
             File đính kèm
         </div>
-        <div class="set-width-value-field d-flex">
-            <div class="no-boder d-flex" style="width: 100%">
-                <span class="w-100" (click)="upload.click()">
-                    <span class="text-truncate form-control boder-input-choose-file">
-                        ---Select File---
-                    </span>
+        <span (click)="deleteFileUpload()" *ngIf="displayName"><i class="fa fa-times mt-2" aria-hidden="true"></i></span>
+        <div [class.offline]="isLinkFile" class="set-width-value-field d-flex">
+            <div class="no-boder d-flex w-100">
+                <span class="w-100 text-truncate form-control boder-input-choose-file" (click)="upload.click()">
+                    {{ displayName || '---Chọn File---'}}
                 </span>
                 <span class="input-group-addon fileUpload">
                     <i class="fa fa-upload" aria-hidden="true"></i>
@@ -34,7 +33,7 @@
         <div class="set-width-name-field name-field">
             Đường dẫn file
         </div>
-        <div class="set-width-value-field">
+        <div class="set-width-value-field" [class.offline]="isFile">
             <input class="form-control" formControlName="linkFile" type="text">
         </div>
     </div>

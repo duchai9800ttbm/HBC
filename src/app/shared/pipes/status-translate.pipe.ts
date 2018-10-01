@@ -11,6 +11,5 @@ export class StatusDocument implements PipeTransform {
         } else {
             return 'Chính thức';
         }
-        console.log(value);
     }
 }

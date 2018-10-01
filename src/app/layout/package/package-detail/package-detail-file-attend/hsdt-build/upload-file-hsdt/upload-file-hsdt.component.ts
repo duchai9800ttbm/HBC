@@ -24,6 +24,10 @@ export class UploadFileHsdtComponent implements OnInit {
     editName: '',
   };
   errorMess;
+  displayName: string;
+  thumbFile;
+  isFile = false;
+  isLinkFile = false;
   constructor(
     private fb: FormBuilder,
     private alertService: AlertService,
@@ -34,7 +38,7 @@ export class UploadFileHsdtComponent implements OnInit {
   ngOnInit() {
     this.uploadForm = this.fb.group({
       file: null,
-      linkFile: null,
+      linkFile: [null, Validators.required],
       description: ''
     });
     this.uploadForm.valueChanges.subscribe(data => {
@@ -42,6 +46,8 @@ export class UploadFileHsdtComponent implements OnInit {
     });
   }
   onFormValueChanged(data?: any) {
+    this.isFile = (this.uploadForm.get('file').value) ? true : false;
+    this.isLinkFile = (this.uploadForm.get('linkFile').value) ? true : false;
     if (this.isSubmitted) {
       this.validateForm();
     }
@@ -55,7 +61,8 @@ export class UploadFileHsdtComponent implements OnInit {
   }
 
   uploadFile(event) {
-    const thumbFile = event.target.files;
+    this.thumbFile = event.target.files;
+    this.displayName = this.thumbFile[0].name;
   }
 
   submitUpload() {
@@ -89,6 +96,11 @@ export class UploadFileHsdtComponent implements OnInit {
   }
   closePopup() {
     this.callBack();
+  }
+  deleteFileUpload() {
+    this.uploadForm.get('file').patchValue(null);
+    this.thumbFile = null;
+    this.displayName = '';
   }
 
 }

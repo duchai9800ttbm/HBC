@@ -9,11 +9,12 @@ import { PackageDetailComponent } from '../../package-detail.component';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { AlertService, ConfirmationService } from '../../../../../shared/services';
 // tslint:disable-next-line:import-blacklist
-import { Subject } from 'rxjs';
+import { Subject, BehaviorSubject } from 'rxjs';
 import { HoSoDuThauService } from '../../../../../shared/services/ho-so-du-thau.service';
 import { PagedResult } from '../../../../../shared/models';
 import { DATATABLE_CONFIG2 } from '../../../../../shared/configs';
 import { DanhSachBoHsdtItem } from '../../../../../shared/models/ho-so-du-thau/danh-sach-bo-hsdt-item.model';
+import { HsdtFilterModel } from '../../../../../shared/models/ho-so-du-thau/hsdt-filter.model';
 @Component({
     selector: 'app-hsdt-build',
     templateUrl: './hsdt-build.component.html',
@@ -34,6 +35,12 @@ export class HsdtBuildComponent implements OnInit {
     isShowSideMenu = false;
     isShowMenu = false;
     notShow = false;
+    searchTerm$ = new BehaviorSubject<string>('');
+    filterModel = new HsdtFilterModel();
+    checkboxSeclectAll: boolean;
+    isShowButtonUp: boolean;
+    isShowButtonDown: boolean;
+    isShowEmpty = false;
     danhSachLoaiTaiLieu;
     constructor(
         private hoSoDuThauService: HoSoDuThauService,
@@ -49,15 +56,10 @@ export class HsdtBuildComponent implements OnInit {
     ngOnInit() {
         this.packageId = +PackageDetailComponent.packageId;
         this.getDanhSachLoaiHoSo();
-        this.getDanhSachBoHoSo();
         this.packageService.isSummaryConditionForm$.subscribe(data => {
             this.isShowMenu = data;
             this.cdr.detectChanges();
         });
-
-        // this.router.events.subscribe((val) => {
-        //     this.notShow = this.isActive();
-        // });
     }
 
     getDanhSachLoaiHoSo() {
@@ -66,16 +68,16 @@ export class HsdtBuildComponent implements OnInit {
             this.danhSachLoaiTaiLieu = res;
         });
     }
-    getDanhSachBoHoSo() {
-        this.hoSoDuThauService.danhSachBoHoSoDuThau(this.packageId, 0, 10)
-            .subscribe(responseResultBoHSDT => {
-                this.pagedResult = responseResultBoHSDT;
-                this.danhSachBoHoSoDuThau = responseResultBoHSDT.items;
-                this.dtTrigger.next();
-                this.spinner.hide();
-            }, err => {
-                this.alertService.error(`Đã xảy ra lỗi khi load danh sách bộ Hồ sơ dự thầu.`);
-            });
+    rerender(pagedResult: any) {
+        this.checkboxSeclectAll = false;
+        this.pagedResult = pagedResult;
+        this.checkButtonUpDown();
+
+    }
+    checkButtonUpDown() {
+        this.isShowButtonUp = +this.pagedResult.pageCount > (+this.pagedResult.currentPage + 1);
+        this.isShowButtonDown = +this.pagedResult.currentPage > 0;
+        this.isShowEmpty = !(this.pagedResult.total > 0);
     }
 
     toggleClick() {
@@ -112,7 +114,7 @@ export class HsdtBuildComponent implements OnInit {
 
     closePopuup() {
         this.dialog.close();
-        this.getDanhSachBoHoSo();
+        // this.getDanhSachBoHoSo();
     }
     onActivate(event) {
         this.hideActionSiteReport = (event.constructor.name === 'LiveformSiteReportComponent') ? true : false;
@@ -136,8 +138,4 @@ export class HsdtBuildComponent implements OnInit {
             }
         );
     }
-
-    // isActive(): boolean {
-    //     return this.router.isActive(`/package/detail/${this.packageId}/attend/build/sitereport`, true);
-    // }
 }

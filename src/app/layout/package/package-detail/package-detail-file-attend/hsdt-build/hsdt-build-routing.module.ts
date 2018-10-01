@@ -5,6 +5,7 @@ import { HsdtBuildComponent } from './hsdt-build.component';
 import { HsktInvolvedComponent } from './hskt-involved/hskt-involved.component';
 import { SummaryConditionFormComponent } from './summary-condition/summary-condition-form/summary-condition-form.component';
 import { LiveformSiteReportComponent } from './liveform-site-report/liveform-site-report.component';
+import { ChiPhiChungComponent } from './chi-phi-chung/chi-phi-chung.component';
 const routes: Routes = [
     {
         path: '',
@@ -19,6 +20,10 @@ const routes: Routes = [
             {
                 path: 'liveformsite',
                 loadChildren: './liveform-site-report/liveform-site-report.module#LiveformSiteReportModule'
+            },
+            {
+                path: 'chiphichung',
+                component: ChiPhiChungComponent
             }
         ]
     }

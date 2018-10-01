@@ -10,14 +10,35 @@ import { ImageItem } from '../models/site-survey-report/image';
 import { AlertService } from './alert.service';
 import * as FileSaver from 'file-saver';
 import { DanhSachBoHsdtItem } from '../models/ho-so-du-thau/danh-sach-bo-hsdt-item.model';
+import { HsdtFilterModel } from '../models/ho-so-du-thau/hsdt-filter.model';
+import { URLSearchParams } from '@angular/http';
+import { InstantSearchService } from './instant-search.service';
+import { DuLieuLiveFormDKDT, ThongTinDuAn, CacBenLienQuan } from '../models/ho-so-du-thau/tom-tat-dkdt.model';
+// tslint:disable-next-line:import-blacklist
+import { BehaviorSubject } from 'rxjs';
 
 @Injectable()
 export class HoSoDuThauService {
 
+  static tempDataLiveFormDKDT = new BehaviorSubject<DuLieuLiveFormDKDT>(new DuLieuLiveFormDKDT());
+
+
+  private static createFilterParams(filter: HsdtFilterModel): URLSearchParams {
+    const urlFilterParams = new URLSearchParams();
+    urlFilterParams.append('status', filter.status);
+    urlFilterParams.append(
+      'uploadedEmployeeId',
+      `${filter.uploadedEmployeeId}`
+    );
+    urlFilterParams.append('createdDate', `${filter.createdDate}`);
+    return urlFilterParams;
+  }
+
   constructor(
     private alertService: AlertService,
     private apiService: ApiService,
-    private sessionService: SessionService
+    private sessionService: SessionService,
+    private instantSearchService: InstantSearchService
   ) { }
   // Tải lên hồ sơ dự thầu
   taiLenHoSoDuThau(
@@ -84,9 +105,17 @@ export class HoSoDuThauService {
     return this.apiService.post(url).map(res => res);
   }
   // Danh sách bộ hồ sơ dự thầu theo gói thầu; tìm kiếm theo tên tài liệu, lọc theo trạng thái, người upload, ngày upload; có phân trang
-  danhSachBoHoSoDuThau(bidOpportunityId: number, page: number, pageSize: number): Observable<PagedResult<DanhSachBoHsdtItem>> {
-    const url = `bidOpportunity/${bidOpportunityId}/${page}/${pageSize}`;
-    return this.apiService.get(url).map(res => {
+  danhSachBoHoSoDuThau(
+    bidOpportunityId: number | string,
+    searchTerm: string,
+    hsdtFilter: HsdtFilterModel,
+    page: number,
+    pageSize: number,
+  ): Observable<PagedResult<DanhSachBoHsdtItem>> {
+    const url = `bidOpportunity/${bidOpportunityId}/${page}/${pageSize}?searchTerm=${searchTerm}`;
+    const urlParams = HoSoDuThauService.createFilterParams(hsdtFilter);
+
+    return this.apiService.get(url, urlParams).map(res => {
       const response = res.result;
       return {
         currentPage: response.pageIndex,
@@ -97,8 +126,46 @@ export class HoSoDuThauService {
       };
     });
   }
+
+  danhSachBoHoSoDuThauInstantSearch(
+    bidOpportunityId: number,
+    searchTerm: Observable<string>,
+    hsdtFilter: HsdtFilterModel,
+    page: number,
+    pageSize: number
+  ): Observable<PagedResult<DanhSachBoHsdtItem>> {
+    const url = `bidOpportunity/${bidOpportunityId}/${page}/${pageSize}?searchTerm=`;
+    const urlParams = HoSoDuThauService.createFilterParams(hsdtFilter);
+    return this.instantSearchService
+      .searchWithFilter(url, searchTerm, HoSoDuThauService.createFilterParams(hsdtFilter))
+      .map(res => {
+        return {
+          currentPage: res.pageIndex,
+          pageSize: res.pageSize,
+          pageCount: res.totalPages,
+          total: res.totalCount,
+          items: (res.items || [])
+        };
+      });
+  }
+
   updateStatus(tenderDocumentId: number, status: string) {
     const url = `tenderdocument/${tenderDocumentId}/${status.toLocaleLowerCase()}`;
     return this.apiService.post(url).map(response => response);
-}
+  }
+
+  // LiveForm Tóm tắt điều kiện dự thầu
+  watchDataLiveForm(): Observable<DuLieuLiveFormDKDT> {
+    return HoSoDuThauService.tempDataLiveFormDKDT;
+  }
+  emitDataAll(obj: DuLieuLiveFormDKDT) {
+    HoSoDuThauService.tempDataLiveFormDKDT.next(obj);
+  }
+  emitDataStepInfo(obj: ThongTinDuAn) {
+    HoSoDuThauService.tempDataLiveFormDKDT.value.thongTinDuAn = obj;
+  }
+  emitDataStepRelate(obj: CacBenLienQuan) {
+    HoSoDuThauService.tempDataLiveFormDKDT.value.cacBenLienQuan = obj;
+  }
+
 }

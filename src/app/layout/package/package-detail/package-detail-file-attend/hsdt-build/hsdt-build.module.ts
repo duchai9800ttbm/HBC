@@ -8,6 +8,7 @@ import { HsktInvolvedComponent } from './hskt-involved/hskt-involved.component';
 import { SharedModule } from '../../../../../shared/shared.module';
 import { SharedComponentsModule } from '../../../../../shared/components/shared-components.module';
 import { HoSoDuThauService } from '../../../../../shared/services/ho-so-du-thau.service';
+import { ChiPhiChungComponent } from './chi-phi-chung/chi-phi-chung.component';
 
 @NgModule({
     imports: [
@@ -19,7 +20,8 @@ import { HoSoDuThauService } from '../../../../../shared/services/ho-so-du-thau.
     declarations: [
         HsdtBuildComponent,
         RequirePriceComponent,
-        HsktInvolvedComponent
+        HsktInvolvedComponent,
+        ChiPhiChungComponent
     ],
     providers: [
         HoSoDuThauService

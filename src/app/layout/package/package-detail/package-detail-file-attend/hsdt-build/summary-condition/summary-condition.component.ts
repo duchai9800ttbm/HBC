@@ -5,8 +5,11 @@ import { TenderConditionSummaryRequest } from '../../../../../../shared/models/a
 import { NgxSpinnerService } from 'ngx-spinner';
 import { AlertService } from '../../../../../../shared/services';
 import { DATATABLE_CONFIG } from '../../../../../../shared/configs';
+// tslint:disable-next-line:import-blacklist
 import { Subject } from 'rxjs';
 import { SummaryConditionFormComponent } from './summary-condition-form/summary-condition-form.component';
+import { DuLieuLiveFormDKDT } from '../../../../../../shared/models/ho-so-du-thau/tom-tat-dkdt.model';
+import { HoSoDuThauService } from '../../../../../../shared/services/ho-so-du-thau.service';
 
 @Component({
   selector: 'app-summary-condition',
@@ -21,12 +24,14 @@ export class SummaryConditionComponent implements OnInit {
   dtOptions: any = DATATABLE_CONFIG;
   dtTrigger: Subject<any> = new Subject();
   constructor(
+    private hoSoDuThauService: HoSoDuThauService,
     private packageService: PackageService,
     private spinner: NgxSpinnerService,
     private alertService: AlertService
   ) { }
 
   ngOnInit() {
+    this.fakeData();
     this.packageId = PackageDetailComponent.packageId;
     this.spinner.show();
     this.packageService.getTenderConditionSummary(this.packageId).subscribe(data => {
@@ -39,12 +44,24 @@ export class SummaryConditionComponent implements OnInit {
       }
       this.spinner.hide();
       setTimeout(() => {
-       this.dtTrigger.next();
+        this.dtTrigger.next();
       });
     }, err => {
       this.spinner.hide();
       this.alertService.error('Đã có lỗi xảy ra, vui lòng thử lại!');
     });
+  }
+
+  fakeData() {
+    const obj = new DuLieuLiveFormDKDT();
+    obj.thongTinDuAn = {
+      tenTaiLieu: 'TaiLieu Test',
+      lanPhongVan: 2,
+      hinhAnhPhoiCanh: [],
+      banVeMasterPlan: [],
+      dienGiaiThongTinDuAn: 'Test dien giai'
+    };
+    this.hoSoDuThauService.emitDataAll(obj);
   }
 
 }
