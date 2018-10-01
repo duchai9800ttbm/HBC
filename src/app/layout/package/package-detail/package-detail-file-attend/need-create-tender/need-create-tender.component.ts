@@ -35,6 +35,9 @@ export class NeedCreateTenderComponent implements OnInit {
   reasonApproveBid = '';
   pagedResultChangeHistoryList: PagedResult<ProposedTenderParticipationHistory[]> = new PagedResult<ProposedTenderParticipationHistory[]>();
   historyList;
+  // get expectedDate() {
+  //   return 
+  // }
   constructor(
     private packageService: PackageService,
     private spinner: NgxSpinnerService,
