@@ -78,3 +78,14 @@
 .date-time{
     width: 300px;
 }
+
+pre{
+    table, th, td {
+        border: 1px solid black!important;
+     }
+}
+:host /deep/ pre{
+    table, th, td {
+        border: 1px solid black!important;
+     }
+}

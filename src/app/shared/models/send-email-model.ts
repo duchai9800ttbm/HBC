@@ -10,13 +10,13 @@ export class SendEmailModel {
 
     get recipientEmails(): string[] {
         // let recipientEmails = this.to.split(',').map(i => i.trim());
-        let recipientEmails = this.to.map( item => item.employeeEmail);
+        let recipientEmails = this.to.map(item => item.employeeEmail || item.employeeName);
         if (this.cc) {
-            const cc = this.cc.map( item => item.employeeEmail);
+            const cc = this.cc.map(item => item.employeeEmail || item.employeeName);
             recipientEmails = recipientEmails.concat(cc);
         }
         if (this.bcc) {
-            const bcc = this.bcc.map( item => item.employeeEmail);
+            const bcc = this.bcc.map(item => item.employeeEmail || item.employeeName);
             recipientEmails = recipientEmails.concat(bcc);
         }
         return recipientEmails;
