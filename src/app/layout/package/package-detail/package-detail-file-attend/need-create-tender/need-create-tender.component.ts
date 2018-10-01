@@ -35,6 +35,9 @@ export class NeedCreateTenderComponent implements OnInit {
   reasonApproveBid = '';
   pagedResultChangeHistoryList: PagedResult<ProposedTenderParticipationHistory[]> = new PagedResult<ProposedTenderParticipationHistory[]>();
   historyList;
+  // get expectedDate() {
+  //   return 
+  // }
   constructor(
     private packageService: PackageService,
     private spinner: NgxSpinnerService,
@@ -67,6 +70,7 @@ export class NeedCreateTenderComponent implements OnInit {
       this.historyList = this.historyList.sort( ( a, b ) =>  parseFloat(a.changedTimes) < parseFloat(b.changedTimes));
       // objs.sort((a,b) => (a.last_nom > b.last_nom) ? 1 : ((b.last_nom > a.last_nom) ? -1 : 0));
       this.historyList = groupBy(this.historyList, [{ field: 'changedTimes' }]);
+      console.log('this.history', this.historyList);
       this.spinner.hide();
     },
       err => {

@@ -40,7 +40,7 @@
 <div class="mt-5 ml-3" *ngIf="proposedTender">
     <div class="d-flex justify-content-between">
         <h5 class="text-uppercase mb-3">phiếu đề nghị dự thầu (proposed tender participating report)</h5>
-        <div class="text-right" *ngIf="proposedTender.tenderDirectorProposal && proposedTender.tenderDirectorProposal.expectedDate">Thời gian mong đợi được duyệt: {{(proposedTender.tenderDirectorProposal?.expectedDate)*1000 | date:'dd/MM/yyyy'}}</div>
+        <div class="text-right" *ngIf="proposedTender.tenderDirectorProposal && proposedTender.tenderDirectorProposal.expectedDate">Thời gian mong đợi được duyệt: {{(proposedTender.tenderDirectorProposal?.expectedDate)*1000 | date:'dd/MM/yyyy': '+0000'}}</div>
     </div>
 
     <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger">
@@ -64,7 +64,7 @@
                 </td>
                 <td>{{proposedTender.isDraftVersion ? 'Bản nháp' : 'Chính thức'}}</td>
                 <td>{{proposedTender.createdEmployee?.employeeName}}</td>
-                <td>{{ (proposedTender.createdDate)*1000 | date:'dd/MM/yyyy , HH:mm'}}</td>
+                <td>{{ (proposedTender.createdDate)*1000 | date:'dd/MM/yyyy , HH:mm':'+0000'}}</td>
                 <td>
                     <div class="d-flex justify-content-center">
                         <div>
@@ -113,7 +113,7 @@
                         </div>
                     </div>
                 </th> -->
-                <th>STT</th>
+                <th class="text-center">STT</th>
                 <th>Lần cập nhật</th>
                 <th>Người cập nhật</th>
                 <th>Ngày cập nhật</th>
@@ -138,12 +138,12 @@
                         </div>
                     </div>
                 </td> -->
-                <td>{{i + 1}}</td>
+                <td class="text-center">{{i + 1}}</td>
                 <td class="text-center">
                     {{item.value + 1}}
                 </td>
                 <td> {{item.items[0].employee?.employeeName}}</td>
-                <td>{{ (item.items[0].changedTime)*1000 | date:'dd/MM/yyyy , HH:mm' : '+0000' }}</td>
+                <td>{{ (item.items[0].changedTime)*1000 | date:'dd/MM/yyyy , HH:mm':'+0000' }}</td>
                 <td>
                     <div class="text-truncate">{{item.items[0].updateDesc}}</div>
                 </td>

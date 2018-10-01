@@ -50,21 +50,22 @@
                     </div>
                   </div>
                 </div>
-                <a class="w-100" (click)="read(item)" [class.notification--not-read]="item.notificationState?.id === 'UnRead'">
+                <a *ngIf="item.notificationType === 'GuiDuyetDeNghiDuThau'" class="w-100" (click)="read(item)" [class.notification--not-read]="item.notificationState?.id === 'UnRead'">
                   <strong>Gói thầu: {{item.bidOpportunityName}}</strong>
                   <div>
                     <span class="last span--margin">Bạn vừa nhận được yêu cầu Duyệt Đề nghị dự thầu từ
                       <span class="content--bold">{{item.sendEmployee?.employeeName}} </span>, thời gian mong đợi được duyệt trước ngày
-                      <span class="content--bold">{{item.data*1000 | date:'dd/MM/yyyy HH:mm'}}</span>
+                      <span class="content--bold">{{item.data*1000 | date:'dd/MM/yyyy HH:mm':'+0000'}}</span>
                     </span>
                     <span class="badge badge-info">Chi tiết</span>
                   </div>
 
                   <p class="small text-muted">
-                    <em>{{item.sendDate*1000 | date:'dd/MM/yyyy HH:mm'}}</em>
+                    <em>{{item.sendDate*1000 | date:'dd/MM/yyyy HH:mm':'+0000'}}</em>
                   </p>
                 </a>
-                <a *ngIf="item.notificationType === 'NhacDuyetDeNghiDuThauTruoc3Ngay'" class="w-100" (click)="read(item)">
+
+                <a *ngIf="item.notificationType === 'NhacDuyetDeNghiDuThauTruoc3Ngay'" class="w-100" (click)="read(item)" [class.notification--not-read]="item.notificationState?.id === 'UnRead'">
                   <strong>Gói thầu: {{item.bidOpportunityName}}</strong>
                   <div>
                     <span class="last span--margin">Nếu chưa duyệt ĐNDT, dựa vào thời gian mong đợi được duyệt để thông báo đến ban giám đốc duyệt
@@ -72,7 +73,7 @@
                     <span class="badge badge-info ">Chi tiết</span>
                   </div>
                   <p class="small text-muted">
-                    <em>{{item.sendDate*1000 | date:'dd/MM/yyyy HH:mm'}}</em>
+                    <em>{{item.sendDate*1000 | date:'dd/MM/yyyy HH:mm':'+0000'}}</em>
                   </p>
                 </a>
 
@@ -84,10 +85,11 @@
                     <span class="badge badge-info">Chi tiết</span>
                   </div>
                   <p class="small text-muted">
-                    <em>{{item.sendDate*1000 | date:'dd/MM/yyyy HH:mm'}}</em>
+                    <em>{{item.sendDate*1000 | date:'dd/MM/yyyy HH:mm':'+0000'}}</em>
                   </p>
                 </a>
-                <a *ngIf="item === 'GuiDuyetTrinhDuyetGia'" class="w-100" (click)="read(item)" [class.notification--not-read]="item.notificationState?.id === 'UnRead'">
+
+                <a *ngIf="item.notificationType === 'GuiDuyetTrinhDuyetGia'" class="w-100" (click)="read(item)" [class.notification--not-read]="item.notificationState?.id === 'UnRead'">
                   <strong>Gói thầu: {{item.bidOpportunityName}}</strong>
                   <div>
                     <span class="last span--margin">Bạn vừa nhận được yêu cầu Duyệt Trình duyệt giá từ
@@ -97,9 +99,10 @@
 
                   </div>
                   <p class="small text-muted">
-                    <em>{{item.sendDate*1000 | date:'dd/MM/yyyy HH:mm'}}</em>
+                    <em>{{item.sendDate*1000 | date:'dd/MM/yyyy HH:mm':'+0000'}}</em>
                   </p>
                 </a>
+
                 <a *ngIf="item.notificationType === 'GuiLaiTrinhDuyetGia'" class="w-100" (click)="read(item)" [class.notification--not-read]="item.notificationState?.id === 'UnRead'">
                   <strong>Gói thầu: {{item.bidOpportunityName}}</strong>
                   <div>
@@ -108,9 +111,10 @@
                     <span class="badge badge-info pre--margin">Chi tiết</span>
                   </div>
                   <p class="small text-muted">
-                    <em>{{item.sendDate*1000 | date:'dd/MM/yyyy HH:mm'}}</em>
+                    <em>{{item.sendDate*1000 | date:'dd/MM/yyyy HH:mm':'+0000'}}</em>
                   </p>
                 </a>
+
                 <a *ngIf="item.notificationType === 'ChuyenGiaoTaiLieu'" class="w-100" (click)="read(item)" [class.notification--not-read]="item.notificationState?.id === 'UnRead'">
                   <div>
                     <span class="last span--margin">Bạn vừa nhận được tài liệu chuyển giao từ
@@ -120,9 +124,10 @@
                     <span class="badge badge-info pre--margin">Chi tiết</span>
                   </div>
                   <p class="small text-muted">
-                    <em>{{item.sendDate*1000 | date:'dd/MM/yyyy HH:mm'}}</em>
+                    <em>{{item.sendDate*1000 | date:'dd/MM/yyyy HH:mm':'+0000'}}</em>
                   </p>
                 </a>
+
                 <div style="padding: 0.25rem 0rem 0.25rem 1rem; min-width: 10rem; color: #019cff; font-weight: bold;">
                   <span *ngIf="item.notificationState.id === 'UnRead'" style="cursor: pointer" (click)="tickReaded(item)">Đánh dấu đã đọc</span> 
                 </div>
