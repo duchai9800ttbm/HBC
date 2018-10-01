@@ -3,6 +3,7 @@ export class TenderPriceApproval {
     bidOpportunityId: number;
     createdEmployeeId?: number;
     updatedEmployeeId?: number;
+    documentName: string;
     createdEmployee: {
         employeeId: number;
         employeeNo: string;

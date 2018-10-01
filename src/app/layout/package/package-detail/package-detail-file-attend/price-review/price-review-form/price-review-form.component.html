@@ -58,7 +58,7 @@
                 </div>
                 <div class="content" id="table-review">
                     <div class="d-flex row-header">
-                        <div class="d-flex ten-tai-lieu">
+                        <div class="d-flex ten-tai-lieu align-self-stretch">
                             <div class="label-document">
                                 <div class="cell-left d-flex align-items-center font-weight-bold">
                                     <div class="ml-3">
@@ -68,21 +68,18 @@
                             </div>
                             <div class="name-document">
                                 <div class="cell-right d-flex align-items-center font-weight-bold">
-                                    <div class="ml-3">
-                                        Trình duyệt giá
-                                    </div>
+                                    <input formControlName="documentName">
+
                                 </div>
                             </div>
                         </div>
-                        <div class="d-flex lan-phong-van">
+                        <div class="d-flex lan-phong-van align-self-stretch">
                             <div class="name font-weight-bold align-items-center d-flex">
                                 <div class="ml-3">Lần phỏng vấn</div>
                             </div>
-                            <div class="value center-parent">
-                                <div class="font-weight-bold center-parent">
-                                    <div>
-                                            <input formControlName="interviewTimes">
-                                    </div>
+                            <div class="value d-flex align-items-center">
+                                <div class="font-weight-bold  d-flex align-items-center ">
+                                    <input formControlName="interviewTimes">
                                 </div>
                             </div>
                         </div>
@@ -704,207 +701,203 @@
                         </div>
                     </div>
 
-                    <div class="d-flex row-condition-1 ">
-                        <div class="first d-flex align-items-center font-weight-bold">
+                    <div class="d-flex row-condition-3">
+                        <div class="colu-1 d-flex font-weight-bold">
                             <div class="stt center-parent">
                                 <div>3</div>
                             </div>
                             <div class="name d-flex align-items-center">
-                                <div class="ml-1 mr-1">Tiền giữ lại cho mỗi đợt thanh toán</div>
+                                <div>
+                                    <div class="ml-1 mr-1">Tiền giữ lại cho mỗi đợt thanh toán</div>
+                                </div>
                             </div>
                         </div>
-                        <div class="two d-flex">
-                            <div class="required-2  d-flex">
-                                <div class="one">
-                                    <div class="item item-above font-weight-bold d-flex align-items-center">
+                        <div class="colu-2 d-flex align-items-center align-self-stretch">
+                            <div class="yeu-cau d-flex flex-column">
+                                <div class="above d-flex align-items-center font-weight-bold">
+                                    <div class="column-1 d-flex align-items-center">
                                         <div class="ml-1 mr-1">%</div>
                                     </div>
-                                    <div class="item item-below d-flex center-parent">
-                                        <div class="w-100">
-                                            <input formControlName="tienGiuLaiYCPercent">
-
-                                        </div>
+                                    <div class="column-2 d-flex align-items-center">
+                                        <div class="ml-1 mr-1">% max dữ lại</div>
 
                                     </div>
                                 </div>
-                                <div class="two">
-                                    <div class="item item-above font-weight-bold d-flex align-items-center">
-                                        <div class="ml-1 mr-1">% max dữ lại</div>
-                                    </div>
-                                    <div class="item item-below d-flex center-parent">
-                                        <div class="w-100">
-                                            <input formControlName="tienGiuLaiYCKhauTru">
+                                <div class="below d-flex">
+                                    <div class="column-1 d-flex align-items-center">
+                                        <input formControlName="tienGiuLaiYCPercent">
 
-                                        </div>
+                                    </div>
+                                    <div class="column-2 d-flex align-items-center">
+                                        <input formControlName="tienGiuLaiYCKhauTru">
 
                                     </div>
                                 </div>
                             </div>
-                            <div class="request  d-flex">
-                                <div class="one">
-                                    <div class="item item-above font-weight-bold d-flex align-items-center">
+                            <div class="de-xuat d-flex flex-column">
+                                <div class="above d-flex align-items-center font-weight-bold">
+                                    <div class="column-1 d-flex align-items-center">
                                         <div class="ml-1 mr-1">%</div>
-                                    </div>
-                                    <div class="item item-below d-flex center-parent">
-                                        <div class="w-100">
-                                            <input formControlName="tienGiuLaiDXPercent">
 
-                                        </div>
+                                    </div>
+                                    <div class="column-2 d-flex align-items-center">
+                                        <div class="ml-1 mr-1">% max dữ lại</div>
 
                                     </div>
                                 </div>
-                                <div class="two">
-                                    <div class="item item-above font-weight-bold d-flex align-items-center">
-                                        <div class="ml-1 mr-1">% max dữ lại</div>
-                                    </div>
-                                    <div class="item item-below d-flex center-parent">
-                                        <div class="w-100">
-                                            <input formControlName="tienGiuLaiDXKhauTru">
+                                <div class="below d-flex">
+                                    <div class="column-1 d-flex align-items-center">
+                                        <input formControlName="tienGiuLaiDXPercent">
 
-                                        </div>
+                                    </div>
+                                    <div class="column-2 d-flex align-items-center">
+                                        <input formControlName="tienGiuLaiDXKhauTru">
 
                                     </div>
                                 </div>
                             </div>
                         </div>
-                        <div class="three">
+                        <div class="colu-3">
                             <textarea name="" id="" formControlName="tienGiuLaiCY"></textarea>
+
                         </div>
                     </div>
 
-                    <div class="d-flex row-condition-1 ">
-                        <div class="first d-flex align-items-center font-weight-bold">
+
+                    <div class="d-flex row-condition-3">
+                        <div class="colu-1 d-flex font-weight-bold">
                             <div class="stt center-parent">
                                 <div>4</div>
                             </div>
                             <div class="name d-flex align-items-center">
-                                <div class="ml-1 mr-1">Phạt tiến độ bị chậm</div>
+                                <div>
+                                    <div class="ml-1 mr-1">Phạt tiến độ bị chậm
+                                    </div>
+                                </div>
                             </div>
                         </div>
-                        <div class="two d-flex">
-                            <div class="required-2  d-flex">
-                                <div class="one">
-                                    <div class="item item-above font-weight-bold d-flex align-items-center">
-                                        <div class="ml-1 mr-1">%HĐ/ngày</div>
+                        <div class="colu-2 d-flex align-items-center align-self-stretch">
+                            <div class="yeu-cau d-flex flex-column">
+                                <div class="above d-flex align-items-center font-weight-bold">
+                                    <div class="column-1 d-flex align-items-center">
+                                        <div class="ml-1 mr-1">%HĐ/ngày
+                                        </div>
                                     </div>
-                                    <div class="item item-below d-flex center-parent">
-                                        <div class="w-100">
-                                            <input formControlName="phatTienDoYCPercent">
-
+                                    <div class="column-2 d-flex align-items-center">
+                                        <div class="ml-1 mr-1">Phạt max
                                         </div>
 
                                     </div>
                                 </div>
-                                <div class="two">
-                                    <div class="item item-above font-weight-bold d-flex align-items-center">
-                                        <div class="ml-1 mr-1">Phạt max</div>
-                                    </div>
-                                    <div class="item item-below d-flex center-parent">
-                                        <div class="w-100">
-                                            <input formControlName="phatTienDoYCMax">
+                                <div class="below d-flex">
+                                    <div class="column-1 d-flex align-items-center">
+                                        <input formControlName="phatTienDoYCPercent">
 
-                                        </div>
+                                    </div>
+                                    <div class="column-2 d-flex align-items-center">
+                                        <input formControlName="phatTienDoYCMax">
 
                                     </div>
                                 </div>
                             </div>
-                            <div class="request  d-flex">
-                                <div class="one">
-                                    <div class="item item-above font-weight-bold d-flex align-items-center">
-                                        <div class="ml-1 mr-1">%HĐ/ngày</div>
-                                    </div>
-                                    <div class="item item-below d-flex center-parent">
-                                        <div class="w-100">
-                                            <input formControlName="phatTienDoDXPercent">
+                            <div class="de-xuat d-flex flex-column">
+                                <div class="above d-flex align-items-center font-weight-bold">
+                                    <div class="column-1 d-flex align-items-center">
+                                        <div class="ml-1 mr-1">%HĐ/ngày
+                                        </div>
 
+                                    </div>
+                                    <div class="column-2 d-flex align-items-center">
+                                        <div class="ml-1 mr-1">Phạt max
                                         </div>
 
                                     </div>
                                 </div>
-                                <div class="two">
-                                    <div class="item item-above font-weight-bold d-flex align-items-center">
-                                        <div class="ml-1 mr-1">Phạt max</div>
-                                    </div>
-                                    <div class="item item-below d-flex center-parent">
-                                        <div class="w-100">
-                                            <input formControlName="phatTienDoDXMax">
+                                <div class="below d-flex">
+                                    <div class="column-1 d-flex align-items-center">
+                                        <input formControlName="phatTienDoDXPercent">
 
-                                        </div>
+                                    </div>
+                                    <div class="column-2 d-flex align-items-center">
+                                        <input formControlName="phatTienDoDXMax">
 
                                     </div>
                                 </div>
                             </div>
                         </div>
-                        <div class="three">
+                        <div class="colu-3">
                             <textarea name="" id="" formControlName="phatTienDoCY"></textarea>
+
                         </div>
                     </div>
 
-                    <div class="d-flex row-condition-1 ">
-                        <div class="first d-flex align-items-center font-weight-bold">
+
+
+
+                    <div class="d-flex row-condition-3">
+                        <div class="colu-1 d-flex font-weight-bold">
                             <div class="stt center-parent">
                                 <div>5</div>
                             </div>
                             <div class="name d-flex align-items-center">
-                                <div class="ml-1 mr-1">Thời gian bảo hành ct</div>
+                                <div>
+                                    <div class="ml-1 mr-1">Thời gian bảo hành ct
+                                    </div>
+                                </div>
                             </div>
                         </div>
-                        <div class="two d-flex">
-                            <div class="required-2  d-flex">
-                                <div class="one">
-                                    <div class="item item-above font-weight-bold d-flex align-items-center">
-                                        <div class="ml-1 mr-1">%</div>
+                        <div class="colu-2 d-flex align-items-center align-self-stretch">
+                            <div class="yeu-cau d-flex flex-column">
+                                <div class="above d-flex align-items-center font-weight-bold">
+                                    <div class="column-1 d-flex align-items-center">
+                                        <div class="ml-1 mr-1">%
+                                        </div>
                                     </div>
-                                    <div class="item item-below d-flex center-parent">
-                                        <div class="w-100">
-                                            <input formControlName="thoiGianBHYCPercent">
-
+                                    <div class="column-2 d-flex align-items-center">
+                                        <div class="ml-1 mr-1">Bằng tiền
                                         </div>
 
                                     </div>
                                 </div>
-                                <div class="two">
-                                    <div class="item item-above font-weight-bold d-flex align-items-center">
-                                        <div class="ml-1 mr-1">Bằng tiền</div>
-                                    </div>
-                                    <div class="item item-below d-flex center-parent">
-                                        <div class="w-100">
-                                            <input formControlName="thoiGianBHYCAmount">
+                                <div class="below d-flex">
+                                    <div class="column-1 d-flex align-items-center">
+                                        <input formControlName="thoiGianBHYCPercent">
 
-                                        </div>
+                                    </div>
+                                    <div class="column-2 d-flex align-items-center">
+                                        <input formControlName="thoiGianBHYCAmount">
 
                                     </div>
                                 </div>
                             </div>
-                            <div class="request  d-flex">
-                                <div class="one">
-                                    <div class="item item-above font-weight-bold d-flex align-items-center">
-                                        <div class="ml-1 mr-1">Bằng bond</div>
-                                    </div>
-                                    <div class="item item-below d-flex center-parent">
-                                        <div class="w-100">
-                                            <input formControlName="thoiGianBHDXBond">
+                            <div class="de-xuat d-flex flex-column">
+                                <div class="above d-flex align-items-center font-weight-bold">
+                                    <div class="column-1 d-flex align-items-center">
+                                        <div class="ml-1 mr-1">Bằng bond
+                                        </div>
 
+                                    </div>
+                                    <div class="column-2 d-flex align-items-center">
+                                        <div class="ml-1 mr-1">T.g bh (tháng)
                                         </div>
 
                                     </div>
                                 </div>
-                                <div class="two">
-                                    <div class="item item-above font-weight-bold d-flex align-items-center">
-                                        <div class="ml-1 mr-1">T.g bh (tháng)</div>
-                                    </div>
-                                    <div class="item item-below d-flex center-parent">
-                                        <div class="w-100">
-                                            <input formControlName="thoiGianBHMonth">
+                                <div class="below d-flex">
+                                    <div class="column-1 d-flex align-items-center">
+                                        <input formControlName="thoiGianBHDXBond">
 
-                                        </div>
+                                    </div>
+                                    <div class="column-2 d-flex align-items-center">
+                                        <input formControlName="thoiGianBHMonth">
 
                                     </div>
                                 </div>
                             </div>
                         </div>
-                        <div class="three">
+                        <div class="colu-3">
                             <textarea name="" id="" formControlName="thoiGianBHCY"></textarea>
+
                         </div>
                     </div>
 

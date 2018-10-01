@@ -19,10 +19,11 @@
     <div class="to">To:
         <span *ngFor="let e of email?.to; let i = index">
             <span *ngIf="i !== 0">,</span>
-            <span>{{e.email}}</span>
             <span *ngIf="!e?.isSuccess">
                 <i class="fa fa-exclamation-triangle icon-warning" aria-hidden="true"></i>
             </span>
+            <span>{{e.email}}</span>
+
 
         </span>
     </div>
@@ -46,9 +47,9 @@
 
 
 <div class="content-email">
-    <pre [innerHTML]="email?.content">
+    <div [innerHTML]="email?.content">
     <!-- {{email?.content}} -->
-  </pre>
+    </div>
 </div>
 <div class="attach">
     <div style="margin: 5px 20px; margin-top: 20px;">
