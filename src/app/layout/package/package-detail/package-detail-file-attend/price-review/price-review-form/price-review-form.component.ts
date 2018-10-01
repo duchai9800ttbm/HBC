@@ -652,11 +652,11 @@ export class PriceReviewFormComponent implements OnInit, AfterViewInit {
           DateTimeConvertHelper.fromTimestampToDtObject(
             this.model.approvalDate * 1000
           ),
-        disabled: this.isModeView
+        //  disabled: this.isModeView
       }],
       approvalTimes: {
         value: this.model.approvalTimes,
-        disabled: this.isModeView
+        disabled: true
       },
       interviewTimes: {
         value: this.model.interviewTimes,

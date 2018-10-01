@@ -13,7 +13,7 @@ const routes: Routes = [
         path: '',
         component: PackageDetailFileAttendComponent,
         children: [
-            { path: '', redirectTo: 'create-request' },
+            // { path: '', redirectTo: 'create-request' },
             {
                 path: 'infomation-deployment',
                 loadChildren: './information-deployment/information-deployment.module#InformationDeploymentModule' },

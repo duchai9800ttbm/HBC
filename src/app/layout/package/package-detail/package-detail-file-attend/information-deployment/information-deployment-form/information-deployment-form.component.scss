@@ -51,6 +51,27 @@
     }
 }
 
+.b-textarea {
+    border: none;
+    resize: none;
+}
+
+.view-readonly {
+    position: absolute;
+    top: 180px;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 1000;
+}
+
+.fake-placeholder {
+    position: absolute;
+    top: .5rem;
+    left: .75rem;
+    opacity: .5;
+}
+
 .header {
     background-color: #f68e56;
     padding: 1rem;

@@ -130,8 +130,9 @@ export class InformationDeploymentComponent implements OnInit {
 
       ],
       allowedContent: true,
-      extraPlugins: 'colorbutton,font,justify,print,tableresize,pastefromword,liststyle',
-      pasteFromWord_inlineImages: true
+      extraPlugins: 'colorbutton,font,justify,print,tableresize,pastefromword,liststyle,autolink',
+      pasteFromWord_inlineImages: true,
+      forcePasteAsPlainText : false,
     };
 
     this.packageId = +PackageDetailComponent.packageId;
@@ -142,8 +143,6 @@ export class InformationDeploymentComponent implements OnInit {
       userId: [null],
       version: [''],
     });
-
-
 
     this.isSendCc = false;
     this.isSendBcc = false;
@@ -168,6 +167,11 @@ export class InformationDeploymentComponent implements OnInit {
     //       this.listEmailSearchTo = response;
     //     });
     //   });
+  }
+
+  refresh() {
+    this.getPackageInfo();
+    this.getTenderPlanInfo();
   }
 
   searchEmailTo(event) {
@@ -367,6 +371,7 @@ export class InformationDeploymentComponent implements OnInit {
     this.packageService.createOrUpdateTenderPreparationPlanning(this.tenderPlan).subscribe(success => {
       this.spinner.hide();
       this.alertService.success('Xác nhận phân công tiến độ thành công!');
+      this.getPackageInfo();
     }, err => {
       this.spinner.hide();
       this.alertService.error('Xác nhận phân công tiến độ thất bại!');
@@ -400,7 +405,6 @@ export class InformationDeploymentComponent implements OnInit {
   //   });
   // }
   onChange(e) {
-    console.log(e);
   }
 
 }
