@@ -130,8 +130,9 @@ export class InformationDeploymentComponent implements OnInit {
 
       ],
       allowedContent: true,
-      extraPlugins: 'colorbutton,font,justify,print,tableresize,pastefromword,liststyle',
-      pasteFromWord_inlineImages: true
+      extraPlugins: 'colorbutton,font,justify,print,tableresize,pastefromword,liststyle,autolink',
+      pasteFromWord_inlineImages: true,
+      forcePasteAsPlainText : false,
     };
 
     this.packageId = +PackageDetailComponent.packageId;
@@ -404,7 +405,6 @@ export class InformationDeploymentComponent implements OnInit {
   //   });
   // }
   onChange(e) {
-    console.log(e);
   }
 
 }
