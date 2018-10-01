@@ -1005,8 +1005,16 @@ export class PackageService {
     }
 
     // tạo mới/ sửa LiveForm phân công tiến độ
-    createOrUpdateTenderPreparationPlanning(data: TenderPreparationPlanningRequest): Observable<any> {
+    createOrUpdateTenderPreparationPlanning(data: any): Observable<any> {
         const url = `tenderpreparationplanningassignment/createorupdate`;
+        data.tasks.forEach(element => {
+            element.startDate = DateTimeConvertHelper.fromDtObjectToSecon(element.startDate);
+            element.finishDate = DateTimeConvertHelper.fromDtObjectToSecon(element.finishDate);
+            // element.whoIsInChargeId = Number(element.whoIsInChargeId);
+            // if (element.startDate && element.finishDate) {
+            //     element.duration = Math.abs(element.startDate - element.finishDate) / (60 * 60 * 24);
+            // }
+        });
         return this.apiService.post(url, data).map(response => response.result);
     }
 
@@ -1018,7 +1026,7 @@ export class PackageService {
 
     // gửi phân công tiến độ
     sendTenderPreparationPlanning(bidOpportunityId: number): Observable<any> {
-        const url = `bidopportunity/hsdt/${bidOpportunityId}/guiphancontiendo`;
+        const url = `bidopportunity/hsdt/${bidOpportunityId}/guiphancongtiendo`;
         return this.apiService.post(url).map(data => data.result);
     }
 
