@@ -45,6 +45,7 @@ export class NeedCreateTenderComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+    console.log('ngOnInit');
     this.bidOpportunityId = PackageDetailComponent.packageId;
     this.getProposedTenderParticipateReportInfo();
     this.getChangeHistory();
@@ -52,12 +53,14 @@ export class NeedCreateTenderComponent implements OnInit {
   }
 
   refresh() {
+    this.statusObservableHsdtService.change();
     this.getProposedTenderParticipateReportInfo();
     this.getChangeHistory();
     this.getPackageInfo();
   }
 
   getChangeHistory() {
+    console.log('getChangeHistory');
     this.spinner.show();
     this.packageService.getChangeHistoryListProposedTender(this.bidOpportunityId, 0, 1000).subscribe(respone => {
       this.historyList = respone.items;
@@ -66,12 +69,12 @@ export class NeedCreateTenderComponent implements OnInit {
       this.historyList = this.historyList.sort( ( a, b ) =>  parseFloat(a.changedTimes) < parseFloat(b.changedTimes));
       // objs.sort((a,b) => (a.last_nom > b.last_nom) ? 1 : ((b.last_nom > a.last_nom) ? -1 : 0));
       this.historyList = groupBy(this.historyList, [{ field: 'changedTimes' }]);
-      console.log('lich su thay doi', this.historyList);
+      console.log('this.historyList', this.historyList);
       this.spinner.hide();
     },
       err => {
         this.spinner.hide();
-        this.alertService.error('Lấy danh sách lịch sử thay đổi phiếu đề nghị dự thầu thất bại!');
+        // this.alertService.error('Lấy danh sách lịch sử thay đổi phiếu đề nghị dự thầu thất bại!');
       });
   }
 
