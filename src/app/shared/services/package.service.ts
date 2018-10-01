@@ -58,7 +58,7 @@ export class PackageService {
     private static toPackageListItem(result: any): PackageListItem {
         return {
             bidOpportunityId: result.bidOpportunityId,
-            classify: result.classify ?  result.classify.value : '',
+            classify: result.classify ? result.classify.value : '',
             amount: result.amount,
             opportunityName: result.opportunityName,
             projectName: result.projectName,
@@ -184,15 +184,15 @@ export class PackageService {
             changedTime: result.changedTime,
             changedTimes: result.changedTimes,
             updateDesc: result.updateDesc,
-            liveFormChangeds: result.liveFormChangeds.map( item => {
-                return {
+            liveFormChangeds: result.liveFormChangeds ? result.liveFormChangeds.map(item =>
+                ({
                     liveFormStep: item.liveFormStep,
                     liveFormSubject: item.liveFormSubject,
                     liveFormTitle: item.liveFormTitle,
                     oldValue: item.oldValue,
                     newValue: item.newValue,
-                };
-            })
+                })
+            ) : []
         };
     }
 
@@ -941,11 +941,11 @@ export class PackageService {
         return this.apiService.post(url).map(response => response.result);
     }
     // Lịch sử thay đổi liveform phiếu đề nghị dự thầu
-    getChangeHistoryListProposedTender (
+    getChangeHistoryListProposedTender(
         bidOpportunityId: number,
         page: number | string,
-        pageSize: number | string): Observable<PagedResult<ProposedTenderParticipationHistory[]>> {
-        const url = `/bidopportunity/${bidOpportunityId}/proposedtenderparticipatinngreport/changedhistory/${page}/${pageSize}`;
+        pageSize: number | string): Observable<PagedResult<ProposedTenderParticipationHistory>> {
+        const url = `bidopportunity/${bidOpportunityId}/proposedtenderparticipatinngreport/changedhistory/${page}/${pageSize}`;
         return this.apiService.get(url).map(response => {
             const result = response.result;
             return {
@@ -973,8 +973,8 @@ export class PackageService {
             reason: reason
         }).map(response => response.result);
     }
-     // Không duyệt đề nghị dự thầu
-     notApproveBidProposal(bidOpportunityId: number, reason: string): Observable<any> {
+    // Không duyệt đề nghị dự thầu
+    notApproveBidProposal(bidOpportunityId: number, reason: string): Observable<any> {
         const url = `bidopportunity/hsdt/${bidOpportunityId}/khongduyetdenghiduthau`;
         return this.apiService.post(url, {
             reason: reason

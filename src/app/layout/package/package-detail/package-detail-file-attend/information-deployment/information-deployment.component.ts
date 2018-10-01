@@ -22,6 +22,7 @@ import { PackageService } from '../../../../../shared/services/package.service';
 import { PackageInfoModel } from '../../../../../shared/models/package/package-info.model';
 import { BidStatus } from '../../../../../shared/constants/bid-status';
 import { TenderPreparationPlanningRequest } from '../../../../../shared/models/api-request/package/tender-preparation-planning-request';
+import { StatusObservableHsdtService } from '../../../../../shared/services/status-observable-hsdt.service';
 @Component({
   selector: 'app-information-deployment',
   templateUrl: './information-deployment.component.html',
@@ -104,7 +105,8 @@ export class InformationDeploymentComponent implements OnInit {
     private spinner: NgxSpinnerService,
     private alertService: AlertService,
     private emailService: EmailService,
-    private packageService: PackageService
+    private packageService: PackageService,
+    private statusObservableHsdtService: StatusObservableHsdtService
   ) {
     this.loadItems();
   }
@@ -229,6 +231,7 @@ export class InformationDeploymentComponent implements OnInit {
       this.emailModel.bidOpportunityId = this.packageId;
       this.spinner.show();
       this.emailService.sendEmailDeployment(this.emailModel, this.file).subscribe(result => {
+        this.statusObservableHsdtService.change();
         this.isSendInformation = !this.isSendInformation;
         this.isTeamPlate = !this.isTeamPlate;
         this.dowloadTem = true;
