@@ -1035,4 +1035,42 @@ export class PackageService {
         const url = `bidopportunity/${bidOpportunityId}/tenderpreparationplanningassignment/item/${itemId}/checkfinish`;
         return this.apiService.post(url).map(data => data.result);
     }
+
+    // Lịch sử thay đổi liveform phiếu đề nghị dự thầu
+    getChangeHistoryListTenderPreparationPlanning(
+        bidOpportunityId: number,
+        page: number | string,
+        pageSize: number | string): Observable<PagedResult<ProposedTenderParticipationHistory>> {
+        const url = `bidopportunity/${bidOpportunityId}/tenderpreparationplanningassignment/changedhistory/${page}/${pageSize}`;
+        return this.apiService.get(url).map(response => {
+            const result = response.result;
+            return {
+                currentPage: result.pageIndex,
+                pageSize: result.pageSize,
+                pageCount: result.totalPages,
+                total: result.totalCount,
+                items: (result.items || []).map(
+                    PackageService.toHistoryListProposedTender
+                )
+            };
+        });
+    }
+
+    // ký duyệt phân công tiến độ
+    signApprovedPreparationPlanning(bidOpportunityId: number) {
+        const url = `bidopportunity/${bidOpportunityId}/tenderpreparationplanningassignment/approved`;
+        return this.apiService.post(url).map(res => res.result);
+    }
+
+    // tải template bảng phân công tiến độ
+    downloadPreparationPlanningTemplate() {
+        const url = `template/downoad`;
+        return this.apiService.getFile(url).map(response => {
+            return FileSaver.saveAs(
+                new Blob([response.file], {
+                    type: `${response.file.type}`,
+                }), response.fileName
+            );
+        });
+    }
 }

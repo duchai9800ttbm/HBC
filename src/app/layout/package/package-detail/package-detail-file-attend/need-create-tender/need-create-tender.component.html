@@ -143,7 +143,7 @@
                     {{item.value + 1}}
                 </td>
                 <td> {{item.items[0].employee?.employeeName}}</td>
-                <td>{{ (item.items[0].changedTime)*1000 | date:'dd/MM/yyyy , HH:mm' }}</td>
+                <td>{{ (item.items[0].changedTime)*1000 | date:'dd/MM/yyyy , HH:mm' : '+0000' }}</td>
                 <td>
                     <div class="text-truncate">{{item.items[0].updateDesc}}</div>
                 </td>

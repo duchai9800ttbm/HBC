@@ -80,6 +80,7 @@ export class NeedCreateTenderFormDirectorProposalComponent implements OnInit {
         NeedCreateTenderFormComponent.formModel.tenderDirectorProposal.expectedDate = DateTimeConvertHelper.fromDtObjectToSecon(
             data.expectedDate
         );
+        NeedCreateTenderFormComponent.formModel.isAgreedParticipating = data.isAgreed;
     }
 
     onSubmit() {

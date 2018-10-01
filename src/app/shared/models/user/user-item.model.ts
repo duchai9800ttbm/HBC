@@ -7,4 +7,5 @@ export class UserItemModel {
     department: {
         value: string
     };
+    email: string;
 }

@@ -41,7 +41,7 @@
                     <div class="">{{packageInfo?.projectName}}</div>
                 </div>
                 <div class="col-md-3 pl-0">
-                    <div class=""><strong>Người lập (Prepare by):</strong></div>
+                    <div class=""><strong>Người lập (Prepare by): </strong>{{tenderPlan?.createdEmployee?.employeeName}}</div>
                     <div class=""></div>
                 </div>
                 <div class="col-md-3 pl-0">
@@ -55,7 +55,7 @@
                     <div class="">{{packageInfo?.place}}</div>
                 </div>
                 <div class="col-md-3 pl-0">
-                    <div class=""><strong>Ngày lập (Date):</strong></div>
+                    <div class=""><strong>Ngày lập (Date): </strong>{{tenderPlan?.createDate * 1000 | date: 'dd/MM/yyyy' : '+0000'}}</div>
                     <div class=""></div>
                 </div>
                 <div class="col-md-3 pl-0">
@@ -69,10 +69,16 @@
                     <div class="">{{packageInfo?.opportunityName}}</div>
                 </div>
                 <div class="col-md-3 pl-0">
-                    <button class="btn btn-primary btn-sign position-absolute">Xác nhận ký</button>
+                    <button class="btn btn-primary btn-sign position-absolute" *ngIf="!planForm.get('isSignedByPreparedPerson').value" (click)="clickSignPrepare()">Xác nhận ký</button>
+                    <button class="btn btn-primary btn-sign position-absolute" *ngIf="planForm.get('isSignedByPreparedPerson').value">
+                            <i class="fa fa-check icon-check" aria-hidden="true"></i> Đã ký
+                    </button>
                 </div>
                 <div class="col-md-3 pl-0">
-                    <button class="btn btn-primary btn-sign position-absolute">Xác nhận ký</button>
+                    <button class="btn btn-primary btn-sign position-absolute" *ngIf="!planForm.get('isSignedByApprovalPerson').value" (click)="clickSignApproved()">Xác nhận ký</button>
+                    <button class="btn btn-primary btn-sign position-absolute" *ngIf="planForm.get('isSignedByApprovalPerson').value">
+                            <i class="fa fa-check icon-check" aria-hidden="true"></i> Đã ký
+                    </button>
                 </div>
             </div>
             <div class="row mt-2">
@@ -103,11 +109,11 @@
                             <span class="custom-dropdown w-100 b-dropdown-no-border">
                                 <select class="form-control" formControlName="projectDirectorEmployeeId">
                                     <option [ngValue]="null">--Chọn--</option>
-                                    <option *ngFor="let user of userList | async" [value]="user.id">{{user.employeeName}}</option>
+                                    <option *ngFor="let user of userList" [value]="user.employeeId">{{user.employeeName}}</option>
                                 </select>
                             </span>
                         </td>
-                        <td class="mw-12"></td>
+                        <td class="mw-12"><a>{{getEmailUser(planForm.get('projectDirectorEmployeeId').value)}}</a></td>
                         <td>Start</td>
                         <td class="mw-12">
                             <!-- <kendo-datepicker class="form-control b-datepicker-no-border"></kendo-datepicker> -->
@@ -120,11 +126,11 @@
                             <span class="custom-dropdown w-100 b-dropdown-no-border">
                                 <select class="form-control" formControlName="tenderDepartmentEmployeeId">
                                     <option [ngValue]="null">--Chọn--</option>
-                                    <option *ngFor="let user of userList | async" [value]="user.id">{{user.employeeName}}</option>
+                                    <option *ngFor="let user of userList" [value]="user.employeeId">{{user.employeeName}}</option>
                                 </select>
                             </span>
                         </td>
-                        <td></td>
+                        <td><a>{{getEmailUser(planForm.get('tenderDepartmentEmployeeId').value)}}</a></td>
                         <td>Tender Duration</td>
                         <td>
                             <!-- <kendo-datepicker class="form-control b-datepicker-no-border"></kendo-datepicker> -->
@@ -137,11 +143,11 @@
                             <span class="custom-dropdown w-100 b-dropdown-no-border">
                                 <select class="form-control" formControlName="technicalDepartmentEmployeeId">
                                     <option [ngValue]="null">--Chọn--</option>
-                                    <option *ngFor="let user of userList | async" [value]="user.id">{{user.employeeName}}</option>
+                                    <option *ngFor="let user of userList" [value]="user.employeeId">{{user.employeeName}}</option>
                                 </select>
                             </span>
                         </td>
-                        <td></td>
+                        <td><a>{{getEmailUser(planForm.get('technicalDepartmentEmployeeId').value)}}</a></td>
                         <td>Query's Deadline</td>
                         <td>
                             <!-- <kendo-datepicker class="form-control b-datepicker-no-border"></kendo-datepicker> -->
@@ -155,11 +161,11 @@
                             <span class="custom-dropdown w-100 b-dropdown-no-border">
                                 <select class="form-control" formControlName="bimDepartmentEmployeeId">
                                     <option [ngValue]="null">--Chọn--</option>
-                                    <option *ngFor="let user of userList | async" [value]="user.id">{{user.employeeName}}</option>
+                                    <option *ngFor="let user of userList" [value]="user.employeeId">{{user.employeeName}}</option>
                                 </select>
                             </span>
                         </td>
-                        <td></td>
+                        <td><a>{{getEmailUser(planForm.get('bimDepartmentEmployeeId').value)}}</a></td>
                         <td>Finish</td>
                         <td>
                             <!-- <kendo-datepicker class="form-control b-datepicker-no-border"></kendo-datepicker> -->
@@ -197,13 +203,13 @@
                                 <span class="custom-dropdown w-100 b-dropdown-no-border">
                                     <select class="form-control" formControlName="whoIsInChargeId">
                                         <option [ngValue]="null">--Chọn--</option>
-                                        <option *ngFor="let user of userList | async" [value]="user.employeeId">{{user.employeeName}}</option>
+                                        <option *ngFor="let user of userList" [value]="user.employeeId">{{user.employeeName}}</option>
                                     </select>
                                 </span>
                             </td>
                             <td class="text-center">
-                                <label class="custom-control custom-checkbox">
-                                    <input type="checkbox" class="custom-control-input input-checkbox" formControlName="isFinish">
+                                <label class="custom-control custom-checkbox z-ontop" >
+                                    <input type="checkbox" (click)="checkFinishTenderPlanItem(data.get('itemId').value)" class="custom-control-input input-checkbox" [attr.disabled]="packageInfo?.stageStatus.id != bidStatus.DaGuiPhanCongTienDo ? '' : null" formControlName="isFinish">
                                     <span class="custom-control-indicator"></span>
                                 </label>
                             </td>
@@ -224,5 +230,28 @@
             </div>
         </div>
     </div>
+    <kendo-dialog [width]="550" *ngIf="isShowChanges">
+            <div>
+                <div class="dialog-header mt-2">
+                    <h3 class="text-center text-uppercase color-black">Cập nhật liveform</h3>
+                    <span class="ic-close pointer" (click)="closeShowChanges()">
+                        <img src="assets/images/ic-close.svg">
+                    </span>
+                </div>
+                <div class="text-center">
+                    Bạn đã cập nhật những gì trong lần sửa này?
+                </div>
+                <div class="dialog-body">
+                    <div class="w-100 mt-4">
+                        <div class="pr-1 pl-1">
+                            <textarea formControlName="updatedDesc" class="form-control" rows="3"></textarea>
+                        </div>
+                    </div>
+                </div>
+                <div class="mt-4 text-center mb-2">
+                    <button class="btn b-btn btn-primary" (click)="saveChangesLiveForm()">OK</button>
+                </div>
+            </div>
+        </kendo-dialog>
 </form>
 <ngx-spinner bdColor="rgba(51, 51, 51, 0.7)" size="medium" color="#fff" type="ball-clip-rotate-multiple"></ngx-spinner>

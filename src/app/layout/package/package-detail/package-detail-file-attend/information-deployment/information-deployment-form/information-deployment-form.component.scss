@@ -62,7 +62,7 @@
     bottom: 0;
     left: 0;
     right: 0;
-    z-index: 1000;
+    z-index: 48;
 }
 
 .fake-placeholder {
@@ -70,6 +70,10 @@
     top: .5rem;
     left: .75rem;
     opacity: .5;
+}
+
+.z-ontop {
+    z-index: 49;
 }
 
 .header {
@@ -153,6 +157,25 @@ table, thead, tbody, tfoot {
     select {
         background-color: #f6f7f8;
     }
+}
+
+.ic-close {
+    position: absolute;
+    right: 1rem;
+    top: 1.5rem;
+}
+
+.btn-sign {
+    min-width: 100px;
+    outline: none;
+}
+
+.icon-check {
+    font-size: 1.5rem;
+    left: 4px;
+    position: absolute;
+    top: 3px;
+    color: #1DAFEC;
 }
 
 /* Custom dropdown */
