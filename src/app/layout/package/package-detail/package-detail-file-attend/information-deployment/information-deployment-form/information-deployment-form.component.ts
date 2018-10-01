@@ -149,20 +149,23 @@ export class InformationDeploymentFormComponent implements OnInit {
     }
 
     getFormData(): TenderPreparationPlanningRequest {
-        const formData = this.planForm.value;
+        const formData = Object.assign({}, this.planForm.value);
         formData.tasks.forEach(element => {
-            element.startDate = DateTimeConvertHelper.fromDtObjectToSecon(element.startDate);
-            element.finishDate = DateTimeConvertHelper.fromDtObjectToSecon(element.finishDate);
+            // element.startDate = DateTimeConvertHelper.fromDtObjectToSecon(element.startDate);
+            // element.finishDate = DateTimeConvertHelper.fromDtObjectToSecon(element.finishDate);
             element.whoIsInChargeId = Number(element.whoIsInChargeId);
-            if (element.startDate && element.finishDate) {
-                element.duration = Math.abs(element.startDate - element.finishDate) / (60 * 60 * 24);
-            }
+            // if (element.startDate && element.finishDate) {
+            //     element.duration = Math.abs(element.startDate - element.finishDate) / (60 * 60 * 24);
+            // }
         });
         return formData as TenderPreparationPlanningRequest;
     }
 
-    validateForm(formData: TenderPreparationPlanningRequest): boolean {
-        if (formData.tasks.every(i => i.whoIsInChargeId === 0 || i.whoIsInChargeId == null)) {
+    validateForm(formData: TenderPreparationPlanningRequest, isDraft: boolean): boolean {
+        if (isDraft) {
+            // lưu nháp thì ko cần validate
+            return true;
+        } else if (formData.tasks.every(i => i.whoIsInChargeId === 0 || i.whoIsInChargeId == null)) {
             this.alertService.error('Bạn chưa hoàn tất phân công tiến độ, chọn "Lưu nháp" nếu muốn thực hiện sau.');
             return false;
         } else {
@@ -172,20 +175,23 @@ export class InformationDeploymentFormComponent implements OnInit {
 
     checkPlanItems(data: TenderPreparationPlanItem[]): boolean {
         let i = 1;
+        let result = true;
         data.forEach(e => {
             if (!(e.whoIsInChargeId && e.startDate && e.finishDate)) {
                 this.alertService.error('Bạn chưa chọn thời gian bắt đầu và thời gian kết thúc cho công việc số ' + i);
-                return true;
+                result = false;
             } else {
                 i++;
             }
         });
-        return false;
+        return result;
     }
 
     submitForm(isDraft: boolean) {
         const data = this.getFormData();
-        if (!this.validateForm(data)) {
+        const isValid = this.validateForm(data, isDraft);
+        console.log('isValid: ', isValid);
+        if (!isValid) {
             return;
         }
         this.spinner.show();

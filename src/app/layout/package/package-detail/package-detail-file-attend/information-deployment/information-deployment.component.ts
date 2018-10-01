@@ -132,7 +132,8 @@ export class InformationDeploymentComponent implements OnInit {
 
       ],
       allowedContent: true,
-      extraPlugins: 'colorbutton,font,justify,print,tableresize,pastefromword,liststyle,autolink',
+      extraPlugins: 'colorbutton,font,justify,print,tableresize,pastefromword,liststyle,autolink,uploadimage',
+
       pasteFromWord_inlineImages: true,
       forcePasteAsPlainText : false,
     };
@@ -395,7 +396,7 @@ export class InformationDeploymentComponent implements OnInit {
 
   customSearchFn(term: string, item: SearchEmailModel) {
     term = term.toLocaleLowerCase();
-    return item.employeeName.toLocaleLowerCase().indexOf(term) > -1 || item.employeeEmail.toLocaleLowerCase() === term;
+    return item.employeeName.toLocaleLowerCase().indexOf(term) > -1 || item.employeeEmail.toLocaleLowerCase().indexOf(term) > -1;
   }
   // sendTenderPlan() {
   //   this.spinner.show();
