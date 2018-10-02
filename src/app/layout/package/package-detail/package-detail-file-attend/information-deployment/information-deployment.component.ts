@@ -23,6 +23,7 @@ import { PackageInfoModel } from '../../../../../shared/models/package/package-i
 import { BidStatus } from '../../../../../shared/constants/bid-status';
 import { TenderPreparationPlanningRequest } from '../../../../../shared/models/api-request/package/tender-preparation-planning-request';
 import { StatusObservableHsdtService } from '../../../../../shared/services/status-observable-hsdt.service';
+import { groupBy } from '@progress/kendo-data-query';
 @Component({
   selector: 'app-information-deployment',
   templateUrl: './information-deployment.component.html',
@@ -97,6 +98,7 @@ export class InformationDeploymentComponent implements OnInit {
   packageInfo: PackageInfoModel;
   bidStatus = BidStatus;
   tenderPlan: TenderPreparationPlanningRequest;
+  historyList;
   constructor(
     private modalService: BsModalService,
     private formBuilder: FormBuilder,
@@ -106,7 +108,8 @@ export class InformationDeploymentComponent implements OnInit {
     private alertService: AlertService,
     private emailService: EmailService,
     private packageService: PackageService,
-    private statusObservableHsdtService: StatusObservableHsdtService
+    private statusObservableHsdtService: StatusObservableHsdtService,
+    private confirmService: ConfirmationService
   ) {
     this.loadItems();
   }
@@ -122,6 +125,7 @@ export class InformationDeploymentComponent implements OnInit {
 
     this.getPackageInfo();
     this.getTenderPlanInfo();
+    this.getChangeHistory();
     this.ckeConfig = {
       toolbar: [
         { name: 'basicstyles', items: ['Bold', 'Italic', 'Underline', 'Strike'] },
@@ -383,15 +387,20 @@ export class InformationDeploymentComponent implements OnInit {
   }
 
   sendTenderPlan() {
-    this.spinner.show();
-    this.packageService.sendTenderPreparationPlanning(this.bidOpportunityId).subscribe(success => {
-      this.spinner.hide();
-      this.alertService.success('Gửi phân công tiến độ thành công!');
-      this.getPackageInfo();
-    }, err => {
-      this.spinner.hide();
-      this.alertService.error('Gửi phân công tiến độ thất bại!');
-    });
+    if (this.tenderPlan.isSignedByApprovalPerson && this.tenderPlan.isSignedByPreparedPerson) {
+      this.spinner.show();
+      this.packageService.sendTenderPreparationPlanning(this.bidOpportunityId).subscribe(success => {
+        this.spinner.hide();
+        this.alertService.success('Gửi phân công tiến độ thành công!');
+        this.getPackageInfo();
+      }, err => {
+        this.spinner.hide();
+        this.alertService.error('Gửi phân công tiến độ thất bại!');
+      });
+    } else {
+      this.confirmService.missAction('Bảng phân công tiến độ chưa được ký duyệt',
+        `/package/detail/${this.bidOpportunityId}/attend/infomation-deployment/edit`);
+    }
   }
 
   customSearchFn(term: string, item: SearchEmailModel) {
@@ -409,6 +418,25 @@ export class InformationDeploymentComponent implements OnInit {
   //   });
   // }
   onChange(e) {
+  }
+
+  getChangeHistory() {
+    this.spinner.show();
+    this.packageService.getChangeHistoryListTenderPreparationPlanning(this.bidOpportunityId, 0, 1000).subscribe(respone => {
+      this.historyList = respone.items;
+      this.historyList = this.historyList.sort( ( a, b ) =>  parseFloat(a.changedTimes) < parseFloat(b.changedTimes));
+      this.historyList = groupBy(this.historyList, [{ field: 'changedTimes' }]);
+      this.dtTrigger.next();
+      this.spinner.hide();
+    },
+      err => {
+        this.spinner.hide();
+        // this.alertService.error('Lấy danh sách lịch sử thay đổi phiếu đề nghị dự thầu thất bại!');
+      });
+  }
+
+  downloadTemplate() {
+    this.packageService.downloadPreparationPlanningTemplate().subscribe(data => console.log());
   }
 
 }

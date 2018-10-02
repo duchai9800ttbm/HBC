@@ -181,4 +181,6 @@ export class EmailDetailComponent implements OnInit {
     );
 
   }
+
+  
 }

@@ -47,7 +47,7 @@
 
 
 <div class="content-email">
-    <div [innerHTML]="email?.content">
+    <div [innerHTML]="email?.content | safe: 'html'">
     <!-- {{email?.content}} -->
     </div>
 </div>

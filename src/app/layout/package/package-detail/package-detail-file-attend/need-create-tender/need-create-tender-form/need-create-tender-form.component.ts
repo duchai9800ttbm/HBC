@@ -253,7 +253,7 @@ export class NeedCreateTenderFormComponent implements OnInit, OnDestroy {
     }
 
     saveChangesLiveForm() {
-        NeedCreateTenderFormComponent.formModel.updatedDetail = this.updatedDetail;
+        NeedCreateTenderFormComponent.formModel.updatedDesc = this.updatedDetail;
         this.onSubmit(false);
         this.updatedDetail = '';
     }
