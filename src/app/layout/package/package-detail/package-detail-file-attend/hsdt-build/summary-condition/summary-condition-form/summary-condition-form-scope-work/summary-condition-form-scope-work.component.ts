@@ -3,6 +3,8 @@ import { FormGroup, FormBuilder, FormArray } from '@angular/forms';
 import { DictionaryItemText } from '../../../../../../../../shared/models';
 import { SummaryConditionFormComponent } from '../summary-condition-form.component';
 import { TenderScopeOfWork } from '../../../../../../../../shared/models/package/tender-scope-of-work';
+import { HoSoDuThauService } from '../../../../../../../../shared/services/ho-so-du-thau.service';
+import { PhamViCongViec } from '../../../../../../../../shared/models/ho-so-du-thau/tom-tat-dkdt.model';
 
 @Component({
   selector: 'app-summary-condition-form-scope-work',
@@ -10,7 +12,7 @@ import { TenderScopeOfWork } from '../../../../../../../../shared/models/package
   styleUrls: ['./summary-condition-form-scope-work.component.scss']
 })
 export class SummaryConditionFormScopeWorkComponent implements OnInit {
-
+  dataStepScope = new PhamViCongViec();
   scopeWorkForm: FormGroup;
 
   get scopeIncludeFA(): FormArray {
@@ -21,6 +23,8 @@ export class SummaryConditionFormScopeWorkComponent implements OnInit {
     return this.scopeWorkForm.get('scopeNotInclude') as FormArray;
   }
   constructor(
+
+    private hoSoDuThauService: HoSoDuThauService,
     private fb: FormBuilder
   ) { }
 
@@ -29,32 +33,18 @@ export class SummaryConditionFormScopeWorkComponent implements OnInit {
       scopeInclude: this.fb.array([]),
       scopeNotInclude: this.fb.array([])
     });
-    // this.initFormData();
-    this.scopeWorkForm.valueChanges.subscribe(data => this.mappingToLiveFormData(data));
+    this.scopeWorkForm.valueChanges.subscribe(data => this.hoSoDuThauService.emitDataStepScope(data));
   }
 
-  // initFormData() {
-  //   if (SummaryConditionFormComponent.formModel.scopeOfWork) {
-  //     const data = SummaryConditionFormComponent.formModel.scopeOfWork;
-  //     if (data.includedWorks.length > 0) {
-  //       data.includedWorks.forEach(e => {
-  //         this.addFormArrayControl('scopeInclude', e);
-  //       });
-  //     } else {
-  //       this.addFormArrayControl('scopeInclude');
-  //     }
-  //     if (data.nonIncludedWorks.length > 0) {
-  //       data.nonIncludedWorks.forEach(e => {
-  //         this.addFormArrayControl('scopeNotInclude', e);
-  //       });
-  //     } else {
-  //       this.addFormArrayControl('scopeNotInclude');
-  //     }
-  //   } else {
-  //     this.addFormArrayControl('scopeInclude');
-  //     this.addFormArrayControl('scopeNotInclude');
-  //   }
-  // }
+  loadData() {
+    this.hoSoDuThauService.watchDataLiveForm().subscribe(data => {
+      const objDataStepScope = data.phamViCongViec;
+      if (objDataStepScope) {
+        this.dataStepScope.phamViBaoGom = objDataStepScope.phamViBaoGom;
+        this.dataStepScope.phamViKhongBaoGom = objDataStepScope.phamViKhongBaoGom;
+      }
+    });
+  }
 
   addFormArrayControl(name: string, data?: DictionaryItemText) {
     const formArray = this.scopeWorkForm.get(name) as FormArray;

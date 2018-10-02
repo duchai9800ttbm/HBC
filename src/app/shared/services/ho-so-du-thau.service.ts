@@ -13,7 +13,20 @@ import { DanhSachBoHsdtItem } from '../models/ho-so-du-thau/danh-sach-bo-hsdt-it
 import { HsdtFilterModel } from '../models/ho-so-du-thau/hsdt-filter.model';
 import { URLSearchParams } from '@angular/http';
 import { InstantSearchService } from './instant-search.service';
-import { DuLieuLiveFormDKDT, ThongTinDuAn, CacBenLienQuan } from '../models/ho-so-du-thau/tom-tat-dkdt.model';
+import {
+  DuLieuLiveFormDKDT,
+  ThongTinDuAn,
+  CacBenLienQuan,
+  PhamViCongViec,
+  DanhSachNhaThau,
+  DanhSachVatTu,
+  HoSoDangLuuY,
+  DienGiaiYeuCauHoSo,
+  DienGiaiYeuCauLamRo,
+  DienGiaiDieuKienHopDong,
+  DIenGiaiDieuKienHSMT,
+  TableYeuCauDacBiet
+} from '../models/ho-so-du-thau/tom-tat-dkdt.model';
 // tslint:disable-next-line:import-blacklist
 import { BehaviorSubject } from 'rxjs';
 
@@ -167,5 +180,31 @@ export class HoSoDuThauService {
   emitDataStepRelate(obj: CacBenLienQuan) {
     HoSoDuThauService.tempDataLiveFormDKDT.value.cacBenLienQuan = obj;
   }
-
+  emitDataStepScope(obj: PhamViCongViec) {
+    HoSoDuThauService.tempDataLiveFormDKDT.value.phamViCongViec = obj;
+  }
+  emitDataStepSubContractor(obj: DanhSachNhaThau) {
+    HoSoDuThauService.tempDataLiveFormDKDT.value.danhSachNhaThau = [obj];
+  }
+  emitDataStepMainMaterial(obj: DanhSachVatTu) {
+    HoSoDuThauService.tempDataLiveFormDKDT.value.danhSachVatTu = [obj];
+  }
+  emitDataStepTenderSubmit(obj: HoSoDangLuuY) {
+    HoSoDuThauService.tempDataLiveFormDKDT.value.hoSoDangLuuY = obj;
+  }
+  emitDataStepDestination(obj: DienGiaiYeuCauHoSo) {
+    HoSoDuThauService.tempDataLiveFormDKDT.value.dienGiaiYeuCauHoSo = obj;
+  }
+  emitDataStepClarification(obj: DienGiaiYeuCauLamRo) {
+    HoSoDuThauService.tempDataLiveFormDKDT.value.dienGiaiYeuCauLamRo = obj;
+  }
+  emitDataStepConditionContract(obj: DienGiaiDieuKienHopDong) {
+    HoSoDuThauService.tempDataLiveFormDKDT.value.dienGiaiDieuKienHopDong = obj;
+  }
+  emitDataStepConditionTender(obj: DIenGiaiDieuKienHSMT) {
+    HoSoDuThauService.tempDataLiveFormDKDT.value.dienGiaiDieuKienHSMT = obj;
+  }
+  emitDataStepSpecial(obj: TableYeuCauDacBiet) {
+    HoSoDuThauService.tempDataLiveFormDKDT.value.yeuCauDacBietKhac = [obj];
+  }
 }

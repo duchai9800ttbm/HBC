@@ -13,6 +13,14 @@ import { HoSoDuThauService } from '../../../../../../../../shared/services/ho-so
 export class SummaryConditionFormRelatedPartiesComponent implements OnInit {
   cacBenLienQuanForm: FormGroup;
   dataStepRelate = new CacBenLienQuan();
+  lienHeChuDauTuList = [];
+  lienHeQuanLyDuAnList = [];
+  lienHeQuanLyChiPhiList = [];
+  lienHeThietKeKTList = [];
+  lienHeThietKeKCList = [];
+  thietKeCoDien = [];
+  lienHeKhacList = [];
+
   constructor(
     private hoSoDuThauService: HoSoDuThauService,
     private alertService: AlertService,
@@ -27,44 +35,86 @@ export class SummaryConditionFormRelatedPartiesComponent implements OnInit {
   }
   createForm() {
     this.cacBenLienQuanForm = this.fb.group({
-      donViChuDauTu: null,
-      lienHeChuDauTu: null,
-      ghiChuChuDauTu: null,
+      donViChuDauTu: this.dataStepRelate.chuDauTu && this.dataStepRelate.chuDauTu.donVi,
+      lienHeChuDauTuList: [],
+      ghiChuChuDauTu: this.dataStepRelate.chuDauTu && this.dataStepRelate.chuDauTu.ghiChu,
 
-      donViQuanLyDuAn: null,
-      lienHeQuanLyDuAn: null,
-      ghiChuQuanLyDuAn: null,
+      donViQuanLyDuAn: this.dataStepRelate.quanLyDuAn && this.dataStepRelate.quanLyDuAn.donVi,
+      lienHeQuanLyDuAnList: [],
+      ghiChuQuanLyDuAn: this.dataStepRelate.quanLyDuAn && this.dataStepRelate.quanLyDuAn.ghiChu,
 
-      donViQuanLyChiPhi: null,
-      lienHeQuanLyChiPhi: null,
-      ghiChuQuanLyChiPhi: null,
+      donViQuanLyChiPhi: this.dataStepRelate.quanLyChiPhi && this.dataStepRelate.quanLyChiPhi.donVi,
+      lienHeQuanLyChiPhiList: [],
+      ghiChuQuanLyChiPhi: this.dataStepRelate.quanLyChiPhi && this.dataStepRelate.quanLyChiPhi.ghiChu,
 
-      donViThietKeKT: null,
-      lienHeThietKeKT: null,
-      ghiChuThietKeKT: null,
+      donViThietKeKT: this.dataStepRelate.thietKeKienTruc && this.dataStepRelate.thietKeKienTruc.donVi,
+      lienHeThietKeKT: [],
+      ghiChuThietKeKT: this.dataStepRelate.thietKeKienTruc && this.dataStepRelate.thietKeKienTruc.ghiChu,
 
-      donViThietKeKC: null,
-      lienHeThietKeKC: null,
-      ghiChuThietKeKC: null,
+      donViThietKeKC: this.dataStepRelate.thietKeKetCau && this.dataStepRelate.thietKeKetCau.donVi,
+      lienHeThietKeKCList: null,
+      ghiChuThietKeKC: this.dataStepRelate.thietKeKetCau && this.dataStepRelate.thietKeKetCau.ghiChu,
 
-      donViThietKeCD: null,
-      lienHeThietKeCD: null,
-      ghiChuThietKeCD: null,
+      donViThietKeCDList: [],
+      lienHeThietKeCDList: [null],
+      ghiChuThietKeCDList: [],
 
-      donViKhac: null,
-      lienHeKhac: null,
-      ghiChuKhac: null,
+      donViKhac: this.dataStepRelate.thongTinKhac && this.dataStepRelate.thongTinKhac.donVi,
+      lienHeKhacList: [null],
+      ghiChuKhac: this.dataStepRelate.thongTinKhac && this.dataStepRelate.thongTinKhac.ghiChu,
     });
   }
   loadData() {
     this.hoSoDuThauService.watchDataLiveForm().subscribe(data => {
-      // const objDataStepInfo = data.thongTinDuAn;
-      // if (objDataStepInfo) {
-      //   this.dataStepRelate.tenTaiLieu = objDataStepInfo.tenTaiLieu;
-      //   this.dataStepRelate.lanPhongVan = objDataStepInfo.lanPhongVan;
-      //   this.dataStepRelate.dienGiaiThongTinDuAn = objDataStepInfo.dienGiaiThongTinDuAn;
-      // }
+      const objDataStepRelate = data.cacBenLienQuan;
+      if (objDataStepRelate) {
+        this.dataStepRelate.chuDauTu = objDataStepRelate.chuDauTu && {
+          donVi: objDataStepRelate.chuDauTu.donVi,
+          lienHe: objDataStepRelate.chuDauTu.lienHe,
+          ghiChu: objDataStepRelate.chuDauTu.ghiChu
+        };
+        this.lienHeChuDauTuList = this.dataStepRelate.chuDauTu && this.dataStepRelate.chuDauTu.lienHe;
+
+        this.dataStepRelate.quanLyDuAn = objDataStepRelate.quanLyDuAn && {
+          donVi: objDataStepRelate.quanLyDuAn.donVi,
+          lienHe: objDataStepRelate.quanLyDuAn.lienHe,
+          ghiChu: objDataStepRelate.quanLyDuAn.ghiChu
+        };
+        this.lienHeQuanLyDuAnList = this.dataStepRelate.quanLyDuAn && this.dataStepRelate.quanLyDuAn.lienHe;
+
+        this.dataStepRelate.quanLyChiPhi = objDataStepRelate.quanLyChiPhi && {
+          donVi: objDataStepRelate.quanLyChiPhi.donVi,
+          lienHe: objDataStepRelate.quanLyChiPhi.lienHe,
+          ghiChu: objDataStepRelate.quanLyChiPhi.ghiChu
+        };
+        this.lienHeQuanLyChiPhiList = this.dataStepRelate.quanLyChiPhi && this.dataStepRelate.quanLyChiPhi.lienHe;
+
+        this.dataStepRelate.thietKeKienTruc = objDataStepRelate.thietKeKienTruc && {
+          donVi: objDataStepRelate.thietKeKienTruc.donVi,
+          lienHe: objDataStepRelate.thietKeKienTruc.lienHe,
+          ghiChu: objDataStepRelate.thietKeKienTruc.ghiChu
+        };
+        this.lienHeThietKeKTList = this.dataStepRelate.thietKeKienTruc && this.dataStepRelate.thietKeKienTruc.lienHe;
+
+        this.dataStepRelate.thietKeKetCau = objDataStepRelate.thietKeKetCau && {
+          donVi: objDataStepRelate.thietKeKetCau.donVi,
+          lienHe: objDataStepRelate.thietKeKetCau.lienHe,
+          ghiChu: objDataStepRelate.thietKeKetCau.ghiChu
+        };
+        this.lienHeThietKeKCList = this.dataStepRelate.thietKeKetCau && this.dataStepRelate.thietKeKetCau.lienHe;
+
+        this.dataStepRelate.thietKeCoDien = objDataStepRelate.thietKeCoDien;
+        this.thietKeCoDien = this.dataStepRelate && this.dataStepRelate.thietKeCoDien;
+
+        this.dataStepRelate.thongTinKhac = objDataStepRelate.thongTinKhac && {
+          donVi: objDataStepRelate.thongTinKhac.donVi,
+          lienHe: objDataStepRelate.thongTinKhac.lienHe,
+          ghiChu: objDataStepRelate.thongTinKhac.ghiChu
+        };
+        this.lienHeKhacList = objDataStepRelate.thongTinKhac && objDataStepRelate.thongTinKhac.lienHe;
+      }
     });
   }
+
 
 }

@@ -12,6 +12,7 @@ export class DuLieuLiveFormDKDT {
     dienGiaiDieuKienHopDong: DienGiaiDieuKienHopDong;
     dienGiaiDieuKienHSMT: DIenGiaiDieuKienHSMT;
     yeuCauDacBietKhac: TableYeuCauDacBiet[];
+    noiDungCapNhat: string;
 }
 
 export class ThongTinDuAn {
@@ -22,13 +23,13 @@ export class ThongTinDuAn {
     dienGiaiThongTinDuAn: string;
 }
 export class CacBenLienQuan {
-    chuDauTu: ThongTinCacBen[];
-    quanLyDuAn: ThongTinCacBen[];
-    quanLyChiPhi: ThongTinCacBen[];
-    thietKeKienTruc: ThongTinCacBen[];
-    thietKeKetCau: ThongTinCacBen[];
+    chuDauTu: ThongTinCacBen;
+    quanLyDuAn: ThongTinCacBen;
+    quanLyChiPhi: ThongTinCacBen;
+    thietKeKienTruc: ThongTinCacBen;
+    thietKeKetCau: ThongTinCacBen;
     thietKeCoDien: ThongTinCacBen[];
-    thongTinKhac: ThongTinCacBen[];
+    thongTinKhac: ThongTinCacBen;
 }
 export class PhamViCongViec {
     phamViBaoGom: PhamViCongViecItem[];
@@ -60,8 +61,10 @@ export class DienGiaiYeuCauLamRo {
     ghiChuThem: string;
 }
 export class DienGiaiDieuKienHopDong {
-    loaiHopDong: string[];
-    ghiChuLoaiHopDong: string;
+    loaiHopDong: {
+        name: string,
+        desc: string;
+    }[];
     dieuKienTheoHSMT: DieuKienHopDong;
     dieuKienTheoHBC: DieuKienHopDong;
 }
@@ -72,10 +75,7 @@ export class DIenGiaiDieuKienHSMT {
 
 export class ThongTinCacBen {
     donVi: string;
-    lienHe: {
-        id: number;
-        text: string;
-    }[];
+    lienHe: string[];
     ghiChu: string;
 }
 export class PhamViCongViecItem {
