@@ -2,7 +2,7 @@ import { ThongTinDoiTac } from './thong-tin-doi-tac';
 import { DieuKienHopDong } from './dieu-kien-hop-dong';
 import { DieuKienHoSo } from './dieu-kien-ho-so';
 
-export class DienGiaiYeuCauLamRo {
+export class  DienGiaiYeuCauLamRo {
     nhaTuVan: ThongTinDoiTac;
     nhaSuDung: ThongTinDoiTac;
     ngayHetHan: number;
