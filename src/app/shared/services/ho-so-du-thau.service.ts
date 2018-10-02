@@ -13,22 +13,16 @@ import { DanhSachBoHsdtItem } from '../models/ho-so-du-thau/danh-sach-bo-hsdt-it
 import { HsdtFilterModel } from '../models/ho-so-du-thau/hsdt-filter.model';
 import { URLSearchParams } from '@angular/http';
 import { InstantSearchService } from './instant-search.service';
-import {
-  DuLieuLiveFormDKDT,
-  ThongTinDuAn,
-  CacBenLienQuan,
-  PhamViCongViec,
-  DanhSachNhaThau,
-  DanhSachVatTu,
-  HoSoDangLuuY,
-  DienGiaiYeuCauHoSo,
-  DienGiaiYeuCauLamRo,
-  DienGiaiDieuKienHopDong,
-  DIenGiaiDieuKienHSMT,
-  TableYeuCauDacBiet
-} from '../models/ho-so-du-thau/tom-tat-dkdt.model';
+import { DuLieuLiveFormDKDT } from '../models/ho-so-du-thau/tom-tat-dkdt.model';
 // tslint:disable-next-line:import-blacklist
 import { BehaviorSubject } from 'rxjs';
+import { ThongTinDuAn } from '../models/ho-so-du-thau/thong-tin-du-an';
+import { CacBenLienQuan } from '../models/ho-so-du-thau/cac-ben-lien-quan';
+import { PhamViCongViec } from '../models/ho-so-du-thau/pham-vi-cong-viec';
+import { DanhSachNhaThau } from '../models/ho-so-du-thau/danh-sach-nha-thau';
+import { DanhSachVatTu, HoSoDangLuuY, DienGiaiYeuCauHoSo } from '../models/ho-so-du-thau/danh-sach-vat-tu';
+import { DienGiaiYeuCauLamRo, DienGiaiDieuKienHopDong, DienGiaiDieuKienHSMT } from '../models/ho-so-du-thau/dien-giai-yeu-cau';
+import { TableYeuCauDacBiet } from '../models/ho-so-du-thau/table-yeu-cau';
 
 @Injectable()
 export class HoSoDuThauService {
@@ -201,7 +195,7 @@ export class HoSoDuThauService {
   emitDataStepConditionContract(obj: DienGiaiDieuKienHopDong) {
     HoSoDuThauService.tempDataLiveFormDKDT.value.dienGiaiDieuKienHopDong = obj;
   }
-  emitDataStepConditionTender(obj: DIenGiaiDieuKienHSMT) {
+  emitDataStepConditionTender(obj: DienGiaiDieuKienHSMT) {
     HoSoDuThauService.tempDataLiveFormDKDT.value.dienGiaiDieuKienHSMT = obj;
   }
   emitDataStepSpecial(obj: TableYeuCauDacBiet) {

@@ -2,8 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, FormArray } from '@angular/forms';
 import { SummaryConditionFormComponent } from '../summary-condition-form.component';
 import DateTimeConvertHelper from '../../../../../../../../shared/helpers/datetime-convert-helper';
-import { DienGiaiDieuKienHopDong } from '../../../../../../../../shared/models/ho-so-du-thau/tom-tat-dkdt.model';
 import { HoSoDuThauService } from '../../../../../../../../shared/services/ho-so-du-thau.service';
+import { DienGiaiDieuKienHopDong } from '../../../../../../../../shared/models/ho-so-du-thau/dien-giai-yeu-cau';
 
 @Component({
     selector: 'app-summary-condition-form-condition-contract',

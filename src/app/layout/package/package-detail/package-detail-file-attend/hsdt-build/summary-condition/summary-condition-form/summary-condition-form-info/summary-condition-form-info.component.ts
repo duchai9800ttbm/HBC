@@ -3,7 +3,7 @@ import { FormGroup, FormBuilder } from '@angular/forms';
 import { HoSoDuThauService } from '../../../../../../../../shared/services/ho-so-du-thau.service';
 import { Router } from '@angular/router';
 import { AlertService } from '../../../../../../../../shared/services';
-import { ThongTinDuAn } from '../../../../../../../../shared/models/ho-so-du-thau/tom-tat-dkdt.model';
+import { ThongTinDuAn } from '../../../../../../../../shared/models/ho-so-du-thau/thong-tin-du-an';
 
 @Component({
   selector: 'app-summary-condition-form-info',

@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder } from '@angular/forms';
-import { CacBenLienQuan } from '../../../../../../../../shared/models/ho-so-du-thau/tom-tat-dkdt.model';
 import { Router } from '@angular/router';
 import { AlertService } from '../../../../../../../../shared/services';
 import { HoSoDuThauService } from '../../../../../../../../shared/services/ho-so-du-thau.service';
+import { CacBenLienQuan } from '../../../../../../../../shared/models/ho-so-du-thau/cac-ben-lien-quan';
 
 @Component({
   selector: 'app-summary-condition-form-related-parties',

@@ -72,19 +72,7 @@ export class HsktInvolvedComponent implements OnInit {
   ngOnInit() {
     this.filterModel.status = '';
     this.packageId = +PackageDetailComponent.packageId;
-    this.hoSoDuThauService
-      .danhSachBoHoSoDuThauInstantSearch(this.packageId, this.searchTerm$, this.filterModel, 0, 10)
-      .subscribe(responseResultBoHSDT => {
-        this.rerender(responseResultBoHSDT);
-        this.danhSachHoSoKT = responseResultBoHSDT.items.filter(item =>
-          item.tenderDocumentType === 'Các hồ sơ kỹ thuật khác'
-        );
-        this.showTable = (this.danhSachHoSoKT.length > 0) ? true : false;
-        this.sum = this.danhSachHoSoKT.length;
-        this.dtTrigger.next();
-      }, err => {
-        this.alertService.error(`Đã có lỗi xảy ra. Xin vui lòng thử lại!`);
-      });
+    this.getDataTypeHSKT();
   }
   rerender(pagedResult: any) {
     this.checkboxSeclectAll = false;
@@ -120,6 +108,9 @@ export class HsktInvolvedComponent implements OnInit {
     this.filterModel.uploadedEmployeeId = null;
     this.filterModel.createdDate = null;
     this.filterModel.uploadedEmployeeId = null;
+    this.getDataTypeHSKT();
+  }
+  getDataTypeHSKT() {
     this.hoSoDuThauService
       .danhSachBoHoSoDuThauInstantSearch(this.packageId, this.searchTerm$, this.filterModel, 0, 10)
       .subscribe(responseResultBoHSDT => {
@@ -206,26 +197,11 @@ export class HsktInvolvedComponent implements OnInit {
       }
     });
   }
-  printDocument(id) {
-    console.log(`Chưa có API`);
-  }
+
   changeStatus(id, status) {
     if (status === 'Draft') {
       this.hoSoDuThauService.updateStatus(id, 'Official').subscribe(res => {
-        this.hoSoDuThauService
-          .danhSachBoHoSoDuThauInstantSearch(this.packageId, this.searchTerm$, this.filterModel, 0, 10)
-          .subscribe(responseResultBoHSDT => {
-            this.danhSachHoSoKT = responseResultBoHSDT.items.filter(item =>
-              item.tenderDocumentType === 'Các hồ sơ kỹ thuật khác'
-            );
-            this.showTable = (this.danhSachHoSoKT.length > 0) ? true : false;
-            this.sum = this.danhSachHoSoKT.length;
-            this.refresh();
-            this.dtTrigger.next();
-            this.spinner.hide();
-          }, err => {
-            this.alertService.error(`Đã xảy ra lỗi khi load danh sách bộ Hồ sơ.`);
-          });
+        this.searchInstant();
         this.showTable = (this.danhSachHoSoKT.length > 0) ? true : false;
         this.sum = this.danhSachHoSoKT.length;
         this.dtTrigger.next();
@@ -239,20 +215,7 @@ export class HsktInvolvedComponent implements OnInit {
     }
     if (status === 'Official') {
       this.hoSoDuThauService.updateStatus(id, 'Draft').subscribe(res => {
-        this.hoSoDuThauService
-          .danhSachBoHoSoDuThauInstantSearch(this.packageId, this.searchTerm$, this.filterModel, 0, 10)
-          .subscribe(responseResultBoHSDT => {
-            this.danhSachHoSoKT = responseResultBoHSDT.items.filter(item =>
-              item.tenderDocumentType === 'Các hồ sơ kỹ thuật khác'
-            );
-            this.showTable = (this.danhSachHoSoKT.length > 0) ? true : false;
-            this.sum = this.danhSachHoSoKT.length;
-            this.refresh();
-            this.dtTrigger.next();
-            this.spinner.hide();
-          }, err => {
-            this.alertService.error(`Đã xảy ra lỗi khi load danh sách bộ Hồ sơ.`);
-          });
+        this.searchInstant();
         this.showTable = (this.danhSachHoSoKT.length > 0) ? true : false;
         this.sum = this.danhSachHoSoKT.length;
         this.dtTrigger.next();
@@ -264,5 +227,21 @@ export class HsktInvolvedComponent implements OnInit {
         this.alertService.error('Đã có lỗi. Dữ liệu chưa được cập nhật!');
       });
     }
+  }
+  searchInstant() {
+    this.hoSoDuThauService
+      .danhSachBoHoSoDuThauInstantSearch(this.packageId, this.searchTerm$, this.filterModel, 0, 10)
+      .subscribe(responseResultBoHSDT => {
+        this.danhSachHoSoKT = responseResultBoHSDT.items.filter(item =>
+          item.tenderDocumentType === 'Các hồ sơ kỹ thuật khác'
+        );
+        this.showTable = (this.danhSachHoSoKT.length > 0) ? true : false;
+        this.sum = this.danhSachHoSoKT.length;
+        this.refresh();
+        this.dtTrigger.next();
+        this.spinner.hide();
+      }, err => {
+        this.alertService.error(`Đã xảy ra lỗi khi load danh sách bộ Hồ sơ.`);
+      });
   }
 }

@@ -4,7 +4,7 @@ import { DictionaryItemText } from '../../../../../../../../shared/models';
 import { SummaryConditionFormComponent } from '../summary-condition-form.component';
 import { TenderScopeOfWork } from '../../../../../../../../shared/models/package/tender-scope-of-work';
 import { HoSoDuThauService } from '../../../../../../../../shared/services/ho-so-du-thau.service';
-import { PhamViCongViec } from '../../../../../../../../shared/models/ho-so-du-thau/tom-tat-dkdt.model';
+import { PhamViCongViec } from '../../../../../../../../shared/models/ho-so-du-thau/pham-vi-cong-viec';
 
 @Component({
   selector: 'app-summary-condition-form-scope-work',
