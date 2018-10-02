@@ -180,7 +180,7 @@
                 <table class="table table-bordered tbl-data-gantt">
                     <thead class="tbl-header-bg-color">
                         <tr>
-                            <th class="text-center align-middle">Stt</th>
+                            <th class="text-center align-middle">STT</th>
                             <th class="text-center align-middle w-work">Công việc</th>
                             <th class="text-center align-middle text-nowrap w-work">Mô tả</th>
                             <th class="text-center align-middle">Phân công cho</th>
@@ -192,7 +192,7 @@
                     </thead>
                     <tbody formArrayName="tasks">
                         <tr *ngFor="let data of tasksFA.controls; let i = index" [formGroupName]="i" [class.b-k-alt]="i % 2 != 0">
-                            <td class="text-center">{{i + 1}}</td>
+                            <td class="text-center">{{data.get('itemNo').value}}</td>
                             <td>{{data.get('itemName').value}}</td>
                             <!-- <td>{{data.get('itemDesc').value}}</td> -->
                             <td class="p-0 position-relative">

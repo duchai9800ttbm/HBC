@@ -676,7 +676,7 @@
                                     </div>
                                 </div>
                             </td>
-                            <td [class.d-none]="!khuVuc" class="text-truncate" [title]="item.location.value">{{item.location.value}}</td>
+                            <td [class.d-none]="!khuVuc" class="text-truncate" [title]="item.location?.value">{{item.location?.value}}</td>
                             <!-- <td [class.d-none]="!congViec" class="text-truncate">{{ item.job }}</td> -->
                             <td [class.d-none]="!tienDoThucHien" class="text-truncate text-right" [title]="item.progress">{{ item.progress }} %</td>
                             <td [class.d-none]="!linkTaiLieu" class="text-truncate cus-pointer ellipsis" [title]="item.documentLink">

@@ -131,6 +131,7 @@ export class InformationDeploymentFormComponent implements OnInit {
     createTaskItemFG(data: TenderPreparationPlanItem): FormGroup {
         return this.fb.group({
             itemId: data.itemId,
+            itemNo: data.itemNo,
             itemName: data.itemName,
             itemDesc: data.itemDesc,
             whoIsInChargeId: data.whoIsInChargeId === 0 ? null : data.whoIsInChargeId,
