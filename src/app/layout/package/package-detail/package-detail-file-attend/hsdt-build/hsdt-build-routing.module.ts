@@ -5,6 +5,7 @@ import { HsdtBuildComponent } from './hsdt-build.component';
 import { HsktInvolvedComponent } from './hskt-involved/hskt-involved.component';
 import { SummaryConditionFormComponent } from './summary-condition/summary-condition-form/summary-condition-form.component';
 import { LiveformSiteReportComponent } from './liveform-site-report/liveform-site-report.component';
+import { ChiPhiChungComponent } from './chi-phi-chung/chi-phi-chung.component';
 import { RequirePriceComponent } from './require-price/require-price.component';
 const routes: Routes = [
     {
@@ -21,7 +22,14 @@ const routes: Routes = [
                 path: 'liveformsite',
                 loadChildren: './liveform-site-report/liveform-site-report.module#LiveformSiteReportModule'
             },
-            { path: 'baogiavattu', component: RequirePriceComponent }
+            {
+                path: 'chiphichung',
+                component: ChiPhiChungComponent
+            },
+            {
+                path: 'baogiavattu',
+                component: RequirePriceComponent
+            }
         ]
     }
 ];

@@ -10,28 +10,28 @@ import { SafeUrlPipe } from './safe-url.pipe';
 import { SafePipe } from './safe.pipe';
 
 @NgModule({
-    imports: [
-        CommonModule
-    ],
-    declarations: [
-        VnCurrencyPipe,
-        FromNowPipe,
-        TimesPipe,
-        ShortenedName,
-        VnNumberPipe,
-        NumberAreaPipe,
-        SafeUrlPipe,
-        SafePipe
-    ],
-    exports: [
-        VnCurrencyPipe,
-        FromNowPipe,
-        TimesPipe,
-        ShortenedName,
-        VnNumberPipe,
-        NumberAreaPipe,
-        SafeUrlPipe,
-        SafePipe
-    ],
+        imports: [
+                CommonModule
+        ],
+        declarations: [
+                VnCurrencyPipe,
+                FromNowPipe,
+                TimesPipe,
+                ShortenedName,
+                VnNumberPipe,
+                NumberAreaPipe,
+                SafeUrlPipe,
+                SafePipe
+        ],
+        exports: [
+                VnCurrencyPipe,
+                FromNowPipe,
+                TimesPipe,
+                ShortenedName,
+                VnNumberPipe,
+                NumberAreaPipe,
+                SafeUrlPipe,
+                SafePipe
+        ],
 })
 export class SharedPipesModule { }

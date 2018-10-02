@@ -94,6 +94,10 @@ export class CreateNewInvitationComponent implements OnInit {
       }
     }
   }
+  deleteFileUpload(event) {
+    this.file = null;
+    this.createFormNewInvitation.get('attachedFiles').patchValue(null);
+  }
 
   closePopup() {
     this.callBack();
