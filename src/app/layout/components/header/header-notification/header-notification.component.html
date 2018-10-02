@@ -1,4 +1,4 @@
-<div id="notificationID"  >
+<div id="notificationID">
     <div #DropTooldiv class="nav-item dropdown notification" dropdown [autoClose]="isShow" container="body">
         <a id="button-nested" dropdownToggle class="dropdown-no-icon nav-link text-white mr-3 drop-menu" aria-controls="dropdown-nested">
             <img class="class-image image-bell--width d-inline-block" src="assets\images\ic-bell.png" alt="">
@@ -7,12 +7,11 @@
             <span class="sr-only">(current)</span>
         </a>
         <div>
-            <ul id="dropdown-nested" *dropdownMenu class="dropdown-menu dropdown-menu-right ul-parent-data--index" role="menu"
-                aria-labelledby="button-nested">
+            <ul id="dropdown-nested" *dropdownMenu class="dropdown-menu dropdown-menu-right ul-parent-data--index" role="menu" aria-labelledby="button-nested">
                 <div class="beeperNub"></div>
                 <!-- #DropToolThongBao -->
                 <div class="notification-item d-flex justify-content-between">
-                    <div  class="dropdown-menu-header font-weight-bold mb-2">
+                    <div class="dropdown-menu-header font-weight-bold mb-2">
                         THÔNG BÁO
                     </div>
                     <!-- <span class="tick-readed">Đánh dấu tất cả là đã đọc</span> -->
@@ -32,19 +31,28 @@
                 </div>
 
                 <div *ngIf="notificationList.length !== 0" class="force-scroll">
-                    <div class="notification-item" *ngFor="let item of notificationList">
-                        <a class="dropdown-item py-2" (click)="read(item)" [class.notification--not-read]="item.notificationState?.id === 'UnRead'">
+                    <div class="notification-item d-flex" *ngFor="let item of notificationList">
+                        <div class="d-flex py-2 padding-avatar pointer" (click)="read(item)" [class.notification--not-read]="item.notificationState?.id === 'UnRead'">
+                            <div class="action" width="">
+                                <div>
+                                    <img [src]="item.sendEmployee.employeeAvatar ? item.sendEmployee.employeeAvatar : 'assets/images/no-avatar.png'" width="30"
+                                        height="30">
+                                </div>
+                            </div>
+                        </div>
+
+                        <a *ngIf="item.notificationType === 'GuiDuyetDeNghiDuThau'" class="dropdown-item py-2" (click)="read(item)" [class.notification--not-read]="item.notificationState?.id === 'UnRead'">
                             <strong>Gói thầu: {{item.bidOpportunityName}}</strong>
                             <div>
                                 <span class="last span--margin">Bạn vừa nhận được yêu cầu Duyệt Đề nghị dự thầu từ
                                     <span class="content--bold">{{item.sendEmployee?.employeeName}} </span>, thời gian mong đợi được duyệt trước ngày
-                                    <span class="content--bold">{{item.data*1000 | date:'dd/MM/yyyy HH:mm'}}</span>
+                                    <span class="content--bold">{{item.data*1000 | date:'dd/MM/yyyy HH:mm':'+0000'}}</span>
                                 </span>
                                 <span class="badge badge-info">Chi tiết</span>
                             </div>
 
                             <p class="small text-muted">
-                                <em>{{item.sendDate*1000 | date:'dd/MM/yyyy HH:mm'}}</em>
+                                <em>{{item.sendDate*1000 | date:'dd/MM/yyyy HH:mm':'+0000'}}</em>
                             </p>
                         </a>
                         <a *ngIf="item.notificationType === 'NhacDuyetDeNghiDuThauTruoc3Ngay'" class="dropdown-item py-2" (click)="read(item)" [class.notification--not-read]="item.notificationState?.id === 'UnRead'">
@@ -56,7 +64,7 @@
                                 <span class="badge badge-info ">Chi tiết</span>
                             </div>
                             <p class="small text-muted">
-                                <em>{{item.sendDate*1000 | date:'dd/MM/yyyy HH:mm'}}</em>
+                                <em>{{item.sendDate*1000 | date:'dd/MM/yyyy HH:mm':'+0000'}}</em>
                             </p>
                         </a>
 
@@ -68,7 +76,7 @@
                                 <span class="badge badge-info">Chi tiết</span>
                             </div>
                             <p class="small text-muted">
-                                <em>{{item.sendDate*1000 | date:'dd/MM/yyyy HH:mm'}}</em>
+                                <em>{{item.sendDate*1000 | date:'dd/MM/yyyy HH:mm':'+0000'}}</em>
                             </p>
                         </a>
                         <a *ngIf="item === 'GuiDuyetTrinhDuyetGia'" class="dropdown-item py-2" (click)="read(item)" [class.notification--not-read]="item.notificationState?.id === 'UnRead'">
@@ -81,7 +89,7 @@
 
                             </div>
                             <p class="small text-muted">
-                                <em>{{item.sendDate*1000 | date:'dd/MM/yyyy HH:mm'}}</em>
+                                <em>{{item.sendDate*1000 | date:'dd/MM/yyyy HH:mm':'+0000'}}</em>
                             </p>
                         </a>
                         <a *ngIf="item.notificationType === 'GuiLaiTrinhDuyetGia'" class="dropdown-item py-2" (click)="read(item)" [class.notification--not-read]="item.notificationState?.id === 'UnRead'">
@@ -92,7 +100,7 @@
                                 <span class="badge badge-info pre--margin">Chi tiết</span>
                             </div>
                             <p class="small text-muted">
-                                <em>{{item.sendDate*1000 | date:'dd/MM/yyyy HH:mm'}}</em>
+                                <em>{{item.sendDate*1000 | date:'dd/MM/yyyy HH:mm':'+0000'}}</em>
                             </p>
                         </a>
                         <a *ngIf="item.notificationType === 'ChuyenGiaoTaiLieu'" class="dropdown-item py-2" (click)="read(item)" [class.notification--not-read]="item.notificationState?.id === 'UnRead'">
@@ -104,7 +112,7 @@
                                 <span class="badge badge-info pre--margin">Chi tiết</span>
                             </div>
                             <p class="small text-muted">
-                                <em>{{item.sendDate*1000 | date:'dd/MM/yyyy HH:mm'}}</em>
+                                <em>{{item.sendDate*1000 | date:'dd/MM/yyyy HH:mm':'+0000'}}</em>
                             </p>
                         </a>
 

@@ -647,16 +647,13 @@ export class PriceReviewFormComponent implements OnInit, AfterViewInit {
           && this.model.tentativeTenderPrice.oAndPPercentOfTotalCost.note,
         disabled: this.isModeView
       },
-      approvalDate: [{
-        value:
-          DateTimeConvertHelper.fromTimestampToDtObject(
-            this.model.approvalDate * 1000
-          ),
-        disabled: this.isModeView
-      }],
+      approvalDate: [
+        DateTimeConvertHelper.fromTimestampToDtObject(
+          this.model.approvalDate * 1000)
+      ],
       approvalTimes: {
         value: this.model.approvalTimes,
-        disabled: this.isModeView
+        disabled: true
       },
       interviewTimes: {
         value: this.model.interviewTimes,
@@ -668,7 +665,11 @@ export class PriceReviewFormComponent implements OnInit, AfterViewInit {
       bidOpportunityId: this.model.bidOpportunityId ? this.model.bidOpportunityId : this.packageId,
       createdEmployeeId: this.model.createdEmployee && this.model.createdEmployee.employeeId,
       updatedEmployeeId: this.model.updatedEmployee && this.model.updatedEmployee.employeeId,
-      isDraftVersion: this.model.isDraftVersion
+      isDraftVersion: this.model.isDraftVersion,
+      documentName: {
+        value: this.model.documentName,
+        disabled: this.isModeView
+      }
     });
   }
 

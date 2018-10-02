@@ -7,34 +7,31 @@ import { ShortenedName } from './shortened-name-pipe.module';
 import { VnNumberPipe } from './vn-number-pipe.module';
 import { NumberAreaPipe } from './number-area.pipe';
 import { SafeUrlPipe } from './safe-url.pipe';
-import { SortAlphabet } from './array-sorting-alphabet.pipe';
-import { StatusDocument } from './status-translate.pipe';
+import { SafePipe } from './safe.pipe';
 
 @NgModule({
-    imports: [
-        CommonModule
-    ],
-    declarations: [
-        VnCurrencyPipe,
-        FromNowPipe,
-        TimesPipe,
-        ShortenedName,
-        VnNumberPipe,
-        NumberAreaPipe,
-        SafeUrlPipe,
-        SortAlphabet,
-        StatusDocument
-    ],
-    exports: [
-        VnCurrencyPipe,
-        FromNowPipe,
-        TimesPipe,
-        ShortenedName,
-        VnNumberPipe,
-        NumberAreaPipe,
-        SafeUrlPipe,
-        SortAlphabet,
-        StatusDocument
-    ],
+        imports: [
+                CommonModule
+        ],
+        declarations: [
+                VnCurrencyPipe,
+                FromNowPipe,
+                TimesPipe,
+                ShortenedName,
+                VnNumberPipe,
+                NumberAreaPipe,
+                SafeUrlPipe,
+                SafePipe
+        ],
+        exports: [
+                VnCurrencyPipe,
+                FromNowPipe,
+                TimesPipe,
+                ShortenedName,
+                VnNumberPipe,
+                NumberAreaPipe,
+                SafeUrlPipe,
+                SafePipe
+        ],
 })
 export class SharedPipesModule { }

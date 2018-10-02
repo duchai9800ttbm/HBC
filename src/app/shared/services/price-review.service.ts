@@ -182,6 +182,7 @@ export class PriceReviewService {
     modelRequest.approvalDate = DateTimeConvertHelper.fromDtObjectToTimestamp(formValue.approvalDate) / 1000;
     modelRequest.approvalTimes = formValue.approvalTimes;
     modelRequest.interviewTimes = formValue.interviewTimes;
+    modelRequest.documentName = formValue.documentName;
     modelRequest.projectInformation = {
       foudationPart: {
         scopeOfWorkIsInclude: formValue.phanMongCheck ? formValue.phanMongCheck : false,
@@ -373,6 +374,7 @@ export class PriceReviewService {
     return {
       id: model.id,
       bidOpportunityId: model.bidOpportunityId,
+      documentName: model.documentName,
       createdEmployee: model.createdEmployee && {
         employeeId: model.createdEmployee.employeeId,
         employeeNo: model.createdEmployee.employeeNo,

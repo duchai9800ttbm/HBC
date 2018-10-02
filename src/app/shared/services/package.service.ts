@@ -58,7 +58,7 @@ export class PackageService {
     private static toPackageListItem(result: any): PackageListItem {
         return {
             bidOpportunityId: result.bidOpportunityId,
-            classify: result.classify ?  result.classify.value : '',
+            classify: result.classify ? result.classify.value : '',
             amount: result.amount,
             opportunityName: result.opportunityName,
             projectName: result.projectName,
@@ -184,15 +184,15 @@ export class PackageService {
             changedTime: result.changedTime,
             changedTimes: result.changedTimes,
             updateDesc: result.updateDesc,
-            liveFormChangeds: result.liveFormChangeds.map( item => {
-                return {
+            liveFormChangeds: result.liveFormChangeds ? result.liveFormChangeds.map(item =>
+                ({
                     liveFormStep: item.liveFormStep,
                     liveFormSubject: item.liveFormSubject,
                     liveFormTitle: item.liveFormTitle,
                     oldValue: item.oldValue,
                     newValue: item.newValue,
-                };
-            })
+                })
+            ) : []
         };
     }
 
@@ -941,11 +941,11 @@ export class PackageService {
         return this.apiService.post(url).map(response => response.result);
     }
     // Lịch sử thay đổi liveform phiếu đề nghị dự thầu
-    getChangeHistoryListProposedTender (
+    getChangeHistoryListProposedTender(
         bidOpportunityId: number,
         page: number | string,
-        pageSize: number | string): Observable<PagedResult<ProposedTenderParticipationHistory[]>> {
-        const url = `${bidOpportunityId}/proposedtenderparticipatinngreport/changedhistory/${page}/${pageSize}`;
+        pageSize: number | string): Observable<PagedResult<ProposedTenderParticipationHistory>> {
+        const url = `bidopportunity/${bidOpportunityId}/proposedtenderparticipatinngreport/changedhistory/${page}/${pageSize}`;
         return this.apiService.get(url).map(response => {
             const result = response.result;
             return {
@@ -973,8 +973,8 @@ export class PackageService {
             reason: reason
         }).map(response => response.result);
     }
-     // Không duyệt đề nghị dự thầu
-     notApproveBidProposal(bidOpportunityId: number, reason: string): Observable<any> {
+    // Không duyệt đề nghị dự thầu
+    notApproveBidProposal(bidOpportunityId: number, reason: string): Observable<any> {
         const url = `bidopportunity/hsdt/${bidOpportunityId}/khongduyetdenghiduthau`;
         return this.apiService.post(url, {
             reason: reason
@@ -1005,8 +1005,16 @@ export class PackageService {
     }
 
     // tạo mới/ sửa LiveForm phân công tiến độ
-    createOrUpdateTenderPreparationPlanning(data: TenderPreparationPlanningRequest): Observable<any> {
+    createOrUpdateTenderPreparationPlanning(data: any): Observable<any> {
         const url = `tenderpreparationplanningassignment/createorupdate`;
+        data.tasks.forEach(element => {
+            element.startDate = DateTimeConvertHelper.fromDtObjectToSecon(element.startDate);
+            element.finishDate = DateTimeConvertHelper.fromDtObjectToSecon(element.finishDate);
+            // element.whoIsInChargeId = Number(element.whoIsInChargeId);
+            // if (element.startDate && element.finishDate) {
+            //     element.duration = Math.abs(element.startDate - element.finishDate) / (60 * 60 * 24);
+            // }
+        });
         return this.apiService.post(url, data).map(response => response.result);
     }
 
@@ -1018,7 +1026,7 @@ export class PackageService {
 
     // gửi phân công tiến độ
     sendTenderPreparationPlanning(bidOpportunityId: number): Observable<any> {
-        const url = `bidopportunity/hsdt/${bidOpportunityId}/guiphancontiendo`;
+        const url = `bidopportunity/hsdt/${bidOpportunityId}/guiphancongtiendo`;
         return this.apiService.post(url).map(data => data.result);
     }
 
@@ -1026,5 +1034,43 @@ export class PackageService {
     checkOrUncheckTenderPreparationPlanningItem(bidOpportunityId: number, itemId: number): Observable<any> {
         const url = `bidopportunity/${bidOpportunityId}/tenderpreparationplanningassignment/item/${itemId}/checkfinish`;
         return this.apiService.post(url).map(data => data.result);
+    }
+
+    // Lịch sử thay đổi liveform phiếu đề nghị dự thầu
+    getChangeHistoryListTenderPreparationPlanning(
+        bidOpportunityId: number,
+        page: number | string,
+        pageSize: number | string): Observable<PagedResult<ProposedTenderParticipationHistory>> {
+        const url = `bidopportunity/${bidOpportunityId}/tenderpreparationplanningassignment/changedhistory/${page}/${pageSize}`;
+        return this.apiService.get(url).map(response => {
+            const result = response.result;
+            return {
+                currentPage: result.pageIndex,
+                pageSize: result.pageSize,
+                pageCount: result.totalPages,
+                total: result.totalCount,
+                items: (result.items || []).map(
+                    PackageService.toHistoryListProposedTender
+                )
+            };
+        });
+    }
+
+    // ký duyệt phân công tiến độ
+    signApprovedPreparationPlanning(bidOpportunityId: number) {
+        const url = `bidopportunity/${bidOpportunityId}/tenderpreparationplanningassignment/approved`;
+        return this.apiService.post(url).map(res => res.result);
+    }
+
+    // tải template bảng phân công tiến độ
+    downloadPreparationPlanningTemplate() {
+        const url = `template/downoad`;
+        return this.apiService.getFile(url).map(response => {
+            return FileSaver.saveAs(
+                new Blob([response.file], {
+                    type: `${response.file.type}`,
+                }), response.fileName
+            );
+        });
     }
 }

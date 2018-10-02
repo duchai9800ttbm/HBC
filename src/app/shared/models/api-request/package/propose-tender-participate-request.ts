@@ -26,5 +26,5 @@ export class ProposeTenderParticipateRequest {
     tenderDirectorProposal: TenderDirectorProposal;
     decisionOfBoardOfGeneralDirector: DecisionBoardGeneralDirector;
     isAgreedParticipating = true;
-    updatedDetail: string;
+    updatedDesc: string;
 }

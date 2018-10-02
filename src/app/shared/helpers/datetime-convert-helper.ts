@@ -8,11 +8,11 @@ export default class DateTimeConvertHelper {
     private static readonly seconFormat = 'X';
 
     static fromDtObjectToTimestamp(dtObject: Date): number {
-        return dtObject ? +dtObject : null;
+        return dtObject ? moment.utc(dtObject).add(7, 'hours').unix() : null;
     }
 
     static fromTimestampToDtObject(timestamp: number): Date {
-        return timestamp ? moment(timestamp).toDate() : null;
+        return timestamp ? moment.utc(timestamp).subtract(7, 'hours').toDate() : null;
     }
 
     static fromTimestampToDtStr(timestamp: number): string {
@@ -20,6 +20,6 @@ export default class DateTimeConvertHelper {
     }
 
     static fromDtObjectToSecon(dtObject: Date): number {
-        return Number(moment(dtObject).format(this.seconFormat));
+        return Number(moment.utc(dtObject).add(7, 'hours').format(this.seconFormat));
     }
 }
