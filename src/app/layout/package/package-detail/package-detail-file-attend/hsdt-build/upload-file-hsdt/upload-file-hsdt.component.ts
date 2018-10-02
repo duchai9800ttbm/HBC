@@ -1,4 +1,10 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, EventEmitter, Output } from '@angular/core';
+import { FormBuilder, Validators, FormGroup } from '@angular/forms';
+import ValidationHelper from '../../../../../../shared/helpers/validation.helper';
+import { NgxSpinnerService } from 'ngx-spinner';
+import { AlertService } from '../../../../../../shared/services/alert.service';
+import { HoSoDuThauService } from '../../../../../../shared/services/ho-so-du-thau.service';
+import { PackageDetailComponent } from '../../../package-detail.component';
 
 @Component({
   selector: 'app-upload-file-hsdt',
@@ -7,13 +13,94 @@ import { Component, OnInit, Input } from '@angular/core';
 })
 export class UploadFileHsdtComponent implements OnInit {
   @Input() nameFile: string;
+  @Input() idFile: number;
+  @Input() bidOpportunityId: number;
   @Input() callBack: Function;
-  constructor() { }
+  @Output() isSubmitUpload = new EventEmitter<boolean>();
+  uploadForm: FormGroup;
+  isSubmitted: boolean;
+  invalidMessages: string[];
+  formErrors = {
+    editName: '',
+  };
+  errorMess;
+  displayName: string;
+  thumbFile;
+  isFile = false;
+  isLinkFile = false;
+  constructor(
+    private fb: FormBuilder,
+    private alertService: AlertService,
+    private spinner: NgxSpinnerService,
+    private hoSoDuThauService: HoSoDuThauService
+
+  ) { }
   ngOnInit() {
+    this.uploadForm = this.fb.group({
+      file: null,
+      linkFile: [null, Validators.required],
+      description: ''
+    });
+    this.uploadForm.valueChanges.subscribe(data => {
+      this.onFormValueChanged(data);
+    });
+  }
+  onFormValueChanged(data?: any) {
+    this.isFile = (this.uploadForm.get('file').value) ? true : false;
+    this.isLinkFile = (this.uploadForm.get('linkFile').value) ? true : false;
+    if (this.isSubmitted) {
+      this.validateForm();
+    }
+  }
+  validateForm() {
+    this.invalidMessages = ValidationHelper.getInvalidMessages(
+      this.uploadForm,
+      this.formErrors,
+    );
+    return this.invalidMessages.length === 0;
   }
 
+  uploadFile(event) {
+    this.thumbFile = event.target.files;
+    this.displayName = this.thumbFile[0].name;
+  }
+
+  submitUpload() {
+    this.isSubmitted = true;
+    if (this.validateForm()) {
+      const file = this.uploadForm.get('file').value;
+      const linkFile = this.uploadForm.get('linkFile').value;
+      const description = this.uploadForm.get('description').value;
+      if (file || linkFile) {
+        this.spinner.show();
+        this.hoSoDuThauService.taiLenHoSoDuThau(
+          this.bidOpportunityId,
+          this.idFile,
+          this.nameFile,
+          description,
+          file,
+          linkFile
+        ).subscribe(data => {
+          this.spinner.hide();
+          this.errorMess = null;
+          this.callBack();
+        }, err => {
+          this.errorMess = 'Upload thất bại, xin vui lòng thử lại!';
+          this.spinner.hide();
+        });
+      } else {
+        this.errorMess = 'Vui lòng chọn file hoặc đường dẫn link đến file!';
+      }
+
+    }
+  }
   closePopup() {
     this.callBack();
+  }
+  deleteFileUpload() {
+    this.uploadForm.get('file').patchValue(null);
+    this.thumbFile = null;
+    this.displayName = '';
   }
 
 }

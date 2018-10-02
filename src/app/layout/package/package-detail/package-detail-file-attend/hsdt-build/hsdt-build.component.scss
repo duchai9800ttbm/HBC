@@ -321,7 +321,8 @@ table.dataTable th {
     background-color: #ffff !important;
     border: 1px solid #dddddd;
 }
-.grow-in-line{
+
+.grow-in-line {
     flex-grow: 1;
 }
 
@@ -392,11 +393,6 @@ table.dataTable th {
             transition: 600ms;
 
             &:hover {
-                background-color: #009CE2;
-                color: #FFFFFF;
-            }
-
-            .router-link-active {
                 background-color: #009CE2;
                 color: #FFFFFF;
             }
@@ -540,6 +536,17 @@ table.dataTable th {
 .router-link-active {
     background-color: #00a0e3 !important;
     color: #fff !important;
+}
+
+.router-link-active.resize {
+    transition: width 300ms;
+    pointer-events: none;
+    width: 0px !important;
+    color: transparent !important;
+    background-color: transparent !important;
+    border: none !important;
+    box-shadow: none !important;
+    display: none;
 }
 
 .itemDisplay {

@@ -1,0 +1,21 @@
+.label-contact {
+    background: #eee;
+    border: none;
+    border-radius: 5px;
+}
+
+.custom-dropdown-liveform::before {
+    width: 41px;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    border-radius: 0 3px 3px 0;
+    background-color: transparent;
+}
+
+.custom-dropdown-liveform::after {
+    color: #00a0e3;
+}
+.tempHiden {
+    visibility: hidden;
+}
