@@ -9,9 +9,13 @@ export class TenderPreparationPlanningRequest {
     updatedEmployee: EmployeeModel;
     updatedEmployeeId: number;
     projectDirectorEmployeeId: number;
+    projectDirectorEmployee: EmployeeModel;
     tenderDepartmentEmployeeId: number;
+    tenderDepartmentEmployee: EmployeeModel;
     technicalDepartmentEmployeeId: number;
+    technicalDepartmentEmployee: EmployeeModel;
     bimDepartmentEmployeeId: number;
+    bimDepartmentEmployee: EmployeeModel;
     projectInformation: string;
     startDate: number;
     finishDate: number;
@@ -19,5 +23,10 @@ export class TenderPreparationPlanningRequest {
     duration: number;
     isDraftVersion = true;
     createDate: number;
+    updatedDesc: string;
+    isSignedByPreparedPerson = false;
+    isSignedByApprovalPerson = false;
+    approvedDate: number;
+    approvedEmployee: EmployeeModel;
     tasks: TenderPreparationPlanItem[];
 }

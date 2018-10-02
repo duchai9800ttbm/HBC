@@ -51,6 +51,7 @@ export class NeedCreateTenderFormComponent implements OnInit, OnDestroy {
         );
         this.dataModel = NeedCreateTenderFormComponent.formModel;
         this.dataModelCopy = Object.assign({}, this.dataModel);
+        // console.log(this.dataModel.tenderDirectorProposal.expectedDate);
         // tslint:disable-next-line:max-line-length
         this.dateApproveBid =
             this.dataModel &&
@@ -252,7 +253,7 @@ export class NeedCreateTenderFormComponent implements OnInit, OnDestroy {
     }
 
     saveChangesLiveForm() {
-        NeedCreateTenderFormComponent.formModel.updatedDetail = this.updatedDetail;
+        NeedCreateTenderFormComponent.formModel.updatedDesc = this.updatedDetail;
         this.onSubmit(false);
         this.updatedDetail = '';
     }

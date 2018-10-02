@@ -20,8 +20,8 @@ export class SessionService {
         return {
             userId: this.currentSession.userId,
             employeeId: this.currentSession.employeeId,
-            userName: this.currentSession.userName
-
+            userName: this.currentSession.userName,
+            fullName: `${this.currentSession.firstName} ${this.currentSession.lastName}`
         };
     }
 

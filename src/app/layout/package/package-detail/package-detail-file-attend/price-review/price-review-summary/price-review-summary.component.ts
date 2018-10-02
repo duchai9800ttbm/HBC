@@ -1,5 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { TenderPriceApproval, TenderPriceApprovalShort, ItemHSDTChinhThuc, PriceReviewItemChangedHistory } from '../../../../../../shared/models/price-review/price-review.model';
+import {
+  TenderPriceApproval,
+  TenderPriceApprovalShort,
+  ItemHSDTChinhThuc,
+  PriceReviewItemChangedHistory
+} from '../../../../../../shared/models/price-review/price-review.model';
 import { PackageDetailComponent } from '../../../package-detail.component';
 import { PriceReviewService } from '../../../../../../shared/services/price-review.service';
 import { DATATABLE_CONFIG2 } from '../../../../../../shared/configs';
