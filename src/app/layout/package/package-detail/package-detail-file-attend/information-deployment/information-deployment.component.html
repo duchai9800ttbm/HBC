@@ -65,7 +65,7 @@
                 <td>
                 </td>
                 <td><a [routerLink]="['./view']" (click)="changeAction('view')">{{tenderPlan.projectInformation}}</a></td>
-                <td>Chưa duyệt</td>
+                <td>{{tenderPlan.approvedEmployee?.employeeName ? tenderPlan.approvedEmployee?.employeeName : 'Chưa duyệt'}}</td>
                 <td>{{tenderPlan.createdEmployee?.employeeName}}</td>
                 <td>{{tenderPlan.createDate * 1000 | date: 'dd/MM/yyyy'}}</td>
                 <td>

@@ -45,7 +45,7 @@
                     <div class=""></div>
                 </div>
                 <div class="col-md-3 pl-0">
-                    <div class=""><strong>Người duyệt (Approved by):</strong></div>
+                    <div class=""><strong>Người duyệt (Approved by): </strong>{{tenderPlan?.approvedEmployee?.employeeName}}</div>
                     <div class=""></div>
                 </div>
             </div>
@@ -59,7 +59,7 @@
                     <div class=""></div>
                 </div>
                 <div class="col-md-3 pl-0">
-                    <div class=""><strong>Ngày duyệt (Date):</strong></div>
+                    <div class=""><strong>Ngày duyệt (Date): </strong>{{tenderPlan?.approvedDate * 1000 | date: 'dd/MM/yyyy' : '+0000'}}</div>
                     <div class=""></div>
                 </div>
             </div>

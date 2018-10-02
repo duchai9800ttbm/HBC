@@ -26,5 +26,7 @@ export class TenderPreparationPlanningRequest {
     updatedDesc: string;
     isSignedByPreparedPerson = false;
     isSignedByApprovalPerson = false;
+    approvedDate: number;
+    approvedEmployee: EmployeeModel;
     tasks: TenderPreparationPlanItem[];
 }

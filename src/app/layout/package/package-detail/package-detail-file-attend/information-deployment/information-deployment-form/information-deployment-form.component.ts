@@ -197,6 +197,9 @@ export class InformationDeploymentFormComponent implements OnInit {
         //         i++;
         //     }
         // });
+        // if (data.find(i => i.whoIsInChargeId && i.startDate && i.finishDate)) {
+
+        // }
         if (data.some(i => i.whoIsInChargeId != null || i.whoIsInChargeId !== 0)) {
             return true;
         }
