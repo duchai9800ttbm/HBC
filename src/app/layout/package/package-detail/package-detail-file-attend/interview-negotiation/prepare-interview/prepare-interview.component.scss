@@ -148,11 +148,11 @@ li.triangle::before {
     margin-right: 4px;
 }
 
-.btn:focus,
-.btn.focus {
-    outline: 0;
-    box-shadow: 0 0 0 0.1rem rgba(0, 160, 227, 0.25) !important;
-}
+// .btn:focus,
+// .btn.focus {
+//     outline: 0;
+//     box-shadow: 0 0 0 0.1rem rgba(0, 160, 227, 0.25) !important;
+// }
 
 .pd-left {
     padding: 0px 50px 0px 0px;
@@ -329,7 +329,7 @@ table.dataTable th {
     .cus-menu-children {
         width: 100%;
         padding-left: 5px;
-        cursor: pointer;
+        // cursor: pointer;
     }
 }
 
@@ -339,6 +339,7 @@ table.dataTable th {
 }
 
 .active {
+    cursor: pointer;
     .number {
         width: 10%;
         font-size: 14px;
@@ -352,6 +353,7 @@ table.dataTable th {
 
 .no-active {
     background-color: #edeff0 !important;
+    cursor: not-allowed;
     .number {
         width: 10%;
         font-size: 14px;
@@ -397,4 +399,20 @@ table.dataTable th {
 .div-menu-active{
     width: 15%;
     border-right: 3px solid #00a0e3;
+}
+
+.back{
+    background-color: #cceffc !important;
+    cursor: pointer;
+    .number {
+        width: 10%;
+        font-size: 14px;
+        color: #0197d6;
+    }
+    .word {
+        width: 90%;
+        display: flex;
+        align-items: center;
+        color: #0096d5;
+    }
 }
