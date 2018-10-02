@@ -161,6 +161,20 @@ export class InterviewInvitationService {
       };
     });
   }
+  // Lấy danh sách lời mời phỏng vấn
+  getListInterview(
+    bidOpportunityId: number,
+    page: number | string,
+    pageSize: number | string
+  ) {
+    const url = `/bidopportunity/${bidOpportunityId}/bidinterviewinvitations/filter/${page}/${pageSize}`;
+    return this.apiService.get(url).map(response => {
+      const result = response.result.items;
+      return (result || []).map(
+        this.toInterviewInvitationList
+      );
+    });
+  }
   // Tạo mới lời mới phỏng vấn
   createInterviewInvitation(
     customerID: number,
