@@ -80,7 +80,7 @@ export class InformationDeploymentFormComponent implements OnInit {
             projectDirectorEmployeeId: planModel.projectDirectorEmployee && planModel.projectDirectorEmployee.employeeId,
             tenderDepartmentEmployeeId: planModel.tenderDepartmentEmployee && planModel.tenderDepartmentEmployee.employeeId,
             technicalDepartmentEmployeeId: planModel.technicalDepartmentEmployee && planModel.technicalDepartmentEmployee.employeeId,
-            bimDepartmentEmployeeId: planModel.bimDepartmentEmployeeId && planModel.bimDepartmentEmployee.employeeId,
+            bimDepartmentEmployeeId: planModel.bimDepartmentEmployee && planModel.bimDepartmentEmployee.employeeId,
             isSignedByPreparedPerson: planModel.isSignedByPreparedPerson,
             isSignedByApprovalPerson: planModel.isSignedByApprovalPerson,
             updatedDesc: '',
