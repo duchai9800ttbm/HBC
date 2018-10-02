@@ -32,7 +32,7 @@
 
                 <div *ngIf="notificationList.length !== 0" class="force-scroll">
                     <div class="notification-item d-flex" *ngFor="let item of notificationList">
-                        <div class="d-flex py-2 padding-avatar">
+                        <div class="d-flex py-2 padding-avatar pointer" (click)="read(item)" [class.notification--not-read]="item.notificationState?.id === 'UnRead'">
                             <div class="action" width="">
                                 <div>
                                     <img [src]="item.sendEmployee.employeeAvatar ? item.sendEmployee.employeeAvatar : 'assets/images/no-avatar.png'" width="30"

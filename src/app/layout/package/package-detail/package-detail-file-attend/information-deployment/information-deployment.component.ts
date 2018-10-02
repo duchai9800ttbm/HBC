@@ -398,7 +398,7 @@ export class InformationDeploymentComponent implements OnInit {
         this.alertService.error('Gửi phân công tiến độ thất bại!');
       });
     } else {
-      this.confirmService.missAction('Bảng phân công tiến độ chưa được ký duyệt',
+      this.confirmService.missAction('Bảng phân công tiến độ chưa được xác nhận ký tại Người tạo và người duyệt',
         `/package/detail/${this.bidOpportunityId}/attend/infomation-deployment/edit`);
     }
   }
