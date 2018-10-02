@@ -305,4 +305,9 @@ export class InformationDeploymentFormComponent implements OnInit {
             }
         }
     }
+
+    refesh() {
+        this.packageService.getTenderPreparationPlanning(this.bidOpportunityId).subscribe(data => this.createForm(data));
+        this.getPackageInfo();
+    }
 }
