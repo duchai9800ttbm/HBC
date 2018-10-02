@@ -41,7 +41,8 @@ export class SiteSurveyReportService {
   // Xóa ảnh báo cáo công trình
   deleteImageSiteSurveyingReport(guid): Observable<any> {
     const url = `bidopportunity/tendersitesurveyingreport/deleteimage`;
-    return this.apiService.post(url, guid);
+    return null; // tạm thời disable
+    // return this.apiService.post(url, guid);
   }
 
   // Upload ảnh

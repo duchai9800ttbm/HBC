@@ -57,7 +57,7 @@ export class WaitResultComponent implements OnInit {
         private alertService: AlertService,
         private spinner: NgxSpinnerService,
         private packageSuccessService: PackageSuccessService
-    ) {}
+    ) { }
 
     ngOnInit() {
         this.reasonForm = this.formBuilder.group({
@@ -94,6 +94,7 @@ export class WaitResultComponent implements OnInit {
                 this.spinner.hide();
             },
             err => {
+                this.alertService.error(`Yêu cầu danh sách lý do trật thầu thất bại. Xin vui lòng thử lại!`);
                 this.spinner.hide();
             }
         );
@@ -136,27 +137,27 @@ export class WaitResultComponent implements OnInit {
         if (this.validateForm()) {
             this.spinner.show();
             let typeBid = null;
-              switch (this.textTrungThau) {
+            switch (this.textTrungThau) {
                 case 'trúng':
                     typeBid = SETTING_REASON.Win;
                     break;
                 case 'trật':
-                  typeBid = SETTING_REASON.Lose;
+                    typeBid = SETTING_REASON.Lose;
                     break;
                 case 'hủy':
-                  typeBid = SETTING_REASON.Cancel;
+                    typeBid = SETTING_REASON.Cancel;
                     break;
             }
             this.packageSuccessService.sendBidResult(this.currentPackageId, Number(this.reasonForm.get('reasonName').value), typeBid)
-              .subscribe(data => {
-                this.modaltrungThau.hide();
-                this.alertService.success(`Gửi lý do ${this.textTrungThau} thầu thành công!`);
-                this.spinner.hide();
-              }, err => {
-                this.modaltrungThau.hide();
-                this.alertService.error(`Gửi lý do ${this.textTrungThau} thầu thất bại!`);
-                this.spinner.hide();
-              });
+                .subscribe(data => {
+                    this.modaltrungThau.hide();
+                    this.alertService.success(`Gửi lý do ${this.textTrungThau} thầu thành công!`);
+                    this.spinner.hide();
+                }, err => {
+                    this.modaltrungThau.hide();
+                    this.alertService.error(`Gửi lý do ${this.textTrungThau} thầu thất bại!`);
+                    this.spinner.hide();
+                });
         }
     }
     validateForm() {

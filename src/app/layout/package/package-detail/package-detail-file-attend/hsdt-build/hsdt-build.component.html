@@ -13,14 +13,8 @@
             </div>
             <div>
                 <div class="btn-toolbar mt-2 mb-2">
-                    <div [ngClass]="{'d-none': hideActionSiteReport}">
-                        <div class="input-group">
-                            <span class="input-group-addon">Tìm kiếm theo</span>
-                            <input type="text" class="form-control icon" placeholder="&#xf002; Tên tài liệu" (keyup)="search($event.target.value)">
-                        </div>
-                    </div>
                     <div>
-                        <button class="btn btn-primary ml-2">
+                        <button class="btn btn-primary ml-2" (click)="taiTemplateHSDT()">
                             Tải Template
                         </button>
                         <button class="btn btn-primary ml-2" [ngClass]="{'d-none': hideActionSiteReport}">
@@ -32,31 +26,15 @@
                         <button class="btn btn-primary ml-2" [ngClass]="{'d-none': hideActionSiteReport}">
                             In
                         </button>
-                        <!-- <button class="btn btn-primary ml-2" type="button" ngbDropdownToggle data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> 
-                                Thêm mới HSDT
-                            </button> -->
                         <span ngbDropdown [ngClass]="{'d-none': hideActionSiteReport}">
                             <button class="btn btn-primary ml-2" id="dropdownBasic1" ngbDropdownToggle>Thêm mới HSDT</button>
                             <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
-                                <button class="dropdown-item">Bảng tóm tắt ĐKDT</button>
-                                <button class="dropdown-item" (click)="showDialogUploadFile('Yêu cầu báo giá vật tư, thầu phụ')">Yêu
-                                    cầu báo giá vật tư, thầu phụ</button>
-                                <button class="dropdown-item" (click)="showDialogUploadFile('Báo cáo tham quan công trình')">Báo
-                                    cáo tham quan công trình</button>
-                                <button class="dropdown-item" (click)="showDialogUploadFile('Bản tổng hợp dự toán')">Bản
-                                    tổng hợp dự toán</button>
-                                <button class="dropdown-item" (click)="showDialogUploadFile('Bản tính chi phí chung')">Bản
-                                    tính chi phí chung</button>
-                                <button class="dropdown-item" (click)="showDialogUploadFile('Bản câu hỏi làm rõ HSMT')">Bản
-                                    câu hỏi làm rõ HSMT</button>
-                                <button class="dropdown-item" (click)="showDialogUploadFile('Các HSKT có liên quan')">Các
-                                    HSKT có liên quan</button>
-                                <button class="dropdown-item" (click)="showDialogUploadFile('Hồ sơ pháp lý')">Hồ sơ
-                                    pháp lý</button>
-                                <button class="dropdown-item" (click)="showDialogUploadFile('Hồ sơ khác')">Hồ sơ khác</button>
+                                <button class="dropdown-item" *ngFor="let item of danhSachLoaiTaiLieu" (click)="showDialogUploadFile(item.name, item.id)">
+                                    {{ item.name }}
+                                </button>
                             </div>
                         </span>
-                        <button class="btn btn-primary ml-2" [ngClass]="{'d-none': hideActionSiteReport}">
+                        <button class="btn btn-primary ml-2" (click)="chotHSDT($event)" [ngClass]="{'d-none': hideActionSiteReport}">
                             Chốt HSDT
                         </button>
                         <button class="btn btn-primary ml-2">
@@ -71,17 +49,18 @@
 
                 <div class="d-flex">
                     <div id="toggle-menu-item">
-                        <div class="toggle-menu-item d-flex flex-column align-items-start" [routerLink]="['./summary']"
-                            routerLinkActive="active-link">
+                        <div class="toggle-menu-item d-flex flex-column align-items-start" [routerLinkActive]="['router-link-active']"
+                            [routerLink]="['./summary']">
                             <div>Bảng tóm tắt ĐKDT</div>
                             <span class="font-italic">LiveForm</span>
                         </div>
-                        <div class="toggle-menu-item d-flex flex-column align-items-start">
+                        <div class="toggle-menu-item d-flex flex-column align-items-start" [routerLinkActive]="['router-link-active']"
+                            [routerLink]="['./baogiavattu']">
                             <div>Yêu cầu báo giá vật tư, thầu phụ</div>
                             <span class="font-italic">Upload</span>
                         </div>
-                        <div class="toggle-menu-item d-flex flex-column align-items-start" routerLink="./liveformsite"
-                            routerLinkActive="active-link">
+                        <div class="toggle-menu-item d-flex flex-column align-items-start" [routerLinkActive]="['router-link-active']"
+                            routerLink="./liveformsite">
                             <div>Báo cáo tham quan công trình</div>
                             <span class="font-italic">LiveForm</span>
                         </div>
@@ -89,7 +68,8 @@
                             <div>Bảng tổng hợp dự toán</div>
                             <span class="font-italic">Upload</span>
                         </div>
-                        <div class="toggle-menu-item d-flex flex-column align-items-start">
+                        <div class="toggle-menu-item d-flex flex-column align-items-start" [routerLinkActive]="['router-link-active']"
+                            routerLink="./chiphichung">
                             <div>Bảng tính chi phí chung</div>
                             <span class="font-italic">Upload</span>
                         </div>
@@ -97,7 +77,8 @@
                             <div>Bảng câu hỏi làm rõ HSMT</div>
                             <span class="font-italic">Upload</span>
                         </div>
-                        <div class="toggle-menu-item d-flex flex-column align-items-start" [routerLink]="['hskt']">
+                        <div class="toggle-menu-item d-flex flex-column align-items-start" [routerLinkActive]="['router-link-active']"
+                            [routerLink]="['hskt']">
                             <div>Các HSKT có liên quan</div>
                             <span class="font-italic">Upload</span>
                         </div>

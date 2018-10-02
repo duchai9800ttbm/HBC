@@ -1,38 +1,30 @@
 import { Component, OnInit } from '@angular/core';
-import { DATATABLE_CONFIG2, DATATABLE_CONFIG } from '../../../../../../shared/configs';
-import { Subject } from 'rxjs/Subject';
-import { BidDocumentFilter } from '../../../../../../shared/models/document/bid-document-filter.model';
-import { PagedResult, DictionaryItemHightLight } from '../../../../../../shared/models';
-import { UserModel } from '../../../../../../shared/models/user/user.model';
+import { DATATABLE_CONFIG2 } from '../../../../../../shared/configs';
+// tslint:disable-next-line:import-blacklist
+import { Subject, BehaviorSubject } from 'rxjs';
 import { DATETIME_PICKER_CONFIG } from '../../../../../../shared/configs/datepicker.config';
-import { UserItemModel } from '../../../../../../shared/models/user/user-item.model';
-import { BidDocumentModel } from '../../../../../../shared/models/document/bid-document.model';
-import { BidDocumentGroupModel } from '../../../../../../shared/models/document/bid-document-group.model';
-import { PackageInfoModel } from '../../../../../../shared/models/package/package-info.model';
+import { PagedResult } from '../../../../../../shared/models';
+import { DanhSachBoHsdtItem } from '../../../../../../shared/models/ho-so-du-thau/danh-sach-bo-hsdt-item.model';
+import { HsdtFilterModel } from '../../../../../../shared/models/ho-so-du-thau/hsdt-filter.model';
+import { PackageDetailComponent } from '../../../package-detail.component';
 import { AlertService, ConfirmationService, UserService, DataService } from '../../../../../../shared/services';
+import { HoSoDuThauService } from '../../../../../../shared/services/ho-so-du-thau.service';
 import { Router } from '@angular/router';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { DocumentService } from '../../../../../../shared/services/document.service';
 import { OpportunityHsmtService } from '../../../../../../shared/services/opportunity-hsmt.service';
 import { PackageService } from '../../../../../../shared/services/package.service';
-import { PackageDetailComponent } from '../../../package-detail.component';
-import { HoSoDuThauService } from '../../../../../../shared/services/ho-so-du-thau.service';
-import { DanhSachBoHsdtItem } from '../../../../../../shared/models/ho-so-du-thau/danh-sach-bo-hsdt-item.model';
-// tslint:disable-next-line:import-blacklist
-import { BehaviorSubject } from 'rxjs';
-import { HsdtFilterModel } from '../../../../../../shared/models/ho-so-du-thau/hsdt-filter.model';
 
 @Component({
-  selector: 'app-hskt-involved',
-  templateUrl: './hskt-involved.component.html',
-  styleUrls: ['./hskt-involved.component.scss']
+  selector: 'app-chi-phi-chung',
+  templateUrl: './chi-phi-chung.component.html',
+  styleUrls: ['./chi-phi-chung.component.scss']
 })
-export class HsktInvolvedComponent implements OnInit {
+export class ChiPhiChungComponent implements OnInit {
   isShowMenu = false;
   dtOptions: any = DATATABLE_CONFIG2;
   dtTrigger: Subject<any> = new Subject();
   searchTerm;
-  pagedResultUser: PagedResult<UserModel> = new PagedResult<UserModel>();
   datePickerConfig = DATETIME_PICKER_CONFIG;
   packageId;
   bidOpportunityId: number;
@@ -55,24 +47,33 @@ export class HsktInvolvedComponent implements OnInit {
   showPopupAdd = false;
   showPopupDetail = false;
   currentItem = {};
-  userListItem: UserItemModel[];
-  ListItem: BidDocumentModel[];
-  packageData: PackageInfoModel;
   tableEmpty: boolean;
   sum = 0;
   showTable = false;
-  danhSachHoSoKT;
+  danhSachChiPhiChung;
   constructor(
     private hoSoDuThauService: HoSoDuThauService,
     private alertService: AlertService,
     private confirmationService: ConfirmationService,
     private spinner: NgxSpinnerService
-  ) {
-  }
+  ) { }
+
   ngOnInit() {
     this.filterModel.status = '';
     this.packageId = +PackageDetailComponent.packageId;
-    this.getDataTypeHSKT();
+    this.hoSoDuThauService
+      .danhSachBoHoSoDuThauInstantSearch(this.packageId, this.searchTerm$, this.filterModel, 0, 10)
+      .subscribe(responseResultChiPhiChung => {
+        this.rerender(responseResultChiPhiChung);
+        this.danhSachChiPhiChung = responseResultChiPhiChung.items.filter(item =>
+          item.tenderDocumentType === 'Bảng tính chi phí chung'
+        );
+        this.showTable = (this.danhSachChiPhiChung.length > 0) ? true : false;
+        this.sum = this.danhSachChiPhiChung.length;
+        this.dtTrigger.next();
+      }, err => {
+        this.alertService.error(`Đã có lỗi xảy ra. Xin vui lòng thử lại!`);
+      });
   }
   rerender(pagedResult: any) {
     this.checkboxSeclectAll = false;
@@ -88,13 +89,13 @@ export class HsktInvolvedComponent implements OnInit {
   filter() {
     this.hoSoDuThauService
       .danhSachBoHoSoDuThau(this.packageId, this.searchTerm$.value, this.filterModel, 0, 10)
-      .subscribe(responseResultBoHSDT => {
-        this.rerender(responseResultBoHSDT);
-        this.danhSachHoSoKT = responseResultBoHSDT.items.filter(item =>
-          item.tenderDocumentType === 'Các hồ sơ kỹ thuật khác'
+      .subscribe(responseResultChiPhiChung => {
+        this.rerender(responseResultChiPhiChung);
+        this.danhSachChiPhiChung = responseResultChiPhiChung.items.filter(item =>
+          item.tenderDocumentType === 'Bảng tính chi phí chung'
         );
-        this.showTable = (this.danhSachHoSoKT.length > 0) ? true : false;
-        this.sum = this.danhSachHoSoKT.length;
+        this.showTable = (this.danhSachChiPhiChung.length > 0) ? true : false;
+        this.sum = this.danhSachChiPhiChung.length;
         this.dtTrigger.next();
       }, err => {
         this.alertService.error(`Đã có lỗi xảy ra. Xin vui lòng thử lại!`);
@@ -108,51 +109,38 @@ export class HsktInvolvedComponent implements OnInit {
     this.filterModel.uploadedEmployeeId = null;
     this.filterModel.createdDate = null;
     this.filterModel.uploadedEmployeeId = null;
-    this.getDataTypeHSKT();
-  }
-  getDataTypeHSKT() {
     this.hoSoDuThauService
       .danhSachBoHoSoDuThauInstantSearch(this.packageId, this.searchTerm$, this.filterModel, 0, 10)
-      .subscribe(responseResultBoHSDT => {
-        this.rerender(responseResultBoHSDT);
-        this.danhSachHoSoKT = responseResultBoHSDT.items.filter(item =>
-          item.tenderDocumentType === 'Các hồ sơ kỹ thuật khác'
+      .subscribe(responseResultChiPhiChung => {
+        this.rerender(responseResultChiPhiChung);
+        this.danhSachChiPhiChung = responseResultChiPhiChung.items.filter(item =>
+          item.tenderDocumentType === 'Bảng tính chi phí chung'
         );
-        this.showTable = (this.danhSachHoSoKT.length > 0) ? true : false;
-        this.sum = this.danhSachHoSoKT.length;
+        this.showTable = (this.danhSachChiPhiChung.length > 0) ? true : false;
+        this.sum = this.danhSachChiPhiChung.length;
         this.dtTrigger.next();
       }, err => {
         this.alertService.error(`Đã có lỗi xảy ra. Xin vui lòng thử lại!`);
       });
   }
 
-  toggleClick() {
-    this.isShowMenu = !this.isShowMenu;
-    $('.toggle-menu-item').toggleClass('resize');
-    $('.line').toggleClass('resize');
-    $('#toggle-menu-item').toggleClass('hidden');
-    $('#toggle-menu-item').toggleClass('resize');
-    $('.iconN1').toggleClass('iconN01');
-    $('.iconN2').toggleClass('iconN02');
-    $('.iconN3').toggleClass('iconN03');
-  }
-
-
   refresh() {
+    this.spinner.show();
     this.hoSoDuThauService
       .danhSachBoHoSoDuThauInstantSearch(this.packageId, this.searchTerm$, this.filterModel, 0, 10)
-      .subscribe(responseResultBoHSDT => {
-        this.danhSachHoSoKT = responseResultBoHSDT.items.filter(item =>
-          item.tenderDocumentType === 'Các hồ sơ kỹ thuật khác'
+      .subscribe(responseResultChiPhiChung => {
+        this.rerender(responseResultChiPhiChung);
+        this.danhSachChiPhiChung = responseResultChiPhiChung.items.filter(item =>
+          item.tenderDocumentType === 'Bảng tính chi phí chung'
         );
-        this.showTable = (this.danhSachHoSoKT.length > 0) ? true : false;
-        this.sum = this.danhSachHoSoKT.length;
-        this.dtTrigger.next();
         this.spinner.hide();
-        this.alertService.success('Dữ liệu đã được cập nhật mới nhất!');
+        this.showTable = (this.danhSachChiPhiChung.length > 0) ? true : false;
+        this.sum = this.danhSachChiPhiChung.length;
+        this.dtTrigger.next();
       }, err => {
-        this.alertService.error(`Đã xảy ra lỗi khi load danh sách bộ Hồ sơ.`);
+        this.alertService.error(`Đã có lỗi xảy ra. Xin vui lòng thử lại!`);
       });
+    this.alertService.success('Dữ liệu đã được cập nhật mới nhất!');
   }
 
   deleteDocument(id) {
@@ -173,7 +161,7 @@ export class HsktInvolvedComponent implements OnInit {
   }
   multiDelete() {
     const that = this;
-    const listId = this.danhSachHoSoKT.filter(x => x.checkboxSelected).map(x => x.id);
+    const listId = this.danhSachChiPhiChung.filter(x => x.checkboxSelected).map(x => x.id);
     if (listId && listId.length === 0) {
       this.alertService.error('Bạn phải chọn ít nhất một tài liệu để xóa!');
     } else {
@@ -197,13 +185,28 @@ export class HsktInvolvedComponent implements OnInit {
       }
     });
   }
-
+  printDocument(id) {
+    console.log(`Chưa có API`);
+  }
   changeStatus(id, status) {
     if (status === 'Draft') {
       this.hoSoDuThauService.updateStatus(id, 'Official').subscribe(res => {
-        this.searchInstant();
-        this.showTable = (this.danhSachHoSoKT.length > 0) ? true : false;
-        this.sum = this.danhSachHoSoKT.length;
+        this.hoSoDuThauService
+          .danhSachBoHoSoDuThauInstantSearch(this.packageId, this.searchTerm$, this.filterModel, 0, 10)
+          .subscribe(responseResultChiPhiChung => {
+            this.danhSachChiPhiChung = responseResultChiPhiChung.items.filter(item =>
+              item.tenderDocumentType === 'Bảng tính chi phí chung'
+            );
+            this.showTable = (this.danhSachChiPhiChung.length > 0) ? true : false;
+            this.sum = this.danhSachChiPhiChung.length;
+            this.refresh();
+            this.dtTrigger.next();
+            this.spinner.hide();
+          }, err => {
+            this.alertService.error(`Đã xảy ra lỗi khi load danh sách bộ Hồ sơ.`);
+          });
+        this.showTable = (this.danhSachChiPhiChung.length > 0) ? true : false;
+        this.sum = this.danhSachChiPhiChung.length;
         this.dtTrigger.next();
         this.spinner.hide();
         this.alertService.success('Dữ liệu đã được cập nhật mới nhất!');
@@ -212,12 +215,24 @@ export class HsktInvolvedComponent implements OnInit {
         this.spinner.hide();
         this.alertService.error('Đã có lỗi. Dữ liệu chưa được cập nhật!');
       });
-    }
-    if (status === 'Official') {
+    } else {
       this.hoSoDuThauService.updateStatus(id, 'Draft').subscribe(res => {
-        this.searchInstant();
-        this.showTable = (this.danhSachHoSoKT.length > 0) ? true : false;
-        this.sum = this.danhSachHoSoKT.length;
+        this.hoSoDuThauService
+          .danhSachBoHoSoDuThauInstantSearch(this.packageId, this.searchTerm$, this.filterModel, 0, 10)
+          .subscribe(responseResultChiPhiChung => {
+            this.danhSachChiPhiChung = responseResultChiPhiChung.items.filter(item =>
+              item.tenderDocumentType === 'Bảng tính chi phí chung'
+            );
+            this.showTable = (this.danhSachChiPhiChung.length > 0) ? true : false;
+            this.sum = this.danhSachChiPhiChung.length;
+            this.refresh();
+            this.dtTrigger.next();
+            this.spinner.hide();
+          }, err => {
+            this.alertService.error(`Đã xảy ra lỗi khi load danh sách bộ Hồ sơ.`);
+          });
+        this.showTable = (this.danhSachChiPhiChung.length > 0) ? true : false;
+        this.sum = this.danhSachChiPhiChung.length;
         this.dtTrigger.next();
         this.spinner.hide();
         this.alertService.success('Dữ liệu đã được cập nhật mới nhất!');
@@ -227,21 +242,5 @@ export class HsktInvolvedComponent implements OnInit {
         this.alertService.error('Đã có lỗi. Dữ liệu chưa được cập nhật!');
       });
     }
-  }
-  searchInstant() {
-    this.hoSoDuThauService
-      .danhSachBoHoSoDuThauInstantSearch(this.packageId, this.searchTerm$, this.filterModel, 0, 10)
-      .subscribe(responseResultBoHSDT => {
-        this.danhSachHoSoKT = responseResultBoHSDT.items.filter(item =>
-          item.tenderDocumentType === 'Các hồ sơ kỹ thuật khác'
-        );
-        this.showTable = (this.danhSachHoSoKT.length > 0) ? true : false;
-        this.sum = this.danhSachHoSoKT.length;
-        this.refresh();
-        this.dtTrigger.next();
-        this.spinner.hide();
-      }, err => {
-        this.alertService.error(`Đã xảy ra lỗi khi load danh sách bộ Hồ sơ.`);
-      });
   }
 }
