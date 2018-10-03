@@ -55,15 +55,12 @@ export class HsdtBuildComponent implements OnInit {
 
     ngOnInit() {
         this.packageId = +PackageDetailComponent.packageId;
-        this.getDanhSachLoaiHoSo();
         this.packageService.isSummaryConditionForm$.subscribe(data => {
             this.isShowMenu = data;
             this.cdr.detectChanges();
-            //this.cdr.detach();
+            // this.cdr.detach();
         });
     }
-
-
 
     getDanhSachLoaiHoSo() {
         this.packageId = +PackageDetailComponent.packageId;
