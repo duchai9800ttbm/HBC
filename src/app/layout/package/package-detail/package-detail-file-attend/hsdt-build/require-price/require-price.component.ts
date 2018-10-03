@@ -21,9 +21,7 @@ import { UploadFileHsdtComponent } from '../upload-file-hsdt/upload-file-hsdt.co
   styleUrls: ['./require-price.component.scss']
 })
 export class RequirePriceComponent implements OnInit {
-  isShowMenu = false;
   dtTrigger: Subject<any> = new Subject();
-  searchTerm;
   dtOptions: any = DATATABLE_CONFIG;
   datePickerConfig = DATETIME_PICKER_CONFIG;
   packageId;
@@ -32,22 +30,10 @@ export class RequirePriceComponent implements OnInit {
   pageSize: number;
   pageIndex: number | string = 0;
   pagedResult: PagedResult<DanhSachBoHsdtItem> = new PagedResult<DanhSachBoHsdtItem>();
-  danhSachBoHoSoDuThau;
   dialog;
-  hideActionSiteReport: boolean;
-  isShowSideMenu = false;
-  notShow = false;
   searchTerm$ = new BehaviorSubject<string>('');
   filterModel = new HsdtFilterModel();
   checkboxSeclectAll: boolean;
-  isShowButtonUp: boolean;
-  isShowButtonDown: boolean;
-  isShowEmpty = false;
-  showPopupAdd = false;
-  showPopupDetail = false;
-  tableEmpty: boolean;
-  sum = 0;
-  showTable = false;
   danhSachLoaiTaiLieu;
   danhSachBGVT;
   constructor(
@@ -85,20 +71,23 @@ export class RequirePriceComponent implements OnInit {
     this.packageId = +PackageDetailComponent.packageId;
     this.hoSoDuThauService.getDanhSachLoaiTaiLieu(this.packageId).subscribe(res => {
       this.danhSachLoaiTaiLieu = res;
+    }, err => {
+      this.alertService.error(`Đã có lỗi xảy ra. Vui lòng thử lại!`);
     });
   }
   getDataTypeBGVT() {
+    this.spinner.show();
     this.hoSoDuThauService
       .danhSachBoHoSoDuThauInstantSearch(this.packageId, this.searchTerm$, this.filterModel, 0, 10)
       .subscribe(responseResultBGVT => {
+        this.spinner.hide();
         this.rerender(responseResultBGVT);
         this.danhSachBGVT = responseResultBGVT.items.filter(item =>
           item.tenderDocumentType === 'Yêu cầu báo giá vật tư, thầu phụ'
         );
-        this.showTable = (this.danhSachBGVT.length > 0) ? true : false;
-        this.sum = this.danhSachBGVT.length;
         this.dtTrigger.next();
       }, err => {
+        this.spinner.hide();
         this.alertService.error(`Đã có lỗi xảy ra. Xin vui lòng thử lại!`);
       });
   }
@@ -106,26 +95,19 @@ export class RequirePriceComponent implements OnInit {
   rerender(pagedResult: any) {
     this.checkboxSeclectAll = false;
     this.pagedResult = pagedResult;
-    this.checkButtonUpDown();
 
   }
   onSelectAll(value: boolean) {
     this.danhSachBGVT.forEach(x => (x.checkboxSelected = value));
   }
 
-
-  checkButtonUpDown() {
-    this.isShowButtonUp = +this.pagedResult.pageCount > (+this.pagedResult.currentPage + 1);
-    this.isShowButtonDown = +this.pagedResult.currentPage > 0;
-    this.isShowEmpty = !(this.pagedResult.total > 0);
-  }
   downloadDocument(id) {
     this.hoSoDuThauService.taiHoSoDuThau(id).subscribe(data => {
     }, err => {
       if (err.json().errorCode) {
         this.alertService.error('File không tồn tại hoặc đã bị xóa!');
       } else {
-        this.alertService.error('Đã có lỗi xãy ra!');
+        this.alertService.error('Đã có lỗi xãy ra. Vui lòng thử lại!');
       }
     });
   }
@@ -139,8 +121,8 @@ export class RequirePriceComponent implements OnInit {
           that.alertService.success('Đã xóa tài liệu!');
           that.refresh();
         }, err => {
-          this.alertService.error(`Đã có lỗi. Tài liệu chưa được xóa!`);
-          this.spinner.hide();
+          that.alertService.error(`Đã có lỗi. Tài liệu chưa được xóa!`);
+          that.spinner.hide();
         });
       }
     );
@@ -153,9 +135,14 @@ export class RequirePriceComponent implements OnInit {
     } else {
       this.confirmationService.confirm('Bạn có chắc chắn muốn xóa những tài liệu này?',
         () => {
+          this.spinner.show();
           this.hoSoDuThauService.xoaNhieuHoSoDuThau(listId).subscribe(res => {
+            that.spinner.hide();
             that.alertService.success('Đã xóa tài liệu!');
             that.refresh();
+          }, err => {
+            that.spinner.hide();
+            that.alertService.error(`Đã có lỗi. Tài liệu chưa được xóa!`);
           });
         });
     }
@@ -165,17 +152,18 @@ export class RequirePriceComponent implements OnInit {
     this.alertService.success(`Dữ liệu đã được cập nhật mới nhất!`);
   }
   filter() {
+    this.spinner.show();
     this.hoSoDuThauService
       .danhSachBoHoSoDuThau(this.packageId, this.searchTerm$.value, this.filterModel, 0, 10)
       .subscribe(responseResultBoHSDT => {
+        this.spinner.hide();
         this.rerender(responseResultBoHSDT);
         this.danhSachBGVT = responseResultBoHSDT.items.filter(item =>
           item.tenderDocumentType === 'Yêu cầu báo giá vật tư, thầu phụ'
         );
-        this.showTable = (this.danhSachBGVT.length > 0) ? true : false;
-        this.sum = this.danhSachBGVT.length;
         this.dtTrigger.next();
       }, err => {
+        this.spinner.hide();
         this.alertService.error(`Đã có lỗi xảy ra. Xin vui lòng thử lại!`);
       });
     this.dtTrigger.next();
@@ -190,10 +178,9 @@ export class RequirePriceComponent implements OnInit {
   }
   changeStatus(id, status) {
     if (status === 'Draft') {
+      this.spinner.show();
       this.hoSoDuThauService.updateStatus(id, 'Official').subscribe(res => {
         this.getDataTypeBGVT();
-        this.showTable = (this.danhSachBGVT.length > 0) ? true : false;
-        this.sum = this.danhSachBGVT.length;
         this.dtTrigger.next();
         this.spinner.hide();
         this.alertService.success('Dữ liệu đã được cập nhật mới nhất!');
@@ -204,10 +191,9 @@ export class RequirePriceComponent implements OnInit {
       });
     }
     if (status === 'Official') {
+      this.spinner.show();
       this.hoSoDuThauService.updateStatus(id, 'Draft').subscribe(res => {
         this.getDataTypeBGVT();
-        this.showTable = (this.danhSachBGVT.length > 0) ? true : false;
-        this.sum = this.danhSachBGVT.length;
         this.dtTrigger.next();
         this.spinner.hide();
         this.alertService.success('Dữ liệu đã được cập nhật mới nhất!');

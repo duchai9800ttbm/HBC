@@ -23,35 +23,19 @@ import { UploadFileHsdtComponent } from '../upload-file-hsdt/upload-file-hsdt.co
   styleUrls: ['./chi-phi-chung.component.scss']
 })
 export class ChiPhiChungComponent implements OnInit {
-  isShowMenu = false;
-  dtOptions: any = DATATABLE_CONFIG2;
   dtTrigger: Subject<any> = new Subject();
-  searchTerm;
   datePickerConfig = DATETIME_PICKER_CONFIG;
   packageId;
   bidOpportunityId: number;
   page: number;
-  checkboxSeclectAll: boolean;
   pageSize: number;
   pageIndex: number | string = 0;
   pagedResult: PagedResult<DanhSachBoHsdtItem> = new PagedResult<DanhSachBoHsdtItem>();
-  danhSachBoHoSoDuThau;
   dialog;
-  hideActionSiteReport: boolean;
-  isShowSideMenu = false;
-  notShow = false;
   searchTerm$ = new BehaviorSubject<string>('');
   filterModel = new HsdtFilterModel();
-  isShowButtonUp: boolean;
-  isShowButtonDown: boolean;
-  isShowEmpty = false;
+  checkboxSeclectAll: boolean;
   danhSachLoaiTaiLieu;
-  showPopupAdd = false;
-  showPopupDetail = false;
-  currentItem = {};
-  tableEmpty: boolean;
-  sum = 0;
-  showTable = false;
   danhSachChiPhiChung;
   constructor(
     private hoSoDuThauService: HoSoDuThauService,
@@ -98,8 +82,6 @@ export class ChiPhiChungComponent implements OnInit {
         this.danhSachChiPhiChung = responseResultChiPhiChung.items.filter(item =>
           item.tenderDocumentType === 'Bảng tính chi phí chung'
         );
-        this.showTable = (this.danhSachChiPhiChung.length > 0) ? true : false;
-        this.sum = this.danhSachChiPhiChung.length;
         this.dtTrigger.next();
       }, err => {
         this.alertService.error(`Đã có lỗi xảy ra. Xin vui lòng thử lại!`);
@@ -108,13 +90,7 @@ export class ChiPhiChungComponent implements OnInit {
   rerender(pagedResult: any) {
     this.checkboxSeclectAll = false;
     this.pagedResult = pagedResult;
-    this.checkButtonUpDown();
 
-  }
-  checkButtonUpDown() {
-    this.isShowButtonUp = +this.pagedResult.pageCount > (+this.pagedResult.currentPage + 1);
-    this.isShowButtonDown = +this.pagedResult.currentPage > 0;
-    this.isShowEmpty = !(this.pagedResult.total > 0);
   }
   filter() {
     this.hoSoDuThauService
@@ -124,8 +100,6 @@ export class ChiPhiChungComponent implements OnInit {
         this.danhSachChiPhiChung = responseResultChiPhiChung.items.filter(item =>
           item.tenderDocumentType === 'Bảng tính chi phí chung'
         );
-        this.showTable = (this.danhSachChiPhiChung.length > 0) ? true : false;
-        this.sum = this.danhSachChiPhiChung.length;
         this.dtTrigger.next();
       }, err => {
         this.alertService.error(`Đã có lỗi xảy ra. Xin vui lòng thử lại!`);
@@ -146,8 +120,6 @@ export class ChiPhiChungComponent implements OnInit {
         this.danhSachChiPhiChung = responseResultChiPhiChung.items.filter(item =>
           item.tenderDocumentType === 'Bảng tính chi phí chung'
         );
-        this.showTable = (this.danhSachChiPhiChung.length > 0) ? true : false;
-        this.sum = this.danhSachChiPhiChung.length;
         this.dtTrigger.next();
       }, err => {
         this.alertService.error(`Đã có lỗi xảy ra. Xin vui lòng thử lại!`);
@@ -164,8 +136,6 @@ export class ChiPhiChungComponent implements OnInit {
           item.tenderDocumentType === 'Bảng tính chi phí chung'
         );
         this.spinner.hide();
-        this.showTable = (this.danhSachChiPhiChung.length > 0) ? true : false;
-        this.sum = this.danhSachChiPhiChung.length;
         this.dtTrigger.next();
       }, err => {
         this.alertService.error(`Đã có lỗi xảy ra. Xin vui lòng thử lại!`);
@@ -186,8 +156,8 @@ export class ChiPhiChungComponent implements OnInit {
           that.alertService.success('Đã xóa tài liệu!');
           that.refresh();
         }, err => {
-          this.alertService.error(`Đã có lỗi. Tài liệu chưa được xóa!`);
-          this.spinner.hide();
+          that.alertService.error(`Đã có lỗi. Tài liệu chưa được xóa!`);
+          that.spinner.hide();
         });
       }
     );
@@ -200,9 +170,14 @@ export class ChiPhiChungComponent implements OnInit {
     } else {
       this.confirmationService.confirm('Bạn có chắc chắn muốn xóa những tài liệu này?',
         () => {
+          this.spinner.show();
           this.hoSoDuThauService.xoaNhieuHoSoDuThau(listId).subscribe(res => {
+            that.spinner.hide();
             that.alertService.success('Đã xóa tài liệu!');
             that.refresh();
+          }, err => {
+            that.spinner.hide();
+            that.alertService.error(`Đã có lỗi. Vui lòng thử lại!`);
           });
         });
     }
@@ -230,16 +205,12 @@ export class ChiPhiChungComponent implements OnInit {
             this.danhSachChiPhiChung = responseResultChiPhiChung.items.filter(item =>
               item.tenderDocumentType === 'Bảng tính chi phí chung'
             );
-            this.showTable = (this.danhSachChiPhiChung.length > 0) ? true : false;
-            this.sum = this.danhSachChiPhiChung.length;
             this.refresh();
             this.dtTrigger.next();
             this.spinner.hide();
           }, err => {
             this.alertService.error(`Đã xảy ra lỗi khi load danh sách bộ Hồ sơ.`);
           });
-        this.showTable = (this.danhSachChiPhiChung.length > 0) ? true : false;
-        this.sum = this.danhSachChiPhiChung.length;
         this.dtTrigger.next();
         this.spinner.hide();
         this.alertService.success('Dữ liệu đã được cập nhật mới nhất!');
@@ -256,16 +227,12 @@ export class ChiPhiChungComponent implements OnInit {
             this.danhSachChiPhiChung = responseResultChiPhiChung.items.filter(item =>
               item.tenderDocumentType === 'Bảng tính chi phí chung'
             );
-            this.showTable = (this.danhSachChiPhiChung.length > 0) ? true : false;
-            this.sum = this.danhSachChiPhiChung.length;
             this.refresh();
             this.dtTrigger.next();
             this.spinner.hide();
           }, err => {
             this.alertService.error(`Đã xảy ra lỗi khi load danh sách bộ Hồ sơ.`);
           });
-        this.showTable = (this.danhSachChiPhiChung.length > 0) ? true : false;
-        this.sum = this.danhSachChiPhiChung.length;
         this.dtTrigger.next();
         this.spinner.hide();
         this.alertService.success('Dữ liệu đã được cập nhật mới nhất!');

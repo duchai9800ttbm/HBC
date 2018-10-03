@@ -30,9 +30,7 @@ import { UploadFileHsdtComponent } from '../upload-file-hsdt/upload-file-hsdt.co
   styleUrls: ['./hskt-involved.component.scss']
 })
 export class HsktInvolvedComponent implements OnInit {
-  isShowMenu = false;
   dtTrigger: Subject<any> = new Subject();
-  searchTerm;
   dtOptions: any = DATATABLE_CONFIG;
   datePickerConfig = DATETIME_PICKER_CONFIG;
   packageId;
@@ -41,30 +39,17 @@ export class HsktInvolvedComponent implements OnInit {
   pageSize: number;
   pageIndex: number | string = 0;
   pagedResult: PagedResult<DanhSachBoHsdtItem> = new PagedResult<DanhSachBoHsdtItem>();
-  danhSachBoHoSoDuThau;
   dialog;
-  hideActionSiteReport: boolean;
-  isShowSideMenu = false;
-  notShow = false;
   searchTerm$ = new BehaviorSubject<string>('');
   filterModel = new HsdtFilterModel();
   checkboxSeclectAll: boolean;
-  isShowButtonUp: boolean;
-  isShowButtonDown: boolean;
-  isShowEmpty = false;
-  showPopupAdd = false;
-  showPopupDetail = false;
-  tableEmpty: boolean;
   sum = 0;
-  showTable = false;
   danhSachLoaiTaiLieu;
   danhSachHoSoKT;
   constructor(
     private hoSoDuThauService: HoSoDuThauService,
     private dialogService: DialogService,
     private alertService: AlertService,
-    private packageService: PackageService,
-    private router: Router,
     private spinner: NgxSpinnerService,
     private confirmationService: ConfirmationService
   ) {
@@ -95,20 +80,24 @@ export class HsktInvolvedComponent implements OnInit {
     this.packageId = +PackageDetailComponent.packageId;
     this.hoSoDuThauService.getDanhSachLoaiTaiLieu(this.packageId).subscribe(res => {
       this.danhSachLoaiTaiLieu = res;
+    }, err => {
+      this.alertService.error(`Đã có lỗi. Vui lòng thử lại!`);
     });
   }
   getDataTypeHSKT() {
+    this.spinner.show();
     this.hoSoDuThauService
       .danhSachBoHoSoDuThauInstantSearch(this.packageId, this.searchTerm$, this.filterModel, 0, 10)
-      .subscribe(responseResultBGVT => {
-        this.rerender(responseResultBGVT);
-        this.danhSachHoSoKT = responseResultBGVT.items.filter(item =>
+      .subscribe(responseHS => {
+        this.spinner.hide();
+        this.rerender(responseHS);
+        this.danhSachHoSoKT = responseHS.items.filter(item =>
           item.tenderDocumentType === 'Các hồ sơ kỹ thuật khác'
         );
-        this.showTable = (this.danhSachHoSoKT.length > 0) ? true : false;
         this.sum = this.danhSachHoSoKT.length;
         this.dtTrigger.next();
       }, err => {
+        this.spinner.hide();
         this.alertService.error(`Đã có lỗi xảy ra. Xin vui lòng thử lại!`);
       });
   }
@@ -116,29 +105,12 @@ export class HsktInvolvedComponent implements OnInit {
   rerender(pagedResult: any) {
     this.checkboxSeclectAll = false;
     this.pagedResult = pagedResult;
-    this.checkButtonUpDown();
 
   }
   onSelectAll(value: boolean) {
     this.danhSachHoSoKT.forEach(x => (x.checkboxSelected = value));
   }
 
-
-  checkButtonUpDown() {
-    this.isShowButtonUp = +this.pagedResult.pageCount > (+this.pagedResult.currentPage + 1);
-    this.isShowButtonDown = +this.pagedResult.currentPage > 0;
-    this.isShowEmpty = !(this.pagedResult.total > 0);
-  }
-  downloadDocument(id) {
-    this.hoSoDuThauService.taiHoSoDuThau(id).subscribe(data => {
-    }, err => {
-      if (err.json().errorCode) {
-        this.alertService.error('File không tồn tại hoặc đã bị xóa!');
-      } else {
-        this.alertService.error('Đã có lỗi xãy ra!');
-      }
-    });
-  }
   deleteDocument(id) {
     const that = this;
     this.confirmationService.confirm(
@@ -146,11 +118,12 @@ export class HsktInvolvedComponent implements OnInit {
       () => {
         this.spinner.show();
         this.hoSoDuThauService.xoaMotHoSoDuThau(id).subscribe(res => {
+          that.spinner.hide();
           that.alertService.success('Đã xóa tài liệu!');
           that.refresh();
         }, err => {
-          this.alertService.error(`Đã có lỗi. Tài liệu chưa được xóa!`);
-          this.spinner.hide();
+          that.spinner.hide();
+          that.alertService.error(`Đã có lỗi. Tài liệu chưa được xóa!`);
         });
       }
     );
@@ -163,8 +136,14 @@ export class HsktInvolvedComponent implements OnInit {
     } else {
       this.confirmationService.confirm('Bạn có chắc chắn muốn xóa những tài liệu này?',
         () => {
+          this.spinner.show();
           this.hoSoDuThauService.xoaNhieuHoSoDuThau(listId).subscribe(res => {
+            that.spinner.hide();
             that.alertService.success('Đã xóa tài liệu!');
+            that.refresh();
+          }, err => {
+            that.spinner.hide();
+            that.alertService.error('Đã có lỗi. Xóa không thành công!');
             that.refresh();
           });
         });
@@ -175,23 +154,26 @@ export class HsktInvolvedComponent implements OnInit {
     this.alertService.success(`Dữ liệu đã được cập nhật mới nhất!`);
   }
   filter() {
+    this.spinner.show();
     this.hoSoDuThauService
       .danhSachBoHoSoDuThau(this.packageId, this.searchTerm$.value, this.filterModel, 0, 10)
       .subscribe(responseResultBoHSDT => {
+        this.spinner.hide();
         this.rerender(responseResultBoHSDT);
         this.danhSachHoSoKT = responseResultBoHSDT.items.filter(item =>
           item.tenderDocumentType === 'Các hồ sơ kỹ thuật khác'
         );
-        this.showTable = (this.danhSachHoSoKT.length > 0) ? true : false;
         this.sum = this.danhSachHoSoKT.length;
         this.dtTrigger.next();
       }, err => {
+        this.spinner.hide();
         this.alertService.error(`Đã có lỗi xảy ra. Xin vui lòng thử lại!`);
       });
     this.dtTrigger.next();
   }
   clearFilter() {
     this.filterModel = new HsdtFilterModel();
+    console.log(this.filterModel);
     this.filterModel.status = '';
     this.filterModel.uploadedEmployeeId = null;
     this.filterModel.createdDate = null;
@@ -200,9 +182,9 @@ export class HsktInvolvedComponent implements OnInit {
   }
   changeStatus(id, status) {
     if (status === 'Draft') {
+      this.spinner.show();
       this.hoSoDuThauService.updateStatus(id, 'Official').subscribe(res => {
         this.getDataTypeHSKT();
-        this.showTable = (this.danhSachHoSoKT.length > 0) ? true : false;
         this.sum = this.danhSachHoSoKT.length;
         this.dtTrigger.next();
         this.spinner.hide();
@@ -214,9 +196,9 @@ export class HsktInvolvedComponent implements OnInit {
       });
     }
     if (status === 'Official') {
+      this.spinner.show();
       this.hoSoDuThauService.updateStatus(id, 'Draft').subscribe(res => {
         this.getDataTypeHSKT();
-        this.showTable = (this.danhSachHoSoKT.length > 0) ? true : false;
         this.sum = this.danhSachHoSoKT.length;
         this.dtTrigger.next();
         this.spinner.hide();

@@ -30,7 +30,7 @@
             </div>
         </div>
     </div>
-    <div *ngIf="sum" class="d-flex flex-row flex-wrap filter-bar custom-filter-bar" style="background-color: #fafbfc!important; padding: 9px 15px;">
+    <div *ngIf="danhSachCHHS?.length" class="d-flex flex-row flex-wrap filter-bar custom-filter-bar" style="background-color: #fafbfc!important; padding: 9px 15px;">
         <div class="d-flex form-inline flex-pad" id="menu-control-table">
             <div class="form-group ml-sm-2">
                 <label for="" class="form-label">Tình trạng</label>
@@ -87,7 +87,7 @@
         </div>
     </div>
 
-    <div *ngIf="sum" class="table-responsive search-table-outter">
+    <div *ngIf="danhSachCHHS?.length" class="table-responsive search-table-outter">
         <table id="table-file-scroll" class="table-selection row-border cell-border">
             <thead>
                 <tr>
@@ -225,13 +225,13 @@
         </table>
     </div>
     <div>
-        <div style="margin-top: 25px" *ngIf="sum">
+        <div style="margin-top: 25px" *ngIf="danhSachCHHS?.length">
             <span>Hiển thị</span>
-            <span class="font-weight-bold">&nbsp;{{sum}}&nbsp;</span>
+            <span class="font-weight-bold">&nbsp;{{danhSachCHHS?.length}}&nbsp;</span>
             <span>kết quả
             </span>
         </div>
-        <div style="margin-top: 15px" class="center-parent" *ngIf="!sum">
+        <div style="margin-top: 15px" class="center-parent" *ngIf="!danhSachCHHS?.length">
             <div>
                 Không có dữ liệu!
             </div>

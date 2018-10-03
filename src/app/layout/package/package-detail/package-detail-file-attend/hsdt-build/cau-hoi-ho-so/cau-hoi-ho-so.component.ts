@@ -21,9 +21,7 @@ import { DATETIME_PICKER_CONFIG } from '../../../../../../shared/configs/datepic
   styleUrls: ['./cau-hoi-ho-so.component.scss']
 })
 export class CauHoiHoSoComponent implements OnInit {
-  isShowMenu = false;
   dtTrigger: Subject<any> = new Subject();
-  searchTerm;
   dtOptions: any = DATATABLE_CONFIG;
   datePickerConfig = DATETIME_PICKER_CONFIG;
   packageId;
@@ -32,22 +30,10 @@ export class CauHoiHoSoComponent implements OnInit {
   pageSize: number;
   pageIndex: number | string = 0;
   pagedResult: PagedResult<DanhSachBoHsdtItem> = new PagedResult<DanhSachBoHsdtItem>();
-  danhSachBoHoSoDuThau;
   dialog;
-  hideActionSiteReport: boolean;
-  isShowSideMenu = false;
-  notShow = false;
   searchTerm$ = new BehaviorSubject<string>('');
   filterModel = new HsdtFilterModel();
   checkboxSeclectAll: boolean;
-  isShowButtonUp: boolean;
-  isShowButtonDown: boolean;
-  isShowEmpty = false;
-  showPopupAdd = false;
-  showPopupDetail = false;
-  tableEmpty: boolean;
-  sum = 0;
-  showTable = false;
   danhSachLoaiTaiLieu;
   danhSachCHHS;
   constructor(
@@ -95,8 +81,6 @@ export class CauHoiHoSoComponent implements OnInit {
         this.danhSachCHHS = responseResultBGVT.items.filter(item =>
           item.tenderDocumentType === 'Bảng câu hỏi làm rõ HSMT'
         );
-        this.showTable = (this.danhSachCHHS.length > 0) ? true : false;
-        this.sum = this.danhSachCHHS.length;
         this.dtTrigger.next();
       }, err => {
         this.alertService.error(`Đã có lỗi xảy ra. Xin vui lòng thử lại!`);
@@ -106,7 +90,6 @@ export class CauHoiHoSoComponent implements OnInit {
   rerender(pagedResult: any) {
     this.checkboxSeclectAll = false;
     this.pagedResult = pagedResult;
-    this.checkButtonUpDown();
 
   }
   onSelectAll(value: boolean) {
@@ -114,11 +97,6 @@ export class CauHoiHoSoComponent implements OnInit {
   }
 
 
-  checkButtonUpDown() {
-    this.isShowButtonUp = +this.pagedResult.pageCount > (+this.pagedResult.currentPage + 1);
-    this.isShowButtonDown = +this.pagedResult.currentPage > 0;
-    this.isShowEmpty = !(this.pagedResult.total > 0);
-  }
   downloadDocument(id) {
     this.hoSoDuThauService.taiHoSoDuThau(id).subscribe(data => {
     }, err => {
@@ -139,8 +117,8 @@ export class CauHoiHoSoComponent implements OnInit {
           that.alertService.success('Đã xóa tài liệu!');
           that.refresh();
         }, err => {
-          this.alertService.error(`Đã có lỗi. Tài liệu chưa được xóa!`);
-          this.spinner.hide();
+          that.alertService.error(`Đã có lỗi. Tài liệu chưa được xóa!`);
+          that.spinner.hide();
         });
       }
     );
@@ -153,9 +131,14 @@ export class CauHoiHoSoComponent implements OnInit {
     } else {
       this.confirmationService.confirm('Bạn có chắc chắn muốn xóa những tài liệu này?',
         () => {
+          this.spinner.show();
           this.hoSoDuThauService.xoaNhieuHoSoDuThau(listId).subscribe(res => {
+            that.spinner.hide();
             that.alertService.success('Đã xóa tài liệu!');
             that.refresh();
+          }, err => {
+            that.spinner.hide();
+            that.alertService.error(`Đã có lỗi. Tài liệu chưa được xóa!`);
           });
         });
     }
@@ -172,8 +155,6 @@ export class CauHoiHoSoComponent implements OnInit {
         this.danhSachCHHS = responseResultBoHSDT.items.filter(item =>
           item.tenderDocumentType === 'Bảng câu hỏi làm rõ HSMT'
         );
-        this.showTable = (this.danhSachCHHS.length > 0) ? true : false;
-        this.sum = this.danhSachCHHS.length;
         this.dtTrigger.next();
       }, err => {
         this.alertService.error(`Đã có lỗi xảy ra. Xin vui lòng thử lại!`);
@@ -192,8 +173,6 @@ export class CauHoiHoSoComponent implements OnInit {
     if (status === 'Draft') {
       this.hoSoDuThauService.updateStatus(id, 'Official').subscribe(res => {
         this.getDataTypeCHHS();
-        this.showTable = (this.danhSachCHHS.length > 0) ? true : false;
-        this.sum = this.danhSachCHHS.length;
         this.dtTrigger.next();
         this.spinner.hide();
         this.alertService.success('Dữ liệu đã được cập nhật mới nhất!');
@@ -206,8 +185,6 @@ export class CauHoiHoSoComponent implements OnInit {
     if (status === 'Official') {
       this.hoSoDuThauService.updateStatus(id, 'Draft').subscribe(res => {
         this.getDataTypeCHHS();
-        this.showTable = (this.danhSachCHHS.length > 0) ? true : false;
-        this.sum = this.danhSachCHHS.length;
         this.dtTrigger.next();
         this.spinner.hide();
         this.alertService.success('Dữ liệu đã được cập nhật mới nhất!');

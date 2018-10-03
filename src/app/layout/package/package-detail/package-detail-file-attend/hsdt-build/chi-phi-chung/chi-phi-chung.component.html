@@ -81,7 +81,7 @@
             </div>
         </div>
     </div>
-    <div *ngIf="sum" class="table-responsive search-table-outter">
+    <div *ngIf="danhSachChiPhiChung?.length" class="table-responsive search-table-outter">
         <table id="table-file-scroll" class="table-selection row-border cell-border">
             <thead>
                 <tr>
@@ -219,13 +219,13 @@
         </table>
     </div>
     <div>
-        <div style="margin-top: 25px" *ngIf="showTable">
+        <div style="margin-top: 25px" *ngIf="danhSachChiPhiChung?.length">
             <span>Hiển thị</span>
-            <span class="font-weight-bold">&nbsp;{{sum}}&nbsp;</span>
+            <span class="font-weight-bold">&nbsp;{{danhSachChiPhiChung?.length}}&nbsp;</span>
             <span>kết quả
             </span>
         </div>
-        <div style="margin-top: 15px" class="center-parent" *ngIf="!showTable">
+        <div style="margin-top: 15px" class="center-parent" *ngIf="!danhSachChiPhiChung?.length">
             <div>
                 Không có dữ liệu!
             </div>
