@@ -14,8 +14,32 @@
 }
 
 .custom-dropdown-liveform::after {
+    font-family: 'FontAwesome';
+    content: "\f04e";
+    right: 3%;
     color: #00a0e3;
 }
+
+span:focus {
+    .custom-dropdown-liveform::after {
+        font-family: 'FontAwesome';
+        content: "\f04e";
+        right: 3%;
+        color: #00a0e3;
+        transform: rotate(90deg);
+        top: 40%;
+    }
+
+    .custom-dropdown-liveform::before {
+        width: 41px;
+        right: 0;
+        top: 0;
+        bottom: 0;
+        border-radius: 0 3px 3px 0;
+        background-color: transparent;
+    }
+}
+
 .tempHiden {
     visibility: hidden;
 }

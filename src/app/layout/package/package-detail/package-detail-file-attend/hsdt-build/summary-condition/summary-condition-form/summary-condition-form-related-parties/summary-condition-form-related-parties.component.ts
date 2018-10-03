@@ -29,6 +29,7 @@ export class SummaryConditionFormRelatedPartiesComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+    this.hoSoDuThauService.fakeData();
     this.loadData();
     this.createForm();
     this.cacBenLienQuanForm.valueChanges.subscribe(data => this.hoSoDuThauService.emitDataStepRelate(data));

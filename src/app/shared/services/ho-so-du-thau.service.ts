@@ -165,6 +165,7 @@ export class HoSoDuThauService {
   watchDataLiveForm(): Observable<DuLieuLiveFormDKDT> {
     return HoSoDuThauService.tempDataLiveFormDKDT;
   }
+  // Các hàm emit data LiveForm tóm tắt đkdt
   emitDataAll(obj: DuLieuLiveFormDKDT) {
     HoSoDuThauService.tempDataLiveFormDKDT.next(obj);
   }
@@ -201,4 +202,241 @@ export class HoSoDuThauService {
   emitDataStepSpecial(obj: TableYeuCauDacBiet) {
     HoSoDuThauService.tempDataLiveFormDKDT.value.yeuCauDacBietKhac = [obj];
   }
+  // fake data coding
+  fakeData() {
+    const obj = new DuLieuLiveFormDKDT();
+    obj.thongTinDuAn = {
+      tenTaiLieu: 'Bảng tóm tắt điều kiện dự thầu - 1',
+      lanPhongVan: 1,
+      hinhAnhPhoiCanh: [],
+      banVeMasterPlan: [],
+      dienGiaiThongTinDuAn: 'Diễn giải thông tin tổng quan dự án'
+    };
+    obj.cacBenLienQuan = {
+      chuDauTu: {
+        donVi: 'Riviera Point Limited Liability Company (Keppel Land)',
+        lienHe: ['Nguyễn B'],
+        ghiChu: 'Ghi chú chủ đầu tư'
+      },
+      quanLyDuAn: {
+        donVi: 'Công ty TNHH ABC',
+        lienHe: ['Nguyễn A'],
+        ghiChu: 'Ghi chú quản lý dự án'
+      },
+      quanLyChiPhi: {
+        donVi: 'Công ty TNHH XYZ',
+        lienHe: ['Nguyễn C'],
+        ghiChu: 'Ghi chú quản lý chi phí'
+      },
+      thietKeKienTruc: {
+        donVi: 'Công ty MTV An Tâm',
+        lienHe: ['Nguyễn A'],
+        ghiChu: 'Ghi chú thiết kế kiến trúc'
+      },
+      thietKeKetCau: {
+        donVi: 'Công ty MTV Yên Tâm',
+        lienHe: ['Nguyễn B'],
+        ghiChu: 'Ghi chú thiết kế kết cấu'
+      },
+      thietKeCoDien: [
+        {
+          donVi: 'Công ty CP Điện Cơ',
+          lienHe: ['Nguyễn C'],
+          ghiChu: 'Ghi chú Cơ Điện'
+        },
+        {
+          donVi: 'Công ty CP Sáng Xanh',
+          lienHe: ['Nguyễn A'],
+          ghiChu: 'Ghi chú 2 Cơ Điện'
+        }
+      ],
+      thongTinKhac: {
+        donVi: 'Công ty CP Kincocha',
+        lienHe: ['Trần B'],
+        ghiChu: 'Ghi chú thông tin khác'
+      }
+    };
+    obj.phamViCongViec = {
+      phamViBaoGom: [
+        {
+          congTac: 'Công tác 1',
+          dienGiaiCongTac: 'Mô tả công tác 1'
+        },
+        {
+          congTac: 'Công tác 1',
+          dienGiaiCongTac: 'Mô tả công tác 1'
+        },
+
+        {
+          congTac: 'Công tác 1',
+          dienGiaiCongTac: 'Mô tả công tác 1'
+        },
+        {
+          congTac: 'Công tác 1',
+          dienGiaiCongTac: 'Mô tả công tác 1'
+        }
+      ],
+      phamViKhongBaoGom: [
+        {
+          congTac: 'Công tác 1',
+          dienGiaiCongTac: 'Mô tả công tác 1'
+        },
+        {
+          congTac: 'Công tác 1',
+          dienGiaiCongTac: 'Mô tả công tác 1'
+        },
+        {
+          congTac: 'Công tác 1',
+          dienGiaiCongTac: 'Mô tả công tác 1'
+        },
+        {
+          congTac: 'Công tác 1',
+          dienGiaiCongTac: 'Mô tả công tác 1'
+        },
+        {
+          congTac: 'Công tác 1',
+          dienGiaiCongTac: 'Mô tả công tác 1'
+        }
+      ]
+    };
+    this.emitDataAll(obj);
+  }
+  // gọi API create or update liveform tóm tắt đkdt
+  // createOrUpdateLiveFormTomTat(obj: DuLieuLiveFormDKDT): Observable<any> {
+  //   const url = `tenderconditionalsummary/createorupdate`;
+  //   const infoReport = {
+
+
+  //     bidOpportunityId: obj.bidOpportunityId,
+  //     createdEmployeeId: obj.createdEmployeeId,
+  //     updatedEmployeeId: obj.updatedEmployeeId,
+  //     isDraftVersion: obj.isDraftVersion,
+  //     documentName: obj.documentName,
+  //     updatedDesc: obj.updatedDesc,
+  //     projectInformation: {
+  //       projectInformation: obj.thongTinDuAn.dienGiaiThongTinDuAn,
+  //       interviewTimes: obj.thongTinDuAn.lanPhongVan
+  //     },
+  //     stakeholder: obj.cacBenLienQuan,
+  //     scopeOfWork: obj.phamViCongViec && {
+  //       includedWorks: obj.phamViCongViec.phamViBaoGom.forEach(x => ({
+  //         name: x.congTac,
+  //         desc: x.dienGiaiCongTac
+  //       })),
+  //       nonIncludedWorks: obj.phamViCongViec.phamViKhongBaoGom.forEach(x => ({
+  //         name: x.congTac,
+  //         desc: x.dienGiaiCongTac
+  //       }))
+  //     },
+  //     nonminatedSubContractor: obj.danhSachNhaThau && {
+  //       workPackages: obj.danhSachNhaThau.forEach(x => ({
+  //         name: x.tenGoiCongViec,
+  //         desc: x.ghiChuThem,
+  //         totalCost: x.thanhTien
+  //       }))
+  //     },
+  //     materialsTobeSuppliedOrAppointedByOwner: obj.danhSachVatTu && {
+  //       materials: obj.danhSachVatTu.forEach(x => ({
+  //         name: x.tenVatTu,
+  //         desc: x.ghiChuThem
+  //       }))
+  //     },
+  //     mainItemOfTenderSubmission: obj.hoSoDangLuuY && {
+  //       attentiveDocuments: [...obj.hoSoDangLuuY.taiLieuLuuY],
+  //       quantity: obj.hoSoDangLuuY.soLuong,
+  //       languages: obj.hoSoDangLuuY.ngonNgu
+  //     },
+  //     requestDocument: obj.dienGiaiYeuCauHoSo && {
+  //       destination: obj.dienGiaiYeuCauHoSo.noiNop,
+  //       receivedPerson: obj.dienGiaiYeuCauHoSo.nguoiNhan,
+  //       closingTime: obj.dienGiaiYeuCauHoSo.hanNop
+  //     },
+  //     requestTenderClarification: obj.dienGiaiYeuCauLamRo && {
+  //       consultant: obj.dienGiaiYeuCauLamRo.nhaTuVan && {
+  //         companyName: obj.dienGiaiYeuCauLamRo.nhaTuVan.tenCongTy,
+  //         companyAddress: obj.dienGiaiYeuCauLamRo.nhaTuVan.diaChiCongTy,
+  //         contactPerson: obj.dienGiaiYeuCauLamRo.nhaTuVan.nguoiLienHe && {
+  //           name: obj.dienGiaiYeuCauLamRo.nhaTuVan.nguoiLienHe.hoVaTen,
+  //           address: obj.dienGiaiYeuCauLamRo.nhaTuVan.nguoiLienHe.diaChi,
+  //           email: obj.dienGiaiYeuCauLamRo.nhaTuVan.nguoiLienHe.email,
+  //           level: obj.dienGiaiYeuCauLamRo.nhaTuVan.nguoiLienHe.viTri
+  //         }
+  //       },
+  //       employer: obj.dienGiaiYeuCauLamRo.nhaSuDung && {
+  //         companyName: obj.dienGiaiYeuCauLamRo.nhaSuDung.tenCongTy,
+  //         companyAddress: obj.dienGiaiYeuCauLamRo.nhaSuDung.diaChiCongTy,
+  //         contactPerson: obj.dienGiaiYeuCauLamRo.nhaSuDung.nguoiLienHe && {
+  //           name: obj.dienGiaiYeuCauLamRo.nhaSuDung.nguoiLienHe.hoVaTen,
+  //           address: obj.dienGiaiYeuCauLamRo.nhaSuDung.nguoiLienHe.diaChi,
+  //           email: obj.dienGiaiYeuCauLamRo.nhaSuDung.nguoiLienHe.email,
+  //           level: obj.dienGiaiYeuCauLamRo.nhaSuDung.nguoiLienHe.viTri
+  //         }
+  //       },
+  //       closingTime: obj.dienGiaiYeuCauLamRo && {
+  //         closingTime: obj.dienGiaiYeuCauLamRo.ngayHetHan,
+  //         desc: obj.dienGiaiYeuCauLamRo.ghiChuThem
+  //       }
+  //     },
+  //     "contractCondition": {
+  //       "contractType": "string",
+  //       "desc": "string",
+  //       "contractCondition": {
+  //         "executiveGuaranteePercent": 0,
+  //         "executiveGuaranteeEfficiency": 0,
+  //         "advanceGuaranteePercent": 0,
+  //         "advanceGuaranteeEfficiency": 0,
+  //         "paymentType": "string",
+  //         "paymentTime": 0,
+  //         "paymentMaterialOnSite": "string",
+  //         "retainedPercent": 0,
+  //         "retainedLimit": 0,
+  //         "retainedPayment": 0,
+  //         "punishhOverduePercent": 0,
+  //         "punishhOverdueLimit": 0,
+  //         "guaranteeDuration": 0,
+  //         "insurranceMachineOfContractor": "string",
+  //         "insurrancePersonOfContractor": "string",
+  //         "insurranceConstructionAnd3rdPart": "string"
+  //       }
+  //     },
+  //     "jsonTenderCondition": {
+  //       "tenderGuaranteeValue": 0,
+  //       "tenderGuaranteeEfficiency": 0,
+  //       "tenderEfficiency": 0,
+  //       "progressStartDate": 0,
+  //       "progressComletionDate": 0,
+  //       "taxTypes": [
+  //         {
+  //           "key": "string",
+  //           "value": "string",
+  //           "displayText": "string"
+  //         }
+  //       ],
+  //       "currency": {
+  //         "key": "string",
+  //         "value": "string",
+  //         "displayText": "string"
+  //       }
+  //     },
+  //     "otherSpecialRequirement": {
+  //       "requirements": [
+  //         {
+  //           "name": "string",
+  //           "desc": "string",
+  //           "link": "string"
+  //         }
+  //       ]
+  //     }
+
+
+
+
+
+
+
+
+
+  //   };
+  //   return this.apiService.post(url, infoReport).map(res => res);
+  // }
 }

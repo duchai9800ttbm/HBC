@@ -16,19 +16,34 @@
     </div>
     <div class="row mt-3">
         <div class="col-md-2">1. Hình phối cảnh</div>
-        <div class="col-md-6 grid-square-4">
-            <div appSquareBox class="rounded d-flex justify-content-center align-items-center flex-column border-dashed"><i
-                    class="fa fa-plus" aria-hidden="true"></i>
-                <div>Image</div>
+        <div class="image-demo-img">
+            <input type="file" accept="image/*" multiple #uploadPerspective (change)="uploadPerspectiveImage($event)">
+            <div class="display-img" *ngFor="let url of hinhAnhPhoiCanhUrls" (click)="viewFullScreenImage(perspectiveImageUrls)">
+                <img [src]="url.largeSizeUrl">
+                <div class="toppp" [ngClass]="{'d-none': viewMode}" (click)="deletePerspectiveImage(url)">
+                    <i class="fa fa-times delete-icon" aria-hidden="true"></i>
+                </div>
+            </div>
+            <div class="perspective-image" [ngClass]="{'d-none': viewMode}" (click)="uploadPerspective.click()"
+                tabindex="15">
+                <i class="fa fa-plus" aria-hidden="true"></i>
+                <p>Image</p>
             </div>
         </div>
     </div>
     <div class="row mt-3">
         <div class="col-md-2">2. Bản vẽ master plan</div>
-        <div class="col-md-6 grid-square-4">
-            <div appSquareBox class="rounded d-flex justify-content-center align-items-center flex-column border-dashed"><i
-                    class="fa fa-plus" aria-hidden="true"></i>
-                <div>Image</div>
+        <div class="image-demo-img">
+            <input type="file" accept="image/*" multiple #uploadMasterplan (change)="uploadMasterplanImage($event)">
+            <div class="display-img" *ngFor="let url of banVeMasterPlanUrl" (click)="viewFullScreenImage(MasterplanImageUrls)">
+                <img [src]="url.largeSizeUrl">
+                <div class="toppp" [ngClass]="{'d-none': viewMode}" (click)="deleteMasterplanImage(url)">
+                    <i class="fa fa-times delete-icon" aria-hidden="true"></i>
+                </div>
+            </div>
+            <div class="perspective-image" [ngClass]="{'d-none': viewMode}" (click)="uploadMasterplan.click()" tabindex="15">
+                <i class="fa fa-plus" aria-hidden="true"></i>
+                <p>Image</p>
             </div>
         </div>
     </div>
@@ -39,13 +54,16 @@
         </div>
     </div>
     <div class="text-center mt-4">
-            <button class="btn border">
-                <i class="fa font-size-3 mr-3 fa-angle-left" aria-hidden="true"></i>
-                Trở về
-            </button>
-            <button class="btn btn-primary ml-2" routerLink="../stackholder">
-                Tiếp
-                <i class="fa font-size-3 ml-3 fa-angle-right" aria-hidden="true"></i>
-            </button>
-        </div>
+        <button class="btn border">
+            <i class="fa font-size-3 mr-3 fa-angle-left" aria-hidden="true"></i>
+            Trở về
+        </button>
+        <button class="btn btn-primary ml-2" routerLink="../stackholder">
+            Tiếp
+            <i class="fa font-size-3 ml-3 fa-angle-right" aria-hidden="true"></i>
+        </button>
+    </div>
 </form>
+
+<app-image-carousel class="d-flex justify-content-center align-items-center" *ngIf="showPopupViewImage"
+    [(imageUrlArray)]="imageUrlArray" (closed)="closeView()"></app-image-carousel>
