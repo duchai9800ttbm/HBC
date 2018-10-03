@@ -30,7 +30,7 @@
             </div>
         </div>
     </div>
-    <div *ngIf="sum" class="d-flex flex-row flex-wrap filter-bar custom-filter-bar" style="background-color: #fafbfc!important; padding: 9px 15px;">
+    <div *ngIf="danhSachCHHS?.length" class="d-flex flex-row flex-wrap filter-bar custom-filter-bar" style="background-color: #fafbfc!important; padding: 9px 15px;">
         <div class="d-flex form-inline flex-pad" id="menu-control-table">
             <div class="form-group ml-sm-2">
                 <label for="" class="form-label">Tình trạng</label>
@@ -47,7 +47,7 @@
                 <span class="custom-dropdown mx-sm-2">
                     <select class="form-control" [(ngModel)]="filterModel.uploadedBy">
                         <option>--Lựa chọn--</option>
-                        <option *ngFor="let uploader of danhSachHoSoKT" [value]="uploader?.uploadedBy">
+                        <option *ngFor="let uploader of danhSachCHHS" [value]="uploader?.uploadedBy">
                             {{ uploader?.uploadedBy }}
                         </option>
                     </select>
@@ -69,7 +69,7 @@
                 <span class="custom-dropdown mx-sm-2">
                     <select class="form-control" [(ngModel)]="filterModel.interViewTimes">
                         <option>--Lựa chọn--</option>
-                        <option *ngFor="let value of danhSachHoSoKT" [value]="value?.interViewTimes">
+                        <option *ngFor="let value of danhSachCHHS" [value]="value?.interViewTimes">
                             {{ value?.interViewTimes }}
                         </option>
                     </select>
@@ -87,7 +87,7 @@
         </div>
     </div>
 
-    <div *ngIf="sum" class="table-responsive search-table-outter">
+    <div *ngIf="danhSachCHHS?.length" class="table-responsive search-table-outter">
         <table id="table-file-scroll" class="table-selection row-border cell-border">
             <thead>
                 <tr>
@@ -170,7 +170,7 @@
             </thead>
 
             <tbody>
-                <tr *ngFor="let hoso of danhSachHoSoKT; index as i">
+                <tr *ngFor="let hoso of danhSachCHHS; index as i">
                     <td class="boder-table">
                         <div class="d-flex justify-content-around">
                             <div style="width: 40%;">
@@ -184,9 +184,9 @@
                             </div>
                         </div>
                     </td>
-                    <td class="boder-table text-center text-truncate-custom">{{ hoso?.documentName }}</td>
-                    <td class="boder-table text-center text-truncate">{{ hoso?.version }}</td>
-                    <td class="boder-table text-center text-truncate-custom">{{ hoso?.description }}</td>
+                    <td class="boder-table text-center text-truncate text-truncate-custom">{{ hoso?.documentName }}</td>
+                    <td class="boder-table text-center text-truncate text-truncate-custom">{{ hoso?.version }}</td>
+                    <td class="boder-table">{{ hoso?.description }}</td>
 
                     <td class="td-mark-status boder-table text-center text-truncate">
                         <div class="d-flex justify-content-between pl-2 pr-2">
@@ -225,13 +225,13 @@
         </table>
     </div>
     <div>
-        <div style="margin-top: 25px" *ngIf="sum">
+        <div style="margin-top: 25px" *ngIf="danhSachCHHS?.length">
             <span>Hiển thị</span>
-            <span class="font-weight-bold">&nbsp;{{sum}}&nbsp;</span>
+            <span class="font-weight-bold">&nbsp;{{danhSachCHHS?.length}}&nbsp;</span>
             <span>kết quả
             </span>
         </div>
-        <div style="margin-top: 15px" class="center-parent" *ngIf="!sum">
+        <div style="margin-top: 15px" class="center-parent" *ngIf="!danhSachCHHS?.length">
             <div>
                 Không có dữ liệu!
             </div>

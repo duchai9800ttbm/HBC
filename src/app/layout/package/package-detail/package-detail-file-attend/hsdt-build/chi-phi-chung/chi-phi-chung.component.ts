@@ -14,6 +14,8 @@ import { NgxSpinnerService } from 'ngx-spinner';
 import { DocumentService } from '../../../../../../shared/services/document.service';
 import { OpportunityHsmtService } from '../../../../../../shared/services/opportunity-hsmt.service';
 import { PackageService } from '../../../../../../shared/services/package.service';
+import { DialogService } from '@progress/kendo-angular-dialog';
+import { UploadFileHsdtComponent } from '../upload-file-hsdt/upload-file-hsdt.component';
 
 @Component({
   selector: 'app-chi-phi-chung',
@@ -21,10 +23,7 @@ import { PackageService } from '../../../../../../shared/services/package.servic
   styleUrls: ['./chi-phi-chung.component.scss']
 })
 export class ChiPhiChungComponent implements OnInit {
-  isShowMenu = false;
-  dtOptions: any = DATATABLE_CONFIG2;
   dtTrigger: Subject<any> = new Subject();
-  searchTerm;
   datePickerConfig = DATETIME_PICKER_CONFIG;
   packageId;
   bidOpportunityId: number;
@@ -32,35 +31,50 @@ export class ChiPhiChungComponent implements OnInit {
   pageSize: number;
   pageIndex: number | string = 0;
   pagedResult: PagedResult<DanhSachBoHsdtItem> = new PagedResult<DanhSachBoHsdtItem>();
-  danhSachBoHoSoDuThau;
   dialog;
-  hideActionSiteReport: boolean;
-  isShowSideMenu = false;
-  notShow = false;
   searchTerm$ = new BehaviorSubject<string>('');
   filterModel = new HsdtFilterModel();
   checkboxSeclectAll: boolean;
-  isShowButtonUp: boolean;
-  isShowButtonDown: boolean;
-  isShowEmpty = false;
   danhSachLoaiTaiLieu;
-  showPopupAdd = false;
-  showPopupDetail = false;
-  currentItem = {};
-  tableEmpty: boolean;
-  sum = 0;
-  showTable = false;
   danhSachChiPhiChung;
   constructor(
     private hoSoDuThauService: HoSoDuThauService,
     private alertService: AlertService,
     private confirmationService: ConfirmationService,
-    private spinner: NgxSpinnerService
+    private spinner: NgxSpinnerService,
+    private dialogService: DialogService,
+    private packageService: PackageService,
+    private router: Router,
   ) { }
 
   ngOnInit() {
-    this.filterModel.status = '';
+    this.getDanhSachLoaiHoSo();
+    this.getDataTypeCPC();
+  }
+  showDialogUploadFile() {
+    this.dialog = this.dialogService.open({
+      content: UploadFileHsdtComponent,
+      width: 750,
+      minWidth: 500
+    });
+    const instance = this.dialog.content.instance;
+    instance.bidOpportunityId = this.packageId;
+    instance.nameFile = 'Bảng tính chi phí chung';
+    instance.idFile = 5;
+    instance.callBack = this.closePopuup.bind(this);
+  }
+  closePopuup() {
+    this.dialog.close();
+    this.getDataTypeCPC();
+    // this.getDanhSachBoHoSo();
+  }
+  getDanhSachLoaiHoSo() {
     this.packageId = +PackageDetailComponent.packageId;
+    this.hoSoDuThauService.getDanhSachLoaiTaiLieu(this.packageId).subscribe(res => {
+      this.danhSachLoaiTaiLieu = res;
+    });
+  }
+  getDataTypeCPC() {
     this.hoSoDuThauService
       .danhSachBoHoSoDuThauInstantSearch(this.packageId, this.searchTerm$, this.filterModel, 0, 10)
       .subscribe(responseResultChiPhiChung => {
@@ -68,8 +82,6 @@ export class ChiPhiChungComponent implements OnInit {
         this.danhSachChiPhiChung = responseResultChiPhiChung.items.filter(item =>
           item.tenderDocumentType === 'Bảng tính chi phí chung'
         );
-        this.showTable = (this.danhSachChiPhiChung.length > 0) ? true : false;
-        this.sum = this.danhSachChiPhiChung.length;
         this.dtTrigger.next();
       }, err => {
         this.alertService.error(`Đã có lỗi xảy ra. Xin vui lòng thử lại!`);
@@ -78,13 +90,7 @@ export class ChiPhiChungComponent implements OnInit {
   rerender(pagedResult: any) {
     this.checkboxSeclectAll = false;
     this.pagedResult = pagedResult;
-    this.checkButtonUpDown();
 
-  }
-  checkButtonUpDown() {
-    this.isShowButtonUp = +this.pagedResult.pageCount > (+this.pagedResult.currentPage + 1);
-    this.isShowButtonDown = +this.pagedResult.currentPage > 0;
-    this.isShowEmpty = !(this.pagedResult.total > 0);
   }
   filter() {
     this.hoSoDuThauService
@@ -94,8 +100,6 @@ export class ChiPhiChungComponent implements OnInit {
         this.danhSachChiPhiChung = responseResultChiPhiChung.items.filter(item =>
           item.tenderDocumentType === 'Bảng tính chi phí chung'
         );
-        this.showTable = (this.danhSachChiPhiChung.length > 0) ? true : false;
-        this.sum = this.danhSachChiPhiChung.length;
         this.dtTrigger.next();
       }, err => {
         this.alertService.error(`Đã có lỗi xảy ra. Xin vui lòng thử lại!`);
@@ -116,8 +120,6 @@ export class ChiPhiChungComponent implements OnInit {
         this.danhSachChiPhiChung = responseResultChiPhiChung.items.filter(item =>
           item.tenderDocumentType === 'Bảng tính chi phí chung'
         );
-        this.showTable = (this.danhSachChiPhiChung.length > 0) ? true : false;
-        this.sum = this.danhSachChiPhiChung.length;
         this.dtTrigger.next();
       }, err => {
         this.alertService.error(`Đã có lỗi xảy ra. Xin vui lòng thử lại!`);
@@ -134,13 +136,14 @@ export class ChiPhiChungComponent implements OnInit {
           item.tenderDocumentType === 'Bảng tính chi phí chung'
         );
         this.spinner.hide();
-        this.showTable = (this.danhSachChiPhiChung.length > 0) ? true : false;
-        this.sum = this.danhSachChiPhiChung.length;
         this.dtTrigger.next();
       }, err => {
         this.alertService.error(`Đã có lỗi xảy ra. Xin vui lòng thử lại!`);
       });
     this.alertService.success('Dữ liệu đã được cập nhật mới nhất!');
+  }
+  onSelectAll(value: boolean) {
+    this.danhSachChiPhiChung.forEach(x => (x.checkboxSelected = value));
   }
 
   deleteDocument(id) {
@@ -153,8 +156,8 @@ export class ChiPhiChungComponent implements OnInit {
           that.alertService.success('Đã xóa tài liệu!');
           that.refresh();
         }, err => {
-          this.alertService.error(`Đã có lỗi. Tài liệu chưa được xóa!`);
-          this.spinner.hide();
+          that.alertService.error(`Đã có lỗi. Tài liệu chưa được xóa!`);
+          that.spinner.hide();
         });
       }
     );
@@ -167,9 +170,14 @@ export class ChiPhiChungComponent implements OnInit {
     } else {
       this.confirmationService.confirm('Bạn có chắc chắn muốn xóa những tài liệu này?',
         () => {
+          this.spinner.show();
           this.hoSoDuThauService.xoaNhieuHoSoDuThau(listId).subscribe(res => {
+            that.spinner.hide();
             that.alertService.success('Đã xóa tài liệu!');
             that.refresh();
+          }, err => {
+            that.spinner.hide();
+            that.alertService.error(`Đã có lỗi. Vui lòng thử lại!`);
           });
         });
     }
@@ -197,16 +205,12 @@ export class ChiPhiChungComponent implements OnInit {
             this.danhSachChiPhiChung = responseResultChiPhiChung.items.filter(item =>
               item.tenderDocumentType === 'Bảng tính chi phí chung'
             );
-            this.showTable = (this.danhSachChiPhiChung.length > 0) ? true : false;
-            this.sum = this.danhSachChiPhiChung.length;
             this.refresh();
             this.dtTrigger.next();
             this.spinner.hide();
           }, err => {
             this.alertService.error(`Đã xảy ra lỗi khi load danh sách bộ Hồ sơ.`);
           });
-        this.showTable = (this.danhSachChiPhiChung.length > 0) ? true : false;
-        this.sum = this.danhSachChiPhiChung.length;
         this.dtTrigger.next();
         this.spinner.hide();
         this.alertService.success('Dữ liệu đã được cập nhật mới nhất!');
@@ -223,16 +227,12 @@ export class ChiPhiChungComponent implements OnInit {
             this.danhSachChiPhiChung = responseResultChiPhiChung.items.filter(item =>
               item.tenderDocumentType === 'Bảng tính chi phí chung'
             );
-            this.showTable = (this.danhSachChiPhiChung.length > 0) ? true : false;
-            this.sum = this.danhSachChiPhiChung.length;
             this.refresh();
             this.dtTrigger.next();
             this.spinner.hide();
           }, err => {
             this.alertService.error(`Đã xảy ra lỗi khi load danh sách bộ Hồ sơ.`);
           });
-        this.showTable = (this.danhSachChiPhiChung.length > 0) ? true : false;
-        this.sum = this.danhSachChiPhiChung.length;
         this.dtTrigger.next();
         this.spinner.hide();
         this.alertService.success('Dữ liệu đã được cập nhật mới nhất!');
