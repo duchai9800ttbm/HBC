@@ -1,0 +1,91 @@
+.rule {
+    border-right: 5px solid #00a0e3;
+    content: "";
+    margin: 2px 0;
+}
+.cus-menu {
+    padding-left: 15px;
+    font-size: 10px;
+    width: 100%;
+    .cus-menu-children {
+        width: 100%;
+        // padding-left: 5px;
+        cursor: pointer;
+    }
+}
+.active {
+    .number {
+        width: 10%;
+        font-size: 14px;
+    }
+    .word {
+        width: 90%;
+        display: flex;
+        align-items: center;
+    }
+}
+
+.no-active {
+    background-color: #edeff0 !important;
+    .number {
+        width: 10%;
+        font-size: 14px;
+    }
+    .word {
+        width: 90%;
+        display: flex;
+        align-items: center;
+        color: #8d8d8d;
+    }
+}
+
+.back{
+    background-color: #cceffc !important;
+    cursor: pointer;
+    .number {
+        width: 10%;
+        font-size: 14px;
+        color: #0197d6;
+    }
+    .word {
+        width: 90%;
+        display: flex;
+        align-items: center;
+        color: #0096d5;
+    }
+}
+
+.div-menu {
+    width: 15%;
+    border-right: 3px solid #edeff0;
+}
+
+.div-menu-active{
+    width: 15%;
+    border-right: 3px solid #00a0e3;
+}
+
+.border-top {
+    border-top: 8px solid #00a0e3;
+    opacity: inherit;
+}
+
+.menu--width{
+    width: 18%;
+}
+.content--width{
+    width: 82%;
+}
+.input-group>.input-group-prepend>.input-group-text {
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+}
+input.icon {
+    font-family: FontAwesome, "Open Sans", Verdana, sans-serif;
+    font-style: normal;
+    font-weight: normal;
+    text-decoration: inherit;
+}
+.title-status--size{
+    font-size: 150%;
+}

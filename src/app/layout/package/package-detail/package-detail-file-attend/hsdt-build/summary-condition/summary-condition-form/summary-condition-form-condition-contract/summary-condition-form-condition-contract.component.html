@@ -2,7 +2,9 @@
     <div class="p-3">
         <h5 class="text-uppercase">IX. điều kiện hợp đồng (conditions of contract)</h5>
         <div class="row mt-3">
-            <div class="col-md-3"><strong>1. Loại hợp đồng</strong></div>
+            <div class="col-md-3">
+                <strong>1. Loại hợp đồng</strong>
+            </div>
             <div class="col-md-8">
                 <span class="custom-dropdown w-100">
                     <select class="form-control">
@@ -19,10 +21,16 @@
         </div>
         <div formGroupName="contractCondition">
             <div class="row mt-3">
-                <div class="col-md-3"><strong>2. Điều kiện hợp đồng</strong></div>
+                <div class="col-md-3">
+                    <strong>2. Điều kiện hợp đồng</strong>
+                </div>
             </div>
             <div class="row mt-3">
-                <div class="col-md-3 pl-2r"><strong><u>2.1 Bảo lãnh thực hiện HĐ</u></strong></div>
+                <div class="col-md-3 pl-2r">
+                    <strong>
+                        <u>2.1 Bảo lãnh thực hiện HĐ</u>
+                    </strong>
+                </div>
             </div>
             <div class="row mt-3">
                 <div class="col-md-3 pl-2r">Phần trăm %</div>
@@ -37,7 +45,11 @@
                 </div>
             </div>
             <div class="row mt-3">
-                <div class="col-md-3 pl-2r"><strong><u>2.2 Bảo lãnh tạm ứng</u></strong></div>
+                <div class="col-md-3 pl-2r">
+                    <strong>
+                        <u>2.2 Bảo lãnh tạm ứng</u>
+                    </strong>
+                </div>
             </div>
             <div class="row mt-3">
                 <div class="col-md-3 pl-2r">Phần trăm %</div>
@@ -52,7 +64,11 @@
                 </div>
             </div>
             <div class="row mt-3">
-                <div class="col-md-3 pl-2r"><strong><u>2.3 Thanh toán</u></strong></div>
+                <div class="col-md-3 pl-2r">
+                    <strong>
+                        <u>2.3 Thanh toán</u>
+                    </strong>
+                </div>
             </div>
             <div class="row mt-3">
                 <div class="col-md-3 pl-2r">Loại thanh toán</div>
@@ -77,7 +93,11 @@
                 </div>
             </div>
             <div class="row mt-3">
-                <div class="col-md-3 pl-2r"><strong><u>2.4 Tiền giữ lại</u></strong></div>
+                <div class="col-md-3 pl-2r">
+                    <strong>
+                        <u>2.4 Tiền giữ lại</u>
+                    </strong>
+                </div>
             </div>
             <div class="row mt-3">
                 <div class="col-md-3 pl-2r">Phần trăm %</div>
@@ -98,7 +118,11 @@
                 </div>
             </div>
             <div class="row mt-3">
-                <div class="col-md-3 pl-2r"><strong><u>2.5 Phạt trễ tiến độ</u></strong></div>
+                <div class="col-md-3 pl-2r">
+                    <strong>
+                        <u>2.5 Phạt trễ tiến độ</u>
+                    </strong>
+                </div>
             </div>
             <div class="row mt-3">
                 <div class="col-md-3 pl-2r">Phần trăm %</div>
@@ -113,7 +137,11 @@
                 </div>
             </div>
             <div class="row mt-3">
-                <div class="col-md-3 pl-2r"><strong><u>2.6 Thời hạn bảo hành (Defect Notification Period)</u></strong></div>
+                <div class="col-md-3 pl-2r">
+                    <strong>
+                        <u>2.6 Thời hạn bảo hành (Defect Notification Period)</u>
+                    </strong>
+                </div>
             </div>
             <div class="row mt-3">
                 <div class="col-md-3 pl-2r">Thời gian</div>
@@ -128,7 +156,11 @@
                 </div>
             </div>
             <div class="row mt-3">
-                <div class="col-md-3 pl-2r"><strong><u>2.7 Bảo hiểm</u></strong></div>
+                <div class="col-md-3 pl-2r">
+                    <strong>
+                        <u>2.7 Bảo hiểm</u>
+                    </strong>
+                </div>
             </div>
             <div formArrayName="insurances">
                 <div class="row mt-3">
@@ -143,8 +175,9 @@
                             </select>
                         </span>
                     </div>
-                    <div class="col-md-1 pl-0" (click)="removeFormArrayControl('insurances', i)" class="fa fa-times-circle pointer"
-                        style="color: #c0c0c0; font-size: 1.2rem" aria-hidden="true"></i></div>
+                    <div class="col-md-1 pl-0" (click)="removeFormArrayControl('insurances', i)">
+                        <i class="fa fa-times-circle pointer" style="color: #c0c0c0; font-size: 1.2rem" aria-hidden="true"></i>
+                    </div>
                 </div>
             </div>
             <div class="row mt-3">

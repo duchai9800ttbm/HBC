@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Observable } from '../../../../node_modules/rxjs';
+import { Observable, Subject, BehaviorSubject } from '../../../../node_modules/rxjs';
 import { PagedResult } from '../models';
 import { InterviewInvitationList } from '../models/interview-invitation/interview-invitation-list.model';
 import { InstantSearchService } from './instant-search.service';
@@ -11,6 +11,10 @@ import { InterviewInvitationFilterReport } from '../models/interview-invitation/
 import { InterviewInvitationReportList } from '../models/interview-invitation/interview-invitation-report-list.model';
 @Injectable()
 export class InterviewInvitationService {
+  interviewInvitationList = new Subject<any>();
+  keySearchInterviewInvitation = new BehaviorSubject<string>('');
+  private keySearchNew = new Subject<string>();
+  refeshCreateInterviewInvitation = new BehaviorSubject<boolean>(false);
   // map theo model danh sách biên bản phỏng vấn
   private static toInterviewInvitationReportList(result: any): InterviewInvitationReportList {
     return {
@@ -39,10 +43,6 @@ export class InterviewInvitationService {
       // description: result.description,
     };
   }
-  constructor(
-    private instantSearchService: InstantSearchService,
-    private apiService: ApiService
-  ) { }
   // Tạo mới filter params
   private static createFilterParams(filter: InterviewInvitationFilter): URLSearchParams {
     const urlFilterParams = new URLSearchParams();
@@ -83,21 +83,60 @@ export class InterviewInvitationService {
     );
     return urlFilterParams;
   }
+  constructor(
+    private instantSearchService: InstantSearchService,
+    private apiService: ApiService
+  ) { }
+  // =============================
+  // Create Interview Invitation
+  // change key search interview invitation
+  changeKeySearchInterviewInvitation(keyup) {
+    this.keySearchInterviewInvitation.next(keyup);
+  }
+  // Observable key search interview invitation
+  watchKeySearchInterviewInvitation() {
+    return this.keySearchInterviewInvitation;
+  }
+
+  changeKeySearchNew(keyup: string) {
+    this.keySearchNew.next(keyup);
+  }
+
+  watchKeySearchNew() {
+    return this.keySearchNew.asObservable();
+  }
+
+  // change interview invitation list
+  changeInterviewInvitationList() {
+    this.interviewInvitationList.next();
+  }
+  // Observable interview invitation list
+  watchInterviewInvitationList(): Observable<boolean> {
+    return this.interviewInvitationList;
+  }
+  // refesh interview invitation list
+  chagneRefeshInterviewInvitationList(displayAlert) {
+    this.refeshCreateInterviewInvitation.next(displayAlert);
+  }
+  // Observable refesh interview invitation list
+  watchRefeshInterviewInvitationList(): Observable<boolean> {
+    return this.refeshCreateInterviewInvitation;
+  }
   // map theo model danh sách lời lời phỏng vấn
   toInterviewInvitationList(result: any): InterviewInvitationList {
     return {
       id: result.id,
-      customer: {
-        id: result.id,
-        customerId: result.customerId,
-        customerName: result.customerName,
-        customerNo: result.customerNo,
-        customerDesc: result.customerDesc,
-        customerClassify: result.customerClassify,
-        customerNewOldType: result.customerNewOldType,
-        customerPhone: result.customerPhone,
-        customerAddress: result.customerAddress,
-      },
+      customer: result.customer ? {
+        id: result.customer.id,
+        customerId: result.customer.customerId,
+        customerName: result.customer.customerName,
+        customerNo: result.customer.customerNo,
+        customerDesc: result.customer.customerDesc,
+        customerClassify: result.customer.customerClassify,
+        customerNewOldType: result.customer.customerNewOldType,
+        customerPhone: result.customer.customerPhone,
+        customerAddress: result.customer.customerAddress,
+      } : null,
       approvedDate: result.approvedDate,
       interviewDate: result.interviewDate,
       place: result.place,
@@ -145,9 +184,10 @@ export class InterviewInvitationService {
     page: number | string,
     pageSize: number | string
   ): Observable<PagedResult<InterviewInvitationList>> {
-    const filterUrl = `/bidopportunity/${bidOpportunityId}/bidinterviewinvitations/filter/${page}/${pageSize}`;
+    console.log('searchTerm-searchTerm', searchTerm);
+    const filterUrl = `bidopportunity/${bidOpportunityId}/bidinterviewinvitations/filter/${page}/${pageSize}`;
     const urlParams = InterviewInvitationService.createFilterParams(filter);
-    urlParams.append('search', searchTerm);
+    urlParams.append('searchTerm', searchTerm);
     return this.apiService.get(filterUrl, urlParams).map(response => {
       const result = response.result;
       return {
@@ -161,6 +201,20 @@ export class InterviewInvitationService {
       };
     });
   }
+  // Lấy danh sách lời mời phỏng vấn
+  getListInterview(
+    bidOpportunityId: number,
+    page: number | string,
+    pageSize: number | string
+  ) {
+    const url = `/bidopportunity/${bidOpportunityId}/bidinterviewinvitations/filter/${page}/${pageSize}`;
+    return this.apiService.get(url).map(response => {
+      const result = response.result.items;
+      return (result || []).map(
+        this.toInterviewInvitationList
+      );
+    });
+  }
   // Tạo mới lời mới phỏng vấn
   createInterviewInvitation(
     customerID: number,
@@ -168,18 +222,21 @@ export class InterviewInvitationService {
     createFormNewInvitationValue: any,
     file: File,
   ) {
+    console.log('createFormNewInvitationValue', createFormNewInvitationValue);
     const url = `bidinterviewinvitation/create`;
     const formData = new FormData();
-    console.log('customerID', customerID);
     if (customerID) {
       formData.append('CustomerId', `${customerID}`);
     }
+    // formData.append('CustomerId', createFormNewInvitationValue.customerName);
     formData.append('BidOpportunityId', `${BidOpportunityId}`);
     formData.append('ReceivedDate', `${moment(createFormNewInvitationValue.approvedDate).unix()}`);
     formData.append('InterViewDate', `${moment(createFormNewInvitationValue.interviewDate).unix()}`);
     formData.append('Place', createFormNewInvitationValue.place);
     formData.append('InterviewTimes', createFormNewInvitationValue.interviewTimes);
-    formData.append('Content', createFormNewInvitationValue.content);
+    if (createFormNewInvitationValue.content) {
+      formData.append('Content', createFormNewInvitationValue.content);
+    }
     formData.append('DocumentFile', file);
     return this.apiService.postFile(url, formData)
       .map(response => response)

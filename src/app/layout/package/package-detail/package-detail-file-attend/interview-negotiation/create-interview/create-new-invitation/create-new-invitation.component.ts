@@ -30,6 +30,7 @@ export class CreateNewInvitationComponent implements OnInit {
   };
   isSubmitted: boolean;
   invalidMessages: string[];
+  interviewTimes: number;
   constructor(
     private fb: FormBuilder,
     private packageService: PackageService,
@@ -39,13 +40,20 @@ export class CreateNewInvitationComponent implements OnInit {
   }
 
   ngOnInit() {
-    console.log('interviewInvitation', this.interviewInvitation);
     this.currentPackageId = +PackageDetailComponent.packageId;
     this.packageService.getInforPackageID(this.currentPackageId).subscribe(result => {
       if (result.customer) {
         this.interviewInvitation.customer.customerId = result.customer.id;
         this.interviewInvitation.customer.customerName = result.customer.text;
       }
+      // this.interviewInvitationService.getListInterview(
+      //   this.currentPackageId,
+      //   0,
+      //   1000
+      // ).subscribe( response => {
+      //   this.interviewTimes = response.length + 1;
+      //   this.createForm();
+      // });
       this.createForm();
     });
   }
@@ -60,7 +68,7 @@ export class CreateNewInvitationComponent implements OnInit {
         DateTimeConvertHelper.fromTimestampToDtObject(this.interviewInvitation.interviewDate) : null
         , [Validators.required]],
       place: [this.interviewInvitation.place, [Validators.required]],
-      interviewTimes: [this.interviewInvitation.interviewTimes, [Validators.required]],
+      interviewTimes: [this.interviewTimes, [Validators.required]],
       content: [this.interviewInvitation.content],
       attachedFiles: ['']
     });
@@ -105,11 +113,11 @@ export class CreateNewInvitationComponent implements OnInit {
 
   onSubmit() {
     this.isSubmitted = true;
-    console.log('this.formError', this.formErrors);
     if (this.validateForm()) {
       this.interviewInvitationService.createInterviewInvitation(
         this.interviewInvitation.customer.customerId,
         this.currentPackageId, this.createFormNewInvitation.value, this.file).subscribe(response => {
+          this.interviewInvitationService.changeInterviewInvitationList();
           this.closePopup();
           this.alertService.success('Thêm mới lời mời thành công!');
         },

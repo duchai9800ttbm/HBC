@@ -22,7 +22,8 @@ import { CustomerModel } from '../../../../../../shared/models/interview-invitat
 export class CreateInterviewComponent implements OnInit {
   currentPackageId: number;
   dialog;
-  searchTerm$ = new BehaviorSubject<string>('');
+  // searchTerm$ = new BehaviorSubject<string>('');
+  keySearch: string;
   dtTrigger: Subject<any> = new Subject();
   dtOptions: any = DATATABLE_CONFIG;
   pagedResult: PagedResult<InterviewInvitationList> = new PagedResult<InterviewInvitationList>();
@@ -36,17 +37,46 @@ export class CreateInterviewComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+    this.interviewInvitationService.watchInterviewInvitationList().subscribe(value => {
+      this.filter();
+    });
+
+    this.interviewInvitationService.watchKeySearchNew().subscribe(data => {
+      console.log('goi con');
+    });
+
+    // this.interviewInvitationService.watchKeySearchInterviewInvitation().subscribe( value => {
+    //   console.log('value-component-chirl', value);
+    //   this.keySearch = value;
+    //   this.filter();
+    // });
+
+    // this.interviewInvitationService.watchKeySearchInterviewInvitation().debounceTime(600)
+    // .distinctUntilChanged()
+    // .subscribe(term => {
+    //   this.keySearch = term;
+    //   this.filter();
+    //   this.spinner.hide();
+    // });
+
+    // this.spinner.show();
+    // this.interviewInvitationService.instantSearchWithFilter(
+    //   this.currentPackageId, this.interviewInvitationService.watchKeySearchInterviewInvitation(),
+    //   this.filterModel, 0, 1000).subscribe(result => {
+    //     this.render(result);
+    //     this.spinner.hide();
+    //   },
+    //     err => {
+    //       this.spinner.hide();
+    //     });
+
+    this.interviewInvitationService.watchRefeshInterviewInvitationList().subscribe(value => {
+      console.log('value-refesh', value);
+      this.refresh(true);
+      this.spinner.hide();
+    });
     this.filterModel.status = '';
     this.currentPackageId = +PackageDetailComponent.packageId;
-    this.spinner.show();
-    this.interviewInvitationService.instantSearchWithFilter(
-      this.currentPackageId, this.searchTerm$, this.filterModel, 0, 1000).subscribe(result => {
-        this.render(result);
-        this.spinner.hide();
-      },
-        err => {
-          this.spinner.hide();
-        });
   }
 
   render(pagedResult: any) {
@@ -56,6 +86,7 @@ export class CreateInterviewComponent implements OnInit {
       }
     });
     this.pagedResult = pagedResult;
+    console.log('this.pageRessult', this.pagedResult);
     this.dtTrigger.next();
   }
 
@@ -73,6 +104,7 @@ export class CreateInterviewComponent implements OnInit {
   }
 
   closePopuup() {
+    this.filter();
     this.dialog.close();
   }
 
@@ -81,7 +113,7 @@ export class CreateInterviewComponent implements OnInit {
     this.interviewInvitationService
       .filterList(
         this.currentPackageId,
-        this.searchTerm$.value,
+        this.keySearch,
         this.filterModel,
         0,
         1000
@@ -97,7 +129,7 @@ export class CreateInterviewComponent implements OnInit {
     this.interviewInvitationService
       .filterList(
         this.currentPackageId,
-        this.searchTerm$.value,
+        this.keySearch,
         this.filterModel,
         0,
         1000
@@ -117,15 +149,15 @@ export class CreateInterviewComponent implements OnInit {
     this.pagedResult.items.forEach(x => (x['checkboxSelected'] = value));
   }
 
-  noticeInterview() {
-    this.dialog = this.dialogService.open({
-      content: InterviewNoticeComponent,
-      width: 1100,
-      minWidth: 250
-    });
-    const instance = this.dialog.content.instance;
-    instance.callBack = () => this.closePopuup();
-  }
+  // noticeInterview() {
+  //   this.dialog = this.dialogService.open({
+  //     content: InterviewNoticeComponent,
+  //     width: 1100,
+  //     minWidth: 250
+  //   });
+  //   const instance = this.dialog.content.instance;
+  //   instance.callBack = () => this.closePopuup();
+  // }
 
   EditInvitation(interviewEdit: InterviewInvitation) {
     this.dialog = this.dialogService.open({

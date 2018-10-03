@@ -1,5 +1,5 @@
 
-import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef, OnDestroy } from '@angular/core';
 import { DialogService } from '../../../../../../../node_modules/@progress/kendo-angular-dialog';
 import { UploadFileHsdtComponent } from './upload-file-hsdt/upload-file-hsdt.component';
 import { PackageService } from '../../../../../shared/services/package.service';
@@ -58,9 +58,16 @@ export class HsdtBuildComponent implements OnInit {
         this.packageService.isSummaryConditionForm$.subscribe(data => {
             this.isShowMenu = data;
             this.cdr.detectChanges();
+            // this.cdr.detach();
         });
     }
 
+    getDanhSachLoaiHoSo() {
+        this.packageId = +PackageDetailComponent.packageId;
+        this.hoSoDuThauService.getDanhSachLoaiTaiLieu(this.packageId).subscribe(res => {
+            this.danhSachLoaiTaiLieu = res;
+        });
+    }
     rerender(pagedResult: any) {
         this.checkboxSeclectAll = false;
         this.pagedResult = pagedResult;
