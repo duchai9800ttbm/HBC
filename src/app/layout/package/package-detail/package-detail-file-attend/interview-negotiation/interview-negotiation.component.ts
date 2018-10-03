@@ -10,6 +10,7 @@ import { InterviewInvitation } from '../../../../../shared/models/interview-invi
 import { CustomerModel } from '../../../../../shared/models/interview-invitation/customer.model';
 import { InterviewNoticeComponent } from './create-interview/interview-notice/interview-notice.component';
 import { BehaviorSubject } from '../../../../../../../node_modules/rxjs';
+import { ActivatedRoute, Router, NavigationEnd } from '../../../../../../../node_modules/@angular/router';
 
 
 @Component({
@@ -26,17 +27,22 @@ export class InterviewNegotiationComponent implements OnInit {
   amountInterview: number;
   dialog;
   statusInInterviewList;
+  stattusCurrentList;
+  currentStatusInterview;
   constructor(
     private dialogService: DialogService,
     private packageService: PackageService,
     private statusObservableHsdtService: StatusObservableHsdtService,
     private interviewInvitationService: InterviewInvitationService,
+    private activeRouter: ActivatedRoute,
+    private router: Router,
   ) {
   }
 
   ngOnInit() {
     this.statusInInterviewList = [this.bidStatus.DaNopHSDT, this.bidStatus.DaNhanLoiMoi,
     this.bidStatus.ChuanBiPhongVan, this.bidStatus.DaChotCongTacChuanBiPhongVan, this.bidStatus.DaPhongVan];
+    this.stattusCurrentList = ['create', 'prepare', 'end'];
     this.packageId = +PackageDetailComponent.packageId;
     this.checkStatusPackage();
     this.statusObservableHsdtService.statusPackageService.subscribe(value => {
@@ -47,26 +53,46 @@ export class InterviewNegotiationComponent implements OnInit {
       .subscribe(keySearch => {
         this.interviewInvitationService.changeKeySearchInterviewInvitation(keySearch);
       });
+    this.router.events.subscribe((val) => {
+      if ((val instanceof NavigationEnd) === true) {
+        this.checkStatusPackage();
+      }
+    });
   }
 
   checkStatusPackage() {
     this.packageService.getInforPackageID(this.packageId).subscribe(result => {
       this.statusPackage = result.stageStatus.id;
       for (let i = 0; i < this.statusInInterviewList.length; i++) {
-        if (this.statusInInterviewList[i] === this.statusPackage ) {
-          this.numberStatusPackageInterview = i;
+        if (this.statusInInterviewList[i] === this.statusPackage) {
+          if ( i === 4) {
+            this.numberStatusPackageInterview = i - 1;
+          } else {
+            this.numberStatusPackageInterview = i;
+          }
           break;
         }
       }
-      if (this.statusPackage === this.bidStatus.DaNopHSDT || this.statusPackage === this.bidStatus.DaNhanLoiMoi) {
-        this.interviewInvitationService.getListInterview(
-          this.packageId,
-          0,
-          1000
-        ).subscribe(response => {
-          this.amountInterview = response.length + 1;
-        });
-      }
+      this.activeRouter.firstChild.url.subscribe(url => {
+        const urlCurrent = url[0].path;
+        console.log('this,', this.stattusCurrentList, urlCurrent);
+        for (let i = 0; i < this.stattusCurrentList.length; i++) {
+          if (this.stattusCurrentList[i] === urlCurrent) {
+            this.currentStatusInterview = i + 1;
+            break;
+          }
+        }
+      });
+      console.log('currentStatusInterView', this.numberStatusPackageInterview, this.currentStatusInterview);
+      // if (this.statusPackage === this.bidStatus.DaNopHSDT || this.statusPackage === this.bidStatus.DaNhanLoiMoi) {
+      //   this.interviewInvitationService.getListInterview(
+      //     this.packageId,
+      //     0,
+      //     1000
+      //   ).subscribe(response => {
+      //     this.amountInterview = response.length + 1;
+      //   });
+      // }
     });
   }
 
