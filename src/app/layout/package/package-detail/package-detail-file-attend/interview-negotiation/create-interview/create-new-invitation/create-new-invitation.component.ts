@@ -113,11 +113,11 @@ export class CreateNewInvitationComponent implements OnInit {
 
   onSubmit() {
     this.isSubmitted = true;
-    console.log('this.formError', this.formErrors);
     if (this.validateForm()) {
       this.interviewInvitationService.createInterviewInvitation(
         this.interviewInvitation.customer.customerId,
         this.currentPackageId, this.createFormNewInvitation.value, this.file).subscribe(response => {
+          this.interviewInvitationService.changeInterviewInvitationList();
           this.closePopup();
           this.alertService.success('Thêm mới lời mời thành công!');
         },
