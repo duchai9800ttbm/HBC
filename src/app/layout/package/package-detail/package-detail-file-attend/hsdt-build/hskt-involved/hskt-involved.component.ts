@@ -186,6 +186,9 @@ export class HsktInvolvedComponent implements OnInit {
         });
     }
   }
+  onSelectAll(value: boolean) {
+    this.danhSachHoSoKT.forEach(x => (x.checkboxSelected = value));
+  }
 
   downloadDocument(id) {
     this.hoSoDuThauService.taiHoSoDuThau(id).subscribe(data => {

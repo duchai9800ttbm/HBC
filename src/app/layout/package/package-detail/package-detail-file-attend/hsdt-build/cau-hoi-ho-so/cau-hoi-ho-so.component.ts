@@ -1,26 +1,26 @@
 import { Component, OnInit } from '@angular/core';
-import { DATATABLE_CONFIG } from '../../../../../../shared/configs';
-// tslint:disable-next-line:import-blacklist
-import { Subject, BehaviorSubject } from 'rxjs';
-import { DATETIME_PICKER_CONFIG } from '../../../../../../shared/configs/datepicker.config';
-import { PackageDetailComponent } from '../../../package-detail.component';
 import { HoSoDuThauService } from '../../../../../../shared/services/ho-so-du-thau.service';
 import { DialogService } from '@progress/kendo-angular-dialog';
 import { AlertService, ConfirmationService } from '../../../../../../shared/services';
 import { PackageService } from '../../../../../../shared/services/package.service';
 import { Router } from '@angular/router';
 import { NgxSpinnerService } from 'ngx-spinner';
+import { PackageDetailComponent } from '../../../package-detail.component';
+// tslint:disable-next-line:import-blacklist
+import { BehaviorSubject, Subject } from 'rxjs';
+import { HsdtFilterModel } from '../../../../../../shared/models/ho-so-du-thau/hsdt-filter.model';
 import { PagedResult } from '../../../../../../shared/models';
 import { DanhSachBoHsdtItem } from '../../../../../../shared/models/ho-so-du-thau/danh-sach-bo-hsdt-item.model';
-import { HsdtFilterModel } from '../../../../../../shared/models/ho-so-du-thau/hsdt-filter.model';
 import { UploadFileHsdtComponent } from '../upload-file-hsdt/upload-file-hsdt.component';
+import { DATATABLE_CONFIG } from '../../../../../../shared/configs';
+import { DATETIME_PICKER_CONFIG } from '../../../../../../shared/configs/datepicker.config';
 
 @Component({
-  selector: 'app-require-price',
-  templateUrl: './require-price.component.html',
-  styleUrls: ['./require-price.component.scss']
+  selector: 'app-cau-hoi-ho-so',
+  templateUrl: './cau-hoi-ho-so.component.html',
+  styleUrls: ['./cau-hoi-ho-so.component.scss']
 })
-export class RequirePriceComponent implements OnInit {
+export class CauHoiHoSoComponent implements OnInit {
   isShowMenu = false;
   dtTrigger: Subject<any> = new Subject();
   searchTerm;
@@ -49,7 +49,7 @@ export class RequirePriceComponent implements OnInit {
   sum = 0;
   showTable = false;
   danhSachLoaiTaiLieu;
-  danhSachBGVT;
+  danhSachCHHS;
   constructor(
     private hoSoDuThauService: HoSoDuThauService,
     private dialogService: DialogService,
@@ -62,7 +62,7 @@ export class RequirePriceComponent implements OnInit {
 
   ngOnInit() {
     this.getDanhSachLoaiHoSo();
-    this.getDataTypeBGVT();
+    this.getDataTypeCHHS();
   }
   showDialogUploadFile() {
     this.dialog = this.dialogService.open({
@@ -72,13 +72,13 @@ export class RequirePriceComponent implements OnInit {
     });
     const instance = this.dialog.content.instance;
     instance.bidOpportunityId = this.packageId;
-    instance.nameFile = 'Yêu cầu báo giá vật tư, thầu phụ';
-    instance.idFile = 2;
+    instance.nameFile = 'Bảng câu hỏi làm rõ HSMT';
+    instance.idFile = 6;
     instance.callBack = this.closePopuup.bind(this);
   }
   closePopuup() {
     this.dialog.close();
-    this.getDataTypeBGVT();
+    this.getDataTypeCHHS();
     // this.getDanhSachBoHoSo();
   }
   getDanhSachLoaiHoSo() {
@@ -87,16 +87,16 @@ export class RequirePriceComponent implements OnInit {
       this.danhSachLoaiTaiLieu = res;
     });
   }
-  getDataTypeBGVT() {
+  getDataTypeCHHS() {
     this.hoSoDuThauService
       .danhSachBoHoSoDuThauInstantSearch(this.packageId, this.searchTerm$, this.filterModel, 0, 10)
       .subscribe(responseResultBGVT => {
         this.rerender(responseResultBGVT);
-        this.danhSachBGVT = responseResultBGVT.items.filter(item =>
-          item.tenderDocumentType === 'Yêu cầu báo giá vật tư, thầu phụ'
+        this.danhSachCHHS = responseResultBGVT.items.filter(item =>
+          item.tenderDocumentType === 'Bảng câu hỏi làm rõ HSMT'
         );
-        this.showTable = (this.danhSachBGVT.length > 0) ? true : false;
-        this.sum = this.danhSachBGVT.length;
+        this.showTable = (this.danhSachCHHS.length > 0) ? true : false;
+        this.sum = this.danhSachCHHS.length;
         this.dtTrigger.next();
       }, err => {
         this.alertService.error(`Đã có lỗi xảy ra. Xin vui lòng thử lại!`);
@@ -110,7 +110,7 @@ export class RequirePriceComponent implements OnInit {
 
   }
   onSelectAll(value: boolean) {
-    this.danhSachBGVT.forEach(x => (x.checkboxSelected = value));
+    this.danhSachCHHS.forEach(x => (x.checkboxSelected = value));
   }
 
 
@@ -147,7 +147,7 @@ export class RequirePriceComponent implements OnInit {
   }
   multiDelete() {
     const that = this;
-    const listId = this.danhSachBGVT.filter(x => x.checkboxSelected).map(x => x.id);
+    const listId = this.danhSachCHHS.filter(x => x.checkboxSelected).map(x => x.id);
     if (listId && listId.length === 0) {
       this.alertService.error('Bạn phải chọn ít nhất một tài liệu để xóa!');
     } else {
@@ -161,7 +161,7 @@ export class RequirePriceComponent implements OnInit {
     }
   }
   refresh() {
-    this.getDataTypeBGVT();
+    this.getDataTypeCHHS();
     this.alertService.success(`Dữ liệu đã được cập nhật mới nhất!`);
   }
   filter() {
@@ -169,11 +169,11 @@ export class RequirePriceComponent implements OnInit {
       .danhSachBoHoSoDuThau(this.packageId, this.searchTerm$.value, this.filterModel, 0, 10)
       .subscribe(responseResultBoHSDT => {
         this.rerender(responseResultBoHSDT);
-        this.danhSachBGVT = responseResultBoHSDT.items.filter(item =>
-          item.tenderDocumentType === 'Yêu cầu báo giá vật tư, thầu phụ'
+        this.danhSachCHHS = responseResultBoHSDT.items.filter(item =>
+          item.tenderDocumentType === 'Bảng câu hỏi làm rõ HSMT'
         );
-        this.showTable = (this.danhSachBGVT.length > 0) ? true : false;
-        this.sum = this.danhSachBGVT.length;
+        this.showTable = (this.danhSachCHHS.length > 0) ? true : false;
+        this.sum = this.danhSachCHHS.length;
         this.dtTrigger.next();
       }, err => {
         this.alertService.error(`Đã có lỗi xảy ra. Xin vui lòng thử lại!`);
@@ -186,14 +186,14 @@ export class RequirePriceComponent implements OnInit {
     this.filterModel.uploadedEmployeeId = null;
     this.filterModel.createdDate = null;
     this.filterModel.uploadedEmployeeId = null;
-    this.getDataTypeBGVT();
+    this.getDataTypeCHHS();
   }
   changeStatus(id, status) {
     if (status === 'Draft') {
       this.hoSoDuThauService.updateStatus(id, 'Official').subscribe(res => {
-        this.getDataTypeBGVT();
-        this.showTable = (this.danhSachBGVT.length > 0) ? true : false;
-        this.sum = this.danhSachBGVT.length;
+        this.getDataTypeCHHS();
+        this.showTable = (this.danhSachCHHS.length > 0) ? true : false;
+        this.sum = this.danhSachCHHS.length;
         this.dtTrigger.next();
         this.spinner.hide();
         this.alertService.success('Dữ liệu đã được cập nhật mới nhất!');
@@ -205,9 +205,9 @@ export class RequirePriceComponent implements OnInit {
     }
     if (status === 'Official') {
       this.hoSoDuThauService.updateStatus(id, 'Draft').subscribe(res => {
-        this.getDataTypeBGVT();
-        this.showTable = (this.danhSachBGVT.length > 0) ? true : false;
-        this.sum = this.danhSachBGVT.length;
+        this.getDataTypeCHHS();
+        this.showTable = (this.danhSachCHHS.length > 0) ? true : false;
+        this.sum = this.danhSachCHHS.length;
         this.dtTrigger.next();
         this.spinner.hide();
         this.alertService.success('Dữ liệu đã được cập nhật mới nhất!');

@@ -1,54 +1,95 @@
-<form [formGroup]="uploadForm">
+<form [formGroup]="uploadForm" novalidate>
     <div class="title-detail center-parent">
-        <div class="col-md-1"></div>
-        <div class="mr-auto col-md-10">
+        <div>
             <div class="media-header center-parent">
-                <h3 class="d-inline mb-0 text-dark bold-title title">UPLOAD
+                <h3 class="d-inline mb-0 text-dark bold-title">
+                    UPLOAD HSMT
                     <span style="text-transform: uppercase">{{nameFile}}</span>
                 </h3>
             </div>
         </div>
-        <div class="col-md-1 close-popup close-popup-X">
-            <span (click)="closePopup()">X</span>
+        <div class="position-absolute x-button">
+            <img (click)="closePopup()" width="15" height="15" class="cursor-pointer not-outline" src="assets\images\close.png">
         </div>
     </div>
-    <div class="max-width pad-row d-flex">
-        <div class="set-width-name-field name-field">
-            File đính kèm
-        </div>
-        <span (click)="deleteFileUpload()" *ngIf="displayName"><i class="fa fa-times mt-2" aria-hidden="true"></i></span>
-        <div [class.offline]="isLinkFile" class="set-width-value-field d-flex">
-            <div class="no-boder d-flex w-100">
-                <span class="w-100 text-truncate form-control boder-input-choose-file" (click)="upload.click()">
-                    {{ displayName || '---Chọn File---'}}
-                </span>
-                <span class="input-group-addon fileUpload">
-                    <i class="fa fa-upload" aria-hidden="true"></i>
-                    <input type="file" formControlName="file" class="upload" #upload (change)="uploadFile($event)" />
-                </span>
+    <hr>
+    <div class="d-flex">
+        <div class="w-100  mr-auto">
+            <div>
+                <div class="body cus-header" id="info-main">
+                    <div class="w-100 center-parent" *ngIf="errorMess" class="alert alert-danger" role="alert">
+                        <span> {{errorMess}}</span>
+                    </div>
+                    <table class="w-100 table">
+
+                        <tbody>
+                            <tr>
+                                <td class="w-30 label no-boder bold-title">Đường dẫn link</td>
+                                <td class="w-70 no-boder">
+                                    <input class="w-100" [class.disable-input]="displayName" class="form-control" formControlName="linkFile"
+                                        tabindex="1" type="text">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="w-30 label no-boder bold-title">Hoặc</td>
+                                <td class="no-boder d-flex justify-content-between">
+                                    <div class="fileUpload">
+                                        <button class="btn btn-primary" [disabled]="uploadForm.get('linkFile').value">
+                                            <i class="fa fa-cloud-upload" aria-hidden="true"></i>&nbsp;&nbsp;
+                                            Chọn File</button>
+                                        <input type="file" class="upload" tabindex="2" [disabled]="uploadForm.get('linkFile').value"
+                                            (change)="uploadFile($event)" />
+                                    </div>
+                                    <div style="width: calc(100% - 120px);" class="d-flex justify-content-between">
+                                        <div> <span class="text-truncate">{{displayName}}</span></div>
+                                        <div *ngIf="displayName">
+                                            <button (click)="deleteFileUpload()" class="btn btn-secondary">X</button>
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="w-30 label no-boder bold-title required">Tên</td>
+                                <td class="w-70 no-boder">
+                                    <input class="w-100" kendoTextBox tabindex="4" type="text" formControlName="editName"
+                                        [class.is-invalid]="formErrors.editName">
+                                    <div class="invalid-feedback" *ngIf="formErrors.editName">
+                                        {{formErrors.editName}}
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="w-30 label no-boder bold-title">Phiên bản</td>
+                                <td class="w-70 no-boder">
+                                    <input appInputNumberInteger class="w-100" kendoTextBox tabindex="5" type="text"
+                                        formControlName="version">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="w-30 label no-boder bold-title">Lần phỏng vấn</td>
+                                <td class="w-70 no-boder">
+                                    <input appInputNumberInteger class="w-100" kendoTextBox tabindex="5" type="text"
+                                        formControlName="interViewTimes">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="w-30 label no-boder bold-title">Mô tả/Nội dung cập nhật</td>
+                                <td class="w-70 no-boder">
+                                    <textarea kendoTextArea tabindex="7" cols="3" rows="3" class="w-100 form-control no-resize-textarea"
+                                        formControlName="description"></textarea>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+            </div>
+            <div class="action-bar alignment-but center-parent">
+                <button type="submit" class="btn btn-primary ml-2 cus-but-cs" (click)="submitUpload()">Upload
+                </button>
+                <button class="btn btn-secondary ml-2 cus-but-cs" (click)="closePopup()">Hủy
+                </button>
             </div>
         </div>
     </div>
-    <div class="max-width pad-row d-flex">
-        <div class="set-width-name-field name-field">
-            Đường dẫn file
-        </div>
-        <div class="set-width-value-field" [class.offline]="isFile">
-            <input class="form-control" formControlName="linkFile" type="text">
-        </div>
-    </div>
-    <div class="max-width pad-row d-flex">
-        <div class="set-width-name-field name-field">
-            Mô tả nội dung cập nhật
-        </div>
-        <div class="set-width-value-field">
-            <textarea formControlName="description" cols="3" rows="3" class="w-100 form-control no-resize-textarea"></textarea>
-        </div>
-    </div>
-
-    <div class="cus-button-popup">
-        <button type="button" class="btn btn-primary" (click)="submitUpload()">Upload</button>
-        <button type="button" class="btn btn-secondary" (click)="closePopup()">Hủy</button>
-    </div>
-
 </form>

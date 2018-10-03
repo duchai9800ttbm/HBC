@@ -14,6 +14,8 @@ import { NgxSpinnerService } from 'ngx-spinner';
 import { DocumentService } from '../../../../../../shared/services/document.service';
 import { OpportunityHsmtService } from '../../../../../../shared/services/opportunity-hsmt.service';
 import { PackageService } from '../../../../../../shared/services/package.service';
+import { DialogService } from '@progress/kendo-angular-dialog';
+import { UploadFileHsdtComponent } from '../upload-file-hsdt/upload-file-hsdt.component';
 
 @Component({
   selector: 'app-chi-phi-chung',
@@ -29,6 +31,7 @@ export class ChiPhiChungComponent implements OnInit {
   packageId;
   bidOpportunityId: number;
   page: number;
+  checkboxSeclectAll: boolean;
   pageSize: number;
   pageIndex: number | string = 0;
   pagedResult: PagedResult<DanhSachBoHsdtItem> = new PagedResult<DanhSachBoHsdtItem>();
@@ -39,7 +42,6 @@ export class ChiPhiChungComponent implements OnInit {
   notShow = false;
   searchTerm$ = new BehaviorSubject<string>('');
   filterModel = new HsdtFilterModel();
-  checkboxSeclectAll: boolean;
   isShowButtonUp: boolean;
   isShowButtonDown: boolean;
   isShowEmpty = false;
@@ -55,12 +57,40 @@ export class ChiPhiChungComponent implements OnInit {
     private hoSoDuThauService: HoSoDuThauService,
     private alertService: AlertService,
     private confirmationService: ConfirmationService,
-    private spinner: NgxSpinnerService
+    private spinner: NgxSpinnerService,
+    private dialogService: DialogService,
+    private packageService: PackageService,
+    private router: Router,
   ) { }
 
   ngOnInit() {
-    this.filterModel.status = '';
+    this.getDanhSachLoaiHoSo();
+    this.getDataTypeCPC();
+  }
+  showDialogUploadFile() {
+    this.dialog = this.dialogService.open({
+      content: UploadFileHsdtComponent,
+      width: 750,
+      minWidth: 500
+    });
+    const instance = this.dialog.content.instance;
+    instance.bidOpportunityId = this.packageId;
+    instance.nameFile = 'Bảng tính chi phí chung';
+    instance.idFile = 5;
+    instance.callBack = this.closePopuup.bind(this);
+  }
+  closePopuup() {
+    this.dialog.close();
+    this.getDataTypeCPC();
+    // this.getDanhSachBoHoSo();
+  }
+  getDanhSachLoaiHoSo() {
     this.packageId = +PackageDetailComponent.packageId;
+    this.hoSoDuThauService.getDanhSachLoaiTaiLieu(this.packageId).subscribe(res => {
+      this.danhSachLoaiTaiLieu = res;
+    });
+  }
+  getDataTypeCPC() {
     this.hoSoDuThauService
       .danhSachBoHoSoDuThauInstantSearch(this.packageId, this.searchTerm$, this.filterModel, 0, 10)
       .subscribe(responseResultChiPhiChung => {
@@ -141,6 +171,9 @@ export class ChiPhiChungComponent implements OnInit {
         this.alertService.error(`Đã có lỗi xảy ra. Xin vui lòng thử lại!`);
       });
     this.alertService.success('Dữ liệu đã được cập nhật mới nhất!');
+  }
+  onSelectAll(value: boolean) {
+    this.danhSachChiPhiChung.forEach(x => (x.checkboxSelected = value));
   }
 
   deleteDocument(id) {

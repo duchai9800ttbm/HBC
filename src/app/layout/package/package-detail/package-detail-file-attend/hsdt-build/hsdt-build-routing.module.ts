@@ -7,6 +7,7 @@ import { SummaryConditionFormComponent } from './summary-condition/summary-condi
 import { LiveformSiteReportComponent } from './liveform-site-report/liveform-site-report.component';
 import { ChiPhiChungComponent } from './chi-phi-chung/chi-phi-chung.component';
 import { RequirePriceComponent } from './require-price/require-price.component';
+import { CauHoiHoSoComponent } from './cau-hoi-ho-so/cau-hoi-ho-so.component';
 const routes: Routes = [
     {
         path: '',
@@ -29,7 +30,8 @@ const routes: Routes = [
             {
                 path: 'baogiavattu',
                 component: RequirePriceComponent
-            }
+            },
+            { path: 'cauhoi', component: CauHoiHoSoComponent }
         ]
     }
 ];
