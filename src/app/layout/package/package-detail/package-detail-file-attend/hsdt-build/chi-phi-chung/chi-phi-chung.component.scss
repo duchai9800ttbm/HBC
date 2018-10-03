@@ -46,3 +46,12 @@ table {
         overflow-x: auto;
     }
 }
+.color-item-test {
+    color: #b3b3b3
+}
+.text-truncate-custom {
+    max-width: 300px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}

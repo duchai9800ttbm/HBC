@@ -95,7 +95,8 @@
                         <div class="d-flex justify-content-around">
                             <div style="width: 40%;">
                                 <label class="custom-control custom-checkbox mt-2">
-                                    <input type="checkbox" class="custom-control-input" [(ngModel)]="checkboxSeclectAll" (change)="onSelectAll($event.target.checked)">
+                                    <input type="checkbox" class="custom-control-input" [(ngModel)]="checkboxSeclectAll"
+                                        (change)="onSelectAll($event.target.checked)">
                                     <span class="custom-control-indicator"></span>
                                 </label>
                             </div>
@@ -183,12 +184,12 @@
                             </div>
                         </div>
                     </td>
-                    <td class="boder-table text-center text-truncate">{{ hoso?.documentName }}</td>
+                    <td class="boder-table text-center text-truncate-custom">{{ hoso?.documentName }}</td>
                     <td class="boder-table text-center text-truncate">{{ hoso?.version }}</td>
-                    <td class="boder-table">{{ hoso?.description }}</td>
+                    <td class="boder-table text-center text-truncate-custom">{{ hoso?.description }}</td>
 
                     <td class="td-mark-status boder-table text-center text-truncate">
-                        <div class="d-flex justify-content-around">
+                        <div class="d-flex justify-content-between pl-2 pr-2">
                             <div class="text-truncate text-right" [title]="hoso.status">
                                 {{ hoso.status | translate }}
                             </div>
