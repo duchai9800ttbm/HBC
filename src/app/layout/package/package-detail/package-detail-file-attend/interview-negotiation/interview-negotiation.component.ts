@@ -19,38 +19,45 @@ import { BehaviorSubject } from '../../../../../../../node_modules/rxjs';
 })
 export class InterviewNegotiationComponent implements OnInit {
   changeKeySearchInterviewInvitation$ = new BehaviorSubject<string>('');
-  packageId = +PackageDetailComponent.packageId;
+  packageId: number;
   statusPackage;
+  numberStatusPackageInterview;
   bidStatus = BidStatus;
   amountInterview: number;
   dialog;
+  statusInInterviewList;
   constructor(
     private dialogService: DialogService,
     private packageService: PackageService,
     private statusObservableHsdtService: StatusObservableHsdtService,
     private interviewInvitationService: InterviewInvitationService,
-  ) { }
+  ) {
+  }
 
   ngOnInit() {
+    this.statusInInterviewList = [this.bidStatus.DaNopHSDT, this.bidStatus.DaNhanLoiMoi,
+    this.bidStatus.ChuanBiPhongVan, this.bidStatus.DaChotCongTacChuanBiPhongVan, this.bidStatus.DaPhongVan];
+    this.packageId = +PackageDetailComponent.packageId;
+    this.checkStatusPackage();
     this.statusObservableHsdtService.statusPackageService.subscribe(value => {
       this.checkStatusPackage();
     });
     this.changeKeySearchInterviewInvitation$.debounceTime(600)
-    .distinctUntilChanged()
-    .subscribe( keySearch => {
-      console.log('keySearch', keySearch);
-      this.interviewInvitationService.changeKeySearchNew(keySearch);
-      this.interviewInvitationService.changeKeySearchInterviewInvitation(keySearch);
-    });
+      .distinctUntilChanged()
+      .subscribe(keySearch => {
+        this.interviewInvitationService.changeKeySearchInterviewInvitation(keySearch);
+      });
   }
-
-  // changeKeySearchInterviewInvitation(keySearch) {
-  //   this.interviewInvitationService.changeKeySearchInterviewInvitation(keySearch);
-  // }
 
   checkStatusPackage() {
     this.packageService.getInforPackageID(this.packageId).subscribe(result => {
       this.statusPackage = result.stageStatus.id;
+      for (let i = 0; i < this.statusInInterviewList.length; i++) {
+        if (this.statusInInterviewList[i] === this.statusPackage ) {
+          this.numberStatusPackageInterview = i;
+          break;
+        }
+      }
       if (this.statusPackage === this.bidStatus.DaNopHSDT || this.statusPackage === this.bidStatus.DaNhanLoiMoi) {
         this.interviewInvitationService.getListInterview(
           this.packageId,

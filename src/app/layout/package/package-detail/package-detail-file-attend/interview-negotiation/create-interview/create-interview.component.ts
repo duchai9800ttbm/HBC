@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { DialogService } from '../../../../../../../../node_modules/@progress/kendo-angular-dialog';
 import { CreateNewInvitationComponent } from './create-new-invitation/create-new-invitation.component';
 import { BehaviorSubject, Subject } from '../../../../../../../../node_modules/rxjs';
@@ -14,42 +14,60 @@ import { NgxSpinnerService } from '../../../../../../../../node_modules/ngx-spin
 import { InterviewNoticeComponent } from './interview-notice/interview-notice.component';
 import { InterviewInvitation } from '../../../../../../shared/models/interview-invitation/interview-invitation-create.model';
 import { CustomerModel } from '../../../../../../shared/models/interview-invitation/customer.model';
+import { StatusObservableHsdtService } from '../../../../../../shared/services/status-observable-hsdt.service';
+import { PackageService } from '../../../../../../shared/services/package.service';
+import { BidStatus } from '../../../../../../shared/constants/bid-status';
+import { groupBy } from '../../../../../../../../node_modules/@progress/kendo-data-query';
+import DateTimeConvertHelper from '../../../../../../shared/helpers/datetime-convert-helper';
 @Component({
   selector: 'app-create-interview',
   templateUrl: './create-interview.component.html',
   styleUrls: ['./create-interview.component.scss']
 })
-export class CreateInterviewComponent implements OnInit {
+export class CreateInterviewComponent implements OnInit, OnDestroy {
   currentPackageId: number;
   dialog;
   // searchTerm$ = new BehaviorSubject<string>('');
-  keySearch: string;
+  keySearch = '';
   dtTrigger: Subject<any> = new Subject();
   dtOptions: any = DATATABLE_CONFIG;
   pagedResult: PagedResult<InterviewInvitationList> = new PagedResult<InterviewInvitationList>();
   filterModel = new InterviewInvitationFilter();
+  numberOfInterviews = [];
+  isNumberOfInterviews = true;
+  statusPackage;
+  bidStatus = BidStatus;
   constructor(
     private dialogService: DialogService,
     private interviewInvitationService: InterviewInvitationService,
     private route: ActivatedRoute,
     private spinner: NgxSpinnerService,
-    private alertService: AlertService
+    private alertService: AlertService,
+    private statusObservableHsdtService: StatusObservableHsdtService,
+    private packageService: PackageService,
   ) { }
 
   ngOnInit() {
+    this.currentPackageId = +PackageDetailComponent.packageId;
+    this.filter();
+    this.getSatusPackage();
+    this.statusObservableHsdtService.statusPackageService.subscribe(value => {
+      this.getSatusPackage();
+    });
+    this.filterModel.status = '';
+    this.filterModel.interviewTimes = null;
+    this.filterModel.receivedDate = null;
     this.interviewInvitationService.watchInterviewInvitationList().subscribe(value => {
+      this.isNumberOfInterviews = true;
       this.filter();
+      this.spinner.hide();
     });
 
-    this.interviewInvitationService.watchKeySearchNew().subscribe(data => {
-      console.log('goi con');
+    this.interviewInvitationService.watchKeySearchInterviewInvitation().subscribe(value => {
+      this.keySearch = value;
+      this.filter();
+      this.spinner.hide();
     });
-
-    // this.interviewInvitationService.watchKeySearchInterviewInvitation().subscribe( value => {
-    //   console.log('value-component-chirl', value);
-    //   this.keySearch = value;
-    //   this.filter();
-    // });
 
     // this.interviewInvitationService.watchKeySearchInterviewInvitation().debounceTime(600)
     // .distinctUntilChanged()
@@ -71,12 +89,27 @@ export class CreateInterviewComponent implements OnInit {
     //     });
 
     this.interviewInvitationService.watchRefeshInterviewInvitationList().subscribe(value => {
-      console.log('value-refesh', value);
       this.refresh(true);
       this.spinner.hide();
     });
-    this.filterModel.status = '';
-    this.currentPackageId = +PackageDetailComponent.packageId;
+
+  }
+
+  ngOnDestroy() {
+    this.interviewInvitationService.watchKeySearchInterviewInvitation().unsubscribe();
+  }
+
+  getSatusPackage() {
+    this.packageService.getInforPackageID(this.currentPackageId).subscribe(result => {
+      this.statusPackage = result.stageStatus.id;
+    });
+  }
+
+  getListNumberOfInterviews() {
+    this.numberOfInterviews = this.pagedResult.items ? this.pagedResult.items.map(item => item.interviewTimes) : [];
+    this.numberOfInterviews = this.numberOfInterviews.sort(( a, b ) =>  a - b);
+    this.numberOfInterviews = this.numberOfInterviews.filter((el, i, a) => i === a.indexOf(el));
+    console.log('this.numberOfInterviews', this.numberOfInterviews);
   }
 
   render(pagedResult: any) {
@@ -86,7 +119,10 @@ export class CreateInterviewComponent implements OnInit {
       }
     });
     this.pagedResult = pagedResult;
-    console.log('this.pageRessult', this.pagedResult);
+    if (this.isNumberOfInterviews) {
+      this.getListNumberOfInterviews();
+      this.isNumberOfInterviews = false;
+    }
     this.dtTrigger.next();
   }
 
@@ -109,6 +145,7 @@ export class CreateInterviewComponent implements OnInit {
   }
 
   filter() {
+    console.log('receivedDate', DateTimeConvertHelper.fromDtObjectToTimestamp(this.filterModel.receivedDate) );
     this.spinner.show();
     this.interviewInvitationService
       .filterList(
@@ -122,6 +159,13 @@ export class CreateInterviewComponent implements OnInit {
         this.render(result);
         this.spinner.hide();
       }, err => this.spinner.hide());
+  }
+
+  clearFilter() {
+    this.filterModel.status = '';
+    this.filterModel.interviewTimes = null;
+    this.filterModel.receivedDate = null;
+    this.filter();
   }
 
   refresh(displayAlert: boolean = false): void {

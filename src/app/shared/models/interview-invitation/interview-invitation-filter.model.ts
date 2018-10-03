@@ -1,7 +1,7 @@
 export class InterviewInvitationFilter {
     customerid: number;
     interviewTimes: number;
-    receivedDate: number;
+    receivedDate: Date;
     status: string;
     sorting: string;
 }
