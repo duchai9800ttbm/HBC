@@ -38,7 +38,9 @@ export class InformationDeploymentFormComponent implements OnInit {
     isShowChanges = false;
     updatedDetail = '';
     tenderPlan: TenderPreparationPlanningRequest;
-
+    mailPersonnel = ['', '', '', ''];
+    taskNoAssignment = '';
+    whoIsInChargeIdSurvey;
     get tasksFA(): FormArray {
         return this.planForm.get('tasks') as FormArray;
     }
@@ -51,7 +53,7 @@ export class InformationDeploymentFormComponent implements OnInit {
         private router: Router,
         private alertService: AlertService,
         private sessionService: SessionService
-    ) {}
+    ) { }
 
     ngOnInit() {
         setTimeout(() => {
@@ -59,20 +61,31 @@ export class InformationDeploymentFormComponent implements OnInit {
         });
         this.routerAction = this.packageService.routerAction;
         this.bidOpportunityId = PackageDetailComponent.packageId;
-        this.userService.getAllUser('').subscribe(data => this.userList = data);
+        this.userService.getAllUser('').subscribe(data => {
+            this.userList = data;
+            console.log('this.useLisst', this.userList);
+        });
         this.getPackageInfo();
         if (this.routerAction === 'create') {
             this.packageService
-            .getDefaultTenderPreparationPlanning()
-            .subscribe(data => this.createForm(data, true));
+                .getDefaultTenderPreparationPlanning()
+                .subscribe(data => {
+                    console.log('getDefaultTenderPreparationPlanning', data);
+                    this.createForm(data, true);
+                }
+                );
         } else {
-            this.packageService.getTenderPreparationPlanning(this.bidOpportunityId).subscribe(data => this.createForm(data));
+            this.packageService.getTenderPreparationPlanning(this.bidOpportunityId).subscribe(data => {
+                console.log('getTenderPreparationPlanning', data);
+                this.createForm(data);
+            });
         }
     }
 
     createForm(planModel: TenderPreparationPlanningRequest, isCreate?) {
         this.tenderPlan = planModel;
         const taskArr = [];
+        console.log('planModel.projectDirectorEmployee', planModel.projectDirectorEmployee);
         planModel.tasks.forEach(i => taskArr.push(this.createTaskItemFG(i)));
         this.planForm = this.fb.group({
             id: planModel.id,
@@ -87,6 +100,11 @@ export class InformationDeploymentFormComponent implements OnInit {
             projectInformation: planModel.projectInformation ? planModel.projectInformation : 'Bảng phân công tiến độ',
             tasks: this.fb.array(taskArr)
         });
+        console.log('projectDirectorEmployeeId-projectDirectorEmployeeId', this.planForm.get('projectDirectorEmployeeId').value);
+        this.changeDirector(this.planForm.get('projectDirectorEmployeeId').value, 0);
+        this.changeDirector(this.planForm.get('tenderDepartmentEmployeeId').value, 1);
+        this.changeDirector(this.planForm.get('technicalDepartmentEmployeeId').value, 2);
+        this.changeDirector(this.planForm.get('bimDepartmentEmployeeId').value, 3);
         setTimeout(() => {
             kendo.jQuery(this.ganttChart.nativeElement).kendoGantt({
                 views: [
@@ -108,7 +126,24 @@ export class InformationDeploymentFormComponent implements OnInit {
     getEmailUser(userId: number): string {
         // tslint:disable-next-line:triple-equals
         // tslint:disable-next-line:max-line-length
-        return this.userList && this.userList.find(i => i.employeeId == userId) ? this.userList.find(i => i.employeeId == userId).email : '';
+        return ( this.userList && this.userList.find(i => i.employeeId === Number(userId)) )? this.userList.find(i => i.employeeId === Number(userId)).email : '';
+    }
+
+    changeDirector(userId, personnelType) {
+        if (userId) {
+            if (personnelType === 0) {
+                this.mailPersonnel[0] = this.getEmailUser(userId);
+            }
+            if (personnelType === 1) {
+                this.mailPersonnel[1] = this.getEmailUser(userId);
+            }
+            if (personnelType === 2) {
+                this.mailPersonnel[2] = this.getEmailUser(userId);
+            }
+            if (personnelType === 3) {
+                this.mailPersonnel[3] = this.getEmailUser(userId);
+            }
+        }
     }
 
     updateGantt() {
@@ -137,13 +172,13 @@ export class InformationDeploymentFormComponent implements OnInit {
             whoIsInChargeId: data.whoIsInChargeId === 0 ? null : data.whoIsInChargeId,
             startDate: data.startDate
                 ? DateTimeConvertHelper.fromTimestampToDtObject(
-                      data.startDate * 1000
-                  )
+                    data.startDate * 1000
+                )
                 : null,
             finishDate: data.finishDate
                 ? DateTimeConvertHelper.fromTimestampToDtObject(
-                      data.finishDate * 1000
-                  )
+                    data.finishDate * 1000
+                )
                 : null,
             duration: data.duration,
             isFinish: data.isFinish
@@ -175,11 +210,16 @@ export class InformationDeploymentFormComponent implements OnInit {
     }
 
     validateForm(formData: TenderPreparationPlanningRequest, isDraft: boolean): boolean {
+        console.log('planForm?.get.value', this.planForm.get('isDraftVersion').value) ;
         if (isDraft) {
             // lưu nháp thì ko cần validate
             return true;
         } else if (formData.tasks.every(i => i.whoIsInChargeId === 0 || i.whoIsInChargeId == null)) {
-            this.alertService.error('Bạn chưa hoàn tất phân công tiến độ, chọn "Lưu nháp" nếu muốn thực hiện sau.');
+            if ( this.planForm.get('isDraftVersion').value === false) {
+                this.alertService.error('Bạn chưa hoàn tất phân công tiến độ!');
+            } else {
+                this.alertService.error('Bạn chưa hoàn tất phân công tiến độ, chọn "Lưu nháp" nếu muốn thực hiện sau.');
+            }
             return false;
         } else {
             return this.checkPlanItems(formData.tasks);
@@ -206,16 +246,33 @@ export class InformationDeploymentFormComponent implements OnInit {
         return false;
     }
 
+    checkAssignment(): boolean {
+        return this.tasksFA.value.every(item => {
+            if (item.whoIsInChargeId && item.whoIsInChargeId !== 0) {
+                this.taskNoAssignment = item.itemName;
+                return (item.startDate && item.finishDate);
+            } else {
+                return true;
+            }
+        });
+
+    }
+
     submitForm(isDraft: boolean) {
-        const data = this.getFormData();
-        const isValid = this.validateForm(data, isDraft);
-        if (!isValid) {
-            return;
-        }
-        if (data.id && !isDraft) {
-            this.isShowChanges = true;
+        console.log('isDrafft', isDraft);
+        if ( this.checkAssignment() ) {
+            const data = this.getFormData();
+            const isValid = this.validateForm(data, isDraft);
+            if (!isValid) {
+                return;
+            }
+            if (data.id && !isDraft) {
+                this.isShowChanges = true;
+            } else {
+                this.saveTenderPlan(isDraft);
+            }
         } else {
-            this.saveTenderPlan(isDraft);
+            this.alertService.error(`Bạn cần chọn ngày bắt đầu và ngày kết thúc cho công việc "${this.taskNoAssignment}"`);
         }
     }
 
@@ -230,6 +287,12 @@ export class InformationDeploymentFormComponent implements OnInit {
         }
         // data.updatedDesc = this.updatedDetail;
         this.spinner.show();
+        // console.log('data-data', data.tasks.forEach( item => {
+        //     item.itemName = '';
+        // }));
+        data.tasks.forEach( item => {
+            item.itemName = '';
+        });
         this.packageService.createOrUpdateTenderPreparationPlanning(data).subscribe(res => {
             this.spinner.hide();
             this.router.navigateByUrl(`package/detail/${this.bidOpportunityId}/attend/infomation-deployment`);

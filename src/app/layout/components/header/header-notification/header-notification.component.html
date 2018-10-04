@@ -35,8 +35,8 @@
                         <div class="d-flex py-2 padding-avatar pointer" (click)="read(item)" [class.notification--not-read]="item.notificationState?.id === 'UnRead'">
                             <div class="action" width="">
                                 <div>
-                                    <img [src]="item.sendEmployee.employeeAvatar ? item.sendEmployee.employeeAvatar : 'assets/images/no-avatar.png'" width="30"
-                                        height="30">
+                                    <img [src]="item.sendEmployee.employeeAvatar && item.sendEmployee.employeeAvatar.thumbSizeUrl ? item.sendEmployee.employeeAvatar.thumbSizeUrl : 'assets/images/no-avatar.png'"
+                                     class="avatar" alt="Avatar">
                                 </div>
                             </div>
                         </div>

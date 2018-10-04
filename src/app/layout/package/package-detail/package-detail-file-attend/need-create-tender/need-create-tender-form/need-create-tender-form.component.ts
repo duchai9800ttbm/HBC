@@ -3,7 +3,8 @@ import { ProposeTenderParticipateRequest } from '../../../../../../shared/models
 import { PackageService } from '../../../../../../shared/services/package.service';
 import {
     AlertService,
-    SessionService
+    SessionService,
+    ConfirmationService
 } from '../../../../../../shared/services';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { PackageDetailComponent } from '../../../package-detail.component';
@@ -40,7 +41,8 @@ export class NeedCreateTenderFormComponent implements OnInit, OnDestroy {
         private spinner: NgxSpinnerService,
         private router: Router,
         private sessionService: SessionService,
-        private scrollTopService: ScrollToTopService
+        private scrollTopService: ScrollToTopService,
+        private confirmService: ConfirmationService,
     ) {}
 
     ngOnInit() {
@@ -257,4 +259,14 @@ export class NeedCreateTenderFormComponent implements OnInit, OnDestroy {
         this.onSubmit(false);
         this.updatedDetail = '';
     }
+
+    checkSigned() {
+        if (NeedCreateTenderFormComponent.formModel.tenderDirectorProposal.isSigned) {
+          this.isShowDialog = true;
+        } else {
+          this.isShowDialog = false;
+          this.confirmService.missAction('Đề nghị dự thầu chưa được xác nhận ký bởi giám đốc dự thầu',
+            `/package/detail/${this.bidOpportunityId}/attend/create-request/form/edit/director-proposal`);
+        }
+      }
 }
