@@ -38,7 +38,7 @@ export class InformationDeploymentFormComponent implements OnInit {
     isShowChanges = false;
     updatedDetail = '';
     tenderPlan: TenderPreparationPlanningRequest;
-
+    mailPersonnel = ['', '', '', ''];
     get tasksFA(): FormArray {
         return this.planForm.get('tasks') as FormArray;
     }
@@ -51,7 +51,7 @@ export class InformationDeploymentFormComponent implements OnInit {
         private router: Router,
         private alertService: AlertService,
         private sessionService: SessionService
-    ) {}
+    ) { }
 
     ngOnInit() {
         setTimeout(() => {
@@ -59,14 +59,23 @@ export class InformationDeploymentFormComponent implements OnInit {
         });
         this.routerAction = this.packageService.routerAction;
         this.bidOpportunityId = PackageDetailComponent.packageId;
-        this.userService.getAllUser('').subscribe(data => this.userList = data);
+        this.userService.getAllUser('').subscribe(data => {
+            this.userList = data;
+        });
         this.getPackageInfo();
         if (this.routerAction === 'create') {
             this.packageService
-            .getDefaultTenderPreparationPlanning()
-            .subscribe(data => this.createForm(data, true));
+                .getDefaultTenderPreparationPlanning()
+                .subscribe(data => {
+                    console.log('getDefaultTenderPreparationPlanning', data);
+                    this.createForm(data, true);
+                }
+                );
         } else {
-            this.packageService.getTenderPreparationPlanning(this.bidOpportunityId).subscribe(data => this.createForm(data));
+            this.packageService.getTenderPreparationPlanning(this.bidOpportunityId).subscribe(data => {
+                console.log('getTenderPreparationPlanning', data);
+                this.createForm(data);
+            });
         }
     }
 
@@ -87,6 +96,10 @@ export class InformationDeploymentFormComponent implements OnInit {
             projectInformation: planModel.projectInformation ? planModel.projectInformation : 'Bảng phân công tiến độ',
             tasks: this.fb.array(taskArr)
         });
+        this.changeDirector(this.planForm.get('projectDirectorEmployeeId').value, 0);
+        this.changeDirector(this.planForm.get('tenderDepartmentEmployeeId').value, 1);
+        this.changeDirector(this.planForm.get('technicalDepartmentEmployeeId').value, 2);
+        this.changeDirector(this.planForm.get('bimDepartmentEmployeeId').value, 3);
         setTimeout(() => {
             kendo.jQuery(this.ganttChart.nativeElement).kendoGantt({
                 views: [
@@ -108,7 +121,22 @@ export class InformationDeploymentFormComponent implements OnInit {
     getEmailUser(userId: number): string {
         // tslint:disable-next-line:triple-equals
         // tslint:disable-next-line:max-line-length
-        return this.userList && this.userList.find(i => i.employeeId == userId) ? this.userList.find(i => i.employeeId == userId).email : '';
+        return this.userList && this.userList.find(i => i.employeeId === Number(userId) ) ? this.userList.find(i => i.employeeId === Number(userId) ).email : '';
+    }
+
+    changeDirector(userId, personnelType) {
+        if (personnelType === 0) {
+            this.mailPersonnel[0] = this.getEmailUser(userId);
+        }
+        if (personnelType === 1) {
+            this.mailPersonnel[1] = this.getEmailUser(userId);
+        }
+        if (personnelType === 2) {
+            this.mailPersonnel[2] = this.getEmailUser(userId);
+        }
+        if (personnelType === 3) {
+            this.mailPersonnel[3] = this.getEmailUser(userId);
+        }
     }
 
     updateGantt() {
@@ -137,13 +165,13 @@ export class InformationDeploymentFormComponent implements OnInit {
             whoIsInChargeId: data.whoIsInChargeId === 0 ? null : data.whoIsInChargeId,
             startDate: data.startDate
                 ? DateTimeConvertHelper.fromTimestampToDtObject(
-                      data.startDate * 1000
-                  )
+                    data.startDate * 1000
+                )
                 : null,
             finishDate: data.finishDate
                 ? DateTimeConvertHelper.fromTimestampToDtObject(
-                      data.finishDate * 1000
-                  )
+                    data.finishDate * 1000
+                )
                 : null,
             duration: data.duration,
             isFinish: data.isFinish

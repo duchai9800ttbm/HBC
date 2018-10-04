@@ -35,72 +35,72 @@ export class PackageDetailFileAttendComponent implements OnInit {
   }
 
   ngOnInit() {
-    // this.checkStatusPackage();
-    // this.statusObservableHsdtService.statusPackageService.subscribe(value => {
-    //   this.packageService.getInforPackageID(this.packageId).subscribe(result => {
-    //     this.packageData = result;
-    //     this.statusPackageName = this.packageData.stageStatus.id;
-    //     for (let i = 0; i < this.listStatusPackage.length; i++) {
-    //       if (this.listStatusPackage[i].find(item => item === this.packageData.stageStatus.id)) {
-    //         this.statusPackageID = i;
-    //         break;
-    //       }
-    //     }
-    //   });
-    // });
-    // this.packageId = +PackageDetailComponent.packageId;
-    // this.packageService.getInforPackageID(this.packageId).subscribe(result => {
-    //   this.packageData = result;
-    //   this.statusPackageName = this.packageData.stageStatus.id;
-    //   this.redirectByStatus();
-    // });
+    this.checkStatusPackage();
+    this.statusObservableHsdtService.statusPackageService.subscribe(value => {
+      this.packageService.getInforPackageID(this.packageId).subscribe(result => {
+        this.packageData = result;
+        this.statusPackageName = this.packageData.stageStatus.id;
+        for (let i = 0; i < this.listStatusPackage.length; i++) {
+          if (this.listStatusPackage[i].find(item => item === this.packageData.stageStatus.id)) {
+            this.statusPackageID = i;
+            break;
+          }
+        }
+      });
+    });
+    this.packageId = +PackageDetailComponent.packageId;
+    this.packageService.getInforPackageID(this.packageId).subscribe(result => {
+      this.packageData = result;
+      this.statusPackageName = this.packageData.stageStatus.id;
+      this.redirectByStatus();
+    });
   }
 
-  // checkStatusPackage() {
-  //   this.packageId = +PackageDetailComponent.packageId;
-  //   if (this.activeRouter.firstChild) {
-  //     this.activeRouter.firstChild.url.subscribe(url => {
-  //       this.currentUrl = url[0].path;
-  //       if (this.urlChirld.find(item => item === this.currentUrl)) {
-  //         this.packageService.getInforPackageID(this.packageId).subscribe(result => {
-  //           this.packageData = result;
-  //           this.statusPackageName = this.packageData.stageStatus.id;
-  //           for (let i = 0; i < this.listStatusPackage.length; i++) {
-  //             if (this.listStatusPackage[i].find(item => item === this.packageData.stageStatus.id)) {
-  //               this.statusPackageID = i;
-  //               break;
-  //             }
-  //           }
-  //         });
-  //       }
-  //     });
-  //   } else {
-  //     this.redirectByStatus();
-  //   }
-  //   this.router.events.subscribe((val) => {
-  //     if ((val instanceof NavigationEnd) === true) {
-  //       if (this.activeRouter.firstChild) {
-  //         this.activeRouter.firstChild.url.subscribe(url => {
-  //           this.currentUrl = url[0].path;
-  //           if (this.urlChirld.find(item => item === this.currentUrl)) {
-  //             this.packageService.getInforPackageID(this.packageId).subscribe(result => {
-  //               this.packageData = result;
-  //               this.statusPackageName = this.packageData.stageStatus.id;
-  //               for (let i = 0; i < this.listStatusPackage.length; i++) {
-  //                 if (this.listStatusPackage[i].find(item => item === this.packageData.stageStatus.id)) {
-  //                   this.statusPackageID = i;
-  //                   break;
-  //                 }
-  //               }
-  //             });
-  //           }
-  //         });
-  //       } else {
-  //         this.redirectByStatus();
-  //       }
-  //     }
-  //   });
-  // }
+  checkStatusPackage() {
+    this.packageId = +PackageDetailComponent.packageId;
+    if (this.activeRouter.firstChild) {
+      this.activeRouter.firstChild.url.subscribe(url => {
+        this.currentUrl = url[0].path;
+        if (this.urlChirld.find(item => item === this.currentUrl)) {
+          this.packageService.getInforPackageID(this.packageId).subscribe(result => {
+            this.packageData = result;
+            this.statusPackageName = this.packageData.stageStatus.id;
+            for (let i = 0; i < this.listStatusPackage.length; i++) {
+              if (this.listStatusPackage[i].find(item => item === this.packageData.stageStatus.id)) {
+                this.statusPackageID = i;
+                break;
+              }
+            }
+          });
+        }
+      });
+    } else {
+      this.redirectByStatus();
+    }
+    this.router.events.subscribe((val) => {
+      if ((val instanceof NavigationEnd) === true) {
+        if (this.activeRouter.firstChild) {
+          this.activeRouter.firstChild.url.subscribe(url => {
+            this.currentUrl = url[0].path;
+            if (this.urlChirld.find(item => item === this.currentUrl)) {
+              this.packageService.getInforPackageID(this.packageId).subscribe(result => {
+                this.packageData = result;
+                this.statusPackageName = this.packageData.stageStatus.id;
+                for (let i = 0; i < this.listStatusPackage.length; i++) {
+                  if (this.listStatusPackage[i].find(item => item === this.packageData.stageStatus.id)) {
+                    this.statusPackageID = i;
+                    break;
+                  }
+                }
+              });
+            }
+          });
+        } else {
+          this.redirectByStatus();
+        }
+      }
+    });
+  }
 
   redirectByStatus() {
     this.packageService.getInforPackageID(this.packageId).subscribe(result => {

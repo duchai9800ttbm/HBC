@@ -107,13 +107,13 @@
                         <td>Project Director</td>
                         <td>
                             <span class="custom-dropdown w-100 b-dropdown-no-border">
-                                <select class="form-control" formControlName="projectDirectorEmployeeId">
+                                <select class="form-control" (change)="changeDirector($event.target.value, 0)" formControlName="projectDirectorEmployeeId">
                                     <option [ngValue]="null">--Chọn--</option>
                                     <option *ngFor="let user of userList" [value]="user.employeeId">{{user.employeeName}}</option>
                                 </select>
                             </span>
                         </td>
-                        <td class="mw-12"><a>{{getEmailUser(planForm.get('projectDirectorEmployeeId').value)}}</a></td>
+                        <td class="mw-12"><a>{{mailPersonnel[0]}}</a></td>
                         <td>Start</td>
                         <td class="mw-12">
                             <!-- <kendo-datepicker class="form-control b-datepicker-no-border"></kendo-datepicker> -->
@@ -124,13 +124,13 @@
                         <td>Tender Dept</td>
                         <td>
                             <span class="custom-dropdown w-100 b-dropdown-no-border">
-                                <select class="form-control" formControlName="tenderDepartmentEmployeeId">
+                                <select class="form-control" (change)="changeDirector($event.target.value, 1)" formControlName="tenderDepartmentEmployeeId">
                                     <option [ngValue]="null">--Chọn--</option>
                                     <option *ngFor="let user of userList" [value]="user.employeeId">{{user.employeeName}}</option>
                                 </select>
                             </span>
                         </td>
-                        <td><a>{{getEmailUser(planForm.get('tenderDepartmentEmployeeId').value)}}</a></td>
+                        <td><a>{{mailPersonnel[1]}}</a></td>
                         <td>Tender Duration</td>
                         <td>
                             <!-- <kendo-datepicker class="form-control b-datepicker-no-border"></kendo-datepicker> -->
@@ -141,13 +141,13 @@
                         <td>Technical Dept</td>
                         <td>
                             <span class="custom-dropdown w-100 b-dropdown-no-border">
-                                <select class="form-control" formControlName="technicalDepartmentEmployeeId">
+                                <select class="form-control" (change)="changeDirector($event.target.value, 2)" formControlName="technicalDepartmentEmployeeId">
                                     <option [ngValue]="null">--Chọn--</option>
                                     <option *ngFor="let user of userList" [value]="user.employeeId">{{user.employeeName}}</option>
                                 </select>
                             </span>
                         </td>
-                        <td><a>{{getEmailUser(planForm.get('technicalDepartmentEmployeeId').value)}}</a></td>
+                        <td><a>{{mailPersonnel[2]}}</a></td>
                         <td>Query's Deadline</td>
                         <td>
                             <!-- <kendo-datepicker class="form-control b-datepicker-no-border"></kendo-datepicker> -->
@@ -159,13 +159,13 @@
                         <td>BIM Dept</td>
                         <td>
                             <span class="custom-dropdown w-100 b-dropdown-no-border">
-                                <select class="form-control" formControlName="bimDepartmentEmployeeId">
+                                <select class="form-control" (change)="changeDirector($event.target.value, 3)" formControlName="bimDepartmentEmployeeId">
                                     <option [ngValue]="null">--Chọn--</option>
                                     <option *ngFor="let user of userList" [value]="user.employeeId">{{user.employeeName}}</option>
                                 </select>
                             </span>
                         </td>
-                        <td><a>{{getEmailUser(planForm.get('bimDepartmentEmployeeId').value)}}</a></td>
+                        <td><a>{{mailPersonnel[3]}}</a></td>
                         <td>Finish</td>
                         <td>
                             <!-- <kendo-datepicker class="form-control b-datepicker-no-border"></kendo-datepicker> -->
@@ -214,10 +214,10 @@
                                 </label>
                             </td>
                             <td class="pl-0">
-                                <kendo-datepicker formControlName="startDate" class="form-control b-datepicker-no-border b-datepicker-ic"></kendo-datepicker>
+                                <kendo-datepicker [max]="data.get('finishDate').value" formControlName="startDate" class="form-control b-datepicker-no-border b-datepicker-ic"></kendo-datepicker>
                             </td>
                             <td class="pl-0">
-                                <kendo-datepicker formControlName="finishDate" class="form-control b-datepicker-no-border b-datepicker-ic"></kendo-datepicker>
+                                <kendo-datepicker [min]="data.get('startDate').value" formControlName="finishDate" class="form-control b-datepicker-no-border b-datepicker-ic"></kendo-datepicker>
                             </td>
                             <td class="text-center">{{getItemDuration(data.get('startDate').value,
                                 data.get('finishDate').value)}}</td>
