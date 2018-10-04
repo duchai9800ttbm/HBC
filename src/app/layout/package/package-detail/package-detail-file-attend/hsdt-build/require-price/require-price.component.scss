@@ -1,3 +1,16 @@
+.padding-table {
+    padding-left: 15px;
+}
+
+.title-table {
+    height: 40px;
+}
+
+.title-table-text {
+    text-transform: uppercase;
+    font-size: 15px;
+}
+
 .boder-table {
     border: 2px solid #ebebeb;
 }
@@ -12,6 +25,10 @@
 
 .small-column {
     width: 9%;
+}
+
+.large-column {
+    width: 15%;
 }
 
 input.icon {
@@ -39,12 +56,22 @@ input.icon {
     box-shadow: none;
 }
 
-table {
-    >tbody {
-        width: auto;
-        white-space: nowrap;
-        overflow-x: auto;
-    }
+.custom-filter-bar {
+    background-color: #fafbfc !important;
+    padding: 9px 15px;
+}
+
+.check-box-stt {
+    width: 3%;
+    min-width: 15px;
+}
+
+.custom-title-text {
+    width: 35%;
+}
+
+.pointer-link {
+    cursor: pointer;
 }
 
 .text-truncate-custom {
@@ -56,4 +83,20 @@ table {
 
 .color-item-test {
     color: #b3b3b3
+}
+
+@media only screen and (max-width: 1409px) {
+    .status-filter {
+        flex-direction: row-reverse;
+    }
+}
+
+@media only screen and (max-width: 1124px) {
+    .responsive-control {
+        flex-direction: row-reverse;
+    }
+
+    .input-group {
+        margin-bottom: 0.2rem
+    }
 }
