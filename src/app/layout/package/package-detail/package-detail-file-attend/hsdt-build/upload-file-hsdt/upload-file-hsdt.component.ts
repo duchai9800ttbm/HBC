@@ -64,7 +64,7 @@ export class UploadFileHsdtComponent implements OnInit {
   }
   uploadFile(event) {
     this.tempFile = event.target.files;
-    this.uploadForm.get('file').patchValue(this.tempFile);
+    this.uploadForm.get('file').patchValue(this.tempFile[0]);
     this.displayName = this.tempFile[0].name;
   }
 
@@ -85,7 +85,9 @@ export class UploadFileHsdtComponent implements OnInit {
           editName,
           description,
           file,
-          linkFile
+          linkFile,
+          version,
+          interViewTimes
         ).subscribe(data => {
           this.spinner.hide();
           this.errorMess = null;

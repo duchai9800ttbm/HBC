@@ -35,6 +35,7 @@ export class RequirePriceComponent implements OnInit {
   danhSachLoaiTaiLieu;
   danhSachBGVT;
   danhSachUser;
+  lanPhongVan;
   constructor(
     private hoSoDuThauService: HoSoDuThauService,
     private dialogService: DialogService,
@@ -48,6 +49,7 @@ export class RequirePriceComponent implements OnInit {
     this.getDataTypeBGVT();
     this.filterModel.status = '';
     this.filterModel.uploadedEmployeeId = null;
+    this.filterModel.interViewTimes = null;
   }
   showDialogUploadFile() {
     this.dialog = this.dialogService.open({
@@ -82,7 +84,7 @@ export class RequirePriceComponent implements OnInit {
         this.spinner.hide();
         this.rerender(responseResultBGVT);
         this.danhSachBGVT = responseResultBGVT.items.filter(item =>
-          item.tenderDocumentType === 'Yêu cầu báo giá vật tư, thầu phụ'
+          item.tenderDocumentType.id === 2
         );
         this.dtTrigger.next();
       }, err => {
@@ -158,7 +160,7 @@ export class RequirePriceComponent implements OnInit {
         this.spinner.hide();
         this.rerender(responseResultBoHSDT);
         this.danhSachBGVT = responseResultBoHSDT.items.filter(item =>
-          item.tenderDocumentType === 'Yêu cầu báo giá vật tư, thầu phụ'
+          item.tenderDocumentType.id === 2
         );
         this.dtTrigger.next();
       }, err => {
@@ -169,6 +171,10 @@ export class RequirePriceComponent implements OnInit {
   }
   clearFilter() {
     this.filterModel = new HsdtFilterModel();
+    this.filterModel.createdDate = null;
+    this.filterModel.status = '';
+    this.filterModel.uploadedEmployeeId = null;
+    this.filterModel.interViewTimes = null;
     this.getDataTypeBGVT();
   }
   changeStatus(id, status) {

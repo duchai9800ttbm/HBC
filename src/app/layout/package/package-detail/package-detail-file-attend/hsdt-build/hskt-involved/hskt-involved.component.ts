@@ -92,7 +92,7 @@ export class HsktInvolvedComponent implements OnInit {
         this.spinner.hide();
         this.rerender(responseHS);
         this.danhSachHoSoKT = responseHS.items.filter(item =>
-          item.tenderDocumentType === 'Các hồ sơ kỹ thuật khác'
+          item.tenderDocumentType.id === 16
         );
         this.sum = this.danhSachHoSoKT.length;
         this.dtTrigger.next();
@@ -161,7 +161,7 @@ export class HsktInvolvedComponent implements OnInit {
         this.spinner.hide();
         this.rerender(responseResultBoHSDT);
         this.danhSachHoSoKT = responseResultBoHSDT.items.filter(item =>
-          item.tenderDocumentType === 'Các hồ sơ kỹ thuật khác'
+          item.tenderDocumentType.id === 16
         );
         this.sum = this.danhSachHoSoKT.length;
         this.dtTrigger.next();

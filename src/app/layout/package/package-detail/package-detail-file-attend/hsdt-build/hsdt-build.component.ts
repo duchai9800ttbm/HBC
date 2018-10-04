@@ -34,7 +34,7 @@ export class HsdtBuildComponent implements OnInit {
     isShowMenu = false;
     notShow = false;
     danhSachLoaiTaiLieu;
-    dataUser;
+
     constructor(
         private hoSoDuThauService: HoSoDuThauService,
         private alertService: AlertService,
@@ -46,6 +46,7 @@ export class HsdtBuildComponent implements OnInit {
     ) { }
 
     ngOnInit() {
+        this.getDanhSachLoaiHoSo();
         this.packageId = +PackageDetailComponent.packageId;
         this.packageService.isSummaryConditionForm$.subscribe(data => {
             this.isShowMenu = data;
@@ -81,7 +82,14 @@ export class HsdtBuildComponent implements OnInit {
         this.hideActionSiteReport = (event.constructor.name === 'LiveformSiteReportComponent') ? true : false;
     }
     taiTemplateHSDT() {
-        this.hoSoDuThauService.taiTemplateHSDT().subscribe();
+        this.hoSoDuThauService.taiTemplateHSDT().subscribe(file => {
+        }, err => {
+            if (err.json().errorCode) {
+                this.alertService.error('File không tồn tại hoặc đã bị xóa!');
+            } else {
+                this.alertService.error('Đã có lỗi xãy ra. Vui lòng thử lại!');
+            }
+        });
     }
 
     chotHSDT(event) {

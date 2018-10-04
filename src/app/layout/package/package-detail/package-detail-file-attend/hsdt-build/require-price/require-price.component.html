@@ -31,8 +31,8 @@
         </div>
     </div>
     <div class="d-flex flex-row flex-wrap filter-bar custom-filter-bar">
-        <div class="d-flex form-inline">
-            <div class="form-group ml-sm-2 p-1">
+        <div class="d-flex form-inline reponsive-custom-control">
+            <div class="form-group ml-sm-2 custom-reponsive-filter-action">
                 <label for="" class="form-label">Tình trạng</label>
                 <span class="custom-dropdown mx-sm-2">
                     <select class="form-control" [(ngModel)]="filterModel.status">
@@ -43,7 +43,7 @@
                 </span>
             </div>
 
-            <div class="form-group ml-sm-2">
+            <div class="form-group ml-sm-2 custom-reponsive-filter-action">
                 <label for="" class="form-label">Người upload</label>
                 <span class="custom-dropdown mx-sm-2">
                     <select class="form-control" [(ngModel)]="filterModel.uploadedEmployeeId">
@@ -55,7 +55,7 @@
                 </span>
             </div>
 
-            <div class="form-group ml-sm-2 p-1">
+            <div class="form-group ml-sm-2">
                 <label for="" class="form-label mr-2">Ngày upload</label>
                 <div class="input-group calendarInput">
 
@@ -72,15 +72,15 @@
                 <label for="" class="form-label">Lần phỏng vấn</label>
                 <span class="custom-dropdown mx-sm-2">
                     <select class="form-control" [(ngModel)]="filterModel.interViewTimes">
-                        <option [ngValue]="null">--Lựa chọn--</option>
-                        <!-- <option *ngFor="let value of danhSachBGVT" [value]="value?.interViewTimes">
+                        <option [value]=null>--Lựa chọn--</option>
+                        <option *ngFor="let value of danhSachBGVT" [value]="value.interViewTimes">
                             {{ value?.interViewTimes }}
-                        </option> -->
+                        </option>
                     </select>
                 </span>
             </div>
 
-            <div class="form-group ml-auto p-1">
+            <div class="form-group responsive-filter-control">
                 <button type="submit" class="btn btn-primary ml-sm-2" (click)="filter()">
                     <i class="fa fa-filter" aria-hidden="true"></i>&nbsp; Lọc
                 </button>
@@ -189,29 +189,26 @@
                         </div>
                     </td>
                     <td class="boder-table text-center text-truncate-custom">{{ hoso?.documentName }}</td>
-                    <td class="boder-table text-center text-truncate">{{ hoso?.version }}</td>
-                    <td class="boder-table text-center text-truncate-custom">{{ hoso?.description }}</td>
-
-                    <td class="td-mark-status boder-table text-center text-truncate">
+                    <td class="boder-table text-center text-truncate">{{ hoso.version }}</td>
+                    <td class="boder-table text-center text-truncate-custom">{{ hoso?.desc }}</td>
+                    <td class="td-mark-status boder-table">
                         <div class="d-flex justify-content-between pl-2 pr-2">
                             <div class="text-truncate text-right" [title]="hoso.status">
                                 {{ hoso.status | translate }}
                             </div>
                             <div (click)="changeStatus(hoso.id, hoso.status)">
-                                <i class="fa fa-check-square color-item-down" class="pointer-link" aria-hidden="true"
-                                    *ngIf="hoso.status === 'Official'"></i>
-                                <i class="fa fa-check-square color-item-test" class="pointer-link" aria-hidden="true"
-                                    *ngIf="hoso.status === 'Draft'"></i>
+                                <i class="fa fa-check-square color-item-down pointer-link" aria-hidden="true" *ngIf="hoso.status === 'Official'"></i>
+                                <i class="fa fa-check-square color-item-test pointer-link" aria-hidden="true" *ngIf="hoso.status === 'Draft'"></i>
                             </div>
                         </div>
                     </td>
-                    <td class="boder-table text-center text-truncate">{{ hoso?.uploadedBy }}</td>
+                    <td class="boder-table text-center text-truncate">{{ hoso.uploadedBy?.employeeName }}</td>
                     <td class="boder-table text-center text-truncate">{{ hoso?.uploadedDate*1000 | date:'dd/MM/yyyy':
                         '+0000' }}</td>
                     <td class="boder-table text-center text-truncate">{{ hoso?.interViewTimes }}</td>
                     <td class="boder-table">
                         <div class="d-flex justify-content-around">
-                            <div *ngIf="!hoso.url" class="pointer-link" title="Tải file" (click)="dowloadDocument(hoso.id)">
+                            <div *ngIf="!hoso.url" class="pointer-link" title="Tải file" (click)="downloadDocument(hoso.id)">
                                 <a>
                                     <i class="fa fa-download color-item-down" aria-hidden="true"></i>
                                 </a>

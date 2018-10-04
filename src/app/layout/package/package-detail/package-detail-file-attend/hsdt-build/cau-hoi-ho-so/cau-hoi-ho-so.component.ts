@@ -79,7 +79,7 @@ export class CauHoiHoSoComponent implements OnInit {
       .subscribe(responseResultBGVT => {
         this.rerender(responseResultBGVT);
         this.danhSachCHHS = responseResultBGVT.items.filter(item =>
-          item.tenderDocumentType === 'Bảng câu hỏi làm rõ HSMT'
+          item.tenderDocumentType.id === 6
         );
         this.dtTrigger.next();
       }, err => {
@@ -153,7 +153,7 @@ export class CauHoiHoSoComponent implements OnInit {
       .subscribe(responseResultBoHSDT => {
         this.rerender(responseResultBoHSDT);
         this.danhSachCHHS = responseResultBoHSDT.items.filter(item =>
-          item.tenderDocumentType === 'Bảng câu hỏi làm rõ HSMT'
+          item.tenderDocumentType.id === 6
         );
         this.dtTrigger.next();
       }, err => {
