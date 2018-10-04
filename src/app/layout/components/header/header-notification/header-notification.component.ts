@@ -169,6 +169,7 @@ export class HeaderNotificationComponent implements OnInit {
   getListNotification() {
     this.notificationService.getListNotification().subscribe(response => {
       this.notificationList = response;
+      console.log('this.notificaiton', this.notificationList);
       // this.notificationList.forEach( item => {
       //   this.amountNotificationNotRead = item
       // });
