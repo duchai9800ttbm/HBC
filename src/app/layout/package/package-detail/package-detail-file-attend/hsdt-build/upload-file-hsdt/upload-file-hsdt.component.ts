@@ -37,7 +37,7 @@ export class UploadFileHsdtComponent implements OnInit {
   ) { }
   ngOnInit() {
     this.uploadForm = this.fb.group({
-      linkFile: [null, Validators.required],
+      linkFile: '',
       file: null,
       editName: '',
       version: null,
@@ -75,6 +75,8 @@ export class UploadFileHsdtComponent implements OnInit {
       const linkFile = this.uploadForm.get('linkFile').value;
       const description = this.uploadForm.get('description').value;
       const editName = this.uploadForm.get('editName').value;
+      const interViewTimes = this.uploadForm.get('interViewTimes').value;
+      const version = this.uploadForm.get('version').value;
       if (file || linkFile) {
         this.spinner.show();
         this.hoSoDuThauService.taiLenHoSoDuThau(

@@ -36,6 +36,7 @@ export class RequirePriceComponent implements OnInit {
   checkboxSeclectAll: boolean;
   danhSachLoaiTaiLieu;
   danhSachBGVT;
+  danhSachUser;
   constructor(
     private hoSoDuThauService: HoSoDuThauService,
     private dialogService: DialogService,
@@ -49,6 +50,8 @@ export class RequirePriceComponent implements OnInit {
   ngOnInit() {
     this.getDanhSachLoaiHoSo();
     this.getDataTypeBGVT();
+    this.filterModel.status = '';
+    this.filterModel.uploadedEmployeeId = null;
   }
   showDialogUploadFile() {
     this.dialog = this.dialogService.open({
@@ -69,6 +72,7 @@ export class RequirePriceComponent implements OnInit {
   }
   getDanhSachLoaiHoSo() {
     this.packageId = +PackageDetailComponent.packageId;
+    this.getDanhSachUser();
     this.hoSoDuThauService.getDanhSachLoaiTaiLieu(this.packageId).subscribe(res => {
       this.danhSachLoaiTaiLieu = res;
     }, err => {
@@ -170,10 +174,6 @@ export class RequirePriceComponent implements OnInit {
   }
   clearFilter() {
     this.filterModel = new HsdtFilterModel();
-    this.filterModel.status = '';
-    this.filterModel.uploadedEmployeeId = null;
-    this.filterModel.createdDate = null;
-    this.filterModel.uploadedEmployeeId = null;
     this.getDataTypeBGVT();
   }
   changeStatus(id, status) {
@@ -203,5 +203,10 @@ export class RequirePriceComponent implements OnInit {
         this.alertService.error('Đã có lỗi. Dữ liệu chưa được cập nhật!');
       });
     }
+  }
+  getDanhSachUser() {
+    this.hoSoDuThauService.getDataUser(0, 40).subscribe(res => {
+      this.danhSachUser = res.items;
+    });
   }
 }
