@@ -9,12 +9,13 @@ import { InterviewInvitationFilter } from '../models/interview-invitation/interv
 import { URLSearchParams } from '@angular/http';
 import { InterviewInvitationFilterReport } from '../models/interview-invitation/interview-invitation-filter-report';
 import { InterviewInvitationReportList } from '../models/interview-invitation/interview-invitation-report-list.model';
+import DateTimeConvertHelper from '../helpers/datetime-convert-helper';
 @Injectable()
 export class InterviewInvitationService {
-  interviewInvitationList = new Subject<any>();
-  keySearchInterviewInvitation = new BehaviorSubject<string>('');
-  private keySearchNew = new Subject<string>();
-  refeshCreateInterviewInvitation = new BehaviorSubject<boolean>(false);
+  static interviewInvitationList = new Subject<any>();
+  static keySearchInterviewInvitation = new BehaviorSubject<string>('');
+  static keySearchNew = new Subject<string>();
+  static refeshCreateInterviewInvitation = new BehaviorSubject<boolean>(false);
   // map theo model danh sách biên bản phỏng vấn
   private static toInterviewInvitationReportList(result: any): InterviewInvitationReportList {
     return {
@@ -45,6 +46,7 @@ export class InterviewInvitationService {
   }
   // Tạo mới filter params
   private static createFilterParams(filter: InterviewInvitationFilter): URLSearchParams {
+    console.log('filter', filter);
     const urlFilterParams = new URLSearchParams();
     urlFilterParams.append(
       'customerid',
@@ -56,7 +58,8 @@ export class InterviewInvitationService {
     );
     urlFilterParams.append(
       'receivedDate',
-      filter.receivedDate ? filter.receivedDate.toString() : ''
+      // filter.receivedDate ? filter.receivedDate.toString() : ''
+      filter.receivedDate ? DateTimeConvertHelper.fromDtObjectToTimestamp(filter.receivedDate).toString() : ''
     );
     urlFilterParams.append('status', filter.status);
     urlFilterParams.append('sorting', filter.sorting);
@@ -91,36 +94,36 @@ export class InterviewInvitationService {
   // Create Interview Invitation
   // change key search interview invitation
   changeKeySearchInterviewInvitation(keyup) {
-    this.keySearchInterviewInvitation.next(keyup);
+    InterviewInvitationService.keySearchInterviewInvitation.next(keyup);
   }
   // Observable key search interview invitation
   watchKeySearchInterviewInvitation() {
-    return this.keySearchInterviewInvitation;
+    return InterviewInvitationService.keySearchInterviewInvitation;
   }
 
   changeKeySearchNew(keyup: string) {
-    this.keySearchNew.next(keyup);
+    InterviewInvitationService.keySearchNew.next(keyup);
   }
 
   watchKeySearchNew() {
-    return this.keySearchNew.asObservable();
+    return InterviewInvitationService.keySearchNew.asObservable();
   }
 
   // change interview invitation list
   changeInterviewInvitationList() {
-    this.interviewInvitationList.next();
+    InterviewInvitationService.interviewInvitationList.next();
   }
   // Observable interview invitation list
   watchInterviewInvitationList(): Observable<boolean> {
-    return this.interviewInvitationList;
+    return InterviewInvitationService.interviewInvitationList;
   }
   // refesh interview invitation list
   chagneRefeshInterviewInvitationList(displayAlert) {
-    this.refeshCreateInterviewInvitation.next(displayAlert);
+    InterviewInvitationService.refeshCreateInterviewInvitation.next(displayAlert);
   }
   // Observable refesh interview invitation list
   watchRefeshInterviewInvitationList(): Observable<boolean> {
-    return this.refeshCreateInterviewInvitation;
+    return InterviewInvitationService.refeshCreateInterviewInvitation;
   }
   // map theo model danh sách lời lời phỏng vấn
   toInterviewInvitationList(result: any): InterviewInvitationList {
@@ -166,7 +169,6 @@ export class InterviewInvitationService {
         InterviewInvitationService.createFilterParams(filter)
       )
       .map(result => {
-        console.log('danh sách lời moiwfi phỏng vấn', result);
         return {
           currentPage: result.page,
           pageSize: pageSize,
@@ -230,8 +232,10 @@ export class InterviewInvitationService {
     }
     // formData.append('CustomerId', createFormNewInvitationValue.customerName);
     formData.append('BidOpportunityId', `${BidOpportunityId}`);
-    formData.append('ReceivedDate', `${moment(createFormNewInvitationValue.approvedDate).unix()}`);
-    formData.append('InterViewDate', `${moment(createFormNewInvitationValue.interviewDate).unix()}`);
+    formData.append('ReceivedDate', `${DateTimeConvertHelper.fromDtObjectToTimestamp(createFormNewInvitationValue.approvedDate)}`);
+    // formData.append('ReceivedDate', `${moment(createFormNewInvitationValue.approvedDate).unix()}`);
+    formData.append('InterViewDate', `${DateTimeConvertHelper.fromDtObjectToTimestamp(createFormNewInvitationValue.interviewDate)}`);
+    // formData.append('InterViewDate', `${moment(createFormNewInvitationValue.interviewDate).unix()}`);
     formData.append('Place', createFormNewInvitationValue.place);
     formData.append('InterviewTimes', createFormNewInvitationValue.interviewTimes);
     if (createFormNewInvitationValue.content) {

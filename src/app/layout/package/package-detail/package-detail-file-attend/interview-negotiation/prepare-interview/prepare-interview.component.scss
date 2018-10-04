@@ -311,6 +311,12 @@ button:focus {
     outline: #fff !important;
 }
 
+table.dataTable{
+    border-bottom: 1px solid #dddddd !important;
+    box-shadow: none;
+    border-collapse: collapse;
+}
+
 table.dataTable th {
     border-bottom: 1px solid #dddddd !important;
     background-color: #ffff !important;

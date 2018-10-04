@@ -1,4 +1,5 @@
-<div class="mr-auto d-flex align-items-end list-package mb-3 d-flex justify-content-between">
+<div class="mr-auto d-flex align-items-end list-package mb-2 d-flex justify-content-between" *ngIf="statusPackage === bidStatus.DaNhanLoiMoi">
+        <!-- *ngIf="statusPackage === bidStatus.DaNhanLoiMoi" -->
     <div class="d-flex justify-content-start pl-5">
         <div class="rule mr-2">
         </div>
@@ -6,9 +7,9 @@
             <div> Đã nộp hồ sơ dự thầu</div>
         </div>
     </div>
-    <div class="pr-3">
+    <div>
         <div class="btn-toolbar">
-            <ng-container *ngIf="amountInterview !== 0">
+            <ng-container>
                 <div class="input-group">
                     <span class="input-group-addon">Tìm kiếm theo</span>
                     <!-- (keyup)="searchTerm$.next($event.target.value)" -->
@@ -28,29 +29,56 @@
     </div>
 </div>
 
+<div class="mr-auto d-flex align-items-end list-package mb-2 d-flex justify-content-between" *ngIf="statusPackage === bidStatus.ChuanBiPhongVan">
+        <!-- *ngIf="statusPackage === bidStatus.ChuanBiPhongVan" -->
+    <div class="d-flex justify-content-start pl-5">
+        <div class="rule mr-2">
+        </div>
+        <div class="center-parent  mr-4 title-status--size">
+            <div> Chuẩn bị phỏng vấn</div>
+        </div>
+    </div>
+    <div>
+        <div class="btn-toolbar">
+            <button class="btn btn-primary ml-2">
+                Tải template
+            </button>
+            <button class="btn btn-primary ml-2">
+                Chốt công tác chuẩn bị phỏng vấn
+            </button>
+            <button class="btn btn-primary ml-2">
+                <i class="fa fa-refresh" aria-hidden="true"></i>
+            </button>
+        </div>
+    </div>
+</div>
+
 <div class="d-flex">
     <div class="set-width-menu-left d-flex menu--width">
         <div class="nav flex-column nav-pills cus-menu" id="v-pills-tab" role="tablist" aria-orientation="vertical">
-            <div class="nav-link active d-flex cus-menu-children" id="v-pills-home-tab" data-toggle="pill" role="tab" aria-controls="v-pills-home"
-                aria-selected="true">
+            <div [routerLink]="['./create']" class="nav-link active d-flex cus-menu-children px-2" id="v-pills-home-tab" data-toggle="pill"
+                role="tab" aria-controls="v-pills-home" aria-selected="true" >
+                <!-- [class.no-active]="numberStatusPackageInterview < 1"
+                [class.active]="numberStatusPackageInterview >= currentStatusInterview && currentStatusInterview === 1" [class.back]="numberStatusPackageInterview > 1 && currentStatusInterview > 1" -->
                 <div class="center-parent number">1</div>
                 <div class="word">Tender Clarification Meeting (TCM)</div>
             </div>
-            <div class="center-parent div-menu">
+            <div class="center-parent div-menu" [class.div-menu-active]="numberStatusPackageInterview > 1">
                 <div class="border-top"></div>
             </div>
-            <div class="nav-link no-active d-flex cus-menu-children" id="v-pills-profile-tab" data-toggle="pill" role="tab" aria-controls="v-pills-profile"
-                aria-selected="false">
+            <div [routerLink]="['./prepare']" class="nav-link d-flex cus-menu-children px-2" id="v-pills-profile-tab" data-toggle="pill" role="tab"
+                aria-controls="v-pills-profile" aria-selected="false" [class.no-active]="numberStatusPackageInterview < 2" [class.active]="numberStatusPackageInterview >= currentStatusInterview && currentStatusInterview === 2"
+                [class.back]="numberStatusPackageInterview > 2 && currentStatusInterview > 2">
                 <div class="center-parent number">2</div>
                 <div class="word">
                     <span>Quản lý tổ chức phỏng vấn</span>
                 </div>
             </div>
-            <div class="center-parent div-menu">
+            <div class="center-parent div-menu" [class.div-menu-active]="numberStatusPackageInterview > 2">
                 <div class="border-top"></div>
             </div>
-            <div class="nav-link no-active d-flex cus-menu-children" id="v-pills-messages-tab" data-toggle="pill" role="tab" aria-controls="v-pills-messages"
-                aria-selected="false">
+            <div [routerLink]="['./end']" class="nav-link d-flex cus-menu-children px-2" id="v-pills-messages-tab" data-toggle="pill" role="tab"
+                aria-controls="v-pills-messages" aria-selected="false" [class.no-active]="numberStatusPackageInterview < 3" [class.active]="numberStatusPackageInterview >= currentStatusInterview && currentStatusInterview === 3">
                 <div class="center-parent number">3</div>
                 <div class="word">Biên bản phỏng vấn thầu</div>
             </div>
