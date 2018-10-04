@@ -39,6 +39,7 @@ export class InformationDeploymentFormComponent implements OnInit {
     updatedDetail = '';
     tenderPlan: TenderPreparationPlanningRequest;
     mailPersonnel = ['', '', '', ''];
+    taskNoAssignment = '';
     get tasksFA(): FormArray {
         return this.planForm.get('tasks') as FormArray;
     }
@@ -121,7 +122,7 @@ export class InformationDeploymentFormComponent implements OnInit {
     getEmailUser(userId: number): string {
         // tslint:disable-next-line:triple-equals
         // tslint:disable-next-line:max-line-length
-        return this.userList && this.userList.find(i => i.employeeId === Number(userId) ) ? this.userList.find(i => i.employeeId === Number(userId) ).email : '';
+        return this.userList && this.userList.find(i => i.employeeId === Number(userId)) ? this.userList.find(i => i.employeeId === Number(userId)).email : '';
     }
 
     changeDirector(userId, personnelType) {
@@ -234,16 +235,32 @@ export class InformationDeploymentFormComponent implements OnInit {
         return false;
     }
 
+    checkAssignment(): boolean {
+        return this.tasksFA.value.every(item => {
+            if (item.whoIsInChargeId && item.whoIsInChargeId !== 0) {
+                this.taskNoAssignment = item.itemName;
+                return (item.startDate && item.finishDate);
+            } else {
+                return true;
+            }
+        });
+
+    }
+
     submitForm(isDraft: boolean) {
-        const data = this.getFormData();
-        const isValid = this.validateForm(data, isDraft);
-        if (!isValid) {
-            return;
-        }
-        if (data.id && !isDraft) {
-            this.isShowChanges = true;
+        if ( this.checkAssignment() ) {
+            const data = this.getFormData();
+            const isValid = this.validateForm(data, isDraft);
+            if (!isValid) {
+                return;
+            }
+            if (data.id && !isDraft) {
+                this.isShowChanges = true;
+            } else {
+                this.saveTenderPlan(isDraft);
+            }
         } else {
-            this.saveTenderPlan(isDraft);
+            this.alertService.error(`Bạn cần chọn ngày bắt đầu và ngày kết thúc cho công việc "${this.taskNoAssignment}"`);
         }
     }
 
@@ -258,6 +275,12 @@ export class InformationDeploymentFormComponent implements OnInit {
         }
         // data.updatedDesc = this.updatedDetail;
         this.spinner.show();
+        // console.log('data-data', data.tasks.forEach( item => {
+        //     item.itemName = '';
+        // }));
+        data.tasks.forEach( item => {
+            item.itemName = '';
+        });
         this.packageService.createOrUpdateTenderPreparationPlanning(data).subscribe(res => {
             this.spinner.hide();
             this.router.navigateByUrl(`package/detail/${this.bidOpportunityId}/attend/infomation-deployment`);

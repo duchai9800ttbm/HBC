@@ -37,57 +37,71 @@
         <div class="header m-0">
             <div class="row">
                 <div class="col-md-6 pl-0 header-bid-info">
-                    <div class=""><strong>Công trình (Project):</strong></div>
+                    <div class="">
+                        <strong>Công trình (Project):</strong>
+                    </div>
                     <div class="">{{packageInfo?.projectName}}</div>
                 </div>
                 <div class="col-md-3 pl-0">
-                    <div class=""><strong>Người lập (Prepare by): </strong>{{tenderPlan?.createdEmployee?.employeeName}}</div>
+                    <div class="">
+                        <strong>Người lập (Prepare by): </strong>{{tenderPlan?.createdEmployee?.employeeName}}</div>
                     <div class=""></div>
                 </div>
                 <div class="col-md-3 pl-0">
-                    <div class=""><strong>Người duyệt (Approved by): </strong>{{tenderPlan?.approvedEmployee?.employeeName}}</div>
+                    <div class="">
+                        <strong>Người duyệt (Approved by): </strong>{{tenderPlan?.approvedEmployee?.employeeName}}</div>
                     <div class=""></div>
                 </div>
             </div>
             <div class="row mt-2">
                 <div class="col-md-6 pl-0 header-bid-info">
-                    <div class=""><strong>Địa điểm (Location):</strong></div>
+                    <div class="">
+                        <strong>Địa điểm (Location):</strong>
+                    </div>
                     <div class="">{{packageInfo?.place}}</div>
                 </div>
                 <div class="col-md-3 pl-0">
-                    <div class=""><strong>Ngày lập (Date): </strong>{{tenderPlan?.createDate * 1000 | date: 'dd/MM/yyyy' : '+0000'}}</div>
+                    <div class="">
+                        <strong>Ngày lập (Date): </strong>{{tenderPlan?.createDate * 1000 | date: 'dd/MM/yyyy' : '+0000'}}</div>
                     <div class=""></div>
                 </div>
                 <div class="col-md-3 pl-0">
-                    <div class=""><strong>Ngày duyệt (Date): </strong>{{tenderPlan?.approvedDate * 1000 | date: 'dd/MM/yyyy' : '+0000'}}</div>
+                    <div class="">
+                        <strong>Ngày duyệt (Date): </strong>{{tenderPlan?.approvedDate * 1000 | date: 'dd/MM/yyyy' : '+0000'}}</div>
                     <div class=""></div>
                 </div>
             </div>
             <div class="row mt-2">
                 <div class="col-md-6 pl-0 header-bid-info">
-                    <div class=""><strong>Gói thầu (Package):</strong></div>
+                    <div class="">
+                        <strong>Gói thầu (Package):</strong>
+                    </div>
                     <div class="">{{packageInfo?.opportunityName}}</div>
                 </div>
                 <div class="col-md-3 pl-0">
                     <button class="btn btn-primary btn-sign position-absolute" *ngIf="!planForm.get('isSignedByPreparedPerson').value" (click)="clickSignPrepare()">Xác nhận ký</button>
                     <button class="btn btn-primary btn-sign position-absolute" *ngIf="planForm.get('isSignedByPreparedPerson').value">
-                            <i class="fa fa-check icon-check" aria-hidden="true"></i> Đã ký
+                        <i class="fa fa-check icon-check" aria-hidden="true"></i> Đã ký
                     </button>
                 </div>
                 <div class="col-md-3 pl-0">
                     <button class="btn btn-primary btn-sign position-absolute" *ngIf="!planForm.get('isSignedByApprovalPerson').value" (click)="clickSignApproved()">Xác nhận ký</button>
                     <button class="btn btn-primary btn-sign position-absolute" *ngIf="planForm.get('isSignedByApprovalPerson').value">
-                            <i class="fa fa-check icon-check" aria-hidden="true"></i> Đã ký
+                        <i class="fa fa-check icon-check" aria-hidden="true"></i> Đã ký
                     </button>
                 </div>
             </div>
             <div class="row mt-2">
                 <div class="col-md-6 pl-0 header-bid-info">
-                    <div class=""><strong>Chủ đầu tư (Employer):</strong></div>
+                    <div class="">
+                        <strong>Chủ đầu tư (Employer):</strong>
+                    </div>
                     <div class=""></div>
                 </div>
                 <div class="col-md-6">
-                    <div class="col-md-4"><strong></strong></div>
+                    <div class="col-md-4">
+                        <strong></strong>
+                    </div>
                     <div class="col-md-8"></div>
                 </div>
             </div>
@@ -98,7 +112,9 @@
                 <thead>
                     <tr>
                         <th>Tên tài liệu</th>
-                        <th colspan="5"><input class="form-control" formControlName="projectInformation"></th>
+                        <th colspan="5">
+                            <input class="form-control" formControlName="projectInformation">
+                        </th>
                     </tr>
                 </thead>
                 <tbody>
@@ -113,7 +129,9 @@
                                 </select>
                             </span>
                         </td>
-                        <td class="mw-12"><a>{{mailPersonnel[0]}}</a></td>
+                        <td class="mw-12">
+                            <a>{{mailPersonnel[0]}}</a>
+                        </td>
                         <td>Start</td>
                         <td class="mw-12">
                             <!-- <kendo-datepicker class="form-control b-datepicker-no-border"></kendo-datepicker> -->
@@ -130,11 +148,13 @@
                                 </select>
                             </span>
                         </td>
-                        <td><a>{{mailPersonnel[1]}}</a></td>
+                        <td>
+                            <a>{{mailPersonnel[1]}}</a>
+                        </td>
                         <td>Tender Duration</td>
                         <td>
                             <!-- <kendo-datepicker class="form-control b-datepicker-no-border"></kendo-datepicker> -->
-                            {{(packageInfo?.submissionDate - packageInfo?.startTrackingDate) / (60 * 60 * 24)}}
+                            {{(packageInfo?.submissionDate - packageInfo?.startTrackingDate) / (60 * 60 * 24)}} days
                         </td>
                     </tr>
                     <tr>
@@ -147,12 +167,13 @@
                                 </select>
                             </span>
                         </td>
-                        <td><a>{{mailPersonnel[2]}}</a></td>
+                        <td>
+                            <a>{{mailPersonnel[2]}}</a>
+                        </td>
                         <td>Query's Deadline</td>
                         <td>
                             <!-- <kendo-datepicker class="form-control b-datepicker-no-border"></kendo-datepicker> -->
-                            {{packageInfo?.submissionDate ? getDateStr(packageInfo?.submissionDate * 1000 - (1000 * 60
-                            * 60 * 24 * 7)) : ''}}
+                            {{packageInfo?.submissionDate ? getDateStr(packageInfo?.submissionDate * 1000 - (1000 * 60 * 60 * 24 * 7)) : ''}}
                         </td>
                     </tr>
                     <tr>
@@ -165,7 +186,9 @@
                                 </select>
                             </span>
                         </td>
-                        <td><a>{{mailPersonnel[3]}}</a></td>
+                        <td>
+                            <a>{{mailPersonnel[3]}}</a>
+                        </td>
                         <td>Finish</td>
                         <td>
                             <!-- <kendo-datepicker class="form-control b-datepicker-no-border"></kendo-datepicker> -->
@@ -199,7 +222,7 @@
                                 <textarea class="form-control b-textarea h-100" formControlName="itemDesc"></textarea>
                                 <span *ngIf="!data.get('itemDesc').value" class="fake-placeholder">Nhập text</span>
                             </td>
-                            <td class="pl-0">
+                            <td class="pl-0" *ngIf="data.get('itemId').value !== 6">
                                 <span class="custom-dropdown w-100 b-dropdown-no-border">
                                     <select class="form-control" formControlName="whoIsInChargeId">
                                         <option [ngValue]="null">--Chọn--</option>
@@ -207,9 +230,17 @@
                                     </select>
                                 </span>
                             </td>
+                            <td *ngIf="data.get('itemId').value === 6">
+                                <!-- <ng-select class="w-100" [items]="userList" typeToSearchText="Nhập tên" clearAllText="Xóa tất cả"
+                                    [addTag]="true" [hideSelected]="true" multiple="true" bindLabel="employeeName"
+                                    [(ngModel)]="emailModel.to">
+                                </ng-select> -->
+                            </td>
                             <td class="text-center">
-                                <label class="custom-control custom-checkbox z-ontop" >
-                                    <input type="checkbox" (click)="checkFinishTenderPlanItem(data.get('itemId').value)" class="custom-control-input input-checkbox" [attr.disabled]="packageInfo?.stageStatus.id != bidStatus.DaGuiPhanCongTienDo ? '' : null" formControlName="isFinish">
+                                <label class="custom-control custom-checkbox z-ontop">
+                                    <input type="checkbox" (click)="checkFinishTenderPlanItem(data.get('itemId').value)" class="custom-control-input input-checkbox"
+                                        [attr.disabled]="packageInfo?.stageStatus.id != bidStatus.DaGuiPhanCongTienDo ? '' : null"
+                                        formControlName="isFinish">
                                     <span class="custom-control-indicator"></span>
                                 </label>
                             </td>
@@ -219,8 +250,8 @@
                             <td class="pl-0">
                                 <kendo-datepicker [min]="data.get('startDate').value" formControlName="finishDate" class="form-control b-datepicker-no-border b-datepicker-ic"></kendo-datepicker>
                             </td>
-                            <td class="text-center">{{getItemDuration(data.get('startDate').value,
-                                data.get('finishDate').value)}}</td>
+                            <td class="text-center">{{getItemDuration(data.get('startDate').value, data.get('finishDate').value)}}
+                            </td>
                         </tr>
                     </tbody>
                 </table>
@@ -231,27 +262,27 @@
         </div>
     </div>
     <kendo-dialog [width]="550" *ngIf="isShowChanges">
-            <div>
-                <div class="dialog-header mt-2">
-                    <h3 class="text-center text-uppercase color-black">Cập nhật liveform</h3>
-                    <span class="ic-close pointer" (click)="closeShowChanges()">
-                        <img src="assets/images/ic-close.svg">
-                    </span>
-                </div>
-                <div class="text-center">
-                    Bạn đã cập nhật những gì trong lần sửa này?
-                </div>
-                <div class="dialog-body">
-                    <div class="w-100 mt-4">
-                        <div class="pr-1 pl-1">
-                            <textarea formControlName="updatedDesc" class="form-control" rows="3"></textarea>
-                        </div>
+        <div>
+            <div class="dialog-header mt-2">
+                <h3 class="text-center text-uppercase color-black">Cập nhật liveform</h3>
+                <span class="ic-close pointer" (click)="closeShowChanges()">
+                    <img src="assets/images/ic-close.svg">
+                </span>
+            </div>
+            <div class="text-center">
+                Bạn đã cập nhật những gì trong lần sửa này?
+            </div>
+            <div class="dialog-body">
+                <div class="w-100 mt-4">
+                    <div class="pr-1 pl-1">
+                        <textarea formControlName="updatedDesc" class="form-control" rows="3"></textarea>
                     </div>
                 </div>
-                <div class="mt-4 text-center mb-2">
-                    <button class="btn b-btn btn-primary" (click)="saveChangesLiveForm()">OK</button>
-                </div>
             </div>
-        </kendo-dialog>
+            <div class="mt-4 text-center mb-2">
+                <button class="btn b-btn btn-primary" (click)="saveChangesLiveForm()">OK</button>
+            </div>
+        </div>
+    </kendo-dialog>
 </form>
 <ngx-spinner bdColor="rgba(51, 51, 51, 0.7)" size="medium" color="#fff" type="ball-clip-rotate-multiple"></ngx-spinner>
