@@ -7,8 +7,6 @@ import { PackageDetailComponent } from '../../../package-detail.component';
 import { HoSoDuThauService } from '../../../../../../shared/services/ho-so-du-thau.service';
 import { DialogService } from '@progress/kendo-angular-dialog';
 import { AlertService, ConfirmationService } from '../../../../../../shared/services';
-import { PackageService } from '../../../../../../shared/services/package.service';
-import { Router } from '@angular/router';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { PagedResult } from '../../../../../../shared/models';
 import { DanhSachBoHsdtItem } from '../../../../../../shared/models/ho-so-du-thau/danh-sach-bo-hsdt-item.model';
@@ -36,12 +34,11 @@ export class RequirePriceComponent implements OnInit {
   checkboxSeclectAll: boolean;
   danhSachLoaiTaiLieu;
   danhSachBGVT;
+  danhSachUser;
   constructor(
     private hoSoDuThauService: HoSoDuThauService,
     private dialogService: DialogService,
     private alertService: AlertService,
-    private packageService: PackageService,
-    private router: Router,
     private spinner: NgxSpinnerService,
     private confirmationService: ConfirmationService
   ) { }
@@ -49,6 +46,8 @@ export class RequirePriceComponent implements OnInit {
   ngOnInit() {
     this.getDanhSachLoaiHoSo();
     this.getDataTypeBGVT();
+    this.filterModel.status = '';
+    this.filterModel.uploadedEmployeeId = null;
   }
   showDialogUploadFile() {
     this.dialog = this.dialogService.open({
@@ -65,10 +64,10 @@ export class RequirePriceComponent implements OnInit {
   closePopuup() {
     this.dialog.close();
     this.getDataTypeBGVT();
-    // this.getDanhSachBoHoSo();
   }
   getDanhSachLoaiHoSo() {
     this.packageId = +PackageDetailComponent.packageId;
+    this.getDanhSachUser();
     this.hoSoDuThauService.getDanhSachLoaiTaiLieu(this.packageId).subscribe(res => {
       this.danhSachLoaiTaiLieu = res;
     }, err => {
@@ -170,10 +169,6 @@ export class RequirePriceComponent implements OnInit {
   }
   clearFilter() {
     this.filterModel = new HsdtFilterModel();
-    this.filterModel.status = '';
-    this.filterModel.uploadedEmployeeId = null;
-    this.filterModel.createdDate = null;
-    this.filterModel.uploadedEmployeeId = null;
     this.getDataTypeBGVT();
   }
   changeStatus(id, status) {
@@ -203,5 +198,10 @@ export class RequirePriceComponent implements OnInit {
         this.alertService.error('Đã có lỗi. Dữ liệu chưa được cập nhật!');
       });
     }
+  }
+  getDanhSachUser() {
+    this.hoSoDuThauService.getDataUser(0, 40).subscribe(res => {
+      this.danhSachUser = res.items;
+    });
   }
 }
