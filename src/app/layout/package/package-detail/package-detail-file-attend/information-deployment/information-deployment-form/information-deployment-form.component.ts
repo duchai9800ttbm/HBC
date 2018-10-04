@@ -40,6 +40,7 @@ export class InformationDeploymentFormComponent implements OnInit {
     tenderPlan: TenderPreparationPlanningRequest;
     mailPersonnel = ['', '', '', ''];
     taskNoAssignment = '';
+    whoIsInChargeIdSurvey;
     get tasksFA(): FormArray {
         return this.planForm.get('tasks') as FormArray;
     }
@@ -62,6 +63,7 @@ export class InformationDeploymentFormComponent implements OnInit {
         this.bidOpportunityId = PackageDetailComponent.packageId;
         this.userService.getAllUser('').subscribe(data => {
             this.userList = data;
+            console.log('this.useLisst', this.userList);
         });
         this.getPackageInfo();
         if (this.routerAction === 'create') {
@@ -83,6 +85,7 @@ export class InformationDeploymentFormComponent implements OnInit {
     createForm(planModel: TenderPreparationPlanningRequest, isCreate?) {
         this.tenderPlan = planModel;
         const taskArr = [];
+        console.log('planModel.projectDirectorEmployee', planModel.projectDirectorEmployee);
         planModel.tasks.forEach(i => taskArr.push(this.createTaskItemFG(i)));
         this.planForm = this.fb.group({
             id: planModel.id,
@@ -97,6 +100,7 @@ export class InformationDeploymentFormComponent implements OnInit {
             projectInformation: planModel.projectInformation ? planModel.projectInformation : 'Bảng phân công tiến độ',
             tasks: this.fb.array(taskArr)
         });
+        console.log('projectDirectorEmployeeId-projectDirectorEmployeeId', this.planForm.get('projectDirectorEmployeeId').value);
         this.changeDirector(this.planForm.get('projectDirectorEmployeeId').value, 0);
         this.changeDirector(this.planForm.get('tenderDepartmentEmployeeId').value, 1);
         this.changeDirector(this.planForm.get('technicalDepartmentEmployeeId').value, 2);
@@ -122,21 +126,23 @@ export class InformationDeploymentFormComponent implements OnInit {
     getEmailUser(userId: number): string {
         // tslint:disable-next-line:triple-equals
         // tslint:disable-next-line:max-line-length
-        return this.userList && this.userList.find(i => i.employeeId === Number(userId)) ? this.userList.find(i => i.employeeId === Number(userId)).email : '';
+        return ( this.userList && this.userList.find(i => i.employeeId === Number(userId)) )? this.userList.find(i => i.employeeId === Number(userId)).email : '';
     }
 
     changeDirector(userId, personnelType) {
-        if (personnelType === 0) {
-            this.mailPersonnel[0] = this.getEmailUser(userId);
-        }
-        if (personnelType === 1) {
-            this.mailPersonnel[1] = this.getEmailUser(userId);
-        }
-        if (personnelType === 2) {
-            this.mailPersonnel[2] = this.getEmailUser(userId);
-        }
-        if (personnelType === 3) {
-            this.mailPersonnel[3] = this.getEmailUser(userId);
+        if (userId) {
+            if (personnelType === 0) {
+                this.mailPersonnel[0] = this.getEmailUser(userId);
+            }
+            if (personnelType === 1) {
+                this.mailPersonnel[1] = this.getEmailUser(userId);
+            }
+            if (personnelType === 2) {
+                this.mailPersonnel[2] = this.getEmailUser(userId);
+            }
+            if (personnelType === 3) {
+                this.mailPersonnel[3] = this.getEmailUser(userId);
+            }
         }
     }
 
@@ -204,11 +210,16 @@ export class InformationDeploymentFormComponent implements OnInit {
     }
 
     validateForm(formData: TenderPreparationPlanningRequest, isDraft: boolean): boolean {
+        console.log('planForm?.get.value', this.planForm.get('isDraftVersion').value) ;
         if (isDraft) {
             // lưu nháp thì ko cần validate
             return true;
         } else if (formData.tasks.every(i => i.whoIsInChargeId === 0 || i.whoIsInChargeId == null)) {
-            this.alertService.error('Bạn chưa hoàn tất phân công tiến độ, chọn "Lưu nháp" nếu muốn thực hiện sau.');
+            if ( this.planForm.get('isDraftVersion').value === false) {
+                this.alertService.error('Bạn chưa hoàn tất phân công tiến độ!');
+            } else {
+                this.alertService.error('Bạn chưa hoàn tất phân công tiến độ, chọn "Lưu nháp" nếu muốn thực hiện sau.');
+            }
             return false;
         } else {
             return this.checkPlanItems(formData.tasks);
@@ -248,6 +259,7 @@ export class InformationDeploymentFormComponent implements OnInit {
     }
 
     submitForm(isDraft: boolean) {
+        console.log('isDrafft', isDraft);
         if ( this.checkAssignment() ) {
             const data = this.getFormData();
             const isValid = this.validateForm(data, isDraft);

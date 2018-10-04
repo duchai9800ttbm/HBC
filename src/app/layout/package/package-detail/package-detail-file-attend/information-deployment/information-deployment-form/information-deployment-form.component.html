@@ -231,10 +231,10 @@
                                 </span>
                             </td>
                             <td *ngIf="data.get('itemId').value === 6">
-                                <!-- <ng-select class="w-100" [items]="userList" typeToSearchText="Nhập tên" clearAllText="Xóa tất cả"
-                                    [addTag]="true" [hideSelected]="true" multiple="true" bindLabel="employeeName"
-                                    [(ngModel)]="emailModel.to">
-                                </ng-select> -->
+                                <ng-select class="w-100" [items]="userList" typeToSearchText="Nhập tên" clearAllText="Xóa tất cả"
+                                    [hideSelected]="true" multiple="true" bindLabel="employeeName"
+                                    formControlName="whoIsInChargeId" style="outline: none">
+                                </ng-select>
                             </td>
                             <td class="text-center">
                                 <label class="custom-control custom-checkbox z-ontop">

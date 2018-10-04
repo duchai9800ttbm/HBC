@@ -204,4 +204,14 @@ table, thead, tbody, tfoot {
         background-color: transparent;
     }
 }
-
+:host /deep/ .ng-select .ng-select-container{
+    border: none;
+    background-color: #f6f7f8;
+    outline: none;
+}
+:host /deep/ .ng-select .ng-arrow-wrapper .ng-arrow{
+    border-color: black transparent transparent;
+    border-style: solid;
+    border-width: 8px 5px 2.5px;
+    margin-left: 14px;
+}
