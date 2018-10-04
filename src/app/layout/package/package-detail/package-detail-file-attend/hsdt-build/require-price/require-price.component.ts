@@ -7,8 +7,6 @@ import { PackageDetailComponent } from '../../../package-detail.component';
 import { HoSoDuThauService } from '../../../../../../shared/services/ho-so-du-thau.service';
 import { DialogService } from '@progress/kendo-angular-dialog';
 import { AlertService, ConfirmationService } from '../../../../../../shared/services';
-import { PackageService } from '../../../../../../shared/services/package.service';
-import { Router } from '@angular/router';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { PagedResult } from '../../../../../../shared/models';
 import { DanhSachBoHsdtItem } from '../../../../../../shared/models/ho-so-du-thau/danh-sach-bo-hsdt-item.model';
@@ -41,8 +39,6 @@ export class RequirePriceComponent implements OnInit {
     private hoSoDuThauService: HoSoDuThauService,
     private dialogService: DialogService,
     private alertService: AlertService,
-    private packageService: PackageService,
-    private router: Router,
     private spinner: NgxSpinnerService,
     private confirmationService: ConfirmationService
   ) { }
@@ -68,7 +64,6 @@ export class RequirePriceComponent implements OnInit {
   closePopuup() {
     this.dialog.close();
     this.getDataTypeBGVT();
-    // this.getDanhSachBoHoSo();
   }
   getDanhSachLoaiHoSo() {
     this.packageId = +PackageDetailComponent.packageId;
