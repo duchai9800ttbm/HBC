@@ -34,6 +34,7 @@ export class HsdtBuildComponent implements OnInit {
     isShowMenu = false;
     notShow = false;
     danhSachLoaiTaiLieu;
+    routerName;
 
     constructor(
         private hoSoDuThauService: HoSoDuThauService,
@@ -79,7 +80,8 @@ export class HsdtBuildComponent implements OnInit {
         this.alertService.success('Dữ liệu đã được cập nhật mới nhất!');
     }
     onActivate(event) {
-        this.hideActionSiteReport = (event.constructor.name === 'LiveformSiteReportComponent') ? true : false;
+        this.routerName = event.constructor.name;
+        this.hideActionSiteReport = (this.routerName === 'LiveformSiteReportComponent') ? true : false;
     }
     taiTemplateHSDT() {
         this.hoSoDuThauService.taiTemplateHSDT().subscribe(file => {
@@ -106,5 +108,9 @@ export class HsdtBuildComponent implements OnInit {
                 });
             }
         );
+    }
+    emitData(data) {
+        this.hoSoDuThauService.transporterData(data);
+        this.router.navigate([`/package/detail/${this.packageId}/attend/build/uploadform`]);
     }
 }

@@ -1,26 +1,24 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { DATATABLE_CONFIG } from '../../../../../../shared/configs';
+// tslint:disable-next-line:import-blacklist
+import { Subject, BehaviorSubject } from 'rxjs';
+import { DATETIME_PICKER_CONFIG } from '../../../../../../shared/configs/datepicker.config';
+import { PackageDetailComponent } from '../../../package-detail.component';
 import { HoSoDuThauService } from '../../../../../../shared/services/ho-so-du-thau.service';
 import { DialogService } from '@progress/kendo-angular-dialog';
 import { AlertService, ConfirmationService } from '../../../../../../shared/services';
-import { PackageService } from '../../../../../../shared/services/package.service';
-import { Router } from '@angular/router';
 import { NgxSpinnerService } from 'ngx-spinner';
-import { PackageDetailComponent } from '../../../package-detail.component';
-// tslint:disable-next-line:import-blacklist
-import { BehaviorSubject, Subject } from 'rxjs';
-import { HsdtFilterModel } from '../../../../../../shared/models/ho-so-du-thau/hsdt-filter.model';
 import { PagedResult } from '../../../../../../shared/models';
 import { DanhSachBoHsdtItem } from '../../../../../../shared/models/ho-so-du-thau/danh-sach-bo-hsdt-item.model';
+import { HsdtFilterModel } from '../../../../../../shared/models/ho-so-du-thau/hsdt-filter.model';
 import { UploadFileHsdtComponent } from '../upload-file-hsdt/upload-file-hsdt.component';
-import { DATATABLE_CONFIG } from '../../../../../../shared/configs';
-import { DATETIME_PICKER_CONFIG } from '../../../../../../shared/configs/datepicker.config';
 
 @Component({
-  selector: 'app-cau-hoi-ho-so',
-  templateUrl: './cau-hoi-ho-so.component.html',
-  styleUrls: ['./cau-hoi-ho-so.component.scss']
+  selector: 'app-upload-form',
+  templateUrl: './upload-form.component.html',
+  styleUrls: ['./upload-form.component.scss']
 })
-export class CauHoiHoSoComponent implements OnInit {
+export class UploadFormComponent implements OnInit {
   dtTrigger: Subject<any> = new Subject();
   dtOptions: any = DATATABLE_CONFIG;
   datePickerConfig = DATETIME_PICKER_CONFIG;
@@ -34,21 +32,30 @@ export class CauHoiHoSoComponent implements OnInit {
   searchTerm$ = new BehaviorSubject<string>('');
   filterModel = new HsdtFilterModel();
   checkboxSeclectAll: boolean;
-  danhSachLoaiTaiLieu;
-  danhSachCHHS;
+
+  dataChildCoponent;
+  nameOfTypeDocument;
+  idOfTypeDocument;
+
+  dataDocumentOfType;
+  danhSachUser;
+  lanPhongVan;
   constructor(
     private hoSoDuThauService: HoSoDuThauService,
     private dialogService: DialogService,
     private alertService: AlertService,
-    private packageService: PackageService,
-    private router: Router,
     private spinner: NgxSpinnerService,
     private confirmationService: ConfirmationService
   ) { }
 
   ngOnInit() {
-    this.getDanhSachLoaiHoSo();
-    this.getDataTypeCHHS();
+    this.patchData();
+    this.getDataDocumentOfType();
+  }
+  patchData() {
+    this.dataChildCoponent = HoSoDuThauService.tempTenderDocumentTypesData;
+    this.nameOfTypeDocument = this.dataChildCoponent.item.name;
+    this.idOfTypeDocument = this.dataChildCoponent.item.id;
   }
   showDialogUploadFile() {
     this.dialog = this.dialogService.open({
@@ -58,31 +65,27 @@ export class CauHoiHoSoComponent implements OnInit {
     });
     const instance = this.dialog.content.instance;
     instance.bidOpportunityId = this.packageId;
-    instance.nameFile = 'Bảng câu hỏi làm rõ HSMT';
-    instance.idFile = 6;
+    instance.nameFile = this.nameOfTypeDocument;
+    instance.idFile = this.idOfTypeDocument;
     instance.callBack = this.closePopuup.bind(this);
   }
   closePopuup() {
     this.dialog.close();
-    this.getDataTypeCHHS();
-    // this.getDanhSachBoHoSo();
+    this.getDataDocumentOfType();
   }
-  getDanhSachLoaiHoSo() {
-    this.packageId = +PackageDetailComponent.packageId;
-    this.hoSoDuThauService.getDanhSachLoaiTaiLieu(this.packageId).subscribe(res => {
-      this.danhSachLoaiTaiLieu = res;
-    });
-  }
-  getDataTypeCHHS() {
+  getDataDocumentOfType() {
+    this.spinner.show();
     this.hoSoDuThauService
       .danhSachBoHoSoDuThauInstantSearch(this.packageId, this.searchTerm$, this.filterModel, 0, 10)
-      .subscribe(responseResultBGVT => {
-        this.rerender(responseResultBGVT);
-        this.danhSachCHHS = responseResultBGVT.items.filter(item =>
-          item.tenderDocumentType.id === 6
+      .subscribe(responseResultDocument => {
+        this.spinner.hide();
+        this.rerender(responseResultDocument);
+        this.dataDocumentOfType = responseResultDocument.items.filter(item =>
+          item.tenderDocumentType.id === this.idOfTypeDocument
         );
         this.dtTrigger.next();
       }, err => {
+        this.spinner.hide();
         this.alertService.error(`Đã có lỗi xảy ra. Xin vui lòng thử lại!`);
       });
   }
@@ -93,9 +96,8 @@ export class CauHoiHoSoComponent implements OnInit {
 
   }
   onSelectAll(value: boolean) {
-    this.danhSachCHHS.forEach(x => (x.checkboxSelected = value));
+    this.dataDocumentOfType.forEach(x => (x.checkboxSelected = value));
   }
-
 
   downloadDocument(id) {
     this.hoSoDuThauService.taiHoSoDuThau(id).subscribe(data => {
@@ -103,7 +105,7 @@ export class CauHoiHoSoComponent implements OnInit {
       if (err.json().errorCode) {
         this.alertService.error('File không tồn tại hoặc đã bị xóa!');
       } else {
-        this.alertService.error('Đã có lỗi xãy ra!');
+        this.alertService.error('Đã có lỗi xãy ra. Vui lòng thử lại!');
       }
     });
   }
@@ -125,7 +127,7 @@ export class CauHoiHoSoComponent implements OnInit {
   }
   multiDelete() {
     const that = this;
-    const listId = this.danhSachCHHS.filter(x => x.checkboxSelected).map(x => x.id);
+    const listId = this.dataDocumentOfType.filter(x => x.checkboxSelected).map(x => x.id);
     if (listId && listId.length === 0) {
       this.alertService.error('Bạn phải chọn ít nhất một tài liệu để xóa!');
     } else {
@@ -144,35 +146,35 @@ export class CauHoiHoSoComponent implements OnInit {
     }
   }
   refresh() {
-    this.getDataTypeCHHS();
+    this.getDataDocumentOfType();
     this.alertService.success(`Dữ liệu đã được cập nhật mới nhất!`);
   }
   filter() {
+    this.spinner.show();
     this.hoSoDuThauService
       .danhSachBoHoSoDuThau(this.packageId, this.searchTerm$.value, this.filterModel, 0, 10)
       .subscribe(responseResultBoHSDT => {
+        this.spinner.hide();
         this.rerender(responseResultBoHSDT);
-        this.danhSachCHHS = responseResultBoHSDT.items.filter(item =>
-          item.tenderDocumentType.id === 6
+        this.dataDocumentOfType = responseResultBoHSDT.items.filter(item =>
+          item.tenderDocumentType.id === this.idOfTypeDocument
         );
         this.dtTrigger.next();
       }, err => {
+        this.spinner.hide();
         this.alertService.error(`Đã có lỗi xảy ra. Xin vui lòng thử lại!`);
       });
     this.dtTrigger.next();
   }
   clearFilter() {
     this.filterModel = new HsdtFilterModel();
-    this.filterModel.status = '';
-    this.filterModel.uploadedEmployeeId = null;
-    this.filterModel.createdDate = null;
-    this.filterModel.uploadedEmployeeId = null;
-    this.getDataTypeCHHS();
+    this.getDataDocumentOfType();
   }
   changeStatus(id, status) {
     if (status === 'Draft') {
+      this.spinner.show();
       this.hoSoDuThauService.updateStatus(id, 'Official').subscribe(res => {
-        this.getDataTypeCHHS();
+        this.getDataDocumentOfType();
         this.dtTrigger.next();
         this.spinner.hide();
         this.alertService.success('Dữ liệu đã được cập nhật mới nhất!');
@@ -183,8 +185,9 @@ export class CauHoiHoSoComponent implements OnInit {
       });
     }
     if (status === 'Official') {
+      this.spinner.show();
       this.hoSoDuThauService.updateStatus(id, 'Draft').subscribe(res => {
-        this.getDataTypeCHHS();
+        this.getDataDocumentOfType();
         this.dtTrigger.next();
         this.spinner.hide();
         this.alertService.success('Dữ liệu đã được cập nhật mới nhất!');
@@ -194,5 +197,10 @@ export class CauHoiHoSoComponent implements OnInit {
         this.alertService.error('Đã có lỗi. Dữ liệu chưa được cập nhật!');
       });
     }
+  }
+  getDanhSachUser() {
+    this.hoSoDuThauService.getDataUser(0, 40).subscribe(res => {
+      this.danhSachUser = res.items;
+    });
   }
 }

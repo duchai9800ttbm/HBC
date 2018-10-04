@@ -44,43 +44,11 @@
                         </div>
                         <!-- List Type of Document -->
                         <ng-container *ngFor="let uploadform of danhSachLoaiTaiLieu; index as i">
-                            <div class="toggle-menu-item d-flex flex-column align-items-start"
-                                [routerLink]="['./pricereport']"
-                                [class.hight-light]="!item.hightLight && (currentMajorTypeId != item.id)"
-                                [class.active-menu]="(currentMajorTypeId == item.id)"
-                                >
+                            <div *ngIf="!uploadform.item?.isLiveForm" class="toggle-menu-item d-flex flex-column align-items-start" (click)="emitData(uploadform)">
                                 <div>{{ uploadform.item?.name }}</div>
                                 <span class="font-italic">Upload</span>
                             </div>
                         </ng-container>
-                        <!-- <div class="toggle-menu-item d-flex flex-column align-items-start" [routerLinkActive]="['router-link-active']"
-                            routerLink="./tonghopdutoan">
-                            <div>Bảng tổng hợp dự toán</div>
-                            <span class="font-italic">Upload</span>
-                        </div>
-                        <div class="toggle-menu-item d-flex flex-column align-items-start" [routerLinkActive]="['router-link-active']"
-                            routerLink="./cost">
-                            <div>Bảng tính chi phí chung</div>
-                            <span class="font-italic">Upload</span>
-                        </div>
-                        <div class="toggle-menu-item d-flex flex-column align-items-start" [routerLinkActive]="['router-link-active']"
-                            routerLink="./question">
-                            <div>Bảng câu hỏi làm rõ HSMT</div>
-                            <span class="font-italic">Upload</span>
-                        </div>
-                        <div class="toggle-menu-item d-flex flex-column align-items-start" [routerLinkActive]="['router-link-active']"
-                            [routerLink]="['techfile']">
-                            <div>Các HSKT có liên quan</div>
-                            <span class="font-italic">Upload</span>
-                        </div>
-                        <div class="toggle-menu-item d-flex flex-column align-items-start">
-                            <div>Hồ sơ pháp lý</div>
-                            <span class="font-italic">Upload</span>
-                        </div>
-                        <div class="no-action toggle-menu-item d-flex flex-column align-items-start">
-                            <div>Hồ sơ khác</div>
-                            <span class="font-italic">Upload</span>
-                        </div> -->
                     </div>
                     <div class="button-click mb-auto" (click)="toggleClick()">
                         <div class="center-parent">

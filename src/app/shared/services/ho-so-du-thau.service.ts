@@ -30,6 +30,7 @@ export class HoSoDuThauService {
 
   static tempDataLiveFormDKDT = new BehaviorSubject<DuLieuLiveFormDKDT>(new DuLieuLiveFormDKDT());
 
+  static tempTenderDocumentTypesData;
 
   private static createFilterParams(filter: HsdtFilterModel): URLSearchParams {
     const numCreatedDate = DateTimeConvertHelper.fromDtObjectToSecon(filter.createdDate);
@@ -42,11 +43,14 @@ export class HoSoDuThauService {
   }
 
   constructor(
-    private alertService: AlertService,
     private apiService: ApiService,
-    private sessionService: SessionService,
     private instantSearchService: InstantSearchService
   ) { }
+
+  // emit data to child component
+  transporterData(data) {
+    HoSoDuThauService.tempTenderDocumentTypesData = data;
+  }
   // get Danh Sách User
   getDataUser(
     page: number,
@@ -201,11 +205,11 @@ export class HoSoDuThauService {
   emitDataStepScope(obj: PhamViCongViec) {
     HoSoDuThauService.tempDataLiveFormDKDT.value.phamViCongViec = obj;
   }
-  emitDataStepSubContractor(obj: DanhSachNhaThau) {
-    HoSoDuThauService.tempDataLiveFormDKDT.value.danhSachNhaThau = [obj];
+  emitDataStepSubContractor(obj: DanhSachNhaThau[]) {
+    HoSoDuThauService.tempDataLiveFormDKDT.value.danhSachNhaThau = obj;
   }
-  emitDataStepMainMaterial(obj: DanhSachVatTu) {
-    HoSoDuThauService.tempDataLiveFormDKDT.value.danhSachVatTu = [obj];
+  emitDataStepMainMaterial(obj: DanhSachVatTu[]) {
+    HoSoDuThauService.tempDataLiveFormDKDT.value.danhSachVatTu = obj;
   }
   emitDataStepTenderSubmit(obj: HoSoDangLuuY) {
     HoSoDuThauService.tempDataLiveFormDKDT.value.hoSoDangLuuY = obj;
@@ -222,7 +226,7 @@ export class HoSoDuThauService {
   emitDataStepConditionTender(obj: DienGiaiDieuKienHSMT) {
     HoSoDuThauService.tempDataLiveFormDKDT.value.dienGiaiDieuKienHSMT = obj;
   }
-  emitDataStepSpecial(obj: TableYeuCauDacBiet) {
-    HoSoDuThauService.tempDataLiveFormDKDT.value.yeuCauDacBietKhac = [obj];
+  emitDataStepSpecial(obj: TableYeuCauDacBiet[]) {
+    HoSoDuThauService.tempDataLiveFormDKDT.value.yeuCauDacBietKhac = obj;
   }
 }
