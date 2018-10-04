@@ -107,7 +107,7 @@ export class CreateInterviewComponent implements OnInit, OnDestroy {
 
   getListNumberOfInterviews() {
     this.numberOfInterviews = this.pagedResult.items ? this.pagedResult.items.map(item => item.interviewTimes) : [];
-    this.numberOfInterviews = this.numberOfInterviews.sort(( a, b ) =>  a - b);
+    this.numberOfInterviews = this.numberOfInterviews.sort((a, b) => a - b);
     this.numberOfInterviews = this.numberOfInterviews.filter((el, i, a) => i === a.indexOf(el));
     console.log('this.numberOfInterviews', this.numberOfInterviews);
   }
@@ -129,8 +129,10 @@ export class CreateInterviewComponent implements OnInit, OnDestroy {
   createInvitation(interviewCreate: InterviewInvitation) {
     this.dialog = this.dialogService.open({
       content: CreateNewInvitationComponent,
-      width: 600,
-      minWidth: 250
+      width: 700,
+      minWidth: 250,
+      // height: 78vh;
+      // width: 50vw;
     });
     const instance = this.dialog.content.instance;
     interviewCreate = new InterviewInvitation();
@@ -145,7 +147,7 @@ export class CreateInterviewComponent implements OnInit, OnDestroy {
   }
 
   filter() {
-    console.log('receivedDate', DateTimeConvertHelper.fromDtObjectToTimestamp(this.filterModel.receivedDate) );
+    console.log('receivedDate', DateTimeConvertHelper.fromDtObjectToTimestamp(this.filterModel.receivedDate));
     this.spinner.show();
     this.interviewInvitationService
       .filterList(
@@ -206,7 +208,7 @@ export class CreateInterviewComponent implements OnInit, OnDestroy {
   EditInvitation(interviewEdit: InterviewInvitation) {
     this.dialog = this.dialogService.open({
       content: CreateNewInvitationComponent,
-      width: 600,
+      width: 700,
       minWidth: 250
     });
     const instance = this.dialog.content.instance;

@@ -86,7 +86,7 @@
           </div>
         </div>
 
-        <div class="d-flex flex-row flex-wrap filter-bar" style="background-color: #fafbfc!important; margin-right: 15px">
+        <div class="d-flex flex-row flex-wrap filter-bar" style="background-color: #fafbfc!important;">
           <div class="d-flex form-inline flex-pad">
             <div class="form-group ml-sm-2 py-2 pl-2">
               <label for="" class="form-label">Trạng thái</label>
@@ -135,7 +135,7 @@
           </div>
         </div>
 
-        <div class="bot-table table-responsive margin-right-table" style="margin-right: 15px;">
+        <div class="bot-table table-responsive">
           <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="table-selection row-border hover cell-border dataTable table">
             <thead>
               <tr>
@@ -263,11 +263,11 @@
                   </div>
                 </td>
               </tr>
-              <!-- <tr>
+              <tr *ngIf="!pagedResult.items || pagedResult.items.length === 0">
                 <td colspan="10">
-                  <div class="center-parent" *ngIf="!pagedResult.items || pagedResult.items.length === 0">Không có dữ liệu</div>
+                  <div class="center-parent">Không có dữ liệu</div>
                 </td>
-              </tr> -->
+              </tr>
             </tbody>
           </table>
         </div>

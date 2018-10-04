@@ -56,7 +56,7 @@
 <div class="d-flex">
     <div class="set-width-menu-left d-flex menu--width">
         <div class="nav flex-column nav-pills cus-menu" id="v-pills-tab" role="tablist" aria-orientation="vertical">
-            <div [routerLink]="['./create']" class="nav-link active d-flex cus-menu-children" id="v-pills-home-tab" data-toggle="pill"
+            <div [routerLink]="['./create']" class="nav-link active d-flex cus-menu-children px-2" id="v-pills-home-tab" data-toggle="pill"
                 role="tab" aria-controls="v-pills-home" aria-selected="true" >
                 <!-- [class.no-active]="numberStatusPackageInterview < 1"
                 [class.active]="numberStatusPackageInterview >= currentStatusInterview && currentStatusInterview === 1" [class.back]="numberStatusPackageInterview > 1 && currentStatusInterview > 1" -->
@@ -66,7 +66,7 @@
             <div class="center-parent div-menu" [class.div-menu-active]="numberStatusPackageInterview > 1">
                 <div class="border-top"></div>
             </div>
-            <div [routerLink]="['./prepare']" class="nav-link d-flex cus-menu-children" id="v-pills-profile-tab" data-toggle="pill" role="tab"
+            <div [routerLink]="['./prepare']" class="nav-link d-flex cus-menu-children px-2" id="v-pills-profile-tab" data-toggle="pill" role="tab"
                 aria-controls="v-pills-profile" aria-selected="false" [class.no-active]="numberStatusPackageInterview < 2" [class.active]="numberStatusPackageInterview >= currentStatusInterview && currentStatusInterview === 2"
                 [class.back]="numberStatusPackageInterview > 2 && currentStatusInterview > 2">
                 <div class="center-parent number">2</div>
@@ -77,7 +77,7 @@
             <div class="center-parent div-menu" [class.div-menu-active]="numberStatusPackageInterview > 2">
                 <div class="border-top"></div>
             </div>
-            <div [routerLink]="['./end']" class="nav-link d-flex cus-menu-children" id="v-pills-messages-tab" data-toggle="pill" role="tab"
+            <div [routerLink]="['./end']" class="nav-link d-flex cus-menu-children px-2" id="v-pills-messages-tab" data-toggle="pill" role="tab"
                 aria-controls="v-pills-messages" aria-selected="false" [class.no-active]="numberStatusPackageInterview < 3" [class.active]="numberStatusPackageInterview >= currentStatusInterview && currentStatusInterview === 3">
                 <div class="center-parent number">3</div>
                 <div class="word">Biên bản phỏng vấn thầu</div>

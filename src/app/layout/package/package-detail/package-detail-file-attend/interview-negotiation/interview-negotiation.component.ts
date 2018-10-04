@@ -99,7 +99,7 @@ export class InterviewNegotiationComponent implements OnInit {
   createInvitation(interviewCreate: InterviewInvitation) {
     this.dialog = this.dialogService.open({
       content: CreateNewInvitationComponent,
-      width: 600,
+      width: 700,
       minWidth: 250
     });
     const instance = this.dialog.content.instance;
