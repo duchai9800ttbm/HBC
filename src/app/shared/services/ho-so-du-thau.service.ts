@@ -151,7 +151,7 @@ export class HoSoDuThauService {
     page: number,
     pageSize: number,
   ): Observable<PagedResult<DanhSachBoHsdtItem>> {
-    const url = `bidOpportunity/${bidOpportunityId}/${page}/${pageSize}?searchTerm=${searchTerm}`;
+    const url = `bidopportunity/${bidOpportunityId}/tenderdocuments/${page}/${pageSize}?searchTerm=${searchTerm}`;
     const urlParams = HoSoDuThauService.createFilterParams(hsdtFilter);
 
     return this.apiService.get(url, urlParams).map(res => {
@@ -165,7 +165,7 @@ export class HoSoDuThauService {
       };
     });
   }
-
+  // GET /api/hbc/bidopportunity/{bidOpportunityId}/tenderdocuments/{page}/{pageSize}
   danhSachBoHoSoDuThauInstantSearch(
     bidOpportunityId: number,
     searchTerm: Observable<string>,
@@ -173,7 +173,7 @@ export class HoSoDuThauService {
     page: number,
     pageSize: number
   ): Observable<PagedResult<DanhSachBoHsdtItem>> {
-    const url = `bidOpportunity/${bidOpportunityId}/${page}/${pageSize}?searchTerm=`;
+    const url = `bidopportunity/${bidOpportunityId}/tenderdocuments/${page}/${pageSize}?searchTerm=`;
     const urlParams = HoSoDuThauService.createFilterParams(hsdtFilter);
     return this.instantSearchService
       .searchWithFilter(url, searchTerm, urlParams)

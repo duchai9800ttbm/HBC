@@ -53,14 +53,12 @@ export class UploadFormComponent implements OnInit {
     this.getDataDocumentOfType();
     this.filterModel.status = '';
     this.filterModel.uploadedEmployeeId = '';
-    this.filterModel.interViewTimes = '';
     this.hoSoDuThauService.watchChangingRouter().subscribe(data => {
       this.getDanhSachUser();
       this.getDanhSachLoaiHoSo();
       this.getDataDocumentOfType();
       this.filterModel.status = '';
       this.filterModel.uploadedEmployeeId = '';
-      this.filterModel.interViewTimes = '';
     });
   }
   showDialogUploadFile() {
@@ -178,7 +176,6 @@ export class UploadFormComponent implements OnInit {
   clearFilter() {
     this.filterModel.status = '';
     this.filterModel.uploadedEmployeeId = '';
-    this.filterModel.interViewTimes = '';
     this.filterModel.createdDate = null;
     this.getDataDocumentOfType();
   }
