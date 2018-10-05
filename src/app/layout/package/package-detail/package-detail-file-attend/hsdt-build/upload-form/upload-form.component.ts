@@ -33,8 +33,6 @@ export class UploadFormComponent implements OnInit {
   filterModel = new HsdtFilterModel();
   checkboxSeclectAll: boolean;
   danhSachLoaiTaiLieu;
-
-  idTypeOfChildCoponent;
   dataOfChildComponent;
   nameOfTypeDocument;
   childrenOfTypeDocument;
@@ -51,22 +49,19 @@ export class UploadFormComponent implements OnInit {
 
   ngOnInit() {
     this.getDanhSachUser();
-    this.patchData();
     this.getDanhSachLoaiHoSo();
     this.getDataDocumentOfType();
     this.filterModel.status = '';
     this.filterModel.uploadedEmployeeId = '';
+    this.filterModel.interViewTimes = '';
     this.hoSoDuThauService.watchChangingRouter().subscribe(data => {
       this.getDanhSachUser();
-      this.patchData();
       this.getDanhSachLoaiHoSo();
       this.getDataDocumentOfType();
       this.filterModel.status = '';
       this.filterModel.uploadedEmployeeId = '';
+      this.filterModel.interViewTimes = '';
     });
-  }
-  patchData() {
-    this.idTypeOfChildCoponent = HoSoDuThauService.idTenderDocumentTypesData;
   }
   showDialogUploadFile() {
     this.dialog = this.dialogService.open({
@@ -77,7 +72,7 @@ export class UploadFormComponent implements OnInit {
     const instance = this.dialog.content.instance;
     instance.bidOpportunityId = this.packageId;
     instance.nameFile = this.nameOfTypeDocument;
-    instance.idFile = this.idTypeOfChildCoponent;
+    instance.idFile = HoSoDuThauService.idTenderDocumentTypesData;
     instance.childrenType = this.childrenOfTypeDocument;
     instance.callBack = this.closePopuup.bind(this);
   }
@@ -85,15 +80,18 @@ export class UploadFormComponent implements OnInit {
     this.dialog.close();
     this.getDataDocumentOfType();
   }
-  getDataDocumentOfType() {
+  getDataDocumentOfType(alert = false) {
     this.spinner.show();
     this.hoSoDuThauService
       .danhSachBoHoSoDuThauInstantSearch(this.packageId, this.searchTerm$, this.filterModel, 0, 10)
       .subscribe(responseResultDocument => {
         this.spinner.hide();
+        if (alert) {
+          this.alertService.success(`Dữ liệu đã được cập nhật mới nhất!`);
+        }
         this.rerender(responseResultDocument);
         this.dataDocumentOfType = responseResultDocument.items.filter(item =>
-          item.tenderDocumentType.id === this.idTypeOfChildCoponent
+          item.tenderDocumentType.id === HoSoDuThauService.idTenderDocumentTypesData
         );
         this.dtTrigger.next();
       }, err => {
@@ -158,8 +156,7 @@ export class UploadFormComponent implements OnInit {
     }
   }
   refresh() {
-    this.getDataDocumentOfType();
-    this.alertService.success(`Dữ liệu đã được cập nhật mới nhất!`);
+    this.getDataDocumentOfType(true);
   }
   filter() {
     this.spinner.show();
@@ -169,7 +166,7 @@ export class UploadFormComponent implements OnInit {
         this.spinner.hide();
         this.rerender(responseResultBoHSDT);
         this.dataDocumentOfType = responseResultBoHSDT.items.filter(item =>
-          item.tenderDocumentType.id === this.idTypeOfChildCoponent
+          item.tenderDocumentType.id === HoSoDuThauService.idTenderDocumentTypesData
         );
         this.dtTrigger.next();
       }, err => {
@@ -181,6 +178,7 @@ export class UploadFormComponent implements OnInit {
   clearFilter() {
     this.filterModel.status = '';
     this.filterModel.uploadedEmployeeId = '';
+    this.filterModel.interViewTimes = '';
     this.filterModel.createdDate = null;
     this.getDataDocumentOfType();
   }
@@ -191,7 +189,6 @@ export class UploadFormComponent implements OnInit {
         this.getDataDocumentOfType();
         this.dtTrigger.next();
         this.spinner.hide();
-        this.alertService.success('Dữ liệu đã được cập nhật mới nhất!');
       }, err => {
         this.dtTrigger.next();
         this.spinner.hide();
@@ -204,7 +201,6 @@ export class UploadFormComponent implements OnInit {
         this.getDataDocumentOfType();
         this.dtTrigger.next();
         this.spinner.hide();
-        this.alertService.success('Dữ liệu đã được cập nhật mới nhất!');
       }, err => {
         this.dtTrigger.next();
         this.spinner.hide();
@@ -223,9 +219,9 @@ export class UploadFormComponent implements OnInit {
     this.hoSoDuThauService.getDanhSachLoaiTaiLieu(this.packageId).subscribe(res => {
       this.spinner.hide();
       this.danhSachLoaiTaiLieu = res;
-      this.dataOfChildComponent = this.danhSachLoaiTaiLieu.filter(x => x.item.id === this.idTypeOfChildCoponent)[0];
+      this.dataOfChildComponent = this.danhSachLoaiTaiLieu.filter(x => x.item.id === HoSoDuThauService.idTenderDocumentTypesData)[0];
       this.nameOfTypeDocument = (this.dataOfChildComponent && this.dataOfChildComponent.item) ? this.dataOfChildComponent.item.name : '';
-      this.childrenOfTypeDocument = this.dataOfChildComponent.children;
+      this.childrenOfTypeDocument = this.dataOfChildComponent ? this.dataOfChildComponent.children : [];
     }, err => {
       this.spinner.hide();
       this.alertService.error(`Đã có lỗi khi tải dữ liệu. Xin vui lòng thử lại!`);

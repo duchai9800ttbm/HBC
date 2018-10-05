@@ -40,14 +40,13 @@ export class UploadFileHsdtComponent implements OnInit {
   ) { }
   ngOnInit() {
     this.listTypeChildren = this.childrenType.map(i => i.item);
-    console.log(this.listTypeChildren);
     this.uploadForm = this.fb.group({
       linkFile: '',
-      file: null,
+      file: '',
       type: '',
-      editName: '',
-      version: null,
-      interViewTimes: null,
+      editName: ['', Validators.required],
+      version: '',
+      interViewTimes: '',
       description: ''
     });
     this.uploadForm.valueChanges.subscribe(data => {

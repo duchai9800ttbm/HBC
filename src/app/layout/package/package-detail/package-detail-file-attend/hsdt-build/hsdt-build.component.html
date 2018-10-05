@@ -44,7 +44,8 @@
                         </div>
                         <!-- List Type of Document -->
                         <ng-container *ngFor="let uploadform of danhSachLoaiTaiLieu; index as i">
-                            <div *ngIf="!uploadform.item?.isLiveForm" class="toggle-menu-item d-flex flex-column align-items-start" (click)="emitData(uploadform.item?.id)">
+                            <div *ngIf="!uploadform.item?.isLiveForm" class="toggle-menu-item d-flex flex-column align-items-start"
+                                [ngClass]="{'router-link-active': isHighlight === i}" (click)="emitData(uploadform.item?.id)">
                                 <div>{{ uploadform.item?.name }}</div>
                                 <span class="font-italic">Upload</span>
                             </div>

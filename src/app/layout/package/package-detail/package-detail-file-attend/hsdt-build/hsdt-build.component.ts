@@ -35,6 +35,7 @@ export class HsdtBuildComponent implements OnInit {
     notShow = false;
     danhSachLoaiTaiLieu;
     routerName;
+    isHighlight;
 
     constructor(
         private hoSoDuThauService: HoSoDuThauService,
@@ -42,8 +43,7 @@ export class HsdtBuildComponent implements OnInit {
         private packageService: PackageService,
         private router: Router,
         private spinner: NgxSpinnerService,
-        private confirmationService: ConfirmationService,
-        private groupUserService: GroupUserService
+        private confirmationService: ConfirmationService
     ) { }
 
     ngOnInit() {
@@ -76,7 +76,7 @@ export class HsdtBuildComponent implements OnInit {
     refresh(): void {
         this.spinner.show();
         this.dtTrigger.next();
-        this.spinner.show();
+        this.spinner.hide();
         this.alertService.success('Dữ liệu đã được cập nhật mới nhất!');
     }
     onActivate(event) {
@@ -110,6 +110,7 @@ export class HsdtBuildComponent implements OnInit {
         );
     }
     emitData(id) {
+        this.isHighlight = id - 1;
         this.hoSoDuThauService.detectChangingRouter(id);
         this.hoSoDuThauService.transporterData(id);
         this.router.navigate([`/package/detail/${this.packageId}/attend/build/uploadform`]);

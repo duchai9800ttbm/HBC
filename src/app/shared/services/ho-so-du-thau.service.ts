@@ -36,9 +36,9 @@ export class HoSoDuThauService {
     const numCreatedDate = DateTimeConvertHelper.fromDtObjectToSecon(filter.createdDate);
     const urlFilterParams = new URLSearchParams();
     urlFilterParams.append('status', filter.status);
-    urlFilterParams.append('uploadedEmployeeId', `${filter.uploadedEmployeeId}`);
-    urlFilterParams.append('interViewTimes', `${filter.interViewTimes}`);
-    urlFilterParams.append('createdDate', `${numCreatedDate}`);
+    urlFilterParams.append('uploadedEmployeeId', `${filter.uploadedEmployeeId ? filter.uploadedEmployeeId : ''}`);
+    urlFilterParams.append('interViewTimes', `${filter.interViewTimes ? filter.interViewTimes : ''}`);
+    urlFilterParams.append('createdDate', `${numCreatedDate ? numCreatedDate : ''}`);
     return urlFilterParams;
   }
 
@@ -93,8 +93,8 @@ export class HoSoDuThauService {
     formData.append('TenderDocumentDesc', tenderDocumentDesc);
     formData.append('TenderDocumentFile', tenderDocumentFile);
     formData.append('Url', link);
-    formData.append('Version', `${version}`);
-    formData.append('InterviewTimes', `${interviewTimes}`);
+    formData.append('Version', `${version ? version : ''}`);
+    formData.append('InterviewTimes', `${interviewTimes ? interviewTimes : ''}`);
     return this.apiService.postFile(url, formData).map(response => response).share();
   }
   // Tải Template
