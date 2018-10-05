@@ -261,13 +261,22 @@ export class InterviewInvitationService {
   downloadFileCreateInterview(bidDocumentId: number) {
     const url = `bidinterviewinvitation/${bidDocumentId}/download `;
     return this.apiService.getFile(url).map(response => {
-        return FileSaver.saveAs(
-            new Blob([response.file], {
-                type: `${response.file.type}`,
-            }), response.fileName
-        );
+      return FileSaver.saveAs(
+        new Blob([response.file], {
+          type: `${response.file.type}`,
+        }), response.fileName
+      );
     });
-}
+  }
+  // Load file lời mời phỏng vấn để đính kèm vào thông báo
+  LoadFileCreateInterview(bidDocumentId: number) {
+    const url = `bidinterviewinvitation/${bidDocumentId}/download `;
+    return this.apiService.getFile(url).map(response => {
+      // return new Blob([response.file], { type: `${response.file.type}` });
+      console.log('response.filename', response, response.contentType, response.file.contentType);
+      return new File([response.file], response.fileName, { type: response.contentType, lastModified: Date.now()});
+    });
+  }
 
   // Tải lên biên bản phỏng vấn
   UploadReportInterview(

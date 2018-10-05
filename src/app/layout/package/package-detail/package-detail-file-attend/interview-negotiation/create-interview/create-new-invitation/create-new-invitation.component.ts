@@ -117,7 +117,8 @@ export class CreateNewInvitationComponent implements OnInit {
     this.isSubmitted = true;
     if (this.validateForm()) {
       this.interviewInvitationService.createInterviewInvitation(
-        this.interviewInvitation.customer.customerId,
+        this.interviewInvitation.customer && this.interviewInvitation.customer.customerId ?
+          this.interviewInvitation.customer.customerId : null,
         this.currentPackageId, this.createFormNewInvitation.value, this.file).subscribe(response => {
           this.interviewInvitationService.changeInterviewInvitationList();
           this.closePopup();
