@@ -39,6 +39,7 @@ export class CreateInterviewComponent implements OnInit, OnDestroy {
   bidStatus = BidStatus;
   currentFieldSort: string;
   statusSort: string;
+  isOnInit: boolean;
   constructor(
     private dialogService: DialogService,
     private interviewInvitationService: InterviewInvitationService,
@@ -65,33 +66,14 @@ export class CreateInterviewComponent implements OnInit, OnDestroy {
       this.spinner.hide();
     });
 
-    this.interviewInvitationService.watchKeySearchInterviewInvitation().subscribe(value => {
-      this.keySearch = value;
-      this.filter();
-      this.spinner.hide();
-    });
-
-    // this.interviewInvitationService.watchKeySearchInterviewInvitation().debounceTime(600)
-    // .distinctUntilChanged()
-    // .subscribe(term => {
-    //   this.keySearch = term;
+    // this.interviewInvitationService.watchKeySearchInterviewInvitation().subscribe(value => {
+    //   this.keySearch = value;
     //   this.filter();
     //   this.spinner.hide();
     // });
 
-    // this.spinner.show();
-    // this.interviewInvitationService.instantSearchWithFilter(
-    //   this.currentPackageId, this.interviewInvitationService.watchKeySearchInterviewInvitation(),
-    //   this.filterModel, 0, 1000).subscribe(result => {
-    //     this.render(result);
-    //     this.spinner.hide();
-    //   },
-    //     err => {
-    //       this.spinner.hide();
-    //     });
-
     this.interviewInvitationService.watchRefeshInterviewInvitationList().subscribe(value => {
-      this.refresh(true);
+      this.refresh(this.isOnInit);
       this.spinner.hide();
     });
 
@@ -111,7 +93,6 @@ export class CreateInterviewComponent implements OnInit, OnDestroy {
     this.numberOfInterviews = this.pagedResult.items ? this.pagedResult.items.map(item => item.interviewTimes) : [];
     this.numberOfInterviews = this.numberOfInterviews.sort((a, b) => a - b);
     this.numberOfInterviews = this.numberOfInterviews.filter((el, i, a) => i === a.indexOf(el));
-    console.log('this.numberOfInterviews', this.numberOfInterviews);
   }
 
   render(pagedResult: any) {
@@ -128,6 +109,7 @@ export class CreateInterviewComponent implements OnInit, OnDestroy {
       this.getListNumberOfInterviews();
       this.isNumberOfInterviews = false;
     }
+    this.isOnInit = true;
     this.dtTrigger.next();
   }
 
@@ -152,7 +134,6 @@ export class CreateInterviewComponent implements OnInit, OnDestroy {
   }
 
   filter() {
-    console.log('receivedDate', DateTimeConvertHelper.fromDtObjectToTimestamp(this.filterModel.receivedDate));
     this.spinner.show();
     this.interviewInvitationService
       .filterList(
@@ -221,7 +202,6 @@ export class CreateInterviewComponent implements OnInit, OnDestroy {
     instance.callBack = () => this.closePopuup();
   }
 
-  // this.historyList = this.historyList.sort( ( a, b ) =>  parseFloat(a.changedTimes) < parseFloat(b.changedTimes));
   sortField(fieldSort: string, statusSort: string) {
     this.currentFieldSort = fieldSort;
     this.statusSort = statusSort;
@@ -283,4 +263,15 @@ export class CreateInterviewComponent implements OnInit, OnDestroy {
       }
     }
   }
+
+  dowloadFileCreateInterview(id) {
+    this.interviewInvitationService.downloadFileCreateInterview(id).subscribe(data => {
+    }, err => {
+        if (err.json().errorCode) {
+            this.alertService.error('File không tồn tại hoặc đã bị xóa!');
+        } else {
+            this.alertService.error('Đã có lỗi xãy ra!');
+        }
+    });
+}
 }

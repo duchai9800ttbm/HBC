@@ -10,6 +10,7 @@ import { URLSearchParams } from '@angular/http';
 import { InterviewInvitationFilterReport } from '../models/interview-invitation/interview-invitation-filter-report';
 import { InterviewInvitationReportList } from '../models/interview-invitation/interview-invitation-report-list.model';
 import DateTimeConvertHelper from '../helpers/datetime-convert-helper';
+import * as FileSaver from 'file-saver';
 @Injectable()
 export class InterviewInvitationService {
   static interviewInvitationList = new Subject<any>();
@@ -246,6 +247,18 @@ export class InterviewInvitationService {
       .map(response => response)
       .share();
   }
+
+  // Tải file lời mời phỏng vấn
+  downloadFileCreateInterview(bidDocumentId: number) {
+    const url = `bidinterviewinvitation/${bidDocumentId}/download `;
+    return this.apiService.getFile(url).map(response => {
+        return FileSaver.saveAs(
+            new Blob([response.file], {
+                type: `${response.file.type}`,
+            }), response.fileName
+        );
+    });
+}
 
   // Tải lên biên bản phỏng vấn
   UploadReportInterview(
