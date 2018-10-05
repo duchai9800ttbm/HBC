@@ -101,7 +101,7 @@ export class HsdtBuildComponent implements OnInit {
             () => {
                 this.hoSoDuThauService.chotHoSoDuThau(this.packageId).subscribe(res => {
                     thiss.alertService.success(`Đã chốt Hồ sơ dự thầu thành công!`);
-                    this.spinner.hide();
+                    thiss.spinner.hide();
                     thiss.refresh();
                 }, err => {
                     thiss.alertService.error(`Đã có lỗi. Chốt Hồ sơ dự thầu không thành công.`);
@@ -109,8 +109,9 @@ export class HsdtBuildComponent implements OnInit {
             }
         );
     }
-    emitData(data) {
-        this.hoSoDuThauService.transporterData(data);
+    emitData(id) {
+        this.hoSoDuThauService.detectChangingRouter(id);
+        this.hoSoDuThauService.transporterData(id);
         this.router.navigate([`/package/detail/${this.packageId}/attend/build/uploadform`]);
     }
 }

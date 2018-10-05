@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnChanges } from '@angular/core';
 import { DATATABLE_CONFIG } from '../../../../../../shared/configs';
 // tslint:disable-next-line:import-blacklist
 import { Subject, BehaviorSubject } from 'rxjs';
@@ -32,14 +32,15 @@ export class UploadFormComponent implements OnInit {
   searchTerm$ = new BehaviorSubject<string>('');
   filterModel = new HsdtFilterModel();
   checkboxSeclectAll: boolean;
+  danhSachLoaiTaiLieu;
 
-  dataChildCoponent;
+  idTypeOfChildCoponent;
+  dataOfChildComponent;
   nameOfTypeDocument;
-  idOfTypeDocument;
-
+  childrenOfTypeDocument;
   dataDocumentOfType;
   danhSachUser;
-  lanPhongVan;
+  isHSKT = false;
   constructor(
     private hoSoDuThauService: HoSoDuThauService,
     private dialogService: DialogService,
@@ -49,13 +50,23 @@ export class UploadFormComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+    this.getDanhSachUser();
     this.patchData();
+    this.getDanhSachLoaiHoSo();
     this.getDataDocumentOfType();
+    this.filterModel.status = '';
+    this.filterModel.uploadedEmployeeId = '';
+    this.hoSoDuThauService.watchChangingRouter().subscribe(data => {
+      this.getDanhSachUser();
+      this.patchData();
+      this.getDanhSachLoaiHoSo();
+      this.getDataDocumentOfType();
+      this.filterModel.status = '';
+      this.filterModel.uploadedEmployeeId = '';
+    });
   }
   patchData() {
-    this.dataChildCoponent = HoSoDuThauService.tempTenderDocumentTypesData;
-    this.nameOfTypeDocument = this.dataChildCoponent.item.name;
-    this.idOfTypeDocument = this.dataChildCoponent.item.id;
+    this.idTypeOfChildCoponent = HoSoDuThauService.idTenderDocumentTypesData;
   }
   showDialogUploadFile() {
     this.dialog = this.dialogService.open({
@@ -66,7 +77,8 @@ export class UploadFormComponent implements OnInit {
     const instance = this.dialog.content.instance;
     instance.bidOpportunityId = this.packageId;
     instance.nameFile = this.nameOfTypeDocument;
-    instance.idFile = this.idOfTypeDocument;
+    instance.idFile = this.idTypeOfChildCoponent;
+    instance.childrenType = this.childrenOfTypeDocument;
     instance.callBack = this.closePopuup.bind(this);
   }
   closePopuup() {
@@ -81,7 +93,7 @@ export class UploadFormComponent implements OnInit {
         this.spinner.hide();
         this.rerender(responseResultDocument);
         this.dataDocumentOfType = responseResultDocument.items.filter(item =>
-          item.tenderDocumentType.id === this.idOfTypeDocument
+          item.tenderDocumentType.id === this.idTypeOfChildCoponent
         );
         this.dtTrigger.next();
       }, err => {
@@ -157,7 +169,7 @@ export class UploadFormComponent implements OnInit {
         this.spinner.hide();
         this.rerender(responseResultBoHSDT);
         this.dataDocumentOfType = responseResultBoHSDT.items.filter(item =>
-          item.tenderDocumentType.id === this.idOfTypeDocument
+          item.tenderDocumentType.id === this.idTypeOfChildCoponent
         );
         this.dtTrigger.next();
       }, err => {
@@ -167,7 +179,9 @@ export class UploadFormComponent implements OnInit {
     this.dtTrigger.next();
   }
   clearFilter() {
-    this.filterModel = new HsdtFilterModel();
+    this.filterModel.status = '';
+    this.filterModel.uploadedEmployeeId = '';
+    this.filterModel.createdDate = null;
     this.getDataDocumentOfType();
   }
   changeStatus(id, status) {
@@ -201,6 +215,20 @@ export class UploadFormComponent implements OnInit {
   getDanhSachUser() {
     this.hoSoDuThauService.getDataUser(0, 40).subscribe(res => {
       this.danhSachUser = res.items;
+    });
+  }
+  getDanhSachLoaiHoSo() {
+    this.packageId = +PackageDetailComponent.packageId;
+    this.spinner.show();
+    this.hoSoDuThauService.getDanhSachLoaiTaiLieu(this.packageId).subscribe(res => {
+      this.spinner.hide();
+      this.danhSachLoaiTaiLieu = res;
+      this.dataOfChildComponent = this.danhSachLoaiTaiLieu.filter(x => x.item.id === this.idTypeOfChildCoponent)[0];
+      this.nameOfTypeDocument = (this.dataOfChildComponent && this.dataOfChildComponent.item) ? this.dataOfChildComponent.item.name : '';
+      this.childrenOfTypeDocument = this.dataOfChildComponent.children;
+    }, err => {
+      this.spinner.hide();
+      this.alertService.error(`Đã có lỗi khi tải dữ liệu. Xin vui lòng thử lại!`);
     });
   }
 }

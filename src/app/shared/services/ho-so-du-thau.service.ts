@@ -29,8 +29,8 @@ import DateTimeConvertHelper from '../helpers/datetime-convert-helper';
 export class HoSoDuThauService {
 
   static tempDataLiveFormDKDT = new BehaviorSubject<DuLieuLiveFormDKDT>(new DuLieuLiveFormDKDT());
-
-  static tempTenderDocumentTypesData;
+  static detectChangeRouter = new BehaviorSubject<boolean>(false);
+  static idTenderDocumentTypesData;
 
   private static createFilterParams(filter: HsdtFilterModel): URLSearchParams {
     const numCreatedDate = DateTimeConvertHelper.fromDtObjectToSecon(filter.createdDate);
@@ -48,8 +48,14 @@ export class HoSoDuThauService {
   ) { }
 
   // emit data to child component
-  transporterData(data) {
-    HoSoDuThauService.tempTenderDocumentTypesData = data;
+  transporterData(id) {
+    HoSoDuThauService.idTenderDocumentTypesData = id;
+  }
+  watchChangingRouter() {
+    return HoSoDuThauService.detectChangeRouter;
+  }
+  detectChangingRouter(id) {
+    HoSoDuThauService.detectChangeRouter.next(id);
   }
   // get Danh Sách User
   getDataUser(
@@ -104,10 +110,8 @@ export class HoSoDuThauService {
   }
   // Tải hồ sơ dự thầu
   taiHoSoDuThau(tenderDocumentId: number) {
-    console.log(tenderDocumentId);
     const url = `tenderdocument/${tenderDocumentId}/download`;
     return this.apiService.getFile(url).map(response => {
-      console.log(response);
       return FileSaver.saveAs(
         new Blob([response.file], {
           type: `${response.file.type}`,
