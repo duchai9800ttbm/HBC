@@ -41,23 +41,23 @@ export class CreateNewInvitationComponent implements OnInit {
 
   ngOnInit() {
     this.currentPackageId = +PackageDetailComponent.packageId;
-    // this.packageService.getInforPackageID(this.currentPackageId).subscribe(result => {
-    //   if (result.customer) {
-    //     this.interviewInvitation.customer.customerId = result.customer.id;
-    //     this.interviewInvitation.customer.customerName = result.customer.text;
-    //   }
-    //   // this.interviewInvitationService.getListInterview(
-    //   //   this.currentPackageId,
-    //   //   0,
-    //   //   1000
-    //   // ).subscribe( response => {
-    //   //   this.interviewTimes = response.length + 1;
-    //   //   this.createForm();
-    //   // });
-    //   this.createForm();
-    // });
+    this.packageService.getInforPackageID(this.currentPackageId).subscribe(result => {
+      if (result.customer) {
+        this.interviewInvitation.customer.customerId = result.customer.id;
+        this.interviewInvitation.customer.customerName = result.customer.text;
+      }
+      // this.interviewInvitationService.getListInterview(
+      //   this.currentPackageId,
+      //   0,
+      //   1000
+      // ).subscribe( response => {
+      //   this.interviewTimes = response.length + 1;
+      //   this.createForm();
+      // });
+      this.createForm();
+    });
 
-    this.createForm();
+    // this.createForm();
   }
 
   createForm() {

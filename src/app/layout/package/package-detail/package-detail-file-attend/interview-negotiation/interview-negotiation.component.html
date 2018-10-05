@@ -10,11 +10,10 @@
     <div>
         <div class="btn-toolbar">
             <ng-container>
-                <div class="input-group">
+                <!-- <div class="input-group">
                     <span class="input-group-addon">Tìm kiếm theo</span>
-                    <!-- (keyup)="searchTerm$.next($event.target.value)" -->
                     <input type="text" class="form-control icon" placeholder="&#xf002; Khách hàng" (keyup)=changeKeySearchInterviewInvitation$.next($event.target.value)>
-                </div>
+                </div> -->
                 <button class="btn btn-primary ml-2" (click)="createInvitation()">
                     Tạo lời mời phỏng vấn
                 </button>
