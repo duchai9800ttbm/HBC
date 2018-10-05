@@ -37,6 +37,8 @@ export class CreateInterviewComponent implements OnInit, OnDestroy {
   isNumberOfInterviews = true;
   statusPackage;
   bidStatus = BidStatus;
+  currentFieldSort: string;
+  statusSort: string;
   constructor(
     private dialogService: DialogService,
     private interviewInvitationService: InterviewInvitationService,
@@ -119,6 +121,7 @@ export class CreateInterviewComponent implements OnInit, OnDestroy {
       }
     });
     this.pagedResult = pagedResult;
+    this.pagedResult.items = this.pagedResult.items.sort( (a, b) => a.id - b.id );
     if (this.isNumberOfInterviews) {
       this.getListNumberOfInterviews();
       this.isNumberOfInterviews = false;
@@ -214,5 +217,35 @@ export class CreateInterviewComponent implements OnInit, OnDestroy {
     const instance = this.dialog.content.instance;
     instance.interviewInvitation = interviewEdit;
     instance.callBack = () => this.closePopuup();
+  }
+
+  // this.historyList = this.historyList.sort( ( a, b ) =>  parseFloat(a.changedTimes) < parseFloat(b.changedTimes));
+  sortField(fieldSort: string, statusSort: string) {
+    this.currentFieldSort = fieldSort;
+    // this.statusSort = Asc
+    // Desc
+    // None
+    switch (fieldSort) {
+      case 'stt': {
+        this.pagedResult.items = this.pagedResult.items.sort(( a, b ) =>  a.id - b.id);
+        break;
+      }
+      case 'approvedDate': {
+        this.pagedResult.items = this.pagedResult.items.sort(( a, b ) =>  a.approvedDate - b.approvedDate );
+        break;
+      }
+      case 'interviewDate': {
+        this.pagedResult.items = this.pagedResult.items.sort(( a, b ) =>  a.interviewDate - b.interviewDate );
+        break;
+      }
+      case 'interviewTimes': {
+        this.pagedResult.items = this.pagedResult.items.sort(( a, b ) =>  a.interviewTimes - b.interviewTimes );
+        break;
+      }
+      case 'status': {
+        this.pagedResult.items = this.pagedResult.items.sort(( a, b ) =>  a.remainningDay - b.remainningDay );
+        break;
+      }
+    }
   }
 }

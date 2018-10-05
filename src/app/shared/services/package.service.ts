@@ -1036,6 +1036,12 @@ export class PackageService {
         return this.apiService.post(url).map(data => data.result);
     }
 
+    // Bắt đầu lập HSDT
+    startSetHSDT(bidOpportunityId: number) {
+        const url = `bidopportunity/hsdt/${bidOpportunityId}/batdaulaphsdt`;
+        return this.apiService.post(url);
+    }
+
     // Lịch sử thay đổi liveform phiếu đề nghị dự thầu
     getChangeHistoryListTenderPreparationPlanning(
         bidOpportunityId: number,
