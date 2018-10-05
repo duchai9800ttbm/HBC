@@ -1,47 +1,64 @@
 <form>
     <div class="p-3">
         <h5 class="text-uppercase">VI. các hồ sơ cần phải nộp đáng lưu ý (some main item of tender submissions)</h5>
+        
         <div class="row mt-3">
-            <div class="col-md-3">1. Những tài liệu lưu ý khi nộp hồ sơ</div>
+            <div class="col-md-3">1. Những tài liệu lưu ý khi nộp hồ sơ
+                <i class="fa fa-plus-square-o ml-3 pointer" aria-hidden="true"></i>
+            </div>
             <div class="col-md-8">
-                <span class="custom-dropdown w-100">
-                    <select class="form-control">
-                        <option [ngValue]="null">--Chọn--</option>
-                    </select>
-                </span>
+                <div class="row no-gutters">
+                    <div class="col-md-11">
+                        <input class="form-control">
+                    </div>
+                    <div class="col-md-1 d-flex center-parent">
+                        <div>
+                            <i class="fa fa-times-circle pointer times-color" aria-hidden="true"></i>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
-        <div class="row mt-3">
-            <div class="col-md-3"></div>
-            <div class="col-md-8">
-                <textarea class="form-control"></textarea>
-            </div>
-        </div>
+
         <div class="row mt-3">
             <div class="col-md-3">2. Số lượng nộp hồ sơ</div>
             <div class="col-md-8">
-                <input type="number" class="form-control">
+                <div class="row no-gutters">
+                    <div class="col-md-11">
+                        <input class="form-control">
+                    </div>
+                    <div class="col-md-1">
+                    </div>
+                </div>
             </div>
         </div>
+
         <div class="row mt-3">
             <div class="col-md-3">3. Ngôn ngữ</div>
             <div class="col-md-8">
-                <span class="custom-dropdown w-100">
-                    <select class="form-control">
-                        <option [ngValue]="null">--Chọn--</option>
-                    </select>
-                </span>
+                <div class="row no-gutters">
+                    <div class="col-md-11">
+                        <span class="custom-dropdown w-100">
+                            <select class="form-control">
+                                <option [value]="'Tiếng Việt'">Tiếng Việt</option>
+                                <option [value]="'Tiếng Anh'">Tiếng Anh</option>
+                            </select>
+                        </span>
+                    </div>
+                    <div class="col-md-1"></div>
+                </div>
             </div>
         </div>
+
         <div class="text-center mt-4">
-                <button class="btn border" routerLink="../main-material">
-                    <i class="fa font-size-3 mr-3 fa-angle-left" aria-hidden="true"></i>
-                    Trở về
-                </button>
-                <button class="btn btn-primary ml-2" routerLink="../profile-destination">
-                    Tiếp
-                    <i class="fa font-size-3 ml-3 fa-angle-right" aria-hidden="true"></i>
-                </button>
-            </div>
+            <button class="btn border" routerLink="../main-material">
+                <i class="fa font-size-3 mr-3 fa-angle-left" aria-hidden="true"></i>
+                Trở về
+            </button>
+            <button class="btn btn-primary ml-2" routerLink="../profile-destination">
+                Tiếp
+                <i class="fa font-size-3 ml-3 fa-angle-right" aria-hidden="true"></i>
+            </button>
+        </div>
     </div>
 </form>

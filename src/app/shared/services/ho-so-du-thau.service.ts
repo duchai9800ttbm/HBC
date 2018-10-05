@@ -194,11 +194,11 @@ export class HoSoDuThauService {
   emitDataStepScope(obj: PhamViCongViec) {
     HoSoDuThauService.tempDataLiveFormDKDT.value.phamViCongViec = obj;
   }
-  emitDataStepSubContractor(obj: DanhSachNhaThau) {
-    HoSoDuThauService.tempDataLiveFormDKDT.value.danhSachNhaThau = [obj];
+  emitDataStepSubContractor(obj: DanhSachNhaThau[]) {
+    HoSoDuThauService.tempDataLiveFormDKDT.value.danhSachNhaThau = obj;
   }
-  emitDataStepMainMaterial(obj: DanhSachVatTu) {
-    HoSoDuThauService.tempDataLiveFormDKDT.value.danhSachVatTu = [obj];
+  emitDataStepMainMaterial(obj: DanhSachVatTu[]) {
+    HoSoDuThauService.tempDataLiveFormDKDT.value.danhSachVatTu = obj;
   }
   emitDataStepTenderSubmit(obj: HoSoDangLuuY) {
     HoSoDuThauService.tempDataLiveFormDKDT.value.hoSoDangLuuY = obj;

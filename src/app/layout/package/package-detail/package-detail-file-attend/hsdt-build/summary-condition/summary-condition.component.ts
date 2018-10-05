@@ -105,49 +105,49 @@ export class SummaryConditionComponent implements OnInit {
         ghiChu: 'Ghi chú thông tin khác'
       }
     };
-    obj.phamViCongViec = {
-      phamViBaoGom: [
-        {
-          congTac: 'Công tác 1',
-          dienGiaiCongTac: 'Mô tả công tác 1'
-        },
-        {
-          congTac: 'Công tác 1',
-          dienGiaiCongTac: 'Mô tả công tác 1'
-        },
+    // obj.phamViCongViec = {
+    //   phamViBaoGom: [
+    //     {
+    //       congTac: 'Công tác 1',
+    //       dienGiaiCongTac: 'Mô tả công tác 1'
+    //     },
+    //     {
+    //       congTac: 'Công tác 1',
+    //       dienGiaiCongTac: 'Mô tả công tác 1'
+    //     },
 
-        {
-          congTac: 'Công tác 1',
-          dienGiaiCongTac: 'Mô tả công tác 1'
-        },
-        {
-          congTac: 'Công tác 1',
-          dienGiaiCongTac: 'Mô tả công tác 1'
-        }
-      ],
-      phamViKhongBaoGom: [
-        {
-          congTac: 'Công tác 1',
-          dienGiaiCongTac: 'Mô tả công tác 1'
-        },
-        {
-          congTac: 'Công tác 1',
-          dienGiaiCongTac: 'Mô tả công tác 1'
-        },
-        {
-          congTac: 'Công tác 1',
-          dienGiaiCongTac: 'Mô tả công tác 1'
-        },
-        {
-          congTac: 'Công tác 1',
-          dienGiaiCongTac: 'Mô tả công tác 1'
-        },
-        {
-          congTac: 'Công tác 1',
-          dienGiaiCongTac: 'Mô tả công tác 1'
-        }
-      ]
-    };
+    //     {
+    //       congTac: 'Công tác 1',
+    //       dienGiaiCongTac: 'Mô tả công tác 1'
+    //     },
+    //     {
+    //       congTac: 'Công tác 1',
+    //       dienGiaiCongTac: 'Mô tả công tác 1'
+    //     }
+    //   ],
+    //   phamViKhongBaoGom: [
+    //     {
+    //       congTac: 'Công tác 1',
+    //       dienGiaiCongTac: 'Mô tả công tác 1'
+    //     },
+    //     {
+    //       congTac: 'Công tác 1',
+    //       dienGiaiCongTac: 'Mô tả công tác 1'
+    //     },
+    //     {
+    //       congTac: 'Công tác 1',
+    //       dienGiaiCongTac: 'Mô tả công tác 1'
+    //     },
+    //     {
+    //       congTac: 'Công tác 1',
+    //       dienGiaiCongTac: 'Mô tả công tác 1'
+    //     },
+    //     {
+    //       congTac: 'Công tác 1',
+    //       dienGiaiCongTac: 'Mô tả công tác 1'
+    //     }
+    //   ]
+    // };
     this.hoSoDuThauService.emitDataAll(obj);
   }
 
