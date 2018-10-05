@@ -182,7 +182,7 @@ export class AddFileComponent implements OnInit {
         };
         this.showPopupAdd = true;
     }
-
+// TODO: FIX HARD CODE
     openPopupUploadFile(documentType) {
         if (documentType === '2') {
             this.typeFileUpload = {

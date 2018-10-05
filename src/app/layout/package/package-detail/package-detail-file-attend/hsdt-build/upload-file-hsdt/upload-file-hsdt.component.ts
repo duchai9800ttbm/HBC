@@ -15,6 +15,7 @@ export class UploadFileHsdtComponent implements OnInit {
   @Input() nameFile: string;
   @Input() idFile: number;
   @Input() bidOpportunityId: number;
+  @Input() childrenType: any;
   @Input() callBack: Function;
   @Output() isSubmitUpload = new EventEmitter<boolean>();
   uploadForm: FormGroup;
@@ -23,9 +24,11 @@ export class UploadFileHsdtComponent implements OnInit {
   formErrors = {
     editName: '',
   };
+  listTypeChildren = [];
   errorMess;
   displayName: string;
   tempFile;
+  typeOfDoc;
   isFile = false;
   isLinkFile = false;
   constructor(
@@ -36,12 +39,14 @@ export class UploadFileHsdtComponent implements OnInit {
 
   ) { }
   ngOnInit() {
+    this.listTypeChildren = this.childrenType.map(i => i.item);
     this.uploadForm = this.fb.group({
       linkFile: '',
-      file: null,
-      editName: '',
-      version: null,
-      interViewTimes: null,
+      file: '',
+      type: '',
+      editName: ['', Validators.required],
+      version: '',
+      interViewTimes: '',
       description: ''
     });
     this.uploadForm.valueChanges.subscribe(data => {
@@ -64,7 +69,7 @@ export class UploadFileHsdtComponent implements OnInit {
   }
   uploadFile(event) {
     this.tempFile = event.target.files;
-    this.uploadForm.get('file').patchValue(this.tempFile);
+    this.uploadForm.get('file').patchValue(this.tempFile[0]);
     this.displayName = this.tempFile[0].name;
   }
 
@@ -73,19 +78,23 @@ export class UploadFileHsdtComponent implements OnInit {
     if (this.validateForm()) {
       const file = this.uploadForm.get('file').value;
       const linkFile = this.uploadForm.get('linkFile').value;
+      const type = this.uploadForm.get('type').value;
       const description = this.uploadForm.get('description').value;
       const editName = this.uploadForm.get('editName').value;
       const interViewTimes = this.uploadForm.get('interViewTimes').value;
       const version = this.uploadForm.get('version').value;
       if (file || linkFile) {
         this.spinner.show();
+        this.typeOfDoc = (type) ? type : this.idFile;
         this.hoSoDuThauService.taiLenHoSoDuThau(
           this.bidOpportunityId,
-          this.idFile,
+          this.typeOfDoc,
           editName,
           description,
           file,
-          linkFile
+          linkFile,
+          version,
+          interViewTimes
         ).subscribe(data => {
           this.spinner.hide();
           this.errorMess = null;
