@@ -3,10 +3,10 @@
         <div id="header-table-build" class=" title-list-package d-flex flex-wrap align-items-center status-filter"
             *ngIf="!isShowMenu">
             <div class="mr-auto d-flex align-items-end list-package mt-2 mb-2">
-                <div class="d-flex justify-content-start" style="height: 40px;" id="res-header">
+                <div class="d-flex justify-content-start res-header-bar" id="res-header">
                     <div class="rule mr-2">
                     </div>
-                    <div class="center-parent  mr-4" style="font-size: 18px">
+                    <div class="center-parent  mr-4 res-header-title">
                         <div>Đang lập HSDT</div>
                     </div>
                 </div>
@@ -38,43 +38,18 @@
                             <span class="font-italic">LiveForm</span>
                         </div>
                         <div class="toggle-menu-item d-flex flex-column align-items-start" [routerLinkActive]="['router-link-active']"
-                            [routerLink]="['./pricereport']">
-                            <div>Yêu cầu báo giá vật tư, thầu phụ</div>
-                            <span class="font-italic">Upload</span>
-                        </div>
-                        <div class="toggle-menu-item d-flex flex-column align-items-start" [routerLinkActive]="['router-link-active']"
-                            routerLink="./liveformsite">
+                            [routerLink]="['./liveformsite']">
                             <div>Báo cáo tham quan công trình</div>
                             <span class="font-italic">LiveForm</span>
                         </div>
-                        <div class="toggle-menu-item d-flex flex-column align-items-start" [routerLinkActive]="['router-link-active']"
-                            routerLink="./tonghopdutoan">
-                            <div>Bảng tổng hợp dự toán</div>
-                            <span class="font-italic">Upload</span>
-                        </div>
-                        <div class="toggle-menu-item d-flex flex-column align-items-start" [routerLinkActive]="['router-link-active']"
-                            routerLink="./cost">
-                            <div>Bảng tính chi phí chung</div>
-                            <span class="font-italic">Upload</span>
-                        </div>
-                        <div class="toggle-menu-item d-flex flex-column align-items-start" [routerLinkActive]="['router-link-active']"
-                            routerLink="./question">
-                            <div>Bảng câu hỏi làm rõ HSMT</div>
-                            <span class="font-italic">Upload</span>
-                        </div>
-                        <div class="toggle-menu-item d-flex flex-column align-items-start" [routerLinkActive]="['router-link-active']"
-                            [routerLink]="['techfile']">
-                            <div>Các HSKT có liên quan</div>
-                            <span class="font-italic">Upload</span>
-                        </div>
-                        <div class="toggle-menu-item d-flex flex-column align-items-start">
-                            <div>Hồ sơ pháp lý</div>
-                            <span class="font-italic">Upload</span>
-                        </div>
-                        <div class="no-action toggle-menu-item d-flex flex-column align-items-start">
-                            <div>Hồ sơ khác</div>
-                            <span class="font-italic">Upload</span>
-                        </div>
+                        <!-- List Type of Document -->
+                        <ng-container *ngFor="let uploadform of danhSachLoaiTaiLieu; index as i">
+                            <div *ngIf="!uploadform.item?.isLiveForm" class="toggle-menu-item d-flex flex-column align-items-start"
+                                [ngClass]="{'router-link-active': isHighlight === i}" (click)="emitData(uploadform.item?.id)">
+                                <div>{{ uploadform.item?.name }}</div>
+                                <span class="font-italic">Upload</span>
+                            </div>
+                        </ng-container>
                     </div>
                     <div class="button-click mb-auto" (click)="toggleClick()">
                         <div class="center-parent">

@@ -1,6 +1,10 @@
 export class DanhSachBoHsdtItem {
     id: number;
-    tenderDocumentType: string;
+    tenderDocumentType: {
+        id: number;
+        name: string;
+        count: number;
+    };
     documentName: string;
     version: number;
     status: string;
@@ -13,4 +17,6 @@ export class DanhSachBoHsdtItem {
     };
     uploadedDate: number;
     fileGuid: string;
+    interViewTimes: number;
+    desc: string;
 }

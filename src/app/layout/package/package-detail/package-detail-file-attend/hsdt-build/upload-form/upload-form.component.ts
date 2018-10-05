@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnChanges } from '@angular/core';
 import { DATATABLE_CONFIG } from '../../../../../../shared/configs';
 // tslint:disable-next-line:import-blacklist
 import { Subject, BehaviorSubject } from 'rxjs';
@@ -14,11 +14,11 @@ import { HsdtFilterModel } from '../../../../../../shared/models/ho-so-du-thau/h
 import { UploadFileHsdtComponent } from '../upload-file-hsdt/upload-file-hsdt.component';
 
 @Component({
-  selector: 'app-require-price',
-  templateUrl: './require-price.component.html',
-  styleUrls: ['./require-price.component.scss']
+  selector: 'app-upload-form',
+  templateUrl: './upload-form.component.html',
+  styleUrls: ['./upload-form.component.scss']
 })
-export class RequirePriceComponent implements OnInit {
+export class UploadFormComponent implements OnInit {
   dtTrigger: Subject<any> = new Subject();
   dtOptions: any = DATATABLE_CONFIG;
   datePickerConfig = DATETIME_PICKER_CONFIG;
@@ -33,8 +33,12 @@ export class RequirePriceComponent implements OnInit {
   filterModel = new HsdtFilterModel();
   checkboxSeclectAll: boolean;
   danhSachLoaiTaiLieu;
-  danhSachBGVT;
+  dataOfChildComponent;
+  nameOfTypeDocument;
+  childrenOfTypeDocument;
+  dataDocumentOfType;
   danhSachUser;
+  isHSKT = false;
   constructor(
     private hoSoDuThauService: HoSoDuThauService,
     private dialogService: DialogService,
@@ -44,10 +48,20 @@ export class RequirePriceComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+    this.getDanhSachUser();
     this.getDanhSachLoaiHoSo();
-    this.getDataTypeBGVT();
+    this.getDataDocumentOfType();
     this.filterModel.status = '';
-    this.filterModel.uploadedEmployeeId = null;
+    this.filterModel.uploadedEmployeeId = '';
+    this.filterModel.interViewTimes = '';
+    this.hoSoDuThauService.watchChangingRouter().subscribe(data => {
+      this.getDanhSachUser();
+      this.getDanhSachLoaiHoSo();
+      this.getDataDocumentOfType();
+      this.filterModel.status = '';
+      this.filterModel.uploadedEmployeeId = '';
+      this.filterModel.interViewTimes = '';
+    });
   }
   showDialogUploadFile() {
     this.dialog = this.dialogService.open({
@@ -57,32 +71,27 @@ export class RequirePriceComponent implements OnInit {
     });
     const instance = this.dialog.content.instance;
     instance.bidOpportunityId = this.packageId;
-    instance.nameFile = 'Yêu cầu báo giá vật tư, thầu phụ';
-    instance.idFile = 2;
+    instance.nameFile = this.nameOfTypeDocument;
+    instance.idFile = HoSoDuThauService.idTenderDocumentTypesData;
+    instance.childrenType = this.childrenOfTypeDocument;
     instance.callBack = this.closePopuup.bind(this);
   }
   closePopuup() {
     this.dialog.close();
-    this.getDataTypeBGVT();
+    this.getDataDocumentOfType();
   }
-  getDanhSachLoaiHoSo() {
-    this.packageId = +PackageDetailComponent.packageId;
-    this.getDanhSachUser();
-    this.hoSoDuThauService.getDanhSachLoaiTaiLieu(this.packageId).subscribe(res => {
-      this.danhSachLoaiTaiLieu = res;
-    }, err => {
-      this.alertService.error(`Đã có lỗi xảy ra. Vui lòng thử lại!`);
-    });
-  }
-  getDataTypeBGVT() {
+  getDataDocumentOfType(alert = false) {
     this.spinner.show();
     this.hoSoDuThauService
       .danhSachBoHoSoDuThauInstantSearch(this.packageId, this.searchTerm$, this.filterModel, 0, 10)
-      .subscribe(responseResultBGVT => {
+      .subscribe(responseResultDocument => {
         this.spinner.hide();
-        this.rerender(responseResultBGVT);
-        this.danhSachBGVT = responseResultBGVT.items.filter(item =>
-          item.tenderDocumentType === 'Yêu cầu báo giá vật tư, thầu phụ'
+        if (alert) {
+          this.alertService.success(`Dữ liệu đã được cập nhật mới nhất!`);
+        }
+        this.rerender(responseResultDocument);
+        this.dataDocumentOfType = responseResultDocument.items.filter(item =>
+          item.tenderDocumentType.id === HoSoDuThauService.idTenderDocumentTypesData
         );
         this.dtTrigger.next();
       }, err => {
@@ -97,7 +106,7 @@ export class RequirePriceComponent implements OnInit {
 
   }
   onSelectAll(value: boolean) {
-    this.danhSachBGVT.forEach(x => (x.checkboxSelected = value));
+    this.dataDocumentOfType.forEach(x => (x.checkboxSelected = value));
   }
 
   downloadDocument(id) {
@@ -128,7 +137,7 @@ export class RequirePriceComponent implements OnInit {
   }
   multiDelete() {
     const that = this;
-    const listId = this.danhSachBGVT.filter(x => x.checkboxSelected).map(x => x.id);
+    const listId = this.dataDocumentOfType.filter(x => x.checkboxSelected).map(x => x.id);
     if (listId && listId.length === 0) {
       this.alertService.error('Bạn phải chọn ít nhất một tài liệu để xóa!');
     } else {
@@ -147,8 +156,7 @@ export class RequirePriceComponent implements OnInit {
     }
   }
   refresh() {
-    this.getDataTypeBGVT();
-    this.alertService.success(`Dữ liệu đã được cập nhật mới nhất!`);
+    this.getDataDocumentOfType(true);
   }
   filter() {
     this.spinner.show();
@@ -157,8 +165,8 @@ export class RequirePriceComponent implements OnInit {
       .subscribe(responseResultBoHSDT => {
         this.spinner.hide();
         this.rerender(responseResultBoHSDT);
-        this.danhSachBGVT = responseResultBoHSDT.items.filter(item =>
-          item.tenderDocumentType === 'Yêu cầu báo giá vật tư, thầu phụ'
+        this.dataDocumentOfType = responseResultBoHSDT.items.filter(item =>
+          item.tenderDocumentType.id === HoSoDuThauService.idTenderDocumentTypesData
         );
         this.dtTrigger.next();
       }, err => {
@@ -168,17 +176,19 @@ export class RequirePriceComponent implements OnInit {
     this.dtTrigger.next();
   }
   clearFilter() {
-    this.filterModel = new HsdtFilterModel();
-    this.getDataTypeBGVT();
+    this.filterModel.status = '';
+    this.filterModel.uploadedEmployeeId = '';
+    this.filterModel.interViewTimes = '';
+    this.filterModel.createdDate = null;
+    this.getDataDocumentOfType();
   }
   changeStatus(id, status) {
     if (status === 'Draft') {
       this.spinner.show();
       this.hoSoDuThauService.updateStatus(id, 'Official').subscribe(res => {
-        this.getDataTypeBGVT();
+        this.getDataDocumentOfType();
         this.dtTrigger.next();
         this.spinner.hide();
-        this.alertService.success('Dữ liệu đã được cập nhật mới nhất!');
       }, err => {
         this.dtTrigger.next();
         this.spinner.hide();
@@ -188,10 +198,9 @@ export class RequirePriceComponent implements OnInit {
     if (status === 'Official') {
       this.spinner.show();
       this.hoSoDuThauService.updateStatus(id, 'Draft').subscribe(res => {
-        this.getDataTypeBGVT();
+        this.getDataDocumentOfType();
         this.dtTrigger.next();
         this.spinner.hide();
-        this.alertService.success('Dữ liệu đã được cập nhật mới nhất!');
       }, err => {
         this.dtTrigger.next();
         this.spinner.hide();
@@ -202,6 +211,20 @@ export class RequirePriceComponent implements OnInit {
   getDanhSachUser() {
     this.hoSoDuThauService.getDataUser(0, 40).subscribe(res => {
       this.danhSachUser = res.items;
+    });
+  }
+  getDanhSachLoaiHoSo() {
+    this.packageId = +PackageDetailComponent.packageId;
+    this.spinner.show();
+    this.hoSoDuThauService.getDanhSachLoaiTaiLieu(this.packageId).subscribe(res => {
+      this.spinner.hide();
+      this.danhSachLoaiTaiLieu = res;
+      this.dataOfChildComponent = this.danhSachLoaiTaiLieu.filter(x => x.item.id === HoSoDuThauService.idTenderDocumentTypesData)[0];
+      this.nameOfTypeDocument = (this.dataOfChildComponent && this.dataOfChildComponent.item) ? this.dataOfChildComponent.item.name : '';
+      this.childrenOfTypeDocument = this.dataOfChildComponent ? this.dataOfChildComponent.children : [];
+    }, err => {
+      this.spinner.hide();
+      this.alertService.error(`Đã có lỗi khi tải dữ liệu. Xin vui lòng thử lại!`);
     });
   }
 }
