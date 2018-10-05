@@ -85,7 +85,10 @@
                     </button>
                 </div>
                 <div class="col-md-3 pl-0">
-                    <button class="btn btn-primary btn-sign position-absolute" *ngIf="!planForm.get('isSignedByApprovalPerson').value" (click)="clickSignApproved()">Xác nhận ký</button>
+                    <button class="btn btn-primary btn-sign position-absolute"
+                    [disabled]="!planForm.get('isSignedByPreparedPerson').value || routerAction !== 'view'" 
+                    [class.not-allow]="!planForm.get('isSignedByPreparedPerson').value || routerAction !== 'view'"
+                    *ngIf="!planForm.get('isSignedByApprovalPerson').value" (click)="clickSignApproved()">Xác nhận ký</button>
                     <button class="btn btn-primary btn-sign position-absolute" *ngIf="planForm.get('isSignedByApprovalPerson').value">
                         <i class="fa fa-check icon-check" aria-hidden="true"></i> Đã ký
                     </button>
@@ -245,12 +248,14 @@
                                 </label>
                             </td>
                             <td class="pl-0">
-                                <kendo-datepicker [max]="data.get('finishDate').value" formControlName="startDate" class="form-control b-datepicker-no-border b-datepicker-ic"></kendo-datepicker>
+                                <kendo-datepicker (valueChange)="calculateTotalTime(i)" [max]="data.get('finishDate').value" formControlName="startDate" class="form-control b-datepicker-no-border b-datepicker-ic"></kendo-datepicker>
                             </td>
                             <td class="pl-0">
-                                <kendo-datepicker [min]="data.get('startDate').value" formControlName="finishDate" class="form-control b-datepicker-no-border b-datepicker-ic"></kendo-datepicker>
+                                <kendo-datepicker (valueChange)="calculateTotalTime(i)" [min]="data.get('startDate').value" formControlName="finishDate" class="form-control b-datepicker-no-border b-datepicker-ic"></kendo-datepicker>
                             </td>
-                            <td class="text-center">{{getItemDuration(data.get('startDate').value, data.get('finishDate').value)}}
+                            <td class="text-center">
+                                {{data.get('totalTime') ? data.get('totalTime').value : ''}}
+                                <!-- {{getItemDuration(data.get('startDate').value, data.get('finishDate').value)}} -->
                             </td>
                         </tr>
                     </tbody>

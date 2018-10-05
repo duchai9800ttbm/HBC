@@ -85,7 +85,6 @@ export class InformationDeploymentFormComponent implements OnInit {
     createForm(planModel: TenderPreparationPlanningRequest, isCreate?) {
         this.tenderPlan = planModel;
         const taskArr = [];
-        console.log('planModel.projectDirectorEmployee', planModel.projectDirectorEmployee);
         planModel.tasks.forEach(i => taskArr.push(this.createTaskItemFG(i)));
         this.planForm = this.fb.group({
             id: planModel.id,
@@ -99,6 +98,9 @@ export class InformationDeploymentFormComponent implements OnInit {
             updatedDesc: '',
             projectInformation: planModel.projectInformation ? planModel.projectInformation : 'Bảng phân công tiến độ',
             tasks: this.fb.array(taskArr)
+        });
+        this.tasksFA.controls.forEach( (item, index) => {
+            this.calculateTotalTime(index);
         });
         console.log('projectDirectorEmployeeId-projectDirectorEmployeeId', this.planForm.get('projectDirectorEmployeeId').value);
         this.changeDirector(this.planForm.get('projectDirectorEmployeeId').value, 0);
@@ -126,7 +128,7 @@ export class InformationDeploymentFormComponent implements OnInit {
     getEmailUser(userId: number): string {
         // tslint:disable-next-line:triple-equals
         // tslint:disable-next-line:max-line-length
-        return ( this.userList && this.userList.find(i => i.employeeId === Number(userId)) )? this.userList.find(i => i.employeeId === Number(userId)).email : '';
+        return ( this.userList && this.userList.find(i => i.employeeId === Number(userId)) ) ? this.userList.find(i => i.employeeId === Number(userId)).email : '';
     }
 
     changeDirector(userId, personnelType) {
@@ -181,7 +183,8 @@ export class InformationDeploymentFormComponent implements OnInit {
                 )
                 : null,
             duration: data.duration,
-            isFinish: data.isFinish
+            isFinish: data.isFinish,
+            totalTime: '',
         });
     }
 
@@ -316,16 +319,29 @@ export class InformationDeploymentFormComponent implements OnInit {
         this.saveTenderPlan(false);
     }
 
-    getItemDuration(start: Date, end: Date): string {
-        if (start && end) {
-            // tslint:disable-next-line:max-line-length
-            return Math.abs(DateTimeConvertHelper.fromDtObjectToSecon(start) - DateTimeConvertHelper.fromDtObjectToSecon(end)) / (60 * 60 * 24) + '';
+    // getItemDuration(start: Date, end: Date): string {
+    //     if (start && end) {
+    //         // tslint:disable-next-line:max-line-length
+    //         return Math.abs(DateTimeConvertHelper.fromDtObjectToSecon(start) - DateTimeConvertHelper.fromDtObjectToSecon(end)) / (60 * 60 * 24) + '';
+    //     } else {
+    //         return '';
+    //     }
+    // }
+
+    calculateTotalTime(index) {
+        const end = DateTimeConvertHelper.fromDtObjectToSecon( (this.tasksFA.controls[index]).get('finishDate').value);
+        const start = DateTimeConvertHelper.fromDtObjectToSecon((this.tasksFA.controls[index]).get('startDate').value);
+        if ( start - end ) {
+            this.tasksFA.controls[index].get('totalTime').patchValue(
+                Math.floor( (end - start) / (60 * 60 * 24) )
+            );
         } else {
-            return '';
+            this.tasksFA.controls[index].get('totalTime').patchValue('');
         }
     }
 
     getDateStr(data: number) {
+        console.log('data', data);
         return data ? DateTimeConvertHelper.fromTimestampToDtStr(data) : '';
     }
 
