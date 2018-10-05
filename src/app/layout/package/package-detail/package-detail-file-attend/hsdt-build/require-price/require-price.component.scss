@@ -85,45 +85,18 @@ input.icon {
     color: #b3b3b3
 }
 
-.color-item-down {
-    color: green;
-}
-
-.responsive-filter-control {
-    padding: 0.3rem;
-    margin-left: auto;
-}
-
-@media only screen and (max-width: 1578px) {
-    .responsive-filter-control {
-        margin-left: unset !important;
+@media only screen and (max-width: 1409px) {
+    .status-filter {
+        flex-direction: row-reverse;
     }
 }
 
-@media only screen and (max-width: 1275px) {
-    .reponsive-custom-control {
-        flex-direction: row;
-        flex-wrap: wrap;
-        justify-content: space-between;
+@media only screen and (max-width: 1124px) {
+    .responsive-control {
+        flex-direction: row-reverse;
     }
 
-    .custom-reponsive-filter-action {
-        margin-bottom: 1rem;
+    .input-group {
+        margin-bottom: 0.2rem
     }
 }
-
-// @media only screen and (max-width: 1409px) {
-//     .status-filter {
-//         flex-direction: row-reverse;
-//     }
-// }
-
-// @media only screen and (max-width: 1124px) {
-//     .responsive-control {
-//         flex-direction: row-reverse;
-//     }
-
-//     .input-group {
-//         margin-bottom: 0.2rem
-//     }
-// }

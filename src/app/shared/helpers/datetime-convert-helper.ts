@@ -20,6 +20,6 @@ export default class DateTimeConvertHelper {
     }
 
     static fromDtObjectToSecon(dtObject: Date): number {
-        return dtObject ? Number(moment.utc(dtObject).add(7, 'hours').format(this.seconFormat)) : null;
+        return Number(moment.utc(dtObject).add(7, 'hours').format(this.seconFormat));
     }
 }
