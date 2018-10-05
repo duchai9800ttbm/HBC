@@ -31,7 +31,7 @@
     <div class="date-time d-flex justify-content-end align-items-center">
         <div>
             <span *ngIf="email?.sentDate">{{email?.sentDate*1000 | date:'dd/MM/yyyy HH:mm': '+0000'}}</span>
-        </div>
+            </div>
         <div class="ml-2">
             <button class="custom-btn" (click)="print()">
                 <i class="fa fa-print" aria-hidden="true"></i>

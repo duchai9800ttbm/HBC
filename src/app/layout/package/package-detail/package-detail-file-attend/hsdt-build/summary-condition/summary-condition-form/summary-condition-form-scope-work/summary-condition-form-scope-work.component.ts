@@ -5,6 +5,8 @@ import { SummaryConditionFormComponent } from '../summary-condition-form.compone
 import { TenderScopeOfWork } from '../../../../../../../../shared/models/package/tender-scope-of-work';
 import { HoSoDuThauService } from '../../../../../../../../shared/services/ho-so-du-thau.service';
 import { PhamViCongViec } from '../../../../../../../../shared/models/ho-so-du-thau/pham-vi-cong-viec';
+import { ThongTinDoiTac } from '../../../../../../../../shared/models/ho-so-du-thau/thong-tin-doi-tac';
+import { PhamViCongViecItem } from '../../../../../../../../shared/models/ho-so-du-thau/pham-vi-cong-viec-item';
 
 @Component({
   selector: 'app-summary-condition-form-scope-work',
@@ -22,18 +24,45 @@ export class SummaryConditionFormScopeWorkComponent implements OnInit {
   get scopeNotIncludeFA(): FormArray {
     return this.scopeWorkForm.get('scopeNotInclude') as FormArray;
   }
-  constructor(
 
+  constructor(
     private hoSoDuThauService: HoSoDuThauService,
     private fb: FormBuilder
   ) { }
 
   ngOnInit() {
+    this.loadData();
+    this.createForm();
+  }
+
+  createForm() {
     this.scopeWorkForm = this.fb.group({
       scopeInclude: this.fb.array([]),
       scopeNotInclude: this.fb.array([])
     });
-    this.scopeWorkForm.valueChanges.subscribe(data => this.hoSoDuThauService.emitDataStepScope(data));
+    this.dataStepScope.phamViKhongBaoGom.forEach(x => {
+      const control = <FormArray>this.scopeWorkForm.controls.scopeNotInclude;
+      control.push(this.fb.group({
+        congTac: x.congTac,
+        dienGiaiCongTac: x.dienGiaiCongTac
+      }));
+    });
+    this.dataStepScope.phamViBaoGom.forEach(x => {
+      const control = <FormArray>this.scopeWorkForm.controls.scopeInclude;
+      control.push(this.fb.group({
+        congTac: x.congTac,
+        dienGiaiCongTac: x.dienGiaiCongTac
+      }));
+    });
+
+    this.scopeWorkForm.valueChanges.subscribe(data => {
+      let obj = new PhamViCongViec();
+      obj = {
+        phamViBaoGom: data.scopeInclude,
+        phamViKhongBaoGom: data.scopeNotInclude
+      };
+      this.hoSoDuThauService.emitDataStepScope(obj);
+    });
   }
 
   loadData() {
@@ -43,38 +72,37 @@ export class SummaryConditionFormScopeWorkComponent implements OnInit {
         this.dataStepScope.phamViBaoGom = objDataStepScope.phamViBaoGom;
         this.dataStepScope.phamViKhongBaoGom = objDataStepScope.phamViKhongBaoGom;
       }
+      if (!this.dataStepScope.phamViBaoGom) {
+        this.dataStepScope.phamViBaoGom = [];
+        this.dataStepScope.phamViBaoGom.push({
+          congTac: '',
+          dienGiaiCongTac: ''
+        });
+      }
+      if (!this.dataStepScope.phamViKhongBaoGom) {
+        this.dataStepScope.phamViKhongBaoGom = [];
+        this.dataStepScope.phamViKhongBaoGom.push({
+          congTac: '',
+          dienGiaiCongTac: ''
+        });
+      }
     });
   }
 
   addFormArrayControl(name: string, data?: DictionaryItemText) {
     const formArray = this.scopeWorkForm.get(name) as FormArray;
     const formItem = this.fb.group({
-      name: data ? data.name : '',
-      desc: data ? data.desc : ''
+      congTac: data ? data.name : '',
+      dienGiaiCongTac: data ? data.desc : ''
     });
     formArray.push(formItem);
   }
+
 
   removeFormArrayControl(name: string, idx: number) {
     const formArray = this.scopeWorkForm.get(name) as FormArray;
     formArray.removeAt(idx);
   }
 
-  mappingToLiveFormData(data) {
-    const value = new TenderScopeOfWork();
-    value.includedWorks = [];
-    value.nonIncludedWorks = [];
-    data.scopeInclude.forEach(e => {
-      let work = new DictionaryItemText();
-      work = e;
-      value.includedWorks.push(work);
-    });
-    data.scopeNotInclude.forEach(e => {
-      let work = new DictionaryItemText();
-      work = e;
-      value.nonIncludedWorks.push(work);
-    });
-    SummaryConditionFormComponent.formModel.scopeOfWork = value;
-  }
 
 }

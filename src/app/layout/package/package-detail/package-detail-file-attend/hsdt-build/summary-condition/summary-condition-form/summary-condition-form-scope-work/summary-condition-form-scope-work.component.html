@@ -10,17 +10,23 @@
         <div formArrayName="scopeInclude">
             <div *ngFor="let fControl of scopeIncludeFA.controls; let i = index" [formGroupName]="i">
                 <div class="row mt-3">
-                    <div class="col-md-3">{{i + 1}}.<span class="ml-3">Công tác {{i + 1}}</span><i class="fa fa-plus-square-o ml-3 pointer"
-                            aria-hidden="true" (click)="addFormArrayControl('scopeInclude')" *ngIf="(i + 1) === scopeIncludeFA.length"></i></div>
-                    <div class="col-md-8">
-                        <input class="form-control" formControlName="name" placeholder="Công tác {{i + 1}}">
+                    <div class="col-md-3">{{i + 1}}.
+                        <span class="ml-3">Công tác {{i + 1}}</span>
+                        <i class="fa fa-plus-square-o ml-3 pointer" aria-hidden="true" (click)="addFormArrayControl('scopeInclude')"
+                            *ngIf="(i + 1) === scopeIncludeFA.length"></i>
                     </div>
-                    <div class="col-md-1 pl-0" *ngIf="i !== 0"><i (click)="removeFormArrayControl('scopeInclude', i)" class="fa fa-times-circle pointer" style="color: #c0c0c0; font-size: 1.2rem" aria-hidden="true"></i></div>
+                    <div class="col-md-8">
+                        <input class="form-control" formControlName="congTac" placeholder="Công tác {{i + 1}}">
+                    </div>
+                    <div class="col-md-1 pl-0" *ngIf="i !== 0">
+                        <i (click)="removeFormArrayControl('scopeInclude', i)" class="fa fa-times-circle pointer times-color"
+                            aria-hidden="true"></i>
+                    </div>
                 </div>
                 <div class="row mt-3">
                     <div class="col-md-3"></div>
                     <div class="col-md-8">
-                        <textarea formControlName="desc" placeholder="Diễn giải công tác {{i + 1}}" class="form-control"></textarea>
+                        <textarea formControlName="dienGiaiCongTac" placeholder="Diễn giải công tác {{i + 1}}" class="form-control"></textarea>
                     </div>
                 </div>
             </div>
@@ -34,30 +40,36 @@
         <div formArrayName="scopeNotInclude">
             <div *ngFor="let fControl of scopeNotIncludeFA.controls; let i = index" [formGroupName]="i">
                 <div class="row mt-3">
-                    <div class="col-md-3">{{i + 1}}.<span class="ml-3">Công tác {{i + 1}}</span><i class="fa fa-plus-square-o ml-3 pointer"
-                            aria-hidden="true" (click)="addFormArrayControl('scopeNotInclude')" *ngIf="(i + 1) === scopeNotIncludeFA.length"></i></div>
-                    <div class="col-md-8">
-                        <input class="form-control" formControlName="name" placeholder="Công tác {{i + 1}}">
+                    <div class="col-md-3">{{i + 1}}.
+                        <span class="ml-3">Công tác {{i + 1}}</span>
+                        <i class="fa fa-plus-square-o ml-3 pointer" aria-hidden="true" (click)="addFormArrayControl('scopeNotInclude')"
+                            *ngIf="(i + 1) === scopeNotIncludeFA.length"></i>
                     </div>
-                    <div class="col-md-1 pl-0" *ngIf="i !== 0"><i (click)="removeFormArrayControl('scopeNotInclude', i)" class="fa fa-times-circle pointer" style="color: #c0c0c0; font-size: 1.2rem" aria-hidden="true"></i></div>
+                    <div class="col-md-8">
+                        <input class="form-control" formControlName="congTac" placeholder="Công tác {{i + 1}}">
+                    </div>
+                    <div class="col-md-1 pl-0" *ngIf="i !== 0">
+                        <i (click)="removeFormArrayControl('scopeNotInclude', i)" class="fa fa-times-circle pointer times-color"
+                            aria-hidden="true"></i>
+                    </div>
                 </div>
                 <div class="row mt-3">
                     <div class="col-md-3"></div>
                     <div class="col-md-8">
-                        <textarea formControlName="desc" placeholder="Diễn giải công tác {{i + 1}}" class="form-control"></textarea>
+                        <textarea formControlName="dienGiaiCongTac" placeholder="Diễn giải công tác {{i + 1}}" class="form-control"></textarea>
                     </div>
                 </div>
             </div>
         </div>
         <div class="text-center mt-4">
-                <button class="btn border" routerLink="../stackholder">
-                    <i class="fa font-size-3 mr-3 fa-angle-left" aria-hidden="true"></i>
-                    Trở về
-                </button>
-                <button class="btn btn-primary ml-2" routerLink="../nonminate">
-                    Tiếp
-                    <i class="fa font-size-3 ml-3 fa-angle-right" aria-hidden="true"></i>
-                </button>
-            </div>
+            <button class="btn border" routerLink="../stackholder">
+                <i class="fa font-size-3 mr-3 fa-angle-left" aria-hidden="true"></i>
+                Trở về
+            </button>
+            <button class="btn btn-primary ml-2" routerLink="../nonminate">
+                Tiếp
+                <i class="fa font-size-3 ml-3 fa-angle-right" aria-hidden="true"></i>
+            </button>
+        </div>
     </div>
 </form>
