@@ -121,7 +121,9 @@ export class CreateInterviewComponent implements OnInit, OnDestroy {
       }
     });
     this.pagedResult = pagedResult;
-    this.pagedResult.items = this.pagedResult.items.sort( (a, b) => a.id - b.id );
+    if (!this.currentFieldSort) {
+      this.pagedResult.items = this.pagedResult.items.sort((a, b) => a.id - b.id);
+    }
     if (this.isNumberOfInterviews) {
       this.getListNumberOfInterviews();
       this.isNumberOfInterviews = false;
@@ -222,28 +224,61 @@ export class CreateInterviewComponent implements OnInit, OnDestroy {
   // this.historyList = this.historyList.sort( ( a, b ) =>  parseFloat(a.changedTimes) < parseFloat(b.changedTimes));
   sortField(fieldSort: string, statusSort: string) {
     this.currentFieldSort = fieldSort;
-    // this.statusSort = Asc
-    // Desc
-    // None
-    switch (fieldSort) {
-      case 'stt': {
-        this.pagedResult.items = this.pagedResult.items.sort(( a, b ) =>  a.id - b.id);
+    this.statusSort = statusSort;
+    switch (this.statusSort) {
+      case 'asc': {
+        switch (fieldSort) {
+          case 'approvedDate': {
+            this.pagedResult.items = this.pagedResult.items.sort((a, b) => a.approvedDate - b.approvedDate);
+            this.render(this.pagedResult);
+            break;
+          }
+          case 'interviewDate': {
+            this.pagedResult.items = this.pagedResult.items.sort((a, b) => a.interviewDate - b.interviewDate);
+            this.render(this.pagedResult);
+            break;
+          }
+          case 'interviewTimes': {
+            this.pagedResult.items = this.pagedResult.items.sort((a, b) => a.interviewTimes - b.interviewTimes);
+            this.render(this.pagedResult);
+            break;
+          }
+          case 'status': {
+            this.pagedResult.items = this.pagedResult.items.sort((a, b) => a.remainningDay - b.remainningDay);
+            this.render(this.pagedResult);
+            break;
+          }
+        }
         break;
       }
-      case 'approvedDate': {
-        this.pagedResult.items = this.pagedResult.items.sort(( a, b ) =>  a.approvedDate - b.approvedDate );
+      case 'desc': {
+        switch (fieldSort) {
+          case 'approvedDate': {
+            this.pagedResult.items = this.pagedResult.items.sort((a, b) => b.approvedDate - a.approvedDate);
+            this.render(this.pagedResult);
+            break;
+          }
+          case 'interviewDate': {
+            this.pagedResult.items = this.pagedResult.items.sort((a, b) => b.interviewDate - a.interviewDate);
+            this.render(this.pagedResult);
+            break;
+          }
+          case 'interviewTimes': {
+            this.pagedResult.items = this.pagedResult.items.sort((a, b) => b.interviewTimes - a.interviewTimes);
+            this.render(this.pagedResult);
+            break;
+          }
+          case 'status': {
+            this.pagedResult.items = this.pagedResult.items.sort((a, b) => b.remainningDay - a.remainningDay);
+            this.render(this.pagedResult);
+            break;
+          }
+        }
         break;
       }
-      case 'interviewDate': {
-        this.pagedResult.items = this.pagedResult.items.sort(( a, b ) =>  a.interviewDate - b.interviewDate );
-        break;
-      }
-      case 'interviewTimes': {
-        this.pagedResult.items = this.pagedResult.items.sort(( a, b ) =>  a.interviewTimes - b.interviewTimes );
-        break;
-      }
-      case 'status': {
-        this.pagedResult.items = this.pagedResult.items.sort(( a, b ) =>  a.remainningDay - b.remainningDay );
+      case '': {
+        this.pagedResult.items = this.pagedResult.items.sort((a, b) => a.id - b.id);
+        this.render(this.pagedResult);
         break;
       }
     }

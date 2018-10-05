@@ -152,29 +152,28 @@
                     <div style="width: 35%;" class="center-parent">
                       STT
                     </div>
-                    <div class="center-parent ml-2">
-                      <img class="icon-sort" src="assets/images/sort.svg" (click)="sortField('stt')">
-                      <img class="icon-sort-down-up" src="assets/images/sort-down.svg" (click)="sortField('stt')">
-                      <img class="icon-sort-down-up" src="assets/images/sort-up.svg" (click)="sortField('stt')">
-                    </div>
+                    <!-- <div class="center-parent ml-2">
+                      <img *ngIf="currentFieldSort !== 'stt' ||  (currentFieldSort === 'stt' && statusSort === '')" class="icon-sort" src="assets/images/sort.svg" (click)="sortField('stt', 'asc')">
+                      <img *ngIf="currentFieldSort === 'stt' && statusSort === 'asc'" class="icon-sort-down-up" src="assets/images/sort-down.svg" (click)="sortField('stt', 'desc')">
+                      <img *ngIf="currentFieldSort === 'stt' && statusSort === 'desc'" class="icon-sort-down-up" src="assets/images/sort-up.svg" (click)="sortField('stt', '')">
+                    </div> -->
                   </div>
                 </th>
 
                 <th style="width: 12%;background-color: #f68e56!important;">
                   Khách hàng
-                  <!-- <div class="d-flex justify-content-between">
-                    <div></div>
-                    <div>
-                      <img class="icon-sort" src="assets/images/sort.svg" (click)="sortField('customerName')">
-                    </div>
-                  </div> -->
                 </th>
 
-                <th style="width: 9%;background-color: #f68e56!important; min-width: 5rem;">
+                <th style="width: 9%;background-color: #f68e56!important; min-width: 5.5rem;">
                   <div class="d-flex justify-content-between">
                     <div>Ngày nhận</div>
-                    <div>
-                      <img class="icon-sort" src="assets/images/sort.svg" (click)="sortField('approvedDate')">
+                    <div class="center-parent ml-2">
+                      <img *ngIf="currentFieldSort !== 'approvedDate' ||  (currentFieldSort === 'approvedDate' && statusSort === '')" class="icon-sort"
+                        src="assets/images/sort.svg" (click)="sortField('approvedDate', 'asc')">
+                      <img *ngIf="currentFieldSort === 'approvedDate' && statusSort === 'asc'" class="icon-sort-down-up" src="assets/images/sort-down.svg"
+                        (click)="sortField('approvedDate', 'desc')">
+                      <img *ngIf="currentFieldSort === 'approvedDate' && statusSort === 'desc'" class="icon-sort-down-up" src="assets/images/sort-up.svg"
+                        (click)="sortField('approvedDate', '')">
                     </div>
                   </div>
                 </th>
@@ -182,8 +181,13 @@
                 <th class="th-mark-status" style="width: 12%; min-width: 8.5rem;background-color: #f68e56!important;">
                   <div class="d-flex justify-content-between">
                     <div>Thời gian phỏng vấn</div>
-                    <div>
-                      <img class="icon-sort" src="assets/images/sort.svg" (click)="sortField('interviewDate')">
+                    <div class="center-parent ml-2">
+                      <img *ngIf="currentFieldSort !== 'interviewDate' ||  (currentFieldSort === 'interviewDate' && statusSort === '')" class="icon-sort"
+                        src="assets/images/sort.svg" (click)="sortField('interviewDate', 'asc')">
+                      <img *ngIf="currentFieldSort === 'interviewDate' && statusSort === 'asc'" class="icon-sort-down-up" src="assets/images/sort-down.svg"
+                        (click)="sortField('interviewDate', 'desc')">
+                      <img *ngIf="currentFieldSort === 'interviewDate' && statusSort === 'desc'" class="icon-sort-down-up" src="assets/images/sort-up.svg"
+                        (click)="sortField('interviewDate', '')">
                     </div>
                   </div>
                 </th>
@@ -197,8 +201,13 @@
                 <th class="th-mark-status" style="width: 7%; min-width: 5rem;background-color: #f68e56!important;">
                   <div class="d-flex justify-content-between">
                     <div>Lần p/vấn</div>
-                    <div>
-                      <img class="icon-sort" src="assets/images/sort.svg" (click)="sortField('interviewTimes')">
+                    <div class="center-parent ml-2">
+                      <img *ngIf="currentFieldSort !== 'interviewTimes' ||  (currentFieldSort === 'interviewTimes' && statusSort === '')" class="icon-sort"
+                        src="assets/images/sort.svg" (click)="sortField('interviewTimes', 'asc')">
+                      <img *ngIf="currentFieldSort === 'interviewTimes' && statusSort === 'asc'" class="icon-sort-down-up" src="assets/images/sort-down.svg"
+                        (click)="sortField('interviewTimes', 'desc')">
+                      <img *ngIf="currentFieldSort === 'interviewTimes' && statusSort === 'desc'" class="icon-sort-down-up" src="assets/images/sort-up.svg"
+                        (click)="sortField('interviewTimes', '')">
                     </div>
                   </div>
                 </th>
@@ -206,8 +215,13 @@
                 <th style="width: 5%;background-color: #f68e56!important;">
                   <div class="d-flex justify-content-between">
                     <div>Trạng thái</div>
-                    <div>
-                      <img class="icon-sort" src="assets/images/sort.svg" (click)="sortField('status')">
+                    <div class="center-parent ml-2">
+                      <img *ngIf="currentFieldSort !== 'status' ||  (currentFieldSort === 'status' && statusSort === '')" class="icon-sort" src="assets/images/sort.svg"
+                        (click)="sortField('status', 'asc')">
+                      <img *ngIf="currentFieldSort === 'status' && statusSort === 'asc'" class="icon-sort-down-up" src="assets/images/sort-down.svg"
+                        (click)="sortField('status', 'desc')">
+                      <img *ngIf="currentFieldSort === 'status' && statusSort === 'desc'" class="icon-sort-down-up" src="assets/images/sort-up.svg"
+                        (click)="sortField('status', '')">
                     </div>
                   </div>
                 </th>
@@ -239,9 +253,9 @@
                   <div style="width: 35%;" class="center-parent">
                     <div>{{i + 1}}</div>
                   </div>
-                  <div class="center-parent ml-2">
+                  <!-- <div class="center-parent ml-2">
                     <div style="width: 15px"></div>
-                  </div>
+                  </div> -->
                 </td>
                 <td>
                   {{item.customer ? item.customer.customerName : ''}}
