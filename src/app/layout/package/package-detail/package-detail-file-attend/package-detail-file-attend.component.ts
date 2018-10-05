@@ -43,6 +43,9 @@ export class PackageDetailFileAttendComponent implements OnInit {
         for (let i = 0; i < this.listStatusPackage.length; i++) {
           if (this.listStatusPackage[i].find(item => item === this.packageData.stageStatus.id)) {
             this.statusPackageID = i;
+            if (i === 2) {
+              this.router.navigate([`/package/detail/${this.packageId}/attend/build`]);
+            }
             break;
           }
         }
