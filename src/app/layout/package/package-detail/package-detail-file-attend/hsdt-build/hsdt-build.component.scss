@@ -413,13 +413,7 @@ table.dataTable th {
         }
     }
 }
-.hight-light {
-    color: #a5a2a2 !important;
-}
-.active-menu {
-    background-color: #009CE2 !important;
-    color: #FFFFFF !important;
-}
+
 .resize {
     transition: width 300ms;
     pointer-events: none;
@@ -462,14 +456,6 @@ table.dataTable th {
     background-color: #fff !important;
     transform: none;
     transition-duration: 600ms;
-}
-
-.res-header-bar {
-    height: 40px;
-}
-
-.res-header-title {
-    font-size: 18px;
 }
 
 @media only screen and (max-width: 1024px) {

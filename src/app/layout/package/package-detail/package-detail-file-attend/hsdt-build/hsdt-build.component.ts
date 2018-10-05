@@ -34,20 +34,18 @@ export class HsdtBuildComponent implements OnInit {
     isShowMenu = false;
     notShow = false;
     danhSachLoaiTaiLieu;
-    routerName;
-    isHighlight;
-
+    dataUser;
     constructor(
         private hoSoDuThauService: HoSoDuThauService,
         private alertService: AlertService,
         private packageService: PackageService,
         private router: Router,
         private spinner: NgxSpinnerService,
-        private confirmationService: ConfirmationService
+        private confirmationService: ConfirmationService,
+        private groupUserService: GroupUserService
     ) { }
 
     ngOnInit() {
-        this.getDanhSachLoaiHoSo();
         this.packageId = +PackageDetailComponent.packageId;
         this.packageService.isSummaryConditionForm$.subscribe(data => {
             this.isShowMenu = data;
@@ -76,22 +74,14 @@ export class HsdtBuildComponent implements OnInit {
     refresh(): void {
         this.spinner.show();
         this.dtTrigger.next();
-        this.spinner.hide();
+        this.spinner.show();
         this.alertService.success('Dữ liệu đã được cập nhật mới nhất!');
     }
     onActivate(event) {
-        this.routerName = event.constructor.name;
-        this.hideActionSiteReport = (this.routerName === 'LiveformSiteReportComponent') ? true : false;
+        this.hideActionSiteReport = (event.constructor.name === 'LiveformSiteReportComponent') ? true : false;
     }
     taiTemplateHSDT() {
-        this.hoSoDuThauService.taiTemplateHSDT().subscribe(file => {
-        }, err => {
-            if (err.json().errorCode) {
-                this.alertService.error('File không tồn tại hoặc đã bị xóa!');
-            } else {
-                this.alertService.error('Đã có lỗi xãy ra. Vui lòng thử lại!');
-            }
-        });
+        this.hoSoDuThauService.taiTemplateHSDT().subscribe();
     }
 
     chotHSDT(event) {
@@ -101,18 +91,12 @@ export class HsdtBuildComponent implements OnInit {
             () => {
                 this.hoSoDuThauService.chotHoSoDuThau(this.packageId).subscribe(res => {
                     thiss.alertService.success(`Đã chốt Hồ sơ dự thầu thành công!`);
-                    thiss.spinner.hide();
+                    this.spinner.hide();
                     thiss.refresh();
                 }, err => {
                     thiss.alertService.error(`Đã có lỗi. Chốt Hồ sơ dự thầu không thành công.`);
                 });
             }
         );
-    }
-    emitData(id) {
-        this.isHighlight = id - 1;
-        this.hoSoDuThauService.detectChangingRouter(id);
-        this.hoSoDuThauService.transporterData(id);
-        this.router.navigate([`/package/detail/${this.packageId}/attend/build/uploadform`]);
     }
 }
