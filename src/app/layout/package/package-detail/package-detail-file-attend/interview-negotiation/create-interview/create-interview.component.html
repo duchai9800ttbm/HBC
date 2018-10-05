@@ -245,7 +245,8 @@
                   <div style="width: 40%;">
                     <div class="center-parent">
                       <label class="custom-control custom-checkbox">
-                        <input type="checkbox" class="custom-control-input" [(ngModel)]="item.checkboxSelected">
+                        <input type="checkbox" class="custom-control-input" [value]="item.checkboxSelected" (click)="saveChooseInterviewService(item.id)">
+                        <!-- [(ngModel)]="item.checkboxSelected" -->
                         <span class="custom-control-indicator"></span>
                       </label>
                     </div>
@@ -261,10 +262,10 @@
                   {{item.customer ? item.customer.customerName : ''}}
                 </td>
                 <td class="text-align-number">
-                  {{(item.approvedDate)*1000 | date:'dd/MM/yyyy'}}
+                  {{ item.approvedDate !== 0 ? ((item.approvedDate)*1000 | date:'dd/MM/yyyy') : ''}}
                 </td>
                 <td class="text-align-number">
-                  {{(item.interviewDate)*1000 | date:'dd/MM/yyyy'}}
+                  {{ item.interviewDate !==0 ? ((item.interviewDate)*1000 | date:'dd/MM/yyyy') : ''}}
                 </td>
                 <td>
                   {{item.place}}

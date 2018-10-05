@@ -426,8 +426,10 @@ export class InformationDeploymentComponent implements OnInit {
       this.historyList = respone.items;
       this.historyList = this.historyList.sort((a, b) => parseFloat(a.changedTimes) < parseFloat(b.changedTimes));
       this.historyList = groupBy(this.historyList, [{ field: 'changedTimes' }]);
-      this.dtTrigger.next();
-      this.spinner.hide();
+      setTimeout(() => {
+        this.dtTrigger.next();
+        this.spinner.hide();
+      });
     },
       err => {
         this.spinner.hide();
