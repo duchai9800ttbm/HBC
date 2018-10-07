@@ -1,7 +1,7 @@
 <div id="outer-table">
     <div class="table-small mt-3">
         <div id="header-table-build" class=" title-list-package d-flex flex-wrap align-items-center status-filter"
-            *ngIf="!isShowMenu">
+            [hidden]="isShowMenu">
             <div class="mr-auto d-flex align-items-end list-package mt-2 mb-2">
                 <div class="d-flex justify-content-start res-header-bar" id="res-header">
                     <div class="rule mr-2">
@@ -28,7 +28,7 @@
             </div>
         </div>
         <div id="main-content" class="d-flex flex-row w-100">
-            <div id="toggle-menu" *ngIf="!isShowMenu">
+            <div id="toggle-menu" [hidden]="isShowMenu">
 
                 <div class="d-flex">
                     <div id="toggle-menu-item">

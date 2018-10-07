@@ -178,7 +178,9 @@ export class CreateInterviewComponent implements OnInit, OnDestroy {
   }
 
   onSelectAll(value: boolean) {
-    this.pagedResult.items.forEach(x => (x['checkboxSelected'] = value));
+    console.log('value', value);
+    // this.pagedResult.items.forEach(x => (x['checkboxSelected'] = value));
+    this.pagedResult.items.forEach( item => item['checkboxSelected'] = value);
   }
 
   // noticeInterview() {
@@ -267,11 +269,21 @@ export class CreateInterviewComponent implements OnInit, OnDestroy {
   dowloadFileCreateInterview(id) {
     this.interviewInvitationService.downloadFileCreateInterview(id).subscribe(data => {
     }, err => {
-        if (err.json().errorCode) {
-            this.alertService.error('File không tồn tại hoặc đã bị xóa!');
-        } else {
-            this.alertService.error('Đã có lỗi xãy ra!');
-        }
+      if (err.json().errorCode) {
+        this.alertService.error('File không tồn tại hoặc đã bị xóa!');
+      } else {
+        this.alertService.error('Đã có lỗi xãy ra!');
+      }
     });
-}
+  }
+
+  saveChooseInterviewService(id) {
+    this.pagedResult.items.forEach( item => {
+      if ( item.id === id) {
+        item['checkboxSelected'] = !item['checkboxSelected'];
+      }
+    });
+    console.log('this.pagedResult.items', this.pagedResult.items.filter( item => item['checkboxSelected'] === true));
+    this.interviewInvitationService.chooseInterviewNotification(this.pagedResult.items.filter( item => item['checkboxSelected'] === true));
+  }
 }

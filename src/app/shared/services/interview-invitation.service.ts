@@ -17,6 +17,7 @@ export class InterviewInvitationService {
   static keySearchInterviewInvitation = new BehaviorSubject<string>('');
   static keySearchNew = new Subject<string>();
   static refeshCreateInterviewInvitation = new BehaviorSubject<boolean>(false);
+  interviewNotification;
   // map theo model danh sách biên bản phỏng vấn
   private static toInterviewInvitationReportList(result: any): InterviewInvitationReportList {
     return {
@@ -125,6 +126,14 @@ export class InterviewInvitationService {
   // Observable refesh interview invitation list
   watchRefeshInterviewInvitationList(): Observable<boolean> {
     return InterviewInvitationService.refeshCreateInterviewInvitation;
+  }
+  // Choose interview to notification
+  chooseInterviewNotification(items) {
+    this.interviewNotification = items;
+  }
+  // Return interview to notification
+  getChooseInterviewNotification() {
+    return this.interviewNotification;
   }
   // map theo model danh sách lời lời phỏng vấn
   toInterviewInvitationList(result: any): InterviewInvitationList {

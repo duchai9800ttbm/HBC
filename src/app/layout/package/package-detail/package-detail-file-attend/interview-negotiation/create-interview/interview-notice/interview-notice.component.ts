@@ -9,6 +9,8 @@ import { PackageDetailComponent } from '../../../../package-detail.component';
 import { NgxSpinnerService } from '../../../../../../../../../node_modules/ngx-spinner';
 import { AlertService } from '../../../../../../../shared/services';
 import { BsModalRef } from '../../../../../../../../../node_modules/ngx-bootstrap';
+import { PackageService } from '../../../../../../../shared/services/package.service';
+import { InterviewInvitationService } from '../../../../../../../shared/services/interview-invitation.service';
 @Component({
   selector: 'app-interview-notice',
   templateUrl: './interview-notice.component.html',
@@ -29,10 +31,13 @@ export class InterviewNoticeComponent implements OnInit {
   isSendBcc = false;
   ckeConfig: any;
   file = [];
+  packageInfo;
   constructor(
     private emailService: EmailService,
     private spinner: NgxSpinnerService,
-    private alertService: AlertService
+    private alertService: AlertService,
+    private packageService: PackageService,
+    private interviewInvitationService: InterviewInvitationService,
   ) { }
   public valueNormalizerTo = (employeeName$: Observable<string>) => employeeName$.pipe(map((employeeName: string) => {
     const emailModelTo = new SearchEmailModel();
@@ -65,6 +70,12 @@ export class InterviewNoticeComponent implements OnInit {
   }))
   ngOnInit() {
     this.packageId = +PackageDetailComponent.packageId;
+    this.packageService.getInforPackageID(this.packageId).subscribe( response => {
+      this.packageInfo = response;
+      this.emailModel.subject = `DỰ ÁN ${this.packageInfo.projectName}, GÓI THẦU ${this.packageInfo.opportunityName} THÔNG BÁO PHỎNG VẤN`;
+    });
+    // this.emailModel.content = `ĐẶNG BẢO QUYỀN`;
+    console.log('this.serveice', this.interviewInvitationService.getChooseInterviewNotification());
     this.searchTermTo$
       .debounceTime(COMMON_CONSTANTS.SearchEmailDelayTimeInMs)
       .distinctUntilChanged()

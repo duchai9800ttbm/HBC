@@ -1,5 +1,5 @@
 
-import { Component, OnInit, ChangeDetectorRef, OnDestroy } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef, OnDestroy, AfterViewChecked } from '@angular/core';
 import { DialogService } from '../../../../../../../node_modules/@progress/kendo-angular-dialog';
 import { UploadFileHsdtComponent } from './upload-file-hsdt/upload-file-hsdt.component';
 import { PackageService } from '../../../../../shared/services/package.service';
@@ -20,7 +20,7 @@ import { ListUserItem } from '../../../../../shared/models/user/user-list-item.m
     templateUrl: './hsdt-build.component.html',
     styleUrls: ['./hsdt-build.component.scss']
 })
-export class HsdtBuildComponent implements OnInit {
+export class HsdtBuildComponent implements OnInit, AfterViewChecked {
     page: number;
     pageSize: number;
     pageIndex: number | string = 0;
@@ -49,8 +49,13 @@ export class HsdtBuildComponent implements OnInit {
     ngOnInit() {
         this.getDanhSachLoaiHoSo();
         this.packageId = +PackageDetailComponent.packageId;
-        this.packageService.isSummaryConditionForm$.subscribe(data => {
-            this.isShowMenu = data;
+    }
+
+    ngAfterViewChecked() {
+        setTimeout(() => {
+            this.packageService.isSummaryConditionForm$.subscribe(data => {
+                this.isShowMenu = data;
+            });
         });
     }
 
