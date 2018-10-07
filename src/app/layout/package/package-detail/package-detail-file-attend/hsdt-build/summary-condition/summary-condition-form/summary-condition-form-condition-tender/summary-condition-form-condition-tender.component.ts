@@ -4,6 +4,7 @@ import { SummaryConditionFormComponent } from '../summary-condition-form.compone
 import DateTimeConvertHelper from '../../../../../../../../shared/helpers/datetime-convert-helper';
 import { DienGiaiDieuKienHSMT } from '../../../../../../../../shared/models/ho-so-du-thau/dien-giai-yeu-cau';
 import { HoSoDuThauService } from '../../../../../../../../shared/services/ho-so-du-thau.service';
+import { DictionaryItemText } from '../../../../../../../../shared/models';
 
 @Component({
     selector: 'app-summary-condition-form-condition-tender',
@@ -194,5 +195,20 @@ export class SummaryConditionFormConditionTenderComponent implements OnInit {
             }
 
         });
+    }
+
+
+
+    addFormArrayControl(name: string, data?: DictionaryItemText) {
+        const formArray = (this.dieuKienHSMTForm.get('theoHSMT') as FormGroup).controls.cacLoaiThue as FormArray;
+        const formItem = this.fb.group({
+            thue: ''
+        });
+        formArray.push(formItem);
+    }
+
+    removeFormArrayControl(name: string, idx: number) {
+        const formArray = (this.dieuKienHSMTForm.get('theoHSMT') as FormGroup).controls.cacLoaiThue as FormArray;
+        formArray.removeAt(idx);
     }
 }
