@@ -14,9 +14,13 @@
     </div>
     <div>
         <div class="btn-toolbar mt-2 mb-2">
+            <button type="button" *ngIf="packageInfo?.stageStatus.id === bidStatus.DaGuiPhanCongTienDo" class="btn btn-primary mr-2"
+                (click)="startSetHSDT()">Bắt đầu lập HSDT</button>
             <button type="button" *ngIf="isconfirmProgress" [ngClass]="{'btn-dep':isconfirmProgress == true}" class="btn btn-up" (click)="openModeSendAssignment(SendAssignment)">{{textConfirmProgress}}</button>
-            <button type="button" *ngIf="packageInfo?.stageStatus.id == bidStatus.ChuaThongBaoTrienKhai || packageInfo?.stageStatus.id == bidStatus.ThamGiaDuThau" class="btn btn-up btn-dep" (click)="openModalDeployment(informationDeployment)">Thông báo triển khai</button>
-            <button type="button" class="btn btn-primary mr-2" (click)="downloadTemplate()">Tải Template
+            <button type="button" *ngIf="packageInfo?.stageStatus.id == bidStatus.ChuaThongBaoTrienKhai || packageInfo?.stageStatus.id == bidStatus.ThamGiaDuThau"
+                class="btn btn-up btn-dep" (click)="openModalDeployment(informationDeployment)">Thông báo triển khai</button>
+            <button type="button" *ngIf="packageInfo?.stageStatus.id !== bidStatus.ChuaThongBaoTrienKhai && packageInfo?.stageStatus.id !== bidStatus.ThamGiaDuThau"
+                class="btn btn-primary mr-2" (click)="downloadTemplate()">Tải Template
             </button>
             <!-- <button type="button" *ngIf="isconfirmProgress" class="btn btn-up disable">Upload file</button>
             <button type="button" *ngIf="!isconfirmProgress" [ngClass]="{ 'btn-dep': dowloadTem === true,'disable': dowloadTem === false }"
@@ -64,7 +68,9 @@
             <tr>
                 <td>
                 </td>
-                <td><a [routerLink]="['./view']" (click)="changeAction('view')">{{tenderPlan.projectInformation}}</a></td>
+                <td>
+                    <a [routerLink]="['./view']" (click)="changeAction('view')">{{tenderPlan.projectInformation}}</a>
+                </td>
                 <td>{{tenderPlan.approvedEmployee?.employeeName ? tenderPlan.approvedEmployee?.employeeName : 'Chưa duyệt'}}</td>
                 <td>{{tenderPlan.createdEmployee?.employeeName}}</td>
                 <td>{{tenderPlan.createDate * 1000 | date: 'dd/MM/yyyy'}}</td>
@@ -74,7 +80,8 @@
                             <a [routerLink]="['./view']" (click)="changeAction('view')">
                                 <i class="fa fa-eye text-warning" aria-hidden="true"></i>
                             </a>
-                            <a class=" text-success ml-3" [class.disabled]="packageInfo?.stageStatus.id == bidStatus.DaGuiPhanCongTienDo" [routerLink]="packageInfo?.stageStatus.id == bidStatus.DaGuiPhanCongTienDo ? [] : ['./edit']" (click)="changeAction('edit')">
+                            <a class=" text-success ml-3" [class.disabled]="packageInfo?.stageStatus.id == bidStatus.DaGuiPhanCongTienDo" [routerLink]="packageInfo?.stageStatus.id == bidStatus.DaGuiPhanCongTienDo ? [] : ['./edit']"
+                                (click)="changeAction('edit')">
                                 <i class="fa fa-pencil cursor-pointer" aria-hidden="true"> </i>
                             </a>
                             <a class=" text-dark ml-3" [class.disabled]="packageInfo?.stageStatus.id == bidStatus.DaGuiPhanCongTienDo" (click)="packageInfo?.stageStatus.id == bidStatus.DaGuiPhanCongTienDo ? null : deleteTenderPlan()">
@@ -92,35 +99,35 @@
 </div>
 
 <div class="mt-5 ml-3" *ngIf="historyList && historyList.length > 0">
-        <div class="d-flex justify-content-between">
-            <h5 class="text-uppercase mb-3">Lịch sử cập nhật</h5>
-        </div>
-    
-        <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger">
-            <thead>
-                <tr>
-                    <th>STT</th>
-                    <th>Lần cập nhật</th>
-                    <th>Người cập nhật</th>
-                    <th>Ngày cập nhật</th>
-                    <th>Nội dung cập nhật</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr *ngFor="let item of historyList; let i = index">
-                    <td>{{i + 1}}</td>
-                    <td class="text-center">
-                        {{item.value + 1}}
-                    </td>
-                    <td> {{item.items[0].employee?.employeeName}}</td>
-                    <td>{{ (item.items[0].changedTime)*1000 | date:'dd/MM/yyyy , HH:mm' : '+0000' }}</td>
-                    <td>
-                        <div class="text-truncate">{{item.items[0].updateDesc}}</div>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
+    <div class="d-flex justify-content-between">
+        <h5 class="text-uppercase mb-3">Lịch sử cập nhật</h5>
     </div>
+
+    <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger">
+        <thead>
+            <tr>
+                <th>STT</th>
+                <th>Lần cập nhật</th>
+                <th>Người cập nhật</th>
+                <th>Ngày cập nhật</th>
+                <th>Nội dung cập nhật</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let item of historyList; let i = index">
+                <td>{{i + 1}}</td>
+                <td class="text-center">
+                    {{item.value + 1}}
+                </td>
+                <td> {{item.items[0].employee?.employeeName}}</td>
+                <td>{{ (item.items[0].changedTime)*1000 | date:'dd/MM/yyyy , HH:mm' : '+0000' }}</td>
+                <td>
+                    <div class="text-truncate">{{item.items[0].updateDesc}}</div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
 
 <!-- <app-assignment-progress *ngIf="showTabelAssignment && isShowTable" [dataConfirm]="dataConfirm" [hideButon]="hideButon"
     [UploadItem]="uploadItem"></app-assignment-progress>

@@ -5,7 +5,6 @@ import { InterviewNegotiationRoutingModule } from './interview-negotiation-routi
 import { InterviewNegotiationComponent } from './interview-negotiation.component';
 import { SharedModule } from '../../../../../shared/shared.module';
 import { SubmittedHsdtComponent } from './submitted-hsdt/submitted-hsdt.component';
-import { InterviewInvitationService } from '../../../../../shared/services/interview-invitation.service';
 @NgModule({
   imports: [
     CommonModule,
@@ -13,8 +12,5 @@ import { InterviewInvitationService } from '../../../../../shared/services/inter
     InterviewNegotiationRoutingModule
   ],
   declarations: [InterviewNegotiationComponent, SubmittedHsdtComponent],
-  providers: [
-    InterviewInvitationService,
-  ]
 })
 export class InterviewNegotiationModule { }

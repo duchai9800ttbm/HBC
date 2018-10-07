@@ -47,6 +47,23 @@ export class HoSoDuThauService {
     private sessionService: SessionService,
     private instantSearchService: InstantSearchService
   ) { }
+  // get Danh Sách User
+  getDataUser(
+    page: number,
+    pageSize: number
+  ) {
+    const url = `user/${page}/${pageSize}`;
+    return this.apiService.get(url).map(res => {
+      const response = res.result;
+      return {
+        currentPage: response.pageIndex,
+        pageSize: response.pageSize,
+        pageCount: response.totalPages,
+        total: response.totalCount,
+        items: (response.items || [])
+      };
+    });
+  }
   // Tải lên hồ sơ dự thầu
   taiLenHoSoDuThau(
     bidOpportunityId: number,
@@ -178,11 +195,11 @@ export class HoSoDuThauService {
   emitDataStepScope(obj: PhamViCongViec) {
     HoSoDuThauService.tempDataLiveFormDKDT.value.phamViCongViec = obj;
   }
-  emitDataStepSubContractor(obj: DanhSachNhaThau) {
-    HoSoDuThauService.tempDataLiveFormDKDT.value.danhSachNhaThau = [obj];
+  emitDataStepSubContractor(obj: DanhSachNhaThau[]) {
+    HoSoDuThauService.tempDataLiveFormDKDT.value.danhSachNhaThau = obj;
   }
-  emitDataStepMainMaterial(obj: DanhSachVatTu) {
-    HoSoDuThauService.tempDataLiveFormDKDT.value.danhSachVatTu = [obj];
+  emitDataStepMainMaterial(obj: DanhSachVatTu[]) {
+    HoSoDuThauService.tempDataLiveFormDKDT.value.danhSachVatTu = obj;
   }
   emitDataStepTenderSubmit(obj: HoSoDangLuuY) {
     HoSoDuThauService.tempDataLiveFormDKDT.value.hoSoDangLuuY = obj;

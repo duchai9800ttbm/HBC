@@ -21,6 +21,8 @@ import { DanhSachBoHsdtItem } from '../../../../../../shared/models/ho-so-du-tha
 // tslint:disable-next-line:import-blacklist
 import { BehaviorSubject } from 'rxjs';
 import { HsdtFilterModel } from '../../../../../../shared/models/ho-so-du-thau/hsdt-filter.model';
+import { DialogService } from '@progress/kendo-angular-dialog';
+import { UploadFileHsdtComponent } from '../upload-file-hsdt/upload-file-hsdt.component';
 
 @Component({
   selector: 'app-hskt-involved',
@@ -28,11 +30,8 @@ import { HsdtFilterModel } from '../../../../../../shared/models/ho-so-du-thau/h
   styleUrls: ['./hskt-involved.component.scss']
 })
 export class HsktInvolvedComponent implements OnInit {
-  isShowMenu = false;
-  dtOptions: any = DATATABLE_CONFIG2;
   dtTrigger: Subject<any> = new Subject();
-  searchTerm;
-  pagedResultUser: PagedResult<UserModel> = new PagedResult<UserModel>();
+  dtOptions: any = DATATABLE_CONFIG;
   datePickerConfig = DATETIME_PICKER_CONFIG;
   packageId;
   bidOpportunityId: number;
@@ -40,33 +39,19 @@ export class HsktInvolvedComponent implements OnInit {
   pageSize: number;
   pageIndex: number | string = 0;
   pagedResult: PagedResult<DanhSachBoHsdtItem> = new PagedResult<DanhSachBoHsdtItem>();
-  danhSachBoHoSoDuThau;
   dialog;
-  hideActionSiteReport: boolean;
-  isShowSideMenu = false;
-  notShow = false;
   searchTerm$ = new BehaviorSubject<string>('');
   filterModel = new HsdtFilterModel();
   checkboxSeclectAll: boolean;
-  isShowButtonUp: boolean;
-  isShowButtonDown: boolean;
-  isShowEmpty = false;
-  danhSachLoaiTaiLieu;
-  showPopupAdd = false;
-  showPopupDetail = false;
-  currentItem = {};
-  userListItem: UserItemModel[];
-  ListItem: BidDocumentModel[];
-  packageData: PackageInfoModel;
-  tableEmpty: boolean;
   sum = 0;
-  showTable = false;
+  danhSachLoaiTaiLieu;
   danhSachHoSoKT;
   constructor(
     private hoSoDuThauService: HoSoDuThauService,
+    private dialogService: DialogService,
     private alertService: AlertService,
-    private confirmationService: ConfirmationService,
-    private spinner: NgxSpinnerService
+    private spinner: NgxSpinnerService,
+    private confirmationService: ConfirmationService
   ) {
   }
   ngOnInit() {
@@ -74,85 +59,56 @@ export class HsktInvolvedComponent implements OnInit {
     this.packageId = +PackageDetailComponent.packageId;
     this.getDataTypeHSKT();
   }
+  showDialogUploadFile() {
+    this.dialog = this.dialogService.open({
+      content: UploadFileHsdtComponent,
+      width: 750,
+      minWidth: 500
+    });
+    const instance = this.dialog.content.instance;
+    instance.bidOpportunityId = this.packageId;
+    instance.nameFile = 'Các hồ sơ kỹ thuật khác';
+    instance.idFile = 16;
+    instance.callBack = this.closePopuup.bind(this);
+  }
+  closePopuup() {
+    this.dialog.close();
+    this.getDataTypeHSKT();
+    // this.getDanhSachBoHoSo();
+  }
+  getDanhSachLoaiHoSo() {
+    this.packageId = +PackageDetailComponent.packageId;
+    this.hoSoDuThauService.getDanhSachLoaiTaiLieu(this.packageId).subscribe(res => {
+      this.danhSachLoaiTaiLieu = res;
+    }, err => {
+      this.alertService.error(`Đã có lỗi. Vui lòng thử lại!`);
+    });
+  }
+  getDataTypeHSKT() {
+    this.spinner.show();
+    this.hoSoDuThauService
+      .danhSachBoHoSoDuThauInstantSearch(this.packageId, this.searchTerm$, this.filterModel, 0, 10)
+      .subscribe(responseHS => {
+        this.spinner.hide();
+        this.rerender(responseHS);
+        this.danhSachHoSoKT = responseHS.items.filter(item =>
+          item.tenderDocumentType === 'Các hồ sơ kỹ thuật khác'
+        );
+        this.sum = this.danhSachHoSoKT.length;
+        this.dtTrigger.next();
+      }, err => {
+        this.spinner.hide();
+        this.alertService.error(`Đã có lỗi xảy ra. Xin vui lòng thử lại!`);
+      });
+  }
+
   rerender(pagedResult: any) {
     this.checkboxSeclectAll = false;
     this.pagedResult = pagedResult;
-    this.checkButtonUpDown();
 
   }
-  checkButtonUpDown() {
-    this.isShowButtonUp = +this.pagedResult.pageCount > (+this.pagedResult.currentPage + 1);
-    this.isShowButtonDown = +this.pagedResult.currentPage > 0;
-    this.isShowEmpty = !(this.pagedResult.total > 0);
-  }
-  filter() {
-    this.hoSoDuThauService
-      .danhSachBoHoSoDuThau(this.packageId, this.searchTerm$.value, this.filterModel, 0, 10)
-      .subscribe(responseResultBoHSDT => {
-        this.rerender(responseResultBoHSDT);
-        this.danhSachHoSoKT = responseResultBoHSDT.items.filter(item =>
-          item.tenderDocumentType === 'Các hồ sơ kỹ thuật khác'
-        );
-        this.showTable = (this.danhSachHoSoKT.length > 0) ? true : false;
-        this.sum = this.danhSachHoSoKT.length;
-        this.dtTrigger.next();
-      }, err => {
-        this.alertService.error(`Đã có lỗi xảy ra. Xin vui lòng thử lại!`);
-      });
-    this.dtTrigger.next();
-  }
-
-  clearFilter() {
-    this.filterModel = new HsdtFilterModel();
-    this.filterModel.status = '';
-    this.filterModel.uploadedEmployeeId = null;
-    this.filterModel.createdDate = null;
-    this.filterModel.uploadedEmployeeId = null;
-    this.getDataTypeHSKT();
-  }
-  getDataTypeHSKT() {
-    this.hoSoDuThauService
-      .danhSachBoHoSoDuThauInstantSearch(this.packageId, this.searchTerm$, this.filterModel, 0, 10)
-      .subscribe(responseResultBoHSDT => {
-        this.rerender(responseResultBoHSDT);
-        this.danhSachHoSoKT = responseResultBoHSDT.items.filter(item =>
-          item.tenderDocumentType === 'Các hồ sơ kỹ thuật khác'
-        );
-        this.showTable = (this.danhSachHoSoKT.length > 0) ? true : false;
-        this.sum = this.danhSachHoSoKT.length;
-        this.dtTrigger.next();
-      }, err => {
-        this.alertService.error(`Đã có lỗi xảy ra. Xin vui lòng thử lại!`);
-      });
-  }
-
-  toggleClick() {
-    this.isShowMenu = !this.isShowMenu;
-    $('.toggle-menu-item').toggleClass('resize');
-    $('.line').toggleClass('resize');
-    $('#toggle-menu-item').toggleClass('hidden');
-    $('#toggle-menu-item').toggleClass('resize');
-    $('.iconN1').toggleClass('iconN01');
-    $('.iconN2').toggleClass('iconN02');
-    $('.iconN3').toggleClass('iconN03');
-  }
-
-
-  refresh() {
-    this.hoSoDuThauService
-      .danhSachBoHoSoDuThauInstantSearch(this.packageId, this.searchTerm$, this.filterModel, 0, 10)
-      .subscribe(responseResultBoHSDT => {
-        this.danhSachHoSoKT = responseResultBoHSDT.items.filter(item =>
-          item.tenderDocumentType === 'Các hồ sơ kỹ thuật khác'
-        );
-        this.showTable = (this.danhSachHoSoKT.length > 0) ? true : false;
-        this.sum = this.danhSachHoSoKT.length;
-        this.dtTrigger.next();
-        this.spinner.hide();
-        this.alertService.success('Dữ liệu đã được cập nhật mới nhất!');
-      }, err => {
-        this.alertService.error(`Đã xảy ra lỗi khi load danh sách bộ Hồ sơ.`);
-      });
+  onSelectAll(value: boolean) {
+    this.danhSachHoSoKT.forEach(x => (x.checkboxSelected = value));
   }
 
   deleteDocument(id) {
@@ -162,11 +118,12 @@ export class HsktInvolvedComponent implements OnInit {
       () => {
         this.spinner.show();
         this.hoSoDuThauService.xoaMotHoSoDuThau(id).subscribe(res => {
+          that.spinner.hide();
           that.alertService.success('Đã xóa tài liệu!');
           that.refresh();
         }, err => {
-          this.alertService.error(`Đã có lỗi. Tài liệu chưa được xóa!`);
-          this.spinner.hide();
+          that.spinner.hide();
+          that.alertService.error(`Đã có lỗi. Tài liệu chưa được xóa!`);
         });
       }
     );
@@ -179,30 +136,55 @@ export class HsktInvolvedComponent implements OnInit {
     } else {
       this.confirmationService.confirm('Bạn có chắc chắn muốn xóa những tài liệu này?',
         () => {
+          this.spinner.show();
           this.hoSoDuThauService.xoaNhieuHoSoDuThau(listId).subscribe(res => {
+            that.spinner.hide();
             that.alertService.success('Đã xóa tài liệu!');
+            that.refresh();
+          }, err => {
+            that.spinner.hide();
+            that.alertService.error('Đã có lỗi. Xóa không thành công!');
             that.refresh();
           });
         });
     }
   }
-
-  downloadDocument(id) {
-    this.hoSoDuThauService.taiHoSoDuThau(id).subscribe(data => {
-    }, err => {
-      if (err.json().errorCode) {
-        this.alertService.error('File không tồn tại hoặc đã bị xóa!');
-      } else {
-        this.alertService.error('Đã có lỗi xãy ra!');
-      }
-    });
+  refresh() {
+    this.getDataTypeHSKT();
+    this.alertService.success(`Dữ liệu đã được cập nhật mới nhất!`);
   }
-
+  filter() {
+    this.spinner.show();
+    this.hoSoDuThauService
+      .danhSachBoHoSoDuThau(this.packageId, this.searchTerm$.value, this.filterModel, 0, 10)
+      .subscribe(responseResultBoHSDT => {
+        this.spinner.hide();
+        this.rerender(responseResultBoHSDT);
+        this.danhSachHoSoKT = responseResultBoHSDT.items.filter(item =>
+          item.tenderDocumentType === 'Các hồ sơ kỹ thuật khác'
+        );
+        this.sum = this.danhSachHoSoKT.length;
+        this.dtTrigger.next();
+      }, err => {
+        this.spinner.hide();
+        this.alertService.error(`Đã có lỗi xảy ra. Xin vui lòng thử lại!`);
+      });
+    this.dtTrigger.next();
+  }
+  clearFilter() {
+    this.filterModel = new HsdtFilterModel();
+    console.log(this.filterModel);
+    this.filterModel.status = '';
+    this.filterModel.uploadedEmployeeId = null;
+    this.filterModel.createdDate = null;
+    this.filterModel.uploadedEmployeeId = null;
+    this.getDataTypeHSKT();
+  }
   changeStatus(id, status) {
     if (status === 'Draft') {
+      this.spinner.show();
       this.hoSoDuThauService.updateStatus(id, 'Official').subscribe(res => {
-        this.searchInstant();
-        this.showTable = (this.danhSachHoSoKT.length > 0) ? true : false;
+        this.getDataTypeHSKT();
         this.sum = this.danhSachHoSoKT.length;
         this.dtTrigger.next();
         this.spinner.hide();
@@ -214,9 +196,9 @@ export class HsktInvolvedComponent implements OnInit {
       });
     }
     if (status === 'Official') {
+      this.spinner.show();
       this.hoSoDuThauService.updateStatus(id, 'Draft').subscribe(res => {
-        this.searchInstant();
-        this.showTable = (this.danhSachHoSoKT.length > 0) ? true : false;
+        this.getDataTypeHSKT();
         this.sum = this.danhSachHoSoKT.length;
         this.dtTrigger.next();
         this.spinner.hide();
@@ -227,21 +209,5 @@ export class HsktInvolvedComponent implements OnInit {
         this.alertService.error('Đã có lỗi. Dữ liệu chưa được cập nhật!');
       });
     }
-  }
-  searchInstant() {
-    this.hoSoDuThauService
-      .danhSachBoHoSoDuThauInstantSearch(this.packageId, this.searchTerm$, this.filterModel, 0, 10)
-      .subscribe(responseResultBoHSDT => {
-        this.danhSachHoSoKT = responseResultBoHSDT.items.filter(item =>
-          item.tenderDocumentType === 'Các hồ sơ kỹ thuật khác'
-        );
-        this.showTable = (this.danhSachHoSoKT.length > 0) ? true : false;
-        this.sum = this.danhSachHoSoKT.length;
-        this.refresh();
-        this.dtTrigger.next();
-        this.spinner.hide();
-      }, err => {
-        this.alertService.error(`Đã xảy ra lỗi khi load danh sách bộ Hồ sơ.`);
-      });
   }
 }

@@ -25,7 +25,7 @@ export class UploadFileHsdtComponent implements OnInit {
   };
   errorMess;
   displayName: string;
-  thumbFile;
+  tempFile;
   isFile = false;
   isLinkFile = false;
   constructor(
@@ -37,8 +37,11 @@ export class UploadFileHsdtComponent implements OnInit {
   ) { }
   ngOnInit() {
     this.uploadForm = this.fb.group({
+      linkFile: '',
       file: null,
-      linkFile: [null, Validators.required],
+      editName: '',
+      version: null,
+      interViewTimes: null,
       description: ''
     });
     this.uploadForm.valueChanges.subscribe(data => {
@@ -59,10 +62,10 @@ export class UploadFileHsdtComponent implements OnInit {
     );
     return this.invalidMessages.length === 0;
   }
-
   uploadFile(event) {
-    this.thumbFile = event.target.files;
-    this.displayName = this.thumbFile[0].name;
+    this.tempFile = event.target.files;
+    this.uploadForm.get('file').patchValue(this.tempFile);
+    this.displayName = this.tempFile[0].name;
   }
 
   submitUpload() {
@@ -71,12 +74,15 @@ export class UploadFileHsdtComponent implements OnInit {
       const file = this.uploadForm.get('file').value;
       const linkFile = this.uploadForm.get('linkFile').value;
       const description = this.uploadForm.get('description').value;
+      const editName = this.uploadForm.get('editName').value;
+      const interViewTimes = this.uploadForm.get('interViewTimes').value;
+      const version = this.uploadForm.get('version').value;
       if (file || linkFile) {
         this.spinner.show();
         this.hoSoDuThauService.taiLenHoSoDuThau(
           this.bidOpportunityId,
           this.idFile,
-          this.nameFile,
+          editName,
           description,
           file,
           linkFile
@@ -99,8 +105,7 @@ export class UploadFileHsdtComponent implements OnInit {
   }
   deleteFileUpload() {
     this.uploadForm.get('file').patchValue(null);
-    this.thumbFile = null;
+    this.tempFile = null;
     this.displayName = '';
   }
-
 }

@@ -1,5 +1,5 @@
 
-import { Component, OnInit, ChangeDetectorRef, OnDestroy } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef, OnDestroy, AfterViewChecked } from '@angular/core';
 import { DialogService } from '../../../../../../../node_modules/@progress/kendo-angular-dialog';
 import { UploadFileHsdtComponent } from './upload-file-hsdt/upload-file-hsdt.component';
 import { PackageService } from '../../../../../shared/services/package.service';
@@ -9,78 +9,59 @@ import { PackageDetailComponent } from '../../package-detail.component';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { AlertService, ConfirmationService } from '../../../../../shared/services';
 // tslint:disable-next-line:import-blacklist
-import { Subject, BehaviorSubject } from 'rxjs';
+import { Subject } from 'rxjs';
 import { HoSoDuThauService } from '../../../../../shared/services/ho-so-du-thau.service';
 import { PagedResult } from '../../../../../shared/models';
 import { DATATABLE_CONFIG2 } from '../../../../../shared/configs';
-import { DanhSachBoHsdtItem } from '../../../../../shared/models/ho-so-du-thau/danh-sach-bo-hsdt-item.model';
-import { HsdtFilterModel } from '../../../../../shared/models/ho-so-du-thau/hsdt-filter.model';
+import { GroupUserService } from '../../../../../shared/services/group-user.service';
+import { ListUserItem } from '../../../../../shared/models/user/user-list-item.model';
 @Component({
     selector: 'app-hsdt-build',
     templateUrl: './hsdt-build.component.html',
     styleUrls: ['./hsdt-build.component.scss']
 })
-export class HsdtBuildComponent implements OnInit {
-    bidOpportunityId: number;
+export class HsdtBuildComponent implements OnInit, AfterViewChecked {
     page: number;
     pageSize: number;
     pageIndex: number | string = 0;
-    pagedResult: PagedResult<DanhSachBoHsdtItem> = new PagedResult<DanhSachBoHsdtItem>();
-    danhSachBoHoSoDuThau;
+    pagedResult: PagedResult<any> = new PagedResult<any>();
+    items: PagedResult<ListUserItem>;
     dtOptions: any = DATATABLE_CONFIG2;
     dtTrigger: Subject<any> = new Subject();
-    dialog;
     packageId: number;
     hideActionSiteReport: boolean;
     isShowSideMenu = false;
     isShowMenu = false;
     notShow = false;
-    searchTerm$ = new BehaviorSubject<string>('');
-    filterModel = new HsdtFilterModel();
-    checkboxSeclectAll: boolean;
-    isShowButtonUp: boolean;
-    isShowButtonDown: boolean;
-    isShowEmpty = false;
     danhSachLoaiTaiLieu;
+    dataUser;
     constructor(
         private hoSoDuThauService: HoSoDuThauService,
-        private dialogService: DialogService,
         private alertService: AlertService,
         private packageService: PackageService,
-        private cdr: ChangeDetectorRef,
         private router: Router,
         private spinner: NgxSpinnerService,
-        private confirmationService: ConfirmationService
+        private confirmationService: ConfirmationService,
+        private groupUserService: GroupUserService
     ) { }
 
     ngOnInit() {
         this.packageId = +PackageDetailComponent.packageId;
-        this.getDanhSachLoaiHoSo();
-        this.packageService.isSummaryConditionForm$.subscribe(data => {
-            this.isShowMenu = data;
-            this.cdr.detectChanges();
-            //this.cdr.detach();
-        });
     }
 
-
+    ngAfterViewChecked() {
+        setTimeout(() => {
+            this.packageService.isSummaryConditionForm$.subscribe(data => {
+                this.isShowMenu = data;
+            });
+        });
+    }
 
     getDanhSachLoaiHoSo() {
         this.packageId = +PackageDetailComponent.packageId;
         this.hoSoDuThauService.getDanhSachLoaiTaiLieu(this.packageId).subscribe(res => {
             this.danhSachLoaiTaiLieu = res;
         });
-    }
-    rerender(pagedResult: any) {
-        this.checkboxSeclectAll = false;
-        this.pagedResult = pagedResult;
-        this.checkButtonUpDown();
-
-    }
-    checkButtonUpDown() {
-        this.isShowButtonUp = +this.pagedResult.pageCount > (+this.pagedResult.currentPage + 1);
-        this.isShowButtonDown = +this.pagedResult.currentPage > 0;
-        this.isShowEmpty = !(this.pagedResult.total > 0);
     }
 
     toggleClick() {
@@ -100,24 +81,6 @@ export class HsdtBuildComponent implements OnInit {
         this.dtTrigger.next();
         this.spinner.show();
         this.alertService.success('Dữ liệu đã được cập nhật mới nhất!');
-    }
-
-    showDialogUploadFile(name: string, id: number) {
-        this.dialog = this.dialogService.open({
-            content: UploadFileHsdtComponent,
-            width: 500,
-            minWidth: 250
-        });
-        const instance = this.dialog.content.instance;
-        instance.bidOpportunityId = this.packageId;
-        instance.nameFile = name;
-        instance.idFile = id;
-        instance.callBack = this.closePopuup.bind(this);
-    }
-
-    closePopuup() {
-        this.dialog.close();
-        // this.getDanhSachBoHoSo();
     }
     onActivate(event) {
         this.hideActionSiteReport = (event.constructor.name === 'LiveformSiteReportComponent') ? true : false;

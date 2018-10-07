@@ -4,6 +4,8 @@ import { SummaryConditionComponent } from '../../summary-condition.component';
 import { SummaryConditionFormComponent } from '../summary-condition-form.component';
 import { TenderMaterialToSupplier } from '../../../../../../../../shared/models/package/tender-material-to-supplier';
 import { DictionaryItemText } from '../../../../../../../../shared/models';
+import { HoSoDuThauService } from '../../../../../../../../shared/services/ho-so-du-thau.service';
+import { DanhSachVatTu } from '../../../../../../../../shared/models/ho-so-du-thau/danh-sach-vat-tu';
 
 @Component({
   selector: 'app-summary-condition-form-main-material',
@@ -13,42 +15,67 @@ import { DictionaryItemText } from '../../../../../../../../shared/models';
 export class SummaryConditionFormMainMaterialComponent implements OnInit {
 
   mainMaterialForm: FormGroup;
+  mainMaterial = new Array<DanhSachVatTu>();
 
   get materialsFA(): FormArray {
     return this.mainMaterialForm.get('materials') as FormArray;
   }
   constructor(
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private hoSoDuThauService: HoSoDuThauService
   ) { }
 
   ngOnInit() {
+
+    this.loadData();
+    this.createForm();
+  }
+
+  createForm() {
     this.mainMaterialForm = this.fb.group({
       materials: this.fb.array([])
     });
-    this.initFormData();
-    this.mainMaterialForm.valueChanges.subscribe(data => this.mappingToLiveFormData(data));
+
+    this.mainMaterial.forEach(x => {
+      const control = <FormArray>this.mainMaterialForm.controls.materials;
+      control.push(this.fb.group({
+        tenVatTu: x.tenVatTu,
+        ghiChuThem: x.ghiChuThem
+      }));
+    });
+
+    this.mainMaterialForm.valueChanges.subscribe(data => {
+      let obj = new Array<DanhSachVatTu>();
+      obj = (data.materials || []).map(x => ({
+        tenVatTu: x.tenVatTu,
+        ghiChuThem: x.ghiChuThem
+      }));
+      this.hoSoDuThauService.emitDataStepMainMaterial(obj);
+    });
   }
 
-  initFormData() {
-    if (SummaryConditionFormComponent.formModel.materialsTobeSuppliedOrAppointedByOwner) {
-      const data = SummaryConditionFormComponent.formModel.materialsTobeSuppliedOrAppointedByOwner;
-      if (data.materials.length > 0) {
-        data.materials.forEach(e => {
-          this.addFormArrayControl('materials', e);
-        });
-      } else {
-        this.addFormArrayControl('materials');
+  loadData() {
+    this.hoSoDuThauService.watchDataLiveForm().subscribe(data => {
+      const mainMaterial = data.danhSachVatTu;
+      if (mainMaterial) {
+        this.mainMaterial = mainMaterial;
       }
-    } else {
-      this.addFormArrayControl('materials');
-    }
+      if (!mainMaterial) {
+        this.mainMaterial = [];
+        this.mainMaterial.push({
+          tenVatTu: '',
+          ghiChuThem: ''
+        });
+      }
+    });
   }
+
 
   addFormArrayControl(name: string, data?: DictionaryItemText) {
     const formArray = this.mainMaterialForm.get(name) as FormArray;
     const formItem = this.fb.group({
-      name: data ? data.name : '',
-      desc: data ? data.desc : ''
+      tenVatTu: data ? data.name : '',
+      ghiChuThem: data ? data.desc : ''
     });
     formArray.push(formItem);
   }
@@ -56,17 +83,6 @@ export class SummaryConditionFormMainMaterialComponent implements OnInit {
   removeFormArrayControl(name: string, idx: number) {
     const formArray = this.mainMaterialForm.get(name) as FormArray;
     formArray.removeAt(idx);
-  }
-
-  mappingToLiveFormData(data) {
-    const value = new TenderMaterialToSupplier();
-    value.materials = [];
-    data.materials.forEach(e => {
-      let work = new DictionaryItemText();
-      work = e;
-      value.materials.push(work);
-    });
-    SummaryConditionFormComponent.formModel.materialsTobeSuppliedOrAppointedByOwner = value;
   }
 
 }

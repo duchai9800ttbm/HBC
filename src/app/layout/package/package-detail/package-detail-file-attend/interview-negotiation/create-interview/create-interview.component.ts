@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { DialogService } from '../../../../../../../../node_modules/@progress/kendo-angular-dialog';
 import { CreateNewInvitationComponent } from './create-new-invitation/create-new-invitation.component';
 import { BehaviorSubject, Subject } from '../../../../../../../../node_modules/rxjs';
@@ -14,69 +14,85 @@ import { NgxSpinnerService } from '../../../../../../../../node_modules/ngx-spin
 import { InterviewNoticeComponent } from './interview-notice/interview-notice.component';
 import { InterviewInvitation } from '../../../../../../shared/models/interview-invitation/interview-invitation-create.model';
 import { CustomerModel } from '../../../../../../shared/models/interview-invitation/customer.model';
+import { StatusObservableHsdtService } from '../../../../../../shared/services/status-observable-hsdt.service';
+import { PackageService } from '../../../../../../shared/services/package.service';
+import { BidStatus } from '../../../../../../shared/constants/bid-status';
+import { groupBy } from '../../../../../../../../node_modules/@progress/kendo-data-query';
+import DateTimeConvertHelper from '../../../../../../shared/helpers/datetime-convert-helper';
 @Component({
   selector: 'app-create-interview',
   templateUrl: './create-interview.component.html',
   styleUrls: ['./create-interview.component.scss']
 })
-export class CreateInterviewComponent implements OnInit {
+export class CreateInterviewComponent implements OnInit, OnDestroy {
   currentPackageId: number;
   dialog;
   // searchTerm$ = new BehaviorSubject<string>('');
-  keySearch: string;
+  keySearch = '';
   dtTrigger: Subject<any> = new Subject();
   dtOptions: any = DATATABLE_CONFIG;
   pagedResult: PagedResult<InterviewInvitationList> = new PagedResult<InterviewInvitationList>();
   filterModel = new InterviewInvitationFilter();
+  numberOfInterviews = [];
+  isNumberOfInterviews = true;
+  statusPackage;
+  bidStatus = BidStatus;
+  currentFieldSort: string;
+  statusSort: string;
+  isOnInit: boolean;
   constructor(
     private dialogService: DialogService,
     private interviewInvitationService: InterviewInvitationService,
     private route: ActivatedRoute,
     private spinner: NgxSpinnerService,
-    private alertService: AlertService
+    private alertService: AlertService,
+    private statusObservableHsdtService: StatusObservableHsdtService,
+    private packageService: PackageService,
   ) { }
 
   ngOnInit() {
+    this.currentPackageId = +PackageDetailComponent.packageId;
+    this.filter();
+    this.getSatusPackage();
+    this.statusObservableHsdtService.statusPackageService.subscribe(value => {
+      this.getSatusPackage();
+    });
+    this.filterModel.status = '';
+    this.filterModel.interviewTimes = null;
+    this.filterModel.receivedDate = null;
     this.interviewInvitationService.watchInterviewInvitationList().subscribe(value => {
+      this.isNumberOfInterviews = true;
       this.filter();
+      this.spinner.hide();
     });
 
-    this.interviewInvitationService.watchKeySearchNew().subscribe(data => {
-      console.log('goi con');
-    });
-
-    // this.interviewInvitationService.watchKeySearchInterviewInvitation().subscribe( value => {
-    //   console.log('value-component-chirl', value);
+    // this.interviewInvitationService.watchKeySearchInterviewInvitation().subscribe(value => {
     //   this.keySearch = value;
-    //   this.filter();
-    // });
-
-    // this.interviewInvitationService.watchKeySearchInterviewInvitation().debounceTime(600)
-    // .distinctUntilChanged()
-    // .subscribe(term => {
-    //   this.keySearch = term;
     //   this.filter();
     //   this.spinner.hide();
     // });
 
-    // this.spinner.show();
-    // this.interviewInvitationService.instantSearchWithFilter(
-    //   this.currentPackageId, this.interviewInvitationService.watchKeySearchInterviewInvitation(),
-    //   this.filterModel, 0, 1000).subscribe(result => {
-    //     this.render(result);
-    //     this.spinner.hide();
-    //   },
-    //     err => {
-    //       this.spinner.hide();
-    //     });
-
     this.interviewInvitationService.watchRefeshInterviewInvitationList().subscribe(value => {
-      console.log('value-refesh', value);
-      this.refresh(true);
+      this.refresh(this.isOnInit);
       this.spinner.hide();
     });
-    this.filterModel.status = '';
-    this.currentPackageId = +PackageDetailComponent.packageId;
+
+  }
+
+  ngOnDestroy() {
+    this.interviewInvitationService.watchKeySearchInterviewInvitation().unsubscribe();
+  }
+
+  getSatusPackage() {
+    this.packageService.getInforPackageID(this.currentPackageId).subscribe(result => {
+      this.statusPackage = result.stageStatus.id;
+    });
+  }
+
+  getListNumberOfInterviews() {
+    this.numberOfInterviews = this.pagedResult.items ? this.pagedResult.items.map(item => item.interviewTimes) : [];
+    this.numberOfInterviews = this.numberOfInterviews.sort((a, b) => a - b);
+    this.numberOfInterviews = this.numberOfInterviews.filter((el, i, a) => i === a.indexOf(el));
   }
 
   render(pagedResult: any) {
@@ -86,15 +102,24 @@ export class CreateInterviewComponent implements OnInit {
       }
     });
     this.pagedResult = pagedResult;
-    console.log('this.pageRessult', this.pagedResult);
+    if (!this.currentFieldSort) {
+      this.pagedResult.items = this.pagedResult.items.sort((a, b) => a.id - b.id);
+    }
+    if (this.isNumberOfInterviews) {
+      this.getListNumberOfInterviews();
+      this.isNumberOfInterviews = false;
+    }
+    this.isOnInit = true;
     this.dtTrigger.next();
   }
 
   createInvitation(interviewCreate: InterviewInvitation) {
     this.dialog = this.dialogService.open({
       content: CreateNewInvitationComponent,
-      width: 600,
-      minWidth: 250
+      width: 700,
+      minWidth: 250,
+      // height: 78vh;
+      // width: 50vw;
     });
     const instance = this.dialog.content.instance;
     interviewCreate = new InterviewInvitation();
@@ -124,6 +149,13 @@ export class CreateInterviewComponent implements OnInit {
       }, err => this.spinner.hide());
   }
 
+  clearFilter() {
+    this.filterModel.status = '';
+    this.filterModel.interviewTimes = null;
+    this.filterModel.receivedDate = null;
+    this.filter();
+  }
+
   refresh(displayAlert: boolean = false): void {
     this.spinner.show();
     this.interviewInvitationService
@@ -146,7 +178,9 @@ export class CreateInterviewComponent implements OnInit {
   }
 
   onSelectAll(value: boolean) {
-    this.pagedResult.items.forEach(x => (x['checkboxSelected'] = value));
+    console.log('value', value);
+    // this.pagedResult.items.forEach(x => (x['checkboxSelected'] = value));
+    this.pagedResult.items.forEach( item => item['checkboxSelected'] = value);
   }
 
   // noticeInterview() {
@@ -162,11 +196,94 @@ export class CreateInterviewComponent implements OnInit {
   EditInvitation(interviewEdit: InterviewInvitation) {
     this.dialog = this.dialogService.open({
       content: CreateNewInvitationComponent,
-      width: 600,
+      width: 700,
       minWidth: 250
     });
     const instance = this.dialog.content.instance;
     instance.interviewInvitation = interviewEdit;
     instance.callBack = () => this.closePopuup();
+  }
+
+  sortField(fieldSort: string, statusSort: string) {
+    this.currentFieldSort = fieldSort;
+    this.statusSort = statusSort;
+    switch (this.statusSort) {
+      case 'asc': {
+        switch (fieldSort) {
+          case 'approvedDate': {
+            this.pagedResult.items = this.pagedResult.items.sort((a, b) => a.approvedDate - b.approvedDate);
+            this.render(this.pagedResult);
+            break;
+          }
+          case 'interviewDate': {
+            this.pagedResult.items = this.pagedResult.items.sort((a, b) => a.interviewDate - b.interviewDate);
+            this.render(this.pagedResult);
+            break;
+          }
+          case 'interviewTimes': {
+            this.pagedResult.items = this.pagedResult.items.sort((a, b) => a.interviewTimes - b.interviewTimes);
+            this.render(this.pagedResult);
+            break;
+          }
+          case 'status': {
+            this.pagedResult.items = this.pagedResult.items.sort((a, b) => a.remainningDay - b.remainningDay);
+            this.render(this.pagedResult);
+            break;
+          }
+        }
+        break;
+      }
+      case 'desc': {
+        switch (fieldSort) {
+          case 'approvedDate': {
+            this.pagedResult.items = this.pagedResult.items.sort((a, b) => b.approvedDate - a.approvedDate);
+            this.render(this.pagedResult);
+            break;
+          }
+          case 'interviewDate': {
+            this.pagedResult.items = this.pagedResult.items.sort((a, b) => b.interviewDate - a.interviewDate);
+            this.render(this.pagedResult);
+            break;
+          }
+          case 'interviewTimes': {
+            this.pagedResult.items = this.pagedResult.items.sort((a, b) => b.interviewTimes - a.interviewTimes);
+            this.render(this.pagedResult);
+            break;
+          }
+          case 'status': {
+            this.pagedResult.items = this.pagedResult.items.sort((a, b) => b.remainningDay - a.remainningDay);
+            this.render(this.pagedResult);
+            break;
+          }
+        }
+        break;
+      }
+      case '': {
+        this.pagedResult.items = this.pagedResult.items.sort((a, b) => a.id - b.id);
+        this.render(this.pagedResult);
+        break;
+      }
+    }
+  }
+
+  dowloadFileCreateInterview(id) {
+    this.interviewInvitationService.downloadFileCreateInterview(id).subscribe(data => {
+    }, err => {
+      if (err.json().errorCode) {
+        this.alertService.error('File không tồn tại hoặc đã bị xóa!');
+      } else {
+        this.alertService.error('Đã có lỗi xãy ra!');
+      }
+    });
+  }
+
+  saveChooseInterviewService(id) {
+    this.pagedResult.items.forEach( item => {
+      if ( item.id === id) {
+        item['checkboxSelected'] = !item['checkboxSelected'];
+      }
+    });
+    console.log('this.pagedResult.items', this.pagedResult.items.filter( item => item['checkboxSelected'] === true));
+    this.interviewInvitationService.chooseInterviewNotification(this.pagedResult.items.filter( item => item['checkboxSelected'] === true));
   }
 }

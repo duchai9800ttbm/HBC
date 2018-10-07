@@ -5,7 +5,7 @@ export class DanhSachVatTu {
 export class HoSoDangLuuY {
     taiLieuLuuY: string[];
     soLuong: number;
-    ngonNgu: string[];
+    ngonNgu: string;
 }
 export class DienGiaiYeuCauHoSo {
     noiNop: string;

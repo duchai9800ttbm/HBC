@@ -139,7 +139,7 @@ export class InformationDeploymentComponent implements OnInit {
       extraPlugins: 'colorbutton,font,justify,print,tableresize,pastefromword,liststyle,autolink,uploadimage',
 
       pasteFromWord_inlineImages: true,
-      forcePasteAsPlainText : false,
+      forcePasteAsPlainText: false,
     };
 
     this.packageId = +PackageDetailComponent.packageId;
@@ -212,7 +212,7 @@ export class InformationDeploymentComponent implements OnInit {
         this.spinner.hide();
         const isTrienKhai = this.packageInfo.stageStatus.id === this.bidStatus.DaThongBaoTrienKhai;
         // tslint:disable-next-line:max-line-length
-        this.toggleTextUpFile = isTrienKhai ? 'Hiện chưa có bảng phân công tiến độ nào' : 'Bạn cần phải thông báo triển khai trước khi phân công tiến độ';
+        this.toggleTextUpFile = isTrienKhai ? 'Hiện chưa có bảng phân công tiến độ nào' : 'Bạn cần phải thông báo triển khai trước khi phân công tiến độ thực hiện';
         console.log(data);
       });
   }
@@ -424,10 +424,12 @@ export class InformationDeploymentComponent implements OnInit {
     this.spinner.show();
     this.packageService.getChangeHistoryListTenderPreparationPlanning(this.bidOpportunityId, 0, 1000).subscribe(respone => {
       this.historyList = respone.items;
-      this.historyList = this.historyList.sort( ( a, b ) =>  parseFloat(a.changedTimes) < parseFloat(b.changedTimes));
+      this.historyList = this.historyList.sort((a, b) => parseFloat(a.changedTimes) < parseFloat(b.changedTimes));
       this.historyList = groupBy(this.historyList, [{ field: 'changedTimes' }]);
-      this.dtTrigger.next();
-      this.spinner.hide();
+      setTimeout(() => {
+        this.dtTrigger.next();
+        this.spinner.hide();
+      });
     },
       err => {
         this.spinner.hide();
@@ -437,6 +439,17 @@ export class InformationDeploymentComponent implements OnInit {
 
   downloadTemplate() {
     this.packageService.downloadPreparationPlanningTemplate().subscribe(data => console.log());
+  }
+
+  startSetHSDT() {
+    console.log('this.bidOpportunityId', this.bidOpportunityId);
+    this.packageService.startSetHSDT(this.bidOpportunityId).subscribe(respone => {
+      this.alertService.success('Bắt đầu lập HSDT thành công!');
+      this.statusObservableHsdtService.change();
+    },
+      err => {
+        this.alertService.error('Bắt đầu lập HSDT thất bại!');
+      });
   }
 
 }

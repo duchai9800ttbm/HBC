@@ -56,6 +56,8 @@ export class CreateNewInvitationComponent implements OnInit {
       // });
       this.createForm();
     });
+
+    // this.createForm();
   }
 
   createForm() {
@@ -68,7 +70,7 @@ export class CreateNewInvitationComponent implements OnInit {
         DateTimeConvertHelper.fromTimestampToDtObject(this.interviewInvitation.interviewDate) : null
         , [Validators.required]],
       place: [this.interviewInvitation.place, [Validators.required]],
-      interviewTimes: [this.interviewTimes, [Validators.required]],
+      interviewTimes: [this.interviewInvitation.interviewTimes, [Validators.required]],
       content: [this.interviewInvitation.content],
       attachedFiles: ['']
     });

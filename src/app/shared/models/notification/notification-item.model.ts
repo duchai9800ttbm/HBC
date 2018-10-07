@@ -16,7 +16,11 @@ export class NotificationItem {
         employeeId: number;
         employeeNo: string;
         employeeName: string;
-        employeeAvatar: string;
+        employeeAvatar: {
+            guid: string;
+            thumbSizeUrl: string;
+            largeSizeUrl: string;
+        }
         employeeEmail: string;
     };
     notificationState: {

@@ -7,6 +7,7 @@ import { SummaryConditionFormComponent } from './summary-condition/summary-condi
 import { LiveformSiteReportComponent } from './liveform-site-report/liveform-site-report.component';
 import { ChiPhiChungComponent } from './chi-phi-chung/chi-phi-chung.component';
 import { RequirePriceComponent } from './require-price/require-price.component';
+import { CauHoiHoSoComponent } from './cau-hoi-ho-so/cau-hoi-ho-so.component';
 const routes: Routes = [
     {
         path: '',
@@ -17,19 +18,20 @@ const routes: Routes = [
                 path: 'summary',
                 loadChildren: './summary-condition/summary-condition.module#SummaryConditionModule'
             },
-            { path: 'hskt', component: HsktInvolvedComponent },
+            { path: 'techfile', component: HsktInvolvedComponent },
             {
                 path: 'liveformsite',
                 loadChildren: './liveform-site-report/liveform-site-report.module#LiveformSiteReportModule'
             },
             {
-                path: 'chiphichung',
+                path: 'cost',
                 component: ChiPhiChungComponent
             },
             {
-                path: 'baogiavattu',
+                path: 'pricereport',
                 component: RequirePriceComponent
-            }
+            },
+            { path: 'question', component: CauHoiHoSoComponent }
         ]
     }
 ];

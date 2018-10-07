@@ -57,3 +57,18 @@
 :host /deep/ .dataTables_empty {
     display: none !important;
 }
+.table-layout--fixed{
+    table-layout: fixed
+}
+.w-5{
+    width: 5% !important;
+}
+.w-10{
+    width: 10% !important;
+}
+.w-15{
+    width: 15% !important;
+}
+.w-60{
+    width: 60% !important;
+}
