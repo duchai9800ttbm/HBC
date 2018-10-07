@@ -218,4 +218,35 @@ export class HoSoDuThauService {
   emitDataStepSpecial(obj: TableYeuCauDacBiet) {
     HoSoDuThauService.tempDataLiveFormDKDT.value.yeuCauDacBietKhac = [obj];
   }
+
+
+
+  // Xóa ảnh
+  deleteImage(guid): Observable<any> {
+    const url = `tenderconditionalsummary/deleteimage`;
+    return null; // tạm thời disable
+    // return this.apiService.post(url, guid);
+  }
+
+  // Upload ảnh
+  uploadImage(
+    listImage: any,
+    bidOpportunityId: number
+  ) {
+    const url = `tenderconditionalsummary/uploadimage`;
+    const imageUploadForm = new FormData();
+    for (const image of listImage) {
+      imageUploadForm.append('Images', image);
+    }
+    imageUploadForm.append('BidOpportunityId', `${bidOpportunityId}`);
+    return this.apiService
+      .postFile(url, imageUploadForm)
+      .map(res => res.result)
+      .share();
+  }
+
+  deleleLiveFormTTDKDuThau(bidOpportunityId: number){
+    const url = `bidopportunity/${bidOpportunityId}/tenderconditionalsummary/delete`;
+    return this.apiService.post(url).map(response => response);
+  }
 }
