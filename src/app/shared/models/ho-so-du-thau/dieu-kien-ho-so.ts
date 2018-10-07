@@ -4,10 +4,10 @@ export class DieuKienHoSo {
         hieuLuc: string;
     };
     hieuLucHoSo: string;
-    tienDo?: {
+    tienDo: {
         ngayKhoiCong: number;
         thoiGianHoanThanh: number;
     };
-    cacLoaiThue?: string[];
-    donViTienTe?: string[];
+    cacLoaiThue: string[];
+    donViTienTe: string;
 }

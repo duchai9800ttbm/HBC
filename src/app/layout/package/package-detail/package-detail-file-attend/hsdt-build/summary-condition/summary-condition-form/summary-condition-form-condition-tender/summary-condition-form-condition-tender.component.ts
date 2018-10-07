@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormBuilder } from '@angular/forms';
+import { FormGroup, FormBuilder, FormArray } from '@angular/forms';
 import { SummaryConditionFormComponent } from '../summary-condition-form.component';
 import DateTimeConvertHelper from '../../../../../../../../shared/helpers/datetime-convert-helper';
+import { DienGiaiDieuKienHSMT } from '../../../../../../../../shared/models/ho-so-du-thau/dien-giai-yeu-cau';
+import { HoSoDuThauService } from '../../../../../../../../shared/services/ho-so-du-thau.service';
 
 @Component({
     selector: 'app-summary-condition-form-condition-tender',
@@ -9,63 +11,188 @@ import DateTimeConvertHelper from '../../../../../../../../shared/helpers/dateti
     styleUrls: ['./summary-condition-form-condition-tender.component.scss']
 })
 export class SummaryConditionFormConditionTenderComponent implements OnInit {
-    conditionTenderForm: FormGroup;
-    constructor(private fb: FormBuilder) {}
+    dieuKienHSMTForm: FormGroup;
+    dienGiaiDieuKienHSMT = new DienGiaiDieuKienHSMT();
+    isModeView = false;
+    constructor(
+        private fb: FormBuilder,
+        private hoSoDuThauService: HoSoDuThauService
+    ) { }
 
+    get cacLoaiThueHSMTFA(): FormArray {
+        return (this.dieuKienHSMTForm.get('theoHSMT') as FormGroup).controls.cacLoaiThue as FormArray;
+    }
     ngOnInit() {
+        this.loadData();
         this.createForm();
-        this.conditionTenderForm.valueChanges.subscribe(data =>
-            this.mappingToLiveFormData(data)
-        );
+
     }
 
     createForm() {
-        const formValue =
-            SummaryConditionFormComponent.formModel.jsonTenderCondition;
-        this.conditionTenderForm = this.fb.group({
-            tenderGuaranteeValue: formValue
-                ? formValue.tenderGuaranteeValue
-                : 0,
-            tenderGuaranteeEfficiency: formValue
-                ? DateTimeConvertHelper.fromTimestampToDtObject(
-                      formValue.tenderGuaranteeEfficiency
-                  )
-                : new Date(),
-            tenderEfficiency: formValue
-                ? DateTimeConvertHelper.fromTimestampToDtObject(
-                      formValue.tenderEfficiency
-                  )
-                : new Date(),
-            progressStartDate: formValue
-                ? DateTimeConvertHelper.fromTimestampToDtObject(
-                      formValue.progressStartDate
-                  )
-                : new Date(),
-            progressComletionDate: formValue
-                ? formValue.progressComletionDate
-                : 0,
-            taxTypes: this.fb.array([]),
-            currency: this.fb.group({
-                key: '',
-                value: '',
-                displayText: ''
+        this.dieuKienHSMTForm = this.fb.group({
+            theoHSMT: this.fb.group({
+                giaTri: {
+                    value: this.dienGiaiDieuKienHSMT && this.dienGiaiDieuKienHSMT.theoHSMT
+                        && this.dienGiaiDieuKienHSMT.theoHSMT.baoLanhDuThau
+                        && this.dienGiaiDieuKienHSMT.theoHSMT.baoLanhDuThau.giaTri,
+                    disabled: this.isModeView
+                },
+                hieuLuc: {
+                    value: this.dienGiaiDieuKienHSMT && this.dienGiaiDieuKienHSMT.theoHSMT
+                        && this.dienGiaiDieuKienHSMT.theoHSMT.baoLanhDuThau
+                        && this.dienGiaiDieuKienHSMT.theoHSMT.baoLanhDuThau.hieuLuc,
+                    disabled: this.isModeView
+                },
+                hieuLucHoSo: {
+                    value: this.dienGiaiDieuKienHSMT && this.dienGiaiDieuKienHSMT.theoHSMT
+                        && this.dienGiaiDieuKienHSMT.theoHSMT.hieuLucHoSo,
+                    disabled: this.isModeView
+                },
+                ngayKhoiCong: {
+                    value: DateTimeConvertHelper.fromTimestampToDtObject(this.dienGiaiDieuKienHSMT && this.dienGiaiDieuKienHSMT.theoHSMT
+                        && this.dienGiaiDieuKienHSMT.theoHSMT.tienDo
+                        && this.dienGiaiDieuKienHSMT.theoHSMT.tienDo.ngayKhoiCong * 1000),
+                    disabled: this.isModeView
+                },
+                thoiGianHoanThanh: {
+                    value: this.dienGiaiDieuKienHSMT && this.dienGiaiDieuKienHSMT.theoHSMT
+                        && this.dienGiaiDieuKienHSMT.theoHSMT.tienDo
+                        && this.dienGiaiDieuKienHSMT.theoHSMT.tienDo.thoiGianHoanThanh,
+                    disabled: this.isModeView
+                },
+                cacLoaiThue: this.fb.array([]),
+                donViTienTe: {
+                    value: this.dienGiaiDieuKienHSMT && this.dienGiaiDieuKienHSMT.theoHSMT
+                        && this.dienGiaiDieuKienHSMT.theoHSMT.donViTienTe,
+                    disabled: this.isModeView
+                }
+            }),
+            theoHBC: this.fb.group({
+                giaTri: {
+                    value: this.dienGiaiDieuKienHSMT && this.dienGiaiDieuKienHSMT.theoHBC
+                        && this.dienGiaiDieuKienHSMT.theoHBC.baoLanhDuThau
+                        && this.dienGiaiDieuKienHSMT.theoHBC.baoLanhDuThau.giaTri,
+                    disabled: this.isModeView
+                },
+                hieuLuc: {
+                    value: this.dienGiaiDieuKienHSMT && this.dienGiaiDieuKienHSMT.theoHBC
+                        && this.dienGiaiDieuKienHSMT.theoHBC.baoLanhDuThau
+                        && this.dienGiaiDieuKienHSMT.theoHBC.baoLanhDuThau.hieuLuc,
+                    disabled: this.isModeView
+                },
+                hieuLucHoSo: {
+                    value: this.dienGiaiDieuKienHSMT && this.dienGiaiDieuKienHSMT.theoHBC
+                        && this.dienGiaiDieuKienHSMT.theoHBC.hieuLucHoSo,
+                    disabled: this.isModeView
+                },
+                ngayKhoiCong: {
+                    value: DateTimeConvertHelper.fromTimestampToDtObject(this.dienGiaiDieuKienHSMT && this.dienGiaiDieuKienHSMT.theoHBC
+                        && this.dienGiaiDieuKienHSMT.theoHBC.tienDo
+                        && this.dienGiaiDieuKienHSMT.theoHBC.tienDo.ngayKhoiCong * 1000),
+                    disabled: this.isModeView
+                },
+                thoiGianHoanThanh: {
+                    value: this.dienGiaiDieuKienHSMT && this.dienGiaiDieuKienHSMT.theoHSMT
+                        && this.dienGiaiDieuKienHSMT.theoHBC.tienDo
+                        && this.dienGiaiDieuKienHSMT.theoHBC.tienDo.thoiGianHoanThanh,
+                    disabled: this.isModeView
+                },
+                cacLoaiThue: this.fb.array([]),
+                donViTienTe: {
+                    value: this.dienGiaiDieuKienHSMT && this.dienGiaiDieuKienHSMT.theoHBC
+                        && this.dienGiaiDieuKienHSMT.theoHBC.donViTienTe,
+                    disabled: this.isModeView
+                }
             })
+        });
+
+        this.dienGiaiDieuKienHSMT.theoHSMT.cacLoaiThue.forEach(x => {
+            console.log((this.dieuKienHSMTForm.controls.theoHSMT as FormGroup));
+
+            const control = (this.dieuKienHSMTForm.controls.theoHSMT as FormGroup).controls.cacLoaiThue as FormArray;
+            control.push(this.fb.group({
+                thue: { value: x, disabled: this.isModeView },
+            }));
+        });
+
+        this.dienGiaiDieuKienHSMT.theoHBC.cacLoaiThue.forEach(x => {
+            const control = (this.dieuKienHSMTForm.controls.theoHBC as FormGroup).controls.cacLoaiThue as FormArray;
+            control.push(this.fb.group({
+                thue: { value: x, disabled: this.isModeView },
+            }));
+        });
+
+        this.dieuKienHSMTForm.valueChanges.subscribe(data => {
+            let obj = new DienGiaiDieuKienHSMT();
+            obj = {
+                theoHSMT: {
+                    baoLanhDuThau: {
+                        giaTri: data.theoHSMT.giaTri,
+                        hieuLuc: data.theoHSMT.hieuLuc
+                    },
+                    hieuLucHoSo: data.theoHSMT.hieuLucHoSo,
+                    tienDo: {
+                        ngayKhoiCong: DateTimeConvertHelper.fromDtObjectToTimestamp(data.theoHSMT.ngayKhoiCong),
+                        thoiGianHoanThanh: data.theoHSMT.thoiGianHoanThanh
+                    },
+                    cacLoaiThue: (data.theoHSMT.cacLoaiThue || []).map(x => x.thue),
+                    donViTienTe: data.theoHSMT.donViTienTe
+                },
+                theoHBC: {
+                    baoLanhDuThau: {
+                        giaTri: data.theoHBC.giaTri,
+                        hieuLuc: data.theoHBC.hieuLuc
+                    },
+                    hieuLucHoSo: data.theoHBC.hieuLucHoSo,
+                    tienDo: {
+                        ngayKhoiCong: DateTimeConvertHelper.fromDtObjectToTimestamp(data.theoHBC.ngayKhoiCong),
+                        thoiGianHoanThanh: data.theoHBC.thoiGianHoanThanh
+                    },
+                    cacLoaiThue: (data.theoHBC.cacLoaiThue || []).map(x => x.thue),
+                    donViTienTe: data.theoHBC.donViTienTe
+                }
+            };
+            this.hoSoDuThauService.emitDataStepConditionTender(obj);
         });
     }
 
-    mappingToLiveFormData(data) {
-        SummaryConditionFormComponent.formModel.jsonTenderCondition = data;
-        // tslint:disable-next-line:max-line-length
-        SummaryConditionFormComponent.formModel.jsonTenderCondition.tenderGuaranteeEfficiency = DateTimeConvertHelper.fromDtObjectToTimestamp(
-            data.tenderGuaranteeEfficiency
-        );
-        // tslint:disable-next-line:max-line-length
-        SummaryConditionFormComponent.formModel.jsonTenderCondition.tenderEfficiency = DateTimeConvertHelper.fromDtObjectToTimestamp(
-            data.tenderEfficiency
-        );
-        // tslint:disable-next-line:max-line-length
-        SummaryConditionFormComponent.formModel.jsonTenderCondition.progressStartDate = DateTimeConvertHelper.fromDtObjectToTimestamp(
-            data.progressStartDate
-        );
+    loadData() {
+        this.hoSoDuThauService.watchDataLiveForm().subscribe(data => {
+            const obj = data.dienGiaiDieuKienHSMT;
+            if (obj) {
+                this.dienGiaiDieuKienHSMT = obj;
+            }
+            if (!obj) {
+                this.dienGiaiDieuKienHSMT = {
+                    theoHSMT: {
+                        baoLanhDuThau: {
+                            giaTri: null,
+                            hieuLuc: '',
+                        },
+                        hieuLucHoSo: '',
+                        tienDo: {
+                            ngayKhoiCong: null,
+                            thoiGianHoanThanh: null,
+                        },
+                        cacLoaiThue: [''],
+                        donViTienTe: ''
+                    },
+                    theoHBC: {
+                        baoLanhDuThau: {
+                            giaTri: null,
+                            hieuLuc: '',
+                        },
+                        hieuLucHoSo: '',
+                        tienDo: {
+                            ngayKhoiCong: null,
+                            thoiGianHoanThanh: null,
+                        },
+                        cacLoaiThue: [''],
+                        donViTienTe: ''
+                    }
+                };
+            }
+
+        });
     }
 }

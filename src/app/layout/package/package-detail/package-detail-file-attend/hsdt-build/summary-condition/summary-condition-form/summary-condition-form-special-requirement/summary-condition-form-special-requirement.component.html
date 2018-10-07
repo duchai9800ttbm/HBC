@@ -1,39 +1,73 @@
 <form [formGroup]="specialRequirementForm">
-    <div class="p-3">
-        <h5 class="text-uppercase">IV. danh sách các nhà thầu phụ được chỉ định (list of nonminated sub-contractors)</h5>
-        <div formArrayName="requirements">
-            <div *ngFor="let fControl of requirementsFA.controls; let i = index" [formGroupName]="i">
-                <div class="mt-3">
-                    {{i + 1}}.<span class="ml-3">Yêu cầu {{i + 1}}</span><i class="fa fa-plus-square-o ml-3 pointer"
-                        aria-hidden="true" (click)="addFormArrayControl('requirements')" *ngIf="(i + 1) === requirementsFA.length"></i>
-                </div>
-                <div class="row mt-3">
-                    <div class="col-md-3">Tên yêu cầu</div>
-                    <div class="col-md-8">
-                        <input formControlName="name" class="form-control">
+        <div class="p-3">
+            <h5 class="text-uppercase">IV. danh sách các nhà thầu phụ được chỉ định (list of nonminated sub-contractors)</h5>
+            <div formArrayName="requirements">
+                <div *ngFor="let fControl of requirementsFA.controls; let i = index" [formGroupName]="i">
+                    <div class="mt-3">
+                        {{i + 1}}.<span class="ml-3">Yêu cầu {{i + 1}}</span><i class="fa fa-plus-square-o ml-3 pointer"
+                            aria-hidden="true" (click)="addFormArrayControl('requirements')" *ngIf="(i + 1) === requirementsFA.length"></i>
                     </div>
-                    <div class="col-md-1 pl-0" *ngIf="i !== 0"><i (click)="removeFormArrayControl('requirements', i)"
-                            class="fa fa-times-circle pointer" style="color: #c0c0c0; font-size: 1.2rem" aria-hidden="true"></i></div>
-                </div>
-                <div class="row mt-3">
-                    <div class="col-md-3">Ghi chú</div>
-                    <div class="col-md-8">
-                        <input formControlName="desc" placeholder="Ghi chú" class="form-control">
+    
+                    <div class="container-table mt-3">
+                        <table class="table-requirement">
+                            <tr class="tr-requirement">
+                                <td>
+                                    <div class="index-row-table">1</div>
+                                </td>
+                                <td>
+                                    <input type="text" placeholder="Green Building Standard">
+                                </td>
+                                <td>
+                                    <input formControlName="name" class="form-control" type="text" placeholder="Green Mark">
+                                </td>
+                                <td>
+                                    <input formControlName="link"  class="form-control" type="text" placeholder="Nhập Link">
+                                </td>
+                            </tr>
+                            <tr class="tr-requirement">
+                                <td rowspan="2">
+                                    <div class="index-row-table">2</div>
+                                </td>
+                                <td rowspan="2">
+                                    <input formControlName="desc" class="form-control" type="text">
+                                </td>
+                                <td rowspan="2">
+                                    <input type="text" placeholder="Two (02) steps">
+                                </td>
+                                <td>
+                                    <input type="text" placeholder="Preliminary">
+                                </td>
+                            </tr>
+                            <tr class="tr-requirement">
+                                <td>
+                                    <input type="text" placeholder="Detail Evaluation">
+                                </td>
+                            </tr>
+                            <tr class="tr-requirement">
+                                <td>
+                                    <div class="index-row-table">3</div>
+                                </td>
+                                <td>
+                                    <input type="text" placeholder="Profit, Overhead and Attendance">
+                                </td>
+                                <td>
+                                    <input type="text" placeholder="3%">
+                                </td>
+                                <td>
+                                    <input type="text" placeholder="Maximum">
+                                </td>
+                            </tr>
+                        </table>
                     </div>
-                </div>
-                <div class="row mt-3">
-                    <div class="col-md-3">Link</div>
-                    <div class="col-md-8">
-                        <input formControlName="link" class="form-control">
-                    </div>
+    
                 </div>
             </div>
-        </div>
-        <div class="text-center mt-4">
+            <div class="text-center mt-4">
                 <button class="btn border" routerLink="../condition-tender">
                     <i class="fa font-size-3 mr-3 fa-angle-left" aria-hidden="true"></i>
                     Trở về
                 </button>
             </div>
-    </div>
-</form>
+        </div>
+    </form>
+    
