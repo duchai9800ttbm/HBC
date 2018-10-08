@@ -11,6 +11,7 @@ import { AlertService } from '../../../../../../../shared/services';
 import { BsModalRef } from '../../../../../../../../../node_modules/ngx-bootstrap';
 import { PackageService } from '../../../../../../../shared/services/package.service';
 import { InterviewInvitationService } from '../../../../../../../shared/services/interview-invitation.service';
+import DateTimeConvertHelper from '../../../../../../../shared/helpers/datetime-convert-helper';
 @Component({
   selector: 'app-interview-notice',
   templateUrl: './interview-notice.component.html',
@@ -32,6 +33,7 @@ export class InterviewNoticeComponent implements OnInit {
   ckeConfig: any;
   file = [];
   packageInfo;
+  interviewChoose;
   constructor(
     private emailService: EmailService,
     private spinner: NgxSpinnerService,
@@ -70,12 +72,35 @@ export class InterviewNoticeComponent implements OnInit {
   }))
   ngOnInit() {
     this.packageId = +PackageDetailComponent.packageId;
-    this.packageService.getInforPackageID(this.packageId).subscribe( response => {
+    this.packageService.getInforPackageID(this.packageId).subscribe(response => {
       this.packageInfo = response;
       this.emailModel.subject = `DỰ ÁN ${this.packageInfo.projectName}, GÓI THẦU ${this.packageInfo.opportunityName} THÔNG BÁO PHỎNG VẤN`;
     });
-    // this.emailModel.content = `ĐẶNG BẢO QUYỀN`;
-    console.log('this.serveice', this.interviewInvitationService.getChooseInterviewNotification());
+    if (this.interviewInvitationService.getChooseInterviewNotification()) {
+      this.interviewChoose = this.interviewInvitationService.getChooseInterviewNotification();
+      this.emailModel.content = `<br>`;
+      this.interviewChoose.forEach( (element, index) => {
+        this.interviewInvitationService.LoadFileCreateInterview(element.id).subscribe( response => {
+          console.log('response', response, response[0]);
+          this.file.push(response);
+          console.log('this.file', this.file);
+        });
+        const approvedDate = DateTimeConvertHelper.fromTimestampToDtObject(element.approvedDate * 1000);
+        const approvedDateStr = approvedDate.getDate() + '/' + approvedDate.getMonth() + '/' + approvedDate.getFullYear();
+        const interviewDate = DateTimeConvertHelper.fromTimestampToDtObject(element.interviewDate * 1000);
+        const hour = interviewDate.getHours() < 10 ? '0' + interviewDate.getHours() : interviewDate.getHours();
+        const minutes = interviewDate.getMinutes() < 10 ? '0' + interviewDate.getMinutes() : interviewDate.getMinutes();
+        const interviewDateStr = interviewDate.getDate() + '/' + interviewDate.getMonth() + '/' + interviewDate.getFullYear()
+          + ',' + hour + ':' + minutes;
+        this.emailModel.content = this.emailModel.content + `
+                              <div>Lần phỏng vấn: ${index + 1}</div>
+                              <li> <span>Khách hàng:</span>&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;<span>${element.customer && element.customer.customerName ? element.customer.customerName : ''}</span></li>
+                              <li> <span>Ngày nhận phỏng vấn:</span>&emsp;&ensp;<span>${approvedDateStr}</span></li>
+                              <li> <span>Thời gian phỏng vấn:</span>&emsp;&emsp;<span>${interviewDateStr}</span></li>
+                              <li> <span>Địa điểm:</span>&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&nbsp;<span>${element.place}</span></li>
+                              <li> <span>Nội dung:</span>&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&nbsp;<span>${element.content ? element.content : ''}</span></li>`;
+      });
+    }
     this.searchTermTo$
       .debounceTime(COMMON_CONSTANTS.SearchEmailDelayTimeInMs)
       .distinctUntilChanged()
@@ -118,8 +143,10 @@ export class InterviewNoticeComponent implements OnInit {
 
   uploadfile(event) {
     const fileList: FileList = event.target.files;
+    console.log(fileList);
     if (fileList.length > 0) {
       for (let i = 0; i < fileList.length; i++) {
+        console.log('fileList[i]', fileList[i]);
         this.file.push(fileList[i]);
       }
       event.target.value = null;
@@ -135,6 +162,7 @@ export class InterviewNoticeComponent implements OnInit {
       this.emailModel.bidOpportunityId = this.packageId;
       this.spinner.show();
       this.emailService.sendEmailInterview(this.emailModel, this.file).subscribe(result => {
+        this.closePopup();
         this.alertService.success('Gửi thông báo phỏng vấn đến các bên liên quan thành công!');
         this.spinner.hide();
       },

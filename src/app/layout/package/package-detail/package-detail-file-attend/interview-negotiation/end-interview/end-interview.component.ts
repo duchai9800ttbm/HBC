@@ -81,7 +81,7 @@ export class EndInterviewComponent implements OnInit {
   uploadReportInterview() {
     this.dialog = this.dialogService.open({
       content: ReportEndInterviewComponent,
-      width: 600,
+      width: 650,
       minWidth: 250
     });
     const instance = this.dialog.content.instance;
