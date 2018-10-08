@@ -25,10 +25,25 @@
 
 .small-column {
     width: 9%;
+    // min-width: 125px;
 }
 
 .large-column {
     width: 15%;
+    // min-width: 250px;
+}
+
+.search-table-outer {
+    overflow-x: auto;
+    white-space: nowrap;
+}
+
+.custom-updater-responsive {
+    max-width: 100px;
+}
+
+.label-thead {
+    font-size: 90%;
 }
 
 input.icon {
@@ -75,7 +90,9 @@ input.icon {
 }
 
 .text-truncate-custom {
-    max-width: 300px;
+    padding-left: 0.5rem;
+    padding-right: 0.5rem;
+    max-width: 250px;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -90,40 +107,77 @@ input.icon {
 }
 
 .responsive-filter-control {
-    padding: 0.3rem;
+    padding: 0.5rem;
     margin-left: auto;
+}
+
+table.dataTable {
+
+    tr:nth-child(odd) {
+        background-color: #fafbfc;
+    }
+
+    border-collapse: collapse !important;
+    overflow-x: scroll;
+
+    // th:first-child,
+    // td:first-child {
+    //     width: 80px !important;
+    //     max-width: 90px;
+    // }
+
+    th:not([type="check"]),
+    td:not([type="check"]) {
+        min-width: 80px;
+        max-width: 90px;
+    }
 }
 
 @media only screen and (max-width: 1578px) {
     .responsive-filter-control {
         margin-left: unset !important;
+        margin-top: 0.2rem;
+    }
+
+    .responsive-interview-control {
+        margin-top: 0.2rem;
+    }
+}
+
+@media only screen and (max-width: 1319px) {
+    .responsive-date-control {
+        margin-top: 0.2rem;
     }
 }
 
 @media only screen and (max-width: 1275px) {
-    .reponsive-custom-control {
-        flex-direction: row;
-        flex-wrap: wrap;
-        justify-content: space-between;
+    .responsive-date-control {
+        margin-top: 0.7rem;
     }
 
-    .custom-reponsive-filter-action {
-        margin-bottom: 1rem;
+    .responsive-interview-control {
+        margin-top: 0.7rem;
     }
 }
 
-// @media only screen and (max-width: 1409px) {
-//     .status-filter {
-//         flex-direction: row-reverse;
-//     }
-// }
+@media only screen and (max-width: 1070px) {
+    .responsive-header-control {
+        margin-top: 0.7rem;
+    }
 
-// @media only screen and (max-width: 1124px) {
-//     .responsive-control {
-//         flex-direction: row-reverse;
-//     }
+    .custom-reponsive-filter-action {
+        margin-top: 0.7rem;
+    }
+}
 
-//     .input-group {
-//         margin-bottom: 0.2rem
-//     }
-// }
+@media only screen and (max-width: 1024px) {
+    .responsive-header-control {
+        margin-top: 0.7rem;
+    }
+}
+
+@media only screen and (max-width: 849px) {
+    .custom-reponsive-filter-action {
+        margin-top: 0.7rem;
+    }
+}
