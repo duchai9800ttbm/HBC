@@ -245,3 +245,21 @@ label {
 .view-mode-control {
     pointer-events: none;
 }
+
+@media only screen and (max-width: 1121px) {
+    .reponsive-checkbox {
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+    }
+
+    .reponsive-checkbox-child:nth-child(3) {
+        order: -2;
+    }
+
+    .reponsive-checkbox-other {
+        width: 40%;
+        order: -1;
+        padding-bottom: 1rem;
+    }
+}

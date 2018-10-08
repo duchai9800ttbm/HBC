@@ -32,7 +32,7 @@
 
                 <div class="d-flex">
                     <div id="toggle-menu-item">
-                        <div class="toggle-menu-item d-flex flex-column align-items-start" [routerLinkActive]="['router-link-active']"
+                        <!-- <div class="toggle-menu-item d-flex flex-column align-items-start" [routerLinkActive]="['router-link-active']"
                             [routerLink]="['./summary']">
                             <div>Bảng tóm tắt ĐKDT</div>
                             <span class="font-italic">LiveForm</span>
@@ -41,11 +41,11 @@
                             [routerLink]="['./liveformsite']">
                             <div>Báo cáo tham quan công trình</div>
                             <span class="font-italic">LiveForm</span>
-                        </div>
+                        </div> -->
                         <!-- List Type of Document -->
                         <ng-container *ngFor="let uploadform of danhSachLoaiTaiLieu; index as i">
-                            <div *ngIf="!uploadform.item?.isLiveForm" class="toggle-menu-item d-flex flex-column align-items-start"
-                                [ngClass]="{'router-link-active': isHighlight === i}" (click)="emitData(uploadform.item?.id)">
+                            <div class="toggle-menu-item d-flex flex-column align-items-start"
+                                [ngClass]="{'router-link-active': isHighlight === i}" (click)="emitData(uploadform.item?.id, uploadform.item?.isLiveForm)">
                                 <div>{{ uploadform.item?.name }}</div>
                                 <span class="font-italic">Upload</span>
                             </div>

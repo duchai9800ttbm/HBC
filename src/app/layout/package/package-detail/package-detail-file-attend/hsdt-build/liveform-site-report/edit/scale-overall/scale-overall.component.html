@@ -10,7 +10,7 @@
                 <input type="text" appInputNumber formControlName="lanPhongVan" tabindex="2">
             </div>
         </div>
-        <h5 class="big-title">1.&nbsp;quy mô tổng quan công trình (project statistic/scale)</h5>
+        <h6 class="big-title">1.&nbsp;quy mô tổng quan công trình (project statistic/scale)</h6>
         <div>
             <div class="detail-each-title">
                 <h6 class="small-title">1.1 Loại công trình xây dựng</h6>
@@ -30,8 +30,8 @@
                     </form>
                     <hr style="margin-right: 13%" />
                     <form [formGroup]="trangThaiCongTrinhForm">
-                        <div class="single-row">
-                            <div class="child childcheck" formArrayName="trangthaiCongTrinhList" *ngFor="let item of trangthaiCongTrinhListFA.controls; let i = index">
+                        <div class="single-row reponsive-checkbox">
+                            <div class="child childcheck reponsive-checkbox-child" formArrayName="trangthaiCongTrinhList" *ngFor="let item of trangthaiCongTrinhListFA.controls; let i = index">
                                 <label>
                                     <input [formControlName]="i" type="checkbox" [ngClass]="{'view-mode-control': viewMode}"
                                         [checked]="trangthaiCongTrinhList[i].checked" (change)="trangthaiCongTrinhList[i].checked = !trangthaiCongTrinhList[i].checked; trangThaiCongTrinhChange($event)"
@@ -40,7 +40,7 @@
                                     <span class="checkmark" tabindex="4"></span>
                                 </label>
                             </div>
-                            <div *ngIf="showValueOfOther"><input [disabled]="viewMode" type="text" [(ngModel)]="valueOfOthers"
+                            <div class="reponsive-checkbox-other" *ngIf="showValueOfOther"><input [disabled]="viewMode" type="text" [(ngModel)]="valueOfOthers"
                                     (ngModelChange)="valueOfOther($event)" [ngModelOptions]="{standalone: true}"></div>
                         </div>
                     </form>

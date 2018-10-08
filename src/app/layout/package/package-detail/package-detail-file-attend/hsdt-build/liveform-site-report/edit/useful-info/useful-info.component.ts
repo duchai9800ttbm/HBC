@@ -19,13 +19,13 @@ export class UsefulInfoComponent implements OnInit {
   url;
   viewMode;
   currentBidOpportunityId: number;
-  usefulInfoData = [new UsefulInfo()];
+  usefulInfoData = new Array(new UsefulInfo());
+  // usefulInfoData = [new UsefulInfo()];
   constructor(
     private router: Router
   ) { }
 
   ngOnInit() {
-    console.log(this.usefulInfoData);
     this.currentBidOpportunityId = +PackageDetailComponent.packageId;
     this.checkFlag();
     this.initdata();
@@ -72,6 +72,8 @@ export class UsefulInfoComponent implements OnInit {
     const obj = LiveformSiteReportComponent.formModel.usefulInfo;
     if (obj) {
       this.usefulInfoData = obj;
+    } else {
+      this.usefulInfoData = [];
     }
   }
   endPointValue(obj: UsefulInfo, index) {

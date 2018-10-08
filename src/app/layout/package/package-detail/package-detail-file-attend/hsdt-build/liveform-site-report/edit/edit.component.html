@@ -53,8 +53,8 @@
     </div>
 
     <div id="info-document">
-        <div class="headerInfo d-flex flex-row">
-            <div class="title-header-field-left w-50 d-flex flex-column">
+        <div class="headerInfo d-flex">
+            <div class="title-header-field title-header-field-left">
                 <div class="d-flex flex-row mt-1 mb-1 h-25 align-content-center">
                     <div class="titleHeader w-40">Công trình (Project):</div>
                     <div class="infoHeader">{{ packageData.projectName }}</div>
@@ -72,26 +72,31 @@
 
                 <div class="d-flex flex-row mt-1 mb-1 h-25 align-content-center">
                     <div class="titleHeader w-40">Người khảo sát/liên hệ:</div>
-                    <div class="infoHeader"></div>
+                    <!-- <div class="infoHeader"></div> -->
+                    <div class="infoHeader">
+                        <select class="custom-select-option">
+                            <option *ngFor="let item of listCustomerContact">{{ item.name }}</option>
+                        </select>
+                    </div>
                 </div>
             </div>
-            <div class="title-header-field-right w-50 d-flex flex-column">
+            <div class=" title-header-field title-header-field-right">
                 <div class="d-flex flex-row mt-1 mb-1 h-25 align-content-center">
                     <div class="titleHeader w-40">Gói thầu (Package):</div>
                     <div class="infoHeader">{{ packageData.opportunityName }}</div>
                 </div>
 
-                <div class="d-flex flex-row mt-1 mb-1 h-25 align-content-center">
+                <div class="d-flex flex-row mt-1 mb-1 h-25 align-content-center hidden-tag">
                     <div class="titleHeader w-40"></div>
                     <div class="infoHeader"></div>
                 </div>
 
                 <div class="d-flex flex-row mt-1 mb-1 h-25 align-content-center">
                     <div class="titleHeader w-40">Ngày khảo sát (Date):</div>
-                    <div class="infoHeader"></div>
+                    <div class="infoHeader">{{ (ngayKhaoSat)*1000 | date:'dd/MM/yyyy' }}</div>
                 </div>
 
-                <div class="d-flex flex-row mt-1 mb-1 h-25 align-content-center">
+                <div class="d-flex flex-row mt-1 mb-1 h-25 align-content-center hidden-tag">
                     <div class="titleHeader w-40"></div>
                     <div class="infoHeader"></div>
                 </div>

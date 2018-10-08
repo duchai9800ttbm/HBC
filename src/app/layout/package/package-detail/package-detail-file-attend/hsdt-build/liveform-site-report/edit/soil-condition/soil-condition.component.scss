@@ -261,3 +261,18 @@ label {
 .view-mode-control {
     display: none;
 }
+
+@media only screen and (max-width: 1430px) {
+    .responsive-label {
+        display: flex;
+        flex-direction: column !important;
+    }
+
+    .responsive-label-label {
+        width: 100% !important;
+    }
+
+    .responsive-label-input {
+        width: 40% !important;
+    }
+}

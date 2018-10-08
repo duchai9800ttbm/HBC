@@ -221,6 +221,10 @@ input[type=text] {
     }
 }
 
+.label-item {
+    width: 25%;
+}
+
 .toppp {
     transition: 1s ease;
     opacity: 0;
@@ -234,6 +238,7 @@ input[type=text] {
     color: #2b2323;
     font-size: 20px;
 }
+
 label {
     font-size: 11px;
 }
