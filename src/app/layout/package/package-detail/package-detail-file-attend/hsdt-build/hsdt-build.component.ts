@@ -100,16 +100,15 @@ export class HsdtBuildComponent implements OnInit, AfterViewChecked {
     }
 
     chotHSDT(event) {
-        const thiss = this;
         this.confirmationService.confirm(
             `Bạn có chắc chắn muốn chốt Hồ sơ dự thầu?`,
             () => {
                 this.hoSoDuThauService.chotHoSoDuThau(this.packageId).subscribe(res => {
-                    thiss.alertService.success(`Đã chốt Hồ sơ dự thầu thành công!`);
-                    thiss.spinner.hide();
-                    thiss.refresh();
+                    this.alertService.success(`Đã chốt Hồ sơ dự thầu thành công!`);
+                    this.spinner.hide();
+                    this.refresh();
                 }, err => {
-                    thiss.alertService.error(`Đã có lỗi. Chốt Hồ sơ dự thầu không thành công.`);
+                    this.alertService.error(`Đã có lỗi. Chốt Hồ sơ dự thầu không thành công.`);
                 });
             }
         );

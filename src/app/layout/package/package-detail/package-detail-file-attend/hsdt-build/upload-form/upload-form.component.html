@@ -8,11 +8,9 @@
             </div>
         </div>
         <div class="btn-toolbar mt-2 mb-2 responsive-control">
-            <div>
-                <div class="input-group">
-                    <span class="input-group-addon">Tìm kiếm theo</span>
-                    <input type="text" class="form-control icon" placeholder="&#xf002; Tên tài liệu" (keyup)="searchTerm$.next($event.target.value)">
-                </div>
+            <div class="input-group">
+                <span class="input-group-addon">Tìm kiếm theo</span>
+                <input type="text" class="form-control icon" placeholder="&#xf002; Tên tài liệu" (keyup)="searchTerm$.next($event.target.value)">
             </div>
             <div>
                 <button class="btn btn-primary ml-2" (click)="multiDelete()">
@@ -185,7 +183,7 @@
                                 </label>
                             </div>
                             <div class="center-parent custom-title-text">
-                                <div>{{ i+1 }}</div>
+                                <div>{{ pageIndex*10+i+1 }}</div>
                             </div>
                         </div>
                     </td>
@@ -213,13 +211,13 @@
                         '' }}</td>
                     <td class="boder-table">
                         <div class="d-flex justify-content-around">
-                            <div *ngIf="!hoso.url" class="pointer-link" title="Tải file" (click)="downloadDocument(hoso.id)">
+                            <div *ngIf="!hoso.fileUrl" class="pointer-link" title="Tải file" (click)="downloadDocument(hoso.id)">
                                 <a>
                                     <i class="fa fa-download color-item-down" aria-hidden="true"></i>
                                 </a>
                             </div>
-                            <div class="pointer-link" *ngIf="hoso.url">
-                                <a [href]="hoso.url" target="_blank">
+                            <div class="pointer-link" *ngIf="hoso.fileUrl">
+                                <a [href]="hoso.fileUrl" target="_blank">
                                     <i class="fa fa-external-link color-item-down" aria-hidden="true"></i>
                                 </a>
                             </div>
@@ -236,10 +234,7 @@
     </div>
     <div>
         <div class="mt-4" *ngIf="dataDocumentOfType?.length">
-            <span>Hiển thị</span>
-            <span class="font-weight-bold">&nbsp;{{dataDocumentOfType?.length}}&nbsp;</span>
-            <span>kết quả
-            </span>
+            <app-pagination [(pagedResult)]="pagedResult" (pagedResultChange)="pagedResultChange($event)"></app-pagination>
         </div>
         <div class="mt-4" class="center-parent" *ngIf="!dataDocumentOfType?.length">
             <div>
