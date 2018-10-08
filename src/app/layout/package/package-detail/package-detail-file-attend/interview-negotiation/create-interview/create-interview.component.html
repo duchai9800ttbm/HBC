@@ -61,7 +61,8 @@
         </div>
       </div>
     </div> -->
-    <div class="center-parent row set-width-image" *ngIf="statusPackage === bidStatus.DaNopHSDT">
+    <div class="center-parent row set-width-image" *ngIf="currentStatusInterview === 0">
+        <!-- statusPackage === bidStatus.DaNopHSDT &&  -->
       <div class="col-md-12 center-parent">
         <img class="class-image" src="assets/images/thuongthao.png" width="250" class="d-inline-block" alt="">
       </div>
@@ -72,7 +73,8 @@
         </button>
       </div>
     </div>
-    <div class="set-width-content pt-2" *ngIf="statusPackage === bidStatus.DaNhanLoiMoi">
+    <div class="set-width-content pt-2" *ngIf="currentStatusInterview > 0">
+        <!-- statusPackage === bidStatus.DaNopHSDT &&  -->
       <div>
         <div class=" title-list-package d-flex flex-wrap align-items-center status-filter">
           <div class="mr-auto d-flex align-items-end list-package mb-2" style="padding-top: 0!important;">

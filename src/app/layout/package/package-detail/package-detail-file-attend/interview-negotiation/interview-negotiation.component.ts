@@ -29,6 +29,7 @@ export class InterviewNegotiationComponent implements OnInit {
   statusInInterviewList;
   stattusCurrentList;
   currentStatusInterview;
+  isNgOnInit = false;
   constructor(
     private dialogService: DialogService,
     private packageService: PackageService,
@@ -44,8 +45,8 @@ export class InterviewNegotiationComponent implements OnInit {
     this.bidStatus.ChuanBiPhongVan, this.bidStatus.DaChotCongTacChuanBiPhongVan, this.bidStatus.DaPhongVan];
     this.stattusCurrentList = ['create', 'prepare', 'end'];
     this.packageId = +PackageDetailComponent.packageId;
-    this.checkStatusPackage();
     this.statusObservableHsdtService.statusPackageService.subscribe(value => {
+      console.log('status');
       this.checkStatusPackage();
     });
     this.changeKeySearchInterviewInvitation$.debounceTime(600)
@@ -58,14 +59,40 @@ export class InterviewNegotiationComponent implements OnInit {
         this.checkStatusPackage();
       }
     });
+    this.packageService.getInforPackageID(this.packageId).subscribe(result => {
+      switch (result.stageStatus.id) {
+        case (this.bidStatus.DaNopHSDT || this.bidStatus.DaNhanLoiMoi): {
+          this.router.navigate([`/package/detail/${this.packageId}/attend/interview-negotiation/create`]);
+          break;
+        }
+        case this.bidStatus.ChuanBiPhongVan: {
+          this.router.navigate([`/package/detail/${this.packageId}/attend/interview-negotiation/prepare`]);
+          break;
+        }
+        case (this.bidStatus.DaChotCongTacChuanBiPhongVan || this.bidStatus.DaPhongVan): {
+          this.router.navigate([`/package/detail/${this.packageId}/attend/interview-negotiation/end`]);
+          break;
+        }
+      }
+    });
   }
 
   checkStatusPackage() {
     this.packageService.getInforPackageID(this.packageId).subscribe(result => {
       this.statusPackage = result.stageStatus.id;
+      this.activeRouter.firstChild.url.subscribe(url => {
+        const urlCurrent = url[0].path;
+        for (let i = 0; i < this.stattusCurrentList.length; i++) {
+          if (this.stattusCurrentList[i] === urlCurrent) {
+            this.currentStatusInterview = i + 1;
+            break;
+          }
+        }
+        this.interviewInvitationService.changeUrlChirld(this.currentStatusInterview);
+      });
       for (let i = 0; i < this.statusInInterviewList.length; i++) {
         if (this.statusInInterviewList[i] === this.statusPackage) {
-          if ( i === 4) {
+          if (i === 4) {
             this.numberStatusPackageInterview = i - 1;
           } else {
             this.numberStatusPackageInterview = i;
@@ -73,17 +100,26 @@ export class InterviewNegotiationComponent implements OnInit {
           break;
         }
       }
-      this.activeRouter.firstChild.url.subscribe(url => {
-        const urlCurrent = url[0].path;
-        console.log('this,', this.stattusCurrentList, urlCurrent);
-        for (let i = 0; i < this.stattusCurrentList.length; i++) {
-          if (this.stattusCurrentList[i] === urlCurrent) {
-            this.currentStatusInterview = i + 1;
-            break;
-          }
-        }
-      });
-      console.log('currentStatusInterView', this.numberStatusPackageInterview, this.currentStatusInterview);
+      console.log('this.currentStatusInterview', this.currentStatusInterview);
+      console.log('this.numberStatusPackageInterview', this.numberStatusPackageInterview);
+      // if (!this.isNgOnInit) {
+      //   switch (this.numberStatusPackageInterview) {
+      //     case 1: {
+      //       this.router.navigate([`/package/detail/${this.packageId}/attend/interview-negotiation/create`]);
+      //       break;
+      //     }
+      //     case 2: {
+      //       this.router.navigate([`/package/detail/${this.packageId}/attend/interview-negotiation/prepare`]);
+      //       break;
+      //     }
+      //     case 3: {
+      //       this.router.navigate([`/package/detail/${this.packageId}/attend/interview-negotiation/end`]);
+      //       break;
+      //     }
+      //   }
+      //   this.isNgOnInit = true;
+      // }
+
       // if (this.statusPackage === this.bidStatus.DaNopHSDT || this.statusPackage === this.bidStatus.DaNhanLoiMoi) {
       //   this.interviewInvitationService.getListInterview(
       //     this.packageId,
