@@ -1,8 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormBuilder, FormArray } from '@angular/forms';
+import { FormGroup, FormBuilder, FormArray, FormControl } from '@angular/forms';
 import { SummaryConditionFormComponent } from '../summary-condition-form.component';
 import { Requirement } from '../../../../../../../../shared/models/package/requirement';
 import { TenderOtherSpecRequirement } from '../../../../../../../../shared/models/package/tender-other-spec-requirement';
+import { HoSoDuThauService } from '../../../../../../../../shared/services/ho-so-du-thau.service';
+import { TableYeuCauDacBiet } from '../../../../../../../../shared/models/ho-so-du-thau/table-yeu-cau';
 
 @Component({
   selector: 'app-summary-condition-form-special-requirement',
@@ -12,35 +14,60 @@ import { TenderOtherSpecRequirement } from '../../../../../../../../shared/model
 export class SummaryConditionFormSpecialRequirementComponent implements OnInit {
 
   specialRequirementForm: FormGroup;
-
+  otherRequirement = new Array<TableYeuCauDacBiet>();
   get requirementsFA(): FormArray {
     return this.specialRequirementForm.get('requirements') as FormArray;
   }
   constructor(
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private hoSoDuThauService: HoSoDuThauService
   ) { }
 
   ngOnInit() {
+    this.loadData();
+    this.createForm();
+  }
+  createForm() {
     this.specialRequirementForm = this.fb.group({
       requirements: this.fb.array([])
     });
-    this.initFormData();
-    this.specialRequirementForm.valueChanges.subscribe(data => this.mappingToLiveFormData(data));
+
+    this.otherRequirement.forEach(x => {
+      const control = <FormArray>this.specialRequirementForm.controls.requirements;
+      control.push(this.fb.group({
+        name: x.name,
+        desc: x.desc,
+        link: x.link
+      }));
+    });
+
+    this.specialRequirementForm.valueChanges.subscribe(data => {
+      let obj = new Array<TableYeuCauDacBiet>();
+      obj = (data.requirements || []).map(x => ({
+        name: x.name,
+        desc: x.desc,
+        link: x.link
+      }));
+      this.hoSoDuThauService.emitDataStepSpecial(obj);
+    });
   }
 
-  initFormData() {
-    if (SummaryConditionFormComponent.formModel.otherSpecialRequirement) {
-      const data = SummaryConditionFormComponent.formModel.otherSpecialRequirement;
-      if (data.requirements.length > 0) {
-        data.requirements.forEach(e => {
-          this.addFormArrayControl('requirements', e);
-        });
-      } else {
-        this.addFormArrayControl('requirements');
+
+  loadData() {
+    this.hoSoDuThauService.watchDataLiveForm().subscribe(data => {
+      const otherRequirement = data.yeuCauDacBietKhac;
+      if (otherRequirement) {
+        this.otherRequirement = otherRequirement;
       }
-    } else {
-      this.addFormArrayControl('requirements');
-    }
+      if (!otherRequirement) {
+        this.otherRequirement = [];
+        this.otherRequirement.push({
+          name: 'Green Mark',
+          desc: '',
+          link: 'Nhập Link'
+        });
+      }
+    });
   }
 
   addFormArrayControl(name: string, data?: Requirement) {
