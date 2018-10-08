@@ -1,5 +1,6 @@
 export class HsdtFilterModel {
     status: string;
-    uploadedEmployeeId: number;
-    createdDate: number;
+    uploadedEmployeeId: number | string;
+    createdDate: Date = null;
+    interViewTimes: number;
 }

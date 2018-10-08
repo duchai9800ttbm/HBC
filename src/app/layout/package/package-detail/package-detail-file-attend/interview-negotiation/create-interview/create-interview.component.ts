@@ -24,7 +24,7 @@ import DateTimeConvertHelper from '../../../../../../shared/helpers/datetime-con
   templateUrl: './create-interview.component.html',
   styleUrls: ['./create-interview.component.scss']
 })
-export class CreateInterviewComponent implements OnInit, OnDestroy {
+export class CreateInterviewComponent implements OnInit {
   currentPackageId: number;
   dialog;
   // searchTerm$ = new BehaviorSubject<string>('');
@@ -40,6 +40,8 @@ export class CreateInterviewComponent implements OnInit, OnDestroy {
   currentFieldSort: string;
   statusSort: string;
   isOnInit: boolean;
+  stattusCurrentList;
+  currentStatusInterview: number;
   constructor(
     private dialogService: DialogService,
     private interviewInvitationService: InterviewInvitationService,
@@ -52,6 +54,7 @@ export class CreateInterviewComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.currentPackageId = +PackageDetailComponent.packageId;
+    this.stattusCurrentList = ['create', 'prepare', 'end'];
     this.filter();
     this.getSatusPackage();
     this.statusObservableHsdtService.statusPackageService.subscribe(value => {
@@ -60,17 +63,20 @@ export class CreateInterviewComponent implements OnInit, OnDestroy {
     this.filterModel.status = '';
     this.filterModel.interviewTimes = null;
     this.filterModel.receivedDate = null;
+    this.interviewInvitationService.getUrlChirld().subscribe( value => {
+      this.currentStatusInterview = value;
+    });
     this.interviewInvitationService.watchInterviewInvitationList().subscribe(value => {
       this.isNumberOfInterviews = true;
       this.filter();
       this.spinner.hide();
     });
 
-    // this.interviewInvitationService.watchKeySearchInterviewInvitation().subscribe(value => {
-    //   this.keySearch = value;
-    //   this.filter();
-    //   this.spinner.hide();
-    // });
+    this.interviewInvitationService.watchKeySearchInterviewInvitation().subscribe(value => {
+      this.keySearch = value;
+      this.filter();
+      this.spinner.hide();
+    });
 
     this.interviewInvitationService.watchRefeshInterviewInvitationList().subscribe(value => {
       this.refresh(this.isOnInit);
@@ -79,14 +85,19 @@ export class CreateInterviewComponent implements OnInit, OnDestroy {
 
   }
 
-  ngOnDestroy() {
-    this.interviewInvitationService.watchKeySearchInterviewInvitation().unsubscribe();
-  }
-
   getSatusPackage() {
     this.packageService.getInforPackageID(this.currentPackageId).subscribe(result => {
       this.statusPackage = result.stageStatus.id;
     });
+    // this.route.url.subscribe(url => {
+    //   const urlCurrent = url[0].path;
+    //   for (let i = 0; i < this.stattusCurrentList.length; i++) {
+    //     if (this.stattusCurrentList[i] === urlCurrent) {
+    //       this.currentStatusInterview = i + 1;
+    //       break;
+    //     }
+    //   }
+    // });
   }
 
   getListNumberOfInterviews() {
@@ -178,8 +189,6 @@ export class CreateInterviewComponent implements OnInit, OnDestroy {
   }
 
   onSelectAll(value: boolean) {
-    console.log('value', value);
-    // this.pagedResult.items.forEach(x => (x['checkboxSelected'] = value));
     this.pagedResult.items.forEach( item => item['checkboxSelected'] = value);
   }
 

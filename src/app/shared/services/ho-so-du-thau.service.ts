@@ -23,34 +23,43 @@ import { DanhSachNhaThau } from '../models/ho-so-du-thau/danh-sach-nha-thau';
 import { DanhSachVatTu, HoSoDangLuuY, DienGiaiYeuCauHoSo } from '../models/ho-so-du-thau/danh-sach-vat-tu';
 import { DienGiaiYeuCauLamRo, DienGiaiDieuKienHopDong, DienGiaiDieuKienHSMT } from '../models/ho-so-du-thau/dien-giai-yeu-cau';
 import { TableYeuCauDacBiet } from '../models/ho-so-du-thau/table-yeu-cau';
+import DateTimeConvertHelper from '../helpers/datetime-convert-helper';
 
 @Injectable()
 export class HoSoDuThauService {
 
   static tempDataLiveFormDKDT = new BehaviorSubject<DuLieuLiveFormDKDT>(new DuLieuLiveFormDKDT());
-
+  static detectChangeRouter = new BehaviorSubject<boolean>(false);
+  static idTenderDocumentTypesData;
 
   private static createFilterParams(filter: HsdtFilterModel): URLSearchParams {
+    const numCreatedDate = DateTimeConvertHelper.fromDtObjectToSecon(filter.createdDate);
     const urlFilterParams = new URLSearchParams();
     urlFilterParams.append('status', filter.status);
-    urlFilterParams.append(
-      'uploadedEmployeeId',
-      `${filter.uploadedEmployeeId}`
-    );
-    urlFilterParams.append('createdDate', `${filter.createdDate}`);
+    urlFilterParams.append('uploadedEmployeeId', `${filter.uploadedEmployeeId ? filter.uploadedEmployeeId : ''}`);
+    urlFilterParams.append('interViewTimes', `${filter.interViewTimes ? filter.interViewTimes : ''}`);
+    urlFilterParams.append('createdDate', `${numCreatedDate ? numCreatedDate : ''}`);
     return urlFilterParams;
   }
 
   constructor(
-    private alertService: AlertService,
     private apiService: ApiService,
-    private sessionService: SessionService,
     private instantSearchService: InstantSearchService
   ) { }
   // get Danh sách các bên liên quan
   getGroupMemberStackHolder(bidOpportunityId: number): Observable<any> {
     const url = `bidopportunity/${bidOpportunityId}/bidusergroupmembersofstakeholders`;
     return this.apiService.get(url).map(res => res.result);
+  }
+  // emit data to child component
+  transporterData(id) {
+    HoSoDuThauService.idTenderDocumentTypesData = id;
+  }
+  watchChangingRouter() {
+    return HoSoDuThauService.detectChangeRouter;
+  }
+  detectChangingRouter(id) {
+    HoSoDuThauService.detectChangeRouter.next(id);
   }
   // get Danh Sách User
   getDataUser(
@@ -76,7 +85,9 @@ export class HoSoDuThauService {
     tenderDocumentName: string,
     tenderDocumentDesc: string,
     tenderDocumentFile: File,
-    link: string
+    link: string,
+    version: number,
+    interviewTimes: number
   ) {
     const url = `tenderdocument/upload`;
     const formData = new FormData();
@@ -86,11 +97,13 @@ export class HoSoDuThauService {
     formData.append('TenderDocumentDesc', tenderDocumentDesc);
     formData.append('TenderDocumentFile', tenderDocumentFile);
     formData.append('Url', link);
+    formData.append('Version', `${version ? version : ''}`);
+    formData.append('InterviewTimes', `${interviewTimes ? interviewTimes : ''}`);
     return this.apiService.postFile(url, formData).map(response => response).share();
   }
   // Tải Template
   taiTemplateHSDT(): Observable<any> {
-    const url = `tenderdocument/template/downoad`;
+    const url = `tenderdocument/template/download`;
     return this.apiService.getFile(url).map(response => {
       return FileSaver.saveAs(
         new Blob([response.file], {
@@ -102,7 +115,7 @@ export class HoSoDuThauService {
   // Tải hồ sơ dự thầu
   taiHoSoDuThau(tenderDocumentId: number) {
     const url = `tenderdocument/${tenderDocumentId}/download`;
-    return this.apiService.get(url).map(response => {
+    return this.apiService.getFile(url).map(response => {
       return FileSaver.saveAs(
         new Blob([response.file], {
           type: `${response.file.type}`,
@@ -125,7 +138,8 @@ export class HoSoDuThauService {
   }
   // get Danh sách loại tài liệu hồ sơ dự thầu (kèm số lượng file của mỗi loại tài liệu) theo gói thầu
   getDanhSachLoaiTaiLieu(bidOpportunityId: number): Observable<any> {
-    const url = `bidopportunity/${bidOpportunityId}/tenderdocumenttypes`;
+    // GET /api/hbc/bidopportunity/{bidOpportunityId}/tenderdocumentmajortypes
+    const url = `bidopportunity/${bidOpportunityId}/tenderdocumentmajortypes`;
     return this.apiService.get(url).map(res => res.result);
   }
   // Chốt hồ sơ dự thầu
@@ -141,7 +155,7 @@ export class HoSoDuThauService {
     page: number,
     pageSize: number,
   ): Observable<PagedResult<DanhSachBoHsdtItem>> {
-    const url = `bidOpportunity/${bidOpportunityId}/${page}/${pageSize}?searchTerm=${searchTerm}`;
+    const url = `bidopportunity/${bidOpportunityId}/tenderdocuments/${page}/${pageSize}?searchTerm=${searchTerm}`;
     const urlParams = HoSoDuThauService.createFilterParams(hsdtFilter);
 
     return this.apiService.get(url, urlParams).map(res => {
@@ -155,7 +169,7 @@ export class HoSoDuThauService {
       };
     });
   }
-
+  // GET /api/hbc/bidopportunity/{bidOpportunityId}/tenderdocuments/{page}/{pageSize}
   danhSachBoHoSoDuThauInstantSearch(
     bidOpportunityId: number,
     searchTerm: Observable<string>,
@@ -163,10 +177,10 @@ export class HoSoDuThauService {
     page: number,
     pageSize: number
   ): Observable<PagedResult<DanhSachBoHsdtItem>> {
-    const url = `bidOpportunity/${bidOpportunityId}/${page}/${pageSize}?searchTerm=`;
+    const url = `bidopportunity/${bidOpportunityId}/tenderdocuments/${page}/${pageSize}?searchTerm=`;
     const urlParams = HoSoDuThauService.createFilterParams(hsdtFilter);
     return this.instantSearchService
-      .searchWithFilter(url, searchTerm, HoSoDuThauService.createFilterParams(hsdtFilter))
+      .searchWithFilter(url, searchTerm, urlParams)
       .map(res => {
         return {
           currentPage: res.pageIndex,
@@ -363,4 +377,34 @@ export class HoSoDuThauService {
   //   };
   //   return this.apiService.post(url, infoReport).map(res => res);
   // }
+
+
+  // Xóa ảnh
+  deleteImage(guid): Observable<any> {
+    const url = `tenderconditionalsummary/deleteimage`;
+    return null; // tạm thời disable
+    // return this.apiService.post(url, guid);
+  }
+
+  // Upload ảnh
+  uploadImage(
+    listImage: any,
+    bidOpportunityId: number
+  ) {
+    const url = `tenderconditionalsummary/uploadimage`;
+    const imageUploadForm = new FormData();
+    for (const image of listImage) {
+      imageUploadForm.append('Images', image);
+    }
+    imageUploadForm.append('BidOpportunityId', `${bidOpportunityId}`);
+    return this.apiService
+      .postFile(url, imageUploadForm)
+      .map(res => res.result)
+      .share();
+  }
+
+  deleleLiveFormTTDKDuThau(bidOpportunityId: number) {
+    const url = `bidopportunity/${bidOpportunityId}/tenderconditionalsummary/delete`;
+    return this.apiService.post(url).map(response => response);
+  }
 }

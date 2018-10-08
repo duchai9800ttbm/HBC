@@ -4,6 +4,8 @@ import { InterviewInvitationReport } from '../../../../../../../shared/models/in
 import { AlertService } from '../../../../../../../shared/services/alert.service';
 import { InterviewInvitationService } from '../../../../../../../shared/services/interview-invitation.service';
 import { PackageDetailComponent } from '../../../../package-detail.component';
+import ValidationHelper from '../../../../../../../shared/helpers/validation.helper';
+import CustomValidator from '../../../../../../../shared/helpers/custom-validator.helper';
 @Component({
   selector: 'app-report-end-interview',
   templateUrl: './report-end-interview.component.html',
@@ -16,6 +18,11 @@ export class ReportEndInterviewComponent implements OnInit {
   interviewInvitationReport = new InterviewInvitationReport();
   file: File;
   currentPackageId: number;
+  invalidMessages: string[];
+  isSubmitted: boolean;
+  formErrors = {
+    documentName: '',
+  };
   constructor(
     private fb: FormBuilder,
     private alertService: AlertService,
@@ -29,13 +36,27 @@ export class ReportEndInterviewComponent implements OnInit {
 
   createForm() {
     this.createFormReport = this.fb.group({
-      documentName: [this.interviewInvitationReport.documentName],
+      documentName: [this.interviewInvitationReport.documentName, CustomValidator.required],
       version: [this.interviewInvitationReport.version],
       uploadedBy: [this.interviewInvitationReport.uploadedBy],
       createdDate: [this.interviewInvitationReport.uploadedBy],
       interviewTimes: [this.interviewInvitationReport.interviewTimes],
       documentDesc: [this.interviewInvitationReport.documentDesc],
+      link: [],
     });
+    this.createFormReport.valueChanges
+      .subscribe(data => this.onFormValueChanged(data));
+  }
+
+  validateForm() {
+    this.invalidMessages = ValidationHelper.getInvalidMessages(this.createFormReport, this.formErrors);
+    return this.invalidMessages.length === 0;
+  }
+
+  onFormValueChanged(data?: any) {
+    if (this.isSubmitted) {
+      this.validateForm();
+    }
   }
 
   closePopup() {
@@ -55,15 +76,24 @@ export class ReportEndInterviewComponent implements OnInit {
   }
 
   Upload() {
-    console.log('this.createFormReport.value', this.createFormReport.value);
-    this.interviewInvitationService.UploadReportInterview(this.currentPackageId, this.createFormReport.value, this.file)
-      .subscribe(response => {
-        this.closePopup();
-        this.reloadData();
-        this.alertService.success('Thêm mới lời mời thành công!');
-      },
-        err => {
-          this.alertService.error('Tạo mới lời mời thất bại, xin vui lòng thử lại!');
-        });
+    console.log('this.createFormReport.value', this.validateForm() );
+    this.isSubmitted = true;
+    if (this.validateForm()) {
+      this.interviewInvitationService.UploadReportInterview(this.currentPackageId, this.createFormReport.value, this.file)
+        .subscribe(response => {
+          this.closePopup();
+          this.reloadData();
+          this.alertService.success('Thêm mới lời mời thành công!');
+        },
+          err => {
+            this.alertService.error('Tạo mới lời mời thất bại, xin vui lòng thử lại!');
+          });
+    }
+  }
+
+  deleteFileUpload() {
+    this.file = null;
+    this.createFormReport.get('link').enable();
+    this.createFormReport.get('documentName').patchValue('');
   }
 }

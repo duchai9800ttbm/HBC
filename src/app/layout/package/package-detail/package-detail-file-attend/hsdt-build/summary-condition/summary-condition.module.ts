@@ -9,6 +9,7 @@ import { SummaryConditionCreateComponent } from './summary-condition-create/summ
 import { SummaryConditionEditComponent } from './summary-condition-edit/summary-condition-edit.component';
 import { SummaryConditionDetailComponent } from './summary-condition-detail/summary-condition-detail.component';
 import { SummaryConditionOverviewComponent } from './summary-condition-overview/summary-condition-overview.component';
+import { HoSoDuThauService } from '../../../../../../shared/services/ho-so-du-thau.service';
 
 @NgModule({
   imports: [
@@ -24,7 +25,7 @@ import { SummaryConditionOverviewComponent } from './summary-condition-overview/
     SummaryConditionOverviewComponent
   ],
   providers: [
-    SiteSurveyReportService
+    HoSoDuThauService
   ]
 })
 export class SummaryConditionModule { }
