@@ -47,6 +47,11 @@ export class HoSoDuThauService {
     private sessionService: SessionService,
     private instantSearchService: InstantSearchService
   ) { }
+  // get Danh sách các bên liên quan
+  getGroupMemberStackHolder(bidOpportunityId: number): Observable<any> {
+    const url = `bidopportunity/${bidOpportunityId}/bidusergroupmembersofstakeholders`;
+    return this.apiService.get(url).map(res => res.result);
+  }
   // get Danh Sách User
   getDataUser(
     page: number,
@@ -219,105 +224,7 @@ export class HoSoDuThauService {
   emitDataStepSpecial(obj: TableYeuCauDacBiet[]) {
     HoSoDuThauService.tempDataLiveFormDKDT.value.yeuCauDacBietKhac = obj;
   }
-  // fake data coding
-  fakeData() {
-    const obj = new DuLieuLiveFormDKDT();
-    obj.thongTinDuAn = {
-      tenTaiLieu: 'Bảng tóm tắt điều kiện dự thầu - 1',
-      lanPhongVan: 1,
-      hinhAnhPhoiCanh: [],
-      banVeMasterPlan: [],
-      dienGiaiThongTinDuAn: 'Diễn giải thông tin tổng quan dự án'
-    };
-    obj.cacBenLienQuan = {
-      chuDauTu: {
-        donVi: 'Riviera Point Limited Liability Company (Keppel Land)',
-        lienHe: ['Nguyễn B'],
-        ghiChu: 'Ghi chú chủ đầu tư'
-      },
-      quanLyDuAn: {
-        donVi: 'Công ty TNHH ABC',
-        lienHe: ['Nguyễn A'],
-        ghiChu: 'Ghi chú quản lý dự án'
-      },
-      quanLyChiPhi: {
-        donVi: 'Công ty TNHH XYZ',
-        lienHe: ['Nguyễn C'],
-        ghiChu: 'Ghi chú quản lý chi phí'
-      },
-      thietKeKienTruc: {
-        donVi: 'Công ty MTV An Tâm',
-        lienHe: ['Nguyễn A'],
-        ghiChu: 'Ghi chú thiết kế kiến trúc'
-      },
-      thietKeKetCau: {
-        donVi: 'Công ty MTV Yên Tâm',
-        lienHe: ['Nguyễn B'],
-        ghiChu: 'Ghi chú thiết kế kết cấu'
-      },
-      thietKeCoDien: [
-        {
-          donVi: 'Công ty CP Điện Cơ',
-          lienHe: ['Nguyễn C'],
-          ghiChu: 'Ghi chú Cơ Điện'
-        },
-        {
-          donVi: 'Công ty CP Sáng Xanh',
-          lienHe: ['Nguyễn A'],
-          ghiChu: 'Ghi chú 2 Cơ Điện'
-        }
-      ],
-      thongTinKhac: {
-        donVi: 'Công ty CP Kincocha',
-        lienHe: ['Trần B'],
-        ghiChu: 'Ghi chú thông tin khác'
-      }
-    };
-    obj.phamViCongViec = {
-      phamViBaoGom: [
-        {
-          congTac: 'Công tác 1',
-          dienGiaiCongTac: 'Mô tả công tác 1'
-        },
-        {
-          congTac: 'Công tác 1',
-          dienGiaiCongTac: 'Mô tả công tác 1'
-        },
 
-        {
-          congTac: 'Công tác 1',
-          dienGiaiCongTac: 'Mô tả công tác 1'
-        },
-        {
-          congTac: 'Công tác 1',
-          dienGiaiCongTac: 'Mô tả công tác 1'
-        }
-      ],
-      phamViKhongBaoGom: [
-        {
-          congTac: 'Công tác 1',
-          dienGiaiCongTac: 'Mô tả công tác 1'
-        },
-        {
-          congTac: 'Công tác 1',
-          dienGiaiCongTac: 'Mô tả công tác 1'
-        },
-        {
-          congTac: 'Công tác 1',
-          dienGiaiCongTac: 'Mô tả công tác 1'
-        },
-        {
-          congTac: 'Công tác 1',
-          dienGiaiCongTac: 'Mô tả công tác 1'
-        },
-        {
-          congTac: 'Công tác 1',
-          dienGiaiCongTac: 'Mô tả công tác 1'
-        }
-      ]
-    };
-    this.emitDataAll(obj);
-  }
   // gọi API create or update liveform tóm tắt đkdt
   // createOrUpdateLiveFormTomTat(obj: DuLieuLiveFormDKDT): Observable<any> {
   //   const url = `tenderconditionalsummary/createorupdate`;

@@ -25,7 +25,7 @@ export class LiveformSiteReportComponent implements OnInit {
   isHistory;
   documentData = new SiteSurveyReport();
   updateInfoList;
-  pageIndex: number | string = 0; 
+  pageIndex: number | string = 0;
   listConstructionType;
   pagedResult: PagedResult<SiteReportChangedHistory> = new PagedResult<SiteReportChangedHistory>();
   dtTrigger: Subject<any> = new Subject();

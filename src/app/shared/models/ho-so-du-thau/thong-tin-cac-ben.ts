@@ -1,5 +1,5 @@
 export class ThongTinCacBen {
     donVi: string;
-    lienHe: string[];
+    lienHe: [];
     ghiChu: string;
 }

@@ -22,6 +22,9 @@ import { SummaryConditionOverviewComponent } from './summary-condition-overview/
     SummaryConditionEditComponent,
     SummaryConditionDetailComponent,
     SummaryConditionOverviewComponent
+  ],
+  providers: [
+    SiteSurveyReportService
   ]
 })
 export class SummaryConditionModule { }
