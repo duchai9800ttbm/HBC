@@ -113,15 +113,15 @@
         </div>
 
         <div class="bot-table">
-          <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="table-selection  row-border hover cell-border dataTable">
+          <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="table-selection  row-border hover cell-border dataTable table-layout">
             <thead>
               <tr>
-                <th class="stt" style="width: 3%; min-width: 15px;background-color: #f68e56!important;">
+                <th class="stt w-5" style="min-width: 15px;background-color: #f68e56!important;">
                   <div class="d-flex justify-content-around">
                     <div style="width: 40%;">
                       <div class="center-parent">
                         <label class="custom-control custom-checkbox">
-                          <input type="checkbox" class="custom-control-input">
+                          <input type="checkbox" class="custom-control-input" (change)="onSelectAll($event.target.checked)">
                           <span class="custom-control-indicator"></span>
                         </label>
                       </div>
@@ -132,20 +132,11 @@
                   </div>
                 </th>
 
-                <th style="width: 13%;background-color: #f68e56!important; border-right: none;">
-                  <div class="d-flex justify-content-center">
-                    <div class="center-parent">
-                      <div>Loại tài liêu</div>
-                    </div>
-                  </div>
+                <th class="w-25" style="width: 13%;background-color: #f68e56!important; border-right: none;">
+                      <div>Loại tài liệu</div>
                 </th>
 
-                <th style="width: 13%;background-color: #f68e56!important; border-left: none;">
-                  <div class="d-flex justify-content-center">
-                    <div class="center-parent">
-                      <div></div>
-                    </div>
-                  </div>
+                <th class="w-25" style="background-color: #f68e56!important; border-left: none;">
                 </th>
 
                 <!-- <th class="th-mark-status" style="width: 10%; min-width: 20px;background-color: #f68e56!important;">
@@ -156,15 +147,11 @@
                   </div>
                 </th> -->
 
-                <th style="background-color: #f68e56!important;">
-                  <div class="d-flex justify-content-center">
-                    <div class="center-parent">
+                <th class="w-20" style="background-color: #f68e56!important;">
                       <div>Tên tài liệu</div>
-                    </div>
-                  </div>
                 </th>
 
-                <th style="background-color: #f68e56!important;">
+                <th class="w-15" style="background-color: #f68e56!important;">
                   <div class="d-flex justify-content-center">
                     <div class="center-parent">
                       <div>Lần phỏng vấn</div>
@@ -172,7 +159,7 @@
                   </div>
                 </th>
 
-                <th class="table-action text-center" style="background-color: #f68e56!important;">
+                <th class="w-10" class="text-center" style="background-color: #f68e56!important;">
                   Thao tác
                 </th>
 
@@ -180,29 +167,26 @@
             </thead>
             <tbody>
               <ng-container *ngFor="let item of pagedResult; let i = index">
-                <ng-container *ngIf="item.childs;then chirld else document">
-                  <ng-template #chirld *ngFor="let itemChirld of item; let k = index">
+                <ng-container *ngIf="item.childs">
+                  <ng-container *ngFor="let itemchirld of item.childs; let k = index">
                     <tr>
                       <td class="stt d-flex justify-content-around">
                         <div style="width: 40%;">
                           <div class="center-parent">
                             <label class="custom-control custom-checkbox">
-                              <input type="checkbox" class="custom-control-input">
+                              <input type="checkbox" class="custom-control-input" [(ngModel)]="item.checkboxSelected">
                               <span class="custom-control-indicator"></span>
                             </label>
                           </div>
                         </div>
                         <div style="width: 35%;" class="center-parent">
-                          <div>1</div>
+                          <div>{{renderIndex(i, k)}}</div>
                         </div>
                       </td>
-                      <td class="text-center">chirldchirld</td>
-                      <!-- {{item.typeName}} -->
-                      <td class="text-center"></td>
-                      <td class="text-center"></td>
-                      <!-- {{item.document?.name}} -->
-                      <td class="text-center"></td>
-                      <!-- {{item.document?.interviewTime}} -->
+                      <td valign="baseline" [attr.rowspan]="item.childs?.length" *ngIf="k === 0">{{item.typeName}}</td>
+                      <td >{{itemchirld.typeName}}</td>
+                      <td >{{itemchirld.document?.name}}</td>
+                      <td class="text-center">{{itemchirld.document?.interviewTime}}</td>
                       <td class="text-center">
                         <div title="Tải file" (click)="dowloadDocument(item.id)">
                           <a>
@@ -211,25 +195,27 @@
                         </div>
                       </td>
                     </tr>
-                  </ng-template>
-                  <ng-template #document>
+                  </ng-container>
+                </ng-container>
+                <ng-container *ngIf="!item.childs">
+                  <ng-container>
                     <tr>
                       <td class="stt d-flex justify-content-around">
                         <div style="width: 40%;">
                           <div class="center-parent">
                             <label class="custom-control custom-checkbox">
-                              <input type="checkbox" class="custom-control-input">
+                              <input type="checkbox" class="custom-control-input" [(ngModel)]="item.checkboxSelected">
                               <span class="custom-control-indicator"></span>
                             </label>
                           </div>
                         </div>
                         <div style="width: 35%;" class="center-parent">
-                          <div>1</div>
+                          <div>{{renderIndex(i,0)}}</div>
                         </div>
                       </td>
-                      <td class="text-center">{{item.typeName}} documentdocument</td>
-                      <td class="text-center"></td>
-                      <td class="text-center">{{item.document?.name}}</td>
+                      <td >{{item.typeName}}</td>
+                      <td ></td>
+                      <td >{{item.document?.name}}</td>
                       <td class="text-center">{{item.document?.interviewTime}}</td>
                       <td class="text-center">
                         <div title="Tải file" (click)="dowloadDocument(item.id)">
@@ -239,13 +225,15 @@
                         </div>
                       </td>
                     </tr>
-                  </ng-template>
+                  </ng-container>
                 </ng-container>
               </ng-container>
             </tbody>
           </table>
+          <div *ngIf="!pagedResult || pagedResult.length === 0" class="center-parent">Không có dữ liệu</div>
         </div>
       </div>
     </div>
   </div>
 </div>
+<ngx-spinner bdColor="rgba(51, 51, 51, 0.7)" size="medium" color="#fff" type="ball-clip-rotate-multiple"></ngx-spinner>

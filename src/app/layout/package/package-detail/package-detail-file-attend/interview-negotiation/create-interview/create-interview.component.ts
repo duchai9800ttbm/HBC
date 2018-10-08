@@ -189,8 +189,6 @@ export class CreateInterviewComponent implements OnInit {
   }
 
   onSelectAll(value: boolean) {
-    console.log('value', value);
-    // this.pagedResult.items.forEach(x => (x['checkboxSelected'] = value));
     this.pagedResult.items.forEach( item => item['checkboxSelected'] = value);
   }
 

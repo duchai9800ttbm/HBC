@@ -1,4 +1,4 @@
-<form [formGroup]="createFormReport">
+<!-- <form [formGroup]="createFormReport">
   <div>
     <div class="title-detail center-parent">
       <div class="col-md-1"></div>
@@ -52,7 +52,6 @@
         Version
       </div>
       <div class="set-width-value-field">
-        <!-- <input class="form-control" type="text"> -->
         <div class="form-control">1</div>
       </div>
     </div>
@@ -79,4 +78,105 @@
     </div>
 
   </div>
-</form>
+</form> -->
+
+
+<div class="example-wrapper">
+      <form [formGroup]="createFormReport">
+          <div class="title-detail center-parent">
+              <div style="width: 20%;">
+              </div>
+              <div style="width: 80%;">
+                  <div class="media-header center-parent">
+                      <h3 class="d-inline mb-0 text-dark bold-title">UPLOAD BIÊN BẢN PHỎNG VẤN</h3>
+                  </div>
+              </div>
+              <div style="width: 20%;" class="d-flex justify-content-end">
+                  <div>
+                      <div>
+                          <img (click)="closePopup()" width="15" height="15" class="cursor-pointer not-outline"
+                              src="assets\images\close.png">
+                      </div>
+                  </div>
+              </div>
+          </div>
+          <hr>
+          <div class="d-flex">
+              <div class="w-100  mr-auto">
+                  <div>
+                      <div class="body cus-header" id="info-main">
+                          <div class="w-100 center-parent" *ngIf="errorMess" class="alert alert-danger" role="alert">
+                              <span> {{errorMess}}</span>
+                          </div>
+                          <table class="w-100 table">
+
+                              <tbody>
+                                  <tr>
+                                      <td class="w-30 label no-boder bold-title">Đường dẫn link</td>
+                                      <td class="w-70 no-boder">
+                                          <input (change)="inputChange()" class="w-100" class="form-control"
+                                             tabindex="1" type="text" formControlName="link">
+                                      </td>
+                                  </tr>
+                                  <tr>
+                                      <td class="w-30 label no-boder bold-title">Hoặc</td>
+                                      <td class="no-boder d-flex justify-content-between">
+                                          <div class="fileUpload">
+                                              <button class="btn btn-primary" [disabled]="createFormReport.get('link').value">
+                                                  <i class="fa fa-cloud-upload" aria-hidden="true"></i>&nbsp;&nbsp;
+                                                  Chọn File</button>
+                                              <input type="file" class="upload" tabindex="2" 
+                                                  (change)="fileChange($event)" [disabled]="createFormReport.get('link').value"/>
+                                          </div>
+                                          <div style="width: calc(100% - 120px);" class="d-flex justify-content-between">
+                                              <div> <span class="text-truncate">{{file?.name}}</span></div>
+                                              <div *ngIf="file">
+                                                  <button (click)="deleteFileUpload()" class="btn btn-secondary">X</button>
+                                              </div>
+                                          </div>
+                                      </td>
+                                  </tr>
+                                  <tr>
+                                      <td class="w-30 label no-boder bold-title required">Tên</td>
+                                      <td class="w-70 no-boder">
+                                          <input class="w-100" kendoTextBox tabindex="4" type="text" formControlName="documentName" [class.is-invalid]="formErrors.documentName">
+                                          <div class="invalid-feedback" *ngIf="formErrors.documentName">
+                                              {{formErrors.documentName}}
+                                          </div>
+                                      </td>
+                                  </tr>
+                                  <tr>
+                                      <td class="w-30 label no-boder bold-title">Phiên bản</td>
+                                      <td class="w-70 no-boder">
+                                          <input appInputNumberInteger class="w-100" kendoTextBox tabindex="5" type="text" formControlName="version">
+                                      </td>
+                                  </tr>
+                                  <tr>
+                                      <td class="w-30 label no-boder bold-title">Lần phỏng vấn</td>
+                                      <td class="no-boder d-flex">
+                                          <input appInputNumberInteger class="w-100" kendoTextBox tabindex="6" type="text" formControlName="interviewTimes">
+                                      </td>
+                                  </tr>
+                                  <tr>
+                                      <td class="w-30 label no-boder bold-title">Mô tả/Nội dung cập nhật</td>
+                                      <td class="w-70 no-boder">
+                                          <textarea kendoTextArea tabindex="7" cols="3" rows="3" class="w-100 form-control no-resize-textarea" formControlName="documentDesc"
+                                              ></textarea>
+                                      </td>
+                                  </tr>
+                              </tbody>
+                          </table>
+                      </div>
+
+                  </div>
+                  <div class="action-bar alignment-but center-parent">
+                      <button type="submit" class="btn btn-primary ml-2 cus-but-cs" (click)="Upload()">Upload
+                      </button>
+                      <button class="btn btn-secondary ml-2 cus-but-cs" (click)="closePopup()">Hủy
+                      </button>
+                  </div>
+              </div>
+          </div>
+      </form>
+</div>
+<ngx-spinner bdColor="rgba(51, 51, 51, 0.7)" size="medium" color="#fff" type="ball-clip-rotate-multiple"></ngx-spinner>

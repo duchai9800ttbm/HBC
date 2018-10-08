@@ -42,12 +42,21 @@
             <button class="btn btn-primary ml-2">
                 Tải template
             </button>
-            <button class="btn btn-primary ml-2">
+            <button class="btn btn-primary ml-2" (click)="approvedInterviewPreparation()">
                 Chốt công tác chuẩn bị phỏng vấn
             </button>
-            <button class="btn btn-primary ml-2">
+            <button class="btn btn-primary ml-2" (click)="refreshPrepareInterview()">
                 <i class="fa fa-refresh" aria-hidden="true"></i>
             </button>
+        </div>
+    </div>
+</div>
+<div class="mr-auto d-flex align-items-end list-package mb-2 d-flex justify-content-between" *ngIf="currentStatusInterview === 3">
+    <div class="d-flex justify-content-start pl-5">
+        <div class="rule mr-2">
+        </div>
+        <div class="center-parent  mr-4 title-status--size">
+            <div> Đã chốt công tác chuẩn bị phỏng vấn</div>
         </div>
     </div>
 </div>
@@ -90,3 +99,4 @@
         <router-outlet></router-outlet>
     </div>
 </div>
+<ngx-spinner bdColor="rgba(51, 51, 51, 0.7)" size="medium" color="#fff" type="ball-clip-rotate-multiple"></ngx-spinner>

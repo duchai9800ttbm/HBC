@@ -11,6 +11,8 @@ import { CustomerModel } from '../../../../../shared/models/interview-invitation
 import { InterviewNoticeComponent } from './create-interview/interview-notice/interview-notice.component';
 import { BehaviorSubject } from '../../../../../../../node_modules/rxjs';
 import { ActivatedRoute, Router, NavigationEnd } from '../../../../../../../node_modules/@angular/router';
+import { NgxSpinnerService } from '../../../../../../../node_modules/ngx-spinner';
+import { AlertService } from '../../../../../shared/services';
 
 
 @Component({
@@ -37,6 +39,8 @@ export class InterviewNegotiationComponent implements OnInit {
     private interviewInvitationService: InterviewInvitationService,
     private activeRouter: ActivatedRoute,
     private router: Router,
+    private spinner: NgxSpinnerService,
+    private alertService: AlertService,
   ) {
   }
 
@@ -161,5 +165,24 @@ export class InterviewNegotiationComponent implements OnInit {
 
   refreshCreateInterview() {
     this.interviewInvitationService.chagneRefeshInterviewInvitationList(true);
+  }
+
+  // =============================
+  // PrepareInterview
+  refreshPrepareInterview() {
+    this.interviewInvitationService.chagneRefeshPrepareInterview(true);
+  }
+
+  approvedInterviewPreparation() {
+    console.log('approvedInterviewPreparation');
+    this.spinner.show();
+    this.interviewInvitationService.approvedinterviewpreparation(this.packageId).subscribe(response => {
+      this.spinner.hide();
+      this.alertService.success('Chốt công tác chuẩn bị phỏng vấn thành công!');
+    },
+      err => {
+        this.spinner.hide();
+        this.alertService.error('Chốt công tác chuẩn bị phỏng vấn thất bại!');
+      });
   }
 }

@@ -14,10 +14,14 @@ import * as FileSaver from 'file-saver';
 import { ApprovedDossiersList } from '../models/interview-invitation/approved-dossiers-list.model';
 @Injectable()
 export class InterviewInvitationService {
+  // Create
   static interviewInvitationList = new Subject<any>();
   static keySearchInterviewInvitation = new BehaviorSubject<string>('');
   static keySearchNew = new Subject<string>();
   static refeshCreateInterviewInvitation = new BehaviorSubject<boolean>(false);
+  // Prepare
+  static refeshPrepareInterviewInvitation = new BehaviorSubject<boolean>(false);
+
   currentStatusInterview: Subject<number> = new Subject<number>();
   interviewNotification;
   // map theo model danh sách biên bản phỏng vấn
@@ -143,6 +147,16 @@ export class InterviewInvitationService {
   // Return currentStatusInterview
   getUrlChirld() {
     return this.currentStatusInterview;
+  }
+  // =============================
+  // Prepare Interview Invitation
+  // refesh interview invitation list
+  chagneRefeshPrepareInterview(displayAlert) {
+    InterviewInvitationService.refeshPrepareInterviewInvitation.next(displayAlert);
+  }
+  // Observable refesh interview invitation list
+  watchRefeshPrepareInterview(): Observable<boolean> {
+    return InterviewInvitationService.refeshPrepareInterviewInvitation;
   }
   // map theo model danh sách lời lời phỏng vấn
   toInterviewInvitationList(result: any): InterviewInvitationList {
@@ -298,15 +312,26 @@ export class InterviewInvitationService {
         name: result.document.name,
         interviewTime: result.document.interviewTime,
       } : null,
-      childs: result.childs ? {
-        typeName: result.childs.typeName,
-        document: result.childs.document ? {
-          type: result.childs.document.type,
-          id: result.childs.document.id,
-          name: result.childs.document.name,
-          interviewTime: result.childs.document.interviewTime,
-        } : null,
-      } : null,
+      childs:
+        result.childs ? result.childs.map(itemChirld => {
+          return {
+            typeName: itemChirld.typeName,
+            document: itemChirld.document ? {
+              type: itemChirld.document.type,
+              id: itemChirld.document.id,
+              name: itemChirld.document.name,
+              interviewTime: itemChirld.document.interviewTime,
+            } : null,
+          };
+        }) : null,
+      // result.childs{
+      //   typeName: result.childs.typeName,
+      //   document: result.childs.document ? {
+      //     type: result.childs.document.type,
+      //     id: result.childs.document.id,
+      //     name: result.childs.document.name,
+      //     interviewTime: result.childs.document.interviewTime,
+      //   } : null,
     };
   }
   // Danh sách hồ sơ dự thầu đã phê duyệt search
@@ -318,6 +343,11 @@ export class InterviewInvitationService {
         this.toApprovedDossiersList
       );
     });
+  }
+  // Chốt công tác chuẩn bị phỏng vấn
+  approvedinterviewpreparation(bidOpportunityId: number) {
+    const url = `bidopportunity/hsdt/${bidOpportunityId}/approvedinterviewpreparation`;
+    return this.apiService.post(url);
   }
 
   // Tải lên biên bản phỏng vấn

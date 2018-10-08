@@ -14,5 +14,5 @@ export class ApprovedDossiersList {
             name: string;
             interviewTime: number;
         }
-    };
+    }[];
 }
