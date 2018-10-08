@@ -13,7 +13,7 @@ export class DienGiaiDieuKienHopDong {
     loaiHopDong: {
         name: string,
         desc: string;
-    }[];
+    };
     dieuKienTheoHSMT: DieuKienHopDong;
     dieuKienTheoHBC: DieuKienHopDong;
 }

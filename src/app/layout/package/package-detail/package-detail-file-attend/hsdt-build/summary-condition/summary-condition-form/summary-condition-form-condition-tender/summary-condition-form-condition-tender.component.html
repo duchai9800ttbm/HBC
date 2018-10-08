@@ -1,4 +1,4 @@
-<form [formGroup]="conditionTenderForm" *ngIf="conditionTenderForm">
+<form [formGroup]="dieuKienHSMTForm">
     <div class="p-3">
         <h5 class="text-uppercase">X. điều kiện hồ sơ mời thầu (tender conditions)</h5>
         <div class="row mt-3">
@@ -7,13 +7,30 @@
         <div class="row mt-3">
             <div class="col-md-3">Giá trị</div>
             <div class="col-md-8">
-                <input formControlName="tenderGuaranteeValue" class="form-control">
+                <div class="row">
+                    <div class="col-md-6" formGroupName="theoHSMT">
+                        <input formControlName="giaTri" class="form-control">
+
+                    </div>
+                    <div class="col-md-6" formGroupName="theoHBC">
+                        <input formControlName="giaTri" class="form-control">
+                    </div>
+                </div>
             </div>
         </div>
         <div class="row mt-3">
             <div class="col-md-3">Hiệu lực</div>
             <div class="col-md-8">
-                <kendo-datepicker formControlName="tenderGuaranteeEfficiency" class="form-control" ></kendo-datepicker>
+                <div class="row">
+                    <div class="col-md-6" formGroupName="theoHSMT">
+                        <input formControlName="hieuLuc" class="form-control">
+
+                    </div>
+                    <div class="col-md-6" formGroupName="theoHBC">
+                        <input formControlName="hieuLuc" class="form-control">
+
+                    </div>
+                </div>
             </div>
         </div>
         <div class="row mt-3">
@@ -22,7 +39,16 @@
         <div class="row mt-3">
             <div class="col-md-3">Thời gian</div>
             <div class="col-md-8">
-                <kendo-datepicker formControlName="tenderEfficiency" class="form-control" ></kendo-datepicker>
+                <div class="row">
+                    <div class="col-md-6" formGroupName="theoHSMT">
+                        <input formControlName="hieuLucHoSo" class="form-control">
+
+                    </div>
+                    <div class="col-md-6" formGroupName="theoHBC">
+                        <input formControlName="hieuLucHoSo" class="form-control">
+
+                    </div>
+                </div>
             </div>
         </div>
         <div class="row mt-3">
@@ -31,56 +57,116 @@
         <div class="row mt-3">
             <div class="col-md-3">Ngày khởi công</div>
             <div class="col-md-8">
-                <kendo-datepicker formControlName="progressStartDate" class="form-control" ></kendo-datepicker>
+                <div class="row">
+                    <div class="col-md-6" formGroupName="theoHSMT">
+                        <kendo-datepicker formControlName="ngayKhoiCong" class="form-control"></kendo-datepicker>
+
+                    </div>
+                    <!-- <div class="col-md-6"  formGroupName="theoHBC">
+                        <kendo-datepicker formControlName="ngayKhoiCong" class="form-control"></kendo-datepicker>
+
+                    </div> -->
+                </div>
             </div>
         </div>
         <div class="row mt-3">
             <div class="col-md-3">Thời gian hoàn thành (ngày)</div>
             <div class="col-md-8">
-                <input type="number" formControlName="progressComletionDate" class="form-control" >
+                <div class="row">
+                    <div class="col-md-6" formGroupName="theoHSMT">
+                        <input type="number" formControlName="thoiGianHoanThanh" class="form-control">
+
+                    </div>
+                    <div class="col-md-6" formGroupName="theoHBC">
+                        <input type="number" formControlName="thoiGianHoanThanh" class="form-control">
+
+                    </div>
+                </div>
             </div>
         </div>
         <div class="row mt-3">
             <div class="col-md-3"><strong><u>4. Các loại thuế</u></strong></div>
         </div>
         <div class="row mt-3">
-            <div class="col-md-3">Chọn loại thuế</div>
+            <div class="col-md-3">Chọn loại thuế
+                <i (click)="addFormArrayControl('cacLoaiThue')" class="fa fa-plus-square-o ml-3 pointer" aria-hidden="true"></i>
+
+            </div>
             <div class="col-md-8">
-                <span class="custom-dropdown w-100">
-                    <select class="form-control">
-                        <option [ngValue]="null">--Chọn--</option>
-                    </select>
-                </span>
+                <div class="row">
+                    <div class="col-md-6" formGroupName="theoHSMT">
+                        <ng-container formArrayName="cacLoaiThue">
+                            <ng-container *ngFor="let fControl of cacLoaiThueHSMTFA.controls; let i = index"
+                                [formGroupName]="i">
+                                <div class="row mb-2">
+                                    <div class="col-md-10">
+                                        <input formControlName="thue" class="form-control">
+
+                                    </div>
+                                    <div class="col-md-2">
+                                        <i *ngIf="i !== 0" (click)="removeFormArrayControl('cacLoaiThue', i)" class="fa fa-times-circle pointer times-color"
+                                            aria-hidden="true"></i>
+                                    </div>
+
+                                </div>
+
+
+                            </ng-container>
+
+                        </ng-container>
+
+                    </div>
+                    <div class="col-md-6">
+                        <!-- <span class="custom-dropdown w-100">
+                            <select class="form-control">
+                                <option [ngValue]="null">--Chọn--</option>
+                            </select>
+                        </span> -->
+                    </div>
+                </div>
+
             </div>
         </div>
-        <div class="row mt-3">
-            <div class="col-md-3">Danh sách</div>
-            <div class="col-md-8">
-                <textarea class="form-control"></textarea>
-            </div>
-        </div>
+
+
         <div class="row mt-3">
             <div class="col-md-3"><strong><u>5. Đồng tiền</u></strong></div>
         </div>
         <div class="row mt-3">
             <div class="col-md-3">Đơn vị tiền tệ</div>
             <div class="col-md-8">
-                <span class="custom-dropdown w-100">
-                    <select class="form-control">
-                        <option [ngValue]="null">--Chọn--</option>
-                    </select>
-                </span>
+                <div class="row">
+                    <div class="col-md-6" formGroupName="theoHSMT">
+                        <span class="custom-dropdown w-100">
+                            <select class="form-control" formControlName="donViTienTe">
+                                <option [ngValue]="null">--Chọn--</option>
+                                <option [value]="'VNĐ'">VNĐ</option>
+                                <option [value]="'USD'">USD</option>
+                            </select>
+                        </span>
+                    </div>
+                    <div class="col-md-6" formGroupName="theoHBC">
+                        <span class="custom-dropdown w-100">
+                            <select class="form-control" formControlName="donViTienTe">
+                                <option [ngValue]="null">--Chọn--</option>
+                                <option [value]="'VNĐ'">VNĐ</option>
+                                <option [value]="'USD'">USD</option>
+                            </select>
+                        </span>
+                    </div>
+                </div>
+
             </div>
         </div>
         <div class="text-center mt-4">
-                <button class="btn border" routerLink="../condition-contract">
-                    <i class="fa font-size-3 mr-3 fa-angle-left" aria-hidden="true"></i>
-                    Trở về
-                </button>
-                <button class="btn btn-primary ml-2" routerLink="../special-requirement">
-                    Tiếp
-                    <i class="fa font-size-3 ml-3 fa-angle-right" aria-hidden="true"></i>
-                </button>
-            </div>
+            <button class="btn border" routerLink="../condition-contract">
+                <i class="fa font-size-3 mr-3 fa-angle-left" aria-hidden="true"></i>
+                Trở về
+            </button>
+            <button class="btn btn-primary ml-2" routerLink="../special-requirement">
+                Tiếp
+                <i class="fa font-size-3 ml-3 fa-angle-right" aria-hidden="true"></i>
+            </button>
+        </div>
     </div>
 </form>

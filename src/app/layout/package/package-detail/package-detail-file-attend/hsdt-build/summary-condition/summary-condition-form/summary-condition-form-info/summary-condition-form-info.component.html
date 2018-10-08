@@ -16,36 +16,63 @@
     </div>
     <div class="row mt-3">
         <div class="col-md-2">1. Hình phối cảnh</div>
-        <div class="col-md-6 grid-square-4">
-            <div appSquareBox class="rounded d-flex justify-content-center align-items-center flex-column border-dashed"><i
-                    class="fa fa-plus" aria-hidden="true"></i>
-                <div>Image</div>
+        <div class="col-md-6">
+            <div class="image-demo-img">
+                <input type="file" accept="image/*" multiple #uploadHinhAnhPhoiCanh (change)="uploadStructureImage($event)">
+                <div class="display-img" *ngFor="let url of hinhAnhPhoiCanhList" (click)="viewFullScreenImage(hinhAnhPhoiCanhList)">
+                    <img [src]="url.largeSizeUrl">
+                    <div class="toppp" [ngClass]="{'d-none': viewMode}" (click)="deleteStructureImage(url)">
+                        <i class="fa fa-times delete-icon" aria-hidden="true"></i>
+                    </div>
+                </div>
+                <div class="perspective-image" [ngClass]="{'d-none': viewMode}" (click)="uploadHinhAnhPhoiCanh.click()"
+                    tabindex="13">
+                    <i class="fa fa-plus" aria-hidden="true"></i>
+                    <p>Image</p>
+                </div>
             </div>
         </div>
     </div>
     <div class="row mt-3">
         <div class="col-md-2">2. Bản vẽ master plan</div>
-        <div class="col-md-6 grid-square-4">
-            <div appSquareBox class="rounded d-flex justify-content-center align-items-center flex-column border-dashed"><i
-                    class="fa fa-plus" aria-hidden="true"></i>
-                <div>Image</div>
+        <div class="col-md-6">
+
+
+            <div class="image-demo-img">
+                <input type="file" accept="image/*" multiple #uploadBanVeMaster (change)="uploadBanVe($event)">
+                <div class="display-img" *ngFor="let url of banVeMasterPlanList" (click)="viewFullScreenImage(banVeMasterPlanList)">
+                    <img [src]="url.largeSizeUrl">
+                    <div class="toppp" [ngClass]="{'d-none': viewMode}" (click)="deleteBanVe(url)">
+                        <i class="fa fa-times delete-icon" aria-hidden="true"></i>
+                    </div>
+                </div>
+                <div class="perspective-image" [ngClass]="{'d-none': viewMode}" (click)="uploadBanVeMaster.click()"
+                    tabindex="13">
+                    <i class="fa fa-plus" aria-hidden="true"></i>
+                    <p>Image</p>
+                </div>
             </div>
         </div>
     </div>
     <div class="row mt-3">
         <div class="col-md-2">3. Thông tin dự án/ gói thầu</div>
         <div class="col-md-6">
-            <textarea class="form-control" placeholder="Diễn giải thông tin tổng quan dự án" formControlName="thongTinDuAn"></textarea>
+            <textarea class="form-control" placeholder="Diễn giải thông tin tổng quan dự án" formControlName="dienGiaiThongTinDuAn"></textarea>
         </div>
     </div>
     <div class="text-center mt-4">
-            <button class="btn border">
-                <i class="fa font-size-3 mr-3 fa-angle-left" aria-hidden="true"></i>
-                Trở về
-            </button>
-            <button class="btn btn-primary ml-2" routerLink="../stackholder">
-                Tiếp
-                <i class="fa font-size-3 ml-3 fa-angle-right" aria-hidden="true"></i>
-            </button>
-        </div>
+        <button class="btn border">
+            <i class="fa font-size-3 mr-3 fa-angle-left" aria-hidden="true"></i>
+            Trở về
+        </button>
+        <button class="btn btn-primary ml-2" routerLink="../stackholder">
+            Tiếp
+            <i class="fa font-size-3 ml-3 fa-angle-right" aria-hidden="true"></i>
+        </button>
+    </div>
 </form>
+
+
+
+<app-image-carousel class="d-flex justify-content-center align-items-center" *ngIf="showPopupViewImage"
+    [(imageUrlArray)]="imageUrlArray" (closed)="closeView()"></app-image-carousel>
