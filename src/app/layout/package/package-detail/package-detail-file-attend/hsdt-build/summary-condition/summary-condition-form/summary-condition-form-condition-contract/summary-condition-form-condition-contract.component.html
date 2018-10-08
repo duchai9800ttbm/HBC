@@ -1,215 +1,551 @@
-<div>
-    <div class="p-3">
-        <h5 class="text-uppercase">IX. điều kiện hợp đồng (conditions of contract)</h5>
-        <div class="row mt-3">
-            <div class="col-md-3">
-                <strong>1. Loại hợp đồng</strong>
-            </div>
-            <div class="col-md-8">
-                <span class="custom-dropdown w-100">
-                    <select class="form-control">
-                        <option [ngValue]="null">--Chọn--</option>
-                    </select>
-                </span>
-            </div>
-        </div>
-        <div class="row mt-3">
-            <div class="col-md-3 pl-2r">Ghi chú</div>
-            <div class="col-md-8">
-                <textarea class="form-control"></textarea>
-            </div>
-        </div>
-        <div formGroupName="contractCondition">
-            <div class="row mt-3">
-                <div class="col-md-3">
-                    <strong>2. Điều kiện hợp đồng</strong>
-                </div>
-            </div>
-            <div class="row mt-3">
-                <div class="col-md-3 pl-2r">
-                    <strong>
-                        <u>2.1 Bảo lãnh thực hiện HĐ</u>
-                    </strong>
-                </div>
-            </div>
-            <div class="row mt-3">
-                <div class="col-md-3 pl-2r">Phần trăm %</div>
-                <div class="col-md-8">
-                    <input type="number" class="form-control">
-                </div>
-            </div>
-            <div class="row mt-3">
-                <div class="col-md-3 pl-2r">Hiệu lực bảo lãnh</div>
-                <div class="col-md-8">
-                    <kendo-datepicker class="form-control"></kendo-datepicker>
-                </div>
-            </div>
-            <div class="row mt-3">
-                <div class="col-md-3 pl-2r">
-                    <strong>
-                        <u>2.2 Bảo lãnh tạm ứng</u>
-                    </strong>
-                </div>
-            </div>
-            <div class="row mt-3">
-                <div class="col-md-3 pl-2r">Phần trăm %</div>
-                <div class="col-md-8">
-                    <input type="number" class="form-control">
-                </div>
-            </div>
-            <div class="row mt-3">
-                <div class="col-md-3 pl-2r">Hiệu lực bảo lãnh</div>
-                <div class="col-md-8">
-                    <kendo-datepicker class="form-control"></kendo-datepicker>
-                </div>
-            </div>
-            <div class="row mt-3">
-                <div class="col-md-3 pl-2r">
-                    <strong>
-                        <u>2.3 Thanh toán</u>
-                    </strong>
-                </div>
-            </div>
-            <div class="row mt-3">
-                <div class="col-md-3 pl-2r">Loại thanh toán</div>
-                <div class="col-md-8">
-                    <span class="custom-dropdown w-100">
-                        <select class="form-control">
-                            <option [ngValue]="null">--Chọn--</option>
-                        </select>
-                    </span>
-                </div>
-            </div>
-            <div class="row mt-3">
-                <div class="col-md-3 pl-2r">Thời gian thanh toán</div>
-                <div class="col-md-8">
-                    <kendo-datepicker class="form-control"></kendo-datepicker>
-                </div>
-            </div>
-            <div class="row mt-3">
-                <div class="col-md-3 pl-2r">Thanh toán khi tập kết máy móc/ vật tư (Material on site)</div>
-                <div class="col-md-8">
-                    <input type="text" class="form-control">
-                </div>
-            </div>
-            <div class="row mt-3">
-                <div class="col-md-3 pl-2r">
-                    <strong>
-                        <u>2.4 Tiền giữ lại</u>
-                    </strong>
-                </div>
-            </div>
-            <div class="row mt-3">
-                <div class="col-md-3 pl-2r">Phần trăm %</div>
-                <div class="col-md-8">
-                    <input type="number" class="form-control">
-                </div>
-            </div>
-            <div class="row mt-3">
-                <div class="col-md-3 pl-2r">Giới hạn tiền giữ lại</div>
-                <div class="col-md-8">
-                    <input type="number" class="form-control">
-                </div>
-            </div>
-            <div class="row mt-3">
-                <div class="col-md-3 pl-2r">Thanh toán tiền giữ lại</div>
-                <div class="col-md-8">
-                    <input type="number" class="form-control">
-                </div>
-            </div>
-            <div class="row mt-3">
-                <div class="col-md-3 pl-2r">
-                    <strong>
-                        <u>2.5 Phạt trễ tiến độ</u>
-                    </strong>
-                </div>
-            </div>
-            <div class="row mt-3">
-                <div class="col-md-3 pl-2r">Phần trăm %</div>
-                <div class="col-md-8">
-                    <input type="number" class="form-control">
-                </div>
-            </div>
-            <div class="row mt-3">
-                <div class="col-md-3 pl-2r">Giới hạn phạt trễ tiến độ</div>
-                <div class="col-md-8">
-                    <input type="number" class="form-control">
-                </div>
-            </div>
-            <div class="row mt-3">
-                <div class="col-md-3 pl-2r">
-                    <strong>
-                        <u>2.6 Thời hạn bảo hành (Defect Notification Period)</u>
-                    </strong>
-                </div>
-            </div>
-            <div class="row mt-3">
-                <div class="col-md-3 pl-2r">Thời gian</div>
-                <div class="col-md-8">
-                    <kendo-datepicker class="form-control"></kendo-datepicker>
-                </div>
-            </div>
-            <div class="row mt-3">
-                <div class="col-md-3 pl-2r">Giới hạn phạt trễ tiến độ</div>
-                <div class="col-md-8">
-                    <input type="number" class="form-control">
-                </div>
-            </div>
-            <div class="row mt-3">
-                <div class="col-md-3 pl-2r">
-                    <strong>
-                        <u>2.7 Bảo hiểm</u>
-                    </strong>
-                </div>
-            </div>
-            <div formArrayName="insurances">
-                <div class="row mt-3">
-                    <div class="col-md-3 text-nowrap pl-2r">
-                        BH máy móc thiết bị nhà thầu
-                        <i class="fa fa-plus-square-o ml-3 pointer" aria-hidden="true" (click)="addFormArrayControl('insurances')"></i>
+<form [formGroup]="conditionContractForm">
+
+    <div>
+        <div class="p-3">
+            <h5 class="text-uppercase">IX. điều kiện hợp đồng (conditions of contract)</h5>
+            <div formGroupName="loaiHopDong">
+                <div class="row col-md-12 mt-3">
+                    <div class="col-md-3">
+                        <strong>1. Loại hợp đồng</strong>
                     </div>
-                    <div class="col-md-8 custom-col-8">
+                    <div class="col-md-8">
                         <span class="custom-dropdown w-100">
-                            <select class="form-control">
+                            <select class="form-control" formControlName="name">
                                 <option [ngValue]="null">--Chọn--</option>
+                                <option [value]="'Chính thức'">Chính thức</option>
+                                <option [value]="'Partime'">Partime</option>
+
                             </select>
                         </span>
                     </div>
-                    <div class="col-md-1 pl-0" (click)="removeFormArrayControl('insurances', i)">
-                        <i class="fa fa-times-circle pointer" style="color: #c0c0c0; font-size: 1.2rem" aria-hidden="true"></i>
+                </div>
+                <div class="row col-md-12 mt-3">
+                    <div class="col-md-3 pl-2r">Ghi chú</div>
+                    <div class="col-md-8">
+                        <textarea class="form-control" formControlName="desc"></textarea>
                     </div>
                 </div>
             </div>
-            <div class="row mt-3">
-                <div class="col-md-3 pl-2r">BH con người của nhà thầu</div>
-                <div class="col-md-8">
-                    <span class="custom-dropdown w-100">
-                        <select class="form-control">
-                            <option [ngValue]="null">--Chọn--</option>
-                        </select>
-                    </span>
+
+            <div>
+                <div class="row col-md-12 mt-3">
+                    <div class="col-md-3">
+                        <strong>2. Điều kiện hợp đồng</strong>
+                    </div>
                 </div>
-            </div>
-            <div class="row mt-3">
-                <div class="col-md-3 pl-2r">BH công trình và BH bên thứ ba</div>
-                <div class="col-md-8">
-                    <span class="custom-dropdown w-100">
-                        <select class="form-control">
-                            <option [ngValue]="null">--Chọn--</option>
-                        </select>
-                    </span>
+
+                <div class="row col-md-12 mt-3">
+                    <div class="col-md-3 pl-2r">
+                        <strong>
+                            <u class="hidden">2.1 Bảo lãnh thực hiện HĐ</u>
+                        </strong>
+                    </div>
                 </div>
+                <div class="row col-md-12">
+                    <div class="row col-md-12 mt-3 col-md-12">
+                        <div class="row col-md-12 col-md-12">
+                            <div class="col-md-6" formGroupName="dieuKienTheoHSMT">
+                                <div formGroupName="baoLanhThucHien" class="row col-md-12">
+                                    <div class="col-md-3 pl-2r">Phần trăm %</div>
+                                    <div class="col-md-8">
+                                        <input formControlName="phanTram" class="form-control">
+                                    </div>
+                                </div>
+
+                            </div>
+                            <div class="col-md-6" formGroupName="dieuKienTheoHBC">
+                                <div formGroupName="baoLanhThucHien" class="row col-md-12">
+                                    <div class="col-md-3 pl-2r">Phần trăm %</div>
+                                    <div class="col-md-8">
+                                        <input formControlName="phanTram" class="form-control">
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="row col-md-12 mt-3 col-md-12">
+                        <div class="row col-md-12 col-md-12">
+                            <div class="col-md-6" formGroupName="dieuKienTheoHSMT">
+                                <div formGroupName="baoLanhThucHien" class="row col-md-12">
+                                    <div class="col-md-3 pl-2r">Hiệu lực bảo lãnh</div>
+                                    <div class="col-md-8">
+                                        <input formControlName="hieuLuc" class="form-control">
+                                    </div>
+                                </div>
+
+                            </div>
+                            <div class="col-md-6" formGroupName="dieuKienTheoHBC">
+                                <div formGroupName="baoLanhThucHien" class="row col-md-12">
+                                    <div class="col-md-3 pl-2r">Hiệu lực bảo lãnh</div>
+                                    <div class="col-md-8">
+                                        <input formControlName="hieuLuc" class="form-control">
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row col-md-12 mt-3">
+                    <div class="col-md-3 pl-2r">
+                        <strong>
+                            <u>2.2 Bảo lãnh tạm ứng</u>
+                        </strong>
+                    </div>
+                </div>
+
+                <div class="row col-md-12">
+                    <div class="row col-md-12 mt-3">
+                        <div class="row col-md-12">
+                            <div class="col-md-6" formGroupName="dieuKienTheoHSMT">
+                                <div formGroupName="baoLanhTamUng" class="row col-md-12">
+                                    <div class="col-md-3 pl-2r">Phần trăm %</div>
+                                    <div class="col-md-8">
+                                        <input formControlName="phanTram" class="form-control">
+                                    </div>
+                                </div>
+
+                            </div>
+                            <div class="col-md-6" formGroupName="dieuKienTheoHBC">
+                                <div formGroupName="baoLanhTamUng" class="row col-md-12">
+                                    <div class="col-md-3 pl-2r">Phần trăm %</div>
+                                    <div class="col-md-8">
+                                        <input formControlName="phanTram" class="form-control">
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="row col-md-12 mt-3">
+                        <div class="row col-md-12">
+                            <div class="col-md-6" formGroupName="dieuKienTheoHSMT">
+                                <div formGroupName="baoLanhTamUng" class="row col-md-12">
+                                    <div class="col-md-3 pl-2r">Hiệu lực bảo lãnh</div>
+                                    <div class="col-md-8">
+                                        <input formControlName="hieuLuc" class="form-control">
+                                    </div>
+                                </div>
+
+                            </div>
+                            <div class="col-md-6" formGroupName="dieuKienTheoHBC">
+                                <div formGroupName="baoLanhTamUng" class="row col-md-12">
+                                    <div class="col-md-3 pl-2r">Hiệu lực bảo lãnh</div>
+                                    <div class="col-md-8">
+                                        <input formControlName="hieuLuc" class="form-control">
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- <div class="row col-md-12 mt-3">
+                            <div class="col-md-3 pl-2r">Phần trăm %</div>
+                            <div class="col-md-8">
+                                <input type="number" class="form-control">
+                            </div>
+                        </div>
+                        <div class="row col-md-12 mt-3">
+                            <div class="col-md-3 pl-2r">Hiệu lực bảo lãnh</div>
+                            <div class="col-md-8">
+                                <input type="number" class="form-control">
+                            </div> -->
+                <div class="row col-md-12 mt-3">
+                    <div class="col-md-3 pl-2r">
+                        <strong>
+                            <u>2.3 Thanh toán</u>
+                        </strong>
+                    </div>
+                </div>
+
+
+                <div class="row col-md-12">
+                    <div class="row col-md-12 mt-3">
+                        <div class="row col-md-12">
+                            <div class="col-md-6" formGroupName="dieuKienTheoHSMT">
+                                <div formGroupName="thanhToan" class="row col-md-12">
+                                    <div class="col-md-3 pl-2r">Loại thanh toán</div>
+                                    <div class="col-md-8">
+                                        <span class="custom-dropdown w-100">
+                                            <select class="form-control" formControlName="loaiThanhToan">
+                                                <option [ngValue]="null">--Chọn--</option>
+                                                <option [value]="'Tiền mặt'">Tiền mặt</option>
+                                                <option [value]="'Chuyển khoản'">Chuyển khoản</option>
+
+                                            </select>
+                                        </span>
+                                    </div>
+                                </div>
+
+                            </div>
+                            <div class="col-md-6" formGroupName="dieuKienTheoHBC">
+                                <div formGroupName="thanhToan" class="row col-md-12">
+                                    <div class="col-md-3 pl-2r">Loại thanh toán</div>
+                                    <div class="col-md-8">
+                                        <span class="custom-dropdown w-100">
+                                            <select class="form-control" formControlName="loaiThanhToan">
+                                                <option [ngValue]="null">--Chọn--</option>
+                                                <option [value]="'Tiền mặt'">Tiền mặt</option>
+                                                <option [value]="'Chuyển khoản'">Chuyển khoản</option>
+
+                                            </select>
+                                        </span>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="row col-md-12 mt-3">
+                        <div class="row col-md-12">
+                            <div class="col-md-6" formGroupName="dieuKienTheoHSMT">
+                                <div formGroupName="thanhToan" class="row col-md-12">
+                                    <div class="col-md-3 pl-2r">Thời gian thanh toán</div>
+                                    <div class="col-md-8">
+                                        <input formControlName="thoiGianThanhToan" class="form-control">
+                                    </div>
+                                </div>
+
+                            </div>
+                            <div class="col-md-6" formGroupName="dieuKienTheoHBC">
+                                <div formGroupName="thanhToan" class="row col-md-12">
+                                    <div class="col-md-3 pl-2r">Thời gian thanh toán</div>
+                                    <div class="col-md-8">
+                                        <input formControlName="thoiGianThanhToan" class="form-control">
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row col-md-12 mt-3">
+                        <div class="row col-md-12">
+                            <div class="col-md-6" formGroupName="dieuKienTheoHSMT">
+                                <div formGroupName="thanhToan" class="row col-md-12">
+                                    <div class="col-md-3 pl-2r">Thanh toán khi tập kết máy móc/ vật tư (Material on
+                                        site)</div>
+                                    <div class="col-md-8">
+                                        <input formControlName="thanhToanKhiTapKet" class="form-control">
+                                    </div>
+                                </div>
+
+                            </div>
+                            <div class="col-md-6" formGroupName="dieuKienTheoHBC">
+                                <div formGroupName="thanhToan" class="row col-md-12">
+                                    <div class="col-md-3 pl-2r">Thanh toán khi tập kết máy móc/ vật tư (Material on
+                                        site)</div>
+                                    <div class="col-md-8">
+                                        <input formControlName="thanhToanKhiTapKet" class="form-control">
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row col-md-12 mt-3">
+                    <div class="col-md-3 pl-2r">
+                        <strong>
+                            <u>2.4 Tiền giữ lại</u>
+                        </strong>
+                    </div>
+                </div>
+
+
+
+                <div class="row col-md-12">
+                    <div class="row col-md-12 mt-3">
+                        <div class="row col-md-12">
+                            <div class="col-md-6" formGroupName="dieuKienTheoHSMT">
+                                <div formGroupName="tienGiuLai" class="row col-md-12">
+                                    <div class="col-md-3 pl-2r">Phần trăm %</div>
+                                    <div class="col-md-8">
+                                        <input formControlName="phanTram" class="form-control">
+
+                                    </div>
+                                </div>
+
+                            </div>
+                            <div class="col-md-6" formGroupName="dieuKienTheoHBC">
+                                <div formGroupName="tienGiuLai" class="row col-md-12">
+                                    <div class="col-md-3 pl-2r">Phần trăm %</div>
+                                    <div class="col-md-8">
+                                        <input formControlName="phanTram" class="form-control">
+
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="row col-md-12 mt-3">
+                        <div class="row col-md-12">
+                            <div class="col-md-6" formGroupName="dieuKienTheoHSMT">
+                                <div formGroupName="tienGiuLai" class="row col-md-12">
+                                    <div class="col-md-3 pl-2r">Giới hạn tiền giữ lại</div>
+                                    <div class="col-md-8">
+                                        <input formControlName="gioiHanTienGiuLai" class="form-control">
+                                    </div>
+                                </div>
+
+                            </div>
+                            <div class="col-md-6" formGroupName="dieuKienTheoHBC">
+                                <div formGroupName="tienGiuLai" class="row col-md-12">
+                                    <div class="col-md-3 pl-2r">Giới hạn tiền giữ lại</div>
+                                    <div class="col-md-8">
+                                        <input formControlName="gioiHanTienGiuLai" class="form-control">
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row col-md-12 mt-3">
+                        <div class="row col-md-12">
+                            <div class="col-md-6" formGroupName="dieuKienTheoHSMT">
+                                <div formGroupName="tienGiuLai" class="row col-md-12">
+                                    <div class="col-md-3 pl-2r">Thanh toán tiền giữ lại</div>
+                                    <div class="col-md-8">
+                                        <input formControlName="thanhToanTienGui" class="form-control">
+                                    </div>
+                                </div>
+
+                            </div>
+                            <div class="col-md-6" formGroupName="dieuKienTheoHBC">
+                                <div formGroupName="tienGiuLai" class="row col-md-12">
+                                    <div class="col-md-3 pl-2r">Thanh toán tiền giữ lại</div>
+                                    <div class="col-md-8">
+                                        <input formControlName="thanhToanTienGui" class="form-control">
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="row col-md-12 mt-3">
+                    <div class="col-md-3 pl-2r">
+                        <strong>
+                            <u>2.5 Phạt trễ tiến độ</u>
+                        </strong>
+                    </div>
+                </div>
+
+
+                <div class="row col-md-12">
+                    <div class="row col-md-12 mt-3">
+                        <div class="row col-md-12">
+                            <div class="col-md-6" formGroupName="dieuKienTheoHSMT">
+                                <div formGroupName="phatTreTienDo" class="row col-md-12">
+                                    <div class="col-md-3 pl-2r">Phần trăm %</div>
+                                    <div class="col-md-8">
+                                        <input formControlName="phanTram" class="form-control">
+                                    </div>
+                                </div>
+
+                            </div>
+                            <div class="col-md-6" formGroupName="dieuKienTheoHBC">
+                                <div formGroupName="phatTreTienDo" class="row col-md-12">
+                                    <div class="col-md-3 pl-2r">Phần trăm %</div>
+                                    <div class="col-md-8">
+                                        <input formControlName="phanTram" class="form-control">
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="row col-md-12 mt-3">
+                        <div class="row col-md-12">
+                            <div class="col-md-6" formGroupName="dieuKienTheoHSMT">
+                                <div formGroupName="phatTreTienDo" class="row col-md-12">
+                                    <div class="col-md-3 pl-2r">Giới hạn phạt trễ tiến độ</div>
+                                    <div class="col-md-8">
+                                        <input formControlName="gioiHanPhatTienDo" class="form-control">
+                                    </div>
+                                </div>
+
+                            </div>
+                            <div class="col-md-6" formGroupName="dieuKienTheoHBC">
+                                <div formGroupName="phatTreTienDo" class="row col-md-12">
+                                    <div class="col-md-3 pl-2r">Giới hạn phạt trễ tiến độ</div>
+                                    <div class="col-md-8">
+                                        <input formControlName="gioiHanPhatTienDo" class="form-control">
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="row col-md-12 mt-3">
+                    <div class="col-md-3 pl-2r">
+                        <strong>
+                            <u>2.6 Thời hạn bảo hành (Defect Notification Period)</u>
+                        </strong>
+                    </div>
+                </div>
+
+                <div class="row col-md-12 mt-3">
+                    <div class="row col-md-12">
+                        <div class="row col-md-12">
+                            <div class="col-md-6" formGroupName="dieuKienTheoHSMT">
+                                <div class="row col-md-12">
+                                    <div class="col-md-3 pl-2r">Thời gian</div>
+                                    <div class="col-md-8">
+                                        <input formControlName="thoiGianBaoHanh" class="form-control">
+                                    </div>
+                                </div>
+
+                            </div>
+                            <div class="col-md-6" formGroupName="dieuKienTheoHBC">
+                                <div class="row col-md-12">
+                                    <div class="col-md-3 pl-2r">Thời gian</div>
+                                    <div class="col-md-8">
+                                        <input formControlName="thoiGianBaoHanh" class="form-control">
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row col-md-12 mt-3">
+                    <div class="col-md-3 pl-2r">
+                        <strong>
+                            <u>2.7 Bảo hiểm</u>
+                        </strong>
+                    </div>
+                </div>
+
+
+                <div class="row col-md-12">
+                    <div class="row col-md-12 mt-3">
+                        <div class="row col-md-12">
+                            <div class="col-md-6" formGroupName="dieuKienTheoHSMT">
+                                <div formGroupName="baoHiem" class="row col-md-12">
+                                    <div class="col-md-3 pl-2r">BH máy móc thiết bị nhà thầu</div>
+                                    <div class="col-md-8">
+                                        <ng-container formArrayName="baoHiemMayMoc">
+                                            <ng-container *ngFor="let fControl of baoHiemMayMocHSMTFA.controls; let i = index"
+                                                [formGroupName]="i">
+                                                <input formControlName="baoHiemItem" class="form-control mb-2">
+
+                                            </ng-container>
+                                        </ng-container>
+
+
+                                    </div>
+                                </div>
+
+                            </div>
+                            <div class="col-md-6" formGroupName="dieuKienTheoHBC">
+                                <div formGroupName="baoHiem" class="row col-md-12">
+                                    <div class="col-md-3 pl-2r">BH máy móc thiết bị nhà thầu</div>
+                                    <div class="col-md-8">
+                                        <ng-container formArrayName="baoHiemMayMoc">
+                                            <ng-container *ngFor="let fControl of baoHiemMayMocHBCFA.controls; let i = index"
+                                                [formGroupName]="i">
+                                                <input formControlName="baoHiemItem" class="form-control mb-2">
+
+                                            </ng-container>
+                                        </ng-container>
+
+
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="row col-md-12 mt-3">
+                        <div class="row col-md-12">
+                            <div class="col-md-6" formGroupName="dieuKienTheoHSMT">
+                                <div formGroupName="baoHiem" class="row col-md-12">
+                                    <div class="col-md-3 pl-2r">BH con người của nhà thầu</div>
+                                    <div class="col-md-8">
+                                        <input formControlName="baoHiemConNguoi" class="form-control">
+                                    </div>
+                                </div>
+
+                            </div>
+                            <div class="col-md-6" formGroupName="dieuKienTheoHBC">
+                                <div formGroupName="baoHiem" class="row col-md-12">
+                                    <div class="col-md-3 pl-2r">BH con người của nhà thầu</div>
+                                    <div class="col-md-8">
+                                        <input formControlName="baoHiemConNguoi" class="form-control">
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row col-md-12 mt-3">
+                        <div class="row col-md-12">
+                            <div class="col-md-6" formGroupName="dieuKienTheoHSMT">
+                                <div formGroupName="baoHiem" class="row col-md-12">
+                                    <div class="col-md-3 pl-2r">BH công trình/ và BH bên thứ ba</div>
+                                    <div class="col-md-8">
+                                        <input formControlName="baoHiemCongTrinh" class="form-control">
+                                    </div>
+                                </div>
+
+                            </div>
+                            <div class="col-md-6" formGroupName="dieuKienTheoHBC">
+                                <div formGroupName="baoHiem" class="row col-md-12">
+                                    <div class="col-md-3 pl-2r">BH công trình/ và BH bên thứ ba</div>
+                                    <div class="col-md-8">
+                                        <input formControlName="baoHiemCongTrinh" class="form-control">
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
             </div>
-            <!-- <div class="text-center mt-4">
-                <button class="btn border" routerLink="../tender-clarify">
-                    <i class="fa font-size-3 mr-3 fa-angle-left" aria-hidden="true"></i>
-                    Trở về
-                </button>
-                <button class="btn btn-primary ml-2" routerLink="../condition-tender">
-                    Tiếp
-                    <i class="fa font-size-3 ml-3 fa-angle-right" aria-hidden="true"></i>
-                </button>
-            </div> -->
+
+
+
+
+
+
+
+
+
+
+        </div>
+
+        <div class="text-center mt-4">
+            <button class="btn border" routerLink="../tender-clarify">
+                <i class="fa font-size-3 mr-3 fa-angle-left" aria-hidden="true"></i>
+                Trở về
+            </button>
+            <button class="btn btn-primary ml-2" routerLink="../condition-tender">
+                Tiếp
+                <i class="fa font-size-3 ml-3 fa-angle-right" aria-hidden="true"></i>
+            </button>
         </div>
     </div>
-</div>
+
+
+
+</form>

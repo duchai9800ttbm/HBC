@@ -54,13 +54,13 @@ export class SummaryConditionComponent implements OnInit {
 
   fakeData() {
     const obj = new DuLieuLiveFormDKDT();
-    obj.thongTinDuAn = {
-      tenTaiLieu: 'Bảng tóm tắt điều kiện dự thầu - 1',
-      lanPhongVan: 1,
-      hinhAnhPhoiCanh: [],
-      banVeMasterPlan: [],
-      dienGiaiThongTinDuAn: 'Diễn giải thông tin tổng quan dự án'
-    };
+    // obj.thongTinDuAn = {
+    //   tenTaiLieu: 'Bảng tóm tắt điều kiện dự thầu - 1',
+    //   lanPhongVan: 1,
+    //   hinhAnhPhoiCanh: [],
+    //   banVeMasterPlan: [],
+    //   dienGiaiThongTinDuAn: 'Diễn giải thông tin tổng quan dự án'
+    // };
     obj.cacBenLienQuan = {
       chuDauTu: {
         donVi: 'Riviera Point Limited Liability Company (Keppel Land)',
