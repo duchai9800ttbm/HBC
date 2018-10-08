@@ -5,6 +5,10 @@ import { SummaryConditionRoutingModule } from './summary-condition-routing.modul
 import { SummaryConditionComponent } from './summary-condition.component';
 import { SharedModule } from '../../../../../../shared/shared.module';
 import { SiteSurveyReportService } from '../../../../../../shared/services/site-survey-report.service';
+import { SummaryConditionCreateComponent } from './summary-condition-create/summary-condition-create.component';
+import { SummaryConditionEditComponent } from './summary-condition-edit/summary-condition-edit.component';
+import { SummaryConditionDetailComponent } from './summary-condition-detail/summary-condition-detail.component';
+import { SummaryConditionOverviewComponent } from './summary-condition-overview/summary-condition-overview.component';
 
 @NgModule({
   imports: [
@@ -12,9 +16,12 @@ import { SiteSurveyReportService } from '../../../../../../shared/services/site-
     SharedModule,
     SummaryConditionRoutingModule
   ],
-  declarations: [SummaryConditionComponent],
-  providers: [
-    SiteSurveyReportService
+  declarations: [
+    SummaryConditionComponent,
+    SummaryConditionCreateComponent,
+    SummaryConditionEditComponent,
+    SummaryConditionDetailComponent,
+    SummaryConditionOverviewComponent
   ]
 })
 export class SummaryConditionModule { }

@@ -216,8 +216,8 @@ export class HoSoDuThauService {
   emitDataStepConditionTender(obj: DienGiaiDieuKienHSMT) {
     HoSoDuThauService.tempDataLiveFormDKDT.value.dienGiaiDieuKienHSMT = obj;
   }
-  emitDataStepSpecial(obj: TableYeuCauDacBiet) {
-    HoSoDuThauService.tempDataLiveFormDKDT.value.yeuCauDacBietKhac = [obj];
+  emitDataStepSpecial(obj: TableYeuCauDacBiet[]) {
+    HoSoDuThauService.tempDataLiveFormDKDT.value.yeuCauDacBietKhac = obj;
   }
   // fake data coding
   fakeData() {

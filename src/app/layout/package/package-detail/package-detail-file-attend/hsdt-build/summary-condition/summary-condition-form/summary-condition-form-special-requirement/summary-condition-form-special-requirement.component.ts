@@ -85,15 +85,4 @@ export class SummaryConditionFormSpecialRequirementComponent implements OnInit {
     formArray.removeAt(idx);
   }
 
-  mappingToLiveFormData(data) {
-    const value = new TenderOtherSpecRequirement();
-    value.requirements = [];
-    data.requirements.forEach(e => {
-      let item = new Requirement();
-      item = e;
-      value.requirements.push(item);
-    });
-    SummaryConditionFormComponent.formModel.otherSpecialRequirement = value;
-  }
-
 }

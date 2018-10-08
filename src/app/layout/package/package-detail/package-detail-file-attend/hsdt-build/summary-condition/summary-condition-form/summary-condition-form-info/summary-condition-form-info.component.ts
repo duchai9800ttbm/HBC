@@ -20,6 +20,8 @@ export class SummaryConditionFormInfoComponent implements OnInit {
   currentBidOpportunityId: number;
   showPopupViewImage = false;
   imageUrlArray = [];
+  viewMode;
+  isModeView = false;
 
   constructor(
     private hoSoDuThauService: HoSoDuThauService,
@@ -37,17 +39,17 @@ export class SummaryConditionFormInfoComponent implements OnInit {
   }
   createForm() {
     this.thongTinDuAnForm = this.fb.group({
-      tenTaiLieu: this.dataStepInfo.tenTaiLieu,
+      tenTaiLieu: { value: this.dataStepInfo.tenTaiLieu, disabled: this.isModeView },
       hinhAnhPhoiCanh: [],
       banVeMasterPlan: [],
-      lanPhongVan: this.dataStepInfo.lanPhongVan,
-      dienGiaiThongTinDuAn: this.dataStepInfo.dienGiaiThongTinDuAn
+      lanPhongVan: { value: this.dataStepInfo.lanPhongVan, disabled: this.isModeView },
+      dienGiaiThongTinDuAn: { value: this.dataStepInfo.dienGiaiThongTinDuAn, disabled: this.isModeView }
     });
 
     this.thongTinDuAnForm.valueChanges.subscribe(data => {
       let obj = new ThongTinDuAn();
       obj = {
-        tenTaiLieu : data.tenTaiLieu,
+        tenTaiLieu: data.tenTaiLieu,
         lanPhongVan: data.lanPhongVan,
         dienGiaiThongTinDuAn: data.dienGiaiThongTinDuAn,
         hinhAnhPhoiCanh: data.hinhAnhPhoiCanh,

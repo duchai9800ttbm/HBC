@@ -37,6 +37,13 @@ export class SummaryConditionFormProfileDestinationComponent implements OnInit {
             hanNop: model.hanNop
           };
         }
+        if (!model) {
+          this.dienGiaiYeuCauHoSo = {
+            noiNop: '',
+            nguoiNhan: '',
+            hanNop: null
+          };
+        }
       });
   }
 
