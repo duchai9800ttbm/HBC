@@ -12,7 +12,7 @@
                 <span class="input-group-addon">Tìm kiếm theo</span>
                 <input type="text" class="form-control icon" placeholder="&#xf002; Tên tài liệu" (keyup)="searchTerm$.next($event.target.value)">
             </div>
-            <div>
+            <div class="responsive-header-control">
                 <button class="btn btn-primary ml-2" (click)="multiDelete()">
                     Xóa
                 </button>
@@ -53,7 +53,7 @@
                 </span>
             </div>
 
-            <div class="form-group ml-sm-2">
+            <div class="form-group ml-sm-2 responsive-date-control">
                 <label for="" class="form-label mr-2">Ngày upload</label>
                 <div class="input-group calendarInput">
 
@@ -66,7 +66,7 @@
                 </div>
             </div>
 
-            <div class="form-group ml-sm-2">
+            <div class="form-group ml-sm-2 responsive-interview-control">
                 <label for="" class="form-label">Lần phỏng vấn</label>
                 <input appInputNumberInteger [(ngModel)]="filterModel.interViewTimes" class="custom-dropdown mx-sm-2 form-control text-right align-placeholder">
             </div>
@@ -82,11 +82,12 @@
         </div>
     </div>
 
-    <div class="table-responsive search-table-outter">
-        <table id="table-file-scroll" class="table-selection row-border cell-border">
+    <div class="table-responsive">
+
+        <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="table-selection row-border cell-border">
             <thead>
                 <tr>
-                    <th class="stt boder-table header-table check-box-stt">
+                    <th class="stt boder-table header-table check-box-stt" style="width: 3%">
                         <div class="d-flex justify-content-around">
                             <div class="w-40">
                                 <label class="custom-control custom-checkbox mt-2">
@@ -96,7 +97,7 @@
                                 </label>
                             </div>
                             <div class="center-parent title-text custom-title-text">
-                                <div>STT</div>
+                                <div class="label-thead">STT</div>
                             </div>
                         </div>
                     </th>
@@ -104,69 +105,69 @@
                     <th *ngIf="childrenOfTypeDocument?.length" class="boder-table header-table large-column">
                         <div class="d-flex justify-content-center">
                             <div class="center-parent title-text">
-                                <div>Loại tài liệu</div>
+                                <div class="label-thead text-center">Loại tài liệu</div>
                             </div>
                         </div>
                     </th>
 
-                    <th class="boder-table header-table large-column">
+                    <th class="boder-table header-table large-column" style="width: 15%">
                         <div class="d-flex justify-content-center">
                             <div class="center-parent title-text">
-                                <div>Tên tài liệu</div>
+                                <div class="label-thead text-center">Tên tài liệu</div>
                             </div>
                         </div>
                     </th>
 
-                    <th class="boder-table header-table small-column">
+                    <th class="boder-table header-table small-column" style="width: 5%">
                         <div class="d-flex justify-content-center">
                             <div class="center-parent title-text">
-                                <div>Phiên bản</div>
+                                <div class="label-thead text-center">Phiên bản</div>
                             </div>
                         </div>
                     </th>
 
-                    <th class="boder-table header-table">
+                    <th class="boder-table header-table large-column" style="width: 20%">
                         <div class="d-flex justify-content-center">
                             <div class="center-parent title-text">
-                                <div>Mô tả</div>
+                                <div class="label-thead text-center">Mô tả</div>
                             </div>
                         </div>
                     </th>
 
-                    <th class="th-mark-status boder-table header-table small-column">
+                    <th class="th-mark-status boder-table header-table small-column" style="width: 10%">
                         <div class="d-flex justify-content-center">
                             <div class="center-parent title-text">
-                                <div>Tình trạng</div>
+                                <div class="label-thead text-center">Tình trạng</div>
                             </div>
                         </div>
                     </th>
 
-                    <th class="boder-table header-table large-column">
+                    <th class="boder-table header-table small-column" style="width: 15%">
                         <div class="d-flex justify-content-center">
                             <div class="center-parent title-text">
-                                <div>Người upload</div>
+                                <div class="label-thead text-center">Người upload</div>
                             </div>
                         </div>
                     </th>
 
-                    <th class="boder-table header-table small-column">
+                    <th class="boder-table header-table small-column" style="width: 10%">
                         <div class="d-flex justify-content-center">
                             <div class="center-parent title-text">
-                                <div>Ngày upload</div>
+                                <div class="label-thead text-center">Ngày upload</div>
                             </div>
                         </div>
                     </th>
 
-                    <th class="boder-table header-table small-column">
+                    <th class="boder-table header-table small-column" style="width: 10%">
                         <div class="d-flex justify-content-center">
                             <div class="center-parent title-text">
-                                <div>Lần phỏng vấn</div>
+                                <div class="label-thead text-center">Lần phỏng vấn</div>
                             </div>
                         </div>
                     </th>
 
-                    <th class="table-action text-center boder-table header-table small-column">
-                        <div class="title-text">Thao tác</div>
+                    <th class="table-action text-center boder-table header-table small-column" style="width: 10%">
+                        <div class="title-text label-thead text-center">Thao tác</div>
                     </th>
 
                 </tr>
@@ -188,13 +189,13 @@
                         </div>
                     </td>
                     <td *ngIf="childrenOfTypeDocument?.length" class="boder-table text-center text-truncate-custom">
-                        {{ hoso?.documentName }}
+                        {{ hoso.tenderDocumentType?.name }}
                     </td>
                     <td class="boder-table text-center text-truncate-custom">{{ hoso?.documentName }}</td>
                     <td class="boder-table text-center text-truncate">{{ hoso?.version ? hoso?.version : '' }}</td>
                     <td class="boder-table text-center text-truncate-custom">{{ hoso?.desc }}</td>
                     <td class="td-mark-status boder-table">
-                        <div class="d-flex justify-content-between pl-2 pr-2">
+                        <div class="d-flex justify-content-between pl-1 pr-1">
                             <div class="text-truncate text-right" [title]="hoso.status">
                                 {{ hoso.status | translate }}
                             </div>
@@ -204,10 +205,13 @@
                             </div>
                         </div>
                     </td>
-                    <td class="boder-table text-center text-truncate">{{ hoso.uploadedBy?.employeeName }}</td>
-                    <td class="boder-table text-center text-truncate">{{ hoso?.uploadedDate*1000 | date:'dd/MM/yyyy':
+                    <td class="boder-table text-center text-truncate text-truncate-custom pr-2 pl-2 custom-updater-responsive">{{
+                        hoso.uploadedBy?.employeeName }}</td>
+                    <td class="boder-table text-center text-truncate">{{ hoso?.uploadedDate*1000 |
+                        date:'dd/MM/yyyy':
                         '+0000' }}</td>
-                    <td class="boder-table text-center text-truncate">{{ hoso?.interViewTimes ? hoso?.interViewTimes :
+                    <td class="boder-table text-center text-truncate">{{ hoso?.interViewTimes ?
+                        hoso?.interViewTimes :
                         '' }}</td>
                     <td class="boder-table">
                         <div class="d-flex justify-content-around">
@@ -231,7 +235,11 @@
                 </tr>
             </tbody>
         </table>
+
     </div>
+
+
+
     <div>
         <div class="mt-4" *ngIf="dataDocumentOfType?.length">
             <app-pagination [(pagedResult)]="pagedResult" (pagedResultChange)="pagedResultChange($event)"></app-pagination>

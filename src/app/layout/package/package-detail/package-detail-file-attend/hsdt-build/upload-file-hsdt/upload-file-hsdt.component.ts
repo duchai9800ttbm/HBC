@@ -54,9 +54,15 @@ export class UploadFileHsdtComponent implements OnInit {
     });
   }
   onFormValueChanged(data?: any) {
-    this.isFile = (this.uploadForm.get('file').value) ? true : false;
-    this.isLinkFile = (this.uploadForm.get('linkFile').value) ? true : false;
+    const isFile = (this.uploadForm.get('file').value) ? true : false;
+    const isLinkFile = (this.uploadForm.get('linkFile').value) ? true : false;
     if (this.isSubmitted) {
+
+      if (!isFile && !isLinkFile) {
+        this.errorMess = 'Vui lòng chọn file hoặc đường dẫn link đến file!';
+      } else {
+        this.errorMess = null;
+      }
       this.validateForm();
     }
   }
@@ -103,10 +109,7 @@ export class UploadFileHsdtComponent implements OnInit {
           this.errorMess = 'Upload thất bại, xin vui lòng thử lại!';
           this.spinner.hide();
         });
-      } else {
-        this.errorMess = 'Vui lòng chọn file hoặc đường dẫn link đến file!';
       }
-
     }
   }
   closePopup() {
