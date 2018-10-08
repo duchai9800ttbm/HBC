@@ -31,6 +31,7 @@ export class EndInterviewComponent implements OnInit {
   peopleUploadList;
   dateUploadList;
   interviewTimeList;
+  uploadedEmployeeList;
   listClassifyCustomer: Observable<DictionaryItem[]>;
   constructor(
     private dialogService: DialogService,
@@ -42,9 +43,9 @@ export class EndInterviewComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.filterModel.interviewtimes = 0;
-    this.filterModel.uploadedEmployeeId = 0;
-    this.filterModel.createdDate = 0;
+    this.filterModel.interviewtimes = null;
+    this.filterModel.uploadedEmployeeId = null;
+    this.filterModel.createdDate = null;
     this.currentPackageId = +PackageDetailComponent.packageId;
     this.spinner.show();
     this.packageService.getInforPackageID(this.currentPackageId).subscribe(result => {
@@ -75,6 +76,8 @@ export class EndInterviewComponent implements OnInit {
     //   }
     // });
     this.pagedResult = pagedResult;
+    this.interviewTimeList = this.pagedResult.items ? this.pagedResult.items.map(item => item.interviewTimes) : [];
+    this.uploadedEmployeeList = this.pagedResult.items ? this.pagedResult.items.map(item => item.uploadedBy) : [];
     this.dtTrigger.next();
   }
 
@@ -122,5 +125,21 @@ export class EndInterviewComponent implements OnInit {
 
   onSelectAll(value: boolean) {
     this.pagedResult.items.forEach(x => (x['checkboxSelected'] = value));
+  }
+
+  filter() {
+    this.spinner.show();
+    this.interviewInvitationService
+      .filterListReport(
+        this.currentPackageId,
+        this.searchTerm$.value,
+        this.filterModel,
+        0,
+        1000
+      )
+      .subscribe(result => {
+        this.render(result);
+        this.spinner.hide();
+      }, err => this.spinner.hide());
   }
 }

@@ -96,11 +96,7 @@ export class InterviewNegotiationComponent implements OnInit {
       });
       for (let i = 0; i < this.statusInInterviewList.length; i++) {
         if (this.statusInInterviewList[i] === this.statusPackage) {
-          if (i === 4) {
-            this.numberStatusPackageInterview = i - 1;
-          } else {
             this.numberStatusPackageInterview = i;
-          }
           break;
         }
       }
