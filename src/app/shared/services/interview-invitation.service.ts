@@ -11,12 +11,14 @@ import { InterviewInvitationFilterReport } from '../models/interview-invitation/
 import { InterviewInvitationReportList } from '../models/interview-invitation/interview-invitation-report-list.model';
 import DateTimeConvertHelper from '../helpers/datetime-convert-helper';
 import * as FileSaver from 'file-saver';
+import { ApprovedDossiersList } from '../models/interview-invitation/approved-dossiers-list.model';
 @Injectable()
 export class InterviewInvitationService {
   static interviewInvitationList = new Subject<any>();
   static keySearchInterviewInvitation = new BehaviorSubject<string>('');
   static keySearchNew = new Subject<string>();
   static refeshCreateInterviewInvitation = new BehaviorSubject<boolean>(false);
+  currentStatusInterview: Subject<number> = new Subject<number>();
   interviewNotification;
   // map theo model danh sách biên bản phỏng vấn
   private static toInterviewInvitationReportList(result: any): InterviewInvitationReportList {
@@ -48,7 +50,6 @@ export class InterviewInvitationService {
   }
   // Tạo mới filter params
   private static createFilterParams(filter: InterviewInvitationFilter): URLSearchParams {
-    console.log('filter', filter);
     const urlFilterParams = new URLSearchParams();
     urlFilterParams.append(
       'customerid',
@@ -134,6 +135,14 @@ export class InterviewInvitationService {
   // Return interview to notification
   getChooseInterviewNotification() {
     return this.interviewNotification;
+  }
+  // Change url chirld
+  changeUrlChirld(urlChirld) {
+    this.currentStatusInterview.next(urlChirld);
+  }
+  // Return currentStatusInterview
+  getUrlChirld() {
+    return this.currentStatusInterview;
   }
   // map theo model danh sách lời lời phỏng vấn
   toInterviewInvitationList(result: any): InterviewInvitationList {
@@ -261,13 +270,55 @@ export class InterviewInvitationService {
   downloadFileCreateInterview(bidDocumentId: number) {
     const url = `bidinterviewinvitation/${bidDocumentId}/download `;
     return this.apiService.getFile(url).map(response => {
-        return FileSaver.saveAs(
-            new Blob([response.file], {
-                type: `${response.file.type}`,
-            }), response.fileName
-        );
+      return FileSaver.saveAs(
+        new Blob([response.file], {
+          type: `${response.file.type}`,
+        }), response.fileName
+      );
     });
-}
+  }
+  // Load file lời mời phỏng vấn để đính kèm vào thông báo
+  LoadFileCreateInterview(bidDocumentId: number) {
+    const url = `bidinterviewinvitation/${bidDocumentId}/download `;
+    return this.apiService.getFile(url).map(response => {
+      // return new Blob([response.file], { type: `${response.file.type}` });
+      return new File([response.file], response.fileName, { type: response.contentType, lastModified: Date.now() });
+    });
+  }
+
+  // ===============================
+  // Chuẩn bị phỏng vấn
+  // Map danh sách hồ sợ dự thầu đã phê duyệt theo model
+  toApprovedDossiersList(result: any): ApprovedDossiersList {
+    return {
+      typeName: result.typeName,
+      document: result.document ? {
+        type: result.document.typeName,
+        id: result.document.id,
+        name: result.document.name,
+        interviewTime: result.document.interviewTime,
+      } : null,
+      childs: result.childs ? {
+        typeName: result.childs.typeName,
+        document: result.childs.document ? {
+          type: result.childs.document.type,
+          id: result.childs.document.id,
+          name: result.childs.document.name,
+          interviewTime: result.childs.document.interviewTime,
+        } : null,
+      } : null,
+    };
+  }
+  // Danh sách hồ sơ dự thầu đã phê duyệt search
+  getListApprovedDossiers(bidDocumentId, searchTerm): Observable<ApprovedDossiersList[]> {
+    const url = `bidopportunity/${bidDocumentId}/approvaltenderdocs?searchTerm=${searchTerm}`;
+    return this.apiService.get(url).map(response => {
+      const result = response.result;
+      return (result || []).map(
+        this.toApprovedDossiersList
+      );
+    });
+  }
 
   // Tải lên biên bản phỏng vấn
   UploadReportInterview(

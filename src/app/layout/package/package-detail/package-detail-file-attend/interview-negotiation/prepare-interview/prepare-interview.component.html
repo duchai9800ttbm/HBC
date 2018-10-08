@@ -100,7 +100,7 @@
             <div class="d-flex">
               <div class="input-group">
                 <span class="input-group-addon">Tìm kiếm theo</span>
-                <input type="text" class="form-control icon" placeholder="&#xf002; Tên tài liệu">
+                <input type="text" class="form-control icon" placeholder="&#xf002; Tên tài liệu" (keyup)="searchApprovedDossiers$.next($event.target.value)">
               </div>
               <button class="btn btn-primary ml-2">
                 Tải xuống tài liệu
@@ -113,7 +113,7 @@
         </div>
 
         <div class="bot-table">
-          <table class="table-selection  row-border hover cell-border dataTable">
+          <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="table-selection  row-border hover cell-border dataTable">
             <thead>
               <tr>
                 <th class="stt" style="width: 3%; min-width: 15px;background-color: #f68e56!important;">
@@ -179,31 +179,69 @@
               </tr>
             </thead>
             <tbody>
-              <tr>
-                <td class="stt d-flex justify-content-around">
-                  <div style="width: 40%;">
-                    <div class="center-parent">
-                      <label class="custom-control custom-checkbox">
-                        <input type="checkbox" class="custom-control-input">
-                        <span class="custom-control-indicator"></span>
-                      </label>
-                    </div>
-                  </div>
-                  <div style="width: 35%;" class="center-parent">
-                    <div>1</div>
-                  </div>
-                </td>
-                <td class="text-center"></td>
-                <td class="text-center"></td>
-                <!-- <td class="text-center"></td> -->
-                <td class="text-center"></td>
-                <td class="text-center"></td>
-                <td class="text-center">
-                  <div class="d-flex justify-content-around">
-
-                  </div>
-                </td>
-              </tr>
+              <ng-container *ngFor="let item of pagedResult; let i = index">
+                <ng-container *ngIf="item.childs;then chirld else document">
+                  <ng-template #chirld *ngFor="let itemChirld of item; let k = index">
+                    <tr>
+                      <td class="stt d-flex justify-content-around">
+                        <div style="width: 40%;">
+                          <div class="center-parent">
+                            <label class="custom-control custom-checkbox">
+                              <input type="checkbox" class="custom-control-input">
+                              <span class="custom-control-indicator"></span>
+                            </label>
+                          </div>
+                        </div>
+                        <div style="width: 35%;" class="center-parent">
+                          <div>1</div>
+                        </div>
+                      </td>
+                      <td class="text-center">chirldchirld</td>
+                      <!-- {{item.typeName}} -->
+                      <td class="text-center"></td>
+                      <td class="text-center"></td>
+                      <!-- {{item.document?.name}} -->
+                      <td class="text-center"></td>
+                      <!-- {{item.document?.interviewTime}} -->
+                      <td class="text-center">
+                        <div title="Tải file" (click)="dowloadDocument(item.id)">
+                          <a>
+                            <i class="fa fa-download color-item-down" aria-hidden="true"></i>
+                          </a>
+                        </div>
+                      </td>
+                    </tr>
+                  </ng-template>
+                  <ng-template #document>
+                    <tr>
+                      <td class="stt d-flex justify-content-around">
+                        <div style="width: 40%;">
+                          <div class="center-parent">
+                            <label class="custom-control custom-checkbox">
+                              <input type="checkbox" class="custom-control-input">
+                              <span class="custom-control-indicator"></span>
+                            </label>
+                          </div>
+                        </div>
+                        <div style="width: 35%;" class="center-parent">
+                          <div>1</div>
+                        </div>
+                      </td>
+                      <td class="text-center">{{item.typeName}} documentdocument</td>
+                      <td class="text-center"></td>
+                      <td class="text-center">{{item.document?.name}}</td>
+                      <td class="text-center">{{item.document?.interviewTime}}</td>
+                      <td class="text-center">
+                        <div title="Tải file" (click)="dowloadDocument(item.id)">
+                          <a>
+                            <i class="fa fa-download color-item-down" aria-hidden="true"></i>
+                          </a>
+                        </div>
+                      </td>
+                    </tr>
+                  </ng-template>
+                </ng-container>
+              </ng-container>
             </tbody>
           </table>
         </div>

@@ -982,7 +982,7 @@ export class PackageService {
     }
     // tải template phiếu đề nghị dự thầu
     downloadProposedTenderParticipateReport() {
-        const url = `proposedtenderparticipatinngreport/template/downoad`;
+        const url = `proposedtenderparticipatinngreport/template/download`;
         return this.apiService.getFile(url).map(response => {
             return FileSaver.saveAs(
                 new Blob([response.file], {
