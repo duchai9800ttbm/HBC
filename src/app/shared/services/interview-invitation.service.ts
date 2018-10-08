@@ -52,7 +52,7 @@ export class InterviewInvitationService {
       // description: result.description,
     };
   }
-  // Tạo mới filter params
+  // Tạo mới filter params - Create Interview
   private static createFilterParams(filter: InterviewInvitationFilter): URLSearchParams {
     const urlFilterParams = new URLSearchParams();
     urlFilterParams.append(
@@ -376,7 +376,7 @@ export class InterviewInvitationService {
     page: number | string,
     pageSize: number | string
   ): Observable<PagedResult<InterviewInvitationReportList>> {
-    const searchUrl = `/bidopportunity/${bidOpportunityId}/bidinterviewreportdocs/filter/${page}/${pageSize}/?searchTerm=`;
+    const searchUrl = `bidopportunity/${bidOpportunityId}/bidinterviewreportdocs/filter/${page}/${pageSize}?searchTerm=`;
     console.log('searchUrl', searchUrl);
     return this.instantSearchService
       .searchWithFilter(
@@ -385,8 +385,6 @@ export class InterviewInvitationService {
         InterviewInvitationService.createFilterParamsReport(filter)
       )
       .map(result => {
-        console.log('ressult-biên bản', result);
-        // return result;
         return {
           currentPage: result.pageIndex,
           pageSize: result.pageSize,
@@ -395,6 +393,31 @@ export class InterviewInvitationService {
           items: (result.items || []).map(InterviewInvitationService.toInterviewInvitationReportList)
         };
       });
+  }
+  // Danh sachs biên bản phỏng vấn lọc & search
+  filterListReport(
+    bidOpportunityId: number,
+    searchTerm: string,
+    filter: InterviewInvitationFilterReport,
+    page: number | string,
+    pageSize: number | string
+  ): Observable<PagedResult<InterviewInvitationList>> {
+    console.log('searchTerm-searchTerm', searchTerm, filter);
+    const filterUrl = `bidopportunity/${bidOpportunityId}/bidinterviewreportdocs/filter/${page}/${pageSize}`;
+    const urlParams = InterviewInvitationService.createFilterParamsReport(filter);
+    urlParams.append('searchTerm', searchTerm);
+    return this.apiService.get(filterUrl, urlParams).map(response => {
+      const result = response.result;
+      return {
+        currentPage: result.pageIndex,
+        pageSize: result.pageSize,
+        pageCount: result.totalPages,
+        total: result.totalCount,
+        items: (result.items || []).map(
+          InterviewInvitationService.toInterviewInvitationReportList
+        )
+      };
+    });
   }
 
   // Chuyển trạng thái đã chốt công tác phỏng vấn => đã phỏng vấn
