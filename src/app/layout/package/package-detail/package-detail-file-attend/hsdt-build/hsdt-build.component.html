@@ -28,7 +28,7 @@
             </div>
         </div>
         <div id="main-content" class="d-flex flex-row w-100">
-            <div id="toggle-menu" [hidden]="isShowMenu">
+            <div id="toggle-menu" [class.left-menu]="isShowSideMenu" style="width: 237px;" [hidden]="isShowMenu">
 
                 <div class="d-flex">
                     <div id="toggle-menu-item">
@@ -62,7 +62,7 @@
                     </div>
                 </div>
             </div>
-            <div class="grow-in-line">
+            <div [class.toggle-width]="isShowSideMenu" class="grow-in-line" style="width: calc(100% - 255px)">
                 <router-outlet (activate)="onActivate($event)"></router-outlet>
             </div>
         </div>

@@ -1,5 +1,5 @@
 import { Component, OnInit, OnChanges } from '@angular/core';
-import { DATATABLE_CONFIG } from '../../../../../../shared/configs';
+import { DATATABLE_CONFIG, DATATABLE_CONFIG2 } from '../../../../../../shared/configs';
 // tslint:disable-next-line:import-blacklist
 import { Subject, BehaviorSubject } from 'rxjs';
 import { DATETIME_PICKER_CONFIG } from '../../../../../../shared/configs/datepicker.config';
@@ -20,8 +20,8 @@ import { UploadFileHsdtComponent } from '../upload-file-hsdt/upload-file-hsdt.co
 })
 export class UploadFormComponent implements OnInit {
   dtTrigger: Subject<any> = new Subject();
-  dtOptions: any = DATATABLE_CONFIG;
   datePickerConfig = DATETIME_PICKER_CONFIG;
+  dtOptions: any = DATATABLE_CONFIG;
   packageId;
   bidOpportunityId: number;
   page: number;
@@ -78,8 +78,8 @@ export class UploadFormComponent implements OnInit {
     this.dialog.close();
     this.getDataDocumentOfType();
   }
-  getDataDocumentOfType(alert = false) {
-    this.spinner.show();
+  getDataDocumentOfType(alert = false, spiner = true) {
+    if (spiner) { this.spinner.show(); }
     this.hoSoDuThauService
       .danhSachBoHoSoDuThauInstantSearch(this.packageId, this.searchTerm$, this.filterModel, 0, 10)
       .subscribe(responseResultDocument => {
@@ -172,7 +172,7 @@ export class UploadFormComponent implements OnInit {
     }
   }
   refresh() {
-    this.getDataDocumentOfType(true);
+    this.getDataDocumentOfType(true, true);
   }
   filter() {
     this.spinner.show();
@@ -195,30 +195,24 @@ export class UploadFormComponent implements OnInit {
     this.filterModel.status = '';
     this.filterModel.uploadedEmployeeId = '';
     this.filterModel.createdDate = null;
-    this.getDataDocumentOfType();
+    this.getDataDocumentOfType(false, false);
   }
   changeStatus(id, status) {
     if (status === 'Draft') {
-      this.spinner.show();
       this.hoSoDuThauService.updateStatus(id, 'Official').subscribe(res => {
-        this.getDataDocumentOfType();
+        this.getDataDocumentOfType(true, false);
         this.dtTrigger.next();
-        this.spinner.hide();
       }, err => {
         this.dtTrigger.next();
-        this.spinner.hide();
         this.alertService.error('Đã có lỗi. Dữ liệu chưa được cập nhật!');
       });
     }
     if (status === 'Official') {
-      this.spinner.show();
       this.hoSoDuThauService.updateStatus(id, 'Draft').subscribe(res => {
-        this.getDataDocumentOfType();
+        this.getDataDocumentOfType(true, false);
         this.dtTrigger.next();
-        this.spinner.hide();
       }, err => {
         this.dtTrigger.next();
-        this.spinner.hide();
         this.alertService.error('Đã có lỗi. Dữ liệu chưa được cập nhật!');
       });
     }
