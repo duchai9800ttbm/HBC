@@ -49,6 +49,7 @@ export class SummaryConditionFormSpecialRequirementComponent implements OnInit {
         link2Two: data.link2Two,
         linkThree: data.linkThree,
       };
+      console.log(obj);
       this.hoSoDuThauService.emitDataStepSpecial(obj);
     });
   }

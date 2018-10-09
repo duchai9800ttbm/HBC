@@ -44,15 +44,7 @@
                 <div class="row col-md-12">
                     <div class="row col-md-12 mt-3 col-md-12">
                         <div class="row col-md-12 col-md-12">
-                            <div class="col-md-6" formGroupName="dieuKienTheoHSMT">
-                                <div formGroupName="baoLanhThucHien" class="row col-md-12">
-                                    <div class="col-md-3 pl-2r">Phần trăm %</div>
-                                    <div class="col-md-8">
-                                        <input formControlName="phanTram" class="form-control">
-                                    </div>
-                                </div>
 
-                            </div>
                             <div class="col-md-6" formGroupName="dieuKienTheoHBC">
                                 <div formGroupName="baoLanhThucHien" class="row col-md-12">
                                     <div class="col-md-3 pl-2r">Phần trăm %</div>
@@ -80,11 +72,34 @@
                                 <div formGroupName="baoLanhThucHien" class="row col-md-12">
                                     <div class="col-md-3 pl-2r">Hiệu lực bảo lãnh</div>
                                     <div class="col-md-8">
-                                        <input formControlName="hieuLuc" class="form-control">
                                     </div>
                                 </div>
 
                             </div>
+                        </div>
+                    </div>
+
+
+                    <div class="col-md-3">
+                        <div class="pl-2r">
+                            Phần trăm %
+
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div formGroupName="dieuKienTheoHSMT">
+                            <div formGroupName="baoLanhThucHien">
+                                <input formControlName="phanTram" class="form-control">
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div formGroupName="dieuKienTheoHSMT">
+                            <div formGroupName="baoLanhThucHien">
+                                <input formControlName="hieuLuc" class="form-control">
+                            </div>
+
                         </div>
                     </div>
                 </div>
@@ -229,8 +244,8 @@
                         <div class="row col-md-12">
                             <div class="col-md-6" formGroupName="dieuKienTheoHSMT">
                                 <div formGroupName="thanhToan" class="row col-md-12">
-                                    <div class="col-md-3 pl-2r">Thanh toán khi tập kết máy móc/ vật tư (Material on
-                                        site)</div>
+                                    <div class="col-md-3 pl-2r">Thanh toán khi tập kết máy móc/ vật tư (Material on site)
+                                    </div>
                                     <div class="col-md-8">
                                         <input formControlName="thanhToanKhiTapKet" class="form-control">
                                     </div>
@@ -239,8 +254,8 @@
                             </div>
                             <div class="col-md-6" formGroupName="dieuKienTheoHBC">
                                 <div formGroupName="thanhToan" class="row col-md-12">
-                                    <div class="col-md-3 pl-2r">Thanh toán khi tập kết máy móc/ vật tư (Material on
-                                        site)</div>
+                                    <div class="col-md-3 pl-2r">Thanh toán khi tập kết máy móc/ vật tư (Material on site)
+                                    </div>
                                     <div class="col-md-8">
                                         <input formControlName="thanhToanKhiTapKet" class="form-control">
                                     </div>
@@ -442,8 +457,7 @@
                                     <div class="col-md-3 pl-2r">BH máy móc thiết bị nhà thầu</div>
                                     <div class="col-md-8">
                                         <ng-container formArrayName="baoHiemMayMoc">
-                                            <ng-container *ngFor="let fControl of baoHiemMayMocHSMTFA.controls; let i = index"
-                                                [formGroupName]="i">
+                                            <ng-container *ngFor="let fControl of baoHiemMayMocHSMTFA.controls; let i = index" [formGroupName]="i">
                                                 <input formControlName="baoHiemItem" class="form-control mb-2">
 
                                             </ng-container>
@@ -459,8 +473,7 @@
                                     <div class="col-md-3 pl-2r">BH máy móc thiết bị nhà thầu</div>
                                     <div class="col-md-8">
                                         <ng-container formArrayName="baoHiemMayMoc">
-                                            <ng-container *ngFor="let fControl of baoHiemMayMocHBCFA.controls; let i = index"
-                                                [formGroupName]="i">
+                                            <ng-container *ngFor="let fControl of baoHiemMayMocHBCFA.controls; let i = index" [formGroupName]="i">
                                                 <input formControlName="baoHiemItem" class="form-control mb-2">
 
                                             </ng-container>
