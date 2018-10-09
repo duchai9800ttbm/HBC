@@ -76,7 +76,7 @@
                         </div>
                     </div>
                     <div>
-                        <p class="perspective-text">Hình ảnh phối cảnh dự án/ Perspective image of project</p>
+                        <p><u>Hình ảnh phối cảnh dự án/ Perspective image of project</u></p>
                         <div class="text-des-input">
                             <input type="text" value="Text" formControlName="hinhAnhPhoiCanhDesc" tabindex="10">
                         </div>
@@ -84,7 +84,7 @@
                             <input type="file" accept="image/*" multiple #uploadPerspective (change)="uploadPerspectiveImage($event)">
                             <div class="display-img" *ngFor="let url of perspectiveImageUrls" (click)="viewFullScreenImage(perspectiveImageUrls)">
                                 <img [src]="url.largeSizeUrl">
-                                <div class="toppp" [ngClass]="{'d-none': viewMode}" (click)="deletePerspectiveImage(url)">
+                                <div class="icon-delete-image" [ngClass]="{'d-none': viewMode}" (click)="deletePerspectiveImage(url)">
                                     <i class="fa fa-times delete-icon" aria-hidden="true"></i>
                                 </div>
                             </div>
@@ -109,7 +109,7 @@
                             <input type="file" accept="image/*" multiple #uploadStructure (change)="uploadStructureImage($event)">
                             <div class="display-img" *ngFor="let url of structureImageUrls" (click)="viewFullScreenImage(structureImageUrls)">
                                 <img [src]="url.largeSizeUrl">
-                                <div class="toppp" [ngClass]="{'d-none': viewMode}" (click)="deleteStructureImage(url)">
+                                <div class="icon-delete-image" [ngClass]="{'d-none': viewMode}" (click)="deleteStructureImage(url)">
                                     <i class="fa fa-times delete-icon" aria-hidden="true"></i>
                                 </div>
                             </div>
@@ -133,7 +133,7 @@
                         <input type="file" accept="image/*" multiple #uploadRequirements (change)="uploadRequirementsImage($event)">
                         <div class="display-img" *ngFor="let url of requirementsImageUrls" (click)="viewFullScreenImage(requirementsImageUrls)">
                             <img [src]="url.largeSizeUrl">
-                            <div class="toppp" [ngClass]="{'d-none': viewMode}" (click)="deleteRequirementsImage(url)">
+                            <div class="icon-delete-image" [ngClass]="{'d-none': viewMode}" (click)="deleteRequirementsImage(url)">
                                 <i class="fa fa-times delete-icon" aria-hidden="true"></i>
                             </div>
                         </div>

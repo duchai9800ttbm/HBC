@@ -13,7 +13,7 @@
                             <input type="file" accept="image/*" multiple #uploadTopography (change)="uploadTopographyImage($event)">
                             <div class="display-img" *ngFor="let url of topographyImageUrls" (click)="viewFullScreenImage(topographyImageUrls)">
                                 <img [src]="url.largeSizeUrl">
-                                <div class="toppp"  [ngClass]="{'d-none': viewMode}" (click)="deleteTopographyImage(url)">
+                                <div class="icon-delete-image"  [ngClass]="{'d-none': viewMode}" (click)="deleteTopographyImage(url)">
                                     <i class="fa fa-times delete-icon" aria-hidden="true"></i>
                                 </div>
                             </div>
@@ -36,7 +36,7 @@
                             <input type="file" accept="image/*" multiple #uploadExistingBuild (change)="uploadExistingBuildImage($event)">
                             <div class="display-img" *ngFor="let url of existingBuildImageUrls" (click)="viewFullScreenImage(existingBuildImageUrls)">
                                 <img [src]="url.largeSizeUrl">
-                                <div class="toppp"  [ngClass]="{'d-none': viewMode}" (click)="deleteExistingBuildImage(url)">
+                                <div class="icon-delete-image"  [ngClass]="{'d-none': viewMode}" (click)="deleteExistingBuildImage(url)">
                                     <i class="fa fa-times delete-icon" aria-hidden="true"></i>
                                 </div>
                             </div>
@@ -60,7 +60,7 @@
                             <input type="file" accept="image/*" multiple #uploadStacale (change)="uploadStacaleImage($event)">
                             <div class="display-img" *ngFor="let url of stacaleImageUrls" (click)="viewFullScreenImage(stacaleImageUrls)">
                                 <img [src]="url.largeSizeUrl">
-                                <div class="toppp"  [ngClass]="{'d-none': viewMode}" (click)="deleteStacaleImage(url)">
+                                <div class="icon-delete-image"  [ngClass]="{'d-none': viewMode}" (click)="deleteStacaleImage(url)">
                                     <i class="fa fa-times delete-icon" aria-hidden="true"></i>
                                 </div>
                             </div>

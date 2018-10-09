@@ -15,7 +15,7 @@
 
                             <div class="display-img" *ngFor="let url of supplySystemImageUrls" (click)="viewFullScreenImage(supplySystemImageUrls)">
                                 <img [src]="url.largeSizeUrl">
-                                <div class="toppp"  [ngClass]="{'d-none': viewMode}" (click)="deleteSupplySystemImage(url)">
+                                <div class="icon-delete-image"  [ngClass]="{'d-none': viewMode}" (click)="deleteSupplySystemImage(url)">
                                     <i class="fa fa-times delete-icon" aria-hidden="true"></i>
                                 </div>
                             </div>
@@ -35,7 +35,7 @@
 
                             <div class="display-img" *ngFor="let url of supplyPointImageUrls" (click)="viewFullScreenImage(supplyPointImageUrls)">
                                 <img [src]="url.largeSizeUrl">
-                                <div class="toppp"  [ngClass]="{'d-none': viewMode}" (click)="deleteSupplyPointImage(url)">
+                                <div class="icon-delete-image"  [ngClass]="{'d-none': viewMode}" (click)="deleteSupplyPointImage(url)">
                                     <i class="fa fa-times delete-icon" aria-hidden="true"></i>
                                 </div>
                             </div>
@@ -60,7 +60,7 @@
 
                             <div class="display-img" *ngFor="let url of drainageSystemImageUrls" (click)="viewFullScreenImage(drainageSystemImageUrls)">
                                 <img [src]="url.largeSizeUrl">
-                                <div class="toppp"  [ngClass]="{'d-none': viewMode}" (click)="deleteDrainageSystemImage(url)">
+                                <div class="icon-delete-image"  [ngClass]="{'d-none': viewMode}" (click)="deleteDrainageSystemImage(url)">
                                     <i class="fa fa-times delete-icon" aria-hidden="true"></i>
                                 </div>
                             </div>
@@ -80,7 +80,7 @@
 
                             <div class="display-img" *ngFor="let url of drainagePointImageUrls" (click)="viewFullScreenImage(drainagePointImageUrls)">
                                 <img [src]="url.largeSizeUrl">
-                                <div class="toppp"  [ngClass]="{'d-none': viewMode}" (click)="deleteDrainagePointImage(url)">
+                                <div class="icon-delete-image"  [ngClass]="{'d-none': viewMode}" (click)="deleteDrainagePointImage(url)">
                                     <i class="fa fa-times delete-icon" aria-hidden="true"></i>
                                 </div>
                             </div>
@@ -105,7 +105,7 @@
 
                             <div class="display-img" *ngFor="let url of powerStationImageUrls" (click)="viewFullScreenImage(powerStationImageUrls)">
                                 <img [src]="url.largeSizeUrl">
-                                <div class="toppp"  [ngClass]="{'d-none': viewMode}" (click)="deletePowerStationImage(url)">
+                                <div class="icon-delete-image"  [ngClass]="{'d-none': viewMode}" (click)="deletePowerStationImage(url)">
                                     <i class="fa fa-times delete-icon" aria-hidden="true"></i>
                                 </div>
                             </div>
@@ -125,7 +125,7 @@
 
                             <div class="display-img" *ngFor="let url of mediumVoltageSystemImageUrls" (click)="viewFullScreenImage(mediumVoltageSystemImageUrls)">
                                 <img [src]="url.largeSizeUrl">
-                                <div class="toppp"  [ngClass]="{'d-none': viewMode}" (click)="deleteMediumVoltageSystemImage(url)">
+                                <div class="icon-delete-image"  [ngClass]="{'d-none': viewMode}" (click)="deleteMediumVoltageSystemImage(url)">
                                     <i class="fa fa-times delete-icon" aria-hidden="true"></i>
                                 </div>
                             </div>
@@ -145,7 +145,7 @@
 
                             <div class="display-img" *ngFor="let url of powerOtherImageUrls" (click)="viewFullScreenImage(powerOtherImageUrls)">
                                 <img [src]="url.largeSizeUrl">
-                                <div class="toppp"  [ngClass]="{'d-none': viewMode}" (click)="deletePowerOtherImage(url)">
+                                <div class="icon-delete-image"  [ngClass]="{'d-none': viewMode}" (click)="deletePowerOtherImage(url)">
                                     <i class="fa fa-times delete-icon" aria-hidden="true"></i>
                                 </div>
                             </div>

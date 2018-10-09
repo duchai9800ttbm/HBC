@@ -16,7 +16,7 @@
 
                             <div class="display-img" *ngFor="let url of footingImageUrls" (click)="viewFullScreenImage(footingImageUrls)">
                                 <img [src]="url.largeSizeUrl">
-                                <div class="toppp"  [ngClass]="{'d-none': viewMode}" (click)="deleteFootingImage(url)">
+                                <div class="icon-delete-image"  [ngClass]="{'d-none': viewMode}" (click)="deleteFootingImage(url)">
                                     <i class="fa fa-times delete-icon" aria-hidden="true"></i>
                                 </div>
                             </div>
@@ -42,7 +42,7 @@
 
                             <div class="display-img" *ngFor="let url of investigationImageUrls" (click)="viewFullScreenImage(investigationImageUrls)">
                                 <img [src]="url.largeSizeUrl">
-                                <div class="toppp"  [ngClass]="{'d-none': viewMode}" (click)="deleteInvestigationImage(url)">
+                                <div class="icon-delete-image"  [ngClass]="{'d-none': viewMode}" (click)="deleteInvestigationImage(url)">
                                     <i class="fa fa-times delete-icon" aria-hidden="true"></i>
                                 </div>
                             </div>

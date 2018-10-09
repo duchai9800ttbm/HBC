@@ -20,7 +20,7 @@
             <input type="file" accept="image/*" multiple #uploadPerspective (change)="uploadPerspectiveImage($event)">
             <div class="display-img" *ngFor="let url of hinhAnhPhoiCanhUrls" (click)="viewFullScreenImage(perspectiveImageUrls)">
                 <img [src]="url.largeSizeUrl">
-                <div class="toppp" [ngClass]="{'d-none': viewMode}" (click)="deletePerspectiveImage(url)">
+                <div class="icon-delete-image" [ngClass]="{'d-none': viewMode}" (click)="deletePerspectiveImage(url)">
                     <i class="fa fa-times delete-icon" aria-hidden="true"></i>
                 </div>
             </div>
@@ -37,7 +37,7 @@
             <input type="file" accept="image/*" multiple #uploadMasterplan (change)="uploadMasterplanImage($event)">
             <div class="display-img" *ngFor="let url of banVeMasterPlanUrl" (click)="viewFullScreenImage(MasterplanImageUrls)">
                 <img [src]="url.largeSizeUrl">
-                <div class="toppp" [ngClass]="{'d-none': viewMode}" (click)="deleteMasterplanImage(url)">
+                <div class="icon-delete-image" [ngClass]="{'d-none': viewMode}" (click)="deleteMasterplanImage(url)">
                     <i class="fa fa-times delete-icon" aria-hidden="true"></i>
                 </div>
             </div>

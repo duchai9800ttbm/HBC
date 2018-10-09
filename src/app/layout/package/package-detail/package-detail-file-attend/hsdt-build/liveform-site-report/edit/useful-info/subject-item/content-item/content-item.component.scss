@@ -137,10 +137,6 @@ label {
 
 .img-demo-des {
     margin-bottom: 15px;
-
-    label.label-hide {
-        visibility: hidden;
-    }
 }
 
 //
@@ -164,13 +160,13 @@ label {
             opacity: 0.5;
         }
 
-        .toppp {
+        .icon-delete-image {
             opacity: 1;
         }
     }
 }
 
-.toppp {
+.icon-delete-image {
     transition: 1s ease;
     opacity: 0;
     position: relative;
@@ -221,7 +217,4 @@ label {
 }
 .view-mode-text {
     pointer-events: none;
-}
-.label-content{
-    visibility: hidden
 }

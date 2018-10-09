@@ -1,18 +1,18 @@
 <form [formGroup]="contentItemForm" class="fix-position-form">
     <div class="img-demo-des">
-        <label class="label-hide"> </label>
+        <label class="invisible"> </label>
         <input type="text" class="input-name-content" [ngClass]="{'view-mode-text': viewMode}" formControlName="tenNoidung">
         <i (click)="deleteContentItem()" [ngClass]="{'d-none': viewMode}" class="fa fa-times-circle remove-content-button" aria-hidden="true"></i>
     </div>
     <div class="img-demo-des">
-        <label class="label-content">Nội dung</label>
+        <label class="invisible">Nội dung</label>
         <textarea class="desc-content" [ngClass]="{'view-mode-text': viewMode}" cols="20" rows="5" formControlName="chiTietNoiDung"></textarea>
     </div>
     <div class="image-demo-img">
         <input type="file" accept="image/*" multiple #uploadContent [ngClass]="{'view-mode-text': viewMode}" (change)="uploadContentImage($event)">
         <div class="display-img" *ngFor="let url of contentItemImageList" (click)="viewFullScreenImage(contentItemImageList)">
             <img [src]="url.largeSizeUrl">
-            <div class="toppp" [ngClass]="{'d-none': viewMode}" (click)="deleteContentImage(url)">
+            <div class="icon-delete-image" [ngClass]="{'d-none': viewMode}" (click)="deleteContentImage(url)">
                 <i class="fa fa-times delete-icon" aria-hidden="true"></i>
             </div>
         </div>
