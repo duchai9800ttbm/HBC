@@ -25,6 +25,20 @@ import { PopupUpdateDescriptionComponent } from './popup-update-description/popu
     SharedModule,
     SummaryConditionFormRoutingModule
   ],
-  declarations: [SummaryConditionFormComponent, SummaryConditionFormInfoComponent, SummaryConditionFormRelatedPartiesComponent, SummaryConditionFormScopeWorkComponent, SummaryConditionFormNonminatedSubConstructorComponent, SummaryConditionFormMainMaterialComponent, SummaryConditionFormTenderSubmissionComponent, SummaryConditionFormProfileDestinationComponent, SummaryConditionFormTenderClarficationComponent, SummaryConditionFormConditionContractComponent, SummaryConditionFormConditionTenderComponent, SummaryConditionFormSpecialRequirementComponent, PopupUpdateDescriptionComponent]
+  declarations: [
+    SummaryConditionFormComponent,
+    SummaryConditionFormInfoComponent,
+    SummaryConditionFormRelatedPartiesComponent,
+    SummaryConditionFormScopeWorkComponent,
+    SummaryConditionFormNonminatedSubConstructorComponent,
+    SummaryConditionFormMainMaterialComponent,
+    SummaryConditionFormTenderSubmissionComponent,
+    SummaryConditionFormProfileDestinationComponent,
+    SummaryConditionFormTenderClarficationComponent,
+    SummaryConditionFormConditionContractComponent,
+    SummaryConditionFormConditionTenderComponent,
+    SummaryConditionFormSpecialRequirementComponent,
+    PopupUpdateDescriptionComponent
+  ]
 })
 export class SummaryConditionFormModule { }
