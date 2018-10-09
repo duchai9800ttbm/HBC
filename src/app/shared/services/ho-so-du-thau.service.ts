@@ -471,6 +471,200 @@ export class HoSoDuThauService {
     return this.apiService.post(url, infoReport).map(res => res);
   }
 
+  // Thông tin bảng tóm tắt ĐKDT
+  getInfoTenderConditionalSummary(bidOpportunityId: number): Observable<any> {
+    const url = `bidopportunity/${bidOpportunityId}/tenderconditionalsummary`;
+    return this.apiService.get(url).map(res => {
+      if (!res.result) {
+        return null;
+      }
+      this.toTenderConditionalSummary(res.result, bidOpportunityId);
+    });
+  }
+
+  toTenderConditionalSummary(model: any, bidOpportunityId: number) {
+    const dataOut = new DuLieuLiveFormDKDT();
+    if (model) {
+      dataOut.id = model.id;
+      dataOut.bidOpportunityId = model.bidOpportunityId;
+      dataOut.documentName = model.documentName;
+      dataOut.createdEmployeeId = model.createdEmployee.employeeId;
+      dataOut.updatedEmployeeId = model.updatedEmployee.employeeId;
+      dataOut.isDraftVersion = model.isDraftVersion;
+      dataOut.thongTinDuAn = model.projectInformation && {
+        tenTaiLieu: model.documentName,
+        lanPhongVan: model.projectInformation.interviewTimes,
+        hinhAnhPhoiCanh: [],
+        banVeMasterPlan: [],
+        dienGiaiThongTinDuAn: model.projectInformation.projectInformation
+      };
+      // TODO: Map lại chỗ StackHolder
+      dataOut.cacBenLienQuan = model.stakeholder;
+      dataOut.phamViCongViec = model.scopeOfWork && {
+        phamViBaoGom: model.scopeOfWork.includedWorks.map(x => ({
+          congTac: x.name,
+          dienGiaiCongTac: x.desc
+        })),
+        phamViKhongBaoGom: (model.scopeOfWork.nonIncludedWorks || []).map(x => ({
+          congTac: x.name,
+          dienGiaiCongTac: x.desc
+        }))
+      };
+      dataOut.danhSachNhaThau = (model.nonminatedSubContractor.workPackages || []).map(x => ({
+        tenGoiCongViec: x.name,
+        ghiChuThem: x.desc,
+        thanhTien: x.totalCost
+      }));
+      dataOut.danhSachVatTu = (model.materialsTobeSuppliedOrAppointedByOwner.materials || []).map(x => ({
+        tenVatTu: x.name,
+        ghiChuThem: x.desc
+      }));
+      dataOut.hoSoDangLuuY = model.mainItemOfTenderSubmission && {
+        taiLieuLuuY: [...model.mainItemOfTenderSubmission.attentiveDocuments],
+        soLuong: model.mainItemOfTenderSubmission.quantity,
+        ngonNgu: model.mainItemOfTenderSubmission.languages
+      };
+      dataOut.dienGiaiYeuCauHoSo = model.requestDocument && {
+        noiNop: model.requestDocument.destination,
+        nguoiNhan: model.requestDocument.receivedPerson,
+        hanNop: model.requestDocument.closingTime
+      };
+      dataOut.dienGiaiYeuCauLamRo = model.requestTenderClarification && {
+        nhaTuVan: model.requestTenderClarification.consultant && {
+          tenCongTy: model.requestTenderClarification.consultant.companyName,
+          diaChiCongTy: model.requestTenderClarification.consultant.companyAddress,
+          nguoiLienHe: model.requestTenderClarification.consultant.contactPerson && {
+            hoVaTen: model.requestTenderClarification.consultant.contactPerson.name,
+            diaChi: model.requestTenderClarification.consultant.contactPerson.address,
+            email: model.requestTenderClarification.consultant.contactPerson.email,
+            viTri: model.requestTenderClarification.consultant.contactPerson.level
+          }
+        },
+        nhaSuDung: model.requestTenderClarification.employer && {
+          tenCongTy: model.requestTenderClarification.employer.companyName,
+          diaChiCongTy: model.requestTenderClarification.employer.companyAddress,
+          nguoiLienHe: model.requestTenderClarification.employer.contactPerson && {
+            hoVaTen: model.requestTenderClarification.employer.contactPerson.name,
+            diaChi: model.requestTenderClarification.employer.contactPerson.address,
+            email: model.requestTenderClarification.employer.contactPerson.email,
+            viTri: model.requestTenderClarification.employer.contactPerson.level
+          }
+        },
+        ngayHetHan: model.requestTenderClarification.closingTime.closingTime,
+        ghiChuThem: model.requestTenderClarification.closingTime.desc
+      };
+      dataOut.dienGiaiDieuKienHopDong = model.contractCondition && {
+        loaiHopDong: model.contractCondition.contractType && {
+          name: model.contractCondition.contractType.contractType,
+          desc: model.contractCondition.contractType.desc
+        },
+        dieuKienTheoHSMT: model.contractCondition.hsmtContractCondition && {
+          baoLanhThucHien: model.contractCondition.hsmtContractCondition && {
+            phanTram: model.contractCondition.hsmtContractCondition.executiveGuaranteePercent,
+            hieuLuc: model.contractCondition.hsmtContractCondition.executiveGuaranteeEfficiency
+          },
+          baoLanhTamUng: model.contractCondition.hsmtContractCondition && {
+            phanTram: model.contractCondition.hsmtContractCondition.advanceGuaranteePercent,
+            hieuLuc: model.contractCondition.hsmtContractCondition.advanceGuaranteeEfficiency
+          },
+          thanhToan: model.contractCondition.hsmtContractCondition && {
+            loaiThanhToan: model.contractCondition.hsmtContractCondition.paymentType,
+            thoiGianThanhToan: model.contractCondition.hsmtContractCondition.paymentTime,
+            thanhToanKhiTapKet: model.contractCondition.hsmtContractCondition.paymentMaterialOnSite
+          },
+          tienGiuLai: model.contractCondition.hsmtContractCondition && {
+            phanTram: model.contractCondition.hsmtContractCondition.retainedPercent,
+            gioiHanTienGiuLai: model.contractCondition.hsmtContractCondition.retainedLimit,
+            thanhToanTienGui: model.contractCondition.hsmtContractCondition.retainedPayment
+          },
+          phatTreTienDo: model.contractCondition.hsmtContractCondition && {
+            phanTram: model.contractCondition.hsmtContractCondition.punishhOverduePercent,
+            gioiHanPhatTienDo: model.contractCondition.hsmtContractCondition.punishhOverdueLimit
+          },
+          thoiGianBaoHanh: model.contractCondition.hsmtContractCondition.guaranteeDuration,
+          baoHiem: model.contractCondition.hsmtContractCondition && {
+            baoHiemMayMoc: [...model.contractCondition.hsmtContractCondition.insurranceMachineOfContractor],
+            baoHiemConNguoi: model.contractCondition.hsmtContractCondition.insurancePersonOfContractor,
+            baoHiemCongTrinh: model.contractCondition.hsmtContractCondition.insurranceConstructionAnd3rdPart
+          }
+        },
+        dieuKienTheoHBC: model.contractCondition.hbcContractCondition && {
+          baoLanhThucHien: model.contractCondition.hbcContractCondition && {
+            phanTram: model.contractCondition.hbcContractCondition.executiveGuaranteePercent,
+            hieuLuc: model.contractCondition.hbcContractCondition.executiveGuaranteeEfficiency
+          },
+          baoLanhTamUng: model.contractCondition.hbcContractCondition && {
+            phanTram: model.contractCondition.hbcContractCondition.advanceGuaranteePercent,
+            hieuLuc: model.contractCondition.hbcContractCondition.advanceGuaranteeEfficiency
+          },
+          thanhToan: model.contractCondition.hbcContractCondition && {
+            loaiThanhToan: model.contractCondition.hbcContractCondition.paymentType,
+            thoiGianThanhToan: model.contractCondition.hbcContractCondition.paymentTime,
+            thanhToanKhiTapKet: model.contractCondition.hbcContractCondition.paymentMaterialOnSite
+          },
+          tienGiuLai: model.contractCondition.hbcContractCondition && {
+            phanTram: model.contractCondition.hbcContractCondition.retainedPercent,
+            gioiHanTienGiuLai: model.contractCondition.hbcContractCondition.retainedLimit,
+            thanhToanTienGui: model.contractCondition.hbcContractCondition.retainedPayment
+          },
+          phatTreTienDo: model.contractCondition.hbcContractCondition && {
+            phanTram: model.contractCondition.hbcContractCondition.punishhOverduePercent,
+            gioiHanPhatTienDo: model.contractCondition.hbcContractCondition.punishhOverdueLimit
+          },
+          thoiGianBaoHanh: model.contractCondition.hbcContractCondition.guaranteeDuration,
+          baoHiem: model.contractCondition.hbcContractCondition && {
+            baoHiemMayMoc: [...model.contractCondition.hbcContractCondition.insurranceMachineOfContractor],
+            baoHiemConNguoi: model.contractCondition.hbcContractCondition.insurancePersonOfContractor,
+            baoHiemCongTrinh: model.contractCondition.hbcContractCondition.insurranceConstructionAnd3rdPart
+          }
+        }
+      };
+      dataOut.dienGiaiDieuKienHSMT = model.tenderCondition && {
+        theoHSMT: model.tenderCondition.hbcTenderCondition && {
+          baoLanhDuThau: model.tenderCondition.hbcTenderCondition && {
+            giaTri: model.tenderCondition.hbcTenderCondition.tenderGuaranteeValue,
+            hieuLuc: model.tenderCondition.hbcTenderCondition.tenderGuaranteeEfficiency
+          },
+          hieuLucHoSo: model.tenderCondition.hbcTenderCondition.tenderEfficiency,
+          tienDo: model.tenderCondition.hbcTenderCondition && {
+            ngayKhoiCong: model.tenderCondition.hbcTenderCondition.progressStartDate,
+            thoiGianHoanThanh: model.tenderCondition.hbcTenderCondition.progressComletionDate
+          },
+
+          // TODO: Chú ý map lại ID, KEY, DISPLAYTEXT
+          cacLoaiThue: (model.tenderCondition.hbcTenderCondition.taxTypes || []).map(x => x.displayText),
+          donViTienTe: (model.tenderCondition.hbcTenderCondition.currency || []).map(x => x.displayText)
+        },
+        theoHBC: model.tenderCondition.hsmtTenderCondition && {
+          baoLanhDuThau: model.tenderCondition.hsmtTenderCondition && {
+            giaTri: model.tenderCondition.hsmtTenderCondition.tenderGuaranteeValue,
+            hieuLuc: model.tenderCondition.hsmtTenderCondition.tenderGuaranteeEfficiency
+          },
+          hieuLucHoSo: model.tenderCondition.hsmtTenderCondition.tenderEfficiency,
+          tienDo: model.tenderCondition.hsmtTenderCondition && {
+            ngayKhoiCong: model.tenderCondition.hsmtTenderCondition.progressStartDate,
+            thoiGianHoanThanh: model.tenderCondition.hsmtTenderCondition.progressComletionDate
+          },
+          // TODO: Chú ý map lại ID, KEY, DISPLAYTEXT
+          cacLoaiThue: (model.tenderCondition.hsmtTenderCondition.taxTypes || []).map(x => x.displayText),
+          donViTienTe: (model.tenderCondition.hsmtTenderCondition.currency || []).map(x => x.displayText)
+        }
+      };
+      // TODO: Map lại chỗ này
+      dataOut.yeuCauDacBietKhac = model.otherSpecialRequirement && {
+        descOne: '',
+        descTwo: '',
+        descThree: '',
+        linkOne: '',
+        linkTwo: '',
+        link2Two: '',
+        linkThree: ''
+      };
+      dataOut.noiDungCapNhat = '';
+    }
+    return dataOut;
+  }
+
 
   // Xóa ảnh
   deleteImage(guid): Observable<any> {

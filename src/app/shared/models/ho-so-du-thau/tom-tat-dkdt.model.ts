@@ -7,6 +7,7 @@ import { TableYeuCauDacBiet } from './table-yeu-cau';
 import { DanhSachVatTu, HoSoDangLuuY, DienGiaiYeuCauHoSo } from './danh-sach-vat-tu';
 
 export class DuLieuLiveFormDKDT {
+    id: number;
     bidOpportunityId: number;
     createdEmployeeId: string;
     updatedEmployeeId: number;
