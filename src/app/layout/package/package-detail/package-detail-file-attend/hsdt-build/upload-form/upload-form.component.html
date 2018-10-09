@@ -150,7 +150,7 @@
                         </div>
                     </th>
 
-                    <th class="boder-table header-table small-column" style="width: 10%">
+                    <th class="boder-table header-table small-column" style="width: 10%;">
                         <div class="d-flex justify-content-center">
                             <div class="center-parent title-text">
                                 <div class="label-thead text-center">Ngày upload</div>
@@ -196,7 +196,7 @@
                     <td class="boder-table text-center text-truncate-custom" [title]="hoso.desc">{{ hoso?.desc }}</td>
                     <td class="td-mark-status boder-table">
                         <div class="d-flex justify-content-between pl-1 pr-1">
-                            <div class="text-truncate text-right" [title]="hoso.status">
+                            <div class="text-truncate text-right" title="{{ hoso.status | translate }}">
                                 {{ hoso.status | translate }}
                             </div>
                             <div (click)="changeStatus(hoso.id, hoso.status)">
@@ -205,9 +205,9 @@
                             </div>
                         </div>
                     </td>
-                    <td class="boder-table text-center text-truncate text-truncate-custom pr-2 pl-2 custom-updater-responsive">{{
-                        hoso.uploadedBy?.employeeName }}</td>
-                    <td class="boder-table text-center">{{ hoso?.uploadedDate*1000 | date:'dd/MM/yyyy HH:mm': '+0000' }}</td>
+                    <td class="boder-table text-center text-truncate text-truncate-custom pr-2 pl-2 custom-updater-responsive" [title]="hoso.uploadedBy.employeeName">
+                        {{ hoso.uploadedBy?.employeeName }}</td>
+                    <td class="boder-table text-center" title="{{ hoso?.uploadedDate*1000 | date:'dd/MM/yyyy HH:mm': '+0000' }}">{{ hoso?.uploadedDate*1000 | date:'dd/MM/yyyy HH:mm': '+0000' }}</td>
                     <td class="boder-table text-center">{{ hoso?.interViewTimes ? hoso?.interViewTimes : '' }}</td>
                     <td class="boder-table">
                         <div class="d-flex justify-content-around">
@@ -240,7 +240,7 @@
         <div class="mt-4" *ngIf="dataDocumentOfType?.length">
             <app-pagination [(pagedResult)]="pagedResult" (pagedResultChange)="pagedResultChange($event)"></app-pagination>
         </div>
-        <div class="mt-4" class="center-parent" *ngIf="!dataDocumentOfType?.length">
+        <div class="mt-4" class="center-parent mt-3" *ngIf="!dataDocumentOfType?.length">
             <div>
                 Không có dữ liệu!
             </div>
