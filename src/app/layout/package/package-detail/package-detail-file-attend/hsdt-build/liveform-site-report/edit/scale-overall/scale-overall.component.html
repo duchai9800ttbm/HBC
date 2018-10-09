@@ -1,7 +1,7 @@
 <form [formGroup]="scaleOverallForm" class="detail-info">
     <div id="step0" class="step-info">
         <div id="info-docs">
-            <div class="label-info" style="margin-bottom: 15px;">
+            <div class="label-info label-info-name">
                 <label for="">Tên tài liệu</label>
                 <input type="text" formControlName="tenTaiLieu" tabindex="1">
             </div>
@@ -28,10 +28,11 @@
                             </div>
                         </div>
                     </form>
-                    <hr style="margin-right: 13%" />
+                    <hr class="line-hoz" />
                     <form [formGroup]="trangThaiCongTrinhForm">
                         <div class="single-row reponsive-checkbox">
-                            <div class="child childcheck reponsive-checkbox-child" formArrayName="trangthaiCongTrinhList" *ngFor="let item of trangthaiCongTrinhListFA.controls; let i = index">
+                            <div class="child childcheck reponsive-checkbox-child" formArrayName="trangthaiCongTrinhList"
+                                *ngFor="let item of trangthaiCongTrinhListFA.controls; let i = index">
                                 <label>
                                     <input [formControlName]="i" type="checkbox" [ngClass]="{'view-mode-control': viewMode}"
                                         [checked]="trangthaiCongTrinhList[i].checked" (change)="trangthaiCongTrinhList[i].checked = !trangthaiCongTrinhList[i].checked; trangThaiCongTrinhChange($event)"
@@ -40,8 +41,9 @@
                                     <span class="checkmark" tabindex="4"></span>
                                 </label>
                             </div>
-                            <div class="reponsive-checkbox-other" *ngIf="showValueOfOther"><input [disabled]="viewMode" type="text" [(ngModel)]="valueOfOthers"
-                                    (ngModelChange)="valueOfOther($event)" [ngModelOptions]="{standalone: true}"></div>
+                            <div class="reponsive-checkbox-other" *ngIf="showValueOfOther"><input [disabled]="viewMode"
+                                    type="text" [(ngModel)]="valueOfOthers" (ngModelChange)="valueOfOther($event)"
+                                    [ngModelOptions]="{standalone: true}"></div>
                         </div>
                     </form>
                 </div>
@@ -74,7 +76,7 @@
                         </div>
                     </div>
                     <div>
-                        <p style="text-decoration: underline;">Hình ảnh phối cảnh dự án/ Perspective image of project</p>
+                        <p class="perspective-text">Hình ảnh phối cảnh dự án/ Perspective image of project</p>
                         <div class="text-des-input">
                             <input type="text" value="Text" formControlName="hinhAnhPhoiCanhDesc" tabindex="10">
                         </div>
