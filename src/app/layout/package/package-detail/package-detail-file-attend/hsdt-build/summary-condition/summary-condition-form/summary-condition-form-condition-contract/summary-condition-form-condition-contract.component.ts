@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, FormArray } from '@angular/forms';
 import { HoSoDuThauService } from '../../../../../../../../shared/services/ho-so-du-thau.service';
 import { DienGiaiDieuKienHopDong } from '../../../../../../../../shared/models/ho-so-du-thau/dien-giai-yeu-cau';
+import DateTimeConvertHelper from '../../../../../../../../shared/helpers/datetime-convert-helper';
+import { SummaryConditionFormComponent } from '../summary-condition-form.component';
 
 @Component({
     selector: 'app-summary-condition-form-condition-contract',
@@ -27,12 +29,17 @@ export class SummaryConditionFormConditionContractComponent implements OnInit {
 
     constructor(
         private fb: FormBuilder,
-        private hoSoDuThauService: HoSoDuThauService
+        private hoSoDuThauService: HoSoDuThauService,
+        private summaryConditionFormComponent: SummaryConditionFormComponent
     ) { }
 
     ngOnInit() {
         this.loadData();
         this.createForm();
+        this.addFormArrayControl('insurances');
+        this.conditionContractForm.valueChanges.subscribe(data =>
+            this.mappingToLiveFormData(data)
+        );
     }
 
     loadData() {
@@ -455,4 +462,23 @@ export class SummaryConditionFormConditionContractComponent implements OnInit {
         formArray.removeAt(idx);
     }
 
+    mappingToLiveFormData(data) {
+        SummaryConditionFormComponent.formModel.contractCondition = data;
+        // tslint:disable-next-line:max-line-length
+        SummaryConditionFormComponent.formModel.contractCondition.contractCondition.executiveGuaranteeEfficiency = DateTimeConvertHelper.fromDtObjectToTimestamp(
+            data.contractCondition.executiveGuaranteeEfficiency
+        );
+        // tslint:disable-next-line:max-line-length
+        SummaryConditionFormComponent.formModel.contractCondition.contractCondition.advanceGuaranteeEfficiency = DateTimeConvertHelper.fromDtObjectToTimestamp(
+            data.contractCondition.advanceGuaranteeEfficiency
+        );
+        // tslint:disable-next-line:max-line-length
+        SummaryConditionFormComponent.formModel.contractCondition.contractCondition.paymentTime = DateTimeConvertHelper.fromDtObjectToTimestamp(
+            data.contractCondition.paymentTime
+        );
+        // tslint:disable-next-line:max-line-length
+        SummaryConditionFormComponent.formModel.contractCondition.contractCondition.guaranteeDuration = DateTimeConvertHelper.fromDtObjectToTimestamp(
+            data.contractCondition.guaranteeDuration
+        );
+    }
 }
