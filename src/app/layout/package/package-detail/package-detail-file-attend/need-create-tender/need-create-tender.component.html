@@ -118,9 +118,10 @@
                 <td>
                     <div *ngIf="item.liveFormChangeds && item.liveFormChangeds.length !== 0">
                         <div *ngFor="let liveFormChanged of item.liveFormChangeds">
-                            <div class="text-truncate">* {{liveFormChanged.liveFormStep | translate}}
-                                <div class="text-truncate">
-                                    - {{liveFormChanged.liveFormTitle | translate}}: từ {{liveFormChanged.oldValue}} thành {{liveFormChanged.newValue}}
+                            <div class="text-truncate" title="* {{liveFormChanged.liveFormStep | translate}}">* {{liveFormChanged.liveFormStep | translate}}
+                                <div class="text-truncate" title="- {{liveFormChanged.liveFormTitle | translate}}: từ {{liveFormChanged.oldValue ? liveFormChanged.oldValue : 'không có'}} thành {{liveFormChanged.newValue ? liveFormChanged.newValue : 'không có'}}">
+                                    - <span class="font-weight-bold">{{liveFormChanged.liveFormTitle | translate}}</span>: từ 
+                                    <span class="font-weight-bold">{{liveFormChanged.oldValue ? liveFormChanged.oldValue : 'không có'}}</span> thành <span class="font-weight-bold">{{liveFormChanged.newValue ? liveFormChanged.newValue : 'không có'}}</span>
                                 </div>
                             </div>
                         </div>

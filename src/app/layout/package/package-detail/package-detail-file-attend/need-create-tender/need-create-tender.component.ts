@@ -69,7 +69,12 @@ export class NeedCreateTenderComponent implements OnInit {
       this.historyList = respone.items;
       console.log('this.history-before', this.historyList);
       // this.historyList = this.historyList.sort( ( a, b ) =>  parseFloat(a.changedTimes) < parseFloat(b.changedTimes));
-      // this.historyList = groupBy(this.historyList, [{ field: 'changedTimes' }]);
+      this.historyList = groupBy(this.historyList, [{ field: 'changedTimes' }]);
+      console.log('this.historyList-changedTimes', this.historyList);
+      // this.historyList.forEach( (itemList, indexList) => {
+      //   this.historyList[indexList].liveFormChangeds = groupBy(itemList.liveFormChangeds, [{ field: 'liveFormStep' }]);
+      // });
+      // console.log('after-history', this.historyList);
       setTimeout(() => {
         this.dtTrigger2.next();
       });
