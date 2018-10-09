@@ -1,7 +1,7 @@
 <form [formGroup]="specialRequirementForm">
     <div class="p-3">
-        <h5 class="text-uppercase">IV. danh sách các nhà thầu phụ được chỉ định (list of nonminated sub-contractors)</h5>
-        <div formArrayName="requirements">
+        <h5 class="text-uppercase font-weight-bold">IV. danh sách các nhà thầu phụ được chỉ định (list of nonminated sub-contractors)</h5>
+        <div>
             <div>
 
                 <div class="container-table mt-3">
@@ -61,11 +61,14 @@
 
             </div>
         </div>
-        <div class="text-center mt-4">
-            <button class="btn border" routerLink="../condition-tender">
-                <i class="fa font-size-3 mr-3 fa-angle-left" aria-hidden="true"></i>
-                Trở về
-            </button>
-        </div>
+        <footer>
+                <div class="text-center mt-4">
+                        <button class="btn border" routerLink="../condition-tender">
+                            <i class="fa font-size-3 mr-3 fa-angle-left" aria-hidden="true"></i>
+                            Trở về
+                        </button>
+                    </div>
+        </footer>
+    
     </div>
 </form>

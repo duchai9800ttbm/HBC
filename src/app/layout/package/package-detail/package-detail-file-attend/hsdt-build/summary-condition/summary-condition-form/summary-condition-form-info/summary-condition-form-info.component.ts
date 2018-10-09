@@ -81,7 +81,7 @@ export class SummaryConditionFormInfoComponent implements OnInit {
   }
 
 
-  uploadStructureImage(event) {
+  uploadPerspectiveImage(event) {
     const files = event.target.files;
     this.hoSoDuThauService
       .uploadImage(files, this.currentBidOpportunityId)
@@ -99,7 +99,7 @@ export class SummaryConditionFormInfoComponent implements OnInit {
       });
   }
 
-  deleteStructureImage(i) {
+  deletePerspectiveImage(i) {
     const index = this.hinhAnhPhoiCanhUrls.indexOf(i);
     this.hoSoDuThauService.deleteImage(i.id).subscribe(res => {
     }, err => {

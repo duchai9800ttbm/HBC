@@ -12,11 +12,11 @@
         </div>
     </div>
     <div class="mt-3">
-        <h5 class="text-uppercase">I. thông tin dự án (project information)</h5>
+        <h5 class="text-uppercase index-font-weight">I. thông tin dự án (project information)</h5>
     </div>
     <div class="row mt-3">
-        <div class="col-md-2">1. Hình phối cảnh</div>
-        <div class="image-demo-img">
+        <div class="col-md-4">1. Hình phối cảnh</div>
+        <div class="image-demo-img col-md-8">
             <input type="file" accept="image/*" multiple #uploadPerspective (change)="uploadPerspectiveImage($event)">
             <div class="display-img" *ngFor="let url of hinhAnhPhoiCanhUrls" (click)="viewFullScreenImage(perspectiveImageUrls)">
                 <img [src]="url.largeSizeUrl">
@@ -32,8 +32,8 @@
         </div>
     </div>
     <div class="row mt-3">
-        <div class="col-md-2">2. Bản vẽ master plan</div>
-        <div class="image-demo-img">
+        <div class="col-md-4">2. Bản vẽ master plan</div>
+        <div class="image-demo-img col-md-8">
             <input type="file" accept="image/*" multiple #uploadMasterplan (change)="uploadMasterplanImage($event)">
             <div class="display-img" *ngFor="let url of banVeMasterPlanUrl" (click)="viewFullScreenImage(MasterplanImageUrls)">
                 <img [src]="url.largeSizeUrl">
