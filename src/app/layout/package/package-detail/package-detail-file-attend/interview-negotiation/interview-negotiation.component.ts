@@ -9,7 +9,7 @@ import { CreateNewInvitationComponent } from './create-interview/create-new-invi
 import { InterviewInvitation } from '../../../../../shared/models/interview-invitation/interview-invitation-create.model';
 import { CustomerModel } from '../../../../../shared/models/interview-invitation/customer.model';
 import { InterviewNoticeComponent } from './create-interview/interview-notice/interview-notice.component';
-import { BehaviorSubject } from '../../../../../../../node_modules/rxjs';
+import { BehaviorSubject, Subscription } from '../../../../../../../node_modules/rxjs';
 import { ActivatedRoute, Router, NavigationEnd } from '../../../../../../../node_modules/@angular/router';
 import { NgxSpinnerService } from '../../../../../../../node_modules/ngx-spinner';
 import { AlertService } from '../../../../../shared/services';
@@ -34,6 +34,7 @@ export class InterviewNegotiationComponent implements OnInit, OnDestroy {
   stattusCurrentList;
   currentStatusInterview;
   isNgOnInit = false;
+  subscription: Subscription;
   constructor(
     private dialogService: DialogService,
     private packageService: PackageService,
@@ -52,40 +53,48 @@ export class InterviewNegotiationComponent implements OnInit, OnDestroy {
     this.stattusCurrentList = ['create', 'prepare', 'end'];
     this.packageId = +PackageDetailComponent.packageId;
     this.checkStatusPackage();
-    this.statusObservableHsdtService.statusPackageService.subscribe(value => {
+    this.subscription = this.statusObservableHsdtService.statusPackageService.subscribe(value => {
+      // this.directionalRouter();
       this.checkStatusPackage();
     });
-    this.changeKeySearchInterviewInvitation$.debounceTime(600)
-      .distinctUntilChanged()
-      .subscribe(keySearch => {
-        this.interviewInvitationService.changeKeySearchInterviewInvitation(keySearch);
-      });
-    this.router.events.subscribe((val) => {
+    // this.changeKeySearchInterviewInvitation$.debounceTime(600)
+    //   .distinctUntilChanged()
+    //   .subscribe(keySearch => {
+    //     this.interviewInvitationService.changeKeySearchInterviewInvitation(keySearch);
+    //   });
+    const eventRouter = this.router.events.subscribe((val) => {
       if ((val instanceof NavigationEnd) === true) {
         this.checkStatusPackage();
       }
     });
+    this.directionalRouter();
+    this.subscription.add(eventRouter);
+  }
+
+  ngOnDestroy() {
+    this.subscription.unsubscribe();
+  }
+
+  directionalRouter() {
     this.packageService.getInforPackageID(this.packageId).subscribe(result => {
+      console.log('this.bidStatus.ChuanBiPhongVan', this.bidStatus.ChuanBiPhongVan, result.stageStatus.id);
       switch (result.stageStatus.id) {
         case (this.bidStatus.DaNopHSDT || this.bidStatus.DaNhanLoiMoi): {
           this.router.navigate([`/package/detail/${this.packageId}/attend/interview-negotiation/create`]);
           break;
         }
         case this.bidStatus.ChuanBiPhongVan: {
+          console.log('chuẩn bị phỏng vấn');
           this.router.navigate([`/package/detail/${this.packageId}/attend/interview-negotiation/prepare`]);
           break;
         }
         case this.bidStatus.DaChotCongTacChuanBiPhongVan:
         case this.bidStatus.DaPhongVan: {
-          console.log('Chốt công tác chuẩn bị phỏng vấn');
           this.router.navigate([`/package/detail/${this.packageId}/attend/interview-negotiation/end`]);
           break;
         }
       }
     });
-  }
-
-  ngOnDestroy() {
   }
 
   checkStatusPackage() {
@@ -111,7 +120,15 @@ export class InterviewNegotiationComponent implements OnInit, OnDestroy {
       console.log('this.numberStatusPackageInterview', this.numberStatusPackageInterview);
     });
   }
-
+  // =========================
+  // Đã nộp HSDT
+  refeshSubmittedHSDT() {
+    // this.directionalRouter();
+    this.checkStatusPackage();
+    this.refreshCreateInterview();
+  }
+  // =========================
+  // Create Interview
   createInvitation(interviewCreate: InterviewInvitation) {
     this.dialog = this.dialogService.open({
       content: CreateNewInvitationComponent,

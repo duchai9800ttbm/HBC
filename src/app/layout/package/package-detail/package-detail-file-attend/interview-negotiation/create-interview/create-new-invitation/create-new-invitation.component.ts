@@ -9,6 +9,7 @@ import { InterviewInvitationService } from '../../../../../../../shared/services
 import { CustomerModel } from '../../../../../../../shared/models/interview-invitation/customer.model';
 import ValidationHelper from '../../../../../../../shared/helpers/validation.helper';
 import DateTimeConvertHelper from '../../../../../../../shared/helpers/datetime-convert-helper';
+import { StatusObservableHsdtService } from '../../../../../../../shared/services/status-observable-hsdt.service';
 @Component({
   selector: 'app-create-new-invitation',
   templateUrl: './create-new-invitation.component.html',
@@ -36,6 +37,7 @@ export class CreateNewInvitationComponent implements OnInit {
     private packageService: PackageService,
     private alertService: AlertService,
     private interviewInvitationService: InterviewInvitationService,
+    private statusObservableHsdtService: StatusObservableHsdtService,
   ) {
   }
 
@@ -120,6 +122,7 @@ export class CreateNewInvitationComponent implements OnInit {
         this.interviewInvitation.customer && this.interviewInvitation.customer.customerId ?
           this.interviewInvitation.customer.customerId : null,
         this.currentPackageId, this.createFormNewInvitation.value, this.file).subscribe(response => {
+          this.statusObservableHsdtService.change();
           this.interviewInvitationService.changeInterviewInvitationList();
           this.closePopup();
           this.alertService.success('Thêm mới lời mời thành công!');
