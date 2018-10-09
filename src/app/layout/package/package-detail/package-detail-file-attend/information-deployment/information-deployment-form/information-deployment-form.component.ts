@@ -331,7 +331,7 @@ export class InformationDeploymentFormComponent implements OnInit {
     calculateTotalTime(index) {
         const end = DateTimeConvertHelper.fromDtObjectToSecon( (this.tasksFA.controls[index]).get('finishDate').value);
         const start = DateTimeConvertHelper.fromDtObjectToSecon((this.tasksFA.controls[index]).get('startDate').value);
-        if ( start - end ) {
+        if ( start && end ) {
             this.tasksFA.controls[index].get('totalTime').patchValue(
                 Math.floor( (end - start) / (60 * 60 * 24) )
             );

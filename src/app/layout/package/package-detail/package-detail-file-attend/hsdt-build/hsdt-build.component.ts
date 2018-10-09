@@ -113,10 +113,18 @@ export class HsdtBuildComponent implements OnInit, AfterViewChecked {
             }
         );
     }
-    emitData(id) {
+    emitData(id, checkliveform) {
         this.isHighlight = id - 1;
-        this.hoSoDuThauService.detectChangingRouter(id);
-        this.hoSoDuThauService.transporterData(id);
-        this.router.navigate([`/package/detail/${this.packageId}/attend/build/uploadform`]);
+        if (checkliveform) {
+            if (id === 1) {
+                this.router.navigate([`/package/detail/${this.packageId}/attend/build/summary`]);
+            } else {
+                this.router.navigate([`/package/detail/${this.packageId}/attend/build/liveformsite`]);
+            }
+        } else {
+            this.hoSoDuThauService.detectChangingRouter(id);
+            this.hoSoDuThauService.transporterData(id);
+            this.router.navigate([`/package/detail/${this.packageId}/attend/build/uploadform`]);
+        }
     }
 }

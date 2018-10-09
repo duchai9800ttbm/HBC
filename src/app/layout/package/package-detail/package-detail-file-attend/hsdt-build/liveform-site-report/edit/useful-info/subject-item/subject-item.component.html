@@ -8,8 +8,7 @@
                 <option [value]="subject" *ngFor="let subject of subjectList">{{ subject }}</option>
             </select>
         </span>
-        <i (click)="deleteSubject()" [ngClass]="{'d-none': viewMode}" class="fa fa-times-circle" aria-hidden="true"
-            style="position: relative;color: #BEBEBE;font-size: 30px;left: 30px;top: 6px;"></i>
+        <i (click)="deleteSubject()" [ngClass]="{'d-none': viewMode}" class="fa fa-times-circle icon-delete" aria-hidden="true"></i>
     </div>
     <div class="topic7" *ngFor="let content of usefulInfo.content; let i = index">
         <ng-container>

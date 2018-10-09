@@ -1,13 +1,13 @@
 <form [formGroup]="serviceConstructionForm" class="detail-info">
     <div id="step4" class="step-info">
-        <h5 class="big-title">5.&nbsp;dịch vụ cơ điện phục vụ thi công (temporary building service for construction)</h5>
+        <h6 class="big-title">5.&nbsp;dịch vụ cơ điện phục vụ thi công (temporary building service for construction)</h6>
         <div>
             <div class="detail-each-title">
                 <h6 class="small-title">5.1 Hệ thống nước/ Existing temp. supply water system</h6>
                 <div class="main-detail">
                     <div class="listDetail">
                         <div class="image-demo-des">
-                            <label for="">Hệ thống hiện hữu/ Existing system</label>
+                            <label class="label-item" for="">Hệ thống hiện hữu/ Existing system</label>
                             <input type="text" formControlName="heThongNuocHienHuuDesc">
                         </div>
                         <div class="image-demo-img">
@@ -15,7 +15,7 @@
 
                             <div class="display-img" *ngFor="let url of supplySystemImageUrls" (click)="viewFullScreenImage(supplySystemImageUrls)">
                                 <img [src]="url.largeSizeUrl">
-                                <div class="toppp"  [ngClass]="{'d-none': viewMode}" (click)="deleteSupplySystemImage(url)">
+                                <div class="icon-delete-image"  [ngClass]="{'d-none': viewMode}" (click)="deleteSupplySystemImage(url)">
                                     <i class="fa fa-times delete-icon" aria-hidden="true"></i>
                                 </div>
                             </div>
@@ -27,7 +27,7 @@
                     </div>
                     <div class="listDetail">
                         <div class="image-demo-des">
-                            <label for="">Điểm đấu nối/ Existing connection point</label>
+                            <label class="label-item" for="">Điểm đấu nối/ Existing connection point</label>
                             <input type="text" formControlName="heThongNuocDiemDauNoiDesc">
                         </div>
                         <div class="image-demo-img">
@@ -35,7 +35,7 @@
 
                             <div class="display-img" *ngFor="let url of supplyPointImageUrls" (click)="viewFullScreenImage(supplyPointImageUrls)">
                                 <img [src]="url.largeSizeUrl">
-                                <div class="toppp"  [ngClass]="{'d-none': viewMode}" (click)="deleteSupplyPointImage(url)">
+                                <div class="icon-delete-image"  [ngClass]="{'d-none': viewMode}" (click)="deleteSupplyPointImage(url)">
                                     <i class="fa fa-times delete-icon" aria-hidden="true"></i>
                                 </div>
                             </div>
@@ -52,7 +52,7 @@
                 <div class="main-detail">
                     <div class="listDetail">
                         <div class="image-demo-des">
-                            <label for="">Hệ thống hiện hữu/ Existing system</label>
+                            <label class="label-item" for="">Hệ thống hiện hữu/ Existing system</label>
                             <input type="text" formControlName="heThongNuocThoatHienHuuDesc">
                         </div>
                         <div class="image-demo-img">
@@ -60,7 +60,7 @@
 
                             <div class="display-img" *ngFor="let url of drainageSystemImageUrls" (click)="viewFullScreenImage(drainageSystemImageUrls)">
                                 <img [src]="url.largeSizeUrl">
-                                <div class="toppp"  [ngClass]="{'d-none': viewMode}" (click)="deleteDrainageSystemImage(url)">
+                                <div class="icon-delete-image"  [ngClass]="{'d-none': viewMode}" (click)="deleteDrainageSystemImage(url)">
                                     <i class="fa fa-times delete-icon" aria-hidden="true"></i>
                                 </div>
                             </div>
@@ -72,7 +72,7 @@
                     </div>
                     <div class="listDetail">
                         <div class="image-demo-des">
-                            <label for="">Điểm đấu nối/ Existing connection point</label>
+                            <label class="label-item" for="">Điểm đấu nối/ Existing connection point</label>
                             <input type="text" formControlName="heThongNuocThoatDiemDauNoiDesc">
                         </div>
                         <div class="image-demo-img">
@@ -80,7 +80,7 @@
 
                             <div class="display-img" *ngFor="let url of drainagePointImageUrls" (click)="viewFullScreenImage(drainagePointImageUrls)">
                                 <img [src]="url.largeSizeUrl">
-                                <div class="toppp"  [ngClass]="{'d-none': viewMode}" (click)="deleteDrainagePointImage(url)">
+                                <div class="icon-delete-image"  [ngClass]="{'d-none': viewMode}" (click)="deleteDrainagePointImage(url)">
                                     <i class="fa fa-times delete-icon" aria-hidden="true"></i>
                                 </div>
                             </div>
@@ -97,7 +97,7 @@
                 <div class="main-detail">
                     <div class="listDetail">
                         <div class="image-demo-des">
-                            <label for="">Trạm hạ thế/Transformer station</label>
+                            <label class="label-item" for="">Trạm hạ thế/Transformer station</label>
                             <input type="text" formControlName="tramHaTheDesc">
                         </div>
                         <div class="image-demo-img">
@@ -105,7 +105,7 @@
 
                             <div class="display-img" *ngFor="let url of powerStationImageUrls" (click)="viewFullScreenImage(powerStationImageUrls)">
                                 <img [src]="url.largeSizeUrl">
-                                <div class="toppp"  [ngClass]="{'d-none': viewMode}" (click)="deletePowerStationImage(url)">
+                                <div class="icon-delete-image"  [ngClass]="{'d-none': viewMode}" (click)="deletePowerStationImage(url)">
                                     <i class="fa fa-times delete-icon" aria-hidden="true"></i>
                                 </div>
                             </div>
@@ -117,7 +117,7 @@
                     </div>
                     <div class="listDetail">
                         <div class="image-demo-des">
-                            <label for="">Đường dây trung thế hiện hữu/ Existing medium voltage system</label>
+                            <label class="label-item" for="">Đường dây trung thế hiện hữu/ Existing medium voltage system</label>
                             <input type="text" formControlName="duongDayTrungTheDesc">
                         </div>
                         <div class="image-demo-img">
@@ -125,7 +125,7 @@
 
                             <div class="display-img" *ngFor="let url of mediumVoltageSystemImageUrls" (click)="viewFullScreenImage(mediumVoltageSystemImageUrls)">
                                 <img [src]="url.largeSizeUrl">
-                                <div class="toppp"  [ngClass]="{'d-none': viewMode}" (click)="deleteMediumVoltageSystemImage(url)">
+                                <div class="icon-delete-image"  [ngClass]="{'d-none': viewMode}" (click)="deleteMediumVoltageSystemImage(url)">
                                     <i class="fa fa-times delete-icon" aria-hidden="true"></i>
                                 </div>
                             </div>
@@ -137,7 +137,7 @@
                     </div>
                     <div class="listDetail">
                         <div class="image-demo-des">
-                            <label for="">Khác/ Others</label>
+                            <label class="label-item" for="">Khác/ Others</label>
                             <input type="text" formControlName="heThongDienKhacDesc">
                         </div>
                         <div class="image-demo-img">
@@ -145,7 +145,7 @@
 
                             <div class="display-img" *ngFor="let url of powerOtherImageUrls" (click)="viewFullScreenImage(powerOtherImageUrls)">
                                 <img [src]="url.largeSizeUrl">
-                                <div class="toppp"  [ngClass]="{'d-none': viewMode}" (click)="deletePowerOtherImage(url)">
+                                <div class="icon-delete-image"  [ngClass]="{'d-none': viewMode}" (click)="deletePowerOtherImage(url)">
                                     <i class="fa fa-times delete-icon" aria-hidden="true"></i>
                                 </div>
                             </div>

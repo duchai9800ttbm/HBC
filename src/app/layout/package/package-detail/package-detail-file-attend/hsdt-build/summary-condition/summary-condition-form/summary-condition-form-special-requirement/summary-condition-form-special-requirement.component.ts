@@ -58,13 +58,12 @@ export class SummaryConditionFormSpecialRequirementComponent implements OnInit {
       const otherRequirement = data.yeuCauDacBietKhac;
       if (otherRequirement) {
         this.otherRequirement = otherRequirement;
-      }
-      if (!otherRequirement) {
+      } else {
         this.otherRequirement = [];
         this.otherRequirement.push({
-          name: '',
+          name: 'Green Mark',
           desc: '',
-          link: ''
+          link: 'Nhập Link'
         });
       }
     });

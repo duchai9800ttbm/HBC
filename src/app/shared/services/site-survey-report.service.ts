@@ -20,6 +20,20 @@ export class SiteSurveyReportService {
   get employeeId() {
     return this.sessionService.currentUser.employeeId;
   }
+  // Get danh sách liên hệ
+  getListCustomerContact(page: number, pageSize: number) {
+    const url = `customercontact/${page}/${pageSize}`;
+    return this.apiService.get(url).map(res => {
+      const response = res.result;
+      return {
+        currentPage: response.pageIndex,
+        pageSize: response.pageSize,
+        pageCount: response.totalPages,
+        total: response.totalCount,
+        items: (response.items || [])
+      };
+    });
+  }
   // Danh sách loại công trình
   getListConstructionType(): Observable<DictionaryItem> {
     const url = `bidconstructiontype/constructiontypes`;

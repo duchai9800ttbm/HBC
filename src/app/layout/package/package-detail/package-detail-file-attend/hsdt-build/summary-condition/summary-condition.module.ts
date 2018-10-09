@@ -4,6 +4,7 @@ import { CommonModule } from '@angular/common';
 import { SummaryConditionRoutingModule } from './summary-condition-routing.module';
 import { SummaryConditionComponent } from './summary-condition.component';
 import { SharedModule } from '../../../../../../shared/shared.module';
+import { SiteSurveyReportService } from '../../../../../../shared/services/site-survey-report.service';
 import { SummaryConditionCreateComponent } from './summary-condition-create/summary-condition-create.component';
 import { SummaryConditionEditComponent } from './summary-condition-edit/summary-condition-edit.component';
 import { SummaryConditionDetailComponent } from './summary-condition-detail/summary-condition-detail.component';
@@ -21,7 +22,7 @@ import { HoSoDuThauService } from '../../../../../../shared/services/ho-so-du-th
     SummaryConditionCreateComponent,
     SummaryConditionEditComponent,
     SummaryConditionDetailComponent,
-    SummaryConditionOverviewComponent,
+    SummaryConditionOverviewComponent
   ],
   providers: [
     HoSoDuThauService
