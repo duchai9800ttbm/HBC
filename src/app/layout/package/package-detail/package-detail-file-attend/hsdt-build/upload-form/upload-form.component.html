@@ -134,7 +134,7 @@
                         </div>
                     </th>
 
-                    <th class="th-mark-status boder-table header-table small-column" style="width: 10%">
+                    <th class="th-mark-status boder-table header-table small-column" style="width: 10%; min-width: 100px;">
                         <div class="d-flex justify-content-center">
                             <div class="center-parent title-text">
                                 <div class="label-thead text-center">Tình trạng</div>
@@ -158,10 +158,10 @@
                         </div>
                     </th>
 
-                    <th class="boder-table header-table small-column" style="width: 10%">
+                    <th class="boder-table header-table small-column" style="width: 7%">
                         <div class="d-flex justify-content-center">
                             <div class="center-parent title-text">
-                                <div class="label-thead text-center">Lần phỏng vấn</div>
+                                <div class="label-thead text-center">Lần p-vấn</div>
                             </div>
                         </div>
                     </th>
@@ -191,7 +191,7 @@
                     <td *ngIf="childrenOfTypeDocument?.length" class="boder-table text-center text-truncate-custom">
                         {{ hoso.tenderDocumentType?.name }}
                     </td>
-                    <td class="boder-table text-center text-truncate-custom">{{ hoso?.documentName }}</td>
+                    <td class="boder-table text-center text-truncate-custom" [title]="hoso.documentName">{{ hoso?.documentName }}</td>
                     <td class="boder-table text-center text-truncate">{{ hoso?.version ? hoso?.version : '' }}</td>
                     <td class="boder-table text-center text-truncate-custom">{{ hoso?.desc }}</td>
                     <td class="td-mark-status boder-table">
