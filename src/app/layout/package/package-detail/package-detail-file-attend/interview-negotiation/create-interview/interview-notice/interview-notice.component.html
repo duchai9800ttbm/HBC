@@ -56,7 +56,7 @@
     </div>
 </div>
 <div class="modal-body">
-    <div class="input-group mb-3">
+    <!-- <div class="input-group mb-3">
         <div class="input-group-prepend">
             <span class="input-group-text">To:</span>
         </div>
@@ -109,8 +109,54 @@
                 </table>
             </ng-template>
         </kendo-multiselect>
+    </div> -->
+    <div class="input-group mb-3">
+        <span class="input-group-addon">To:</span>
+        <ng-select class="w-100" [items]="listEmailSearchTo" typeToSearchText="Nhập email" addTagText="Thêm email:" clearAllText="Xóa tất cả"
+            [addTag]="true" [hideSelected]="true" multiple="true" bindLabel="employeeName" [searchFn]="customSearchFn" [(ngModel)]="emailModel.to">
+            <ng-template ng-option-tmp let-item="item" let-index="index" let-search="searchTerm">
+                <table>
+                    <tr>{{item.employeeName}}</tr>
+                    <tr>{{item.employeeEmail}}</tr>
+                </table>
+            </ng-template>
+        </ng-select>
     </div>
-    
+
+    <div class="input-group mb-3" *ngIf="isSendCc">
+        <span class="input-group-addon" id="basic-addon1">Cc:</span>
+        <ng-select class="w-100" [items]="listEmailSearchCc" addTagText="Thêm email:" clearAllText="Xóa tất cả" [addTag]="true" [hideSelected]="true"
+            multiple="true" bindLabel="employeeName" [searchFn]="customSearchFn" [(ngModel)]="emailModel.cc">
+            <ng-template ng-option-tmp let-item="item" let-index="index" let-search="searchTerm">
+                <table>
+                    <tr>{{item.employeeName}}</tr>
+                    <tr>{{item.employeeEmail}}</tr>
+                </table>
+            </ng-template>
+        </ng-select>
+    </div>
+
+    <div class="input-group mb-3" *ngIf="isSendBcc">
+        <span class="input-group-addon" id="basic-addon1">Bcc:</span>
+        <ng-select class="w-100" [items]="listEmailSearchBcc" addTagText="Thêm email:" clearAllText="Xóa tất cả" [addTag]="true"
+            [hideSelected]="true" multiple="true" bindLabel="employeeName" [searchFn]="customSearchFn" [(ngModel)]="emailModel.bcc">
+            <ng-template ng-option-tmp let-item="item" let-index="index" let-search="searchTerm">
+                <table>
+                    <tr>{{item.employeeName}}</tr>
+                    <tr>{{item.employeeEmail}}</tr>
+                </table>
+            </ng-template>
+        </ng-select>
+    </div>
+
+    <div class="mb-3 ml-2" *ngIf="!isSendCc || !isSendBcc">
+        <span class="">
+            <span *ngIf="!isSendCc" title="Thêm người nhận Cc" class="send-cc" (click)="sendCc()">Thêm Cc</span>
+            <span *ngIf="!isSendCc && !isSendBcc" class="send-cc"> | </span>
+            <span *ngIf="!isSendBcc" title="Thêm người nhận Bcc" class="send-cc" (click)="sendBcc()">Thêm Bcc</span>
+        </span>
+    </div>
+
     <div class="input-group mb-3">
         <div class="input-group-prepend">
             <span class="input-group-text" id="basic-addon1">Tiêu đề:</span>
@@ -120,8 +166,7 @@
     </div>
     <div class="body-ckeditor">
         <ckeditor [(ngModel)]="emailModel.content" [config]="ckeConfig" #ckeditor>
-            <ckbutton [name]="'saveButton'" [command]="'saveCmd'" [icon]="'save.png'" [label]="'Save Document'"
-                [toolbar]="'clipboard,1'">
+            <ckbutton [name]="'saveButton'" [command]="'saveCmd'" [icon]="'save.png'" [label]="'Save Document'" [toolbar]="'clipboard,1'">
             </ckbutton>
         </ckeditor>
     </div>

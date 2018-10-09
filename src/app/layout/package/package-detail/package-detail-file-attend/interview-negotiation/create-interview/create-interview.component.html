@@ -61,8 +61,8 @@
         </div>
       </div>
     </div> -->
-    <div class="center-parent row set-width-image" *ngIf="currentStatusInterview === 0">
-      <!-- statusPackage === bidStatus.DaNopHSDT &&  -->
+    <div class="center-parent row set-width-image" *ngIf="statusPackage === bidStatus.DaNopHSDT">
+      <!-- currentStatusInterview === 0 &&   -->
       <div class="col-md-12 center-parent">
         <img class="class-image" src="assets/images/thuongthao.png" width="250" class="d-inline-block" alt="">
       </div>
@@ -73,8 +73,8 @@
         </button>
       </div>
     </div>
-    <div class="set-width-content pt-2" *ngIf="currentStatusInterview > 0">
-      <!-- statusPackage === bidStatus.DaNopHSDT &&  -->
+    <div class="set-width-content pt-2" *ngIf="currentStatusInterview > 0 || statusPackage === bidStatus.DaNhanLoiMoi">
+      <!-- currentStatusInterview > 0 &&  -->
       <div>
         <div class=" title-list-package d-flex flex-wrap align-items-center status-filter">
           <div class="mr-auto d-flex align-items-end list-package mb-2" style="padding-top: 0!important;">
@@ -248,7 +248,7 @@
                     <div style="width: 15px"></div>
                   </div> -->
                 </td>
-                <td>
+                <td [title]="item.customer ? item.customer.customerName : ''">
                   {{item.customer ? item.customer.customerName : ''}}
                 </td>
                 <td class="text-align-number">
@@ -257,10 +257,10 @@
                 <td class="text-align-number">
                   {{ item.interviewDate !==0 ? ((item.interviewDate)*1000 | date:'dd/MM/yyyy':'+0000') : ''}}
                 </td>
-                <td>
+                <td [title]="item.place">
                   {{item.place}}
                 </td>
-                <td>
+                <td [title]="item.content">
                   {{item.content}}
                 </td>
                 <td class="text-center">
@@ -279,8 +279,8 @@
                     </div>
                   </div>
                 </td>
-                <td class="text-center">
-                  <div *ngIf="item.remainningDay > 0">
+                <td>
+                  <div *ngIf="item.remainningDay > 0" class="text-center" title="Còn {{item.remainningDay}} ngày đến thời gian phỏng vấn">
                     Còn {{item.remainningDay}} ngày đến thời gian phỏng vấn
                   </div>
                   <div *ngIf="item.remainningDay < 0">

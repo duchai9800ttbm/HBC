@@ -113,7 +113,7 @@
                                 <tr>
                                     <td class="w-30 label no-boder bold-title">Đường dẫn link</td>
                                     <td class="w-70 no-boder">
-                                        <input class="w-100" class="form-control" tabindex="1" type="text" formControlName="link">
+                                        <input class="w-100" [attr.disabled]="file ? '' : null" class="form-control" tabindex="1" type="text" formControlName="link">
                                     </td>
                                 </tr>
                                 <tr>

@@ -170,19 +170,19 @@ export class PackageDetailFileAttendComponent implements OnInit {
           break;
         }
         case this.bidStatus.DaNhanLoiMoi: {
-          this.router.navigate([`/package/detail/${this.packageId}/attend/interview-negotiation`]);
+          this.router.navigate([`/package/detail/${this.packageId}/attend/interview-negotiation/create`]);
           break;
         }
         case this.bidStatus.ChuanBiPhongVan: {
-          this.router.navigate([`/package/detail/${this.packageId}/attend/interview-negotiation`]);
+          this.router.navigate([`/package/detail/${this.packageId}/attend/interview-negotiation/prepare`]);
           break;
         }
         case this.bidStatus.DaChotCongTacChuanBiPhongVan: {
-          this.router.navigate([`/package/detail/${this.packageId}/attend/interview-negotiation`]);
+          this.router.navigate([`/package/detail/${this.packageId}/attend/interview-negotiation/end`]);
           break;
         }
         case this.bidStatus.DaPhongVan: {
-          this.router.navigate([`/package/detail/${this.packageId}/attend/interview-negotiation`]);
+          this.router.navigate([`/package/detail/${this.packageId}/attend/interview-negotiation/end`]);
           break;
         }
         default: {

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { PackageService } from '../../../../../shared/services/package.service';
 import { PackageDetailComponent } from '../../package-detail.component';
 import { StatusObservableHsdtService } from '../../../../../shared/services/status-observable-hsdt.service';
@@ -9,7 +9,7 @@ import { CreateNewInvitationComponent } from './create-interview/create-new-invi
 import { InterviewInvitation } from '../../../../../shared/models/interview-invitation/interview-invitation-create.model';
 import { CustomerModel } from '../../../../../shared/models/interview-invitation/customer.model';
 import { InterviewNoticeComponent } from './create-interview/interview-notice/interview-notice.component';
-import { BehaviorSubject } from '../../../../../../../node_modules/rxjs';
+import { BehaviorSubject, Subscription } from '../../../../../../../node_modules/rxjs';
 import { ActivatedRoute, Router, NavigationEnd } from '../../../../../../../node_modules/@angular/router';
 import { NgxSpinnerService } from '../../../../../../../node_modules/ngx-spinner';
 import { AlertService } from '../../../../../shared/services';
@@ -21,7 +21,7 @@ import { ReportEndInterviewComponent } from './end-interview/report-end-intervie
   templateUrl: './interview-negotiation.component.html',
   styleUrls: ['./interview-negotiation.component.scss']
 })
-export class InterviewNegotiationComponent implements OnInit {
+export class InterviewNegotiationComponent implements OnInit, OnDestroy {
   changeKeySearchInterviewInvitation$ = new BehaviorSubject<string>('');
   packageId: number;
   statusPackage;
@@ -34,6 +34,7 @@ export class InterviewNegotiationComponent implements OnInit {
   stattusCurrentList;
   currentStatusInterview;
   isNgOnInit = false;
+  subscription: Subscription;
   constructor(
     private dialogService: DialogService,
     private packageService: PackageService,
@@ -51,31 +52,44 @@ export class InterviewNegotiationComponent implements OnInit {
     this.bidStatus.ChuanBiPhongVan, this.bidStatus.DaChotCongTacChuanBiPhongVan, this.bidStatus.DaPhongVan];
     this.stattusCurrentList = ['create', 'prepare', 'end'];
     this.packageId = +PackageDetailComponent.packageId;
-    this.statusObservableHsdtService.statusPackageService.subscribe(value => {
-      console.log('status');
+    this.checkStatusPackage();
+    this.subscription = this.statusObservableHsdtService.statusPackageService.subscribe(value => {
+      // this.directionalRouter();
       this.checkStatusPackage();
     });
-    this.changeKeySearchInterviewInvitation$.debounceTime(600)
-      .distinctUntilChanged()
-      .subscribe(keySearch => {
-        this.interviewInvitationService.changeKeySearchInterviewInvitation(keySearch);
-      });
-    this.router.events.subscribe((val) => {
+    // this.changeKeySearchInterviewInvitation$.debounceTime(600)
+    //   .distinctUntilChanged()
+    //   .subscribe(keySearch => {
+    //     this.interviewInvitationService.changeKeySearchInterviewInvitation(keySearch);
+    //   });
+    const eventRouter = this.router.events.subscribe((val) => {
       if ((val instanceof NavigationEnd) === true) {
         this.checkStatusPackage();
       }
     });
+    this.directionalRouter();
+    this.subscription.add(eventRouter);
+  }
+
+  ngOnDestroy() {
+    this.subscription.unsubscribe();
+  }
+
+  directionalRouter() {
     this.packageService.getInforPackageID(this.packageId).subscribe(result => {
+      console.log('this.bidStatus.ChuanBiPhongVan', this.bidStatus.ChuanBiPhongVan, result.stageStatus.id);
       switch (result.stageStatus.id) {
         case (this.bidStatus.DaNopHSDT || this.bidStatus.DaNhanLoiMoi): {
           this.router.navigate([`/package/detail/${this.packageId}/attend/interview-negotiation/create`]);
           break;
         }
         case this.bidStatus.ChuanBiPhongVan: {
+          console.log('chuẩn bị phỏng vấn');
           this.router.navigate([`/package/detail/${this.packageId}/attend/interview-negotiation/prepare`]);
           break;
         }
-        case (this.bidStatus.DaChotCongTacChuanBiPhongVan || this.bidStatus.DaPhongVan): {
+        case this.bidStatus.DaChotCongTacChuanBiPhongVan:
+        case this.bidStatus.DaPhongVan: {
           this.router.navigate([`/package/detail/${this.packageId}/attend/interview-negotiation/end`]);
           break;
         }
@@ -104,36 +118,17 @@ export class InterviewNegotiationComponent implements OnInit {
       }
       console.log('this.currentStatusInterview', this.currentStatusInterview);
       console.log('this.numberStatusPackageInterview', this.numberStatusPackageInterview);
-      // if (!this.isNgOnInit) {
-      //   switch (this.numberStatusPackageInterview) {
-      //     case 1: {
-      //       this.router.navigate([`/package/detail/${this.packageId}/attend/interview-negotiation/create`]);
-      //       break;
-      //     }
-      //     case 2: {
-      //       this.router.navigate([`/package/detail/${this.packageId}/attend/interview-negotiation/prepare`]);
-      //       break;
-      //     }
-      //     case 3: {
-      //       this.router.navigate([`/package/detail/${this.packageId}/attend/interview-negotiation/end`]);
-      //       break;
-      //     }
-      //   }
-      //   this.isNgOnInit = true;
-      // }
-
-      // if (this.statusPackage === this.bidStatus.DaNopHSDT || this.statusPackage === this.bidStatus.DaNhanLoiMoi) {
-      //   this.interviewInvitationService.getListInterview(
-      //     this.packageId,
-      //     0,
-      //     1000
-      //   ).subscribe(response => {
-      //     this.amountInterview = response.length + 1;
-      //   });
-      // }
     });
   }
-
+  // =========================
+  // Đã nộp HSDT
+  refeshSubmittedHSDT() {
+    // this.directionalRouter();
+    this.checkStatusPackage();
+    this.refreshCreateInterview();
+  }
+  // =========================
+  // Create Interview
   createInvitation(interviewCreate: InterviewInvitation) {
     this.dialog = this.dialogService.open({
       content: CreateNewInvitationComponent,
@@ -152,13 +147,18 @@ export class InterviewNegotiationComponent implements OnInit {
   }
 
   noticeInterview() {
-    this.dialog = this.dialogService.open({
-      content: InterviewNoticeComponent,
-      width: 1100,
-      minWidth: 250
-    });
-    const instance = this.dialog.content.instance;
-    instance.callBack = () => this.closePopuup();
+    if (this.interviewInvitationService.getChooseInterviewNotification()
+      && this.interviewInvitationService.getChooseInterviewNotification().length !== 0) {
+      this.dialog = this.dialogService.open({
+        content: InterviewNoticeComponent,
+        width: 1100,
+        minWidth: 250
+      });
+      const instance = this.dialog.content.instance;
+      instance.callBack = () => this.closePopuup();
+    } else {
+      this.alertService.error('Chưa chọn lần phỏng vấn!');
+    }
   }
 
   refreshCreateInterview() {
@@ -174,6 +174,7 @@ export class InterviewNegotiationComponent implements OnInit {
   approvedInterviewPreparation() {
     this.spinner.show();
     this.interviewInvitationService.approvedinterviewpreparation(this.packageId).subscribe(response => {
+      this.statusObservableHsdtService.change();
       this.spinner.hide();
       this.alertService.success('Chốt công tác chuẩn bị phỏng vấn thành công!');
     },
@@ -216,6 +217,7 @@ export class InterviewNegotiationComponent implements OnInit {
   correctionHSDT() {
     this.interviewInvitationService.correctionHSDT(this.packageId).subscribe(response => {
       this.alertService.success('Hiệu chỉnh hồ sơ dự thầu thành công!');
+      this.router.navigate([`/package/detail/${this.packageId}/attend/build/summary`]);
     },
       err => {
         this.alertService.error('Hiệu chỉnh hồ sơ dự thầu không thành công!');
@@ -225,6 +227,7 @@ export class InterviewNegotiationComponent implements OnInit {
   closeInterview() {
     this.interviewInvitationService.closeInterview(this.packageId).subscribe(response => {
       this.alertService.success('Đóng phỏng vấn thành công!');
+      this.router.navigate([`/package/detail/${this.packageId}/result/wait-result`]);
     },
       err => {
         this.alertService.error('Đóng phỏng vấn không thành công!');

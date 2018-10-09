@@ -455,3 +455,9 @@ table.dataTable td{
     width: 9px;
     cursor: pointer;
 }
+:host /deep/ .dataTables_wrapper {
+    position: inherit !important;
+}
+:host /deep/ .dataTables_empty {
+    display: none !important;
+}

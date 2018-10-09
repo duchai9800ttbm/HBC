@@ -165,7 +165,7 @@
         <div class="input-group mb-3" *ngIf="isSendCc">
             <span class="input-group-addon" id="basic-addon1">Cc:</span>
             <ng-select class="w-100" [items]="listEmailSearchCc" addTagText="Thêm email:" clearAllText="Xóa tất cả" [addTag]="true" [hideSelected]="true"
-                multiple="true" bindLabel="employeeEmail" [searchFn]="customSearchFn" [(ngModel)]="emailModel.cc">
+                multiple="true" bindLabel="employeeName" [searchFn]="customSearchFn" [(ngModel)]="emailModel.cc">
                 <ng-template ng-option-tmp let-item="item" let-index="index" let-search="searchTerm">
                     <table>
                         <tr>{{item.employeeName}}</tr>
@@ -178,7 +178,7 @@
         <div class="input-group mb-3" *ngIf="isSendBcc">
             <span class="input-group-addon" id="basic-addon1">Bcc:</span>
             <ng-select class="w-100" [items]="listEmailSearchBcc" addTagText="Thêm email:" clearAllText="Xóa tất cả" [addTag]="true"
-                [hideSelected]="true" multiple="true" bindLabel="employeeEmail" [searchFn]="customSearchFn" [(ngModel)]="emailModel.bcc">
+                [hideSelected]="true" multiple="true" bindLabel="employeeName" [searchFn]="customSearchFn" [(ngModel)]="emailModel.bcc">
                 <ng-template ng-option-tmp let-item="item" let-index="index" let-search="searchTerm">
                     <table>
                         <tr>{{item.employeeName}}</tr>
