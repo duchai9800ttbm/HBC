@@ -30,15 +30,12 @@ export class SummaryConditionFormConditionContractComponent implements OnInit {
     constructor(
         private fb: FormBuilder,
         private hoSoDuThauService: HoSoDuThauService,
-        private summaryConditionFormComponent: SummaryConditionFormComponent
     ) { }
 
     ngOnInit() {
         this.loadData();
         this.createForm();
-        this.addFormArrayControl('insurances');
-        this.conditionContractForm.valueChanges.subscribe(data =>
-            this.mappingToLiveFormData(data)
+        this.conditionContractForm.valueChanges.subscribe(
         );
     }
 
@@ -445,40 +442,47 @@ export class SummaryConditionFormConditionContractComponent implements OnInit {
 
     }
 
-    addFormArrayControl(name: string) {
-        const formGroup = this.conditionContractForm.get(
-            'contractCondition'
-        ) as FormGroup;
-        const formArray = formGroup.get(name) as FormArray;
-        const formItem = this.fb.group({
-            name: '',
-            description: ''
+    addFormArrayControl() {
+        const formGroupHSMT = (this.conditionContractForm.get(
+            'dieuKienTheoHSMT'
+        ) as FormGroup).controls.baoHiem as FormGroup;
+        const formArrayHSMT = formGroupHSMT.get('baoHiemMayMoc') as FormArray;
+        const formItemHSMT = this.fb.group({
+            baoHiemItem: {
+                value: '',
+                disabled: this.isModelView
+            }
         });
-        formArray.push(formItem);
+        formArrayHSMT.push(formItemHSMT);
+
+        const formGroupHBC = (this.conditionContractForm.get(
+            'dieuKienTheoHBC'
+        ) as FormGroup).controls.baoHiem as FormGroup;
+        const formArrayHBC = formGroupHBC.get('baoHiemMayMoc') as FormArray;
+        const formItemHBC = this.fb.group({
+            baoHiemItem: {
+                value: '',
+                disabled: this.isModelView
+            }
+        });
+        formArrayHBC.push(formItemHBC);
+
     }
 
     removeFormArrayControl(name: string, idx: number) {
-        const formArray = this.conditionContractForm.get(name) as FormArray;
-        formArray.removeAt(idx);
+        const formGroupHSMT = (this.conditionContractForm.get(
+            'dieuKienTheoHSMT'
+        ) as FormGroup).controls.baoHiem as FormGroup;
+        const formArrayHSMT = formGroupHSMT.get('baoHiemMayMoc') as FormArray;
+        formArrayHSMT.removeAt(idx);
+
+
+        const formGroupHBC = (this.conditionContractForm.get(
+            'dieuKienTheoHBC'
+        ) as FormGroup).controls.baoHiem as FormGroup;
+        const formArrayHBC = formGroupHBC.get('baoHiemMayMoc') as FormArray;
+        formArrayHBC.removeAt(idx);
     }
 
-    mappingToLiveFormData(data) {
-        SummaryConditionFormComponent.formModel.contractCondition = data;
-        // tslint:disable-next-line:max-line-length
-        SummaryConditionFormComponent.formModel.contractCondition.contractCondition.executiveGuaranteeEfficiency = DateTimeConvertHelper.fromDtObjectToTimestamp(
-            data.contractCondition.executiveGuaranteeEfficiency
-        );
-        // tslint:disable-next-line:max-line-length
-        SummaryConditionFormComponent.formModel.contractCondition.contractCondition.advanceGuaranteeEfficiency = DateTimeConvertHelper.fromDtObjectToTimestamp(
-            data.contractCondition.advanceGuaranteeEfficiency
-        );
-        // tslint:disable-next-line:max-line-length
-        SummaryConditionFormComponent.formModel.contractCondition.contractCondition.paymentTime = DateTimeConvertHelper.fromDtObjectToTimestamp(
-            data.contractCondition.paymentTime
-        );
-        // tslint:disable-next-line:max-line-length
-        SummaryConditionFormComponent.formModel.contractCondition.contractCondition.guaranteeDuration = DateTimeConvertHelper.fromDtObjectToTimestamp(
-            data.contractCondition.guaranteeDuration
-        );
-    }
+
 }
