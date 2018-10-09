@@ -104,6 +104,7 @@
                             <span class="custom-dropdown mx-sm-2">
                                 <select class="form-control" [(ngModel)]="filterModel.uploadedEmployeeId">
                                     <option [value]="null">--Lựa chọn--</option>
+                                    <option *ngFor="let item of uploadedEmployeeList" [value]="item.employeeId">{{item.employeeName}}</option>
                                 </select>
                             </span>
                         </div>
@@ -116,7 +117,7 @@
                             <span class="custom-dropdown mx-sm-2">
                                 <select class="form-control" [(ngModel)]="filterModel.interviewtimes">
                                     <option [ngValue]="null">--Lựa chọn--</option>
-                                    <option *ngFor="let item of numberOfInterviews">{{item}}</option>
+                                    <option *ngFor="let item of interviewTimeList">{{item}}</option>
                                 </select>
                             </span>
                         </div>
@@ -135,7 +136,7 @@
                     <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="table-selection row-border hover cell-border dataTable table table-layout">
                         <thead>
                             <tr>
-                                <th class="w-5 stt class-color set-width-stt">
+                                <th class="set-width-stt stt class-color">
                                     <div class="d-flex justify-content-around">
                                         <div class="w-40">
                                             <div class="center-parent">
@@ -225,7 +226,7 @@
                                     </div>
                                 </th>
 
-                                <th class="w-5 table-action text-center set-width-manipulation">
+                                <th class="set-width-manipulation table-action text-center">
                                     Thao tác
                                 </th>
                             </tr>
@@ -248,7 +249,7 @@
                                 <td>
                                     {{item.documentName}}
                                 </td>
-                                <td>
+                                <td class="text-center">
                                     {{item.version}}
                                 </td>
                                 <td>
@@ -258,14 +259,14 @@
                                     {{item.uploadedBy.employeeName}}
                                 </td>
                                 <td>
-                                    {{(item.createdDate)*1000 | date:'dd/MM/yyyy'}}
+                                    {{(item.createdDate)*1000 | date:'dd/MM/yyyy':'+0000'}}
                                 </td>
                                 <td class="text-center">
                                     {{item.interviewTimes}}
                                 </td>
                                 <td class="text-center">
                                     <div class="d-flex justify-content-around">
-                                        <div>
+                                        <div (click)="downloadReport(item.id)">
                                             <a title="Tải file">
                                                 <i class="fa fa-download icon-download--color" aria-hidden="true"></i>
                                             </a>

@@ -76,13 +76,13 @@ export class ReportEndInterviewComponent implements OnInit {
   }
 
   Upload() {
-    console.log('this.Upload.Upload', this.createFormReport.get('documentName').value, this.formErrors);
     this.isSubmitted = true;
     if (this.validateForm() &&
       ((this.createFormReport.get('link').value && this.createFormReport.get('link').value !== '') || (this.file))) {
       this.interviewInvitationService.UploadReportInterview(this.currentPackageId, this.createFormReport.value, this.file)
         .subscribe(response => {
           this.closePopup();
+          this.interviewInvitationService.changeEndInterviewList();
           this.reloadData();
           this.alertService.success('Thêm mới lời mời thành công!');
         },

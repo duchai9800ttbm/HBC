@@ -252,10 +252,10 @@
                   {{item.customer ? item.customer.customerName : ''}}
                 </td>
                 <td class="text-align-number">
-                  {{ item.approvedDate !== 0 ? ((item.approvedDate)*1000 | date:'dd/MM/yyyy') : ''}}
+                  {{ item.approvedDate !== 0 ? ((item.approvedDate)*1000 | date:'dd/MM/yyyy':'+0000') : ''}}
                 </td>
                 <td class="text-align-number">
-                  {{ item.interviewDate !==0 ? ((item.interviewDate)*1000 | date:'dd/MM/yyyy') : ''}}
+                  {{ item.interviewDate !==0 ? ((item.interviewDate)*1000 | date:'dd/MM/yyyy':'+0000') : ''}}
                 </td>
                 <td>
                   {{item.place}}

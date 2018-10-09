@@ -13,6 +13,8 @@ import { InterviewInvitationReportList } from '../../../../../../shared/models/i
 import { PackageService } from '../../../../../../shared/services/package.service';
 import { BidStatus } from '../../../../../../shared/constants/bid-status';
 import { GroupDescriptor } from '../../../../../../../../node_modules/@progress/kendo-data-query';
+import { Validators } from '../../../../../../../../node_modules/@angular/forms';
+import DateTimeConvertHelper from '../../../../../../shared/helpers/datetime-convert-helper';
 @Component({
   selector: 'app-end-interview',
   templateUrl: './end-interview.component.html',
@@ -33,6 +35,9 @@ export class EndInterviewComponent implements OnInit {
   interviewTimeList;
   uploadedEmployeeList;
   listClassifyCustomer: Observable<DictionaryItem[]>;
+  isOnInit: boolean;
+  currentFieldSort;
+  statusSort;
   constructor(
     private dialogService: DialogService,
     private spinner: NgxSpinnerService,
@@ -41,7 +46,6 @@ export class EndInterviewComponent implements OnInit {
     private packageService: PackageService,
     private userService: UserService,
   ) { }
-
   ngOnInit() {
     this.filterModel.interviewtimes = null;
     this.filterModel.uploadedEmployeeId = null;
@@ -67,6 +71,14 @@ export class EndInterviewComponent implements OnInit {
           this.spinner.hide();
           this.alertService.error('Đã xảy ra lỗi!');
         });
+    this.interviewInvitationService.watchRefeshEndInterview().subscribe(result => {
+      this.refresh(this.isOnInit);
+      this.spinner.hide();
+    });
+    this.interviewInvitationService.watchEndInterviewList().subscribe(result => {
+      this.filter();
+      this.spinner.hide();
+    });
   }
 
   render(pagedResult: any) {
@@ -141,5 +153,120 @@ export class EndInterviewComponent implements OnInit {
         this.render(result);
         this.spinner.hide();
       }, err => this.spinner.hide());
+  }
+
+  clearFilter() {
+    this.filterModel.interviewtimes = null;
+    this.filterModel.uploadedEmployeeId = null;
+    this.filterModel.createdDate = null;
+    this.filter();
+  }
+
+  refresh(displayAlert: boolean = false): void {
+    this.spinner.show();
+    this.interviewInvitationService
+      .filterListReport(
+        this.currentPackageId,
+        this.searchTerm$.value,
+        this.filterModel,
+        0,
+        1000
+      )
+      .subscribe(result => {
+        this.render(result);
+        this.spinner.hide();
+        if (displayAlert) {
+          this.alertService.success(
+            'Dữ liệu đã được cập nhật mới nhất'
+          );
+        }
+        this.isOnInit = true;
+      }, err => this.spinner.hide());
+  }
+
+  downloadReport(bidInterviewReportDocId: number) {
+    this.interviewInvitationService.downloadReport(bidInterviewReportDocId).subscribe(response => {
+    },
+      err => {
+        this.alertService.error('Tải về biên bản phỏng vấn không thành công!');
+      });
+  }
+
+  sortField(fieldSort: string, statusSort: string) {
+    this.currentFieldSort = fieldSort;
+    this.statusSort = statusSort;
+    switch (this.statusSort) {
+      case 'asc': {
+        switch (fieldSort) {
+          case 'documentName': {
+            this.pagedResult.items = this.pagedResult.items.sort((a, b) => {
+              return ('' + a.documentName).localeCompare(b.documentName);
+            });
+            this.render(this.pagedResult);
+            break;
+          }
+          case 'version': {
+            this.pagedResult.items = this.pagedResult.items.sort((a, b) => parseFloat(a.version) - parseFloat(b.version));
+            this.render(this.pagedResult);
+            break;
+          }
+          case 'employeeName': {
+            this.pagedResult.items = this.pagedResult.items.sort((a, b) =>
+              parseFloat(a.uploadedBy.employeeName) - parseFloat(b.uploadedBy.employeeName));
+            this.render(this.pagedResult);
+            break;
+          }
+          case 'createdDate': {
+            this.pagedResult.items = this.pagedResult.items.sort((a, b) => a.createdDate - b.createdDate);
+            this.render(this.pagedResult);
+            break;
+          }
+          case 'interviewTimes': {
+            this.pagedResult.items = this.pagedResult.items.sort((a, b) => a.interviewTimes - b.interviewTimes);
+            this.render(this.pagedResult);
+            break;
+          }
+        }
+        break;
+      }
+      case 'desc': {
+        switch (fieldSort) {
+          case 'documentName': {
+            this.pagedResult.items = this.pagedResult.items.sort((a, b) => {
+              return ('' + b.documentName).localeCompare(a.documentName);
+            });
+            this.render(this.pagedResult);
+            break;
+          }
+          case 'version': {
+            this.pagedResult.items = this.pagedResult.items.sort((a, b) => parseFloat(b.version) - parseFloat(a.version));
+            this.render(this.pagedResult);
+            break;
+          }
+          case 'employeeName': {
+            this.pagedResult.items = this.pagedResult.items.sort((a, b) =>
+              parseFloat(b.uploadedBy.employeeName) - parseFloat(a.uploadedBy.employeeName));
+            this.render(this.pagedResult);
+            break;
+          }
+          case 'createdDate': {
+            this.pagedResult.items = this.pagedResult.items.sort((a, b) => b.createdDate - a.createdDate);
+            this.render(this.pagedResult);
+            break;
+          }
+          case 'interviewTimes': {
+            this.pagedResult.items = this.pagedResult.items.sort((a, b) => b.interviewTimes - a.interviewTimes);
+            this.render(this.pagedResult);
+            break;
+          }
+        }
+        break;
+      }
+      case '': {
+        this.pagedResult.items = this.pagedResult.items.sort((a, b) => a.id - b.id);
+        this.render(this.pagedResult);
+        break;
+      }
+    }
   }
 }
