@@ -22,8 +22,8 @@ export class SummaryConditionFormConditionContractComponent implements OnInit {
     }
 
     get baoHiemMayMocHBCFA(): FormArray {
-        const dieuKienHSMT = this.conditionContractForm.get('dieuKienTheoHBC') as FormGroup;
-        const baoHiem = dieuKienHSMT.get('baoHiem') as FormGroup;
+        const dieuKienHBC = this.conditionContractForm.get('dieuKienTheoHBC') as FormGroup;
+        const baoHiem = dieuKienHBC.get('baoHiem') as FormGroup;
         return baoHiem.get('baoHiemMayMoc') as FormArray;
     }
 
