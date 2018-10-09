@@ -62,6 +62,7 @@
 }
 .w-5{
     width: 5% !important;
+    width: 3rem !important;
 }
 .w-10{
     width: 10% !important;
@@ -69,6 +70,14 @@
 .w-15{
     width: 15% !important;
 }
+.w-30{
+    width: 30% !important;
+}
 .w-60{
     width: 60% !important;
 }
+// :host /deep/ table.dataTable th {
+//     border-bottom: 1px solid #f68e56 !important;
+//     background-color: #f68e56;
+//     color: #ffff;
+// }
