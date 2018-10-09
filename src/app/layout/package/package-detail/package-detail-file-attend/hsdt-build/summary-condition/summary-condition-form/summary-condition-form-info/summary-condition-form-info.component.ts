@@ -27,7 +27,6 @@ export class SummaryConditionFormInfoComponent implements OnInit {
     private hoSoDuThauService: HoSoDuThauService,
     private alertService: AlertService,
     private router: Router,
-    private siteSurveyReportService: SiteSurveyReportService,
     private fb: FormBuilder
   ) { }
 
@@ -82,74 +81,10 @@ export class SummaryConditionFormInfoComponent implements OnInit {
   }
 
 
-  // uploadStructureImage(event) {
-  //   const files = event.target.files;
-  //   this.hoSoDuThauService
-  //     .uploadImage(files, this.currentBidOpportunityId)
-  //     .subscribe(res => {
-  //       this.hinhAnhPhoiCanhUrls = [...this.hinhAnhPhoiCanhUrls, ...res];
-  //       this.thongTinDuAnForm.get('hinhAnhPhoiCanh').patchValue(this.hinhAnhPhoiCanhUrls);
-  //     }, err => {
-  //       this.alertService.error('Upload hình ảnh thất bại. Xin vui lòng thử lại!');
-  //       this.hinhAnhPhoiCanhUrls.forEach(x => {
-  //         if (!x.id) {
-  //           const index = this.hinhAnhPhoiCanhUrls.indexOf(x);
-  //           this.hinhAnhPhoiCanhUrls.splice(index, 1);
-  //         }
-  //       });
-  //     });
-  // }
-
-  // deleteStructureImage(i) {
-  //   const index = this.hinhAnhPhoiCanhUrls.indexOf(i);
-  //   this.hoSoDuThauService.deleteImage(i.id).subscribe(res => {
-  //   }, err => {
-  //     this.alertService.error('Đã xảy ra lỗi, hình ảnh xóa không thành công');
-  //   });
-  //   this.hinhAnhPhoiCanhUrls.splice(index, 1);
-  //   this.thongTinDuAnForm.get('hinhAnhPhoiCanh').patchValue(this.hinhAnhPhoiCanhUrls);
-  // }
-
-  // uploadBanVe(event) {
-  //   const files = event.target.files;
-  //   this.hoSoDuThauService
-  //     .uploadImage(files, this.currentBidOpportunityId)
-  //     .subscribe(res => {
-  //       this.banVeMasterPlanUrl = [...this.banVeMasterPlanUrl, ...res];
-  //       this.thongTinDuAnForm.get('banVeMasterPlan').patchValue(this.banVeMasterPlanUrl);
-  //     }, err => {
-  //       this.alertService.error('Upload hình ảnh thất bại. Xin vui lòng thử lại!');
-  //       this.banVeMasterPlanUrl.forEach(x => {
-  //         if (!x.id) {
-  //           const index = this.banVeMasterPlanUrl.indexOf(x);
-  //           this.banVeMasterPlanUrl.splice(index, 1);
-  //         }
-  //       });
-  //     });
-  // }
-
-  // deleteBanVe(i) {
-  //   const index = this.banVeMasterPlanUrl.indexOf(i);
-  //   this.hoSoDuThauService.deleteImage(i.id).subscribe(res => {
-  //   }, err => {
-  //     this.alertService.error('Đã xảy ra lỗi, hình ảnh xóa không thành công');
-  //   });
-  //   this.banVeMasterPlanUrl.splice(index, 1);
-  //   this.thongTinDuAnForm.get('banVeMasterPlan').patchValue(this.banVeMasterPlanUrl);
-  // }
-
-  viewFullScreenImage(listImage) {
-    this.showPopupViewImage = true;
-    this.imageUrlArray = [...listImage];
-  }
-
-  closeView() {
-    this.showPopupViewImage = false;
-  }
-  uploadPerspectiveImage(event) {
+  uploadStructureImage(event) {
     const files = event.target.files;
-    this.siteSurveyReportService
-      .uploadImageSiteSurveyingReport(files, this.currentBidOpportunityId)
+    this.hoSoDuThauService
+      .uploadImage(files, this.currentBidOpportunityId)
       .subscribe(res => {
         this.hinhAnhPhoiCanhUrls = [...this.hinhAnhPhoiCanhUrls, ...res];
         this.thongTinDuAnForm.get('hinhAnhPhoiCanh').patchValue(this.hinhAnhPhoiCanhUrls);
@@ -163,13 +98,52 @@ export class SummaryConditionFormInfoComponent implements OnInit {
         });
       });
   }
-  deletePerspectiveImage(i) {
+
+  deleteStructureImage(i) {
     const index = this.hinhAnhPhoiCanhUrls.indexOf(i);
-    this.siteSurveyReportService.deleteImageSiteSurveyingReport(i.id).subscribe(res => {
+    this.hoSoDuThauService.deleteImage(i.id).subscribe(res => {
     }, err => {
       this.alertService.error('Đã xảy ra lỗi, hình ảnh xóa không thành công');
     });
     this.hinhAnhPhoiCanhUrls.splice(index, 1);
     this.thongTinDuAnForm.get('hinhAnhPhoiCanh').patchValue(this.hinhAnhPhoiCanhUrls);
   }
+
+  uploadBanVe(event) {
+    const files = event.target.files;
+    this.hoSoDuThauService
+      .uploadImage(files, this.currentBidOpportunityId)
+      .subscribe(res => {
+        this.banVeMasterPlanUrl = [...this.banVeMasterPlanUrl, ...res];
+        this.thongTinDuAnForm.get('banVeMasterPlan').patchValue(this.banVeMasterPlanUrl);
+      }, err => {
+        this.alertService.error('Upload hình ảnh thất bại. Xin vui lòng thử lại!');
+        this.banVeMasterPlanUrl.forEach(x => {
+          if (!x.id) {
+            const index = this.banVeMasterPlanUrl.indexOf(x);
+            this.banVeMasterPlanUrl.splice(index, 1);
+          }
+        });
+      });
+  }
+
+  deleteBanVe(i) {
+    const index = this.banVeMasterPlanUrl.indexOf(i);
+    this.hoSoDuThauService.deleteImage(i.id).subscribe(res => {
+    }, err => {
+      this.alertService.error('Đã xảy ra lỗi, hình ảnh xóa không thành công');
+    });
+    this.banVeMasterPlanUrl.splice(index, 1);
+    this.thongTinDuAnForm.get('banVeMasterPlan').patchValue(this.banVeMasterPlanUrl);
+  }
+
+  viewFullScreenImage(listImage) {
+    this.showPopupViewImage = true;
+    this.imageUrlArray = [...listImage];
+  }
+
+  closeView() {
+    this.showPopupViewImage = false;
+  }
+
 }
