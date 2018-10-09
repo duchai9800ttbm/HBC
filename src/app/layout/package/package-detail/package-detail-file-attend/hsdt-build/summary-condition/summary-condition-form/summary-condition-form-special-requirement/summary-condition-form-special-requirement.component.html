@@ -2,11 +2,7 @@
     <div class="p-3">
         <h5 class="text-uppercase">IV. danh sách các nhà thầu phụ được chỉ định (list of nonminated sub-contractors)</h5>
         <div formArrayName="requirements">
-            <div *ngFor="let fControl of requirementsFA.controls; let i = index" [formGroupName]="i">
-                <div class="mt-3">
-                    {{i + 1}}.<span class="ml-3">Yêu cầu {{i + 1}}</span><i class="fa fa-plus-square-o ml-3 pointer"
-                        aria-hidden="true" (click)="addFormArrayControl('requirements')" *ngIf="(i + 1) === requirementsFA.length"></i>
-                </div>
+            <div>
 
                 <div class="container-table mt-3">
                     <table class="table-requirement">
@@ -15,46 +11,49 @@
                                 <div class="index-row-table">1</div>
                             </td>
                             <td>
-                                <input type="text" placeholder="Green Building Standard">
+                                Green Building Standard
                             </td>
                             <td>
-                                <input formControlName="name" class="form-control" type="text" placeholder="Green Mark">
+                                <input formControlName="descOne" class="form-control" type="text">
                             </td>
                             <td>
-                                <input formControlName="link"  class="form-control" type="text" placeholder="Nhập Link">
+                                <input formControlName="linkOne" class="form-control" type="text">
                             </td>
                         </tr>
+
                         <tr class="tr-requirement">
                             <td rowspan="2">
                                 <div class="index-row-table">2</div>
                             </td>
                             <td rowspan="2">
-                                <input formControlName="desc" class="form-control" type="text">
+                                Tender Evaluation
                             </td>
                             <td rowspan="2">
-                                <input type="text" placeholder="Two (02) steps">
+                                <input type="text" formControlName="descTwo">
                             </td>
                             <td>
-                                <input type="text" placeholder="Preliminary">
+                                <input type="text" formControlName="linkTwo">
                             </td>
                         </tr>
+
                         <tr class="tr-requirement">
                             <td>
-                                <input type="text" placeholder="Detail Evaluation">
+                                <input type="text" formControlName="link2Two">
                             </td>
                         </tr>
+
                         <tr class="tr-requirement">
                             <td>
                                 <div class="index-row-table">3</div>
                             </td>
                             <td>
-                                <input type="text" placeholder="Profit, Overhead and Attendance">
+                                Profit, Overhead and Attendance
                             </td>
                             <td>
-                                <input type="text" placeholder="3%">
+                                <input type="text" formControlName="descThree">
                             </td>
                             <td>
-                                <input type="text" placeholder="Maximum">
+                                <input type="text" formControlName="linkThree">
                             </td>
                         </tr>
                     </table>
