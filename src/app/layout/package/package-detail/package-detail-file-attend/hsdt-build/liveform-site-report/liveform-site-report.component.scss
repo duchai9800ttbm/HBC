@@ -494,6 +494,32 @@ table.dataTable {
     }
 }
 
+.icon-ic-file {
+    width: 10%;
+}
+.icon-view-file{
+    color: #00B21E;
+}
+.icon-edit-file{
+    color: #004FA4;
+}
+.icon-print-file{
+    color: #FF5F22;
+}
+
+.title-header-report {
+    padding-top: 0 !important;
+
+    .title-header-report-text {
+        height: 40px;
+        font-size: 15px;
+        text-transform: uppercase;
+    }
+}
+.custom-table-responsive{
+    overflow-x:auto;
+}
+
 .icon-mg {
     margin: 0 12px 0 12px;
 }

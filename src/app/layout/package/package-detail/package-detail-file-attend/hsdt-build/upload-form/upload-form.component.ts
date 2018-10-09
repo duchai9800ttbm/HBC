@@ -76,7 +76,7 @@ export class UploadFormComponent implements OnInit {
   }
   closePopuup() {
     this.dialog.close();
-    this.getDataDocumentOfType();
+    this.getDataDocumentOfType(false, false);
   }
   getDataDocumentOfType(alert = false, spiner = true) {
     if (spiner) { this.spinner.show(); }
@@ -199,12 +199,13 @@ export class UploadFormComponent implements OnInit {
     this.filterModel.status = '';
     this.filterModel.uploadedEmployeeId = '';
     this.filterModel.createdDate = null;
+    this.filterModel.interViewTimes = '';
     this.getDataDocumentOfType(false, false);
   }
   changeStatus(id, status) {
     if (status === 'Draft') {
       this.hoSoDuThauService.updateStatus(id, 'Official').subscribe(res => {
-        this.getDataDocumentOfType(true, false);
+        this.getDataDocumentOfType(false, false);
         this.dtTrigger.next();
       }, err => {
         this.dtTrigger.next();
@@ -213,7 +214,7 @@ export class UploadFormComponent implements OnInit {
     }
     if (status === 'Official') {
       this.hoSoDuThauService.updateStatus(id, 'Draft').subscribe(res => {
-        this.getDataDocumentOfType(true, false);
+        this.getDataDocumentOfType(false, false);
         this.dtTrigger.next();
       }, err => {
         this.dtTrigger.next();

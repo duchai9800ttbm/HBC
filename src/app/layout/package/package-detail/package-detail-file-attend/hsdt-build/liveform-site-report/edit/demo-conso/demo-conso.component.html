@@ -1,6 +1,6 @@
 <form [formGroup]="demoConsoForm" class="detail-info">
     <div id="step3" class="step-info">
-        <h5 class="big-title">4.&nbsp;phá vỡ và gia cố (demobilisation and consolidation)</h5>
+        <h6 class="big-title">4.&nbsp;phá vỡ và gia cố (demobilisation and consolidation)</h6>
         <div>
             <div class="detail-each-title">
                 <h6 class="small-title">4.1 Phá vỡ kết cấu/ tòa nhà/ Demobilisation existing structure or building</h6>
@@ -13,7 +13,7 @@
                             <input type="file" accept="image/*" multiple #uploadDemobilisation (change)="uploadDemobilisationImage($event)">
                             <div class="display-img" *ngFor="let url of demobilisationImageUrls" (click)="viewFullScreenImage(demobilisationImageUrls)">
                                 <img [src]="url.largeSizeUrl">
-                                <div class="toppp"  [ngClass]="{'d-none': viewMode}" (click)="deleteDemobilisationImage(url)">
+                                <div class="icon-delete-image"  [ngClass]="{'d-none': viewMode}" (click)="deleteDemobilisationImage(url)">
                                     <i class="fa fa-times delete-icon" aria-hidden="true"></i>
                                 </div>
                             </div>
@@ -37,7 +37,7 @@
 
                             <div class="display-img" *ngFor="let url of consolidationImageUrls" (click)="viewFullScreenImage(consolidationImageUrls)">
                                 <img [src]="url.largeSizeUrl">
-                                <div class="toppp"  [ngClass]="{'d-none': viewMode}" (click)="deleteConsolidationImage(url)">
+                                <div class="icon-delete-image"  [ngClass]="{'d-none': viewMode}" (click)="deleteConsolidationImage(url)">
                                     <i class="fa fa-times delete-icon" aria-hidden="true"></i>
                                 </div>
                             </div>
@@ -62,7 +62,7 @@
 
                             <div class="display-img" *ngFor="let url of adjacentImageUrls" (click)="viewFullScreenImage(adjacentImageUrls)">
                                 <img [src]="url.largeSizeUrl">
-                                <div class="toppp"  [ngClass]="{'d-none': viewMode}" (click)="deleteAdjacentImage(url)">
+                                <div class="icon-delete-image"  [ngClass]="{'d-none': viewMode}" (click)="deleteAdjacentImage(url)">
                                     <i class="fa fa-times delete-icon" aria-hidden="true"></i>
                                 </div>
                             </div>

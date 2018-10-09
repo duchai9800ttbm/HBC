@@ -466,6 +466,9 @@ table.dataTable th {
     transform: none;
     transition-duration: 600ms;
 }
+.middle-line {
+    margin: 3.5px 0;
+}
 
 .res-header-bar {
     height: 40px;
@@ -479,8 +482,16 @@ table.dataTable th {
     width: calc(100% - 45px) !important;
 }
 
+.menu-width {
+    width: 237px;
+}
+
+.table-width {
+    width: calc(100% - 255px);
+}
+
 .left-menu {
-    width: 25px !important;
+    width: 25px;
 }
 
 @media only screen and (max-width: 1024px) {

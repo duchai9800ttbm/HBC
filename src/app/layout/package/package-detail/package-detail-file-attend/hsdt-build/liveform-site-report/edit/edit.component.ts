@@ -12,6 +12,7 @@ import { PackageDetailComponent } from '../../../../package-detail.component';
 import { PackageService } from '../../../../../../../shared/services/package.service';
 import { PackageInfoModel } from '../../../../../../../shared/models/package/package-info.model';
 import { SiteSurveyReportService } from '../../../../../../../shared/services/site-survey-report.service';
+import { DictionaryItem } from '../../../../../../../shared/models';
 // const objectToFormData = require('object-to-formdata');
 
 @Component({
@@ -38,7 +39,8 @@ export class EditComponent implements OnInit, OnDestroy {
   stepName;
   currentBidOpportunityId: number;
   packageData = new PackageInfoModel();
-
+  listCustomerContact;
+  ngayKhaoSat;
   constructor(
     private documentService: DocumentService,
     private siteSurveyReportService: SiteSurveyReportService,
@@ -49,9 +51,21 @@ export class EditComponent implements OnInit, OnDestroy {
   ) { }
 
   ngOnInit() {
+    this.getInfoTenderPreparationPlanning();
+    this.getCustomerContact();
     this.currentBidOpportunityId = +PackageDetailComponent.packageId;
     this.packageService.getInforPackageID(this.currentBidOpportunityId).subscribe(result => {
       this.packageData = result;
+    });
+  }
+  getCustomerContact() {
+    this.siteSurveyReportService.getListCustomerContact(0, 10).subscribe(data => {
+      this.listCustomerContact = data.items;
+    });
+  }
+  getInfoTenderPreparationPlanning() {
+    this.packageService.getTenderPreparationPlanning(this.currentBidOpportunityId).subscribe(data => {
+      this.ngayKhaoSat = data.finishDate;
     });
   }
   submitLiveForm(event) {
