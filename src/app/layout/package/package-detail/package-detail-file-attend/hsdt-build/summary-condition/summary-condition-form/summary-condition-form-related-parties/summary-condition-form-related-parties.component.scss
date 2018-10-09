@@ -1,8 +1,20 @@
 .label-contact {
-    background-color: #EAEAEA;
-    color: #949494;
+    background: #eee;
+    border: none;
+    //border-radius: 5px;
+
     border-top-left-radius: 5px;
     border-bottom-left-radius: 5px;
+    min-width: 55px;
+    border: 1px solid #ced4da;
+    border-top-right-radius: 0px;
+    border-bottom-right-radius: 0px;
+}
+
+.form-control-custom{
+    border-top-left-radius: 0px;
+    border-bottom-left-radius: 0px;
+    border-left: none;
 }
 
 .custom-dropdown-liveform::before {
@@ -45,11 +57,21 @@ span:focus {
     visibility: hidden;
 }
 
-.hide-dropdown::before,
-.hide-dropdown::after {
-    color: transparent !important;
+.w-3{
+    width: calc(100% / 3);
 }
 
-.value-option {
-    color: #0082BB;
+.form-control-customer{
+    height: 100%;
+}
+
+.border-none{
+    width: 100%;
+    outline: none;
+    border: none;
+}
+
+.b-textarea {
+    border: none;
+    resize: none;
 }

@@ -1,29 +1,42 @@
 <div class="p-3">
     <h5 class="text-uppercase">II. các bên liên quan (stakeholders)</h5>
     <div class="d-flex flex-column">
-        <div *ngFor="let stackholder of listOfBidUserStackholder">
-            <div class="d-flex flex-row mt-3">
-                <div class="w-15">1. {{ stackholder.groupDesc }}</div>
-                <div class="w-25 ml-4">
-                    <div class="form-control label-contact">Công ty TNHH ABC</div>
-                </div>
 
-                <div class="w-25 ml-4 mr-4 d-flex flex-row">
-                    <div class="label-contact text-center w-20 d-flex align-content-center justify-content-center">Liên hệ</div>
-                    <span [class.hide-dropdown]="stackholder.customers?.length <= 1" class="custom-dropdown-liveform w-80 custom-dropdown">
-                        <select class="form-control value-option">
-                            <option *ngIf="stackholder.customers?.length > 1" [ngValue]="null">---Chọn---</option>
-                            <option *ngFor="let customer of stackholder.customers" [value]="customer.customerId">{{
-                                customer.customerName }}</option>
-                        </select>
-                    </span>
-                </div>
 
-                <div class="w-25 ml-4 mr-4 d-flex flex-row">
-                    <div class="label-contact text-center w-25 d-flex align-content-center justify-content-center">Ghi chú</div>
-                    <input class="form-control">
-                </div>
+        <div class="d-flex flex-row" *ngFor="let item of mockData; index as i">
+            <div class="w-15">6. {{item.groupName}}</div>
+            <div class="w-85">
+                <ng-container *ngFor="let customer of item.customers; index as k">
+                    <div class="d-flex flex-row w-100 mb-3">
+                        <div class="w-3 ml-3">
+                            <span class="form-control form-control-customer"> {{customer.name}} </span>
+                        </div>
+
+                        <div class="w-3 ml-3 d-flex flex-row">
+                            <div class="label-contact w-20 text-center center-parent">
+                                <div>Liên hệ</div>
+                            </div>
+                            <span class="form-control form-control-custom w-80">
+                                <span>Nguyễn Hữu Nghĩa</span>,
+                                <span>Hoàng Duy Khánh</span>
+                            </span>
+                        </div>
+                        <div class="w-3 ml-3 d-flex flex-row">
+                            <div class="label-contact w-20 text-center center-parent">
+                                <div>Ghi chú</div>
+                            </div>
+                            <span class="form-control form-control-custom w-80">
+                                <textarea class="form-control b-textarea h-100" (input)="noteChange($event)" [(ngModel)]="customer.note"></textarea>
+
+                            </span>
+                        </div>
+                    </div>
+                </ng-container>
             </div>
+
+
         </div>
+
+
     </div>
 </div>
