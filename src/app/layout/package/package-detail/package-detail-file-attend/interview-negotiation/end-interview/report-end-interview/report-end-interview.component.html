@@ -84,14 +84,14 @@
 <div class="example-wrapper">
     <form [formGroup]="createFormReport">
         <div class="title-detail center-parent">
-            <div style="width: 20%;">
+            <div class="w-20">
             </div>
-            <div style="width: 80%;">
+            <div class="w-80">
                 <div class="media-header center-parent">
                     <h3 class="d-inline mb-0 text-dark bold-title">UPLOAD BIÊN BẢN PHỎNG VẤN</h3>
                 </div>
             </div>
-            <div style="width: 20%;" class="d-flex justify-content-end">
+            <div class="d-flex justify-content-end w-20">
                 <div>
                     <div>
                         <img (click)="closePopup()" width="15" height="15" class="cursor-pointer not-outline" src="assets\images\close.png">
@@ -125,7 +125,7 @@
                                             <input type="file" class="upload" tabindex="2" (change)="fileChange($event)" [disabled]="createFormReport.get('link').value"
                                             />
                                         </div>
-                                        <div style="width: calc(100% - 120px);" class="d-flex justify-content-between">
+                                        <div class="d-flex justify-content-between name-file--width">
                                             <div>
                                                 <span class="text-truncate">{{file?.name}}</span>
                                             </div>
