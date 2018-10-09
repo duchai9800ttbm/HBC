@@ -4,6 +4,7 @@ import { TenderConditionSummaryRequest } from '../../../../../../../shared/model
 import { PackageDetailComponent } from '../../../../package-detail.component';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { AlertService } from '../../../../../../../shared/services';
+import { HoSoDuThauService } from '../../../../../../../shared/services/ho-so-du-thau.service';
 
 @Component({
   selector: 'app-summary-condition-form',
@@ -40,15 +41,18 @@ export class SummaryConditionFormComponent implements OnInit, OnDestroy {
   }
 
   onSubmit() {
-    this.spinner.show();
-    this.packageService.createOrUpdateTenderConditionSummary(SummaryConditionFormComponent.formModel).subscribe(data => {
-      console.log(data);
-      this.spinner.hide();
-      this.alertService.success('Lập hồ sơ dự thầu thành công!');
-    }, err => {
-      this.spinner.hide();
-      this.alertService.error('Lập hồ sơ dự thầu thất bại!');
-    });
+    // this.spinner.show();
+    const dataLiveForm = HoSoDuThauService.tempDataLiveFormDKDT;
+    dataLiveForm.value.bidOpportunityId = 10;
+    console.log(HoSoDuThauService.tempDataLiveFormDKDT.value.bidOpportunityId);
+    // this.packageService.createOrUpdateTenderConditionSummary(dataLiveForm).subscribe(data => {
+    //   console.log(data);
+    //   this.spinner.hide();
+    //   this.alertService.success('Lập hồ sơ dự thầu thành công!');
+    // }, err => {
+    //   this.spinner.hide();
+    //   this.alertService.error('Lập hồ sơ dự thầu thất bại!');
+    // });
   }
 
 }

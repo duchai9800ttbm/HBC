@@ -1,3 +1,19 @@
-<p>
-  popup-update-description works!
-</p>
+<div id="overlay">
+  <div id="modal-container">
+      <div class="header-popup">
+          <div class="title">
+              <h3 style="text-transform:uppercase">cập nhật liveform</h3>
+          </div>
+          <div class="close-popup">
+              <span (click)="close()">
+                  X
+              </span>
+          </div>
+      </div>
+      <div class="content-confirm">
+          <h6>Bạn đã cập nhật những gì trong lần chỉnh sửa này?</h6>
+          <textarea rows="3" [(ngModel)]="descriptionUpdate"></textarea>
+          <button type="button" class="btn btn-primary" (click)="submit()">OK</button>
+      </div>
+  </div>
+</div>

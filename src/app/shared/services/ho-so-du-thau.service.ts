@@ -239,7 +239,9 @@ export class HoSoDuThauService {
   emitDataStepSpecial(obj: TableYeuCauDacBiet[]) {
     HoSoDuThauService.tempDataLiveFormDKDT.value.yeuCauDacBietKhac = obj;
   }
-
+  emitDataUpdateDescription(text: string) {
+    HoSoDuThauService.tempDataLiveFormDKDT.value.noiDungCapNhat = text;
+  }
   // gọi API create or update liveform tóm tắt đkdt
   // createOrUpdateLiveFormTomTat(obj: DuLieuLiveFormDKDT): Observable<any> {
   //   const url = `tenderconditionalsummary/createorupdate`;

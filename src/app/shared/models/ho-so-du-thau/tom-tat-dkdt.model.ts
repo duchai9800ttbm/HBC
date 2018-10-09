@@ -12,7 +12,6 @@ export class DuLieuLiveFormDKDT {
     updatedEmployeeId: number;
     isDraftVersion: boolean;
     documentName: string;
-    updatedDesc: string;
     thongTinDuAn: ThongTinDuAn;
     cacBenLienQuan: CacBenLienQuan;
     phamViCongViec: PhamViCongViec;
