@@ -35,8 +35,7 @@ export class SummaryConditionFormConditionContractComponent implements OnInit {
     ngOnInit() {
         this.loadData();
         this.createForm();
-        this.conditionContractForm.valueChanges.subscribe(
-        );
+   
     }
 
     loadData() {
@@ -421,6 +420,7 @@ export class SummaryConditionFormConditionContractComponent implements OnInit {
                     disabled: this.isModelView
                 }
             }));
+
         });
 
         this.dataStepConditionContract.dieuKienTheoHBC.baoHiem.baoHiemMayMoc.forEach(x => {
@@ -439,10 +439,10 @@ export class SummaryConditionFormConditionContractComponent implements OnInit {
             console.log(data);
         });
 
-
     }
 
     addFormArrayControl() {
+        this.conditionContractForm.updateValueAndValidity();
         const formGroupHSMT = (this.conditionContractForm.get(
             'dieuKienTheoHSMT'
         ) as FormGroup).controls.baoHiem as FormGroup;
@@ -453,6 +453,7 @@ export class SummaryConditionFormConditionContractComponent implements OnInit {
                 disabled: this.isModelView
             }
         });
+        formArrayHSMT.updateValueAndValidity();
         formArrayHSMT.push(formItemHSMT);
 
         const formGroupHBC = (this.conditionContractForm.get(
@@ -465,6 +466,7 @@ export class SummaryConditionFormConditionContractComponent implements OnInit {
                 disabled: this.isModelView
             }
         });
+        formArrayHBC.updateValueAndValidity();
         formArrayHBC.push(formItemHBC);
 
     }
