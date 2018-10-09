@@ -24,6 +24,7 @@ import { DanhSachVatTu, HoSoDangLuuY, DienGiaiYeuCauHoSo } from '../models/ho-so
 import { DienGiaiYeuCauLamRo, DienGiaiDieuKienHopDong, DienGiaiDieuKienHSMT } from '../models/ho-so-du-thau/dien-giai-yeu-cau';
 import { TableYeuCauDacBiet } from '../models/ho-so-du-thau/table-yeu-cau';
 import DateTimeConvertHelper from '../helpers/datetime-convert-helper';
+import { StakeHolder } from '../models/ho-so-du-thau/stack-holder.model';
 
 @Injectable()
 export class HoSoDuThauService {
@@ -260,5 +261,10 @@ export class HoSoDuThauService {
   deleleLiveFormTTDKDuThau(bidOpportunityId: number) {
     const url = `bidopportunity/${bidOpportunityId}/tenderconditionalsummary/delete`;
     return this.apiService.post(url).map(response => response);
+  }
+
+  getStackHolders(bidOpportunityId: number): Observable<StakeHolder[]> {
+    const url = `bidopportunity/${bidOpportunityId}/bidusergroupmembersofstakeholders`;
+    return this.apiService.get(url).map(response => response.result);
   }
 }

@@ -1,158 +1,42 @@
-<form [formGroup]="cacBenLienQuanForm" class="p-3">
+<div class="p-3">
     <h5 class="text-uppercase">II. các bên liên quan (stakeholders)</h5>
     <div class="d-flex flex-column">
-        <div class="d-flex flex-row mt-3">
-            <div class="w-15">1. Chủ đầu tư</div>
-            <div class="w-25 ml-4">
-                <input class="form-control" formControlName="donViChuDauTu">
+
+
+        <div class="d-flex flex-row" *ngFor="let item of mockData; index as i">
+            <div class="w-15">6. {{item.groupName}}</div>
+            <div class="w-85">
+                <ng-container *ngFor="let customer of item.customers; index as k">
+                    <div class="d-flex flex-row w-100 mb-3">
+                        <div class="w-3 ml-3">
+                            <span class="form-control form-control-customer"> {{customer.name}} </span>
+                        </div>
+
+                        <div class="w-3 ml-3 d-flex flex-row">
+                            <div class="label-contact w-20 text-center center-parent">
+                                <div>Liên hệ</div>
+                            </div>
+                            <span class="form-control form-control-custom w-80">
+                                <span>Nguyễn Hữu Nghĩa</span>,
+                                <span>Hoàng Duy Khánh</span>
+                            </span>
+                        </div>
+                        <div class="w-3 ml-3 d-flex flex-row">
+                            <div class="label-contact w-20 text-center center-parent">
+                                <div>Ghi chú</div>
+                            </div>
+                            <span class="form-control form-control-custom w-80">
+                                <textarea class="form-control b-textarea h-100" (input)="noteChange($event)" [(ngModel)]="customer.note"></textarea>
+
+                            </span>
+                        </div>
+                    </div>
+                </ng-container>
             </div>
 
-            <div class="w-25 ml-4 mr-4 d-flex flex-row">
-                <input placeholder="Liên hệ" class="label-contact w-20">
-                <span class="custom-dropdown custom-dropdown-liveform w-80">
-                    <select class="form-control">
-                        <option [ngValue]="null">---Chọn---</option>
-                        <option *ngFor="let lienhe of lienHeChuDauTuList" [value]="lienhe">{{ lienhe }}</option>
-                    </select>
-                </span>
-            </div>
 
-            <div class="w-25 ml-4 mr-4 d-flex flex-row">
-                <input placeholder="Ghi chú" class="label-contact w-25">
-                <input class="form-control" formControlName="ghiChuChuDauTu">
-            </div>
         </div>
 
-        <div class="d-flex flex-row mt-3">
-            <div class="w-15">2. Quản lý dự án</div>
-            <div class="w-25 ml-4">
-                <input class="form-control" formControlName="donViQuanLyDuAn">
-            </div>
 
-            <div class="w-25 ml-4 mr-4 d-flex flex-row">
-                <input placeholder="Liên hệ" class="label-contact w-20">
-                <span class="custom-dropdown custom-dropdown-liveform w-80">
-                    <select class="form-control">
-                        <option [ngValue]="null">---Chọn---</option>
-                        <option *ngFor="let lienhe of lienHeChuDauTuList" [value]="lienhe">{{ lienhe }}</option>
-                    </select>
-                </span>
-            </div>
-
-            <div class="w-25 ml-4 mr-4 d-flex flex-row">
-                <input placeholder="Ghi chú" class="label-contact w-25">
-                <input class="form-control" formControlName="ghiChuQuanLyDuAn">
-            </div>
-        </div>
-
-        <div class="d-flex flex-row mt-3">
-            <div class="w-15">3. Quản lý chi phí</div>
-            <div class="w-25 ml-4">
-                <input class="form-control" formControlName="donViQuanLyChiPhi">
-            </div>
-
-            <div class="w-25 ml-4 mr-4 d-flex flex-row">
-                <input placeholder="Liên hệ" class="label-contact w-20">
-                <span class="custom-dropdown custom-dropdown-liveform w-80">
-                    <select class="form-control">
-                        <option [ngValue]="null">---Chọn---</option>
-                        <option *ngFor="let lienhe of lienHeChuDauTuList" [value]="lienhe">{{ lienhe }}</option>
-                    </select>
-                </span>
-            </div>
-
-            <div class="w-25 ml-4 mr-4 d-flex flex-row">
-                <input placeholder="Ghi chú" class="label-contact w-25">
-                <input class="form-control" formControlName="ghiChuQuanLyChiPhi">
-            </div>
-        </div>
-
-        <div class="d-flex flex-row mt-3">
-            <div class="w-15">4. Thiết kế kiến trúc</div>
-            <div class="w-25 ml-4">
-                <input class="form-control" formControlName="donViThietKeKT">
-            </div>
-
-            <div class="w-25 ml-4 mr-4 d-flex flex-row">
-                <input placeholder="Liên hệ" class="label-contact w-20">
-                <span class="custom-dropdown custom-dropdown-liveform w-80">
-                    <select class="form-control">
-                        <option [ngValue]="null">---Chọn---</option>
-                        <option *ngFor="let lienhe of lienHeChuDauTuList" [value]="lienhe">{{ lienhe }}</option>
-                    </select>
-                </span>
-            </div>
-
-            <div class="w-25 ml-4 mr-4 d-flex flex-row">
-                <input placeholder="Ghi chú" class="label-contact w-25">
-                <input class="form-control" formControlName="ghiChuThietKeKT">
-            </div>
-        </div>
-
-        <div class="d-flex flex-row mt-3">
-            <div class="w-15">5. Thiết kế kết cấu</div>
-            <div class="w-25 ml-4">
-                <input class="form-control" formControlName="donViThietKeKC">
-            </div>
-
-            <div class="w-25 ml-4 mr-4 d-flex flex-row">
-                <input placeholder="Liên hệ" class="label-contact w-20">
-                <span class="custom-dropdown custom-dropdown-liveform w-80">
-                    <select class="form-control">
-                        <option [ngValue]="null">---Chọn---</option>
-                        <option *ngFor="let lienhe of lienHeChuDauTuList" [value]="lienhe">{{ lienhe }}</option>
-                    </select>
-                </span>
-            </div>
-
-
-            <div class="w-25 ml-4 mr-4 d-flex flex-row">
-                <input placeholder="Ghi chú" class="label-contact w-25">
-                <input class="form-control" formControlName="ghiChuThietKeKC">
-            </div>
-        </div>
-
-        <div class="d-flex flex-row mt-3" *ngFor="let item of thietKeCoDien; index as i">
-            <div class="w-15" [class.tempHiden]="i!==0">6. Thiết kế cơ điện</div>
-            <div class="w-25 ml-4">
-                <input class="form-control">
-            </div>
-
-            <div class="w-25 ml-4 mr-4 d-flex flex-row">
-                <input placeholder="Liên hệ" class="label-contact w-20">
-                <span class="custom-dropdown custom-dropdown-liveform w-80">
-                    <select class="form-control">
-                        <option [ngValue]="null">---Chọn---</option>
-                        <option *ngFor="let lienhe of item.lienHe"></option>
-                    </select>
-                </span>
-            </div>
-            <div class="w-25 ml-4 mr-4 d-flex flex-row">
-                <input placeholder="Ghi chú" class="label-contact w-25">
-                <input class="form-control">
-            </div>
-        </div>
-
-        <div class="d-flex flex-row mt-3">
-            <div class="w-15">7. Khác</div>
-            <div class="w-25 ml-4">
-                <input class="form-control" formControlName="donViKhac">
-            </div>
-
-            <div class="w-25 ml-4 mr-4 d-flex flex-row">
-                <input placeholder="Liên hệ" class="label-contact w-20">
-                <span class="custom-dropdown custom-dropdown-liveform w-80">
-                    <select class="form-control">
-                        <option [ngValue]="null">---Chọn---</option>
-                        <option *ngFor="let lienhe of lienHeChuDauTuList" [value]="lienhe">{{ lienhe }}</option>
-                    </select>
-                </span>
-            </div>
-
-            <div class="w-25 ml-4 mr-4 d-flex flex-row">
-                <input placeholder="Ghi chú" class="label-contact w-25">
-                <input class="form-control" formControlName="ghiChuKhac">
-            </div>
-        </div>
     </div>
-</form>
+</div>

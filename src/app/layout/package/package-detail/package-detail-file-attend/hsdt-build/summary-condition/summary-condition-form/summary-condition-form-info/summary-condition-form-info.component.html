@@ -1,13 +1,13 @@
 <form [formGroup]="thongTinDuAnForm" class="p-3">
     <div class="row">
-        <div class="col-md-2">Tên tài liệu</div>
-        <div class="col-md-6">
+        <div class="col-md-4">Tên tài liệu</div>
+        <div class="col-md-8">
             <input class="form-control" formControlName="tenTaiLieu">
         </div>
     </div>
     <div class="row mt-3">
-        <div class="col-md-2">Lần phỏng vấn</div>
-        <div class="col-md-6">
+        <div class="col-md-4">Lần phỏng vấn</div>
+        <div class="col-md-8">
             <input type="number" class="form-control" formControlName="lanPhongVan">
         </div>
     </div>
@@ -15,8 +15,8 @@
         <h5 class="text-uppercase">I. thông tin dự án (project information)</h5>
     </div>
     <div class="row mt-3">
-        <div class="col-md-2">1. Hình phối cảnh</div>
-        <div class="col-md-6">
+        <div class="col-md-4">1. Hình phối cảnh</div>
+        <div class="col-md-8">
             <div class="image-demo-img">
                 <input type="file" accept="image/*" multiple #uploadHinhAnhPhoiCanh (change)="uploadStructureImage($event)">
                 <div class="display-img" *ngFor="let url of hinhAnhPhoiCanhList" (click)="viewFullScreenImage(hinhAnhPhoiCanhList)">
@@ -34,8 +34,8 @@
         </div>
     </div>
     <div class="row mt-3">
-        <div class="col-md-2">2. Bản vẽ master plan</div>
-        <div class="col-md-6">
+        <div class="col-md-4">2. Bản vẽ master plan</div>
+        <div class="col-md-8">
 
 
             <div class="image-demo-img">
@@ -55,8 +55,8 @@
         </div>
     </div>
     <div class="row mt-3">
-        <div class="col-md-2">3. Thông tin dự án/ gói thầu</div>
-        <div class="col-md-6">
+        <div class="col-md-4">3. Thông tin dự án/ gói thầu</div>
+        <div class="col-md-8">
             <textarea class="form-control" placeholder="Diễn giải thông tin tổng quan dự án" formControlName="dienGiaiThongTinDuAn"></textarea>
         </div>
     </div>

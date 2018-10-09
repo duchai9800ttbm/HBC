@@ -1,7 +1,20 @@
 .label-contact {
     background: #eee;
     border: none;
-    border-radius: 5px;
+    //border-radius: 5px;
+
+    border-top-left-radius: 5px;
+    border-bottom-left-radius: 5px;
+    min-width: 55px;
+    border: 1px solid #ced4da;
+    border-top-right-radius: 0px;
+    border-bottom-right-radius: 0px;
+}
+
+.form-control-custom{
+    border-top-left-radius: 0px;
+    border-bottom-left-radius: 0px;
+    border-left: none;
 }
 
 .custom-dropdown-liveform::before {
@@ -18,4 +31,23 @@
 }
 .tempHiden {
     visibility: hidden;
+}
+
+.w-3{
+    width: calc(100% / 3);
+}
+
+.form-control-customer{
+    height: 100%;
+}
+
+.border-none{
+    width: 100%;
+    outline: none;
+    border: none;
+}
+
+.b-textarea {
+    border: none;
+    resize: none;
 }
