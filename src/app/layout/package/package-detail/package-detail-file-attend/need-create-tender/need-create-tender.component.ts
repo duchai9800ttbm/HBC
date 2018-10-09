@@ -24,7 +24,9 @@ import { GroupDescriptor, DataResult, process, groupBy } from '@progress/kendo-d
 export class NeedCreateTenderComponent implements OnInit {
 
   dtOptions: any = DATATABLE_CONFIG;
+  dtOptions2: any = DATATABLE_CONFIG;
   dtTrigger: Subject<any> = new Subject();
+  dtTrigger2: Subject<any> = new Subject();
   bidOpportunityId;
   proposedTender: ProposeTenderParticipateRequest;
   isShowDialog = false;
@@ -36,7 +38,7 @@ export class NeedCreateTenderComponent implements OnInit {
   pagedResultChangeHistoryList: PagedResult<ProposedTenderParticipationHistory[]> = new PagedResult<ProposedTenderParticipationHistory[]>();
   historyList;
   // get expectedDate() {
-  //   return 
+  //   return
   // }
   constructor(
     private packageService: PackageService,
@@ -65,12 +67,12 @@ export class NeedCreateTenderComponent implements OnInit {
     this.spinner.show();
     this.packageService.getChangeHistoryListProposedTender(this.bidOpportunityId, 0, 1000).subscribe(respone => {
       this.historyList = respone.items;
-      // this.pagedResultChangeHistoryList = process(products, { group: this.groups });
-      // const a =   [this.pagedResultChangeHistoryList.items , { field: 'changedTimes' }];
-      this.historyList = this.historyList.sort( ( a, b ) =>  parseFloat(a.changedTimes) < parseFloat(b.changedTimes));
-      // objs.sort((a,b) => (a.last_nom > b.last_nom) ? 1 : ((b.last_nom > a.last_nom) ? -1 : 0));
-      this.historyList = groupBy(this.historyList, [{ field: 'changedTimes' }]);
-      console.log('this.history', this.historyList);
+      console.log('this.history-before', this.historyList);
+      // this.historyList = this.historyList.sort( ( a, b ) =>  parseFloat(a.changedTimes) < parseFloat(b.changedTimes));
+      // this.historyList = groupBy(this.historyList, [{ field: 'changedTimes' }]);
+      setTimeout(() => {
+        this.dtTrigger2.next();
+      });
       this.spinner.hide();
     },
       err => {
