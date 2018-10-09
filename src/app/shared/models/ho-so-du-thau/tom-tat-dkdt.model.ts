@@ -22,6 +22,6 @@ export class DuLieuLiveFormDKDT {
     dienGiaiYeuCauLamRo: DienGiaiYeuCauLamRo;
     dienGiaiDieuKienHopDong: DienGiaiDieuKienHopDong;
     dienGiaiDieuKienHSMT: DienGiaiDieuKienHSMT;
-    yeuCauDacBietKhac: TableYeuCauDacBiet[];
+    yeuCauDacBietKhac: TableYeuCauDacBiet;
     noiDungCapNhat: string;
 }
