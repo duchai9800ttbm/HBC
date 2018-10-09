@@ -60,6 +60,8 @@ export class InformationDeploymentComponent implements OnInit {
   packageId: number;
   dtTrigger: Subject<any> = new Subject();
   dtOptions: any = DATATABLE_CONFIG;
+  dtTrigger2: Subject<any> = new Subject();
+  dtOptions2: any = DATATABLE_CONFIG;
   datePickerConfig = DATETIME_PICKER_CONFIG;
   public skip = 0;
   pageSize = 5;
@@ -427,7 +429,7 @@ export class InformationDeploymentComponent implements OnInit {
       this.historyList = this.historyList.sort((a, b) => parseFloat(a.changedTimes) < parseFloat(b.changedTimes));
       this.historyList = groupBy(this.historyList, [{ field: 'changedTimes' }]);
       setTimeout(() => {
-        this.dtTrigger.next();
+        this.dtTrigger2.next();
         this.spinner.hide();
       });
     },
