@@ -181,3 +181,7 @@ table.dataTable {
         margin-top: 0.7rem;
     }
 }
+
+:host /deep/ .dataTables_empty {
+    display: none !important;
+}

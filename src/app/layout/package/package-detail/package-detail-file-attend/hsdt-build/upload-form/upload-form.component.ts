@@ -83,7 +83,6 @@ export class UploadFormComponent implements OnInit {
     this.hoSoDuThauService
       .danhSachBoHoSoDuThauInstantSearch(this.packageId, this.searchTerm$, this.filterModel, 0, 10)
       .subscribe(responseResultDocument => {
-        this.pagedResult = responseResultDocument;
         this.spinner.hide();
         if (alert) {
           this.alertService.success(`Dữ liệu đã được cập nhật mới nhất!`);
@@ -92,6 +91,9 @@ export class UploadFormComponent implements OnInit {
         this.dataDocumentOfType = responseResultDocument.items.filter(item =>
           item.tenderDocumentType.id === HoSoDuThauService.idTenderDocumentTypesData
         );
+        this.pagedResult = responseResultDocument;
+        this.pagedResult.total = this.dataDocumentOfType.length;
+        this.pagedResult.items = this.dataDocumentOfType;
         this.dtTrigger.next();
       }, err => {
         this.spinner.hide();
@@ -104,12 +106,14 @@ export class UploadFormComponent implements OnInit {
       .danhSachBoHoSoDuThauInstantSearch(this.packageId, this.searchTerm$, this.filterModel, pagedResult.currentPage, pagedResult.pageSize)
       .subscribe(responseResultDocument => {
         this.spinner.hide();
-        this.pagedResult = responseResultDocument;
         this.pageIndex = responseResultDocument.currentPage;
         this.rerender(responseResultDocument);
         this.dataDocumentOfType = responseResultDocument.items.filter(item =>
           item.tenderDocumentType.id === HoSoDuThauService.idTenderDocumentTypesData
         );
+        this.pagedResult = responseResultDocument;
+        this.pagedResult.total = this.dataDocumentOfType.length;
+        this.pagedResult.items = this.dataDocumentOfType;
         this.dtTrigger.next();
       }, err => {
         this.spinner.hide();
