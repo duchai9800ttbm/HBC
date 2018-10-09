@@ -243,143 +243,233 @@ export class HoSoDuThauService {
     HoSoDuThauService.tempDataLiveFormDKDT.value.noiDungCapNhat = text;
   }
   // gọi API create or update liveform tóm tắt đkdt
-  // createOrUpdateLiveFormTomTat(obj: DuLieuLiveFormDKDT): Observable<any> {
-  //   const url = `tenderconditionalsummary/createorupdate`;
-  //   const infoReport = {
+  createOrUpdateLiveFormTomTat(obj: DuLieuLiveFormDKDT): Observable<any> {
+    const url = `tenderconditionalsummary/createorupdate`;
+    const infoReport = {
+      bidOpportunityId: obj.bidOpportunityId,
+      createdEmployeeId: obj.createdEmployeeId,
+      updatedEmployeeId: obj.updatedEmployeeId,
+      isDraftVersion: obj.isDraftVersion,
+      documentName: obj.documentName,
+      updatedDesc: obj.noiDungCapNhat,
+      projectInformation: obj.thongTinDuAn && {
+        projectInformation: obj.thongTinDuAn.dienGiaiThongTinDuAn,
+        interviewTimes: obj.thongTinDuAn.lanPhongVan
+      },
+      stakeholder: {}, // TODO: Map lại chỗ này
+      scopeOfWork: obj.phamViCongViec && {
+        includedWorks: obj.phamViCongViec.phamViBaoGom.forEach(x => ({
+          name: x.congTac,
+          desc: x.dienGiaiCongTac
+        })),
+        nonIncludedWorks: obj.phamViCongViec.phamViKhongBaoGom.forEach(x => ({
+          name: x.congTac,
+          desc: x.dienGiaiCongTac
+        }))
+      },
+      nonminatedSubContractor: obj.danhSachNhaThau && {
+        workPackages: obj.danhSachNhaThau.forEach(x => ({
+          name: x.tenGoiCongViec,
+          desc: x.ghiChuThem,
+          totalCost: x.thanhTien
+        }))
+      },
+      materialsTobeSuppliedOrAppointedByOwner: obj.danhSachVatTu && {
+        materials: obj.danhSachVatTu.forEach(x => ({
+          name: x.tenVatTu,
+          desc: x.ghiChuThem
+        }))
+      },
+      mainItemOfTenderSubmission: obj.hoSoDangLuuY && {
+        attentiveDocuments: [...obj.hoSoDangLuuY.taiLieuLuuY],
+        quantity: obj.hoSoDangLuuY.soLuong,
+        languages: obj.hoSoDangLuuY.ngonNgu
+      },
+      requestDocument: obj.dienGiaiYeuCauHoSo && {
+        destination: obj.dienGiaiYeuCauHoSo.noiNop,
+        receivedPerson: obj.dienGiaiYeuCauHoSo.nguoiNhan,
+        closingTime: obj.dienGiaiYeuCauHoSo.hanNop
+      },
+      requestTenderClarification: obj.dienGiaiYeuCauLamRo && {
+        consultant: obj.dienGiaiYeuCauLamRo.nhaTuVan && {
+          companyName: obj.dienGiaiYeuCauLamRo.nhaTuVan.tenCongTy,
+          companyAddress: obj.dienGiaiYeuCauLamRo.nhaTuVan.diaChiCongTy,
+          contactPerson: obj.dienGiaiYeuCauLamRo.nhaTuVan.nguoiLienHe && {
+            name: obj.dienGiaiYeuCauLamRo.nhaTuVan.nguoiLienHe.hoVaTen,
+            address: obj.dienGiaiYeuCauLamRo.nhaTuVan.nguoiLienHe.diaChi,
+            email: obj.dienGiaiYeuCauLamRo.nhaTuVan.nguoiLienHe.email,
+            level: obj.dienGiaiYeuCauLamRo.nhaTuVan.nguoiLienHe.viTri
+          }
+        },
+        employer: obj.dienGiaiYeuCauLamRo.nhaSuDung && {
+          companyName: obj.dienGiaiYeuCauLamRo.nhaSuDung.tenCongTy,
+          companyAddress: obj.dienGiaiYeuCauLamRo.nhaSuDung.diaChiCongTy,
+          contactPerson: obj.dienGiaiYeuCauLamRo.nhaSuDung.nguoiLienHe && {
+            name: obj.dienGiaiYeuCauLamRo.nhaSuDung.nguoiLienHe.hoVaTen,
+            address: obj.dienGiaiYeuCauLamRo.nhaSuDung.nguoiLienHe.diaChi,
+            email: obj.dienGiaiYeuCauLamRo.nhaSuDung.nguoiLienHe.email,
+            level: obj.dienGiaiYeuCauLamRo.nhaSuDung.nguoiLienHe.viTri
+          }
+        },
+        closingTime: obj.dienGiaiYeuCauLamRo && {
+          closingTime: obj.dienGiaiYeuCauLamRo.ngayHetHan,
+          desc: obj.dienGiaiYeuCauLamRo.ghiChuThem
+        }
+      },
+      contractCondition: obj.dienGiaiDieuKienHopDong && {
+        contractType: (obj.dienGiaiDieuKienHopDong.loaiHopDong) ? obj.dienGiaiDieuKienHopDong.loaiHopDong.name : '',
+        desc: (obj.dienGiaiDieuKienHopDong.loaiHopDong) ? obj.dienGiaiDieuKienHopDong.loaiHopDong.desc : '',
 
+        hsmtContractCondition: obj.dienGiaiDieuKienHopDong.dieuKienTheoHSMT && {
+          executiveGuaranteePercent:
+            (obj.dienGiaiDieuKienHopDong.dieuKienTheoHSMT.baoLanhThucHien) ?
+              obj.dienGiaiDieuKienHopDong.dieuKienTheoHSMT.baoLanhThucHien.phanTram : '',
+          executiveGuaranteeEfficiency:
+            (obj.dienGiaiDieuKienHopDong.dieuKienTheoHSMT.baoLanhThucHien) ?
+              obj.dienGiaiDieuKienHopDong.dieuKienTheoHSMT.baoLanhThucHien.hieuLuc : '',
+          advanceGuaranteePercent:
+            (obj.dienGiaiDieuKienHopDong.dieuKienTheoHSMT.baoLanhTamUng) ?
+              obj.dienGiaiDieuKienHopDong.dieuKienTheoHSMT.baoLanhTamUng.phanTram : '',
+          advanceGuaranteeEfficiency:
+            (obj.dienGiaiDieuKienHopDong.dieuKienTheoHSMT.baoLanhTamUng) ?
+              obj.dienGiaiDieuKienHopDong.dieuKienTheoHSMT.baoLanhTamUng.hieuLuc : '',
+          paymentType:
+            (obj.dienGiaiDieuKienHopDong.dieuKienTheoHSMT.thanhToan) ?
+              obj.dienGiaiDieuKienHopDong.dieuKienTheoHSMT.thanhToan.loaiThanhToan : '',
+          paymentTime:
+            (obj.dienGiaiDieuKienHopDong.dieuKienTheoHSMT.thanhToan) ?
+              obj.dienGiaiDieuKienHopDong.dieuKienTheoHSMT.thanhToan.thoiGianThanhToan : '',
+          paymentMaterialOnSite:
+            (obj.dienGiaiDieuKienHopDong.dieuKienTheoHSMT.thanhToan) ?
+              obj.dienGiaiDieuKienHopDong.dieuKienTheoHSMT.thanhToan.thanhToanKhiTapKet : '',
+          retainedPercent:
+            (obj.dienGiaiDieuKienHopDong.dieuKienTheoHSMT.tienGiuLai) ?
+              obj.dienGiaiDieuKienHopDong.dieuKienTheoHSMT.tienGiuLai.phanTram : '',
+          retainedLimit:
+            (obj.dienGiaiDieuKienHopDong.dieuKienTheoHSMT.tienGiuLai) ?
+              obj.dienGiaiDieuKienHopDong.dieuKienTheoHSMT.tienGiuLai.gioiHanTienGiuLai : '',
+          retainedPayment:
+            (obj.dienGiaiDieuKienHopDong.dieuKienTheoHSMT.tienGiuLai) ?
+              obj.dienGiaiDieuKienHopDong.dieuKienTheoHSMT.tienGiuLai.thanhToanTienGui : '',
+          punishhOverduePercent:
+            (obj.dienGiaiDieuKienHopDong.dieuKienTheoHSMT.phatTreTienDo) ?
+              obj.dienGiaiDieuKienHopDong.dieuKienTheoHSMT.phatTreTienDo.phanTram : '',
+          punishhOverdueLimit:
+            (obj.dienGiaiDieuKienHopDong.dieuKienTheoHSMT.phatTreTienDo) ?
+              obj.dienGiaiDieuKienHopDong.dieuKienTheoHSMT.phatTreTienDo.gioiHanPhatTienDo : '',
+          guaranteeDuration: obj.dienGiaiDieuKienHopDong.dieuKienTheoHSMT.thoiGianBaoHanh,
+          insurranceMachineOfContractor:
+            (obj.dienGiaiDieuKienHopDong.dieuKienTheoHSMT.baoHiem) ?
+              obj.dienGiaiDieuKienHopDong.dieuKienTheoHSMT.baoHiem.baoHiemMayMoc : [],
+          insurancePersonOfContractor:
+            (obj.dienGiaiDieuKienHopDong.dieuKienTheoHSMT.baoHiem) ?
+              obj.dienGiaiDieuKienHopDong.dieuKienTheoHSMT.baoHiem.baoHiemConNguoi : '',
+          insurranceConstructionAnd3rdPart:
+            (obj.dienGiaiDieuKienHopDong.dieuKienTheoHSMT.baoHiem) ?
+              obj.dienGiaiDieuKienHopDong.dieuKienTheoHSMT.baoHiem.baoHiemCongTrinh : ''
+        },
+        hbcContractCondition: obj.dienGiaiDieuKienHopDong.dieuKienTheoHBC && {
+          executiveGuaranteePercent:
+            (obj.dienGiaiDieuKienHopDong.dieuKienTheoHBC.baoLanhThucHien) ?
+              obj.dienGiaiDieuKienHopDong.dieuKienTheoHBC.baoLanhThucHien.phanTram : '',
+          executiveGuaranteeEfficiency:
+            (obj.dienGiaiDieuKienHopDong.dieuKienTheoHBC.baoLanhThucHien) ?
+              obj.dienGiaiDieuKienHopDong.dieuKienTheoHBC.baoLanhThucHien.hieuLuc : '',
+          advanceGuaranteePercent:
+            (obj.dienGiaiDieuKienHopDong.dieuKienTheoHBC.baoLanhTamUng) ?
+              obj.dienGiaiDieuKienHopDong.dieuKienTheoHBC.baoLanhTamUng.phanTram : '',
+          advanceGuaranteeEfficiency:
+            (obj.dienGiaiDieuKienHopDong.dieuKienTheoHBC.baoLanhTamUng) ?
+              obj.dienGiaiDieuKienHopDong.dieuKienTheoHBC.baoLanhTamUng.hieuLuc : '',
+          paymentType:
+            (obj.dienGiaiDieuKienHopDong.dieuKienTheoHBC.thanhToan) ?
+              obj.dienGiaiDieuKienHopDong.dieuKienTheoHBC.thanhToan.loaiThanhToan : '',
+          paymentTime:
+            (obj.dienGiaiDieuKienHopDong.dieuKienTheoHBC.thanhToan) ?
+              obj.dienGiaiDieuKienHopDong.dieuKienTheoHBC.thanhToan.thoiGianThanhToan : '',
+          paymentMaterialOnSite:
+            (obj.dienGiaiDieuKienHopDong.dieuKienTheoHBC.thanhToan) ?
+              obj.dienGiaiDieuKienHopDong.dieuKienTheoHBC.thanhToan.thanhToanKhiTapKet : '',
+          retainedPercent:
+            (obj.dienGiaiDieuKienHopDong.dieuKienTheoHBC.tienGiuLai) ?
+              obj.dienGiaiDieuKienHopDong.dieuKienTheoHBC.tienGiuLai.phanTram : '',
+          retainedLimit:
+            (obj.dienGiaiDieuKienHopDong.dieuKienTheoHBC.tienGiuLai) ?
+              obj.dienGiaiDieuKienHopDong.dieuKienTheoHBC.tienGiuLai.gioiHanTienGiuLai : '',
+          retainedPayment:
+            (obj.dienGiaiDieuKienHopDong.dieuKienTheoHBC.tienGiuLai) ?
+              obj.dienGiaiDieuKienHopDong.dieuKienTheoHBC.tienGiuLai.thanhToanTienGui : '',
+          punishhOverduePercent:
+            (obj.dienGiaiDieuKienHopDong.dieuKienTheoHBC.phatTreTienDo) ?
+              obj.dienGiaiDieuKienHopDong.dieuKienTheoHBC.phatTreTienDo.phanTram : '',
+          punishhOverdueLimit:
+            (obj.dienGiaiDieuKienHopDong.dieuKienTheoHBC.phatTreTienDo) ?
+              obj.dienGiaiDieuKienHopDong.dieuKienTheoHBC.phatTreTienDo.gioiHanPhatTienDo : '',
+          guaranteeDuration: obj.dienGiaiDieuKienHopDong.dieuKienTheoHBC.thoiGianBaoHanh,
+          insurranceMachineOfContractor:
+            (obj.dienGiaiDieuKienHopDong.dieuKienTheoHBC.baoHiem) ?
+              obj.dienGiaiDieuKienHopDong.dieuKienTheoHBC.baoHiem.baoHiemMayMoc : [],
+          insurancePersonOfContractor:
+            (obj.dienGiaiDieuKienHopDong.dieuKienTheoHBC.baoHiem) ?
+              obj.dienGiaiDieuKienHopDong.dieuKienTheoHBC.baoHiem.baoHiemConNguoi : '',
+          insurranceConstructionAnd3rdPart:
+            (obj.dienGiaiDieuKienHopDong.dieuKienTheoHBC.baoHiem) ?
+              obj.dienGiaiDieuKienHopDong.dieuKienTheoHBC.baoHiem.baoHiemCongTrinh : ''
+        }
 
-  //     bidOpportunityId: obj.bidOpportunityId,
-  //     createdEmployeeId: obj.createdEmployeeId,
-  //     updatedEmployeeId: obj.updatedEmployeeId,
-  //     isDraftVersion: obj.isDraftVersion,
-  //     documentName: obj.documentName,
-  //     updatedDesc: obj.updatedDesc,
-  //     projectInformation: {
-  //       projectInformation: obj.thongTinDuAn.dienGiaiThongTinDuAn,
-  //       interviewTimes: obj.thongTinDuAn.lanPhongVan
-  //     },
-  //     stakeholder: obj.cacBenLienQuan,
-  //     scopeOfWork: obj.phamViCongViec && {
-  //       includedWorks: obj.phamViCongViec.phamViBaoGom.forEach(x => ({
-  //         name: x.congTac,
-  //         desc: x.dienGiaiCongTac
-  //       })),
-  //       nonIncludedWorks: obj.phamViCongViec.phamViKhongBaoGom.forEach(x => ({
-  //         name: x.congTac,
-  //         desc: x.dienGiaiCongTac
-  //       }))
-  //     },
-  //     nonminatedSubContractor: obj.danhSachNhaThau && {
-  //       workPackages: obj.danhSachNhaThau.forEach(x => ({
-  //         name: x.tenGoiCongViec,
-  //         desc: x.ghiChuThem,
-  //         totalCost: x.thanhTien
-  //       }))
-  //     },
-  //     materialsTobeSuppliedOrAppointedByOwner: obj.danhSachVatTu && {
-  //       materials: obj.danhSachVatTu.forEach(x => ({
-  //         name: x.tenVatTu,
-  //         desc: x.ghiChuThem
-  //       }))
-  //     },
-  //     mainItemOfTenderSubmission: obj.hoSoDangLuuY && {
-  //       attentiveDocuments: [...obj.hoSoDangLuuY.taiLieuLuuY],
-  //       quantity: obj.hoSoDangLuuY.soLuong,
-  //       languages: obj.hoSoDangLuuY.ngonNgu
-  //     },
-  //     requestDocument: obj.dienGiaiYeuCauHoSo && {
-  //       destination: obj.dienGiaiYeuCauHoSo.noiNop,
-  //       receivedPerson: obj.dienGiaiYeuCauHoSo.nguoiNhan,
-  //       closingTime: obj.dienGiaiYeuCauHoSo.hanNop
-  //     },
-  //     requestTenderClarification: obj.dienGiaiYeuCauLamRo && {
-  //       consultant: obj.dienGiaiYeuCauLamRo.nhaTuVan && {
-  //         companyName: obj.dienGiaiYeuCauLamRo.nhaTuVan.tenCongTy,
-  //         companyAddress: obj.dienGiaiYeuCauLamRo.nhaTuVan.diaChiCongTy,
-  //         contactPerson: obj.dienGiaiYeuCauLamRo.nhaTuVan.nguoiLienHe && {
-  //           name: obj.dienGiaiYeuCauLamRo.nhaTuVan.nguoiLienHe.hoVaTen,
-  //           address: obj.dienGiaiYeuCauLamRo.nhaTuVan.nguoiLienHe.diaChi,
-  //           email: obj.dienGiaiYeuCauLamRo.nhaTuVan.nguoiLienHe.email,
-  //           level: obj.dienGiaiYeuCauLamRo.nhaTuVan.nguoiLienHe.viTri
-  //         }
-  //       },
-  //       employer: obj.dienGiaiYeuCauLamRo.nhaSuDung && {
-  //         companyName: obj.dienGiaiYeuCauLamRo.nhaSuDung.tenCongTy,
-  //         companyAddress: obj.dienGiaiYeuCauLamRo.nhaSuDung.diaChiCongTy,
-  //         contactPerson: obj.dienGiaiYeuCauLamRo.nhaSuDung.nguoiLienHe && {
-  //           name: obj.dienGiaiYeuCauLamRo.nhaSuDung.nguoiLienHe.hoVaTen,
-  //           address: obj.dienGiaiYeuCauLamRo.nhaSuDung.nguoiLienHe.diaChi,
-  //           email: obj.dienGiaiYeuCauLamRo.nhaSuDung.nguoiLienHe.email,
-  //           level: obj.dienGiaiYeuCauLamRo.nhaSuDung.nguoiLienHe.viTri
-  //         }
-  //       },
-  //       closingTime: obj.dienGiaiYeuCauLamRo && {
-  //         closingTime: obj.dienGiaiYeuCauLamRo.ngayHetHan,
-  //         desc: obj.dienGiaiYeuCauLamRo.ghiChuThem
-  //       }
-  //     },
-  //     "contractCondition": {
-  //       "contractType": "string",
-  //       "desc": "string",
-  //       "contractCondition": {
-  //         "executiveGuaranteePercent": 0,
-  //         "executiveGuaranteeEfficiency": 0,
-  //         "advanceGuaranteePercent": 0,
-  //         "advanceGuaranteeEfficiency": 0,
-  //         "paymentType": "string",
-  //         "paymentTime": 0,
-  //         "paymentMaterialOnSite": "string",
-  //         "retainedPercent": 0,
-  //         "retainedLimit": 0,
-  //         "retainedPayment": 0,
-  //         "punishhOverduePercent": 0,
-  //         "punishhOverdueLimit": 0,
-  //         "guaranteeDuration": 0,
-  //         "insurranceMachineOfContractor": "string",
-  //         "insurrancePersonOfContractor": "string",
-  //         "insurranceConstructionAnd3rdPart": "string"
-  //       }
-  //     },
-  //     "jsonTenderCondition": {
-  //       "tenderGuaranteeValue": 0,
-  //       "tenderGuaranteeEfficiency": 0,
-  //       "tenderEfficiency": 0,
-  //       "progressStartDate": 0,
-  //       "progressComletionDate": 0,
-  //       "taxTypes": [
-  //         {
-  //           "key": "string",
-  //           "value": "string",
-  //           "displayText": "string"
-  //         }
-  //       ],
-  //       "currency": {
-  //         "key": "string",
-  //         "value": "string",
-  //         "displayText": "string"
-  //       }
-  //     },
-  //     "otherSpecialRequirement": {
-  //       "requirements": [
-  //         {
-  //           "name": "string",
-  //           "desc": "string",
-  //           "link": "string"
-  //         }
-  //       ]
-  //     }
-
-
-
-
-
-
-
-
-
-  //   };
-  //   return this.apiService.post(url, infoReport).map(res => res);
-  // }
+      },
+      tenderCondition: obj.dienGiaiDieuKienHSMT && {
+        hbcTenderCondition: obj.dienGiaiDieuKienHSMT.theoHBC && {
+          tenderGuaranteeValue: (obj.dienGiaiDieuKienHSMT.theoHBC.baoLanhDuThau) ?
+            obj.dienGiaiDieuKienHSMT.theoHBC.baoLanhDuThau.giaTri : '',
+          tenderGuaranteeEfficiency:
+            (obj.dienGiaiDieuKienHSMT.theoHBC.baoLanhDuThau) ?
+              obj.dienGiaiDieuKienHSMT.theoHBC.baoLanhDuThau.hieuLuc : '',
+          tenderEfficiency: obj.dienGiaiDieuKienHSMT.theoHBC.hieuLucHoSo,
+          progressStartDate: (obj.dienGiaiDieuKienHSMT.theoHBC.tienDo) ?
+            obj.dienGiaiDieuKienHSMT.theoHBC.tienDo.ngayKhoiCong : '',
+          progressComletionDate: (obj.dienGiaiDieuKienHSMT.theoHBC.tienDo) ?
+            obj.dienGiaiDieuKienHSMT.theoHBC.tienDo.thoiGianHoanThanh : '',
+          taxTypes: (obj.dienGiaiDieuKienHSMT.theoHBC.cacLoaiThue) ? obj.dienGiaiDieuKienHSMT.theoHBC.cacLoaiThue : [],
+          currency: obj.dienGiaiDieuKienHSMT.theoHBC && {
+            // TODO: Map lại chỗ này
+            key: '',
+            value: '',
+            displayText: obj.dienGiaiDieuKienHSMT.theoHBC.donViTienTe
+          }
+        },
+        hsmtTenderCondition: obj.dienGiaiDieuKienHSMT.theoHSMT && {
+          tenderGuaranteeValue: (obj.dienGiaiDieuKienHSMT.theoHSMT.baoLanhDuThau) ?
+            obj.dienGiaiDieuKienHSMT.theoHSMT.baoLanhDuThau.giaTri : '',
+          tenderGuaranteeEfficiency:
+            (obj.dienGiaiDieuKienHSMT.theoHSMT.baoLanhDuThau) ?
+              obj.dienGiaiDieuKienHSMT.theoHSMT.baoLanhDuThau.hieuLuc : '',
+          tenderEfficiency: obj.dienGiaiDieuKienHSMT.theoHSMT.hieuLucHoSo,
+          progressStartDate: (obj.dienGiaiDieuKienHSMT.theoHSMT.tienDo) ?
+            obj.dienGiaiDieuKienHSMT.theoHSMT.tienDo.ngayKhoiCong : '',
+          progressComletionDate: (obj.dienGiaiDieuKienHSMT.theoHSMT.tienDo) ?
+            obj.dienGiaiDieuKienHSMT.theoHSMT.tienDo.thoiGianHoanThanh : '',
+          taxTypes: (obj.dienGiaiDieuKienHSMT.theoHSMT.cacLoaiThue) ? obj.dienGiaiDieuKienHSMT.theoHSMT.cacLoaiThue : [],
+          currency: obj.dienGiaiDieuKienHSMT.theoHSMT && {
+            // TODO: Map lại chỗ này
+            key: '',
+            value: '',
+            displayText: obj.dienGiaiDieuKienHSMT.theoHSMT.donViTienTe
+          }
+        }
+      },
+      otherSpecialRequirement: obj.yeuCauDacBietKhac && {
+        // TODO: Map lại chỗ này
+        greenBuildingStandardName: '',
+        greenBuildingStandardLink: '',
+        tenderEvaluationStep1: '',
+        tenderEvaluationStep2: '',
+        profitValue: '',
+        profitDesc: ''
+      }
+    };
+    return this.apiService.post(url, infoReport).map(res => res);
+  }
 
 
   // Xóa ảnh

@@ -15,25 +15,16 @@ export class SummaryConditionFormComponent implements OnInit, OnDestroy {
 
   static formModel: TenderConditionSummaryRequest;
   packageId;
+  showPopupConfirm = false;
   constructor(
     private packageService: PackageService,
+    private hoSoDuThauService: HoSoDuThauService,
     private spinner: NgxSpinnerService,
     private alertService: AlertService
   ) { }
 
   ngOnInit() {
     this.packageService.setSummaryConditionForm(true);
-    // this.packageId = PackageDetailComponent.packageId;
-    // SummaryConditionFormComponent.formModel.bidOpportunityId = this.packageId;
-    // this.packageService.getTenderConditionSummary(this.packageId)
-    //   .subscribe(data => {
-    //     console.log(data);
-    //     if (data) {
-    //       SummaryConditionFormComponent.formModel = data;
-    //     } else {
-    //       SummaryConditionFormComponent.formModel = new TenderConditionSummaryRequest();
-    //     }
-    //   });
   }
 
   ngOnDestroy(): void {
@@ -41,18 +32,22 @@ export class SummaryConditionFormComponent implements OnInit, OnDestroy {
   }
 
   onSubmit() {
-    // this.spinner.show();
-    const dataLiveForm = HoSoDuThauService.tempDataLiveFormDKDT;
-    dataLiveForm.value.bidOpportunityId = 10;
-    console.log(HoSoDuThauService.tempDataLiveFormDKDT.value.bidOpportunityId);
-    // this.packageService.createOrUpdateTenderConditionSummary(dataLiveForm).subscribe(data => {
-    //   console.log(data);
-    //   this.spinner.hide();
-    //   this.alertService.success('Lập hồ sơ dự thầu thành công!');
-    // }, err => {
-    //   this.spinner.hide();
-    //   this.alertService.error('Lập hồ sơ dự thầu thất bại!');
-    // });
+    this.showPopupConfirm = true;
   }
+  submitLiveForm(event) {
+    if (!event) {
+      this.showPopupConfirm = false;
+    } else {
+      const dataLiveform = HoSoDuThauService.tempDataLiveFormDKDT.value;
+      console.log(dataLiveform);
+      this.hoSoDuThauService.createOrUpdateLiveFormTomTat(dataLiveform).subscribe(res => {
+        this.alertService.success(`LiveForm đã được cập nhật!`);
+      }, err => {
+        this.alertService.error(`Đã có lỗi xảy ra. Cập nhật không thành công!`);
+      });
+      this.showPopupConfirm = false;
+    }
+  }
+
 
 }
