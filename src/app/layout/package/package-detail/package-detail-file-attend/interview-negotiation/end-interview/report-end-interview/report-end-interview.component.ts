@@ -6,6 +6,7 @@ import { InterviewInvitationService } from '../../../../../../../shared/services
 import { PackageDetailComponent } from '../../../../package-detail.component';
 import ValidationHelper from '../../../../../../../shared/helpers/validation.helper';
 import CustomValidator from '../../../../../../../shared/helpers/custom-validator.helper';
+import { StatusObservableHsdtService } from '../../../../../../../shared/services/status-observable-hsdt.service';
 @Component({
   selector: 'app-report-end-interview',
   templateUrl: './report-end-interview.component.html',
@@ -27,6 +28,7 @@ export class ReportEndInterviewComponent implements OnInit {
     private fb: FormBuilder,
     private alertService: AlertService,
     private interviewInvitationService: InterviewInvitationService,
+    private statusObservableHsdtService: StatusObservableHsdtService,
   ) { }
 
   ngOnInit() {
@@ -82,6 +84,7 @@ export class ReportEndInterviewComponent implements OnInit {
       this.interviewInvitationService.UploadReportInterview(this.currentPackageId, this.createFormReport.value, this.file)
         .subscribe(response => {
           this.closePopup();
+          this.statusObservableHsdtService.change();
           this.interviewInvitationService.changeEndInterviewList();
           this.reloadData();
           this.alertService.success('Thêm mới lời mời thành công!');

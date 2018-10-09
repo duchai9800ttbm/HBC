@@ -10,10 +10,10 @@
     <div>
         <div class="btn-toolbar">
             <ng-container>
-                <div class="input-group">
+                <!-- <div class="input-group">
                     <span class="input-group-addon">Tìm kiếm theo</span>
                     <input type="text" class="form-control icon" placeholder="&#xf002; Khách hàng" (keyup)=changeKeySearchInterviewInvitation$.next($event.target.value)>
-                </div>
+                </div> -->
                 <button class="btn btn-primary ml-2" (click)="createInvitation()">
                     Tạo lời mời phỏng vấn
                 </button>
@@ -92,9 +92,10 @@
 <div class="d-flex">
     <div class="set-width-menu-left d-flex menu--width">
         <div class="nav flex-column nav-pills cus-menu" id="v-pills-tab" role="tablist" aria-orientation="vertical">
-            <div [routerLink]="['./create']" class="nav-link active d-flex cus-menu-children px-2" id="v-pills-home-tab" data-toggle="pill"
+            <div [routerLink]="numberStatusPackageInterview > 0 ? ['./create'] : []" class="nav-link active d-flex cus-menu-children px-2" id="v-pills-home-tab" data-toggle="pill"
                 role="tab" aria-controls="v-pills-home" aria-selected="true" [class.no-active]="numberStatusPackageInterview < 1"
-                [class.active]="numberStatusPackageInterview >= currentStatusInterview && currentStatusInterview === 1" [class.back]="numberStatusPackageInterview > 1 && currentStatusInterview > 1">
+                [class.back]="numberStatusPackageInterview > 0 && currentStatusInterview > 1"
+                [class.active]="currentStatusInterview === 1">
                 <!-- [class.no-active]="numberStatusPackageInterview < 1"
                 [class.active]="numberStatusPackageInterview >= currentStatusInterview && currentStatusInterview === 1" [class.back]="numberStatusPackageInterview > 1 && currentStatusInterview > 1" -->
                 <div class="center-parent number">1</div>
@@ -103,9 +104,9 @@
             <div class="center-parent div-menu" [class.div-menu-active]="numberStatusPackageInterview > 1">
                 <div class="border-top"></div>
             </div>
-            <div [routerLink]="['./prepare']" class="nav-link d-flex cus-menu-children px-2" id="v-pills-profile-tab" data-toggle="pill"
+            <div [routerLink]="numberStatusPackageInterview > 1 ? ['./prepare'] : []" class="nav-link d-flex cus-menu-children px-2" id="v-pills-profile-tab" data-toggle="pill"
                 role="tab" aria-controls="v-pills-profile" aria-selected="false" [class.no-active]="numberStatusPackageInterview < 2"
-                [class.back]="numberStatusPackageInterview > 1 && currentStatusInterview !== 2" [class.active]="numberStatusPackageInterview === currentStatusInterview && currentStatusInterview === 2">
+                [class.back]="numberStatusPackageInterview > 1 && currentStatusInterview !== 2" [class.active]="currentStatusInterview === 2">
                 <!-- && currentStatusInterview > 2 -->
                 <div class="center-parent number">2</div>
                 <div class="word">
@@ -115,9 +116,10 @@
             <div class="center-parent div-menu" [class.div-menu-active]="numberStatusPackageInterview > 2">
                 <div class="border-top"></div>
             </div>
-            <div [routerLink]="['./end']" class="nav-link d-flex cus-menu-children px-2" id="v-pills-messages-tab" data-toggle="pill"
+            <div [routerLink]="numberStatusPackageInterview > 2 ? ['./end'] : []" class="nav-link d-flex cus-menu-children px-2" id="v-pills-messages-tab" data-toggle="pill"
                 role="tab" aria-controls="v-pills-messages" aria-selected="false" [class.no-active]="numberStatusPackageInterview < 3"
-                [class.active]="numberStatusPackageInterview >= currentStatusInterview && currentStatusInterview === 3">
+                [class.back]="numberStatusPackageInterview > 2 && currentStatusInterview !== 3"
+                [class.active]="currentStatusInterview === 3">
                 <div class="center-parent number">3</div>
                 <div class="word">Biên bản phỏng vấn thầu</div>
             </div>

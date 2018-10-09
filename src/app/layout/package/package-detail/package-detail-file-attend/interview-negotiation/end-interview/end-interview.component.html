@@ -246,17 +246,17 @@
                                         <div>{{i + 1}}</div>
                                     </div>
                                 </td>
-                                <td>
+                                <td [title]="item.documentName">
                                     {{item.documentName}}
                                 </td>
-                                <td class="text-center">
+                                <td class="text-center" [title]="item.version">
                                     {{item.version}}
                                 </td>
-                                <td>
+                                <td [title]="item.desc">
                                     {{item.desc}}
                                 </td>
-                                <td>
-                                    {{item.uploadedBy.employeeName}}
+                                <td [title]="item.uploadedBy && item.uploadedBy.employeeName ? item.uploadedBy.employeeName : ''">
+                                    {{item.uploadedBy?.employeeName}}
                                 </td>
                                 <td>
                                     {{(item.createdDate)*1000 | date:'dd/MM/yyyy':'+0000'}}

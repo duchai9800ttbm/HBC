@@ -1,7 +1,7 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { DialogService } from '../../../../../../../../node_modules/@progress/kendo-angular-dialog';
 import { CreateNewInvitationComponent } from './create-new-invitation/create-new-invitation.component';
-import { BehaviorSubject, Subject } from '../../../../../../../../node_modules/rxjs';
+import { BehaviorSubject, Subject, Subscription } from '../../../../../../../../node_modules/rxjs';
 import { InterviewInvitationService } from '../../../../../../shared/services/interview-invitation.service';
 import { ActivatedRoute } from '../../../../../../../../node_modules/@angular/router';
 import { PackageDetailComponent } from '../../../package-detail.component';
@@ -24,7 +24,7 @@ import DateTimeConvertHelper from '../../../../../../shared/helpers/datetime-con
   templateUrl: './create-interview.component.html',
   styleUrls: ['./create-interview.component.scss']
 })
-export class CreateInterviewComponent implements OnInit {
+export class CreateInterviewComponent implements OnInit , OnDestroy{
   currentPackageId: number;
   dialog;
   // searchTerm$ = new BehaviorSubject<string>('');
@@ -42,6 +42,7 @@ export class CreateInterviewComponent implements OnInit {
   isOnInit: boolean;
   stattusCurrentList;
   currentStatusInterview: number;
+  subscription: Subscription;
   constructor(
     private dialogService: DialogService,
     private interviewInvitationService: InterviewInvitationService,
@@ -66,38 +67,35 @@ export class CreateInterviewComponent implements OnInit {
     this.interviewInvitationService.getUrlChirld().subscribe( value => {
       this.currentStatusInterview = value;
     });
-    this.interviewInvitationService.watchInterviewInvitationList().subscribe(value => {
+    this.subscription = this.interviewInvitationService.watchInterviewInvitationList().subscribe(value => {
       this.isNumberOfInterviews = true;
       this.filter();
       this.spinner.hide();
     });
 
-    this.interviewInvitationService.watchKeySearchInterviewInvitation().subscribe(value => {
+    const searchKey = this.interviewInvitationService.watchKeySearchInterviewInvitation().subscribe(value => {
       this.keySearch = value;
       this.filter();
       this.spinner.hide();
     });
+    this.subscription.add(searchKey);
 
-    this.interviewInvitationService.watchRefeshInterviewInvitationList().subscribe(value => {
+    const refesh = this.interviewInvitationService.watchRefeshInterviewInvitationList().subscribe(value => {
       this.refresh(this.isOnInit);
       this.spinner.hide();
     });
+    this.subscription.add(refesh);
 
+  }
+
+  ngOnDestroy() {
+    this.subscription.unsubscribe();
   }
 
   getSatusPackage() {
     this.packageService.getInforPackageID(this.currentPackageId).subscribe(result => {
       this.statusPackage = result.stageStatus.id;
     });
-    // this.route.url.subscribe(url => {
-    //   const urlCurrent = url[0].path;
-    //   for (let i = 0; i < this.stattusCurrentList.length; i++) {
-    //     if (this.stattusCurrentList[i] === urlCurrent) {
-    //       this.currentStatusInterview = i + 1;
-    //       break;
-    //     }
-    //   }
-    // });
   }
 
   getListNumberOfInterviews() {
@@ -190,17 +188,8 @@ export class CreateInterviewComponent implements OnInit {
 
   onSelectAll(value: boolean) {
     this.pagedResult.items.forEach( item => item['checkboxSelected'] = value);
+    this.interviewInvitationService.chooseInterviewNotification(this.pagedResult.items.filter( item => item['checkboxSelected'] === true));
   }
-
-  // noticeInterview() {
-  //   this.dialog = this.dialogService.open({
-  //     content: InterviewNoticeComponent,
-  //     width: 1100,
-  //     minWidth: 250
-  //   });
-  //   const instance = this.dialog.content.instance;
-  //   instance.callBack = () => this.closePopuup();
-  // }
 
   EditInvitation(interviewEdit: InterviewInvitation) {
     this.dialog = this.dialogService.open({
@@ -292,7 +281,6 @@ export class CreateInterviewComponent implements OnInit {
         item['checkboxSelected'] = !item['checkboxSelected'];
       }
     });
-    console.log('this.pagedResult.items', this.pagedResult.items.filter( item => item['checkboxSelected'] === true));
     this.interviewInvitationService.chooseInterviewNotification(this.pagedResult.items.filter( item => item['checkboxSelected'] === true));
   }
 }

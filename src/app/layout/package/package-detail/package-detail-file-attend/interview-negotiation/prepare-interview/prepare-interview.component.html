@@ -183,9 +183,9 @@
                           <div>{{renderIndex(i, k)}}</div>
                         </div>
                       </td>
-                      <td valign="baseline" [attr.rowspan]="item.childs?.length" *ngIf="k === 0">{{item.typeName}}</td>
-                      <td>{{itemchirld.typeName}}</td>
-                      <td>{{itemchirld.document?.name}}</td>
+                      <td valign="baseline" [attr.rowspan]="item.childs?.length" *ngIf="k === 0" [title]="item.typeName">{{item.typeName}}</td>
+                      <td [title]="itemchirld.typeName">{{itemchirld.typeName}}</td>
+                      <td [title]="itemchirld.document && itemchirld.document.name ? itemchirld.document.name : ''">{{itemchirld.document?.name}}</td>
                       <td class="text-center">{{itemchirld.document?.interviewTime}}</td>
                       <td class="text-center">
                         <div *ngIf="!item.isLiveForm" title="Tải file" (click)="dowloadDocument(itemchirld.document.id)">
@@ -218,9 +218,9 @@
                           <div>{{renderIndex(i,0)}}</div>
                         </div>
                       </td>
-                      <td>{{item.typeName}}</td>
+                      <td [title]="item.typeName">{{item.typeName}}</td>
                       <td></td>
-                      <td>{{item.document?.name}}</td>
+                      <td [title]="item.document && item.document.name ? item.document.name : ''">{{item.document?.name}}</td>
                       <td class="text-center">{{item.document?.interviewTime}}</td>
                       <td class="text-center">
                         <div *ngIf="!item.isLiveForm" title="Tải file" (click)="dowloadDocument(item.document.id)">
