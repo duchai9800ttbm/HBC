@@ -39,7 +39,7 @@
     </div>
     <div>
         <div class="btn-toolbar">
-            <button class="btn btn-primary ml-2">
+            <button class="btn btn-primary ml-2" (click)="downloadTemplatePrepare()">
                 Tải template
             </button>
             <button class="btn btn-primary ml-2" (click)="approvedInterviewPreparation()">
@@ -70,16 +70,19 @@
     </div>
     <div>
         <div class="btn-toolbar">
-            <button class="btn btn-primary ml-2">
+            <button class="btn btn-primary ml-2" (click)="uploadReportInterview()">
+                Upload biên bản
+            </button>
+            <button class="btn btn-primary ml-2" (click)="correctionHSDT()">
                 Hiệu chỉnh HSDT
             </button>
-            <button class="btn btn-primary ml-2">
+            <button class="btn btn-primary ml-2" (click)="downloadTemplateEnd()">
                 Tải template
             </button>
-            <button class="btn btn-primary ml-2">
+            <button class="btn btn-primary ml-2" (click)="closeInterview()">
                 Đóng phỏng vấn
             </button>
-            <button class="btn btn-primary ml-2">
+            <button class="btn btn-primary ml-2" (click)="refreshEndInterview()">
                 <i class="fa fa-refresh" aria-hidden="true"></i>
             </button>
         </div>

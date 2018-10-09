@@ -21,7 +21,10 @@ export class InterviewInvitationService {
   static refeshCreateInterviewInvitation = new BehaviorSubject<boolean>(false);
   // Prepare
   static refeshPrepareInterviewInvitation = new BehaviorSubject<boolean>(false);
-
+  // End
+  static refeshEndInterviewInvitation = new BehaviorSubject<boolean>(false);
+  static endInterviewList = new Subject<any>();
+  //
   currentStatusInterview: Subject<number> = new Subject<number>();
   interviewNotification;
   // map theo model danh sách biên bản phỏng vấn
@@ -85,7 +88,8 @@ export class InterviewInvitationService {
     );
     urlFilterParams.append(
       'createdDate',
-      filter.createdDate ? filter.createdDate.toString() : ''
+      filter.createdDate ?
+        DateTimeConvertHelper.fromDtObjectToTimestamp(filter.createdDate).toString() : ''
     );
     urlFilterParams.append(
       'sorting',
@@ -157,6 +161,22 @@ export class InterviewInvitationService {
   // Observable refesh interview invitation list
   watchRefeshPrepareInterview(): Observable<boolean> {
     return InterviewInvitationService.refeshPrepareInterviewInvitation;
+  }
+  // =============================
+  // End Interview Invitation List
+  chagneRefeshEndInterview(displayAlert) {
+    InterviewInvitationService.refeshEndInterviewInvitation.next(displayAlert);
+  }
+  // Observable refesh interview invitation list
+  watchRefeshEndInterview(): Observable<boolean> {
+    return InterviewInvitationService.refeshEndInterviewInvitation;
+  }
+  changeEndInterviewList() {
+    InterviewInvitationService.endInterviewList.next();
+  }
+  // Observable interview invitation list
+  watchEndInterviewList(): Observable<boolean> {
+    return InterviewInvitationService.endInterviewList;
   }
   // map theo model danh sách lời lời phỏng vấn
   toInterviewInvitationList(result: any): InterviewInvitationList {
@@ -306,8 +326,9 @@ export class InterviewInvitationService {
   toApprovedDossiersList(result: any): ApprovedDossiersList {
     return {
       typeName: result.typeName,
+      isLiveForm: result.isLiveForm,
       document: result.document ? {
-        type: result.document.typeName,
+        type: result.document.type,
         id: result.document.id,
         name: result.document.name,
         interviewTime: result.document.interviewTime,
@@ -341,6 +362,28 @@ export class InterviewInvitationService {
       const result = response.result;
       return (result || []).map(
         this.toApprovedDossiersList
+      );
+    });
+  }
+  // Download template chuẩn bị phỏng vấn
+  downloadTemplatePrepare() {
+    const url = `prepareinterview/template/download`;
+    return this.apiService.getFile(url).map(response => {
+      return FileSaver.saveAs(
+        new Blob([response.file], {
+          type: `${response.file.type}`,
+        }), response.fileName
+      );
+    });
+  }
+  // Dowload hô sơ dự thầu đã phê duyệt - đối với các file
+  downloadTenderdocument(tenderDocumentId: number) {
+    const url = `tenderdocument/${tenderDocumentId}/download`;
+    return this.apiService.getFile(url).map(response => {
+      return FileSaver.saveAs(
+        new Blob([response.file], {
+          type: `${response.file.type}`,
+        }), response.fileName
       );
     });
   }
@@ -419,12 +462,35 @@ export class InterviewInvitationService {
       };
     });
   }
-
+  // Tải về biên bản phỏng vấn
+  downloadReport(bidInterviewReportDocId: number) {
+    const url = `bidinterviewreportdoc/${bidInterviewReportDocId}/download`;
+    return this.apiService.getFile(url).map(response => {
+      return FileSaver.saveAs(
+        new Blob([response.file], {
+          type: `${response.file.type}`,
+        }), response.fileName
+      );
+    });
+  }
   // Chuyển trạng thái đã chốt công tác phỏng vấn => đã phỏng vấn
   submitPrepareInterviews(bidOpportunityId: number) {
     const url = `bidopportunity/hsdt/${bidOpportunityId}/daphongvan`;
     return this.apiService.post(url).map(response => {
       return response;
     });
+  }
+  // Tải template đã phỏng vấn
+  downloadTemplateEnd() {
+  }
+  // Hiệu chỉnh HSDT
+  correctionHSDT(bidOpportunityId: number) {
+    const url = `bidopportunity/hsdt/${bidOpportunityId}/canhieuchinhhsdt`;
+    return this.apiService.post(url);
+  }
+  // Đóng phỏng vấn
+  closeInterview(bidOpportunityId: number) {
+    const url = `bidopportunity/hsdt/${bidOpportunityId}/dongphongvan`;
+    return this.apiService.post(url);
   }
 }
