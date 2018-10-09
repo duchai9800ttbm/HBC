@@ -1,7 +1,20 @@
 .label-contact {
     background: #eee;
     border: none;
-    border-radius: 5px;
+    //border-radius: 5px;
+
+    border-top-left-radius: 5px;
+    border-bottom-left-radius: 5px;
+    min-width: 55px;
+    border: 1px solid #ced4da;
+    border-top-right-radius: 0px;
+    border-bottom-right-radius: 0px;
+}
+
+.form-control-custom{
+    border-top-left-radius: 0px;
+    border-bottom-left-radius: 0px;
+    border-left: none;
 }
 
 .custom-dropdown-liveform::before {
@@ -14,8 +27,51 @@
 }
 
 .custom-dropdown-liveform::after {
+    font-family: 'FontAwesome';
+    content: "\f04e";
+    right: 3%;
     color: #00a0e3;
 }
+
+span:focus {
+    .custom-dropdown-liveform::after {
+        font-family: 'FontAwesome';
+        content: "\f04e";
+        right: 3%;
+        color: #00a0e3;
+        transform: rotate(90deg);
+        top: 40%;
+    }
+
+    .custom-dropdown-liveform::before {
+        width: 41px;
+        right: 0;
+        top: 0;
+        bottom: 0;
+        border-radius: 0 3px 3px 0;
+        background-color: transparent;
+    }
+}
+
 .tempHiden {
     visibility: hidden;
+}
+
+.w-3{
+    width: calc(100% / 3);
+}
+
+.form-control-customer{
+    height: 100%;
+}
+
+.border-none{
+    width: 100%;
+    outline: none;
+    border: none;
+}
+
+.b-textarea {
+    border: none;
+    resize: none;
 }

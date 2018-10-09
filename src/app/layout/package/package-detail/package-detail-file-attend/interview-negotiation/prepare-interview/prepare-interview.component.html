@@ -133,7 +133,7 @@
                 </th>
 
                 <th class="w-25" style="width: 13%;background-color: #f68e56!important; border-right: none;">
-                      <div>Loại tài liệu</div>
+                  <div>Loại tài liệu</div>
                 </th>
 
                 <th class="w-25" style="background-color: #f68e56!important; border-left: none;">
@@ -148,7 +148,7 @@
                 </th> -->
 
                 <th class="w-20" style="background-color: #f68e56!important;">
-                      <div>Tên tài liệu</div>
+                  <div>Tên tài liệu</div>
                 </th>
 
                 <th class="w-15" style="background-color: #f68e56!important;">
@@ -184,13 +184,18 @@
                         </div>
                       </td>
                       <td valign="baseline" [attr.rowspan]="item.childs?.length" *ngIf="k === 0">{{item.typeName}}</td>
-                      <td >{{itemchirld.typeName}}</td>
-                      <td >{{itemchirld.document?.name}}</td>
+                      <td>{{itemchirld.typeName}}</td>
+                      <td>{{itemchirld.document?.name}}</td>
                       <td class="text-center">{{itemchirld.document?.interviewTime}}</td>
                       <td class="text-center">
-                        <div title="Tải file" (click)="dowloadDocument(item.id)">
+                        <div *ngIf="!item.isLiveForm" title="Tải file" (click)="dowloadDocument(itemchirld.document.id)">
                           <a>
                             <i class="fa fa-download color-item-down" aria-hidden="true"></i>
+                          </a>
+                        </div>
+                        <div *ngIf="item.isLiveForm" title="Xem chi tiết" (click)="viewDetailLiveForm(item.document.type)">
+                          <a>
+                            <i class="fa fa-eye text-warning" aria-hidden="true"></i>
                           </a>
                         </div>
                       </td>
@@ -213,14 +218,19 @@
                           <div>{{renderIndex(i,0)}}</div>
                         </div>
                       </td>
-                      <td >{{item.typeName}}</td>
-                      <td ></td>
-                      <td >{{item.document?.name}}</td>
+                      <td>{{item.typeName}}</td>
+                      <td></td>
+                      <td>{{item.document?.name}}</td>
                       <td class="text-center">{{item.document?.interviewTime}}</td>
                       <td class="text-center">
-                        <div title="Tải file" (click)="dowloadDocument(item.id)">
+                        <div *ngIf="!item.isLiveForm" title="Tải file" (click)="dowloadDocument(item.document.id)">
                           <a>
                             <i class="fa fa-download color-item-down" aria-hidden="true"></i>
+                          </a>
+                        </div>
+                        <div *ngIf="item.isLiveForm" title="Xem chi tiết" (click)="viewDetailLiveForm(item.document.type)">
+                          <a>
+                            <i class="fa fa-eye text-warning" aria-hidden="true"></i>
                           </a>
                         </div>
                       </td>

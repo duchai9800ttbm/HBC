@@ -1,6 +1,6 @@
 <form [formGroup]="trafficForm" class="detail-info">
     <div id="step2" class="step-info">
-        <h5 class="big-title">3.&nbsp;giao thông và lối vào công trường (transportation and site entrance condition)</h5>
+        <h6 class="big-title">3.&nbsp;giao thông và lối vào công trường (transportation and site entrance condition)</h6>
         <div>
             <div class="detail-each-title">
                 <h6 class="small-title">3.1 Những chi tiết địa hình/ Topography</h6>
@@ -15,7 +15,7 @@
 
                             <div class="display-img" *ngFor="let url of disadvantageImageUrls" (click)="viewFullScreenImage(disadvantageImageUrls)">
                                 <img [src]="url.largeSizeUrl">
-                                <div class="toppp"  [ngClass]="{'d-none': viewMode}" (click)="deleteDisadvantageImage(url)">
+                                <div class="icon-delete-image"  [ngClass]="{'d-none': viewMode}" (click)="deleteDisadvantageImage(url)">
                                     <i class="fa fa-times delete-icon" aria-hidden="true"></i>
                                 </div>
                             </div>
@@ -35,7 +35,7 @@
 
                             <div class="display-img" *ngFor="let url of advantageImageUrls" (click)="viewFullScreenImage(advantageImageUrls)">
                                 <img [src]="url.largeSizeUrl">
-                                <div class="toppp"  [ngClass]="{'d-none': viewMode}" (click)="deleteAdvantageImage(url)">
+                                <div class="icon-delete-image"  [ngClass]="{'d-none': viewMode}" (click)="deleteAdvantageImage(url)">
                                     <i class="fa fa-times delete-icon" aria-hidden="true"></i>
                                 </div>
                             </div>
@@ -60,7 +60,7 @@
 
                             <div class="display-img" *ngFor="let url of directionImageUrls" (click)="viewFullScreenImage(directionImageUrls)">
                                 <img [src]="url.largeSizeUrl">
-                                <div class="toppp"  [ngClass]="{'d-none': viewMode}" (click)="deleteDirectionImage(url)">
+                                <div class="icon-delete-image"  [ngClass]="{'d-none': viewMode}" (click)="deleteDirectionImage(url)">
                                     <i class="fa fa-times delete-icon" aria-hidden="true"></i>
                                 </div>
                             </div>
@@ -80,7 +80,7 @@
 
                             <div class="display-img" *ngFor="let url of existingImageUrls" (click)="viewFullScreenImage(existingImageUrls)">
                                 <img [src]="url.largeSizeUrl">
-                                <div class="toppp"  [ngClass]="{'d-none': viewMode}" (click)="deleteExistingImage(url)">
+                                <div class="icon-delete-image"  [ngClass]="{'d-none': viewMode}" (click)="deleteExistingImage(url)">
                                     <i class="fa fa-times delete-icon" aria-hidden="true"></i>
                                 </div>
                             </div>
@@ -100,7 +100,7 @@
 
                             <div class="display-img" *ngFor="let url of roadImageUrls" (click)="viewFullScreenImage(roadImageUrls)">
                                 <img [src]="url.largeSizeUrl">
-                                <div class="toppp"  [ngClass]="{'d-none': viewMode}" (click)="deleteRoadImage(url)">
+                                <div class="icon-delete-image"  [ngClass]="{'d-none': viewMode}" (click)="deleteRoadImage(url)">
                                     <i class="fa fa-times delete-icon" aria-hidden="true"></i>
                                 </div>
                             </div>
@@ -120,7 +120,7 @@
 
                             <div class="display-img" *ngFor="let url of fenceImageUrls" (click)="viewFullScreenImage(fenceImageUrls)">
                                 <img [src]="url.largeSizeUrl">
-                                <div class="toppp"  [ngClass]="{'d-none': viewMode}" (click)="deleteFenceImage(url)">
+                                <div class="icon-delete-image"  [ngClass]="{'d-none': viewMode}" (click)="deleteFenceImage(url)">
                                     <i class="fa fa-times delete-icon" aria-hidden="true"></i>
                                 </div>
                             </div>

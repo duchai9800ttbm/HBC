@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, FormArray } from '@angular/forms';
 import { HoSoDuThauService } from '../../../../../../../../shared/services/ho-so-du-thau.service';
 import { DienGiaiDieuKienHopDong } from '../../../../../../../../shared/models/ho-so-du-thau/dien-giai-yeu-cau';
+import DateTimeConvertHelper from '../../../../../../../../shared/helpers/datetime-convert-helper';
+import { SummaryConditionFormComponent } from '../summary-condition-form.component';
 
 @Component({
     selector: 'app-summary-condition-form-condition-contract',
@@ -27,12 +29,14 @@ export class SummaryConditionFormConditionContractComponent implements OnInit {
 
     constructor(
         private fb: FormBuilder,
-        private hoSoDuThauService: HoSoDuThauService
+        private hoSoDuThauService: HoSoDuThauService,
     ) { }
 
     ngOnInit() {
         this.loadData();
         this.createForm();
+        this.conditionContractForm.valueChanges.subscribe(
+        );
     }
 
     loadData() {
@@ -438,21 +442,47 @@ export class SummaryConditionFormConditionContractComponent implements OnInit {
 
     }
 
-    addFormArrayControl(name: string) {
-        const formGroup = this.conditionContractForm.get(
-            'contractCondition'
-        ) as FormGroup;
-        const formArray = formGroup.get(name) as FormArray;
-        const formItem = this.fb.group({
-            name: '',
-            description: ''
+    addFormArrayControl() {
+        const formGroupHSMT = (this.conditionContractForm.get(
+            'dieuKienTheoHSMT'
+        ) as FormGroup).controls.baoHiem as FormGroup;
+        const formArrayHSMT = formGroupHSMT.get('baoHiemMayMoc') as FormArray;
+        const formItemHSMT = this.fb.group({
+            baoHiemItem: {
+                value: '',
+                disabled: this.isModelView
+            }
         });
-        formArray.push(formItem);
+        formArrayHSMT.push(formItemHSMT);
+
+        const formGroupHBC = (this.conditionContractForm.get(
+            'dieuKienTheoHBC'
+        ) as FormGroup).controls.baoHiem as FormGroup;
+        const formArrayHBC = formGroupHBC.get('baoHiemMayMoc') as FormArray;
+        const formItemHBC = this.fb.group({
+            baoHiemItem: {
+                value: '',
+                disabled: this.isModelView
+            }
+        });
+        formArrayHBC.push(formItemHBC);
+
     }
 
     removeFormArrayControl(name: string, idx: number) {
-        const formArray = this.conditionContractForm.get(name) as FormArray;
-        formArray.removeAt(idx);
+        const formGroupHSMT = (this.conditionContractForm.get(
+            'dieuKienTheoHSMT'
+        ) as FormGroup).controls.baoHiem as FormGroup;
+        const formArrayHSMT = formGroupHSMT.get('baoHiemMayMoc') as FormArray;
+        formArrayHSMT.removeAt(idx);
+
+
+        const formGroupHBC = (this.conditionContractForm.get(
+            'dieuKienTheoHBC'
+        ) as FormGroup).controls.baoHiem as FormGroup;
+        const formArrayHBC = formGroupHBC.get('baoHiemMayMoc') as FormArray;
+        formArrayHBC.removeAt(idx);
     }
+
 
 }

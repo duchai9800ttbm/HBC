@@ -1,7 +1,7 @@
 <form [formGroup]="scaleOverallForm" class="detail-info">
     <div id="step0" class="step-info">
         <div id="info-docs">
-            <div class="label-info" style="margin-bottom: 15px;">
+            <div class="label-info label-info-name">
                 <label for="">Tên tài liệu</label>
                 <input type="text" formControlName="tenTaiLieu" tabindex="1">
             </div>
@@ -10,7 +10,7 @@
                 <input type="text" appInputNumber formControlName="lanPhongVan" tabindex="2">
             </div>
         </div>
-        <h5 class="big-title">1.&nbsp;quy mô tổng quan công trình (project statistic/scale)</h5>
+        <h6 class="big-title">1.&nbsp;quy mô tổng quan công trình (project statistic/scale)</h6>
         <div>
             <div class="detail-each-title">
                 <h6 class="small-title">1.1 Loại công trình xây dựng</h6>
@@ -28,10 +28,11 @@
                             </div>
                         </div>
                     </form>
-                    <hr style="margin-right: 13%" />
+                    <hr class="line-hoz" />
                     <form [formGroup]="trangThaiCongTrinhForm">
-                        <div class="single-row">
-                            <div class="child childcheck" formArrayName="trangthaiCongTrinhList" *ngFor="let item of trangthaiCongTrinhListFA.controls; let i = index">
+                        <div class="single-row reponsive-checkbox">
+                            <div class="child childcheck reponsive-checkbox-child" formArrayName="trangthaiCongTrinhList"
+                                *ngFor="let item of trangthaiCongTrinhListFA.controls; let i = index">
                                 <label>
                                     <input [formControlName]="i" type="checkbox" [ngClass]="{'view-mode-control': viewMode}"
                                         [checked]="trangthaiCongTrinhList[i].checked" (change)="trangthaiCongTrinhList[i].checked = !trangthaiCongTrinhList[i].checked; trangThaiCongTrinhChange($event)"
@@ -40,8 +41,9 @@
                                     <span class="checkmark" tabindex="4"></span>
                                 </label>
                             </div>
-                            <div *ngIf="showValueOfOther"><input [disabled]="viewMode" type="text" [(ngModel)]="valueOfOthers"
-                                    (ngModelChange)="valueOfOther($event)" [ngModelOptions]="{standalone: true}"></div>
+                            <div class="reponsive-checkbox-other" *ngIf="showValueOfOther"><input [disabled]="viewMode"
+                                    type="text" [(ngModel)]="valueOfOthers" (ngModelChange)="valueOfOther($event)"
+                                    [ngModelOptions]="{standalone: true}"></div>
                         </div>
                     </form>
                 </div>
@@ -74,7 +76,7 @@
                         </div>
                     </div>
                     <div>
-                        <p style="text-decoration: underline;">Hình ảnh phối cảnh dự án/ Perspective image of project</p>
+                        <p><u>Hình ảnh phối cảnh dự án/ Perspective image of project</u></p>
                         <div class="text-des-input">
                             <input type="text" value="Text" formControlName="hinhAnhPhoiCanhDesc" tabindex="10">
                         </div>
@@ -82,7 +84,7 @@
                             <input type="file" accept="image/*" multiple #uploadPerspective (change)="uploadPerspectiveImage($event)">
                             <div class="display-img" *ngFor="let url of perspectiveImageUrls" (click)="viewFullScreenImage(perspectiveImageUrls)">
                                 <img [src]="url.largeSizeUrl">
-                                <div class="toppp" [ngClass]="{'d-none': viewMode}" (click)="deletePerspectiveImage(url)">
+                                <div class="icon-delete-image" [ngClass]="{'d-none': viewMode}" (click)="deletePerspectiveImage(url)">
                                     <i class="fa fa-times delete-icon" aria-hidden="true"></i>
                                 </div>
                             </div>
@@ -107,7 +109,7 @@
                             <input type="file" accept="image/*" multiple #uploadStructure (change)="uploadStructureImage($event)">
                             <div class="display-img" *ngFor="let url of structureImageUrls" (click)="viewFullScreenImage(structureImageUrls)">
                                 <img [src]="url.largeSizeUrl">
-                                <div class="toppp" [ngClass]="{'d-none': viewMode}" (click)="deleteStructureImage(url)">
+                                <div class="icon-delete-image" [ngClass]="{'d-none': viewMode}" (click)="deleteStructureImage(url)">
                                     <i class="fa fa-times delete-icon" aria-hidden="true"></i>
                                 </div>
                             </div>
@@ -131,7 +133,7 @@
                         <input type="file" accept="image/*" multiple #uploadRequirements (change)="uploadRequirementsImage($event)">
                         <div class="display-img" *ngFor="let url of requirementsImageUrls" (click)="viewFullScreenImage(requirementsImageUrls)">
                             <img [src]="url.largeSizeUrl">
-                            <div class="toppp" [ngClass]="{'d-none': viewMode}" (click)="deleteRequirementsImage(url)">
+                            <div class="icon-delete-image" [ngClass]="{'d-none': viewMode}" (click)="deleteRequirementsImage(url)">
                                 <i class="fa fa-times delete-icon" aria-hidden="true"></i>
                             </div>
                         </div>

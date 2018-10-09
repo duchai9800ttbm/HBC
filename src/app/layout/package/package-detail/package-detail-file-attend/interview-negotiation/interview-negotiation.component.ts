@@ -13,6 +13,7 @@ import { BehaviorSubject } from '../../../../../../../node_modules/rxjs';
 import { ActivatedRoute, Router, NavigationEnd } from '../../../../../../../node_modules/@angular/router';
 import { NgxSpinnerService } from '../../../../../../../node_modules/ngx-spinner';
 import { AlertService } from '../../../../../shared/services';
+import { ReportEndInterviewComponent } from './end-interview/report-end-interview/report-end-interview.component';
 
 
 @Component({
@@ -28,6 +29,7 @@ export class InterviewNegotiationComponent implements OnInit {
   bidStatus = BidStatus;
   amountInterview: number;
   dialog;
+  dialogEndInterview;
   statusInInterviewList;
   stattusCurrentList;
   currentStatusInterview;
@@ -96,7 +98,7 @@ export class InterviewNegotiationComponent implements OnInit {
       });
       for (let i = 0; i < this.statusInInterviewList.length; i++) {
         if (this.statusInInterviewList[i] === this.statusPackage) {
-            this.numberStatusPackageInterview = i;
+          this.numberStatusPackageInterview = i;
           break;
         }
       }
@@ -170,7 +172,6 @@ export class InterviewNegotiationComponent implements OnInit {
   }
 
   approvedInterviewPreparation() {
-    console.log('approvedInterviewPreparation');
     this.spinner.show();
     this.interviewInvitationService.approvedinterviewpreparation(this.packageId).subscribe(response => {
       this.spinner.hide();
@@ -179,6 +180,54 @@ export class InterviewNegotiationComponent implements OnInit {
       err => {
         this.spinner.hide();
         this.alertService.error('Chốt công tác chuẩn bị phỏng vấn thất bại!');
+      });
+  }
+
+  downloadTemplatePrepare() {
+    this.interviewInvitationService.downloadTemplatePrepare().subscribe(item => {
+    },
+      err => {
+        this.alertService.error('Tải template chuẩn bị phỏng vấn thất bại!');
+      });
+  }
+
+  // =======================
+  // End Interview
+  refreshEndInterview() {
+    this.interviewInvitationService.chagneRefeshEndInterview(true);
+  }
+  uploadReportInterview() {
+    this.dialogEndInterview = this.dialogService.open({
+      content: ReportEndInterviewComponent,
+      width: 650,
+      minWidth: 250
+    });
+    const instance = this.dialogEndInterview.content.instance;
+    instance.callBack = () => this.closePopuupEndInterview();
+  }
+
+  closePopuupEndInterview() {
+    this.dialogEndInterview.close();
+  }
+
+  downloadTemplateEnd() {
+  }
+
+  correctionHSDT() {
+    this.interviewInvitationService.correctionHSDT(this.packageId).subscribe(response => {
+      this.alertService.success('Hiệu chỉnh hồ sơ dự thầu thành công!');
+    },
+      err => {
+        this.alertService.error('Hiệu chỉnh hồ sơ dự thầu không thành công!');
+      });
+  }
+
+  closeInterview() {
+    this.interviewInvitationService.closeInterview(this.packageId).subscribe(response => {
+      this.alertService.success('Đóng phỏng vấn thành công!');
+    },
+      err => {
+        this.alertService.error('Đóng phỏng vấn không thành công!');
       });
   }
 }

@@ -1,5 +1,6 @@
 export class ApprovedDossiersList {
     typeName: string;
+    isLiveForm: boolean;
     document: {
         type: string;
         id: number;

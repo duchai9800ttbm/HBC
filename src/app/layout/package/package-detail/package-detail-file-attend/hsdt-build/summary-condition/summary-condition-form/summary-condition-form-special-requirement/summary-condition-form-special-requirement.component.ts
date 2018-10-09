@@ -14,10 +14,8 @@ import { TableYeuCauDacBiet } from '../../../../../../../../shared/models/ho-so-
 export class SummaryConditionFormSpecialRequirementComponent implements OnInit {
 
   specialRequirementForm: FormGroup;
-  otherRequirement = new Array<TableYeuCauDacBiet>();
-  get requirementsFA(): FormArray {
-    return this.specialRequirementForm.get('requirements') as FormArray;
-  }
+  otherRequirement = new TableYeuCauDacBiet();
+ 
   constructor(
     private fb: FormBuilder,
     private hoSoDuThauService: HoSoDuThauService
@@ -29,25 +27,29 @@ export class SummaryConditionFormSpecialRequirementComponent implements OnInit {
   }
   createForm() {
     this.specialRequirementForm = this.fb.group({
-      requirements: this.fb.array([])
+      descOne: this.otherRequirement.descOne,
+      descTwo: this.otherRequirement.descTwo,
+      descThree: this.otherRequirement.descThree,
+      linkOne: this.otherRequirement.linkOne,
+      linkTwo: this.otherRequirement.linkTwo,
+      link2Two: this.otherRequirement.link2Two,
+      linkThree: this.otherRequirement.linkThree,
     });
 
-    this.otherRequirement.forEach(x => {
-      const control = <FormArray>this.specialRequirementForm.controls.requirements;
-      control.push(this.fb.group({
-        name: x.name,
-        desc: x.desc,
-        link: x.link
-      }));
-    });
+
 
     this.specialRequirementForm.valueChanges.subscribe(data => {
-      let obj = new Array<TableYeuCauDacBiet>();
-      obj = (data.requirements || []).map(x => ({
-        name: x.name,
-        desc: x.desc,
-        link: x.link
-      }));
+      let obj = new TableYeuCauDacBiet();
+      obj = {
+        descOne: data.descOne,
+        descTwo: data.descTwo,
+        descThree: data.descThree,
+        linkOne: data.linkOne,
+        linkTwo: data.linkTwo,
+        link2Two: data.link2Two,
+        linkThree: data.linkThree,
+      };
+      console.log(obj);
       this.hoSoDuThauService.emitDataStepSpecial(obj);
     });
   }
@@ -59,30 +61,8 @@ export class SummaryConditionFormSpecialRequirementComponent implements OnInit {
       if (otherRequirement) {
         this.otherRequirement = otherRequirement;
       }
-      if (!otherRequirement) {
-        this.otherRequirement = [];
-        this.otherRequirement.push({
-          name: '',
-          desc: '',
-          link: ''
-        });
-      }
     });
   }
 
-  addFormArrayControl(name: string, data?: Requirement) {
-    const formArray = this.specialRequirementForm.get(name) as FormArray;
-    const formItem = this.fb.group({
-      name: data ? data.name : '',
-      desc: data ? data.desc : '',
-      link: data ? data.link : ''
-    });
-    formArray.push(formItem);
-  }
-
-  removeFormArrayControl(name: string, idx: number) {
-    const formArray = this.specialRequirementForm.get(name) as FormArray;
-    formArray.removeAt(idx);
-  }
 
 }

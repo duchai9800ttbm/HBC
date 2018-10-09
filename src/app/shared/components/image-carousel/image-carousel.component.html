@@ -2,7 +2,7 @@
     <div id="modal-container" class="d-flex flex-column align-items-center">
         <div class="close-button" (click)="closeView()"><i class="fa fa-times-circle-o" aria-hidden="true"></i></div>
         <div class="w3-content">
-            <img *ngFor="let image of imageUrlArray; index as i" class="w-100" [class.noShow]="isShow !== i"
+            <img *ngFor="let image of imageUrlArray; index as i" class="w-100 show-image-item" [class.noShow]="isShow !== i"
                 [class.show]="isShow === i" [src]="image.largeSizeUrl">
         </div>
         <div class="thumbImage d-flex flex-row justify-content-center flex-wrap mt-2 mb-2">

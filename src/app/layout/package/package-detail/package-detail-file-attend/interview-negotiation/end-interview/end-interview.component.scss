@@ -520,7 +520,8 @@ table.dataTable td {
 }
 
 .set-width-stt {
-    min-width: 3rem !important;
+    width: 5% !important;
+    width: 3rem !important;
 }
 
 .filter--background {
@@ -588,7 +589,8 @@ table.dataTable td {
 }
 
 .set-width-manipulation {
-    min-width: 4rem !important;
+    width: 5% !important;
+    width: 4rem !important;
 }
 
 .no-content__image--pad {
@@ -610,12 +612,15 @@ table.dataTable td {
     width: 15px;
     cursor: pointer;
 }
+.icon-sort-down-up{
+    width: 9px;
+    cursor: pointer;
+}
 .table-layout{
     table-layout: fixed;
 }
 .w-5{
     width: 5% !important;
-    width: 3rem !important;
 }
 .w-25{
     width: 25% !important;

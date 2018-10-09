@@ -1,5 +1,9 @@
 export class TableYeuCauDacBiet {
-    name: string;
-    desc: string;
-    link: string;
+    descOne: string;
+    descTwo: string;
+    descThree: string;
+    linkOne: string;
+    linkTwo: string;
+    link2Two: string;
+    linkThree: string;
 }

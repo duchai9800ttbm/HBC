@@ -51,6 +51,7 @@ export class PrepareInterviewComponent implements OnInit {
         this.spinner.show();
         this.interviewInvitationService.getListApprovedDossiers(this.packageId, keySearch).subscribe(response => {
           this.pagedResult = response;
+          console.log('this.result', this.pagedResult);
           this.spinner.hide();
         },
           err => {
@@ -87,6 +88,37 @@ export class PrepareInterviewComponent implements OnInit {
 
   onSelectAll(value: boolean) {
     this.pagedResult.forEach(item => item['checkboxSelected'] = value);
+  }
+
+
+  viewDetailLiveForm(type: string) {
+    console.log('typeliveForm', type);
+    switch (type) {
+      // Bản tóm tắt điều kiện dự thầu
+      case 'TenderConditionalSummary': {
+        this.router.navigate([`/package/detail/${this.packageId}/attend/build/summary`]);
+        break;
+      }
+      // Bảo cáo tham quan công trình
+      case 'SiteSurveyingReport': {
+        this.router.navigate([`/package/detail/${this.packageId}/attend/build/liveformsite`]);
+        break;
+      }
+      // Trình duyệt giá
+      case 'TenderPriceApproval': {
+        this.router.navigate([`/package/detail/${this.packageId}/attend/price-review/summary`]);
+        break;
+      }
+    }
+  }
+
+  dowloadDocument(tenderDocumentId: number) {
+    console.log('tenderDocumentId', tenderDocumentId);
+    this.interviewInvitationService.downloadTenderdocument(tenderDocumentId).subscribe(response => {
+    },
+      err => {
+        this.alertService.error('Tải tài liệu hồ sơ dự thầu không thành công!');
+      });
   }
 
 }
