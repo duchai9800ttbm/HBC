@@ -17,6 +17,7 @@ import { SummaryConditionFormTenderClarficationComponent } from './summary-condi
 import { SummaryConditionFormConditionContractComponent } from './summary-condition-form-condition-contract/summary-condition-form-condition-contract.component';
 import { SummaryConditionFormConditionTenderComponent } from './summary-condition-form-condition-tender/summary-condition-form-condition-tender.component';
 import { SummaryConditionFormSpecialRequirementComponent } from './summary-condition-form-special-requirement/summary-condition-form-special-requirement.component';
+import { PopupUpdateDescriptionComponent } from './popup-update-description/popup-update-description.component';
 
 @NgModule({
   imports: [
@@ -24,6 +25,6 @@ import { SummaryConditionFormSpecialRequirementComponent } from './summary-condi
     SharedModule,
     SummaryConditionFormRoutingModule
   ],
-  declarations: [SummaryConditionFormComponent, SummaryConditionFormInfoComponent, SummaryConditionFormRelatedPartiesComponent, SummaryConditionFormScopeWorkComponent, SummaryConditionFormNonminatedSubConstructorComponent, SummaryConditionFormMainMaterialComponent, SummaryConditionFormTenderSubmissionComponent, SummaryConditionFormProfileDestinationComponent, SummaryConditionFormTenderClarficationComponent, SummaryConditionFormConditionContractComponent, SummaryConditionFormConditionTenderComponent, SummaryConditionFormSpecialRequirementComponent]
+  declarations: [SummaryConditionFormComponent, SummaryConditionFormInfoComponent, SummaryConditionFormRelatedPartiesComponent, SummaryConditionFormScopeWorkComponent, SummaryConditionFormNonminatedSubConstructorComponent, SummaryConditionFormMainMaterialComponent, SummaryConditionFormTenderSubmissionComponent, SummaryConditionFormProfileDestinationComponent, SummaryConditionFormTenderClarficationComponent, SummaryConditionFormConditionContractComponent, SummaryConditionFormConditionTenderComponent, SummaryConditionFormSpecialRequirementComponent, PopupUpdateDescriptionComponent]
 })
 export class SummaryConditionFormModule { }
