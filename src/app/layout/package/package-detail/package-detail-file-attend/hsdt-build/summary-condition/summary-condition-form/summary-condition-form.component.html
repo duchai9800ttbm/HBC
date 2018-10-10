@@ -46,17 +46,27 @@
         <div class="toggle-menu-item" routerLink="./special-requirement" routerLinkActive="active-link">XI. Yêu cầu đặc biệt khác</div> -->
 
         <div class="toggle-menu-item pointer" routerLink="./info" routerLinkActive="active-link">I. Thông tin dự án</div>
-        <div class="toggle-menu-item pointer" routerLink="./stackholder" routerLinkActive="active-link">II. Các bên liên quan</div>
-        <div class="toggle-menu-item pointer" routerLink="./scope" routerLinkActive="active-link">III. Phạm vi công việc</div>
-        <div class="toggle-menu-item pointer" routerLink="./nonminate" routerLinkActive="active-link">IV. Nhà thầu phụ được chỉ định</div>
-        <div class="toggle-menu-item pointer" routerLink="./main-material" routerLinkActive="active-link">V. Vật tư do CĐT cung cấp/ chỉ định</div>
-        <div class="toggle-menu-item pointer" routerLink="./tender-submission" routerLinkActive="active-link">VI. Hồ sơ phải nộp đáng lưu ý</div>
+        <div class="toggle-menu-item pointer" routerLink="./stackholder" routerLinkActive="active-link">II. Các bên
+            liên quan</div>
+        <div class="toggle-menu-item pointer" routerLink="./scope" routerLinkActive="active-link">III. Phạm vi công
+            việc</div>
+        <div class="toggle-menu-item pointer" routerLink="./nonminate" routerLinkActive="active-link">IV. Nhà thầu phụ
+            được chỉ định</div>
+        <div class="toggle-menu-item pointer" routerLink="./main-material" routerLinkActive="active-link">V. Vật tư do
+            CĐT cung cấp/ chỉ định</div>
+        <div class="toggle-menu-item pointer" routerLink="./tender-submission" routerLinkActive="active-link">VI. Hồ sơ
+            phải nộp đáng lưu ý</div>
         <div class="toggle-menu-item">Diễn giải chi tiết hồ sơ</div>
-        <div class="toggle-menu-item pointer" routerLink="./profile-destination" routerLinkActive="active-link"><i class="fa fa-caret-right mr-3" aria-hidden="true"></i> VII. Yêu cầu hồ sơ</div>
-        <div class="toggle-menu-item pointer" routerLink="./tender-clarify" routerLinkActive="active-link"><i class="fa fa-caret-right mr-3" aria-hidden="true"></i> VIII. Yêu cầu làm rõ HSMT</div>
-        <div class="toggle-menu-item pointer" routerLink="./condition-contract" routerLinkActive="active-link"><i class="fa fa-caret-right mr-3" aria-hidden="true"></i> IX. Điều kiện hợp đồng</div>
-        <div class="toggle-menu-item pointer" routerLink="./condition-tender" routerLinkActive="active-link"><i class="fa fa-caret-right mr-3" aria-hidden="true"></i> X. Điều kiện HSMT</div>
-        <div class="toggle-menu-item pointer" routerLink="./special-requirement" routerLinkActive="active-link">XI. Yêu cầu đặc biệt khác</div>
+        <div class="toggle-menu-item pointer" routerLink="./profile-destination" routerLinkActive="active-link"><i
+                class="fa fa-caret-right mr-3" aria-hidden="true"></i> VII. Yêu cầu hồ sơ</div>
+        <div class="toggle-menu-item pointer" routerLink="./tender-clarify" routerLinkActive="active-link"><i class="fa fa-caret-right mr-3"
+                aria-hidden="true"></i> VIII. Yêu cầu làm rõ HSMT</div>
+        <div class="toggle-menu-item pointer" routerLink="./condition-contract" routerLinkActive="active-link"><i class="fa fa-caret-right mr-3"
+                aria-hidden="true"></i> IX. Điều kiện hợp đồng</div>
+        <div class="toggle-menu-item pointer" routerLink="./condition-tender" routerLinkActive="active-link"><i class="fa fa-caret-right mr-3"
+                aria-hidden="true"></i> X. Điều kiện HSMT</div>
+        <div class="toggle-menu-item pointer" routerLink="./special-requirement" routerLinkActive="active-link">XI. Yêu
+            cầu đặc biệt khác</div>
 
     </div>
     <div class="w-100 ml-2">
@@ -74,4 +84,5 @@
         <router-outlet></router-outlet>
     </div>
 </div>
+<app-popup-update-description *ngIf="showPopupConfirm" (closed)="submitLiveForm($event)"></app-popup-update-description>
 <ngx-spinner bdColor="rgba(51, 51, 51, 0.7)" size="medium" color="#fff" type="ball-clip-rotate-multiple"></ngx-spinner>

@@ -398,6 +398,5 @@
     "TenderDirectorProposal": "ý kiến đề xuất của giám đốc dự thầu",
     "IsAgreed": "Tham gia dự thầu",
     "Reason": "Lý do",
-    "True": "Đồng ý tham gia",
-    "False": "Không đồng ý tham gia"
+    "IsSigned": "Ký tên"
 }
