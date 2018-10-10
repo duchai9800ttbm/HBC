@@ -1,5 +1,4 @@
 .outer {
-    margin-top: 15px;
     width: 100%;
     //  height: 100vh;
     box-shadow: 0 1pt 12pt rgba(0, 0, 0, 0.15);
@@ -317,6 +316,119 @@ table.dataTable th {
 .fs {
     font-size: 15px;
 }
-// .pd-t {
-//     padding-top: 18px;
-// }
+.btn-send {
+    background-color: #00a0e3;
+    border: #00a0e3;
+    color: white;
+    margin-right: 4px;
+}
+.btn-cancel {
+    background-color: #8e8b8b;
+    border: #8e8b8b;
+    color: white;
+}
+.send-cc {
+    margin-right: 10px;
+    color: #00a0e3;
+    cursor: pointer;
+}
+.fileUpload {
+    position: relative;
+    overflow: hidden;
+    cursor: pointer;
+    width: auto;
+}
+.fileUpload input.upload {
+    position: absolute;
+    top: 0;
+    right: 0;
+    margin: 0;
+    padding: 0;
+    font-size: 20px;
+    cursor: pointer;
+    opacity: 0;
+    filter: alpha(opacity=0);
+}
+.input-group-prepend>.input-group-text {
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+    background: #fff!important;
+    border-right: none;
+}
+.input-group-append {
+    margin-left: -1px;
+}
+.input-group-append>.input-group-text {
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+    background: #fff!important;
+    border-left: none;
+}
+
+.input-group-text {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+    padding: .375rem .75rem;
+    margin-bottom: 0;
+    font-size: 1rem;
+    font-weight: 400;
+    line-height: 1.5;
+    color: #495057;
+    text-align: center;
+    white-space: nowrap;
+    background-color: #e9ecef;
+    border: 1px solid #ced4da;
+    border-radius: .25rem;
+    padding-right: 6px;    
+}
+.img-back {
+    margin: 0px 5px 8px 5px; 
+}
+table.dataTable th {
+    background-color: #f68e56 !important;
+    border: 1px solid #dddddd;
+}
+.set-stt--width{
+    width: 5% !important;
+    width: 3rem !important;
+}
+.set-manipulation--width{
+    width: 5% !important;
+    width: 4rem !important;
+}
+.table-layout{
+    table-layout: fixed;
+}
+.w-80{
+    width: 80%;
+}
+.w-40{
+    width: 40% !important;
+}
+.w-35{
+    width: 35%;
+}
+.w-30{
+    width: 30% !important;
+}
+.w-25{
+    width: 25% !important;
+}
+.w-10{
+    width: 10% !important;
+}
+.w-15{
+    width: 15% !important;
+}
+.icon-sort{
+    width: 15px;
+    cursor: pointer;
+}
+.icon-sort-down-up{
+    width: 9px;
+    cursor: pointer;
+}
