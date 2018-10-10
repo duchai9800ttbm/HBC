@@ -182,7 +182,7 @@
                         </div>
                     </th>
 
-                    <th class="table-action text-center boder-table header-table small-column" style="width: 5%">
+                    <th class="table-action text-center boder-table header-table small-column" style="width: 5%; min-width: 80px;">
                         <div class="title-text label-thead text-center">Thao tác</div>
                     </th>
 
@@ -204,7 +204,8 @@
                             </div>
                         </div>
                     </td>
-                    <td [hidden]="!isTypeChildDoc" class="remove-border boder-table d-flex flex-row align-content-center" [title]="hoso.tenderDocumentType.name">
+                    <td [hidden]="!isTypeChildDoc" class="remove-border boder-table d-flex flex-row align-content-center"
+                        [title]="hoso.tenderDocumentType.name">
                         <div class="text-center text-truncate-custom">{{ hoso.tenderDocumentType?.name }}</div>
                         <img width="25" height="25" src="assets\images\document.png" (click)="clickpopup.click()">
                     </td>
