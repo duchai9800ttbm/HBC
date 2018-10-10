@@ -49,7 +49,7 @@ export class LiveformSiteReportComponent implements OnInit {
         },
           err => {
             this.spinner.hide();
-            this.alertService.error('Đã xảy ra lỗi, cập nhật dữ liệu không thành công');
+            this.alertService.error('Đã xảy ra lỗi, danh sách loại công trình cập nhật không thành công');
           });
       }
       this.documentData = res;
@@ -57,7 +57,7 @@ export class LiveformSiteReportComponent implements OnInit {
     },
       err => {
         this.spinner.hide();
-        this.alertService.error('Đã xảy ra lỗi, cập nhật dữ liệu không thành công');
+        this.alertService.error('Đã xảy ra lỗi, cập nhật dữ liệu lifeform không thành công');
       });
     this.siteSurveyReportService.changedHistoryTenderSiteReport(this.bidOpportunityId, 0, 10)
       .subscribe(responseResultHistory => {

@@ -60,7 +60,7 @@ export class EditComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.getInfoTenderPreparationPlanning();
     this.getAllUser();
-    this.isDraft = LiveformSiteReportComponent.formModel.isDraft;
+    this.isDraft = LiveformSiteReportComponent.formModel.isDraftVersion;
     this.currentBidOpportunityId = +PackageDetailComponent.packageId;
     this.packageService.getInforPackageID(this.currentBidOpportunityId).subscribe(result => {
       this.packageData = result;
@@ -106,7 +106,7 @@ export class EditComponent implements OnInit, OnDestroy {
       id: this.customer.employeeId,
       text: this.customer.employeeName
     };
-    LiveformSiteReportComponent.formModel.isDraft = this.isDraft;
+    LiveformSiteReportComponent.formModel.isDraftVersion = this.isDraft;
     this.showPopupConfirm = false;
     if (!event) {
       this.showPopupConfirm = false;
@@ -137,10 +137,7 @@ export class EditComponent implements OnInit, OnDestroy {
     this.alertService.success('Dữ liệu đã được cập nhật mới nhất!');
   }
 
-  updateliveform(i) {
-    if (i === 'isDraft') {
-      this.isDraft = true;
-    } else { this.isDraft = false; }
+  updateliveform() {
     this.showPopupConfirm = true;
   }
   cancelCreateUpdate() {

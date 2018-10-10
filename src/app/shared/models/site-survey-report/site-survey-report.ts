@@ -28,7 +28,7 @@ export class SiteSurveyReport {
         id: number;
         name: string;
     };
-    isDraft: boolean;
+    isDraftVersion: boolean;
     ngayCapNhat: number;
     noiDungCapNhat: string;
     tenTaiLieu: string;

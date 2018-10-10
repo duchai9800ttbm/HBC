@@ -246,6 +246,15 @@ export class SiteSurveyReportService {
         id: this.employeeId,
         name: ''
       };
+      dataFormated.isDraftVersion = true;
+      dataFormated.nguoiKhaoSat = model.surveyEmployee && {
+        id: model.surveyEmployee.employeeId,
+        text: model.surveyEmployee.employeeName
+      };
+      dataFormated.phongBan = model.department && {
+        id: model.department.id,
+        text: model.department.departmentName
+      };
       dataFormated.scaleOverall = new ScaleOverall();
       dataFormated.scaleOverall.loaiCongTrinh = new Array;
       dataFormated.scaleOverall.trangthaiCongTrinh = [
@@ -291,8 +300,15 @@ export class SiteSurveyReportService {
       };
       dataFormated.ngayCapNhat = model.updateTime;
       dataFormated.noiDungCapNhat = '';
-      // TODO: check lại chỗ này
-      dataFormated.isDraft = model.isDratt;
+      dataFormated.isDraftVersion = model.isDraftVersion;
+      dataFormated.nguoiKhaoSat = model.surveyEmployee && {
+        id: model.surveyEmployee.employeeId,
+        text: model.surveyEmployee.employeeName
+      };
+      dataFormated.phongBan = model.department && {
+        id: model.department.id,
+        text: model.department.departmentName
+      };
       dataFormated.tenTaiLieu = (model.projectStatistic.projectStatistic) ?
         model.projectStatistic.projectStatistic.projectScale.documentName : '';
       dataFormated.lanPhongVan = (model.projectStatistic.projectStatistic) ?
