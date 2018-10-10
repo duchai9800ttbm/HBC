@@ -8,6 +8,11 @@
     cursor: pointer;
 }
 
+.custom-control.custom-checkbox.mt-2 {
+    position: relative;
+    top: -3px;
+}
+
 .center-parent {
     display: flex;
     justify-content: center;
