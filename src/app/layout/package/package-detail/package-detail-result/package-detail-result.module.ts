@@ -11,6 +11,7 @@ import { CKEditorModule } from 'ng2-ckeditor';
 // tslint:disable-next-line:max-line-length
 import { UploadResultFileAttendComponent } from './package-success/package-list/upload-result-file-attend/upload-result-file-attend.component';
 import { DetailResultPackageService } from '../../../../shared/services/detail-result-package.service';
+import { NotificationContractComponent } from './package-success/package-list/notification-contract/notification-contract.component';
 @NgModule({
   imports: [
     CommonModule,
@@ -24,10 +25,12 @@ import { DetailResultPackageService } from '../../../../shared/services/detail-r
       WaitResultComponent,
       PackageFailedComponent,
       PackgeCancelComponent,
-      UploadResultFileAttendComponent
+      UploadResultFileAttendComponent,
+      NotificationContractComponent
   ],
   entryComponents: [
-    UploadResultFileAttendComponent
+    UploadResultFileAttendComponent,
+    NotificationContractComponent
   ],
   providers: [
     DetailResultPackageService

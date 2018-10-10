@@ -1,7 +1,7 @@
 <div class="table-small">
     <div class=" title-list-package d-flex flex-wrap align-items-center status-filter">
         <div class="mr-auto d-flex align-items-end list-package mt-2 mb-2">
-            <div class="d-flex justify-content-start" style="height: 40px;">
+            <div class="d-flex justify-content-start">
                 <div class="rule mr-2">
                 </div>
                 <div class="center-parent  mr-4">
@@ -38,23 +38,23 @@
         </div>
     </div>
     <div class="d-flex form-group status-filter">
-            <h5 class="d-inline mb-0 mr-auto text-dark text-uppercase pd-t">kết quả dự thầu</h5>
-            <!-- <div class="btn-toolbar">
+        <h5 class="d-inline mb-0 mr-auto text-dark text-uppercase pd-t">kết quả dự thầu</h5>
+        <!-- <div class="btn-toolbar">
                 <div class="input-group btn-rg">
                     <span class="input-group-addon">Tìm kiếm theo</span>
                     <input type="text" class="form-control icon" placeholder="&#xf002; Nhập tên" (keyup)="searchTerm$.next($event.target.value)">
                 </div>
             </div> -->
-        </div>
-    
+    </div>
+
     <div class="main-table">
         <div class="bot-table">
-            <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="table-selection stripe row-border hover cell-border dataTable">
+            <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="table-selection stripe row-border hover cell-border dataTable table-layout">
                 <thead>
                     <tr>
-                        <th class="stt" style="width: 5%; min-width: 20px;background-color: #f68e56!important;">
+                        <th class="set-stt--width">
                             <div class="d-flex justify-content-around">
-                                <div style="width: 40%;">
+                                <div class="w-40">
                                     <div class="center-parent">
                                         <label class="custom-control custom-checkbox">
                                             <input type="checkbox" class="custom-control-input" (change)="onSelectAll($event.target.checked)">
@@ -62,100 +62,106 @@
                                         </label>
                                     </div>
                                 </div>
-
-                                <div style="width: 35%;" class="center-parent">
+                                <div class="center-parent w-35">
                                     <div>STT</div>
-                                </div>
-                                <div class="center-parent" style="width: 15%;padding-left: 5px;">
-                                    <div class="ng-tns-c15-6">
-                                        <i class="fa fa-caret-down" style="color: #ffff;"></i>
-                                    </div>
                                 </div>
                             </div>
                         </th>
 
-                        <th style="width: 35%; background-color: #f68e56!important;">
-                            <div class="d-flex ">
+                        <th class="w-25">
+                            <div class="d-flex justify-content-between">
                                 <div class="center-parent">
                                     <div>Tên tài liệu</div>
                                 </div>
-                                <div class="center-parent pd-l">
-                                    <div class="ng-tns-c15-6">
-                                        <i class="fa fa-caret-down" style="color: #ffff;"></i>
-                                    </div>
+                                <div class="center-parent ml-2">
+                                    <img *ngIf="currentFieldSort !== 'name' ||  (currentFieldSort === 'name' && statusSort === '')" class="icon-sort" src="assets/images/sort.svg"
+                                        (click)="sortField('name', 'asc')">
+                                    <img *ngIf="currentFieldSort === 'name' && statusSort === 'asc'" class="icon-sort-down-up" src="assets/images/sort-down.svg"
+                                        (click)="sortField('name', 'desc')">
+                                    <img *ngIf="currentFieldSort === 'name' && statusSort === 'desc'" class="icon-sort-down-up" src="assets/images/sort-up.svg"
+                                        (click)="sortField('name', '')">
                                 </div>
                             </div>
 
                         </th>
-                        <th class="th-mark-status" style="width: 10%; min-width: 20px;background-color: #f68e56!important;">
+                        <th class="th-mark-status w-10">
                             <div class="d-flex justify-content-center">
-                                <div style="width: 80%;" class="center-parent">
+                                <div class="center-parent w-80">
                                     <div>Phiên bản</div>
                                 </div>
-                                <div class="center-parent pd-l">
-                                    <div class="ng-tns-c15-6">
-                                        <i class="fa fa-caret-down" style="color: #ffff;"></i>
-                                    </div>
+                                <div class="center-parent ml-2">
+                                    <img *ngIf="currentFieldSort !== 'version' ||  (currentFieldSort === 'version' && statusSort === '')" class="icon-sort" src="assets/images/sort.svg"
+                                        (click)="sortField('version', 'asc')">
+                                    <img *ngIf="currentFieldSort === 'version' && statusSort === 'asc'" class="icon-sort-down-up" src="assets/images/sort-down.svg"
+                                        (click)="sortField('version', 'desc')">
+                                    <img *ngIf="currentFieldSort === 'version' && statusSort === 'desc'" class="icon-sort-down-up" src="assets/images/sort-up.svg"
+                                        (click)="sortField('version', '')">
                                 </div>
                             </div>
                         </th>
 
-                        <th style="background-color: #f68e56!important;">
-                            <div class="d-flex justify-content-center">
-                                <div class="center-parent">
-                                    <div>Mô tả</div>
-                                </div>
+                        <th class="w-10">
+                            <div class="center-parent">
+                                <div>Mô tả</div>
                             </div>
                         </th>
 
-                        <th style="width: 12%;background-color: #f68e56!important;">
+                        <th class="w-15">
                             <div class="d-flex justify-content-center">
                                 <div class="center-parent">
                                     <div>Người upload</div>
                                 </div>
-                                <div class="center-parent pd-l">
-                                    <div class="ng-tns-c15-6">
-                                        <i class="fa fa-caret-down" style="color: #ffff;"></i>
-                                    </div>
+                                <div class="center-parent ml-2">
+                                    <img *ngIf="currentFieldSort !== 'employeeName' ||  (currentFieldSort === 'employeeName' && statusSort === '')" class="icon-sort"
+                                        src="assets/images/sort.svg" (click)="sortField('employeeName', 'asc')">
+                                    <img *ngIf="currentFieldSort === 'employeeName' && statusSort === 'asc'" class="icon-sort-down-up" src="assets/images/sort-down.svg"
+                                        (click)="sortField('employeeName', 'desc')">
+                                    <img *ngIf="currentFieldSort === 'employeeName' && statusSort === 'desc'" class="icon-sort-down-up" src="assets/images/sort-up.svg"
+                                        (click)="sortField('employeeName', '')">
                                 </div>
                             </div>
                         </th>
 
-                        <th style="width: 12%; background-color: #f68e56!important;">
+                        <th class="w-15">
                             <div class="d-flex justify-content-center">
                                 <div class="center-parent">
                                     <div>Ngày upload</div>
                                 </div>
-                                <div class="center-parent pd-l">
-                                    <div class="ng-tns-c15-6">
-                                        <i class="fa fa-caret-down" style="color: #ffff;"></i>
-                                    </div>
+                                <div class="center-parent ml-2">
+                                    <img *ngIf="currentFieldSort !== 'uploadDate' ||  (currentFieldSort === 'uploadDate' && statusSort === '')" class="icon-sort"
+                                        src="assets/images/sort.svg" (click)="sortField('uploadDate', 'asc')">
+                                    <img *ngIf="currentFieldSort === 'uploadDate' && statusSort === 'asc'" class="icon-sort-down-up" src="assets/images/sort-down.svg"
+                                        (click)="sortField('uploadDate', 'desc')">
+                                    <img *ngIf="currentFieldSort === 'uploadDate' && statusSort === 'desc'" class="icon-sort-down-up" src="assets/images/sort-up.svg"
+                                        (click)="sortField('uploadDate', '')">
                                 </div>
                             </div>
                         </th>
-                        <th style="width: 19%;background-color: #f68e56!important;">
+                        <th class="w-15">
                             <div class="d-flex justify-content-center">
                                 <div class="center-parent">
                                     <div>Lần phỏng vấn</div>
                                 </div>
-                                <div class="center-parent pd-l">
-                                    <div class="ng-tns-c15-6">
-                                        <i class="fa fa-caret-down" style="color: #ffff;"></i>
-                                    </div>
+                                <div class="center-parent ml-2">
+                                    <img *ngIf="currentFieldSort !== 'interviewTimes' ||  (currentFieldSort === 'interviewTimes' && statusSort === '')" class="icon-sort"
+                                        src="assets/images/sort.svg" (click)="sortField('interviewTimes', 'asc')">
+                                    <img *ngIf="currentFieldSort === 'interviewTimes' && statusSort === 'asc'" class="icon-sort-down-up" src="assets/images/sort-down.svg"
+                                        (click)="sortField('interviewTimes', 'desc')">
+                                    <img *ngIf="currentFieldSort === 'interviewTimes' && statusSort === 'desc'" class="icon-sort-down-up" src="assets/images/sort-up.svg"
+                                        (click)="sortField('interviewTimes', '')">
                                 </div>
                             </div>
                         </th>
-
-                        <th class="table-action text-center" style="background-color: #f68e56!important;">
+                        <th class="table-action text-center set-manipulation--width">
                             Thao tác
                         </th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr *ngFor="let item of listFileResult; let i = index">
-                        <td class="stt" style="width: 5%; min-width: 20px;">
+                        <td class="set-stt--width">
                             <div class="d-flex justify-content-around">
-                                <div style="width: 40%;">
+                                <div class="w-40">
                                     <div class="center-parent">
                                         <label class="custom-control custom-checkbox">
                                             <input type="checkbox" class="custom-control-input" [(ngModel)]="item.checkboxSelected">
@@ -164,25 +170,20 @@
                                     </div>
                                 </div>
 
-                                <div style="width: 35%;" class="center-parent">
+                                <div class="center-parent w-35">
                                     <div>{{i+1}}</div>
-                                </div>
-                                <div class="center-parent" style="width: 15%;padding-left: 5px;">
-                                    <div class="ng-tns-c15-6">
-
-                                    </div>
                                 </div>
                             </div>
                         </td>
 
-                        <td class="docName">{{ item.name }}</td>
-                        <td class="text-center">{{ item.version }}</td>
-                        <td class="doc">{{ item.desc }}</td>
-                        <td class="select-filter text-center">{{ item.uploadBy?.employeeName }}</td>
+                        <td class="docName" [title]="item.name">{{ item.name }}</td>
+                        <td class="text-center" [title]="item.version">{{ item.version }}</td>
+                        <td class="doc" [title]="item.desc">{{ item.desc }}</td>
+                        <td class="select-filter text-center" [title]="item.uploadBy?.employeeName">{{ item.uploadBy?.employeeName }}</td>
                         <!-- <td class="text-center">{{ item.bidReviewDocumentUploadDate* 1000 | date:'dd/MM/yyyy HH:mm': '+0000'}}</td> -->
                         <td class="select-filter text-center">{{ item.uploadDate*1000 | date:'dd/MM/yyyy HH:mm': '+0000' }}</td>
-                        <td class="select-filter text-center">{{ item.interviewTimes }}</td>                       
-                        <td class="text-center" style="width: 12%;">
+                        <td class="select-filter text-center">{{ item.interviewTimes }}</td>
+                        <td class="text-center">
                             <div class="d-flex justify-content-around">
                                 <div id="mr">
                                     <a title="Tải file" (click)="downloadFileItem(item.id)">
@@ -215,61 +216,94 @@
     <div class="modal-header no-boder-bottom">
         <div class="pull-left ">
             <div class="text-title icon-arrow">
-                <img width="15" height="15" class="img-back pointer" src="assets\images\nghia.png" (click)="ClosePopup()" />
-                <h4 class="modal-title text-dark d-inline text-send-noti"> {{textTitleSendMail}}</h4>
+                <img width="15" height="15" class="img-back pointer" src="assets\images\nghia.png" (click)="modalRef.hide()" />
+                <h4 class="modal-title text-dark d-inline text-send-noti"> Gửi thư phản hồi đến phòng hợp đồng</h4>
             </div>
         </div>
 
         <div class="pull-right">
-            <button type="button" class="btn btn-cancel mg-r" aria-label="Close" (click)="modalRef.hide()">Hủy</button>
-            <button type="button" *ngIf="!showBtnNotification" class="btn btn-send" aria-label="Close" (click)="SendMailHD()">Gửi</button>
-            <button type="button" *ngIf="showBtnNotification" class="btn btn-send" aria-label="Close" (click)="SendMailOther()">Gửi</button>
-
+            <button type="button" class="btn btn-cancel mr-2" aria-label="Close" (click)="modalRef.hide()">Hủy</button>
+            <button type="button" *ngIf="!showBtnNotification" class="btn btn-send" aria-label="Close" (click)="SendInformation()">Gửi</button>
         </div>
     </div>
     <div class="modal-body">
         <div class="input-group mb-3">
-            <div class="input-group-prepend">
-                <span class="input-group-text">To:</span>
-            </div>
-            <input type="text" class="form-control boder-left-none" [ngClass]="{ 'bd-r' : isSendCc === false ||isSendBcc===false }" aria-label="To"
-                autofocus>
-            <div class="input-group-append" *ngIf="!isSendCc || !isSendBcc">
-                <span class="input-group-text">
-                    <span *ngIf="!isSendCc" title="Thêm người nhận Cc" class="send-cc" (click)="sendCc()">Cc</span>
-                    <span *ngIf="!isSendBcc" title="Thêm người nhận Bcc" class="send-cc" (click)="sendBcc()">Bcc</span>
-                </span>
-            </div>
+            <span class="input-group-addon">To:</span>
+            <ng-select class="w-100" [items]="listEmailSearchTo" typeToSearchText="Nhập email" addTagText="Thêm email:" clearAllText="Xóa tất cả"
+                [addTag]="true" [hideSelected]="true" multiple="true" bindLabel="employeeName" [searchFn]="customSearchFn" [(ngModel)]="emailModel.to">
+                <ng-template ng-option-tmp let-item="item" let-index="index" let-search="searchTerm">
+                    <table>
+                        <tr>{{item.employeeName}}</tr>
+                        <tr>{{item.employeeEmail}}</tr>
+                    </table>
+                </ng-template>
+            </ng-select>
         </div>
 
         <div class="input-group mb-3" *ngIf="isSendCc">
-            <div class="input-group-prepend">
-                <span class="input-group-text" id="basic-addon1">Cc:</span>
-            </div>
-            <input type="text" class="form-control boder-left-none" placeholder="" aria-label="To" aria-describedby="basic-addon1" autofocus>
+            <span class="input-group-addon" id="basic-addon1">Cc:</span>
+            <ng-select class="w-100" [items]="listEmailSearchCc" addTagText="Thêm email:" clearAllText="Xóa tất cả" [addTag]="true" [hideSelected]="true"
+                multiple="true" bindLabel="employeeName" [searchFn]="customSearchFn" [(ngModel)]="emailModel.cc">
+                <ng-template ng-option-tmp let-item="item" let-index="index" let-search="searchTerm">
+                    <table>
+                        <tr>{{item.employeeName}}</tr>
+                        <tr>{{item.employeeEmail}}</tr>
+                    </table>
+                </ng-template>
+            </ng-select>
         </div>
 
         <div class="input-group mb-3" *ngIf="isSendBcc">
-            <div class="input-group-prepend">
-                <span class="input-group-text" id="basic-addon1">Bcc:</span>
-            </div>
-            <input type="text" class="form-control boder-left-none" placeholder="" aria-label="To" aria-describedby="basic-addon1" autofocus>
+            <span class="input-group-addon" id="basic-addon1">Bcc:</span>
+            <ng-select class="w-100" [items]="listEmailSearchBcc" addTagText="Thêm email:" clearAllText="Xóa tất cả" [addTag]="true"
+                [hideSelected]="true" multiple="true" bindLabel="employeeName" [searchFn]="customSearchFn" [(ngModel)]="emailModel.bcc">
+                <ng-template ng-option-tmp let-item="item" let-index="index" let-search="searchTerm">
+                    <table>
+                        <tr>{{item.employeeName}}</tr>
+                        <tr>{{item.employeeEmail}}</tr>
+                    </table>
+                </ng-template>
+            </ng-select>
+        </div>
+
+        <div class="mb-3 ml-2" *ngIf="!isSendCc || !isSendBcc">
+            <span class="">
+                <span *ngIf="!isSendCc" title="Thêm người nhận Cc" class="send-cc" (click)="sendCc()">Thêm Cc</span>
+                <span *ngIf="!isSendCc && !isSendBcc" class="send-cc"> | </span>
+                <span *ngIf="!isSendBcc" title="Thêm người nhận Bcc" class="send-cc" (click)="sendBcc()">Thêm Bcc</span>
+            </span>
         </div>
 
         <div class="input-group mb-3">
             <div class="input-group-prepend">
                 <span class="input-group-text" id="basic-addon1">Tiêu đề:</span>
             </div>
-            <input type="text" class="form-control boder-left-none" placeholder="" aria-label="Tiede" aria-describedby="basic-addon1">
+            <input type="text" [(ngModel)]="emailModel.subject" class="form-control boder-left-none" placeholder="" aria-label="Tiede"
+                aria-describedby="basic-addon1">
         </div>
         <div class="body-ckeditor">
-            <ckeditor [(ngModel)]="ckeditorContent">
-                <ckbutton [name]="'saveButton'" [command]="'saveCmd'" (click)="save($event)" [icon]="'save.png'" [label]="'Save Document'"
-                    [toolbar]="'clipboard,1'">
+            <ckeditor [(ngModel)]="emailModel.content" [config]="ckeConfig" #ckeditor debounce="500" (paster)="onPaste($event)">
+                <ckbutton [name]="'saveButton'" [command]="'saveCmd'" [icon]="'save.png'" [label]="'Save Document'" [toolbar]="'clipboard,1'">
                 </ckbutton>
             </ckeditor>
         </div>
-
+        <div class="d-flex">
+            <div class="fileUpload width-but-upload pt-2">
+                <button class="btn btn-primary">
+                    <i class="fa fa-paperclip" aria-hidden="true"></i>&nbsp;&nbsp; Đính kèm file</button>
+                <input type="file" class="upload" tabindex="2" (change)="uploadfile($event)" multiple />
+            </div>
+            <div class="width-add-file-upload">
+                <div *ngFor="let item of file; let i = index" class="d-flex pl-2 pt-2 float-left">
+                    <div class="center-parent">
+                        <span class="text-truncate">{{item?.name}}</span>
+                    </div>
+                    <div class="pl-2 center-parent">
+                        <button (click)="deleteFileUpload(i)" class="btn btn-secondary">X</button>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 </ng-template>
 <!-- Modal upladfile -->
@@ -336,7 +370,7 @@
             <div class="row pd-up">
                 <div class="col-md-4 mg-l">Ngày nhận kết quả</div>
                 <div class="col-md-7 input-group">
-                    <owl-date-time  >
+                    <owl-date-time>
                     </owl-date-time>
                     <span class="input-group-addon">
                         <i class="fa fa-calendar"></i>
