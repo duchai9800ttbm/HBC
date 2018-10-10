@@ -19,9 +19,22 @@
                 <button class="btn btn-primary ml-2">
                     In
                 </button>
-                <button class="btn btn-primary ml-2" (click)="showDialogUploadFile()">
+                <button *ngIf="!isTypeChildDoc" class="btn btn-primary ml-2" (click)="showDialogUploadFile()">
                     Thêm mới HSDT
                 </button>
+
+                <div *ngIf="isTypeChildDoc" class="btn-group ml-1" ngbDropdown>
+                    <button type="button" class="btn btn-primary" ngbDropdownToggle data-toggle="dropdown"
+                        aria-haspopup="true" aria-expanded="false">
+                        Thêm mới HSDT
+                    </button>
+                    <div class="dropdown-menu" ngbDropdownMenu>
+                        <div *ngFor="let children of childrenOfTypeDocument" class="fileUpload dropdown-item" (click)="showDialogUploadFile(children.item.id)">
+                            <a>{{ children.item?.name }}</a>
+                        </div>
+                    </div>
+                </div>
+
                 <button (click)="refresh()" class="btn btn-primary ml-2">
                     <i class="fa fa-refresh" aria-hidden="true"></i>
                 </button>
@@ -81,7 +94,7 @@
             </div>
         </div>
     </div>
-
+    <!-- None ChildrenType -->
     <div class="table-responsive">
 
         <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="table-selection row-border cell-border">
@@ -161,7 +174,7 @@
                     <th class="boder-table header-table small-column" style="width: 7%">
                         <div class="d-flex justify-content-center">
                             <div class="center-parent title-text">
-                                <div class="label-thead text-center">Lần p-vấn</div>
+                                <div class="label-thead text-center">Lần p/vấn</div>
                             </div>
                         </div>
                     </th>
@@ -188,10 +201,12 @@
                             </div>
                         </div>
                     </td>
-                    <td *ngIf="childrenOfTypeDocument?.length" class="boder-table text-center text-truncate-custom"  [title]="hoso.tenderDocumentType.name">
+                    <td *ngIf="childrenOfTypeDocument?.length" class="boder-table text-center text-truncate-custom"
+                        [title]="hoso.tenderDocumentType.name">
                         {{ hoso.tenderDocumentType?.name }}
                     </td>
-                    <td class="boder-table text-center text-truncate-custom" [title]="hoso.documentName">{{ hoso?.documentName }}</td>
+                    <td class="boder-table text-center text-truncate-custom" [title]="hoso.documentName">{{
+                        hoso?.documentName }}</td>
                     <td class="boder-table text-center text-truncate">{{ hoso?.version ? hoso?.version : '' }}</td>
                     <td class="boder-table text-center text-truncate-custom" [title]="hoso.desc">{{ hoso?.desc }}</td>
                     <td class="td-mark-status boder-table">
@@ -205,9 +220,11 @@
                             </div>
                         </div>
                     </td>
-                    <td class="boder-table text-center text-truncate text-truncate-custom pr-2 pl-2 custom-updater-responsive" [title]="hoso.uploadedBy.employeeName">
+                    <td class="boder-table text-center text-truncate text-truncate-custom pr-2 pl-2 custom-updater-responsive"
+                        [title]="hoso.uploadedBy.employeeName">
                         {{ hoso.uploadedBy?.employeeName }}</td>
-                    <td class="boder-table text-center" title="{{ hoso?.uploadedDate*1000 | date:'dd/MM/yyyy HH:mm': '+0000' }}">{{ hoso?.uploadedDate*1000 | date:'dd/MM/yyyy HH:mm': '+0000' }}</td>
+                    <td class="boder-table text-center" title="{{ hoso?.uploadedDate*1000 | date:'dd/MM/yyyy HH:mm': '+0000' }}">{{
+                        hoso?.uploadedDate*1000 | date:'dd/MM/yyyy HH:mm': '+0000' }}</td>
                     <td class="boder-table text-center">{{ hoso?.interViewTimes ? hoso?.interViewTimes : '' }}</td>
                     <td class="boder-table">
                         <div class="d-flex justify-content-around">
@@ -234,7 +251,162 @@
 
     </div>
 
+    <!-- Have ChildrenType -->
+    <div class="table-responsive" *ngIf="false">
 
+        <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="table-selection row-border cell-border">
+            <thead>
+                <tr>
+                    <th class="stt boder-table header-table check-box-stt" style="width: 3%">
+                        <div class="d-flex justify-content-around">
+                            <div class="w-40">
+                                <label class="custom-control custom-checkbox mt-2">
+                                    <input type="checkbox" class="custom-control-input" [(ngModel)]="checkboxSeclectAll"
+                                        (change)="onSelectAll($event.target.checked)">
+                                    <span class="custom-control-indicator"></span>
+                                </label>
+                            </div>
+                            <div class="center-parent title-text custom-title-text">
+                                <div class="label-thead">STT</div>
+                            </div>
+                        </div>
+                    </th>
+
+                    <th *ngIf="childrenOfTypeDocument?.length" class="boder-table header-table large-column">
+                        <div class="d-flex justify-content-center">
+                            <div class="center-parent title-text">
+                                <div class="label-thead text-center">Loại tài liệu</div>
+                            </div>
+                        </div>
+                    </th>
+
+                    <th class="boder-table header-table large-column" style="width: 15%">
+                        <div class="d-flex justify-content-center">
+                            <div class="center-parent title-text">
+                                <div class="label-thead text-center">Tên tài liệu</div>
+                            </div>
+                        </div>
+                    </th>
+
+                    <th class="boder-table header-table small-column" style="width: 5%">
+                        <div class="d-flex justify-content-center">
+                            <div class="center-parent title-text">
+                                <div class="label-thead text-center">Phiên bản</div>
+                            </div>
+                        </div>
+                    </th>
+
+                    <th class="boder-table header-table large-column" style="width: 20%">
+                        <div class="d-flex justify-content-center">
+                            <div class="center-parent title-text">
+                                <div class="label-thead text-center">Mô tả</div>
+                            </div>
+                        </div>
+                    </th>
+
+                    <th class="th-mark-status boder-table header-table small-column" style="width: 10%; min-width: 100px;">
+                        <div class="d-flex justify-content-center">
+                            <div class="center-parent title-text">
+                                <div class="label-thead text-center">Tình trạng</div>
+                            </div>
+                        </div>
+                    </th>
+
+                    <th class="boder-table header-table small-column" style="width: 15%">
+                        <div class="d-flex justify-content-center">
+                            <div class="center-parent title-text">
+                                <div class="label-thead text-center">Người upload</div>
+                            </div>
+                        </div>
+                    </th>
+
+                    <th class="boder-table header-table small-column" style="width: 10%;">
+                        <div class="d-flex justify-content-center">
+                            <div class="center-parent title-text">
+                                <div class="label-thead text-center">Ngày upload</div>
+                            </div>
+                        </div>
+                    </th>
+
+                    <th class="boder-table header-table small-column" style="width: 7%">
+                        <div class="d-flex justify-content-center">
+                            <div class="center-parent title-text">
+                                <div class="label-thead text-center">Lần p/vấn</div>
+                            </div>
+                        </div>
+                    </th>
+
+                    <th class="table-action text-center boder-table header-table small-column" style="width: 10%">
+                        <div class="title-text label-thead text-center">Thao tác</div>
+                    </th>
+
+                </tr>
+            </thead>
+
+            <tbody>
+                <tr *ngFor="let hoso of dataDocumentOfType; index as i">
+                    <td class="boder-table">
+                        <div class="d-flex justify-content-around">
+                            <div class="w-40">
+                                <label class="custom-control custom-checkbox mt-2">
+                                    <input type="checkbox" class="custom-control-input" [(ngModel)]="hoso.checkboxSelected">
+                                    <span class="custom-control-indicator"></span>
+                                </label>
+                            </div>
+                            <div class="center-parent custom-title-text">
+                                <div>{{ pageIndex*10+i+1 }}</div>
+                            </div>
+                        </div>
+                    </td>
+                    <td *ngIf="childrenOfTypeDocument?.length" class="boder-table text-center text-truncate-custom"
+                        [title]="hoso.tenderDocumentType.name">
+                        {{ hoso.tenderDocumentType?.name }}
+                    </td>
+                    <td class="boder-table text-center text-truncate-custom" [title]="hoso.documentName">{{
+                        hoso?.documentName }}</td>
+                    <td class="boder-table text-center text-truncate">{{ hoso?.version ? hoso?.version : '' }}</td>
+                    <td class="boder-table text-center text-truncate-custom" [title]="hoso.desc">{{ hoso?.desc }}</td>
+                    <td class="td-mark-status boder-table">
+                        <div class="d-flex justify-content-between pl-1 pr-1">
+                            <div class="text-truncate text-right" title="{{ hoso.status | translate }}">
+                                {{ hoso.status | translate }}
+                            </div>
+                            <div (click)="changeStatus(hoso.id, hoso.status)">
+                                <i class="fa fa-check-square color-item-down pointer-link" aria-hidden="true" *ngIf="hoso.status === 'Official'"></i>
+                                <i class="fa fa-check-square color-item-test pointer-link" aria-hidden="true" *ngIf="hoso.status === 'Draft'"></i>
+                            </div>
+                        </div>
+                    </td>
+                    <td class="boder-table text-center text-truncate text-truncate-custom pr-2 pl-2 custom-updater-responsive"
+                        [title]="hoso.uploadedBy.employeeName">
+                        {{ hoso.uploadedBy?.employeeName }}</td>
+                    <td class="boder-table text-center" title="{{ hoso?.uploadedDate*1000 | date:'dd/MM/yyyy HH:mm': '+0000' }}">{{
+                        hoso?.uploadedDate*1000 | date:'dd/MM/yyyy HH:mm': '+0000' }}</td>
+                    <td class="boder-table text-center">{{ hoso?.interViewTimes ? hoso?.interViewTimes : '' }}</td>
+                    <td class="boder-table">
+                        <div class="d-flex justify-content-around">
+                            <div *ngIf="!hoso.fileUrl" class="pointer-link" title="Tải file" (click)="downloadDocument(hoso.id)">
+                                <a>
+                                    <i class="fa fa-download color-item-down" aria-hidden="true"></i>
+                                </a>
+                            </div>
+                            <div class="pointer-link" *ngIf="hoso.fileUrl">
+                                <a [href]="hoso.fileUrl" target="_blank">
+                                    <i class="fa fa-external-link color-item-down" aria-hidden="true"></i>
+                                </a>
+                            </div>
+                            <div class="pointer-link" (click)="deleteDocument(hoso.id)" title="Xóa">
+                                <a>
+                                    <i class="fa fa-trash-o" aria-hidden="true"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+
+    </div>
 
     <div>
         <div class="mt-4" *ngIf="dataDocumentOfType?.length">

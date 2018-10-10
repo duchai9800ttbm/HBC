@@ -2,6 +2,7 @@ export class DanhSachBoHsdtItem {
     id: number;
     tenderDocumentType: {
         id: number;
+        parentId: number;
         name: string;
         count: number;
     };

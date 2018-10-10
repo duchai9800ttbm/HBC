@@ -39,6 +39,7 @@ export class UploadFormComponent implements OnInit {
   dataDocumentOfType;
   danhSachUser;
   isHSKT = false;
+  isTypeChildDoc = false;
   constructor(
     private hoSoDuThauService: HoSoDuThauService,
     private dialogService: DialogService,
@@ -61,7 +62,7 @@ export class UploadFormComponent implements OnInit {
       this.filterModel.uploadedEmployeeId = '';
     });
   }
-  showDialogUploadFile() {
+  showDialogUploadFile(i) {
     this.dialog = this.dialogService.open({
       content: UploadFileHsdtComponent,
       width: 750,
@@ -70,7 +71,11 @@ export class UploadFormComponent implements OnInit {
     const instance = this.dialog.content.instance;
     instance.bidOpportunityId = this.packageId;
     instance.nameFile = this.nameOfTypeDocument;
-    instance.idFile = HoSoDuThauService.idTenderDocumentTypesData;
+    if (i) {
+      instance.idFile = i;
+    } else {
+      instance.idFile = HoSoDuThauService.idTenderDocumentTypesData;
+    }
     instance.childrenType = this.childrenOfTypeDocument;
     instance.callBack = this.closePopuup.bind(this);
   }
@@ -81,16 +86,19 @@ export class UploadFormComponent implements OnInit {
   getDataDocumentOfType(alert = false, spiner = true) {
     if (spiner) { this.spinner.show(); }
     this.hoSoDuThauService
-      .danhSachBoHoSoDuThauInstantSearch(this.packageId, this.searchTerm$, this.filterModel, 0, 10)
+      .danhSachBoHoSoDuThauInstantSearch(this.packageId, this.searchTerm$, this.filterModel, 0, 1000)
       .subscribe(responseResultDocument => {
         this.spinner.hide();
         if (alert) {
           this.alertService.success(`Dữ liệu đã được cập nhật mới nhất!`);
         }
         this.rerender(responseResultDocument);
+        console.log(responseResultDocument);
         this.dataDocumentOfType = responseResultDocument.items.filter(item =>
-          item.tenderDocumentType.id === HoSoDuThauService.idTenderDocumentTypesData
+          item.tenderDocumentType.id === HoSoDuThauService.idTenderDocumentTypesData ||
+          item.tenderDocumentType.parentId === HoSoDuThauService.idTenderDocumentTypesData
         );
+        console.log(this.dataDocumentOfType);
         this.pagedResult = responseResultDocument;
         this.pagedResult.total = this.dataDocumentOfType.length;
         this.pagedResult.items = this.dataDocumentOfType;
@@ -236,6 +244,7 @@ export class UploadFormComponent implements OnInit {
       this.dataOfChildComponent = this.danhSachLoaiTaiLieu.filter(x => x.item.id === HoSoDuThauService.idTenderDocumentTypesData)[0];
       this.nameOfTypeDocument = (this.dataOfChildComponent && this.dataOfChildComponent.item) ? this.dataOfChildComponent.item.name : '';
       this.childrenOfTypeDocument = this.dataOfChildComponent ? this.dataOfChildComponent.children : [];
+      this.isTypeChildDoc = (this.childrenOfTypeDocument.length) ? true : false;
     }, err => {
       this.spinner.hide();
       this.alertService.error(`Đã có lỗi khi tải dữ liệu. Xin vui lòng thử lại!`);

@@ -916,8 +916,8 @@ export class PackageService {
         });
     }
     // get chi tiết bảng tóm tắt điều kiện dự thầu
-    getTenderConditionSummary(packageId: number): Observable<any> {
-        const url = `${packageId}/tenderconditionalsummary`;
+    getTenderConditionSummary(bidOpportunityId: number): Observable<any> {
+        const url = `bidopportunity/${bidOpportunityId}/tenderconditionalsummary`;
         return this.apiService.get(url).map(response => response.result);
     }
     // tạo mới or update bảng tóm tắt điều kiện dự thầu
