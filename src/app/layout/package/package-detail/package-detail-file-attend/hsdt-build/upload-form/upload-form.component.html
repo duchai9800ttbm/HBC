@@ -30,7 +30,7 @@
                     </button>
                     <div class="dropdown-menu" ngbDropdownMenu>
                         <ng-container *ngFor="let children of childrenOfTypeDocument; index as i">
-                            <div class="fileUpload dropdown-item" (click)="showDialogUploadFile(children.item.id)">
+                            <div class="fileUpload dropdown-item" #clickpopup (click)="showDialogUploadFile(children.item.id)">
                                 <a>{{ children.item?.name }}</a>
                             </div>
                             <div class="line" *ngIf="!(childrenOfTypeDocument.length == i+1)" style="width: calc(100% - 10px); border-top: #B8B8B8 solid 1px; height: 1px; border-left: 1px; margin-left: 10px; margin-bottom: 0.5rem; margin-top: 0.5rem;"></div>
@@ -118,7 +118,7 @@
                         </div>
                     </th>
 
-                    <th *ngIf="isTypeChildDoc" class="boder-table header-table large-column">
+                    <th [hidden]="!isTypeChildDoc" class="boder-table header-table large-column set-width-of-type">
                         <div class="d-flex justify-content-center">
                             <div class="center-parent title-text">
                                 <div class="label-thead text-center">Loại tài liệu</div>
@@ -174,7 +174,7 @@
                         </div>
                     </th>
 
-                    <th class="boder-table header-table small-column" style="width: 7%">
+                    <th class="boder-table header-table small-column" style="width: 5%">
                         <div class="d-flex justify-content-center">
                             <div class="center-parent title-text">
                                 <div class="label-thead text-center">Lần p/vấn</div>
@@ -182,7 +182,7 @@
                         </div>
                     </th>
 
-                    <th class="table-action text-center boder-table header-table small-column" style="width: 10%">
+                    <th class="table-action text-center boder-table header-table small-column" style="width: 5%">
                         <div class="title-text label-thead text-center">Thao tác</div>
                     </th>
 
@@ -204,8 +204,9 @@
                             </div>
                         </div>
                     </td>
-                    <td *ngIf="isTypeChildDoc" class="boder-table text-center text-truncate-custom" [title]="hoso.tenderDocumentType.name">
-                        {{ hoso.tenderDocumentType?.name }}
+                    <td [hidden]="!isTypeChildDoc" class="remove-border boder-table d-flex flex-row align-content-center" [title]="hoso.tenderDocumentType.name">
+                        <div class="text-center text-truncate-custom">{{ hoso.tenderDocumentType?.name }}</div>
+                        <img width="25" height="25" src="assets\images\document.png" (click)="clickpopup.click()">
                     </td>
                     <td class="boder-table text-center text-truncate-custom" [title]="hoso.documentName">
                         {{ hoso?.documentName }}</td>

@@ -143,6 +143,10 @@ input.icon {
     cursor: pointer;
 }
 
+.set-width-of-type {
+    min-width: 130px;
+}
+
 table.dataTable {
 
     tr:nth-child(odd) {
@@ -160,9 +164,14 @@ table.dataTable {
 
     th:not([type="check"]),
     td:not([type="check"]) {
-        min-width: 80px;
-        max-width: 90px;
+        min-width: 50px;
+        max-width: 160px;
     }
+}
+
+.remove-border.boder-table {
+    padding-top: 1rem !important;
+    border: none !important;
 }
 
 tr {
