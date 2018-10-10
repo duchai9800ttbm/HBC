@@ -10,6 +10,14 @@ export class SiteSurveyReport {
     isCreateOrEdit: boolean;
     id: number;
     bidOpportunityId: number;
+    phongBan: {
+        id: number,
+        text: string
+    };
+    nguoiKhaoSat: {
+        id: number,
+        text: string
+    };
     nguoiTao: {
         id: number;
         name: string;
@@ -20,6 +28,7 @@ export class SiteSurveyReport {
         id: number;
         name: string;
     };
+    isDraft: boolean;
     ngayCapNhat: number;
     noiDungCapNhat: string;
     tenTaiLieu: string;

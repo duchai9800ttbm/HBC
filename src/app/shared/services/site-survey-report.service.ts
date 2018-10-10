@@ -8,6 +8,7 @@ import { SiteSurveyReport } from '../models/site-survey-report/site-survey-repor
 import { ScaleOverall } from '../models/site-survey-report/scale-overall.model';
 import { ImageItem } from '../models/site-survey-report/image';
 import { AlertService } from './alert.service';
+import { UserList } from '../models/site-survey-report/user-list';
 
 @Injectable()
 export class SiteSurveyReportService {
@@ -33,6 +34,12 @@ export class SiteSurveyReportService {
         items: (response.items || [])
       };
     });
+  }
+  // Get Danh sách User
+  getAllUser(searchTerm: string): Observable<UserList[]> {
+    const url = `user/search/?searchTerm=${searchTerm}`;
+    return this.apiService.get(url)
+      .map(response => response.result).share();
   }
   // Danh sách loại công trình
   getListConstructionType(): Observable<DictionaryItem> {
@@ -83,6 +90,7 @@ export class SiteSurveyReportService {
       bidOpportunityId: obj.bidOpportunityId,
       createdEmployeeId: obj.nguoiTao.id,
       updatedEmployeeId: (obj.nguoiCapNhat) ? obj.nguoiCapNhat.id : this.employeeId,
+      // TODO: Map lại 2 field chỗ này
       projectStatistic: obj.scaleOverall && {
         projectStatistic: {
           constructionType: obj.scaleOverall.loaiCongTrinh && obj.scaleOverall.loaiCongTrinh.forEach(x => ({
@@ -283,6 +291,8 @@ export class SiteSurveyReportService {
       };
       dataFormated.ngayCapNhat = model.updateTime;
       dataFormated.noiDungCapNhat = '';
+      // TODO: check lại chỗ này
+      dataFormated.isDraft = model.isDratt;
       dataFormated.tenTaiLieu = (model.projectStatistic.projectStatistic) ?
         model.projectStatistic.projectStatistic.projectScale.documentName : '';
       dataFormated.lanPhongVan = (model.projectStatistic.projectStatistic) ?
@@ -557,7 +567,7 @@ export class SiteSurveyReportService {
   }
 
   // Xóa báo cáo công trình
-  deleteSiteSurveyingReport(bidOpportunityId: number): Observable<any> {
+  deleteSiteSurveyingReport(bidOpportunityId: number) {
     const url = `bidopportunity/${bidOpportunityId}/tendersitesurveyingreport/delete`;
     return this.apiService.post(url, bidOpportunityId);
   }
