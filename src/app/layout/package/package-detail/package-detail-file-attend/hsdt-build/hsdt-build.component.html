@@ -33,9 +33,10 @@
                 <div class="d-flex">
                     <div id="toggle-menu-item">
                         <ng-container *ngFor="let uploadform of danhSachLoaiTaiLieu; index as i">
-                            <div class="toggle-menu-item d-flex flex-column align-items-start"
-                                [ngClass]="{'router-link-active': isHighlight === i}" (click)="emitData(uploadform.item?.id, uploadform.item?.isLiveForm)">
-                                <div>{{ uploadform.item?.name }}</div>
+                            <div class="toggle-menu-item d-flex flex-column align-items-start" [ngClass]="{'router-link-active': isHighlight === i}"
+                                [class.color-text-gray]="uploadform.item?.count === 0" (click)="emitData(uploadform.item?.id, uploadform.item?.isLiveForm)">
+                                <div class="text-truncate-custom" [title]="uploadform.item.name">
+                                    {{ uploadform.item?.name }}</div>
                                 <span *ngIf="!uploadform.item?.isLiveForm" class="font-italic">Upload</span>
                                 <span *ngIf="uploadform.item?.isLiveForm" class="font-italic">LiveForm</span>
                             </div>

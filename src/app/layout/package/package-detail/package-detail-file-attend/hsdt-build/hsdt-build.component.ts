@@ -35,7 +35,7 @@ export class HsdtBuildComponent implements OnInit, AfterViewChecked {
     notShow = false;
     danhSachLoaiTaiLieu;
     routerName;
-    isHighlight;
+    isHighlight = 0;
 
     constructor(
         private hoSoDuThauService: HoSoDuThauService,

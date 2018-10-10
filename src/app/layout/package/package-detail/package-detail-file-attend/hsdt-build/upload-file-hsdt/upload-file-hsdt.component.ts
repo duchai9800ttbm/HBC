@@ -49,6 +49,7 @@ export class UploadFileHsdtComponent implements OnInit {
       interViewTimes: '',
       description: ''
     });
+    this.uploadForm.get('type').patchValue(this.idFile);
     this.uploadForm.valueChanges.subscribe(data => {
       this.onFormValueChanged(data);
     });
