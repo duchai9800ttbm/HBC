@@ -38,7 +38,6 @@ export class UploadFormComponent implements OnInit {
   childrenOfTypeDocument;
   dataDocumentOfType;
   danhSachUser;
-  isHSKT = false;
   isTypeChildDoc = false;
   constructor(
     private hoSoDuThauService: HoSoDuThauService,
@@ -93,12 +92,10 @@ export class UploadFormComponent implements OnInit {
           this.alertService.success(`Dữ liệu đã được cập nhật mới nhất!`);
         }
         this.rerender(responseResultDocument);
-        console.log(responseResultDocument);
         this.dataDocumentOfType = responseResultDocument.items.filter(item =>
           item.tenderDocumentType.id === HoSoDuThauService.idTenderDocumentTypesData ||
           item.tenderDocumentType.parentId === HoSoDuThauService.idTenderDocumentTypesData
         );
-        console.log(this.dataDocumentOfType);
         this.pagedResult = responseResultDocument;
         this.pagedResult.total = this.dataDocumentOfType.length;
         this.pagedResult.items = this.dataDocumentOfType;
@@ -237,16 +234,13 @@ export class UploadFormComponent implements OnInit {
   }
   getDanhSachLoaiHoSo() {
     this.packageId = +PackageDetailComponent.packageId;
-    this.spinner.show();
     this.hoSoDuThauService.getDanhSachLoaiTaiLieu(this.packageId).subscribe(res => {
-      this.spinner.hide();
       this.danhSachLoaiTaiLieu = res;
       this.dataOfChildComponent = this.danhSachLoaiTaiLieu.filter(x => x.item.id === HoSoDuThauService.idTenderDocumentTypesData)[0];
       this.nameOfTypeDocument = (this.dataOfChildComponent && this.dataOfChildComponent.item) ? this.dataOfChildComponent.item.name : '';
       this.childrenOfTypeDocument = this.dataOfChildComponent ? this.dataOfChildComponent.children : [];
       this.isTypeChildDoc = (this.childrenOfTypeDocument.length) ? true : false;
     }, err => {
-      this.spinner.hide();
       this.alertService.error(`Đã có lỗi khi tải dữ liệu. Xin vui lòng thử lại!`);
     });
   }
