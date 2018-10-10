@@ -23,17 +23,17 @@
                     Thêm mới HSDT
                 </button>
 
-                <div *ngIf="isTypeChildDoc" class="btn-group ml-1" ngbDropdown>
+                <div *ngIf="isTypeChildDoc" class="btn-group ml-1" ngbDropdown placement="bottom-right">
                     <button type="button" class="btn btn-primary" ngbDropdownToggle data-toggle="dropdown"
                         aria-haspopup="true" aria-expanded="false">
                         Thêm mới HSDT
                     </button>
                     <div class="dropdown-menu" ngbDropdownMenu>
                         <ng-container *ngFor="let children of childrenOfTypeDocument; index as i">
-                            <div class="fileUpload dropdown-item" #clickpopup (click)="showDialogUploadFile(children.item.id)">
+                            <div class="dropdown-item" #clickpopup (click)="showDialogUploadFile(children.item.id)">
                                 <a>{{ children.item?.name }}</a>
                             </div>
-                            <div class="line" *ngIf="!(childrenOfTypeDocument.length == i+1)" style="width: calc(100% - 10px); border-top: #B8B8B8 solid 1px; height: 1px; border-left: 1px; margin-left: 10px; margin-bottom: 0.5rem; margin-top: 0.5rem;"></div>
+                            <div class="line" *ngIf="!(childrenOfTypeDocument.length == i+1)"></div>
                         </ng-container>
                     </div>
                 </div>
