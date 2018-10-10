@@ -14,6 +14,9 @@ import { DialogService } from '../../../../../../../../node_modules/@progress/ke
 import { DetailResultPackageService } from '../../../../../../shared/services/detail-result-package.service';
 import { PackageDetailComponent } from '../../../package-detail.component';
 import { DocumentResultList } from '../../../../../../shared/models/result-attend/document-result-list.model';
+import { NotificationContractComponent } from './notification-contract/notification-contract.component';
+import { SendEmailModel } from '../../../../../../shared/models/send-email-model';
+import { EmailService } from '../../../../../../shared/services/email.service';
 @Component({
   selector: 'app-package-list',
   templateUrl: './package-list.component.html',
@@ -27,8 +30,6 @@ export class PackageListComponent implements OnInit {
   dtOptions: any = DATATABLE_CONFIG;
   checkboxSeclectAll: boolean;
   showBtnNotification: boolean;
-  isSendCc: boolean;
-  isSendBcc: boolean;
   textTrungThau: string;
   textNotification: string;
   textTitleSendMail: string;
@@ -38,8 +39,19 @@ export class PackageListComponent implements OnInit {
   submitted = false;
   datePickerConfig = DATETIME_PICKER_CONFIG;
   dialogUploadResultAttend;
+  dialogNotificationContract;
   currentPackageId: number;
   listFileResult: DocumentResultList[];
+  currentFieldSort;
+  statusSort;
+  emailModel: SendEmailModel = new SendEmailModel();
+  ckeConfig: any;
+  isSendCc = false;
+  isSendBcc = false;
+  file = [];
+  listEmailSearchTo;
+  listEmailSearchCc;
+  listEmailSearchBcc;
   @Output() active: EventEmitter<any> = new EventEmitter<any>();
   resultData: any = [
     { id: 1, bidReviewDocumentName: 'Tài liệu cung cấp vật tư', bidReviewDocumentVersion: 1, bidReviewDocumentStatus: 'Danh sách tài liệu cung cấp vật tư', employeeName: 'Oliver Dinh', bidReviewDocumentUploadDate: '01/01/2018 ,09:00', interview: 1 },
@@ -59,11 +71,30 @@ export class PackageListComponent implements OnInit {
     private formBuilder: FormBuilder,
     private dialogService: DialogService,
     private detailResultPackageService: DetailResultPackageService,
-    private confirmationService: ConfirmationService
+    private confirmationService: ConfirmationService,
+    private emailService: EmailService,
   ) { }
 
   ngOnInit() {
     this.currentPackageId = +PackageDetailComponent.packageId;
+    this.ckeConfig = {
+      toolbar: [
+        { name: 'basicstyles', items: ['Bold', 'Italic', 'Underline', 'Strike'] },
+        { name: 'justify', items: ['JustifyLeft', 'JustifyCenter', 'JustifyRight', 'JustifyBlock'] },
+        { name: 'styles', items: ['Styles', 'Format', 'FontSize', '-', 'TextColor', 'BGColor'] },
+        { name: 'insert', items: ['Image', 'Flash', 'Table', 'HorizontalRule', 'Smiley', 'SpecialChar', 'PageBreak', 'Iframe'] },
+        { name: 'clipboard', items: ['Cut', 'Copy', 'Paste', 'PasteText', 'Undo', 'Redo'] },
+      ],
+      allowedContent: true,
+      extraPlugins: 'colorbutton,font,justify,print,tableresize,pastefromword,liststyle,autolink,uploadimage',
+      pasteFromWord_inlineImages: true,
+      forcePasteAsPlainText: false,
+    };
+    this.emailService.searchbymail('').subscribe(response => {
+      this.listEmailSearchTo = response;
+      this.listEmailSearchCc = response;
+      this.listEmailSearchBcc = response;
+    });
     this.refesh(false);
     this.detailResultPackageService.watchListFileResult().subscribe(response => {
       this.refesh(false);
@@ -84,6 +115,18 @@ export class PackageListComponent implements OnInit {
     this.textNotification = 'Thông báo cho phòng hợp đồng';
     this.textTitleSendMail = 'Gửi thư phản hồi đến phòng hợp đồng';
   }
+  // notificationForContract() {
+  //   this.dialogNotificationContract = this.dialogService.open({
+  //     content: NotificationContractComponent,
+  //     width: 1000,
+  //     minWidth: 250
+  //   });
+  //   const instance = this.dialogNotificationContract.content.instance;
+  //   instance.callBack = () => this.closePopuupNotification();
+  // }
+  // closePopuupNotification() {
+  //   this.dialogNotificationContract.close();
+  // }
   openModalNotification(template: TemplateRef<any>) {
     this.modalRef = this.modalService.show(
       template,
@@ -95,13 +138,6 @@ export class PackageListComponent implements OnInit {
   }
   onSelectAll(value: boolean) {
     this.listFileResult.forEach(x => (x['checkboxSelected'] = value));
-  }
-
-  sendCc() {
-    this.isSendCc = !this.isSendCc;
-  }
-  sendBcc() {
-    this.isSendBcc = !this.isSendBcc;
   }
   ClosePopup() {
     this.modalRef.hide();
@@ -217,5 +253,123 @@ export class PackageListComponent implements OnInit {
       err => {
         this.alertService.error('Tải tài liệu không thành công');
       });
+  }
+  render(listFileResult: any) {
+    this.listFileResult = listFileResult;
+    this.dtTrigger.next();
+  }
+  sortField(fieldSort: string, statusSort: string) {
+    this.currentFieldSort = fieldSort;
+    this.statusSort = statusSort;
+    switch (this.statusSort) {
+      case 'asc': {
+        switch (fieldSort) {
+          case 'name': {
+            this.listFileResult = this.listFileResult.sort((a, b) => {
+              return ('' + a.name).localeCompare(b.name);
+            });
+            this.render(this.listFileResult);
+            break;
+          }
+          case 'version': {
+            this.listFileResult = this.listFileResult.sort((a, b) => a.version - b.version);
+            this.render(this.listFileResult);
+            break;
+          }
+          case 'employeeName': {
+            this.listFileResult = this.listFileResult.sort((a, b) => {
+              return ('' + a.uploadBy.employeeName).localeCompare(b.uploadBy.employeeName);
+            });
+            this.render(this.listFileResult);
+            break;
+          }
+          case 'uploadDate': {
+            this.listFileResult = this.listFileResult.sort((a, b) => a.uploadDate - b.uploadDate);
+            this.render(this.listFileResult);
+            break;
+          }
+          case 'interviewTimes': {
+            this.listFileResult = this.listFileResult.sort((a, b) => a.interviewTimes - b.interviewTimes);
+            this.render(this.listFileResult);
+            break;
+          }
+        }
+        break;
+      }
+      case 'desc': {
+        switch (fieldSort) {
+          case 'name': {
+            this.listFileResult = this.listFileResult.sort((a, b) => {
+              return ('' + b.name).localeCompare(a.name);
+            });
+            this.render(this.listFileResult);
+            break;
+          }
+          case 'version': {
+            this.listFileResult = this.listFileResult.sort((a, b) => b.version - a.version);
+            this.render(this.listFileResult);
+            break;
+          }
+          case 'employeeName': {
+            this.listFileResult = this.listFileResult.sort((a, b) => {
+              return ('' + b.uploadBy.employeeName).localeCompare(a.uploadBy.employeeName);
+            });
+            this.render(this.listFileResult);
+            break;
+          }
+          case 'uploadDate': {
+            this.listFileResult = this.listFileResult.sort((a, b) => b.uploadDate - a.uploadDate);
+            this.render(this.listFileResult);
+            break;
+          }
+          case 'interviewTimes': {
+            this.listFileResult = this.listFileResult.sort((a, b) => b.interviewTimes - a.interviewTimes);
+            this.render(this.listFileResult);
+            break;
+          }
+        }
+        break;
+      }
+      case '': {
+        this.listFileResult = this.listFileResult.sort((a, b) => a.id - b.id);
+        this.render(this.listFileResult);
+        break;
+      }
+    }
+  }
+  sendCc() {
+    this.isSendCc = !this.isSendCc;
+  }
+  sendBcc() {
+    this.isSendBcc = !this.isSendBcc;
+  }
+  uploadfile(event) {
+    const fileList: FileList = event.target.files;
+    if (fileList.length > 0) {
+      for (let i = 0; i < fileList.length; i++) {
+        this.file.push(fileList[i]);
+      }
+      event.target.value = null;
+    }
+    console.log('this.file', this.file);
+  }
+  deleteFileUpload(index: number) {
+    this.file.splice(index, 1);
+  }
+  SendInformation() {
+    if (this.emailModel && this.emailModel.to) {
+      this.emailModel.bidOpportunityId = this.currentPackageId;
+      this.spinner.show();
+      this.emailService.sendEmailDeployment(this.emailModel, this.file).subscribe(result => {
+        this.alertService.success('Gửi phản hồi đến phòng hợp đồng thành công!');
+        this.modalRef.hide();
+        this.spinner.hide();
+      },
+        err => {
+          this.alertService.error('Đã xảy ra lỗi. Gửi phản hồi đến phòng hợp đồng không thành công!');
+          this.modalRef.hide();
+          this.spinner.hide();
+        });
+    }
   }
 }

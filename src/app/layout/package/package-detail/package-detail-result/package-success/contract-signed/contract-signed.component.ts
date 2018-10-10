@@ -8,6 +8,9 @@ import { Observable, BehaviorSubject, Subject } from '../../../../../../../../no
 import { PackageSuccessService } from '../../../../../../shared/services/package-success.service'
 import { ConfirmationService, AlertService } from '../../../../../../shared/services';
 import { PackageService } from '../../../../../../shared/services/package.service'
+import { PackageDetailComponent } from '../../../package-detail.component';
+import { SendEmailModel } from '../../../../../../shared/models/send-email-model';
+import { EmailService } from '../../../../../../shared/services/email.service';
 
 @Component({
   selector: 'app-contract-signed',
@@ -20,24 +23,51 @@ export class ContractSignedComponent implements OnInit {
   datePickerConfig = DATETIME_PICKER_CONFIG;
   formUpload: FormGroup;
   submitted = false;
-  isSignedContract: boolean = false;
-  textContract :string;
+  isSignedContract = false;
+  textContract: string;
   dtTrigger: Subject<any> = new Subject();
   dtOptions: any = DATATABLE_CONFIG;
-  total:number;
-  public resultData :any [] = this.packageSuccessService.getDataResult();
-  
+  total: number;
+  modalRef: BsModalRef;
+  currentPackageId;
+  ckeConfig;
+  listEmailSearchTo;
+  listEmailSearchCc;
+  listEmailSearchBcc;
+  isSendCc = false;
+  isSendBcc = false;
+  emailModel: SendEmailModel = new SendEmailModel();
+  public resultData: any [] = this.packageSuccessService.getDataResult();
   constructor(
     private modalService: BsModalService,
     private formBuilder: FormBuilder,
     private packageSuccessService: PackageSuccessService,
     private alertService: AlertService,
     private confirmationService: ConfirmationService,
-    private packageService: PackageService
+    private packageService: PackageService,
+    private emailService: EmailService
   ) { }
 
   ngOnInit() {
-    //  this.isContract= false;
+    this.currentPackageId = +PackageDetailComponent.packageId;
+    this.ckeConfig = {
+      toolbar: [
+        { name: 'basicstyles', items: ['Bold', 'Italic', 'Underline', 'Strike'] },
+        { name: 'justify', items: ['JustifyLeft', 'JustifyCenter', 'JustifyRight', 'JustifyBlock'] },
+        { name: 'styles', items: ['Styles', 'Format', 'FontSize', '-', 'TextColor', 'BGColor'] },
+        { name: 'insert', items: ['Image', 'Flash', 'Table', 'HorizontalRule', 'Smiley', 'SpecialChar', 'PageBreak', 'Iframe'] },
+        { name: 'clipboard', items: ['Cut', 'Copy', 'Paste', 'PasteText', 'Undo', 'Redo'] },
+      ],
+      allowedContent: true,
+      extraPlugins: 'colorbutton,font,justify,print,tableresize,pastefromword,liststyle,autolink,uploadimage',
+      pasteFromWord_inlineImages: true,
+      forcePasteAsPlainText: false,
+    };
+    this.emailService.searchbymail('').subscribe(response => {
+      this.listEmailSearchTo = response;
+      this.listEmailSearchCc = response;
+      this.listEmailSearchBcc = response;
+    });
     this.formUpload = this.formBuilder.group({
       name: [''],
       link: [''],
@@ -68,6 +98,17 @@ export class ContractSignedComponent implements OnInit {
     this.alertService.success('Upload hợp đồng ký kết thành công!');    
     this.textContract = this.isSignedContract ? 'Đã ký kết hợp đồng':'Đã phản hồi đến phòng hợp đồng'
     this.modalUpload.hide();
-
+  }
+  openModalNotification(template: TemplateRef<any>) {
+    this.modalRef = this.modalService.show(
+      template,
+      Object.assign({}, { class: 'gray modal-lg-max' })
+    );
+  }
+  sendCc() {
+    this.isSendCc = !this.isSendCc;
+  }
+  sendBcc() {
+    this.isSendBcc = !this.isSendBcc;
   }
 }

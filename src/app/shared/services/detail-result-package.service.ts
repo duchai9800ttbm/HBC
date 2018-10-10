@@ -4,6 +4,7 @@ import DateTimeConvertHelper from '../helpers/datetime-convert-helper';
 import { DocumentResultList } from '../models/result-attend/document-result-list.model';
 import { Observable, Subject } from '../../../../node_modules/rxjs';
 import * as FileSaver from 'file-saver';
+import { SendEmailModel } from '../models/send-email-model';
 @Injectable()
 export class DetailResultPackageService {
   listFileResult: Subject<any> = new Subject();
@@ -63,10 +64,12 @@ export class DetailResultPackageService {
     const formData = new FormData();
     formData.append('BidOpportunityId', `${BidOpportunityId}`);
     formData.append('Name', `${uploadResultFormValue.documentName}`);
-    formData.append('InterviewTimes', `${uploadResultFormValue.InterviewTimes}`);
+    formData.append('InterviewTimes', `${uploadResultFormValue.interviewTimes}`);
     formData.append('ReceivedDate', uploadResultFormValue.receivedDate ?
       DateTimeConvertHelper.fromDtObjectToTimestamp(uploadResultFormValue.receivedDate).toString() : '');
-    formData.append('Desc', uploadResultFormValue.documentDesc);
+    if (uploadResultFormValue.documentDesc || uploadResultFormValue.documentDesc === '') {
+      formData.append('Desc', uploadResultFormValue.documentDesc);
+    }
     if (file) {
       formData.append('File', file);
     } else {
@@ -113,5 +116,20 @@ export class DetailResultPackageService {
         }), response.fileName
       );
     });
+  }
+  // Gửi thư phản hồi đến phòng hợp đồng
+  sendFeedbackToContractRoom(data: SendEmailModel,  file: File[]) {
+    const url = `bidopportunity/kqdt/sendfeedbacktocontractroom`;
+    const dataObj = new FormData();
+    dataObj.append('BidOpportunityId', data.bidOpportunityId + '');
+    dataObj.append('Subject', data.subject ? data.subject : '');
+    data.recipientEmails.forEach((item, index) => {
+      dataObj.append('RecipientEmails[' + index + ']', item);
+    });
+    file.forEach( item => {
+      dataObj.append('AttachmentFiles', item);
+    });
+    dataObj.append('Content', data.content);
+    return this.apiService.postFile(url, dataObj);
   }
 }
