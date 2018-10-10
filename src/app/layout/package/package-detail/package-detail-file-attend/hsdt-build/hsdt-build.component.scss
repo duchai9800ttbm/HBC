@@ -354,19 +354,16 @@ table.dataTable th {
                 font-size: 0.95em;
                 transition: 600ms;
 
+                border-bottom: solid 1px #ccecf9;
+                border-right: solid 1px #ccecf9;
+
                 &:hover {
                     background-color: #009CE2;
                     color: #FFFFFF;
                 }
 
                 &:first-child {
-                    border-top: #009CE2 solid 1px;
-                    border-top-right-radius: 5px;
-                }
-
-                &:last-child {
-                    border-bottom: #009CE2 solid 1px;
-                    border-bottom-right-radius: 5px;
+                    border-top: solid 1px #ccecf9;
                 }
             }
 
@@ -418,6 +415,10 @@ table.dataTable th {
     color: #a5a2a2 !important;
 }
 
+.color-text-gray {
+    color: #a5a2a2 !important;
+}
+
 .active-menu {
     background-color: #009CE2 !important;
     color: #FFFFFF !important;
@@ -442,7 +443,7 @@ table.dataTable th {
 }
 
 .iconN1 {
-    width: 25px;
+    width: 20px;
     transform: rotate(45deg) translate(5px, 5px);
     transition-duration: 600ms;
 }
@@ -454,7 +455,7 @@ table.dataTable th {
 }
 
 .iconN3 {
-    width: 25px;
+    width: 20px;
     transform: rotate(-45deg) translate(4px, -4px);
     transition-duration: 600ms;
 }
@@ -466,6 +467,7 @@ table.dataTable th {
     transform: none;
     transition-duration: 600ms;
 }
+
 .middle-line {
     margin: 3.5px 0;
 }
@@ -494,7 +496,16 @@ table.dataTable th {
     width: 25px;
 }
 
+.text-truncate-custom {
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
 @media only screen and (max-width: 1024px) {
+    .text-truncate-custom {
+        white-space: nowrap;
+        max-width: 8rem;
+    }
     .toggle-menu-item {
         width: 150px !important;
         font-size: 12px !important;
@@ -567,6 +578,10 @@ table.dataTable th {
     border-left: 12px solid transparent;
     border-bottom-color: rgba(0, 0, 0, 0.2);
     content: '';
+}
+
+.toggle-menu-item.color-text-gray {
+    color: #a5a2a2;
 }
 
 .router-link-active {

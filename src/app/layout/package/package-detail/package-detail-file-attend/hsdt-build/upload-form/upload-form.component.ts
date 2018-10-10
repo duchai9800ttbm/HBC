@@ -93,12 +93,10 @@ export class UploadFormComponent implements OnInit {
           this.alertService.success(`Dữ liệu đã được cập nhật mới nhất!`);
         }
         this.rerender(responseResultDocument);
-        console.log(responseResultDocument);
         this.dataDocumentOfType = responseResultDocument.items.filter(item =>
           item.tenderDocumentType.id === HoSoDuThauService.idTenderDocumentTypesData ||
           item.tenderDocumentType.parentId === HoSoDuThauService.idTenderDocumentTypesData
         );
-        console.log(this.dataDocumentOfType);
         this.pagedResult = responseResultDocument;
         this.pagedResult.total = this.dataDocumentOfType.length;
         this.pagedResult.items = this.dataDocumentOfType;

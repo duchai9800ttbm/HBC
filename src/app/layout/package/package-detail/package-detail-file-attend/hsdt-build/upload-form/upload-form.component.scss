@@ -121,7 +121,8 @@ input.icon {
 }
 
 .dropdown-menu {
-    transform: translateX(-56%) !important;
+    transform: translateX(-60%) !important;
+    border-radius: 3px;
 }
 
 .dropdown-menu::before {
@@ -134,6 +135,12 @@ input.icon {
     border-left: 12px solid transparent;
     border-bottom-color: rgba(0, 0, 0, 0.2);
     content: '';
+}
+
+.fileUpload {
+    position: relative;
+    overflow: hidden;
+    cursor: pointer;
 }
 
 table.dataTable {
