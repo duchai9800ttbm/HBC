@@ -56,7 +56,13 @@ export class SiteSurveyReportService {
   // Thông tin bảng báo cáo công trình
   tenderSiteSurveyingReport(bidOpportunityId: number): Observable<SiteSurveyReport> {
     const url = `bidopportunity/${bidOpportunityId}/tendersitesurveyingreport`;
-    return this.apiService.get(url).map(res => this.toSiteSurveyReport(res.result, bidOpportunityId));
+    return this.apiService.get(url).map(res => {
+      if (!res.result) {
+        return null;
+      } else {
+        this.toSiteSurveyReport(res.result, bidOpportunityId);
+      }
+    });
   }
 
   // Xóa ảnh báo cáo công trình
