@@ -311,7 +311,7 @@
                                                         <!-- <input appEnterPreventDefault [placeholder]="datePickerConfig.datePlaceHolder" class="input-date-time" formControlName="startTrackingDate"
                                                             tabindex="27" [owlDateTimeTrigger]="dtStartTrackingDate" [owlDateTime]="dtStartTrackingDate">
                                                         <owl-date-time #dtStartTrackingDate pickerType="calendar"></owl-date-time> -->
-                                                        <kendo-datepicker appEnterPreventDefault class="w-100" tabindex="27" formControlName="startTrackingDate"></kendo-datepicker>
+                                                        <kendo-datepicker appEnterPreventDefault class="w-100" tabindex="27" [max]="packageForm.get('submissionDate').value" formControlName="startTrackingDate"></kendo-datepicker>
                                                         <!-- <span [owlDateTimeTrigger]="dtStartTrackingDate" class="input-group-addon">
                                                             <i class="fa fa-calendar"></i>
                                                         </span> -->
@@ -354,8 +354,7 @@
                                                         <span [owlDateTimeTrigger]="dtSubmissionDate" class="input-group-addon">
                                                             <i class="fa fa-calendar"></i>
                                                         </span> -->
-
-                                                        <kendo-datepicker appEnterPreventDefault class="w-100" tabindex="28" formControlName="submissionDate"></kendo-datepicker>
+                                                        <kendo-datepicker appEnterPreventDefault class="w-100" [min]="packageForm.get('startTrackingDate').value" [max]="packageForm.get('resultEstimatedDate').value" tabindex="28" formControlName="submissionDate"></kendo-datepicker>
                                                     </div>
                                                     <div class="invalid-feedback" *ngIf="formErrors.submissionDate">
                                                         {{formErrors.submissionDate}}
@@ -376,7 +375,6 @@
                                                         <span [owlDateTimeTrigger]="dtProjectEstimatedEndDate" class="input-group-addon">
                                                             <i class="fa fa-calendar"></i>
                                                         </span> -->
-
                                                         <kendo-datepicker (valueChange)="calculatedTotalTime()" [min]="packageForm.get('projectEstimatedStartDate').value" appEnterPreventDefault class="w-100" tabindex="31" formControlName="projectEstimatedEndDate"></kendo-datepicker>
                                                     </div>
                                                 </td>
@@ -396,8 +394,7 @@
                                                         <span [owlDateTimeTrigger]="dtResultEstimatedDate" class="input-group-addon">
                                                             <i class="fa fa-calendar"></i>
                                                         </span> -->
-
-                                                        <kendo-datepicker appEnterPreventDefault class="w-100" tabindex="29" formControlName="resultEstimatedDate"></kendo-datepicker>
+                                                        <kendo-datepicker appEnterPreventDefault [min]="packageForm.get('submissionDate').value" class="w-100" tabindex="29" formControlName="resultEstimatedDate"></kendo-datepicker>
                                                     </div>
                                                     <div class="invalid-feedback" *ngIf="formErrors.resultEstimatedDate">
                                                         {{formErrors.resultEstimatedDate}}
