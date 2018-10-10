@@ -8,11 +8,14 @@ import { PackageFailedComponent } from './package-failed/package-failed.componen
 import { ModalModule } from 'ngx-bootstrap/modal';
 import { PackgeCancelComponent } from './packge-cancel/packge-cancel.component';
 import { CKEditorModule } from 'ng2-ckeditor';
+// tslint:disable-next-line:max-line-length
+import { UploadResultFileAttendComponent } from './package-success/package-list/upload-result-file-attend/upload-result-file-attend.component';
+import { DetailResultPackageService } from '../../../../shared/services/detail-result-package.service';
 @NgModule({
   imports: [
     CommonModule,
     SharedModule,
-    PackageDetailResultRoutingModule,    
+    PackageDetailResultRoutingModule,
     CKEditorModule
     // ModalModule
   ],
@@ -20,7 +23,14 @@ import { CKEditorModule } from 'ng2-ckeditor';
       PackageDetailResultComponent,
       WaitResultComponent,
       PackageFailedComponent,
-      PackgeCancelComponent
+      PackgeCancelComponent,
+      UploadResultFileAttendComponent
+  ],
+  entryComponents: [
+    UploadResultFileAttendComponent
+  ],
+  providers: [
+    DetailResultPackageService
   ]
 })
 export class PackageDetailResultModule { }
