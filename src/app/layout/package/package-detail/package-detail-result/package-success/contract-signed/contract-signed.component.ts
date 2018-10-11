@@ -19,6 +19,7 @@ import { NgxSpinnerService } from '../../../../../../../../node_modules/ngx-spin
 import { FilterContractSigning } from '../../../../../../shared/models/result-attend/filter-contract-signing.model';
 import { PagedResult } from '../../../../../../shared/models';
 import { ContractSigningList } from '../../../../../../shared/models/result-attend/contract-signing.list.model';
+import { groupBy } from '../../../../../../../../node_modules/@progress/kendo-data-query';
 
 @Component({
   selector: 'app-contract-signed',
@@ -54,6 +55,10 @@ export class ContractSignedComponent implements OnInit, OnDestroy {
   filterModel = new FilterContractSigning();
   pagedResult: PagedResult<ContractSigningList> = new PagedResult<ContractSigningList>();
   isNgOnInit: boolean;
+  uploadList;
+  interviewTimeList;
+  currentFieldSort;
+  statusSort;
   constructor(
     private modalService: BsModalService,
     private formBuilder: FormBuilder,
@@ -141,13 +146,41 @@ export class ContractSignedComponent implements OnInit, OnDestroy {
       }, err => this.spinner.hide());
   }
 
+  clearFilter() {
+    this.filterModel.uploadedDate = null;
+    this.filterModel.uploadedByEmployeeId = null;
+    this.filterModel.contractDate = null;
+    this.filterModel.interviewTime = null;
+    this.filter(false);
+  }
+
   render(pagedResult: any) {
     this.pagedResult = pagedResult;
+    this.getUploadList();
+    this.getInterviewTimeList();
     this.dtTrigger.next();
   }
 
+  getUploadList() {
+    this.uploadList = this.pagedResult.items ? this.pagedResult.items.map(item => item.uploadByEmployee) : [];
+    this.uploadList = groupBy(this.uploadList, [{ field: 'employeeId' }]);
+    this.uploadList = this.uploadList.map(item => {
+      return {
+        employeeId: item.items[0].employeeId,
+        employeeName: item.items[0].employeeName
+      };
+    });
+    this.uploadList = this.uploadList.sort((a, b) => a.employeeId - b.employeeId);
+  }
+
+  getInterviewTimeList() {
+    this.interviewTimeList = this.pagedResult.items ? this.pagedResult.items.map(item => item.interviewTime) : [];
+    this.interviewTimeList = this.interviewTimeList.sort((a, b) => a - b);
+    this.interviewTimeList = this.interviewTimeList.filter((el, i, a) => i === a.indexOf(el));
+  }
+
   onSelectAll(value: boolean) {
-    this.resultData.forEach(x => (x['checkboxSelected'] = value));
+    this.pagedResult.items.forEach(x => (x['checkboxSelected'] = value));
   }
 
   modalAdd(template: TemplateRef<any>) {
@@ -198,5 +231,159 @@ export class ContractSignedComponent implements OnInit, OnDestroy {
       err => {
         this.alertService.error('Tải template không thành công!');
       });
+  }
+  refesh() {
+    this.filter(true);
+  }
+  deleteContractSign() {
+    const listItemCheckbox = [];
+    this.pagedResult.items.forEach(x => {
+      if (x['checkboxSelected'] === true) {
+        listItemCheckbox.push(x.id);
+      }
+    });
+    switch (listItemCheckbox.length) {
+      case 0: {
+        this.alertService.error('Bạn chưa chọn tài liệu cần xóa!');
+        break;
+      }
+      case 1: {
+        this.confirmationService.confirm(
+          'Bạn có chắc chắn muốn xóa tài liệu được chọn?',
+          () => {
+            this.detailResultPackageService.deleteContractSigning(listItemCheckbox[0]).subscribe(response => {
+              this.filter(false);
+              this.alertService.success('Xóa tài liệu thành công!');
+            },
+              err => {
+                this.alertService.error('Xóa tài liệu không thành công!');
+              });
+          });
+        break;
+      }
+      default: {
+        this.confirmationService.confirm(
+          'Bạn có chắc chắn muốn xóa tài liệu được chọn?',
+          () => {
+            console.log('listItemCheckbox', listItemCheckbox);
+            this.detailResultPackageService.deleteMultiContractSigning(listItemCheckbox).subscribe(response => {
+              this.filter(false);
+              this.alertService.success('Xóa tài liệu thành công!');
+            },
+              err => {
+                this.alertService.error('Xóa tài liệu không thành công!');
+              });
+          });
+      }
+    }
+  }
+  downloadFileItem(bidContractDocumentId: number) {
+    this.detailResultPackageService.downloadContractSigning(bidContractDocumentId).subscribe(response => {
+    },
+      err => {
+        this.alertService.error('Tải về hợp đồng không thành công!');
+      });
+  }
+  deleteFileItem(bidContractDocumentId: number) {
+    this.confirmationService.confirm(
+      'Bạn có chắc chắn muốn xóa tài liệu được chọn?',
+      () => {
+        this.detailResultPackageService.deleteContractSigning(bidContractDocumentId).subscribe(response => {
+          this.filter(false);
+          this.alertService.success('Xóa tài liệu thành công!');
+        },
+          err => {
+            this.alertService.error('Xóa tài liệu không thành công!');
+          });
+      });
+  }
+  sortField(fieldSort: string, statusSort: string) {
+    this.currentFieldSort = fieldSort;
+    this.statusSort = statusSort;
+    switch (this.statusSort) {
+      case 'asc': {
+        switch (fieldSort) {
+          case 'name': {
+            this.pagedResult.items = this.pagedResult.items.sort((a, b) => {
+              return ('' + a.name).localeCompare(b.name);
+            });
+            this.render(this.pagedResult);
+            break;
+          }
+          case 'version': {
+            this.pagedResult.items = this.pagedResult.items.sort((a, b) => a.version - b.version);
+            this.render(this.pagedResult);
+            break;
+          }
+          case 'employeeName': {
+            this.pagedResult.items = this.pagedResult.items.sort((a, b) => {
+              return ('' + a.uploadByEmployee.employeeName).localeCompare(b.uploadByEmployee.employeeName);
+            });
+            this.render(this.pagedResult);
+            break;
+          }
+          case 'uploadDate': {
+            this.pagedResult.items = this.pagedResult.items.sort((a, b) => a.uploadDate - b.uploadDate);
+            this.render(this.pagedResult);
+            break;
+          }
+          case 'contractDate': {
+            this.pagedResult.items = this.pagedResult.items.sort((a, b) => a.contractDate - b.contractDate);
+            this.render(this.pagedResult);
+            break;
+          }
+          case 'uploadDate': {
+            this.pagedResult.items = this.pagedResult.items.sort((a, b) => a.uploadDate - b.uploadDate);
+            this.render(this.pagedResult);
+            break;
+          }
+        }
+        break;
+      }
+      case 'desc': {
+        switch (fieldSort) {
+          case 'name': {
+            this.pagedResult.items = this.pagedResult.items.sort((a, b) => {
+              return ('' + b.name).localeCompare(a.name);
+            });
+            this.render(this.pagedResult);
+            break;
+          }
+          case 'version': {
+            this.pagedResult.items = this.pagedResult.items.sort((a, b) => b.version - a.version);
+            this.render(this.pagedResult);
+            break;
+          }
+          case 'employeeName': {
+            this.pagedResult.items = this.pagedResult.items.sort((a, b) => {
+              return ('' + b.uploadByEmployee.employeeName).localeCompare(a.uploadByEmployee.employeeName);
+            });
+            this.render(this.pagedResult);
+            break;
+          }
+          case 'uploadDate': {
+            this.pagedResult.items = this.pagedResult.items.sort((a, b) => b.uploadDate - a.uploadDate);
+            this.render(this.pagedResult);
+            break;
+          }
+          case 'contractDate': {
+            this.pagedResult.items = this.pagedResult.items.sort((a, b) => b.contractDate - a.contractDate);
+            this.render(this.pagedResult);
+            break;
+          }
+          case 'interviewTimes': {
+            this.pagedResult.items = this.pagedResult.items.sort((a, b) => b.interviewTime - a.interviewTime);
+            this.render(this.pagedResult);
+            break;
+          }
+        }
+        break;
+      }
+      case '': {
+        this.pagedResult.items = this.pagedResult.items.sort((a, b) => a.id - b.id);
+        this.render(this.pagedResult);
+        break;
+      }
+    }
   }
 }

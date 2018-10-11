@@ -271,4 +271,28 @@ export class DetailResultPackageService {
       );
     });
   }
+  // Xóa 1 hợp đồng ký kết
+  deleteContractSigning(bidContractDocumentId: number) {
+    const url = `bidcontractdocument/${bidContractDocumentId}/delete`;
+    return this.apiService.post(url);
+  }
+  // Xóa nhiều hợp đồng ký kết
+  deleteMultiContractSigning(bidContractDocumentIdArray: number[]) {
+    const url = `bidcontractdocument/multidelete`;
+    const request = {
+      ids: bidContractDocumentIdArray,
+    };
+    return this.apiService.post(url, request);
+  }
+  // Tải về hợp đồng kí kết
+  downloadContractSigning(bidContractDocumentId: number) {
+    const url = `bidcontractdocument/${bidContractDocumentId}/download`;
+    return this.apiService.getFile(url).map(response => {
+      return FileSaver.saveAs(
+        new Blob([response.file], {
+          type: `${response.file.type}`,
+        }), response.fileName
+      );
+    });
+  }
 }

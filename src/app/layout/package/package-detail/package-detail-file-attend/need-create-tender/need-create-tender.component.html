@@ -113,7 +113,7 @@
                 <td> {{itemByChangedTimes.items[0].employee?.employeeName}}</td>
                 <td>{{ (itemByChangedTimes.items[0].changedTime)*1000 | date:'dd/MM/yyyy , HH:mm':'+0000' }}</td>
                 <td>
-                    <div class="text-truncate">{{itemByChangedTimes.items[0].updateDesc}}</div>
+                    <div class="text-truncate" [title]="itemByChangedTimes.items[0].updateDesc">{{itemByChangedTimes.items[0].updateDesc}}</div>
                 </td>
                 <td>
                     <div *ngIf="itemByChangedTimes.items && itemByChangedTimes.items !== 0">

@@ -28,6 +28,7 @@ export class UploadContractSigningComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+    console.log('UploadContractSigningComponent');
     this.currentPackageId = +PackageDetailComponent.packageId;
     this.createForm();
   }
