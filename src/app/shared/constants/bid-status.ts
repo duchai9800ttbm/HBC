@@ -18,4 +18,17 @@ export enum BidStatus {
     ChuanBiPhongVan = 'ChuanBiPhongVan',
     DaChotCongTacChuanBiPhongVan = 'DaChotCongTacChuanBiPhongVan',
     DaPhongVan = 'DaPhongVan',
+    // KQDT
+    TratThau = 'TratThau',
+    HuyThau = 'HuyThau',
+    DaThongBaoCacBenLienQuan = 'DaThongBaoCacBenLienQuan',
+    CoBaiHocKinhNghiem = 'CoBaiHocKinhNghiem',
+    TrungThau = 'TrungThau',
+    DaPhanHoiDenPHopDong = 'DaPhanHoiDenPHopDong',
+    DaKyKetHopDong = 'DaKyKetHopDong',
+    DaChuyenGiaoTaiLieu = 'DaChuyenGiaoTaiLieu',
+    ChuaNhanTaiLieu = 'ChuaNhanTaiLieu',
+    DaNhanTaiLieu = 'DaNhanTaiLieu',
+    DaThongBaoHopKickOff = 'DaThongBaoHopKickOff',
+    ChuaChuyenGiaoTaiLieu = 'ChuaChuyenGiaoTaiLieu',
 }
