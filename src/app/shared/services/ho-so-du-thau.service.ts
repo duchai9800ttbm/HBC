@@ -45,8 +45,13 @@ export class HoSoDuThauService {
 
   constructor(
     private apiService: ApiService,
-    private instantSearchService: InstantSearchService
+    private instantSearchService: InstantSearchService,
+    private sessionService: SessionService
   ) { }
+  // get Employee ID
+  get employeeId() {
+    return this.sessionService.currentUser.employeeId;
+  }
   // get Danh sách các bên liên quan
   getGroupMemberStackHolder(bidOpportunityId: number): Observable<any> {
     const url = `bidopportunity/${bidOpportunityId}/bidusergroupmembersofstakeholders`;
@@ -247,7 +252,7 @@ export class HoSoDuThauService {
     const url = `tenderconditionalsummary/createorupdate`;
     const infoReport = {
       bidOpportunityId: obj.bidOpportunityId,
-      createdEmployeeId: obj.createdEmployeeId,
+      createdEmployeeId: (obj) ? obj.createdEmployeeId : this.employeeId,
       updatedEmployeeId: obj.updatedEmployeeId,
       isDraftVersion: obj.isDraftVersion,
       documentName: obj.documentName,
