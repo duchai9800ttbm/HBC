@@ -17,10 +17,10 @@
     <div class="controll-bar">
         <div class="btn-toolbar mt-2 mb-2">
             <div>
-                <button id="printButton" *ngIf="isDraft" class="btn btn-primary ml-2" (click)="updateliveform()">
+                <button id="printButton" *ngIf="isDraft" class="btn btn-primary ml-2" (click)="updateliveform(true)">
                     Lưu bản nháp
                 </button>
-                <button id="printButton" *ngIf="!isDraft" class="btn btn-primary ml-2" (click)="updateliveform()">
+                <button id="printButton" class="btn btn-primary ml-2" (click)="updateliveform(false)">
                     Lưu
                 </button>
                 <button type="button" class="btn btn-up disable ml-2" (click)="cancelCreateUpdate()">

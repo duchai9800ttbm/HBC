@@ -137,7 +137,8 @@ export class EditComponent implements OnInit, OnDestroy {
     this.alertService.success('Dữ liệu đã được cập nhật mới nhất!');
   }
 
-  updateliveform() {
+  updateliveform(check: boolean) {
+    LiveformSiteReportComponent.formModel.isDraftVersion = check;
     this.showPopupConfirm = true;
   }
   cancelCreateUpdate() {
