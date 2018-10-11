@@ -202,6 +202,12 @@ export class PackageService {
         private apiService: ApiService
     ) { }
 
+    // Get Evaluation List
+    getEvaluationValue() {
+        const url = `data/evaluation`;
+        return this.apiService.get(url).map(res => res.result);
+    }
+
     setRouterAction(data: string) {
         this.routerAction = data;
         this.routerActionSub.next(data);

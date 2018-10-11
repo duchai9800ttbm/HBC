@@ -214,7 +214,7 @@ export class HoSoDuThauService {
   emitDataStepInfo(obj: ThongTinDuAn) {
     HoSoDuThauService.tempDataLiveFormDKDT.value.thongTinDuAn = obj;
   }
-  emitDataStepRelate(obj: CacBenLienQuan) {
+  emitDataStepRelate(obj: StakeHolder[]) {
     HoSoDuThauService.tempDataLiveFormDKDT.value.cacBenLienQuan = obj;
   }
   emitDataStepScope(obj: PhamViCongViec) {
@@ -247,40 +247,43 @@ export class HoSoDuThauService {
   emitDataUpdateDescription(text: string) {
     HoSoDuThauService.tempDataLiveFormDKDT.value.noiDungCapNhat = text;
   }
+  emitFormCacBenLienQuan(isChangeForm: boolean) {
+    HoSoDuThauService.tempDataLiveFormDKDT.value.isChangeFormCacBenLienQuan = isChangeForm;
+  }
   // gọi API create or update liveform tóm tắt đkdt
   createOrUpdateLiveFormTomTat(obj: DuLieuLiveFormDKDT): Observable<any> {
     const url = `tenderconditionalsummary/createorupdate`;
     const infoReport = {
       bidOpportunityId: obj.bidOpportunityId,
       createdEmployeeId: (obj) ? obj.createdEmployeeId : this.employeeId,
-      updatedEmployeeId: obj.updatedEmployeeId,
+      updatedEmployeeId: this.employeeId,
       isDraftVersion: obj.isDraftVersion,
-      documentName: obj.documentName,
+      documentName: obj.thongTinDuAn && obj.thongTinDuAn.tenTaiLieu,
       updatedDesc: obj.noiDungCapNhat,
       projectInformation: obj.thongTinDuAn && {
         projectInformation: obj.thongTinDuAn.dienGiaiThongTinDuAn,
         interviewTimes: obj.thongTinDuAn.lanPhongVan
       },
-      stakeholder: {}, // TODO: Map lại chỗ này
+      stakeholder: {}, // TODO: Map lại chỗ này, tạm thời bỏ qua
       scopeOfWork: obj.phamViCongViec && {
-        includedWorks: obj.phamViCongViec.phamViBaoGom.forEach(x => ({
+        includedWorks: obj.phamViCongViec.phamViBaoGom.map(x => ({
           name: x.congTac,
           desc: x.dienGiaiCongTac
         })),
-        nonIncludedWorks: obj.phamViCongViec.phamViKhongBaoGom.forEach(x => ({
+        nonIncludedWorks: obj.phamViCongViec.phamViKhongBaoGom.map(x => ({
           name: x.congTac,
           desc: x.dienGiaiCongTac
         }))
       },
       nonminatedSubContractor: obj.danhSachNhaThau && {
-        workPackages: obj.danhSachNhaThau.forEach(x => ({
+        workPackages: obj.danhSachNhaThau.map(x => ({
           name: x.tenGoiCongViec,
           desc: x.ghiChuThem,
           totalCost: x.thanhTien
         }))
       },
       materialsTobeSuppliedOrAppointedByOwner: obj.danhSachVatTu && {
-        materials: obj.danhSachVatTu.forEach(x => ({
+        materials: obj.danhSachVatTu.map(x => ({
           name: x.tenVatTu,
           desc: x.ghiChuThem
         }))
@@ -322,37 +325,47 @@ export class HoSoDuThauService {
         }
       },
       contractCondition: obj.dienGiaiDieuKienHopDong && {
-        contractType: (obj.dienGiaiDieuKienHopDong.loaiHopDong) ? obj.dienGiaiDieuKienHopDong.loaiHopDong.name : '',
-        desc: (obj.dienGiaiDieuKienHopDong.loaiHopDong) ? obj.dienGiaiDieuKienHopDong.loaiHopDong.desc : '',
-
+        contractType: obj.dienGiaiDieuKienHopDong.loaiHopDong && {
+          contractType: obj.dienGiaiDieuKienHopDong.loaiHopDong.name,
+          desc: obj.dienGiaiDieuKienHopDong.loaiHopDong.desc
+        },
         hsmtContractCondition: obj.dienGiaiDieuKienHopDong.dieuKienTheoHSMT && {
           executiveGuaranteePercent:
             (obj.dienGiaiDieuKienHopDong.dieuKienTheoHSMT.baoLanhThucHien) ?
               obj.dienGiaiDieuKienHopDong.dieuKienTheoHSMT.baoLanhThucHien.phanTram : '',
+
           executiveGuaranteeEfficiency:
             (obj.dienGiaiDieuKienHopDong.dieuKienTheoHSMT.baoLanhThucHien) ?
               obj.dienGiaiDieuKienHopDong.dieuKienTheoHSMT.baoLanhThucHien.hieuLuc : '',
+
           advanceGuaranteePercent:
             (obj.dienGiaiDieuKienHopDong.dieuKienTheoHSMT.baoLanhTamUng) ?
               obj.dienGiaiDieuKienHopDong.dieuKienTheoHSMT.baoLanhTamUng.phanTram : '',
+
           advanceGuaranteeEfficiency:
             (obj.dienGiaiDieuKienHopDong.dieuKienTheoHSMT.baoLanhTamUng) ?
               obj.dienGiaiDieuKienHopDong.dieuKienTheoHSMT.baoLanhTamUng.hieuLuc : '',
+
           paymentType:
             (obj.dienGiaiDieuKienHopDong.dieuKienTheoHSMT.thanhToan) ?
               obj.dienGiaiDieuKienHopDong.dieuKienTheoHSMT.thanhToan.loaiThanhToan : '',
+
           paymentTime:
             (obj.dienGiaiDieuKienHopDong.dieuKienTheoHSMT.thanhToan) ?
               obj.dienGiaiDieuKienHopDong.dieuKienTheoHSMT.thanhToan.thoiGianThanhToan : '',
+
           paymentMaterialOnSite:
             (obj.dienGiaiDieuKienHopDong.dieuKienTheoHSMT.thanhToan) ?
               obj.dienGiaiDieuKienHopDong.dieuKienTheoHSMT.thanhToan.thanhToanKhiTapKet : '',
+
           retainedPercent:
             (obj.dienGiaiDieuKienHopDong.dieuKienTheoHSMT.tienGiuLai) ?
               obj.dienGiaiDieuKienHopDong.dieuKienTheoHSMT.tienGiuLai.phanTram : '',
+
           retainedLimit:
             (obj.dienGiaiDieuKienHopDong.dieuKienTheoHSMT.tienGiuLai) ?
               obj.dienGiaiDieuKienHopDong.dieuKienTheoHSMT.tienGiuLai.gioiHanTienGiuLai : '',
+
           retainedPayment:
             (obj.dienGiaiDieuKienHopDong.dieuKienTheoHSMT.tienGiuLai) ?
               obj.dienGiaiDieuKienHopDong.dieuKienTheoHSMT.tienGiuLai.thanhToanTienGui : '',
@@ -365,7 +378,7 @@ export class HoSoDuThauService {
           guaranteeDuration: obj.dienGiaiDieuKienHopDong.dieuKienTheoHSMT.thoiGianBaoHanh,
           insurranceMachineOfContractor:
             (obj.dienGiaiDieuKienHopDong.dieuKienTheoHSMT.baoHiem) ?
-              obj.dienGiaiDieuKienHopDong.dieuKienTheoHSMT.baoHiem.baoHiemMayMoc : [],
+              [...obj.dienGiaiDieuKienHopDong.dieuKienTheoHSMT.baoHiem.baoHiemMayMoc] : [],
           insurancePersonOfContractor:
             (obj.dienGiaiDieuKienHopDong.dieuKienTheoHSMT.baoHiem) ?
               obj.dienGiaiDieuKienHopDong.dieuKienTheoHSMT.baoHiem.baoHiemConNguoi : '',
@@ -413,7 +426,7 @@ export class HoSoDuThauService {
           guaranteeDuration: obj.dienGiaiDieuKienHopDong.dieuKienTheoHBC.thoiGianBaoHanh,
           insurranceMachineOfContractor:
             (obj.dienGiaiDieuKienHopDong.dieuKienTheoHBC.baoHiem) ?
-              obj.dienGiaiDieuKienHopDong.dieuKienTheoHBC.baoHiem.baoHiemMayMoc : [],
+              [...obj.dienGiaiDieuKienHopDong.dieuKienTheoHBC.baoHiem.baoHiemMayMoc] : [],
           insurancePersonOfContractor:
             (obj.dienGiaiDieuKienHopDong.dieuKienTheoHBC.baoHiem) ?
               obj.dienGiaiDieuKienHopDong.dieuKienTheoHBC.baoHiem.baoHiemConNguoi : '',
@@ -435,9 +448,14 @@ export class HoSoDuThauService {
             obj.dienGiaiDieuKienHSMT.theoHBC.tienDo.ngayKhoiCong : '',
           progressComletionDate: (obj.dienGiaiDieuKienHSMT.theoHBC.tienDo) ?
             obj.dienGiaiDieuKienHSMT.theoHBC.tienDo.thoiGianHoanThanh : '',
-          taxTypes: (obj.dienGiaiDieuKienHSMT.theoHBC.cacLoaiThue) ? obj.dienGiaiDieuKienHSMT.theoHBC.cacLoaiThue : [],
+
+          taxTypes: (obj.dienGiaiDieuKienHSMT.theoHBC.cacLoaiThue) ?
+            obj.dienGiaiDieuKienHSMT.theoHBC.cacLoaiThue.map(x => ({
+              key: '',
+              value: '',
+              displayText: x
+            })) : [],
           currency: obj.dienGiaiDieuKienHSMT.theoHBC && {
-            // TODO: Map lại chỗ này
             key: '',
             value: '',
             displayText: obj.dienGiaiDieuKienHSMT.theoHBC.donViTienTe
@@ -454,9 +472,13 @@ export class HoSoDuThauService {
             obj.dienGiaiDieuKienHSMT.theoHSMT.tienDo.ngayKhoiCong : '',
           progressComletionDate: (obj.dienGiaiDieuKienHSMT.theoHSMT.tienDo) ?
             obj.dienGiaiDieuKienHSMT.theoHSMT.tienDo.thoiGianHoanThanh : '',
-          taxTypes: (obj.dienGiaiDieuKienHSMT.theoHSMT.cacLoaiThue) ? obj.dienGiaiDieuKienHSMT.theoHSMT.cacLoaiThue : [],
+          taxTypes: (obj.dienGiaiDieuKienHSMT.theoHSMT.cacLoaiThue) ?
+            obj.dienGiaiDieuKienHSMT.theoHSMT.cacLoaiThue.map(x => ({
+              key: '',
+              value: '',
+              displayText: x
+            })) : [],
           currency: obj.dienGiaiDieuKienHSMT.theoHSMT && {
-            // TODO: Map lại chỗ này
             key: '',
             value: '',
             displayText: obj.dienGiaiDieuKienHSMT.theoHSMT.donViTienTe
@@ -465,12 +487,12 @@ export class HoSoDuThauService {
       },
       otherSpecialRequirement: obj.yeuCauDacBietKhac && {
         // TODO: Map lại chỗ này
-        greenBuildingStandardName: '',
-        greenBuildingStandardLink: '',
-        tenderEvaluationStep1: '',
-        tenderEvaluationStep2: '',
-        profitValue: '',
-        profitDesc: ''
+        greenBuildingStandardName: obj.yeuCauDacBietKhac.greenBuildingStandardName,
+        greenBuildingStandardLink: obj.yeuCauDacBietKhac.greenBuildingStandardLink,
+        tenderEvaluationStep1: obj.yeuCauDacBietKhac.tenderEvaluationStep1,
+        tenderEvaluationStep2: obj.yeuCauDacBietKhac.tenderEvaluationStep2,
+        profitValue: obj.yeuCauDacBietKhac.profitValue,
+        profitDesc: obj.yeuCauDacBietKhac.profitDesc
       }
     };
     return this.apiService.post(url, infoReport).map(res => res);
@@ -483,7 +505,7 @@ export class HoSoDuThauService {
       if (!res.result) {
         return null;
       }
-      this.toTenderConditionalSummary(res.result, bidOpportunityId);
+      return this.toTenderConditionalSummary(res.result, bidOpportunityId);
     });
   }
 
@@ -657,13 +679,12 @@ export class HoSoDuThauService {
       };
       // TODO: Map lại chỗ này
       dataOut.yeuCauDacBietKhac = model.otherSpecialRequirement && {
-        descOne: '',
-        descTwo: '',
-        descThree: '',
-        linkOne: '',
-        linkTwo: '',
-        link2Two: '',
-        linkThree: ''
+        greenBuildingStandardName: model.otherSpecialRequirement.greenBuildingStandardName,
+        greenBuildingStandardLink: model.otherSpecialRequirement.greenBuildingStandardLink,
+        tenderEvaluationStep1: model.otherSpecialRequirement.tenderEvaluationStep1,
+        tenderEvaluationStep2: model.otherSpecialRequirement.tenderEvaluationStep2,
+        profitValue: model.otherSpecialRequirement.profitValue,
+        profitDesc: model.otherSpecialRequirement.profitDesc
       };
       dataOut.noiDungCapNhat = '';
     }

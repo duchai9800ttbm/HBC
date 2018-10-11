@@ -28,6 +28,7 @@ import { DialogService } from '@progress/kendo-angular-dialog';
 import { PopupCreateAssignerComponent } from '../../../shared/components/popup-create-assigner/popup-create-assigner.component';
 import { PopupCreateChairComponent } from '../../../shared/components/popup-create-chair/popup-create-chair.component';
 import { UserFormComponent } from './user-form/user-form.component';
+import { EvaluationModel } from '../../../shared/models/package/evaluation.model';
 @Component({
     selector: 'app-package-form',
     templateUrl: './package-form.component.html',
@@ -65,6 +66,7 @@ export class PackageFormComponent implements OnInit {
     contactsSearchResults: DictionaryItem[];
     assignSearchResults: DictionaryItem[];
     userListItem: UserItemModel[];
+    dataEvaluation: EvaluationModel[];
     public min: Date = new Date(1917, 0, 1);
     public max: Date = new Date(2000, 11, 31);
     constructor(
@@ -91,6 +93,8 @@ export class PackageFormComponent implements OnInit {
         this.listMainBuildingCategory = this.dataService.getListMainConstructionComponents();
         this.listRoleContractors = this.dataService.getListHBCRoles();
         this.listStatus = this.dataService.getListBidOpportunityStatuses();
+        this.getDataEvaluation();
+
         this.createForm();
         window.scroll(0, 0);
     }
@@ -160,9 +164,9 @@ export class PackageFormComponent implements OnInit {
     }
 
     calculatedTotalTime() {
-         if (this.packageForm.get('projectEstimatedEndDate').value && this.packageForm.get('projectEstimatedStartDate').value) {
-            this.packageForm.get('totalTime').patchValue( ( (this.packageForm.get('projectEstimatedEndDate').value
-            - this.packageForm.get('projectEstimatedStartDate').value )  / (24 * 3600 * 1000) ).toString() + ' ngày' );
+        if (this.packageForm.get('projectEstimatedEndDate').value && this.packageForm.get('projectEstimatedStartDate').value) {
+            this.packageForm.get('totalTime').patchValue(((this.packageForm.get('projectEstimatedEndDate').value
+                - this.packageForm.get('projectEstimatedStartDate').value) / (24 * 3600 * 1000)).toString() + ' ngày');
         }
     }
 
@@ -220,16 +224,13 @@ export class PackageFormComponent implements OnInit {
         this.packageService.getListCustomer(query)
             .subscribe(result => {
                 this.customersSearchResults = result;
-                console.log('this.customersSearchResults', result);
             });
     }
 
     customerSelectedChange(e) {
-        console.log(e);
         this.packageForm.get('customerNewOldType').patchValue(e.customerNewOldType);
     }
     changeConsultant(e) {
-        console.log('eeee', e);
         this.packageForm.get('consultantAddress').patchValue(e.customerAddress);
         this.packageForm.get('consultantPhone').patchValue(e.customerPhone);
     }
@@ -237,6 +238,11 @@ export class PackageFormComponent implements OnInit {
     searchAssigns(query) {
         this.userService.searchListUser(query)
             .subscribe(result => this.assignSearchResults = result);
+    }
+    getDataEvaluation() {
+        this.packageService.getEvaluationValue().subscribe(data => {
+            this.dataEvaluation = data;
+        });
     }
     // openPopupCreateAssigner() {
     //     this.dialogAssigner = this.dialogService.open({

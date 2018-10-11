@@ -5,6 +5,8 @@ import { PackageDetailComponent } from '../../../../package-detail.component';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { AlertService } from '../../../../../../../shared/services';
 import { HoSoDuThauService } from '../../../../../../../shared/services/ho-so-du-thau.service';
+import { Router } from '../../../../../../../../../node_modules/@angular/router';
+import { PackageInfoModel } from '../../../../../../../shared/models/package/package-info.model';
 
 @Component({
   selector: 'app-summary-condition-form',
@@ -15,17 +17,25 @@ export class SummaryConditionFormComponent implements OnInit, OnDestroy {
 
   static formModel: TenderConditionSummaryRequest;
   packageId;
+  package: PackageInfoModel;
   showPopupConfirm = false;
   constructor(
     private packageService: PackageService,
     private hoSoDuThauService: HoSoDuThauService,
     private spinner: NgxSpinnerService,
-    private alertService: AlertService
+    private alertService: AlertService,
+    private router: Router
   ) { }
 
   ngOnInit() {
     this.packageId = +PackageDetailComponent.packageId;
     this.packageService.setSummaryConditionForm(true);
+
+    this.packageService.getInforPackageID(this.packageId).subscribe(result => {
+      this.package = result;
+
+    }, err => {
+    });
   }
 
   ngOnDestroy(): void {
@@ -33,10 +43,12 @@ export class SummaryConditionFormComponent implements OnInit, OnDestroy {
   }
 
   onSubmit(check: boolean) {
-    console.log(this.packageId);
     HoSoDuThauService.tempDataLiveFormDKDT.value.bidOpportunityId = this.packageId;
     HoSoDuThauService.tempDataLiveFormDKDT.value.isDraftVersion = check;
     this.showPopupConfirm = true;
+  }
+  backSummary() {
+    this.router.navigate([`package/detail/${this.packageId}/attend/build/summary`]);
   }
   submitLiveForm(event) {
     if (!event) {
@@ -51,6 +63,12 @@ export class SummaryConditionFormComponent implements OnInit, OnDestroy {
       this.showPopupConfirm = false;
     }
   }
+
+  cancel() {
+
+  }
+
+  refresh() { }
 
 
 }

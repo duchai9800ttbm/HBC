@@ -15,7 +15,7 @@ export class SummaryConditionFormSpecialRequirementComponent implements OnInit {
 
   specialRequirementForm: FormGroup;
   otherRequirement = new TableYeuCauDacBiet();
- 
+
   constructor(
     private fb: FormBuilder,
     private hoSoDuThauService: HoSoDuThauService
@@ -27,13 +27,12 @@ export class SummaryConditionFormSpecialRequirementComponent implements OnInit {
   }
   createForm() {
     this.specialRequirementForm = this.fb.group({
-      descOne: this.otherRequirement.descOne,
-      descTwo: this.otherRequirement.descTwo,
-      descThree: this.otherRequirement.descThree,
-      linkOne: this.otherRequirement.linkOne,
-      linkTwo: this.otherRequirement.linkTwo,
-      link2Two: this.otherRequirement.link2Two,
-      linkThree: this.otherRequirement.linkThree,
+      descOne: this.otherRequirement.greenBuildingStandardName,
+      linkOne: this.otherRequirement.greenBuildingStandardLink,
+      linkTwo: this.otherRequirement.tenderEvaluationStep1,
+      link2Two: this.otherRequirement.tenderEvaluationStep2,
+      descThree: this.otherRequirement.profitValue,
+      linkThree: this.otherRequirement.profitDesc,
     });
 
 
@@ -41,13 +40,12 @@ export class SummaryConditionFormSpecialRequirementComponent implements OnInit {
     this.specialRequirementForm.valueChanges.subscribe(data => {
       let obj = new TableYeuCauDacBiet();
       obj = {
-        descOne: data.descOne,
-        descTwo: data.descTwo,
-        descThree: data.descThree,
-        linkOne: data.linkOne,
-        linkTwo: data.linkTwo,
-        link2Two: data.link2Two,
-        linkThree: data.linkThree,
+        greenBuildingStandardName: data.descOne,
+        greenBuildingStandardLink: data.linkOne,
+        tenderEvaluationStep1: data.linkTwo,
+        tenderEvaluationStep2: data.link2Two,
+        profitValue: data.descThree,
+        profitDesc: data.linkThree
       };
       console.log(obj);
       this.hoSoDuThauService.emitDataStepSpecial(obj);

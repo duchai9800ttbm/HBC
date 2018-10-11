@@ -1,11 +1,15 @@
-import { ThongTinCacBen } from './thong-tin-cac-ben';
-
 export class CacBenLienQuan {
-    chuDauTu: ThongTinCacBen[];
-    quanLyDuAn: ThongTinCacBen[];
-    quanLyChiPhi: ThongTinCacBen[];
-    thietKeKienTruc: ThongTinCacBen[];
-    thietKeKetCau: ThongTinCacBen[];
-    thietKeCoDien: ThongTinCacBen[];
-    thongTinKhac: ThongTinCacBen[];
+    groupId: number;
+    customers: CustomerCacBenLienQuan[];
+}
+
+class CustomerCacBenLienQuan {
+    id: number;
+    note: string;
+    customerContacts: CustomerContactsCacBenLienQuan[];
+}
+
+class CustomerContactsCacBenLienQuan {
+    id: number;
+    name: string;
 }
