@@ -53,6 +53,7 @@ export class ContractSignedComponent implements OnInit, OnDestroy {
   searchTerm$ = new BehaviorSubject<string>('');
   filterModel = new FilterContractSigning();
   pagedResult: PagedResult<ContractSigningList> = new PagedResult<ContractSigningList>();
+  isNgOnInit: boolean;
   constructor(
     private modalService: BsModalService,
     private formBuilder: FormBuilder,
@@ -68,6 +69,10 @@ export class ContractSignedComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.currentPackageId = +PackageDetailComponent.packageId;
+    this.filterModel.uploadedDate = null;
+    this.filterModel.uploadedByEmployeeId = null;
+    this.filterModel.contractDate = null;
+    this.filterModel.interviewTime = null;
     this.ckeConfig = {
       toolbar: [
         { name: 'basicstyles', items: ['Bold', 'Italic', 'Underline', 'Strike'] },
@@ -89,8 +94,10 @@ export class ContractSignedComponent implements OnInit, OnDestroy {
     this.packageService.getInforPackageID(this.currentPackageId).subscribe(result => {
       this.statusPackage = result.stageStatus.id;
     });
+    this.filter(false);
     this.subscription = this.detailResultPackageService.watchListContractSigning().subscribe(value => {
       this.statusPackage = this.bidStatus.DaKyKetHopDong;
+      this.filter(false);
     });
     this.searchTerm$.debounceTime(600)
       .distinctUntilChanged()
@@ -126,10 +133,11 @@ export class ContractSignedComponent implements OnInit, OnDestroy {
       )
       .subscribe(result => {
         this.render(result);
-        if (displayAlert) {
+        if (displayAlert && this.isNgOnInit) {
           this.alertService.success('Dữ liệu đã được cập nhật mới nhất!');
         }
         this.spinner.hide();
+        this.isNgOnInit = true;
       }, err => this.spinner.hide());
   }
 
@@ -182,5 +190,13 @@ export class ContractSignedComponent implements OnInit, OnDestroy {
 
   closePopuup() {
     this.dialogUploadContractSigning.close();
+  }
+
+  downloadTemplateContractSigning() {
+    this.detailResultPackageService.downloadTemplateContractSigning().subscribe(response => {
+    },
+      err => {
+        this.alertService.error('Tải template không thành công!');
+      });
   }
 }
