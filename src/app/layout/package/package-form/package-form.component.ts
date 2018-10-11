@@ -241,7 +241,7 @@ export class PackageFormComponent implements OnInit {
     }
     getDataEvaluation() {
         this.packageService.getEvaluationValue().subscribe(data => {
-            this.dataEvaluation = [...data];
+            this.dataEvaluation = data;
         });
     }
     // openPopupCreateAssigner() {
