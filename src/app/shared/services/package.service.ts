@@ -20,7 +20,6 @@ import { BidPermissionGroupResponsive } from '../models/api-response/setting/bid
 import * as FileSaver from 'file-saver';
 import { TenderPreparationPlanningRequest } from '../models/api-request/package/tender-preparation-planning-request';
 import { ProposedTenderParticipationHistory } from '../models/api-response/package/proposed-tender-participation-history.model';
-import { EvaluationModel } from '../models/package/evaluation.model';
 
 @Injectable()
 export class PackageService {
@@ -204,7 +203,7 @@ export class PackageService {
     ) { }
 
     // Get Evaluation List
-    getEvaluationValue(): Observable<EvaluationModel> {
+    getEvaluationValue() {
         const url = `data/evaluation`;
         return this.apiService.get(url).map(res => res.result);
     }
