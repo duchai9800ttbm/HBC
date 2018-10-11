@@ -1,9 +1,8 @@
 export class TableYeuCauDacBiet {
-    descOne: string;
-    descTwo: string;
-    descThree: string;
-    linkOne: string;
-    linkTwo: string;
-    link2Two: string;
-    linkThree: string;
+    greenBuildingStandardName: string;
+    greenBuildingStandardLink: string;
+    tenderEvaluationStep1: string;
+    tenderEvaluationStep2: string;
+    profitValue: number;
+    profitDesc: string;
 }
