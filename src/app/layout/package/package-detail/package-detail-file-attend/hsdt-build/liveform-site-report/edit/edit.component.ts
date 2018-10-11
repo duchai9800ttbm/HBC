@@ -3,17 +3,17 @@ import { DATETIME_PICKER_CONFIG } from '../../../../../../../shared/configs/date
 // tslint:disable-next-line:import-blacklist
 import { Subject } from 'rxjs';
 import { Router } from '@angular/router';
-import { AlertService, SessionService } from '../../../../../../../shared/services';
+import { AlertService, SessionService, UserService } from '../../../../../../../shared/services';
 import { NgxSpinnerService } from 'ngx-spinner';
-import { SiteSurveyReport } from '../../../../../../../shared/models/site-survey-report/site-survey-report';
 import { DocumentService } from '../../../../../../../shared/services/document.service';
 import { LiveformSiteReportComponent } from '../liveform-site-report.component';
 import { PackageDetailComponent } from '../../../../package-detail.component';
 import { PackageService } from '../../../../../../../shared/services/package.service';
 import { PackageInfoModel } from '../../../../../../../shared/models/package/package-info.model';
 import { SiteSurveyReportService } from '../../../../../../../shared/services/site-survey-report.service';
-import { DictionaryItem } from '../../../../../../../shared/models';
-// const objectToFormData = require('object-to-formdata');
+import { CustomerContact } from '../../../../../../../shared/models/site-survey-report/customer-contact';
+import { DepartmentList } from '../../../../../../../shared/models/site-survey-report/department-list';
+import { UserList } from '../../../../../../../shared/models/site-survey-report/user-list';
 
 @Component({
   selector: 'app-edit',
@@ -39,28 +39,57 @@ export class EditComponent implements OnInit, OnDestroy {
   stepName;
   currentBidOpportunityId: number;
   packageData = new PackageInfoModel();
-  listCustomerContact;
+  listCustomerContact = new Array(new CustomerContact());
+  customer;
+  listDepartments = new Array(new DepartmentList());
+  department = {
+    key: 49,
+    value: 'Phòng dự thầu'
+  };
+  listUser: UserList[];
   ngayKhaoSat;
+  isDraft;
   constructor(
-    private documentService: DocumentService,
     private siteSurveyReportService: SiteSurveyReportService,
     private packageService: PackageService,
     private router: Router,
     private alertService: AlertService,
-    private spinner: NgxSpinnerService
+    private spinner: NgxSpinnerService,
   ) { }
 
   ngOnInit() {
     this.getInfoTenderPreparationPlanning();
-    this.getCustomerContact();
+    this.getAllUser();
+    this.isDraft = LiveformSiteReportComponent.formModel.isDraftVersion;
     this.currentBidOpportunityId = +PackageDetailComponent.packageId;
     this.packageService.getInforPackageID(this.currentBidOpportunityId).subscribe(result => {
       this.packageData = result;
     });
   }
-  getCustomerContact() {
-    this.siteSurveyReportService.getListCustomerContact(0, 10).subscribe(data => {
-      this.listCustomerContact = data.items;
+  getAllUser() {
+    this.siteSurveyReportService.getAllUser('').subscribe(data => {
+      this.listUser = data;
+      this.listDepartments.push(this.department);
+      this.listUser.forEach(x => {
+        this.listCustomerContact.push({
+          employeeId: x.employeeId,
+          employeeName: x.employeeName
+        });
+        if (x.department) {
+          let checkduplicate: boolean;
+          this.listDepartments.forEach(item => {
+            if (item.key === x.department.key) {
+              checkduplicate = true;
+            } else { checkduplicate = false; }
+          });
+          if (!checkduplicate) {
+            this.listDepartments.push({
+              key: x.department.key,
+              value: x.department.value
+            });
+          }
+        }
+      });
     });
   }
   getInfoTenderPreparationPlanning() {
@@ -69,6 +98,16 @@ export class EditComponent implements OnInit, OnDestroy {
     });
   }
   submitLiveForm(event) {
+    LiveformSiteReportComponent.formModel.phongBan = this.department && {
+      id: this.department.key,
+      text: this.department.value
+    };
+    LiveformSiteReportComponent.formModel.nguoiKhaoSat = this.customer && {
+      id: this.customer.employeeId,
+      text: this.customer.employeeName
+    };
+    LiveformSiteReportComponent.formModel.isDraftVersion = this.isDraft;
+    this.showPopupConfirm = false;
     if (!event) {
       this.showPopupConfirm = false;
     } else {

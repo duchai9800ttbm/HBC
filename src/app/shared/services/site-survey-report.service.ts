@@ -8,6 +8,7 @@ import { SiteSurveyReport } from '../models/site-survey-report/site-survey-repor
 import { ScaleOverall } from '../models/site-survey-report/scale-overall.model';
 import { ImageItem } from '../models/site-survey-report/image';
 import { AlertService } from './alert.service';
+import { UserList } from '../models/site-survey-report/user-list';
 
 @Injectable()
 export class SiteSurveyReportService {
@@ -34,6 +35,12 @@ export class SiteSurveyReportService {
       };
     });
   }
+  // Get Danh sách User
+  getAllUser(searchTerm: string): Observable<UserList[]> {
+    const url = `user/search/?searchTerm=${searchTerm}`;
+    return this.apiService.get(url)
+      .map(response => response.result).share();
+  }
   // Danh sách loại công trình
   getListConstructionType(): Observable<DictionaryItem> {
     const url = `bidconstructiontype/constructiontypes`;
@@ -49,7 +56,13 @@ export class SiteSurveyReportService {
   // Thông tin bảng báo cáo công trình
   tenderSiteSurveyingReport(bidOpportunityId: number): Observable<SiteSurveyReport> {
     const url = `bidopportunity/${bidOpportunityId}/tendersitesurveyingreport`;
-    return this.apiService.get(url).map(res => this.toSiteSurveyReport(res.result, bidOpportunityId));
+    return this.apiService.get(url).map(res => {
+      if (!res.result) {
+        return null;
+      } else {
+        this.toSiteSurveyReport(res.result, bidOpportunityId);
+      }
+    });
   }
 
   // Xóa ảnh báo cáo công trình
@@ -83,6 +96,7 @@ export class SiteSurveyReportService {
       bidOpportunityId: obj.bidOpportunityId,
       createdEmployeeId: obj.nguoiTao.id,
       updatedEmployeeId: (obj.nguoiCapNhat) ? obj.nguoiCapNhat.id : this.employeeId,
+      // TODO: Map lại 2 field chỗ này
       projectStatistic: obj.scaleOverall && {
         projectStatistic: {
           constructionType: obj.scaleOverall.loaiCongTrinh && obj.scaleOverall.loaiCongTrinh.forEach(x => ({
@@ -238,6 +252,15 @@ export class SiteSurveyReportService {
         id: this.employeeId,
         name: ''
       };
+      dataFormated.isDraftVersion = true;
+      dataFormated.nguoiKhaoSat = model.surveyEmployee && {
+        id: model.surveyEmployee.employeeId,
+        text: model.surveyEmployee.employeeName
+      };
+      dataFormated.phongBan = model.department && {
+        id: model.department.id,
+        text: model.department.departmentName
+      };
       dataFormated.scaleOverall = new ScaleOverall();
       dataFormated.scaleOverall.loaiCongTrinh = new Array;
       dataFormated.scaleOverall.trangthaiCongTrinh = [
@@ -283,6 +306,15 @@ export class SiteSurveyReportService {
       };
       dataFormated.ngayCapNhat = model.updateTime;
       dataFormated.noiDungCapNhat = '';
+      dataFormated.isDraftVersion = model.isDraftVersion;
+      dataFormated.nguoiKhaoSat = model.surveyEmployee && {
+        id: model.surveyEmployee.employeeId,
+        text: model.surveyEmployee.employeeName
+      };
+      dataFormated.phongBan = model.department && {
+        id: model.department.id,
+        text: model.department.departmentName
+      };
       dataFormated.tenTaiLieu = (model.projectStatistic.projectStatistic) ?
         model.projectStatistic.projectStatistic.projectScale.documentName : '';
       dataFormated.lanPhongVan = (model.projectStatistic.projectStatistic) ?
@@ -557,7 +589,7 @@ export class SiteSurveyReportService {
   }
 
   // Xóa báo cáo công trình
-  deleteSiteSurveyingReport(bidOpportunityId: number): Observable<any> {
+  deleteSiteSurveyingReport(bidOpportunityId: number) {
     const url = `bidopportunity/${bidOpportunityId}/tendersitesurveyingreport/delete`;
     return this.apiService.post(url, bidOpportunityId);
   }

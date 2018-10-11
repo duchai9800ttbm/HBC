@@ -24,6 +24,7 @@ export class SummaryConditionFormComponent implements OnInit, OnDestroy {
   ) { }
 
   ngOnInit() {
+    this.packageId = +PackageDetailComponent.packageId;
     this.packageService.setSummaryConditionForm(true);
   }
 
@@ -31,7 +32,10 @@ export class SummaryConditionFormComponent implements OnInit, OnDestroy {
     this.packageService.setSummaryConditionForm(false);
   }
 
-  onSubmit() {
+  onSubmit(check: boolean) {
+    console.log(this.packageId);
+    HoSoDuThauService.tempDataLiveFormDKDT.value.bidOpportunityId = this.packageId;
+    HoSoDuThauService.tempDataLiveFormDKDT.value.isDraftVersion = check;
     this.showPopupConfirm = true;
   }
   submitLiveForm(event) {
@@ -39,7 +43,6 @@ export class SummaryConditionFormComponent implements OnInit, OnDestroy {
       this.showPopupConfirm = false;
     } else {
       const dataLiveform = HoSoDuThauService.tempDataLiveFormDKDT.value;
-      console.log(dataLiveform);
       this.hoSoDuThauService.createOrUpdateLiveFormTomTat(dataLiveform).subscribe(res => {
         this.alertService.success(`LiveForm đã được cập nhật!`);
       }, err => {

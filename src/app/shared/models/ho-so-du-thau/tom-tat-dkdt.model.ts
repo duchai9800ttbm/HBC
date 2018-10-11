@@ -9,7 +9,7 @@ import { DanhSachVatTu, HoSoDangLuuY, DienGiaiYeuCauHoSo } from './danh-sach-vat
 export class DuLieuLiveFormDKDT {
     id: number;
     bidOpportunityId: number;
-    createdEmployeeId: string;
+    createdEmployeeId: number;
     updatedEmployeeId: number;
     isDraftVersion: boolean;
     documentName: string;
