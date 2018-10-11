@@ -5,6 +5,7 @@ import { DanhSachNhaThau } from './danh-sach-nha-thau';
 import { DienGiaiYeuCauLamRo, DienGiaiDieuKienHopDong, DienGiaiDieuKienHSMT } from './dien-giai-yeu-cau';
 import { TableYeuCauDacBiet } from './table-yeu-cau';
 import { DanhSachVatTu, HoSoDangLuuY, DienGiaiYeuCauHoSo } from './danh-sach-vat-tu';
+import { StakeHolder } from './stack-holder.model';
 
 export class DuLieuLiveFormDKDT {
     id: number;
@@ -14,7 +15,7 @@ export class DuLieuLiveFormDKDT {
     isDraftVersion: boolean;
     documentName: string;
     thongTinDuAn: ThongTinDuAn;
-    cacBenLienQuan: CacBenLienQuan;
+    cacBenLienQuan: StakeHolder[];
     phamViCongViec: PhamViCongViec;
     danhSachNhaThau: DanhSachNhaThau[];
     danhSachVatTu: DanhSachVatTu[];

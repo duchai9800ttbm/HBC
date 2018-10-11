@@ -3,13 +3,16 @@
     <div class="d-flex flex-column">
 
 
-        <div class="d-flex flex-row" *ngFor="let item of mockData; index as i">
-            <div class="w-15">6. {{item.groupName}}</div>
+        <div class="d-flex flex-row mb-2" *ngFor="let item of stakeHolderList; index as i">
+            <div class="w-15 d-flex flex-row">
+                <div>{{i+1}}. &nbsp;</div>
+                <div>{{item?.groupDesc}}</div>
+            </div>
             <div class="w-85">
                 <ng-container *ngFor="let customer of item.customers; index as k">
                     <div class="d-flex flex-row w-100 mb-3">
                         <div class="w-3 ml-3">
-                            <span class="form-control form-control-customer"> {{customer.name}} </span>
+                            <span class="form-control form-control-customer"> {{customer?.customerName}} </span>
                         </div>
 
                         <div class="w-3 ml-3 d-flex flex-row">
@@ -17,8 +20,9 @@
                                 <div>Liên hệ</div>
                             </div>
                             <span class="form-control form-control-custom w-80">
-                                <span>Nguyễn Hữu Nghĩa</span>,
-                                <span>Hoàng Duy Khánh</span>
+                                <span *ngFor="let contact of customer.contacts; index as k">
+                                    <span *ngIf="k !== 0">,&nbsp;</span>{{contact.name}}
+                                </span>
                             </span>
                         </div>
                         <div class="w-3 ml-3 d-flex flex-row">
@@ -27,7 +31,6 @@
                             </div>
                             <span class="form-control form-control-custom w-80">
                                 <textarea class="form-control b-textarea h-100" (input)="noteChange($event)" [(ngModel)]="customer.note"></textarea>
-
                             </span>
                         </div>
                     </div>

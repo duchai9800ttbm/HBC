@@ -214,7 +214,7 @@ export class HoSoDuThauService {
   emitDataStepInfo(obj: ThongTinDuAn) {
     HoSoDuThauService.tempDataLiveFormDKDT.value.thongTinDuAn = obj;
   }
-  emitDataStepRelate(obj: CacBenLienQuan) {
+  emitDataStepRelate(obj: StakeHolder[]) {
     HoSoDuThauService.tempDataLiveFormDKDT.value.cacBenLienQuan = obj;
   }
   emitDataStepScope(obj: PhamViCongViec) {
