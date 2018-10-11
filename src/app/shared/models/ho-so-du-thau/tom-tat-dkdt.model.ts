@@ -13,6 +13,7 @@ export class DuLieuLiveFormDKDT {
     updatedEmployeeId: number;
     isDraftVersion: boolean;
     documentName: string;
+    noiDungCapNhat: string;
     thongTinDuAn: ThongTinDuAn;
     cacBenLienQuan: CacBenLienQuan;
     phamViCongViec: PhamViCongViec;
@@ -24,5 +25,4 @@ export class DuLieuLiveFormDKDT {
     dienGiaiDieuKienHopDong: DienGiaiDieuKienHopDong;
     dienGiaiDieuKienHSMT: DienGiaiDieuKienHSMT;
     yeuCauDacBietKhac: TableYeuCauDacBiet;
-    noiDungCapNhat: string;
 }
