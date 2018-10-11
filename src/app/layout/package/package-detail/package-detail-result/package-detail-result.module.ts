@@ -12,6 +12,7 @@ import { CKEditorModule } from 'ng2-ckeditor';
 import { UploadResultFileAttendComponent } from './package-success/package-list/upload-result-file-attend/upload-result-file-attend.component';
 import { DetailResultPackageService } from '../../../../shared/services/detail-result-package.service';
 import { NotificationContractComponent } from './package-success/package-list/notification-contract/notification-contract.component';
+import { UploadContractSigningComponent } from './package-success/contract-signed/upload-contract-signing/upload-contract-signing.component';
 @NgModule({
   imports: [
     CommonModule,
@@ -26,11 +27,13 @@ import { NotificationContractComponent } from './package-success/package-list/no
       PackageFailedComponent,
       PackgeCancelComponent,
       UploadResultFileAttendComponent,
-      NotificationContractComponent
+      NotificationContractComponent,
+      UploadContractSigningComponent
   ],
   entryComponents: [
     UploadResultFileAttendComponent,
-    NotificationContractComponent
+    NotificationContractComponent,
+    UploadContractSigningComponent
   ],
   providers: [
     DetailResultPackageService

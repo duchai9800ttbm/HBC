@@ -9,6 +9,7 @@ import { PackageSuccessComponent } from './package-success.component';
 import { CKEditorModule } from 'ng2-ckeditor';
 import { PackageDocumentComponent } from './package-list/package-document/package-document.component';
 import { PackageDocumentSenderComponent } from './package-list/package-document/package-document-sender/package-document-sender.component';
+// tslint:disable-next-line:max-line-length
 import { PackageDocumentReceiverComponent } from './package-list/package-document/package-document-receiver/package-document-receiver.component';
 // import { ReportMeetingComponent } from './meeting-kickoff/report-meeting/report-meeting.component';
 @NgModule({

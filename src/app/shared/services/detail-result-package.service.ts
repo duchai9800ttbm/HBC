@@ -5,9 +5,14 @@ import { DocumentResultList } from '../models/result-attend/document-result-list
 import { Observable, Subject } from '../../../../node_modules/rxjs';
 import * as FileSaver from 'file-saver';
 import { SendEmailModel } from '../models/send-email-model';
+import { FilterContractSigning } from '../models/result-attend/filter-contract-signing.model';
+import { ContractSigningList } from '../models/result-attend/contract-signing.list.model';
+import { PagedResult } from '../models';
+import { URLSearchParams } from '@angular/http';
 @Injectable()
 export class DetailResultPackageService {
   listFileResult: Subject<any> = new Subject();
+  listContractSigning: Subject<any> = new Subject();
   constructor(
     private apiService: ApiService,
   ) { }
@@ -118,7 +123,7 @@ export class DetailResultPackageService {
     });
   }
   // Gửi thư phản hồi đến phòng hợp đồng
-  sendFeedbackToContractRoom(data: SendEmailModel,  file: File[]) {
+  sendFeedbackToContractRoom(data: SendEmailModel, file: File[]) {
     const url = `bidopportunity/kqdt/sendfeedbacktocontractroom`;
     const dataObj = new FormData();
     dataObj.append('BidOpportunityId', data.bidOpportunityId + '');
@@ -126,10 +131,118 @@ export class DetailResultPackageService {
     data.recipientEmails.forEach((item, index) => {
       dataObj.append('RecipientEmails[' + index + ']', item);
     });
-    file.forEach( item => {
+    file.forEach(item => {
       dataObj.append('AttachmentFiles', item);
     });
     dataObj.append('Content', data.content);
     return this.apiService.postFile(url, dataObj);
+  }
+  // =============================
+  // Bước 2, hợp đồng ký kết
+  // Tải lên hợp đồng ký kết
+  uploadContractSigning(
+    BidOpportunityId: number,
+    uploadResultFormValue: any,
+    file: File,
+  ) {
+    const url = `bidopportunity/kqdt/contractdocument/upload`;
+    const formData = new FormData();
+    formData.append('BidOpportunityId', `${BidOpportunityId}`);
+    formData.append('Name', `${uploadResultFormValue.documentName}`);
+    if (uploadResultFormValue.documentDesc || uploadResultFormValue.documentDesc === '') {
+      formData.append('Desc', uploadResultFormValue.documentDesc);
+    }
+    formData.append('Vesion', `${uploadResultFormValue.version}`);
+    formData.append('InterviewTime', `${uploadResultFormValue.interviewTimes}`);
+    formData.append('ContractDate', uploadResultFormValue.receivedDate ?
+      DateTimeConvertHelper.fromDtObjectToTimestamp(uploadResultFormValue.receivedDate).toString() : '');
+    if (file) {
+      formData.append('File', file);
+    } else {
+      formData.append('Url', uploadResultFormValue.link);
+    }
+    return this.apiService.postFile(url, formData)
+      .map(response => response)
+      .share();
+  }
+  // Có sự thay đổi listContractSigning
+  changeListContractSigning() {
+    this.listContractSigning.next();
+  }
+  // Obserable listContractSigning
+  watchListContractSigning() {
+    return this.listContractSigning;
+  }
+  // Filter danh sách hợp đồng ký kết
+  createFilterContractSigning(filter: FilterContractSigning): URLSearchParams {
+    const urlFilterParams = new URLSearchParams();
+    urlFilterParams.append(
+      'uploadedDate',
+      filter.uploadedDate ? DateTimeConvertHelper.fromDtObjectToTimestamp(filter.uploadedDate).toString() : ''
+    );
+    urlFilterParams.append(
+      'uploadedByEmployeeId',
+      filter.uploadedByEmployeeId ? filter.uploadedByEmployeeId.toString() : ''
+    );
+    urlFilterParams.append(
+      'contractDate',
+      filter.contractDate ? DateTimeConvertHelper.fromDtObjectToTimestamp(filter.contractDate).toString() : ''
+    );
+    urlFilterParams.append(
+      'interviewTime',
+      filter.interviewTime ? filter.interviewTime.toString() : ''
+    );
+    urlFilterParams.append(
+      'sorting',
+      filter.sorting ? filter.sorting : ''
+    );
+    return urlFilterParams;
+  }
+  // Mapping model danh sách hợp đồng ký kêt
+  toContractSigningList(resutl: any): ContractSigningList {
+    return {
+      id: resutl.id,
+      name: resutl.name,
+      version: resutl.version,
+      desc: resutl.desc,
+      uploadByEmployee: {
+        employeeId: resutl.uploadByEmployee.employeeId,
+        employeeNo: resutl.uploadByEmployee.employeeNo,
+        employeeName: resutl.uploadByEmployee.employeeName,
+        employeeAvatar: {
+          guid: resutl.uploadByEmployee.employeeAvatar.guid,
+          thumbSizeUrl: resutl.uploadByEmployee.employeeAvatar.thumbSizeUrl,
+          largeSizeUrl: resutl.uploadByEmployee.employeeAvatar.largeSizeUrl,
+        },
+        employeeEmail: resutl.uploadByEmployee.employeeEmail,
+      },
+      uploadDate: resutl.uploadDate,
+      contractDate: resutl.contractDate,
+      interviewTime: resutl.interviewTime,
+    };
+  }
+  // Filter danh sách hợp đồng ký kết
+  filterContractSigning(
+    bidOpportunityId: number,
+    searchTerm: string,
+    filter: FilterContractSigning,
+    page: number | string,
+    pageSize: number | string
+  ): Observable<PagedResult<ContractSigningList>> {
+    const filterUrl = `bidopportunity/${bidOpportunityId}/bidinterviewinvitations/filter/${page}/${pageSize}`;
+    const urlParams = this.createFilterContractSigning(filter);
+    urlParams.append('searchTerm', searchTerm);
+    return this.apiService.get(filterUrl, urlParams).map(response => {
+      const result = response.result;
+      return {
+        currentPage: result.pageIndex,
+        pageSize: result.pageSize,
+        pageCount: result.totalPages,
+        total: result.totalCount,
+        items: (result.items || []).map(
+          this.toContractSigningList
+        )
+      };
+    });
   }
 }

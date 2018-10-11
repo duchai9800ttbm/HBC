@@ -30,7 +30,7 @@
                     </button>
                     <div class="dropdown-menu" ngbDropdownMenu>
                         <ng-container *ngFor="let children of childrenOfTypeDocument; index as i">
-                            <div class="dropdown-item" #clickpopup (click)="showDialogUploadFile(children.item.id)">
+                            <div class="dropdown-item" (click)="showDialogUploadFile(children.item.id)">
                                 <a>{{ children.item?.name }}</a>
                             </div>
                             <div class="line" *ngIf="!(childrenOfTypeDocument.length == i+1)"></div>
@@ -100,7 +100,7 @@
 
     <div class="table-responsive">
 
-        <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="table-selection row-border cell-border">
+        <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="table-selection row-border cell-border w-100">
             <thead>
                 <tr>
                     <th class="stt boder-table header-table check-box-stt" style="width: 3%">
@@ -118,7 +118,7 @@
                         </div>
                     </th>
 
-                    <th [hidden]="!isTypeChildDoc" class="boder-table header-table large-column set-width-of-type">
+                    <th [class.d-none]="!isTypeChildDoc" class="boder-table header-table large-column set-width-of-type" style="width: 15%">
                         <div class="d-flex justify-content-center">
                             <div class="center-parent title-text">
                                 <div class="label-thead text-center">Loại tài liệu</div>
@@ -126,7 +126,7 @@
                         </div>
                     </th>
 
-                    <th class="boder-table header-table large-column" style="width: 15%">
+                    <th class="boder-table header-table large-column" style="width: 15%; min-width: 131px;">
                         <div class="d-flex justify-content-center">
                             <div class="center-parent title-text">
                                 <div class="label-thead text-center">Tên tài liệu</div>
@@ -134,7 +134,7 @@
                         </div>
                     </th>
 
-                    <th class="boder-table header-table small-column" style="width: 5%">
+                    <th class="boder-table header-table small-column" style="width: 5%; min-width: 65px;">
                         <div class="d-flex justify-content-center">
                             <div class="center-parent title-text">
                                 <div class="label-thead text-center">Phiên bản</div>
@@ -142,7 +142,7 @@
                         </div>
                     </th>
 
-                    <th class="boder-table header-table large-column" style="width: 20%">
+                    <th class="boder-table header-table large-column" style="width: 20%; min-width: 150px;">
                         <div class="d-flex justify-content-center">
                             <div class="center-parent title-text">
                                 <div class="label-thead text-center">Mô tả</div>
@@ -174,7 +174,7 @@
                         </div>
                     </th>
 
-                    <th class="boder-table header-table small-column" style="width: 5%">
+                    <th class="boder-table header-table small-column" style="width: 5%; min-width: 80px">
                         <div class="d-flex justify-content-center">
                             <div class="center-parent title-text">
                                 <div class="label-thead text-center">Lần p/vấn</div>
@@ -204,11 +204,13 @@
                             </div>
                         </div>
                     </td>
-                    <td [hidden]="!isTypeChildDoc" class="remove-border boder-table d-flex flex-row align-content-center"
+
+                    <td [class.d-none]="!isTypeChildDoc" class="remove-border boder-table text-center text-truncate-custom"
                         [title]="hoso.tenderDocumentType.name">
-                        <div class="text-center text-truncate-custom">{{ hoso.tenderDocumentType?.name }}</div>
-                        <img width="25" height="25" src="assets\images\document.png" (click)="clickpopup.click()">
+                        <p class="custom-text-display">{{ hoso.tenderDocumentType?.name }}</p>
+                        <img class="custom-image" (click)="showDialogUploadFile(hoso.tenderDocumentType.id)" width="25" height="25" src="assets\images\document.png">
                     </td>
+
                     <td class="boder-table text-center text-truncate-custom" [title]="hoso.documentName">
                         {{ hoso?.documentName }}</td>
                     <td class="boder-table text-center text-truncate">{{ hoso?.version ? hoso?.version : '' }}</td>

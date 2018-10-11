@@ -225,10 +225,19 @@ tr {
 
 .line {
     width: calc(100% - 10px);
-    border-top: #B8B8B8 solid 1px;
+    border-top: solid 1px #e9ecef;
     height: 1px;
     border-left: 1px;
-    margin-left: 10px;
-    margin-bottom: 0.5rem;
-    margin-top: 0.5rem;
+    margin-bottom: 0.2rem;
+    margin-top: 0.2rem;
+}
+.custom-text-display{
+    display: inline-block;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 80%;
+}
+.custom-image{
+    vertical-align: super;
 }

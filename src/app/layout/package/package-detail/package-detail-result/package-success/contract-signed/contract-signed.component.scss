@@ -3,7 +3,7 @@
     //  height: 100vh;
     box-shadow: 0 1pt 12pt rgba(0, 0, 0, 0.15);
     border-radius: 10px;
-    padding: 0 25px 30px;
+    padding: 10px 25px 30px;
     background-color: #fff;
 }
 
@@ -11,6 +11,7 @@
     border-right: 5px solid #00a0e3;
     content: "";
     margin: 10px 0;
+    height: 1.2rem;
 }
 
 #outer-img {
@@ -97,9 +98,6 @@ input.icon{
 }
 input.form-control.icon {
     border: 1px solid #00a0e3;
-}
-.filter-bar {
-    padding: 10px;
 }
 .des {
     white-space: nowrap; 
@@ -314,7 +312,7 @@ table.dataTable th {
       }
   }
 .fs {
-    font-size: 15px;
+    font-size: 1.2rem;
 }
 .btn-send {
     background-color: #00a0e3;
