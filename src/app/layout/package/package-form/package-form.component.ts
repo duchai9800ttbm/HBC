@@ -238,6 +238,11 @@ export class PackageFormComponent implements OnInit {
         this.userService.searchListUser(query)
             .subscribe(result => this.assignSearchResults = result);
     }
+    getDataEvaluation(){
+        this.packageService.getEvaluationValue().subscribe{
+            
+        }
+    }
     // openPopupCreateAssigner() {
     //     this.dialogAssigner = this.dialogService.open({
     //         title: 'TẠO MỚI USER',
