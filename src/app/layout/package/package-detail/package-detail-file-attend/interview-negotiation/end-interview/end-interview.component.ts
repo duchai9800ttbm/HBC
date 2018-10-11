@@ -12,7 +12,7 @@ import { DATATABLE_CONFIG2, DATATABLE_CONFIG } from '../../../../../../shared/co
 import { InterviewInvitationReportList } from '../../../../../../shared/models/interview-invitation/interview-invitation-report-list.model';
 import { PackageService } from '../../../../../../shared/services/package.service';
 import { BidStatus } from '../../../../../../shared/constants/bid-status';
-import { GroupDescriptor } from '../../../../../../../../node_modules/@progress/kendo-data-query';
+import { GroupDescriptor, groupBy } from '../../../../../../../../node_modules/@progress/kendo-data-query';
 import { Validators } from '../../../../../../../../node_modules/@angular/forms';
 import DateTimeConvertHelper from '../../../../../../shared/helpers/datetime-convert-helper';
 @Component({
@@ -90,6 +90,14 @@ export class EndInterviewComponent implements OnInit {
     this.pagedResult = pagedResult;
     this.interviewTimeList = this.pagedResult.items ? this.pagedResult.items.map(item => item.interviewTimes) : [];
     this.uploadedEmployeeList = this.pagedResult.items ? this.pagedResult.items.map(item => item.uploadedBy) : [];
+    this.uploadedEmployeeList = groupBy(this.uploadedEmployeeList, [{ field: 'employeeId' }]);
+    this.uploadedEmployeeList = this.uploadedEmployeeList.map( item => {
+      return {
+        employeeId: item.items[0].employeeId,
+        employeeName: item.items[0].employeeName
+      };
+    });
+    this.uploadedEmployeeList = this.uploadedEmployeeList.sort((a, b) => a.employeeId - b.employeeId);
     this.dtTrigger.next();
   }
 
