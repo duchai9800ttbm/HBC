@@ -70,7 +70,10 @@ export class PackageInfoModel {
     acceptanceReason: string;
     unacceptanceReason: string;
     cancelReason: string;
-    evaluation: string;
+    evaluation: {
+        id: number,
+        text: string
+    };
     startTrackingDate: number;
     submissionDate: number;
     resultEstimatedDate: number;

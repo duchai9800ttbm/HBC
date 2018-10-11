@@ -130,7 +130,7 @@ export class EditComponent implements OnInit {
             chairEmployeeId: [this.package.chairEmployee && this.package.chairEmployee.id],
             //  bidStatusId: [this.package.status && this.package.status.id, Validators.required],
             amount: [this.package.amount, [Validators.required, CustomValidator.totalValue]],
-            evaluation: [this.package.evaluation],
+            evaluationId: [this.package.evaluation && this.package.evaluation.id],
             startTrackingDate: [DateTimeConvertHelper.fromTimestampToDtObject(
                 this.package.startTrackingDate * 1000
             )],
@@ -184,10 +184,10 @@ export class EditComponent implements OnInit {
 
     calculatedTotalTime() {
         if (this.packageForm.get('projectEstimatedEndDate').value && this.packageForm.get('projectEstimatedStartDate').value) {
-           this.packageForm.get('totalTime').patchValue( ( (this.packageForm.get('projectEstimatedEndDate').value
-           - this.packageForm.get('projectEstimatedStartDate').value )  / (24 * 3600 * 1000) ).toString() + ' ngày' );
-       }
-   }
+            this.packageForm.get('totalTime').patchValue(((this.packageForm.get('projectEstimatedEndDate').value
+                - this.packageForm.get('projectEstimatedStartDate').value) / (24 * 3600 * 1000)).toString() + ' ngày');
+        }
+    }
 
     validateForm() {
         this.invalidMessages = ValidationHelper.getInvalidMessages(
@@ -254,7 +254,7 @@ export class EditComponent implements OnInit {
     }
     getDataEvaluation() {
         this.packageService.getEvaluationValue().subscribe(data => {
-            this.dataEvaluation = [...data];
+            this.dataEvaluation = data;
         });
     }
 
