@@ -12,13 +12,7 @@ export class SummaryConditionFormRelatedPartiesComponent implements OnInit {
   cacBenLienQuan = new Array<StakeHolder>();
   stakeHolderList = new Array<StakeHolder>();
   packageId;
-  lienHeChuDauTuList = [];
-  lienHeQuanLyDuAnList = [];
-  lienHeQuanLyChiPhiList = [];
-  lienHeThietKeKTList = [];
-  lienHeThietKeKCList = [];
-  thietKeCoDien = [];
-  lienHeKhacList = [];
+  isFormChange = false;
 
 
   constructor(
@@ -34,9 +28,11 @@ export class SummaryConditionFormRelatedPartiesComponent implements OnInit {
   loadData() {
     this.hoSoDuThauService.watchDataLiveForm().subscribe(data => {
       const objDataStepRelate = data.cacBenLienQuan;
+      this.isFormChange = data.isChangeFormCacBenLienQuan;
       if (objDataStepRelate) {
         this.cacBenLienQuan = objDataStepRelate;
       }
+
       this.hoSoDuThauService.getStackHolders(this.packageId).subscribe(response => {
         this.stakeHolderList = response;
 
@@ -46,6 +42,10 @@ export class SummaryConditionFormRelatedPartiesComponent implements OnInit {
               customer.note = '';
             });
           });
+        }
+
+        if (this.isFormChange) {
+          this.stakeHolderList = this.cacBenLienQuan;
         }
 
         // merged two array object
@@ -65,11 +65,14 @@ export class SummaryConditionFormRelatedPartiesComponent implements OnInit {
           }
         }
       });
+
     });
   }
 
   noteChange(e) {
-    console.log('a12123bcd');
+    if (!this.isFormChange) {
+      this.hoSoDuThauService.emitFormCacBenLienQuan(true);
+    }
     this.hoSoDuThauService.emitDataStepRelate(this.stakeHolderList);
   }
 

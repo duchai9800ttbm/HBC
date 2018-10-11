@@ -247,6 +247,9 @@ export class HoSoDuThauService {
   emitDataUpdateDescription(text: string) {
     HoSoDuThauService.tempDataLiveFormDKDT.value.noiDungCapNhat = text;
   }
+  emitFormCacBenLienQuan(isChangeForm: boolean) {
+    HoSoDuThauService.tempDataLiveFormDKDT.value.isChangeFormCacBenLienQuan = isChangeForm;
+  }
   // gọi API create or update liveform tóm tắt đkdt
   createOrUpdateLiveFormTomTat(obj: DuLieuLiveFormDKDT): Observable<any> {
     const url = `tenderconditionalsummary/createorupdate`;

@@ -28,68 +28,68 @@ export class SummaryConditionFormComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.packageId = +PackageDetailComponent.packageId;
     this.packageService.setSummaryConditionForm(true);
-    HoSoDuThauService.tempDataLiveFormDKDT.value.cacBenLienQuan = [
-      {
-        id: 10,
-        groupName: null,
-        groupDesc: null,
-        customers: [
-          {
-            customerId: 140,
-            customerName: null,
-            customerNo: null,
-            customerDesc: null,
-            note: 'abcd',
-            contacts: [
-              {
-                id: 130,
-                name: 'Chị Linh'
-              },
-              {
-                id: 125,
-                name: 'Chị Hạnh'
-              }
-            ]
-          }
-        ]
-      },
-      {
-        id: 11,
-        groupName: null,
-        groupDesc: null,
-        customers: []
-      },
-      {
-        id: 12,
-        groupName: null,
-        groupDesc: 'Quản lý chi phí',
-        customers: []
-      },
-      {
-        id: 13,
-        groupName: 'ThietKeKienTruc',
-        groupDesc: 'Thiết kế kiến trúc',
-        customers: []
-      },
-      {
-        id: 14,
-        groupName: 'ThietKeKetCau',
-        groupDesc: 'Thiết kế kết cấu',
-        customers: []
-      },
-      {
-        id: 15,
-        groupName: 'ThietKeCoDien',
-        groupDesc: 'Thiết kế cơ điện',
-        customers: []
-      },
-      {
-        id: 16,
-        groupName: 'Khac',
-        groupDesc: 'Khác',
-        customers: []
-      }
-    ];
+    // HoSoDuThauService.tempDataLiveFormDKDT.value.cacBenLienQuan = [
+    //   {
+    //     id: 10,
+    //     groupName: null,
+    //     groupDesc: null,
+    //     customers: [
+    //       {
+    //         customerId: 140,
+    //         customerName: null,
+    //         customerNo: null,
+    //         customerDesc: null,
+    //         note: 'abcd',
+    //         contacts: [
+    //           {
+    //             id: 130,
+    //             name: 'Chị Linh'
+    //           },
+    //           {
+    //             id: 125,
+    //             name: 'Chị Hạnh'
+    //           }
+    //         ]
+    //       }
+    //     ]
+    //   },
+    //   {
+    //     id: 11,
+    //     groupName: null,
+    //     groupDesc: null,
+    //     customers: []
+    //   },
+    //   {
+    //     id: 12,
+    //     groupName: null,
+    //     groupDesc: 'Quản lý chi phí',
+    //     customers: []
+    //   },
+    //   {
+    //     id: 13,
+    //     groupName: 'ThietKeKienTruc',
+    //     groupDesc: 'Thiết kế kiến trúc',
+    //     customers: []
+    //   },
+    //   {
+    //     id: 14,
+    //     groupName: 'ThietKeKetCau',
+    //     groupDesc: 'Thiết kế kết cấu',
+    //     customers: []
+    //   },
+    //   {
+    //     id: 15,
+    //     groupName: 'ThietKeCoDien',
+    //     groupDesc: 'Thiết kế cơ điện',
+    //     customers: []
+    //   },
+    //   {
+    //     id: 16,
+    //     groupName: 'Khac',
+    //     groupDesc: 'Khác',
+    //     customers: []
+    //   }
+    // ];
   }
 
   ngOnDestroy(): void {
