@@ -40,7 +40,7 @@ export class EditComponent implements OnInit, OnDestroy {
   currentBidOpportunityId: number;
   packageData = new PackageInfoModel();
   listCustomerContact = new Array(new CustomerContact());
-  customer;
+  customer = null;
   listDepartments = new Array(new DepartmentList());
   department = {
     key: 49,
@@ -137,7 +137,8 @@ export class EditComponent implements OnInit, OnDestroy {
     this.alertService.success('Dữ liệu đã được cập nhật mới nhất!');
   }
 
-  updateliveform() {
+  updateliveform(check: boolean) {
+    LiveformSiteReportComponent.formModel.isDraftVersion = check;
     this.showPopupConfirm = true;
   }
   cancelCreateUpdate() {
