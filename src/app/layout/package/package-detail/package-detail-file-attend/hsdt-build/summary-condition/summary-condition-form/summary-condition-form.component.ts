@@ -6,6 +6,7 @@ import { NgxSpinnerService } from 'ngx-spinner';
 import { AlertService } from '../../../../../../../shared/services';
 import { HoSoDuThauService } from '../../../../../../../shared/services/ho-so-du-thau.service';
 import { Router } from '../../../../../../../../../node_modules/@angular/router';
+import { PackageInfoModel } from '../../../../../../../shared/models/package/package-info.model';
 
 @Component({
   selector: 'app-summary-condition-form',
@@ -16,6 +17,7 @@ export class SummaryConditionFormComponent implements OnInit, OnDestroy {
 
   static formModel: TenderConditionSummaryRequest;
   packageId;
+  package: PackageInfoModel;
   showPopupConfirm = false;
   constructor(
     private packageService: PackageService,
@@ -28,68 +30,12 @@ export class SummaryConditionFormComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.packageId = +PackageDetailComponent.packageId;
     this.packageService.setSummaryConditionForm(true);
-    // HoSoDuThauService.tempDataLiveFormDKDT.value.cacBenLienQuan = [
-    //   {
-    //     id: 10,
-    //     groupName: null,
-    //     groupDesc: null,
-    //     customers: [
-    //       {
-    //         customerId: 140,
-    //         customerName: null,
-    //         customerNo: null,
-    //         customerDesc: null,
-    //         note: 'abcd',
-    //         contacts: [
-    //           {
-    //             id: 130,
-    //             name: 'Chị Linh'
-    //           },
-    //           {
-    //             id: 125,
-    //             name: 'Chị Hạnh'
-    //           }
-    //         ]
-    //       }
-    //     ]
-    //   },
-    //   {
-    //     id: 11,
-    //     groupName: null,
-    //     groupDesc: null,
-    //     customers: []
-    //   },
-    //   {
-    //     id: 12,
-    //     groupName: null,
-    //     groupDesc: 'Quản lý chi phí',
-    //     customers: []
-    //   },
-    //   {
-    //     id: 13,
-    //     groupName: 'ThietKeKienTruc',
-    //     groupDesc: 'Thiết kế kiến trúc',
-    //     customers: []
-    //   },
-    //   {
-    //     id: 14,
-    //     groupName: 'ThietKeKetCau',
-    //     groupDesc: 'Thiết kế kết cấu',
-    //     customers: []
-    //   },
-    //   {
-    //     id: 15,
-    //     groupName: 'ThietKeCoDien',
-    //     groupDesc: 'Thiết kế cơ điện',
-    //     customers: []
-    //   },
-    //   {
-    //     id: 16,
-    //     groupName: 'Khac',
-    //     groupDesc: 'Khác',
-    //     customers: []
-    //   }
-    // ];
+
+    this.packageService.getInforPackageID(this.packageId).subscribe(result => {
+      this.package = result;
+
+    }, err => {
+    });
   }
 
   ngOnDestroy(): void {
@@ -117,6 +63,12 @@ export class SummaryConditionFormComponent implements OnInit, OnDestroy {
       this.showPopupConfirm = false;
     }
   }
+
+  cancel() {
+
+  }
+
+  refresh() { }
 
 
 }

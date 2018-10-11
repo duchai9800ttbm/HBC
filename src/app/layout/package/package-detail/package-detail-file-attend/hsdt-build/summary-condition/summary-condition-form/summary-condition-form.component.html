@@ -13,16 +13,16 @@
     </div>
     <div>
         <div class="btn-toolbar mt-2 mb-2">
-            <button class="btn btn-primary ml-2" (click)="onSubmit(true)">
+            <button class="btn btn-primary ml-1" (click)="onSubmit(true)">
                 Lưu nháp
             </button>
-            <button class="btn btn-primary ml-2" (click)="onSubmit(false)">
+            <button class="btn btn-primary ml-1" (click)="onSubmit(false)">
                 Lưu
             </button>
-            <button class="btn btn-secondary ml-2">
+            <button class="btn btn-secondary ml-1" (click)="cancel()">
                 Hủy
             </button>
-            <button class="btn btn-primary ml-2">
+            <button class="btn btn-primary ml-1" (click)="refresh()">
                 <i class="fa fa-refresh" aria-hidden="true"></i>
             </button>
         </div>
@@ -31,19 +31,6 @@
 </div>
 <div id="main-content">
     <div id="toggle-menu">
-
-        <!-- <div class="toggle-menu-item" routerLink="./info" routerLinkActive="active-link">I. Thông tin dự án</div>
-        <div class="toggle-menu-item" routerLink="./stackholder" routerLinkActive="active-link">II. Các bên liên quan</div>
-        <div class="toggle-menu-item" routerLink="./scope" routerLinkActive="active-link">III. Phạm vi công việc</div>
-        <div class="toggle-menu-item" routerLink="./nonminate" routerLinkActive="active-link">IV. Nhà thầu phụ được chỉ định</div>
-        <div class="toggle-menu-item" routerLink="./main-material" routerLinkActive="active-link">V. Vật tư do CĐT cung cấp/ chỉ định</div>
-        <div class="toggle-menu-item" routerLink="./tender-submission" routerLinkActive="active-link">VI. Hồ sơ phải nộp đáng lưu ý</div>
-        <div class="toggle-menu-item">Diễn giải chi tiết hồ sơ</div>
-        <div class="toggle-menu-item" routerLink="./profile-destination" routerLinkActive="active-link"><i class="fa fa-caret-right mr-3" aria-hidden="true"></i> VII. Yêu cầu hồ sơ</div>
-        <div class="toggle-menu-item" routerLink="./tender-clarify" routerLinkActive="active-link"><i class="fa fa-caret-right mr-3" aria-hidden="true"></i> VIII. Yêu cầu làm rõ HSMT</div>
-        <div class="toggle-menu-item" routerLink="./condition-contract" routerLinkActive="active-link"><i class="fa fa-caret-right mr-3" aria-hidden="true"></i> IX. Điều kiện hợp đồng</div>
-        <div class="toggle-menu-item" routerLink="./condition-tender" routerLinkActive="active-link"><i class="fa fa-caret-right mr-3" aria-hidden="true"></i> X. Điều kiện HSMT</div>
-        <div class="toggle-menu-item" routerLink="./special-requirement" routerLinkActive="active-link">XI. Yêu cầu đặc biệt khác</div> -->
 
         <div class="toggle-menu-item pointer" routerLink="./info" routerLinkActive="active-link">I. Thông tin dự án</div>
         <div class="toggle-menu-item pointer" routerLink="./stackholder" routerLinkActive="active-link">II. Các bên
@@ -73,11 +60,11 @@
         <div>
             <div class="row header m-0">
                 <div class="col-md-6">
-                    <p>Công trình (Project):</p>
-                    <p>Địa điểm (Location):</p>
+                    <p>Công trình (Project): {{package?.projectName}}</p>
+                    <p>Địa điểm (Location): {{package?.place}}</p>
                 </div>
                 <div class="col-md-6">
-                    <p>Gói thầu (Package):</p>
+                    <p>Gói thầu (Package): {{package?.opportunityName}}</p>
                 </div>
             </div>
         </div>

@@ -505,7 +505,7 @@ export class HoSoDuThauService {
       if (!res.result) {
         return null;
       }
-      this.toTenderConditionalSummary(res.result, bidOpportunityId);
+      return this.toTenderConditionalSummary(res.result, bidOpportunityId);
     });
   }
 
