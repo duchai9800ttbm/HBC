@@ -24,7 +24,7 @@ import DateTimeConvertHelper from '../../../../../../shared/helpers/datetime-con
   templateUrl: './create-interview.component.html',
   styleUrls: ['./create-interview.component.scss']
 })
-export class CreateInterviewComponent implements OnInit , OnDestroy{
+export class CreateInterviewComponent implements OnInit , OnDestroy {
   currentPackageId: number;
   dialog;
   // searchTerm$ = new BehaviorSubject<string>('');

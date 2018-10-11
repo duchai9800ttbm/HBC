@@ -1,7 +1,7 @@
-import { Component, OnInit, OnChanges } from '@angular/core';
+import { Component, OnInit, OnChanges, OnDestroy } from '@angular/core';
 import { DATATABLE_CONFIG, DATATABLE_CONFIG2 } from '../../../../../../shared/configs';
 // tslint:disable-next-line:import-blacklist
-import { Subject, BehaviorSubject } from 'rxjs';
+import { Subject, BehaviorSubject, Subscription } from 'rxjs';
 import { DATETIME_PICKER_CONFIG } from '../../../../../../shared/configs/datepicker.config';
 import { PackageDetailComponent } from '../../../package-detail.component';
 import { HoSoDuThauService } from '../../../../../../shared/services/ho-so-du-thau.service';
@@ -18,7 +18,7 @@ import { UploadFileHsdtComponent } from '../upload-file-hsdt/upload-file-hsdt.co
   templateUrl: './upload-form.component.html',
   styleUrls: ['./upload-form.component.scss']
 })
-export class UploadFormComponent implements OnInit {
+export class UploadFormComponent implements OnInit, OnDestroy {
   dtTrigger: Subject<any> = new Subject();
   datePickerConfig = DATETIME_PICKER_CONFIG;
   dtOptions: any = DATATABLE_CONFIG;
@@ -39,6 +39,7 @@ export class UploadFormComponent implements OnInit {
   dataDocumentOfType;
   danhSachUser;
   isTypeChildDoc = false;
+  subscription: Subscription;
   constructor(
     private hoSoDuThauService: HoSoDuThauService,
     private dialogService: DialogService,
@@ -53,7 +54,7 @@ export class UploadFormComponent implements OnInit {
     this.getDataDocumentOfType();
     this.filterModel.status = '';
     this.filterModel.uploadedEmployeeId = '';
-    this.hoSoDuThauService.watchChangingRouter().subscribe(data => {
+    this.subscription = this.hoSoDuThauService.watchChangingRouter().subscribe(data => {
       this.getDanhSachUser();
       this.getDanhSachLoaiHoSo();
       this.getDataDocumentOfType();
@@ -61,6 +62,11 @@ export class UploadFormComponent implements OnInit {
       this.filterModel.uploadedEmployeeId = '';
     });
   }
+  ngOnDestroy() {
+    this.subscription.unsubscribe();
+  }
+
+
   showDialogUploadFile(i) {
     this.dialog = this.dialogService.open({
       content: UploadFileHsdtComponent,
