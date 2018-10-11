@@ -1,4 +1,5 @@
-<div class="outer" id="outer" *ngIf="statusPackage === bidStatus.DaPhanHoiDenPHopDong">
+<div class="outer" id="outer" *ngIf="fasle">
+    <!-- statusPackage === bidStatus.DaPhanHoiDenPHopDong -->
     <div id="outer-img">
         <img src="assets/images/kykethd.png" alt="">
         <h5>Bạn đã hoàn tất ký kết hợp đồng</h5>
@@ -7,7 +8,8 @@
         </div>
     </div>
 </div>
-<div class="outer" id="outer" *ngIf="statusPackage === bidStatus.DaKyKetHopDong">
+<div class="outer" id="outer" *ngIf="true">
+    <!-- statusPackage === bidStatus.DaKyKetHopDong -->
     <!-- <div class=" title-list-package d-flex flex-wrap align-items-center">
         <div class="mr-auto d-flex align-items-end list-package mt-2 mb-2">
             <div class="d-flex justify-content-start">
@@ -47,10 +49,10 @@
         </div>
         <div>
             <div class="mt-2 mb-2">
-                <button class="btn btn-primary ml-2">
+                <button class="btn btn-primary ml-2" (click)="downloadTemplateContractSigning()">
                     Tải Template
                 </button>
-                <button class="btn btn-primary ml-2">
+                <button class="btn btn-primary ml-2" (click)="uploadContractSigning()">
                     Upload file
                 </button>
                 <button class="btn btn-primary ml-2">
@@ -79,41 +81,27 @@
             <div class="d-flex form-inline flex-pad">
                 <div class="form-group py-2 pl-2">
                     <label for="" class="form-label">Ngày ký hợp đồng</label>
-                    <span class="custom-dropdown mx-sm-2">
-                        <select class="form-control">
-                            <option value="">Tất cả</option>
-                            <option value="Official">01-08-2018</option>
-                            <option value="Draft">02-08-2018</option>
-                        </select>
-                    </span>
+                    <kendo-datepicker class="mx-sm-2" [(ngModel)]="filterModel.uploadedDate"></kendo-datepicker>
                 </div>
                 <div class="form-group py-2 pl-2">
                     <label for="" class="form-label">Người upload</label>
                     <span class="custom-dropdown mx-sm-2">
-                        <select class="form-control">
-                            <option value="">--Lựa chọn--</option>
-                            <option value="Official">Olive Dinh</option>
-                            <option value="Draft">Van Dinh</option>
+                        <select class="form-control" [(ngModel)]="filterModel.uploadedByEmployeeId">
+                            <option [ngValue]="null">--Lựa chọn--</option>
+                            <!-- <option *ngFor="let item of numberOfInterviews">{{item}}</option> -->
                         </select>
                     </span>
                 </div>
                 <div class="form-group py-2 pl-2">
                     <label for="" class="form-label">Ngày upload</label>
-                    <span class="custom-dropdown mx-sm-2">
-                        <select class="form-control">
-                            <option value="">--Lựa chọn--</option>
-                            <option value="Official">01-08-2018</option>
-                            <option value="Draft">02-08-2018</option>
-                        </select>
-                    </span>
+                    <kendo-datepicker class="mx-sm-2" [(ngModel)]="filterModel.contractDate"></kendo-datepicker>
                 </div>
                 <div class="form-group py-2 pl-2">
                     <label for="" class="form-label">Lần phỏng vấn</label>
                     <span class="custom-dropdown mx-sm-2">
-                        <select class="form-control">
-                            <option value="">--Lựa chọn--</option>
-                            <option value="Official">1</option>
-                            <option value="Draft">2</option>
+                        <select class="form-control" [(ngModel)]="filterModel.interviewTime">
+                            <option [ngValue]="null">--Lựa chọn--</option>
+                            <!-- <option *ngFor="let item of numberOfInterviews">{{item}}</option> -->
                         </select>
                     </span>
                 </div>
@@ -256,7 +244,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr *ngFor="let item of resultData; let i = index;">
+                    <tr *ngFor="let item of pagedResult.items; let i = index;">
                         <td class="set-stt--width">
                             <div class="d-flex justify-content-around">
                                 <div class="w-40">
@@ -273,13 +261,13 @@
                                 </div>
                             </div>
                         </td>
-                        <td class="documentName">{{item.documentName}}</td>
+                        <td class="documentName">{{item.name}}</td>
                         <td class="text-center">{{item.version}}</td>
-                        <td class="text-center description">{{item.description}} </td>
-                        <td class="text-center employeeName">{{item.employeeName}}</td>
-                        <td class="text-center">{{item.createdDate}}</td>
-                        <td class="text-center">Ngày ký kết</td>
-                        <td class="text-center">{{item.interview}}</td>
+                        <td class="description">{{item.desc}} </td>
+                        <td class="text-center employeeName">{{item.uploadByEmployee?.employeeName}}</td>
+                        <td class="text-center">{{item.uploadDate*1000 | date:'dd/MM/yyyy HH:mm':'+0000'}}</td>
+                        <td class="text-center">{{item.contractDate*1000 | date:'dd/MM/yyyy HH:mm':'+0000'}}</td>
+                        <td class="text-center">{{item.interviewTime}}</td>
                         <td class="text-center">
                             <div class="d-flex justify-content-around">
                                 <div id="mr">
@@ -296,13 +284,13 @@
                                     <a title="In">
                                         <i class="fa fa-print color-item-print" aria-hidden="true"></i>
                                     </a>
-
                                 </div>
                             </div>
                         </td>
                     </tr>
                 </tbody>
             </table>
+            <div *ngIf="!pagedResult.items || pagedResult.items.length === 0" class="center-parent">Không có dữ liệu</div>
         </div>
     </div>
 </div>

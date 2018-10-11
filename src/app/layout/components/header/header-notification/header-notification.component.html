@@ -36,7 +36,7 @@
                             <div class="action" width="">
                                 <div>
                                     <img [src]="item.sendEmployee.employeeAvatar && item.sendEmployee.employeeAvatar.thumbSizeUrl ? item.sendEmployee.employeeAvatar.thumbSizeUrl : 'assets/images/no-avatar.png'"
-                                     class="avatar" alt="Avatar">
+                                        class="avatar" alt="Avatar">
                                 </div>
                             </div>
                         </div>
@@ -79,7 +79,8 @@
                                 <em>{{item.sendDate*1000 | date:'dd/MM/yyyy HH:mm':'+0000'}}</em>
                             </p>
                         </a>
-                        <a *ngIf="item === 'GuiDuyetTrinhDuyetGia'" class="dropdown-item py-2" (click)="read(item)" [class.notification--not-read]="item.notificationState?.id === 'UnRead'">
+
+                        <a *ngIf="item.notificationType === 'GuiDuyetTrinhDuyetGia'" class="w-100" (click)="read(item)" [class.notification--not-read]="item.notificationState?.id === 'UnRead'">
                             <strong>Gói thầu: {{item.bidOpportunityName}}</strong>
                             <div>
                                 <span class="last span--margin">Bạn vừa nhận được yêu cầu Duyệt Trình duyệt giá từ
@@ -92,6 +93,7 @@
                                 <em>{{item.sendDate*1000 | date:'dd/MM/yyyy HH:mm':'+0000'}}</em>
                             </p>
                         </a>
+
                         <a *ngIf="item.notificationType === 'GuiLaiTrinhDuyetGia'" class="dropdown-item py-2" (click)="read(item)" [class.notification--not-read]="item.notificationState?.id === 'UnRead'">
                             <strong>Gói thầu: {{item.bidOpportunityName}}</strong>
                             <div>

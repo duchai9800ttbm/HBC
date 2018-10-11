@@ -17,6 +17,7 @@ import { DocumentResultList } from '../../../../../../shared/models/result-atten
 import { NotificationContractComponent } from './notification-contract/notification-contract.component';
 import { SendEmailModel } from '../../../../../../shared/models/send-email-model';
 import { EmailService } from '../../../../../../shared/services/email.service';
+import { BidStatus } from '../../../../../../shared/constants/bid-status';
 @Component({
   selector: 'app-package-list',
   templateUrl: './package-list.component.html',
@@ -52,6 +53,9 @@ export class PackageListComponent implements OnInit {
   listEmailSearchTo;
   listEmailSearchCc;
   listEmailSearchBcc;
+  actionSendEmail = 'ContractRoom';
+  statusPackage;
+  bidStatus = BidStatus;
   @Output() active: EventEmitter<any> = new EventEmitter<any>();
   resultData: any = [
     { id: 1, bidReviewDocumentName: 'Tài liệu cung cấp vật tư', bidReviewDocumentVersion: 1, bidReviewDocumentStatus: 'Danh sách tài liệu cung cấp vật tư', employeeName: 'Oliver Dinh', bidReviewDocumentUploadDate: '01/01/2018 ,09:00', interview: 1 },
@@ -95,6 +99,9 @@ export class PackageListComponent implements OnInit {
       this.listEmailSearchCc = response;
       this.listEmailSearchBcc = response;
     });
+    this.packageService.getInforPackageID(this.currentPackageId).subscribe(result => {
+      this.statusPackage = result.stageStatus.id;
+    });
     this.refesh(false);
     this.detailResultPackageService.watchListFileResult().subscribe(response => {
       this.refesh(false);
@@ -112,22 +119,9 @@ export class PackageListComponent implements OnInit {
     this.isSendCc = false;
     this.isSendBcc = false;
     this.textTrungThau = 'Trúng thầu';
-    this.textNotification = 'Thông báo cho phòng hợp đồng';
-    this.textTitleSendMail = 'Gửi thư phản hồi đến phòng hợp đồng';
   }
-  // notificationForContract() {
-  //   this.dialogNotificationContract = this.dialogService.open({
-  //     content: NotificationContractComponent,
-  //     width: 1000,
-  //     minWidth: 250
-  //   });
-  //   const instance = this.dialogNotificationContract.content.instance;
-  //   instance.callBack = () => this.closePopuupNotification();
-  // }
-  // closePopuupNotification() {
-  //   this.dialogNotificationContract.close();
-  // }
-  openModalNotification(template: TemplateRef<any>) {
+  openModalNotification(template: TemplateRef<any>, actionSendEmail: string) {
+    this.actionSendEmail = actionSendEmail;
     this.modalRef = this.modalService.show(
       template,
       Object.assign({}, { class: 'gray modal-lg-max' })
@@ -360,16 +354,39 @@ export class PackageListComponent implements OnInit {
     if (this.emailModel && this.emailModel.to) {
       this.emailModel.bidOpportunityId = this.currentPackageId;
       this.spinner.show();
-      this.emailService.sendEmailDeployment(this.emailModel, this.file).subscribe(result => {
-        this.alertService.success('Gửi phản hồi đến phòng hợp đồng thành công!');
-        this.modalRef.hide();
-        this.spinner.hide();
-      },
-        err => {
-          this.alertService.error('Đã xảy ra lỗi. Gửi phản hồi đến phòng hợp đồng không thành công!');
-          this.modalRef.hide();
-          this.spinner.hide();
-        });
+      switch (this.actionSendEmail) {
+        case ('ContractRoom'): {
+          this.detailResultPackageService.sendFeedbackToContractRoom(this.emailModel, this.file).subscribe(result => {
+            this.emailModel = new SendEmailModel();
+            this.file = [];
+            this.alertService.success('Gửi phản hồi đến phòng hợp đồng thành công!');
+            this.modalRef.hide();
+            this.spinner.hide();
+          },
+            err => {
+              this.alertService.error('Đã xảy ra lỗi. Gửi phản hồi đến phòng hợp đồng không thành công!');
+              this.modalRef.hide();
+              this.spinner.hide();
+            });
+          break;
+        }
+        case ('Stakeholders'): {
+          this.detailResultPackageService.sendFeedbackToStakeholders(this.emailModel, this.file).subscribe(result => {
+            this.emailModel = new SendEmailModel();
+            this.file = [];
+            this.alertService.success('Gửi phản hồi đến phòng hợp đồng thành công!');
+            this.modalRef.hide();
+            this.spinner.hide();
+          },
+            err => {
+              this.alertService.error('Đã xảy ra lỗi. Gửi phản hồi đến phòng hợp đồng không thành công!');
+              this.modalRef.hide();
+              this.spinner.hide();
+            });
+          break;
+        }
+      }
+
     }
   }
 }

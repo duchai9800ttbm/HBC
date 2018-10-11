@@ -137,6 +137,21 @@ export class DetailResultPackageService {
     dataObj.append('Content', data.content);
     return this.apiService.postFile(url, dataObj);
   }
+  // Gửi thư thông báo cho các bên liên quan
+  sendFeedbackToStakeholders(data: SendEmailModel, file: File[]) {
+    const url = `bidopportunity/kqdt/sendfeedbacktocontractroom`;
+    const dataObj = new FormData();
+    dataObj.append('BidOpportunityId', data.bidOpportunityId + '');
+    dataObj.append('Subject', data.subject ? data.subject : '');
+    data.recipientEmails.forEach((item, index) => {
+      dataObj.append('RecipientEmails[' + index + ']', item);
+    });
+    file.forEach(item => {
+      dataObj.append('AttachmentFiles', item);
+    });
+    dataObj.append('Content', data.content);
+    return this.apiService.postFile(url, dataObj);
+  }
   // =============================
   // Bước 2, hợp đồng ký kết
   // Tải lên hợp đồng ký kết
@@ -229,7 +244,7 @@ export class DetailResultPackageService {
     page: number | string,
     pageSize: number | string
   ): Observable<PagedResult<ContractSigningList>> {
-    const filterUrl = `bidopportunity/${bidOpportunityId}/bidinterviewinvitations/filter/${page}/${pageSize}`;
+    const filterUrl = `bidopportunity/${bidOpportunityId}/bidcontractdocument/filter/${page}/${pageSize}`;
     const urlParams = this.createFilterContractSigning(filter);
     urlParams.append('searchTerm', searchTerm);
     return this.apiService.get(filterUrl, urlParams).map(response => {
@@ -243,6 +258,17 @@ export class DetailResultPackageService {
           this.toContractSigningList
         )
       };
+    });
+  }
+  // Tải template hợp đồng kí kết
+  downloadTemplateContractSigning() {
+    const url = `bidcontractdocument/template/download`;
+    return this.apiService.getFile(url).map(response => {
+      return FileSaver.saveAs(
+        new Blob([response.file], {
+          type: `${response.file.type}`,
+        }), response.fileName
+      );
     });
   }
 }

@@ -202,28 +202,13 @@ table.dataTable th {
       }
 }
 @media only screen and (max-width: 1600px) {
-  
-    .custom-filter-bar{
-        zoom: 0.9;
-    }
   }
   
   @media only screen and (max-width: 1400px) {
-    
-      .custom-filter-bar{
-          zoom: 0.8;
-      }
   }
   
   
   @media only screen and (max-width: 1366px) {
-  
-    .custom-filter-bar{
-        zoom: 0.7;
-    }
-    .status-filter{
-        zoom: 0.9 !important;
-    }
     #mr {
         margin-right: 10px;
     } 
@@ -236,12 +221,6 @@ table.dataTable th {
   }
   
   @media only screen and (max-width: 1200px) {
-    .custom-filter-bar{
-        zoom: 0.85;
-    }
-    .status-filter{
-    zoom: 0.9 !important;
-    }
     #mr {
         margin-right: 10px;
     } 
@@ -254,29 +233,9 @@ table.dataTable th {
   }
   
   @media only screen and (max-width: 1150px) {
-      table.dataTable{
-          zoom: 0.72;
-      }
-   
-      .status-filter{
-          zoom: 0.85;
-      }
-      .custom-filter-bar{
-          zoom: 0.5;
-      }
   }
   
   @media only screen and (max-width: 1024px) {
-      .btn-toolbar {
-          zoom: 0.85;
-      }
-  
-      .status-filter{
-          zoom: 0.8 !important;
-      }
-      .custom-filter-bar{
-          zoom: 0.6!important;
-      }
       #mr {
         margin-right: 10px;
     } 
@@ -289,25 +248,9 @@ table.dataTable th {
   }
   
   @media only screen and (max-width: 1010px) {
-  
-      .status-filter{
-          zoom: 0.65;
-      }
-      .custom-filter-bar{
-          zoom: 0.5;
-      }
   }
   
   @media only screen and (max-width: 997px) {
-  
-      .status-filter{
-  
-          
-          zoom: 0.45;
-      }
-      .custom-filter-bar{
-          zoom: 0.6;
-      }
   }
 .icon-sort{
     width: 15px;
