@@ -54,8 +54,7 @@ export class SummaryConditionFormComponent implements OnInit, OnDestroy {
     if (!event) {
       this.showPopupConfirm = false;
     } else {
-      const dataLiveform = HoSoDuThauService.tempDataLiveFormDKDT.value;
-      this.hoSoDuThauService.createOrUpdateLiveFormTomTat(dataLiveform).subscribe(res => {
+      this.hoSoDuThauService.createOrUpdateLiveFormTomTat().subscribe(res => {
         this.alertService.success(`LiveForm đã được cập nhật!`);
       }, err => {
         this.alertService.error(`Đã có lỗi xảy ra. Cập nhật không thành công!`);

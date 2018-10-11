@@ -35,7 +35,7 @@ export class SummaryConditionFormConditionContractComponent implements OnInit {
     ngOnInit() {
         this.loadData();
         this.createForm();
-   
+        this.conditionContractForm.valueChanges.subscribe(data => this.hoSoDuThauService.emitDataStepConditionContract(data));
     }
 
     loadData() {
@@ -436,7 +436,73 @@ export class SummaryConditionFormConditionContractComponent implements OnInit {
 
 
         this.conditionContractForm.valueChanges.subscribe(data => {
-            console.log(data);
+            let objData = new DienGiaiDieuKienHopDong();
+            objData = {
+                loaiHopDong: data.loaiHopDong && {
+                    name: data.loaiHopDong.name,
+                    desc: data.loaiHopDong.desc
+                },
+                dieuKienTheoHSMT: data.dieuKienTheoHSMT && {
+                    baoLanhThucHien: data.dieuKienTheoHSMT.baoLanhThucHien && {
+                        phanTram: data.dieuKienTheoHSMT.baoLanhThucHien.phanTram,
+                        hieuLuc: data.dieuKienTheoHSMT.baoLanhThucHien.hieuLuc
+                    },
+                    baoLanhTamUng: data.dieuKienTheoHSMT.baoLanhTamUng && {
+                        phanTram: data.dieuKienTheoHSMT.baoLanhTamUng.phanTram,
+                        hieuLuc: data.dieuKienTheoHSMT.baoLanhTamUng.hieuLuc
+                    },
+                    thanhToan: data.dieuKienTheoHSMT.thanhToan && {
+                        loaiThanhToan: data.dieuKienTheoHSMT.thanhToan.loaiThanhToan,
+                        thoiGianThanhToan: data.dieuKienTheoHSMT.thanhToan.thoiGianThanhToan,
+                        thanhToanKhiTapKet: data.dieuKienTheoHSMT.thanhToan.thanhToanKhiTapKet
+                    },
+                    tienGiuLai: data.dieuKienTheoHSMT.tienGiuLai && {
+                        phanTram: data.dieuKienTheoHSMT.tienGiuLai.phanTram,
+                        gioiHanTienGiuLai: data.dieuKienTheoHSMT.tienGiuLai.gioiHanTienGiuLai,
+                        thanhToanTienGui: data.dieuKienTheoHSMT.tienGiuLai.thanhToanTienGui
+                    },
+                    phatTreTienDo: data.dieuKienTheoHSMT.phatTreTienDo && {
+                        phanTram: data.dieuKienTheoHSMT.phatTreTienDo.phanTram,
+                        gioiHanPhatTienDo: data.dieuKienTheoHSMT.phatTreTienDo.gioiHanPhatTienDo
+                    },
+                    thoiGianBaoHanh: data.dieuKienTheoHSMT.thoiGianBaoHanh,
+                    baoHiem: data.dieuKienTheoHSMT.baoHiem && {
+                        baoHiemMayMoc: data.dieuKienTheoHSMT.baoHiem.baoHiemMayMoc,
+                        baoHiemConNguoi: data.dieuKienTheoHSMT.baoHiem.baoHiemConNguoi,
+                        baoHiemCongTrinh: data.dieuKienTheoHSMT.baoHiem.baoHiemCongTrinh
+                    }
+                },
+                dieuKienTheoHBC: data.dieuKienTheoHBC && {
+                    baoLanhThucHien: data.dieuKienTheoHBC.baoLanhThucHien && {
+                        phanTram: data.dieuKienTheoHBC.baoLanhThucHien.phanTram,
+                        hieuLuc: data.dieuKienTheoHBC.baoLanhThucHien.hieuLuc
+                    },
+                    baoLanhTamUng: data.dieuKienTheoHBC.baoLanhTamUng && {
+                        phanTram: data.dieuKienTheoHBC.baoLanhTamUng.phanTram,
+                        hieuLuc: data.dieuKienTheoHBC.baoLanhTamUng.hieuLuc
+                    },
+                    thanhToan: data.dieuKienTheoHBC.thanhToan && {
+                        loaiThanhToan: data.dieuKienTheoHBC.thanhToan.loaiThanhToan,
+                        thoiGianThanhToan: data.dieuKienTheoHBC.thanhToan.thoiGianThanhToan,
+                        thanhToanKhiTapKet: data.dieuKienTheoHBC.thanhToan.thanhToanKhiTapKet
+                    },
+                    tienGiuLai: data.dieuKienTheoHBC.tienGiuLai && {
+                        phanTram: data.dieuKienTheoHBC.tienGiuLai.phanTram,
+                        gioiHanTienGiuLai: data.dieuKienTheoHBC.tienGiuLai.gioiHanTienGiuLai,
+                        thanhToanTienGui: data.dieuKienTheoHBC.tienGiuLai.thanhToanTienGui
+                    },
+                    phatTreTienDo: data.dieuKienTheoHBC.phatTreTienDo && {
+                        phanTram: data.dieuKienTheoHBC.phatTreTienDo.phanTram,
+                        gioiHanPhatTienDo: data.dieuKienTheoHBC.phatTreTienDo.gioiHanPhatTienDo
+                    },
+                    thoiGianBaoHanh: data.dieuKienTheoHBC.thoiGianBaoHanh,
+                    baoHiem: data.dieuKienTheoHBC.baoHiem && {
+                        baoHiemMayMoc: data.dieuKienTheoHBC.baoHiem.baoHiemMayMoc,
+                        baoHiemConNguoi: data.dieuKienTheoHBC.baoHiem.baoHiemConNguoi,
+                        baoHiemCongTrinh: data.dieuKienTheoHBC.baoHiem.baoHiemCongTrinh
+                    }
+                }
+            };
         });
 
     }

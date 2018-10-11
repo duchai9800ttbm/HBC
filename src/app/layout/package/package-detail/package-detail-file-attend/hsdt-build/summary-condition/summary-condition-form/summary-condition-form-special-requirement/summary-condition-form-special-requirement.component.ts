@@ -47,7 +47,6 @@ export class SummaryConditionFormSpecialRequirementComponent implements OnInit {
         profitValue: data.descThree,
         profitDesc: data.linkThree
       };
-      console.log(obj);
       this.hoSoDuThauService.emitDataStepSpecial(obj);
     });
   }

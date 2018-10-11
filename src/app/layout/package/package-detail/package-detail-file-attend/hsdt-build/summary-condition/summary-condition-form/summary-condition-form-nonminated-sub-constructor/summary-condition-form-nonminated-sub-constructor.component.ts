@@ -46,7 +46,7 @@ export class SummaryConditionFormNonminatedSubConstructorComponent implements On
     this.nonminateForm.valueChanges.subscribe(data => {
       let obj = new Array<DanhSachNhaThau>();
       obj = data.packageWork.map(x => ({
-        tenCongViec: x.tenCongViec,
+        tenGoiCongViec: x.tenGoiCongViec,
         ghiChuThem: x.ghiChuThem,
         thanhTien: x.thanhTien
       }));

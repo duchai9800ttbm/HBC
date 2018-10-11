@@ -251,8 +251,9 @@ export class HoSoDuThauService {
     HoSoDuThauService.tempDataLiveFormDKDT.value.isChangeFormCacBenLienQuan = isChangeForm;
   }
   // gọi API create or update liveform tóm tắt đkdt
-  createOrUpdateLiveFormTomTat(obj: DuLieuLiveFormDKDT): Observable<any> {
+  createOrUpdateLiveFormTomTat(): Observable<any> {
     const url = `tenderconditionalsummary/createorupdate`;
+    const obj = HoSoDuThauService.tempDataLiveFormDKDT.value;
     const infoReport = {
       bidOpportunityId: obj.bidOpportunityId,
       createdEmployeeId: (obj) ? obj.createdEmployeeId : this.employeeId,
@@ -296,7 +297,7 @@ export class HoSoDuThauService {
       requestDocument: obj.dienGiaiYeuCauHoSo && {
         destination: obj.dienGiaiYeuCauHoSo.noiNop,
         receivedPerson: obj.dienGiaiYeuCauHoSo.nguoiNhan,
-        closingTime: obj.dienGiaiYeuCauHoSo.hanNop
+        closingTime: obj.dienGiaiYeuCauHoSo.hanNop ? obj.dienGiaiYeuCauHoSo.hanNop : 0
       },
       requestTenderClarification: obj.dienGiaiYeuCauLamRo && {
         consultant: obj.dienGiaiYeuCauLamRo.nhaTuVan && {
@@ -364,7 +365,7 @@ export class HoSoDuThauService {
 
           retainedLimit:
             (obj.dienGiaiDieuKienHopDong.dieuKienTheoHSMT.tienGiuLai) ?
-              obj.dienGiaiDieuKienHopDong.dieuKienTheoHSMT.tienGiuLai.gioiHanTienGiuLai : '',
+              obj.dienGiaiDieuKienHopDong.dieuKienTheoHSMT.tienGiuLai.gioiHanTienGiuLai : 0,
 
           retainedPayment:
             (obj.dienGiaiDieuKienHopDong.dieuKienTheoHSMT.tienGiuLai) ?
@@ -389,13 +390,13 @@ export class HoSoDuThauService {
         hbcContractCondition: obj.dienGiaiDieuKienHopDong.dieuKienTheoHBC && {
           executiveGuaranteePercent:
             (obj.dienGiaiDieuKienHopDong.dieuKienTheoHBC.baoLanhThucHien) ?
-              obj.dienGiaiDieuKienHopDong.dieuKienTheoHBC.baoLanhThucHien.phanTram : '',
+              +obj.dienGiaiDieuKienHopDong.dieuKienTheoHBC.baoLanhThucHien.phanTram : 0,
           executiveGuaranteeEfficiency:
             (obj.dienGiaiDieuKienHopDong.dieuKienTheoHBC.baoLanhThucHien) ?
               obj.dienGiaiDieuKienHopDong.dieuKienTheoHBC.baoLanhThucHien.hieuLuc : '',
           advanceGuaranteePercent:
             (obj.dienGiaiDieuKienHopDong.dieuKienTheoHBC.baoLanhTamUng) ?
-              obj.dienGiaiDieuKienHopDong.dieuKienTheoHBC.baoLanhTamUng.phanTram : '',
+              +obj.dienGiaiDieuKienHopDong.dieuKienTheoHBC.baoLanhTamUng.phanTram : 0,
           advanceGuaranteeEfficiency:
             (obj.dienGiaiDieuKienHopDong.dieuKienTheoHBC.baoLanhTamUng) ?
               obj.dienGiaiDieuKienHopDong.dieuKienTheoHBC.baoLanhTamUng.hieuLuc : '',
@@ -520,7 +521,7 @@ export class HoSoDuThauService {
       dataOut.isDraftVersion = model.isDraftVersion;
       dataOut.thongTinDuAn = model.projectInformation && {
         tenTaiLieu: model.documentName,
-        lanPhongVan: model.projectInformation.interviewTimes,
+        lanPhongVan: (model.projectInformation.interviewTimes) ? model.projectInformation.interviewTimes : 0,
         hinhAnhPhoiCanh: [],
         banVeMasterPlan: [],
         dienGiaiThongTinDuAn: model.projectInformation.projectInformation
@@ -587,28 +588,39 @@ export class HoSoDuThauService {
         },
         dieuKienTheoHSMT: model.contractCondition.hsmtContractCondition && {
           baoLanhThucHien: model.contractCondition.hsmtContractCondition && {
-            phanTram: model.contractCondition.hsmtContractCondition.executiveGuaranteePercent,
-            hieuLuc: model.contractCondition.hsmtContractCondition.executiveGuaranteeEfficiency
+            phanTram: (model.contractCondition.hsmtContractCondition.executiveGuaranteePercent) ?
+              model.contractCondition.hsmtContractCondition.executiveGuaranteePercent : 0,
+            hieuLuc: (model.contractCondition.hsmtContractCondition.executiveGuaranteeEfficiency) ?
+              model.contractCondition.hsmtContractCondition.executiveGuaranteeEfficiency : 0
           },
           baoLanhTamUng: model.contractCondition.hsmtContractCondition && {
-            phanTram: model.contractCondition.hsmtContractCondition.advanceGuaranteePercent,
-            hieuLuc: model.contractCondition.hsmtContractCondition.advanceGuaranteeEfficiency
+            phanTram: (model.contractCondition.hsmtContractCondition.advanceGuaranteePercent) ?
+              model.contractCondition.hsmtContractCondition.advanceGuaranteePercent : 0,
+            hieuLuc: (model.contractCondition.hsmtContractCondition.advanceGuaranteeEfficiency) ?
+              model.contractCondition.hsmtContractCondition.advanceGuaranteeEfficiency : 0
           },
           thanhToan: model.contractCondition.hsmtContractCondition && {
             loaiThanhToan: model.contractCondition.hsmtContractCondition.paymentType,
-            thoiGianThanhToan: model.contractCondition.hsmtContractCondition.paymentTime,
+            thoiGianThanhToan: (model.contractCondition.hsmtContractCondition.paymentTime) ?
+              model.contractCondition.hsmtContractCondition.paymentTime : 0,
             thanhToanKhiTapKet: model.contractCondition.hsmtContractCondition.paymentMaterialOnSite
           },
           tienGiuLai: model.contractCondition.hsmtContractCondition && {
-            phanTram: model.contractCondition.hsmtContractCondition.retainedPercent,
-            gioiHanTienGiuLai: model.contractCondition.hsmtContractCondition.retainedLimit,
-            thanhToanTienGui: model.contractCondition.hsmtContractCondition.retainedPayment
+            phanTram: (model.contractCondition.hsmtContractCondition.retainedPercent) ?
+              model.contractCondition.hsmtContractCondition.retainedPercent : 0,
+            gioiHanTienGiuLai: (model.contractCondition.hsmtContractCondition.retainedLimit) ?
+              model.contractCondition.hsmtContractCondition.retainedLimit : 0,
+            thanhToanTienGui: (model.contractCondition.hsmtContractCondition.retainedPayment) ?
+              model.contractCondition.hsmtContractCondition.retainedPayment : 0
           },
           phatTreTienDo: model.contractCondition.hsmtContractCondition && {
-            phanTram: model.contractCondition.hsmtContractCondition.punishhOverduePercent,
-            gioiHanPhatTienDo: model.contractCondition.hsmtContractCondition.punishhOverdueLimit
+            phanTram: (model.contractCondition.hsmtContractCondition.punishhOverduePercent) ?
+              model.contractCondition.hsmtContractCondition.punishhOverduePercent : 0,
+            gioiHanPhatTienDo: (model.contractCondition.hsmtContractCondition.punishhOverdueLimit) ?
+              model.contractCondition.hsmtContractCondition.punishhOverdueLimit : 0
           },
-          thoiGianBaoHanh: model.contractCondition.hsmtContractCondition.guaranteeDuration,
+          thoiGianBaoHanh: (model.contractCondition.hsmtContractCondition.guaranteeDuration) ?
+            model.contractCondition.hsmtContractCondition.guaranteeDuration : 0,
           baoHiem: model.contractCondition.hsmtContractCondition && {
             baoHiemMayMoc: [...model.contractCondition.hsmtContractCondition.insurranceMachineOfContractor],
             baoHiemConNguoi: model.contractCondition.hsmtContractCondition.insurancePersonOfContractor,
@@ -617,8 +629,10 @@ export class HoSoDuThauService {
         },
         dieuKienTheoHBC: model.contractCondition.hbcContractCondition && {
           baoLanhThucHien: model.contractCondition.hbcContractCondition && {
-            phanTram: model.contractCondition.hbcContractCondition.executiveGuaranteePercent,
-            hieuLuc: model.contractCondition.hbcContractCondition.executiveGuaranteeEfficiency
+            phanTram: (model.contractCondition.hbcContractCondition.executiveGuaranteePercent) ?
+              model.contractCondition.hbcContractCondition.executiveGuaranteePercent : 0,
+            hieuLuc: (model.contractCondition.hbcContractCondition.executiveGuaranteeEfficiency) ?
+              model.contractCondition.hbcContractCondition.executiveGuaranteeEfficiency : 0
           },
           baoLanhTamUng: model.contractCondition.hbcContractCondition && {
             phanTram: model.contractCondition.hbcContractCondition.advanceGuaranteePercent,
@@ -649,8 +663,10 @@ export class HoSoDuThauService {
       dataOut.dienGiaiDieuKienHSMT = model.tenderCondition && {
         theoHSMT: model.tenderCondition.hbcTenderCondition && {
           baoLanhDuThau: model.tenderCondition.hbcTenderCondition && {
-            giaTri: model.tenderCondition.hbcTenderCondition.tenderGuaranteeValue,
-            hieuLuc: model.tenderCondition.hbcTenderCondition.tenderGuaranteeEfficiency
+            giaTri: (model.tenderCondition.hbcTenderCondition.tenderGuaranteeValue) ?
+              model.tenderCondition.hbcTenderCondition.tenderGuaranteeValue : 0,
+            hieuLuc: (model.tenderCondition.hbcTenderCondition.tenderGuaranteeEfficiency) ?
+              model.tenderCondition.hbcTenderCondition.tenderGuaranteeEfficiency : 0
           },
           hieuLucHoSo: model.tenderCondition.hbcTenderCondition.tenderEfficiency,
           tienDo: model.tenderCondition.hbcTenderCondition && {
@@ -664,8 +680,10 @@ export class HoSoDuThauService {
         },
         theoHBC: model.tenderCondition.hsmtTenderCondition && {
           baoLanhDuThau: model.tenderCondition.hsmtTenderCondition && {
-            giaTri: model.tenderCondition.hsmtTenderCondition.tenderGuaranteeValue,
-            hieuLuc: model.tenderCondition.hsmtTenderCondition.tenderGuaranteeEfficiency
+            giaTri: (model.tenderCondition.hsmtTenderCondition.tenderGuaranteeValue) ?
+              model.tenderCondition.hsmtTenderCondition.tenderGuaranteeValue : 0,
+            hieuLuc: (model.tenderCondition.hsmtTenderCondition.tenderGuaranteeEfficiency) ?
+              model.tenderCondition.hsmtTenderCondition.tenderGuaranteeEfficiency : 0
           },
           hieuLucHoSo: model.tenderCondition.hsmtTenderCondition.tenderEfficiency,
           tienDo: model.tenderCondition.hsmtTenderCondition && {
