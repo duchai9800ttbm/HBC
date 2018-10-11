@@ -27,6 +27,7 @@ import { PackageInfoModel } from '../../../../../shared/models/package/package-i
 import { DISABLED } from '@angular/forms/src/model';
 import { UserItemModel } from '../../../../../shared/models/user/user-item.model';
 import CustomValidator from '../../../../../shared/helpers/custom-validator.helper';
+import { EvaluationModel } from '../../../../../shared/models/package/evaluation.model';
 @Component({
     selector: 'app-edit',
     templateUrl: './edit.component.html',
@@ -65,6 +66,7 @@ export class EditComponent implements OnInit {
     assignSearchResults: DictionaryItem[];
     customersSearchResults: any[];
     userListItem: UserItemModel[];
+    dataEvaluation: EvaluationModel[];
 
     constructor(
         private fb: FormBuilder,
@@ -78,6 +80,7 @@ export class EditComponent implements OnInit {
     ) { }
 
     ngOnInit() {
+        this.getDataEvaluation();
         this.userService.getAllUser('').subscribe(data => this.userListItem = data);
         this.packageId = +PackageDetailComponent.packageId;
         this.listZone = this.dataService.getListRegionTypes();
@@ -248,6 +251,11 @@ export class EditComponent implements OnInit {
 
     mapNewCustomer(obj) {
         this.packageForm.get('customerId').patchValue(obj);
+    }
+    getDataEvaluation() {
+        this.packageService.getEvaluationValue().subscribe(data => {
+            this.dataEvaluation = [...data];
+        });
     }
 
 }
