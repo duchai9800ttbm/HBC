@@ -40,7 +40,7 @@ export class EditComponent implements OnInit, OnDestroy {
   currentBidOpportunityId: number;
   packageData = new PackageInfoModel();
   listCustomerContact = new Array(new CustomerContact());
-  customer;
+  customer = null;
   listDepartments = new Array(new DepartmentList());
   department = {
     key: 49,
