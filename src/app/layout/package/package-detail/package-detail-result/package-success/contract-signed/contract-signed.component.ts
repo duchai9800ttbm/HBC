@@ -57,6 +57,8 @@ export class ContractSignedComponent implements OnInit, OnDestroy {
   isNgOnInit: boolean;
   uploadList;
   interviewTimeList;
+  currentFieldSort;
+  statusSort;
   constructor(
     private modalService: BsModalService,
     private formBuilder: FormBuilder,
@@ -272,6 +274,115 @@ export class ContractSignedComponent implements OnInit, OnDestroy {
                 this.alertService.error('Xóa tài liệu không thành công!');
               });
           });
+      }
+    }
+  }
+  downloadFileItem(bidContractDocumentId: number) {
+    this.detailResultPackageService.downloadContractSigning(bidContractDocumentId).subscribe(response => {
+    },
+      err => {
+        this.alertService.error('Tải về hợp đồng không thành công!');
+      });
+  }
+  deleteFileItem(bidContractDocumentId: number) {
+    this.confirmationService.confirm(
+      'Bạn có chắc chắn muốn xóa tài liệu được chọn?',
+      () => {
+        this.detailResultPackageService.deleteContractSigning(bidContractDocumentId).subscribe(response => {
+          this.filter(false);
+          this.alertService.success('Xóa tài liệu thành công!');
+        },
+          err => {
+            this.alertService.error('Xóa tài liệu không thành công!');
+          });
+      });
+  }
+  sortField(fieldSort: string, statusSort: string) {
+    this.currentFieldSort = fieldSort;
+    this.statusSort = statusSort;
+    switch (this.statusSort) {
+      case 'asc': {
+        switch (fieldSort) {
+          case 'name': {
+            this.pagedResult.items = this.pagedResult.items.sort((a, b) => {
+              return ('' + a.name).localeCompare(b.name);
+            });
+            this.render(this.pagedResult);
+            break;
+          }
+          case 'version': {
+            this.pagedResult.items = this.pagedResult.items.sort((a, b) => a.version - b.version);
+            this.render(this.pagedResult);
+            break;
+          }
+          case 'employeeName': {
+            this.pagedResult.items = this.pagedResult.items.sort((a, b) => {
+              return ('' + a.uploadByEmployee.employeeName).localeCompare(b.uploadByEmployee.employeeName);
+            });
+            this.render(this.pagedResult);
+            break;
+          }
+          case 'uploadDate': {
+            this.pagedResult.items = this.pagedResult.items.sort((a, b) => a.uploadDate - b.uploadDate);
+            this.render(this.pagedResult);
+            break;
+          }
+          case 'contractDate': {
+            this.pagedResult.items = this.pagedResult.items.sort((a, b) => a.contractDate - b.contractDate);
+            this.render(this.pagedResult);
+            break;
+          }
+          case 'uploadDate': {
+            this.pagedResult.items = this.pagedResult.items.sort((a, b) => a.uploadDate - b.uploadDate);
+            this.render(this.pagedResult);
+            break;
+          }
+        }
+        break;
+      }
+      case 'desc': {
+        switch (fieldSort) {
+          case 'name': {
+            this.pagedResult.items = this.pagedResult.items.sort((a, b) => {
+              return ('' + b.name).localeCompare(a.name);
+            });
+            this.render(this.pagedResult);
+            break;
+          }
+          case 'version': {
+            this.pagedResult.items = this.pagedResult.items.sort((a, b) => b.version - a.version);
+            this.render(this.pagedResult);
+            break;
+          }
+          case 'employeeName': {
+            this.pagedResult.items = this.pagedResult.items.sort((a, b) => {
+              return ('' + b.uploadByEmployee.employeeName).localeCompare(a.uploadByEmployee.employeeName);
+            });
+            this.render(this.pagedResult);
+            break;
+          }
+          case 'uploadDate': {
+            this.pagedResult.items = this.pagedResult.items.sort((a, b) => b.uploadDate - a.uploadDate);
+            this.render(this.pagedResult);
+            break;
+          }
+          case 'contractDate': {
+            this.pagedResult.items = this.pagedResult.items.sort((a, b) => b.contractDate - a.contractDate);
+            this.render(this.pagedResult);
+            break;
+          }
+          case 'interviewTimes': {
+            this.pagedResult.items = this.pagedResult.items.sort((a, b) => b.interviewTime - a.interviewTime);
+            this.render(this.pagedResult);
+            break;
+          }
+        }
+        break;
+      }
+      case '': {
+        this.pagedResult.items = this.pagedResult.items.sort((a, b) => a.id - b.id);
+        this.render(this.pagedResult);
+        break;
       }
     }
   }

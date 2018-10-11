@@ -285,4 +285,14 @@ export class DetailResultPackageService {
     return this.apiService.post(url, request);
   }
   // Tải về hợp đồng kí kết
+  downloadContractSigning(bidContractDocumentId: number) {
+    const url = `bidcontractdocument/${bidContractDocumentId}/download`;
+    return this.apiService.getFile(url).map(response => {
+      return FileSaver.saveAs(
+        new Blob([response.file], {
+          type: `${response.file.type}`,
+        }), response.fileName
+      );
+    });
+  }
 }

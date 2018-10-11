@@ -214,12 +214,12 @@
                                     <div>Ngày ký kết hợp đồng</div>
                                 </div>
                                 <div class="center-parent ml-2">
-                                    <img *ngIf="currentFieldSort !== 'interviewTimes' ||  (currentFieldSort === 'interviewTimes' && statusSort === '')" class="icon-sort"
-                                        src="assets/images/sort.svg" (click)="sortField('interviewTimes', 'asc')">
-                                    <!-- <img *ngIf="currentFieldSort === 'interviewTimes' && statusSort === 'asc'" class="icon-sort-down-up" src="assets/images/sort-down.svg"
-                                        (click)="sortField('interviewTimes', 'desc')">
-                                    <img *ngIf="currentFieldSort === 'interviewTimes' && statusSort === 'desc'" class="icon-sort-down-up" src="assets/images/sort-up.svg"
-                                        (click)="sortField('interviewTimes', '')"> -->
+                                    <img *ngIf="currentFieldSort !== 'contractDate' ||  (currentFieldSort === 'contractDate' && statusSort === '')" class="icon-sort"
+                                        src="assets/images/sort.svg" (click)="sortField('contractDate', 'asc')">
+                                    <img *ngIf="currentFieldSort === 'contractDate' && statusSort === 'asc'" class="icon-sort-down-up" src="assets/images/sort-down.svg"
+                                        (click)="sortField('contractDate', 'desc')">
+                                    <img *ngIf="currentFieldSort === 'contractDate' && statusSort === 'desc'" class="icon-sort-down-up" src="assets/images/sort-up.svg"
+                                        (click)="sortField('contractDate', '')">
                                 </div>
                             </div>
                         </th>
@@ -276,7 +276,7 @@
                                     </a>
                                 </div>
                                 <div id="mr">
-                                    <a title="Xóa file">
+                                    <a title="Xóa file" (click)="deleteFileItem(item.id)">
                                         <i class="fa fa-trash-o" aria-hidden="true"></i>
                                     </a>
                                 </div>
