@@ -13,14 +13,14 @@
             </div>
             <div>
                 <div class="btn-toolbar mt-2 mb-2">
-                    <div>
+                    <div class="d-flex">
                         <button class="btn btn-primary" (click)="taiTemplateHSDT()">
                             Tải Template
                         </button>
-                        <button class="btn btn-primary fix-margin-left" [ngClass]="{'d-none': hideActionSiteReport}">
+                        <button class="btn btn-primary ml-1" [ngClass]="{'d-none': hideActionSiteReport}">
                             Tải xuống tài liệu
                         </button>
-                        <button class="btn btn-primary" (click)="chotHSDT($event)" [ngClass]="{'d-none': hideActionSiteReport}">
+                        <button class="btn btn-primary ml-1" (click)="chotHSDT($event)" [ngClass]="{'d-none': hideActionSiteReport}">
                             Chốt HSDT
                         </button>
                     </div>
