@@ -58,22 +58,27 @@ export class CreateInterviewComponent implements OnInit , OnDestroy {
     this.stattusCurrentList = ['create', 'prepare', 'end'];
     this.filter();
     this.getSatusPackage();
-    this.statusObservableHsdtService.statusPackageService.subscribe(value => {
+    this.subscription = this.statusObservableHsdtService.statusPackageService.subscribe(value => {
+      console.log('statusPackageService');
       this.getSatusPackage();
+      this.spinner.hide();
     });
     this.filterModel.status = '';
     this.filterModel.interviewTimes = null;
     this.filterModel.receivedDate = null;
-    this.interviewInvitationService.getUrlChirld().subscribe( value => {
+    const getUrlChirld = this.interviewInvitationService.getUrlChirld().subscribe( value => {
       console.log('getUrlChirld', value);
       this.currentStatusInterview = value;
+      this.spinner.hide();
     });
-    this.subscription = this.interviewInvitationService.watchInterviewInvitationList().subscribe(value => {
+    this.subscription.add(getUrlChirld);
+    const interviewList = this.interviewInvitationService.watchInterviewInvitationList().subscribe(value => {
       console.log('watchInterviewInvitationList');
       this.isNumberOfInterviews = true;
       this.filter();
       this.spinner.hide();
     });
+    this.subscription.add(interviewList);
 
     // const searchKey = this.interviewInvitationService.watchKeySearchInterviewInvitation().subscribe(value => {
     //   this.keySearch = value;

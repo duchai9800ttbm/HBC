@@ -176,6 +176,7 @@ export class InterviewNegotiationComponent implements OnInit, OnDestroy {
     this.interviewInvitationService.approvedinterviewpreparation(this.packageId).subscribe(response => {
       this.statusObservableHsdtService.change();
       this.spinner.hide();
+      this.router.navigate([`/package/detail/${this.packageId}/attend/interview-negotiation/end`]);
       this.alertService.success('Chốt công tác chuẩn bị phỏng vấn thành công!');
     },
       err => {

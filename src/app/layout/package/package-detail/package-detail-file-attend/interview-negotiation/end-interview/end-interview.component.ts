@@ -15,6 +15,7 @@ import { BidStatus } from '../../../../../../shared/constants/bid-status';
 import { GroupDescriptor, groupBy } from '../../../../../../../../node_modules/@progress/kendo-data-query';
 import { Validators } from '../../../../../../../../node_modules/@angular/forms';
 import DateTimeConvertHelper from '../../../../../../shared/helpers/datetime-convert-helper';
+import { StatusObservableHsdtService } from '../../../../../../shared/services/status-observable-hsdt.service';
 @Component({
   selector: 'app-end-interview',
   templateUrl: './end-interview.component.html',
@@ -45,6 +46,7 @@ export class EndInterviewComponent implements OnInit {
     private alertService: AlertService,
     private packageService: PackageService,
     private userService: UserService,
+    private statusObservableHsdtService: StatusObservableHsdtService,
   ) { }
   ngOnInit() {
     this.filterModel.interviewtimes = null;
@@ -52,8 +54,11 @@ export class EndInterviewComponent implements OnInit {
     this.filterModel.createdDate = null;
     this.currentPackageId = +PackageDetailComponent.packageId;
     this.spinner.show();
-    this.packageService.getInforPackageID(this.currentPackageId).subscribe(result => {
-      this.statusPackage = result.stageStatus.id;
+    this.getStatusPackage();
+    this.statusObservableHsdtService.statusPackageService.subscribe(value => {
+      if (this.isOnInit) {
+        this.getStatusPackage();
+      }
     });
     this.interviewInvitationService.instantSearchWithFilterReport(
       this.currentPackageId, this.searchTerm$, this.filterModel, 0, 1000).subscribe(result => {
@@ -81,6 +86,12 @@ export class EndInterviewComponent implements OnInit {
     });
   }
 
+  getStatusPackage() {
+    this.packageService.getInforPackageID(this.currentPackageId).subscribe(result => {
+      this.statusPackage = result.stageStatus.id;
+    });
+  }
+
   render(pagedResult: any) {
     // pagedResult.items.forEach(element => {
     //   if (element.remainningDay < 0) {
@@ -91,7 +102,7 @@ export class EndInterviewComponent implements OnInit {
     this.interviewTimeList = this.pagedResult.items ? this.pagedResult.items.map(item => item.interviewTimes) : [];
     this.uploadedEmployeeList = this.pagedResult.items ? this.pagedResult.items.map(item => item.uploadedBy) : [];
     this.uploadedEmployeeList = groupBy(this.uploadedEmployeeList, [{ field: 'employeeId' }]);
-    this.uploadedEmployeeList = this.uploadedEmployeeList.map( item => {
+    this.uploadedEmployeeList = this.uploadedEmployeeList.map(item => {
       return {
         employeeId: item.items[0].employeeId,
         employeeName: item.items[0].employeeName
