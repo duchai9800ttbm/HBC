@@ -108,8 +108,6 @@ export class SummaryConditionFormConditionTenderComponent implements OnInit {
         });
 
         this.dienGiaiDieuKienHSMT.theoHSMT.cacLoaiThue.forEach(x => {
-            console.log((this.dieuKienHSMTForm.controls.theoHSMT as FormGroup));
-
             const control = (this.dieuKienHSMTForm.controls.theoHSMT as FormGroup).controls.cacLoaiThue as FormArray;
             control.push(this.fb.group({
                 thue: { value: x, disabled: this.isModeView },
