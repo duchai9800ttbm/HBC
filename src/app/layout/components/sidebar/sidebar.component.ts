@@ -11,6 +11,7 @@ import { CallCenterService } from '../../../shared/services/call-center.service'
 import { CallCenterHistoryService } from '../../../shared/services/call-center-history.service';
 import { slideInOut } from '../../../router.animations';
 import { LayoutService } from '../../../shared/services/layout.service';
+import { ChangeDactivitites } from '../../../shared/models/side-bar/change-dactivitites.model';
 
 @Component({
     selector: 'app-sidebar',
@@ -29,7 +30,7 @@ export class SidebarComponent implements OnInit {
     listPhoneNumberHistoryAway = [];
     audits$: Observable<AuditItem[]>;
     audits: any[];
-    pagedResult: PagedResult<AuditItem>;
+    pagedResult: PagedResult<ChangeDactivitites> = new PagedResult<ChangeDactivitites>();
     @Input() state;
 
     constructor(
@@ -73,7 +74,7 @@ export class SidebarComponent implements OnInit {
         //     this.getListPhoneNumberIsCall();
         //     this.getListPhoneCallAway();
         // });
-
+        this.getDataChangeRecently();
     }
     toggleSidebar() {
         const width = document.getElementById('sidebar').offsetWidth;
@@ -110,5 +111,11 @@ export class SidebarComponent implements OnInit {
             // this.showSidebarContent = true;
             // document.getElementById('logo').setAttribute('Width', '200');
         }
+    }
+    getDataChangeRecently() {
+        this.layoutService.getDataChangeRecently(0, 10).subscribe(data => {
+            this.pagedResult = data;
+            console.log(this.pagedResult);
+        });
     }
 }

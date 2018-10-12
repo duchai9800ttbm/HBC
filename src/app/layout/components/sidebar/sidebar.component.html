@@ -97,8 +97,8 @@
 
     </ul>
 </nav>  -->
-<nav id="sidebar" class="sidebar" [@slideInOut]="state" >
-        <!-- (window:resize)="onResize($event)" -->
+<nav id="sidebar" class="sidebar" [@slideInOut]="state">
+    <!-- (window:resize)="onResize($event)" -->
     <div class="d-flex flex-row-reverse button-tog" [class.center-parent]="showSidebarContent">
         <div class="action center-parent" width="">
             <div class="center-parent">
@@ -109,6 +109,8 @@
     </div>
     <div [hidden]="showSidebarContent" class="change">
         <div class="font-weight-bold mb-3 mt-4">Thay đổi gần đây</div>
+
+
         <div class="mt-2">
             <div style="display: flex" class="row">
                 <div class="col-sm-2">
@@ -129,25 +131,11 @@
                 <div class="col-sm-10" style="font-style: italic; color:  #a8b9bf; font-size: 10px;">Hôm qua</div>
             </div>
         </div>
-        <div class="mt-2">
-            <div style="display: flex" class="row">
-                <div class="col-sm-2">
-                    <img src="assets/images/no-avatar.png" width="30" height="30" alt="">
-                </div>
-                <div class="col-sm-10">
-                    <!-- <div style="display: flex">
-                    <div style="font-weight: bold;padding-right: 2px;">Admin</div>
-                    <div>mới tạo mới</div>
-                </div>
-                <div>gói thầu xây dựng</div> -->
-                    <p class="last mb-1">
-                        <strong>Admin </strong>mới tạo mới gói thầu xây dưng</p>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-sm-2"></div>
-                <div class="col-sm-10" style="font-style: italic; color: #a8b9bf; font-size: 10px;">Hôm qua</div>
-            </div>
+
+        <app-pagination [(pagedResult)]="pagedResult" (pagedResultChange)="pagedResultChange($event)"></app-pagination>
+
+        <div>
+            Xem tất cả!
         </div>
     </div>
 </nav>
