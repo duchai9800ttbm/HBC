@@ -140,6 +140,18 @@ export class PriceReviewSummaryComponent implements OnInit {
     });
   }
 
+  nopHoSo() {
+    const that = this;
+    this.confirmService.confirm('Bạn có chắc muốn nộp hồ sơ?', () => {
+      this.priceReviewService.nopHoSo(this.packageId).subscribe(data => {
+        that.refresh();
+        that.alertService.success('Nộp hồ sơ thành công!');
+      }, err => {
+        that.alertService.error('Nộp hồ sơ thất bại, vui lòng thử lại sau!');
+      });
+    });
+  }
+
   hieuChinhHSDT() {
     const that = this;
     this.confirmService.confirm('Bạn có chắc muốn hiệu chỉnh HSDT?', () => {

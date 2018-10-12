@@ -68,6 +68,11 @@ export class PriceReviewService {
     return this.apiService.post(url);
   }
 
+  nopHoSo(bidOpportunityId: number) {
+    const url = `bidopportunity/hsdt/${bidOpportunityId}/nophsdt`;
+    return this.apiService.post(url);
+  }
+
   hieuChinhHSDT(bidOpportunityId: number) {
     const url = `bidopportunity/hsdt/${bidOpportunityId}/hieuchinhhsdt`;
     return this.apiService.post(url);

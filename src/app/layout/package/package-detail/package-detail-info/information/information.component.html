@@ -11,7 +11,7 @@
                     <table class="w-100 table table-bordered layout-table" *ngIf="package">
                         <tbody>
                             <tr>
-                                <td class="w-15 bg-light text-right label required no-boder">Tên dự án</td>
+                                <td class="w-15 bg-light text-right label required no-boder field-name">Tên dự án</td>
                                 <td class="w-35 no-boder">
                                     <div class="w-75 form-control">{{package.projectName}}</div>
                                 </td>
@@ -21,7 +21,7 @@
                                 </td>
                             </tr>
                             <tr>
-                                <td class="w-15 bg-light text-right label no-boder">Mã số dự án</td>
+                                <td class="w-15 bg-light text-right label no-boder field-name">Mã số dự án</td>
                                 <td class="w-35 no-boder">
                                     <div class="w-75 form-control">{{package.projectNo}}</div>
                                 </td>
@@ -31,11 +31,11 @@
                                 </td>
                             </tr>
                             <tr>
-                                <td class="w-15 bg-light text-right label required no-boder">Tên gói thầu</td>
+                                <td class="w-15 bg-light text-right label required no-boder field-name">Tên gói thầu</td>
                                 <td class="w-35 no-boder">
                                     <div class="w-75 form-control">{{package.opportunityName}}</div>
                                 </td>
-                                <td class="w-15 bg-light text-right label no-boder">Hạng mục thi công chính</td>
+                                <td class="w-15 bg-light text-right label no-boder field-name">Hạng mục thi công chính</td>
                                 <td class="w-35 no-boder">
                                     <div class=" w-75 form-control">{{package.mainBuildingCategory?.text}}</div>
                                 </td>
@@ -45,42 +45,42 @@
                                 <td class="w-35 no-boder">
                                     <div class="w-75 form-control">{{package.job}}</div>
                                 </td> -->
-                                <td class="w-15 bg-light text-right label no-boder">Địa điểm</td>
+                                <td class="w-15 bg-light text-right label no-boder field-name">Địa điểm</td>
                                 <td class="w-35 no-boder">
                                     <div class="w-75 form-control">{{package.place}}</div>
                                 </td>
-                                <td class="w-15 bg-light text-right label no-boder">Vai trò</td>
+                                <td class="w-15 bg-light text-right label no-boder field-name">Vai trò</td>
                                 <td class="w-35 no-boder">
                                     <div class="w-75 form-control">{{ package.hbcRole?.text }}</div>
                                 </td>
                             </tr>
                             <tr>
-                                <td class="w-15 bg-light text-right label no-boder">Khu vực</td>
+                                <td class="w-15 bg-light text-right label no-boder field-name">Khu vực</td>
                                 <td class="w-35 no-boder">
                                     <div class="w-75 form-control">{{package.location?.text}}</div>
                                 </td>
-                                <td class="w-15 bg-light text-right label no-boder">Link tài liệu</td>
+                                <td class="w-15 bg-light text-right label no-boder field-name">Link tài liệu</td>
                                 <td class="w-35 no-boder">
                                     <!-- <div class="w-75 form-control">{{package.documentLink}}</div> -->
                                     <a class="w-75 form-control color-link color-link" target="_blank" [href]="package.documentLink">{{ package.documentLink }}</a>
                                 </td>
                             </tr>
                             <tr>
-                                <td class="w-15 bg-light text-right label no-boder">Quý</td>
+                                <td class="w-15 bg-light text-right label no-boder field-name">Quý</td>
                                 <td class="w-35 no-boder">
                                     <div class="w-75 form-control">{{package.quarter?.text}}</div>
                                 </td>
-                                <td class="w-15 bg-light text-right label no-boder">Chủ trì</td>
+                                <td class="w-15 bg-light text-right label no-boder field-name">Chủ trì</td>
                                 <td class="w-35 no-boder">
                                     <div class="w-75 form-control">{{package.chairEmployee?.text}}</div>
                                 </td>
                             </tr>
                             <tr>
-                                <td class="w-15 bg-light text-right label no-boder">Tên khách hàng</td>
+                                <td class="w-15 bg-light text-right label no-boder field-name">Tên khách hàng</td>
                                 <td class="w-35 no-boder">
                                     <div class="w-75 form-control">{{package.customer?.text}}</div>
                                 </td>
-                                <td class="w-15 bg-light text-right label no-boder">Giai đoạn</td>
+                                <td class="w-15 bg-light text-right label no-boder field-name">Giai đoạn</td>
                                 <td class="w-35 no-boder" style="text-align: center;">
                                     <div class="w-75 d-flex flex-column" style="align-items: flex-start;">
                                         <div style="width: 100%;">
@@ -93,21 +93,21 @@
                                 </td>
                             </tr>
                             <tr>
-                                <td class="w-15 bg-light text-right label no-boder">Loại khách hàng</td>
+                                <td class="w-15 bg-light text-right label no-boder field-name">Loại khách hàng</td>
                                 <td class="w-35 no-boder">
                                     <div class="w-75 form-control">{{package.customer?.customerNewOldType | translate}}</div>
                                 </td>
-                                <td class="w-15 bg-light text-right label no-boder">Tổng giá trị</td>
+                                <td class="w-15 bg-light text-right label no-boder field-name">Tổng giá trị</td>
                                 <td class="w-35 no-boder">
                                     <div class="w-75 form-control text-right">{{+package.amount | vnCurrency}}</div>
                                 </td>
                             </tr>
                             <tr>
-                                <td class="w-15 bg-light text-right label no-boder">Liên hệ</td>
+                                <td class="w-15 bg-light text-right label no-boder field-name">Liên hệ</td>
                                 <td class="w-35 no-boder">
                                     <div class="w-75 form-control">{{package.customerContact?.text}}</div>
                                 </td>
-                                <td class="w-15 bg-light text-right label no-boder">Tiến độ thực hiện</td>
+                                <td class="w-15 bg-light text-right label no-boder field-name">Tiến độ thực hiện</td>
                                 <td class="w-35 no-boder">
                                     <div class="w-75 form-control text-right">
                                         {{package.progress}}&nbsp;
@@ -116,55 +116,55 @@
                                 </td>
                             </tr>
                             <tr>
-                                <td class="w-15 bg-light text-right label no-boder">Đơn vị tư vấn</td>
+                                <td class="w-15 bg-light text-right label no-boder field-name">Đơn vị tư vấn</td>
                                 <td class="w-35 no-boder">
                                     <div class="w-75 form-control">{{package.consultantUnitCustomer?.text}}</div>
                                 </td>
-                                <td class="w-15 bg-light text-right label no-boder">Lí do Thắng thầu</td>
+                                <td class="w-15 bg-light text-right label no-boder field-name">Lí do Thắng thầu</td>
                                 <td class="w-35 no-boder">
                                     <div class="w-75 form-control">{{package.acceptanceReason}}</div>
                                 </td>
                             </tr>
                             <tr>
-                                <td class="w-15 bg-light text-right label no-boder">Địa chỉ ĐVTV</td>
+                                <td class="w-15 bg-light text-right label no-boder field-name">Địa chỉ ĐVTV</td>
                                 <td class="w-35 no-boder">
                                     <div class="w-75 form-control">{{package.consultantAddress}}</div>
                                 </td>
-                                <td class="w-15 bg-light text-right label no-boder">Lí do Trật thầu</td>
+                                <td class="w-15 bg-light text-right label no-boder field-name">Lí do Trật thầu</td>
                                 <td class="w-35 no-boder">
                                     <div class="w-75 form-control">{{package.unacceptanceReason}}</div>
                                 </td>
                             </tr>
                             <tr>
-                                <td class="w-15 bg-light text-right label no-boder" style="border-top: none;border-right: none;">Số điện thoại ĐVTV</td>
+                                <td class="w-15 bg-light text-right label no-boder field-name" style="border-top: none;border-right: none;">Số điện thoại ĐVTV</td>
                                 <td class="w-35 no-boder" style="border-top: none;border-right: none;border-left: none;">
                                     <div class="w-75 form-control">{{package.consultantPhone}}</div>
                                 </td>
-                                <td class="w-15 bg-light text-right label no-boder">Lý do Hủy thầu</td>
+                                <td class="w-15 bg-light text-right label no-boder field-name">Lý do Hủy thầu</td>
                                 <td class="w-35 no-boder">
                                     <div class="w-75 form-control">{{package.cancelReason}}</div>
                                 </td>
                             </tr>
                             <tr>
-                                <td class="w-15 bg-light text-right label " style="padding-bottom: 20px!important; border-top: none;border-right: none;">Diện tích sàn (m2)</td>
+                                <td class="w-15 bg-light text-right label field-name" style="padding-bottom: 20px!important; border-top: none;border-right: none;">Diện tích sàn (m2)</td>
                                 <td class="w-35" style="padding-bottom: 20px!important; border-top: none;border-right: none;">
                                     <div class="w-75 form-control text-right">
                                         {{package.floorArea | numberArea}} &nbsp;
                                     </div>
                                 </td>
-                                <td class="w-15 bg-light text-right label" style="padding-bottom: 20px!important; border-top: none;border-right: none;border-left: none;">Đánh giá dự án</td>
+                                <td class="w-15 bg-light text-right label field-name" style="padding-bottom: 20px!important; border-top: none;border-right: none;border-left: none;">Đánh giá dự án</td>
                                 <td class="w-35" style="padding-bottom: 20px!important; border-top: none;border-right: none;border-left: none;">
                                     <div class="w-75 form-control">{{package.evaluation?.value}}</div>
                                 </td>
                             </tr>
                             <tr>
-                                <td class="w-15 bg-light text-right label no-boder" style="padding-top: 20px!important;">Ngày bắt đầu</td>
+                                <td class="w-15 bg-light text-right label no-boder field-name" style="padding-top: 20px!important;">Ngày bắt đầu</td>
                                 <td class="w-35 no-boder" style="padding-top: 20px!important;">
                                     <div class="w-75 form-control">
                                         <span *ngIf="package.startTrackingDate">{{(package.startTrackingDate)*1000 | date:'dd/MM/yyyy'}}</span>
                                     </div>
                                 </td>
-                                <td class="w-15 bg-light text-right label no-boder" style="padding-top: 20px!important;">Ngày khởi công dự án</td>
+                                <td class="w-15 bg-light text-right label no-boder field-name" style="padding-top: 20px!important;">Ngày khởi công dự án</td>
                                 <td class="w-35 no-boder" style="padding-top: 20px!important;">
                                     <div class="w-75 form-control">
                                         <span *ngIf="package.projectEstimatedStartDate">{{(package.projectEstimatedStartDate)*1000 | date:'dd/MM/yyyy'}}</span>
@@ -172,13 +172,13 @@
                                 </td>
                             </tr>
                             <tr>
-                                <td class="w-15 bg-light text-right label required no-boder">Ngày nộp hồ sơ mời thầu</td>
+                                <td class="w-15 bg-light text-right label required no-boder field-name">Ngày nộp hồ sơ mời thầu</td>
                                 <td class="w-35 no-boder">
                                     <div class="w-75 form-control">
                                         <span *ngIf="package.submissionDate">{{(package.submissionDate)*1000 | date:'dd/MM/yyyy'}}</span>
                                     </div>
                                 </td>
-                                <td class="w-15 bg-light text-right label no-boder">Ngày kết thúc dự án</td>
+                                <td class="w-15 bg-light text-right label no-boder field-name">Ngày kết thúc dự án</td>
                                 <td class="w-35 no-boder">
                                     <div class="w-75 form-control">
                                         <span *ngIf="package.projectEstimatedEndDate">{{(package.projectEstimatedEndDate)*1000 | date:'dd/MM/yyyy'}}</span>
@@ -186,13 +186,13 @@
                                 </td>
                             </tr>
                             <tr>
-                                <td class="w-15 bg-light text-right label required no-boder">Ngày dự kiến kết quả thầu</td>
+                                <td class="w-15 bg-light text-right label required no-boder field-name">Ngày dự kiến kết quả thầu</td>
                                 <td class="w-35 no-boder">
                                     <div class="w-75 form-control">
                                         <span *ngIf="package.resultEstimatedDate">{{(package.resultEstimatedDate)*1000 | date:'dd/MM/yyyy'}}</span>
                                     </div>
                                 </td>
-                                <td class="w-15 bg-light text-right label no-boder">Tổng thời gian</td>
+                                <td class="w-15 bg-light text-right label no-boder field-name">Tổng thời gian</td>
                                 <td class="w-35 no-boder">
                                     <div class="w-75 form-control">{{package.totalTime}}</div>
                                 </td>
