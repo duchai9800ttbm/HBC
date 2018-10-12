@@ -15,14 +15,14 @@
     </div>
     <div>
       <div class="btn-toolbar mt-2 mb-2">
-        <button class="btn btn-primary ml-2" (click)="openModalNotification(notification)">
+        <button class="btn btn-primary ml-1" (click)="openModalNotification(notification)">
           {{textNotification}}
         </button>
-        <button class="btn btn-primary ml-2" (click)="uploadkqdt(uploadFile)">
+        <button class="btn btn-primary ml-1" (click)="uploadkqdt(uploadFile)">
           Upload&nbsp;
           <span style="text-transform: uppercase">kqdt</span>
         </button>
-        <button class="btn btn-primary ml-2">
+        <button class="btn btn-primary ml-1">
           <i class="fa fa-refresh" aria-hidden="true"></i>
         </button>
       </div>
@@ -31,16 +31,16 @@
   <div class="d-flex form-group status-filter" id="result">
     <h5 class="d-inline mb-0 mr-auto text-dark text-uppercase pd-t">Kết quả dự thầu</h5>
     <div class="btn-toolbar">
-      <button class="btn btn-primary ml-2">
+      <button class="btn btn-primary ml-1">
         Tải Template
       </button>
-      <button class="btn btn-primary ml-2">
+      <button class="btn btn-primary ml-1">
         Tải xuống tài liệu
       </button>
-      <button class="btn btn-primary ml-2">
+      <button class="btn btn-primary ml-1">
         In
       </button>
-      <button class="btn btn-primary ml-2" *ngIf="!showBtnNotification">
+      <button class="btn btn-primary ml-1" *ngIf="!showBtnNotification">
         Xóa
       </button>
     </div>

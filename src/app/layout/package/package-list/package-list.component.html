@@ -7,7 +7,7 @@
                 <span class="input-group-addon">Tìm kiếm theo</span>
                 <input type="text" class="form-control icon" placeholder="&#xf002; Từ khóa" (keyup)="searchTerm$.next($event.target.value)">
             </div>
-            <div class="btn-group ml-2" ngbDropdown #DropTool="ngbDropdown">
+            <div class="btn-group ml-1" ngbDropdown #DropTool="ngbDropdown">
                 <div #DropTool2>
                     <button type="button" class="btn btn-primary" ngbDropdownToggle data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         Công cụ &nbsp;&nbsp;
@@ -19,10 +19,10 @@
                     </div>
                 </div>
             </div>
-            <button *ngIf="isCreateBidOpportunity" class="btn btn-primary ml-2" [routerLink]="['/package/create']">
+            <button *ngIf="isCreateBidOpportunity" class="btn btn-primary ml-1" [routerLink]="['/package/create']">
                 Thêm gói thầu
             </button>
-            <button class="btn btn-primary ml-2" (click)="refreshGlobal(true)">
+            <button class="btn btn-primary ml-1" (click)="refreshGlobal(true)">
                 <i class="fa fa-refresh" aria-hidden="true"></i>
             </button>
         </div>
@@ -70,10 +70,10 @@
                     </div>
 
                 </div>
-                <button type="submit" class="btn btn-primary ml-sm-2" (click)="filter(true)">
+                <button type="submit" class="btn btn-primary ml-sm-1" (click)="filter(true)">
                     <i class="fa fa-filter" aria-hidden="true"></i>&nbsp;&nbsp; Lọc
                 </button>
-                <button class="btn btn-secondary ml-sm-2" (click)="clearFilter()">
+                <button class="btn btn-secondary ml-sm-1" (click)="clearFilter()">
                     <i class="fa fa-times"></i>&nbsp;&nbsp; Xóa lọc
                 </button>
             </div>

@@ -16,18 +16,18 @@
             <!-- <button class="btn btn-primary ml-2">
                 Import dữ liệu theo mẫu
             </button> -->
-            <button type="button" class="btn btn-primary ml-2" (click)="checkSigned()" *ngIf="routerAction == 'view' && packageInfo?.stageStatus.id == bidStatus.CanLapDeNghiDuThau && !dataModel?.isDraftVersion">Gửi duyệt đề nghị DT</button>
-            <button class="btn btn-primary ml-2" (click)="edit()" *ngIf="routerAction == 'view' && packageInfo?.stageStatus.id == bidStatus.CanLapDeNghiDuThau">Sửa</button>
-            <button class="btn btn-primary ml-2" (click)="saveDrafts()" *ngIf="routerAction != 'view' && dataModel?.isDraftVersion">
+            <button type="button" class="btn btn-primary ml-1" (click)="checkSigned()" *ngIf="routerAction == 'view' && packageInfo?.stageStatus.id == bidStatus.CanLapDeNghiDuThau && !dataModel?.isDraftVersion">Gửi duyệt đề nghị DT</button>
+            <button class="btn btn-primary ml-1" (click)="edit()" *ngIf="routerAction == 'view' && packageInfo?.stageStatus.id == bidStatus.CanLapDeNghiDuThau">Sửa</button>
+            <button class="btn btn-primary ml-1" (click)="saveDrafts()" *ngIf="routerAction != 'view' && dataModel?.isDraftVersion">
                 Lưu nháp
             </button>
-            <button class="btn btn-primary ml-2" (click)="saveOfficially()" *ngIf="routerAction != 'view'">
+            <button class="btn btn-primary ml-1" (click)="saveOfficially()" *ngIf="routerAction != 'view'">
                 Lưu
             </button>
-            <button class="btn btn-secondary ml-2" (click)="cancel()" *ngIf="routerAction != 'view'">
+            <button class="btn btn-secondary ml-1" (click)="cancel()" *ngIf="routerAction != 'view'">
                 Hủy
             </button>
-            <button class="btn btn-primary ml-2" (click)="refresh()">
+            <button class="btn btn-primary ml-1" (click)="refresh()">
                 <i class="fa fa-refresh" aria-hidden="true"></i>
             </button>
         </div>

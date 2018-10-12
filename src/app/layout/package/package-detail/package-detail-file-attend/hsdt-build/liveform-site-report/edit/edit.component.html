@@ -17,16 +17,16 @@
     <div class="controll-bar">
         <div class="btn-toolbar mt-2 mb-2">
             <div>
-                <button id="printButton" *ngIf="isDraft" class="btn btn-primary ml-2" (click)="updateliveform(true)">
+                <button id="printButton" *ngIf="isDraft" class="btn btn-primary ml-1" (click)="updateliveform(true)">
                     Lưu bản nháp
                 </button>
-                <button id="printButton" class="btn btn-primary ml-2" (click)="updateliveform(false)">
+                <button id="printButton" class="btn btn-primary ml-1" (click)="updateliveform(false)">
                     Lưu
                 </button>
-                <button type="button" class="btn btn-up disable ml-2" (click)="cancelCreateUpdate()">
+                <button type="button" class="btn btn-up disable ml-1" (click)="cancelCreateUpdate()">
                     Hủy
                 </button>
-                <button class="btn btn-primary ml-2" (click)="refresh()">
+                <button class="btn btn-primary ml-1" (click)="refresh()">
                     <i class="fa fa-refresh" aria-hidden="true"></i>
                 </button>
             </div>
@@ -114,11 +114,11 @@
     </div>
 </div>
 <div class="button-change-view d-flex flex-row flex-wrap justify-content-center">
-    <button *ngIf="stepName !== 'ScaleOverallComponent'" type="button" class="next-pre-button btn btn-default ml-2 mr-2"
+    <button *ngIf="stepName !== 'ScaleOverallComponent'" type="button" class="next-pre-button btn btn-default ml-1 mr-2"
         (click)="preStep()">
         <i class="fa fa-chevron-left" aria-hidden="true"></i> Trở về
     </button>
-    <button *ngIf="stepName !== 'UsefulInfoComponent'" type="button" class="next-pre-button btn btn-primary ml-2 mr-2"
+    <button *ngIf="stepName !== 'UsefulInfoComponent'" type="button" class="next-pre-button btn btn-primary ml-1 mr-2"
         (click)="nextStep()">
         Tiếp <i class="fa fa-chevron-right" aria-hidden="true"></i>
     </button>

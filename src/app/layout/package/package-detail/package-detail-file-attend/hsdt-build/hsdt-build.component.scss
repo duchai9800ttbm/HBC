@@ -177,7 +177,7 @@ li.triangle::before {
 }
 
 #outer-table {
-  //  padding: 20px 0 0 0;
+    //  padding: 20px 0 0 0;
 }
 
 #header-table-build {
@@ -506,6 +506,7 @@ table.dataTable th {
         white-space: nowrap;
         max-width: 8rem;
     }
+
     .toggle-menu-item {
         width: 150px !important;
         font-size: 12px !important;
@@ -611,4 +612,8 @@ table.dataTable th {
 
 .no-action {
     color: #7b7b7b;
+}
+
+.fix-margin-left {
+    margin-left: 0.05rem;
 }
