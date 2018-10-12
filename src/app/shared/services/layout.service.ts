@@ -21,7 +21,8 @@ export class LayoutService {
   }
   getDataChangeRecently(page: number, pageSize: number): Observable<PagedResult<ChangeDactivitites>> {
     const url = `changedactivitites/${page}/${pageSize}`;
-    return this.apiService.get(url).map(res => {
+    return this.apiService.get(url).map(response => {
+      const res = response.result;
       return {
         currentPage: res.pageIndex,
         pageSize: res.pageSize,
