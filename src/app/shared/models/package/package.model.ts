@@ -21,7 +21,7 @@ export class PackageModel {
     chairEmployeeId: number;
     bidStatusId: number;
     amount: number;
-    evaluation: string;
+    evaluationId: number;
     startTrackingDate: number;
     submissionDate: number;
     resultEstimatedDate: number;

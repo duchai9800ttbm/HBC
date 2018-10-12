@@ -123,7 +123,7 @@ export class PackageFormComponent implements OnInit {
             chairEmployeeId: [this.package.chairEmployeeId],
             //   bidStatusId: [this.package.bidStatusId, Validators.required],
             amount: [this.package.amount, [Validators.required, CustomValidator.totalValue]],
-            evaluation: [this.package.evaluation],
+            evaluationId: [this.package.evaluationId],
             startTrackingDate: [this.package.startTrackingDate],
             submissionDate: [this.package.submissionDate],
             resultEstimatedDate: [this.package.resultEstimatedDate],
