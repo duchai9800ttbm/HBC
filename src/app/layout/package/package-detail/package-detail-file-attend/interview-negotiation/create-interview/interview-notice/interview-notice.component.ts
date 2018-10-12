@@ -13,6 +13,7 @@ import { PackageService } from '../../../../../../../shared/services/package.ser
 import { InterviewInvitationService } from '../../../../../../../shared/services/interview-invitation.service';
 import DateTimeConvertHelper from '../../../../../../../shared/helpers/datetime-convert-helper';
 import { StatusObservableHsdtService } from '../../../../../../../shared/services/status-observable-hsdt.service';
+import { Router } from '../../../../../../../../../node_modules/@angular/router';
 @Component({
   selector: 'app-interview-notice',
   templateUrl: './interview-notice.component.html',
@@ -42,6 +43,7 @@ export class InterviewNoticeComponent implements OnInit {
     private packageService: PackageService,
     private interviewInvitationService: InterviewInvitationService,
     private statusObservableHsdtService: StatusObservableHsdtService,
+    private router: Router,
   ) { }
   public valueNormalizerTo = (employeeName$: Observable<string>) => employeeName$.pipe(map((employeeName: string) => {
     const emailModelTo = new SearchEmailModel();
@@ -166,6 +168,7 @@ export class InterviewNoticeComponent implements OnInit {
       this.emailService.sendEmailInterview(this.emailModel, this.file).subscribe(result => {
         this.closePopup();
         this.statusObservableHsdtService.change();
+        this.router.navigate([`/package/detail/${this.packageId}/attend/interview-negotiation/prepare`]);
         this.alertService.success('Gửi thông báo phỏng vấn đến các bên liên quan thành công!');
         this.spinner.hide();
       },

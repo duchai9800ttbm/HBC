@@ -12,7 +12,9 @@ import { CKEditorModule } from 'ng2-ckeditor';
 import { UploadResultFileAttendComponent } from './package-success/package-list/upload-result-file-attend/upload-result-file-attend.component';
 import { DetailResultPackageService } from '../../../../shared/services/detail-result-package.service';
 import { NotificationContractComponent } from './package-success/package-list/notification-contract/notification-contract.component';
+// tslint:disable-next-line:max-line-length
 import { UploadContractSigningComponent } from './package-success/contract-signed/upload-contract-signing/upload-contract-signing.component';
+import { UploadResultAttendComponent } from './wait-result/upload-result-attend/upload-result-attend.component';
 @NgModule({
   imports: [
     CommonModule,
@@ -28,12 +30,14 @@ import { UploadContractSigningComponent } from './package-success/contract-signe
       PackgeCancelComponent,
       UploadResultFileAttendComponent,
       NotificationContractComponent,
-      UploadContractSigningComponent
+      UploadContractSigningComponent,
+      UploadResultAttendComponent
   ],
   entryComponents: [
     UploadResultFileAttendComponent,
     NotificationContractComponent,
-    UploadContractSigningComponent
+    UploadContractSigningComponent,
+    UploadResultAttendComponent,
   ],
   providers: [
     DetailResultPackageService

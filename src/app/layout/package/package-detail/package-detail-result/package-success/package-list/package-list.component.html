@@ -64,7 +64,7 @@
         </div>
     </div>
     <div class="d-flex form-group status-filter">
-        <h5 class="d-inline mb-0 mr-auto text-dark text-uppercase pd-t">kết quả dự thầu</h5>
+        <h5 class="d-inline mb-0 mr-auto text-dark text-uppercase pd-t title-header-chirl">kết quả dự thầu</h5>
         <!-- <div class="btn-toolbar">
                 <div class="input-group btn-rg">
                     <span class="input-group-addon">Tìm kiếm theo</span>
@@ -206,7 +206,6 @@
                         <td class="text-center" [title]="item.version">{{ item.version }}</td>
                         <td class="doc" [title]="item.desc">{{ item.desc }}</td>
                         <td class="select-filter text-center" [title]="item.uploadBy?.employeeName">{{ item.uploadBy?.employeeName }}</td>
-                        <!-- <td class="text-center">{{ item.bidReviewDocumentUploadDate* 1000 | date:'dd/MM/yyyy HH:mm': '+0000'}}</td> -->
                         <td class="select-filter text-center">{{ item.uploadDate*1000 | date:'dd/MM/yyyy HH:mm': '+0000' }}</td>
                         <td class="select-filter text-center">{{ item.interviewTimes }}</td>
                         <td class="text-center">
@@ -216,7 +215,8 @@
                                         <i class="fa fa-download color-item-down" aria-hidden="true"></i>
                                     </a>
                                 </div>
-                                <div id="mr" *ngIf="!showBtnNotification">
+                                <div id="mr" (click)="deleteFileItem(item.id)">
+                                    <!-- *ngIf="!showBtnNotification" -->
                                     <a title="Xóa file">
                                         <i class="fa fa-trash-o" aria-hidden="true"></i>
                                     </a>
@@ -232,7 +232,6 @@
                 </tbody>
             </table>
         </div>
-        <!-- <div class="show">Hiển thị 2 kết quả</div> -->
     </div>
 </div>
 
@@ -419,5 +418,5 @@
         </div>
     </form>
 </ng-template>
-<!-- <app-contract-signed [isContract]="showTableSigned" *ngIf="showTableSigned" ></app-contract-signed> -->
-<app-package-document [isContract]="showTableSigned" *ngIf="showTableSigned"></app-package-document>
+<!-- <app-contract-signed [isContract]="showTableSigned" *ngIf="true" ></app-contract-signed> -->
+<app-package-document [isContract]="showTableSigned" *ngIf="true"></app-package-document>

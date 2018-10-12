@@ -312,7 +312,7 @@ table.dataTable th {
       }
   }
 .fs {
-    font-size: 1.2rem;
+    font-size: 130%;
 }
 .btn-send {
     background-color: #00a0e3;
@@ -438,4 +438,7 @@ table.dataTable th {
 }
 :host /deep/ .dataTables_empty {
     display: none !important;
+}
+.title-header-chirld{
+    font-size: 120%;
 }

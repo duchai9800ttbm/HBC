@@ -9,6 +9,8 @@ import { FilterContractSigning } from '../models/result-attend/filter-contract-s
 import { ContractSigningList } from '../models/result-attend/contract-signing.list.model';
 import { PagedResult } from '../models';
 import { URLSearchParams } from '@angular/http';
+import { FilterNeedTransferDoc } from '../models/result-attend/filter-need-transfer-doc.model';
+import { NeedTranferDocList } from '../models/result-attend/need-transfer-doc-list.model';
 @Injectable()
 export class DetailResultPackageService {
   listFileResult: Subject<any> = new Subject();
@@ -151,6 +153,82 @@ export class DetailResultPackageService {
     });
     dataObj.append('Content', data.content);
     return this.apiService.postFile(url, dataObj);
+  }
+  // Chuyển giao tài liệu
+  // Tạo filter paramater danh sách tài liệu cần chuyển giao
+  toParamaterNeedTransfer(filter: FilterNeedTransferDoc): URLSearchParams {
+    const urlFilterParams = new URLSearchParams();
+    urlFilterParams.append(
+      'documentType',
+      filter.documentType ? filter.documentType : ''
+    );
+    urlFilterParams.append(
+      'DocumentTypeId',
+      filter.documentTypeId ? filter.documentTypeId.toString() : ''
+    );
+    urlFilterParams.append(
+      'interviewTimes',
+      filter.interviewTimes ? filter.interviewTimes.toString() : ''
+    );
+    return urlFilterParams;
+  }
+  // Mapping to model danh sách tài liệu cần chuyển giao
+  toListNeedTransferDocs(result: any): NeedTranferDocList {
+    return {
+      bidOpportunityStage: {
+        key: result.bidOpportunityStage.key,
+        value: result.bidOpportunityStage.value,
+        displayText: result.bidOpportunityStage.displayText,
+      },
+      needTransferDocument: result.needTransferDocument ? result.needTransferDocument.map(itemNeedTransferDocument => {
+        return {
+          documentType: {
+            key: itemNeedTransferDocument.documentType.key,
+            value: itemNeedTransferDocument.documentType.value,
+            displayText: itemNeedTransferDocument.documentType.displayText,
+          },
+          document: {
+            type: itemNeedTransferDocument.document.type,
+            id: itemNeedTransferDocument.document.id,
+            name: itemNeedTransferDocument.document.name,
+            interviewTime: itemNeedTransferDocument.document.interviewTime,
+          },
+          childDocuments: itemNeedTransferDocument.childDocuments ? itemNeedTransferDocument.childDocuments.map(itemChildDocuments => {
+            return {
+              documentType: {
+                key: itemChildDocuments.documentType.key,
+                value: itemChildDocuments.documentType.value,
+                displayText: itemChildDocuments.documentType.displayText,
+              },
+              document: {
+                type: itemChildDocuments.document.type,
+                id: itemChildDocuments.document.id,
+                name: itemChildDocuments.document.name,
+                interviewTime: itemChildDocuments.document.interviewTime,
+              }
+            };
+          }) : null,
+        };
+      }) : null,
+    };
+  }
+  // Danh sách tài liệu cần chuyển giao(tìm kiếm, lọc)
+  getListNeedTransferDocs(
+    bidOpportunityId: number,
+    searchTerm: string,
+    filter: FilterNeedTransferDoc,
+    page: number | string,
+    pageSize: number | string
+  ): Observable<NeedTranferDocList[]> {
+    const filterUrl = `tenderresultdocument/bidOpportunity/${bidOpportunityId}/needtransferdocs`;
+    const urlParams = this.toParamaterNeedTransfer(filter);
+    urlParams.append('searchTerm', searchTerm);
+    return this.apiService.get(filterUrl, urlParams).map(response => {
+      const result = response.result;
+      return (result || []).map(
+        this.toListNeedTransferDocs
+      );
+    });
   }
   // =============================
   // Bước 2, hợp đồng ký kết
