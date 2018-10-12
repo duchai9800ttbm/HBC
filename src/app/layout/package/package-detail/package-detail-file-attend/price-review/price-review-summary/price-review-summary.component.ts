@@ -13,6 +13,7 @@ import { AlertService, ConfirmationService } from '../../../../../../shared/serv
 import { PackageService } from '../../../../../../shared/services/package.service';
 import { PackageInfoModel } from '../../../../../../shared/models/package/package-info.model';
 import { PagedResult } from '../../../../../../shared/models';
+import { StatusObservableHsdtService } from '../../../../../../shared/services/status-observable-hsdt.service';
 
 @Component({
   selector: 'app-price-review-summary',
@@ -33,7 +34,8 @@ export class PriceReviewSummaryComponent implements OnInit {
     private priceReviewService: PriceReviewService,
     private alertService: AlertService,
     private confirmService: ConfirmationService,
-    private packageService: PackageService
+    private packageService: PackageService,
+    private statusObservableHsdtService: StatusObservableHsdtService
   ) { }
 
 
@@ -42,7 +44,6 @@ export class PriceReviewSummaryComponent implements OnInit {
     this.packageId = PackageDetailComponent.packageId;
     this.packageService.getInforPackageID(this.packageId).subscribe(result => {
       this.package = result;
-
     }, err => {
     });
     this.priceReviewService.viewShort(this.packageId).subscribe(data => {
@@ -85,13 +86,19 @@ export class PriceReviewSummaryComponent implements OnInit {
   }
   closePopup(params) {
     this.showPopupAdd = false;
-    this.refresh();
+    this.refresh(false);
   }
 
-  refresh() {
+  refresh(isAlert: boolean) {
+    this.packageService.getInforPackageID(this.packageId).subscribe(result => {
+      this.package = result;
+    }, err => {
+    });
     this.priceReviewService.viewShort(this.packageId).subscribe(data => {
       this.priceReview = data;
-      this.alertService.success('Dữ liệu đã được cập nhật mới nhất!');
+      if (isAlert) {
+        this.alertService.success('Dữ liệu đã được cập nhật mới nhất!');
+      }
     });
   }
 
@@ -103,7 +110,7 @@ export class PriceReviewSummaryComponent implements OnInit {
     }
     this.confirmService.confirm('Bạn có chắc muốn gửi duyệt trình duyệt giá?', () => {
       this.priceReviewService.guiDuyetTrinhDuyetGia(this.packageId).subscribe(data => {
-        that.refresh();
+        that.refresh(false);
         that.alertService.success('Gửi duyệt trình duyệt giá thành công!');
       }, err => {
         that.alertService.error('Gửi duyệt trình duyệt giá thất bại, vui lòng thử lại sau!');
@@ -120,7 +127,7 @@ export class PriceReviewSummaryComponent implements OnInit {
     }
     this.confirmService.confirm('Bạn có chắc muốn gửi duyệt lại trình duyệt giá?', () => {
       this.priceReviewService.guiDuyetLaiTrinhDuyetGia(this.packageId).subscribe(data => {
-        that.refresh();
+        that.refresh(false);
         that.alertService.success('Gửi duyệt lại trình duyệt giá thành công!');
       }, err => {
         that.alertService.error('Gửi duyệt lại trình duyệt giá thất bại, vui lòng thử lại sau!');
@@ -132,7 +139,7 @@ export class PriceReviewSummaryComponent implements OnInit {
     const that = this;
     this.confirmService.confirm('Bạn có chắc muốn chốt hồ sơ?', () => {
       this.priceReviewService.chotHoSo(this.packageId).subscribe(data => {
-        that.refresh();
+        that.refresh(false);
         that.alertService.success('Chốt hồ sơ thành công!');
       }, err => {
         that.alertService.error('Chốt hồ sơ thất bại, vui lòng thử lại sau!');
@@ -144,7 +151,8 @@ export class PriceReviewSummaryComponent implements OnInit {
     const that = this;
     this.confirmService.confirm('Bạn có chắc muốn nộp hồ sơ?', () => {
       this.priceReviewService.nopHoSo(this.packageId).subscribe(data => {
-        that.refresh();
+        this.statusObservableHsdtService.change();
+        that.refresh(false);
         that.alertService.success('Nộp hồ sơ thành công!');
       }, err => {
         that.alertService.error('Nộp hồ sơ thất bại, vui lòng thử lại sau!');
@@ -156,7 +164,7 @@ export class PriceReviewSummaryComponent implements OnInit {
     const that = this;
     this.confirmService.confirm('Bạn có chắc muốn hiệu chỉnh HSDT?', () => {
       this.priceReviewService.hieuChinhHSDT(this.packageId).subscribe(data => {
-        that.refresh();
+        that.refresh(false);
       }, err => {
         that.alertService.error('Thất bại, vui lòng thử lại sau!');
       });
@@ -174,7 +182,7 @@ export class PriceReviewSummaryComponent implements OnInit {
     const that = this;
     this.confirmService.confirm('Bạn có chắc muốn xóa liveform trình duyệt giá?', () => {
       this.priceReviewService.delete(this.packageId).subscribe(data => {
-        that.refresh();
+        that.refresh(false);
         that.alertService.success('Xóa thành công!');
       }, err => {
         that.alertService.error('Xóa thất bại, vui lòng thử lại sau!');

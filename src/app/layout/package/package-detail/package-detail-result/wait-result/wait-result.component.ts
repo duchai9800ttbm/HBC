@@ -13,6 +13,8 @@ import { Subject } from '../../../../../../../node_modules/rxjs';
 import { CancelItem } from '../../../../../shared/models/reason/cancel-item';
 import ValidationHelper from '../../../../../shared/helpers/validation.helper';
 import { SETTING_REASON } from '../../../../../shared/configs/common.config';
+import { DialogService } from '../../../../../../../node_modules/@progress/kendo-angular-dialog';
+import { UploadResultFileAttendComponent } from '../package-success/package-list/upload-result-file-attend/upload-result-file-attend.component';
 
 @Component({
     selector: 'app-wait-result',
@@ -49,6 +51,8 @@ export class WaitResultComponent implements OnInit {
     packageId: number;
     formUpload: FormGroup;
     submitted = false;
+    modalRef: BsModalRef;
+    dialogUploadResultAttend;
     constructor(
         private modalService: BsModalService,
         private router: Router,
@@ -56,7 +60,8 @@ export class WaitResultComponent implements OnInit {
         private formBuilder: FormBuilder,
         private alertService: AlertService,
         private spinner: NgxSpinnerService,
-        private packageSuccessService: PackageSuccessService
+        private packageSuccessService: PackageSuccessService,
+        private dialogService: DialogService
     ) { }
 
     ngOnInit() {
@@ -148,6 +153,32 @@ export class WaitResultComponent implements OnInit {
                     typeBid = SETTING_REASON.Cancel;
                     break;
             }
+            console.log('sendBidResult', this.currentPackageId, Number(this.reasonForm.get('reasonName').value), typeBid);
+            switch (typeBid) {
+                case 'win': {
+                    this.dialogUploadResultAttend = this.dialogService.open({
+                        content: UploadResultFileAttendComponent,
+                        width: 650,
+                        minWidth: 250
+                    });
+                    const instance = this.dialogUploadResultAttend.content.instance;
+                    instance.callBack = () => this.closePopuup();
+                    break;
+                }
+                case 'lose': {
+                    this.dialogUploadResultAttend = this.dialogService.open({
+                        content: UploadResultFileAttendComponent,
+                        width: 650,
+                        minWidth: 250
+                    });
+                    const instance = this.dialogUploadResultAttend.content.instance;
+                    instance.callBack = () => this.closePopuup()
+                    break;
+                }
+                case 'cancel': {
+                    this.router.navigate([`/package/detail/${this.currentPackageId}/result/package-cancel`]);
+                }
+            }
             this.packageSuccessService.sendBidResult(this.currentPackageId, Number(this.reasonForm.get('reasonName').value), typeBid)
                 .subscribe(data => {
                     this.modaltrungThau.hide();
@@ -160,6 +191,11 @@ export class WaitResultComponent implements OnInit {
                 });
         }
     }
+
+    closePopuup() {
+        this.dialogUploadResultAttend.close();
+    }
+
     validateForm() {
         this.invalidMessages = ValidationHelper.getInvalidMessages(
             this.reasonForm,
@@ -188,4 +224,6 @@ export class WaitResultComponent implements OnInit {
         this.spinner.hide();
         this.alertService.success('Upload kết quả dự thầu thành công!');
     }
+    // refesh() {
+    // }
 }

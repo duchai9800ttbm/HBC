@@ -212,6 +212,11 @@ export class InterviewNegotiationComponent implements OnInit, OnDestroy {
   }
 
   downloadTemplateEnd() {
+    this.interviewInvitationService.downloadTemplateEnd().subscribe(response => {
+    },
+      err => {
+        this.alertService.error('Tải template không thành công!');
+      });
   }
 
   correctionHSDT() {

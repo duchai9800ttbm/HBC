@@ -44,8 +44,11 @@
                 </span>
             </li>
             <!-- (statusPackageID > 3)  ? ['./interview-negotiation'] : [] -->
-            <li class="triangle" [routerLink]="['./interview-negotiation']" [class.noActive]="currentUrl !== 'interview-negotiation' && statusPackageID > 3"
-                [class.active]="currentUrl === 'interview-negotiation'" [class.allow]="(statusPackageID > 3)" [class.no-allow]="(statusPackageID < 4)">
+            <li class="triangle" [routerLink]="['./interview-negotiation']"
+                [class.noActive]="(currentUrl !== 'interview-negotiation' && statusPackageID > 3) || ( currentUrl === 'price-review' && statusPackageName === 'DaNopHSDT' )"
+                [class.active]="currentUrl === 'interview-negotiation'"
+                [class.allow]="(statusPackageID > 3) || (statusPackageName === 'DaNopHSDT')"
+                [class.no-allow]="(statusPackageID < 4) && (statusPackageName !== 'DaNopHSDT')">
                 <div style="width: 100%" class="center-parent">
                     <div class="arrow-down"></div>
                 </div>

@@ -482,6 +482,14 @@ export class InterviewInvitationService {
   }
   // Tải template đã phỏng vấn
   downloadTemplateEnd() {
+    const url = `interviewed/template/download`;
+    return this.apiService.getFile(url).map(response => {
+      return FileSaver.saveAs(
+        new Blob([response.file], {
+          type: `${response.file.type}`,
+        }), response.fileName
+      );
+    });
   }
   // Hiệu chỉnh HSDT
   correctionHSDT(bidOpportunityId: number) {

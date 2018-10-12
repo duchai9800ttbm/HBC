@@ -73,7 +73,7 @@
         </button>
       </div>
     </div>
-    <div class="set-width-content pt-2" *ngIf="currentStatusInterview > 0 || statusPackage === bidStatus.DaNhanLoiMoi">
+    <div class="set-width-content pt-2" *ngIf="(currentStatusInterview > 0 || statusPackage === bidStatus.DaNhanLoiMoi) && statusPackage !== bidStatus.DaNopHSDT">
       <!-- currentStatusInterview > 0 &&  -->
       <div>
         <div class=" title-list-package d-flex flex-wrap align-items-center status-filter">
