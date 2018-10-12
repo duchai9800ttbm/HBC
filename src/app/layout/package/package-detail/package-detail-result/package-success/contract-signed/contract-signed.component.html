@@ -49,13 +49,13 @@
         </div>
         <div>
             <div class="mt-2 mb-2">
-                <button class="btn btn-primary ml-2" (click)="downloadTemplateContractSigning()">
+                <button class="btn btn-primary ml-1" (click)="downloadTemplateContractSigning()">
                     Tải Template
                 </button>
-                <button class="btn btn-primary ml-2" (click)="uploadContractSigning()">
+                <button class="btn btn-primary ml-1" (click)="uploadContractSigning()">
                     Upload file
                 </button>
-                <button class="btn btn-primary ml-2" (click)="refesh()">
+                <button class="btn btn-primary ml-1" (click)="refesh()">
                     <i class="fa fa-refresh" aria-hidden="true"></i>
                 </button>
             </div>
@@ -68,10 +68,10 @@
                 <span class="input-group-addon">Tìm kiếm theo</span>
                 <input type="text" class="form-control icon" placeholder="&#xf002; Nhập tên" (keyup)="searchTerm$.next($event.target.value)">
             </div>
-            <button class="btn btn-primary ml-2">
+            <button class="btn btn-primary ml-1">
                 Tải xuống tài liệu
             </button>
-            <button class="btn btn-primary ml-2" (click)="deleteContractSign()">
+            <button class="btn btn-primary ml-1" (click)="deleteContractSign()">
                 Xóa
             </button>
         </div>

@@ -6,10 +6,10 @@
                 <span class="input-group-addon">Tìm kiếm theo</span>
                 <input type="text" class="form-control" placeholder="Từ khóa" (keyup)="searchTerm$.next($event.target.value)">
             </div>
-            <button class="btn btn-primary ml-2" [routerLink]="['/settings/location/create']">
+            <button class="btn btn-primary ml-1" [routerLink]="['/settings/location/create']">
                 &nbsp;&nbsp; Thêm mới
             </button>
-            <button class="btn btn-primary ml-2" (click)="deleteMultiple()">
+            <button class="btn btn-primary ml-1" (click)="deleteMultiple()">
                 <i aria-hidden="true" class="fa fa-trash-o"></i>
             </button>
         </div>

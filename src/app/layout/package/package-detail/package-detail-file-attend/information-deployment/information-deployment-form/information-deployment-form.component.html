@@ -17,17 +17,17 @@
                 <!-- <button class="btn btn-primary ml-2">
               Import dữ liệu theo mẫu
           </button> -->
-                <button class="btn btn-primary ml-2" (click)="changeRouterAction('edit')" *ngIf="routerAction == 'view' && packageInfo?.stageStatus.id != bidStatus.DaGuiPhanCongTienDo">Sửa</button>
-                <button class="btn btn-primary ml-2" (click)="submitForm(true)" *ngIf="planForm?.get('isDraftVersion').value && routerAction != 'view'">
+                <button class="btn btn-primary ml-1" (click)="changeRouterAction('edit')" *ngIf="routerAction == 'view' && packageInfo?.stageStatus.id != bidStatus.DaGuiPhanCongTienDo">Sửa</button>
+                <button class="btn btn-primary ml-1" (click)="submitForm(true)" *ngIf="planForm?.get('isDraftVersion').value && routerAction != 'view'">
                     Lưu nháp
                 </button>
-                <button class="btn btn-primary ml-2" *ngIf="routerAction != 'view'" (click)="submitForm(false)">
+                <button class="btn btn-primary ml-1" *ngIf="routerAction != 'view'" (click)="submitForm(false)">
                     Lưu
                 </button>
-                <button class="btn btn-secondary ml-2" *ngIf="routerAction != 'view'" routerLink="../">
+                <button class="btn btn-secondary ml-1" *ngIf="routerAction != 'view'" routerLink="../">
                     Hủy
                 </button>
-                <button class="btn btn-primary ml-2" (click)="refesh()">
+                <button class="btn btn-primary ml-1" (click)="refesh()">
                     <i class="fa fa-refresh" aria-hidden="true"></i>
                 </button>
             </div>

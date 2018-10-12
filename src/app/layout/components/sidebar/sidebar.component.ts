@@ -1,28 +1,27 @@
-import { Component, OnInit, Output, EventEmitter, Input } from "@angular/core";
-import { Observable } from "rxjs/Observable";
-import { AuditItem, PagedResult } from "../../../shared/models/index";
+import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
+import { Observable } from 'rxjs/Observable';
+import { AuditItem, PagedResult } from '../../../shared/models/index';
 import {
     AuditService,
     SessionService,
     UserService
-} from "../../../shared/services/index";
-import { UserModel } from "../../../shared/models/user/user.model";
-import { CallCenterService } from "../../../shared/services/call-center.service";
-import { CallCenterHistoryService } from "../../../shared/services/call-center-history.service";
-import { slideInOut } from "../../../router.animations";
-import { LayoutService } from "../../../shared/services/layout.service";
+} from '../../../shared/services/index';
+import { UserModel } from '../../../shared/models/user/user.model';
+import { CallCenterService } from '../../../shared/services/call-center.service';
+import { CallCenterHistoryService } from '../../../shared/services/call-center-history.service';
+import { slideInOut } from '../../../router.animations';
+import { LayoutService } from '../../../shared/services/layout.service';
 
 @Component({
-    selector: "app-sidebar",
-    templateUrl: "./sidebar.component.html",
-    styleUrls: ["./sidebar.component.scss"],
+    selector: 'app-sidebar',
+    templateUrl: './sidebar.component.html',
+    styleUrls: ['./sidebar.component.scss'],
     animations: [slideInOut()],
 
 })
 export class SidebarComponent implements OnInit {
-    abc = "aaaa";
     isActive = false;
-    showMenu = "";
+    showMenu = '';
     dem = 0;
     avatarSrc: string;
     listPhoneNumber = [];

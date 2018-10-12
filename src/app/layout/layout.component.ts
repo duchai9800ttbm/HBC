@@ -1,16 +1,16 @@
-import { Component, OnInit } from "@angular/core";
-import { Router } from "@angular/router";
-import { IntervalObservable } from "rxjs/observable/IntervalObservable";
-import * as moment from "moment";
-import { AlertService } from "../shared/services/index";
-import { TranslateService } from "@ngx-translate/core";
-import { delay } from "rxjs/operator/delay";
+import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+import { IntervalObservable } from 'rxjs/observable/IntervalObservable';
+import * as moment from 'moment';
+import { AlertService } from '../shared/services/index';
+import { TranslateService } from '@ngx-translate/core';
+import { delay } from 'rxjs/operator/delay';
 import { ScrollToTopService } from '../shared/services/scroll-to-top.service';
 
 @Component({
-    selector: "app-layout",
-    templateUrl: "./layout.component.html",
-    styleUrls: ["./layout.component.scss"]
+    selector: 'app-layout',
+    templateUrl: './layout.component.html',
+    styleUrls: ['./layout.component.scss']
 })
 export class LayoutComponent implements OnInit {
     constructor(
@@ -29,10 +29,10 @@ export class LayoutComponent implements OnInit {
     logo = false;
     ngOnInit() {
         // disable datatable error alerts
-        $.fn.dataTable.ext.errMode = "none";
+        $.fn.dataTable.ext.errMode = 'none';
 
-        if (this.router.url === "/" || this.router.url === "/#/") {
-            this.router.navigate(["/dashboard"]);
+        if (this.router.url === '/' || this.router.url === '/#/') {
+            this.router.navigate(['/dashboard']);
         }
         // IntervalObservable.create(1 * 60 * 1000).subscribe(_ => {
         //     if (window.localStorage["listsNotification"]) {
