@@ -65,6 +65,7 @@ export class CreateInterviewComponent implements OnInit , OnDestroy {
     this.filterModel.interviewTimes = null;
     this.filterModel.receivedDate = null;
     this.interviewInvitationService.getUrlChirld().subscribe( value => {
+      console.log('getUrlChirld', value);
       this.currentStatusInterview = value;
     });
     this.subscription = this.interviewInvitationService.watchInterviewInvitationList().subscribe(value => {
@@ -82,6 +83,7 @@ export class CreateInterviewComponent implements OnInit , OnDestroy {
     // this.subscription.add(searchKey);
 
     const refesh = this.interviewInvitationService.watchRefeshInterviewInvitationList().subscribe(value => {
+      console.log('watchRefeshInterviewInvitationList');
       this.refresh(this.isOnInit);
       this.spinner.hide();
     });

@@ -80,7 +80,7 @@
                             </p>
                         </a>
 
-                        <a *ngIf="item.notificationType === 'GuiDuyetTrinhDuyetGia'" class="w-100" (click)="read(item)" [class.notification--not-read]="item.notificationState?.id === 'UnRead'">
+                        <a *ngIf="item.notificationType === 'GuiDuyetTrinhDuyetGia'" class="dropdown-item py-2" (click)="read(item)" [class.notification--not-read]="item.notificationState?.id === 'UnRead'">
                             <strong>Gói thầu: {{item.bidOpportunityName}}</strong>
                             <div>
                                 <span class="last span--margin">Bạn vừa nhận được yêu cầu Duyệt Trình duyệt giá từ
