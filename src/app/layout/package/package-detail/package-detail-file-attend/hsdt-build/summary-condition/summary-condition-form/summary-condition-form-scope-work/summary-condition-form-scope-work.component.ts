@@ -32,10 +32,21 @@ export class SummaryConditionFormScopeWorkComponent implements OnInit {
 
   ngOnInit() {
     this.loadData();
-    this.createForm();
   }
 
   createForm() {
+    if (!this.dataStepScope) {
+      this.dataStepScope = {
+        phamViBaoGom: [{
+          congTac: '',
+          dienGiaiCongTac: ''
+        }],
+        phamViKhongBaoGom: [{
+          congTac: '',
+          dienGiaiCongTac: ''
+        }],
+      };
+    }
     this.scopeWorkForm = this.fb.group({
       scopeInclude: this.fb.array([]),
       scopeNotInclude: this.fb.array([])
@@ -67,11 +78,12 @@ export class SummaryConditionFormScopeWorkComponent implements OnInit {
 
   loadData() {
     this.hoSoDuThauService.watchDataLiveForm().subscribe(data => {
+      console.log(data);
       const objDataStepScope = data.phamViCongViec;
       if (objDataStepScope) {
-        this.dataStepScope.phamViBaoGom = objDataStepScope.phamViBaoGom;
-        this.dataStepScope.phamViKhongBaoGom = objDataStepScope.phamViKhongBaoGom;
+        this.dataStepScope = objDataStepScope;
       }
+
       if (!this.dataStepScope.phamViBaoGom) {
         this.dataStepScope.phamViBaoGom = [];
         this.dataStepScope.phamViBaoGom.push({
@@ -79,6 +91,7 @@ export class SummaryConditionFormScopeWorkComponent implements OnInit {
           dienGiaiCongTac: ''
         });
       }
+
       if (!this.dataStepScope.phamViKhongBaoGom) {
         this.dataStepScope.phamViKhongBaoGom = [];
         this.dataStepScope.phamViKhongBaoGom.push({
@@ -86,6 +99,9 @@ export class SummaryConditionFormScopeWorkComponent implements OnInit {
           dienGiaiCongTac: ''
         });
       }
+      console.log(this.dataStepScope);
+      this.createForm();
+
     });
   }
 

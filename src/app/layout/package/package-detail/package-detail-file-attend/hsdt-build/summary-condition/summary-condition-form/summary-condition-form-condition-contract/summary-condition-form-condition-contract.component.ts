@@ -35,7 +35,11 @@ export class SummaryConditionFormConditionContractComponent implements OnInit {
     ngOnInit() {
         this.loadData();
         this.createForm();
-        this.conditionContractForm.valueChanges.subscribe(data => this.hoSoDuThauService.emitDataStepConditionContract(data));
+        this.conditionContractForm.valueChanges.subscribe(data => {
+            let obj = new DienGiaiDieuKienHopDong();
+            this.hoSoDuThauService.emitDataStepConditionContract(obj);
+        }
+        );
     }
 
     loadData() {

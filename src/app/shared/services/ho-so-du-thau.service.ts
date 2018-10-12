@@ -256,41 +256,55 @@ export class HoSoDuThauService {
     const obj = HoSoDuThauService.tempDataLiveFormDKDT.value;
     const infoReport = {
       bidOpportunityId: obj.bidOpportunityId,
-      createdEmployeeId: (obj) ? obj.createdEmployeeId : this.employeeId,
+      createdEmployeeId: obj.createdEmployeeId ? obj.createdEmployeeId : this.employeeId,
       updatedEmployeeId: this.employeeId,
       isDraftVersion: obj.isDraftVersion,
       documentName: obj.thongTinDuAn && obj.thongTinDuAn.tenTaiLieu,
       updatedDesc: obj.noiDungCapNhat,
       projectInformation: obj.thongTinDuAn && {
         projectInformation: obj.thongTinDuAn.dienGiaiThongTinDuAn,
-        interviewTimes: obj.thongTinDuAn.lanPhongVan
+        interviewTimes: obj.thongTinDuAn.lanPhongVan,
+        perspectiveImageUrls: obj.thongTinDuAn.hinhAnhPhoiCanh,
+        masterPlanImageUrls: obj.thongTinDuAn.banVeMasterPlan
       },
-      stakeholder: {}, // TODO: Map lại chỗ này, tạm thời bỏ qua
+      stakeholder: {
+        stakeholderGroups: (obj.cacBenLienQuan || []).map(x => ({
+          groupId: x.id,
+          customers: (x.customers || []).map(customer => ({
+            id: customer.customerId,
+            note: customer.note,
+            customerContacts: (customer.contacts || []).map(contact => ({
+              id: contact.id,
+              name: contact.name
+            }))
+          }))
+        }))
+      }, // TODO: Map lại chỗ này, tạm thời bỏ qua
       scopeOfWork: obj.phamViCongViec && {
-        includedWorks: obj.phamViCongViec.phamViBaoGom.map(x => ({
+        includedWorks: (obj.phamViCongViec.phamViBaoGom || []).map(x => ({
           name: x.congTac,
           desc: x.dienGiaiCongTac
         })),
-        nonIncludedWorks: obj.phamViCongViec.phamViKhongBaoGom.map(x => ({
+        nonIncludedWorks: (obj.phamViCongViec.phamViKhongBaoGom || []).map(x => ({
           name: x.congTac,
           desc: x.dienGiaiCongTac
         }))
       },
       nonminatedSubContractor: obj.danhSachNhaThau && {
-        workPackages: obj.danhSachNhaThau.map(x => ({
+        workPackages: (obj.danhSachNhaThau || []).map(x => ({
           name: x.tenGoiCongViec,
           desc: x.ghiChuThem,
           totalCost: x.thanhTien
         }))
       },
       materialsTobeSuppliedOrAppointedByOwner: obj.danhSachVatTu && {
-        materials: obj.danhSachVatTu.map(x => ({
+        materials: (obj.danhSachVatTu || []).map(x => ({
           name: x.tenVatTu,
           desc: x.ghiChuThem
         }))
       },
       mainItemOfTenderSubmission: obj.hoSoDangLuuY && {
-        attentiveDocuments: [...obj.hoSoDangLuuY.taiLieuLuuY],
+        attentiveDocuments: obj.hoSoDangLuuY.taiLieuLuuY,
         quantity: obj.hoSoDangLuuY.soLuong,
         languages: obj.hoSoDangLuuY.ngonNgu
       },
@@ -379,7 +393,7 @@ export class HoSoDuThauService {
           guaranteeDuration: obj.dienGiaiDieuKienHopDong.dieuKienTheoHSMT.thoiGianBaoHanh,
           insurranceMachineOfContractor:
             (obj.dienGiaiDieuKienHopDong.dieuKienTheoHSMT.baoHiem) ?
-              [...obj.dienGiaiDieuKienHopDong.dieuKienTheoHSMT.baoHiem.baoHiemMayMoc] : [],
+              obj.dienGiaiDieuKienHopDong.dieuKienTheoHSMT.baoHiem.baoHiemMayMoc : [],
           insurancePersonOfContractor:
             (obj.dienGiaiDieuKienHopDong.dieuKienTheoHSMT.baoHiem) ?
               obj.dienGiaiDieuKienHopDong.dieuKienTheoHSMT.baoHiem.baoHiemConNguoi : '',
@@ -427,7 +441,7 @@ export class HoSoDuThauService {
           guaranteeDuration: obj.dienGiaiDieuKienHopDong.dieuKienTheoHBC.thoiGianBaoHanh,
           insurranceMachineOfContractor:
             (obj.dienGiaiDieuKienHopDong.dieuKienTheoHBC.baoHiem) ?
-              [...obj.dienGiaiDieuKienHopDong.dieuKienTheoHBC.baoHiem.baoHiemMayMoc] : [],
+              obj.dienGiaiDieuKienHopDong.dieuKienTheoHBC.baoHiem.baoHiemMayMoc : [],
           insurancePersonOfContractor:
             (obj.dienGiaiDieuKienHopDong.dieuKienTheoHBC.baoHiem) ?
               obj.dienGiaiDieuKienHopDong.dieuKienTheoHBC.baoHiem.baoHiemConNguoi : '',
@@ -451,7 +465,7 @@ export class HoSoDuThauService {
             obj.dienGiaiDieuKienHSMT.theoHBC.tienDo.thoiGianHoanThanh : '',
 
           taxTypes: (obj.dienGiaiDieuKienHSMT.theoHBC.cacLoaiThue) ?
-            obj.dienGiaiDieuKienHSMT.theoHBC.cacLoaiThue.map(x => ({
+            (obj.dienGiaiDieuKienHSMT.theoHBC.cacLoaiThue || []).map(x => ({
               key: '',
               value: '',
               displayText: x
@@ -474,7 +488,7 @@ export class HoSoDuThauService {
           progressComletionDate: (obj.dienGiaiDieuKienHSMT.theoHSMT.tienDo) ?
             obj.dienGiaiDieuKienHSMT.theoHSMT.tienDo.thoiGianHoanThanh : '',
           taxTypes: (obj.dienGiaiDieuKienHSMT.theoHSMT.cacLoaiThue) ?
-            obj.dienGiaiDieuKienHSMT.theoHSMT.cacLoaiThue.map(x => ({
+            (obj.dienGiaiDieuKienHSMT.theoHSMT.cacLoaiThue || []).map(x => ({
               key: '',
               value: '',
               displayText: x
@@ -516,20 +530,30 @@ export class HoSoDuThauService {
       dataOut.id = model.id;
       dataOut.bidOpportunityId = model.bidOpportunityId;
       dataOut.documentName = model.documentName;
-      dataOut.createdEmployeeId = model.createdEmployee.employeeId;
-      dataOut.updatedEmployeeId = model.updatedEmployee.employeeId;
+      dataOut.createdEmployeeId = model.createdEmployee && model.createdEmployee.employeeId;
+      dataOut.updatedEmployeeId = model.updatedEmployee && model.updatedEmployee.employeeId;
       dataOut.isDraftVersion = model.isDraftVersion;
       dataOut.thongTinDuAn = model.projectInformation && {
         tenTaiLieu: model.documentName,
         lanPhongVan: (model.projectInformation.interviewTimes) ? model.projectInformation.interviewTimes : 0,
-        hinhAnhPhoiCanh: [],
-        banVeMasterPlan: [],
+        hinhAnhPhoiCanh: model.projectInformation.perspectiveImageUrls,
+        banVeMasterPlan: model.projectInformation.masterPlanImageUrls,
         dienGiaiThongTinDuAn: model.projectInformation.projectInformation
       };
       // TODO: Map lại chỗ StackHolder
-      dataOut.cacBenLienQuan = model.stakeholder;
+      dataOut.cacBenLienQuan = model.stakeholder && (model.stakeholder.stakeholderGroups || []).map(x => ({
+        id: x.groupId,
+        customers: (x.customers || []).map(customer => ({
+          customerId: customer.id,
+          note: customer.note,
+          contacts: (customer.customerContacts || []).map(contact => ({
+            id: contact.id,
+            name: contact.name
+          }))
+        }))
+      }));
       dataOut.phamViCongViec = model.scopeOfWork && {
-        phamViBaoGom: model.scopeOfWork.includedWorks.map(x => ({
+        phamViBaoGom: (model.scopeOfWork.includedWorks || []).map(x => ({
           congTac: x.name,
           dienGiaiCongTac: x.desc
         })),
@@ -548,7 +572,7 @@ export class HoSoDuThauService {
         ghiChuThem: x.desc
       }));
       dataOut.hoSoDangLuuY = model.mainItemOfTenderSubmission && {
-        taiLieuLuuY: [...model.mainItemOfTenderSubmission.attentiveDocuments],
+        taiLieuLuuY: model.mainItemOfTenderSubmission.attentiveDocuments,
         soLuong: model.mainItemOfTenderSubmission.quantity,
         ngonNgu: model.mainItemOfTenderSubmission.languages
       };
@@ -622,7 +646,7 @@ export class HoSoDuThauService {
           thoiGianBaoHanh: (model.contractCondition.hsmtContractCondition.guaranteeDuration) ?
             model.contractCondition.hsmtContractCondition.guaranteeDuration : 0,
           baoHiem: model.contractCondition.hsmtContractCondition && {
-            baoHiemMayMoc: [...model.contractCondition.hsmtContractCondition.insurranceMachineOfContractor],
+            baoHiemMayMoc: model.contractCondition.hsmtContractCondition.insurranceMachineOfContractor,
             baoHiemConNguoi: model.contractCondition.hsmtContractCondition.insurancePersonOfContractor,
             baoHiemCongTrinh: model.contractCondition.hsmtContractCondition.insurranceConstructionAnd3rdPart
           }
@@ -654,14 +678,14 @@ export class HoSoDuThauService {
           },
           thoiGianBaoHanh: model.contractCondition.hbcContractCondition.guaranteeDuration,
           baoHiem: model.contractCondition.hbcContractCondition && {
-            baoHiemMayMoc: [...model.contractCondition.hbcContractCondition.insurranceMachineOfContractor],
+            baoHiemMayMoc: model.contractCondition.hbcContractCondition.insurranceMachineOfContractor,
             baoHiemConNguoi: model.contractCondition.hbcContractCondition.insurancePersonOfContractor,
             baoHiemCongTrinh: model.contractCondition.hbcContractCondition.insurranceConstructionAnd3rdPart
           }
         }
       };
       dataOut.dienGiaiDieuKienHSMT = model.tenderCondition && {
-        theoHSMT: model.tenderCondition.hbcTenderCondition && {
+        theoHBC: model.tenderCondition.hbcTenderCondition && {
           baoLanhDuThau: model.tenderCondition.hbcTenderCondition && {
             giaTri: (model.tenderCondition.hbcTenderCondition.tenderGuaranteeValue) ?
               model.tenderCondition.hbcTenderCondition.tenderGuaranteeValue : 0,
@@ -676,9 +700,9 @@ export class HoSoDuThauService {
 
           // TODO: Chú ý map lại ID, KEY, DISPLAYTEXT
           cacLoaiThue: (model.tenderCondition.hbcTenderCondition.taxTypes || []).map(x => x.displayText),
-          donViTienTe: (model.tenderCondition.hbcTenderCondition.currency || []).map(x => x.displayText)
+          donViTienTe: model.tenderCondition.hbcTenderCondition.currency &&  model.tenderCondition.hbcTenderCondition.currency.displayText
         },
-        theoHBC: model.tenderCondition.hsmtTenderCondition && {
+        theoHSMT: model.tenderCondition.hsmtTenderCondition && {
           baoLanhDuThau: model.tenderCondition.hsmtTenderCondition && {
             giaTri: (model.tenderCondition.hsmtTenderCondition.tenderGuaranteeValue) ?
               model.tenderCondition.hsmtTenderCondition.tenderGuaranteeValue : 0,
@@ -692,7 +716,7 @@ export class HoSoDuThauService {
           },
           // TODO: Chú ý map lại ID, KEY, DISPLAYTEXT
           cacLoaiThue: (model.tenderCondition.hsmtTenderCondition.taxTypes || []).map(x => x.displayText),
-          donViTienTe: (model.tenderCondition.hsmtTenderCondition.currency || []).map(x => x.displayText)
+          donViTienTe: model.tenderCondition.hsmtTenderCondition.currency && model.tenderCondition.hsmtTenderCondition.currency.displayText
         }
       };
       // TODO: Map lại chỗ này
