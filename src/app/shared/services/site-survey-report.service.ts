@@ -94,9 +94,10 @@ export class SiteSurveyReportService {
     const url = `bidopportunity/tendersitesurveyingreport/createorupdate`;
     const infoReport = {
       bidOpportunityId: obj.bidOpportunityId,
-      createdEmployeeId: obj.nguoiTao.id,
-      updatedEmployeeId: (obj.nguoiCapNhat) ? obj.nguoiCapNhat.id : this.employeeId,
-      // TODO: Map lại 2 field chỗ này
+      createdEmployeeId: (obj.nguoiTao) ? obj.nguoiTao.id : this.employeeId,
+      updatedEmployeeId: this.employeeId,
+      departmentId: obj.phongBan && obj.phongBan.id,
+      surveyEmployeeId: obj.nguoiCapNhat && obj.nguoiCapNhat.id,
       projectStatistic: obj.scaleOverall && {
         projectStatistic: {
           constructionType: obj.scaleOverall.loaiCongTrinh && obj.scaleOverall.loaiCongTrinh.forEach(x => ({

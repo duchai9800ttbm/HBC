@@ -1,15 +1,15 @@
 <div class="detail-info">
     <div class="step-info">
-        <h6 class="big-title">7.&nbsp;các thông tin hữu ích khác/ usefull infomation</h6>
+        <h6 class="big-title font-weight-bold">7.&nbsp;các thông tin hữu ích khác/ usefull infomation</h6>
         <div>
             <div class="detail-each-title">
-                <h6 class="small-title">Những chủ đề trên nếu thấy cần thiết thì làm riêng
+                <h6 class="small-title font-weight-bold">Những chủ đề trên nếu thấy cần thiết thì làm riêng
                     một report cho chủ đề đó</h6>
                 <ng-container *ngIf="usefulInfoData.length">
                     <ng-container *ngFor="let subject of usefulInfoData; let i = index">
                         <div class="list-detail">
                             <div class="img-demo-des">
-                                <label for="">7.{{ i+1 }} Chủ đề</label>
+                                <label class="font-weight-bold">7.{{ i+1 }} Chủ đề</label>
                             </div>
                         </div>
                         <app-subject-item [usefulInfo]="subject" (watchingChild)="endPointValue($event, i)"

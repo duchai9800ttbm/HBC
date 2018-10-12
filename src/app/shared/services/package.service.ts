@@ -475,7 +475,10 @@ export class PackageService {
                 acceptanceReason: result.acceptanceReason,
                 unacceptanceReason: result.unacceptanceReason,
                 cancelReason: result.cancelReason,
-                evaluation: result.evaluation,
+                evaluation: result.evaluation && {
+                    id: result.evaluation.key,
+                    text: result.evaluation.value
+                },
                 startTrackingDate: result.startTrackingDate,
                 submissionDate: result.submissionDate,
                 resultEstimatedDate: result.resultEstimatedDate,
@@ -622,7 +625,6 @@ export class PackageService {
     // Tạo mới gói thầu
     createOpportunity(formValue: any): Observable<any> {
         const url = `bidopportunity/create`;
-        console.log('formValue.projectEstimatedStartDate', formValue.projectEstimatedStartDate);
         const inforPackage = {
             projectName: formValue.projectName,
             projectNo: formValue.projectNo,
@@ -652,7 +654,7 @@ export class PackageService {
                 : 0,
             bidStatusId: formValue.bidStatusId,
             amount: formValue.amount ? formValue.amount : 0,
-            evaluation: formValue.evaluation,
+            evaluation: formValue.evaluationId,
             startTrackingDate: moment(formValue.startTrackingDate).unix(),
             submissionDate: moment(formValue.submissionDate).unix(),
             resultEstimatedDate: moment(formValue.resultEstimatedDate).unix(),
@@ -703,7 +705,7 @@ export class PackageService {
                 : 0,
             bidStatusId: formValue.bidStatusId,
             amount: formValue.amount ? formValue.amount : 0,
-            evaluation: formValue.evaluation,
+            evaluation: formValue.evaluationId,
             startTrackingDate: moment(formValue.startTrackingDate).unix(),
             submissionDate: moment(formValue.submissionDate).unix(),
             resultEstimatedDate: moment(formValue.resultEstimatedDate).unix(),

@@ -17,10 +17,10 @@
     <div class="controll-bar">
         <div class="btn-toolbar mt-2 mb-2">
             <div>
-                <button id="printButton" *ngIf="isDraft" class="btn btn-primary ml-2" (click)="updateliveform()">
+                <button id="printButton" *ngIf="isDraft" class="btn btn-primary ml-2" (click)="updateliveform(true)">
                     Lưu bản nháp
                 </button>
-                <button id="printButton" *ngIf="!isDraft" class="btn btn-primary ml-2" (click)="updateliveform()">
+                <button id="printButton" class="btn btn-primary ml-2" (click)="updateliveform(false)">
                     Lưu
                 </button>
                 <button type="button" class="btn btn-up disable ml-2" (click)="cancelCreateUpdate()">
@@ -36,20 +36,20 @@
 
 <div class="content-report">
     <div id="toggle-menu-item">
-        <div class="toggle-menu-item" [routerLinkActive]="['router-link-active']" [routerLink]="['./scale']">1.&nbsp;
-            Quy mô tổng quan công trình</div>
-        <div class="toggle-menu-item" [routerLinkActive]="['router-link-active']" [routerLink]="['./describe']">2.&nbsp;
-            Mô tả tổng quát công trường</div>
-        <div class="toggle-menu-item" [routerLinkActive]="['router-link-active']" [routerLink]="['./traffic']">3.&nbsp;
-            Giao thông và lối vào công trường</div>
-        <div class="toggle-menu-item" [routerLinkActive]="['router-link-active']" [routerLink]="['./demo-conso']">4.&nbsp;
-            Phá vỡ và gia cố</div>
-        <div class="toggle-menu-item" [routerLinkActive]="['router-link-active']" [routerLink]="['./service-construction']">5.&nbsp;
-            Dịch vụ cơ điện phục vụ thi công</div>
-        <div class="toggle-menu-item" [routerLinkActive]="['router-link-active']" [routerLink]="['./soil']">6.&nbsp;
-            Điều kiện để đất nền hiện hữu</div>
-        <div class="toggle-menu-item" [routerLinkActive]="['router-link-active']" [routerLink]="['./moreinfo']">7.&nbsp;
-            Thông tin hữu ích khác</div>
+        <div title="Quy mô tổng quan công trình" class="toggle-menu-item text-truncate" [routerLinkActive]="['router-link-active']" [routerLink]="['./scale']">
+            1.&nbsp;Quy mô tổng quan công trình</div>
+        <div title="Mô tả tổng quát công trường" class="toggle-menu-item text-truncate" [routerLinkActive]="['router-link-active']" [routerLink]="['./describe']">
+            2.&nbsp;Mô tả tổng quát công trường</div>
+        <div title="Giao thông và lối vào công trường" class="toggle-menu-item text-truncate" [routerLinkActive]="['router-link-active']" [routerLink]="['./traffic']">
+            3.&nbsp;Giao thông và lối vào công trường</div>
+        <div title="Phá vỡ và gia cố" class="toggle-menu-item text-truncate" [routerLinkActive]="['router-link-active']" [routerLink]="['./demo-conso']">
+            4.&nbsp;Phá vỡ và gia cố</div>
+        <div title="Dịch vụ cơ điện phục vụ thi công" class="toggle-menu-item text-truncate" [routerLinkActive]="['router-link-active']" [routerLink]="['./service-construction']">
+            5.&nbsp;Dịch vụ cơ điện phục vụ thi công</div>
+        <div title="Điều kiện để đất nền hiện hữu" class="toggle-menu-item text-truncate" [routerLinkActive]="['router-link-active']" [routerLink]="['./soil']">
+            6.&nbsp;Điều kiện để đất nền hiện hữu</div>
+        <div title="Thông tin hữu ích khác" class="toggle-menu-item text-truncate" [routerLinkActive]="['router-link-active']" [routerLink]="['./moreinfo']">
+            7.&nbsp;Thông tin hữu ích khác</div>
     </div>
 
     <div id="info-document">
@@ -80,6 +80,7 @@
                     <div class="titleHeader w-40">Người khảo sát/liên hệ:</div>
                     <div class="infoHeader">
                         <select class="custom-select-option option-set-width" [(ngModel)]="customer">
+                            <option [value]="null">---Chọn---</option>
                             <option *ngFor="let item of listCustomerContact" [value]="item">
                                 {{ item.employeeName }}
                             </option>
