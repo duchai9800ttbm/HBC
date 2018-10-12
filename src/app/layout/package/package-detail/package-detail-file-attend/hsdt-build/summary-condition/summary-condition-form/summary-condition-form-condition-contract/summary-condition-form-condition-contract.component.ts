@@ -34,12 +34,7 @@ export class SummaryConditionFormConditionContractComponent implements OnInit {
 
     ngOnInit() {
         this.loadData();
-        this.createForm();
-        this.conditionContractForm.valueChanges.subscribe(data => {
-            let obj = new DienGiaiDieuKienHopDong();
-            this.hoSoDuThauService.emitDataStepConditionContract(obj);
-        }
-        );
+
     }
 
     loadData() {
@@ -78,35 +73,46 @@ export class SummaryConditionFormConditionContractComponent implements OnInit {
                     }
                 };
                 this.dataStepConditionContract.dieuKienTheoHBC = objDataStepConditionContract.dieuKienTheoHBC && {
-                    baoLanhThucHien: objDataStepConditionContract.dieuKienTheoHSMT.baoLanhThucHien && {
-                        phanTram: objDataStepConditionContract.dieuKienTheoHSMT.baoLanhThucHien.phanTram,
-                        hieuLuc: objDataStepConditionContract.dieuKienTheoHSMT.baoLanhThucHien.hieuLuc
+                    baoLanhThucHien: objDataStepConditionContract.dieuKienTheoHBC.baoLanhThucHien && {
+                        phanTram: objDataStepConditionContract.dieuKienTheoHBC.baoLanhThucHien.phanTram,
+                        hieuLuc: objDataStepConditionContract.dieuKienTheoHBC.baoLanhThucHien.hieuLuc
                     },
-                    baoLanhTamUng: objDataStepConditionContract.dieuKienTheoHSMT.baoLanhTamUng && {
-                        phanTram: objDataStepConditionContract.dieuKienTheoHSMT.baoLanhTamUng.phanTram,
-                        hieuLuc: objDataStepConditionContract.dieuKienTheoHSMT.baoLanhTamUng.hieuLuc
+                    baoLanhTamUng: objDataStepConditionContract.dieuKienTheoHBC.baoLanhTamUng && {
+                        phanTram: objDataStepConditionContract.dieuKienTheoHBC.baoLanhTamUng.phanTram,
+                        hieuLuc: objDataStepConditionContract.dieuKienTheoHBC.baoLanhTamUng.hieuLuc
                     },
-                    thanhToan: objDataStepConditionContract.dieuKienTheoHSMT.thanhToan && {
-                        loaiThanhToan: objDataStepConditionContract.dieuKienTheoHSMT.thanhToan.loaiThanhToan,
-                        thoiGianThanhToan: objDataStepConditionContract.dieuKienTheoHSMT.thanhToan.thoiGianThanhToan,
-                        thanhToanKhiTapKet: objDataStepConditionContract.dieuKienTheoHSMT.thanhToan.thanhToanKhiTapKet
+                    thanhToan: objDataStepConditionContract.dieuKienTheoHBC.thanhToan && {
+                        loaiThanhToan: objDataStepConditionContract.dieuKienTheoHBC.thanhToan.loaiThanhToan,
+                        thoiGianThanhToan: objDataStepConditionContract.dieuKienTheoHBC.thanhToan.thoiGianThanhToan,
+                        thanhToanKhiTapKet: objDataStepConditionContract.dieuKienTheoHBC.thanhToan.thanhToanKhiTapKet
                     },
-                    tienGiuLai: objDataStepConditionContract.dieuKienTheoHSMT.tienGiuLai && {
-                        phanTram: objDataStepConditionContract.dieuKienTheoHSMT.tienGiuLai.phanTram,
-                        gioiHanTienGiuLai: objDataStepConditionContract.dieuKienTheoHSMT.tienGiuLai.gioiHanTienGiuLai,
-                        thanhToanTienGui: objDataStepConditionContract.dieuKienTheoHSMT.tienGiuLai.thanhToanTienGui
+                    tienGiuLai: objDataStepConditionContract.dieuKienTheoHBC.tienGiuLai && {
+                        phanTram: objDataStepConditionContract.dieuKienTheoHBC.tienGiuLai.phanTram,
+                        gioiHanTienGiuLai: objDataStepConditionContract.dieuKienTheoHBC.tienGiuLai.gioiHanTienGiuLai,
+                        thanhToanTienGui: objDataStepConditionContract.dieuKienTheoHBC.tienGiuLai.thanhToanTienGui
                     },
-                    phatTreTienDo: objDataStepConditionContract.dieuKienTheoHSMT.phatTreTienDo && {
-                        phanTram: objDataStepConditionContract.dieuKienTheoHSMT.phatTreTienDo.phanTram,
-                        gioiHanPhatTienDo: objDataStepConditionContract.dieuKienTheoHSMT.phatTreTienDo.gioiHanPhatTienDo
+                    phatTreTienDo: objDataStepConditionContract.dieuKienTheoHBC.phatTreTienDo && {
+                        phanTram: objDataStepConditionContract.dieuKienTheoHBC.phatTreTienDo.phanTram,
+                        gioiHanPhatTienDo: objDataStepConditionContract.dieuKienTheoHBC.phatTreTienDo.gioiHanPhatTienDo
                     },
-                    thoiGianBaoHanh: objDataStepConditionContract.dieuKienTheoHSMT.thoiGianBaoHanh,
-                    baoHiem: objDataStepConditionContract.dieuKienTheoHSMT.baoHiem && {
-                        baoHiemMayMoc: objDataStepConditionContract.dieuKienTheoHSMT.baoHiem.baoHiemMayMoc,
-                        baoHiemConNguoi: objDataStepConditionContract.dieuKienTheoHSMT.baoHiem.baoHiemConNguoi,
-                        baoHiemCongTrinh: objDataStepConditionContract.dieuKienTheoHSMT.baoHiem.baoHiemCongTrinh
+                    thoiGianBaoHanh: objDataStepConditionContract.dieuKienTheoHBC.thoiGianBaoHanh,
+                    baoHiem: objDataStepConditionContract.dieuKienTheoHBC.baoHiem && {
+                        baoHiemMayMoc: objDataStepConditionContract.dieuKienTheoHBC.baoHiem.baoHiemMayMoc,
+                        baoHiemConNguoi: objDataStepConditionContract.dieuKienTheoHBC.baoHiem.baoHiemConNguoi,
+                        baoHiemCongTrinh: objDataStepConditionContract.dieuKienTheoHBC.baoHiem.baoHiemCongTrinh
                     }
                 };
+
+                if (!this.dataStepConditionContract.dieuKienTheoHSMT.baoHiem.baoHiemMayMoc ||
+                    this.dataStepConditionContract.dieuKienTheoHSMT.baoHiem.baoHiemMayMoc.length === 0) {
+                    this.dataStepConditionContract.dieuKienTheoHSMT.baoHiem.baoHiemMayMoc = [];
+                    this.dataStepConditionContract.dieuKienTheoHSMT.baoHiem.baoHiemMayMoc.push('');
+                }
+                if (!this.dataStepConditionContract.dieuKienTheoHBC.baoHiem.baoHiemMayMoc ||
+                    this.dataStepConditionContract.dieuKienTheoHBC.baoHiem.baoHiemMayMoc.length === 0) {
+                    this.dataStepConditionContract.dieuKienTheoHBC.baoHiem.baoHiemMayMoc = [];
+                    this.dataStepConditionContract.dieuKienTheoHBC.baoHiem.baoHiemMayMoc.push('');
+                }
             }
             if (!objDataStepConditionContract) {
                 this.dataStepConditionContract = {
@@ -176,6 +182,9 @@ export class SummaryConditionFormConditionContractComponent implements OnInit {
                     }
                 };
             }
+
+            this.createForm();
+
         });
     }
 
@@ -471,7 +480,7 @@ export class SummaryConditionFormConditionContractComponent implements OnInit {
                     },
                     thoiGianBaoHanh: data.dieuKienTheoHSMT.thoiGianBaoHanh,
                     baoHiem: data.dieuKienTheoHSMT.baoHiem && {
-                        baoHiemMayMoc: data.dieuKienTheoHSMT.baoHiem.baoHiemMayMoc,
+                        baoHiemMayMoc: (data.dieuKienTheoHSMT.baoHiem.baoHiemMayMoc || []).map(x => x.baoHiemItem),
                         baoHiemConNguoi: data.dieuKienTheoHSMT.baoHiem.baoHiemConNguoi,
                         baoHiemCongTrinh: data.dieuKienTheoHSMT.baoHiem.baoHiemCongTrinh
                     }
@@ -501,12 +510,13 @@ export class SummaryConditionFormConditionContractComponent implements OnInit {
                     },
                     thoiGianBaoHanh: data.dieuKienTheoHBC.thoiGianBaoHanh,
                     baoHiem: data.dieuKienTheoHBC.baoHiem && {
-                        baoHiemMayMoc: data.dieuKienTheoHBC.baoHiem.baoHiemMayMoc,
+                        baoHiemMayMoc: (data.dieuKienTheoHBC.baoHiem.baoHiemMayMoc || []).map(x => x.baoHiemItem),
                         baoHiemConNguoi: data.dieuKienTheoHBC.baoHiem.baoHiemConNguoi,
                         baoHiemCongTrinh: data.dieuKienTheoHBC.baoHiem.baoHiemCongTrinh
                     }
                 }
             };
+            this.hoSoDuThauService.emitDataStepConditionContract(objData);
         });
 
     }

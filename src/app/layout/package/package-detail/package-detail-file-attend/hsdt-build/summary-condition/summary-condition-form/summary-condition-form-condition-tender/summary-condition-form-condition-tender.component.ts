@@ -216,7 +216,6 @@ export class SummaryConditionFormConditionTenderComponent implements OnInit {
                     }
                 };
             }
-            console.log(this.dienGiaiDieuKienHSMT);
             this.createForm();
         });
     }

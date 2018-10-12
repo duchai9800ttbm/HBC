@@ -25,7 +25,6 @@ export class SummaryConditionFormNonminatedSubConstructorComponent implements On
 
   ngOnInit() {
     this.loadData();
-    this.createForm();
   }
 
 
@@ -59,16 +58,17 @@ export class SummaryConditionFormNonminatedSubConstructorComponent implements On
   loadData() {
     this.hoSoDuThauService.watchDataLiveForm().subscribe(data => {
       const obj = data.danhSachNhaThau;
-      if (obj) {
+      if (obj && obj.length > 0) {
         this.nhaThauPhu = obj;
-      }
-      if (!obj) {
+      } else {
+        this.nhaThauPhu = [];
         this.nhaThauPhu.push({
           tenGoiCongViec: '',
           ghiChuThem: '',
-          thanhTien: null
+          thanhTien: 0
         });
       }
+      this.createForm();
     });
   }
 

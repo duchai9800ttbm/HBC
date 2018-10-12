@@ -35,18 +35,6 @@ export class SummaryConditionFormScopeWorkComponent implements OnInit {
   }
 
   createForm() {
-    if (!this.dataStepScope) {
-      this.dataStepScope = {
-        phamViBaoGom: [{
-          congTac: '',
-          dienGiaiCongTac: ''
-        }],
-        phamViKhongBaoGom: [{
-          congTac: '',
-          dienGiaiCongTac: ''
-        }],
-      };
-    }
     this.scopeWorkForm = this.fb.group({
       scopeInclude: this.fb.array([]),
       scopeNotInclude: this.fb.array([])
@@ -69,8 +57,14 @@ export class SummaryConditionFormScopeWorkComponent implements OnInit {
     this.scopeWorkForm.valueChanges.subscribe(data => {
       let obj = new PhamViCongViec();
       obj = {
-        phamViBaoGom: data.scopeInclude,
-        phamViKhongBaoGom: data.scopeNotInclude
+        phamViBaoGom: data.scopeInclude.map(x => ({
+          congTac: x.congTac,
+          dienGiaiCongTac: x.dienGiaiCongTac
+        })),
+        phamViKhongBaoGom: data.scopeNotInclude.map(x => ({
+          congTac: x.congTac,
+          dienGiaiCongTac: x.dienGiaiCongTac
+        }))
       };
       this.hoSoDuThauService.emitDataStepScope(obj);
     });
@@ -78,13 +72,24 @@ export class SummaryConditionFormScopeWorkComponent implements OnInit {
 
   loadData() {
     this.hoSoDuThauService.watchDataLiveForm().subscribe(data => {
-      console.log(data);
       const objDataStepScope = data.phamViCongViec;
       if (objDataStepScope) {
         this.dataStepScope = objDataStepScope;
       }
 
-      if (!this.dataStepScope.phamViBaoGom) {
+      if (!this.dataStepScope) {
+        this.dataStepScope = {
+          phamViBaoGom: [{
+            congTac: '',
+            dienGiaiCongTac: ''
+          }],
+          phamViKhongBaoGom: [{
+            congTac: '',
+            dienGiaiCongTac: ''
+          }],
+        };
+      }
+      if (!this.dataStepScope.phamViBaoGom || this.dataStepScope.phamViBaoGom.length === 0) {
         this.dataStepScope.phamViBaoGom = [];
         this.dataStepScope.phamViBaoGom.push({
           congTac: '',
@@ -92,14 +97,13 @@ export class SummaryConditionFormScopeWorkComponent implements OnInit {
         });
       }
 
-      if (!this.dataStepScope.phamViKhongBaoGom) {
+      if (!this.dataStepScope.phamViKhongBaoGom || this.dataStepScope.phamViKhongBaoGom.length === 0) {
         this.dataStepScope.phamViKhongBaoGom = [];
         this.dataStepScope.phamViKhongBaoGom.push({
           congTac: '',
           dienGiaiCongTac: ''
         });
       }
-      console.log(this.dataStepScope);
       this.createForm();
 
     });

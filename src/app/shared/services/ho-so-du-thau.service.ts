@@ -259,7 +259,7 @@ export class HoSoDuThauService {
       createdEmployeeId: obj.createdEmployeeId ? obj.createdEmployeeId : this.employeeId,
       updatedEmployeeId: this.employeeId,
       isDraftVersion: obj.isDraftVersion,
-      documentName: obj.thongTinDuAn && obj.thongTinDuAn.tenTaiLieu,
+      documentName: obj.thongTinDuAn && obj.thongTinDuAn.tenTaiLieu ? obj.thongTinDuAn.tenTaiLieu : '',
       updatedDesc: obj.noiDungCapNhat,
       projectInformation: obj.thongTinDuAn && {
         projectInformation: obj.thongTinDuAn.dienGiaiThongTinDuAn,
@@ -347,7 +347,7 @@ export class HoSoDuThauService {
         hsmtContractCondition: obj.dienGiaiDieuKienHopDong.dieuKienTheoHSMT && {
           executiveGuaranteePercent:
             (obj.dienGiaiDieuKienHopDong.dieuKienTheoHSMT.baoLanhThucHien) ?
-              obj.dienGiaiDieuKienHopDong.dieuKienTheoHSMT.baoLanhThucHien.phanTram : '',
+              obj.dienGiaiDieuKienHopDong.dieuKienTheoHSMT.baoLanhThucHien.phanTram : 0,
 
           executiveGuaranteeEfficiency:
             (obj.dienGiaiDieuKienHopDong.dieuKienTheoHSMT.baoLanhThucHien) ?
@@ -355,7 +355,7 @@ export class HoSoDuThauService {
 
           advanceGuaranteePercent:
             (obj.dienGiaiDieuKienHopDong.dieuKienTheoHSMT.baoLanhTamUng) ?
-              obj.dienGiaiDieuKienHopDong.dieuKienTheoHSMT.baoLanhTamUng.phanTram : '',
+              obj.dienGiaiDieuKienHopDong.dieuKienTheoHSMT.baoLanhTamUng.phanTram : 0,
 
           advanceGuaranteeEfficiency:
             (obj.dienGiaiDieuKienHopDong.dieuKienTheoHSMT.baoLanhTamUng) ?
@@ -375,7 +375,7 @@ export class HoSoDuThauService {
 
           retainedPercent:
             (obj.dienGiaiDieuKienHopDong.dieuKienTheoHSMT.tienGiuLai) ?
-              obj.dienGiaiDieuKienHopDong.dieuKienTheoHSMT.tienGiuLai.phanTram : '',
+              obj.dienGiaiDieuKienHopDong.dieuKienTheoHSMT.tienGiuLai.phanTram : 0,
 
           retainedLimit:
             (obj.dienGiaiDieuKienHopDong.dieuKienTheoHSMT.tienGiuLai) ?
@@ -383,17 +383,16 @@ export class HoSoDuThauService {
 
           retainedPayment:
             (obj.dienGiaiDieuKienHopDong.dieuKienTheoHSMT.tienGiuLai) ?
-              obj.dienGiaiDieuKienHopDong.dieuKienTheoHSMT.tienGiuLai.thanhToanTienGui : '',
+              (obj.dienGiaiDieuKienHopDong.dieuKienTheoHSMT.tienGiuLai.thanhToanTienGui
+                ? obj.dienGiaiDieuKienHopDong.dieuKienTheoHSMT.tienGiuLai.thanhToanTienGui : 0) : 0,
           punishhOverduePercent:
             (obj.dienGiaiDieuKienHopDong.dieuKienTheoHSMT.phatTreTienDo) ?
-              obj.dienGiaiDieuKienHopDong.dieuKienTheoHSMT.phatTreTienDo.phanTram : '',
+              obj.dienGiaiDieuKienHopDong.dieuKienTheoHSMT.phatTreTienDo.phanTram : 0,
           punishhOverdueLimit:
             (obj.dienGiaiDieuKienHopDong.dieuKienTheoHSMT.phatTreTienDo) ?
               obj.dienGiaiDieuKienHopDong.dieuKienTheoHSMT.phatTreTienDo.gioiHanPhatTienDo : '',
           guaranteeDuration: obj.dienGiaiDieuKienHopDong.dieuKienTheoHSMT.thoiGianBaoHanh,
-          insurranceMachineOfContractor:
-            (obj.dienGiaiDieuKienHopDong.dieuKienTheoHSMT.baoHiem) ?
-              obj.dienGiaiDieuKienHopDong.dieuKienTheoHSMT.baoHiem.baoHiemMayMoc : [],
+          insurranceMachineOfContractor: (obj.dienGiaiDieuKienHopDong.dieuKienTheoHSMT.baoHiem.baoHiemMayMoc || []).map(x => x),
           insurancePersonOfContractor:
             (obj.dienGiaiDieuKienHopDong.dieuKienTheoHSMT.baoHiem) ?
               obj.dienGiaiDieuKienHopDong.dieuKienTheoHSMT.baoHiem.baoHiemConNguoi : '',
@@ -425,23 +424,21 @@ export class HoSoDuThauService {
               obj.dienGiaiDieuKienHopDong.dieuKienTheoHBC.thanhToan.thanhToanKhiTapKet : '',
           retainedPercent:
             (obj.dienGiaiDieuKienHopDong.dieuKienTheoHBC.tienGiuLai) ?
-              obj.dienGiaiDieuKienHopDong.dieuKienTheoHBC.tienGiuLai.phanTram : '',
+              obj.dienGiaiDieuKienHopDong.dieuKienTheoHBC.tienGiuLai.phanTram : 0,
           retainedLimit:
             (obj.dienGiaiDieuKienHopDong.dieuKienTheoHBC.tienGiuLai) ?
-              obj.dienGiaiDieuKienHopDong.dieuKienTheoHBC.tienGiuLai.gioiHanTienGiuLai : '',
+              obj.dienGiaiDieuKienHopDong.dieuKienTheoHBC.tienGiuLai.gioiHanTienGiuLai : 0,
           retainedPayment:
             (obj.dienGiaiDieuKienHopDong.dieuKienTheoHBC.tienGiuLai) ?
               obj.dienGiaiDieuKienHopDong.dieuKienTheoHBC.tienGiuLai.thanhToanTienGui : '',
           punishhOverduePercent:
             (obj.dienGiaiDieuKienHopDong.dieuKienTheoHBC.phatTreTienDo) ?
-              obj.dienGiaiDieuKienHopDong.dieuKienTheoHBC.phatTreTienDo.phanTram : '',
+              obj.dienGiaiDieuKienHopDong.dieuKienTheoHBC.phatTreTienDo.phanTram : 0,
           punishhOverdueLimit:
             (obj.dienGiaiDieuKienHopDong.dieuKienTheoHBC.phatTreTienDo) ?
               obj.dienGiaiDieuKienHopDong.dieuKienTheoHBC.phatTreTienDo.gioiHanPhatTienDo : '',
           guaranteeDuration: obj.dienGiaiDieuKienHopDong.dieuKienTheoHBC.thoiGianBaoHanh,
-          insurranceMachineOfContractor:
-            (obj.dienGiaiDieuKienHopDong.dieuKienTheoHBC.baoHiem) ?
-              obj.dienGiaiDieuKienHopDong.dieuKienTheoHBC.baoHiem.baoHiemMayMoc : [],
+          insurranceMachineOfContractor: (obj.dienGiaiDieuKienHopDong.dieuKienTheoHBC.baoHiem.baoHiemMayMoc || []).map(x => x),
           insurancePersonOfContractor:
             (obj.dienGiaiDieuKienHopDong.dieuKienTheoHBC.baoHiem) ?
               obj.dienGiaiDieuKienHopDong.dieuKienTheoHBC.baoHiem.baoHiemConNguoi : '',
@@ -562,7 +559,7 @@ export class HoSoDuThauService {
           dienGiaiCongTac: x.desc
         }))
       };
-      dataOut.danhSachNhaThau = (model.nonminatedSubContractor.workPackages || []).map(x => ({
+      dataOut.danhSachNhaThau = model.nonminatedSubContractor && (model.nonminatedSubContractor.workPackages || []).map(x => ({
         tenGoiCongViec: x.name,
         ghiChuThem: x.desc,
         thanhTien: x.totalCost
@@ -669,7 +666,8 @@ export class HoSoDuThauService {
           },
           tienGiuLai: model.contractCondition.hbcContractCondition && {
             phanTram: model.contractCondition.hbcContractCondition.retainedPercent,
-            gioiHanTienGiuLai: model.contractCondition.hbcContractCondition.retainedLimit,
+            gioiHanTienGiuLai: model.contractCondition.hbcContractCondition.retainedLimit ?
+              model.contractCondition.hbcContractCondition.retainedLimit : 0,
             thanhToanTienGui: model.contractCondition.hbcContractCondition.retainedPayment
           },
           phatTreTienDo: model.contractCondition.hbcContractCondition && {
@@ -700,7 +698,7 @@ export class HoSoDuThauService {
 
           // TODO: Chú ý map lại ID, KEY, DISPLAYTEXT
           cacLoaiThue: (model.tenderCondition.hbcTenderCondition.taxTypes || []).map(x => x.displayText),
-          donViTienTe: model.tenderCondition.hbcTenderCondition.currency &&  model.tenderCondition.hbcTenderCondition.currency.displayText
+          donViTienTe: model.tenderCondition.hbcTenderCondition.currency && model.tenderCondition.hbcTenderCondition.currency.displayText
         },
         theoHSMT: model.tenderCondition.hsmtTenderCondition && {
           baoLanhDuThau: model.tenderCondition.hsmtTenderCondition && {

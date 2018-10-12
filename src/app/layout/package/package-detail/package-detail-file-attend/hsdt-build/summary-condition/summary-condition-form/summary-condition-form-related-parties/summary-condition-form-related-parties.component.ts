@@ -26,7 +26,6 @@ export class SummaryConditionFormRelatedPartiesComponent implements OnInit {
   }
 
   loadData() {
-    console.log('reare', HoSoDuThauService.tempDataLiveFormDKDT.value);
     this.hoSoDuThauService.watchDataLiveForm().subscribe(data => {
       const objDataStepRelate = data.cacBenLienQuan;
       this.isFormChange = data.isChangeFormCacBenLienQuan;
@@ -48,8 +47,7 @@ export class SummaryConditionFormRelatedPartiesComponent implements OnInit {
         if (this.isFormChange) {
           this.stakeHolderList = this.cacBenLienQuan;
         }
-        console.log(this.cacBenLienQuan);
-        console.log(this.stakeHolderList);
+
         // merged two array object
         for (const group of this.stakeHolderList) {
           for (const groupLiveForm of this.cacBenLienQuan) {
@@ -67,8 +65,7 @@ export class SummaryConditionFormRelatedPartiesComponent implements OnInit {
           }
         }
 
-        console.log(this.cacBenLienQuan);
-        console.log(this.stakeHolderList);
+
       });
 
     });

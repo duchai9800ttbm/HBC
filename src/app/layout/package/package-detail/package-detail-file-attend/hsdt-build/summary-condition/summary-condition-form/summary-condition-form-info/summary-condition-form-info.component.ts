@@ -85,13 +85,11 @@ export class SummaryConditionFormInfoComponent implements OnInit {
         };
       }
       this.createForm();
-      console.log(this.dataStepInfo);
     });
   }
 
 
   uploadPerspectiveImage(event) {
-    console.log('asdasd');
     const files = event.target.files;
     this.hoSoDuThauService
       .uploadImage(files, this.currentBidOpportunityId)
@@ -114,7 +112,6 @@ export class SummaryConditionFormInfoComponent implements OnInit {
         });
       });
 
-    console.log('nghia', this.uploadPhoiCanh);
   }
 
   deletePerspectiveImage(i) {
