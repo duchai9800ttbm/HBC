@@ -42,7 +42,7 @@
                         </div>
 
                         <a *ngIf="item.notificationType === 'GuiDuyetDeNghiDuThau'" class="dropdown-item py-2" (click)="read(item)" [class.notification--not-read]="item.notificationState?.id === 'UnRead'">
-                            <strong>Gói thầu: {{item.bidOpportunityName}}</strong>
+                            <strong class="last">Gói thầu: {{item.bidOpportunityName}}</strong>
                             <div>
                                 <span class="last span--margin">Bạn vừa nhận được yêu cầu Duyệt Đề nghị dự thầu từ
                                     <span class="content--bold">{{item.sendEmployee?.employeeName}} </span>, thời gian mong đợi được duyệt trước ngày
@@ -56,7 +56,7 @@
                             </p>
                         </a>
                         <a *ngIf="item.notificationType === 'NhacDuyetDeNghiDuThauTruoc3Ngay'" class="dropdown-item py-2" (click)="read(item)" [class.notification--not-read]="item.notificationState?.id === 'UnRead'">
-                            <strong>Gói thầu: {{item.bidOpportunityName}}</strong>
+                            <strong class="last">Gói thầu: {{item.bidOpportunityName}}</strong>
                             <div>
                                 <span class="last span--margin">Nếu chưa duyệt ĐNDT, dựa vào thời gian mong đợi được duyệt để thông báo đến ban giám đốc
                                     duyệt
@@ -81,7 +81,7 @@
                         </a>
 
                         <a *ngIf="item.notificationType === 'GuiDuyetTrinhDuyetGia'" class="dropdown-item py-2" (click)="read(item)" [class.notification--not-read]="item.notificationState?.id === 'UnRead'">
-                            <strong>Gói thầu: {{item.bidOpportunityName}}</strong>
+                            <strong class="last">Gói thầu: {{item.bidOpportunityName}}</strong>
                             <div>
                                 <span class="last span--margin">Bạn vừa nhận được yêu cầu Duyệt Trình duyệt giá từ
                                     <span class="content--bold">{{item.sendEmployee?.employeeName}}</span>
@@ -95,7 +95,7 @@
                         </a>
 
                         <a *ngIf="item.notificationType === 'GuiLaiTrinhDuyetGia'" class="dropdown-item py-2" (click)="read(item)" [class.notification--not-read]="item.notificationState?.id === 'UnRead'">
-                            <strong>Gói thầu: {{item.bidOpportunityName}}</strong>
+                            <strong class="last">Gói thầu: {{item.bidOpportunityName}}</strong>
                             <div>
                                 <span class="last span--margin">Trình duyệt giá đã được điều chỉnh bởi
                                     <span class="content--bold">{{item.sendEmployee?.employeeName}}</span>, vui lòng xem xét phê duyệt trình duyệt giá</span>

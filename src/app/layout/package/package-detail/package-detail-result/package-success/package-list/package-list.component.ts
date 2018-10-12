@@ -389,4 +389,17 @@ export class PackageListComponent implements OnInit {
 
     }
   }
+  deleteFileItem(tenderResultDocumentId: number) {
+    this.confirmationService.confirm(
+      'Bạn có chắc chắn muốn xóa tài liệu được chọn?',
+      () => {
+        this.detailResultPackageService.deleteFileResult(tenderResultDocumentId).subscribe(response => {
+          this.refesh(false);
+          this.alertService.success('Xóa tài liệu thành công!');
+        },
+          err => {
+            this.alertService.error('Xóa tài liệu không thành công!');
+          });
+      });
+  }
 }
