@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { LayoutComponent } from './layout.component';
 import { NotificationListComponent } from './notification-list/notification-list.component';
+import { ColSpinComponent } from './col-spin/col-spin.component';
 
 const routes: Routes = [
     {
@@ -25,7 +26,8 @@ const routes: Routes = [
             { path: 'blank-page', loadChildren: './blank-page/blank-page.module#BlankPageModule' },
             // { path: 'revenue', loadChildren: './revenue-detail/revenue-detail.module#RevenueDetailModule' },
             // { path: 'delivery', loadChildren: './delivery/delivery.module#DeliveryModule' },
-            { path: 'settings', loadChildren: './settings/settings.module#SettingsModule'}
+            { path: 'settings', loadChildren: './settings/settings.module#SettingsModule'},
+            { path: 'col-spin', component: ColSpinComponent}
         ]
     }
 ];

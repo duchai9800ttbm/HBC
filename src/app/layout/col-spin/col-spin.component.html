@@ -1,0 +1,81 @@
+<div class="zui-wrapper">
+    <div class="zui-scroller" #wrap1 (scroll)="syncScroll1(wrap1, wrap2)">
+        <table class="zui-table table table-striped table-hover">
+            <thead>
+                <tr>
+                    <th class="zui-sticky-col" style="height: 38px">
+                        <label class="custom-control custom-checkbox">
+                            <input type="checkbox" class="custom-control-input input-checkbox">
+                            <span class="custom-control-indicator"></span>
+                        </label>
+                    </th>
+                    <th>Number</th>
+                    <th>Position</th>
+                    <th>Height</th>
+                    <th>Born</th>
+                    <th>Salary</th>
+                    <th>Prior to NBA/Country</th>
+                    <th>Prior to NBA/Country</th>
+                    <th>Prior to NBA/Country</th>
+                    <th>Prior to NBA/Country</th>
+                    <th>Prior to NBA/Country</th>
+                    <th>Prior to NBA/Country</th>
+                    <th>Prior to NBA/Country</th>
+                    <th>Prior to NBA/Country</th>
+                    <th>Prior to NBA/Country</th>
+                    <th>Prior to NBA/Country</th>
+                    <th>Prior to NBA/Country</th>
+                    <th>Prior to NBA/Country</th>
+                    <th>Prior to NBA/Country</th>
+                    <th class="zui-sticky-col-right text-center">Thao tác</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let tData of tableArr; let i = index" appRowHover>
+                    <td class="zui-sticky-col" style="height: 38px" [class.odd]="i % 2 == 0">
+                        <label class="custom-control custom-checkbox">
+                            <input type="checkbox" class="custom-control-input input-checkbox">
+                            <span class="custom-control-indicator"></span>
+                        </label>
+                    </td>
+                    <td>15</td>
+                    <td>C</td>
+                    <td>6'11"</td>
+                    <td>08-13-1990</td>
+                    <td>$4,917,000</td>
+                    <td>Kentucky/USA</td>
+                    <td>Kentucky/USA</td>
+                    <td>Kentucky/USA</td>
+                    <td>Kentucky/USA</td>
+                    <td>Kentucky/USA</td>
+                    <td>Kentucky/USA</td>
+                    <td>Kentucky/USA</td>
+                    <td>Kentucky/USA</td>
+                    <td>Kentucky/USA</td>
+                    <td>Kentucky/USA</td>
+                    <td>Kentucky/USA</td>
+                    <td>Kentucky/USA</td>
+                    <td>Kentucky/USA</td>
+                    <td class="zui-sticky-col-right" [class.odd]="i % 2 == 0">
+                        <div class="d-flex justify-content-center">
+                            <div>
+                                <a>
+                                    <i class="fa fa-eye text-warning" aria-hidden="true"></i>
+                                </a>
+                                <a class=" text-success ml-3">
+                                    <i class="fa fa-pencil cursor-pointer" aria-hidden="true"> </i>
+                                </a>
+                                <a class=" text-dark ml-3">
+                                    <i class="fa fa-trash-o" aria-hidden="true"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+<div class="scrollbar-fake" #wrap2 (scroll)="syncScroll2(wrap1, wrap2)">
+    <div class="scrollbar-fake-content"></div>
+</div>
