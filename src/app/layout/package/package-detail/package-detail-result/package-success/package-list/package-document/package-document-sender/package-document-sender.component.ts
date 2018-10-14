@@ -51,7 +51,6 @@ export class PackageDocumentSenderComponent implements OnInit {
     { id: 6, rom: 'Maketing-slide', username: 'Dao Nhan', nameDocument: 'Maketing online', status: 'Yêu cầu gửi lại' }
   ]
   // public data :DocumentItem [] = this.packageSuccessService.getdataGetDocument();
-
   constructor(
     private packageSuccessService: PackageSuccessService,
     private modalService: BsModalService,
@@ -73,12 +72,12 @@ export class PackageDocumentSenderComponent implements OnInit {
     this.btnManageTransfer = false;
     this.total = this.data.length;
     this.textmovedata = 'Chưa chuyển giao tài liệu';
-    if (this.userGetDocument) {
-      this.data = this.packageSuccessService.getdataDocuments();
-      this.total = this.data.length;
-    } else {
-      this.data = this.packageSuccessService.getdataGetDocument();
-    }
+    // if (this.userGetDocument) {
+    //   this.data = this.packageSuccessService.getdataDocuments();
+    //   this.total = this.data.length;
+    // } else {
+    //   this.data = this.packageSuccessService.getdataGetDocument();
+    // }
     this.filterModel.documentType = '';
     this.filterModel.documentTypeId = null;
     this.filterModel.interviewTimes = null;
@@ -146,5 +145,15 @@ export class PackageDocumentSenderComponent implements OnInit {
     console.log('result-needTranferDocLst', needTransferDocsList);
     this.needTransferDocsList = needTransferDocsList;
     this.dtTrigger.next();
+  }
+  refesh() {
+    this.filter(true);
+  }
+  downloadTemplate() {
+    this.detailResultPackageService.downloadTemplateDoc().subscribe(response => {
+    },
+      err => {
+        this.alertService.error('Tải template tài liệu cần chuyển giao không thành công!');
+      });
   }
 }

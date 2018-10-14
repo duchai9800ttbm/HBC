@@ -11,6 +11,7 @@ import { PagedResult } from '../models';
 import { URLSearchParams } from '@angular/http';
 import { FilterNeedTransferDoc } from '../models/result-attend/filter-need-transfer-doc.model';
 import { NeedTranferDocList } from '../models/result-attend/need-transfer-doc-list.model';
+import { NeedTransferDoc } from '../models/result-attend/need-transfer-doc.model';
 @Injectable()
 export class DetailResultPackageService {
   listFileResult: Subject<any> = new Subject();
@@ -229,6 +230,45 @@ export class DetailResultPackageService {
         this.toListNeedTransferDocs
       );
     });
+  }
+  // Danh sách loại tài liệu cần chuyển giao
+  getListTypeNeedTransferDoc() {
+    const url  = `tenderresultdocument/transferdocumenttypes`;
+    return this.apiService.get(url).map( response => {
+      const result = response.result;
+      return {
+        id: result.id,
+        type: result.type,
+        desc: result.desc,
+      };
+    });
+  }
+  // Tải về template tài liệu cần chuyển giao
+  downloadTemplateDoc() {
+    const url = `tenderresultdocument/transferdoc/template/download`;
+    return this.apiService.getFile(url).map(response => {
+      return FileSaver.saveAs(
+        new Blob([response.file], {
+          type: `${response.file.type}`,
+        }), response.fileName
+      );
+    });
+  }
+  // Tải về tài liệu cần chuyển giao
+  downloadDocNeedTransfer(documentId: number, type: string) {
+    const url = `tenderresultdocument/transferdoc/${documentId}/download?type=${type}`;
+    return this.apiService.getFile(url).map(response => {
+      return FileSaver.saveAs(
+        new Blob([response.file], {
+          type: `${response.file.type}`,
+        }), response.fileName
+      );
+    });
+  }
+  // Chuyển giao tài liệu
+  NeedTransferDoc(needTransferdoc: NeedTransferDoc) {
+    const url = `bidopportunity/kqdt/chuyengiaotailieu`;
+    return this.apiService.post(url, needTransferdoc);
   }
   // =============================
   // Bước 2, hợp đồng ký kết
