@@ -7,6 +7,7 @@ import { AlertService } from '../../../../../../../shared/services';
 import { HoSoDuThauService } from '../../../../../../../shared/services/ho-so-du-thau.service';
 import { Router } from '../../../../../../../../../node_modules/@angular/router';
 import { PackageInfoModel } from '../../../../../../../shared/models/package/package-info.model';
+import { DuLieuLiveFormDKDT } from '../../../../../../../shared/models/ho-so-du-thau/tom-tat-dkdt.model';
 
 @Component({
   selector: 'app-summary-condition-form',
@@ -36,10 +37,22 @@ export class SummaryConditionFormComponent implements OnInit, OnDestroy {
 
     }, err => {
     });
+
+    this.hoSoDuThauService.getInfoTenderConditionalSummary(this.packageId).subscribe(data => {
+      if (data) {
+        this.hoSoDuThauService.emitDataAll(data);
+      }
+      if (!data) {
+        const obj = new DuLieuLiveFormDKDT();
+        this.hoSoDuThauService.emitDataAll(obj);
+      }
+    });
   }
 
   ngOnDestroy(): void {
     this.packageService.setSummaryConditionForm(false);
+    const obj = new DuLieuLiveFormDKDT();
+    this.hoSoDuThauService.emitDataAll(obj);
   }
 
   onSubmit(check: boolean) {

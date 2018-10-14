@@ -25,8 +25,6 @@ export class SummaryConditionFormConditionTenderComponent implements OnInit {
     }
     ngOnInit() {
         this.loadData();
-        this.createForm();
-
     }
 
     createForm() {
@@ -107,14 +105,14 @@ export class SummaryConditionFormConditionTenderComponent implements OnInit {
             })
         });
 
-        this.dienGiaiDieuKienHSMT.theoHSMT.cacLoaiThue.forEach(x => {
+        (this.dienGiaiDieuKienHSMT.theoHSMT.cacLoaiThue || []).forEach(x => {
             const control = (this.dieuKienHSMTForm.controls.theoHSMT as FormGroup).controls.cacLoaiThue as FormArray;
             control.push(this.fb.group({
                 thue: { value: x, disabled: this.isModeView },
             }));
         });
 
-        this.dienGiaiDieuKienHSMT.theoHBC.cacLoaiThue.forEach(x => {
+        (this.dienGiaiDieuKienHSMT.theoHBC.cacLoaiThue || []).forEach(x => {
             const control = (this.dieuKienHSMTForm.controls.theoHBC as FormGroup).controls.cacLoaiThue as FormArray;
             control.push(this.fb.group({
                 thue: { value: x, disabled: this.isModeView },
@@ -159,7 +157,34 @@ export class SummaryConditionFormConditionTenderComponent implements OnInit {
         this.hoSoDuThauService.watchDataLiveForm().subscribe(data => {
             const obj = data.dienGiaiDieuKienHSMT;
             if (obj) {
-                this.dienGiaiDieuKienHSMT = obj;
+                this.dienGiaiDieuKienHSMT = {
+                    theoHBC: obj.theoHSMT ? obj.theoHBC : {
+                        baoLanhDuThau: {
+                            giaTri: null,
+                            hieuLuc: '',
+                        },
+                        hieuLucHoSo: '',
+                        tienDo: {
+                            ngayKhoiCong: null,
+                            thoiGianHoanThanh: null,
+                        },
+                        cacLoaiThue: [''],
+                        donViTienTe: ''
+                    },
+                    theoHSMT: obj.theoHSMT ? obj.theoHSMT : {
+                        baoLanhDuThau: {
+                            giaTri: null,
+                            hieuLuc: '',
+                        },
+                        hieuLucHoSo: '',
+                        tienDo: {
+                            ngayKhoiCong: null,
+                            thoiGianHoanThanh: null,
+                        },
+                        cacLoaiThue: [''],
+                        donViTienTe: ''
+                    }
+                };
             }
             if (!obj) {
                 this.dienGiaiDieuKienHSMT = {
@@ -191,7 +216,7 @@ export class SummaryConditionFormConditionTenderComponent implements OnInit {
                     }
                 };
             }
-
+            this.createForm();
         });
     }
 

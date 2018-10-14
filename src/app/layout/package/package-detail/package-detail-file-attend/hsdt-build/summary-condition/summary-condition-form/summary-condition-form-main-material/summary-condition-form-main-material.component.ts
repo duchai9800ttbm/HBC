@@ -57,10 +57,9 @@ export class SummaryConditionFormMainMaterialComponent implements OnInit {
   loadData() {
     this.hoSoDuThauService.watchDataLiveForm().subscribe(data => {
       const mainMaterial = data.danhSachVatTu;
-      if (mainMaterial) {
+      if (mainMaterial && mainMaterial.length > 0) {
         this.mainMaterial = mainMaterial;
-      }
-      if (!mainMaterial) {
+      } else {
         this.mainMaterial = [];
         this.mainMaterial.push({
           tenVatTu: '',

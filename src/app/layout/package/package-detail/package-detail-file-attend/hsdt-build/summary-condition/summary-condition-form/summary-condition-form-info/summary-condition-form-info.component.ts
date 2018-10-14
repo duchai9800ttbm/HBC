@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormGroup, FormBuilder } from '@angular/forms';
 import { HoSoDuThauService } from '../../../../../../../../shared/services/ho-so-du-thau.service';
 import { Router } from '@angular/router';
@@ -13,9 +13,13 @@ import { PackageDetailComponent } from '../../../../../package-detail.component'
   styleUrls: ['./summary-condition-form-info.component.scss']
 })
 export class SummaryConditionFormInfoComponent implements OnInit {
+
+  @ViewChild('uploadMasterplan') uploadMasterplan;
+  @ViewChild('uploadPhoiCanh') uploadPhoiCanh;
+
   thongTinDuAnForm: FormGroup;
   hinhAnhPhoiCanhUrls = [];
-  banVeMasterPlanUrl = [];
+  banVeMasterPlanUrls = [];
   dataStepInfo = new ThongTinDuAn();
   currentBidOpportunityId: number;
   showPopupViewImage = false;
@@ -33,14 +37,13 @@ export class SummaryConditionFormInfoComponent implements OnInit {
   ngOnInit() {
     this.currentBidOpportunityId = +PackageDetailComponent.packageId;
     this.loadData();
-    this.createForm();
-    this.thongTinDuAnForm.valueChanges.subscribe(data => this.hoSoDuThauService.emitDataStepInfo(data));
   }
+
   createForm() {
     this.thongTinDuAnForm = this.fb.group({
       tenTaiLieu: { value: this.dataStepInfo.tenTaiLieu, disabled: this.isModeView },
-      hinhAnhPhoiCanh: [],
-      banVeMasterPlan: [],
+      hinhAnhPhoiCanh: this.dataStepInfo.hinhAnhPhoiCanh,
+      banVeMasterPlan: this.dataStepInfo.banVeMasterPlan,
       lanPhongVan: { value: this.dataStepInfo.lanPhongVan, disabled: this.isModeView },
       dienGiaiThongTinDuAn: { value: this.dataStepInfo.dienGiaiThongTinDuAn, disabled: this.isModeView }
     });
@@ -49,11 +52,13 @@ export class SummaryConditionFormInfoComponent implements OnInit {
       let obj = new ThongTinDuAn();
       obj = {
         tenTaiLieu: data.tenTaiLieu,
-        lanPhongVan: data.lanPhongVan,
+        lanPhongVan: data.lanPhongVan ? data.lanPhongVan : 0,
         dienGiaiThongTinDuAn: data.dienGiaiThongTinDuAn,
-        hinhAnhPhoiCanh: data.hinhAnhPhoiCanh,
-        banVeMasterPlan: data.banVeMasterPlan
+        hinhAnhPhoiCanh: [...this.hinhAnhPhoiCanhUrls],
+        banVeMasterPlan: [...this.banVeMasterPlanUrls]
       };
+
+      this.hoSoDuThauService.emitDataStepInfo(obj);
     });
 
 
@@ -62,21 +67,24 @@ export class SummaryConditionFormInfoComponent implements OnInit {
     this.hoSoDuThauService.watchDataLiveForm().subscribe(data => {
       const objDataStepInfo = data.thongTinDuAn;
       if (objDataStepInfo) {
-        this.dataStepInfo.tenTaiLieu = objDataStepInfo.tenTaiLieu;
+        this.dataStepInfo.tenTaiLieu = data.documentName;
         this.dataStepInfo.lanPhongVan = objDataStepInfo.lanPhongVan;
+        this.dataStepInfo.hinhAnhPhoiCanh = objDataStepInfo.hinhAnhPhoiCanh;
+        this.dataStepInfo.banVeMasterPlan = objDataStepInfo.banVeMasterPlan;
         this.hinhAnhPhoiCanhUrls = objDataStepInfo.hinhAnhPhoiCanh;
-        this.banVeMasterPlanUrl = objDataStepInfo.banVeMasterPlan;
+        this.banVeMasterPlanUrls = objDataStepInfo.banVeMasterPlan;
         this.dataStepInfo.dienGiaiThongTinDuAn = objDataStepInfo.dienGiaiThongTinDuAn;
       }
       if (!objDataStepInfo) {
         this.dataStepInfo = {
           tenTaiLieu: '',
-          lanPhongVan: null,
+          lanPhongVan: 0,
           hinhAnhPhoiCanh: [],
           banVeMasterPlan: [],
           dienGiaiThongTinDuAn: ''
         };
       }
+      this.createForm();
     });
   }
 
@@ -86,8 +94,14 @@ export class SummaryConditionFormInfoComponent implements OnInit {
     this.hoSoDuThauService
       .uploadImage(files, this.currentBidOpportunityId)
       .subscribe(res => {
-        this.hinhAnhPhoiCanhUrls = [...this.hinhAnhPhoiCanhUrls, ...res];
+        if (this.hinhAnhPhoiCanhUrls) {
+          this.hinhAnhPhoiCanhUrls = [...this.hinhAnhPhoiCanhUrls, ...res];
+        }
+        if (!this.hinhAnhPhoiCanhUrls) {
+          this.hinhAnhPhoiCanhUrls = res;
+        }
         this.thongTinDuAnForm.get('hinhAnhPhoiCanh').patchValue(this.hinhAnhPhoiCanhUrls);
+        this.uploadPhoiCanh.nativeElement.value = null;
       }, err => {
         this.alertService.error('Upload hình ảnh thất bại. Xin vui lòng thử lại!');
         this.hinhAnhPhoiCanhUrls.forEach(x => {
@@ -97,6 +111,7 @@ export class SummaryConditionFormInfoComponent implements OnInit {
           }
         });
       });
+
   }
 
   deletePerspectiveImage(i) {
@@ -114,27 +129,34 @@ export class SummaryConditionFormInfoComponent implements OnInit {
     this.hoSoDuThauService
       .uploadImage(files, this.currentBidOpportunityId)
       .subscribe(res => {
-        this.banVeMasterPlanUrl = [...this.banVeMasterPlanUrl, ...res];
-        this.thongTinDuAnForm.get('banVeMasterPlan').patchValue(this.banVeMasterPlanUrl);
+        if (this.banVeMasterPlanUrls) {
+          this.banVeMasterPlanUrls = [...this.banVeMasterPlanUrls, ...res];
+        }
+        if (!this.banVeMasterPlanUrls) {
+          this.banVeMasterPlanUrls = res;
+        }
+        this.thongTinDuAnForm.get('banVeMasterPlan').patchValue(this.banVeMasterPlanUrls);
+        this.uploadMasterplan.nativeElement.value = null;
+
       }, err => {
         this.alertService.error('Upload hình ảnh thất bại. Xin vui lòng thử lại!');
-        this.banVeMasterPlanUrl.forEach(x => {
+        this.banVeMasterPlanUrls.forEach(x => {
           if (!x.id) {
-            const index = this.banVeMasterPlanUrl.indexOf(x);
-            this.banVeMasterPlanUrl.splice(index, 1);
+            const index = this.banVeMasterPlanUrls.indexOf(x);
+            this.banVeMasterPlanUrls.splice(index, 1);
           }
         });
       });
   }
 
   deleteBanVe(i) {
-    const index = this.banVeMasterPlanUrl.indexOf(i);
+    const index = this.banVeMasterPlanUrls.indexOf(i);
     this.hoSoDuThauService.deleteImage(i.id).subscribe(res => {
     }, err => {
       this.alertService.error('Đã xảy ra lỗi, hình ảnh xóa không thành công');
     });
-    this.banVeMasterPlanUrl.splice(index, 1);
-    this.thongTinDuAnForm.get('banVeMasterPlan').patchValue(this.banVeMasterPlanUrl);
+    this.banVeMasterPlanUrls.splice(index, 1);
+    this.thongTinDuAnForm.get('banVeMasterPlan').patchValue(this.banVeMasterPlanUrls);
   }
 
   viewFullScreenImage(listImage) {

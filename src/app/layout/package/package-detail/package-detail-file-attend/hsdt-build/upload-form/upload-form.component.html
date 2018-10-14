@@ -12,7 +12,7 @@
                 <span class="input-group-addon">Tìm kiếm theo</span>
                 <input type="text" class="form-control icon" placeholder="&#xf002; Tên tài liệu" (keyup)="searchTerm$.next($event.target.value)">
             </div>
-            <div class="responsive-header-control">
+            <div class="responsive-header-control d-flex">
                 <button class="btn btn-primary ml-1" (click)="multiDelete()">
                     Xóa
                 </button>
@@ -88,10 +88,10 @@
             </div>
 
             <div class="form-group responsive-filter-control">
-                <button type="submit" class="btn btn-primary ml-sm-2" (click)="filter()">
+                <button type="submit" class="btn btn-primary ml-sm-1" (click)="filter()">
                     <i class="fa fa-filter" aria-hidden="true"></i>&nbsp; Lọc
                 </button>
-                <button class="btn btn-secondary ml-sm-2" (click)="clearFilter()">
+                <button class="btn btn-secondary ml-sm-1" (click)="clearFilter()">
                     <i class="fa fa-times"></i>&nbsp; Xóa lọc
                 </button>
             </div>
