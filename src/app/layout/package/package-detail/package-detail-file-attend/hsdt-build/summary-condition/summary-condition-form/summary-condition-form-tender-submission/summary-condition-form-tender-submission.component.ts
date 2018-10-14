@@ -22,6 +22,7 @@ export class SummaryConditionFormTenderSubmissionComponent implements OnInit {
   get taiLieuLuuYFA(): FormArray {
     return this.hoSoDangLuuYForm.get('taiLieuLuuY') as FormArray;
   }
+  amountFiles;
   ngOnInit() {
     this.loadData();
     this.createForm();
@@ -78,12 +79,14 @@ export class SummaryConditionFormTenderSubmissionComponent implements OnInit {
       taiLieu: data ? data.name : '',
     });
     formArray.push(formItem);
+    this.amountFiles = formArray.length;
   }
 
 
   removeFormArrayControl(name: string, idx: number) {
     const formArray = this.hoSoDangLuuYForm.get(name) as FormArray;
     formArray.removeAt(idx);
+    this.amountFiles = formArray.length;
   }
 
 
