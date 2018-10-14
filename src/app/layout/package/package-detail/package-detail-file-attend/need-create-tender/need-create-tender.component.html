@@ -66,15 +66,15 @@
                 <td>
                     <div class="d-flex justify-content-center">
                         <div>
-                            <a [routerLink]="['./form/view']" (click)="changeAction('view')">
+                            <a [routerLink]="['./form/view']" (click)="changeAction('view')" title="Chi tiết">
                                 <i class="fa fa-eye text-warning" aria-hidden="true"></i>
                             </a>
-                            <a *ngIf="packageInfo?.stageStatus.id == bidStatus.CanLapDeNghiDuThau" class=" text-success ml-3" [class.disable]="packageInfo?.stageStatus.id != bidStatus.CanLapDeNghiDuThau"
+                            <a *ngIf="packageInfo?.stageStatus.id == bidStatus.CanLapDeNghiDuThau" class=" text-success ml-3" title="Chỉnh sửa" [class.disable]="packageInfo?.stageStatus.id != bidStatus.CanLapDeNghiDuThau"
                                 [routerLink]="packageInfo?.stageStatus.id != bidStatus.CanLapDeNghiDuThau ? [] : ['./form/edit']"
                                 (click)="changeAction('edit')">
                                 <i class="fa fa-pencil cursor-pointer" aria-hidden="true"> </i>
                             </a>
-                            <a *ngIf="packageInfo?.stageStatus.id == bidStatus.CanLapDeNghiDuThau" class=" text-dark ml-3" (click)="deleteProposedTenderParticipateReport()">
+                            <a *ngIf="packageInfo?.stageStatus.id == bidStatus.CanLapDeNghiDuThau" title="Xóa" class=" text-dark ml-3" (click)="deleteProposedTenderParticipateReport()">
                                 <i class="fa fa-trash-o" aria-hidden="true"></i>
                             </a>
                             <!-- <a class="ml-3" (click)="printForm()">
@@ -108,7 +108,7 @@
             <tr *ngFor="let itemByChangedTimes of historyList; let i = index">
                 <td class="text-center">{{i + 1}}</td>
                 <td class="text-center">
-                    {{itemByChangedTimes.value + 1}}
+                    {{historyList.length - i}}
                 </td>
                 <td> {{itemByChangedTimes.items[0].employee?.employeeName}}</td>
                 <td>{{ (itemByChangedTimes.items[0].changedTime)*1000 | date:'dd/MM/yyyy , HH:mm':'+0000' }}</td>
@@ -143,7 +143,6 @@
                                                 <span class="font-weight-bold">{{itemByLiveFormStep.newValue ? (itemByLiveFormStep.newValue === 'True' ?
                                                     'Đã ký' : 'Chưa ký') : 'không có'}}</span>
                                             </span>
-
                                         </div>
                                     </div>
                                 </div>
@@ -154,7 +153,9 @@
             </tr>
         </tbody>
     </table>
+    <app-pagination [(pagedResult)]="pagedResultChangeHistoryList" (pagedResultChange)="pagedResultChangeHistory($event)"></app-pagination>
 </div>
+
 
 <div id="divPrint" class="d-none" *ngIf="false">
     <div class="header-print d-flex justify-content-between">
