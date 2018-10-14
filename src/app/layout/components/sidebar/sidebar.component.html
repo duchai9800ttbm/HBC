@@ -115,11 +115,11 @@
             <ng-container *ngFor="let changeContent of pagedResult.items; index as i">
                 <!-- Thêm/Tạo mới -->
 
-                <div class="row d-flex custom-width">
-                    <div class="col-sm-2">
+                <div class="d-flex custom-width">
+                    <div class="mt-1">
                         <img [src]="changeContent.changeEmployee?.employeeAvatar" width="30" height="30" alt="">
                     </div>
-                    <div class="col-sm-10">
+                    <div class="pl-2">
                         <p class="mb-1 text-truncate-height" [title]="changeContent.bidActivityChangeEntityName" style="-webkit-box-orient: vertical;">
                             <strong>{{ changeContent?.changeEmployee?.employeeName }}</strong>
                             {{
@@ -135,9 +135,9 @@
                     </div>
                 </div>
 
-                <div class="row mb-3 custom-width">
-                    <div class="col-sm-2"></div>
-                    <p class="small text-muted">
+                <div class="d-flex mb-3 custom-width">
+                    <div class="set-width"></div>
+                    <p class="small text-muted pl-2">
                         <em>{{ (changeContent.bidActivityChangDate*1000 - 7*60*60*1000) | amCalendar }}</em>
                     </p>
                 </div>

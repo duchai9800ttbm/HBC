@@ -3,6 +3,12 @@
         <h5 class="text-uppercase font-weight-bold">X. điều kiện hồ sơ mời thầu (tender conditions)</h5>
         <div class="row mt-3">
             <div class="col-md-3"><strong><u>1. Bảo lãnh dự thầu</u></strong></div>
+            <div class="col-md-8">
+                <div class="row">
+                    <div class="col-md-6 text-uppercase text-right">theo hsmt <i class="fa fa-caret-down" aria-hidden="true"></i></div>
+                    <div class="col-md-6 text-uppercase text-right">theo hbc đề xuất <i class="fa fa-caret-down" aria-hidden="true"></i></div>
+                </div>
+            </div>
         </div>
         <div class="row mt-3">
             <div class="col-md-3">Giá trị</div>
@@ -99,11 +105,11 @@
                             <ng-container *ngFor="let fControl of cacLoaiThueHSMTFA.controls; let i = index"
                                 [formGroupName]="i">
                                 <div class="row mb-2">
-                                    <div class="col-md-10">
+                                    <div class="col-md-12">
                                         <input formControlName="thue" class="form-control">
 
                                     </div>
-                                    <div class="col-md-2">
+                                    <div class="set-position-button">
                                         <i *ngIf="i !== 0" (click)="removeFormArrayControl('cacLoaiThue', i)" class="fa fa-times-circle pointer times-color"
                                             aria-hidden="true"></i>
                                     </div>

@@ -1,6 +1,7 @@
 <form [formGroup]="yeuCauHoSoForm">
     <div class="p-3">
-        <h5 class="text-uppercase font-weight-bold">VII. yêu cầu về nơi nộp hồ sơ, người nhận, thời gian nộp hồ sơ (destination, contact person, tender closing time)</h5>
+        <h5 class="text-uppercase font-weight-bold">VII. yêu cầu về nơi nộp hồ sơ, người nhận, thời gian nộp hồ sơ
+            (destination, contact person, tender closing time)</h5>
         <div class="row mt-3">
             <div class="col-md-3">1. Nơi nộp</div>
             <div class="col-md-8">
@@ -16,18 +17,18 @@
         <div class="row mt-3">
             <div class="col-md-3">3. Hạn chót nộp hồ sơ</div>
             <div class="col-md-8">
-                <kendo-datepicker formControlName="hanNop" class="form-control" ></kendo-datepicker>
+                <kendo-datepicker formControlName="hanNop" class="form-control"></kendo-datepicker>
             </div>
         </div>
         <div class="text-center mt-4">
-                <button class="btn border" routerLink="../tender-submission">
-                    <i class="fa font-size-3 mr-3 fa-angle-left" aria-hidden="true"></i>
-                    Trở về
-                </button>
-                <button class="btn btn-primary ml-1" routerLink="../tender-clarify">
-                    Tiếp
-                    <i class="fa font-size-3 ml-3 fa-angle-right" aria-hidden="true"></i>
-                </button>
-            </div>
+            <button class="btn border" routerLink="../tender-submission">
+                <i class="fa font-size-3 mr-3 fa-angle-left" aria-hidden="true"></i>
+                Trở về
+            </button>
+            <button class="btn btn-primary ml-1" routerLink="../tender-clarify">
+                Tiếp
+                <i class="fa font-size-3 ml-3 fa-angle-right" aria-hidden="true"></i>
+            </button>
+        </div>
     </div>
 </form>
