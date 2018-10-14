@@ -6,7 +6,8 @@
             <div class="col-md-8">
                 <div class="row">
                     <div class="col-md-6 text-uppercase text-right">theo hsmt <i class="fa fa-caret-down" aria-hidden="true"></i></div>
-                    <div class="col-md-6 text-uppercase text-right">theo hbc đề xuất <i class="fa fa-caret-down" aria-hidden="true"></i></div>
+                    <div class="col-md-6 text-uppercase text-right">theo hbc đề xuất <i class="fa fa-caret-down"
+                            aria-hidden="true"></i></div>
                 </div>
             </div>
         </div>
@@ -109,9 +110,8 @@
                                         <input formControlName="thue" class="form-control">
 
                                     </div>
-                                    <div class="set-position-button">
-                                        <i *ngIf="i !== 0" (click)="removeFormArrayControl('cacLoaiThue', i)" class="fa fa-times-circle pointer times-color"
-                                            aria-hidden="true"></i>
+                                    <div class="set-position-button" (click)="removeFormArrayControl('cacLoaiThue', i)">
+                                        <i *ngIf="i !== 0" class="fa fa-times-circle pointer times-color" aria-hidden="true"></i>
                                     </div>
 
                                 </div>
