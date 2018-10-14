@@ -17,6 +17,7 @@ import { CallCenterService } from '../shared/services/call-center.service';
 import { OpportunityService, ContactService, CustomerService, ProspectService } from '../shared/services';
 import { CallCenterHistoryService } from '../shared/services/call-center-history.service';
 import { GroupUserService } from '../shared/services/group-user.service';
+import { ColSpinComponent } from './col-spin/col-spin.component';
 
 @NgModule({
     imports: [
@@ -35,6 +36,7 @@ import { GroupUserService } from '../shared/services/group-user.service';
         FooterComponent,
         NotificationListComponent,
         MenuComponent,
+        ColSpinComponent,
     ],
     entryComponents: [
         ChangePasswordModalComponent,

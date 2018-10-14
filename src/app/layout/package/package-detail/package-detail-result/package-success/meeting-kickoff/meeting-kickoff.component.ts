@@ -8,6 +8,8 @@ import { DATETIME_PICKER_CONFIG } from '../../../../../../shared/configs/datepic
 import { DATATABLE_CONFIG } from '../../../../../../shared/configs';
 import { Observable, BehaviorSubject, Subject } from '../../../../../../../../node_modules/rxjs';
 import { ConfirmationService, AlertService } from '../../../../../../shared/services';
+import { EmailService } from '../../../../../../shared/services/email.service';
+import { SendEmailModel } from '../../../../../../shared/models/send-email-model';
 
 @Component({
   selector: 'app-meeting-kickoff',
@@ -37,7 +39,12 @@ export class MeetingKickoffComponent implements OnInit {
     { id: 1, username: 'Oliver Dinh', email: 'oliverdinh@gmail.com' },
     { id: 2, username: 'Van Dinh', email: 'vandinh@gmail.com' },
     { id: 3, username: 'Huy Nhat', email: 'huynhat@gmail.com' }
-  ]
+  ];
+  listEmailSearchTo;
+  listEmailSearchCc;
+  listEmailSearchBcc;
+  emailModel: SendEmailModel = new SendEmailModel();
+  ckeConfig;
   constructor(
     private modalService: BsModalService,
     private router: Router,
@@ -45,6 +52,7 @@ export class MeetingKickoffComponent implements OnInit {
     private formBuilder: FormBuilder,
     private alertService: AlertService,
     private confirmationService: ConfirmationService,
+    private emailService: EmailService
   ) { }
 
   ngOnInit() {
@@ -63,6 +71,25 @@ export class MeetingKickoffComponent implements OnInit {
     this.doNotiMeeting = false;
     this.isSendCc = false;
     this.reportMeeting = false;
+    this.ckeConfig = {
+      toolbar: [
+        { name: 'basicstyles', items: ['Bold', 'Italic', 'Underline', 'Strike'] },
+        { name: 'justify', items: ['JustifyLeft', 'JustifyCenter', 'JustifyRight', 'JustifyBlock'] },
+        { name: 'styles', items: ['Styles', 'Format', 'FontSize', '-', 'TextColor', 'BGColor'] },
+        { name: 'insert', items: ['Image', 'Flash', 'Table', 'HorizontalRule', 'Smiley', 'SpecialChar', 'PageBreak', 'Iframe'] },
+        { name: 'clipboard', items: ['Cut', 'Copy', 'Paste', 'PasteText', 'Undo', 'Redo'] },
+      ],
+      allowedContent: true,
+      extraPlugins: 'colorbutton,font,justify,print,tableresize,pastefromword,liststyle,autolink,uploadimage',
+      pasteFromWord_inlineImages: true,
+      forcePasteAsPlainText: false,
+    };
+
+    this.emailService.searchbymail('').subscribe(response => {
+      this.listEmailSearchTo = response;
+      this.listEmailSearchCc = response;
+      this.listEmailSearchBcc = response;
+    });
   }
 
   sendCc() {
