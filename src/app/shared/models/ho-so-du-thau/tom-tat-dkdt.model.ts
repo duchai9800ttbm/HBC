@@ -12,6 +12,28 @@ export class DuLieuLiveFormDKDT {
     bidOpportunityId: number;
     createdEmployeeId: number;
     updatedEmployeeId: number;
+    createdEmployee: {
+        employeeAvatar: {
+            guid: string;
+            largeSizeUrl: string;
+            thumbSizeUrl: string;
+        },
+        employeeEmail: string;
+        employeeId: number;
+        employeeName: string;
+        employeeNo: string;
+    };
+    updatedEmployee: {
+        employeeAvatar: {
+            guid: string;
+            largeSizeUrl: string;
+            thumbSizeUrl: string;
+        },
+        employeeEmail: string;
+        employeeId: number;
+        employeeName: string;
+        employeeNo: string;
+    };
     isDraftVersion: boolean;
     documentName: string;
     noiDungCapNhat: string;
