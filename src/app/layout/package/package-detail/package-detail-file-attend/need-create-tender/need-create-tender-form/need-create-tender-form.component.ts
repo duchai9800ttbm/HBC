@@ -19,6 +19,7 @@ import { EstimatedBudgetPackage } from '../../../../../../shared/models/package/
 import { Currency } from '../../../../../../shared/models/currency';
 import { FeeTenderInvitationDocument } from '../../../../../../shared/models/package/fee-tender-invitation-document';
 import { ContractConditionTenderParticipate } from '../../../../../../shared/models/package/contract-condition-tender-participate';
+import { TenderDirectorProposal } from '../../../../../../shared/models/package/tender-director-proposal';
 
 @Component({
     selector: 'app-need-create-tender-form',
@@ -99,6 +100,11 @@ export class NeedCreateTenderFormComponent implements OnInit, OnDestroy {
                     NeedCreateTenderFormComponent.formModel.contractCondition.delayDamagesForTheWorks = 0;
                     NeedCreateTenderFormComponent.formModel.contractCondition.advancePayment = 0;
                     NeedCreateTenderFormComponent.formModel.contractCondition.retentionMoney = 0;
+                    // =====================
+                    // TenderDirectorProposal
+                    NeedCreateTenderFormComponent.formModel.tenderDirectorProposal = new TenderDirectorProposal();
+                    // tslint:disable-next-line:max-line-length
+                    NeedCreateTenderFormComponent.formModel.tenderDirectorProposal.expectedDate = DateTimeConvertHelper.fromDtObjectToTimestamp(new Date());
                 }
             }
         );
