@@ -27,6 +27,8 @@ export class PriceReviewSummaryComponent implements OnInit {
   listItemHSDTChinhThuc: ItemHSDTChinhThuc[];
   dtOptions: any = DATATABLE_CONFIG2;
   dtTrigger: Subject<any> = new Subject();
+  dtTrigger2: Subject<any> = new Subject();
+
   showPopupAdd;
   pagedResult: PagedResult<PriceReviewItemChangedHistory> = new PagedResult<PriceReviewItemChangedHistory>();
 
