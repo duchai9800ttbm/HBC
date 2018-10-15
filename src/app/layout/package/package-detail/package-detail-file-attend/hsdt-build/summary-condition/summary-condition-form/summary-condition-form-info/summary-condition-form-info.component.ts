@@ -25,7 +25,7 @@ export class SummaryConditionFormInfoComponent implements OnInit {
   showPopupViewImage = false;
   imageUrlArray = [];
   viewMode;
-  isModeView = false;
+  isModeView = true;
 
   constructor(
     private hoSoDuThauService: HoSoDuThauService,
@@ -36,7 +36,12 @@ export class SummaryConditionFormInfoComponent implements OnInit {
 
   ngOnInit() {
     this.currentBidOpportunityId = +PackageDetailComponent.packageId;
-    this.loadData();
+    this.hoSoDuThauService.watchLiveformState().subscribe(data => {
+      this.isModeView = data.isModeView;
+      this.loadData();
+
+    });
+    // this.loadData();
   }
 
   createForm() {
@@ -61,6 +66,11 @@ export class SummaryConditionFormInfoComponent implements OnInit {
       this.hoSoDuThauService.emitDataStepInfo(obj);
     });
 
+    if (this.isModeView) {
+      this.thongTinDuAnForm.get('tenTaiLieu').enable();
+      this.thongTinDuAnForm.get('lanPhongVan').enable();
+      this.thongTinDuAnForm.get('dienGiaiThongTinDuAn').enable();
+    }
 
   }
   loadData() {

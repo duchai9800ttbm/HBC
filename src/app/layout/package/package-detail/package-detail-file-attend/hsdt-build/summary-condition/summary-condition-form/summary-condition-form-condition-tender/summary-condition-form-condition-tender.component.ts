@@ -24,6 +24,9 @@ export class SummaryConditionFormConditionTenderComponent implements OnInit {
         return (this.dieuKienHSMTForm.get('theoHSMT') as FormGroup).controls.cacLoaiThue as FormArray;
     }
     ngOnInit() {
+        this.hoSoDuThauService.watchLiveformState().subscribe(data => {
+            this.isModeView = data.isModeView;
+        });
         this.loadData();
     }
 
@@ -225,7 +228,7 @@ export class SummaryConditionFormConditionTenderComponent implements OnInit {
     addFormArrayControl(name: string, data?: DictionaryItemText) {
         const formArray = (this.dieuKienHSMTForm.get('theoHSMT') as FormGroup).controls.cacLoaiThue as FormArray;
         const formItem = this.fb.group({
-            thue: ''
+            thue: { value: '', disabled: this.isModeView }
         });
         formArray.push(formItem);
     }
