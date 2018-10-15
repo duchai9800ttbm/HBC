@@ -114,15 +114,22 @@ export class UploadFileHsdtComponent implements OnInit {
   uploadFile(event) {
     this.tempFile = event.target.files;
     this.displayName = this.tempFile[0].name;
+    if (!this.uploadForm.get('editName').value) {
+      this.uploadForm.get('editName').patchValue(this.displayName);
+    }
     this.uploadForm.get('file').patchValue(this.tempFile[0]);
-    this.uploadForm.get('editName').patchValue(this.displayName);
     event.target.value = null;
   }
 
   deleteFileUpload() {
     this.uploadForm.get('file').patchValue(null);
     this.tempFile = null;
-    this.displayName = '';
-    this.uploadForm.get('editName').patchValue('');
+    // this.displayName = '';
+    if (this.uploadForm.get('editName').value === this.displayName) {
+      this.uploadForm.get('editName').patchValue('');
+      this.displayName = '';
+    } else {
+      this.displayName = '';
+    }
   }
 }

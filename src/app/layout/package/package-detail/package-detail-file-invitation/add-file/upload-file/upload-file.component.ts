@@ -83,10 +83,10 @@ export class UploadFileComponent implements OnInit {
     if (fileList.length > 0) {
       this.file = fileList[0];
       this.uploadForm.get('link').patchValue('');
-      this.uploadForm.get('nameFile').patchValue('');
-      this.uploadForm.get('editName').patchValue('');
       this.uploadForm.get('nameFile').patchValue(event.target.files[0].name);
-      this.uploadForm.get('editName').patchValue(event.target.files[0].name);
+      if (!this.uploadForm.get('editName').value) {
+        this.uploadForm.get('editName').patchValue(event.target.files[0].name);
+      }
       event.target.value = null;
     }
   }
@@ -95,11 +95,15 @@ export class UploadFileComponent implements OnInit {
     this.deleteFileUpload();
   }
   deleteFileUpload() {
-    this.file = null;
     this.uploadForm.get('link').enable();
-
-    this.uploadForm.get('nameFile').patchValue('');
-    this.uploadForm.get('editName').patchValue('');
+    if (this.uploadForm.get('editName').value === this.file.name) {
+      this.file = null;
+      this.uploadForm.get('editName').patchValue('');
+      this.uploadForm.get('nameFile').patchValue('');
+      this.file = null;
+    } else {
+      this.uploadForm.get('nameFile').patchValue('');
+    }
   }
 
   createForm() {
@@ -112,21 +116,20 @@ export class UploadFileComponent implements OnInit {
       date: new Date(),
       description: ''
     });
-
     this.uploadForm.valueChanges.subscribe(data => {
       this.onFormValueChanged(data);
     });
   }
   onFormValueChanged(data?: any) {
-    const isFile = (this.uploadForm.get('file').value) ? true : false;
-    const isLinkFile = (this.uploadForm.get('linkFile').value) ? true : false;
+    const isFile = (this.uploadForm.get('nameFile').value) ? true : false;
+    const isLinkFile = (this.uploadForm.get('link').value) ? true : false;
+    if (!isFile && !isLinkFile) {
+      this.errorMess = 'Vui lòng chọn file hoặc đường dẫn link đến file!';
+    } else {
+      this.errorMess = null;
+    }
     if (this.isSubmitted) {
       this.validateForm();
-      if (!isFile && !isLinkFile) {
-        this.errorMess = 'Vui lòng chọn file hoặc đường dẫn link đến file!';
-      } else {
-        this.errorMess = null;
-      }
     }
   }
 
@@ -163,10 +166,7 @@ export class UploadFileComponent implements OnInit {
             this.errorMess = 'Upload thất bại, xin vui lòng thử lại!';
             this.spinner.hide();
           });
-      } else {
-        this.errorMess = 'Vui lòng chọn file hoặc đường dẫn link đến file!';
       }
-
     }
   }
 
