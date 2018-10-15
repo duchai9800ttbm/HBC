@@ -13,7 +13,7 @@ import { SummaryConditionFormComponent } from '../summary-condition-form.compone
 export class SummaryConditionFormConditionContractComponent implements OnInit {
     conditionContractForm: FormGroup;
     dataStepConditionContract = new DienGiaiDieuKienHopDong();
-    isModelView = false;
+    isModeView = false;
 
     get baoHiemMayMocHSMTFA(): FormArray {
         const dieuKienHSMT = this.conditionContractForm.get('dieuKienTheoHSMT') as FormGroup;
@@ -33,6 +33,9 @@ export class SummaryConditionFormConditionContractComponent implements OnInit {
     ) { }
 
     ngOnInit() {
+        this.hoSoDuThauService.watchLiveformState().subscribe(data => {
+            this.isModeView = data.isModeView;
+          });
         this.loadData();
 
     }
@@ -195,11 +198,11 @@ export class SummaryConditionFormConditionContractComponent implements OnInit {
                 name: {
                     value: this.dataStepConditionContract && this.dataStepConditionContract.loaiHopDong
                         && this.dataStepConditionContract.loaiHopDong.name,
-                    disabled: this.isModelView
+                    disabled: this.isModeView
                 },
                 desc: {
                     value: this.dataStepConditionContract.loaiHopDong.desc,
-                    disabled: this.isModelView
+                    disabled: this.isModeView
                 }
             }),
             dieuKienTheoHSMT: this.fb.group({
@@ -208,13 +211,13 @@ export class SummaryConditionFormConditionContractComponent implements OnInit {
                         value: this.dataStepConditionContract && this.dataStepConditionContract.dieuKienTheoHSMT
                             && this.dataStepConditionContract.dieuKienTheoHSMT.baoLanhThucHien
                             && this.dataStepConditionContract.dieuKienTheoHSMT.baoLanhThucHien.phanTram,
-                        disabled: this.isModelView
+                        disabled: this.isModeView
                     },
                     hieuLuc: {
                         value: this.dataStepConditionContract && this.dataStepConditionContract.dieuKienTheoHSMT
                             && this.dataStepConditionContract.dieuKienTheoHSMT.baoLanhThucHien
                             && this.dataStepConditionContract.dieuKienTheoHSMT.baoLanhThucHien.hieuLuc,
-                        disabled: this.isModelView
+                        disabled: this.isModeView
                     }
                 }),
 
@@ -223,13 +226,13 @@ export class SummaryConditionFormConditionContractComponent implements OnInit {
                         value: this.dataStepConditionContract && this.dataStepConditionContract.dieuKienTheoHSMT
                             && this.dataStepConditionContract.dieuKienTheoHSMT.baoLanhTamUng
                             && this.dataStepConditionContract.dieuKienTheoHSMT.baoLanhTamUng.phanTram,
-                        disabled: this.isModelView
+                        disabled: this.isModeView
                     },
                     hieuLuc: {
                         value: this.dataStepConditionContract && this.dataStepConditionContract.dieuKienTheoHSMT
                             && this.dataStepConditionContract.dieuKienTheoHSMT.baoLanhTamUng
                             && this.dataStepConditionContract.dieuKienTheoHSMT.baoLanhTamUng.hieuLuc,
-                        disabled: this.isModelView
+                        disabled: this.isModeView
                     }
                 }),
 
@@ -238,19 +241,19 @@ export class SummaryConditionFormConditionContractComponent implements OnInit {
                         value: this.dataStepConditionContract && this.dataStepConditionContract.dieuKienTheoHSMT
                             && this.dataStepConditionContract.dieuKienTheoHSMT.thanhToan
                             && this.dataStepConditionContract.dieuKienTheoHSMT.thanhToan.loaiThanhToan,
-                        disabled: this.isModelView
+                        disabled: this.isModeView
                     },
                     thoiGianThanhToan: {
                         value: this.dataStepConditionContract && this.dataStepConditionContract.dieuKienTheoHSMT
                             && this.dataStepConditionContract.dieuKienTheoHSMT.thanhToan
                             && this.dataStepConditionContract.dieuKienTheoHSMT.thanhToan.thoiGianThanhToan,
-                        disabled: this.isModelView
+                        disabled: this.isModeView
                     },
                     thanhToanKhiTapKet: {
                         value: this.dataStepConditionContract && this.dataStepConditionContract.dieuKienTheoHSMT
                             && this.dataStepConditionContract.dieuKienTheoHSMT.thanhToan
                             && this.dataStepConditionContract.dieuKienTheoHSMT.thanhToan.thanhToanKhiTapKet,
-                        disabled: this.isModelView
+                        disabled: this.isModeView
                     }
                 }),
 
@@ -259,19 +262,19 @@ export class SummaryConditionFormConditionContractComponent implements OnInit {
                         value: this.dataStepConditionContract && this.dataStepConditionContract.dieuKienTheoHSMT
                             && this.dataStepConditionContract.dieuKienTheoHSMT.tienGiuLai
                             && this.dataStepConditionContract.dieuKienTheoHSMT.tienGiuLai.phanTram,
-                        disabled: this.isModelView
+                        disabled: this.isModeView
                     },
                     gioiHanTienGiuLai: {
                         value: this.dataStepConditionContract && this.dataStepConditionContract.dieuKienTheoHSMT
                             && this.dataStepConditionContract.dieuKienTheoHSMT.tienGiuLai
                             && this.dataStepConditionContract.dieuKienTheoHSMT.tienGiuLai.gioiHanTienGiuLai,
-                        disabled: this.isModelView
+                        disabled: this.isModeView
                     },
                     thanhToanTienGui: {
                         value: this.dataStepConditionContract && this.dataStepConditionContract.dieuKienTheoHSMT
                             && this.dataStepConditionContract.dieuKienTheoHSMT.tienGiuLai
                             && this.dataStepConditionContract.dieuKienTheoHSMT.tienGiuLai.thanhToanTienGui,
-                        disabled: this.isModelView
+                        disabled: this.isModeView
                     }
                 }),
 
@@ -280,20 +283,20 @@ export class SummaryConditionFormConditionContractComponent implements OnInit {
                         value: this.dataStepConditionContract && this.dataStepConditionContract.dieuKienTheoHSMT
                             && this.dataStepConditionContract.dieuKienTheoHSMT.phatTreTienDo
                             && this.dataStepConditionContract.dieuKienTheoHSMT.phatTreTienDo.phanTram,
-                        disabled: this.isModelView
+                        disabled: this.isModeView
                     },
                     gioiHanPhatTienDo: {
                         value: this.dataStepConditionContract && this.dataStepConditionContract.dieuKienTheoHSMT
                             && this.dataStepConditionContract.dieuKienTheoHSMT.phatTreTienDo
                             && this.dataStepConditionContract.dieuKienTheoHSMT.phatTreTienDo.gioiHanPhatTienDo,
-                        disabled: this.isModelView
+                        disabled: this.isModeView
                     }
                 }),
 
                 thoiGianBaoHanh: {
                     value: this.dataStepConditionContract && this.dataStepConditionContract.dieuKienTheoHSMT
                         && this.dataStepConditionContract.dieuKienTheoHSMT.thoiGianBaoHanh,
-                    disabled: this.isModelView
+                    disabled: this.isModeView
                 },
 
                 baoHiem: this.fb.group({
@@ -302,13 +305,13 @@ export class SummaryConditionFormConditionContractComponent implements OnInit {
                         value: this.dataStepConditionContract && this.dataStepConditionContract.dieuKienTheoHSMT
                             && this.dataStepConditionContract.dieuKienTheoHSMT.baoHiem
                             && this.dataStepConditionContract.dieuKienTheoHSMT.baoHiem.baoHiemConNguoi,
-                        disabled: this.isModelView
+                        disabled: this.isModeView
                     },
                     baoHiemCongTrinh: {
                         value: this.dataStepConditionContract && this.dataStepConditionContract.dieuKienTheoHSMT
                             && this.dataStepConditionContract.dieuKienTheoHSMT.baoHiem
                             && this.dataStepConditionContract.dieuKienTheoHSMT.baoHiem.baoHiemCongTrinh,
-                        disabled: this.isModelView
+                        disabled: this.isModeView
                     }
                 })
             }),
@@ -318,13 +321,13 @@ export class SummaryConditionFormConditionContractComponent implements OnInit {
                         value: this.dataStepConditionContract && this.dataStepConditionContract.dieuKienTheoHBC
                             && this.dataStepConditionContract.dieuKienTheoHBC.baoLanhThucHien
                             && this.dataStepConditionContract.dieuKienTheoHBC.baoLanhThucHien.phanTram,
-                        disabled: this.isModelView
+                        disabled: this.isModeView
                     },
                     hieuLuc: {
                         value: this.dataStepConditionContract && this.dataStepConditionContract.dieuKienTheoHBC
                             && this.dataStepConditionContract.dieuKienTheoHBC.baoLanhThucHien
                             && this.dataStepConditionContract.dieuKienTheoHBC.baoLanhThucHien.hieuLuc,
-                        disabled: this.isModelView
+                        disabled: this.isModeView
                     }
                 }),
 
@@ -333,13 +336,13 @@ export class SummaryConditionFormConditionContractComponent implements OnInit {
                         value: this.dataStepConditionContract && this.dataStepConditionContract.dieuKienTheoHBC
                             && this.dataStepConditionContract.dieuKienTheoHBC.baoLanhTamUng
                             && this.dataStepConditionContract.dieuKienTheoHBC.baoLanhTamUng.phanTram,
-                        disabled: this.isModelView
+                        disabled: this.isModeView
                     },
                     hieuLuc: {
                         value: this.dataStepConditionContract && this.dataStepConditionContract.dieuKienTheoHBC
                             && this.dataStepConditionContract.dieuKienTheoHBC.baoLanhTamUng
                             && this.dataStepConditionContract.dieuKienTheoHBC.baoLanhTamUng.hieuLuc,
-                        disabled: this.isModelView
+                        disabled: this.isModeView
                     }
                 }),
 
@@ -348,19 +351,19 @@ export class SummaryConditionFormConditionContractComponent implements OnInit {
                         value: this.dataStepConditionContract && this.dataStepConditionContract.dieuKienTheoHBC
                             && this.dataStepConditionContract.dieuKienTheoHBC.thanhToan
                             && this.dataStepConditionContract.dieuKienTheoHBC.thanhToan.loaiThanhToan,
-                        disabled: this.isModelView
+                        disabled: this.isModeView
                     },
                     thoiGianThanhToan: {
                         value: this.dataStepConditionContract && this.dataStepConditionContract.dieuKienTheoHBC
                             && this.dataStepConditionContract.dieuKienTheoHBC.thanhToan
                             && this.dataStepConditionContract.dieuKienTheoHBC.thanhToan.thoiGianThanhToan,
-                        disabled: this.isModelView
+                        disabled: this.isModeView
                     },
                     thanhToanKhiTapKet: {
                         value: this.dataStepConditionContract && this.dataStepConditionContract.dieuKienTheoHBC
                             && this.dataStepConditionContract.dieuKienTheoHBC.thanhToan
                             && this.dataStepConditionContract.dieuKienTheoHBC.thanhToan.thanhToanKhiTapKet,
-                        disabled: this.isModelView
+                        disabled: this.isModeView
                     }
                 }),
 
@@ -369,19 +372,19 @@ export class SummaryConditionFormConditionContractComponent implements OnInit {
                         value: this.dataStepConditionContract && this.dataStepConditionContract.dieuKienTheoHBC
                             && this.dataStepConditionContract.dieuKienTheoHBC.tienGiuLai
                             && this.dataStepConditionContract.dieuKienTheoHBC.tienGiuLai.phanTram,
-                        disabled: this.isModelView
+                        disabled: this.isModeView
                     },
                     gioiHanTienGiuLai: {
                         value: this.dataStepConditionContract && this.dataStepConditionContract.dieuKienTheoHBC
                             && this.dataStepConditionContract.dieuKienTheoHBC.tienGiuLai
                             && this.dataStepConditionContract.dieuKienTheoHBC.tienGiuLai.gioiHanTienGiuLai,
-                        disabled: this.isModelView
+                        disabled: this.isModeView
                     },
                     thanhToanTienGui: {
                         value: this.dataStepConditionContract && this.dataStepConditionContract.dieuKienTheoHBC
                             && this.dataStepConditionContract.dieuKienTheoHBC.tienGiuLai
                             && this.dataStepConditionContract.dieuKienTheoHBC.tienGiuLai.thanhToanTienGui,
-                        disabled: this.isModelView
+                        disabled: this.isModeView
                     }
                 }),
 
@@ -390,20 +393,20 @@ export class SummaryConditionFormConditionContractComponent implements OnInit {
                         value: this.dataStepConditionContract && this.dataStepConditionContract.dieuKienTheoHBC
                             && this.dataStepConditionContract.dieuKienTheoHBC.phatTreTienDo
                             && this.dataStepConditionContract.dieuKienTheoHBC.phatTreTienDo.phanTram,
-                        disabled: this.isModelView
+                        disabled: this.isModeView
                     },
                     gioiHanPhatTienDo: {
                         value: this.dataStepConditionContract && this.dataStepConditionContract.dieuKienTheoHBC
                             && this.dataStepConditionContract.dieuKienTheoHBC.phatTreTienDo
                             && this.dataStepConditionContract.dieuKienTheoHBC.phatTreTienDo.gioiHanPhatTienDo,
-                        disabled: this.isModelView
+                        disabled: this.isModeView
                     }
                 }),
 
                 thoiGianBaoHanh: {
                     value: this.dataStepConditionContract && this.dataStepConditionContract.dieuKienTheoHBC
                         && this.dataStepConditionContract.dieuKienTheoHBC.thoiGianBaoHanh,
-                    disabled: this.isModelView
+                    disabled: this.isModeView
                 },
 
                 baoHiem: this.fb.group({
@@ -412,13 +415,13 @@ export class SummaryConditionFormConditionContractComponent implements OnInit {
                         value: this.dataStepConditionContract && this.dataStepConditionContract.dieuKienTheoHBC
                             && this.dataStepConditionContract.dieuKienTheoHBC.baoHiem
                             && this.dataStepConditionContract.dieuKienTheoHBC.baoHiem.baoHiemConNguoi,
-                        disabled: this.isModelView
+                        disabled: this.isModeView
                     },
                     baoHiemCongTrinh: {
                         value: this.dataStepConditionContract && this.dataStepConditionContract.dieuKienTheoHBC
                             && this.dataStepConditionContract.dieuKienTheoHBC.baoHiem
                             && this.dataStepConditionContract.dieuKienTheoHBC.baoHiem.baoHiemCongTrinh,
-                        disabled: this.isModelView
+                        disabled: this.isModeView
                     }
                 })
             }),
@@ -430,7 +433,7 @@ export class SummaryConditionFormConditionContractComponent implements OnInit {
             controls.push(this.fb.group({
                 baoHiemItem: {
                     value: x,
-                    disabled: this.isModelView
+                    disabled: this.isModeView
                 }
             }));
 
@@ -442,7 +445,7 @@ export class SummaryConditionFormConditionContractComponent implements OnInit {
             controls.push(this.fb.group({
                 baoHiemItem: {
                     value: x,
-                    disabled: this.isModelView
+                    disabled: this.isModeView
                 }
             }));
         });
@@ -530,7 +533,7 @@ export class SummaryConditionFormConditionContractComponent implements OnInit {
         const formItemHSMT = this.fb.group({
             baoHiemItem: {
                 value: '',
-                disabled: this.isModelView
+                disabled: this.isModeView
             }
         });
         formArrayHSMT.updateValueAndValidity();
@@ -543,7 +546,7 @@ export class SummaryConditionFormConditionContractComponent implements OnInit {
         const formItemHBC = this.fb.group({
             baoHiemItem: {
                 value: '',
-                disabled: this.isModelView
+                disabled: this.isModeView
             }
         });
         formArrayHBC.updateValueAndValidity();

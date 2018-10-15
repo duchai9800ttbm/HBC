@@ -16,7 +16,7 @@ import { PhamViCongViecItem } from '../../../../../../../../shared/models/ho-so-
 export class SummaryConditionFormScopeWorkComponent implements OnInit {
   dataStepScope = new PhamViCongViec();
   scopeWorkForm: FormGroup;
-
+  isModeView = false;
   get scopeIncludeFA(): FormArray {
     return this.scopeWorkForm.get('scopeInclude') as FormArray;
   }
@@ -31,6 +31,9 @@ export class SummaryConditionFormScopeWorkComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+    this.hoSoDuThauService.watchLiveformState().subscribe(data => {
+      this.isModeView = data.isModeView;
+    });
     this.loadData();
   }
 
@@ -42,15 +45,15 @@ export class SummaryConditionFormScopeWorkComponent implements OnInit {
     this.dataStepScope.phamViKhongBaoGom.forEach(x => {
       const control = <FormArray>this.scopeWorkForm.controls.scopeNotInclude;
       control.push(this.fb.group({
-        congTac: x.congTac,
-        dienGiaiCongTac: x.dienGiaiCongTac
+        congTac: { value: x.congTac, disabled: this.isModeView },
+        dienGiaiCongTac: { value: x.dienGiaiCongTac, disabled: this.isModeView }
       }));
     });
     this.dataStepScope.phamViBaoGom.forEach(x => {
       const control = <FormArray>this.scopeWorkForm.controls.scopeInclude;
       control.push(this.fb.group({
-        congTac: x.congTac,
-        dienGiaiCongTac: x.dienGiaiCongTac
+        congTac: { value: x.congTac, disabled: this.isModeView },
+        dienGiaiCongTac: { value: x.dienGiaiCongTac, disabled: this.isModeView }
       }));
     });
 
@@ -112,8 +115,8 @@ export class SummaryConditionFormScopeWorkComponent implements OnInit {
   addFormArrayControl(name: string, data?: DictionaryItemText) {
     const formArray = this.scopeWorkForm.get(name) as FormArray;
     const formItem = this.fb.group({
-      congTac: data ? data.name : '',
-      dienGiaiCongTac: data ? data.desc : ''
+      congTac: { value: data ? data.name : '', disabled: this.isModeView },
+      dienGiaiCongTac: { value: data ? data.desc : '', disabled: this.isModeView }
     });
     formArray.push(formItem);
   }

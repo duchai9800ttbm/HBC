@@ -37,7 +37,7 @@ export class SummaryConditionComponent implements OnInit {
         this.summaryCondition = data;
         setTimeout(() => {
           this.dtTrigger.next();
-        }, 300);
+        }, 0);
       });
   }
 

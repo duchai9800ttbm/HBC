@@ -13,14 +13,17 @@
     </div>
     <div>
         <div class="btn-toolbar mt-2 mb-2">
-            <button class="btn btn-primary ml-1" (click)="onSubmit(true)">
+            <button *ngIf="!isModeView" class="btn btn-primary ml-1" (click)="onSubmit(true)">
                 Lưu nháp
             </button>
-            <button class="btn btn-primary ml-1" (click)="onSubmit(false)">
+            <button *ngIf="!isModeView" class="btn btn-primary ml-1" (click)="onSubmit(false)">
                 Lưu
             </button>
-            <button class="btn btn-secondary ml-1" (click)="cancel()">
+            <button *ngIf="!isModeView" class="btn btn-secondary ml-1" (click)="backSummary()">
                 Hủy
+            </button>
+            <button *ngIf="isModeView" class="btn btn-primary ml-1" (click)="edit()">
+                Chỉnh sửa
             </button>
             <button class="btn btn-primary ml-1" (click)="refresh()">
                 <i class="fa fa-refresh" aria-hidden="true"></i>

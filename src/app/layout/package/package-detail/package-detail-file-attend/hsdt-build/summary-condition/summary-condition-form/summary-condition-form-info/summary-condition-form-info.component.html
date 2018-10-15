@@ -20,11 +20,11 @@
             <input type="file" accept="image/*" multiple #uploadPhoiCanh (change)="uploadPerspectiveImage($event)">
             <div class="display-img" *ngFor="let url of hinhAnhPhoiCanhUrls" (click)="viewFullScreenImage(hinhAnhPhoiCanhUrls)">
                 <img [src]="url.largeSizeUrl">
-                <div class="icon-delete-image" [ngClass]="{'d-none': viewMode}" (click)="deletePerspectiveImage(url)">
+                <div class="icon-delete-image" [ngClass]="{'d-none': isModeView}" (click)="deletePerspectiveImage(url)">
                     <i class="fa fa-times delete-icon" aria-hidden="true"></i>
                 </div>
             </div>
-            <div class="perspective-image" [ngClass]="{'d-none': viewMode}" (click)="uploadPhoiCanh.click()"
+            <div class="perspective-image" [ngClass]="{'d-none': isModeView}" (click)="uploadPhoiCanh.click()"
                 tabindex="15">
                 <i class="fa fa-plus" aria-hidden="true"></i>
                 <p>Image</p>
@@ -37,11 +37,11 @@
             <input type="file" accept="image/*" multiple #uploadMasterplan (change)="uploadBanVe($event)">
             <div class="display-img" *ngFor="let url of banVeMasterPlanUrls" (click)="viewFullScreenImage(banVeMasterPlanUrls)">
                 <img [src]="url.largeSizeUrl">
-                <div class="icon-delete-image" [ngClass]="{'d-none': viewMode}" (click)="deleteBanVe(url)">
+                <div class="icon-delete-image" [ngClass]="{'d-none': isModeView}" (click)="deleteBanVe(url)">
                     <i class="fa fa-times delete-icon" aria-hidden="true"></i>
                 </div>
             </div>
-            <div class="perspective-image" [ngClass]="{'d-none': viewMode}" (click)="uploadMasterplan.click()" tabindex="15">
+            <div class="perspective-image" [ngClass]="{'d-none': isModeView}" (click)="uploadMasterplan.click()" tabindex="15">
                 <i class="fa fa-plus" aria-hidden="true"></i>
                 <p>Image</p>
             </div>

@@ -30,7 +30,7 @@
                                 <div>Ghi chú</div>
                             </div>
                             <span class="form-control form-control-custom w-80">
-                                <textarea class="form-control b-textarea h-100" (input)="noteChange($event)"
+                                <textarea [disabled]="isModeView" class="form-control b-textarea h-100" (input)="noteChange($event)"
                                     [(ngModel)]="customer.note"></textarea>
                             </span>
                         </div>

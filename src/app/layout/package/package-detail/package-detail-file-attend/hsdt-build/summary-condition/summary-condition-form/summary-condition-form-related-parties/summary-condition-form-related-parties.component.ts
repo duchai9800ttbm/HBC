@@ -13,7 +13,7 @@ export class SummaryConditionFormRelatedPartiesComponent implements OnInit {
   stakeHolderList = new Array<StakeHolder>();
   packageId;
   isFormChange = false;
-
+  isModeView = false;
 
   constructor(
     private hoSoDuThauService: HoSoDuThauService,
@@ -21,6 +21,9 @@ export class SummaryConditionFormRelatedPartiesComponent implements OnInit {
 
 
   ngOnInit() {
+    this.hoSoDuThauService.watchLiveformState().subscribe(data => {
+      this.isModeView = data.isModeView;
+    });
     this.packageId = +PackageDetailComponent.packageId;
     this.loadData();
   }

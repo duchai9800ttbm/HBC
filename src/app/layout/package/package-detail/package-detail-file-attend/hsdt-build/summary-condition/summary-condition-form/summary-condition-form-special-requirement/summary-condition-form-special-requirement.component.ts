@@ -15,24 +15,27 @@ export class SummaryConditionFormSpecialRequirementComponent implements OnInit {
 
   specialRequirementForm: FormGroup;
   otherRequirement = new TableYeuCauDacBiet();
-
+  isModeView = false;
   constructor(
     private fb: FormBuilder,
     private hoSoDuThauService: HoSoDuThauService
   ) { }
 
   ngOnInit() {
+    this.hoSoDuThauService.watchLiveformState().subscribe(data => {
+      this.isModeView = data.isModeView;
+    });
     this.loadData();
     this.createForm();
   }
   createForm() {
     this.specialRequirementForm = this.fb.group({
-      descOne: this.otherRequirement.greenBuildingStandardName,
-      linkOne: this.otherRequirement.greenBuildingStandardLink,
-      linkTwo: this.otherRequirement.tenderEvaluationStep1,
-      link2Two: this.otherRequirement.tenderEvaluationStep2,
-      descThree: this.otherRequirement.profitValue,
-      linkThree: this.otherRequirement.profitDesc,
+      descOne: { value: this.otherRequirement.greenBuildingStandardName, disabled: this.isModeView },
+      linkOne: { value: this.otherRequirement.greenBuildingStandardLink, disabled: this.isModeView },
+      linkTwo: { value: this.otherRequirement.tenderEvaluationStep1, disabled: this.isModeView },
+      link2Two: { value: this.otherRequirement.tenderEvaluationStep2, disabled: this.isModeView },
+      descThree: { value: this.otherRequirement.profitValue, disabled: this.isModeView },
+      linkThree: { value: this.otherRequirement.profitDesc, disabled: this.isModeView }
     });
 
 

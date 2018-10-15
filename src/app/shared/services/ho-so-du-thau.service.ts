@@ -25,13 +25,17 @@ import { DienGiaiYeuCauLamRo, DienGiaiDieuKienHopDong, DienGiaiDieuKienHSMT } fr
 import { TableYeuCauDacBiet } from '../models/ho-so-du-thau/table-yeu-cau';
 import DateTimeConvertHelper from '../helpers/datetime-convert-helper';
 import { StakeHolder } from '../models/ho-so-du-thau/stack-holder.model';
+import { StateLiveFormSummaryCondition } from '../models/ho-so-du-thau/stateLiveFormSummaryCondition';
 
 @Injectable()
 export class HoSoDuThauService {
 
   static tempDataLiveFormDKDT = new BehaviorSubject<DuLieuLiveFormDKDT>(new DuLieuLiveFormDKDT());
   static detectChangeRouter = new BehaviorSubject<boolean>(false);
+  static stateLiveFormSummaryCondition = new BehaviorSubject<StateLiveFormSummaryCondition>(new StateLiveFormSummaryCondition());
   static idTenderDocumentTypesData;
+
+
 
   private static createFilterParams(filter: HsdtFilterModel): URLSearchParams {
     const numCreatedDate = DateTimeConvertHelper.fromDtObjectToSecon(filter.createdDate);
@@ -48,6 +52,17 @@ export class HoSoDuThauService {
     private instantSearchService: InstantSearchService,
     private sessionService: SessionService
   ) { }
+
+  emitIsModeView(value: boolean) {
+    const obj = new StateLiveFormSummaryCondition();
+    obj.isModeView = value;
+    HoSoDuThauService.stateLiveFormSummaryCondition.next(obj);
+  }
+
+  watchLiveformState() {
+    return HoSoDuThauService.stateLiveFormSummaryCondition;
+  }
+
   // get Employee ID
   get employeeId() {
     return this.sessionService.currentUser.employeeId;

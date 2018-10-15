@@ -5,7 +5,7 @@ import { PackageDetailComponent } from '../../../../package-detail.component';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { AlertService } from '../../../../../../../shared/services';
 import { HoSoDuThauService } from '../../../../../../../shared/services/ho-so-du-thau.service';
-import { Router } from '../../../../../../../../../node_modules/@angular/router';
+import { Router, ActivatedRoute } from '../../../../../../../../../node_modules/@angular/router';
 import { PackageInfoModel } from '../../../../../../../shared/models/package/package-info.model';
 import { DuLieuLiveFormDKDT } from '../../../../../../../shared/models/ho-so-du-thau/tom-tat-dkdt.model';
 
@@ -20,12 +20,14 @@ export class SummaryConditionFormComponent implements OnInit, OnDestroy {
   packageId;
   package: PackageInfoModel;
   showPopupConfirm = false;
+  isModeView = false;
   constructor(
     private packageService: PackageService,
     private hoSoDuThauService: HoSoDuThauService,
     private spinner: NgxSpinnerService,
     private alertService: AlertService,
-    private router: Router
+    private router: Router,
+    private activatedRoute: ActivatedRoute
   ) { }
 
   ngOnInit() {
@@ -36,6 +38,32 @@ export class SummaryConditionFormComponent implements OnInit, OnDestroy {
       this.package = result;
 
     }, err => {
+    });
+
+    this.activatedRoute.params.subscribe(data => {
+      console.log(data);
+      switch (data.action) {
+        case 'create': {
+          this.isModeView = false;
+          this.hoSoDuThauService.emitIsModeView(false);
+          break;
+        }
+        case 'edit': {
+          this.isModeView = false;
+          this.hoSoDuThauService.emitIsModeView(false);
+          break;
+        }
+        case 'detail': {
+          this.isModeView = true;
+          this.hoSoDuThauService.emitIsModeView(true);
+          break;
+        }
+        default: {
+          this.isModeView = false;
+          this.hoSoDuThauService.emitIsModeView(false);
+          break;
+        }
+      }
     });
 
     this.hoSoDuThauService.getInfoTenderConditionalSummary(this.packageId).subscribe(data => {
@@ -75,6 +103,11 @@ export class SummaryConditionFormComponent implements OnInit, OnDestroy {
       });
       this.showPopupConfirm = false;
     }
+  }
+
+  edit() {
+    this.hoSoDuThauService.emitIsModeView(false);
+    this.router.navigate([`package/detail/${this.packageId}/attend/build/summary/form/edit`]);
   }
 
   cancel() {

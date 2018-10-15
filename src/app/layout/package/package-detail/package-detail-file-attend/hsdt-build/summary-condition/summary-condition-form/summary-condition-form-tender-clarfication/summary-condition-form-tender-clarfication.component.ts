@@ -21,6 +21,9 @@ export class SummaryConditionFormTenderClarficationComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+    this.hoSoDuThauService.watchLiveformState().subscribe(data => {
+      this.isModeView = data.isModeView;
+    });
     this.loadData();
     this.createForm();
 

@@ -459,7 +459,7 @@
                             BH máy móc thiết bị nhà thầu </div>
                     </div>
                     <div class="col-md-1">
-                        <i class="fa fa-plus-square-o pointer" aria-hidden="true" (click)="addFormArrayControl()"></i>
+                        <i class="fa fa-plus-square-o pointer" *ngIf="!isModeView" aria-hidden="true" (click)="addFormArrayControl()"></i>
                     </div>
                     <div class="col-md-4">
                         <div formGroupName="dieuKienTheoHSMT">
@@ -486,7 +486,7 @@
                                             </div>
                                             <div class="col-md-2 center-parent">
                                                 <div class="w-24 mb-2">
-                                                    <i *ngIf="i !== 0" (click)="removeFormArrayControl('scopeInclude', i)"
+                                                    <i *ngIf="i !== 0 && !isModeView" (click)="removeFormArrayControl('scopeInclude', i)"
                                                         class="fa fa-times-circle pointer times-color icon-delete-item"
                                                         aria-hidden="true"></i>
                                                 </div>

@@ -13,6 +13,7 @@ export class SummaryConditionFormTenderSubmissionComponent implements OnInit {
 
   hoSoDangLuuY = new HoSoDangLuuY();
   hoSoDangLuuYForm: FormGroup;
+  isModeView = false;
   constructor(
     private hoSoDuThauService: HoSoDuThauService,
     private fb: FormBuilder
@@ -24,6 +25,9 @@ export class SummaryConditionFormTenderSubmissionComponent implements OnInit {
   }
   amountFiles;
   ngOnInit() {
+    this.hoSoDuThauService.watchLiveformState().subscribe(data => {
+      this.isModeView = data.isModeView;
+    });
     this.loadData();
     this.createForm();
   }
@@ -51,14 +55,14 @@ export class SummaryConditionFormTenderSubmissionComponent implements OnInit {
   createForm() {
     this.hoSoDangLuuYForm = this.fb.group({
       taiLieuLuuY: this.fb.array([]),
-      soLuong: this.hoSoDangLuuY.soLuong,
-      ngonNgu: this.hoSoDangLuuY.ngonNgu
+      soLuong: { value: this.hoSoDangLuuY.soLuong, disabled: this.isModeView },
+      ngonNgu: { value: this.hoSoDangLuuY.ngonNgu, disabled: this.isModeView }
     });
 
     this.hoSoDangLuuY.taiLieuLuuY.forEach(x => {
       const control = <FormArray>this.hoSoDangLuuYForm.controls.taiLieuLuuY;
       control.push(this.fb.group({
-        taiLieu: x
+        taiLieu: { value: x, disabled: this.isModeView }
       }));
     });
 
@@ -76,7 +80,7 @@ export class SummaryConditionFormTenderSubmissionComponent implements OnInit {
   addFormArrayControl(name: string, data?: DictionaryItemText) {
     const formArray = this.hoSoDangLuuYForm.get(name) as FormArray;
     const formItem = this.fb.group({
-      taiLieu: data ? data.name : '',
+      taiLieu: { value: data ? data.name : '', disabled: this.isModeView },
     });
     formArray.push(formItem);
     this.amountFiles = formArray.length;

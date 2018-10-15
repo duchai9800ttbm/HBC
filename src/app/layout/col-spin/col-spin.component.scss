@@ -68,7 +68,7 @@
     height: 6px;
     margin-left: 40px;
     margin-right: 120px;
-    overflow: scroll;
+    overflow: auto;
     &::-webkit-scrollbar {
         height: 10px;
     }
@@ -76,7 +76,7 @@
         background: #888; 
     }
     .scrollbar-fake-content {
-        width: 2352px;
+        // width: 2512px;
         height: 6px;
     }
 }
