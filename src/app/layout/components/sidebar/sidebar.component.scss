@@ -281,6 +281,7 @@ img {
 }
 
 .text-truncate-height {
+    font-size: 90%;
     display: -webkit-box;
     -webkit-line-clamp: 3;
     -webkit-box-orient: vertical;
@@ -288,24 +289,7 @@ img {
 }
 
 .scroll-list {
-    padding-right: 8px;
     margin-right: -8px;
-    overflow-y: auto;
-    overflow-x: hidden !important;
-}
-
-
-::-webkit-scrollbar-track {
-    background-color: #F5F5F5;
-}
-
-::-webkit-scrollbar {
-    width: 3px;
-    background-color: #F5F5F5;
-}
-
-::-webkit-scrollbar-thumb {
-    background-color: #205377;
 }
 
 .custom-width {
