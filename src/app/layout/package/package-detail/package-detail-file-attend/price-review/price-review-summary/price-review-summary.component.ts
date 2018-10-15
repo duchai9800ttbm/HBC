@@ -53,6 +53,7 @@ export class PriceReviewSummaryComponent implements OnInit {
     });
     this.priceReviewService.getDanhSachHSDTChinhThuc(230).subscribe(data => {
       this.listItemHSDTChinhThuc = data;
+      console.log('this.listItemHSDTChinhThuc', this.listItemHSDTChinhThuc);
     });
 
     this.priceReviewService.changedHistoryPriceReview(this.packageId, 0, 10)

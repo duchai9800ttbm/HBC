@@ -12,6 +12,8 @@ import { URLSearchParams } from '@angular/http';
 import { FilterNeedTransferDoc } from '../models/result-attend/filter-need-transfer-doc.model';
 import { NeedTranferDocList } from '../models/result-attend/need-transfer-doc-list.model';
 import { NeedTransferDoc } from '../models/result-attend/need-transfer-doc.model';
+import { ReportMeetingList } from '../models/result-attend/report-meeting-list.model';
+import { FilterReportMeeting } from '../models/result-attend/filter-report-meeting.model';
 @Injectable()
 export class DetailResultPackageService {
   listFileResult: Subject<any> = new Subject();
@@ -455,4 +457,74 @@ export class DetailResultPackageService {
       .map(response => response)
       .share();
   }
+  // Danh sách biên bản
+  //  Tạo filter paramater danh sách biên bản cuộc họp
+  toFilterMeetingReport(filter: FilterReportMeeting): URLSearchParams {
+    const urlFilterParams = new URLSearchParams();
+    urlFilterParams.append(
+      'meetingTime',
+      filter.meetingTime ? DateTimeConvertHelper.fromDtObjectToTimestamp(filter.meetingTime).toString() : ''
+    );
+    urlFilterParams.append(
+      'interviewTimes',
+      filter.interviewTimes ? filter.interviewTimes.toString() : ''
+    );
+    urlFilterParams.append(
+      'uploadedEmployeeId',
+      filter.uploadedEmployeeId ? filter.uploadedEmployeeId.toString() : ''
+    );
+    urlFilterParams.append(
+      'createdDate',
+      filter.createdDate ? DateTimeConvertHelper.fromDtObjectToTimestamp(filter.createdDate).toString() : ''
+    );
+    urlFilterParams.append(
+      'sorting',
+      filter.sorting ? filter.sorting.toString() : ''
+    );
+    return urlFilterParams;
+  }
+  // Map theo model của danh sách biên bản cuộc họp
+  toReportMeetingList(result: any): ReportMeetingList {
+    return {
+      id: result.id,
+      documentName: result.documentName,
+      version: result.version,
+      uploadedBy: {
+        employeeId: result.uploadedBy.employeeId,
+        employeeNo: result.uploadedBy.employeeNo,
+        employeeName: result.uploadedBy.employeeName,
+        employeeAvatar: {
+          guid: result.uploadedBy.employeeAvatar.guid,
+          thumbSizeUrl: result.uploadedBy.employeeAvatar.thumbSizeUrl,
+          largeSizeUrl: result.uploadedBy.employeeAvatar.largeSizeUrl,
+        },
+        employeeEmail: result.uploadedBy.employeeEmail,
+      },
+      createdDate: result.createdDate,
+      interviewTimes: result.interviewTimes,
+      meetingTime: result.meetingTime,
+      fileUrl: result.fileUrl,
+      description: result.description,
+    };
+  }
+  // Dánh sách biên bản cuộc họp (tìm kiếm, lọc)
+  getBidMeetingReportdocsList(
+    bidOpportunityId: number,
+    searchTerm: string,
+    filter: FilterReportMeeting,
+    page: number | string,
+    pageSize: number | string
+  ): Observable<PagedResult<ReportMeetingList>> {
+    const filterUrl = `bidopportunity/${bidOpportunityId}/bidmeetingreportdocs/filter/${page}/${pageSize}`;
+    const urlParams = this.toFilterMeetingReport(filter);
+    urlParams.append('searchTerm', searchTerm);
+    return this.apiService.get(filterUrl, urlParams).map(response => {
+      const result = response.result;
+      return (result || []).map(
+        this.toReportMeetingList
+      );
+    });
+  }
+  // Danh sách file Presentations
+  // Danh sách
 }
