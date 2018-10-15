@@ -16,11 +16,11 @@ export class NotificationService {
         employeeId: result.sendEmployee.employeeId,
         employeeNo: result.sendEmployee.employeeNo,
         employeeName: result.sendEmployee.employeeName,
-        employeeAvatar: {
+        employeeAvatar: result.sendEmployee.employeeAvatar ? {
           guid: result.sendEmployee.employeeAvatar.guid,
           thumbSizeUrl: result.sendEmployee.employeeAvatar.thumbSizeUrl,
           largeSizeUrl: result.sendEmployee.employeeAvatar.largeSizeUrl,
-        },
+        } : null,
         employeeEmail: result.sendEmployee.employeeEmail,
       },
       notificationState: {

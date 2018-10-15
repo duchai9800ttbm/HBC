@@ -264,3 +264,11 @@ table.dataTable th {
   .wstt {
       width: 6%;
   }
+.edit-number{
+    position: relative;
+    .edit-number--posotion{
+        position: absolute;
+        top: 20px;
+        right: 16px;
+    }
+}
