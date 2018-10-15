@@ -28,6 +28,7 @@ import { DISABLED } from '@angular/forms/src/model';
 import { UserItemModel } from '../../../../../shared/models/user/user-item.model';
 import CustomValidator from '../../../../../shared/helpers/custom-validator.helper';
 import { EvaluationModel } from '../../../../../shared/models/package/evaluation.model';
+import { moment } from '../../../../../../../node_modules/ngx-bootstrap/chronos/test/chain';
 @Component({
     selector: 'app-edit',
     templateUrl: './edit.component.html',
@@ -257,5 +258,4 @@ export class EditComponent implements OnInit {
             this.dataEvaluation = data;
         });
     }
-
 }

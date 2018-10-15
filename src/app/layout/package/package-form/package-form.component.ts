@@ -29,6 +29,7 @@ import { PopupCreateAssignerComponent } from '../../../shared/components/popup-c
 import { PopupCreateChairComponent } from '../../../shared/components/popup-create-chair/popup-create-chair.component';
 import { UserFormComponent } from './user-form/user-form.component';
 import { EvaluationModel } from '../../../shared/models/package/evaluation.model';
+import { moment } from '../../../../../node_modules/ngx-bootstrap/chronos/test/chain';
 @Component({
     selector: 'app-package-form',
     templateUrl: './package-form.component.html',
