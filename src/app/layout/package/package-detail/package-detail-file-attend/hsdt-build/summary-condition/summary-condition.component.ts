@@ -10,6 +10,9 @@ import { Subject } from 'rxjs';
 import { SummaryConditionFormComponent } from './summary-condition-form/summary-condition-form.component';
 import { DuLieuLiveFormDKDT } from '../../../../../../shared/models/ho-so-du-thau/tom-tat-dkdt.model';
 import { HoSoDuThauService } from '../../../../../../shared/services/ho-so-du-thau.service';
+import { HistoryLiveForm } from '../../../../../../shared/models/ho-so-du-thau/history-liveform.model';
+import { PagedResult } from '../../../../../../shared/models';
+import { GroupDescriptor, DataResult, process, groupBy } from '@progress/kendo-data-query';
 
 @Component({
   selector: 'app-summary-condition',
@@ -22,6 +25,11 @@ export class SummaryConditionComponent implements OnInit {
   summaryCondition: DuLieuLiveFormDKDT;
   dtOptions: any = DATATABLE_CONFIG;
   dtTrigger: Subject<any> = new Subject();
+  dtTrigger2: Subject<any> = new Subject();
+
+  historyList;
+  pagedResultChangeHistoryList: PagedResult<HistoryLiveForm> = new PagedResult<HistoryLiveForm>();
+
   constructor(
     private hoSoDuThauService: HoSoDuThauService,
     private packageService: PackageService,
@@ -39,6 +47,7 @@ export class SummaryConditionComponent implements OnInit {
           this.dtTrigger.next();
         }, 0);
       });
+    this.getChangeHistory(0, 10);
   }
 
   refresh(isAlert: boolean) {
@@ -63,5 +72,31 @@ export class SummaryConditionComponent implements OnInit {
         that.alertService.error('Xóa thất bại, vui lòng thử lại sau!');
       });
     });
+  }
+
+  getChangeHistory(page: number | string, pageSize: number | string) {
+    this.spinner.show();
+    this.hoSoDuThauService.getChangeHistoryListProposedTender(this.packageId, page, pageSize).subscribe(respone => {
+      this.historyList = respone.items;
+      this.pagedResultChangeHistoryList = respone;
+      this.historyList = groupBy(this.pagedResultChangeHistoryList.items, [{ field: 'changedTime' }]);
+      this.historyList.forEach((itemList, indexList) => {
+        itemList.items.forEach((itemByChangedTimes, indexChangedTimes) => {
+          this.historyList[indexList].items[indexChangedTimes].liveFormChangeds =
+            groupBy(itemByChangedTimes.liveFormChangeds, [{ field: 'liveFormStep' }]);
+        });
+      });
+      setTimeout(() => {
+        this.dtTrigger2.next();
+      });
+      this.spinner.hide();
+    },
+      err => {
+        this.spinner.hide();
+      });
+  }
+
+  pagedResultChangeHistory(e) {
+    this.getChangeHistory(this.pagedResultChangeHistoryList.currentPage, this.pagedResultChangeHistoryList.pageSize);
   }
 }

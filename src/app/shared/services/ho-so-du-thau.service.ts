@@ -26,6 +26,7 @@ import { TableYeuCauDacBiet } from '../models/ho-so-du-thau/table-yeu-cau';
 import DateTimeConvertHelper from '../helpers/datetime-convert-helper';
 import { StakeHolder } from '../models/ho-so-du-thau/stack-holder.model';
 import { StateLiveFormSummaryCondition } from '../models/ho-so-du-thau/stateLiveFormSummaryCondition';
+import { HistoryLiveForm } from '../models/ho-so-du-thau/history-liveform.model';
 
 @Injectable()
 export class HoSoDuThauService {
@@ -35,7 +36,29 @@ export class HoSoDuThauService {
   static stateLiveFormSummaryCondition = new BehaviorSubject<StateLiveFormSummaryCondition>(new StateLiveFormSummaryCondition());
   static idTenderDocumentTypesData;
 
-
+  private static toHistoryLiveForm(result: any): HistoryLiveForm {
+    return {
+      employee: {
+        employeeId: result.employee.employeeId,
+        employeeNo: result.employee.employeeNo,
+        employeeName: result.employee.employeeName,
+        employeeAvatar: result.employee.employeeAvatar,
+        employeeEmail: result.employee.employeeEmail,
+      },
+      changedTime: result.changedTime,
+      changedTimes: result.changedTimes,
+      updateDesc: result.updateDesc,
+      liveFormChangeds: result.liveFormChangeds ? result.liveFormChangeds.map(item =>
+        ({
+          liveFormStep: item.liveFormStep,
+          liveFormSubject: item.liveFormSubject,
+          liveFormTitle: item.liveFormTitle,
+          oldValue: item.oldValue,
+          newValue: item.newValue,
+        })
+      ) : []
+    };
+  }
 
   private static createFilterParams(filter: HsdtFilterModel): URLSearchParams {
     const numCreatedDate = DateTimeConvertHelper.fromDtObjectToSecon(filter.createdDate);
@@ -801,5 +824,25 @@ export class HoSoDuThauService {
   getStackHolders(bidOpportunityId: number): Observable<StakeHolder[]> {
     const url = `bidopportunity/${bidOpportunityId}/bidusergroupmembersofstakeholders`;
     return this.apiService.get(url).map(response => response.result);
+  }
+
+  // Lịch sử thay đổi liveform
+  getChangeHistoryListProposedTender(
+    bidOpportunityId: number,
+    page: number | string,
+    pageSize: number | string): Observable<PagedResult<HistoryLiveForm>> {
+    const url = `bidopportunity/${bidOpportunityId}/tenderconditionalsummary/changedhistory/${page}/${pageSize}`;
+    return this.apiService.get(url).map(response => {
+      const result = response.result;
+      return {
+        currentPage: result.pageIndex,
+        pageSize: result.pageSize,
+        pageCount: result.totalPages,
+        total: result.totalCount,
+        items: (result.items || []).map(
+          HoSoDuThauService.toHistoryLiveForm
+        )
+      };
+    });
   }
 }
