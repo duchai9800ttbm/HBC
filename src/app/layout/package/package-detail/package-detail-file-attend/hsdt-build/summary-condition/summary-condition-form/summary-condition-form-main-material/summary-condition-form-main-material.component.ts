@@ -16,7 +16,7 @@ export class SummaryConditionFormMainMaterialComponent implements OnInit {
 
   mainMaterialForm: FormGroup;
   mainMaterial = new Array<DanhSachVatTu>();
-
+  isModeView = false;
   get materialsFA(): FormArray {
     return this.mainMaterialForm.get('materials') as FormArray;
   }
@@ -26,7 +26,9 @@ export class SummaryConditionFormMainMaterialComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-
+    this.hoSoDuThauService.watchLiveformState().subscribe(data => {
+      this.isModeView = data.isModeView;
+    });
     this.loadData();
     this.createForm();
   }
@@ -39,16 +41,16 @@ export class SummaryConditionFormMainMaterialComponent implements OnInit {
     this.mainMaterial.forEach(x => {
       const control = <FormArray>this.mainMaterialForm.controls.materials;
       control.push(this.fb.group({
-        tenVatTu: x.tenVatTu,
-        ghiChuThem: x.ghiChuThem
+        tenVatTu: { value: x.tenVatTu, disabled: this.isModeView },
+        ghiChuThem: { value: x.ghiChuThem, disabled: this.isModeView }
       }));
     });
 
     this.mainMaterialForm.valueChanges.subscribe(data => {
       let obj = new Array<DanhSachVatTu>();
       obj = (data.materials || []).map(x => ({
-        tenVatTu: x.tenVatTu,
-        ghiChuThem: x.ghiChuThem
+        tenVatTu: { value: x.tenVatTu, disabled: this.isModeView },
+        ghiChuThem: { value: x.ghiChuThem, disabled: this.isModeView }
       }));
       this.hoSoDuThauService.emitDataStepMainMaterial(obj);
     });
@@ -73,8 +75,8 @@ export class SummaryConditionFormMainMaterialComponent implements OnInit {
   addFormArrayControl(name: string, data?: DictionaryItemText) {
     const formArray = this.mainMaterialForm.get(name) as FormArray;
     const formItem = this.fb.group({
-      tenVatTu: data ? data.name : '',
-      ghiChuThem: data ? data.desc : ''
+      tenVatTu: { value: data ? data.name : '', disabled: this.isModeView },
+      ghiChuThem: { value: data ? data.desc : '', disabled: this.isModeView }
     });
     formArray.push(formItem);
   }

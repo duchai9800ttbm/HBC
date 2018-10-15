@@ -15,6 +15,7 @@ export class SummaryConditionFormNonminatedSubConstructorComponent implements On
 
   nonminateForm: FormGroup;
   nhaThauPhu = new Array<DanhSachNhaThau>();
+  isModeView = false;
   get packageWorkFA(): FormArray {
     return this.nonminateForm.get('packageWork') as FormArray;
   }
@@ -24,6 +25,9 @@ export class SummaryConditionFormNonminatedSubConstructorComponent implements On
   ) { }
 
   ngOnInit() {
+    this.hoSoDuThauService.watchLiveformState().subscribe(data => {
+      this.isModeView = data.isModeView;
+    });
     this.loadData();
   }
 
@@ -36,9 +40,9 @@ export class SummaryConditionFormNonminatedSubConstructorComponent implements On
     this.nhaThauPhu.forEach(x => {
       const control = <FormArray>this.nonminateForm.controls.packageWork;
       control.push(this.fb.group({
-        tenGoiCongViec: x.tenGoiCongViec,
-        ghiChuThem: x.ghiChuThem,
-        thanhTien: x.thanhTien,
+        tenGoiCongViec: { value: x.tenGoiCongViec, disabled: this.isModeView },
+        ghiChuThem: { value: x.ghiChuThem, disabled: this.isModeView },
+        thanhTien: { value: x.thanhTien, disabled: this.isModeView },
       }));
     });
 
@@ -75,9 +79,9 @@ export class SummaryConditionFormNonminatedSubConstructorComponent implements On
   addFormArrayControl(name: string, data?: WorkPackage) {
     const formArray = this.nonminateForm.get(name) as FormArray;
     const formItem = this.fb.group({
-      tenGoiCongViec: data ? data.name : '',
-      ghiChuThem: data ? data.desc : '',
-      thanhTien: data ? data.totalCost : 0
+      tenGoiCongViec: { value: data ? data.name : '', disabled: this.isModeView },
+      ghiChuThem: { value: data ? data.desc : '', disabled: this.isModeView },
+      thanhTien: { value: data ? data.totalCost : 0, disabled: this.isModeView }
     });
     formArray.push(formItem);
   }

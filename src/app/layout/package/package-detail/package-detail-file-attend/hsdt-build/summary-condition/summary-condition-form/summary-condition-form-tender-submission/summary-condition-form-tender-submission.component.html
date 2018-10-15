@@ -1,10 +1,15 @@
 <form [formGroup]="hoSoDangLuuYForm">
     <div class="p-3">
-        <h5 class="text-uppercase font-weight-bold">VI. các hồ sơ cần phải nộp đáng lưu ý (some main item of tender submissions)</h5>
+        <h5 class="text-uppercase font-weight-bold">VI. các hồ sơ cần phải nộp đáng lưu ý (some main item of tender
+            submissions)</h5>
 
         <div class="row mt-3">
-            <div class="col-md-3">1. Những tài liệu lưu ý khi nộp hồ sơ
-                <i (click)="addFormArrayControl('taiLieuLuuY')" class="fa fa-plus-square-o ml-3 pointer" aria-hidden="true"></i>
+            <div class="col-md-3">
+                <div class="pr-4">1. Những tài liệu lưu ý khi nộp hồ sơ</div>
+                <div class="set-position-button">
+                    <i (click)="addFormArrayControl('taiLieuLuuY')" *ngIf="!isModeView" class="fa fa-plus-square-o ml-3 pointer"
+                        aria-hidden="true"></i>
+                </div>
             </div>
             <div class="col-md-8" formArrayName="taiLieuLuuY">
                 <div class="row no-gutters mb-2" *ngFor="let fControl of taiLieuLuuYFA.controls; let i = index"
@@ -14,7 +19,8 @@
                     </div>
                     <div class="col-md-1 d-flex center-parent">
                         <div>
-                            <i *ngIf="i !== 0" (click)="removeFormArrayControl('taiLieuLuuY', i)" class="fa fa-times-circle pointer times-color" aria-hidden="true"></i>
+                            <i *ngIf="i !== 0 && !isModeView" (click)="removeFormArrayControl('taiLieuLuuY', i)" class="fa fa-times-circle pointer times-color"
+                                aria-hidden="true"></i>
                         </div>
                     </div>
                 </div>
@@ -26,7 +32,7 @@
             <div class="col-md-8">
                 <div class="row no-gutters">
                     <div class="col-md-11">
-                        <input class="form-control" formControlName="soLuong">
+                        <input class="form-control" [(ngModel)]="amountFiles" readonly formControlName="soLuong">
                     </div>
                     <div class="col-md-1">
                     </div>

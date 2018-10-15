@@ -12,6 +12,7 @@ import { PackageInfoModel } from '../../../../../shared/models/package/package-i
 import { BidStatus } from '../../../../../shared/constants/bid-status';
 import { StatusObservableHsdtService } from '../../../../../shared/services/status-observable-hsdt.service';
 import { NotificationService } from '../../../../../shared/services/notification.service';
+// tslint:disable-next-line:max-line-length
 import { ProposedTenderParticipationHistory } from '../../../../../shared/models/api-response/package/proposed-tender-participation-history.model';
 import { PagedResult } from '../../../../../shared/models';
 import { GroupDescriptor, DataResult, process, groupBy } from '@progress/kendo-data-query';
@@ -52,33 +53,30 @@ export class NeedCreateTenderComponent implements OnInit {
   ngOnInit() {
     this.bidOpportunityId = PackageDetailComponent.packageId;
     this.getProposedTenderParticipateReportInfo();
-    this.getChangeHistory();
+    this.getChangeHistory(0, 10);
     this.getPackageInfo();
   }
 
   refresh() {
     this.statusObservableHsdtService.change();
     this.getProposedTenderParticipateReportInfo();
-    this.getChangeHistory();
+    this.getChangeHistory(this.pagedResultChangeHistoryList.currentPage, this.pagedResultChangeHistoryList.pageSize);
     this.getPackageInfo();
   }
 
-  getChangeHistory() {
+  getChangeHistory(page: number | string, pageSize: number | string) {
     this.spinner.show();
-    this.packageService.getChangeHistoryListProposedTender(this.bidOpportunityId, 0, 1000).subscribe(respone => {
+    this.packageService.getChangeHistoryListProposedTender(this.bidOpportunityId, page, pageSize).subscribe(respone => {
       this.historyList = respone.items;
-      console.log('this.history-before', this.historyList);
-      // this.historyList = this.historyList.sort( ( a, b ) =>  parseFloat(a.changedTimes) < parseFloat(b.changedTimes));
-      this.historyList = groupBy(this.historyList, [{ field: 'changedTimes' }]);
-      console.log('this.historyList-changedTimes', this.historyList);
+      this.pagedResultChangeHistoryList = respone;
+      this.historyList = groupBy(this.pagedResultChangeHistoryList.items, [{ field: 'changedTime' }]);
       this.historyList.forEach( (itemList, indexList) => {
-        // this.historyList[indexList].liveFormChangeds = groupBy(itemList.liveFormChangeds, [{ field: 'liveFormStep' }]);
         itemList.items.forEach( (itemByChangedTimes, indexChangedTimes) => {
           this.historyList[indexList].items[indexChangedTimes].liveFormChangeds =
             groupBy(itemByChangedTimes.liveFormChangeds, [{ field: 'liveFormStep' }]);
         });
       });
-      console.log('after-history', this.historyList);
+      console.log('this.historyList-after', this.historyList);
       setTimeout(() => {
         this.dtTrigger2.next();
       });
@@ -88,6 +86,10 @@ export class NeedCreateTenderComponent implements OnInit {
         this.spinner.hide();
         // this.alertService.error('Lấy danh sách lịch sử thay đổi phiếu đề nghị dự thầu thất bại!');
       });
+  }
+
+  pagedResultChangeHistory(e) {
+    this.getChangeHistory(this.pagedResultChangeHistoryList.currentPage, this.pagedResultChangeHistoryList.pageSize);
   }
 
   getProposedTenderParticipateReportInfo() {
@@ -215,6 +217,7 @@ export class NeedCreateTenderComponent implements OnInit {
         this.spinner.hide();
         this.proposedTender = null;
         this.getProposedTenderParticipateReportInfo();
+        this.getChangeHistory(this.pagedResultChangeHistoryList.currentPage, this.pagedResultChangeHistoryList.pageSize);
       }, err => {
         this.alertService.error('Xóa phiếu đề nghị dự thầu thất bại');
         this.spinner.hide();

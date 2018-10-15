@@ -25,13 +25,17 @@ import { DienGiaiYeuCauLamRo, DienGiaiDieuKienHopDong, DienGiaiDieuKienHSMT } fr
 import { TableYeuCauDacBiet } from '../models/ho-so-du-thau/table-yeu-cau';
 import DateTimeConvertHelper from '../helpers/datetime-convert-helper';
 import { StakeHolder } from '../models/ho-so-du-thau/stack-holder.model';
+import { StateLiveFormSummaryCondition } from '../models/ho-so-du-thau/stateLiveFormSummaryCondition';
 
 @Injectable()
 export class HoSoDuThauService {
 
   static tempDataLiveFormDKDT = new BehaviorSubject<DuLieuLiveFormDKDT>(new DuLieuLiveFormDKDT());
   static detectChangeRouter = new BehaviorSubject<boolean>(false);
+  static stateLiveFormSummaryCondition = new BehaviorSubject<StateLiveFormSummaryCondition>(new StateLiveFormSummaryCondition());
   static idTenderDocumentTypesData;
+
+
 
   private static createFilterParams(filter: HsdtFilterModel): URLSearchParams {
     const numCreatedDate = DateTimeConvertHelper.fromDtObjectToSecon(filter.createdDate);
@@ -48,6 +52,17 @@ export class HoSoDuThauService {
     private instantSearchService: InstantSearchService,
     private sessionService: SessionService
   ) { }
+
+  emitIsModeView(value: boolean) {
+    const obj = new StateLiveFormSummaryCondition();
+    obj.isModeView = value;
+    HoSoDuThauService.stateLiveFormSummaryCondition.next(obj);
+  }
+
+  watchLiveformState() {
+    return HoSoDuThauService.stateLiveFormSummaryCondition;
+  }
+
   // get Employee ID
   get employeeId() {
     return this.sessionService.currentUser.employeeId;
@@ -528,6 +543,28 @@ export class HoSoDuThauService {
       dataOut.bidOpportunityId = model.bidOpportunityId;
       dataOut.documentName = model.documentName;
       dataOut.createdEmployeeId = model.createdEmployee && model.createdEmployee.employeeId;
+      dataOut.createdEmployee = model.createdEmployee && {
+        employeeAvatar: model.createdEmployee.employeeAvatar && {
+          guid: model.createdEmployee.employeeAvatar.guid,
+          largeSizeUrl: model.createdEmployee.employeeAvatar.largeSizeUrl,
+          thumbSizeUrl: model.createdEmployee.employeeAvatar.thumbSizeUrl
+        },
+        employeeEmail: model.createdEmployee.employeeEmail,
+        employeeId: model.createdEmployee.employeeId,
+        employeeName: model.createdEmployee.employeeName,
+        employeeNo: model.createdEmployee.employeeNo
+      };
+      dataOut.updatedEmployee = model.updatedEmployee && {
+        employeeAvatar: model.updatedEmployee.employeeAvatar && {
+          guid: model.updatedEmployee.employeeAvatar.guid,
+          largeSizeUrl: model.updatedEmployee.employeeAvatar.largeSizeUrl,
+          thumbSizeUrl: model.updatedEmployee.employeeAvatar.thumbSizeUrl
+        },
+        employeeEmail: model.updatedEmployee.employeeEmail,
+        employeeId: model.updatedEmployee.employeeId,
+        employeeName: model.updatedEmployee.employeeName,
+        employeeNo: model.updatedEmployee.employeeNo
+      };
       dataOut.updatedEmployeeId = model.updatedEmployee && model.updatedEmployee.employeeId;
       dataOut.isDraftVersion = model.isDraftVersion;
       dataOut.thongTinDuAn = model.projectInformation && {

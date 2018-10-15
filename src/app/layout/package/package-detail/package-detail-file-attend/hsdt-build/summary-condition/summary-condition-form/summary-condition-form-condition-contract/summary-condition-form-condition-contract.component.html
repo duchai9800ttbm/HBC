@@ -40,6 +40,16 @@
                             <u class="hidden">2.1 Bảo lãnh thực hiện HĐ</u>
                         </strong>
                     </div>
+
+                    <div class="col-md-8">
+                        <div class="row">
+                            <div class="col-md-6 text-uppercase text-right">theo hsmt <i class="fa fa-caret-down"
+                                    aria-hidden="true"></i></div>
+                            <div class="col-md-6 text-uppercase text-right">theo hbc đề xuất <i class="fa fa-caret-down"
+                                    aria-hidden="true"></i></div>
+                        </div>
+                    </div>
+
                 </div>
                 <div class="row col-md-12 mt-3">
 
@@ -449,13 +459,14 @@
                             BH máy móc thiết bị nhà thầu </div>
                     </div>
                     <div class="col-md-1">
-                        <i class="fa fa-plus-square-o pointer" aria-hidden="true" (click)="addFormArrayControl()"></i>
+                        <i class="fa fa-plus-square-o pointer" *ngIf="!isModeView" aria-hidden="true" (click)="addFormArrayControl()"></i>
                     </div>
                     <div class="col-md-4">
                         <div formGroupName="dieuKienTheoHSMT">
                             <div formGroupName="baoHiem">
                                 <ng-container formArrayName="baoHiemMayMoc">
-                                    <ng-container *ngFor="let fControl of baoHiemMayMocHSMTFA.controls; let i = index" [formGroupName]="i">
+                                    <ng-container *ngFor="let fControl of baoHiemMayMocHSMTFA.controls; let i = index"
+                                        [formGroupName]="i">
                                         <input formControlName="baoHiemItem" class="form-control mb-2">
                                     </ng-container>
                                 </ng-container>
@@ -467,14 +478,17 @@
                         <div formGroupName="dieuKienTheoHBC">
                             <div formGroupName="baoHiem">
                                 <ng-container formArrayName="baoHiemMayMoc">
-                                    <ng-container *ngFor="let fControl of baoHiemMayMocHBCFA.controls; let i = index" [formGroupName]="i">
+                                    <ng-container *ngFor="let fControl of baoHiemMayMocHBCFA.controls; let i = index"
+                                        [formGroupName]="i">
                                         <div class="d-flex flex-row">
                                             <div class="w-76">
                                                 <input formControlName="baoHiemItem" class="form-control mb-2">
                                             </div>
                                             <div class="col-md-2 center-parent">
                                                 <div class="w-24 mb-2">
-                                                    <i *ngIf="i !== 0" (click)="removeFormArrayControl('scopeInclude', i)" class="fa fa-times-circle pointer times-color icon-delete-item" aria-hidden="true"></i>
+                                                    <i *ngIf="i !== 0 && !isModeView" (click)="removeFormArrayControl('scopeInclude', i)"
+                                                        class="fa fa-times-circle pointer times-color icon-delete-item"
+                                                        aria-hidden="true"></i>
                                                 </div>
                                             </div>
                                         </div>
@@ -496,7 +510,7 @@
                     <div class="col-md-4">
                         <div formGroupName="dieuKienTheoHSMT">
                             <div formGroupName="baoHiem">
-                                <input formControlName="baoHiemConNguoi"  class="form-control">
+                                <input formControlName="baoHiemConNguoi" class="form-control">
 
                             </div>
 

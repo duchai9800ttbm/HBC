@@ -395,8 +395,10 @@
     "MonthlyPaymentOrMilestone": "Mốc thanh toán/ thanh toán hàng tháng",
     "RetentionMoney": "RetentionMoney",
     "SpecialCondition": "Điều kiện đặc biệt khác",
-    "TenderDirectorProposal": "ý kiến đề xuất của giám đốc dự thầu",
+    "TenderDirectorProposal": "Ý kiến đề xuất của giám đốc dự thầu",
     "IsAgreed": "Tham gia dự thầu",
     "Reason": "Lý do",
-    "IsSigned": "Ký tên"
+    "IsSigned": "Ký tên",
+    "Date": "Ngày",
+    "ExpectedDate": "Thời gian mong đợi được duyệt"
 }

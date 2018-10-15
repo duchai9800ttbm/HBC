@@ -36,7 +36,11 @@ export class SummaryConditionFormInfoComponent implements OnInit {
 
   ngOnInit() {
     this.currentBidOpportunityId = +PackageDetailComponent.packageId;
-    this.loadData();
+    this.hoSoDuThauService.watchLiveformState().subscribe(data => {
+      this.isModeView = data.isModeView;
+      this.loadData();
+    });
+    // this.loadData();
   }
 
   createForm() {
@@ -54,13 +58,19 @@ export class SummaryConditionFormInfoComponent implements OnInit {
         tenTaiLieu: data.tenTaiLieu,
         lanPhongVan: data.lanPhongVan ? data.lanPhongVan : 0,
         dienGiaiThongTinDuAn: data.dienGiaiThongTinDuAn,
-        hinhAnhPhoiCanh: [...this.hinhAnhPhoiCanhUrls],
-        banVeMasterPlan: [...this.banVeMasterPlanUrls]
+        hinhAnhPhoiCanh: this.hinhAnhPhoiCanhUrls,
+        banVeMasterPlan: this.banVeMasterPlanUrls
       };
 
       this.hoSoDuThauService.emitDataStepInfo(obj);
     });
 
+    if (this.isModeView) {
+      console.log('abcdee');
+      this.thongTinDuAnForm.get('tenTaiLieu').disable();
+      this.thongTinDuAnForm.get('lanPhongVan').disable();
+      this.thongTinDuAnForm.get('dienGiaiThongTinDuAn').disable();
+    }
 
   }
   loadData() {

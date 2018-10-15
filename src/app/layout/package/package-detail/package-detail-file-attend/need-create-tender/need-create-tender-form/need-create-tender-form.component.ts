@@ -15,6 +15,11 @@ import { NeedCreateTenderComponent } from '../need-create-tender.component';
 import { BidStatus } from '../../../../../../shared/constants/bid-status';
 import DateTimeConvertHelper from '../../../../../../shared/helpers/datetime-convert-helper';
 import { ScrollToTopService } from '../../../../../../shared/services/scroll-to-top.service';
+import { EstimatedBudgetPackage } from '../../../../../../shared/models/package/estimated-budget-package';
+import { Currency } from '../../../../../../shared/models/currency';
+import { FeeTenderInvitationDocument } from '../../../../../../shared/models/package/fee-tender-invitation-document';
+import { ContractConditionTenderParticipate } from '../../../../../../shared/models/package/contract-condition-tender-participate';
+import { TenderDirectorProposal } from '../../../../../../shared/models/package/tender-director-proposal';
 
 @Component({
     selector: 'app-need-create-tender-form',
@@ -49,8 +54,64 @@ export class NeedCreateTenderFormComponent implements OnInit, OnDestroy {
         this.scrollTopService.isScrollTop = false;
         this.routerAction = this.packageService.routerAction;
         this.packageService.routerAction$.subscribe(
-            router => (this.routerAction = router)
+            router => {
+                this.routerAction = router;
+                if (this.routerAction === 'create') {
+                    // ======================
+                    // EstimatedBudgetPackage
+                    NeedCreateTenderFormComponent.formModel.estimatedBudgetOfPakage = new EstimatedBudgetPackage();
+                    NeedCreateTenderFormComponent.formModel.estimatedBudgetOfPakage.draftBudgetOfPackageCurrency = new Currency();
+                    NeedCreateTenderFormComponent.formModel.estimatedBudgetOfPakage.draftBudgetOfPackageCurrency.key = 'VNĐ';
+                    NeedCreateTenderFormComponent.formModel.estimatedBudgetOfPakage.draftBudgetOfPackageCurrency.value = 'VNĐ';
+                    NeedCreateTenderFormComponent.formModel.estimatedBudgetOfPakage.draftBudgetOfPackageCurrency.displayText = 'VNĐ';
+                    // =======================
+                    // FeeTenderInvitationDocument
+                    NeedCreateTenderFormComponent.formModel.feeOfTenderInvitationDocument = new FeeTenderInvitationDocument();
+                    // tslint:disable-next-line:max-line-length
+                    NeedCreateTenderFormComponent.formModel.feeOfTenderInvitationDocument.feeOfTenderInvitationDocumentCurrency = new Currency();
+                    NeedCreateTenderFormComponent.formModel.feeOfTenderInvitationDocument.feeOfTenderInvitationDocumentCurrency.key = 'VNĐ';
+                    // tslint:disable-next-line:max-line-length
+                    NeedCreateTenderFormComponent.formModel.feeOfTenderInvitationDocument.feeOfTenderInvitationDocumentCurrency.value = 'VNĐ';
+                    // tslint:disable-next-line:max-line-length
+                    NeedCreateTenderFormComponent.formModel.feeOfTenderInvitationDocument.feeOfTenderInvitationDocumentCurrency.displayText = 'VNĐ';
+                    NeedCreateTenderFormComponent.formModel.feeOfTenderInvitationDocument.tenderDocumentDepositCurrency = new Currency();
+                    NeedCreateTenderFormComponent.formModel.feeOfTenderInvitationDocument.tenderDocumentDepositCurrency.key = 'VNĐ';
+                    NeedCreateTenderFormComponent.formModel.feeOfTenderInvitationDocument.tenderDocumentDepositCurrency.value = 'VNĐ';
+                    NeedCreateTenderFormComponent.formModel.feeOfTenderInvitationDocument.tenderDocumentDepositCurrency.displayText = 'VNĐ';
+                    // ======================
+                    // ContractConditionTenderParticipate
+                    NeedCreateTenderFormComponent.formModel.contractCondition = new ContractConditionTenderParticipate();
+                    NeedCreateTenderFormComponent.formModel.contractCondition.timeForCompletion = 0;
+                    NeedCreateTenderFormComponent.formModel.contractCondition.timeForCompletionUnit = new Currency();
+                    NeedCreateTenderFormComponent.formModel.contractCondition.timeForCompletionUnit.key = 'VNĐ';
+                    NeedCreateTenderFormComponent.formModel.contractCondition.timeForCompletionUnit.value = 'VNĐ';
+                    NeedCreateTenderFormComponent.formModel.contractCondition.timeForCompletionUnit.displayText = 'VNĐ';
+                    NeedCreateTenderFormComponent.formModel.contractCondition.warrantyPeriod = 0;
+                    NeedCreateTenderFormComponent.formModel.contractCondition.warrantyPeriodUnit = new Currency();
+                    NeedCreateTenderFormComponent.formModel.contractCondition.warrantyPeriodUnit.key = 'VNĐ';
+                    NeedCreateTenderFormComponent.formModel.contractCondition.warrantyPeriodUnit.value = 'VNĐ';
+                    NeedCreateTenderFormComponent.formModel.contractCondition.warrantyPeriodUnit.displayText = 'VNĐ';
+                    NeedCreateTenderFormComponent.formModel.contractCondition.tenderSecurity = 0;
+                    NeedCreateTenderFormComponent.formModel.contractCondition.tenderSecurityCurrency = new Currency();
+                    NeedCreateTenderFormComponent.formModel.contractCondition.tenderSecurityCurrency.key = 'VNĐ';
+                    NeedCreateTenderFormComponent.formModel.contractCondition.tenderSecurityCurrency.value = 'VNĐ';
+                    NeedCreateTenderFormComponent.formModel.contractCondition.tenderSecurityCurrency.displayText = 'VNĐ';
+                    NeedCreateTenderFormComponent.formModel.contractCondition.performanceSecurity = 0;
+                    NeedCreateTenderFormComponent.formModel.contractCondition.delayDamagesForTheWorks = 0;
+                    NeedCreateTenderFormComponent.formModel.contractCondition.advancePayment = 0;
+                    NeedCreateTenderFormComponent.formModel.contractCondition.retentionMoney = 0;
+                    // =====================
+                    // TenderDirectorProposal
+                    NeedCreateTenderFormComponent.formModel.tenderDirectorProposal = new TenderDirectorProposal();
+                    // tslint:disable-next-line:max-line-length
+                    NeedCreateTenderFormComponent.formModel.tenderDirectorProposal.expectedDate = DateTimeConvertHelper.fromDtObjectToTimestamp(new Date());
+                }
+            }
         );
+        console.log('NeedCreateTenderFormComponent.formModel', NeedCreateTenderFormComponent.formModel);
+        if (!NeedCreateTenderFormComponent.formModel) {
+            console.log('NeedCreateTenderFormComponent.formModel', NeedCreateTenderFormComponent.formModel);
+        }
         this.dataModel = NeedCreateTenderFormComponent.formModel;
         this.dataModelCopy = Object.assign({}, this.dataModel);
         // console.log(this.dataModel.tenderDirectorProposal.expectedDate);

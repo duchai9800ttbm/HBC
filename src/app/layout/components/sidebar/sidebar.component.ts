@@ -77,7 +77,6 @@ export class SidebarComponent implements OnInit {
         //     this.getListPhoneCallAway();
         // });
         this.getDataChangeRecently();
-        this.setMaxHeight();
     }
     toggleSidebar() {
         const width = document.getElementById('sidebar').offsetWidth;
@@ -114,17 +113,10 @@ export class SidebarComponent implements OnInit {
         }
     }
     getDataChangeRecently() {
-        this.layoutService.getDataChangeRecently(0, 10).subscribe(data => {
+        this.layoutService.getDataChangeRecently(0, 5).subscribe(data => {
             this.pagedResult = data;
         }, err => {
             this.alertService.error('Đã có lỗi khi tải nội dung thay đổi gần đây!');
-        });
-    }
-    pagedResultChange(pagedResult: any) {
-        this.layoutService.getDataChangeRecently(pagedResult.currentPage, pagedResult.pageSize).subscribe(data => {
-            this.pagedResult = data;
-        }, err => {
-            this.alertService.error('Đã có lỗi khi tải trang nội dung thay đổi gần đây!');
         });
     }
     renderDataChangeRecently(action: string, target?: string, data?: any) {
@@ -324,11 +316,5 @@ export class SidebarComponent implements OnInit {
                 break;
             }
         }
-    }
-
-    // Set height to list
-    setMaxHeight() {
-        const screenheight = window.innerHeight;
-        document.getElementById('set-height-scroll').style.height = screenheight - 200 + 'px';
     }
 }

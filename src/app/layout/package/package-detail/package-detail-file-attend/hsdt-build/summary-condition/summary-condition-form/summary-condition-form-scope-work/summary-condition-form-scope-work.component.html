@@ -12,12 +12,12 @@
                 <div class="row mt-3">
                     <div class="col-md-3">{{i + 1}}.
                         <span class="ml-3">Công tác {{i + 1}}</span>
-                        <i class="fa fa-plus-square-o ml-3 pointer" aria-hidden="true" (click)="addFormArrayControl('scopeInclude')" *ngIf="(i + 1) === scopeIncludeFA.length"></i>
+                        <i class="fa fa-plus-square-o ml-3 pointer" aria-hidden="true" (click)="addFormArrayControl('scopeInclude')" *ngIf="(i + 1) === scopeIncludeFA.length && !isModeView"></i>
                     </div>
                     <div class="col-md-8">
                         <input class="form-control" formControlName="congTac" placeholder="Công tác {{i + 1}}">
                     </div>
-                    <div class="col-md-1 pl-0" *ngIf="i !== 0">
+                    <div class="col-md-1 pl-0" *ngIf="i !== 0 && !isModeView">
                         <i (click)="removeFormArrayControl('scopeInclude', i)" class="fa fa-times-circle pointer times-color" aria-hidden="true"></i>
                     </div>
                 </div>
@@ -40,12 +40,12 @@
                 <div class="row mt-3">
                     <div class="col-md-3">{{i + 1}}.
                         <span class="ml-3">Công tác {{i + 1}}</span>
-                        <i class="fa fa-plus-square-o ml-3 pointer" aria-hidden="true" (click)="addFormArrayControl('scopeNotInclude')" *ngIf="(i + 1) === scopeNotIncludeFA.length"></i>
+                        <i class="fa fa-plus-square-o ml-3 pointer" aria-hidden="true" (click)="addFormArrayControl('scopeNotInclude')" *ngIf="(i + 1) === scopeNotIncludeFA.length && !isModeView"></i>
                     </div>
                     <div class="col-md-8">
                         <input class="form-control" formControlName="congTac" placeholder="Công tác {{i + 1}}">
                     </div>
-                    <div class="col-md-1 pl-0" *ngIf="i !== 0">
+                    <div class="col-md-1 pl-0" *ngIf="i !== 0 && !isModeView">
                         <i (click)="removeFormArrayControl('scopeNotInclude', i)" class="fa fa-times-circle pointer times-color" aria-hidden="true"></i>
                     </div>
                 </div>
