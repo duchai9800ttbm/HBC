@@ -15,6 +15,7 @@ import { WidthAutoDirective } from './width-auto.directive';
 import { AutoFocusDirective } from './auto-focus.directive';
 import { InputNumberNegativeDecimalDirective } from './input-number-negative-decimal.directive';
 import { RowHoverDirective } from './row-hover.directive';
+import { InputDateDirective } from './input-date.directive';
 
 @NgModule({
     imports: [
@@ -34,6 +35,7 @@ import { RowHoverDirective } from './row-hover.directive';
         AutoFocusDirective,
         InputNumberNegativeDecimalDirective,
         RowHoverDirective,
+        InputDateDirective
     ],
     exports: [
         InputNumberDirective,
@@ -48,7 +50,8 @@ import { RowHoverDirective } from './row-hover.directive';
         WidthAutoDirective,
         AutoFocusDirective,
         InputNumberNegativeDecimalDirective,
-        RowHoverDirective
+        RowHoverDirective,
+        InputDateDirective
     ],
     providers: [
         VnCurrencyPipe,
