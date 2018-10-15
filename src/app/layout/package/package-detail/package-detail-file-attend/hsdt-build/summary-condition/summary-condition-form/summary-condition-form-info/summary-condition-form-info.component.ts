@@ -25,7 +25,7 @@ export class SummaryConditionFormInfoComponent implements OnInit {
   showPopupViewImage = false;
   imageUrlArray = [];
   viewMode;
-  isModeView = true;
+  isModeView = false;
 
   constructor(
     private hoSoDuThauService: HoSoDuThauService,
@@ -39,7 +39,6 @@ export class SummaryConditionFormInfoComponent implements OnInit {
     this.hoSoDuThauService.watchLiveformState().subscribe(data => {
       this.isModeView = data.isModeView;
       this.loadData();
-
     });
     // this.loadData();
   }
@@ -59,17 +58,18 @@ export class SummaryConditionFormInfoComponent implements OnInit {
         tenTaiLieu: data.tenTaiLieu,
         lanPhongVan: data.lanPhongVan ? data.lanPhongVan : 0,
         dienGiaiThongTinDuAn: data.dienGiaiThongTinDuAn,
-        hinhAnhPhoiCanh: [...this.hinhAnhPhoiCanhUrls],
-        banVeMasterPlan: [...this.banVeMasterPlanUrls]
+        hinhAnhPhoiCanh: this.hinhAnhPhoiCanhUrls,
+        banVeMasterPlan: this.banVeMasterPlanUrls
       };
 
       this.hoSoDuThauService.emitDataStepInfo(obj);
     });
 
     if (this.isModeView) {
-      this.thongTinDuAnForm.get('tenTaiLieu').enable();
-      this.thongTinDuAnForm.get('lanPhongVan').enable();
-      this.thongTinDuAnForm.get('dienGiaiThongTinDuAn').enable();
+      console.log('abcdee');
+      this.thongTinDuAnForm.get('tenTaiLieu').disable();
+      this.thongTinDuAnForm.get('lanPhongVan').disable();
+      this.thongTinDuAnForm.get('dienGiaiThongTinDuAn').disable();
     }
 
   }

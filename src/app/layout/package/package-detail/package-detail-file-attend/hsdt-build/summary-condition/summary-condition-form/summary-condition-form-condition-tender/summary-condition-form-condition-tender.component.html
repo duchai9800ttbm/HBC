@@ -96,7 +96,7 @@
         </div>
         <div class="row mt-3">
             <div class="col-md-3">Chọn loại thuế
-                <i (click)="addFormArrayControl('cacLoaiThue')" class="fa fa-plus-square-o ml-3 pointer" aria-hidden="true"></i>
+                <i (click)="addFormArrayControl('cacLoaiThue')" *ngIf="!isModeView" class="fa fa-plus-square-o ml-3 pointer" aria-hidden="true"></i>
 
             </div>
             <div class="col-md-8">
