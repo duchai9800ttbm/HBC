@@ -63,18 +63,39 @@ export class UploadKickOffComponent implements OnInit {
     this.isSubmitted = true;
     if (this.validateForm() &&
       ((this.uploadMeetingKickOff.get('link').value && this.uploadMeetingKickOff.get('link').value !== '') || (this.file))) {
-      this.detailResultPackageService.uploadFileResult(
-        this.currentPackageId,
-        this.uploadMeetingKickOff.value,
-        this.file
-      ).subscribe(response => {
-        this.closePopup();
-        this.detailResultPackageService.changeListFileResult();
-        this.alertService.success('Upload kết quả dự thầu thành công!');
-      },
-        err => {
-          this.alertService.error('Upload kết quả dự thầu không thành công!');
-        });
+      switch (this.action) {
+        case 'report': {
+          this.detailResultPackageService.uploadReportMeeting(
+            this.currentPackageId,
+            this.uploadMeetingKickOff.value,
+            this.file
+          ).subscribe(response => {
+            this.closePopup();
+            this.detailResultPackageService.changeListFileResult();
+            this.alertService.success('Upload biên bản cuộc họp thành công!');
+          },
+            err => {
+              this.alertService.error('Upload biên bản cuộc họp không thành công!');
+            });
+          break;
+        }
+        case 'file': {
+          this.detailResultPackageService.uploadFilePresentationMeeting(
+            this.currentPackageId,
+            this.uploadMeetingKickOff.value,
+            this.file
+          ).subscribe(response => {
+            this.closePopup();
+            this.detailResultPackageService.changeListFileResult();
+            this.alertService.success('Upload file presentation thành công!');
+          },
+            err => {
+              this.alertService.error('Upload file presentation không thành công!');
+            });
+          break;
+        }
+      }
+
     }
   }
 
