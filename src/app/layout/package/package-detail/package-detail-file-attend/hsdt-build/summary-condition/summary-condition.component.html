@@ -1,6 +1,6 @@
 <div class="p-3">
     <h5 class="text-uppercase">bảng tóm tắt điều kiện dự thầu (tender conditional summary)</h5>
-    <div class="mt-5" *ngIf="!summaryCondition">
+    <div class="mt-3" *ngIf="!summaryCondition">
         <div class="text-center">
             <img style="width: 116px" src="assets/images/ic_file.png">
             <div class="mt-3">Hiện chưa có bản tóm tắt dự thầu nào</div>
@@ -12,7 +12,7 @@
         </div>
     </div>
 
-    <div class="mt-5" *ngIf="summaryCondition">
+    <div class="mt-4" *ngIf="summaryCondition">
         <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger">
             <thead>
                 <tr>
