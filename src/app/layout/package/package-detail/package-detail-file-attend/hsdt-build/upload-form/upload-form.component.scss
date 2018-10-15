@@ -252,4 +252,13 @@ tr {
 
 .custom-image {
     vertical-align: super;
+    cursor: pointer;
+}
+
+.td-group {
+    white-space: normal !important;
+}
+
+.set-width-text-type {
+    width: calc(100% - 25px);
 }

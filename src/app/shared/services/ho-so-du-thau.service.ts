@@ -69,6 +69,32 @@ export class HoSoDuThauService {
     urlFilterParams.append('createdDate', `${numCreatedDate ? numCreatedDate : ''}`);
     return urlFilterParams;
   }
+  private static toDocumentTypeItem(result: any): DanhSachBoHsdtItem {
+    return {
+      id: result.id,
+      tenderDocumentTypeId: result.tenderDocumentType.id,
+      tenderDocumentType: result.tenderDocumentType && {
+        id: result.tenderDocumentType.id,
+        parentId: result.tenderDocumentType.parentId,
+        name: result.tenderDocumentType.name,
+        count: result.tenderDocumentType.count
+      },
+      documentName: result.documentName,
+      version: result.version,
+      status: result.status,
+      uploadedBy: result.uploadedBy && {
+        employeeId: result.uploadedBy.employeeId,
+        employeeNo: result.uploadedBy.employeeNo,
+        employeeName: result.uploadedBy.employeeName,
+        employeeAvatar: result.uploadedBy.employeeAvatar,
+        employeeEmail: result.uploadedBy.employeeEmail
+      },
+      uploadedDate: result.uploadedDate,
+      fileGuid: result.fileGuid,
+      interViewTimes: result.interviewTimes,
+      desc: result.desc
+    };
+  }
 
   constructor(
     private apiService: ApiService,
@@ -213,6 +239,48 @@ export class HoSoDuThauService {
       };
     });
   }
+  // Group Document theo Loại
+  groupDocumentTypeId(source: DanhSachBoHsdtItem[]) {
+    const groupedObj = source.reduce((prev, cur) => {
+      if (!prev[cur['documentType']]) {
+        prev[cur['documentType']] = [cur];
+      } else {
+        prev[cur['documentType']].push(cur);
+      }
+      return prev;
+    }, {});
+    const groupBeforeSort = Object.keys(groupedObj).map(documentType => (
+      {
+        documentType,
+        items: groupedObj[documentType],
+        id: 0
+      }
+    ));
+    // Sorted by design
+    groupBeforeSort.forEach(item => {
+      switch (item.documentType) {
+        case 'Quyển HSMT':
+          item['id'] = 0;
+          break;
+        case 'Bản vẽ thuyết minh':
+          item['id'] = 1;
+          break;
+        case 'BOQ':
+          item['id'] = 2;
+          break;
+        case 'Tiêu chí kĩ thuật (Specs)':
+          item['id'] = 3;
+          break;
+        case 'Các báo cáo và các tài liệu khác (KSDQ)':
+          item['id'] = 4;
+          break;
+      }
+    });
+    groupBeforeSort.sort(function (a, b) {
+      return a.id - b.id;
+    });
+    return groupBeforeSort;
+  }
   // GET /api/hbc/bidopportunity/{bidOpportunityId}/tenderdocuments/{page}/{pageSize}
   danhSachBoHoSoDuThauInstantSearch(
     bidOpportunityId: number,
@@ -231,10 +299,33 @@ export class HoSoDuThauService {
           pageSize: res.pageSize,
           pageCount: res.totalPages,
           total: res.totalCount,
-          items: (res.items || [])
+          items: (res.items || []).map(HoSoDuThauService.toDocumentTypeItem)
         };
       });
   }
+
+  // danhSachBoHoSoDuThauInstantSearch(
+  //   bidOpportunityId: number,
+  //   searchTerm: Observable<string>,
+  //   hsdtFilter: HsdtFilterModel,
+  //   page: number,
+  //   pageSize: number
+  // ): Observable<PagedResult<DanhSachBoHsdtItem>> {
+  //   const url = `bidopportunity/${bidOpportunityId}/tenderdocuments/${page}/${pageSize}?searchTerm=`;
+  //   const urlParams = HoSoDuThauService.createFilterParams(hsdtFilter);
+  //   return this.instantSearchService
+  //     .searchWithFilter(url, searchTerm, urlParams)
+  //     .map(res => {
+  //       console.log(res.items);
+  //       return {
+  //         currentPage: res.pageIndex,
+  //         pageSize: res.pageSize,
+  //         pageCount: res.totalPages,
+  //         total: res.totalCount,
+  //         items: (res.items || [])
+  //       };
+  //     });
+  // }
 
   updateStatus(tenderDocumentId: number, status: string) {
     const url = `tenderdocument/${tenderDocumentId}/${status.toLocaleLowerCase()}`;
