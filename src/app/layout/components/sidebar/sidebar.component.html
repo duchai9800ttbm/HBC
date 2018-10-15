@@ -116,7 +116,8 @@
 
                 <div class="d-flex custom-width">
                     <div class="mt-1">
-                        <img [src]="changeContent.changeEmployee?.employeeAvatar" width="30" height="30" alt="">
+                        <img [src]="changeContent.changeEmployee && changeContent.changeEmployee.employeeAvatar ? changeContent.changeEmployee.employeeAvatar : 'assets/images/no-avatar.png'"
+                            width="30" height="30">
                     </div>
                     <div class="pl-2">
                         <p class="mb-1 text-truncate-height" [title]="changeContent.bidActivityChangeEntityName" style="-webkit-box-orient: vertical;">
