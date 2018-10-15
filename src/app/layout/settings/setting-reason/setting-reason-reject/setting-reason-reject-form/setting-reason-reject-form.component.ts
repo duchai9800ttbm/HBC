@@ -55,6 +55,13 @@ export class SettingReasonRejectFormComponent implements OnInit {
           : `Lý do hủy thầu ${reasonName} đã được tạo mới thành công.`;
         this.router.navigate([`/settings/reason/reject`]);
         this.alertService.success(message);
+      }, err => {
+        const error = err.json();
+        if (error.errorCode === 'BusinessException') {
+          this.alertService.error(`Lý do ${reasonName} đã tồn tại. Xin vui lòng kiểm tra lại!`);
+        } else {
+          this.alertService.error('Đã xảy ra lỗi. Cập nhật lý do hủy thầu không thành công!');
+        }
       });
     }
   }

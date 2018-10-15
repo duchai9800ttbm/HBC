@@ -56,6 +56,13 @@ export class SettingReasonLoseFormComponent implements OnInit {
           : `Lý do trật thầu ${reasonName} đã được tạo mới thành công.`;
         this.router.navigate([`/settings/reason/lose`]);
         this.alertService.success(message);
+      }, err => {
+        const error = err.json();
+        if (error.errorCode === 'BusinessException') {
+          this.alertService.error(`Lý do ${reasonName} đã tồn tại. Xin vui lòng kiểm tra lại!`);
+        } else {
+          this.alertService.error('Đã xảy ra lỗi. Cập nhật lý do trật thầu không thành công!');
+        }
       });
     }
   }
