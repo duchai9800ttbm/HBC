@@ -15,6 +15,7 @@ import { NotificationContractComponent } from './package-success/package-list/no
 // tslint:disable-next-line:max-line-length
 import { UploadContractSigningComponent } from './package-success/contract-signed/upload-contract-signing/upload-contract-signing.component';
 import { UploadResultAttendComponent } from './wait-result/upload-result-attend/upload-result-attend.component';
+import { UploadKickOffComponent } from './package-success/meeting-kickoff/upload-kick-off/upload-kick-off.component';
 @NgModule({
   imports: [
     CommonModule,
@@ -31,13 +32,15 @@ import { UploadResultAttendComponent } from './wait-result/upload-result-attend/
       UploadResultFileAttendComponent,
       NotificationContractComponent,
       UploadContractSigningComponent,
-      UploadResultAttendComponent
+      UploadResultAttendComponent,
+      UploadKickOffComponent
   ],
   entryComponents: [
     UploadResultFileAttendComponent,
     NotificationContractComponent,
     UploadContractSigningComponent,
     UploadResultAttendComponent,
+    UploadKickOffComponent
   ],
   providers: [
     DetailResultPackageService

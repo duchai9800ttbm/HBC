@@ -10,6 +10,10 @@ import { Observable, BehaviorSubject, Subject } from '../../../../../../../../no
 import { ConfirmationService, AlertService } from '../../../../../../shared/services';
 import { EmailService } from '../../../../../../shared/services/email.service';
 import { SendEmailModel } from '../../../../../../shared/models/send-email-model';
+import { DetailResultPackageService } from '../../../../../../shared/services/detail-result-package.service';
+import { NgxSpinnerService } from '../../../../../../../../node_modules/ngx-spinner';
+import { UploadKickOffComponent } from './upload-kick-off/upload-kick-off.component';
+import { DialogService } from '../../../../../../../../node_modules/@progress/kendo-angular-dialog';
 
 @Component({
   selector: 'app-meeting-kickoff',
@@ -45,6 +49,9 @@ export class MeetingKickoffComponent implements OnInit {
   listEmailSearchBcc;
   emailModel: SendEmailModel = new SendEmailModel();
   ckeConfig;
+  file = [];
+  actionEmail: string;
+  dialogUploadMettingKickOff;
   constructor(
     private modalService: BsModalService,
     private router: Router,
@@ -52,7 +59,10 @@ export class MeetingKickoffComponent implements OnInit {
     private formBuilder: FormBuilder,
     private alertService: AlertService,
     private confirmationService: ConfirmationService,
-    private emailService: EmailService
+    private emailService: EmailService,
+    private detailResultPackageService: DetailResultPackageService,
+    private spinner: NgxSpinnerService,
+    private dialogService: DialogService
   ) { }
 
   ngOnInit() {
@@ -122,7 +132,7 @@ export class MeetingKickoffComponent implements OnInit {
     this.submitted = true;
     if (this.formUpload.invalid) {
       return;
-    }    
+    }
     this.router.navigate([`/package/detail/${this.currentPackageId}/result/package-success/meeting-kickoff/report-meeting`]);
     this.alertService.success('Upload file Presentation thành công!');
     this.reportFile = false;
@@ -142,17 +152,61 @@ export class MeetingKickoffComponent implements OnInit {
     this.modalRef.hide();
   }
 
-  modalUp(template: TemplateRef<any>, type: number) {
-    this.type = type;
-    if (this.type == 1) {
-      this.textUploadReport = 'Upload biên bản cuộc họp';
-    } else {
-      this.textUploadReport = 'Upload file presentation';
-    }
-    this.modalUpload = this.modalService.show(template);
-
-  }
+  // modalUp(template: TemplateRef<any>, type: number) {
+  //   this.type = type;
+  //   if (this.type === 1) {
+  //     this.textUploadReport = 'Upload biên bản cuộc họp';
+  //   } else {
+  //     this.textUploadReport = 'Upload file presentation';
+  //   }
+  //   this.modalUpload = this.modalService.show(template);
+  // }
   modelViewListData(template: TemplateRef<any>) {
     this.modalViewData = this.modalService.show(template);
+  }
+  // Gửi thư thông báo kick-off
+  uploadfile(event) {
+    const fileList: FileList = event.target.files;
+    if (fileList.length > 0) {
+      for (let i = 0; i < fileList.length; i++) {
+        this.file.push(fileList[i]);
+      }
+      event.target.value = null;
+    }
+  }
+  deleteFileUpload(index: number) {
+    this.file.splice(index, 1);
+  }
+  SendInformation() {
+    if (this.emailModel && this.emailModel.to) {
+      this.emailModel.bidOpportunityId = this.currentPackageId;
+      this.spinner.show();
+      this.detailResultPackageService.notiMeetingKickOff(this.emailModel, this.file).subscribe(result => {
+        this.emailModel = new SendEmailModel();
+        this.file = [];
+        this.alertService.success('Gửi thư thông báo họp kick-off dự án thành công!');
+        this.modalRef.hide();
+        this.spinner.hide();
+      },
+        err => {
+          this.alertService.error('Đã xảy ra lỗi. Gửi thư thông báo họp kick-off dự án không thành công!');
+          this.modalRef.hide();
+          this.spinner.hide();
+        });
+    }
+  }
+  // Upload meeting kick-off
+  modalUp(action) {
+    this.dialogUploadMettingKickOff = this.dialogService.open({
+      content: UploadKickOffComponent,
+      width: 650,
+      minWidth: 250
+    });
+    const instance = this.dialogUploadMettingKickOff.content.instance;
+    instance.callBack = () => this.closePopuup();
+    instance.action = action;
+  }
+  closePopuup() {
+    this.dialogUploadMettingKickOff.close();
   }
 }

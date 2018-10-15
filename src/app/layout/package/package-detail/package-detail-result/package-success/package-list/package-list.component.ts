@@ -345,7 +345,6 @@ export class PackageListComponent implements OnInit {
       }
       event.target.value = null;
     }
-    console.log('this.file', this.file);
   }
   deleteFileUpload(index: number) {
     this.file.splice(index, 1);
