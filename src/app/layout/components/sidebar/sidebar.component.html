@@ -108,12 +108,11 @@
 
     </div>
     <div [hidden]="showSidebarContent" class="change">
-        <div class="font-weight-bold mb-3 mt-4">Thay đổi gần đây</div>
+        <div class="font-weight-bold mb-3">Thay đổi gần đây</div>
 
 
-        <div class="mt-2 scroll-list" id="set-height-scroll" (window:resize)="setMaxHeight($event)">
+        <div class="mt-2 scroll-list" id="set-height-scroll">
             <ng-container *ngFor="let changeContent of pagedResult.items; index as i">
-                <!-- Thêm/Tạo mới -->
 
                 <div class="d-flex custom-width">
                     <div class="mt-1">
@@ -131,7 +130,6 @@
                             }}
                             <strong>{{ changeContent.bidActivityChangeEntityName }}</strong>
                         </p>
-
                     </div>
                 </div>
 
@@ -144,7 +142,7 @@
 
             </ng-container>
         </div>
-        <div class="text-center mt-3" *ngIf="pagedResult.items?.length !== 0">
+        <div class="text-center" *ngIf="pagedResult.items?.length !== 0">
             <a class="pointer font-italic">
                 Xem tất cả
             </a>
