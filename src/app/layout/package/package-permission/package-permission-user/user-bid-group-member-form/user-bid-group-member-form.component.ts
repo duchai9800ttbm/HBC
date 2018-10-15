@@ -34,7 +34,7 @@ export class UserBidGroupMemberFormComponent implements OnInit {
         private packageService: PackageService,
         private alertService: AlertService,
         private spinner: NgxSpinnerService
-    ) {}
+    ) { }
 
     ngOnInit() {
         this.packageId = PackagePermissionComponent.packageId;
@@ -55,7 +55,11 @@ export class UserBidGroupMemberFormComponent implements OnInit {
         const formArray = this.packagePermissionBidUserGroupForm.get(name).get('users') as FormArray;
         const formGroup = formArray.controls[index] as FormGroup;
         // tslint:disable-next-line:triple-equals
-        formGroup.get('department').patchValue(this.listUser.find(i => i.id == value).department.value);
+        const user = this.listUser.find(i => i.id == value);
+        const department = user.department;
+        if (department) {
+            formGroup.get('department').patchValue(this.listUser.find(i => i.id == value).department.value);
+        }
     }
 
     onSubmit() {
@@ -115,11 +119,16 @@ export class UserBidGroupMemberFormComponent implements OnInit {
                 this.addFormItem(e.groupName);
             } else {
                 e.users.forEach(item => {
-                    this.addFormItem(
-                        e.groupName,
-                        item.id,
-                        item.department.value
-                    );
+                    if (item.department) {
+                        this.addFormItem(
+                            e.groupName,
+                            item.id,
+                            item.department.value
+                        );
+                    } else {
+                        this.addFormItemNoDepartment(e.groupName, item.id);
+                    }
+
                 });
             }
         });
@@ -142,6 +151,18 @@ export class UserBidGroupMemberFormComponent implements OnInit {
         const item = this.fb.group({
             name: userName,
             department: departmentName
+        });
+        formArray.push(item);
+    }
+
+    addFormItemNoDepartment(controlName: string, userName?): void {
+        const formGroup = this.packagePermissionBidUserGroupForm.get(
+            controlName
+        ) as FormGroup;
+        const formArray = formGroup.get('users') as FormArray;
+        const item = this.fb.group({
+            name: userName,
+            department: ''
         });
         formArray.push(item);
     }

@@ -118,7 +118,8 @@
                         </div>
                     </th>
 
-                    <th [class.d-none]="!isTypeChildDoc" class="boder-table header-table large-column set-width-of-type" style="width: 15%">
+                    <th [class.d-none]="!isTypeChildDoc" class="boder-table header-table large-column set-width-of-type"
+                        style="width: 15%">
                         <div class="d-flex justify-content-center">
                             <div class="center-parent title-text">
                                 <div class="label-thead text-center">Loại tài liệu</div>
@@ -190,68 +191,87 @@
             </thead>
 
             <tbody>
-                <tr *ngFor="let hoso of dataDocumentOfType; index as i">
-                    <td class="boder-table">
-                        <div class="d-flex justify-content-around">
-                            <div class="w-40">
-                                <label class="custom-control custom-checkbox mt-2">
-                                    <input type="checkbox" class="custom-control-input" [(ngModel)]="hoso.checkboxSelected">
-                                    <span class="custom-control-indicator"></span>
-                                </label>
-                            </div>
-                            <div class="center-parent custom-title-text">
-                                <div>{{ pageIndex*10+i+1 }}</div>
-                            </div>
-                        </div>
-                    </td>
+                <ng-container *ngFor="let loaihoso of listDocumentShowGroup; index as i">
+                    <ng-container *ngFor="let hoso of loaihoso.items; index as k">
+                        <tr>
+                            <td class="boder-table">
+                                <div class="d-flex justify-content-around">
+                                    <div class="w-40">
+                                        <label class="custom-control custom-checkbox mt-2">
+                                            <input type="checkbox" class="custom-control-input" [(ngModel)]="hoso.checkboxSelected">
+                                            <span class="custom-control-indicator"></span>
+                                        </label>
+                                    </div>
+                                    <div class="center-parent custom-title-text">
+                                        <div>{{ renderIndex(i , k) }}</div>
+                                    </div>
+                                </div>
+                            </td>
 
-                    <td [class.d-none]="!isTypeChildDoc" class="remove-border boder-table text-center text-truncate-custom"
-                        [title]="hoso.tenderDocumentType.name">
-                        <p class="custom-text-display">{{ hoso.tenderDocumentType?.name }}</p>
-                        <img class="custom-image" (click)="showDialogUploadFile(hoso.tenderDocumentType.id)" width="25" height="25" src="assets\images\document.png">
-                    </td>
+                            <td [attr.rowspan]="loaihoso.items.length" valign="baseline" *ngIf="k == 0" [class.d-none]="!isTypeChildDoc"
+                                class="remove-border boder-table">
 
-                    <td class="boder-table text-center text-truncate-custom" [title]="hoso.documentName">
-                        {{ hoso?.documentName }}</td>
-                    <td class="boder-table text-center text-truncate">{{ hoso?.version ? hoso?.version : '' }}</td>
-                    <td class="boder-table text-center text-truncate-custom" [title]="hoso.desc">{{ hoso?.desc }}</td>
-                    <td class="td-mark-status boder-table">
-                        <div class="d-flex justify-content-between pl-1 pr-1">
-                            <div class="text-truncate text-right" title="{{ hoso.status | translate }}">
-                                {{ hoso.status | translate }}
-                            </div>
-                            <div (click)="changeStatus(hoso.id, hoso.status)">
-                                <i class="fa fa-check-square color-item-down pointer-link" aria-hidden="true" *ngIf="hoso.status === 'Official'"></i>
-                                <i class="fa fa-check-square color-item-test pointer-link" aria-hidden="true" *ngIf="hoso.status === 'Draft'"></i>
-                            </div>
-                        </div>
-                    </td>
-                    <td class="boder-table text-center text-truncate text-truncate-custom pr-2 pl-2 custom-updater-responsive"
-                        [title]="hoso.uploadedBy.employeeName">
-                        {{ hoso.uploadedBy?.employeeName }}</td>
-                    <td class="boder-table text-center" title="{{ hoso?.uploadedDate*1000 | date:'dd/MM/yyyy HH:mm': '+0000' }}">{{
-                        hoso?.uploadedDate*1000 | date:'dd/MM/yyyy HH:mm': '+0000' }}</td>
-                    <td class="boder-table text-center">{{ hoso?.interViewTimes ? hoso?.interViewTimes : '' }}</td>
-                    <td class="boder-table">
-                        <div class="d-flex justify-content-around">
-                            <div *ngIf="!hoso.fileUrl" class="pointer-link" title="Tải file" (click)="downloadDocument(hoso.id)">
-                                <a>
-                                    <i class="fa fa-download color-item-down" aria-hidden="true"></i>
-                                </a>
-                            </div>
-                            <div class="pointer-link" *ngIf="hoso.fileUrl">
-                                <a [href]="hoso.fileUrl" target="_blank">
-                                    <i class="fa fa-external-link color-item-down" aria-hidden="true"></i>
-                                </a>
-                            </div>
-                            <div class="pointer-link" (click)="deleteDocument(hoso.id)" title="Xóa">
-                                <a>
-                                    <i class="fa fa-trash-o" aria-hidden="true"></i>
-                                </a>
-                            </div>
-                        </div>
-                    </td>
-                </tr>
+                                <div class="d-flex  document-type center-parent">
+                                    <div [title]="hoso.tenderDocumentType.name" class="set-width-text-type" [class.text-truncate-custom]="loaihoso.items.length==1" [class.td-group]="loaihoso.items.length>1">
+                                        {{ hoso.tenderDocumentType?.name }}
+                                    </div>
+                                    <div (click)="showDialogUploadFile(hoso.tenderDocumentType.id)" title="Upload tài liệu"
+                                        class="custom-image">
+                                        <img width="25" height="25" src="assets\images\document.png">
+                                    </div>
+                                </div>
+                            </td>
+                            <td *ngIf="k != 0" class="d-none"></td>
+
+                            <td class="boder-table text-center text-truncate-custom" [title]="hoso.documentName">
+                                {{ hoso?.documentName }}</td>
+                            <td class="boder-table text-center text-truncate">
+                                {{ hoso?.version ? hoso?.version : '' }}
+                            </td>
+                            <td class="boder-table text-center text-truncate-custom" [title]="hoso.desc">
+                                {{ hoso?.desc }}
+                            </td>
+                            <td class="td-mark-status boder-table">
+                                <div class="d-flex justify-content-between pl-1 pr-1">
+                                    <div class="text-truncate text-right" title="{{ hoso.status | translate }}">
+                                        {{ hoso.status | translate }}
+                                    </div>
+                                    <div (click)="changeStatus(hoso.id, hoso.status)">
+                                        <i class="fa fa-check-square color-item-down pointer-link" aria-hidden="true"
+                                            *ngIf="hoso.status === 'Official'"></i>
+                                        <i class="fa fa-check-square color-item-test pointer-link" aria-hidden="true"
+                                            *ngIf="hoso.status === 'Draft'"></i>
+                                    </div>
+                                </div>
+                            </td>
+                            <td class="boder-table text-center text-truncate text-truncate-custom pr-2 pl-2 custom-updater-responsive"
+                                [title]="hoso.uploadedBy.employeeName">
+                                {{ hoso.uploadedBy?.employeeName }}</td>
+                            <td class="boder-table text-center" title="{{ hoso?.uploadedDate*1000 | date:'dd/MM/yyyy HH:mm': '+0000' }}">{{
+                                hoso?.uploadedDate*1000 | date:'dd/MM/yyyy HH:mm': '+0000' }}</td>
+                            <td class="boder-table text-center">{{ hoso?.interViewTimes ? hoso?.interViewTimes : '' }}</td>
+                            <td class="boder-table">
+                                <div class="d-flex justify-content-around">
+                                    <div *ngIf="!hoso.fileUrl" class="pointer-link" title="Tải file" (click)="downloadDocument(hoso.id)">
+                                        <a>
+                                            <i class="fa fa-download color-item-down" aria-hidden="true"></i>
+                                        </a>
+                                    </div>
+                                    <div class="pointer-link" *ngIf="hoso.fileUrl">
+                                        <a [href]="hoso.fileUrl" target="_blank">
+                                            <i class="fa fa-external-link color-item-down" aria-hidden="true"></i>
+                                        </a>
+                                    </div>
+                                    <div class="pointer-link" (click)="deleteDocument(hoso.id)" title="Xóa">
+                                        <a>
+                                            <i class="fa fa-trash-o" aria-hidden="true"></i>
+                                        </a>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                    </ng-container>
+                </ng-container>
             </tbody>
         </table>
 

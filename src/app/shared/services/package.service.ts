@@ -20,6 +20,7 @@ import { BidPermissionGroupResponsive } from '../models/api-response/setting/bid
 import * as FileSaver from 'file-saver';
 import { TenderPreparationPlanningRequest } from '../models/api-request/package/tender-preparation-planning-request';
 import { ProposedTenderParticipationHistory } from '../models/api-response/package/proposed-tender-participation-history.model';
+import { StakeHolder } from '../models/ho-so-du-thau/stack-holder.model';
 
 @Injectable()
 export class PackageService {
@@ -869,8 +870,21 @@ export class PackageService {
         return this.apiService.get(url).map(response => response.result);
     }
 
+    // Danh sách user của các nhóm trong "các bên liên quan"
+    getStackHolders(bidOpportunityId: number): Observable<StakeHolder[]> {
+        const url = `bidopportunity/${bidOpportunityId}/bidusergroupmembersofstakeholders`;
+        return this.apiService.get(url).map(response => response.result);
+    }
+
+    updateStackHolders(bidId: number, data): Observable<any> {
+        const url = `bidopportunity/${bidId}/changebidusergroupmembers`;
+        console.log('data', data);
+        return this.apiService.post(url, data).map(response => response.result);
+    }
+
     updateBidGroupMembers(bidId: number, data): Observable<any> {
         const url = `bidopportunity/${bidId}/changebidusergroupmembers`;
+        console.log('data', data);
         return this.apiService.post(url, data).map(response => response.result);
     }
 
