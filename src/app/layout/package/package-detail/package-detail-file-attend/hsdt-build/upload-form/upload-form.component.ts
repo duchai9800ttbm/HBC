@@ -12,6 +12,7 @@ import { PagedResult } from '../../../../../../shared/models';
 import { DanhSachBoHsdtItem } from '../../../../../../shared/models/ho-so-du-thau/danh-sach-bo-hsdt-item.model';
 import { HsdtFilterModel } from '../../../../../../shared/models/ho-so-du-thau/hsdt-filter.model';
 import { UploadFileHsdtComponent } from '../upload-file-hsdt/upload-file-hsdt.component';
+import { ListDocumentTypeIdGroup } from '../../../../../../shared/models/ho-so-du-thau/list-document-type.model';
 
 @Component({
   selector: 'app-upload-form',
@@ -40,6 +41,8 @@ export class UploadFormComponent implements OnInit, OnDestroy {
   danhSachUser;
   isTypeChildDoc = false;
   subscription: Subscription;
+  listDocumentShowGroup: ListDocumentTypeIdGroup[];
+  sum = 0;
   constructor(
     private hoSoDuThauService: HoSoDuThauService,
     private dialogService: DialogService,
@@ -102,6 +105,7 @@ export class UploadFormComponent implements OnInit, OnDestroy {
           item.tenderDocumentType.id === HoSoDuThauService.idTenderDocumentTypesData ||
           item.tenderDocumentType.parentId === HoSoDuThauService.idTenderDocumentTypesData
         );
+        this.listDocumentShowGroup = this.groupDocumentType(this.dataDocumentOfType);
         this.pagedResult = responseResultDocument;
         this.pagedResult.total = this.dataDocumentOfType.length;
         this.pagedResult.items = this.dataDocumentOfType;
@@ -111,21 +115,69 @@ export class UploadFormComponent implements OnInit, OnDestroy {
         this.alertService.error(`Đã có lỗi xảy ra. Xin vui lòng thử lại!`);
       });
   }
+  // Group Doc
+  groupDocumentType(source: any): any {
+    const groupedObj = source.reduce((prev, cur) => {
+      if (!prev[cur['tenderDocumentTypeId']]) {
+        prev[cur['tenderDocumentTypeId']] = [cur];
+      } else {
+        prev[cur['tenderDocumentTypeId']].push(cur);
+      }
+      return prev;
+    }, {});
+    const groupBeforeSort = Object.keys(groupedObj).map(tenderDocumentTypeId => (
+      {
+        tenderDocumentTypeId,
+        items: groupedObj[tenderDocumentTypeId]
+      }
+    ));
+    return groupBeforeSort;
+  }
+  renderIndex(i, k) {
+    let dem = 0;
+    let tam = -1;
+    if (+i === 0) {
+      this.sum = k + 1;
+      return k + 1;
+    } else {
+      this.listDocumentShowGroup.forEach(ite => {
+        if (tam < +i - 1) {
+          ite.items.forEach(e => {
+            dem++;
+          });
+        }
+        tam++;
+      });
+      this.sum = dem + k + 1;
+      return dem + k + 1;
+    }
+  }
+
   pagedResultChange(pagedResult: any) {
     this.spinner.show();
     this.hoSoDuThauService
       .danhSachBoHoSoDuThauInstantSearch(this.packageId, this.searchTerm$, this.filterModel, pagedResult.currentPage, pagedResult.pageSize)
       .subscribe(responseResultDocument => {
         this.spinner.hide();
-        this.pageIndex = responseResultDocument.currentPage;
+        if (alert) {
+          this.alertService.success(`Dữ liệu đã được cập nhật mới nhất!`);
+        }
         this.rerender(responseResultDocument);
         this.dataDocumentOfType = responseResultDocument.items.filter(item =>
-          item.tenderDocumentType.id === HoSoDuThauService.idTenderDocumentTypesData
+          item.tenderDocumentType.id === HoSoDuThauService.idTenderDocumentTypesData ||
+          item.tenderDocumentType.parentId === HoSoDuThauService.idTenderDocumentTypesData
         );
+        this.listDocumentShowGroup = this.groupDocumentType(this.dataDocumentOfType);
         this.pagedResult = responseResultDocument;
         this.pagedResult.total = this.dataDocumentOfType.length;
         this.pagedResult.items = this.dataDocumentOfType;
         this.dtTrigger.next();
+        // this.spinner.hide();
+        // this.pageIndex = responseResultDocument.currentPage;
+        // this.rerender(responseResultDocument);
+        // this.dataDocumentOfType = responseResultDocument.items.filter(item =>
+        //   item.tenderDocumentType.id === HoSoDuThauService.idTenderDocumentTypesData
+        // );
       }, err => {
         this.spinner.hide();
         this.alertService.error(`Đã có lỗi xảy ra. Xin vui lòng thử lại!`);

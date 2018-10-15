@@ -1,5 +1,6 @@
 export class DanhSachBoHsdtItem {
     id: number;
+    tenderDocumentTypeId: number;
     tenderDocumentType: {
         id: number;
         parentId: number;

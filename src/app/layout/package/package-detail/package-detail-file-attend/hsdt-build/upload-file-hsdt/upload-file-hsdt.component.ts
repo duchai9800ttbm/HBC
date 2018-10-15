@@ -73,11 +73,6 @@ export class UploadFileHsdtComponent implements OnInit {
     );
     return this.invalidMessages.length === 0;
   }
-  uploadFile(event) {
-    this.tempFile = event.target.files;
-    this.uploadForm.get('file').patchValue(this.tempFile[0]);
-    this.displayName = this.tempFile[0].name;
-  }
 
   submitUpload() {
     this.isSubmitted = true;
@@ -115,9 +110,19 @@ export class UploadFileHsdtComponent implements OnInit {
   closePopup() {
     this.callBack();
   }
+
+  uploadFile(event) {
+    this.tempFile = event.target.files;
+    this.displayName = this.tempFile[0].name;
+    this.uploadForm.get('file').patchValue(this.tempFile[0]);
+    this.uploadForm.get('editName').patchValue(this.displayName);
+    event.target.value = null;
+  }
+
   deleteFileUpload() {
     this.uploadForm.get('file').patchValue(null);
     this.tempFile = null;
     this.displayName = '';
+    this.uploadForm.get('editName').patchValue('');
   }
 }
