@@ -15,6 +15,7 @@ export class NeedTranferDocList {
             id: number;
             name: string;
             interviewTime: number;
+            isLiveForm: boolean;
         };
         childDocuments: {
             documentType: {
@@ -26,7 +27,8 @@ export class NeedTranferDocList {
                 type: string;
                 id: number;
                 name: string;
-                interviewTime: number
+                interviewTime: number;
+                isLiveForm: boolean;
             }
         } [];
     } [];

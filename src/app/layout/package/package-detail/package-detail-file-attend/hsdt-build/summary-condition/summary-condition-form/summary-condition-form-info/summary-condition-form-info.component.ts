@@ -38,12 +38,15 @@ export class SummaryConditionFormInfoComponent implements OnInit {
     this.currentBidOpportunityId = +PackageDetailComponent.packageId;
     this.hoSoDuThauService.watchLiveformState().subscribe(data => {
       this.isModeView = data.isModeView;
-      this.loadData();
+      if (!this.isModeView && this.thongTinDuAnForm) {
+        this.thongTinDuAnForm.enable();
+      }
     });
-    // this.loadData();
+    this.loadData();
   }
 
   createForm() {
+    console.log(this.dataStepInfo);
     this.thongTinDuAnForm = this.fb.group({
       tenTaiLieu: { value: this.dataStepInfo.tenTaiLieu, disabled: this.isModeView },
       hinhAnhPhoiCanh: this.dataStepInfo.hinhAnhPhoiCanh,
@@ -51,6 +54,10 @@ export class SummaryConditionFormInfoComponent implements OnInit {
       lanPhongVan: { value: this.dataStepInfo.lanPhongVan, disabled: this.isModeView },
       dienGiaiThongTinDuAn: { value: this.dataStepInfo.dienGiaiThongTinDuAn, disabled: this.isModeView }
     });
+
+    if (!this.isModeView) {
+      this.thongTinDuAnForm.enable();
+    }
 
     this.thongTinDuAnForm.valueChanges.subscribe(data => {
       let obj = new ThongTinDuAn();
@@ -64,13 +71,6 @@ export class SummaryConditionFormInfoComponent implements OnInit {
 
       this.hoSoDuThauService.emitDataStepInfo(obj);
     });
-
-    if (this.isModeView) {
-      console.log('abcdee');
-      this.thongTinDuAnForm.get('tenTaiLieu').disable();
-      this.thongTinDuAnForm.get('lanPhongVan').disable();
-      this.thongTinDuAnForm.get('dienGiaiThongTinDuAn').disable();
-    }
 
   }
   loadData() {

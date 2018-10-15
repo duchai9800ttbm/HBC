@@ -6,7 +6,7 @@ import { DATATABLE_CONFIG } from '../../../../../../../../shared/configs';
 import { Observable, BehaviorSubject, Subject } from '../../../../../../../../../../node_modules/rxjs';
 import { DocumentItem } from '../../../../../../../../shared/models/document-item';
 import { PackageSuccessService } from '../../../../../../../../shared/services/package-success.service';
-import { SessionService } from '../../../../../../../../shared/services/index';
+import { SessionService, DataService } from '../../../../../../../../shared/services/index';
 import { Router } from '@angular/router';
 import { ConfirmationService, AlertService } from '../../../../../../../../shared/services';
 import { DetailResultPackageService } from '../../../../../../../../shared/services/detail-result-package.service';
@@ -14,6 +14,7 @@ import { NgxSpinnerService } from '../../../../../../../../../../node_modules/ng
 import { PackageDetailComponent } from '../../../../../package-detail.component';
 import { NeedTranferDocList } from '../../../../../../../../shared/models/result-attend/need-transfer-doc-list.model';
 import { FilterNeedTransferDoc } from '../../../../../../../../shared/models/result-attend/filter-need-transfer-doc.model';
+import { DepartmentsFormBranches } from '../../../../../../../../shared/models/user/departments-from-branches';
 
 @Component({
   selector: 'app-package-document-sender',
@@ -42,6 +43,7 @@ export class PackageDocumentSenderComponent implements OnInit {
   filterModel = new FilterNeedTransferDoc();
   isNgOnInit: boolean;
   needTransferDocsList: NeedTranferDocList[];
+  departments: Observable<DepartmentsFormBranches[]>;
   listData: any = [
     { id: 1, rom: 'Maketing', username: 'Oliver Dinh', nameDocument: 'Maketing online', status: 'Đã nhận' },
     { id: 2, rom: 'Maketing', username: 'Van Dinh', nameDocument: 'Maketing online', status: 'Đã nhận' },
@@ -59,7 +61,8 @@ export class PackageDocumentSenderComponent implements OnInit {
     private alertService: AlertService,
     private confirmationService: ConfirmationService,
     private detailResultPackageService: DetailResultPackageService,
-    private spinner: NgxSpinnerService
+    private spinner: NgxSpinnerService,
+    private dataService: DataService,
   ) { }
 
   ngOnInit() {
@@ -72,6 +75,7 @@ export class PackageDocumentSenderComponent implements OnInit {
     this.btnManageTransfer = false;
     this.total = this.data.length;
     this.textmovedata = 'Chưa chuyển giao tài liệu';
+    this.departments = this.dataService.getListDepartmentsFromBranches();
     // if (this.userGetDocument) {
     //   this.data = this.packageSuccessService.getdataDocuments();
     //   this.total = this.data.length;
@@ -81,12 +85,14 @@ export class PackageDocumentSenderComponent implements OnInit {
     this.filterModel.documentType = '';
     this.filterModel.documentTypeId = null;
     this.filterModel.interviewTimes = null;
-    this.filter(false);
-    this.searchTerm$.debounceTime(600)
-      .distinctUntilChanged()
-      .subscribe(keySearch => {
-        this.filter(false);
-      });
+    // this.searchTerm$.debounceTime(600)
+    //   .distinctUntilChanged()
+    //   .subscribe(keySearch => {
+    //     this.filter(false);
+    //   });
+    this.detailResultPackageService.getListNeedTransferDocs(this.currentPackageId).subscribe( response => {
+      console.log('response', response);
+    });
 
   }
   onSelectAll(value: boolean) {
@@ -122,33 +128,29 @@ export class PackageDocumentSenderComponent implements OnInit {
       Object.assign({}, { class: 'gray modal-lg' })
     );
   }
-  filter(displayAlert: boolean) {
-    this.spinner.show();
-    this.detailResultPackageService
-      .getListNeedTransferDocs(
-        this.currentPackageId,
-        this.searchTerm$.value,
-        this.filterModel,
-        0,
-        1000
-      )
-      .subscribe(result => {
-        this.render(result);
-        if (displayAlert && this.isNgOnInit) {
-          this.alertService.success('Dữ liệu đã được cập nhật mới nhất!');
-        }
-        this.spinner.hide();
-        this.isNgOnInit = true;
-      }, err => this.spinner.hide());
-  }
+  // filter(displayAlert: boolean) {
+  //   this.spinner.show();
+  //   this.detailResultPackageService
+  //     .getListNeedTransferDocs(
+  //       this.currentPackageId,
+  //   )
+  //     .subscribe(result => {
+  //       this.render(result);
+  //       if (displayAlert && this.isNgOnInit) {
+  //         this.alertService.success('Dữ liệu đã được cập nhật mới nhất!');
+  //       }
+  //       this.spinner.hide();
+  //       this.isNgOnInit = true;
+  //     }, err => this.spinner.hide());
+  // }
   render(needTransferDocsList: any) {
     console.log('result-needTranferDocLst', needTransferDocsList);
     this.needTransferDocsList = needTransferDocsList;
     this.dtTrigger.next();
   }
-  refesh() {
-    this.filter(true);
-  }
+  // refesh() {
+  //   this.filter(true);
+  // }
   downloadTemplate() {
     this.detailResultPackageService.downloadTemplateDoc().subscribe(response => {
     },
