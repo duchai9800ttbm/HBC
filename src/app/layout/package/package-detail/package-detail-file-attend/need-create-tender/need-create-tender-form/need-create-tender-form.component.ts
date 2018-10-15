@@ -108,13 +108,10 @@ export class NeedCreateTenderFormComponent implements OnInit, OnDestroy {
                 }
             }
         );
-        console.log('NeedCreateTenderFormComponent.formModel', NeedCreateTenderFormComponent.formModel);
         if (!NeedCreateTenderFormComponent.formModel) {
-            console.log('NeedCreateTenderFormComponent.formModel', NeedCreateTenderFormComponent.formModel);
         }
         this.dataModel = NeedCreateTenderFormComponent.formModel;
         this.dataModelCopy = Object.assign({}, this.dataModel);
-        // console.log(this.dataModel.tenderDirectorProposal.expectedDate);
         // tslint:disable-next-line:max-line-length
         this.dateApproveBid =
             this.dataModel &&
@@ -302,8 +299,6 @@ export class NeedCreateTenderFormComponent implements OnInit, OnDestroy {
 
     saveOfficially() {
         // this.draftsOrOfficially = false;
-        console.log('NeedCreateTenderFormComponent.formModel.id', NeedCreateTenderFormComponent.formModel.id,
-        NeedCreateTenderFormComponent.formModel.isDraftVersion);
         if ( NeedCreateTenderFormComponent.formModel.id ) {
             if ( NeedCreateTenderFormComponent.formModel && !NeedCreateTenderFormComponent.formModel.isDraftVersion) {
                 this.isShowChanges = true;

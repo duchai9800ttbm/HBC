@@ -195,6 +195,7 @@ export class DetailResultPackageService {
             id: itemNeedTransferDocument.document.id,
             name: itemNeedTransferDocument.document.name,
             interviewTime: itemNeedTransferDocument.document.interviewTime,
+            isLiveForm: itemNeedTransferDocument.document.isLiveForm,
           },
           childDocuments: itemNeedTransferDocument.childDocuments ? itemNeedTransferDocument.childDocuments.map(itemChildDocuments => {
             return {
@@ -208,6 +209,7 @@ export class DetailResultPackageService {
                 id: itemChildDocuments.document.id,
                 name: itemChildDocuments.document.name,
                 interviewTime: itemChildDocuments.document.interviewTime,
+                isLiveForm: itemChildDocuments.document.isLiveForm,
               }
             };
           }) : null,
@@ -215,24 +217,36 @@ export class DetailResultPackageService {
       }) : null,
     };
   }
-  // Danh sách tài liệu cần chuyển giao(tìm kiếm, lọc)
+  // Danh sách tài liệu cần chuyển giao CHƯA CÓ chuyển giao cho và ngày sử dụng
   getListNeedTransferDocs(
     bidOpportunityId: number,
-    searchTerm: string,
-    filter: FilterNeedTransferDoc,
-    page: number | string,
-    pageSize: number | string
   ): Observable<NeedTranferDocList[]> {
     const filterUrl = `tenderresultdocument/bidOpportunity/${bidOpportunityId}/needtransferdocs`;
-    const urlParams = this.toParamaterNeedTransfer(filter);
-    urlParams.append('searchTerm', searchTerm);
-    return this.apiService.get(filterUrl, urlParams).map(response => {
+    return this.apiService.get(filterUrl).map(response => {
       const result = response.result;
       return (result || []).map(
         this.toListNeedTransferDocs
       );
     });
   }
+  // // Danh sách tài liệu cần chuyển giao(tìm kiếm, lọc)
+  // getListNeedTransferDocs(
+  //   bidOpportunityId: number,
+  //   searchTerm: string,
+  //   filter: FilterNeedTransferDoc,
+  //   page: number | string,
+  //   pageSize: number | string
+  // ): Observable<NeedTranferDocList[]> {
+  //   const filterUrl = `tenderresultdocument/bidOpportunity/${bidOpportunityId}/needtransferdocs`;
+  //   const urlParams = this.toParamaterNeedTransfer(filter);
+  //   urlParams.append('searchTerm', searchTerm);
+  //   return this.apiService.get(filterUrl, urlParams).map(response => {
+  //     const result = response.result;
+  //     return (result || []).map(
+  //       this.toListNeedTransferDocs
+  //     );
+  //   });
+  // }
   // Danh sách loại tài liệu cần chuyển giao
   getListTypeNeedTransferDoc() {
     const url = `tenderresultdocument/transferdocumenttypes`;
@@ -508,7 +522,7 @@ export class DetailResultPackageService {
     };
   }
   // Dánh sách biên bản cuộc họp (tìm kiếm, lọc)
-  getBidMeetingReportdocsList(
+  getBidMeetingReportDocsList(
     bidOpportunityId: number,
     searchTerm: string,
     filter: FilterReportMeeting,
@@ -525,6 +539,72 @@ export class DetailResultPackageService {
       );
     });
   }
+  // Tải về biên bản cuộc họp hoặc file presentation
+  downloadMeeting(bidMeetingReportDocId: number) {
+    const url = `bidmeetingreportdoc/${bidMeetingReportDocId}/download`;
+    return this.apiService.getFile(url).map(response => {
+      return FileSaver.saveAs(
+        new Blob([response.file], {
+          type: `${response.file.type}`,
+        }), response.fileName
+      );
+    });
+  }
   // Danh sách file Presentations
-  // Danh sách
+  // Danh sách file Presentations
+  getBidMeetingFileList(
+    bidOpportunityId: number,
+    searchTerm: string,
+    filter: FilterReportMeeting,
+    page: number | string,
+    pageSize: number | string
+  ): Observable<PagedResult<ReportMeetingList>> {
+    const filterUrl = `bidopportunity/${bidOpportunityId}/filepresentations/filter/${page}/${pageSize}`;
+    const urlParams = this.toFilterMeetingReport(filter);
+    urlParams.append('searchTerm', searchTerm);
+    return this.apiService.get(filterUrl, urlParams).map(response => {
+      const result = response.result;
+      return (result || []).map(
+        this.toReportMeetingList
+      );
+    });
+  }
+  // Tải lên file presentation
+  uploadFilePresentationMeeting(
+    BidOpportunityId: number,
+    uploadResultFormValue: any,
+    file: File,
+  ) {
+    const url = `filepresentaion/upload`;
+    const formData = new FormData();
+    formData.append('BidOpportunityId', `${BidOpportunityId}`);
+    formData.append('Name', `${uploadResultFormValue.documentName}`);
+    formData.append('InterviewTimes', `${uploadResultFormValue.interviewTimes}`);
+    formData.append('ReceivedDate', uploadResultFormValue.receivedDate ?
+      DateTimeConvertHelper.fromDtObjectToTimestamp(uploadResultFormValue.receivedDate).toString() : '');
+    if (uploadResultFormValue.documentDesc || uploadResultFormValue.documentDesc === '') {
+      formData.append('Desc', uploadResultFormValue.documentDesc);
+    }
+    if (file) {
+      formData.append('File', file);
+    } else {
+      formData.append('Url', uploadResultFormValue.link);
+    }
+    return this.apiService.postFile(url, formData)
+      .map(response => response)
+      .share();
+  }
+  // Xóa biên bản cuộc họp hoặc file presentation
+  deleteMeetingReportOrFile(bidMeetingReportDocId: number) {
+    const url = `bidmeetingreportdoc/${bidMeetingReportDocId}/delete`;
+    return this.apiService.post(url);
+  }
+  // Xóa nhiều biên bản cuộc họp hoặc file presentation
+  deleteMutipleMeetingReportOrFile(bidMeetingReportDocIdArray: number[]) {
+    const url = `bidmeetingreportdocs/multidelete`;
+    const request = {
+      ids: bidMeetingReportDocIdArray,
+    };
+    return this.apiService.post(url, request);
+  }
 }

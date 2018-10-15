@@ -27,6 +27,7 @@ export class NeedCreateTenderFormAnalysisComponent implements OnInit {
     this.packageService.routerAction$.subscribe(router => {
       this.routerAction = router;
       this.createForm();
+      this.analysisForm.valueChanges.subscribe(data => this.mappingToLiveFormData(data));
     });
     this.createForm();
     this.analysisForm.valueChanges.subscribe(data => this.mappingToLiveFormData(data));
@@ -34,7 +35,6 @@ export class NeedCreateTenderFormAnalysisComponent implements OnInit {
 
   createForm() {
     const value = NeedCreateTenderFormComponent.formModel;
-    // console.log(value);
     this.analysisForm = this.fb.group({
       documentName: value && value.documentName ? value.documentName : '',
       employerAnalysis: this.fb.group({

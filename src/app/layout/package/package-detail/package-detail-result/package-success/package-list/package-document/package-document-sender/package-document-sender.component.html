@@ -105,149 +105,173 @@
 
         <div class="main-table">
             <div class="bot-table">
-                <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="table-selection stripe row-border hover cell-border dataTable">
+                <table class="table-selection stripe row-border hover cell-border dataTable">
                     <thead>
-                        <th class="stt bg-default w5" style="background-color: #f68e56!important;">
-                            <div class="d-flex justify-content-around">
-                                <div style="width: 40%;">
+                        <tr>
+                            <th class="stt bg-default w5" style="background-color: #f68e56!important;">
+                                <div class="d-flex justify-content-around">
+                                    <div style="width: 40%;">
+                                        <div class="center-parent">
+                                            <label class="custom-control custom-checkbox">
+                                                <input type="checkbox" class="custom-control-input" [(ngModel)]="checkboxSeclectAll" (change)="onSelectAll($event.target.checked)">
+                                                <span class="custom-control-indicator"></span>
+                                            </label>
+                                        </div>
+                                    </div>
+                                    <div style="width: 35%;" class="center-parent">
+                                        <div>STT</div>
+                                    </div>
+                                </div>
+                            </th>
+                            <th class="bg-default" style="background-color: #f68e56!important;" [ngClass]="{'w12' : isManageTransfer==true, 'w15' : isManageTransfer==false}">
+                                <div class="d-flex justify-content-center">
                                     <div class="center-parent">
-                                        <label class="custom-control custom-checkbox">
-                                            <input type="checkbox" class="custom-control-input" [(ngModel)]="checkboxSeclectAll" (change)="onSelectAll($event.target.checked)">
-                                            <span class="custom-control-indicator"></span>
-                                        </label>
+                                        <div>Loại tài liệu</div>
                                     </div>
                                 </div>
+                            </th>
+                            <th class="bg-default" style="background-color: #f68e56!important;" [ngClass]="{'w12' : isManageTransfer==true, 'w15' : isManageTransfer==false}">
+                                <div class="d-flex justify-content-center">
+                                    <div class="center-parent">
+                                        <div></div>
+                                    </div>
+                                </div>
+                            </th>
+                            <th class="bg-default" style="background-color: #f68e56!important;" [ngClass]="{'w12' : isManageTransfer==true, 'w15' : isManageTransfer==false}">
+                                <div class="d-flex justify-content-center">
+                                    <div class="center-parent">
+                                        <div>Tên tài liệu</div>
+                                    </div>
+                                </div>
+                            </th>
+                            <th class="bg-default w15" style="background-color: #f68e56!important;">
+                                <div class="d-flex justify-content-center">
+                                    <div class="center-parent">
+                                        <div>Chuyển giao cho</div>
+                                    </div>
+                                </div>
+                            </th>
+                            <th class="bg-default w10" style="background-color: #f68e56!important;">
+                                <div class="d-flex justify-content-center">
+                                    <div class="center-parent">
+                                        <div>Số ngày sử dụng</div>
+                                    </div>
+                                </div>
+                            </th>
 
-                                <div style="width: 35%;" class="center-parent">
-                                    <div>STT</div>
-                                </div>
-                                <!-- <div class="center-parent" style="width: 15%;padding-left: 5px;">
-                                    <div class="ng-tns-c15-6">
-                                        <i class="fa fa-caret-down" style="color: #ffff;"></i>
+                            <th class="bg-default w10" style="background-color: #f68e56!important;">
+                                <div class="d-flex justify-content-center">
+                                    <div class="center-parent">
+                                        <div>Lần phỏng vấn</div>
                                     </div>
-                                </div> -->
-                            </div>
-                        </th>
-                        <th class="bg-default" style="background-color: #f68e56!important;" [ngClass]="{'w12' : isManageTransfer==true, 'w15' : isManageTransfer==false}">
-                            <div class="d-flex justify-content-center">
-                                <div class="center-parent">
-                                    <div>Loại tài liệu</div>
                                 </div>
-                                <!-- <div class="center-parent pd-l">
-                                    <div class="ng-tns-c15-6">
-                                        <i class="fa fa-caret-down" style="color: #ffff;"></i>
+                            </th>
+                            <th class="bg-default" style="background-color: #f68e56!important;" [ngClass]="{'w6' : isManageTransfer==true, 'w10' : isManageTransfer==false}">
+                                <div class="d-flex justify-content-center">
+                                    <div class="center-parent">
+                                        <div>Thao tác</div>
                                     </div>
-                                </div> -->
-                            </div>
-                        </th>
-                        <th class="bg-default" style="background-color: #f68e56!important;" [ngClass]="{'w12' : isManageTransfer==true, 'w15' : isManageTransfer==false}">
-                            <div class="d-flex justify-content-center">
-                                <div class="center-parent">
-                                    <div></div>
                                 </div>
-                            </div>
-                        </th>
-                        <th class="bg-default" style="background-color: #f68e56!important;" [ngClass]="{'w12' : isManageTransfer==true, 'w15' : isManageTransfer==false}">
-                            <div class="d-flex justify-content-center">
-                                <div class="center-parent">
-                                    <div>Tên tài liệu</div>
-                                </div>
-                                <!-- <div class="center-parent pd-l">
-                                    <div class="ng-tns-c15-6">
-                                        <i class="fa fa-caret-down" style="color: #ffff;"></i>
-                                    </div>
-                                </div> -->
-                            </div>
-                        </th>
-                        <th class="bg-default w15" style="background-color: #f68e56!important;">
-                            <div class="d-flex justify-content-center">
-                                <div class="center-parent">
-                                    <div>Chuyển giao cho</div>
-                                </div>
-                                <!-- <div class="center-parent pd-l">
-                                    <div class="ng-tns-c15-6">
-                                        <i class="fa fa-caret-down" style="color: #ffff;"></i>
-                                    </div>
-                                </div> -->
-                            </div>
-                        </th>
-                        <th class="bg-default w10" style="background-color: #f68e56!important;">
-                            <div class="d-flex justify-content-center">
-                                <div class="center-parent">
-                                    <div>Số ngày sử dụng</div>
-                                </div>
-                                <!-- <div class="center-parent pd-l">
-                                    <div class="ng-tns-c15-6">
-                                        <i class="fa fa-caret-down" style="color: #ffff;"></i>
-                                    </div>
-                                </div> -->
-                            </div>
-                        </th>
-                        <th class="bg-default w12" style="background-color: #f68e56!important;" *ngIf="isManageTransfer">
-                            <div class="d-flex justify-content-center">
-                                <div class="center-parent">
-                                    <div>Thời gian chuyển giao</div>
-                                </div>
-                                <!-- <div class="center-parent pd-l">
-                                    <div class="ng-tns-c15-6">
-                                        <i class="fa fa-caret-down" style="color: #ffff;"></i>
-                                    </div>
-                                </div> -->
-                            </div>
-                        </th>
-                        <th class="bg-default w10" style="background-color: #f68e56!important;">
-                            <div class="d-flex justify-content-center">
-                                <div class="center-parent">
-                                    <div>Lần phỏng vấn</div>
-                                </div>
-                                <!-- <div class="center-parent pd-l">
-                                    <div class="ng-tns-c15-6">
-                                        <i class="fa fa-caret-down" style="color: #ffff;"></i>
-                                    </div>
-                                </div> -->
-                            </div>
-                        </th>
-                        <th class="bg-default" style="background-color: #f68e56!important;" [ngClass]="{'w6' : isManageTransfer==true, 'w10' : isManageTransfer==false}">
-                            <div class="d-flex justify-content-center">
-                                <div class="center-parent">
-                                    <div>Thao tác</div>
-                                </div>
-                            </div>
-                        </th>
+                            </th>
+                        </tr>
                     </thead>
-                </table>
-                <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="table-selection stripe row-border hover cell-border" id ="hsmt">
-                    <thead>
-                        <th class="stt hsmt-head th" [ngClass]="{'w-custom' : isManageTransfer==true, 'w50' : isManageTransfer==false}">
-                            <div class="mgl-hs"> Hồ sơ mời thầu
-                                <i class="fa fa-caret-down mr-l3" (click)="showhsmt()"></i>
-                            </div>
-                        </th>
-                        <th class="hsmt-head th text-center" [ngClass]="{'w12' : isManageTransfer==true, 'w15' : isManageTransfer==false}">
-                           
-                            <div class="ml-sm-2">                                
-                                <span class="custom-dropdown custom-dropdown-v2 mx-sm-2">
-                                    <select class="form-control">
-                                        <option value="">--Chọn phòng ban--</option>
-                                        <option value="Official">Phòng hành chính</option>
-                                        <option value="Draft">Phòng lưu trữ</option>
-                                    </select>
-                                </span>
-                            </div>
-                        </th>
-                        <th class="hsmt-head th select-filter text-center w10">
-                            <input type="number" class="form-control" placeholder="Number" [ngClass]="{'w80' : isManageTransfer==true}">
-                        </th>
-                        <th class="hsmt-head th w10"></th>
-                        <th class="hsmt-head th w10"></th>
-                   
-
-                    </thead>
-                </table>
-                <table *ngIf="!isDataHsmt" datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="table-selection stripe row-border hover cell-border dataTable table-input">
                     <tbody>
+                        <!-- Hồ sơ mời thầu -->
+                        <tr>
+                            <td colspan="4" class="stt hsmt-head th" [ngClass]="{'w-custom' : isManageTransfer==true, 'w50' : isManageTransfer==false}">
+                                <div class="mgl-hs"> Hồ sơ mời thầu
+                                    <i class="fa fa-caret-down mr-l3" (click)="showhsmt()"></i>
+                                </div>
+                            </td>
+                            <td class="hsmt-head th text-center" [ngClass]="{'w12' : isManageTransfer==true, 'w15' : isManageTransfer==false}">
+                                <div class="ml-sm-2">
+                                    <span class="custom-dropdown custom-dropdown-v2 mx-sm-2">
+                                        <select class="form-control">
+                                            <option value="">--Chọn phòng ban--</option>
+                                            <option value="Official">Phòng hành chính</option>
+                                            <option value="Draft">Phòng lưu trữ</option>
+                                        </select>
+                                    </span>
+                                </div>
+                            </td>
+                            <td class="hsmt-head th select-filter text-center w10">
+                                <input type="number" class="form-control" placeholder="Number" [ngClass]="{'w80' : isManageTransfer==true}">
+                            </td>
+                            <td class="hsmt-head th w10"></td>
+                            <td class="hsmt-head th w10"></td>
+                        </tr>
                         <tr *ngFor="let item of data; let i = index">
                             <td class="stt w5 bg-default wstt">
+                                <div class="d-flex justify-content-around">
+                                    <div style="width: 40%;">
+                                        <div class="center-parent">
+                                            <label class="custom-control custom-checkbox">
+                                                <input type="checkbox" class="custom-control-input" [(ngModel)]="item.checkboxSelected">
+                                                <span class="custom-control-indicator"></span>
+                                            </label>
+                                        </div>
+                                    </div>
+                                    <div style="width: 35%;" class="center-parent">
+                                        <div>{{i+1}}</div>
+                                    </div>
+                                    <div class="center-parent" style="width: 15%;padding-left: 5px;">
+                                        <div class="ng-tns-c15-6">
+                                        </div>
+                                    </div>
+                                </div>
+                            </td>
+                            <td [ngClass]="{'w12' : isManageTransfer==true, 'w15' : isManageTransfer==false}">{{ item.documentType }}</td>
+                            <td [ngClass]="{'w12' : isManageTransfer==true, 'w15' : isManageTransfer==false}">{{ item.documentData }}</td>
+                            <td [ngClass]="{'w12' : isManageTransfer==true, 'w15' : isManageTransfer==false}">{{ item.documentName }}</td>
+                            <!-- <td class="select-filter w15">{{ item.documentRom}}</td> -->
+                            <td *ngIf="isManageTransfer" class="select-filter text-center td-input w10">
+                                <input autocomplete="off" class="form-control" type="text" name="item.dateNo" value="{{item.dateNo}}">
+                            </td>
+                            <td *ngIf="!isManageTransfer" class="select-filter text-center w10">{{ item.dateNo}}</td>
+                            <!-- <td *ngIf="isManageTransfer" class="select-filter text-center w12">{{ item.timeTransfer}}</td> -->
+                            <td class="select-filter text-center w10">{{ item.interviewNo}}</td>
+                            <td class="text-center" [ngClass]="{'w6' : isManageTransfer==true, 'w10' : isManageTransfer==false}">
+                                <div class="d-flex justify-content-around">
+                                    <div id="mr">
+                                        <a title="Tải file" (click)="downloadFileItem(item.id)">
+                                            <i class="fa fa-download color-item-down" aria-hidden="true"></i>
+                                        </a>
+                                    </div>
+                                    <div>
+                                        <a title="In">
+                                            <i class="fa fa-print color-item-print" aria-hidden="true"></i>
+                                        </a>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                        <!-- Hồ sơ dự thầu -->
+                        <tr>
+                            <td colspan="4" class="stt hsmt-head th" [ngClass]="{'w-custom' : isManageTransfer==true, 'w50' : isManageTransfer==false}">
+                                <div class="mgl-hs"> Hồ sơ dự thầu
+                                    <i class="fa fa-caret-down mr-l3" (click)="showhsdt()"></i>
+                                </div>
+                            </td>
+                            <td class="hsmt-head th text-center" [ngClass]="{'w12' : isManageTransfer==true, 'w15' : isManageTransfer==false}">
+                                <div class="ml-sm-2">
+                                    <span class="custom-dropdown custom-dropdown-v2 mx-sm-2">
+                                        <select class="form-control">
+                                            <option value="">--Chọn phòng ban--</option>
+                                            <option value="Official">Phòng hành chính</option>
+                                            <option value="Draft">Phòng lưu trữ</option>
+                                        </select>
+                                    </span>
+                                </div>
+                            </td>
+                            <td class="hsmt-head th select-filter text-center w10">
+                                <input type="number" class="form-control" placeholder="Number" [ngClass]="{'w80' : isManageTransfer==true}">
+                            </td>
+                            <td class="hsmt-head th w10"></td>
+                            <td class="hsmt-head th w10"></td>
+                        </tr>
+                        <!-- Dữ liệu tài liệu dự thầu -->
+                        <tr *ngFor="let item of data; let i = index">
+                            <td class="stt wstt">
                                 <div class="d-flex justify-content-around">
                                     <div style="width: 40%;">
                                         <div class="center-parent">
@@ -271,20 +295,20 @@
                             <td [ngClass]="{'w12' : isManageTransfer==true, 'w15' : isManageTransfer==false}">{{ item.documentType }}</td>
                             <td [ngClass]="{'w12' : isManageTransfer==true, 'w15' : isManageTransfer==false}">{{ item.documentData }}</td>
                             <td [ngClass]="{'w12' : isManageTransfer==true, 'w15' : isManageTransfer==false}">{{ item.documentName }}</td>
-                            <td class="select-filter w15">{{ item.documentRom}}</td>
+                            <!-- <td class="select-filter w15">{{ item.documentRom}}</td> -->
                             <td *ngIf="isManageTransfer" class="select-filter text-center td-input w10">
                                 <input autocomplete="off" class="form-control" type="text" name="item.dateNo" value="{{item.dateNo}}">
                             </td>
                             <td *ngIf="!isManageTransfer" class="select-filter text-center w10">{{ item.dateNo}}</td>
-                            <td *ngIf="isManageTransfer" class="select-filter text-center w12">{{ item.timeTransfer}}</td>
+                            <!-- <td *ngIf="isManageTransfer" class="select-filter text-center w12">{{ item.timeTransfer}}</td> -->
                             <td class="select-filter text-center w10">{{ item.interviewNo}}</td>
-                            <td class="text-center" [ngClass]="{'w6' : isManageTransfer==true, 'w10' : isManageTransfer==false}">                                
+                            <td class="text-center" [ngClass]="{'w6' : isManageTransfer==true, 'w10' : isManageTransfer==false}">
                                 <div class="d-flex justify-content-around">
                                     <div id="mr">
                                         <a title="Tải file" (click)="downloadFileItem(item.id)">
                                             <i class="fa fa-download color-item-down" aria-hidden="true"></i>
                                         </a>
-                                    </div>                                    
+                                    </div>
                                     <div>
                                         <a title="In">
                                             <i class="fa fa-print color-item-print" aria-hidden="true"></i>
@@ -295,7 +319,93 @@
                         </tr>
                     </tbody>
                 </table>
-                <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="table-selection stripe row-border hover cell-border" id ="hsmt">
+                <!-- <th class="bg-default w12" style="background-color: #f68e56!important;" *ngIf="isManageTransfer">
+                                <div class="d-flex justify-content-center">
+                                    <div class="center-parent">
+                                        <div>Thời gian chuyển giao</div>
+                                    </div>
+                                </div>
+                            </th> -->
+                <!-- <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="table-selection stripe row-border hover cell-border"
+                    id="hsmt">
+                    <thead>
+                        <tr>
+                            <th class="stt hsmt-head th" [ngClass]="{'w-custom' : isManageTransfer==true, 'w50' : isManageTransfer==false}">
+                                <div class="mgl-hs"> Hồ sơ mời thầu
+                                    <i class="fa fa-caret-down mr-l3" (click)="showhsmt()"></i>
+                                </div>
+                            </th>
+                            <th class="hsmt-head th text-center" [ngClass]="{'w12' : isManageTransfer==true, 'w15' : isManageTransfer==false}">
+                                <div class="ml-sm-2">
+                                    <span class="custom-dropdown custom-dropdown-v2 mx-sm-2">
+                                        <select class="form-control">
+                                            <option value="">--Chọn phòng ban--</option>
+                                            <option value="Official">Phòng hành chính</option>
+                                            <option value="Draft">Phòng lưu trữ</option>
+                                        </select>
+                                    </span>
+                                </div>
+                            </th>
+                            <th class="hsmt-head th select-filter text-center w10">
+                                <input type="number" class="form-control" placeholder="Number" [ngClass]="{'w80' : isManageTransfer==true}">
+                            </th>
+                            <th class="hsmt-head th w10"></th>
+                            <th class="hsmt-head th w10"></th>
+                        </tr>
+                    </thead>
+                </table> -->
+                <!-- <table *ngIf="!isDataHsmt" datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="table-selection stripe row-border hover cell-border dataTable table-input">
+                    <tbody>
+                        <tr *ngFor="let item of data; let i = index">
+                            <td class="stt w5 bg-default wstt">
+                                <div class="d-flex justify-content-around">
+                                    <div style="width: 40%;">
+                                        <div class="center-parent">
+                                            <label class="custom-control custom-checkbox">
+                                                <input type="checkbox" class="custom-control-input" [(ngModel)]="item.checkboxSelected">
+                                                <span class="custom-control-indicator"></span>
+                                            </label>
+                                        </div>
+                                    </div>
+
+                                    <div style="width: 35%;" class="center-parent">
+                                        <div>{{i+1}}</div>
+                                    </div>
+                                    <div class="center-parent" style="width: 15%;padding-left: 5px;">
+                                        <div class="ng-tns-c15-6">
+                                        </div>
+                                    </div>
+                                </div>
+                            </td>
+                            <td [ngClass]="{'w12' : isManageTransfer==true, 'w15' : isManageTransfer==false}">{{ item.documentType }}</td>
+                            <td [ngClass]="{'w12' : isManageTransfer==true, 'w15' : isManageTransfer==false}">{{ item.documentData }}</td>
+                            <td [ngClass]="{'w12' : isManageTransfer==true, 'w15' : isManageTransfer==false}">{{ item.documentName }}</td>
+                            <td class="select-filter w15">{{ item.documentRom}}</td>
+                            <td *ngIf="isManageTransfer" class="select-filter text-center td-input w10">
+                                <input autocomplete="off" class="form-control" type="text" name="item.dateNo" value="{{item.dateNo}}">
+                            </td>
+                            <td *ngIf="!isManageTransfer" class="select-filter text-center w10">{{ item.dateNo}}</td>
+                            <td *ngIf="isManageTransfer" class="select-filter text-center w12">{{ item.timeTransfer}}</td>
+                            <td class="select-filter text-center w10">{{ item.interviewNo}}</td>
+                            <td class="text-center" [ngClass]="{'w6' : isManageTransfer==true, 'w10' : isManageTransfer==false}">
+                                <div class="d-flex justify-content-around">
+                                    <div id="mr">
+                                        <a title="Tải file" (click)="downloadFileItem(item.id)">
+                                            <i class="fa fa-download color-item-down" aria-hidden="true"></i>
+                                        </a>
+                                    </div>
+                                    <div>
+                                        <a title="In">
+                                            <i class="fa fa-print color-item-print" aria-hidden="true"></i>
+                                        </a>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="table-selection stripe row-border hover cell-border"
+                    id="hsmt">
                     <thead>
                         <th class="stt hsmt-head th" [ngClass]="{'w-custom' : isManageTransfer==true, 'w50' : isManageTransfer==false}">
                             <div class="mgl-hs"> Hồ sơ dự thầu
@@ -303,7 +413,7 @@
                             </div>
                         </th>
                         <th class="hsmt-head th text-center" [ngClass]="{'w12' : isManageTransfer==true, 'w15' : isManageTransfer==false}">
-                            <div class="ml-sm-2">                                
+                            <div class="ml-sm-2">
                                 <span class="custom-dropdown custom-dropdown-v2 mx-sm-2">
                                     <select class="form-control">
                                         <option value="">--Chọn phòng ban--</option>
@@ -320,7 +430,6 @@
                         <th class="hsmt-head th w10"></th>
                     </thead>
                 </table>
-                <!-- isDataHsdt -->
                 <table *ngIf="!isDataHsdt" datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="table-input table-selection stripe row-border hover cell-border dataTable">
                     <tbody>
                         <tr *ngFor="let item of data; let i = index">
@@ -361,7 +470,7 @@
                                         <a title="Tải file" (click)="downloadFileItem(item.id)">
                                             <i class="fa fa-download color-item-down" aria-hidden="true"></i>
                                         </a>
-                                    </div>                                    
+                                    </div>
                                     <div>
                                         <a title="In">
                                             <i class="fa fa-print color-item-print" aria-hidden="true"></i>
@@ -371,7 +480,7 @@
                             </td>
                         </tr>
                     </tbody>
-                </table>
+                </table> -->
             </div>
             <div class="show">Hiển thị {{total}} kết quả</div>
         </div>

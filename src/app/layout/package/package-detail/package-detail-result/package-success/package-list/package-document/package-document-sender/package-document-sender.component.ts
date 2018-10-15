@@ -81,12 +81,14 @@ export class PackageDocumentSenderComponent implements OnInit {
     this.filterModel.documentType = '';
     this.filterModel.documentTypeId = null;
     this.filterModel.interviewTimes = null;
-    this.filter(false);
-    this.searchTerm$.debounceTime(600)
-      .distinctUntilChanged()
-      .subscribe(keySearch => {
-        this.filter(false);
-      });
+    // this.searchTerm$.debounceTime(600)
+    //   .distinctUntilChanged()
+    //   .subscribe(keySearch => {
+    //     this.filter(false);
+    //   });
+    this.detailResultPackageService.getListNeedTransferDocs(this.currentPackageId).subscribe( response => {
+      console.log('response', response);
+    });
 
   }
   onSelectAll(value: boolean) {
@@ -122,33 +124,29 @@ export class PackageDocumentSenderComponent implements OnInit {
       Object.assign({}, { class: 'gray modal-lg' })
     );
   }
-  filter(displayAlert: boolean) {
-    this.spinner.show();
-    this.detailResultPackageService
-      .getListNeedTransferDocs(
-        this.currentPackageId,
-        this.searchTerm$.value,
-        this.filterModel,
-        0,
-        1000
-      )
-      .subscribe(result => {
-        this.render(result);
-        if (displayAlert && this.isNgOnInit) {
-          this.alertService.success('Dữ liệu đã được cập nhật mới nhất!');
-        }
-        this.spinner.hide();
-        this.isNgOnInit = true;
-      }, err => this.spinner.hide());
-  }
+  // filter(displayAlert: boolean) {
+  //   this.spinner.show();
+  //   this.detailResultPackageService
+  //     .getListNeedTransferDocs(
+  //       this.currentPackageId,
+  //   )
+  //     .subscribe(result => {
+  //       this.render(result);
+  //       if (displayAlert && this.isNgOnInit) {
+  //         this.alertService.success('Dữ liệu đã được cập nhật mới nhất!');
+  //       }
+  //       this.spinner.hide();
+  //       this.isNgOnInit = true;
+  //     }, err => this.spinner.hide());
+  // }
   render(needTransferDocsList: any) {
     console.log('result-needTranferDocLst', needTransferDocsList);
     this.needTransferDocsList = needTransferDocsList;
     this.dtTrigger.next();
   }
-  refesh() {
-    this.filter(true);
-  }
+  // refesh() {
+  //   this.filter(true);
+  // }
   downloadTemplate() {
     this.detailResultPackageService.downloadTemplateDoc().subscribe(response => {
     },
