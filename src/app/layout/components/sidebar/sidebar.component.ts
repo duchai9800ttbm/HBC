@@ -121,15 +121,18 @@ export class SidebarComponent implements OnInit {
     }
     renderDataChangeRecently(action: string, target?: string, data?: any) {
         let resultpackage = '';
-        if (!data.acceptanceReason) {
-            resultpackage = 'Trúng thầu';
-        } else {
-            if (!data.unacceptanceReason) {
-                resultpackage = 'Trật thầu';
+        if (data) {
+            if (!data.acceptanceReason) {
+                resultpackage = 'Trúng thầu';
             } else {
-                resultpackage = 'Hủy thầu';
+                if (!data.unacceptanceReason) {
+                    resultpackage = 'Trật thầu';
+                } else {
+                    resultpackage = 'Hủy thầu';
+                }
             }
         }
+
         switch (action) {
             case 'Delete': {
                 switch (target) {

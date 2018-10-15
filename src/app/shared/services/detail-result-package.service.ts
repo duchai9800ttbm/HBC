@@ -233,8 +233,8 @@ export class DetailResultPackageService {
   }
   // Danh sách loại tài liệu cần chuyển giao
   getListTypeNeedTransferDoc() {
-    const url  = `tenderresultdocument/transferdocumenttypes`;
-    return this.apiService.get(url).map( response => {
+    const url = `tenderresultdocument/transferdocumenttypes`;
+    return this.apiService.get(url).map(response => {
       const result = response.result;
       return {
         id: result.id,
@@ -412,5 +412,47 @@ export class DetailResultPackageService {
         }), response.fileName
       );
     });
+  }
+  // =============================
+  // Bước 3, Họp kick-off
+  // Gửi thư thông báo họp kick-off
+  notiMeetingKickOff(data: SendEmailModel, file: File[]) {
+    const url = `bidopportunity/kqdt/guithuthongbaohopkickoff`;
+    const dataObj = new FormData();
+    dataObj.append('BidOpportunityId', data.bidOpportunityId + '');
+    dataObj.append('Subject', data.subject ? data.subject : '');
+    data.recipientEmails.forEach((item, index) => {
+      dataObj.append('RecipientEmails[' + index + ']', item);
+    });
+    file.forEach(item => {
+      dataObj.append('AttachmentFiles', item);
+    });
+    dataObj.append('Content', data.content);
+    return this.apiService.postFile(url, dataObj);
+  }
+  // Tải lên biên bản cuộc họp
+  uploadReportMeeting(
+    BidOpportunityId: number,
+    uploadResultFormValue: any,
+    file: File,
+  ) {
+    const url = `tenderresultdocument/upload`;
+    const formData = new FormData();
+    formData.append('BidOpportunityId', `${BidOpportunityId}`);
+    formData.append('Name', `${uploadResultFormValue.documentName}`);
+    formData.append('InterviewTimes', `${uploadResultFormValue.interviewTimes}`);
+    formData.append('ReceivedDate', uploadResultFormValue.receivedDate ?
+      DateTimeConvertHelper.fromDtObjectToTimestamp(uploadResultFormValue.receivedDate).toString() : '');
+    if (uploadResultFormValue.documentDesc || uploadResultFormValue.documentDesc === '') {
+      formData.append('Desc', uploadResultFormValue.documentDesc);
+    }
+    if (file) {
+      formData.append('File', file);
+    } else {
+      formData.append('Url', uploadResultFormValue.link);
+    }
+    return this.apiService.postFile(url, formData)
+      .map(response => response)
+      .share();
   }
 }

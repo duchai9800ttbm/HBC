@@ -20,6 +20,9 @@ import { CKEditorModule } from 'ng2-ckeditor';
     MeetingKickoffRoutingModule,
     CKEditorModule
   ],
-  declarations: [MeetingKickoffComponent,ReportMeetingComponent]
+  declarations: [
+    MeetingKickoffComponent,
+    ReportMeetingComponent
+  ]
 })
 export class MeetingKickoffModule { }

@@ -655,15 +655,11 @@ export class PackageService {
             bidStatusId: formValue.bidStatusId,
             amount: formValue.amount ? formValue.amount : 0,
             evaluation: formValue.evaluationId,
-            startTrackingDate: moment(formValue.startTrackingDate).unix(),
-            submissionDate: moment(formValue.submissionDate).unix(),
-            resultEstimatedDate: moment(formValue.resultEstimatedDate).unix(),
-            projectEstimatedStartDate: moment(
-                formValue.projectEstimatedStartDate
-            ).unix(),
-            projectEstimatedEndDate: moment(
-                formValue.projectEstimatedEndDate
-            ).unix(),
+            startTrackingDate: DateTimeConvertHelper.fromDtObjectToTimestamp(formValue.startTrackingDate),
+            submissionDate: DateTimeConvertHelper.fromDtObjectToTimestamp(formValue.submissionDate),
+            resultEstimatedDate: DateTimeConvertHelper.fromDtObjectToTimestamp(formValue.resultEstimatedDate),
+            projectEstimatedStartDate: DateTimeConvertHelper.fromDtObjectToTimestamp(formValue.projectEstimatedStartDate),
+            projectEstimatedEndDate: DateTimeConvertHelper.fromDtObjectToTimestamp(formValue.projectEstimatedEndDate),
             totalTime: formValue.totalTime,
             description: formValue.description
         };
@@ -706,15 +702,11 @@ export class PackageService {
             bidStatusId: formValue.bidStatusId,
             amount: formValue.amount ? formValue.amount : 0,
             evaluation: formValue.evaluationId,
-            startTrackingDate: moment(formValue.startTrackingDate).unix(),
-            submissionDate: moment(formValue.submissionDate).unix(),
-            resultEstimatedDate: moment(formValue.resultEstimatedDate).unix(),
-            projectEstimatedStartDate: moment(
-                formValue.projectEstimatedStartDate
-            ).unix(),
-            projectEstimatedEndDate: moment(
-                formValue.projectEstimatedEndDate
-            ).unix(),
+            startTrackingDate: DateTimeConvertHelper.fromDtObjectToTimestamp(formValue.startTrackingDate),
+            submissionDate: DateTimeConvertHelper.fromDtObjectToTimestamp(formValue.submissionDate),
+            resultEstimatedDate: DateTimeConvertHelper.fromDtObjectToTimestamp(formValue.resultEstimatedDate),
+            projectEstimatedStartDate: DateTimeConvertHelper.fromDtObjectToTimestamp(formValue.projectEstimatedStartDate),
+            projectEstimatedEndDate: DateTimeConvertHelper.fromDtObjectToTimestamp(formValue.projectEstimatedEndDate),
             totalTime: formValue.totalTime,
             description: formValue.description,
             cancelReason: formValue.cancelReason,

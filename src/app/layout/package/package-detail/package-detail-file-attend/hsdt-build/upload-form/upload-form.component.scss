@@ -198,6 +198,10 @@ tr {
 }
 
 @media only screen and (max-width: 1070px) {
+    .responsive-filter-control {
+        margin-top: 0.7rem;
+    }
+
     .responsive-header-control {
         margin-top: 0.7rem;
     }
@@ -209,6 +213,12 @@ tr {
 
 @media only screen and (max-width: 1024px) {
     .responsive-header-control {
+        margin-top: 0.7rem;
+    }
+}
+
+@media only screen and (max-width: 992px) {
+    .responsive-filter-control {
         margin-top: 0.7rem;
     }
 }
@@ -231,13 +241,15 @@ tr {
     margin-bottom: 0.2rem;
     margin-top: 0.2rem;
 }
-.custom-text-display{
+
+.custom-text-display {
     display: inline-block;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
     max-width: 80%;
 }
-.custom-image{
+
+.custom-image {
     vertical-align: super;
 }

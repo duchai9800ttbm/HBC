@@ -13,6 +13,7 @@
     <div>
       <div class="btn-toolbar mt-2 mb-2">
         <button class="btn btn-primary ml-1" *ngIf="doNotiMeeting" (click)="modalNoti(notiKickOff)">
+            <!-- *ngIf="doNotiMeeting" -->
           Gửi lại email thông báo kick-off
         </button>
         <button class="btn btn-primary ml-1" (click)="refresh(true)">
@@ -27,9 +28,10 @@
     <h5 *ngIf="1doNotiMeeting">Bạn chưa thông báo họp kick-off dự án?</h5>
     <div class="confirm-button">
       <button *ngIf="!doNotiMeeting" class="btn btn-primary" id="success" (click)="modalNoti(notiKickOff)">Thông báo họp kick-off</button>
-      <div *ngIf="doNotiMeeting">
-        <button class="btn btn-primary" (click)="modalUp(uploadFile,1)">Upload biên bản cuộc họp</button>
-        <button class="btn btn-primary" (click)="modalUp(uploadFile,2)">Upload file presentation</button>
+      <div>
+          <!-- *ngIf="doNotiMeeting" -->
+        <button class="btn btn-primary" (click)="modalUp('report')">Upload biên bản cuộc họp</button>
+        <button class="btn btn-primary" (click)="modalUp('file')">Upload file presentation</button>
       </div>
     </div>
   </div>
