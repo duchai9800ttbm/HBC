@@ -44,6 +44,8 @@ export class PackageDocumentSenderComponent implements OnInit {
   isNgOnInit: boolean;
   needTransferDocsList: NeedTranferDocList[];
   departments: Observable<DepartmentsFormBranches[]>;
+  numberDateHSMT: number;
+  numberDateHSDT: number;
   listData: any = [
     { id: 1, rom: 'Maketing', username: 'Oliver Dinh', nameDocument: 'Maketing online', status: 'Đã nhận' },
     { id: 2, rom: 'Maketing', username: 'Van Dinh', nameDocument: 'Maketing online', status: 'Đã nhận' },
@@ -51,7 +53,7 @@ export class PackageDocumentSenderComponent implements OnInit {
     { id: 4, rom: 'Sale', username: 'Phuong VD', nameDocument: 'Maketing online', status: 'Chưa nhận' },
     { id: 5, rom: 'Maketing', username: 'Nghia Nguyen', nameDocument: 'Maketing online', status: 'Đã nhận' },
     { id: 6, rom: 'Maketing-slide', username: 'Dao Nhan', nameDocument: 'Maketing online', status: 'Yêu cầu gửi lại' }
-  ]
+  ];
   // public data :DocumentItem [] = this.packageSuccessService.getdataGetDocument();
   constructor(
     private packageSuccessService: PackageSuccessService,
