@@ -927,6 +927,7 @@ export class PackageService {
     }
     // tạo mới or update phiếu đề nghị dự thầu
     createOrUpdateProposedTenderParticipateReport(data): Observable<any> {
+        console.log('updaate phiếu đề nghị');
         const url = `proposedtenderparticipatinngreport/createorupdate`;
         return this.apiService.post(url, data).map(response => response.result);
     }
