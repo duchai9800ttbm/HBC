@@ -209,4 +209,5 @@ export class MeetingKickoffComponent implements OnInit {
   closePopuup() {
     this.dialogUploadMettingKickOff.close();
   }
+
 }
