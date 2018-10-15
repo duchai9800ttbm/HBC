@@ -1,6 +1,6 @@
 <div class="zui-wrapper">
     <div class="zui-scroller" #wrap1 (scroll)="syncScroll1(wrap1, wrap2)">
-        <table class="zui-table table table-striped table-hover">
+        <table class="zui-table table table-striped table-hover" #tablePin>
             <thead>
                 <tr>
                     <th class="zui-sticky-col" style="height: 38px">
@@ -9,24 +9,24 @@
                             <span class="custom-control-indicator"></span>
                         </label>
                     </th>
-                    <th>Number</th>
-                    <th>Position</th>
-                    <th>Height</th>
-                    <th>Born</th>
-                    <th>Salary</th>
-                    <th>Prior to NBA/Country</th>
-                    <th>Prior to NBA/Country</th>
-                    <th>Prior to NBA/Country</th>
-                    <th>Prior to NBA/Country</th>
-                    <th>Prior to NBA/Country</th>
-                    <th>Prior to NBA/Country</th>
-                    <th>Prior to NBA/Country</th>
-                    <th>Prior to NBA/Country</th>
-                    <th>Prior to NBA/Country</th>
-                    <th>Prior to NBA/Country</th>
-                    <th>Prior to NBA/Country</th>
-                    <th>Prior to NBA/Country</th>
-                    <th>Prior to NBA/Country</th>
+                    <th [class.d-none]="getShowOrHide(1)">Number</th>
+                    <th [class.d-none]="getShowOrHide(2)">Position</th>
+                    <th [class.d-none]="getShowOrHide(3)">Height</th>
+                    <th [class.d-none]="getShowOrHide(4)">Born</th>
+                    <th [class.d-none]="getShowOrHide(5)">Salary</th>
+                    <th [class.d-none]="getShowOrHide(6)">Prior to NBA/Country</th>
+                    <th [class.d-none]="getShowOrHide(7)">Prior to NBA/Country</th>
+                    <th [class.d-none]="getShowOrHide(8)">Prior to NBA/Country</th>
+                    <th [class.d-none]="getShowOrHide(9)">Prior to NBA/Country</th>
+                    <th [class.d-none]="getShowOrHide(10)">Prior to NBA/Country</th>
+                    <th [class.d-none]="getShowOrHide(11)">Prior to NBA/Country</th>
+                    <th [class.d-none]="getShowOrHide(12)">Prior to NBA/Country</th>
+                    <th [class.d-none]="getShowOrHide(13)">Prior to NBA/Country</th>
+                    <th [class.d-none]="getShowOrHide(14)">Prior to NBA/Country</th>
+                    <th [class.d-none]="getShowOrHide(15)">Prior to NBA/Country</th>
+                    <th [class.d-none]="getShowOrHide(16)">Prior to NBA/Country</th>
+                    <th [class.d-none]="getShowOrHide(17)">Prior to NBA/Country</th>
+                    <th [class.d-none]="getShowOrHide(18)">Prior to NBA/Country</th>
                     <th class="zui-sticky-col-right text-center">Thao tác</th>
                 </tr>
             </thead>
@@ -38,24 +38,24 @@
                             <span class="custom-control-indicator"></span>
                         </label>
                     </td>
-                    <td>15</td>
-                    <td>C</td>
-                    <td>6'11"</td>
-                    <td>08-13-1990</td>
-                    <td>$4,917,000</td>
-                    <td>Kentucky/USA</td>
-                    <td>Kentucky/USA</td>
-                    <td>Kentucky/USA</td>
-                    <td>Kentucky/USA</td>
-                    <td>Kentucky/USA</td>
-                    <td>Kentucky/USA</td>
-                    <td>Kentucky/USA</td>
-                    <td>Kentucky/USA</td>
-                    <td>Kentucky/USA</td>
-                    <td>Kentucky/USA</td>
-                    <td>Kentucky/USA</td>
-                    <td>Kentucky/USA</td>
-                    <td>Kentucky/USA</td>
+                    <td [class.d-none]="getShowOrHide(1)">15</td>
+                    <td [class.d-none]="getShowOrHide(2)">C</td>
+                    <td [class.d-none]="getShowOrHide(3)">6'11"</td>
+                    <td [class.d-none]="getShowOrHide(4)">08-13-1990</td>
+                    <td [class.d-none]="getShowOrHide(5)">$4,917,000</td>
+                    <td [class.d-none]="getShowOrHide(6)">Kentucky/USA</td>
+                    <td [class.d-none]="getShowOrHide(7)">Kentucky/USA</td>
+                    <td [class.d-none]="getShowOrHide(8)">Kentucky/USA</td>
+                    <td [class.d-none]="getShowOrHide(9)">Kentucky/USA</td>
+                    <td [class.d-none]="getShowOrHide(10)">Kentucky/USA</td>
+                    <td [class.d-none]="getShowOrHide(11)">Kentucky/USA</td>
+                    <td [class.d-none]="getShowOrHide(12)">Kentucky/USA</td>
+                    <td [class.d-none]="getShowOrHide(13)">Kentucky/USA</td>
+                    <td [class.d-none]="getShowOrHide(14)">Kentucky/USA</td>
+                    <td [class.d-none]="getShowOrHide(15)">Kentucky/USA</td>
+                    <td [class.d-none]="getShowOrHide(16)">Kentucky/USA</td>
+                    <td [class.d-none]="getShowOrHide(17)">Kentucky/USA</td>
+                    <td [class.d-none]="getShowOrHide(18)">Kentucky/USA</td>
                     <td class="zui-sticky-col-right" [class.odd]="i % 2 == 0">
                         <div class="d-flex justify-content-center">
                             <div>
@@ -77,5 +77,25 @@
     </div>
 </div>
 <div class="scrollbar-fake" #wrap2 (scroll)="syncScroll2(wrap1, wrap2)">
-    <div class="scrollbar-fake-content"></div>
+    <div class="scrollbar-fake-content" #fakeScrollBar></div>
+</div>
+<div>
+    <span><input type="checkbox" (click)="showOrHideCol(1)"></span>
+    <span><input type="checkbox" (click)="showOrHideCol(2)"></span>
+    <span><input type="checkbox" (click)="showOrHideCol(3)"></span>
+    <span><input type="checkbox" (click)="showOrHideCol(4)"></span>
+    <span><input type="checkbox" (click)="showOrHideCol(5)"></span>
+    <span><input type="checkbox" (click)="showOrHideCol(6)"></span>
+    <span><input type="checkbox" (click)="showOrHideCol(7)"></span>
+    <span><input type="checkbox" (click)="showOrHideCol(8)"></span>
+    <span><input type="checkbox" (click)="showOrHideCol(9)"></span>
+    <span><input type="checkbox" (click)="showOrHideCol(10)"></span>
+    <span><input type="checkbox" (click)="showOrHideCol(11)"></span>
+    <span><input type="checkbox" (click)="showOrHideCol(12)"></span>
+    <span><input type="checkbox" (click)="showOrHideCol(13)"></span>
+    <span><input type="checkbox" (click)="showOrHideCol(14)"></span>
+    <span><input type="checkbox" (click)="showOrHideCol(15)"></span>
+    <span><input type="checkbox" (click)="showOrHideCol(16)"></span>
+    <span><input type="checkbox" (click)="showOrHideCol(17)"></span>
+    <span><input type="checkbox" (click)="showOrHideCol(18)"></span>
 </div>
