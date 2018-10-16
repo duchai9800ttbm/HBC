@@ -452,20 +452,19 @@ export class DetailResultPackageService {
     uploadResultFormValue: any,
     file: File,
   ) {
-    const url = `tenderresultdocument/upload`;
+    const url = `bidmeetingreportdoc/upload`;
     const formData = new FormData();
     formData.append('BidOpportunityId', `${BidOpportunityId}`);
-    formData.append('Name', `${uploadResultFormValue.documentName}`);
+    formData.append('DocumentName', `${uploadResultFormValue.documentName}`);
     formData.append('InterviewTimes', `${uploadResultFormValue.interviewTimes}`);
-    formData.append('ReceivedDate', uploadResultFormValue.receivedDate ?
-      DateTimeConvertHelper.fromDtObjectToTimestamp(uploadResultFormValue.receivedDate).toString() : '');
-    if (uploadResultFormValue.documentDesc || uploadResultFormValue.documentDesc === '') {
-      formData.append('Desc', uploadResultFormValue.documentDesc);
+    formData.append('Version', `${uploadResultFormValue.version}`);
+    if (uploadResultFormValue.documentDesc && uploadResultFormValue.documentDesc !== '') {
+      formData.append('DocumentDesc', uploadResultFormValue.documentDesc);
     }
     if (file) {
-      formData.append('File', file);
+      formData.append('DocumentFile', file);
     } else {
-      formData.append('Url', uploadResultFormValue.link);
+      formData.append('FileUrl', uploadResultFormValue.link);
     }
     return this.apiService.postFile(url, formData)
       .map(response => response)
@@ -503,17 +502,17 @@ export class DetailResultPackageService {
       id: result.id,
       documentName: result.documentName,
       version: result.version,
-      uploadedBy: {
+      uploadedBy: result.uploadedBy ? {
         employeeId: result.uploadedBy.employeeId,
         employeeNo: result.uploadedBy.employeeNo,
         employeeName: result.uploadedBy.employeeName,
-        employeeAvatar: {
+        employeeAvatar: result.uploadedBy.employeeAvatar ? {
           guid: result.uploadedBy.employeeAvatar.guid,
           thumbSizeUrl: result.uploadedBy.employeeAvatar.thumbSizeUrl,
           largeSizeUrl: result.uploadedBy.employeeAvatar.largeSizeUrl,
-        },
+        } : null,
         employeeEmail: result.uploadedBy.employeeEmail,
-      },
+      } : null,
       createdDate: result.createdDate,
       interviewTimes: result.interviewTimes,
       meetingTime: result.meetingTime,
@@ -534,9 +533,15 @@ export class DetailResultPackageService {
     urlParams.append('searchTerm', searchTerm);
     return this.apiService.get(filterUrl, urlParams).map(response => {
       const result = response.result;
-      return (result || []).map(
-        this.toReportMeetingList
-      );
+      return {
+        currentPage: result.pageIndex,
+        pageSize: result.pageSize,
+        pageCount: result.totalPages,
+        total: result.totalCount,
+        items: (result.items || []).map(
+          this.toReportMeetingList
+        )
+      };
     });
   }
   // Tải về biên bản cuộc họp hoặc file presentation
@@ -564,9 +569,16 @@ export class DetailResultPackageService {
     urlParams.append('searchTerm', searchTerm);
     return this.apiService.get(filterUrl, urlParams).map(response => {
       const result = response.result;
-      return (result || []).map(
-        this.toReportMeetingList
-      );
+      console.log('response-getBidMeetingFileList', response, result);
+      return {
+        currentPage: result.pageIndex,
+        pageSize: result.pageSize,
+        pageCount: result.totalPages,
+        total: result.totalCount,
+        items: (result.items || []).map(
+          this.toReportMeetingList
+        )
+      };
     });
   }
   // Tải lên file presentation
@@ -578,17 +590,16 @@ export class DetailResultPackageService {
     const url = `filepresentaion/upload`;
     const formData = new FormData();
     formData.append('BidOpportunityId', `${BidOpportunityId}`);
-    formData.append('Name', `${uploadResultFormValue.documentName}`);
+    formData.append('DocumentName', `${uploadResultFormValue.documentName}`);
     formData.append('InterviewTimes', `${uploadResultFormValue.interviewTimes}`);
-    formData.append('ReceivedDate', uploadResultFormValue.receivedDate ?
-      DateTimeConvertHelper.fromDtObjectToTimestamp(uploadResultFormValue.receivedDate).toString() : '');
+    formData.append('Version', `${uploadResultFormValue.version}`);
     if (uploadResultFormValue.documentDesc || uploadResultFormValue.documentDesc === '') {
-      formData.append('Desc', uploadResultFormValue.documentDesc);
+      formData.append('DocumentDesc', uploadResultFormValue.documentDesc);
     }
     if (file) {
-      formData.append('File', file);
+      formData.append('DocumentFile', file);
     } else {
-      formData.append('Url', uploadResultFormValue.link);
+      formData.append('FileUrl', uploadResultFormValue.link);
     }
     return this.apiService.postFile(url, formData)
       .map(response => response)

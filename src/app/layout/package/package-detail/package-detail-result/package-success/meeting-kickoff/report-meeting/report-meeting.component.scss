@@ -96,7 +96,8 @@ input.form-control.icon {
     padding: 30px 0px 20px 0px;
 }
 .title-header {
-    font-size: 15px;
+    // font-size: 15px;
+    font-size: 130%;
     padding-right: 10px;
 }
 .nodata {
@@ -252,4 +253,49 @@ input.form-control.icon {
 .icon-sort-down-up{
     width: 9px;
     cursor: pointer;
+}
+table.dataTable th {
+    background-color: #f68e56 !important;
+    border: 1px solid #dddddd;
+}
+.set-stt--width{
+    width: 5% !important;
+    width: 3rem !important;
+}
+.set-manipulation--width{
+    width: 5% !important;
+    width: 4rem !important;
+}
+.table-layout{
+    table-layout: fixed;
+}
+.w-80{
+    width: 80%;
+}
+.w-40{
+    width: 40% !important;
+}
+.w-35{
+    width: 35%;
+}
+.w-30{
+    width: 30% !important;
+}
+.w-25{
+    width: 25% !important;
+}
+.w-15{
+    width: 15% !important;
+}
+.w-10{
+    width: 10% !important;
+}
+:host /deep/ .k-dateinput-wrap .k-input, .k-dropdown-wrap .k-input, .k-picker-wrap .k-input, .k-numeric-wrap .k-input {
+    padding: 1rem 1rem !important;
+}
+:host /deep/ .dataTables_wrapper {
+    position: inherit !important;
+}
+:host /deep/ .dataTables_empty {
+    display: none !important;
 }

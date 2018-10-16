@@ -14,6 +14,7 @@ import ValidationHelper from '../../../../../../../shared/helpers/validation.hel
 export class UploadKickOffComponent implements OnInit {
 
   @Input() callBack: Function;
+  @Input() addAndReload: Function;
   @Input() action: string;
   uploadMeetingKickOff: FormGroup;
   file;
@@ -40,6 +41,7 @@ export class UploadKickOffComponent implements OnInit {
       version: [],
       uploadedBy: [],
       receivedDate: [],
+      meetingTime: [],
       interviewTimes: [],
       documentDesc: [],
       link: [],
@@ -70,7 +72,7 @@ export class UploadKickOffComponent implements OnInit {
             this.uploadMeetingKickOff.value,
             this.file
           ).subscribe(response => {
-            this.closePopup();
+            this.closePopupAndReload();
             this.detailResultPackageService.changeListFileResult();
             this.alertService.success('Upload biên bản cuộc họp thành công!');
           },
@@ -85,7 +87,7 @@ export class UploadKickOffComponent implements OnInit {
             this.uploadMeetingKickOff.value,
             this.file
           ).subscribe(response => {
-            this.closePopup();
+            this.closePopupAndReload();
             this.detailResultPackageService.changeListFileResult();
             this.alertService.success('Upload file presentation thành công!');
           },
@@ -115,6 +117,10 @@ export class UploadKickOffComponent implements OnInit {
     this.file = null;
     this.uploadMeetingKickOff.get('link').enable();
     this.uploadMeetingKickOff.get('documentName').patchValue('');
+  }
+
+  closePopupAndReload() {
+    this.addAndReload();
   }
 
   closePopup() {
