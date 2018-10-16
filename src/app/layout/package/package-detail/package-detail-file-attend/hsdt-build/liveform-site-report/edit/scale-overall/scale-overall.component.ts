@@ -1,7 +1,8 @@
 import {
   Component,
   OnInit,
-  TemplateRef
+  TemplateRef,
+  ViewChild
 } from '@angular/core';
 import {
   ScaleOverall
@@ -33,6 +34,9 @@ import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
   styleUrls: ['./scale-overall.component.scss']
 })
 export class ScaleOverallComponent implements OnInit {
+  @ViewChild('uploadPerspective') uploadPerspective;
+  @ViewChild('uploadStructure') uploadStructure;
+  @ViewChild('uploadRequirements') uploadRequirements;
   scaleOverallForm: FormGroup;
   siteArea;
   totalBuildArea;
@@ -211,6 +215,7 @@ export class ScaleOverallComponent implements OnInit {
       .subscribe(res => {
         this.perspectiveImageUrls = [...this.perspectiveImageUrls, ...res];
         this.scaleOverallForm.get('hinhAnhPhoiCanhList').patchValue(this.perspectiveImageUrls);
+        this.uploadPerspective.nativeElement.value = null;
       }, err => {
         this.alertService.error('Upload hình ảnh thất bại. Xin vui lòng thử lại!');
         this.perspectiveImageUrls.forEach(x => {
@@ -224,10 +229,12 @@ export class ScaleOverallComponent implements OnInit {
 
   deletePerspectiveImage(i) {
     const index = this.perspectiveImageUrls.indexOf(i);
-    this.siteSurveyReportService.deleteImageSiteSurveyingReport(i.id).subscribe(res => {
-    }, err => {
-      this.alertService.error('Đã xảy ra lỗi, hình ảnh xóa không thành công');
-    });
+    if (i.guid) {
+      this.siteSurveyReportService.deleteImageSiteSurveyingReport(i.guid).subscribe(res => {
+      }, err => {
+        this.alertService.error('Đã xảy ra lỗi, hình ảnh xóa không thành công');
+      });
+    }
     this.perspectiveImageUrls.splice(index, 1);
     this.scaleOverallForm.get('hinhAnhPhoiCanhList').patchValue(this.perspectiveImageUrls);
   }
@@ -239,6 +246,7 @@ export class ScaleOverallComponent implements OnInit {
       .subscribe(res => {
         this.structureImageUrls = [...this.structureImageUrls, ...res];
         this.scaleOverallForm.get('thongTinVeKetCauList').patchValue(this.structureImageUrls);
+        this.uploadStructure.nativeElement.value = null;
       }, err => {
         this.alertService.error('Upload hình ảnh thất bại. Xin vui lòng thử lại!');
         this.structureImageUrls.forEach(x => {
@@ -251,10 +259,12 @@ export class ScaleOverallComponent implements OnInit {
   }
   deleteStructureImage(i) {
     const index = this.structureImageUrls.indexOf(i);
-    this.siteSurveyReportService.deleteImageSiteSurveyingReport(i.id).subscribe(res => {
-    }, err => {
-      this.alertService.error('Đã xảy ra lỗi, hình ảnh xóa không thành công');
-    });
+    if (i.guid) {
+      this.siteSurveyReportService.deleteImageSiteSurveyingReport(i.guid).subscribe(res => {
+      }, err => {
+        this.alertService.error('Đã xảy ra lỗi, hình ảnh xóa không thành công');
+      });
+    }
     this.structureImageUrls.splice(index, 1);
     this.scaleOverallForm.get('thongTinVeKetCauList').patchValue(this.structureImageUrls);
   }
@@ -265,6 +275,7 @@ export class ScaleOverallComponent implements OnInit {
       .subscribe(res => {
         this.requirementsImageUrls = [...this.requirementsImageUrls, ...res];
         this.scaleOverallForm.get('nhungYeuCauDacBietList').patchValue(this.requirementsImageUrls);
+        this.uploadRequirements.nativeElement.value = null;
       }, err => {
         this.alertService.error('Upload hình ảnh thất bại. Xin vui lòng thử lại!');
         this.requirementsImageUrls.forEach(x => {
@@ -277,9 +288,8 @@ export class ScaleOverallComponent implements OnInit {
   }
   deleteRequirementsImage(i) {
     const index = this.requirementsImageUrls.indexOf(i);
-    if (i.id) {
-      this.siteSurveyReportService.deleteImageSiteSurveyingReport(i.id).subscribe(res => {
-
+    if (i.guid) {
+      this.siteSurveyReportService.deleteImageSiteSurveyingReport(i.guid).subscribe(res => {
       }, err => {
         this.alertService.error('Đã xảy ra lỗi, hình ảnh xóa không thành công');
       });

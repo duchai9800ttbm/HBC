@@ -2,10 +2,10 @@
     border-radius: 0.25rem;
     position: fixed;
     z-index: 801;
-    right: 15%;
+    // right: 15%;
     top: 10%;
-    width: 60%;
-    padding: 35px;
+    // width: 60%;
+    // padding: 35px;
     display: flex;
     flex-direction: column;
     justify-content: space-around;
@@ -27,16 +27,24 @@
         font-size: 30px;
     }
 }
-.show-image-item{
+
+.main-show-image {
+    height: 65vh;
+}
+
+.show-image-item {
+    object-fit: contain;
+    height: auto;
     max-height: 600px;
+    max-width: 70vw;
 }
 
 .close-button {
     color: #FFFFFF;
     position: absolute;
     font-size: 2rem;
-    top: 0;
-    right: -4%;
+    top: -4%;
+    right: -7%;
 }
 
 .hideSlides {
@@ -64,14 +72,19 @@
 }
 
 .thumbImage {
-    img {
-        margin: 1rem 0.5rem;
-        width: 10rem;
-        height: 20%;
+    div {
+        img {
+            margin: 1rem 0.5rem;
+            width: auto;
+            max-width: 165px;
+            max-height: 95px;
+            object-fit: contain;
+        }
     }
 }
 
 .button-thumb {
+    outline: none;
     background: transparent;
     border: none;
     font-size: 3rem;
@@ -127,11 +140,14 @@
 
 
 @media only screen and (max-width: 1164px) {
-    .thumbImage {
-        img {
-            margin: 1rem 0.5rem;
-            width: 20%;
-            height: 20%;
-        }
+    #modal-container {
+        margin-top: 3rem;
+        zoom: 0.8;
+    }
+}
+
+@media only screen and (max-width: 768px) {
+    .close-button {
+        margin-right: 1.5rem;
     }
 }

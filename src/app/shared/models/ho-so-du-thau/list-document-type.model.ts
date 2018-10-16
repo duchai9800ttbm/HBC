@@ -1,4 +1,4 @@
 export class ListDocumentTypeIdGroup {
-    documentTypeId: number;
+    tenderDocumentTypeId: number;
     items: any[];
 }

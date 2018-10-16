@@ -43,6 +43,8 @@ export class UploadFormComponent implements OnInit, OnDestroy {
   subscription: Subscription;
   listDocumentShowGroup: ListDocumentTypeIdGroup[];
   sum = 0;
+  showPopupDetail = false;
+  currentItem = {};
   constructor(
     private hoSoDuThauService: HoSoDuThauService,
     private dialogService: DialogService,
@@ -172,12 +174,6 @@ export class UploadFormComponent implements OnInit, OnDestroy {
         this.pagedResult.total = this.dataDocumentOfType.length;
         this.pagedResult.items = this.dataDocumentOfType;
         this.dtTrigger.next();
-        // this.spinner.hide();
-        // this.pageIndex = responseResultDocument.currentPage;
-        // this.rerender(responseResultDocument);
-        // this.dataDocumentOfType = responseResultDocument.items.filter(item =>
-        //   item.tenderDocumentType.id === HoSoDuThauService.idTenderDocumentTypesData
-        // );
       }, err => {
         this.spinner.hide();
         this.alertService.error(`Đã có lỗi xảy ra. Xin vui lòng thử lại!`);
@@ -207,14 +203,11 @@ export class UploadFormComponent implements OnInit, OnDestroy {
     this.confirmationService.confirm(
       'Bạn có chắc chắn muốn xóa tài liệu này?',
       () => {
-        this.spinner.show();
         this.hoSoDuThauService.xoaMotHoSoDuThau(id).subscribe(res => {
-          this.spinner.hide();
           this.alertService.success('Đã xóa tài liệu!');
           this.refresh();
         }, err => {
           this.alertService.error(`Đã có lỗi. Tài liệu chưa được xóa!`);
-          this.spinner.hide();
         });
       }
     );
@@ -244,13 +237,18 @@ export class UploadFormComponent implements OnInit, OnDestroy {
   filter() {
     this.spinner.show();
     this.hoSoDuThauService
-      .danhSachBoHoSoDuThau(this.packageId, this.searchTerm$.value, this.filterModel, 0, 10)
+      .danhSachBoHoSoDuThau(this.packageId, this.searchTerm$.value, this.filterModel, 0, 1000)
       .subscribe(responseResultBoHSDT => {
         this.spinner.hide();
         this.rerender(responseResultBoHSDT);
         this.dataDocumentOfType = responseResultBoHSDT.items.filter(item =>
-          item.tenderDocumentType.id === HoSoDuThauService.idTenderDocumentTypesData
+          item.tenderDocumentType.id === HoSoDuThauService.idTenderDocumentTypesData ||
+          item.tenderDocumentType.parentId === HoSoDuThauService.idTenderDocumentTypesData
         );
+        this.listDocumentShowGroup = this.groupDocumentType(this.dataDocumentOfType);
+        this.pagedResult = responseResultBoHSDT;
+        this.pagedResult.total = this.dataDocumentOfType.length;
+        this.pagedResult.items = this.dataDocumentOfType;
         this.dtTrigger.next();
       }, err => {
         this.spinner.hide();
@@ -301,5 +299,13 @@ export class UploadFormComponent implements OnInit, OnDestroy {
     }, err => {
       this.alertService.error(`Đã có lỗi khi tải dữ liệu. Xin vui lòng thử lại!`);
     });
+  }
+  viewDetail(item) {
+    this.currentItem = item;
+    this.showPopupDetail = true;
+  }
+
+  closePopupDetail() {
+    this.showPopupDetail = false;
   }
 }

@@ -91,8 +91,8 @@ export class ContentItemComponent implements OnInit {
   }
   deleteContentImage(i) {
     const index = this.contentItemImageList.indexOf(i);
-    if (i.id) {
-      this.siteSurveyReportService.deleteImageSiteSurveyingReport(i.id).subscribe(res => {
+    if (i.guid) {
+      this.siteSurveyReportService.deleteImageSiteSurveyingReport(i.guid).subscribe(res => {
 
       }, err => {
         this.alertService.error('Đã xảy ra lỗi, hình ảnh xóa không thành công');
