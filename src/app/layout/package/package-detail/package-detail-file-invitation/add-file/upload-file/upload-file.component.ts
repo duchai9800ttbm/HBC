@@ -121,14 +121,19 @@ export class UploadFileComponent implements OnInit {
     });
   }
   onFormValueChanged(data?: any) {
-    const isFile = (this.uploadForm.get('nameFile').value) ? true : false;
-    const isLinkFile = (this.uploadForm.get('link').value) ? true : false;
     if (this.isSubmitted) {
       this.validateForm();
     }
   }
 
   validateForm() {
+    const isFile = (this.uploadForm.get('nameFile').value) ? true : false;
+    const isLinkFile = (this.uploadForm.get('link').value) ? true : false;
+    if (!isFile && !isLinkFile) {
+      this.errorMess = 'Vui lòng chọn file hoặc đường dẫn link đến file!';
+    } else {
+      this.errorMess = null;
+    }
     this.invalidMessages = ValidationHelper.getInvalidMessages(
       this.uploadForm,
       this.formErrors,

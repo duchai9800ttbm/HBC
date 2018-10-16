@@ -57,6 +57,11 @@ export class UploadFileHsdtComponent implements OnInit {
     });
   }
   onFormValueChanged(data?: any) {
+    if (this.isSubmitted) {
+      this.validateForm();
+    }
+  }
+  validateForm() {
     const isFile = (this.uploadForm.get('file').value) ? true : false;
     const isLinkFile = (this.uploadForm.get('linkFile').value) ? true : false;
     this.lockLink = (isLinkFile) ? true : false;
@@ -65,11 +70,6 @@ export class UploadFileHsdtComponent implements OnInit {
     } else {
       this.errorMess = null;
     }
-    if (this.isSubmitted) {
-      this.validateForm();
-    }
-  }
-  validateForm() {
     this.invalidMessages = ValidationHelper.getInvalidMessages(
       this.uploadForm,
       this.formErrors,
