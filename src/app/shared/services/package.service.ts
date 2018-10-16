@@ -20,6 +20,7 @@ import { BidPermissionGroupResponsive } from '../models/api-response/setting/bid
 import * as FileSaver from 'file-saver';
 import { TenderPreparationPlanningRequest } from '../models/api-request/package/tender-preparation-planning-request';
 import { ProposedTenderParticipationHistory } from '../models/api-response/package/proposed-tender-participation-history.model';
+import { StakeHolder } from '../models/ho-so-du-thau/stack-holder.model';
 
 @Injectable()
 export class PackageService {
@@ -749,6 +750,22 @@ export class PackageService {
             .share();
     }
 
+    // Liên hệ khách hàng - Màn hình tạo mới gói thầu
+    getListCustomercontact2(searchTerm: string): Observable<any> {
+        const url = `customercontact/0/10/?searchTerm=${searchTerm}`;
+        return this.apiService
+            .get(url)
+            .map(response => {
+                return response.result.items.map(x => {
+                    return {
+                        id: x.id,
+                        name: x.name
+                    };
+                });
+            })
+            .share();
+    }
+
     //
     getListCustomer(searchTerm: string): Observable<any> {
         const url = `customer/search/0/10/?searchTerm=${searchTerm}`;
@@ -762,6 +779,22 @@ export class PackageService {
                         customerNewOldType: x.customerNewOldType,
                         customerPhone: x.customerPhone,
                         customerAddress: x.customerAddress
+                    };
+                });
+            })
+            .share();
+    }
+
+    //
+    getListCustomer2(): Observable<any> {
+        const url = `customer/search/0/1000/`;
+        return this.apiService
+            .get(url)
+            .map(response => {
+                return response.result.items.map(x => {
+                    return {
+                        id: x.customerId,
+                        name: x.customerName,
                     };
                 });
             })
@@ -869,8 +902,21 @@ export class PackageService {
         return this.apiService.get(url).map(response => response.result);
     }
 
+    // Danh sách user của các nhóm trong "các bên liên quan"
+    getStakeHolders(bidOpportunityId: number): Observable<StakeHolder[]> {
+        const url = `bidopportunity/${bidOpportunityId}/bidusergroupmembersofstakeholders`;
+        return this.apiService.get(url).map(response => response.result);
+    }
+
+    updateStakeHolders(bidOpportunityId: number, data): Observable<any> {
+        const url = `bidopportunity/${bidOpportunityId}/changebidstakeholdersgroupmembers`;
+        console.log('data', data);
+        return this.apiService.post(url, data).map(response => response.result);
+    }
+
     updateBidGroupMembers(bidId: number, data): Observable<any> {
         const url = `bidopportunity/${bidId}/changebidusergroupmembers`;
+        console.log('data', data);
         return this.apiService.post(url, data).map(response => response.result);
     }
 

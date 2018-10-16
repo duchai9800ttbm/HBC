@@ -10,9 +10,35 @@ import * as FileSaver from 'file-saver';
 import { Observable } from '../../../../node_modules/rxjs/Observable';
 import { PagedResult } from '../models';
 import { SiteReportChangedHistory } from '../models/site-survey-report/site-report-changed-history';
+import { HoSoDuThauService } from './ho-so-du-thau.service';
+import { HistoryLiveForm } from '../models/ho-so-du-thau/history-liveform.model';
 
 @Injectable()
 export class PriceReviewService {
+
+  private static toHistoryLiveForm(result: any): HistoryLiveForm {
+    return {
+      employee: {
+        employeeId: result.employee.employeeId,
+        employeeNo: result.employee.employeeNo,
+        employeeName: result.employee.employeeName,
+        employeeAvatar: result.employee.employeeAvatar,
+        employeeEmail: result.employee.employeeEmail,
+      },
+      changedTime: result.changedTime,
+      changedTimes: result.changedTimes,
+      updateDesc: result.updateDesc,
+      liveFormChangeds: result.liveFormChangeds ? result.liveFormChangeds.map(item =>
+        ({
+          liveFormStep: item.liveFormStep,
+          liveFormSubject: item.liveFormSubject,
+          liveFormTitle: item.liveFormTitle,
+          oldValue: item.oldValue,
+          newValue: item.newValue,
+        })
+      ) : []
+    };
+  }
 
   constructor(
     private apiService: ApiService,
@@ -85,7 +111,7 @@ export class PriceReviewService {
 
   changedHistoryPriceReview(bidOpportunityId: number, page: string | number, pageSize: number | string)
     : Observable<PagedResult<PriceReviewItemChangedHistory>> {
-    const url = `${bidOpportunityId}/tenderpriceapproval/changedhistory/${page}/${pageSize}`;
+    const url = `bidopportunity/${bidOpportunityId}/tenderpriceapproval/changedhistory/${page}/${pageSize}`;
     return this.apiService.get(url).map(res => {
       const response = res.result;
       return {
@@ -93,7 +119,9 @@ export class PriceReviewService {
         pageSize: response.pageSize,
         pageCount: response.totalPages,
         total: response.totalCount,
-        items: (response.items || [])
+        items: (response.items || []).map(
+          PriceReviewService.toHistoryLiveForm
+        )
       };
     });
   }

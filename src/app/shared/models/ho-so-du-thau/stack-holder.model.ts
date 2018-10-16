@@ -6,7 +6,7 @@ export class StakeHolder {
 
 }
 
-class CustomerStakeHolder {
+export class CustomerStakeHolder {
     customerId: number;
     customerName: string;
     customerNo: string;
@@ -15,7 +15,7 @@ class CustomerStakeHolder {
     note?: string;
 }
 
-class ContactStakeHolder {
+export class ContactStakeHolder {
     id: number;
     name: string;
 }

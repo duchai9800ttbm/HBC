@@ -40,15 +40,12 @@ export class EditComponent implements OnInit, OnDestroy {
   currentBidOpportunityId: number;
   packageData = new PackageInfoModel();
   listCustomerContact = new Array(new CustomerContact());
-  customer = null;
+  customerId;
   listDepartments = new Array(new DepartmentList());
-  department = {
-    key: 49,
-    value: 'Phòng dự thầu'
-  };
+  departmentId;
   listUser: UserList[];
   ngayKhaoSat;
-  isDraft;
+  isDraft = true;
   constructor(
     private siteSurveyReportService: SiteSurveyReportService,
     private packageService: PackageService,
@@ -58,9 +55,10 @@ export class EditComponent implements OnInit, OnDestroy {
   ) { }
 
   ngOnInit() {
+    this.departmentId = 49;
     this.getInfoTenderPreparationPlanning();
     this.getAllUser();
-    this.isDraft = LiveformSiteReportComponent.formModel.isDraftVersion;
+    this.isDraft = (LiveformSiteReportComponent.formModel.isDraft) ? LiveformSiteReportComponent.formModel.isDraft : true;
     this.currentBidOpportunityId = +PackageDetailComponent.packageId;
     this.packageService.getInforPackageID(this.currentBidOpportunityId).subscribe(result => {
       this.packageData = result;
@@ -69,7 +67,6 @@ export class EditComponent implements OnInit, OnDestroy {
   getAllUser() {
     this.siteSurveyReportService.getAllUser('').subscribe(data => {
       this.listUser = data;
-      this.listDepartments.push(this.department);
       this.listUser.forEach(x => {
         this.listCustomerContact.push({
           employeeId: x.employeeId,
@@ -98,15 +95,15 @@ export class EditComponent implements OnInit, OnDestroy {
     });
   }
   submitLiveForm(event) {
-    LiveformSiteReportComponent.formModel.phongBan = this.department && {
-      id: this.department.key,
-      text: this.department.value
+    LiveformSiteReportComponent.formModel.phongBan = {
+      id: this.departmentId,
+      text: ''
     };
-    LiveformSiteReportComponent.formModel.nguoiKhaoSat = this.customer && {
-      id: this.customer.employeeId,
-      text: this.customer.employeeName
+    LiveformSiteReportComponent.formModel.nguoiKhaoSat = {
+      id: this.customerId,
+      text: ''
     };
-    LiveformSiteReportComponent.formModel.isDraftVersion = this.isDraft;
+    LiveformSiteReportComponent.formModel.isDraft = this.isDraft;
     this.showPopupConfirm = false;
     if (!event) {
       this.showPopupConfirm = false;
@@ -138,7 +135,7 @@ export class EditComponent implements OnInit, OnDestroy {
   }
 
   updateliveform(check: boolean) {
-    LiveformSiteReportComponent.formModel.isDraftVersion = check;
+    LiveformSiteReportComponent.formModel.isDraft = check;
     this.showPopupConfirm = true;
   }
   cancelCreateUpdate() {

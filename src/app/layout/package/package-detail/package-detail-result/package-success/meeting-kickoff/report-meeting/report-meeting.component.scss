@@ -42,9 +42,6 @@ input.icon {
 input.form-control.icon {
     border: 1px solid #00a0e3;
 }
-.filter-bar {
-    padding: 10px;
-}
 
 .no-boder-bottom {
     border-bottom: none;
@@ -99,7 +96,8 @@ input.form-control.icon {
     padding: 30px 0px 20px 0px;
 }
 .title-header {
-    font-size: 15px;
+    // font-size: 15px;
+    font-size: 130%;
     padding-right: 10px;
 }
 .nodata {
@@ -137,25 +135,13 @@ input.form-control.icon {
       }
 }
 @media only screen and (max-width: 1600px) {
-  
-    .custom-filter-bar{
-        zoom: 0.9;
-    }
   }
   
   @media only screen and (max-width: 1400px) {
-    
-      .custom-filter-bar{
-          zoom: 0.8;
-      }
   }
   
   
   @media only screen and (max-width: 1366px) {
-  
-      .custom-filter-bar{
-          zoom: 0.9;
-      }
       .no-mr-bt {
         margin-top: 20px!important;
       }
@@ -171,21 +157,12 @@ input.form-control.icon {
   }
   
   @media only screen and (max-width: 1200px) {
-    .btn-toolbar {
-        zoom: 0.9;
-    }
     .tdup {
         max-width: 100px!important;
     }
     .tdup-name {
         max-width: 150px!important;
     }
-    .custom-filter-bar{
-        zoom: 0.9;
-    }
-    .status-filter{
-        zoom: 0.9;
-     }
     #mr {
         margin-right: 10px;
     } 
@@ -201,25 +178,9 @@ input.form-control.icon {
   }
   
   @media only screen and (max-width: 1150px) {
-      table.dataTable{
-          zoom: 0.7;
-      }
-   
-      .status-filter{
-          zoom: 0.85;
-      }
-      .custom-filter-bar{
-          zoom: 0.5;
-      }
   }
   
   @media only screen and (max-width: 1024px) {
-    .btn-toolbar {
-        zoom: 0.8;
-    }
-    #result {
-     zoom: 0.85!important;   
-    }
     .tdup {
         max-width: 80px!important;
     }
@@ -227,15 +188,10 @@ input.form-control.icon {
         max-width: 150px!important;
     }
     .file-filter {
-        zoom: 0.6;
         font-size: 120%;
     }
     .status-filter{
-      zoom: 0.8!important;
       font-size: 120%;
-    }
-    .custom-filter-bar{
-        zoom: 0.7;
     }
       #mr {
           margin-right: 10px;
@@ -255,25 +211,9 @@ input.form-control.icon {
   
   
   @media only screen and (max-width: 1010px) {
-  
-      .status-filter{
-          zoom: 0.65;
-      }
-      .custom-filter-bar{
-          zoom: 0.5;
-      }
   }
   
   @media only screen and (max-width: 997px) {
-  
-      .status-filter{
-  
-          
-          zoom: 0.45;
-      }
-      .custom-filter-bar{
-          zoom: 0.6;
-      }
   }
   .w5 {
     width: 5%;
@@ -305,4 +245,57 @@ input.form-control.icon {
 }
 .no-mr-bt {
     border-bottom: none;
+}
+.icon-sort{
+    width: 15px;
+    cursor: pointer;
+}
+.icon-sort-down-up{
+    width: 9px;
+    cursor: pointer;
+}
+table.dataTable th {
+    background-color: #f68e56 !important;
+    border: 1px solid #dddddd;
+}
+.set-stt--width{
+    width: 5% !important;
+    width: 3rem !important;
+}
+.set-manipulation--width{
+    width: 5% !important;
+    width: 4rem !important;
+}
+.table-layout{
+    table-layout: fixed;
+}
+.w-80{
+    width: 80%;
+}
+.w-40{
+    width: 40% !important;
+}
+.w-35{
+    width: 35%;
+}
+.w-30{
+    width: 30% !important;
+}
+.w-25{
+    width: 25% !important;
+}
+.w-15{
+    width: 15% !important;
+}
+.w-10{
+    width: 10% !important;
+}
+:host /deep/ .k-dateinput-wrap .k-input, .k-dropdown-wrap .k-input, .k-picker-wrap .k-input, .k-numeric-wrap .k-input {
+    padding: 1rem 1rem !important;
+}
+:host /deep/ .dataTables_wrapper {
+    position: inherit !important;
+}
+:host /deep/ .dataTables_empty {
+    display: none !important;
 }

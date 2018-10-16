@@ -91,6 +91,7 @@ export class HoSoDuThauService {
       },
       uploadedDate: result.uploadedDate,
       fileGuid: result.fileGuid,
+      fileUrl: result.fileUrl,
       interViewTimes: result.interviewTimes,
       desc: result.desc
     };

@@ -41,7 +41,10 @@ export class SummaryConditionFormMainMaterialComponent implements OnInit {
     this.mainMaterial.forEach(x => {
       const control = <FormArray>this.mainMaterialForm.controls.materials;
       control.push(this.fb.group({
-        tenVatTu: { value: x.tenVatTu, disabled: this.isModeView },
+        tenVatTu: {
+          value: x.tenVatTu,
+          disabled: this.isModeView
+        },
         ghiChuThem: { value: x.ghiChuThem, disabled: this.isModeView }
       }));
     });
@@ -49,8 +52,8 @@ export class SummaryConditionFormMainMaterialComponent implements OnInit {
     this.mainMaterialForm.valueChanges.subscribe(data => {
       let obj = new Array<DanhSachVatTu>();
       obj = (data.materials || []).map(x => ({
-        tenVatTu: { value: x.tenVatTu, disabled: this.isModeView },
-        ghiChuThem: { value: x.ghiChuThem, disabled: this.isModeView }
+        tenVatTu: x.tenVatTu,
+        ghiChuThem: x.ghiChuThem
       }));
       this.hoSoDuThauService.emitDataStepMainMaterial(obj);
     });

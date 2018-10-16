@@ -118,8 +118,8 @@ export class DemoConsoComponent implements OnInit {
   }
   deleteDemobilisationImage(i) {
     const index = this.demobilisationImageUrls.indexOf(i);
-    if (i.id) {
-      this.siteSurveyReportService.deleteImageSiteSurveyingReport(i.id).subscribe(res => {
+    if (i.guid) {
+      this.siteSurveyReportService.deleteImageSiteSurveyingReport(i.guid).subscribe(res => {
 
       }, err => {
         this.alertService.error('Đã xảy ra lỗi, hình ảnh xóa không thành công');
@@ -147,8 +147,8 @@ export class DemoConsoComponent implements OnInit {
   }
   deleteConsolidationImage(i) {
     const index = this.consolidationImageUrls.indexOf(i);
-    if (i.id) {
-      this.siteSurveyReportService.deleteImageSiteSurveyingReport(i.id).subscribe(res => {
+    if (i.guid) {
+      this.siteSurveyReportService.deleteImageSiteSurveyingReport(i.guid).subscribe(res => {
 
       }, err => {
         this.alertService.error('Đã xảy ra lỗi, hình ảnh xóa không thành công');
@@ -176,8 +176,8 @@ export class DemoConsoComponent implements OnInit {
   }
   deleteAdjacentImage(i) {
     const index = this.adjacentImageUrls.indexOf(i);
-    if (i.id) {
-      this.siteSurveyReportService.deleteImageSiteSurveyingReport(i.id).subscribe(res => {
+    if (i.guid) {
+      this.siteSurveyReportService.deleteImageSiteSurveyingReport(i.guid).subscribe(res => {
 
       }, err => {
         this.alertService.error('Đã xảy ra lỗi, hình ảnh xóa không thành công');

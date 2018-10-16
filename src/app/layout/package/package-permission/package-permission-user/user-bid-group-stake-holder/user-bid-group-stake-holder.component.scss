@@ -1,0 +1,65 @@
+.group-name{
+    min-height: 40px;
+    width: 192px;
+    .item-group{
+        padding: 5px 10px;
+        background-color: #f68e56;
+        color: #FFFFFF;
+        height: 100%;
+    }
+}
+
+.customers{
+    width: calc(100% - 193px);
+    min-height: 40px;
+    background-color: #F4F4F4;
+    .customer{
+        height: 100%;
+        margin-left: 5px;
+        margin-right: 5px;
+    }
+}
+
+.boder-table{
+    // border: 1px solid #dadada;
+    padding: 20px 30px 35px 30px;
+    // border-top: none;
+    box-shadow: 0 4px 6px 0 hsla(0, 0%, 0%, 0.2);
+    background-color: #ffff;
+}
+
+.customer-contact{
+    width: calc(100% - 80px);
+}
+
+.button-delete{
+    width: 80px;
+    background-color: #FFFFFF;
+}
+.label-contact{
+    width: 70px;
+}
+
+.btn-icon {
+    color: white;
+    width: 20px;
+    height: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    margin-left: 12px;
+    cursor: pointer;
+}
+
+.btn-icon-plus {
+    background-color: #00a0e3;
+}
+
+.btn-icon-minus {
+    background-color: #EA5552;
+}
+
+.icon{
+    margin-top: 2px;
+}

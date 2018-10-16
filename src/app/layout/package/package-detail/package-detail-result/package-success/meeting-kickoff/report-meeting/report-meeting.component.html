@@ -11,13 +11,23 @@
     </div>
     <div>
       <div class="btn-toolbar mt-2 mb-2 status-filter">
+        <div class="input-group btn-rg">
+          <span class="input-group-addon">Tìm kiếm theo</span>
+          <input type="text" class="form-control icon" placeholder="&#xf002; Tên tài liệu" (keyup)="searchTermMeetingReport$.next($event.target.value)">
+        </div>
         <button class="btn btn-primary ml-1">
           Tải Template
         </button>
-        <button class="btn btn-primary ml-1" (click)="modalUp(uploadFile,1)">
+        <button class="btn btn-primary ml-1">
+          Tải xuống tài liệu
+        </button>
+        <button class="btn btn-primary ml-1" (click)="deleteButMeetingReportOrFile('report')">
+          Xóa
+        </button>
+        <button class="btn btn-primary ml-1" (click)="modalUp('report')">
           Upload&nbsp;biên bản cuộc họp
         </button>
-        <button class="btn btn-primary ml-1">
+        <button class="btn btn-primary ml-1" (click)="refeshListReport()">
           <i class="fa fa-refresh" aria-hidden="true"></i>
         </button>
       </div>
@@ -25,64 +35,50 @@
   </div>
   <div class="d-flex form-group status-filter" id="result">
     <h5 class="d-inline mb-0 mr-auto text-dark text-uppercase pd-t"> Biên bản cuộc họp</h5>
-    <div class="btn-toolbar">
-      <div class="input-group btn-rg">
-        <span class="input-group-addon">Tìm kiếm theo</span>
-        <input type="text" class="form-control icon" placeholder="&#xf002; Tên tài liệu">
-      </div>
-      <button class="btn btn-primary ml-1">
-        Tải xuống tài liệu
-      </button>
+    <!-- <div class="btn-toolbar">
       <button class="btn btn-primary ml-1">
         In
       </button>
-      <button class="btn btn-primary ml-1">
-        Xóa
-      </button>
-    </div>
+    </div> -->
   </div>
 
   <div class="main-table">
-    <div class="d-flex flex-row flex-wrap filter-bar custom-filter-bar" style="background-color: #fafbfc!important">
+    <div class="d-flex flex-row flex-wrap filter-bar" style="background-color: #fafbfc!important">
       <div class="d-flex form-inline flex-pad">
 
-        <div class="form-group ">
+        <div class="form-group py-2 pl-2">
           <label for="" class="form-label">Người upload</label>
           <span class="custom-dropdown mx-sm-2">
-            <select class="form-control">
-              <option value="">--Lựa chọn--</option>
-              <option value="Official">Olive Dinh</option>
-              <option value="Draft">Van Dinh</option>
+            <select class="form-control" [(ngModel)]="filterMeetingReport.uploadedEmployeeId">
+              <option [ngValue]="null">--Lựa chọn--</option>
+              <option *ngFor="let item of employeeListReport" [value]="item.employeeId">{{item.employeeName}}</option>
             </select>
           </span>
         </div>
-        <div class="form-group ">
+        <div class="form-group py-2 pl-2">
           <label for="" class="form-label">Ngày upload</label>
-          <span class="custom-dropdown mx-sm-2">
-            <select class="form-control">
-              <option value="">--Lựa chọn--</option>
-              <option value="Official">01-08-2018</option>
-              <option value="Draft">02-08-2018</option>
-            </select>
-          </span>
+          <kendo-datepicker class="mx-sm-2" [(ngModel)]="filterMeetingReport.createdDate"></kendo-datepicker>
         </div>
-        <div class="form-group ">
+        <div class="form-group py-2 pl-2">
+          <label for="" class="form-label">Ngày tổ chức họp</label>
+          <kendo-datepicker class="mx-sm-2" [(ngModel)]="filterMeetingReport.meetingTime"></kendo-datepicker>
+        </div>
+        <div class="form-group py-2 pl-2">
           <label for="" class="form-label">Lần phỏng vấn</label>
           <span class="custom-dropdown mx-sm-2">
-            <select class="form-control">
-              <option value="">--Lựa chọn--</option>
-              <option value="Official">1</option>
-              <option value="Draft">2</option>
+            <select class="form-control" [(ngModel)]="filterMeetingReport.interviewTimes">
+              <option [ngValue]="null">--Lựa chọn--</option>
+              <option *ngFor="let item of interviewTimesReport">{{item}}</option>
             </select>
           </span>
         </div>
 
-        <div class="form-group ">
-          <button type="submit" class="btn btn-primary mx-sm-2">
+        <div class="form-group py-2 pl-2 ml-auto">
+          <button type="submit" class="btn btn-primary mr-f mr-2" (click)="filterReport()">
             <i class="fa fa-filter" aria-hidden="true"></i>
             <span class="filter-pd">Lọc </span>
           </button>
-          <button class="btn btn-secondary">
+          <button class="btn btn-secondary mr-2" (click)="clearFilterReport()">
             <i class="fa fa-times"></i>
             <span class="filter-pd">Xóa lọc </span>
           </button>
@@ -91,111 +87,115 @@
     </div>
 
     <div class="bot-table">
-      <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="table-selection stripe row-border hover cell-border dataTable">
+      <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTriggerReport" class="table-selection stripe row-border hover cell-border dataTable table-layout">
         <thead>
-          <th class="stt bg-default w5" style="background-color: #f68e56!important;">
+          <th class="set-stt--width">
             <div class="d-flex justify-content-around">
-              <div style="width: 40%;">
+              <div class="w-40">
                 <div class="center-parent">
                   <label class="custom-control custom-checkbox">
-                    <input type="checkbox" class="custom-control-input" [(ngModel)]="checkboxSeclectAll" (change)="onSelectAll($event.target.checked)">
+                    <input type="checkbox" class="custom-control-input" (change)="onSelectAllReport($event.target.checked)">
                     <span class="custom-control-indicator"></span>
                   </label>
                 </div>
               </div>
-
-              <div style="width: 35%;" class="center-parent">
+              <div class="center-parent w-35">
                 <div>STT</div>
-              </div>
-              <div class="center-parent" style="width: 15%;padding-left: 5px;">
-                <div class="ng-tns-c15-6">
-                  <i class="fa fa-caret-down" style="color: #ffff;"></i>
-                </div>
               </div>
             </div>
           </th>
-          <th class="bg-default w12" style="background-color: #f68e56!important;">
-            <div class="d-flex justify-content-center">
+          <th class="w-15">
+            <div class="d-flex justify-content-between">
               <div class="center-parent">
                 <div>Tên tài liệu</div>
               </div>
-              <div class="center-parent pd-l">
-                <div class="ng-tns-c15-6">
-                  <i class="fa fa-caret-down" style="color: #ffff;"></i>
-                </div>
+              <div class="center-parent ml-2">
+                <img *ngIf="currentFieldSortReport !== 'documentName' ||  (currentFieldSortReport === 'documentName' && statusSortReport === '')"
+                  class="icon-sort" src="assets/images/sort.svg" (click)="sortField('documentName', 'asc')">
+                <img *ngIf="currentFieldSortReport === 'documentName' && statusSortReport === 'asc'" class="icon-sort-down-up" src="assets/images/sort-down.svg"
+                  (click)="sortField('documentName', 'desc')">
+                <img *ngIf="currentFieldSortReport === 'documentName' && statusSortReport === 'desc'" class="icon-sort-down-up" src="assets/images/sort-up.svg"
+                  (click)="sortField('documentName', '')">
               </div>
             </div>
           </th>
-         
-          <th class="bg-default w12" style="background-color: #f68e56!important;">
+
+          <th class="th-mark-status w-10">
             <div class="d-flex justify-content-center">
-              <div class="center-parent">
+              <div class="center-parent w-80">
                 <div>Phiên bản</div>
               </div>
-              <div class="center-parent pd-l">
-                <div class="ng-tns-c15-6">
-                  <i class="fa fa-caret-down" style="color: #ffff;"></i>
-                </div>
+              <div class="center-parent ml-2">
+                <img *ngIf="currentFieldSortReport !== 'version' ||  (currentFieldSortReport === 'version' && statusSortReport === '')" class="icon-sort"
+                  src="assets/images/sort.svg" (click)="sortField('version', 'asc')">
+                <img *ngIf="currentFieldSortReport === 'version' && statusSortReport === 'asc'" class="icon-sort-down-up" src="assets/images/sort-down.svg"
+                  (click)="sortField('version', 'desc')">
+                <img *ngIf="currentFieldSortReport === 'version' && statusSortReport === 'desc'" class="icon-sort-down-up" src="assets/images/sort-up.svg"
+                  (click)="sortField('version', '')">
               </div>
             </div>
           </th>
-          <th class="bg-default w15" style="background-color: #f68e56!important;">
+          <th class="w-10">
+            Mô tả
+          </th>
+
+          <th class="w-10">
             <div class="d-flex justify-content-center">
               <div class="center-parent">
-                <div>Mô tả</div>
+                <div>Người upload</div>
               </div>
-              <div class="center-parent pd-l">
-                <div class="ng-tns-c15-6">
-                  <i class="fa fa-caret-down" style="color: #ffff;"></i>
-                </div>
+              <div class="center-parent ml-2">
+                <img *ngIf="currentFieldSortReport !== 'employeeName' ||  (currentFieldSortReport === 'employeeName' && statusSortReport === '')"
+                  class="icon-sort" src="assets/images/sort.svg" (click)="sortField('employeeName', 'asc')">
+                <img *ngIf="currentFieldSortReport === 'employeeName' && statusSortReport === 'asc'" class="icon-sort-down-up" src="assets/images/sort-down.svg"
+                  (click)="sortField('employeeName', 'desc')">
+                <img *ngIf="currentFieldSortReport === 'employeeName' && statusSortReport === 'desc'" class="icon-sort-down-up" src="assets/images/sort-up.svg"
+                  (click)="sortField('employeeName', '')">
               </div>
             </div>
           </th>
-          <th class="bg-default w12" style="background-color: #f68e56!important;">
-              <div class="d-flex justify-content-center">
-                <div class="center-parent">
-                  <div>Người upload</div>
-                </div>
-                <div class="center-parent pd-l">
-                  <div class="ng-tns-c15-6">
-                    <i class="fa fa-caret-down" style="color: #ffff;"></i>
-                  </div>
-                </div>
-              </div>
-            </th>
-          <th class="bg-default w12" style="background-color: #f68e56!important;">
+          <th class="w-10">
             <div class="d-flex justify-content-center">
               <div class="center-parent">
                 <div>Ngày upload</div>
               </div>
-              <div class="center-parent pd-l">
-                <div class="ng-tns-c15-6">
-                  <i class="fa fa-caret-down" style="color: #ffff;"></i>
-                </div>
+              <div class="center-parent ml-2">
+                <img *ngIf="currentFieldSortReport !== 'createdDate' ||  (currentFieldSortReport === 'createdDate' && statusSortReport === '')"
+                  class="icon-sort" src="assets/images/sort.svg" (click)="sortField('createdDate', 'asc')">
+                <img *ngIf="currentFieldSortReport === 'createdDate' && statusSortReport === 'asc'" class="icon-sort-down-up" src="assets/images/sort-down.svg"
+                  (click)="sortField('createdDate', 'desc')">
+                <img *ngIf="currentFieldSortReport === 'createdDate' && statusSortReport === 'desc'" class="icon-sort-down-up" src="assets/images/sort-up.svg"
+                  (click)="sortField('createdDate', '')">
               </div>
             </div>
           </th>
-          <th class="bg-default w10" style="background-color: #f68e56!important;">
+          <th class="w-10">
             <div class="d-flex justify-content-center">
               <div class="center-parent">
                 <div>Lần phỏng vấn</div>
               </div>
-              <div class="center-parent pd-l">
-                <div class="ng-tns-c15-6">
-                  <i class="fa fa-caret-down" style="color: #ffff;"></i>
-                </div>
+              <div class="center-parent ml-2">
+                <img *ngIf="currentFieldSortReport !== 'interviewTimes' ||  (currentFieldSortReport === 'interviewTimes' && statusSortReport === '')"
+                  class="icon-sort" src="assets/images/sort.svg" (click)="sortField('interviewTimes', 'asc')">
+                <img *ngIf="currentFieldSortReport === 'interviewTimes' && statusSortReport === 'asc'" class="icon-sort-down-up" src="assets/images/sort-down.svg"
+                  (click)="sortField('interviewTimes', 'desc')">
+                <img *ngIf="currentFieldSortReport === 'interviewTimes' && statusSortReport === 'desc'" class="icon-sort-down-up" src="assets/images/sort-up.svg"
+                  (click)="sortField('interviewTimes', '')">
               </div>
             </div>
           </th>
-          <th class="bg-default w12" style="background-color: #f68e56!important;">
+          <th class="w-10">
             <div class="d-flex justify-content-center">
               <div class="center-parent">
                 <div>Thời gian họp</div>
               </div>
-              <div class="center-parent pd-l">
-                <div class="ng-tns-c15-6">
-                  <i class="fa fa-caret-down" style="color: #ffff;"></i>
-                </div>
+              <div class="center-parent ml-2">
+                <img *ngIf="currentFieldSortReport !== 'meetingTime' ||  (currentFieldSortReport === 'meetingTime' && statusSortReport === '')"
+                  class="icon-sort" src="assets/images/sort.svg" (click)="sortField('meetingTime', 'asc')">
+                <img *ngIf="currentFieldSortReport === 'meetingTime' && statusSortReport === 'asc'" class="icon-sort-down-up" src="assets/images/sort-down.svg"
+                  (click)="sortField('meetingTime', 'desc')">
+                <img *ngIf="currentFieldSortReport === 'meetingTime' && statusSortReport === 'desc'" class="icon-sort-down-up" src="assets/images/sort-up.svg"
+                  (click)="sortField('meetingTime', '')">
               </div>
             </div>
           </th>
@@ -208,10 +208,10 @@
           </th>
         </thead>
         <tbody>
-          <tr *ngFor="let item of resultData; let i = index;">
-            <td class="stt" style="width: 5%; min-width: 20px;">
+          <tr *ngFor="let item of meetingReportList; let i = index;">
+            <td class="set-stt--width">
               <div class="d-flex justify-content-around">
-                <div style="width: 40%;">
+                <div class="w-40">
                   <div class="center-parent">
                     <label class="custom-control custom-checkbox">
                       <input type="checkbox" class="custom-control-input" [(ngModel)]="item.checkboxSelected">
@@ -219,33 +219,27 @@
                     </label>
                   </div>
                 </div>
-
-                <div style="width: 35%;" class="center-parent">
+                <div class="center-parent w-35">
                   <div>{{i+1}}</div>
-                </div>
-                <div class="center-parent" style="width: 15%;padding-left: 5px;">
-                  <div class="ng-tns-c15-6">
-
-                  </div>
                 </div>
               </div>
             </td>
             <td class="tdup-name">{{item.documentName}}</td>
             <td class="text-center">{{item.version}}</td>
-            <td class="text-center tdup">{{item.description}} </td>
-            <td class="text-center" >{{item.employeeName}}</td>
-            <td class="text-center">{{item.createdDate}}</td>
-            <td class="text-center">{{item.interview}}</td>
-            <td class="text-center">{{item.createdDate}}</td>
+            <td class="tdup">{{item.description}} </td>
+            <td>{{item.uploadedBy?.employeeName}}</td>
+            <td>{{item.createdDate*1000 | date:'dd/MM/yyyy'}}</td>
+            <td class="text-center">{{item.interviewTimes}}</td>
+            <td>{{item.meetingTime*1000 | date:'dd/MM/yyyy'}}</td>
             <td class="text-center">
               <div class="d-flex justify-content-around">
                 <div id="mr">
-                  <a title="Tải file" (click)="downloadFileItem(item.id)">
+                  <a title="Tải file" (click)="downloadMeetingReportOrFile('report', item.id)">
                     <i class="fa fa-download color-item-down" aria-hidden="true"></i>
                   </a>
                 </div>
                 <div id="mr">
-                  <a title="Xóa file">
+                  <a title="Xóa file" (click)="deleteMeetingReportOrFile('report', item.id)">
                     <i class="fa fa-trash-o" aria-hidden="true"></i>
                   </a>
                 </div>
@@ -253,24 +247,21 @@
                   <a title="In">
                     <i class="fa fa-print color-item-print" aria-hidden="true"></i>
                   </a>
-
                 </div>
               </div>
             </td>
           </tr>
-          <tr *ngIf="total ==0">
+          <tr *ngIf="meetingReportList && meetingReportList.length === 0">
             <td colspan="9" class="text-center">Không có dữ liệu</td>
           </tr>
         </tbody>
       </table>
-
     </div>
-    <div class="show">Hiển thị {{total}} kết quả</div>
   </div>
 </div>
 <!-- File Presentation -->
 <div class="table-small mt-3">
-  <div class=" title-list-package d-flex flex-wrap align-items-center status-filter">
+  <!-- <div class=" title-list-package d-flex flex-wrap align-items-center status-filter">
     <div class="mr-auto d-flex align-items-end list-package mt-2 mb-2">
       <div class="d-flex justify-content-start">
         <div class="rule mr-2">
@@ -282,8 +273,18 @@
     </div>
     <div>
       <div class="btn-toolbar mt-2 mb-2 status-filter">
+        <div class="input-group btn-rg">
+          <span class="input-group-addon">Tìm kiếm theo</span>
+          <input type="text" class="form-control icon" placeholder="&#xf002; Tên tài liệu">
+        </div>
         <button class="btn btn-primary ml-1">
-          Tải Template
+            Tải Template
+          </button>
+        <button class="btn btn-primary ml-1">
+          Tải xuống tài liệu
+        </button>
+        <button class="btn btn-primary ml-1">
+          Xóa
         </button>
         <button class="btn btn-primary ml-1" (click)="modalUp(uploadFile,2)">
           Upload&nbsp;biên bản cuộc họp
@@ -293,67 +294,63 @@
         </button>
       </div>
     </div>
-  </div>
+  </div> -->
   <div class="d-flex form-group status-filter" id="result">
     <h5 class="d-inline mb-0 mr-auto text-dark text-uppercase pd-t">File Presentation</h5>
     <div class="btn-toolbar">
       <div class="input-group btn-rg">
         <span class="input-group-addon">Tìm kiếm theo</span>
-        <input type="text" class="form-control icon" placeholder="&#xf002; Tên tài liệu">
+        <input type="text" class="form-control icon" placeholder="&#xf002; Tên tài liệu" (keyup)="searchTermFile$.next($event.target.value)">
       </div>
+      <button class="btn btn-primary ml-1">
+        Tải Template
+      </button>
       <button class="btn btn-primary ml-1">
         Tải xuống tài liệu
       </button>
-      <button class="btn btn-primary ml-1">
-        In
-      </button>
-      <button class="btn btn-primary ml-1">
+      <button class="btn btn-primary ml-1" (click)="deleteButMeetingReportOrFile('file')">
         Xóa
       </button>
-
+      <button class="btn btn-primary ml-1" (click)="modalUp('file')">
+        Upload file presentation
+      </button>
+      <button class="btn btn-primary ml-1" (click)="refeshListFile()">
+        <i class="fa fa-refresh" aria-hidden="true"></i>
+      </button>
     </div>
   </div>
   <div class="main-table">
-    <div class="d-flex flex-row flex-wrap filter-bar custom-filter-bar" style="background-color: #fafbfc!important">
+    <div class="d-flex flex-row flex-wrap filter-bar" style="background-color: #fafbfc!important">
       <div class="d-flex form-inline flex-pad">
-
-        <div class="form-group ">
+        <div class="form-group py-2 pl-2">
           <label for="" class="form-label">Người upload</label>
           <span class="custom-dropdown mx-sm-2">
-            <select class="form-control">
-              <option value="">--Lựa chọn--</option>
-              <option value="Official">Olive Dinh</option>
-              <option value="Draft">Van Dinh</option>
+            <select class="form-control" [(ngModel)]="filterFile.uploadedEmployeeId">
+              <option [ngValue]="null">--Lựa chọn--</option>
+              <option *ngFor="let item of employeeListFile" [value]="item.employeeId">{{item.employeeName}}</option>
             </select>
           </span>
         </div>
-        <div class="form-group ">
+        <div class="form-group py-2 pl-2">
           <label for="" class="form-label">Ngày upload</label>
-          <span class="custom-dropdown mx-sm-2">
-            <select class="form-control">
-              <option value="">--Lựa chọn--</option>
-              <option value="Official">01-08-2018</option>
-              <option value="Draft">02-08-2018</option>
-            </select>
-          </span>
+          <kendo-datepicker class="mx-sm-2" [(ngModel)]="filterFile.createdDate"></kendo-datepicker>
         </div>
-        <div class="form-group ">
+        <div class="form-group py-2 pl-2">
           <label for="" class="form-label">Lần phỏng vấn</label>
           <span class="custom-dropdown mx-sm-2">
-            <select class="form-control">
-              <option value="">--Lựa chọn--</option>
-              <option value="Official">1</option>
-              <option value="Draft">2</option>
+            <select class="form-control" [(ngModel)]="filterFile.interviewTimes">
+              <option [ngValue]="null">--Lựa chọn--</option>
+              <option *ngFor="let item of interviewTimesFile">{{item}}</option>
             </select>
           </span>
         </div>
 
-        <div class="form-group ">
-          <button type="submit" class="btn btn-primary mx-sm-2">
+        <div class="form-group py-2 pl-2 ml-auto">
+          <button type="submit" class="btn btn-primary mr-f mr-2" (click)="filterFileFunction()">
             <i class="fa fa-filter" aria-hidden="true"></i>
             <span class="filter-pd">Lọc </span>
           </button>
-          <button class="btn btn-secondary">
+          <button class="btn btn-secondary mr-2" (click)="clearFilterFileFunction()">
             <i class="fa fa-times"></i>
             <span class="filter-pd">Xóa lọc </span>
           </button>
@@ -362,147 +359,142 @@
     </div>
 
     <div class="bot-table">
-      <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="table-selection stripe row-border hover cell-border dataTable">
+      <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTriggerFile" class="table-selection stripe row-border hover cell-border dataTable table-layout">
         <thead>
           <tr>
-            <th class="stt" style="width: 5%; min-width: 20px;background-color: #f68e56!important;">
+            <th class="set-stt--width">
               <div class="d-flex justify-content-around">
-                <div style="width: 40%;">
+                <div class="w-40">
                   <div class="center-parent">
                     <label class="custom-control custom-checkbox">
-                      <input type="checkbox" class="custom-control-input" [(ngModel)]="checkboxSeclectAllFile" (change)="onSelectAllFile($event.target.checked)">
+                      <input type="checkbox" class="custom-control-input" (change)="onSelectAllFile($event.target.checked)">
                       <span class="custom-control-indicator"></span>
                     </label>
                   </div>
                 </div>
-
-                <div style="width: 35%;" class="center-parent">
+                <div class="center-parent w-35">
                   <div>STT</div>
-                </div>
-                <div class="center-parent" style="width: 15%;padding-left: 5px;">
-                  <div class="ng-tns-c15-6">
-                    <i class="fa fa-caret-down" style="color: #ffff;"></i>
-                  </div>
                 </div>
               </div>
             </th>
-
-            <th style="width: 35%; background-color: #f68e56!important;">
-              <div class="d-flex">
+            <th class="w-20">
+              <div class="d-flex justify-content-between">
                 <div class="center-parent">
                   <div>Tên tài liệu</div>
                 </div>
-                <div class="center-parent pd-l">
-                  <div class="ng-tns-c15-6">
-                    <i class="fa fa-caret-down" style="color: #ffff;"></i>
-                  </div>
+                <div class="center-parent ml-2">
+                  <img *ngIf="currentFieldSortFile !== 'documentName' ||  (currentFieldSortFile === 'documentName' && statusSortFile === '')"
+                    class="icon-sort" src="assets/images/sort.svg" (click)="sortFieldFile('documentName', 'asc')">
+                  <img *ngIf="currentFieldSortFile === 'documentName' && statusSortFile === 'asc'" class="icon-sort-down-up" src="assets/images/sort-down.svg"
+                    (click)="sortFieldFile('documentName', 'desc')">
+                  <img *ngIf="currentFieldSortFile === 'documentName' && statusSortFile === 'desc'" class="icon-sort-down-up" src="assets/images/sort-up.svg"
+                    (click)="sortFieldFile('documentName', '')">
                 </div>
               </div>
-
             </th>
-            <th class="th-mark-status" style="width: 10%; min-width: 20px;background-color: #f68e56!important;">
-              <div class="d-flex">
-                <div style="width: 80%;" class="center-parent">
+            <th class="th-mark-status w-10">
+              <div class="d-flex justify-content-center">
+                <div class="center-parent w-80">
                   <div>Phiên bản</div>
                 </div>
-                <div class="center-parent pd-l">
-                  <div class="ng-tns-c15-6">
-                    <i class="fa fa-caret-down" style="color: #ffff;"></i>
-                  </div>
+                <div class="center-parent ml-2">
+                  <img *ngIf="currentFieldSortFile !== 'version' ||  (currentFieldSortFile === 'version' && statusSortFile === '')" class="icon-sort"
+                    src="assets/images/sort.svg" (click)="sortFieldFile('version', 'asc')">
+                  <img *ngIf="currentFieldSortFile === 'version' && statusSortFile === 'asc'" class="icon-sort-down-up" src="assets/images/sort-down.svg"
+                    (click)="sortFieldFile('version', 'desc')">
+                  <img *ngIf="currentFieldSortFile === 'version' && statusSortFile === 'desc'" class="icon-sort-down-up" src="assets/images/sort-up.svg"
+                    (click)="sortFieldFile('version', '')">
                 </div>
               </div>
             </th>
 
-            <th style="background-color: #f68e56!important;">
-              <div class="d-flex">
-                <div class="center-parent">
-                  <div>Mô tả</div>
-                </div>
-              </div>
+            <th class="w-10">
+              Mô tả
             </th>
 
-            <th style="width: 12%;background-color: #f68e56!important;">
-              <div class="d-flex">
+            <th class="w-10">
+              <div class="d-flex justify-content-center">
                 <div class="center-parent">
                   <div>Người upload</div>
                 </div>
-                <div class="center-parent pd-l">
-                  <div class="ng-tns-c15-6">
-                    <i class="fa fa-caret-down" style="color: #ffff;"></i>
-                  </div>
+                <div class="center-parent ml-2">
+                  <img *ngIf="currentFieldSortFile !== 'employeeName' ||  (currentFieldSortFile === 'employeeName' && statusSortFile === '')"
+                    class="icon-sort" src="assets/images/sort.svg" (click)="sortFieldFile('employeeName', 'asc')">
+                  <img *ngIf="currentFieldSortFile === 'employeeName' && statusSortFile === 'asc'" class="icon-sort-down-up" src="assets/images/sort-down.svg"
+                    (click)="sortFieldFile('employeeName', 'desc')">
+                  <img *ngIf="currentFieldSortFile === 'employeeName' && statusSortFile === 'desc'" class="icon-sort-down-up" src="assets/images/sort-up.svg"
+                    (click)="sortFieldFile('employeeName', '')">
                 </div>
               </div>
             </th>
 
-            <th style="width: 12%; background-color: #f68e56!important;">
-              <div class="d-flex">
+            <th class="w-10">
+              <div class="d-flex justify-content-center">
                 <div class="center-parent">
                   <div>Ngày upload</div>
                 </div>
-                <div class="center-parent pd-l">
-                  <div class="ng-tns-c15-6">
-                    <i class="fa fa-caret-down" style="color: #ffff;"></i>
-                  </div>
+                <div class="center-parent ml-2">
+                  <img *ngIf="currentFieldSortFile !== 'createdDate' ||  (currentFieldSortFile === 'createdDate' && statusSortFile === '')"
+                    class="icon-sort" src="assets/images/sort.svg" (click)="sortFieldFile('createdDate', 'asc')">
+                  <img *ngIf="currentFieldSortFile === 'createdDate' && statusSortFile === 'asc'" class="icon-sort-down-up" src="assets/images/sort-down.svg"
+                    (click)="sortFieldFile('createdDate', 'desc')">
+                  <img *ngIf="currentFieldSortFile === 'createdDate' && statusSortFile === 'desc'" class="icon-sort-down-up" src="assets/images/sort-up.svg"
+                    (click)="sortFieldFile('createdDate', '')">
                 </div>
               </div>
             </th>
-            <th style="width: 12%;background-color: #f68e56!important;">
+            <th class="w-15">
               <div class="d-flex justify-content-center">
                 <div class="center-parent">
                   <div>Lần phỏng vấn</div>
                 </div>
-                <div class="center-parent pd-l">
-                  <div class="ng-tns-c15-6">
-                    <i class="fa fa-caret-down" style="color: #ffff;"></i>
-                  </div>
+                <div class="center-parent ml-2">
+                  <img *ngIf="currentFieldSortFile !== 'interviewTimes' ||  (currentFieldSortFile === 'interviewTimes' && statusSortFile === '')"
+                    class="icon-sort" src="assets/images/sort.svg" (click)="sortFieldFile('interviewTimes', 'asc')">
+                  <img *ngIf="currentFieldSortFile === 'interviewTimes' && statusSortFile === 'asc'" class="icon-sort-down-up" src="assets/images/sort-down.svg"
+                    (click)="sortFieldFile('interviewTimes', 'desc')">
+                  <img *ngIf="currentFieldSortFile === 'interviewTimes' && statusSortFile === 'desc'" class="icon-sort-down-up" src="assets/images/sort-up.svg"
+                    (click)="sortFieldFile('interviewTimes', '')">
                 </div>
               </div>
             </th>
-
             <th class="table-action text-center" style="background-color: #f68e56!important;">
               Thao tác
             </th>
           </tr>
         </thead>
         <tbody>
-          <tr *ngFor="let item of dataFileUpload; let i = index">
-            <td class="stt" style="width: 5%; min-width: 20px;">
+          <tr *ngFor="let item of meetingFileList; let i = index">
+            <td class="set-stt--width">
               <div class="d-flex justify-content-around">
-                <div style="width: 40%;">
+                <div class="w-40">
                   <div class="center-parent">
                     <label class="custom-control custom-checkbox">
-                      <input type="checkbox" class="custom-control-input" [(ngModel)]="item.checkboxSelectedFile">
+                      <input type="checkbox" class="custom-control-input" [(ngModel)]="item.checkboxSelected">
                       <span class="custom-control-indicator"></span>
                     </label>
                   </div>
                 </div>
-
-                <div style="width: 35%;" class="center-parent">
+                <div class="center-parent w-35">
                   <div>{{i+1}}</div>
-                </div>
-                <div class="center-parent" style="width: 15%;padding-left: 5px;">
-                  <div class="ng-tns-c15-6">
-
-                  </div>
                 </div>
               </div>
             </td>
             <td class="tdup-name">{{ item.documentName }}</td>
             <td class="text-center">{{ item.version }}</td>
-            <td class="tdup">{{ item.documentName | translate }}</td>
-            <td class="select-filter text-center">{{ item.employeeName}}</td>
-            <!-- <td class="text-center">{{ item.bidReviewDocumentUploadDate* 1000 | date:'dd/MM/yyyy HH:mm': '+0000'}}</td> -->
-            <td class="select-filter text-center">{{ item.timeTransfer}}</td>
-            <td class="select-filter text-center">{{ item.interviewNo}}</td>
+            <td class="tdup">{{ item.description }}</td>
+            <td class="select-filter">{{ item.uploadedBy?.employeeName}}</td>
+            <td class="select-filter">{{ item.createdDate*1000 | date: 'dd/MM/yyyy'}}</td>
+            <td class="text-center tdup-name">{{ item.interviewTimes }}</td>
             <td class="text-center" style="width: 12%;">
               <div class="d-flex justify-content-around">
                 <div id="mr">
-                  <a title="Tải file" (click)="downloadFileItem(item.id)">
+                  <a title="Tải file" (click)="downloadMeetingReportOrFile('file', item.id)">
                     <i class="fa fa-download color-item-down" aria-hidden="true"></i>
                   </a>
                 </div>
                 <div id="mr">
-                  <a title="Xóa file">
+                  <a title="Xóa file" (click)="deleteMeetingReportOrFile('file', item.id)">
                     <i class="fa fa-trash-o" aria-hidden="true"></i>
                   </a>
                 </div>
@@ -514,16 +506,15 @@
               </div>
             </td>
           </tr>
-          <tr *ngIf="totalFileUpload ==0">
-            <td colspan="9" class="text-center">Không có dữ liệu</td>
+          <tr *ngIf="meetingFileList && meetingFileList.length === 0">
+            <td colspan="8" class="text-center">Không có dữ liệu</td>
           </tr>
         </tbody>
       </table>
     </div>
-    <div class="show">Hiển thị {{totalFileUpload}} kết quả</div>
   </div>
 </div>
-
+<ngx-spinner bdColor="rgba(51, 51, 51, 0.7)" size="medium" color="#fff" type="ball-clip-rotate-multiple"></ngx-spinner>
 <!-- Modal upladfile -->
 
 <ng-template #uploadFile>
@@ -587,7 +578,7 @@
       <div class="row pd-up" *ngIf="type == 1">
         <div class="col-md-4 mg-l">Thời gian họp</div>
         <div class="col-md-7 input-group">
-          <owl-date-time  >
+          <owl-date-time>
           </owl-date-time>
           <span class="input-group-addon">
             <i class="fa fa-calendar"></i>

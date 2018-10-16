@@ -5,6 +5,7 @@ import { NgxSpinnerService } from 'ngx-spinner';
 import { AlertService } from '../../../../../../shared/services/alert.service';
 import { HoSoDuThauService } from '../../../../../../shared/services/ho-so-du-thau.service';
 import { PackageDetailComponent } from '../../../package-detail.component';
+import { ListDocumentTypeIdGroup } from '../../../../../../shared/models/ho-so-du-thau/list-document-type.model';
 
 @Component({
   selector: 'app-upload-file-hsdt',
@@ -31,6 +32,7 @@ export class UploadFileHsdtComponent implements OnInit {
   typeOfDoc;
   isFile = false;
   isLinkFile = false;
+  lockLink = false;
   constructor(
     private fb: FormBuilder,
     private alertService: AlertService,
@@ -57,6 +59,7 @@ export class UploadFileHsdtComponent implements OnInit {
   onFormValueChanged(data?: any) {
     const isFile = (this.uploadForm.get('file').value) ? true : false;
     const isLinkFile = (this.uploadForm.get('linkFile').value) ? true : false;
+    this.lockLink = (isLinkFile) ? true : false;
     if (!isFile && !isLinkFile) {
       this.errorMess = 'Vui lòng chọn file hoặc đường dẫn link đến file!';
     } else {
@@ -118,13 +121,16 @@ export class UploadFileHsdtComponent implements OnInit {
       this.uploadForm.get('editName').patchValue(this.displayName);
     }
     this.uploadForm.get('file').patchValue(this.tempFile[0]);
+
+    if (!this.uploadForm.get('editName').value) {
+      this.uploadForm.get('editName').patchValue(this.displayName);
+    }
     event.target.value = null;
   }
 
   deleteFileUpload() {
     this.uploadForm.get('file').patchValue(null);
     this.tempFile = null;
-    // this.displayName = '';
     if (this.uploadForm.get('editName').value === this.displayName) {
       this.uploadForm.get('editName').patchValue('');
       this.displayName = '';

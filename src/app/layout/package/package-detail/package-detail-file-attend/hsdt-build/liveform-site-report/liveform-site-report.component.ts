@@ -46,19 +46,6 @@ export class LiveformSiteReportComponent implements OnInit {
         LiveformSiteReportComponent.formModel = new SiteSurveyReport();
 
         LiveformSiteReportComponent.formModel.bidOpportunityId = this.bidOpportunityId;
-        // LiveformSiteReportComponent.formModel.nguoiTao = {
-        //   id: this.employeeId,
-        //   name: ''
-        // };
-        // LiveformSiteReportComponent.formModel.isDraftVersion = true;
-        // LiveformSiteReportComponent.formModel.nguoiKhaoSat = model.surveyEmployee && {
-        //   id: model.surveyEmployee.employeeId,
-        //   text: model.surveyEmployee.employeeName
-        // };
-        // LiveformSiteReportComponent.formModel.phongBan = model.department && {
-        //   id: model.department.id,
-        //   text: model.department.departmentName
-        // };
         LiveformSiteReportComponent.formModel.scaleOverall = new ScaleOverall();
         LiveformSiteReportComponent.formModel.scaleOverall.loaiCongTrinh = new Array;
         LiveformSiteReportComponent.formModel.scaleOverall.trangthaiCongTrinh = [
@@ -100,6 +87,7 @@ export class LiveformSiteReportComponent implements OnInit {
         });
       }
       this.isData = (LiveformSiteReportComponent.formModel.id) ? true : false;
+      this.documentData = res;
     }, err => {
       this.spinner.hide();
       this.alertService.error('Đã xảy ra lỗi, cập nhật dữ liệu lifeform không thành công');
