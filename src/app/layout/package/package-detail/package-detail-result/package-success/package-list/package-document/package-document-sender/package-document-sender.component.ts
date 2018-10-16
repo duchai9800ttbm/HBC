@@ -16,6 +16,7 @@ import { NeedTranferDocList } from '../../../../../../../../shared/models/result
 import { FilterNeedTransferDoc } from '../../../../../../../../shared/models/result-attend/filter-need-transfer-doc.model';
 import { DepartmentsFormBranches } from '../../../../../../../../shared/models/user/departments-from-branches';
 import { FormGroup, FormBuilder, FormArray } from '../../../../../../../../../../node_modules/@angular/forms';
+import { EmailService } from '../../../../../../../../shared/services/email.service';
 
 @Component({
   selector: 'app-package-document-sender',
@@ -44,7 +45,7 @@ export class PackageDocumentSenderComponent implements OnInit {
   filterModel = new FilterNeedTransferDoc();
   isNgOnInit: boolean;
   needTransferDocsList: NeedTranferDocList[];
-  departments: Observable<DepartmentsFormBranches[]>;
+  departments: DepartmentsFormBranches[];
   // numberDateHSMT: number;
   // numberDateHSDT: number;
   docHSMTList = [];
@@ -64,6 +65,12 @@ export class PackageDocumentSenderComponent implements OnInit {
     { id: 6, rom: 'Maketing-slide', username: 'Dao Nhan', nameDocument: 'Maketing online', status: 'Yêu cầu gửi lại' }
   ];
   // public data :DocumentItem [] = this.packageSuccessService.getdataGetDocument();
+  get tranferDocHSMTormControls() {
+    return this.formHSMTTranferDoc.get('docs') as FormArray;
+  }
+  get tranferDocHSDTormControls() {
+    return this.formHSMTTranferDoc.get('docs') as FormArray;
+  }
   constructor(
     private packageSuccessService: PackageSuccessService,
     private modalService: BsModalService,
@@ -75,6 +82,7 @@ export class PackageDocumentSenderComponent implements OnInit {
     private spinner: NgxSpinnerService,
     private dataService: DataService,
     private fb: FormBuilder,
+    private emailService: EmailService
   ) { }
 
   ngOnInit() {
@@ -87,7 +95,9 @@ export class PackageDocumentSenderComponent implements OnInit {
     this.btnManageTransfer = false;
     this.total = this.data.length;
     this.textmovedata = 'Chưa chuyển giao tài liệu';
-    this.departments = this.dataService.getListDepartmentsFromBranches();
+    this.dataService.getListDepartmentsFromBranches().subscribe( response => {
+      this.departments = response;
+    });
     // if (this.userGetDocument) {
     //   this.data = this.packageSuccessService.getdataDocuments();
     //   this.total = this.data.length;
@@ -115,10 +125,9 @@ export class PackageDocumentSenderComponent implements OnInit {
           }
         }
       });
-      console.log('response-HSSSSSS', this.docHSMTList, this.docHSDTList);
+      this.createFormHSMTTranferDoc();
+      this.createFormHSDTTranferDoc();
     });
-    this.createFormHSMTTranferDoc();
-    this.createFormHSDTTranferDoc();
   }
   createFormHSMTTranferDoc() {
     this.formHSMTTranferDoc = this.fb.group({
@@ -132,6 +141,7 @@ export class PackageDocumentSenderComponent implements OnInit {
     return this.fb.group({
       transferName: null,
       dateUse: 0,
+      checkbox: false,
     });
   }
   createFormHSDTTranferDoc() {
@@ -139,13 +149,14 @@ export class PackageDocumentSenderComponent implements OnInit {
       docs: this.fb.array([])
     });
     this.docHSDTList.forEach(item => {
-      (this.formHSMTTranferDoc.get('docs') as FormArray).push(this.addFormHSDTTranferDoc());
+      (this.formHSDTTranferDoc.get('docs') as FormArray).push(this.addFormHSDTTranferDoc());
     });
   }
   addFormHSDTTranferDoc(): FormGroup {
     return this.fb.group({
-      transferName: '',
+      transferName: null,
       dateUse: '',
+      checkbox: false
     });
   }
   onSelectAll(value: boolean) {
@@ -176,7 +187,7 @@ export class PackageDocumentSenderComponent implements OnInit {
 
 
   manageTransferDocument(template: TemplateRef<any>) {
-    this.detailResultPackageService.manageTransferDocs(this.currentPackageId).subscribe( response =>
+    this.detailResultPackageService.manageTransferDocs(this.currentPackageId).subscribe(response =>
       (console.log('resonsepseMageTranfer', response)));
     this.modalRef = this.modalService.show(
       template,
@@ -199,7 +210,6 @@ export class PackageDocumentSenderComponent implements OnInit {
   //     }, err => this.spinner.hide());
   // }
   render(needTransferDocsList: any) {
-    console.log('result-needTranferDocLst', needTransferDocsList);
     this.needTransferDocsList = needTransferDocsList;
     this.dtTrigger.next();
   }
