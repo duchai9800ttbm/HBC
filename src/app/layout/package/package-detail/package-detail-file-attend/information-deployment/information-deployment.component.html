@@ -8,7 +8,8 @@
                 <div *ngIf="packageInfo?.stageStatus.id == bidStatus.ChuaThongBaoTrienKhai || packageInfo?.stageStatus.id == bidStatus.ThamGiaDuThau">Chưa thông báo triển khai</div>
                 <div *ngIf="packageInfo?.stageStatus.id == bidStatus.DaThongBaoTrienKhai">Đã thông báo triển khai</div>
                 <div *ngIf="packageInfo?.stageStatus.id == bidStatus.DaXacNhanPhanCong">Đã xác nhận phân công</div>
-                <div *ngIf="packageInfo?.stageStatus.id == bidStatus.DaGuiPhanCongTienDo">Đã gửi phân công tiến độ</div>
+                <div *ngIf="(packageInfo?.stageStatus.id !== bidStatus.ChuaThongBaoTrienKhai) && (packageInfo?.stageStatus.id !== bidStatus.ThamGiaDuThau)
+                    && (packageInfo?.stageStatus.id !== bidStatus.DaThongBaoTrienKhai) && (packageInfo?.stageStatus.id !== bidStatus.DaXacNhanPhanCong)">Đã gửi phân công tiến độ</div>
             </div>
         </div>
     </div>

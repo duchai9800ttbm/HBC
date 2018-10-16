@@ -19,6 +19,7 @@ import { HistoryLiveForm } from '../../../../../../shared/models/ho-so-du-thau/h
 import { GroupDescriptor, DataResult, process, groupBy } from '@progress/kendo-data-query';
 import { DialogService } from '../../../../../../../../node_modules/@progress/kendo-angular-dialog';
 import { FormInComponent } from '../../../../../../shared/components/form-in/form-in.component';
+import { BidStatus } from '../../../../../../shared/constants/bid-status';
 
 @Component({
   selector: 'app-price-review-summary',
@@ -35,6 +36,7 @@ export class PriceReviewSummaryComponent implements OnInit {
   dtTrigger2: Subject<any> = new Subject();
   historyList;
   dialog;
+  bidStatus = BidStatus;
   pagedResultChangeHistoryList: PagedResult<HistoryLiveForm> = new PagedResult<HistoryLiveForm>();
   showPopupAdd;
   pagedResult: PagedResult<PriceReviewItemChangedHistory> = new PagedResult<PriceReviewItemChangedHistory>();
