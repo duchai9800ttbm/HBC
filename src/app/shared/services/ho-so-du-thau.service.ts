@@ -888,8 +888,7 @@ export class HoSoDuThauService {
   // Xóa ảnh
   deleteImage(guid): Observable<any> {
     const url = `tenderconditionalsummary/deleteimage`;
-    return null; // tạm thời disable
-    // return this.apiService.post(url, guid);
+    return this.apiService.post(url, guid);
   }
 
   // Upload ảnh

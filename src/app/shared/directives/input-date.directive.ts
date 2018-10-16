@@ -40,7 +40,7 @@ export class InputDateDirective implements OnInit {
 
 
     ngOnInit() {
-        this.ngControl.valueAccessor.writeValue(this.numberArea.transform(this.ngControl.value));
+        this.ngControl.valueAccessor.writeValue(this.transform(this.ngControl.value));
     }
 
     transform(value: number | string, fractionSize: number = 0): string {
