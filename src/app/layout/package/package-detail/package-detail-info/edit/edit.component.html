@@ -261,6 +261,7 @@
                                         <span class="custom-dropdown w-75">
                                             <select class="form-control" appEnterPreventDefault tabindex="25"
                                                 formControlName="evaluationId">
+                                                <option [ngValue]="null">---Chọn---</option>
                                                 <option *ngFor="let item of dataEvaluation" [value]="item.key">
                                                     {{ item.value }}
                                                 </option>
