@@ -508,13 +508,12 @@ export class HoSoDuThauService {
               obj.dienGiaiDieuKienHopDong.dieuKienTheoHSMT.tienGiuLai.phanTram : 0,
 
           retainedLimit:
-            (obj.dienGiaiDieuKienHopDong.dieuKienTheoHSMT.tienGiuLai) ?
+            obj.dienGiaiDieuKienHopDong.dieuKienTheoHSMT.tienGiuLai ?
               obj.dienGiaiDieuKienHopDong.dieuKienTheoHSMT.tienGiuLai.gioiHanTienGiuLai : 0,
 
           retainedPayment:
             (obj.dienGiaiDieuKienHopDong.dieuKienTheoHSMT.tienGiuLai) ?
-              (obj.dienGiaiDieuKienHopDong.dieuKienTheoHSMT.tienGiuLai.thanhToanTienGui
-                ? obj.dienGiaiDieuKienHopDong.dieuKienTheoHSMT.tienGiuLai.thanhToanTienGui : 0) : 0,
+              obj.dienGiaiDieuKienHopDong.dieuKienTheoHSMT.tienGiuLai.thanhToanTienGui : '',
           punishhOverduePercent:
             (obj.dienGiaiDieuKienHopDong.dieuKienTheoHSMT.phatTreTienDo) ?
               obj.dienGiaiDieuKienHopDong.dieuKienTheoHSMT.phatTreTienDo.phanTram : 0,
@@ -556,8 +555,9 @@ export class HoSoDuThauService {
             (obj.dienGiaiDieuKienHopDong.dieuKienTheoHBC.tienGiuLai) ?
               obj.dienGiaiDieuKienHopDong.dieuKienTheoHBC.tienGiuLai.phanTram : 0,
           retainedLimit:
-            (obj.dienGiaiDieuKienHopDong.dieuKienTheoHBC.tienGiuLai) ?
-              obj.dienGiaiDieuKienHopDong.dieuKienTheoHBC.tienGiuLai.gioiHanTienGiuLai : 0,
+            obj.dienGiaiDieuKienHopDong.dieuKienTheoHBC.tienGiuLai ?
+              (obj.dienGiaiDieuKienHopDong.dieuKienTheoHBC.tienGiuLai.gioiHanTienGiuLai ?
+                obj.dienGiaiDieuKienHopDong.dieuKienTheoHBC.tienGiuLai.gioiHanTienGiuLai : 0) : 0,
           retainedPayment:
             (obj.dienGiaiDieuKienHopDong.dieuKienTheoHBC.tienGiuLai) ?
               obj.dienGiaiDieuKienHopDong.dieuKienTheoHBC.tienGiuLai.thanhToanTienGui : '',
@@ -782,7 +782,8 @@ export class HoSoDuThauService {
             phanTram: (model.contractCondition.hsmtContractCondition.retainedPercent) ?
               model.contractCondition.hsmtContractCondition.retainedPercent : 0,
             gioiHanTienGiuLai: (model.contractCondition.hsmtContractCondition.retainedLimit) ?
-              model.contractCondition.hsmtContractCondition.retainedLimit : 0,
+              (model.contractCondition.hsmtContractCondition.retainedLimit ?
+                model.contractCondition.hsmtContractCondition.retainedLimit : 0) : 0,
             thanhToanTienGui: (model.contractCondition.hsmtContractCondition.retainedPayment) ?
               model.contractCondition.hsmtContractCondition.retainedPayment : 0
           },
