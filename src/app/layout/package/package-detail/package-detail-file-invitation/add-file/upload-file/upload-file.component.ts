@@ -98,11 +98,11 @@ export class UploadFileComponent implements OnInit {
     this.uploadForm.get('link').enable();
     if (this.uploadForm.get('editName').value === this.file.name) {
       this.file = null;
-      this.uploadForm.get('editName').patchValue('');
       this.uploadForm.get('nameFile').patchValue('');
-      this.file = null;
+      this.uploadForm.get('editName').patchValue('');
     } else {
       this.uploadForm.get('nameFile').patchValue('');
+      this.file = null;
     }
   }
 
