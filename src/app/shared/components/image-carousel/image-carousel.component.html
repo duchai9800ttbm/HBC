@@ -1,22 +1,39 @@
-<div id="overlay">
+<div id="overlay" class="d-flex justify-content-center align-content-center">
     <div id="modal-container" class="d-flex flex-column align-items-center">
         <div class="close-button" (click)="closeView()"><i class="fa fa-times-circle-o" aria-hidden="true"></i></div>
-        <div class="w3-content">
-            <img *ngFor="let image of imageUrlArray; index as i" class="w-100 show-image-item" [class.noShow]="isShow !== i"
+        <div class="w3-content main-show-image d-flex justify-content-center align-content-center">
+            <img *ngFor="let image of imageUrlArray; index as i" class="show-image-item" [class.noShow]="isShow !== i"
                 [class.show]="isShow === i" [src]="image.largeSizeUrl">
         </div>
-        <div class="thumbImage d-flex flex-row justify-content-center flex-wrap mt-2 mb-2">
-            <button class="button-thumb mr-1" (click)="prevButton()"><i class="fa fa-chevron-left" aria-hidden="true"></i></button>
-            <img *ngIf="imageUrlArray[i-1]" [src]="imageUrlArray[i-1].thumbSizeUrl">
-            <img *ngFor="let image of imageUrlArray; index as j" [src]="image.thumbSizeUrl" [class.noThumb]="isShow !== j"
-                [class.thumb]="isShow === j" [class.shining]="isShow === j">
-            <img *ngIf="imageUrlArray[i+1]" [src]="imageUrlArray[i+1].thumbSizeUrl">
-            <button class="button-thumb ml-1" (click)="nextButton()"><i class="fa fa-chevron-right" aria-hidden="true"></i></button>
-        </div>
-        <div class="w3-center d-flex flex-column align-items-center button-control">
-            <div class="mt-2 d-flex flex-row justify-content-center">
-                <h4 class="text-view">Hình {{i+1}} / {{imageUrlArray.length}}</h4>
+
+
+        <div class="w-100 d-flex flex-column">
+            <div class="thumbImage w-100 d-flex justify-content-center">
+                <button class="button-thumb mr-5 d-inline-block" (click)="prevButton()"><i class="fa fa-chevron-left"
+                        aria-hidden="true"></i></button>
+                <div class="d-inline-block">
+                    <ng-container *ngIf="isShow === (imageUrlArray.length -1) && imageUrlArray[i-2]?.largeSizeUrl">
+                        <img [src]="imageUrlArray[i-2]?.largeSizeUrl">
+                    </ng-container>
+                    <img *ngIf="imageUrlArray[i-1]" [src]="imageUrlArray[i-1]?.largeSizeUrl">
+                    <img *ngFor="let image of imageUrlArray; index as j" [src]="image.largeSizeUrl" [class.noThumb]="isShow !== j"
+                        [class.thumb]="isShow === j" [class.shining]="isShow === j">
+                    <img *ngIf="imageUrlArray[i+1]" [src]="imageUrlArray[i+1]?.largeSizeUrl">
+                    <ng-container *ngIf="isShow === 0 && imageUrlArray[i+2]?.largeSizeUrl">
+                        <img [src]="imageUrlArray[i+2]?.largeSizeUrl">
+                    </ng-container>
+                </div>
+                <button class="button-thumb ml-5 d-inline-block" (click)="nextButton()"><i class="fa fa-chevron-right"
+                        aria-hidden="true"></i></button>
+            </div>
+
+            <div class="w3-center d-flex flex-column align-items-center button-control">
+                <div class="mb-2 d-flex flex-row justify-content-center">
+                    <h4 class="text-view">Hình {{i+1}} / {{imageUrlArray.length}}</h4>
+                </div>
             </div>
         </div>
+
+
     </div>
 </div>

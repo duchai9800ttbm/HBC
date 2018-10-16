@@ -19,6 +19,7 @@ export class DanhSachBoHsdtItem {
     };
     uploadedDate: number;
     fileGuid: string;
+    fileUrl: string;
     interViewTimes: number;
     desc: string;
 }

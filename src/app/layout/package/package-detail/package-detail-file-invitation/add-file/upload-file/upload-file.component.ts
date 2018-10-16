@@ -54,9 +54,9 @@ export class UploadFileComponent implements OnInit {
 
   ngOnInit() {
     this.createForm();
-    this.documentService.read(this.packageId, this.typeFile.id).subscribe(response => {
-      this.uploadForm.get('version').patchValue(response.length + 1);
-    });
+    // this.documentService.read(this.packageId, this.typeFile.id).subscribe(response => {
+    //   this.uploadForm.get('version').patchValue(response.length + 1);
+    // });
     this.documentService.bidDocumentType().subscribe(data => {
       this.listTypeFile = data;
       this.uploadForm.get('type').patchValue(this.typeFile);
@@ -118,8 +118,8 @@ export class UploadFileComponent implements OnInit {
     });
   }
   onFormValueChanged(data?: any) {
-    const isFile = (this.uploadForm.get('file').value) ? true : false;
-    const isLinkFile = (this.uploadForm.get('linkFile').value) ? true : false;
+    const isFile = (this.uploadForm.get('nameFile').value) ? true : false;
+    const isLinkFile = (this.uploadForm.get('link').value) ? true : false;
     if (this.isSubmitted) {
       this.validateForm();
       if (!isFile && !isLinkFile) {

@@ -193,8 +193,8 @@ export class ServiceConstructionComponent implements OnInit {
   }
   deleteSupplySystemImage(i) {
     const index = this.supplySystemImageUrls.indexOf(i);
-    if (i.id) {
-      this.siteSurveyReportService.deleteImageSiteSurveyingReport(i.id).subscribe(res => {
+    if (i.guid) {
+      this.siteSurveyReportService.deleteImageSiteSurveyingReport(i.guid).subscribe(res => {
 
       }, err => {
         this.alertService.error('Đã xảy ra lỗi, hình ảnh xóa không thành công');
@@ -222,8 +222,8 @@ export class ServiceConstructionComponent implements OnInit {
   }
   deleteSupplyPointImage(i) {
     const index = this.supplyPointImageUrls.indexOf(i);
-    if (i.id) {
-      this.siteSurveyReportService.deleteImageSiteSurveyingReport(i.id).subscribe(res => {
+    if (i.guid) {
+      this.siteSurveyReportService.deleteImageSiteSurveyingReport(i.guid).subscribe(res => {
 
       }, err => {
         this.alertService.error('Đã xảy ra lỗi, hình ảnh xóa không thành công');
@@ -252,8 +252,8 @@ export class ServiceConstructionComponent implements OnInit {
   }
   deleteDrainageSystemImage(i) {
     const index = this.drainageSystemImageUrls.indexOf(i);
-    if (i.id) {
-      this.siteSurveyReportService.deleteImageSiteSurveyingReport(i.id).subscribe(res => {
+    if (i.guid) {
+      this.siteSurveyReportService.deleteImageSiteSurveyingReport(i.guid).subscribe(res => {
 
       }, err => {
         this.alertService.error('Đã xảy ra lỗi, hình ảnh xóa không thành công');
@@ -281,8 +281,8 @@ export class ServiceConstructionComponent implements OnInit {
   }
   deleteDrainagePointImage(i) {
     const index = this.drainagePointImageUrls.indexOf(i);
-    if (i.id) {
-      this.siteSurveyReportService.deleteImageSiteSurveyingReport(i.id).subscribe(res => {
+    if (i.guid) {
+      this.siteSurveyReportService.deleteImageSiteSurveyingReport(i.guid).subscribe(res => {
 
       }, err => {
         this.alertService.error('Đã xảy ra lỗi, hình ảnh xóa không thành công');
@@ -310,8 +310,8 @@ export class ServiceConstructionComponent implements OnInit {
   }
   deletePowerStationImage(i) {
     const index = this.powerStationImageUrls.indexOf(i);
-    if (i.id) {
-      this.siteSurveyReportService.deleteImageSiteSurveyingReport(i.id).subscribe(res => {
+    if (i.guid) {
+      this.siteSurveyReportService.deleteImageSiteSurveyingReport(i.guid).subscribe(res => {
 
       }, err => {
         this.alertService.error('Đã xảy ra lỗi, hình ảnh xóa không thành công');
@@ -339,8 +339,8 @@ export class ServiceConstructionComponent implements OnInit {
   }
   deleteMediumVoltageSystemImage(i) {
     const index = this.mediumVoltageSystemImageUrls.indexOf(i);
-    if (i.id) {
-      this.siteSurveyReportService.deleteImageSiteSurveyingReport(i.id).subscribe(res => {
+    if (i.guid) {
+      this.siteSurveyReportService.deleteImageSiteSurveyingReport(i.guid).subscribe(res => {
 
       }, err => {
         this.alertService.error('Đã xảy ra lỗi, hình ảnh xóa không thành công');
@@ -368,8 +368,8 @@ export class ServiceConstructionComponent implements OnInit {
   }
   deletePowerOtherImage(i) {
     const index = this.powerOtherImageUrls.indexOf(i);
-    if (i.id) {
-      this.siteSurveyReportService.deleteImageSiteSurveyingReport(i.id).subscribe(res => {
+    if (i.guid) {
+      this.siteSurveyReportService.deleteImageSiteSurveyingReport(i.guid).subscribe(res => {
 
       }, err => {
         this.alertService.error('Đã xảy ra lỗi, hình ảnh xóa không thành công');

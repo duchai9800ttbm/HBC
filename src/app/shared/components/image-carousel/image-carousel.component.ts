@@ -33,7 +33,7 @@ export class ImageCarouselComponent implements OnInit {
       this.i -= 1;
       this.showOneImage(this.i);
     } else {
-      this.alertService.error('Bạn đang xem hình đầu tiên!');
+      // this.alertService.error('Bạn đang xem hình đầu tiên!');
     }
   }
   nextButton() {
@@ -41,7 +41,7 @@ export class ImageCarouselComponent implements OnInit {
       this.i += 1;
       this.showOneImage(this.i);
     } else {
-      this.alertService.error('Bạn đang xem hình cuối!');
+      // this.alertService.error('Bạn đang xem hình cuối!');
     }
   }
   showOneImage(i) {
