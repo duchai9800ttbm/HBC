@@ -63,7 +63,7 @@
                 <td>{{proposedTender.isDraftVersion ? 'Bản nháp' : 'Chính thức'}}</td>
                 <td>{{proposedTender.createdEmployee?.employeeName}}</td>
                 <td>{{ (proposedTender.createdDate)*1000 | date:'dd/MM/yyyy , HH:mm':'+0000'}}</td>
-                <td>
+                <td class="">
                     <div class="d-flex justify-content-center">
                         <div>
                             <a [routerLink]="['./form/view']" (click)="changeAction('view')" title="Chi tiết">
@@ -77,9 +77,9 @@
                             <a *ngIf="packageInfo?.stageStatus.id == bidStatus.CanLapDeNghiDuThau" title="Xóa" class=" text-dark ml-3" (click)="deleteProposedTenderParticipateReport()">
                                 <i class="fa fa-trash-o" aria-hidden="true"></i>
                             </a>
-                            <!-- <a class="ml-3" (click)="printForm()">
+                            <a class="ml-3" (click)="printForm()">
                                 <i class="fa fa-print ic-print-color" aria-hidden="true"></i>
-                            </a> -->
+                            </a>
                         </div>
                     </div>
                 </td>
@@ -115,7 +115,7 @@
                 <td>
                     <div class="text-truncate" [title]="itemByChangedTimes.items[0].updateDesc">{{itemByChangedTimes.items[0].updateDesc}}</div>
                 </td>
-                <td>
+                <td class="font-size-90">
                     <div *ngIf="itemByChangedTimes.items && itemByChangedTimes.items !== 0">
                         <div *ngFor="let itemByChangeTime of itemByChangedTimes.items">
                             <div *ngFor="let itemByLiveFormChanged of itemByChangeTime.liveFormChangeds">

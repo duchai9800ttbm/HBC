@@ -7,13 +7,18 @@ import {
 } from '../../../../../../shared/models/price-review/price-review.model';
 import { PackageDetailComponent } from '../../../package-detail.component';
 import { PriceReviewService } from '../../../../../../shared/services/price-review.service';
-import { DATATABLE_CONFIG2 } from '../../../../../../shared/configs';
+import { DATATABLE_CONFIG2, DATATABLE_CONFIG } from '../../../../../../shared/configs';
 import { Subject } from 'rxjs/Subject';
 import { AlertService, ConfirmationService } from '../../../../../../shared/services';
 import { PackageService } from '../../../../../../shared/services/package.service';
 import { PackageInfoModel } from '../../../../../../shared/models/package/package-info.model';
 import { PagedResult } from '../../../../../../shared/models';
 import { StatusObservableHsdtService } from '../../../../../../shared/services/status-observable-hsdt.service';
+import { NgxSpinnerService } from '../../../../../../../../node_modules/ngx-spinner';
+import { HistoryLiveForm } from '../../../../../../shared/models/ho-so-du-thau/history-liveform.model';
+import { GroupDescriptor, DataResult, process, groupBy } from '@progress/kendo-data-query';
+import { DialogService } from '../../../../../../../../node_modules/@progress/kendo-angular-dialog';
+import { FormInComponent } from '../../../../../../shared/components/form-in/form-in.component';
 
 @Component({
   selector: 'app-price-review-summary',
@@ -25,10 +30,12 @@ export class PriceReviewSummaryComponent implements OnInit {
   priceReview: TenderPriceApprovalShort;
   package = new PackageInfoModel();
   listItemHSDTChinhThuc: ItemHSDTChinhThuc[];
-  dtOptions: any = DATATABLE_CONFIG2;
+  dtOptions: any = DATATABLE_CONFIG;
   dtTrigger: Subject<any> = new Subject();
   dtTrigger2: Subject<any> = new Subject();
-
+  historyList;
+  dialog;
+  pagedResultChangeHistoryList: PagedResult<HistoryLiveForm> = new PagedResult<HistoryLiveForm>();
   showPopupAdd;
   pagedResult: PagedResult<PriceReviewItemChangedHistory> = new PagedResult<PriceReviewItemChangedHistory>();
 
@@ -37,7 +44,9 @@ export class PriceReviewSummaryComponent implements OnInit {
     private alertService: AlertService,
     private confirmService: ConfirmationService,
     private packageService: PackageService,
-    private statusObservableHsdtService: StatusObservableHsdtService
+    private statusObservableHsdtService: StatusObservableHsdtService,
+    private spinner: NgxSpinnerService,
+    private dialogService: DialogService
   ) { }
 
 
@@ -56,10 +65,42 @@ export class PriceReviewSummaryComponent implements OnInit {
       console.log('this.listItemHSDTChinhThuc', this.listItemHSDTChinhThuc);
     });
 
-    this.priceReviewService.changedHistoryPriceReview(this.packageId, 0, 10)
-      .subscribe(data => {
-        this.pagedResult = data;
+    this.getChangeHistory(0, 10);
+
+
+    // this.priceReviewService.changedHistoryPriceReview(this.packageId, 0, 10)
+    //   .subscribe(data => {
+    //     this.pagedResult = data;
+    //   });
+  }
+
+  getChangeHistory(page: number | string, pageSize: number | string) {
+    this.spinner.show();
+    this.priceReviewService.changedHistoryPriceReview(this.packageId, page, pageSize).subscribe(respone => {
+      this.historyList = respone.items;
+      this.pagedResultChangeHistoryList = respone;
+      this.historyList = groupBy(this.pagedResultChangeHistoryList.items, [{ field: 'changedTime' }]);
+      this.historyList.forEach((itemList, indexList) => {
+        itemList.items.forEach((itemByChangedTimes, indexChangedTimes) => {
+          this.historyList[indexList].items[indexChangedTimes].liveFormChangeds =
+            groupBy(itemByChangedTimes.liveFormChangeds, [{ field: 'liveFormStep' }]);
+        });
       });
+
+
+      console.log(this.historyList);
+      setTimeout(() => {
+        this.dtTrigger2.next();
+      });
+      this.spinner.hide();
+    },
+      err => {
+        this.spinner.hide();
+      });
+  }
+
+  pagedResultChangeHistory(e) {
+    this.getChangeHistory(this.pagedResultChangeHistoryList.currentPage, this.pagedResultChangeHistoryList.pageSize);
   }
 
   renderIndex(i, k) {
@@ -199,8 +240,19 @@ export class PriceReviewSummaryComponent implements OnInit {
         console.log(data);
       });
   }
-  print() {
 
+
+  print() {
+    this.dialog = this.dialogService.open({
+      title: 'FORM IN',
+      content: FormInComponent,
+      width: window.screen.availWidth * 0.8,
+      minWidth: 250,
+      height: window.screen.availHeight * 0.7
+    });
+    const instance = this.dialog.content.instance;
+    instance.type = 'LiveFormTrinhDuyetGia';
+    instance.packageId = this.packageId;
   }
 
   downloadFileAttach(id: number) {

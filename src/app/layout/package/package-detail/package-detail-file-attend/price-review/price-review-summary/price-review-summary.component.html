@@ -53,227 +53,232 @@
         <h5>BẢNG TÓM TẮT THÔNG TIN DỰ ÁN - TRÌNH DUYỆT GIÁ THẦU</h5>
     </div>
     <div class="table-responsive">
-            <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="table-selection stripe row-border hover cell-border dataTable">
-                    <thead>
-                        <tr>
-            
-                            <th class="bg-default" style="background-color: #f68e56!important;">
-                                <div class="d-flex">
-                                    <div class="center-parent">
-                                        <div>Tên tài liệu</div>
-                                    </div>
-                                </div>
-                            </th>
-                            <th class="bg-default" style="background-color: #f68e56!important;">
-                                <div class="d-flex">
-                                    <div class="d-flex justify-content-between w-100">
-                                        <div>File đính kèm</div>
-                                        <div class="w-25 d-flex flex-row-reverse" (click)="open()" style="cursor: pointer" title="Upload tài liệu">
-                                            <img width="25" height="25" src="assets\images\file-upload.png">
-                                        </div>
-                                    </div>
-                                </div>
-                            </th>
-                            <th class="bg-default" style="background-color: #f68e56!important;">
-                                <div class="d-flex">
-                                    <div class="center-parent">
-                                        <div>Lần phỏng vấn</div>
-                                    </div>
-                                </div>
-                            </th>
-            
-                            <th class="bg-default" style="background-color: #f68e56!important;">
-                                <div class="d-flex">
-                                    <div class="center-parent">
-                                        <div>Trạng thái</div>
-                                    </div>
-                                </div>
-                            </th>
-                            <th class="bg-default" style="background-color: #f68e56!important;">
-                                <div class="d-flex">
-                                    <div class="center-parent">
-                                        <div>Lần duyệt</div>
-                                    </div>
-                                </div>
-                            </th>
-                            <th class="bg-default" style="background-color: #f68e56!important;">
-                                <div class="d-flex">
-                                    <div class="center-parent">
-                                        <div>Người tạo</div>
-                                    </div>
-                                </div>
-                            </th>
-                            <th class="bg-default" style="background-color: #f68e56!important;">
-                                <div class="d-flex">
-                                    <div class="center-parent">
-                                        <div>Ngày tạo</div>
-                                    </div>
-                                </div>
-                            </th>
-                            <th class="bg-default" style="background-color: #f68e56!important;">
-                                <div class="d-flex">
-                                    <div class="center-parent">
-                                        <div>Thao tác</div>
-                                    </div>
-                                </div>
-                            </th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td class="select-filter" valign="baseline">Trình duyệt giá</td>
-                            <td style="padding: 0!important; max-width: 200px;">
-                                <div class="attach-file">
-                                    <div class="item d-flex align-items-center" style="box-sizing: border-box" *ngFor="let item of priceReview.files">
-                                        <div class="ml-2 mt-1 mb-1 mr-2 d-flex justify-content-between w-90">
-                                            <div class="">
-                                                <div class="name">
-                                                    <span class="xuong-dong-2">{{item?.name}}</span>
-                                                </div>
-                                                <div class="time">
-                                                    {{ item?.uploadDate*1000 | date:'dd/MM/yyyy HH:mm': '+0000' }} </div>
-                                            </div>
-                                            <div>
-                                                <a (click)="downloadFileAttach(item.id)" *ngIf="!item.url">
-                                                    <i class="fa fa-download color-item-down" aria-hidden="true"></i>
-                                                </a>
-                                                <a [href]="item.url" target="_blank" *ngIf="item.url">
-                                                    <i class="fa fa-external-link color-item-down" aria-hidden="true"></i>
-                                                </a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-            
-                            </td>
-                            <td class="select-filter text-center" valign="baseline">{{priceReview?.interviewTimes}}</td>
-                            <td class="select-filter" valign="baseline">{{priceReview?.isDraftVersion ? 'Bản nháp' : 'Chính thức'}}</td>
-            
-                            <td class="select-filter text-center" valign="baseline">{{priceReview?.approvalTimes}}</td>
-                            <td class="select-filter" valign="baseline">{{priceReview?.createdEmployee?.employeeName}}</td>
-                            <td class="select-filter" valign="baseline">{{priceReview?.createdDate*1000 | date:'dd/MM/yyyy HH:mm': '+0000' }}</td>
-                            <td class="select-filter min-width-action" valign="baseline">
-                                <div class="d-flex justify-content-around">
-                                    <div style="cursor: pointer;" title="Xem" routerLink="../detail">
-                                        <a>
-                                            <i class="fa fa-eye cursor-pointer icon-view" aria-hidden="true"></i>
-                                        </a>
-                                    </div>
-                                    <div style="cursor: pointer;" title="Sửa" routerLink="../edit">
-                                        <a>
-                                            <i class="fa fa-pencil cursor-pointer icon-edit" aria-hidden="true"> </i>
-                                        </a>
-                                    </div>
-                                    <div style="cursor: pointer;" title="Xóa" (click)="delete()">
-                                        <a class="text-success">
-                                            <i class="fa fa-trash-o cursor-pointer icon-delete" aria-hidden="true"></i>
-                                        </a>
-                                    </div>
-                                    <div style="cursor: pointer;" title="In" (click)="print()">
-                                        <a class="text-success">
-                                            <i class="fa fa-print cursor-pointer icon-print" aria-hidden="true"></i>
-                                        </a>
-                                    </div>
-                                </div>
-                            </td>
-            
-                        </tr>
-                    </tbody>
-                </table>
-    </div>
-   
-</div>
-
-
-
-<div class="content mt-4" *ngIf="priceReview">
-    <div class="mb-4 mt-1">
-        <h5>BẢNG TÓM TẮT THÔNG TIN DỰ ÁN - TRÌNH DUYỆT GIÁ THẦU</h5>
-    </div>
-    <div class="bot-table">
-        <table class="table-selection  row-border hover cell-border dataTable">
+        <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="table-selection stripe row-border hover cell-border dataTable">
             <thead>
                 <tr>
-                    <th class="stt" style="background-color: #f68e56!important;">
-                        <div class="d-flex justify-content-around">
-                            <!-- <div style="width: 40%;">
-                                        <div class="center-parent">
-                                            <label class="custom-control custom-checkbox">
-                                                <input type="checkbox" class="custom-control-input">
-                                                <span class="custom-control-indicator"></span>
-                                            </label>
-                                        </div>
-                                    </div> -->
+
+                    <th class="bg-default" style="background-color: #f68e56!important;">
+                        <div class="d-flex">
                             <div class="center-parent">
-                                <div>STT</div>
+                                <div>Tên tài liệu</div>
                             </div>
                         </div>
                     </th>
-                    <th style="width: 18%;background-color: #f68e56!important;">
-                        <div class="d-flex justify-content-center">
-                            <div class="center-parent">
-                                <div>Lần cập nhật</div>
+                    <th class="bg-default" style="background-color: #f68e56!important;">
+                        <div class="d-flex">
+                            <div class="d-flex justify-content-between w-100">
+                                <div>File đính kèm</div>
+                                <div class="w-25 d-flex flex-row-reverse" (click)="open()" style="cursor: pointer" title="Upload tài liệu">
+                                    <img width="25" height="25" src="assets\images\file-upload.png">
+                                </div>
                             </div>
                         </div>
                     </th>
-                    <th style="width: 18%;background-color: #f68e56!important;">
-                        <div class="d-flex justify-content-center">
+                    <th class="bg-default" style="background-color: #f68e56!important;">
+                        <div class="d-flex">
                             <div class="center-parent">
-                                <div>Người cập nhật</div>
+                                <div>Lần phỏng vấn</div>
                             </div>
                         </div>
                     </th>
-                    <th style="width: 18%; background-color: #f68e56!important;">
-                        <div class="d-flex justify-content-center">
+
+                    <th class="bg-default" style="background-color: #f68e56!important;">
+                        <div class="d-flex">
                             <div class="center-parent">
-                                <div>Ngày cập nhật</div>
+                                <div>Trạng thái</div>
                             </div>
                         </div>
                     </th>
-                    <th style="width: 18%; background-color: #f68e56!important;">
-                        <div class="d-flex justify-content-center">
+                    <th class="bg-default" style="background-color: #f68e56!important;">
+                        <div class="d-flex">
                             <div class="center-parent">
-                                <div>Nội dung cập nhật</div>
+                                <div>Lần duyệt</div>
                             </div>
                         </div>
                     </th>
-                    <th style="width: 24%; background-color: #f68e56!important;">
-                        <div class="d-flex justify-content-center">
+                    <th class="bg-default" style="background-color: #f68e56!important;">
+                        <div class="d-flex">
                             <div class="center-parent">
-                                <div>Chi tiết cập nhật</div>
+                                <div>Người tạo</div>
+                            </div>
+                        </div>
+                    </th>
+                    <th class="bg-default" style="background-color: #f68e56!important;">
+                        <div class="d-flex">
+                            <div class="center-parent">
+                                <div>Ngày tạo</div>
+                            </div>
+                        </div>
+                    </th>
+                    <th class="bg-default" style="background-color: #f68e56!important;">
+                        <div class="d-flex">
+                            <div class="center-parent">
+                                <div>Thao tác</div>
                             </div>
                         </div>
                     </th>
                 </tr>
             </thead>
             <tbody>
-                <tr *ngFor="let updateInfo of pagedResult.items; index as i">
-                    <td class="stt" valign="baseline">
-                        <!-- <div class="center-parent d-inline-block">
-                                    <label class="custom-control custom-checkbox">
-                                        <input type="checkbox" class="custom-control-input">
-                                        <span class="custom-control-indicator"></span>
-                                    </label>
-                                </div> -->
-                        <div class="center-parent">
-                            <div>{{ i+1 }}</div>
+                <tr>
+                    <td class="select-filter" valign="baseline">Trình duyệt giá</td>
+                    <td style="padding: 0!important; max-width: 200px;">
+                        <div class="attach-file">
+                            <div class="item d-flex align-items-center" style="box-sizing: border-box" *ngFor="let item of priceReview.files">
+                                <div class="ml-2 mt-1 mb-1 mr-2 d-flex justify-content-between w-90">
+                                    <div class="">
+                                        <div class="name">
+                                            <span class="xuong-dong-2">{{item?.name}}</span>
+                                        </div>
+                                        <div class="time">
+                                            {{ item?.uploadDate*1000 | date:'dd/MM/yyyy HH:mm': '+0000' }} </div>
+                                    </div>
+                                    <div>
+                                        <a (click)="downloadFileAttach(item.id)" *ngIf="!item.url">
+                                            <i class="fa fa-download color-item-down" aria-hidden="true"></i>
+                                        </a>
+                                        <a [href]="item.url" target="_blank" *ngIf="item.url">
+                                            <i class="fa fa-external-link color-item-down" aria-hidden="true"></i>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </td>
+                    <td class="select-filter text-center" valign="baseline">{{priceReview?.interviewTimes}}</td>
+                    <td class="select-filter" valign="baseline">{{priceReview?.isDraftVersion ? 'Bản nháp' : 'Chính thức'}}</td>
+
+                    <td class="select-filter text-center" valign="baseline">{{priceReview?.approvalTimes}}</td>
+                    <td class="select-filter" valign="baseline">{{priceReview?.createdEmployee?.employeeName}}</td>
+                    <td class="select-filter" valign="baseline">{{priceReview?.createdDate*1000 | date:'dd/MM/yyyy HH:mm': '+0000' }}</td>
+                    <td class="select-filter min-width-action" valign="baseline">
+                        <div class="d-flex justify-content-around">
+                            <div style="cursor: pointer;" title="Xem" routerLink="../detail">
+                                <a>
+                                    <i class="fa fa-eye cursor-pointer icon-view" aria-hidden="true"></i>
+                                </a>
+                            </div>
+                            <div style="cursor: pointer;" title="Sửa" routerLink="../edit">
+                                <a>
+                                    <i class="fa fa-pencil cursor-pointer icon-edit" aria-hidden="true"> </i>
+                                </a>
+                            </div>
+                            <div style="cursor: pointer;" title="Xóa" (click)="delete()">
+                                <a class="text-success">
+                                    <i class="fa fa-trash-o cursor-pointer icon-delete" aria-hidden="true"></i>
+                                </a>
+                            </div>
+                            <div style="cursor: pointer;" title="In" (click)="print()">
+                                <a class="text-success">
+                                    <i class="fa fa-print cursor-pointer icon-print" aria-hidden="true"></i>
+                                </a>
+                            </div>
                         </div>
                     </td>
-                    <td class="text-center" valign="baseline">{{ updateInfo.changedTimes }}</td>
-                    <td class="text-center" valign="baseline">{{ updateInfo.employee?.employeeName }}</td>
-                    <td class="text-center" valign="baseline">{{ updateInfo?.changedTime*1000 | date:'dd/MM/yyyy HH:mm': '+0000' }}</td>
+
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+</div>
+
+
+
+<div class="content mt-5" *ngIf="historyList && historyList.length !== 0">
+    <div class="d-flex justify-content-between">
+        <h5 class="text-uppercase mb-3">Lịch sử cập nhật</h5>
+    </div>
+    <div class="table-responsive">
+        <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger2" class="w-100 table-selection stripe row-border hover cell-border dataTable">
+            <thead>
+                <tr>
+                    <th class="w-15">Lần cập nhật</th>
+                    <th class="w-10">Người cập nhật</th>
+                    <th class="w-15">Ngày cập nhật</th>
+                    <th class="w-20">Nội dung cập nhật</th>
+                    <th class="w-40">Chi tiết cập nhật</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let itemByChangedTimes of historyList; let i = index">
                     <td class="text-center">
-                        {{ (updateInfo?.updateDesc != 'undefined') ? updateInfo.updateDesc : '' }}
+                        <!-- {{historyList.length - i}} -->
                     </td>
-                    <td class="align-baseline d-flex flex-column align-items-start xuong-dong">
-                        <p *ngFor="let item of updateInfo.liveFormChangeds; index as j">{{ item.liveFormTitle | translate }}: {{ item.oldValue }} --- {{ item.newValue }}</p>
+                    <td> {{itemByChangedTimes.items[0].employee?.employeeName}}</td>
+                    <td>{{ (itemByChangedTimes.items[0].changedTime)*1000 | date:'dd/MM/yyyy , HH:mm':'+0000' }}</td>
+                    <td>
+                        <div class="text-truncate" [title]="itemByChangedTimes.items[0].updateDesc">{{itemByChangedTimes.items[0].updateDesc}}</div>
+                    </td>
+                    <td class="font-size-90">
+                        <div *ngIf="itemByChangedTimes.items && itemByChangedTimes.items !== 0">
+                            <div *ngFor="let itemByChangeTime of itemByChangedTimes.items">
+                                <div *ngFor="let itemByLiveFormChanged of itemByChangeTime.liveFormChangeds">
+                                    <div class="text-truncate">
+                                        <div *ngFor="let itemByLiveFormStep of itemByLiveFormChanged.items">
+                                            <div *ngIf="!itemByChangeTime.liveFormChangeds[0].value">
+                                                <div *ngIf="!(itemByLiveFormStep.liveFormTitle === 'CostOfCapital' ||
+                                                              itemByLiveFormStep.liveFormTitle === 'CostOfCapitalGeneralCost' ||
+                                                              itemByLiveFormStep.liveFormTitle === 'CostOfCapitalPCPSValue' ||
+                                                              itemByLiveFormStep.liveFormTitle === 'TotalCostOfCapital' ||
+                                                              itemByLiveFormStep.liveFormTitle === 'TotalCostOfCapitalProfitCost' ||
+                                                              itemByLiveFormStep.liveFormTitle === 'TotalCostOfSubmission' ||
+                                                              itemByLiveFormStep.liveFormTitle === 'GFA' ||
+                                                              itemByLiveFormStep.liveFormTitle === 'CostOfCapitalValue')">
+                                                    <span>{{itemByLiveFormStep.liveFormTitle | translate}}:</span>&nbsp; từ
+                                                    <span class="font-weight-bold">{{itemByLiveFormStep.oldValue ? itemByLiveFormStep.oldValue : 'không
+                                                        có'}}
+                                                    </span>
+                                                    thành
+                                                    <span class="font-weight-bold">
+                                                        {{itemByLiveFormStep.newValue ? itemByLiveFormStep.newValue : 'không có'}}
+                                                    </span>
+                                                </div>
+
+                                                <div *ngIf="itemByLiveFormStep.liveFormTitle === 'GFA'">
+                                                    <span>{{itemByLiveFormStep.liveFormTitle | translate}}:</span>&nbsp; từ
+                                                    <span class="font-weight-bold">{{itemByLiveFormStep.oldValue | numberArea}}</span>
+                                                    thành
+                                                    <span class="font-weight-bold">
+                                                        {{itemByLiveFormStep.newValue | numberArea}}
+                                                    </span>
+                                                </div>
+
+
+                                                <div *ngIf="itemByLiveFormStep.liveFormTitle === 'CostOfCapital' ||
+                                                            itemByLiveFormStep.liveFormTitle === 'CostOfCapitalGeneralCost'||
+                                                            itemByLiveFormStep.liveFormTitle === 'CostOfCapitalPCPSValue' ||
+                                                            itemByLiveFormStep.liveFormTitle === 'TotalCostOfCapital' ||
+                                                            itemByLiveFormStep.liveFormTitle === 'TotalCostOfCapitalProfitCost' ||
+                                                            itemByLiveFormStep.liveFormTitle === 'TotalCostOfSubmission' ||
+                                                            itemByLiveFormStep.liveFormTitle === 'CostOfCapitalValue'">
+                                                    <span>{{itemByLiveFormStep.liveFormTitle | translate}}:</span>&nbsp; từ
+                                                    <span class="font-weight-bold">{{itemByLiveFormStep.oldValue | vnCurrency}}</span>
+                                                    thành
+                                                    <span class="font-weight-bold">
+                                                        {{itemByLiveFormStep.newValue | vnCurrency}}
+                                                    </span>
+                                                </div>
+
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </td>
                 </tr>
             </tbody>
         </table>
     </div>
-    <app-pagination [(pagedResult)]="pagedResult" (pagedResultChange)="pagedResultChange($event)"></app-pagination>
+
+
+    <app-pagination [(pagedResult)]="pagedResultChangeHistoryList" (pagedResultChange)="pagedResultChangeHistory($event)"></app-pagination>
 </div>
+
+
 
 
 <div class="content mt-4" *ngIf="package?.stageStatus?.id === 'DaNopHSDT' || package?.stageStatus?.id === 'ChotHoSo'">
@@ -333,7 +338,7 @@
                     <ng-container *ngIf="items.childs.length">
                         <ng-container *ngFor="let item of items.childs; let k = index;">
                             <tr>
-                                <td class="text-center">{{renderIndex(k,i)}}</td>
+                                <td class="text-center">{{renderIndex(i,k)}}</td>
                                 <td valign="baseline" [attr.rowspan]="items.childs?.length" *ngIf="k == 0">
                                     {{items?.typeName}}
                                 </td>
@@ -359,7 +364,7 @@
                                             </a>
                                         </div>
                                         <div style="cursor: pointer;" title="In">
-                                            <a class="text-success">
+                                            <a class="text-success" (click)="print()">
                                                 <i class="fa fa-print cursor-pointer icon-print" aria-hidden="true"></i>
                                             </a>
                                         </div>
