@@ -750,6 +750,22 @@ export class PackageService {
             .share();
     }
 
+    // Liên hệ khách hàng - Màn hình tạo mới gói thầu
+    getListCustomercontact2(searchTerm: string): Observable<any> {
+        const url = `customercontact/0/10/?searchTerm=${searchTerm}`;
+        return this.apiService
+            .get(url)
+            .map(response => {
+                return response.result.items.map(x => {
+                    return {
+                        id: x.id,
+                        name: x.name
+                    };
+                });
+            })
+            .share();
+    }
+
     //
     getListCustomer(searchTerm: string): Observable<any> {
         const url = `customer/search/0/10/?searchTerm=${searchTerm}`;
@@ -763,6 +779,22 @@ export class PackageService {
                         customerNewOldType: x.customerNewOldType,
                         customerPhone: x.customerPhone,
                         customerAddress: x.customerAddress
+                    };
+                });
+            })
+            .share();
+    }
+
+    //
+    getListCustomer2(): Observable<any> {
+        const url = `customer/search/0/1000/`;
+        return this.apiService
+            .get(url)
+            .map(response => {
+                return response.result.items.map(x => {
+                    return {
+                        id: x.customerId,
+                        name: x.customerName,
                     };
                 });
             })

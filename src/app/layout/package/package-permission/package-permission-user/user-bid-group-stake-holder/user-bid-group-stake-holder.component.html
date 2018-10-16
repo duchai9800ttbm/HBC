@@ -1,3 +1,119 @@
-<p>
-  user-bid-group-stake-holder works!
-</p>
+<div>
+    <!-- <form [formGroup]="stakeHolderForm">
+    <ng-container *ngIf="">
+      <ng-container>
+
+      </ng-container>
+    </ng-container>
+  </form> -->
+</div>
+
+<!-- <div *ngFor="let item of listStackHolders" class="mt-2">
+    <div class="d-flex flex-row">
+        <div class="group-name d-flex align-item-center">
+            <div class="align-middle">
+                {{item.groupDesc }}
+            </div>
+        </div>
+        <div class="customers">
+            <div *ngFor="let customer of item.customers">
+                <div class="d-flex flex-row">
+                    <span class="custom-dropdown">
+                        <select class="form-control" [(ngModel)]="customer.customerId">
+                            <option [ngValue]="null">---Chọn---</option>
+                            <option *ngFor="let user of listUser" [value]="item.id">{{user.employeeName }}</option>
+                        </select>
+                    </span>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div> -->
+
+
+
+
+<div class="boder-table mt-3">
+    <div class="">
+        <div class="media-header" style="text-align: right; padding-right: 1rem; margin-top: -0.75rem;">
+            <span class="action-bar alignment-but">
+                <button type="submit" class="btn btn-primary" (click)="submit()">Lưu
+                </button>
+                <button type="submit" class="btn btn-secondary" [routerLink]="['/package/detail']">Hủy
+                </button>
+            </span>
+        </div>
+    </div>
+    <div style="margin-top: 1rem;">
+        <h5 class="mb-3 text-uppercase">Các bên liên quan/ Stakeholders</h5>
+
+        <ng-container *ngFor="let item of listStackHolders; index as i">
+            <ng-container *ngFor="let customer of item.customers; index as k">
+                <div class="d-flex flex-row align-items-stretch mt-1">
+                    <div class="group-name">
+                        <div class="item-group d-flex align-items-center " *ngIf="k === 0">
+                            <div class="align-middle"><span>{{item.groupDesc}}</span></div>
+                        </div>
+                    </div>
+                    <div class="customers d-flex flex-row">
+                        <div class="customer-contact d-flex flex-row">
+                            <div class="d-flex align-items-center customer w-40">
+                                <div class="w-100">
+                                    <span class="custom-dropdown w-100">
+                                        <select class="form-control" [(ngModel)]="customer.customerId">
+                                            <option [ngValue]="null">---Chọn---</option>
+                                            <option *ngFor="let ite of customersSearchResults" [value]="ite.id">{{ite.name}}</option>
+                                        </select>
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="d-flex align-items-center customer w-60">
+                                <div class="label-contact">Liên hệ:</div>
+                                <div class="autocomplete-wrapper-2 ui-fluid p-2 w-100">
+                                    <p-autoComplete [(ngModel)]="customer.contacts" [suggestions]="contactsSearchResults"
+                                        [forceSelection]="true" [delay]="'400'" [emptyMessage]="'Không có dữ liệu'"
+                                        placeholder="Tìm theo tên" [immutable]="true" (completeMethod)="searchContacts($event.query)"
+                                        [tabindex]="'9'" field="name" [multiple]="true">
+                                    </p-autoComplete>
+                                    <span class="input-group-addon">
+                                        <i class="fa fa-search"></i>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="button-delete d-flex">
+                            <div class="btn-icon btn-icon-plus">
+                                <i class="fa fa-plus icon" aria-hidden="true" (click)="addFormItem(item.id)"></i>
+                            </div>
+                            <div class="btn-icon btn-icon-minus" *ngIf="k !== 0">
+                                <i class="fa fa-minus icon" aria-hidden="true" (click)="removeFormItem(item.id, k)"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </ng-container>
+
+            <!-- <ng-container *ngIf="!customer">
+                <div class="d-flex flex-row mt-1">
+                    <div class="group-name">
+                        <div class="item-group d-flex align-items-center">
+                            <div class="align-middle"><span>{{item.groupDesc}}</span></div>
+                        </div>
+                    </div>
+                    <div class="customers">
+                        <div>
+                            <span class="custom-dropdown">
+                                <select class="form-control" [(ngModel)]="item.customers[0].customerId">
+                                    <option [ngValue]="null">---Chọn---</option>
+                                    <option *ngFor="let user of listUser" [value]="item.id">{{user.employeeName }}</option>
+                                </select>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </ng-container> -->
+        </ng-container>
+    </div>
+</div>
+<ngx-spinner bdColor="rgba(51, 51, 51, 0.7)" size="medium" color="#fff" type="ball-clip-rotate-multiple"></ngx-spinner>
