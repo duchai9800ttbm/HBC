@@ -11,6 +11,11 @@ import { ConfirmationService, AlertService } from '../../../../../../../shared/s
 import { DetailResultPackageService } from '../../../../../../../shared/services/detail-result-package.service';
 import { FilterReportMeeting } from '../../../../../../../shared/models/result-attend/filter-report-meeting.model';
 import { ReportMeetingList } from '../../../../../../../shared/models/result-attend/report-meeting-list.model';
+import { UploadKickOffComponent } from '../upload-kick-off/upload-kick-off.component';
+import { DialogService } from '../../../../../../../../../node_modules/@progress/kendo-angular-dialog';
+import { PackageDetailComponent } from '../../../../package-detail.component';
+import { NgxSpinnerService } from '../../../../../../../../../node_modules/ngx-spinner';
+import { groupBy } from '../../../../../../../../../node_modules/@progress/kendo-data-query';
 
 @Component({
   selector: 'app-report-meeting',
@@ -19,7 +24,8 @@ import { ReportMeetingList } from '../../../../../../../shared/models/result-att
 })
 export class ReportMeetingComponent implements OnInit {
   @Input() reportFile;
-  dtTrigger: Subject<any> = new Subject();
+  dtTriggerReport: Subject<any> = new Subject();
+  dtTriggerFile: Subject<any> = new Subject();
   dtOptions: any = DATATABLE_CONFIG;
   documentItem: DocumentItem;
   checkboxSeclectAll: boolean;
@@ -41,6 +47,16 @@ export class ReportMeetingComponent implements OnInit {
   filterFile = new FilterReportMeeting();
   meetingReportList: ReportMeetingList[];
   meetingFileList: ReportMeetingList[];
+  dialogUploadMettingKickOff;
+  actionUpload: string;
+  currentFieldSortReport;
+  statusSortReport;
+  currentFieldSortFile;
+  statusSortFile;
+  employeeListReport;
+  interviewTimesReport;
+  employeeListFile;
+  interviewTimesFile;
   constructor(
     private packageSuccessService: PackageSuccessService,
     private modalService: BsModalService,
@@ -48,9 +64,12 @@ export class ReportMeetingComponent implements OnInit {
     private alertService: AlertService,
     private confirmationService: ConfirmationService,
     private detailResultPackageService: DetailResultPackageService,
+    private dialogService: DialogService,
+    private spinner: NgxSpinnerService,
   ) { }
 
   ngOnInit() {
+    this.currentPackageId = +PackageDetailComponent.packageId;
     this.formUpload = this.formBuilder.group({
       name: [''],
       description: [''],
@@ -74,7 +93,7 @@ export class ReportMeetingComponent implements OnInit {
     this.filterMeetingReport.createdDate = null;
     this.filterMeetingReport.meetingTime = null;
     this.filterMeetingReport.interviewTimes = null;
-    this.filterMeetingReportList(false);
+    // this.filterMeetingReportList(false);
     this.searchTermMeetingReport$.debounceTime(600)
       .distinctUntilChanged()
       .subscribe(keySearch => {
@@ -84,21 +103,13 @@ export class ReportMeetingComponent implements OnInit {
     this.filterFile.uploadedEmployeeId = null;
     this.filterFile.createdDate = null;
     this.filterFile.interviewTimes = null;
-    this.filterFileList(false);
+    // this.filterFileList(false);
     this.searchTermFile$.debounceTime(600)
       .distinctUntilChanged()
       .subscribe(keySearch => {
         this.filterFileList(false);
       });
   }
-  onSelectAll(value: boolean) {
-    this.resultData.forEach(x => (x['checkboxSelected'] = value));
-  }
-
-  onSelectAllFile(value: boolean) {
-    this.dataFileUpload.forEach(x => (x['checkboxSelectedFile'] = value));
-  }
-
   get f() { return this.formUpload.controls; }
   onSubmit() {
     this.submitted = true;
@@ -120,21 +131,21 @@ export class ReportMeetingComponent implements OnInit {
     this.totalFileUpload = this.dataFileUpload.length;
     this.modalUpload.hide();
   }
-
-  modalUp(template: TemplateRef<any>, type: number) {
-    this.type = type;
-    console.log('type', type);
-    if (this.type === 1) {
-      this.textUploadReport = 'Upload biên bản cuộc họp';
-    } else {
-      this.textUploadReport = 'Upload file presentation';
-    }
-    this.modalUpload = this.modalService.show(template);
-  }
+  // modalUp(template: TemplateRef<any>, type: number) {
+  //   this.type = type;
+  //   console.log('type', type);
+  //   if (this.type === 1) {
+  //     this.textUploadReport = 'Upload biên bản cuộc họp';
+  //   } else {
+  //     this.textUploadReport = 'Upload file presentation';
+  //   }
+  //   this.modalUpload = this.modalService.show(template);
+  // }
   // ====
   // ráp API
   // Report
   filterMeetingReportList(alertReload: boolean) {
+    this.spinner.show();
     this.detailResultPackageService.getBidMeetingReportDocsList(
       this.currentPackageId,
       this.searchTermMeetingReport$.value,
@@ -143,14 +154,38 @@ export class ReportMeetingComponent implements OnInit {
       1000
     ).subscribe(response => {
       this.meetingReportList = response.items;
+      this.getListFilterReport();
+      this.spinner.hide();
       if (alertReload) {
         this.alertService.success('Danh sách biên bản cuộc họp đã được cập nhật mới nhất!');
       }
     },
       err => {
+        this.spinner.hide();
         this.alertService.error('Không thể cập nhật danh sách biên bản cuộc họp!');
       });
   }
+  getListFilterReport() {
+    this.getUploadListReport();
+    this.getInterviewTimeListReport();
+  }
+  getUploadListReport() {
+    this.employeeListReport = this.meetingReportList ? this.meetingReportList.map(item => item.uploadedBy) : [];
+    this.employeeListReport = groupBy(this.employeeListReport, [{ field: 'employeeId' }]);
+    this.employeeListReport = this.employeeListReport.map(item => {
+      return {
+        employeeId: item.items[0].employeeId,
+        employeeName: item.items[0].employeeName
+      };
+    });
+    this.employeeListReport = this.employeeListReport.sort((a, b) => a.employeeId - b.employeeId);
+  }
+  getInterviewTimeListReport() {
+    this.interviewTimesReport = this.meetingReportList ? this.meetingReportList.map(item => item.interviewTimes) : [];
+    this.interviewTimesReport = this.interviewTimesReport.sort((a, b) => a - b);
+    this.interviewTimesReport = this.interviewTimesReport.filter((el, i, a) => i === a.indexOf(el));
+  }
+
   refeshListReport() {
     this.filterMeetingReportList(true);
   }
@@ -164,8 +199,12 @@ export class ReportMeetingComponent implements OnInit {
     this.filterMeetingReport.interviewTimes = null;
     this.filterMeetingReportList(false);
   }
+  onSelectAllReport(value: boolean) {
+    this.meetingReportList.forEach(x => (x['checkboxSelected'] = value));
+  }
   // File
   filterFileList(alertReload: boolean) {
+    this.spinner.show();
     this.detailResultPackageService.getBidMeetingFileList(
       this.currentPackageId,
       this.searchTermFile$.value,
@@ -174,13 +213,36 @@ export class ReportMeetingComponent implements OnInit {
       1000
     ).subscribe(response => {
       this.meetingFileList = response.items;
+      this.getListFilterFile();
+      this.spinner.hide();
       if (alertReload) {
         this.alertService.success('Danh sách file presentation đã được cập nhật mới nhất!');
       }
     },
       err => {
+        this.spinner.hide();
         this.alertService.error('Không thể cập nhật danh sách file presentation!');
       });
+  }
+  getListFilterFile() {
+    this.getUploadListFile();
+    this.getInterviewTimeListFile();
+  }
+  getUploadListFile() {
+    this.employeeListFile = this.meetingFileList ? this.meetingFileList.map(item => item.uploadedBy) : [];
+    this.employeeListFile = groupBy(this.employeeListFile, [{ field: 'employeeId' }]);
+    this.employeeListFile = this.employeeListFile.map(item => {
+      return {
+        employeeId: item.items[0].employeeId,
+        employeeName: item.items[0].employeeName
+      };
+    });
+    this.employeeListFile = this.employeeListFile.sort((a, b) => a.employeeId - b.employeeId);
+  }
+  getInterviewTimeListFile() {
+    this.interviewTimesFile = this.meetingFileList ? this.meetingFileList.map(item => item.interviewTimes) : [];
+    this.interviewTimesFile = this.interviewTimesFile.sort((a, b) => a - b);
+    this.interviewTimesFile = this.interviewTimesFile.filter((el, i, a) => i === a.indexOf(el));
   }
   refeshListFile() {
     this.filterFileList(true);
@@ -193,5 +255,319 @@ export class ReportMeetingComponent implements OnInit {
     this.filterFile.createdDate = null;
     this.filterFile.interviewTimes = null;
     this.filterFileList(false);
+  }
+  modalUp(action) {
+    this.actionUpload = action;
+    this.dialogUploadMettingKickOff = this.dialogService.open({
+      content: UploadKickOffComponent,
+      width: 650,
+      minWidth: 250
+    });
+    const instance = this.dialogUploadMettingKickOff.content.instance;
+    instance.callBack = () => this.closePopuup();
+    instance.addAndReload = () => this.addAndReload();
+    instance.action = action;
+  }
+  addAndReload() {
+    this.dialogUploadMettingKickOff.close();
+    switch (this.actionUpload) {
+      case 'report': {
+        this.filterMeetingReportList(false);
+        break;
+      }
+      case 'file': {
+        this.filterFileList(false);
+        break;
+      }
+    }
+  }
+  closePopuup() {
+    this.dialogUploadMettingKickOff.close();
+  }
+  onSelectAllFile(value: boolean) {
+    this.meetingFileList.forEach(x => (x['checkboxSelected'] = value));
+  }
+  downloadMeetingReportOrFile(actionDownload, bidMeetingReportDocId) {
+    this.detailResultPackageService.downloadMeeting(bidMeetingReportDocId).subscribe(response => {
+    },
+      err => {
+        switch (actionDownload) {
+          case 'report': {
+            this.alertService.error('Tải về biên bản cuộc họp không thành công!');
+            break;
+          }
+          case 'file': {
+            this.alertService.error('Tải về file presentation không thành công!');
+          }
+        }
+      });
+  }
+  deleteMeetingReportOrFile(actionDownload, bidMeetingReportDocId) {
+    this.confirmationService.confirm(
+      'Bạn có chắc chắn muốn xóa biên bản được chọn?',
+      () => {
+        this.detailResultPackageService.deleteMeetingReportOrFile(bidMeetingReportDocId).subscribe(response => {
+          switch (actionDownload) {
+            case 'report': {
+              this.alertService.success('Xóa biên bản thành công!');
+              this.filterMeetingReportList(false);
+              break;
+            }
+            case 'file': {
+              this.alertService.success('Xóa file presentation thành công!');
+              this.filterFileList(false);
+            }
+          }
+        }, err => {
+          switch (actionDownload) {
+            case 'report': {
+              this.alertService.error('Xóa biên bản không thành công!');
+              break;
+            }
+            case 'file': {
+              this.alertService.error('Xóa file presentation không thành công!');
+            }
+          }
+        });
+      });
+  }
+  deleteButMeetingReportOrFile(actionDownload) {
+    const listItemCheckbox = [];
+    switch (actionDownload) {
+      case 'report': {
+        this.meetingReportList.forEach(x => {
+          if (x['checkboxSelected'] === true) {
+            listItemCheckbox.push(x.id);
+          }
+        });
+        switch (listItemCheckbox.length) {
+          case 0: {
+            this.alertService.error('Bạn chưa chọn biên bản cần xóa!');
+            break;
+          }
+          case 1: {
+            this.confirmationService.confirm(
+              'Bạn có chắc chắn muốn xóa biên bản được chọn?',
+              () => {
+                this.detailResultPackageService.deleteMeetingReportOrFile(listItemCheckbox[0]).subscribe(response => {
+                  this.filterMeetingReportList(false);
+                  this.alertService.success('Xóa biên bản thành công!');
+                },
+                  err => {
+                    this.alertService.error('Xóa biên bản không thành công!');
+                  });
+              });
+            break;
+          }
+          default: {
+            this.confirmationService.confirm(
+              'Bạn có chắc chắn muốn xóa biên bản được chọn?',
+              () => {
+                this.detailResultPackageService.deleteMutipleMeetingReportOrFile(listItemCheckbox).subscribe(response => {
+                  this.filterMeetingReportList(false);
+                  this.alertService.success('Xóa biên bản thành công!');
+                },
+                  err => {
+                    this.alertService.error('Xóa biên bản không thành công!');
+                  });
+              });
+          }
+        }
+        break;
+      }
+      case 'file': {
+        this.meetingFileList.forEach(x => {
+          if (x['checkboxSelected'] === true) {
+            listItemCheckbox.push(x.id);
+          }
+        });
+        switch (listItemCheckbox.length) {
+          case 0: {
+            this.alertService.error('Bạn chưa chọn file presentation cần xóa!');
+            break;
+          }
+          case 1: {
+            this.confirmationService.confirm(
+              'Bạn có chắc chắn muốn xóa file presentation được chọn?',
+              () => {
+                this.detailResultPackageService.deleteMeetingReportOrFile(listItemCheckbox[0]).subscribe(response => {
+                  this.filterFileList(false);
+                  this.alertService.success('Xóa file presentation thành công!');
+                },
+                  err => {
+                    this.alertService.error('Xóa file presentation không thành công!');
+                  });
+              });
+            break;
+          }
+          default: {
+            this.confirmationService.confirm(
+              'Bạn có chắc chắn muốn xóa file presentation được chọn?',
+              () => {
+                this.detailResultPackageService.deleteMutipleMeetingReportOrFile(listItemCheckbox).subscribe(response => {
+                  this.filterFileList(false);
+                  this.alertService.success('Xóa file presentation thành công!');
+                },
+                  err => {
+                    this.alertService.error('Xóa file presentation không thành công!');
+                  });
+              });
+          }
+        }
+      }
+    }
+  }
+  sortField(fieldSort: string, statusSort: string) {
+    this.currentFieldSortReport = fieldSort;
+    this.statusSortReport = statusSort;
+    switch (statusSort) {
+      case 'asc': {
+        switch (fieldSort) {
+          case 'documentName': {
+            this.meetingReportList = this.meetingReportList.sort((a, b) => {
+              return ('' + a.documentName).localeCompare(b.documentName);
+            });
+            break;
+          }
+          case 'version': {
+            this.meetingReportList = this.meetingReportList.sort((a, b) => {
+              return ('' + a.version).localeCompare(b.version);
+            });
+            break;
+          }
+          case 'employeeName': {
+            this.meetingReportList = this.meetingReportList.sort((a, b) => {
+              return ('' + a.uploadedBy.employeeName).localeCompare(b.uploadedBy.employeeName);
+            });
+            break;
+          }
+          case 'createdDate': {
+            this.meetingReportList = this.meetingReportList.sort((a, b) => a.createdDate - b.createdDate);
+            break;
+          }
+          case 'interviewTimes': {
+            this.meetingReportList = this.meetingReportList.sort((a, b) => a.interviewTimes - b.interviewTimes);
+            break;
+          }
+          case 'meetingTime': {
+            this.meetingReportList = this.meetingReportList.sort((a, b) => a.meetingTime - b.meetingTime);
+            break;
+          }
+        }
+        break;
+      }
+      case 'desc': {
+        switch (fieldSort) {
+          case 'documentName': {
+            this.meetingReportList = this.meetingReportList.sort((a, b) => {
+              return ('' + b.documentName).localeCompare(a.documentName);
+            });
+            break;
+          }
+          case 'version': {
+            this.meetingReportList = this.meetingReportList.sort((a, b) => {
+              return ('' + b.version).localeCompare(a.version);
+            });
+            break;
+          }
+          case 'employeeName': {
+            this.meetingReportList = this.meetingReportList.sort((a, b) => {
+              return ('' + b.uploadedBy.employeeName).localeCompare(a.uploadedBy.employeeName);
+            });
+            break;
+          }
+          case 'createdDate': {
+            this.meetingReportList = this.meetingReportList.sort((a, b) => b.createdDate - a.createdDate);
+            break;
+          }
+          case 'interviewTimes': {
+            this.meetingReportList = this.meetingReportList.sort((a, b) => b.interviewTimes - a.interviewTimes);
+            break;
+          }
+          case 'meetingTime': {
+            this.meetingReportList = this.meetingReportList.sort((a, b) => b.meetingTime - a.meetingTime);
+            break;
+          }
+        }
+        break;
+      }
+      case '': {
+        this.meetingReportList = this.meetingReportList.sort((a, b) => b.id - a.id);
+        break;
+      }
+    }
+  }
+
+  sortFieldFile(fieldSort: string, statusSort: string) {
+    this.currentFieldSortFile = fieldSort;
+    this.statusSortFile = statusSort;
+    switch (statusSort) {
+      case 'asc': {
+        switch (fieldSort) {
+          case 'documentName': {
+            this.meetingFileList = this.meetingFileList.sort((a, b) => {
+              return ('' + a.documentName).localeCompare(b.documentName);
+            });
+            break;
+          }
+          case 'version': {
+            this.meetingFileList = this.meetingFileList.sort((a, b) => {
+              return ('' + a.version).localeCompare(b.version);
+            });
+            break;
+          }
+          case 'employeeName': {
+            this.meetingFileList = this.meetingFileList.sort((a, b) => {
+              return ('' + a.uploadedBy.employeeName).localeCompare(b.uploadedBy.employeeName);
+            });
+            break;
+          }
+          case 'createdDate': {
+            this.meetingFileList = this.meetingFileList.sort((a, b) => a.createdDate - b.createdDate);
+            break;
+          }
+          case 'interviewTimes': {
+            this.meetingFileList = this.meetingFileList.sort((a, b) => a.interviewTimes - b.interviewTimes);
+            break;
+          }
+        }
+        break;
+      }
+      case 'desc': {
+        switch (fieldSort) {
+          case 'documentName': {
+            this.meetingFileList = this.meetingFileList.sort((a, b) => {
+              return ('' + b.documentName).localeCompare(a.documentName);
+            });
+            break;
+          }
+          case 'version': {
+            this.meetingFileList = this.meetingFileList.sort((a, b) => {
+              return ('' + b.version).localeCompare(a.version);
+            });
+            break;
+          }
+          case 'employeeName': {
+            this.meetingFileList = this.meetingFileList.sort((a, b) => {
+              return ('' + b.uploadedBy.employeeName).localeCompare(a.uploadedBy.employeeName);
+            });
+            break;
+          }
+          case 'createdDate': {
+            this.meetingFileList = this.meetingFileList.sort((a, b) => b.createdDate - a.createdDate);
+            break;
+          }
+          case 'interviewTimes': {
+            this.meetingFileList = this.meetingFileList.sort((a, b) => b.interviewTimes - a.interviewTimes);
+            break;
+          }
+        }
+        break;
+      }
+      case '': {
+        this.meetingFileList = this.meetingFileList.sort((a, b) => b.id - a.id);
+        break;
+      }
+    }
   }
 }
