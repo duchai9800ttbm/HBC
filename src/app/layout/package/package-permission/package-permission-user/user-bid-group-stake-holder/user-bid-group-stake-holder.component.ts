@@ -53,38 +53,9 @@ export class UserBidGroupStakeHolderComponent implements OnInit {
           item.customers.push(obj);
         }
       });
-      console.log(this.listStackHolders);
 
     });
   }
-
-  // createForm() {
-  //   this.stakeHolderForm = this.fb.group({
-  //     stakeHolders: this.fb.array([])
-  //   });
-
-  //   this.listStackHolders.forEach(x => {
-  //     const controls = <FormArray>(this.stakeHolderForm.controls.stakeHolders);
-  //     controls.push(this.fb.group({
-  //       groupName: x.groupName,
-  //       customers: this.fb.array([
-  //         (x.customers || []).map(customer => {
-  //           const customerControl = this.fb.group({
-  //             customerId: customer.customerId,
-  //             customerName: customer.customerName,
-  //             contacts: this.fb.array([
-  //               (customer.contacts || []).map(contact => {
-  //                 const contactControl = this.fb.control(contact);
-  //                 return contactControl as FormControl;
-  //               })
-  //             ])
-  //           });
-  //           return customerControl as FormGroup;
-  //         })
-  //       ]) as FormArray
-  //     }));
-  //   });
-  // }
 
   addFormItem(groupId) {
     this.listStackHolders.forEach(item => {

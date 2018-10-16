@@ -85,6 +85,12 @@ export class ApiService {
             .map((res: Response) => res.json());
     }
 
+    getHTML(path: string, params: URLSearchParams = new URLSearchParams()): Observable<any> {
+        return this.http.get(`${environment.api_endpoint}${path}`, { headers: this.setHeaders(), search: params })
+            .catch(this.formatErrors.bind(this))
+            .map((res: Response) => res);
+    }
+
     getFileHBC(path: string, params: URLSearchParams = new URLSearchParams()): Observable<any> {
         return this.http.get(`${environment.api_endpoint}${path}`, {
             headers: this.setHeaders(), search: params,

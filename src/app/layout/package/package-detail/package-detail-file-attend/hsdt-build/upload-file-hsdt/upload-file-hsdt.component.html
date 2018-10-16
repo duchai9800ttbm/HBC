@@ -33,10 +33,10 @@
                                 <td class="w-30 label no-boder bold-title">Hoặc</td>
                                 <td class="no-boder d-flex justify-content-between">
                                     <div class="fileUpload">
-                                        <button class="btn btn-primary" [disabled]="uploadForm.get('linkFile').value">
+                                        <button class="btn btn-primary" [disabled]="lockLink">
                                             <i class="fa fa-cloud-upload" aria-hidden="true"></i>&nbsp;&nbsp;
                                             Chọn File</button>
-                                        <input type="file" class="upload" tabindex="2" [disabled]="uploadForm.get('linkFile').value"
+                                        <input type="file" class="upload" tabindex="2" [disabled]="lockLink"
                                             (change)="uploadFile($event)" />
                                     </div>
                                     <div style="width: calc(100% - 120px);" class="d-flex justify-content-between">

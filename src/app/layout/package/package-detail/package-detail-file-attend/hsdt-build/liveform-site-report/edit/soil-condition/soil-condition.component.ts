@@ -106,8 +106,8 @@ export class SoilConditionComponent implements OnInit {
   }
   deleteFootingImage(i) {
     const index = this.footingImageUrls.indexOf(i);
-    if (i.id) {
-      this.siteSurveyReportService.deleteImageSiteSurveyingReport(i.id).subscribe(res => {
+    if (i.guid) {
+      this.siteSurveyReportService.deleteImageSiteSurveyingReport(i.guid).subscribe(res => {
 
       }, err => {
         this.alertService.error('Đã xảy ra lỗi, hình ảnh xóa không thành công');
@@ -135,8 +135,8 @@ export class SoilConditionComponent implements OnInit {
   }
   deleteInvestigationImage(i) {
     const index = this.investigationImageUrls.indexOf(i);
-    if (i.id) {
-      this.siteSurveyReportService.deleteImageSiteSurveyingReport(i.id).subscribe(res => {
+    if (i.guid) {
+      this.siteSurveyReportService.deleteImageSiteSurveyingReport(i.guid).subscribe(res => {
 
       }, err => {
         this.alertService.error('Đã xảy ra lỗi, hình ảnh xóa không thành công');

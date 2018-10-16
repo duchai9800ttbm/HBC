@@ -13,7 +13,7 @@
     </div>
 
     <div class="mt-4" *ngIf="summaryCondition">
-        <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger">
+        <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="table-selection stripe row-border hover cell-border dataTable">
             <thead>
                 <tr>
 
@@ -64,7 +64,7 @@
         <h5 class="text-uppercase mb-3">Lịch sử cập nhật</h5>
     </div>
     <div class="table-responsive">
-        <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger2" class="w-100 table-layout--fixed">
+        <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger2" class="table-selection stripe row-border hover cell-border dataTable">
             <thead>
                 <tr>
                     <th class="text-center w-5">STT</th>
@@ -86,7 +86,7 @@
                     <td>
                         <div class="text-truncate" [title]="itemByChangedTimes.items[0].updateDesc">{{itemByChangedTimes.items[0].updateDesc}}</div>
                     </td>
-                    <td>
+                    <td class="font-size-90">
                         <div *ngIf="itemByChangedTimes.items && itemByChangedTimes.items !== 0">
                             <div *ngFor="let itemByChangeTime of itemByChangedTimes.items">
                                 <div *ngFor="let itemByLiveFormChanged of itemByChangeTime.liveFormChangeds">

@@ -76,7 +76,7 @@
               {{item.desc}}
             </td>
             <td class="text-truncate">
-              {{ item.createdTime === 0 ? '' : (item.createdTime)*1000 | date:'dd/MM/yyyy'}}
+              {{ item.createdTime === 0 ? '' : (item.createdTime)*1000 | date:'dd/MM/yyyy': '+0000'}}
             </td>
             <td class="text-truncate">
               {{item.isUsing === true ? 'Đã sử dụng' : 'Chưa sử dụng'}}

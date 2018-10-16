@@ -16,6 +16,8 @@ import { NotificationService } from '../../../../../shared/services/notification
 import { ProposedTenderParticipationHistory } from '../../../../../shared/models/api-response/package/proposed-tender-participation-history.model';
 import { PagedResult } from '../../../../../shared/models';
 import { GroupDescriptor, DataResult, process, groupBy } from '@progress/kendo-data-query';
+import { DialogService } from '../../../../../../../node_modules/@progress/kendo-angular-dialog';
+import { FormInComponent } from '../../../../../shared/components/form-in/form-in.component';
 
 @Component({
   selector: 'app-need-create-tender',
@@ -38,6 +40,8 @@ export class NeedCreateTenderComponent implements OnInit {
   reasonApproveBid = '';
   pagedResultChangeHistoryList: PagedResult<ProposedTenderParticipationHistory[]> = new PagedResult<ProposedTenderParticipationHistory[]>();
   historyList;
+  dialog;
+
   // get expectedDate() {
   //   return
   // }
@@ -48,6 +52,7 @@ export class NeedCreateTenderComponent implements OnInit {
     private statusObservableHsdtService: StatusObservableHsdtService,
     private confirmService: ConfirmationService,
     private notificationService: NotificationService,
+    private dialogService: DialogService
   ) { }
 
   ngOnInit() {
@@ -131,30 +136,16 @@ export class NeedCreateTenderComponent implements OnInit {
   }
 
   printForm() {
-    const printContent = document.getElementById('divPrint');
-    const WindowPrt = window.open('', '', 'left=0,top=0,width=900,height=900,toolbar=0,scrollbars=0,status=0');
-    WindowPrt.document.write(`
-      <html>
-        <head>
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-        <style type="text/css">
-        .logo-hbc {
-            max-width: 50%;
-            object-fit: contain;
-            max-height: 10em;
-        }
-        </style>
-        </head>
-        <body>
-          ${printContent.innerHTML}
-        </body>
-      </html>`);
-    WindowPrt.document.close();
-    WindowPrt.focus();
-    setTimeout(() => {
-      WindowPrt.print();
-      WindowPrt.close();
-    }, 250);
+    this.dialog = this.dialogService.open({
+      title: 'FORM IN',
+      content: FormInComponent,
+      width: window.screen.availWidth * 0.8,
+      minWidth: 250,
+      height: window.screen.availHeight * 0.7
+    });
+    const instance = this.dialog.content.instance;
+    instance.type = 'LiveFormPhieuDeNghiDuThau';
+    instance.packageId = this.bidOpportunityId;
   }
 
   sendApproveBidProposal() {

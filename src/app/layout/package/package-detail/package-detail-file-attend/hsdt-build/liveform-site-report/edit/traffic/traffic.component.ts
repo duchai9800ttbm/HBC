@@ -155,8 +155,8 @@ export class TrafficComponent implements OnInit {
   }
   deleteDisadvantageImage(i) {
     const index = this.disadvantageImageUrls.indexOf(i);
-    if (i.id) {
-      this.siteSurveyReportService.deleteImageSiteSurveyingReport(i.id).subscribe(res => {
+    if (i.guid) {
+      this.siteSurveyReportService.deleteImageSiteSurveyingReport(i.guid).subscribe(res => {
 
       }, err => {
         this.alertService.error('Đã xảy ra lỗi, hình ảnh xóa không thành công');
@@ -184,8 +184,8 @@ export class TrafficComponent implements OnInit {
   }
   deleteAdvantageImage(i) {
     const index = this.advantageImageUrls.indexOf(i);
-    if (i.id) {
-      this.siteSurveyReportService.deleteImageSiteSurveyingReport(i.id).subscribe(res => {
+    if (i.guid) {
+      this.siteSurveyReportService.deleteImageSiteSurveyingReport(i.guid).subscribe(res => {
 
       }, err => {
         this.alertService.error('Đã xảy ra lỗi, hình ảnh xóa không thành công');
@@ -213,8 +213,8 @@ export class TrafficComponent implements OnInit {
   }
   deleteDirectionImage(i) {
     const index = this.directionImageUrls.indexOf(i);
-    if (i.id) {
-      this.siteSurveyReportService.deleteImageSiteSurveyingReport(i.id).subscribe(res => {
+    if (i.guid) {
+      this.siteSurveyReportService.deleteImageSiteSurveyingReport(i.guid).subscribe(res => {
 
       }, err => {
         this.alertService.error('Đã xảy ra lỗi, hình ảnh xóa không thành công');
@@ -242,8 +242,8 @@ export class TrafficComponent implements OnInit {
   }
   deleteExistingImage(i) {
     const index = this.existingImageUrls.indexOf(i);
-    if (i.id) {
-      this.siteSurveyReportService.deleteImageSiteSurveyingReport(i.id).subscribe(res => {
+    if (i.guid) {
+      this.siteSurveyReportService.deleteImageSiteSurveyingReport(i.guid).subscribe(res => {
 
       }, err => {
         this.alertService.error('Đã xảy ra lỗi, hình ảnh xóa không thành công');
@@ -271,8 +271,8 @@ export class TrafficComponent implements OnInit {
   }
   deleteRoadImage(i) {
     const index = this.roadImageUrls.indexOf(i);
-    if (i.id) {
-      this.siteSurveyReportService.deleteImageSiteSurveyingReport(i.id).subscribe(res => {
+    if (i.guid) {
+      this.siteSurveyReportService.deleteImageSiteSurveyingReport(i.guid).subscribe(res => {
 
       }, err => {
         this.alertService.error('Đã xảy ra lỗi, hình ảnh xóa không thành công');
@@ -300,8 +300,8 @@ export class TrafficComponent implements OnInit {
   }
   deleteFenceImage(i) {
     const index = this.fenceImageUrls.indexOf(i);
-    if (i.id) {
-      this.siteSurveyReportService.deleteImageSiteSurveyingReport(i.id).subscribe(res => {
+    if (i.guid) {
+      this.siteSurveyReportService.deleteImageSiteSurveyingReport(i.guid).subscribe(res => {
 
       }, err => {
         this.alertService.error('Đã xảy ra lỗi, hình ảnh xóa không thành công');

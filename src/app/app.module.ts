@@ -41,6 +41,7 @@ import '@progress/kendo-ui';
 import { NG_SELECT_DEFAULT_CONFIG } from '../../node_modules/@ng-select/ng-select';
 import { NotificationService } from './shared/services/notification.service';
 import { InterviewInvitationService } from './shared/services/interview-invitation.service';
+import { PrintingDocumentService } from './shared/services/printing-document.service';
 
 // AoT requires an exported function for factories
 export function createTranslateLoader(http: HttpClient) {
@@ -98,6 +99,7 @@ registerLocaleData(localeFrCa, localeFrCaExtra);
         PackageSuccessService,
         EmailService,
         LayoutService,
+        PrintingDocumentService,
         InterviewInvitationService,
         { provide: LocationStrategy, useClass: HashLocationStrategy },
         {

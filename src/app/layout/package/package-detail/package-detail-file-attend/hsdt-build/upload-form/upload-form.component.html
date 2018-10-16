@@ -119,7 +119,7 @@
                     </th>
 
                     <th [class.d-none]="!isTypeChildDoc" class="boder-table header-table large-column set-width-of-type"
-                        style="width: 15%">
+                        style="width: 15%; min-width: 100px;">
                         <div class="d-flex justify-content-center">
                             <div class="center-parent title-text">
                                 <div class="label-thead text-center">Loại tài liệu</div>
@@ -212,7 +212,8 @@
                                 class="remove-border boder-table">
 
                                 <div class="d-flex  document-type center-parent">
-                                    <div [title]="hoso.tenderDocumentType.name" class="set-width-text-type" [class.text-truncate-custom]="loaihoso.items.length==1" [class.td-group]="loaihoso.items.length>1">
+                                    <div [title]="hoso.tenderDocumentType.name" class="set-width-text-type"
+                                        [class.text-truncate-custom]="loaihoso.items.length==1" [class.td-group]="loaihoso.items.length>1">
                                         {{ hoso.tenderDocumentType?.name }}
                                     </div>
                                     <div (click)="showDialogUploadFile(hoso.tenderDocumentType.id)" title="Upload tài liệu"
@@ -223,12 +224,16 @@
                             </td>
                             <td *ngIf="k != 0" class="d-none"></td>
 
-                            <td class="boder-table text-center text-truncate-custom" [title]="hoso.documentName">
-                                {{ hoso?.documentName }}</td>
+                            <td class="boder-table text-center text-truncate-custom" [title]="hoso.documentName"
+                                (click)="viewDetail(hoso)">
+                                <a href="javascript:;" class="text-center">
+                                    {{ hoso?.documentName }}
+                                </a>
+                            </td>
                             <td class="boder-table text-center text-truncate">
                                 {{ hoso?.version ? hoso?.version : '' }}
                             </td>
-                            <td class="boder-table text-center text-truncate-custom" [title]="hoso.desc">
+                            <td class="boder-table text-center text-truncate-custom" [title]="(hoso?.desc)? hoso.desc : ''">
                                 {{ hoso?.desc }}
                             </td>
                             <td class="td-mark-status boder-table">
@@ -257,7 +262,7 @@
                                             <i class="fa fa-download color-item-down" aria-hidden="true"></i>
                                         </a>
                                     </div>
-                                    <div class="pointer-link" *ngIf="hoso.fileUrl">
+                                    <div class="pointer-link" *ngIf="hoso.fileUrl" title="Xem file">
                                         <a [href]="hoso.fileUrl" target="_blank">
                                             <i class="fa fa-external-link color-item-down" aria-hidden="true"></i>
                                         </a>
@@ -278,9 +283,6 @@
     </div>
 
     <div>
-        <div class="mt-4" *ngIf="dataDocumentOfType?.length">
-            <app-pagination [(pagedResult)]="pagedResult" (pagedResultChange)="pagedResultChange($event)"></app-pagination>
-        </div>
         <div class="mt-4" class="center-parent mt-3" *ngIf="!dataDocumentOfType?.length">
             <div>
                 Không có dữ liệu!
@@ -288,5 +290,6 @@
         </div>
     </div>
 </div>
-
+<app-view-detail-file [model]="currentItem" [currentMajorType]="{currentMajorTypeId: currentMajorTypeId, currentMajorTypeText: currentMajorTypeText}"
+    *ngIf="showPopupDetail" (closed)="closePopupDetail($event)"></app-view-detail-file>
 <ngx-spinner bdColor="rgba(51, 51, 51, 0.7)" size="medium" color="#fff" type="ball-clip-rotate-multiple"></ngx-spinner>

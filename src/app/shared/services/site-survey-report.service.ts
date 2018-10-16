@@ -60,16 +60,15 @@ export class SiteSurveyReportService {
       if (!res.result) {
         return null;
       } else {
-        this.toSiteSurveyReport(res.result, bidOpportunityId);
+        return this.toSiteSurveyReport(res.result, bidOpportunityId);
       }
     });
   }
 
   // Xóa ảnh báo cáo công trình
-  deleteImageSiteSurveyingReport(guid): Observable<any> {
+  deleteImageSiteSurveyingReport(guid) {
     const url = `bidopportunity/tendersitesurveyingreport/deleteimage`;
-    return null; // tạm thời disable
-    // return this.apiService.post(url, guid);
+    return this.apiService.post(url, guid);
   }
 
   // Upload ảnh
@@ -96,8 +95,10 @@ export class SiteSurveyReportService {
       bidOpportunityId: obj.bidOpportunityId,
       createdEmployeeId: (obj.nguoiTao) ? obj.nguoiTao.id : this.employeeId,
       updatedEmployeeId: this.employeeId,
-      departmentId: obj.phongBan && obj.phongBan.id,
-      surveyEmployeeId: obj.nguoiCapNhat && obj.nguoiCapNhat.id,
+      isDraftVersion: obj.isDraft,
+      departmentId: (obj.phongBan) ? obj.phongBan.id : 0,
+      surveyEmployeeId: (obj.nguoiKhaoSat) ? obj.nguoiKhaoSat.id : 0,
+      documentName: (obj.scaleOverall) ? obj.scaleOverall.tenTaiLieu : '',
       projectStatistic: obj.scaleOverall && {
         projectStatistic: {
           constructionType: obj.scaleOverall.loaiCongTrinh && obj.scaleOverall.loaiCongTrinh.forEach(x => ({
@@ -111,7 +112,6 @@ export class SiteSurveyReportService {
             checked: x.checked
           })),
           projectScale: obj.scaleOverall.quyMoDuAn && {
-            documentName: (obj.scaleOverall.tenTaiLieu) ? obj.scaleOverall.tenTaiLieu : '',
             interviewTimes: (obj.scaleOverall.lanPhongVan) ? obj.scaleOverall.lanPhongVan : 0,
             siteArea: (obj.scaleOverall.quyMoDuAn.dienTichCongTruong) ? obj.scaleOverall.quyMoDuAn.dienTichCongTruong : 0,
             grossFloorArea: (obj.scaleOverall.quyMoDuAn.tongDienTichXayDung) ? obj.scaleOverall.quyMoDuAn.tongDienTichXayDung : 0,
@@ -253,7 +253,7 @@ export class SiteSurveyReportService {
         id: this.employeeId,
         name: ''
       };
-      dataFormated.isDraftVersion = true;
+      dataFormated.isDraft = true;
       dataFormated.nguoiKhaoSat = model.surveyEmployee && {
         id: model.surveyEmployee.employeeId,
         text: model.surveyEmployee.employeeName
@@ -299,30 +299,28 @@ export class SiteSurveyReportService {
         id: model.createdEmployee.employeeId,
         name: model.createdEmployee.employeeName
       };
-      dataFormated.ngayTao = model.createTime;
-      dataFormated.lanCapNhat = null;
       dataFormated.nguoiCapNhat = model.updatedEmployee && {
         id: model.updatedEmployee.employeeId,
         name: model.updatedEmployee.employeeName
       };
-      dataFormated.ngayCapNhat = model.updateTime;
-      dataFormated.noiDungCapNhat = '';
-      dataFormated.isDraftVersion = model.isDraftVersion;
-      dataFormated.nguoiKhaoSat = model.surveyEmployee && {
-        id: model.surveyEmployee.employeeId,
-        text: model.surveyEmployee.employeeName
-      };
+      dataFormated.isDraft = model.isDraftVersion;
       dataFormated.phongBan = model.department && {
         id: model.department.id,
         text: model.department.departmentName
       };
-      dataFormated.tenTaiLieu = (model.projectStatistic.projectStatistic) ?
-        model.projectStatistic.projectStatistic.projectScale.documentName : '';
+      dataFormated.ngayTao = model.createTime;
+      dataFormated.lanCapNhat = null;
+      dataFormated.ngayCapNhat = model.updateTime;
+      dataFormated.noiDungCapNhat = '';
+      dataFormated.nguoiKhaoSat = model.surveyEmployee && {
+        id: model.surveyEmployee.employeeId,
+        text: model.surveyEmployee.employeeName
+      };
+      dataFormated.tenTaiLieu = model.documentName;
       dataFormated.lanPhongVan = (model.projectStatistic.projectStatistic) ?
         model.projectStatistic.projectStatistic.projectScale.interviewTimes : null;
       dataFormated.scaleOverall = {
-        tenTaiLieu: (model.projectStatistic.projectStatistic) ?
-          model.projectStatistic.projectStatistic.projectScale.documentName : '',
+        tenTaiLieu: model.documentName,
         lanPhongVan: (model.projectStatistic.projectStatistic) ?
           model.projectStatistic.projectStatistic.projectScale.interviewTimes : null,
         loaiCongTrinh: (model.projectStatistic.projectStatistic.constructionType || []).map(x => ({
