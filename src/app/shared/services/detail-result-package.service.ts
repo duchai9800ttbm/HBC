@@ -14,6 +14,7 @@ import { NeedTranferDocList } from '../models/result-attend/need-transfer-doc-li
 import { NeedTransferDoc } from '../models/result-attend/need-transfer-doc.model';
 import { ReportMeetingList } from '../models/result-attend/report-meeting-list.model';
 import { FilterReportMeeting } from '../models/result-attend/filter-report-meeting.model';
+import { ManageNeedTranferList } from '../models/result-attend/manage-need-transfer-list.model';
 @Injectable()
 export class DetailResultPackageService {
   listFileResult: Subject<any> = new Subject();
@@ -185,32 +186,32 @@ export class DetailResultPackageService {
       },
       needTransferDocument: result.needTransferDocument ? result.needTransferDocument.map(itemNeedTransferDocument => {
         return {
-          documentType: {
+          documentType: itemNeedTransferDocument.documentType ? {
             key: itemNeedTransferDocument.documentType.key,
             value: itemNeedTransferDocument.documentType.value,
             displayText: itemNeedTransferDocument.documentType.displayText,
-          },
-          document: {
+          } : null,
+          document: itemNeedTransferDocument.document ? {
             type: itemNeedTransferDocument.document.type,
             id: itemNeedTransferDocument.document.id,
             name: itemNeedTransferDocument.document.name,
             interviewTime: itemNeedTransferDocument.document.interviewTime,
             isLiveForm: itemNeedTransferDocument.document.isLiveForm,
-          },
+          } : null,
           childDocuments: itemNeedTransferDocument.childDocuments ? itemNeedTransferDocument.childDocuments.map(itemChildDocuments => {
             return {
-              documentType: {
+              documentType: itemChildDocuments.documentType ? {
                 key: itemChildDocuments.documentType.key,
                 value: itemChildDocuments.documentType.value,
                 displayText: itemChildDocuments.documentType.displayText,
-              },
-              document: {
+              } : null,
+              document: itemChildDocuments.document ? {
                 type: itemChildDocuments.document.type,
                 id: itemChildDocuments.document.id,
                 name: itemChildDocuments.document.name,
                 interviewTime: itemChildDocuments.document.interviewTime,
                 isLiveForm: itemChildDocuments.document.isLiveForm,
-              }
+              } : null
             };
           }) : null,
         };
@@ -285,6 +286,50 @@ export class DetailResultPackageService {
   NeedTransferDoc(needTransferdoc: NeedTransferDoc) {
     const url = `bidopportunity/kqdt/chuyengiaotailieu`;
     return this.apiService.post(url, needTransferdoc);
+  }
+  // to Map theo model của quản lý người nhận tài liệu
+  toManageTransferDocs(result: any): ManageNeedTranferList {
+    return {
+      id: result.id,
+      document: result.document ? {
+        type: result.document.type,
+        id: result.document.id,
+        name: result.document.name,
+        interviewTime: result.document.interviewTime,
+        isLiveForm: result.document.isLiveForm,
+      } : null,
+      department: result.department ? {
+        key: result.department.key,
+        value: result.department.value,
+        displayText: result.department.displayText,
+      } : null,
+      receivedEmployee: result.receivedEmployee ? {
+        employeeId: result.receivedEmployee.employeeId,
+        employeeNo: result.receivedEmployee.employeeNo,
+        employeeName: result.receivedEmployee.employeeName,
+        employeeAvatar: result.receivedEmployee.employeeAvatar ? {
+          guid: result.receivedEmployee.employeeAvatar.employeeAvatar,
+          thumbSizeUrl: result.receivedEmployee.employeeAvatar.thumbSizeUrl,
+          largeSizeUrl: result.receivedEmployee.employeeAvatar.largeSizeUrl,
+        } : null,
+        employeeEmail: result.receivedEmployee.employeeEmail,
+      } : null,
+      receiveStatus: result.receiveStatus ? {
+        key: result.receiveStatus.key,
+        value: result.receiveStatus.value,
+        displayText: result.receiveStatus.displayText,
+      } : null,
+    };
+  }
+  // Quản lý người nhận tài liệu
+  manageTransferDocs(bidOpportunityId: number) {
+    const url = `bidopportunitys/${bidOpportunityId}/transferdocdetail`;
+    return this.apiService.get(url).map(response => {
+      const result = response.result;
+      return (result.items || []).map(
+        this.toManageTransferDocs
+      );
+    });
   }
   // =============================
   // Bước 2, hợp đồng ký kết

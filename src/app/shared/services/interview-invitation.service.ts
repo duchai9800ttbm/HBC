@@ -405,7 +405,11 @@ export class InterviewInvitationService {
     formData.append('DocumentName', `${createFormReportValue.documentName}`);
     formData.append('DocumentDesc', `${createFormReportValue.documentDesc}`);
     formData.append('InterviewTimes', `${createFormReportValue.interviewTimes}`);
-    formData.append('DocumentFile', file);
+    if (file) {
+      formData.append('DocumentFile', file);
+    } else {
+      formData.append('FileUrl', `${createFormReportValue.link}`);
+    }
     return this.apiService.postFile(url, formData)
       .map(response => response)
       .share();

@@ -186,7 +186,7 @@
                             <td class="hsmt-head th text-center" [ngClass]="{'w12' : isManageTransfer==true, 'w15' : isManageTransfer==false}">
                                 <div class="ml-sm-2">
                                     <span class="custom-dropdown custom-dropdown-v2 mx-sm-2">
-                                        <select class="form-control">
+                                        <select class="form-control" [(ngModel)]="defaulttransferNameHSMT">
                                             <option [ngValue]="null">---Chọn phòng ban---</option>
                                             <option *ngFor="let item of departments | async" [value]="item.id">{{item.departmentName }}</option>
                                         </select>
@@ -194,57 +194,68 @@
                                 </div>
                             </td>
                             <td class="hsmt-head th select-filter text-center w10 edit-number">
-                                <input [(ngModel)]="numberDateHSMT" appInputDate min="0" class="form-control number-date--pad" placeholder="Number" [ngClass]="{'w80' : isManageTransfer==true}">
+                                <input [(ngModel)]="defaultdateUseHSMT" appInputDate min="0" class="form-control number-date--pad" placeholder="Number" [ngClass]="{'w80' : isManageTransfer==true}">
                                 <i class="fa fa-pencil edit-number--posotion"></i>
                             </td>
                             <td class="hsmt-head th w10"></td>
                             <td class="hsmt-head th w10"></td>
                         </tr>
-                        <tr *ngFor="let item of data; let i = index">
-                            <td class="stt w5 bg-default wstt">
-                                <div class="d-flex justify-content-around">
-                                    <div style="width: 40%;">
-                                        <div class="center-parent">
-                                            <label class="custom-control custom-checkbox">
-                                                <input type="checkbox" class="custom-control-input" [(ngModel)]="item.checkboxSelected">
-                                                <span class="custom-control-indicator"></span>
-                                            </label>
+                        <form [formGroup]="formHSMTTranferDoc" *ngIf="formHSMTTranferDoc">
+                            <ng-container formArrayName="docs">
+                                <tr *ngFor="let item of docHSMTList; let i = index">
+                                    <td class="stt w5 bg-default wstt">
+                                        <div class="d-flex justify-content-around">
+                                            <div style="width: 40%;">
+                                                <div class="center-parent">
+                                                    <label class="custom-control custom-checkbox">
+                                                        <input type="checkbox" class="custom-control-input" [(ngModel)]="item.checkboxSelected">
+                                                        <span class="custom-control-indicator"></span>
+                                                    </label>
+                                                </div>
+                                            </div>
+                                            <div style="width: 35%;" class="center-parent">
+                                                <div>{{i+1}}</div>
+                                            </div>
+                                            <div class="center-parent" style="width: 15%;padding-left: 5px;">
+                                                <div class="ng-tns-c15-6">
+                                                </div>
+                                            </div>
                                         </div>
-                                    </div>
-                                    <div style="width: 35%;" class="center-parent">
-                                        <div>{{i+1}}</div>
-                                    </div>
-                                    <div class="center-parent" style="width: 15%;padding-left: 5px;">
-                                        <div class="ng-tns-c15-6">
+                                    </td>
+                                    <td [ngClass]="{'w12' : isManageTransfer==true, 'w15' : isManageTransfer==false}">{{ item.documentType?.value }}</td>
+                                    <td [ngClass]="{'w12' : isManageTransfer==true, 'w15' : isManageTransfer==false}">{{ item.document }}</td>
+                                    <td [ngClass]="{'w12' : isManageTransfer==true, 'w15' : isManageTransfer==false}">{{ item.documentName }}</td>
+                                    <td *ngIf="isManageTransfer" class="select-filter text-center td-input w10">
+                                        <div class="ml-sm-2">
+                                            <span class="custom-dropdown custom-dropdown-v2 mx-sm-2">
+                                                <select class="form-control" formControlName="transferName">
+                                                    <option [ngValue]="null">---Chọn phòng ban---</option>
+                                                    <option *ngFor="let item of departments | async" [value]="item.id">{{item.departmentName }}</option>
+                                                </select>
+                                            </span>
                                         </div>
-                                    </div>
-                                </div>
-                            </td>
-                            <td [ngClass]="{'w12' : isManageTransfer==true, 'w15' : isManageTransfer==false}">{{ item.documentType }}</td>
-                            <td [ngClass]="{'w12' : isManageTransfer==true, 'w15' : isManageTransfer==false}">{{ item.documentData }}</td>
-                            <td [ngClass]="{'w12' : isManageTransfer==true, 'w15' : isManageTransfer==false}">{{ item.documentName }}</td>
-                            <!-- <td class="select-filter w15">{{ item.documentRom}}</td> -->
-                            <td *ngIf="isManageTransfer" class="select-filter text-center td-input w10">
-                                <input autocomplete="off" class="form-control" type="text" name="item.dateNo" value="{{item.dateNo}}">
-                            </td>
-                            <td *ngIf="!isManageTransfer" class="select-filter text-center w10">{{ item.dateNo}}</td>
-                            <!-- <td *ngIf="isManageTransfer" class="select-filter text-center w12">{{ item.timeTransfer}}</td> -->
-                            <td class="select-filter text-center w10">{{ item.interviewNo}}</td>
-                            <td class="text-center" [ngClass]="{'w6' : isManageTransfer==true, 'w10' : isManageTransfer==false}">
-                                <div class="d-flex justify-content-around">
-                                    <div id="mr">
-                                        <a title="Tải file" (click)="downloadFileItem(item.id)">
-                                            <i class="fa fa-download color-item-down" aria-hidden="true"></i>
-                                        </a>
-                                    </div>
-                                    <div>
-                                        <a title="In">
-                                            <i class="fa fa-print color-item-print" aria-hidden="true"></i>
-                                        </a>
-                                    </div>
-                                </div>
-                            </td>
-                        </tr>
+                                    </td>
+                                    <td *ngIf="!isManageTransfer" class="select-filter text-center w10">
+                                        <input formControlName="dateUse" appInputDate min="0" class="form-control number-date--pad" placeholder="Number" [ngClass]="{'w80' : isManageTransfer==true}">
+                                    </td>
+                                    <td class="select-filter text-center w10">{{ item.interviewNo}}</td>
+                                    <td class="text-center" [ngClass]="{'w6' : isManageTransfer==true, 'w10' : isManageTransfer==false}">
+                                        <div class="d-flex justify-content-around">
+                                            <div id="mr">
+                                                <a title="Tải file" (click)="downloadFileItem(item.id)">
+                                                    <i class="fa fa-download color-item-down" aria-hidden="true"></i>
+                                                </a>
+                                            </div>
+                                            <div>
+                                                <a title="In">
+                                                    <i class="fa fa-print color-item-print" aria-hidden="true"></i>
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </ng-container>
+                        </form>
                         <!-- Hồ sơ dự thầu -->
                         <tr>
                             <td colspan="4" class="stt hsmt-head th" [ngClass]="{'w-custom' : isManageTransfer==true, 'w50' : isManageTransfer==false}">
@@ -255,7 +266,7 @@
                             <td class="hsmt-head th text-center" [ngClass]="{'w12' : isManageTransfer==true, 'w15' : isManageTransfer==false}">
                                 <div class="ml-sm-2">
                                     <span class="custom-dropdown custom-dropdown-v2 mx-sm-2">
-                                        <select class="form-control">
+                                        <select class="form-control" [(ngModel)]="defaulttransferNameHSDT">
                                             <option [ngValue]="null">---Chọn phòng ban---</option>
                                             <option *ngFor="let item of departments | async" [value]="item.id">{{item.departmentName }}</option>
                                         </select>
@@ -263,60 +274,69 @@
                                 </div>
                             </td>
                             <td class="hsmt-head th select-filter text-center w10 edit-number">
-                                <input [(ngModel)]="numberDateHSDT" appInputDate class="form-control number-date--pad" placeholder="Number" [ngClass]="{'w80' : isManageTransfer==true}">
+                                <input [(ngModel)]="defaultdateUseHSDT" appInputDate class="form-control number-date--pad" placeholder="Number" [ngClass]="{'w80' : isManageTransfer==true}">
                                 <i class="fa fa-pencil edit-number--posotion"></i>
                             </td>
                             <td class="hsmt-head th w10"></td>
                             <td class="hsmt-head th w10"></td>
                         </tr>
                         <!-- Dữ liệu tài liệu dự thầu -->
-                        <tr *ngFor="let item of data; let i = index">
-                            <td class="stt wstt">
-                                <div class="d-flex justify-content-around">
-                                    <div style="width: 40%;">
-                                        <div class="center-parent">
-                                            <label class="custom-control custom-checkbox">
-                                                <input type="checkbox" class="custom-control-input" [(ngModel)]="item.checkboxSelected">
-                                                <span class="custom-control-indicator"></span>
-                                            </label>
-                                        </div>
-                                    </div>
+                        <form [formGroup]="formHSDTTranferDoc" *ngIf="formHSDTTranferDoc">
+                            <ng-container formArrayName="docs">
+                                <tr *ngFor="let item of data; let i = index">
+                                    <td class="stt wstt">
+                                        <div class="d-flex justify-content-around">
+                                            <div style="width: 40%;">
+                                                <div class="center-parent">
+                                                    <label class="custom-control custom-checkbox">
+                                                        <input type="checkbox" class="custom-control-input" [(ngModel)]="item.checkboxSelected">
+                                                        <span class="custom-control-indicator"></span>
+                                                    </label>
+                                                </div>
+                                            </div>
 
-                                    <div style="width: 35%;" class="center-parent">
-                                        <div>{{i+1}}</div>
-                                    </div>
-                                    <div class="center-parent" style="width: 15%;padding-left: 5px;">
-                                        <div class="ng-tns-c15-6">
+                                            <div style="width: 35%;" class="center-parent">
+                                                <div>{{i+1}}</div>
+                                            </div>
+                                            <div class="center-parent" style="width: 15%;padding-left: 5px;">
+                                                <div class="ng-tns-c15-6">
 
+                                                </div>
+                                            </div>
                                         </div>
-                                    </div>
-                                </div>
-                            </td>
-                            <td [ngClass]="{'w12' : isManageTransfer==true, 'w15' : isManageTransfer==false}">{{ item.documentType }}</td>
-                            <td [ngClass]="{'w12' : isManageTransfer==true, 'w15' : isManageTransfer==false}">{{ item.documentData }}</td>
-                            <td [ngClass]="{'w12' : isManageTransfer==true, 'w15' : isManageTransfer==false}">{{ item.documentName }}</td>
-                            <!-- <td class="select-filter w15">{{ item.documentRom}}</td> -->
-                            <td *ngIf="isManageTransfer" class="select-filter text-center td-input w10">
-                                <input autocomplete="off" class="form-control" type="text" name="item.dateNo" value="{{item.dateNo}}">
-                            </td>
-                            <td *ngIf="!isManageTransfer" class="select-filter text-center w10">{{ item.dateNo}}</td>
-                            <!-- <td *ngIf="isManageTransfer" class="select-filter text-center w12">{{ item.timeTransfer}}</td> -->
-                            <td class="select-filter text-center w10">{{ item.interviewNo}}</td>
-                            <td class="text-center" [ngClass]="{'w6' : isManageTransfer==true, 'w10' : isManageTransfer==false}">
-                                <div class="d-flex justify-content-around">
-                                    <div id="mr">
-                                        <a title="Tải file" (click)="downloadFileItem(item.id)">
-                                            <i class="fa fa-download color-item-down" aria-hidden="true"></i>
-                                        </a>
-                                    </div>
-                                    <div>
-                                        <a title="In">
-                                            <i class="fa fa-print color-item-print" aria-hidden="true"></i>
-                                        </a>
-                                    </div>
-                                </div>
-                            </td>
-                        </tr>
+                                    </td>
+                                    <td [ngClass]="{'w12' : isManageTransfer==true, 'w15' : isManageTransfer==false}">{{ item.documentType }}</td>
+                                    <td [ngClass]="{'w12' : isManageTransfer==true, 'w15' : isManageTransfer==false}">{{ item.documentData }}</td>
+                                    <td [ngClass]="{'w12' : isManageTransfer==true, 'w15' : isManageTransfer==false}">{{ item.documentName }}</td>
+                                    <td *ngIf="isManageTransfer" class="select-filter text-center td-input w10">
+                                        <div class="ml-sm-2">
+                                            <span class="custom-dropdown custom-dropdown-v2 mx-sm-2">
+                                                <select class="form-control" formControlName="transferName">
+                                                    <option [ngValue]="null">---Chọn phòng ban---</option>
+                                                    <option *ngFor="let item of departments | async" [value]="item.id">{{item.departmentName }}</option>
+                                                </select>
+                                            </span>
+                                        </div>
+                                    </td>
+                                    <input formControlName="dateUse" appInputDate min="0" class="form-control number-date--pad" placeholder="Number" [ngClass]="{'w80' : isManageTransfer==true}">
+                                    <td class="select-filter text-center w10">{{ item.interviewNo}}</td>
+                                    <td class="text-center" [ngClass]="{'w6' : isManageTransfer==true, 'w10' : isManageTransfer==false}">
+                                        <div class="d-flex justify-content-around">
+                                            <div id="mr">
+                                                <a title="Tải file" (click)="downloadFileItem(item.id)">
+                                                    <i class="fa fa-download color-item-down" aria-hidden="true"></i>
+                                                </a>
+                                            </div>
+                                            <div>
+                                                <a title="In">
+                                                    <i class="fa fa-print color-item-print" aria-hidden="true"></i>
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </ng-container>
+                        </form>
                     </tbody>
                 </table>
                 <!-- <th class="bg-default w12" style="background-color: #f68e56!important;" *ngIf="isManageTransfer">

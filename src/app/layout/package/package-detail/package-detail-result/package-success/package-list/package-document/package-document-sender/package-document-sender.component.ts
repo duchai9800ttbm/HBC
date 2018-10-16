@@ -15,6 +15,7 @@ import { PackageDetailComponent } from '../../../../../package-detail.component'
 import { NeedTranferDocList } from '../../../../../../../../shared/models/result-attend/need-transfer-doc-list.model';
 import { FilterNeedTransferDoc } from '../../../../../../../../shared/models/result-attend/filter-need-transfer-doc.model';
 import { DepartmentsFormBranches } from '../../../../../../../../shared/models/user/departments-from-branches';
+import { FormGroup, FormBuilder, FormArray } from '../../../../../../../../../../node_modules/@angular/forms';
 
 @Component({
   selector: 'app-package-document-sender',
@@ -44,8 +45,16 @@ export class PackageDocumentSenderComponent implements OnInit {
   isNgOnInit: boolean;
   needTransferDocsList: NeedTranferDocList[];
   departments: Observable<DepartmentsFormBranches[]>;
-  numberDateHSMT: number;
-  numberDateHSDT: number;
+  // numberDateHSMT: number;
+  // numberDateHSDT: number;
+  docHSMTList = [];
+  docHSDTList = [];
+  formHSMTTranferDoc: FormGroup;
+  formHSDTTranferDoc: FormGroup;
+  defaulttransferNameHSMT = null;
+  defaultdateUseHSMT = 0;
+  defaulttransferNameHSDT = null;
+  defaultdateUseHSDT = 0;
   listData: any = [
     { id: 1, rom: 'Maketing', username: 'Oliver Dinh', nameDocument: 'Maketing online', status: 'Đã nhận' },
     { id: 2, rom: 'Maketing', username: 'Van Dinh', nameDocument: 'Maketing online', status: 'Đã nhận' },
@@ -65,6 +74,7 @@ export class PackageDocumentSenderComponent implements OnInit {
     private detailResultPackageService: DetailResultPackageService,
     private spinner: NgxSpinnerService,
     private dataService: DataService,
+    private fb: FormBuilder,
   ) { }
 
   ngOnInit() {
@@ -92,10 +102,51 @@ export class PackageDocumentSenderComponent implements OnInit {
     //   .subscribe(keySearch => {
     //     this.filter(false);
     //   });
-    this.detailResultPackageService.getListNeedTransferDocs(this.currentPackageId).subscribe( response => {
-      console.log('response', response);
+    this.detailResultPackageService.getListNeedTransferDocs(this.currentPackageId).subscribe(response => {
+      response.forEach(item => {
+        switch (item.bidOpportunityStage.key) {
+          case 'HSMT': {
+            this.docHSMTList = item.needTransferDocument;
+            break;
+          }
+          case 'HSDT': {
+            this.docHSDTList = item.needTransferDocument;
+            break;
+          }
+        }
+      });
+      console.log('response-HSSSSSS', this.docHSMTList, this.docHSDTList);
     });
-
+    this.createFormHSMTTranferDoc();
+    this.createFormHSDTTranferDoc();
+  }
+  createFormHSMTTranferDoc() {
+    this.formHSMTTranferDoc = this.fb.group({
+      docs: this.fb.array([])
+    });
+    this.docHSMTList.forEach(item => {
+      (this.formHSMTTranferDoc.get('docs') as FormArray).push(this.addFormHSMTTranferDoc());
+    });
+  }
+  addFormHSMTTranferDoc(): FormGroup {
+    return this.fb.group({
+      transferName: null,
+      dateUse: 0,
+    });
+  }
+  createFormHSDTTranferDoc() {
+    this.formHSDTTranferDoc = this.fb.group({
+      docs: this.fb.array([])
+    });
+    this.docHSDTList.forEach(item => {
+      (this.formHSMTTranferDoc.get('docs') as FormArray).push(this.addFormHSDTTranferDoc());
+    });
+  }
+  addFormHSDTTranferDoc(): FormGroup {
+    return this.fb.group({
+      transferName: '',
+      dateUse: '',
+    });
   }
   onSelectAll(value: boolean) {
     this.data.forEach(x => (x['checkboxSelected'] = value));
@@ -125,6 +176,8 @@ export class PackageDocumentSenderComponent implements OnInit {
 
 
   manageTransferDocument(template: TemplateRef<any>) {
+    this.detailResultPackageService.manageTransferDocs(this.currentPackageId).subscribe( response =>
+      (console.log('resonsepseMageTranfer', response)));
     this.modalRef = this.modalService.show(
       template,
       Object.assign({}, { class: 'gray modal-lg' })
