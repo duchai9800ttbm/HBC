@@ -18,11 +18,16 @@ import { DepartmentsFormBranches } from '../../../../../../../../shared/models/u
 import { FormGroup, FormBuilder, FormArray } from '../../../../../../../../../../node_modules/@angular/forms';
 import { EmailService } from '../../../../../../../../shared/services/email.service';
 import { groupBy } from '../../../../../../../../../../node_modules/@progress/kendo-data-query';
+import { DocumentService } from '../../../../../../../../shared/services/document.service';
+import { HoSoDuThauService } from '../../../../../../../../shared/services/ho-so-du-thau.service';
+import { HadTransferList } from '../../../../../../../../shared/models/result-attend/had-transfer-list.model';
+import { ManageNeedTranferList } from '../../../../../../../../shared/models/result-attend/manage-need-transfer-list.model';
 
 @Component({
   selector: 'app-package-document-sender',
   templateUrl: './package-document-sender.component.html',
-  styleUrls: ['./package-document-sender.component.scss']
+  styleUrls: ['./package-document-sender.component.scss'],
+  providers: [HoSoDuThauService]
 })
 export class PackageDocumentSenderComponent implements OnInit {
   datePickerConfig = DATETIME_PICKER_CONFIG;
@@ -47,8 +52,7 @@ export class PackageDocumentSenderComponent implements OnInit {
   isNgOnInit: boolean;
   needTransferDocsList: NeedTranferDocList[];
   departments: DepartmentsFormBranches[];
-  // numberDateHSMT: number;
-  // numberDateHSDT: number;
+  // Chưa chuyển giao tài liệu
   docHSMTList = [];
   docHSDTList = [];
   formHSMTTranferDoc: FormGroup;
@@ -58,6 +62,11 @@ export class PackageDocumentSenderComponent implements OnInit {
   defaulttransferNameHSDT = null;
   defaultdateUseHSDT = '';
   sum = 0;
+  // Đã chuyển giao tài liệu
+  hadTransferList: HadTransferList[];
+  docHSMTHadTransfer;
+  docHSDTHadTransfer;
+  manageNeedTranferList: ManageNeedTranferList[];
   listData: any = [
     { id: 1, rom: 'Maketing', username: 'Oliver Dinh', nameDocument: 'Maketing online', status: 'Đã nhận' },
     { id: 2, rom: 'Maketing', username: 'Van Dinh', nameDocument: 'Maketing online', status: 'Đã nhận' },
@@ -83,14 +92,16 @@ export class PackageDocumentSenderComponent implements OnInit {
     private spinner: NgxSpinnerService,
     private dataService: DataService,
     private fb: FormBuilder,
-    private emailService: EmailService
+    private emailService: EmailService,
+    private documentService: DocumentService,
+    private hoSoDuThauService: HoSoDuThauService
   ) { }
 
   ngOnInit() {
     this.currentPackageId = +PackageDetailComponent.packageId;
     this.userInfo = this.sessionService.userInfo;
-    this.isDataHsmt = false;
-    this.isDataHsdt = false;
+    this.isDataHsmt = true;
+    this.isDataHsdt = true;
     this.isManageTransfer = false;
     this.userGetDocument = true;
     this.btnManageTransfer = false;
@@ -127,8 +138,33 @@ export class PackageDocumentSenderComponent implements OnInit {
         }
       });
       console.log('this.docHSMTList', this.docHSMTList);
-      // this.createFormHSMTTranferDoc();
-      // this.createFormHSDTTranferDoc();
+    });
+    this.detailResultPackageService.getHadTransferredList(this.currentPackageId).subscribe(response => {
+      this.hadTransferList = response;
+      response.forEach(item => {
+        switch (item.bidOpportunityStage.key) {
+          case 'HSMT': {
+            this.docHSMTHadTransfer = item.transferDocument;
+            break;
+          }
+          case 'HSDT': {
+            this.docHSDTHadTransfer = item.transferDocument;
+            break;
+          }
+        }
+      });
+      this.docHSMTHadTransfer.forEach((itemPra, indexPra) => {
+        if (itemPra.childDocuments && itemPra.childDocuments.length !== 0) {
+          itemPra.childDocuments.forEach((item, index) =>
+            itemPra.childDocuments[index].documentType = JSON.stringify(item.documentType));
+          this.docHSMTHadTransfer[indexPra].childDocuments = groupBy(itemPra.childDocuments,
+            [{ field: 'documentType' }]);
+          this.docHSMTHadTransfer[indexPra].childDocuments.forEach((item, indexChirl) => {
+            this.docHSMTHadTransfer[indexPra].childDocuments[indexChirl].value = JSON.parse(item.value);
+          });
+        }
+      });
+      console.log('this.docHSMTHadTransfer', this.docHSMTHadTransfer, this.docHSDTHadTransfer);
     });
   }
   // Form HSMT
@@ -242,12 +278,11 @@ export class PackageDocumentSenderComponent implements OnInit {
       });
     });
   }
-  onSelectDocument(value: boolean) {
-    this.listData.forEach(x => (x['selectedDocument'] = value));
-  }
+  // onSelectDocument(value: boolean) {
+  //   this.listData.forEach(x => (x['selectedDocument'] = value));
+  // }
   showhsmt() {
     this.isDataHsmt = !this.isDataHsmt;
-
   }
   showhsdt() {
     this.isDataHsdt = !this.isDataHsdt;
@@ -280,20 +315,31 @@ export class PackageDocumentSenderComponent implements OnInit {
         }
       });
     });
-    console.log('this.itemDocument',  itemDocChooseTranfer);
-    this.detailResultPackageService.tranferDocs(this.currentPackageId, itemDocChooseTranfer);
-    this.confirmationService.confirm(
-      'Bạn có muốn chuyên giao tài liệu?',
-      () => {
-        this.alertService.success('Chuyển giao tài liệu thành công!');
-      }
-    );
+    if (itemDocChooseTranfer && itemDocChooseTranfer.length !== 0) {
+      this.confirmationService.confirm(
+        'Bạn có muốn chuyên giao tài liệu?',
+        () => {
+          this.detailResultPackageService.tranferDocs(this.currentPackageId, itemDocChooseTranfer).subscribe(response => {
+            this.detailResultPackageService.getHadTransferredList(this.currentPackageId).subscribe(responseHadTransferList => {
+              this.hadTransferList = responseHadTransferList;
+            });
+            this.alertService.success('Chuyển giao tài liệu thành công!');
+          },
+            err => {
+              this.alertService.error('Chuyển giao tài liệu không thành công!');
+            });
+        }
+      );
+    } else {
+      this.alertService.error('Bạn phải chọn ít nhất một tài liều để chuyển giao!');
+    }
   }
 
 
   manageTransferDocument(template: TemplateRef<any>) {
-    this.detailResultPackageService.manageTransferDocs(this.currentPackageId).subscribe(response =>
-      (console.log('resonsepseMageTranfer', response)));
+    this.detailResultPackageService.manageTransferDocs(this.currentPackageId).subscribe(response => {
+        this.manageNeedTranferList = response;
+      });
     this.modalRef = this.modalService.show(
       template,
       Object.assign({}, { class: 'gray modal-lg' })
@@ -340,6 +386,45 @@ export class PackageDocumentSenderComponent implements OnInit {
           for (let indexChild = 0; indexChild < j + 1; indexChild++) {
             if (indexChild < j) {
               dem = dem + this.docHSMTList[indexPar].childDocuments[indexChild].items.length;
+            } else {
+              for (let indexChildChild = 0; indexChildChild < k + 1; indexChildChild++) {
+                dem++;
+              }
+            }
+          }
+        }
+      } else {
+        dem++;
+      }
+    }
+    return dem;
+  }
+  downloadFileItemHSMT(bidDocumentId) {
+    this.documentService.download(bidDocumentId).subscribe(response => {
+    },
+      err => {
+        this.alertService.error('Tải tài liệu không thành công!');
+      });
+  }
+  downloadFileItemHSDT(bidDocumentId) {
+    this.hoSoDuThauService.taiHoSoDuThau(bidDocumentId).subscribe(response => {
+    },
+      err => {
+        this.alertService.error('Tải tài liệu không thành công!');
+      });
+  }
+  renderIndexHadTransfer(i, j, k) {
+    let dem = 0;
+    for (let indexPar = 0; indexPar < i + 1; indexPar++) {
+      if (this.docHSMTHadTransfer[indexPar].childDocuments) {
+        if (indexPar < i) {
+          for (let indexChild = 0; indexChild < this.docHSMTHadTransfer[indexPar].childDocuments.length; indexChild++) {
+            dem = dem + this.docHSMTHadTransfer[indexPar].childDocuments[indexChild].items.length;
+          }
+        } else {
+          for (let indexChild = 0; indexChild < j + 1; indexChild++) {
+            if (indexChild < j) {
+              dem = dem + this.docHSMTHadTransfer[indexPar].childDocuments[indexChild].items.length;
             } else {
               for (let indexChildChild = 0; indexChildChild < k + 1; indexChildChild++) {
                 dem++;
