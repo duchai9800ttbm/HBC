@@ -33,6 +33,7 @@ export class HoSoDuThauService {
 
   static tempDataLiveFormDKDT = new BehaviorSubject<DuLieuLiveFormDKDT>(new DuLieuLiveFormDKDT());
   static detectChangeRouter = new BehaviorSubject<boolean>(false);
+  static uploadDocReload = new BehaviorSubject<boolean>(false);
   static stateLiveFormSummaryCondition = new BehaviorSubject<StateLiveFormSummaryCondition>(new StateLiveFormSummaryCondition());
   static idTenderDocumentTypesData;
 
@@ -131,6 +132,12 @@ export class HoSoDuThauService {
   }
   detectChangingRouter(id) {
     HoSoDuThauService.detectChangeRouter.next(id);
+  }
+  watchChangingUpload() {
+    return HoSoDuThauService.uploadDocReload;
+  }
+  detectUploadFile(event) {
+    HoSoDuThauService.uploadDocReload.next(event);
   }
   // get Danh Sách User
   getDataUser(

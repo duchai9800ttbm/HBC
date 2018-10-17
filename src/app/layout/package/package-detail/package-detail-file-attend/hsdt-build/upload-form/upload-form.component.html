@@ -37,10 +37,6 @@
                         </ng-container>
                     </div>
                 </div>
-
-                <button (click)="refresh()" class="btn btn-primary ml-1">
-                    <i class="fa fa-refresh" aria-hidden="true"></i>
-                </button>
             </div>
         </div>
     </div>
@@ -62,8 +58,8 @@
                 <span class="custom-dropdown mx-sm-2">
                     <select class="form-control" [(ngModel)]="filterModel.uploadedEmployeeId">
                         <option value="">--Lựa chọn--</option>
-                        <option *ngFor="let uploader of danhSachUser" [value]="uploader.id">
-                            {{ uploader?.firstName }} {{ uploader?.lastName }}
+                        <option *ngFor="let uploader of danhSachUser" [value]="uploader.employeeId">
+                            {{ uploader?.employeeName }}
                         </option>
                     </select>
                 </span>
@@ -224,9 +220,9 @@
                             </td>
                             <td *ngIf="k != 0" class="d-none"></td>
 
-                            <td class="boder-table text-center text-truncate-custom" [title]="hoso.documentName"
+                            <td class="boder-table text-truncate-custom" [title]="hoso.documentName"
                                 (click)="viewDetail(hoso)">
-                                <a href="javascript:;" class="text-center">
+                                <a href="javascript:;">
                                     {{ hoso?.documentName }}
                                 </a>
                             </td>
