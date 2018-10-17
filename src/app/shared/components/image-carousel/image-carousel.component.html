@@ -1,6 +1,6 @@
 <div id="overlay" class="d-flex justify-content-center align-content-center">
     <div id="modal-container" class="d-flex flex-column align-items-center">
-        <div class="close-button" (click)="closeView()"><i class="fa fa-times-circle-o" aria-hidden="true"></i></div>
+        <div class="close-button cursor-pointer" (click)="closeView()"><i class="fa fa-times-circle-o" aria-hidden="true"></i></div>
         <div class="w3-content main-show-image d-flex justify-content-center align-content-center">
             <img *ngFor="let image of imageUrlArray; index as i" class="show-image-item" [class.noShow]="isShow !== i"
                 [class.show]="isShow === i" [src]="image.largeSizeUrl">
@@ -9,7 +9,7 @@
 
         <div class="w-100 d-flex flex-column">
             <div class="thumbImage w-100 d-flex justify-content-center">
-                <button class="button-thumb mr-5 d-inline-block" (click)="prevButton()"><i class="fa fa-chevron-left"
+                <button class="button-thumb mr-5 d-inline-block cursor-pointer" (click)="prevButton()"><i class="fa fa-chevron-left"
                         aria-hidden="true"></i></button>
                 <div class="d-inline-block">
                     <ng-container *ngIf="isShow === (imageUrlArray.length -1) && imageUrlArray[i-2]?.largeSizeUrl">
@@ -23,7 +23,7 @@
                         <img [src]="imageUrlArray[i+2]?.largeSizeUrl">
                     </ng-container>
                 </div>
-                <button class="button-thumb ml-5 d-inline-block" (click)="nextButton()"><i class="fa fa-chevron-right"
+                <button class="button-thumb ml-5 d-inline-block cursor-pointer" (click)="nextButton()"><i class="fa fa-chevron-right"
                         aria-hidden="true"></i></button>
             </div>
 
