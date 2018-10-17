@@ -41,6 +41,8 @@ export class PackageListComponent implements OnInit, AfterViewChecked {
     @ViewChild('myDrop2') myDrop2: ElementRef;
     @ViewChild('DropTool') DropTool: ElementRef;
     @ViewChild('DropTool2') DropTool2: ElementRef;
+    @ViewChild('tablePin') tablePin: ElementRef;
+    @ViewChild('fakeScrollBar') fakeScrollBar: ElementRef;
     activityStatusList: Observable<DictionaryItem[]>;
     checkboxSeclectAll: boolean;
     dtOptions: any = DATATABLE_CONFIG2;
@@ -267,6 +269,7 @@ export class PackageListComponent implements OnInit, AfterViewChecked {
         // };
         // this.dtOptions['scrollX'] = true;
         // this.dtOptions['scrollCollapse'] = true;
+        
 
     }
     ngAfterViewChecked() {
@@ -479,8 +482,11 @@ export class PackageListComponent implements OnInit, AfterViewChecked {
         // }
         setTimeout(() => {
             this.dtTrigger.next();
-            const table = document.getElementById('tableId') as HTMLTableElement;
-            table.style.width = 'auto';
+            // const table = document.getElementById('tableId') as HTMLTableElement;
+            // table.style.width = 'auto';
+            const table = this.tablePin.nativeElement as HTMLElement;
+            const scrollBar = this.fakeScrollBar.nativeElement as HTMLElement;
+            scrollBar.style.width = table.offsetWidth + 'px';
         });
     }
 
@@ -580,5 +586,13 @@ export class PackageListComponent implements OnInit, AfterViewChecked {
 
     openLinkDocument(linkDocument) {
         window.open(linkDocument, '_blank');
+    }
+
+    syncScroll1(wrap1: HTMLElement, wrap2: HTMLElement) {
+        wrap2.scrollLeft = wrap1.scrollLeft;
+    }
+
+    syncScroll2(wrap1: HTMLElement, wrap2: HTMLElement) {
+        wrap1.scrollLeft = wrap2.scrollLeft;
     }
 }

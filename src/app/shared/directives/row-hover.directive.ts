@@ -26,8 +26,8 @@ export class RowHoverDirective {
     if (copy) {
       this.oldStyle = tdFirst.style.backgroundColor;
     }
-    tdFirst.style.backgroundColor = 'rgba(0, 0, 0, 0.075)';
-    tdLast.style.backgroundColor = 'rgba(0, 0, 0, 0.075)';
+    tdFirst.style.backgroundColor = '#f1f1f1';
+    tdLast.style.backgroundColor = '#f1f1f1';
     if (!copy) {
       tdFirst.style.backgroundColor = this.oldStyle;
       tdLast.style.backgroundColor = this.oldStyle;

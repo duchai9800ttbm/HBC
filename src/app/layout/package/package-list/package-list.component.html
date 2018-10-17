@@ -137,15 +137,13 @@
             </div>
         </div>
 
-
-
-        <div class="">
-            <div class="table-responsive set-height-table" id="style-scroll">
-                <table datatable id="tableId" [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" style="min-width: 100%" appWidthAuto class="table-selection zui-table stripe hover">
+        <div class="zui-wrapper">
+            <div class="zui-scroller" #wrap1 (scroll)="syncScroll1(wrap1, wrap2)" id="style-scroll">
+                <table id="tableId" class="zui-table table table-striped table-hover" #tablePin>
                     <thead>
-                        <tr style="width: 100%;">
-                            <th class="text-center " type="check" style="width: 60px; max-width: 60px !important;">
-                                <label class="custom-control custom-checkbox">
+                        <tr style="height: 45px">
+                            <th class="text-center zui-sticky-col" type="check" style="width: 40px; max-width: 40px !important; height: 45px;">
+                                <label class="custom-control custom-checkbox custom-checkbox--head-m">
                                     <input type="checkbox" class="custom-control-input input-checkbox" [(ngModel)]="checkboxSeclectAll" (change)="onSelectAll($event.target.checked)">
                                     <span class="custom-control-indicator"></span>
                                 </label>
@@ -624,15 +622,15 @@
                                     </div>
                                 </div>
                             </th>
-                            <th style="max-width: 100px!important; width: 100px!important; padding: 5px 0 !important;" class="table-action text-center -right" type="check-action">
+                            <th style="max-width: 100px!important; width: 100px!important; padding: 12px 0 !important; height: 45px;" class="table-action text-center -right zui-sticky-col-right" type="check-action">
                                 Thao tác
                             </th>
                         </tr>
                     </thead>
                     <tbody *ngIf="listPackage">
-                        <tr *ngFor="let item of pagedResult.items; let i = index">
-                            <td class="text-center " type="check">
-                                <label class="custom-control custom-checkbox">
+                        <tr *ngFor="let item of pagedResult.items; let i = index" class="table-pin-col--height" appRowHover>
+                            <td class="text-center zui-sticky-col" type="check" [class.odd]="i % 2 == 0">
+                                <label class="custom-control custom-checkbox custom-checkbox--body-m">
                                     <input type="checkbox" class="custom-control-input" [(ngModel)]="item.checkboxSelected">
                                     <span class="custom-control-indicator"></span>
                                 </label>
@@ -714,8 +712,8 @@
                             <td [class.d-none]="!diaDiem" class="text-truncate" [title]="item.place">{{ item.place }}</td>
                             <td [class.d-none]="!moTa" class="text-truncate" [title]="item.description">{{ item.description }}</td>
                             <td [class.d-none]="!danhGiaDuAn" class="text-truncate" [title]="item.evaluation">{{ item.evaluation }}</td>
-                            <td style="max-width: 100px!important;" class="-right" type="check-action">
-                                <div class="d-flex justify-content-center">
+                            <td style="max-width: 100px!important;" class="-right zui-sticky-col-right" type="check-action" [class.odd]="i % 2 == 0">
+                                <div class="d-flex justify-content-center align-items-center h-100">
                                     <div>
                                         <a *ngIf="isViewBidOpportunityDetail" [routerLink]="['/package/detail',item.bidOpportunityId]">
                                             <i class="fa fa-eye text-warning" aria-hidden="true"></i>
@@ -734,6 +732,9 @@
                 </table>
                 <div class="center-parent" *ngIf="!pagedResult.items || pagedResult.items.length === 0">Không có dữ liệu</div>
             </div>
+        </div>
+        <div class="scrollbar-fake" #wrap2 (scroll)="syncScroll2(wrap1, wrap2)">
+            <div class="scrollbar-fake-content" #fakeScrollBar></div>
         </div>
         <app-pagination [(pagedResult)]="pagedResult" (pagedResultChange)="pagedResultChange($event)"></app-pagination>
     </div>
