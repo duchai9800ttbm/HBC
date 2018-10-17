@@ -57,6 +57,8 @@ export class UploadFileHsdtComponent implements OnInit {
     });
   }
   onFormValueChanged(data?: any) {
+    const isLinkFile = (this.uploadForm.get('linkFile').value) ? true : false;
+    this.lockLink = (isLinkFile) ? true : false;
     if (this.isSubmitted) {
       this.validateForm();
     }

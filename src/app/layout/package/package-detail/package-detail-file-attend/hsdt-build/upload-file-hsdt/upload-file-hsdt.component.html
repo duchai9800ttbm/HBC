@@ -40,7 +40,7 @@
                                             (change)="uploadFile($event)" />
                                     </div>
                                     <div style="width: calc(100% - 120px);" class="d-flex justify-content-between">
-                                        <div> <span class="text-truncate">{{displayName}}</span></div>
+                                        <div> <span class="text-truncate">{{ displayName }}</span></div>
                                         <div *ngIf="displayName">
                                             <button (click)="deleteFileUpload()" class="btn btn-secondary">X</button>
                                         </div>
