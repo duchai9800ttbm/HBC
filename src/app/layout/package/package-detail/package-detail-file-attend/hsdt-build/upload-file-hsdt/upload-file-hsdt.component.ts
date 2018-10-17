@@ -18,7 +18,6 @@ export class UploadFileHsdtComponent implements OnInit {
   @Input() bidOpportunityId: number;
   @Input() childrenType: any;
   @Input() callBack: Function;
-  @Output() isSubmitUpload = new EventEmitter<boolean>();
   uploadForm: FormGroup;
   isSubmitted: boolean;
   invalidMessages: string[];
@@ -32,7 +31,6 @@ export class UploadFileHsdtComponent implements OnInit {
   typeOfDoc;
   isFile = false;
   isLinkFile = false;
-  lockLink = false;
   constructor(
     private fb: FormBuilder,
     private alertService: AlertService,
@@ -64,7 +62,6 @@ export class UploadFileHsdtComponent implements OnInit {
   validateForm() {
     const isFile = (this.uploadForm.get('file').value) ? true : false;
     const isLinkFile = (this.uploadForm.get('linkFile').value) ? true : false;
-    this.lockLink = (isLinkFile) ? true : false;
     if (!isFile && !isLinkFile) {
       this.errorMess = 'Vui lòng chọn file hoặc đường dẫn link đến file!';
     } else {
@@ -106,6 +103,7 @@ export class UploadFileHsdtComponent implements OnInit {
         }, err => {
           this.errorMess = 'Upload thất bại, xin vui lòng thử lại!';
           this.spinner.hide();
+          this.callBack();
         });
       }
     }

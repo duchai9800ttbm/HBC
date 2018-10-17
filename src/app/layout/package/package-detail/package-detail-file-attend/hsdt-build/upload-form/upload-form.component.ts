@@ -1,4 +1,4 @@
-import { Component, OnInit, OnChanges, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnChanges, OnDestroy, Output, EventEmitter } from '@angular/core';
 import { DATATABLE_CONFIG, DATATABLE_CONFIG2 } from '../../../../../../shared/configs';
 // tslint:disable-next-line:import-blacklist
 import { Subject, BehaviorSubject, Subscription } from 'rxjs';
@@ -6,13 +6,14 @@ import { DATETIME_PICKER_CONFIG } from '../../../../../../shared/configs/datepic
 import { PackageDetailComponent } from '../../../package-detail.component';
 import { HoSoDuThauService } from '../../../../../../shared/services/ho-so-du-thau.service';
 import { DialogService } from '@progress/kendo-angular-dialog';
-import { AlertService, ConfirmationService } from '../../../../../../shared/services';
+import { AlertService, ConfirmationService, UserService } from '../../../../../../shared/services';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { PagedResult } from '../../../../../../shared/models';
 import { DanhSachBoHsdtItem } from '../../../../../../shared/models/ho-so-du-thau/danh-sach-bo-hsdt-item.model';
 import { HsdtFilterModel } from '../../../../../../shared/models/ho-so-du-thau/hsdt-filter.model';
 import { UploadFileHsdtComponent } from '../upload-file-hsdt/upload-file-hsdt.component';
 import { ListDocumentTypeIdGroup } from '../../../../../../shared/models/ho-so-du-thau/list-document-type.model';
+import { UserItemModel } from '../../../../../../shared/models/user/user-item.model';
 
 @Component({
   selector: 'app-upload-form',
@@ -38,7 +39,7 @@ export class UploadFormComponent implements OnInit, OnDestroy {
   nameOfTypeDocument;
   childrenOfTypeDocument;
   dataDocumentOfType;
-  danhSachUser;
+  danhSachUser: UserItemModel[];
   isTypeChildDoc = false;
   subscription: Subscription;
   listDocumentShowGroup: ListDocumentTypeIdGroup[];
@@ -50,7 +51,8 @@ export class UploadFormComponent implements OnInit, OnDestroy {
     private dialogService: DialogService,
     private alertService: AlertService,
     private spinner: NgxSpinnerService,
-    private confirmationService: ConfirmationService
+    private confirmationService: ConfirmationService,
+    private userService: UserService
   ) { }
 
   ngOnInit() {
@@ -91,6 +93,7 @@ export class UploadFormComponent implements OnInit, OnDestroy {
   }
   closePopuup() {
     this.dialog.close();
+    this.hoSoDuThauService.detectUploadFile(true);
     this.getDataDocumentOfType(false, false);
   }
   getDataDocumentOfType(alert = false, spiner = true) {
@@ -205,6 +208,7 @@ export class UploadFormComponent implements OnInit, OnDestroy {
       () => {
         this.hoSoDuThauService.xoaMotHoSoDuThau(id).subscribe(res => {
           this.alertService.success('Đã xóa tài liệu!');
+          this.hoSoDuThauService.detectUploadFile(true);
           this.refresh();
         }, err => {
           this.alertService.error(`Đã có lỗi. Tài liệu chưa được xóa!`);
@@ -223,6 +227,7 @@ export class UploadFormComponent implements OnInit, OnDestroy {
           this.hoSoDuThauService.xoaNhieuHoSoDuThau(listId).subscribe(res => {
             this.spinner.hide();
             this.alertService.success('Đã xóa tài liệu!');
+            this.hoSoDuThauService.detectUploadFile(true);
             this.refresh();
           }, err => {
             this.spinner.hide();
@@ -284,8 +289,8 @@ export class UploadFormComponent implements OnInit, OnDestroy {
     }
   }
   getDanhSachUser() {
-    this.hoSoDuThauService.getDataUser(0, 40).subscribe(res => {
-      this.danhSachUser = res.items;
+    this.userService.getAllUser('').subscribe(res => {
+      this.danhSachUser = res;
     });
   }
   getDanhSachLoaiHoSo() {

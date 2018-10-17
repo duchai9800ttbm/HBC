@@ -46,9 +46,7 @@
 .fileUpload {
     position: relative;
     overflow: hidden;
-    cursor: pointer;
     width: auto;
-
 }
 
 .fileUpload input.upload {
@@ -58,9 +56,9 @@
     margin: 0;
     padding: 0;
     font-size: 20px;
-    cursor: pointer;
     opacity: 0;
     filter: alpha(opacity=0);
+    cursor: pointer;
 }
 
 .x-button {
@@ -69,4 +67,9 @@
 
 .disable-input {
     pointer-events: none;
+    cursor: auto;
+}
+
+.pointer-default {
+    cursor: default !important;
 }

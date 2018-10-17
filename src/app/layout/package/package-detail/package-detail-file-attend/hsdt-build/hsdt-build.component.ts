@@ -9,7 +9,7 @@ import { PackageDetailComponent } from '../../package-detail.component';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { AlertService, ConfirmationService } from '../../../../../shared/services';
 // tslint:disable-next-line:import-blacklist
-import { Subject } from 'rxjs';
+import { Subject, Subscription } from 'rxjs';
 import { HoSoDuThauService } from '../../../../../shared/services/ho-so-du-thau.service';
 import { PagedResult } from '../../../../../shared/models';
 import { DATATABLE_CONFIG2 } from '../../../../../shared/configs';
@@ -36,6 +36,7 @@ export class HsdtBuildComponent implements OnInit, AfterViewChecked {
     danhSachLoaiTaiLieu;
     routerName;
     isHighlight = 0;
+    subscription: Subscription;
 
     constructor(
         private hoSoDuThauService: HoSoDuThauService,
@@ -49,6 +50,9 @@ export class HsdtBuildComponent implements OnInit, AfterViewChecked {
     ngOnInit() {
         this.getDanhSachLoaiHoSo();
         this.packageId = +PackageDetailComponent.packageId;
+        this.subscription = this.hoSoDuThauService.watchChangingUpload().subscribe(signal => {
+            this.getDanhSachLoaiHoSo();
+        });
     }
 
     ngAfterViewChecked() {
@@ -114,7 +118,12 @@ export class HsdtBuildComponent implements OnInit, AfterViewChecked {
         );
     }
     emitData(id, checkliveform) {
-        this.isHighlight = id - 1;
+        if (id !== 21) {
+            this.isHighlight = id - 1;
+        } else {
+            // id loại Hồ Sơ Khác
+            this.isHighlight = id - 13;
+        }
         if (checkliveform) {
             if (id === 1) {
                 this.router.navigate([`/package/detail/${this.packageId}/attend/build/summary`]);
