@@ -191,13 +191,14 @@ export class DetailResultPackageService {
             value: itemNeedTransferDocument.documentType.value,
             displayText: itemNeedTransferDocument.documentType.displayText,
           } : null,
-          document: itemNeedTransferDocument.document ? {
-            type: itemNeedTransferDocument.document.type,
-            id: itemNeedTransferDocument.document.id,
-            name: itemNeedTransferDocument.document.name,
-            interviewTime: itemNeedTransferDocument.document.interviewTime,
-            isLiveForm: itemNeedTransferDocument.document.isLiveForm,
-          } : null,
+          documents: itemNeedTransferDocument.documents ? itemNeedTransferDocument.documents.map(itemParDocuments =>
+            ({
+              type: itemParDocuments.type,
+              id: itemParDocuments.id,
+              name: itemParDocuments.name,
+              interviewTime: itemParDocuments.interviewTime,
+              isLiveForm: itemParDocuments.isLiveForm,
+            })) : null,
           childDocuments: itemNeedTransferDocument.childDocuments ? itemNeedTransferDocument.childDocuments.map(itemChildDocuments => {
             return {
               documentType: itemChildDocuments.documentType ? {
@@ -205,13 +206,15 @@ export class DetailResultPackageService {
                 value: itemChildDocuments.documentType.value,
                 displayText: itemChildDocuments.documentType.displayText,
               } : null,
-              document: itemChildDocuments.document ? {
-                type: itemChildDocuments.document.type,
-                id: itemChildDocuments.document.id,
-                name: itemChildDocuments.document.name,
-                interviewTime: itemChildDocuments.document.interviewTime,
-                isLiveForm: itemChildDocuments.document.isLiveForm,
-              } : null
+              documents: itemChildDocuments.documents ? itemChildDocuments.documents.map(item =>
+                ({
+                  type: item.type,
+                  id: item.id,
+                  name: item.name,
+                  interviewTime: item.interviewTime,
+                  isLiveForm: item.isLiveForm,
+                })
+              ) : null
             };
           }) : null,
         };
@@ -259,6 +262,28 @@ export class DetailResultPackageService {
         desc: result.desc,
       };
     });
+  }
+  // Chuyển giao tài liệu
+  tranferDocs(bidOpportunityId: number, docChoose: any) {
+    const url = `bidopportunity/kqdt/chuyengiaotailieu`;
+    const request = {
+      bidOpportunityId: bidOpportunityId,
+      transferDocuments: docChoose.map(item => {
+        const departmentIds = [];
+        if (item.transferName) {
+          item.transferName.forEach(itemTranfer => {
+            departmentIds.push(itemTranfer.id);
+          });
+        }
+        return {
+          documentId: item.id,
+          documentType: item.type,
+          departmentIds: departmentIds,
+          useDate: item.dateUse ? Number(item.dateUse) : 0
+        };
+      }),
+    };
+    console.log('this.request', request);
   }
   // Tải về template tài liệu cần chuyển giao
   downloadTemplateDoc() {
@@ -330,6 +355,14 @@ export class DetailResultPackageService {
         this.toManageTransferDocs
       );
     });
+  }
+  // Xác nhận đã nhận
+  confirmReceiveDocs(idsArray: number[]) {
+    const url = `bidtransferdocdetail/confirmreceivedocs`;
+    const request = {
+      ids: idsArray
+    };
+    return this.apiService.post(url, request);
   }
   // =============================
   // Bước 2, hợp đồng ký kết

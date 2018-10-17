@@ -23,7 +23,7 @@ export class NeedTranferDocList {
                 value: string;
                 displayText: string;
             }
-            document: {
+            documents: {
                 type: string;
                 id: number;
                 name: string;

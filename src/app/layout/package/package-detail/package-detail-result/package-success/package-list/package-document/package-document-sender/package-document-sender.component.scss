@@ -268,13 +268,16 @@ table.dataTable th {
     position: relative;
     .edit-number--posotion{
         position: absolute;
-        top: 20px;
-        right: 16px;
+        top: 8px;
+        right: 9px;
     }
 }
 .number-date--pad{
-    padding: 0.375rem 1.5rem 0.375rem 0.75rem
+    padding: 0.375rem 1.5rem 0.375rem 0.5rem
 }
 .td--overflow{
     overflow: unset !important;
+}
+:host /deep/ .ng-select.ng-select-multiple .ng-select-container .ng-value-container .ng-value {
+    font-size: 80% !important;
 }
