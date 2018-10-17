@@ -6,9 +6,13 @@ import { DATATABLE_CONFIG } from '../../../../../../../../shared/configs';
 import { Observable, BehaviorSubject, Subject } from '../../../../../../../../../../node_modules/rxjs';
 import { DocumentItem } from '../../../../../../../../shared/models/document-item';
 import { PackageSuccessService } from '../../../../../../../../shared/services/package-success.service';
-import { SessionService } from '../../../../../../../../shared/services/index';
+import { SessionService, DataService } from '../../../../../../../../shared/services/index';
 import { PackageService } from '../../../../../../../../shared/services/package.service';
 import { ConfirmationService, AlertService } from '../../../../../../../../shared/services';
+import { PackageDetailComponent } from '../../../../../package-detail.component';
+import { DetailResultPackageService } from '../../../../../../../../shared/services/detail-result-package.service';
+import { DepartmentsFormBranches } from '../../../../../../../../shared/models/user/departments-from-branches';
+import { HadTransferList } from '../../../../../../../../shared/models/result-attend/had-transfer-list.model';
 
 @Component({
   selector: 'app-package-document-receiver',
@@ -33,8 +37,8 @@ export class PackageDocumentReceiverComponent implements OnInit {
   textUserManage: string;
   userInfo: any;
   bntConfirm: boolean;
+  currentPackageId: number;
   public data: DocumentItem[] = this.packageSuccessService.getdataGetDocument();
-
   constructor(
     private packageSuccessService: PackageSuccessService,
     private modalService: BsModalService,
@@ -42,10 +46,12 @@ export class PackageDocumentReceiverComponent implements OnInit {
     private packageService: PackageService,
     private alertService: AlertService,
     private confirmationService: ConfirmationService,
+    private detailResultPackageService: DetailResultPackageService,
+    private dataService: DataService
   ) { }
 
   ngOnInit() {
-
+    this.currentPackageId = +PackageDetailComponent.packageId;
     this.userInfo = this.sessionService.userInfo;
     this.isDataHsmt = false;
     this.isDataHsdt = false;

@@ -281,3 +281,23 @@ table.dataTable th {
 :host /deep/ .ng-select.ng-select-multiple .ng-select-container .ng-value-container .ng-value {
     font-size: 80% !important;
 }
+.icon-pointer{
+    cursor: pointer;
+}
+table.dataTable th {
+    background-color: #f68e56 !important;
+    border: 1px solid #dddddd;
+}
+.w-40{
+    width: 40%;
+}
+.w-35{
+    width: 35%;
+}
+.set-stt-manager--width{
+    width: 5%;
+    min-width: 20px;
+}
+.tilte-cus--height{
+    height: 40px;
+}

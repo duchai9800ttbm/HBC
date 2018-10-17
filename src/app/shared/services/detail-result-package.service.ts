@@ -15,6 +15,7 @@ import { NeedTransferDoc } from '../models/result-attend/need-transfer-doc.model
 import { ReportMeetingList } from '../models/result-attend/report-meeting-list.model';
 import { FilterReportMeeting } from '../models/result-attend/filter-report-meeting.model';
 import { ManageNeedTranferList } from '../models/result-attend/manage-need-transfer-list.model';
+import { HadTransferList } from '../models/result-attend/had-transfer-list.model';
 @Injectable()
 export class DetailResultPackageService {
   listFileResult: Subject<any> = new Subject();
@@ -283,7 +284,7 @@ export class DetailResultPackageService {
         };
       }),
     };
-    console.log('this.request', request);
+    return this.apiService.post(url, request);
   }
   // Tải về template tài liệu cần chuyển giao
   downloadTemplateDoc() {
@@ -347,11 +348,11 @@ export class DetailResultPackageService {
     };
   }
   // Quản lý người nhận tài liệu
-  manageTransferDocs(bidOpportunityId: number) {
+  manageTransferDocs(bidOpportunityId: number): Observable<ManageNeedTranferList[]> {
     const url = `bidopportunitys/${bidOpportunityId}/transferdocdetail`;
     return this.apiService.get(url).map(response => {
       const result = response.result;
-      return (result.items || []).map(
+      return (result || []).map(
         this.toManageTransferDocs
       );
     });
@@ -363,6 +364,82 @@ export class DetailResultPackageService {
       ids: idsArray
     };
     return this.apiService.post(url, request);
+  }
+  // Map to model danh sách tài liệu đã chuyển giao
+  toHadTransferedList(result: any): HadTransferList {
+    return {
+      bidOpportunityStage: result.bidOpportunityStage ? {
+        key: result.bidOpportunityStage.key,
+        value: result.bidOpportunityStage.value,
+        displayText: result.bidOpportunityStage.displayText,
+      } : null,
+      transferDocument: result.transferDocument ? result.transferDocument.map(itemTransferDocument => {
+        return {
+          documentType: itemTransferDocument.documentType ? {
+            key: itemTransferDocument.documentType.key,
+            value: itemTransferDocument.documentType.value,
+            displayText: itemTransferDocument.documentType.displayText,
+          } : null,
+          documents: (itemTransferDocument.documents && itemTransferDocument.documents.length !== 0) ?
+            itemTransferDocument.documents.map(itemdocument => {
+              return {
+                departments: (itemdocument.departments && itemdocument.departments.length !== 0) ?
+                  itemdocument.departments.map(itemDepartments => {
+                    return {
+                      key: itemDepartments ? itemDepartments.key : null,
+                      value: itemDepartments ? itemDepartments.value : null,
+                      displayText: itemDepartments ? itemDepartments.displayText : null,
+                    };
+                  }) : null,
+                useDays: itemdocument.useDays,
+                type: itemdocument.type,
+                id: itemdocument.id,
+                name: itemdocument.name,
+                interviewTime: itemdocument.interviewTime,
+                isLiveForm: itemdocument.isLiveForm,
+              };
+            }) : null,
+          childDocuments: itemTransferDocument.childDocuments ? itemTransferDocument.childDocuments.map(itemChildDocuments => {
+            return {
+              documentType: itemChildDocuments.documentType ? {
+                key: itemChildDocuments.documentType.key,
+                value: itemChildDocuments.documentType.value,
+                displayText: itemChildDocuments.documentType.displayText,
+              } : null,
+              documents: (itemChildDocuments.documents && itemChildDocuments.documents.length !== 0) ?
+                itemChildDocuments.documents.map(itemDocuments => {
+                  return {
+                    departments: (itemDocuments.departments && itemDocuments.departments.length !== 0) ?
+                    itemDocuments.departments.map(itemDepartments => {
+                        return {
+                          key: itemDepartments ? itemDepartments.key : null,
+                          value: itemDepartments ? itemDepartments.value : null,
+                          displayText: itemDepartments ? itemDepartments.displayText : null,
+                        };
+                      }) : null,
+                    useDays: itemDocuments.useDays,
+                    type: itemDocuments.type,
+                    id: itemDocuments.id,
+                    name: itemDocuments.name,
+                    interviewTime: itemDocuments.interviewTime,
+                    isLiveForm: itemDocuments.isLiveForm,
+                  };
+                }) : null
+            };
+          }) : null,
+        };
+      }) : null,
+    };
+  }
+  // Danh sách tài liệu đã chuyển giao
+  getHadTransferredList(bidOpportunityId): Observable<HadTransferList[]> {
+    const url = `tenderresultdocument/bidOpportunity/${bidOpportunityId}/transferdocs`;
+    return this.apiService.get(url).map(reponse => {
+      const result = reponse.result;
+      return (result || []).map(
+        this.toHadTransferedList
+      );
+    });
   }
   // =============================
   // Bước 2, hợp đồng ký kết
