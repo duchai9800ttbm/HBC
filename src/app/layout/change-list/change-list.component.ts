@@ -1,8 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { AuditService } from '../../shared/services';
-import { Router } from '@angular/router';
-import { Observable } from 'rxjs';
-import { AuditItem, PagedResult } from '../../shared/models';
+import { AlertService } from '../../shared/services';
+import { PagedResult } from '../../shared/models';
 import { LayoutService } from '../../shared/services/layout.service';
 import { ChangeDactivitites } from '../../shared/models/side-bar/change-dactivitites.model';
 
@@ -15,20 +13,19 @@ export class ChangeListComponent implements OnInit {
 
   constructor(
     private layoutService: LayoutService,
-    private router: Router
+    private alertService: AlertService
   ) { }
-  // audits$: Observable<AuditItem[]>;
   audits: ChangeDactivitites[];
   pagedResult: PagedResult<ChangeDactivitites>;
   showButton = true;
   ngOnInit() {
-    window.scrollTo(0, 0);
-
     this.layoutService.getDataChangeRecently(0, 10)
       .subscribe(pagedResult => {
         this.pagedResult = pagedResult;
         this.audits = pagedResult.items;
         this.showButton = pagedResult.pageCount !== 1;
+      }, err => {
+        this.alertService.error(`Đã xảy ra lỗi khi tải danh sách thay đổi gần đây!`);
       });
   }
   onLoadMore() {
@@ -37,6 +34,8 @@ export class ChangeListComponent implements OnInit {
         this.showButton = (pagedResult.items.length > 0) && (+pagedResult.currentPage + 1 < pagedResult.pageCount);
         this.pagedResult = pagedResult;
         this.audits = this.audits.concat(pagedResult.items);
+      }, err => {
+        this.alertService.error(`Đã xảy ra lỗi khi tải danh sách thay đổi gần đây!`);
       });
   }
   renderDataChangeRecently(action: string, target?: string, data?: any, typereturn?: any) {
@@ -192,7 +191,6 @@ export class ChangeListComponent implements OnInit {
           }
           case 'HoSoPhapLy': {
             return sourceImage = 'assets/images/change-xóa-icon.png';
-            return 'vừa xóa HSPL ở gói thầu';
           }
           case 'HoSoKhac': {
             if (typereturn === 'iconImage') {
@@ -838,7 +836,5 @@ export class ChangeListComponent implements OnInit {
         break;
       }
     }
-  }
-  switchIcon() {
   }
 }
