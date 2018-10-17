@@ -18,6 +18,7 @@ import { OpportunityService, ContactService, CustomerService, ProspectService } 
 import { CallCenterHistoryService } from '../shared/services/call-center-history.service';
 import { GroupUserService } from '../shared/services/group-user.service';
 import { ColSpinComponent } from './col-spin/col-spin.component';
+import { ChangeListComponent } from './change-list/change-list.component';
 
 @NgModule({
     imports: [
@@ -37,6 +38,7 @@ import { ColSpinComponent } from './col-spin/col-spin.component';
         NotificationListComponent,
         MenuComponent,
         ColSpinComponent,
+        ChangeListComponent,
     ],
     entryComponents: [
         ChangePasswordModalComponent,
