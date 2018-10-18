@@ -33,12 +33,12 @@
                                 <td class="w-30 label no-boder bold-title">Hoặc</td>
                                 <td class="no-boder d-flex justify-content-between">
                                     <div class="fileUpload">
-                                        <button class="btn btn-primary" [disabled]="uploadForm.get('linkFile').value"
-                                            [class.pointer-default]="uploadForm.get('linkFile').value">
+                                        <button class="btn btn-primary" [disabled]="lockField"
+                                            [class.pointer-default]="lockField">
                                             <i class="fa fa-cloud-upload" aria-hidden="true"></i>&nbsp;&nbsp;
                                             Chọn File</button>
-                                        <input type="file" class="upload" [class.pointer-default]="uploadForm.get('linkFile').value"
-                                            [disabled]="uploadForm.get('linkFile').value" (change)="uploadFile($event)" />
+                                        <input type="file" class="upload" [class.pointer-default]="lockField"
+                                            [disabled]="lockField" (change)="uploadFile($event)" />
                                     </div>
                                     <div style="width: calc(100% - 120px);" class="d-flex justify-content-between">
                                         <div> <span class="text-truncate">{{ displayName }}</span></div>
@@ -46,6 +46,27 @@
                                             <button (click)="deleteFileUpload()" class="btn btn-secondary">X</button>
                                         </div>
                                     </div>
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <td class="w-30 label no-boder bold-title table__label--align">Hình ảnh</td>
+                                <td class="no-boder">
+
+                                    <div class="image-demo-img">
+                                        <input type="file" accept="image/*" #uploadImage (change)="uploadImageF($event)">
+                                        <div class="display-img" *ngFor="let url of imageUrls" (click)="viewFullScreenImage(structureImageUrls)">
+                                            <img [src]="url.largeSizeUrl">
+                                            <div class="icon-delete-image" [ngClass]="{'d-none': viewMode}" (click)="deleteImage(url)">
+                                                <i class="fa fa-times delete-icon" aria-hidden="true"></i>
+                                            </div>
+                                        </div>
+                                        <div class="perspective-image" [ngClass]="{'d-none': viewMode}" (click)="uploadImage.click()">
+                                            <i class="fa fa-plus" aria-hidden="true"></i>
+                                            <p>Image</p>
+                                        </div>
+                                    </div>
+
                                 </td>
                             </tr>
 

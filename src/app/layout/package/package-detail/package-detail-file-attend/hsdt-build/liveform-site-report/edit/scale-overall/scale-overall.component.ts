@@ -108,7 +108,7 @@ export class ScaleOverallComponent implements OnInit {
   }
 
   checkFlag() {
-    if (LiveformSiteReportComponent.formModel.isCreateOrEdit) {
+    if (LiveformSiteReportComponent.formModel.isCreate) {
       const flag = LiveformSiteReportComponent.viewFlag;
       if (flag) {
         const inputs = document.getElementsByTagName('input');

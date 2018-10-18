@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, EventEmitter, Output } from '@angular/core';
+import { Component, OnInit, Input, EventEmitter, Output, ViewChild } from '@angular/core';
 import { FormBuilder, Validators, FormGroup } from '@angular/forms';
 import ValidationHelper from '../../../../../../shared/helpers/validation.helper';
 import { NgxSpinnerService } from 'ngx-spinner';
@@ -13,7 +13,9 @@ import { ListDocumentTypeIdGroup } from '../../../../../../shared/models/ho-so-d
   styleUrls: ['./upload-file-hsdt.component.scss']
 })
 export class UploadFileHsdtComponent implements OnInit {
+  @ViewChild('uploadImage') uploadImageAction;
   @Input() nameFile: string;
+  @Input() setversion: number;
   @Input() idFile: number;
   @Input() bidOpportunityId: number;
   @Input() childrenType: any;
@@ -31,6 +33,8 @@ export class UploadFileHsdtComponent implements OnInit {
   typeOfDoc;
   isFile = false;
   isLinkFile = false;
+  lockField = false;
+  imageUrls = [];
   constructor(
     private fb: FormBuilder,
     private alertService: AlertService,
@@ -50,11 +54,13 @@ export class UploadFileHsdtComponent implements OnInit {
       description: ''
     });
     this.uploadForm.get('type').patchValue(this.idFile);
+    this.uploadForm.get('version').patchValue(this.setversion);
     this.uploadForm.valueChanges.subscribe(data => {
       this.onFormValueChanged(data);
     });
   }
   onFormValueChanged(data?: any) {
+    this.lockField = this.uploadForm.get('linkFile').value ? true : false;
     if (this.isSubmitted) {
       this.validateForm();
     }
@@ -84,6 +90,8 @@ export class UploadFileHsdtComponent implements OnInit {
       const editName = this.uploadForm.get('editName').value;
       const interViewTimes = this.uploadForm.get('interViewTimes').value;
       const version = this.uploadForm.get('version').value;
+      const imageIds = this.imageUrls.map(image => image.guid);
+      console.log(imageIds);
       if (file || linkFile) {
         this.spinner.show();
         this.typeOfDoc = (type) ? type : this.idFile;
@@ -95,7 +103,8 @@ export class UploadFileHsdtComponent implements OnInit {
           file,
           linkFile,
           version,
-          interViewTimes
+          interViewTimes,
+          imageIds
         ).subscribe(data => {
           this.spinner.hide();
           this.errorMess = null;
@@ -135,5 +144,28 @@ export class UploadFileHsdtComponent implements OnInit {
     } else {
       this.displayName = '';
     }
+  }
+  uploadImageF(event) {
+    const file = event.target.files;
+    this.hoSoDuThauService.uploadImageService(file[0]).subscribe(res => {
+      this.imageUrls.push(res);
+      this.uploadImageAction.nativeElement.value = null;
+    }, err => {
+      this.alertService.error('Tải ảnh lên thất bại. Vui lòng thử lại!');
+      this.imageUrls.forEach(x => {
+        if (!x.guid) {
+          this.imageUrls.splice(this.imageUrls.indexOf(x), 1);
+        }
+      });
+    });
+  }
+  deleteImage(image) {
+    if (image.guid) {
+      this.hoSoDuThauService.deleteImageService(image.guid).subscribe(res => {
+      }, err => {
+        this.alertService.error('Xin vui lòng thử lại!');
+      });
+    }
+    this.imageUrls.splice(this.imageUrls.indexOf(image), 1);
   }
 }

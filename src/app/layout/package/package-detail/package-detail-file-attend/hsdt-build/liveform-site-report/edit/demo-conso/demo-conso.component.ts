@@ -47,7 +47,7 @@ export class DemoConsoComponent implements OnInit {
     this.demoConsoForm.valueChanges.subscribe(data => this.mappingToLiveFormData(data));
   }
   checkFlag() {
-    if ((LiveformSiteReportComponent.formModel.isCreateOrEdit)) {
+    if ((LiveformSiteReportComponent.formModel.isCreate)) {
       const flag = LiveformSiteReportComponent.viewFlag;
       this.viewMode = flag;
       if (flag) {
