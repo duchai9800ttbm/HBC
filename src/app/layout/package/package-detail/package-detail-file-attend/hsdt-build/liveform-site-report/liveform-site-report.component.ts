@@ -44,7 +44,7 @@ export class LiveformSiteReportComponent implements OnInit {
     this.siteSurveyReportService.tenderSiteSurveyingReport(this.bidOpportunityId).subscribe(res => {
       if (!res) {
         LiveformSiteReportComponent.formModel = new SiteSurveyReport();
-
+        LiveformSiteReportComponent.formModel.isCreate = true;
         LiveformSiteReportComponent.formModel.bidOpportunityId = this.bidOpportunityId;
         LiveformSiteReportComponent.formModel.scaleOverall = new ScaleOverall();
         LiveformSiteReportComponent.formModel.scaleOverall.loaiCongTrinh = new Array;
@@ -114,7 +114,7 @@ export class LiveformSiteReportComponent implements OnInit {
     this.dtTrigger.next();
   }
   createMode() {
-    LiveformSiteReportComponent.formModel.isCreateOrEdit = true;
+    LiveformSiteReportComponent.formModel.isCreate = true;
   }
   deleteDoc() {
     const that = this;

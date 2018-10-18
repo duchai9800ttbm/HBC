@@ -41,7 +41,7 @@ export class ContentItemComponent implements OnInit {
     this.contentItemForm.valueChanges.subscribe(data => this.mappingData(data));
   }
   checkFlag() {
-    if ((LiveformSiteReportComponent.formModel.isCreateOrEdit)) {
+    if ((LiveformSiteReportComponent.formModel.isCreate)) {
       const flag = LiveformSiteReportComponent.viewFlag;
       this.viewMode = flag;
       if (flag) {

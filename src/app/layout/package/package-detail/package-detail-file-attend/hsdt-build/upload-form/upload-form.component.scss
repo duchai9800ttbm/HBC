@@ -170,6 +170,15 @@ tr {
     border-bottom: solid 2px #ebebeb;
 }
 
+.max-width-column {
+    // max-width: 110px !important;
+}
+
+.underline-dotted {
+    text-decoration-line: underline;
+    text-decoration-style: dotted;
+}
+
 @media only screen and (max-width: 1578px) {
     .responsive-filter-control {
         margin-left: unset !important;

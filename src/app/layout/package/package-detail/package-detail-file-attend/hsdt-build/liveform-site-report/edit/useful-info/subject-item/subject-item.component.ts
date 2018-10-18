@@ -34,7 +34,7 @@ export class SubjectItemComponent implements OnInit {
     this.checkFlag();
   }
   checkFlag() {
-    if ((LiveformSiteReportComponent.formModel.isCreateOrEdit)) {
+    if ((LiveformSiteReportComponent.formModel.isCreate)) {
       const flag = LiveformSiteReportComponent.viewFlag;
       this.viewMode = flag;
       if (flag) {

@@ -46,6 +46,8 @@ export class UploadFormComponent implements OnInit, OnDestroy {
   sum = 0;
   showPopupDetail = false;
   currentItem = {};
+  showPopupViewImage = false;
+  imageUrlArray = [];
   constructor(
     private hoSoDuThauService: HoSoDuThauService,
     private dialogService: DialogService,
@@ -312,5 +314,12 @@ export class UploadFormComponent implements OnInit, OnDestroy {
 
   closePopupDetail() {
     this.showPopupDetail = false;
+  }
+  viewFullScreenImage(listImage) {
+    this.showPopupViewImage = true;
+    this.imageUrlArray = [...listImage];
+  }
+  closeView() {
+    this.showPopupViewImage = false;
   }
 }

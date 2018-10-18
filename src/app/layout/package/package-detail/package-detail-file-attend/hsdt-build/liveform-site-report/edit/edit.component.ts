@@ -46,6 +46,7 @@ export class EditComponent implements OnInit, OnDestroy {
   listUser: UserList[];
   ngayKhaoSat;
   isDraft = true;
+  isCreate = false;
   constructor(
     private siteSurveyReportService: SiteSurveyReportService,
     private packageService: PackageService,
@@ -58,6 +59,7 @@ export class EditComponent implements OnInit, OnDestroy {
     this.departmentId = 49;
     this.getInfoTenderPreparationPlanning();
     this.getAllUser();
+    this.isCreate = (LiveformSiteReportComponent.formModel.isCreate) ? LiveformSiteReportComponent.formModel.isCreate : false;
     this.isDraft = (LiveformSiteReportComponent.formModel.isDraft) ? LiveformSiteReportComponent.formModel.isDraft : true;
     this.currentBidOpportunityId = +PackageDetailComponent.packageId;
     this.packageService.getInforPackageID(this.currentBidOpportunityId).subscribe(result => {
@@ -136,7 +138,11 @@ export class EditComponent implements OnInit, OnDestroy {
 
   updateliveform(check: boolean) {
     LiveformSiteReportComponent.formModel.isDraft = check;
-    this.showPopupConfirm = true;
+    if (this.isCreate) {
+      this.submitLiveForm(true);
+    } else {
+      this.showPopupConfirm = true;
+    }
   }
   cancelCreateUpdate() {
     this.router.navigate([`/package/detail/${this.currentBidOpportunityId}/attend/build/liveformsite`]);

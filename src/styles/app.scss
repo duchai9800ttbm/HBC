@@ -45,7 +45,7 @@
 
 /*HELPER*/
 @font-face {
-    font-family: 'MyriadPro' , Fallback, sans-serif !important;
+    font-family: 'MyriadPro', Fallback, sans-serif !important;
     src: url('/assets/fonts/MyriadPro-Bold.otf') format("opentype");
 }
 
@@ -857,7 +857,7 @@ Direction
     align-items: center;
 }
 
-.center-align{
+.center-align {
     display: flex;
     //justify-content: center;
     align-items: center;
@@ -892,66 +892,82 @@ Direction
     background-color: #fde7ee;
     font-size: 80% !important;
 }
-.color-item-down{
+
+.color-item-down {
     color: green;
 }
-.color-item-print{
+
+.color-item-print {
     color: #f68e56;
 }
-.document-type{
-  //  padding-top: 3px!important;
+
+.document-type {
+    //  padding-top: 3px!important;
 }
 
 pre {
-    white-space: pre-wrap;                 /* CSS3 browsers  */
-    white-space: -moz-pre-wrap !important; /* 1999+ Mozilla  */
-    white-space: -pre-wrap;                /* Opera 4 thru 6 */
-    white-space: -o-pre-wrap;              /* Opera 7 and up */
-    word-wrap: break-word;                 /* IE 5.5+ and up */
-    }
-
-    select.form-control:not([size]):not([multiple]){
-        height: auto!important;
-    }
-
-    .copy-right{
-        color: #ffff;
-    }
-.bg-light{
-    background-color: #fff9e4!important;
-}
-.card-header, .card-collapse .header{
-    background-color: #f68e56!important;
-    color: #ffff!important;
+    white-space: pre-wrap;
+    /* CSS3 browsers  */
+    white-space: -moz-pre-wrap !important;
+    /* 1999+ Mozilla  */
+    white-space: -pre-wrap;
+    /* Opera 4 thru 6 */
+    white-space: -o-pre-wrap;
+    /* Opera 7 and up */
+    word-wrap: break-word;
+    /* IE 5.5+ and up */
 }
 
-.router-link-active-2{
+select.form-control:not([size]):not([multiple]) {
+    height: auto !important;
+}
+
+.copy-right {
+    color: #ffff;
+}
+
+.bg-light {
+    background-color: #fff9e4 !important;
+}
+
+.card-header,
+.card-collapse .header {
+    background-color: #f68e56 !important;
+    color: #ffff !important;
+}
+
+.router-link-active-2 {
     background-color: #00aeef;
     color: #fff;
 }
 
 ::-webkit-scrollbar {
     height: 8px;
- }
+}
 
 ::-webkit-scrollbar-track {
-    background-color:#f8f8f8;
- // border-radius: 5px;
+    background-color: #f8f8f8;
+    // border-radius: 5px;
 
 }
+
 ::-webkit-scrollbar-thumb {
     background-color: #c6c6c6;
     cursor: pointer;
 }
 
-router-oulet{
+router-oulet {
     height: 100%;
 }
 
-.icon-warning{
- color: red;   
+.icon-warning {
+    color: red;
 }
 
-.font-size-90{
-    font-size: 90%!important;
+.font-size-90 {
+    font-size: 90% !important;
+}
+
+.font__heading--size {
+    font-size: 1rem;
 }
