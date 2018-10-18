@@ -4,8 +4,8 @@
             <div class="d-flex justify-content-start" style="height: 40px;">
                 <div class="rule mr-2">
                 </div>
-                <div class="center-parent  mr-4">
-                    <div>{{textmovedata}}</div>
+                <div class="center-parent mr-4">
+                    <div class="header-title">{{textmovedata}}</div>
                 </div>
             </div>
         </div>
@@ -14,7 +14,7 @@
                 <button *ngIf="!bntConfirm" class="btn btn-primary ml-1" (click)="confirmGot()">
                     Xác nhận đã nhận
                 </button>
-                <button class="btn btn-primary ml-1">
+                <!-- <button class="btn btn-primary ml-1">
                     Tải Template
                 </button>
                 <button class="btn btn-primary ml-1">
@@ -22,8 +22,8 @@
                 </button>
                 <button class="btn btn-primary ml-1">
                     In
-                </button>
-                <button class="btn btn-primary ml-1">
+                </button> -->
+                <button class="btn btn-primary ml-1" (click)="refesh()">
                     <i class="fa fa-refresh" aria-hidden="true"></i>
                 </button>
             </div>
@@ -31,11 +31,11 @@
     </div>
 
     <div class="d-flex form-group status-filter">
-        <h5 class="d-inline mb-0 mr-auto text-dark text-uppercase pd-t">Tài liệu được chuyển giao từ {{userInfo.firstName}}</h5>
+        <h5 class="d-inline mb-0 mr-auto text-dark text-uppercase pd-t header-title-child">Tài liệu được chuyển giao từ {{userInfo.firstName}}</h5>
         <div class="btn-toolbar">
             <div class="input-group btn-rg">
                 <span class="input-group-addon">Tìm kiếm theo</span>
-                <input type="text" class="form-control icon" placeholder="&#xf002; Nhập tên">
+                <input type="text" class="form-control icon" placeholder="&#xf002; Nhập tên" (keyup)="searchTerm$.next($event.target.value)">
             </div>
         </div>
     </div>
@@ -46,7 +46,7 @@
                 <div class="form-group ml-sm-2">
                     <label for="" class="form-label">Loại tài liệu</label>
                     <span class="custom-dropdown mx-sm-2">
-                        <select class="form-control">
+                        <select class="form-control" [(ngModel)]="filter.documentType">
                             <option value="">Tất cả</option>
                             <option value="Official">Chính thức</option>
                             <option value="Draft">Bản nháp</option>
@@ -56,7 +56,7 @@
                 <div class="form-group ml-sm-2">
                     <label for="" class="form-label">Trạng thái</label>
                     <span class="custom-dropdown mx-sm-2">
-                        <select class="form-control">
+                        <select class="form-control" [(ngModel)]="filter.status">
                             <option value="">--Lựa chọn--</option>
                             <option value="Official">Đang sử dụng</option>
                             <option value="Draft">Quá hạn sử dụng</option>
@@ -65,11 +65,11 @@
                 </div>
 
                 <div class="form-group ml-sm-2">
-                    <button type="submit" class="btn btn-primary ml-sm-2">
+                    <button type="submit" class="btn btn-primary ml-sm-2" (click)="filterFuc(false)">
                         <i class="fa fa-filter" aria-hidden="true"></i>
                         <span class="filter-pd">Lọc </span>
                     </button>
-                    <button class="btn btn-secondary ml-sm-2">
+                    <button class="btn btn-secondary ml-sm-2" (click)="clearFilterFuc()">
                         <i class="fa fa-times"></i>
                         <span class="filter-pd">Xóa lọc </span>
                     </button>
@@ -79,11 +79,292 @@
 
         <div class="main-table">
             <div class="bot-table">
+                <!-- <table class="table-selection stripe row-border hover cell-border dataTable">
+                    <thead>
+                        <tr>
+                            <th class="stt bg-default w5">
+                                <div class="d-flex justify-content-around">
+                                    <div class="w-40">
+                                        <div class="center-parent">
+                                            <label class="custom-control custom-checkbox">
+                                                <input type="checkbox" class="custom-control-input" [(ngModel)]="checkboxSeclectAll" (change)="onSelectAll($event.target.checked)">
+                                                <span class="custom-control-indicator"></span>
+                                            </label>
+                                        </div>
+                                    </div>
+                                    <div class="center-parent w-35">
+                                        <div>STT</div>
+                                    </div>
+                                </div>
+                            </th>
+                            <th class="bg-default" [ngClass]="{'w12' : isManageTransfer==true, 'w15' : isManageTransfer==false}">
+                                <div class="d-flex justify-content-center">
+                                    <div class="center-parent">
+                                        <div>Loại tài liệu</div>
+                                    </div>
+                                </div>
+                            </th>
+                            <th class="bg-default" [ngClass]="{'w12' : isManageTransfer==true, 'w15' : isManageTransfer==false}">
+                                <div class="d-flex justify-content-center">
+                                    <div class="center-parent">
+                                        <div></div>
+                                    </div>
+                                </div>
+                            </th>
+                            <th class="bg-default" [ngClass]="{'w12' : isManageTransfer==true, 'w15' : isManageTransfer==false}">
+                                <div class="d-flex justify-content-center">
+                                    <div class="center-parent">
+                                        <div>Tên tài liệu</div>
+                                    </div>
+                                </div>
+                            </th>
+                            <th class="bg-default w15">
+                                <div class="d-flex justify-content-center">
+                                    <div class="center-parent">
+                                        <div>Thời gian chuyển giao</div>
+                                    </div>
+                                </div>
+                            </th>
+                            <th class="bg-default w10">
+                                <div class="d-flex justify-content-center">
+                                    <div class="center-parent">
+                                        <div>Được sử dụng đến ngày</div>
+                                    </div>
+                                </div>
+                            </th>
+
+                            <th class="bg-default w10">
+                                <div class="d-flex justify-content-center">
+                                    <div class="center-parent">
+                                        <div>Trạng thái</div>
+                                    </div>
+                                </div>
+                            </th>
+                            <th class="bg-default" [ngClass]="{'w6' : isManageTransfer==true, 'w10' : isManageTransfer==false}">
+                                <div class="d-flex justify-content-center">
+                                    <div class="center-parent">
+                                        <div>Thao tác</div>
+                                    </div>
+                                </div>
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td colspan="4" class="stt hsmt-head th" [ngClass]="{'w-custom' : isManageTransfer==true, 'w50' : isManageTransfer==false}">
+                                <div class="mgl-hs"> Hồ sơ mời thầu
+                                    <i class="fa fa-caret-down mr-l3" (click)="showhsmt()"></i>
+                                </div>
+                            </td>
+                            <td class="hsmt-head th td--overflow" [ngClass]="{'w12' : isManageTransfer==true, 'w15' : isManageTransfer==false}">
+                                <ng-select class="w-100" [items]="departments" placeholder="Chọn phòng ban" clearAllText="Xóa tất cả" [hideSelected]="true"
+                                    multiple="true" bindLabel="departmentName" [searchFn]="customSearchFn" [(ngModel)]="defaulttransferNameHSMT">
+                                </ng-select>
+                            </td>
+                            <td class="hsmt-head th select-filter text-center w10">
+                                <div class="edit-number">
+                                    <input [(ngModel)]="defaultdateUseHSMT" appInputDate min="0" class="form-control number-date--pad" placeholder="Number" [ngClass]="{'w80' : isManageTransfer==true}">
+                                    <i class="fa fa-pencil edit-number--posotion"></i>
+                                </div>
+                            </td>
+                            <td class="hsmt-head th w10"></td>
+                            <td class="hsmt-head th w10"></td>
+                        </tr>
+                        <ng-container *ngFor="let itemchildDocuments of docHSMTList; let i = index">
+                            <ng-container *ngIf="itemchildDocuments.childDocuments && itemchildDocuments.childDocuments.length !== 0">
+                                <ng-container *ngFor="let itemChild of itemchildDocuments.childDocuments; let j = index">
+                                    <ng-container *ngFor="let items of itemChild.items; let k = index">
+                                        <tr>
+                                            <td class="stt w5 bg-default wstt">
+                                                <div class="d-flex justify-content-around">
+                                                    <div class="w-40">
+                                                        <div class="center-parent">
+                                                            <label class="custom-control custom-checkbox">
+                                                                <input type="checkbox" class="custom-control-input" [(ngModel)]="items.documents[0].checkboxSelected">
+                                                                <span class="custom-control-indicator"></span>
+                                                            </label>
+                                                        </div>
+                                                    </div>
+                                                    <div class="center-parent w-35">
+                                                        <div>{{renderIndex(i, j, k)}}</div>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                            <td [ngClass]="{'w12' : isManageTransfer==true, 'w15' : isManageTransfer==false}">
+                                                <div *ngIf="j === 0 && k === 0" class="text-truncate">
+                                                    {{itemchildDocuments.documentType.value}}
+                                                </div>
+                                            </td>
+                                            <td [ngClass]="{'w12' : isManageTransfer==true, 'w15' : isManageTransfer==false}">
+                                                <div *ngIf="k === 0" class="text-truncate">
+                                                    {{itemChild.value.value}}
+                                                </div>
+                                            </td>
+                                            <td [ngClass]="{'w12' : isManageTransfer==true, 'w15' : isManageTransfer==false}">{{ items.documents[0].name }}</td>
+                                            <td class="select-filter td-input w10 td--overflow">
+                                                <ng-select class="w-100" [items]="departments" placeholder="Chọn phòng ban" clearAllText="Xóa tất cả" [hideSelected]="true"
+                                                    multiple="true" bindLabel="departmentName" [searchFn]="customSearchFn" [(ngModel)]="items.documents[0].transferName">
+                                                </ng-select>
+                                            </td>
+                                            <td class="select-filter text-center w10">
+                                                <div class="edit-number">
+                                                    <input [(ngModel)]="items.documents[0].dateUse" appInputDate min="0" class="form-control number-date--pad" placeholder="Number"
+                                                        [ngClass]="{'w80' : isManageTransfer==true}">
+                                                    <i class="fa fa-pencil edit-number--posotion"></i>
+                                                </div>
+
+                                            </td>
+                                            <td class="select-filter text-center w10">{{ items.documents[0].interviewTime }}</td>
+                                            <td class="text-center" [ngClass]="{'w6' : isManageTransfer==true, 'w10' : isManageTransfer==false}">
+                                                <div class="d-flex justify-content-around">
+                                                    <div id="mr">
+                                                        <a title="Tải file" (click)="downloadFileItemHSMT(items.documents[0].id)">
+                                                            <i class="fa fa-download color-item-down" aria-hidden="true"></i>
+                                                        </a>
+                                                    </div>
+                                                    <div>
+                                                        <a title="In">
+                                                            <i class="fa fa-print color-item-print" aria-hidden="true"></i>
+                                                        </a>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    </ng-container>
+                                </ng-container>
+                            </ng-container>
+                            <ng-container *ngIf="!itemchildDocuments.childDocuments">
+                                <ng-container *ngFor="let documents of itemchildDocuments.documents; let j = index">
+                                    <tr>
+                                        <td class="stt w5 bg-default wstt">
+                                            <div class="d-flex justify-content-around">
+                                                <div class="w-40">
+                                                    <div class="center-parent">
+                                                        <label class="custom-control custom-checkbox">
+                                                            <input type="checkbox" class="custom-control-input" [(ngModel)]="documents.checkboxSelected">
+                                                            <span class="custom-control-indicator"></span>
+                                                        </label>
+                                                    </div>
+                                                </div>
+                                                <div class="center-parent w-35">
+                                                    <div>{{renderIndex(i, j, k)}}</div>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td [ngClass]="{'w12' : isManageTransfer==true, 'w15' : isManageTransfer==false}">
+                                            <div *ngIf="j === 0" class="text-truncate">
+                                                {{itemchildDocuments.documentType.value}}
+                                            </div>
+                                        </td>
+                                        <td [ngClass]="{'w12' : isManageTransfer==true, 'w15' : isManageTransfer==false}">
+                                        </td>
+                                        <td [ngClass]="{'w12' : isManageTransfer==true, 'w15' : isManageTransfer==false}">{{ documents.name }}</td>
+                                        <td class="select-filter td-input w10 td--overflow">
+                                            <ng-select class="w-100" [items]="departments" placeholder="Chọn phòng ban" clearAllText="Xóa tất cả" [hideSelected]="true"
+                                                multiple="true" bindLabel="departmentName" [searchFn]="customSearchFn" [(ngModel)]="documents.transferName">
+                                            </ng-select>
+                                        </td>
+                                        <td class="select-filter text-center w10">
+                                            <div class="edit-number">
+                                                <input [(ngModel)]="documents.dateUse" appInputDate min="0" class="form-control number-date--pad" placeholder="Number" [ngClass]="{'w80' : isManageTransfer==true}">
+                                                <i class="fa fa-pencil edit-number--posotion"></i>
+                                            </div>
+                                        </td>
+                                        <td class="select-filter text-center w10">{{ documents.interviewTime }}</td>
+                                        <td class="text-center" [ngClass]="{'w6' : isManageTransfer==true, 'w10' : isManageTransfer==false}">
+                                            <div class="d-flex justify-content-around">
+                                                <div id="mr">
+                                                    <a title="Tải file" (click)="downloadFileItem(item.id)">
+                                                        <i class="fa fa-download color-item-down" aria-hidden="true"></i>
+                                                    </a>
+                                                </div>
+                                                <div>
+                                                    <a title="In">
+                                                        <i class="fa fa-print color-item-print" aria-hidden="true"></i>
+                                                    </a>
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </ng-container>
+                            </ng-container>
+                        </ng-container>
+                        <tr>
+                            <td colspan="4" class="stt hsmt-head th" [ngClass]="{'w-custom' : isManageTransfer==true, 'w50' : isManageTransfer==false}">
+                                <div class="mgl-hs"> Hồ sơ dự thầu
+                                    <i class="fa fa-caret-down mr-l3" (click)="showhsdt()"></i>
+                                </div>
+                            </td>
+                            <td class="hsmt-head th td--overflow" [ngClass]="{'w12' : isManageTransfer==true, 'w15' : isManageTransfer==false}">
+                                <ng-select class="w-100" [items]="departments" placeholder="Chọn phòng ban" clearAllText="Xóa tất cả" [hideSelected]="true"
+                                    multiple="true" bindLabel="departmentName" [searchFn]="customSearchFn" [(ngModel)]="defaulttransferNameHSDT">
+                                </ng-select>
+                            </td>
+                            <td class="hsmt-head th select-filter text-center w10">
+                                <div class="edit-number">
+                                    <input [(ngModel)]="defaultdateUseHSDT" appInputDate class="form-control number-date--pad" placeholder="Number" [ngClass]="{'w80' : isManageTransfer==true}">
+                                    <i class="fa fa-pencil edit-number--posotion"></i>
+                                </div>
+                            </td>
+                            <td class="hsmt-head th w10"></td>
+                            <td class="hsmt-head th w10"></td>
+                        </tr>
+                        <ng-container *ngFor="let itemchildDocuments of docHSDTList; let i = index">
+                            <ng-container *ngFor="let document of itemchildDocuments.documents; let j = index">
+                                <tr>
+                                    <td class="stt wstt">
+                                        <div class="d-flex justify-content-around">
+                                            <div class="w-40">
+                                                <div class="center-parent">
+                                                    <label class="custom-control custom-checkbox">
+                                                        <input type="checkbox" class="custom-control-input" [(ngModel)]="document.checkboxSelected">
+                                                        <span class="custom-control-indicator"></span>
+                                                    </label>
+                                                </div>
+                                            </div>
+
+                                            <div class="center-parent w-35">
+                                                <div>{{i+1}}</div>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td [ngClass]="{'w12' : isManageTransfer==true, 'w15' : isManageTransfer==false}">{{ itemchildDocuments.documentType.value }}</td>
+                                    <td [ngClass]="{'w12' : isManageTransfer==true, 'w15' : isManageTransfer==false}"></td>
+                                    <td [ngClass]="{'w12' : isManageTransfer==true, 'w15' : isManageTransfer==false}">{{ document.name }}</td>
+                                    <td class="select-filter td-input w10 td--overflow">
+                                        <ng-select class="w-100" [items]="departments" placeholder="Chọn phòng ban" clearAllText="Xóa tất cả" [hideSelected]="true"
+                                            multiple="true" bindLabel="departmentName" [searchFn]="customSearchFn" [(ngModel)]="document.transferName">
+                                        </ng-select>
+                                    </td>
+                                    <td class="th select-filter text-center w10">
+                                        <div class="edit-number">
+                                            <input [(ngModel)]="document.dateUse" appInputDate min="0" class="form-control number-date--pad" placeholder="Number" [ngClass]="{'w80' : isManageTransfer==true}">
+                                            <i class="fa fa-pencil edit-number--posotion"></i>
+                                        </div>
+                                    </td>
+                                    <td class="select-filter text-center w10">{{ document.interviewTime}}</td>
+                                    <td class="text-center" [ngClass]="{'w6' : isManageTransfer==true, 'w10' : isManageTransfer==false}">
+                                        <div class="col-md-4 offset-md-2 center-parent cursor-pointer">
+                                            <i [title]="'tải file'" class="fa fa-download color-item-down"></i>
+                                        </div>
+
+                                        <div class="col-md-3 center-parent cursor-pointer color-item-print">
+                                            <i [title]="'In'" class="fa fa-print "></i>
+                                        </div>
+                                        <div *ngIf="item.status==2" class="col-md-3 center-parent cursor-pointer" style="color:#673AB7;">
+                                            <i class="fa fa-undo" aria-hidden="true"></i>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </ng-container>
+                        </ng-container>
+                    </tbody>
+                </table> -->
                 <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="table-selection stripe row-border hover cell-border dataTable">
                     <thead>
-                        <th class="stt bg-default w5" style="background-color: #f68e56!important;">
+                        <th class="stt bg-default w5">
                             <div class="d-flex justify-content-around">
-                                <div style="width: 40%;">
+                                <div class="w-40">
                                     <div class="center-parent">
                                         <label class="custom-control custom-checkbox">
                                             <input type="checkbox" class="custom-control-input" [(ngModel)]="checkboxSeclectAll" (change)="onSelectAll($event.target.checked)">
@@ -92,13 +373,8 @@
                                     </div>
                                 </div>
 
-                                <div style="width: 35%;background-color: #f68e56!important;" class="center-parent">
+                                <div class="center-parent w-35">
                                     <div>STT</div>
-                                </div>
-                                <div class="center-parent" style="width: 15%;padding-left: 5px;">
-                                    <div class="ng-tns-c15-6">
-                                        <i class="fa fa-caret-down" style="color: #ffff;"></i>
-                                    </div>
                                 </div>
                             </div>
                         </th>
@@ -107,64 +383,39 @@
                                 <div class="center-parent">
                                     <div>Loại tài liệu</div>
                                 </div>
-                                <div class="center-parent pd-l">
-                                    <div class="ng-tns-c15-6">
-                                        <i class="fa fa-caret-down" style="color: #ffff;"></i>
-                                    </div>
-                                </div>
                             </div>
                         </th>
 
-                        <th class="bg-default w15" style="background-color: #f68e56!important;">
+                        <th class="bg-default w15">
                             <div class="d-flex justify-content-center">
                                 <div class="center-parent">
                                     <div>Tên tài liệu</div>
                                 </div>
-                                <div class="center-parent pd-l">
-                                    <div class="ng-tns-c15-6">
-                                        <i class="fa fa-caret-down" style="color: #ffff;"></i>
-                                    </div>
-                                </div>
                             </div>
                         </th>
-                        <th class="bg-default w15" style="background-color: #f68e56!important;">
+                        <th class="bg-default w15">
                             <div class="d-flex justify-content-center">
                                 <div class="center-parent">
                                     <div>Thời gian chuyển giao</div>
                                 </div>
-                                <div class="center-parent pd-l">
-                                    <div class="ng-tns-c15-6">
-                                        <i class="fa fa-caret-down" style="color: #ffff;"></i>
-                                    </div>
-                                </div>
                             </div>
                         </th>
-                        <th class="bg-default w15" style="background-color: #f68e56!important;">
+                        <th class="bg-default w15">
                             <div class="d-flex justify-content-center">
                                 <div class="center-parent">
                                     <div>Được sử dụng đến ngày</div>
                                 </div>
-                                <div class="center-parent pd-l">
-                                    <div class="ng-tns-c15-6">
-                                        <i class="fa fa-caret-down" style="color: #ffff;"></i>
-                                    </div>
-                                </div>
                             </div>
                         </th>
-                        <th class="bg-default w12" style="background-color: #f68e56!important;">
+                        <th class="bg-default w12">
                             <div class="d-flex justify-content-center">
                                 <div class="center-parent">
                                     <div>Trạng thái </div>
                                 </div>
-                                <div class="center-parent pd-l">
-                                    <div class="ng-tns-c15-6">
-                                        <i class="fa fa-caret-down" style="color: #ffff;"></i>
-                                    </div>
-                                </div>
                             </div>
                         </th>
 
-                        <th class="bg-default w10" style="background-color: #f68e56!important;">
+                        <th class="bg-default w10">
                             <div class="d-flex justify-content-center">
                                 <div class="center-parent">
                                     <div>Thao tác</div>
@@ -185,48 +436,125 @@
                 </table>
                 <table *ngIf="!isDataHsmt" datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="table-selection stripe row-border hover cell-border dataTable table-input">
                     <tbody>
-                        <tr *ngFor="let item of data; let i = index">                           
-                            <td class="stt wstt" *ngIf="item.type==1">
-                                <div class="d-flex justify-content-around">
-                                    <div style="width: 40%;">
-                                        <div class="center-parent">
-                                            <label class="custom-control custom-checkbox">
-                                                <input type="checkbox" class="custom-control-input" [(ngModel)]="item.checkboxSelected">
-                                                <span class="custom-control-indicator"></span>
-                                            </label>
-                                        </div>
-                                    </div>
+                        <ng-container *ngFor="let itemchildDocuments of docHSMTList; let i = index">
+                            <ng-container *ngIf="itemchildDocuments.childDocuments && itemchildDocuments.childDocuments.length !== 0">
+                                <ng-container *ngFor="let itemChild of itemchildDocuments.childDocuments; let j = index">
+                                    <ng-container *ngFor="let items of itemChild.items; let k = index">
+                                        <tr>
+                                            <td class="stt w5 bg-default wstt">
+                                                <div class="d-flex justify-content-around">
+                                                    <div class="w-40">
+                                                        <div class="center-parent">
+                                                            <label class="custom-control custom-checkbox">
+                                                                <input type="checkbox" class="custom-control-input" [(ngModel)]="items.documents[0].checkboxSelected">
+                                                                <span class="custom-control-indicator"></span>
+                                                            </label>
+                                                        </div>
+                                                    </div>
+                                                    <div class="center-parent w-35">
+                                                        <div>{{renderIndex(i, j, k)}}</div>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                            <td [ngClass]="{'w12' : isManageTransfer==true, 'w15' : isManageTransfer==false}">
+                                                <div *ngIf="j === 0 && k === 0" class="text-truncate">
+                                                    {{itemchildDocuments.documentType.value}}
+                                                </div>
+                                            </td>
+                                            <td [ngClass]="{'w12' : isManageTransfer==true, 'w15' : isManageTransfer==false}">
+                                                <div *ngIf="k === 0" class="text-truncate">
+                                                    {{itemChild.value.value}}
+                                                </div>
+                                            </td>
+                                            <td [ngClass]="{'w12' : isManageTransfer==true, 'w15' : isManageTransfer==false}">{{ items.documents[0].name }}</td>
+                                            <td class="select-filter td-input w10 td--overflow">
+                                                <ng-select class="w-100" [items]="departments" placeholder="Chọn phòng ban" clearAllText="Xóa tất cả" [hideSelected]="true"
+                                                    multiple="true" bindLabel="departmentName" [searchFn]="customSearchFn" [(ngModel)]="items.documents[0].transferName">
+                                                </ng-select>
+                                            </td>
+                                            <td class="select-filter text-center w10">
+                                                <div class="edit-number">
+                                                    <input [(ngModel)]="items.documents[0].dateUse" appInputDate min="0" class="form-control number-date--pad" placeholder="Number"
+                                                        [ngClass]="{'w80' : isManageTransfer==true}">
+                                                    <i class="fa fa-pencil edit-number--posotion"></i>
+                                                </div>
 
-                                    <div style="width: 35%;" class="center-parent">
-                                        <div>{{i+1}}</div>
-                                    </div>
-                                    <div class="center-parent" style="width: 15%;padding-left: 5px;">
-                                        <div class="ng-tns-c15-6">
-
-                                        </div>
-                                    </div>
-                                </div>
-                            </td>
-                            <td *ngIf="item.type==1" style="width:17%">{{ item.documentType }}</td>
-                            <td *ngIf="item.type==1" class="w15 text-center">{{ item.documentName }}</td>
-                            <td *ngIf="item.type==1" class="w15 text-center">{{ item.timeTransfer }}</td>
-                            <td *ngIf="item.type==1" class="select-filter w15 text-center">{{ item.documentNumber}}</td>
-                            <td *ngIf="item.type==1" class="select-filter text-center w12">{{ item.status ===1?'Được sử dụng' :'Quá hạn sử dụng'}}</td>
-                            <td *ngIf="item.type==1" class="text-center w10">
-                                <div class="row ">
-                                    <div class="col-md-4 offset-md-2 center-parent cursor-pointer">
-                                        <i [title]="'tải file'" class="fa fa-download color-item-down"></i>
-                                    </div>
-
-                                    <div class="col-md-3 center-parent cursor-pointer color-item-print">
-                                        <i [title]="'In'" class="fa fa-print "></i>
-                                    </div>
-                                    <div *ngIf="item.status==2" class="col-md-3 center-parent cursor-pointer" style="color:#673AB7;">
-                                        <i class="fa fa-undo" aria-hidden="true"></i>
-                                    </div>
-                                </div>
-                            </td>
-                        </tr>
+                                            </td>
+                                            <td class="select-filter text-center w10">{{ items.documents[0].interviewTime }}</td>
+                                            <td class="text-center" [ngClass]="{'w6' : isManageTransfer==true, 'w10' : isManageTransfer==false}">
+                                                <div class="d-flex justify-content-around">
+                                                    <div id="mr">
+                                                        <a title="Tải file" (click)="downloadFileItemHSMT(items.documents[0].id)">
+                                                            <i class="fa fa-download color-item-down" aria-hidden="true"></i>
+                                                        </a>
+                                                    </div>
+                                                    <div>
+                                                        <a title="In">
+                                                            <i class="fa fa-print color-item-print" aria-hidden="true"></i>
+                                                        </a>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    </ng-container>
+                                </ng-container>
+                            </ng-container>
+                            <ng-container *ngIf="!itemchildDocuments.childDocuments">
+                                <ng-container *ngFor="let documents of itemchildDocuments.documents; let j = index">
+                                    <tr>
+                                        <td class="stt w5 bg-default wstt">
+                                            <div class="d-flex justify-content-around">
+                                                <div class="w-40">
+                                                    <div class="center-parent">
+                                                        <label class="custom-control custom-checkbox">
+                                                            <input type="checkbox" class="custom-control-input" [(ngModel)]="documents.checkboxSelected">
+                                                            <span class="custom-control-indicator"></span>
+                                                        </label>
+                                                    </div>
+                                                </div>
+                                                <div class="center-parent w-35">
+                                                    <div>{{renderIndex(i, j, k)}}</div>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td [ngClass]="{'w12' : isManageTransfer==true, 'w15' : isManageTransfer==false}">
+                                            <div *ngIf="j === 0" class="text-truncate">
+                                                {{itemchildDocuments.documentType.value}}
+                                            </div>
+                                        </td>
+                                        <td [ngClass]="{'w12' : isManageTransfer==true, 'w15' : isManageTransfer==false}">
+                                        </td>
+                                        <td [ngClass]="{'w12' : isManageTransfer==true, 'w15' : isManageTransfer==false}">{{ documents.name }}</td>
+                                        <td class="select-filter td-input w10 td--overflow">
+                                            <ng-select class="w-100" [items]="departments" placeholder="Chọn phòng ban" clearAllText="Xóa tất cả" [hideSelected]="true"
+                                                multiple="true" bindLabel="departmentName" [searchFn]="customSearchFn" [(ngModel)]="documents.transferName">
+                                            </ng-select>
+                                        </td>
+                                        <td class="select-filter text-center w10">
+                                            <div class="edit-number">
+                                                <input [(ngModel)]="documents.dateUse" appInputDate min="0" class="form-control number-date--pad" placeholder="Number" [ngClass]="{'w80' : isManageTransfer==true}">
+                                                <i class="fa fa-pencil edit-number--posotion"></i>
+                                            </div>
+                                        </td>
+                                        <td class="select-filter text-center w10">{{ documents.interviewTime }}</td>
+                                        <td class="text-center" [ngClass]="{'w6' : isManageTransfer==true, 'w10' : isManageTransfer==false}">
+                                            <div class="d-flex justify-content-around">
+                                                <div id="mr">
+                                                    <a title="Tải file" (click)="downloadFileItem(item.id)">
+                                                        <i class="fa fa-download color-item-down" aria-hidden="true"></i>
+                                                    </a>
+                                                </div>
+                                                <div>
+                                                    <a title="In">
+                                                        <i class="fa fa-print color-item-print" aria-hidden="true"></i>
+                                                    </a>
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </ng-container>
+                            </ng-container>
+                        </ng-container>
                     </tbody>
                 </table>
                 <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="table-selection stripe row-border hover cell-border"
@@ -239,56 +567,60 @@
                         </th>
                     </thead>
                 </table>
-                <!-- isDataHsdt -->
                 <table *ngIf="!isDataHsdt" datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="table-input table-selection stripe row-border hover cell-border dataTable">
                     <tbody>
-                        <tr *ngFor="let item of data; let i = index">
-                            <td class="stt wstt" *ngIf="item.type==2">
-                                <div class="d-flex justify-content-around">
-                                    <div style="width: 40%;">
-                                        <div class="center-parent">
-                                            <label class="custom-control custom-checkbox">
-                                                <input type="checkbox" class="custom-control-input" [(ngModel)]="item.checkboxSelected">
-                                                <span class="custom-control-indicator"></span>
-                                            </label>
+                        <ng-container *ngFor="let itemchildDocuments of docHSDTList; let i = index">
+                            <ng-container *ngFor="let document of itemchildDocuments.documents; let j = index">
+                                <tr>
+                                    <td class="stt wstt">
+                                        <div class="d-flex justify-content-around">
+                                            <div class="w-40">
+                                                <div class="center-parent">
+                                                    <label class="custom-control custom-checkbox">
+                                                        <input type="checkbox" class="custom-control-input" [(ngModel)]="document.checkboxSelected">
+                                                        <span class="custom-control-indicator"></span>
+                                                    </label>
+                                                </div>
+                                            </div>
+
+                                            <div class="center-parent w-35">
+                                                <div>{{i+1}}</div>
+                                            </div>
                                         </div>
-                                    </div>
-
-                                    <div style="width: 35%;" class="center-parent">
-                                        <div>{{i+1}}</div>
-                                    </div>
-                                    <div class="center-parent" style="width: 15%;padding-left: 5px;">
-                                        <div class="ng-tns-c15-6">
-
+                                    </td>
+                                    <td [ngClass]="{'w12' : isManageTransfer==true, 'w15' : isManageTransfer==false}">{{ itemchildDocuments.documentType.value }}</td>
+                                    <td [ngClass]="{'w12' : isManageTransfer==true, 'w15' : isManageTransfer==false}"></td>
+                                    <td [ngClass]="{'w12' : isManageTransfer==true, 'w15' : isManageTransfer==false}">{{ document.name }}</td>
+                                    <td class="select-filter td-input w10 td--overflow">
+                                        <ng-select class="w-100" [items]="departments" placeholder="Chọn phòng ban" clearAllText="Xóa tất cả" [hideSelected]="true"
+                                            multiple="true" bindLabel="departmentName" [searchFn]="customSearchFn" [(ngModel)]="document.transferName">
+                                        </ng-select>
+                                    </td>
+                                    <td class="th select-filter text-center w10">
+                                        <div class="edit-number">
+                                            <input [(ngModel)]="document.dateUse" appInputDate min="0" class="form-control number-date--pad" placeholder="Number" [ngClass]="{'w80' : isManageTransfer==true}">
+                                            <i class="fa fa-pencil edit-number--posotion"></i>
                                         </div>
-                                    </div>
-                                </div>
-                            </td>
-                            <td *ngIf="item.type==2" style="width: 17%">{{ item.documentType }}</td>
-                            <td *ngIf="item.type==2" class="w15 text-center">{{ item.documentName }}</td>
-                            <td *ngIf="item.type==2" class="w15 text-center">{{ item.timeTransfer }}</td>
-                            <td *ngIf="item.type==2" class="select-filter w15 text-center">{{ item.documentNumber}}</td>
-                            <td *ngIf="item.type==2" class="select-filter text-center w12">{{ item.status ===1 ? 'Đang sử dụng' :'Quá hạn sử dụng'}}</td>
-                            <td *ngIf="item.type==2" class="text-center w10">
-                                <div class="row ">
-                                    <div class="col-md-4 offset-md-1 center-parent cursor-pointer">
-                                        <i [title]="'tải file'" class="fa fa-download color-item-down"></i>
-                                    </div>
+                                    </td>
+                                    <td class="select-filter text-center w10">{{ document.interviewTime}}</td>
+                                    <td class="text-center" [ngClass]="{'w6' : isManageTransfer==true, 'w10' : isManageTransfer==false}">
+                                        <div class="col-md-4 offset-md-2 center-parent cursor-pointer">
+                                            <i [title]="'tải file'" class="fa fa-download color-item-down"></i>
+                                        </div>
 
-                                    <div class="col-md-3 center-parent cursor-pointer color-item-print">
-                                        <i [title]="'In'" class="fa fa-print "></i>
-                                    </div>
-                                    <div *ngIf="item.status==2" class="col-md-3 center-parent cursor-pointer" style="color:#673AB7;">
-                                        <i class="fa fa-undo" aria-hidden="true"></i>
-                                    </div>
-
-                                </div>
-                            </td>
-                        </tr>
+                                        <div class="col-md-3 center-parent cursor-pointer color-item-print">
+                                            <i [title]="'In'" class="fa fa-print "></i>
+                                        </div>
+                                        <div *ngIf="item.status==2" class="col-md-3 center-parent cursor-pointer" style="color:#673AB7;">
+                                            <i class="fa fa-undo" aria-hidden="true"></i>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </ng-container>
+                        </ng-container>
                     </tbody>
                 </table>
             </div>
-            <div class="show">Hiển thị {{total}} kết quả</div>
         </div>
 
     </div>

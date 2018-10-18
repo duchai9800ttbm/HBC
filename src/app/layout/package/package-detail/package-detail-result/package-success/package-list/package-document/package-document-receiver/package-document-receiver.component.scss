@@ -26,13 +26,13 @@
             max-width: 80px;
         }
     }
-    .status-filter {
-        zoom: 0.9;
-        font-size: 120%;
-    }
-    .custom-filter-bar {
-        zoom: 0.9 !important;
-    }
+    // .status-filter {
+    //     zoom: 0.9;
+    //     font-size: 120%;
+    // }
+    // .custom-filter-bar {
+    //     zoom: 0.9 !important;
+    // }
 }
 
 @media only screen and (max-width: 1270px) {
@@ -42,13 +42,13 @@
             max-width: 80px;
         }
     }
-    .status-filter {
-        zoom: 0.7;
-        font-size: 120%;
-    }
-    .custom-filter-bar {
-        zoom: 0.65
-    }
+    // .status-filter {
+    //     zoom: 0.7;
+    //     font-size: 120%;
+    // }
+    // .custom-filter-bar {
+    //     zoom: 0.65
+    // }
 }
 
 @media only screen and (max-width: 1200px) {
@@ -58,13 +58,13 @@
             max-width: 75px;
         }
     }
-    .status-filter {
-        zoom: 0.8;
-        font-size: 120%;
-    }
-    .custom-filter-bar {
-        zoom: 0.85!important;
-    }
+    // .status-filter {
+    //     zoom: 0.8;
+    //     font-size: 120%;
+    // }
+    // .custom-filter-bar {
+    //     zoom: 0.85!important;
+    // }
 }
 
 @media only screen and (max-width: 1024px) {
@@ -72,13 +72,13 @@
     td {
         max-width: 65px;
     }
-    .status-filter {
-        zoom: 0.6;
-        font-size: 120%;
-    }
-    .custom-filter-bar {
-        zoom: 0.6;
-    }
+    // .status-filter {
+    //     zoom: 0.6;
+    //     font-size: 120%;
+    // }
+    // .custom-filter-bar {
+    //     zoom: 0.6;
+    // }
 }
 
 @media only screen and (max-width: 1100px) {
@@ -86,13 +86,13 @@
     td {
         max-width: 65px;
     }
-    .status-filter {
-        zoom: 0.5;
-        font-size: 120%;
-    }
-    .custom-filter-bar {
-        zoom: 0.7;
-    }
+    // .status-filter {
+    //     zoom: 0.5;
+    //     font-size: 120%;
+    // }
+    // .custom-filter-bar {
+    //     zoom: 0.7;
+    // }
 }
 .custor-filter-bar {
     padding: 0px;
@@ -234,51 +234,51 @@ table.dataTable th {
 }
 @media only screen and (max-width: 1600px) {
   
-    .custom-filter-bar{
-        zoom: 0.9;
-    }
+    // .custom-filter-bar{
+    //     zoom: 0.9;
+    // }
   }
   
   @media only screen and (max-width: 1400px) {
     
-      .custom-filter-bar{
-          zoom: 0.8;
-      }
+    //   .custom-filter-bar{
+    //       zoom: 0.8;
+    //   }
   }
   
   
   @media only screen and (max-width: 1366px) {
   
-      .custom-filter-bar{
-          zoom: 0.7;
-      }
+    //   .custom-filter-bar{
+    //       zoom: 0.7;
+    //   }
   }
   
   
   @media only screen and (max-width: 1150px) {
-      table.dataTable{
-          zoom: 0.72;
-      }
+    //   table.dataTable{
+    //       zoom: 0.72;
+    //   }
    
-      .status-filter{
-          zoom: 0.85;
-      }
-      .custom-filter-bar{
-          zoom: 0.5;
-      }
+    //   .status-filter{
+    //       zoom: 0.85;
+    //   }
+    //   .custom-filter-bar{
+    //       zoom: 0.5;
+    //   }
   }
   
   @media only screen and (max-width: 1024px) {
-      .btn-toolbar {
-          zoom: 0.85;
-      }
+    //   .btn-toolbar {
+    //       zoom: 0.85;
+    //   }
   
-      .status-filter{
-          zoom: 0.75;
-      }
-      .custom-filter-bar{
-          zoom: 0.6;
-      }
+    //   .status-filter{
+    //       zoom: 0.75;
+    //   }
+    //   .custom-filter-bar{
+    //       zoom: 0.6;
+    //   }
       #mr {
         margin-right: 10px;
     } 
@@ -289,25 +289,41 @@ table.dataTable th {
   
   @media only screen and (max-width: 1010px) {
   
-      .status-filter{
-          zoom: 0.65;
-      }
-      .custom-filter-bar{
-          zoom: 0.5;
-      }
+    //   .status-filter{
+    //       zoom: 0.65;
+    //   }
+    //   .custom-filter-bar{
+    //       zoom: 0.5;
+    //   }
   }
   
   @media only screen and (max-width: 997px) {
   
-      .status-filter{
+    //   .status-filter{
   
           
-          zoom: 0.45;
-      }
-      .custom-filter-bar{
-          zoom: 0.6;
-      }
+    //       zoom: 0.45;
+    //   }
+    //   .custom-filter-bar{
+    //       zoom: 0.6;
+    //   }
   }
   .wstt {
     width: 6%;
+}
+table.dataTable th {
+    background-color: #f68e56 !important;
+    border: 1px solid #dddddd;
+}
+.w-40{
+    width: 40%;
+}
+.w-35{
+    width: 35%;
+}
+.header-title{
+    font-size: 130%;
+}
+.header-title-child{
+    font-size: 120%;
 }

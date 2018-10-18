@@ -66,7 +66,7 @@ export class PackageDocumentSenderComponent implements OnInit {
   hadTransferList: HadTransferList[];
   docHSMTHadTransfer;
   docHSDTHadTransfer;
-  manageNeedTranferList: ManageNeedTranferList[];
+  manageNeedTranferList = [];
   listData: any = [
     { id: 1, rom: 'Maketing', username: 'Oliver Dinh', nameDocument: 'Maketing online', status: 'Đã nhận' },
     { id: 2, rom: 'Maketing', username: 'Van Dinh', nameDocument: 'Maketing online', status: 'Đã nhận' },
@@ -278,9 +278,6 @@ export class PackageDocumentSenderComponent implements OnInit {
       });
     });
   }
-  // onSelectDocument(value: boolean) {
-  //   this.listData.forEach(x => (x['selectedDocument'] = value));
-  // }
   showhsmt() {
     this.isDataHsmt = !this.isDataHsmt;
   }
@@ -338,8 +335,13 @@ export class PackageDocumentSenderComponent implements OnInit {
 
   manageTransferDocument(template: TemplateRef<any>) {
     this.detailResultPackageService.manageTransferDocs(this.currentPackageId).subscribe(response => {
-        this.manageNeedTranferList = response;
+      this.manageNeedTranferList = response;
+      this.manageNeedTranferList.forEach((itemEmployee, indexEmployee) => {
+        this.manageNeedTranferList[indexEmployee]['receivedEmployeeStr'] = JSON.stringify(itemEmployee.receivedEmployee);
       });
+      this.manageNeedTranferList = groupBy(this.manageNeedTranferList, [{ field: 'receivedEmployeeStr' }]);
+      console.log('this.manageNeedTranferList', this.manageNeedTranferList);
+    });
     this.modalRef = this.modalService.show(
       template,
       Object.assign({}, { class: 'gray modal-lg' })
@@ -437,5 +439,55 @@ export class PackageDocumentSenderComponent implements OnInit {
       }
     }
     return dem;
+  }
+  // Tài liệu đã chuyển giao
+  onSelectAllHadTransfer(value: boolean) {
+    this.docHSMTHadTransfer.forEach(itemHSMT => {
+      if (itemHSMT.childDocuments) {
+        itemHSMT.childDocuments.forEach(itemChild => {
+          itemChild.items.forEach(itemChildChild => {
+            itemChildChild.documents[0].checkboxSelected = value;
+          });
+        });
+      } else {
+        itemHSMT.documents[0].checkboxSelected = value;
+      }
+    });
+    this.docHSDTHadTransfer.forEach(itemHSDT => {
+      itemHSDT.documents.forEach(itemDocument => {
+        itemDocument.checkboxSelected = value;
+      });
+    });
+  }
+  // Quản lý tài liệu
+  onSelectDocument(value: boolean) {
+    this.manageNeedTranferList.forEach(x => (x['selectedDocument'] = value));
+  }
+  renderIndexManage(i, k) {
+    let dem = 0;
+    let tam = -1;
+    if (+i === 0) {
+      this.sum = k + 1;
+      return k + 1;
+    } else {
+      this.manageNeedTranferList.forEach(ite => {
+        if (tam < +i - 1) {
+          ite.items.forEach(e => {
+            dem++;
+          });
+        }
+        tam++;
+      });
+      this.sum = dem + k + 1;
+      return dem + k + 1;
+    }
+  }
+  requestToreSubmitDoc(bidTransferDocDetailId: number) {
+    this.detailResultPackageService.requestToreSubmitdoc(bidTransferDocDetailId).subscribe(response => {
+      this.alertService.success('Yêu cầu gửi lại tài liệu thành công!');
+    },
+      err => {
+        this.alertService.error('Yêu cầu gửi lại tài liệu không thành công!');
+      });
   }
 }

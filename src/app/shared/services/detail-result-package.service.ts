@@ -16,6 +16,8 @@ import { ReportMeetingList } from '../models/result-attend/report-meeting-list.m
 import { FilterReportMeeting } from '../models/result-attend/filter-report-meeting.model';
 import { ManageNeedTranferList } from '../models/result-attend/manage-need-transfer-list.model';
 import { HadTransferList } from '../models/result-attend/had-transfer-list.model';
+import { FilterTransferredDoc } from '../models/result-attend/filter-transferred-doc.model';
+import { TransferredDoc } from '../models/result-attend/transferred-doc.model';
 @Injectable()
 export class DetailResultPackageService {
   listFileResult: Subject<any> = new Subject();
@@ -357,6 +359,11 @@ export class DetailResultPackageService {
       );
     });
   }
+  // Yêu cầu gửi lại tài liệu
+  requestToreSubmitdoc(bidTransferDocDetailId: number) {
+    const url = `bidtransferdocdetail/${bidTransferDocDetailId}/requesttoresubmitdoc`;
+    return this.apiService.get(url);
+  }
   // Xác nhận đã nhận
   confirmReceiveDocs(idsArray: number[]) {
     const url = `bidtransferdocdetail/confirmreceivedocs`;
@@ -410,7 +417,7 @@ export class DetailResultPackageService {
                 itemChildDocuments.documents.map(itemDocuments => {
                   return {
                     departments: (itemDocuments.departments && itemDocuments.departments.length !== 0) ?
-                    itemDocuments.departments.map(itemDepartments => {
+                      itemDocuments.departments.map(itemDepartments => {
                         return {
                           key: itemDepartments ? itemDepartments.key : null,
                           value: itemDepartments ? itemDepartments.value : null,
@@ -439,6 +446,83 @@ export class DetailResultPackageService {
       return (result || []).map(
         this.toHadTransferedList
       );
+    });
+  }
+  // to filter paramter cho danh sách tài liệu được chuyển giao
+  toFilterTranferDocDetails(filter: FilterTransferredDoc): URLSearchParams {
+    const urlFilterParams = new URLSearchParams();
+    urlFilterParams.append(
+      'documentType',
+      filter.documentType ? filter.documentType.toString() : ''
+    );
+    urlFilterParams.append(
+      'documentTypeId',
+      filter.documentTypeId ? filter.documentTypeId.toString() : ''
+    );
+    urlFilterParams.append(
+      'status',
+      filter.status ? filter.status.toString() : ''
+    );
+    return urlFilterParams;
+  }
+  // Map theo model cuả tài liệu được chuyển giao
+  toTransferredDoc(result: any): TransferredDoc {
+    return {
+      bidDocumentState: result.bidDocumentState ? {
+        key: result.bidDocumentState.key,
+        value: result.bidDocumentState.value,
+        displayText: result.bidDocumentState.displayText,
+      } : null,
+      bidTransferDocDetails: (result.bidTransferDocDetails && result.bidTransferDocDetails.length !== 0) ?
+        result.bidTransferDocDetails.map(itemBidTransferDocDetails => {
+          return {
+            id: itemBidTransferDocDetails.id,
+            documentType: itemBidTransferDocDetails.documentType ? {
+              key: itemBidTransferDocDetails.documentType.key,
+              value: itemBidTransferDocDetails.documentType.value,
+              displayText: itemBidTransferDocDetails.documentType.displayText,
+            } : null,
+            document: itemBidTransferDocDetails.document ? {
+              type: itemBidTransferDocDetails.document.type,
+              id: itemBidTransferDocDetails.document.id,
+              name: itemBidTransferDocDetails.document.name,
+              interviewTime: itemBidTransferDocDetails.document.interviewTime,
+              isLiveForm: itemBidTransferDocDetails.document.isLiveForm,
+            } : null,
+            sendDate: itemBidTransferDocDetails.sendDate,
+            useTo: itemBidTransferDocDetails.useTo,
+            status: itemBidTransferDocDetails.status ? {
+              key: itemBidTransferDocDetails.status.key,
+              value: itemBidTransferDocDetails.status.value,
+              displayText: itemBidTransferDocDetails.status.displayText,
+            } : null,
+            sendEmployee: itemBidTransferDocDetails.sendEmployee ? {
+              employeeId: itemBidTransferDocDetails.sendEmployee.employeeId,
+              employeeNo: itemBidTransferDocDetails.sendEmployee.employeeNo,
+              employeeName: itemBidTransferDocDetails.sendEmployee.employeeName,
+              employeeAvatar: itemBidTransferDocDetails.sendEmployee.employeeAvatar ? {
+                guid: itemBidTransferDocDetails.sendEmployee.employeeAvatar.guid,
+                thumbSizeUrl: itemBidTransferDocDetails.sendEmployee.employeeAvatar.thumbSizeUrl,
+                largeSizeUrl: itemBidTransferDocDetails.sendEmployee.employeeAvatar.largeSizeUrl,
+              } : null,
+              employeeEmail: itemBidTransferDocDetails.sendEmployee.employeeEmail,
+            } : null,
+          };
+        }) : null,
+    };
+  }
+  // Danh sách tài liệu được chuyển giao
+  filterTransferDocDetailsList(
+    bidOpportunityId: number,
+    searchTerm: string,
+    filter: FilterTransferredDoc,
+  ): Observable<TransferredDoc[]> {
+    const filterUrl = `bidOpportunity/${bidOpportunityId}/filtertransferdocdetails`;
+    const urlParams = this.toFilterTranferDocDetails(filter);
+    urlParams.append('searchTerm', searchTerm);
+    return this.apiService.get(filterUrl, urlParams).map(response => {
+      const result = response.result;
+      return (result || []).map(this.toTransferredDoc);
     });
   }
   // =============================
