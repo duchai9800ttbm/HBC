@@ -86,25 +86,8 @@ export class UploadFormComponent implements OnInit, OnDestroy {
     instance.bidOpportunityId = this.packageId;
     instance.nameFile = this.nameOfTypeDocument;
     if (i) {
-      if (this.listDocumentShowGroup.length === 0) {
-        instance.setversion = 1;
-      } else {
-        const tempShow = this.listDocumentShowGroup.filter(item => item.tenderDocumentTypeId == i);
-        if (!tempShow[0]) {
-          instance.setversion = 1;
-        } else {
-          const maxVersion = Math.max.apply(Math, tempShow[0].items.map(item => item.version));
-          instance.setversion = maxVersion + 1;
-        }
-      }
       instance.idFile = i;
     } else {
-      if (this.listDocumentShowGroup.length === 0) {
-        instance.setversion = 1;
-      } else {
-        const maxVersion = Math.max.apply(Math, this.listDocumentShowGroup[0].items.map(item => item.version));
-        instance.setversion = maxVersion + 1;
-      }
       instance.idFile = HoSoDuThauService.idTenderDocumentTypesData;
     }
     instance.childrenType = this.childrenOfTypeDocument;

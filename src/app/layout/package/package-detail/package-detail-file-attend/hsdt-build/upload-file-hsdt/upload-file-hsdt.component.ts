@@ -15,7 +15,6 @@ import { ListDocumentTypeIdGroup } from '../../../../../../shared/models/ho-so-d
 export class UploadFileHsdtComponent implements OnInit {
   @ViewChild('uploadImage') uploadImageAction;
   @Input() nameFile: string;
-  @Input() setversion: number;
   @Input() idFile: number;
   @Input() bidOpportunityId: number;
   @Input() childrenType: any;
@@ -35,6 +34,7 @@ export class UploadFileHsdtComponent implements OnInit {
   isLinkFile = false;
   lockField = false;
   imageUrls = [];
+  listDocumentShow: ListDocumentTypeIdGroup[];
   constructor(
     private fb: FormBuilder,
     private alertService: AlertService,
@@ -54,10 +54,14 @@ export class UploadFileHsdtComponent implements OnInit {
       description: ''
     });
     this.uploadForm.get('type').patchValue(this.idFile);
-    this.uploadForm.get('version').patchValue(this.setversion);
+    // this.uploadForm.get('version').patchValue(this.setversion);
+    this.getVersionValue(this.uploadForm.get('type').value);
     this.uploadForm.valueChanges.subscribe(data => {
       this.onFormValueChanged(data);
     });
+  }
+  valueTypeDocChange(event) {
+    this.getVersionValue(this.uploadForm.get('type').value);
   }
   onFormValueChanged(data?: any) {
     this.lockField = this.uploadForm.get('linkFile').value ? true : false;
@@ -78,6 +82,40 @@ export class UploadFileHsdtComponent implements OnInit {
       this.formErrors,
     );
     return this.invalidMessages.length === 0;
+  }
+  // Get Version Value
+  getVersionValue(typeDocId) {
+    this.hoSoDuThauService.getFileNoSearch(this.bidOpportunityId).subscribe(responseResultDocument => {
+      this.listDocumentShow = this.groupDocumentType(
+        responseResultDocument.items.filter(item => item.tenderDocumentType.id == typeDocId)
+      );
+      if (!this.listDocumentShow[0]) {
+        this.uploadForm.get('version').patchValue(1);
+      } else {
+        const maxVersion = Math.max.apply(Math, this.listDocumentShow[0].items.map(item => item.version));
+        this.uploadForm.get('version').patchValue(maxVersion + 1);
+      }
+    }, err => {
+      this.alertService.error('Lấy thông tin Phiên bản thất bại. Xin vui lòng thử lại!');
+    });
+  }
+
+  groupDocumentType(source: any): any {
+    const groupedObj = source.reduce((prev, cur) => {
+      if (!prev[cur['tenderDocumentTypeId']]) {
+        prev[cur['tenderDocumentTypeId']] = [cur];
+      } else {
+        prev[cur['tenderDocumentTypeId']].push(cur);
+      }
+      return prev;
+    }, {});
+    const groupBeforeSort = Object.keys(groupedObj).map(tenderDocumentTypeId => (
+      {
+        tenderDocumentTypeId,
+        items: groupedObj[tenderDocumentTypeId]
+      }
+    ));
+    return groupBeforeSort;
   }
 
   submitUpload() {

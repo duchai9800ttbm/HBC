@@ -168,7 +168,6 @@ export class HoSoDuThauService {
   deleteImageService(guid) {
     const url = `image/delete`;
     return this.apiService.post(url, guid);
-
   }
 
   // Tải lên hồ sơ dự thầu
@@ -330,29 +329,20 @@ export class HoSoDuThauService {
         };
       });
   }
-
-  // danhSachBoHoSoDuThauInstantSearch(
-  //   bidOpportunityId: number,
-  //   searchTerm: Observable<string>,
-  //   hsdtFilter: HsdtFilterModel,
-  //   page: number,
-  //   pageSize: number
-  // ): Observable<PagedResult<DanhSachBoHsdtItem>> {
-  //   const url = `bidopportunity/${bidOpportunityId}/tenderdocuments/${page}/${pageSize}?searchTerm=`;
-  //   const urlParams = HoSoDuThauService.createFilterParams(hsdtFilter);
-  //   return this.instantSearchService
-  //     .searchWithFilter(url, searchTerm, urlParams)
-  //     .map(res => {
-  //       console.log(res.items);
-  //       return {
-  //         currentPage: res.pageIndex,
-  //         pageSize: res.pageSize,
-  //         pageCount: res.totalPages,
-  //         total: res.totalCount,
-  //         items: (res.items || [])
-  //       };
-  //     });
-  // }
+  // Get All File Without Search Param
+  getFileNoSearch(bidOpportunityId: number): Observable<PagedResult<DanhSachBoHsdtItem>> {
+    const url = `bidopportunity/${bidOpportunityId}/tenderdocuments/0/1000`;
+    return this.apiService.get(url).map(res => {
+      const response = res.result;
+      return {
+        currentPage: response.pageIndex,
+        pageSize: response.pageSize,
+        pageCount: response.totalPages,
+        total: response.totalCount,
+        items: (response.items || []).map(HoSoDuThauService.toDocumentTypeItem)
+      };
+    });
+  }
 
   updateStatus(tenderDocumentId: number, status: string) {
     const url = `tenderdocument/${tenderDocumentId}/${status.toLocaleLowerCase()}`;
