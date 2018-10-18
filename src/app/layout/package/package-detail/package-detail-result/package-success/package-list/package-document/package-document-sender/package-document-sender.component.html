@@ -107,7 +107,7 @@
         <div class="main-table">
             <div class="bot-table">
                 <!-- Start Màn hình CHƯA chuyển giao tài liệu -->
-                <table *ngIf="false" class="table-selection stripe row-border hover cell-border dataTable">
+                <table *ngIf="true" class="table-selection stripe row-border hover cell-border dataTable">
                     <thead>
                         <tr>
                             <th class="stt bg-default w5">
@@ -403,7 +403,7 @@
                                     <div class="w-40">
                                         <div class="center-parent">
                                             <label class="custom-control custom-checkbox">
-                                                <input type="checkbox" class="custom-control-input" [(ngModel)]="checkboxSeclectAll" (change)="onSelectAll($event.target.checked)">
+                                                <input type="checkbox" class="custom-control-input" [(ngModel)]="checkboxSeclectAll" (change)="onSelectAllHadTransfer($event.target.checked)">
                                                 <span class="custom-control-indicator"></span>
                                             </label>
                                         </div>
@@ -717,7 +717,7 @@
                 <h4 class="modal-title text-model">Quản lý người nhận tài liệu</h4>
             </div>
             <div class="col-md-1">
-                <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+                <button type="button" class="close pull-right cursor-pointer" aria-label="Close" (click)="modalRef.hide()">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
@@ -746,7 +746,14 @@
                             <th class="bg-default">
                                 <div class="d-flex">
                                     <div class="center-parent">
-                                        <div>Phòng ban</div>
+                                        <div>Tên tài liệu</div>
+                                    </div>
+                                </div>
+                            </th>
+                            <th class="bg-default">
+                                <div class="d-flex">
+                                    <div class="center-parent">
+                                        <div> Phòng ban</div>
                                     </div>
                                 </div>
                             </th>
@@ -754,13 +761,6 @@
                                 <div class="d-flex">
                                     <div class="center-parent">
                                         <div>Người dùng</div>
-                                    </div>
-                                </div>
-                            </th>
-                            <th class="bg-default">
-                                <div class="d-flex">
-                                    <div class="center-parent">
-                                        <div>Tên tài liệu</div>
                                     </div>
                                 </div>
                             </th>
@@ -781,36 +781,45 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr *ngFor="let data of listData; let i = index">
-                            <td class="stt set-stt-manager--width">
-                                <div class="d-flex justify-content-around">
-                                    <div class="w-40">
-                                        <div class="center-parent">
-                                            <label class="custom-control custom-checkbox">
-                                                <input type="checkbox" class="custom-control-input" [(ngModel)]="data.selectedDocument">
-                                                <span class="custom-control-indicator"></span>
-                                            </label>
+                        <ng-container *ngFor="let itemsTranferList of manageNeedTranferList; let i = index">
+                            <tr *ngFor="let data of itemsTranferList.items; let j = index">
+                                <td class="stt set-stt-manager--width">
+                                    <div class="d-flex justify-content-around">
+                                        <div class="w-40">
+                                            <div class="center-parent">
+                                                <label class="custom-control custom-checkbox">
+                                                    <input type="checkbox" class="custom-control-input" [(ngModel)]="data.selectedDocument">
+                                                    <span class="custom-control-indicator"></span>
+                                                </label>
+                                            </div>
+                                        </div>
+
+                                        <div class="center-parent w-35">
+                                            <div>{{renderIndexManage(i,j)}}</div>
                                         </div>
                                     </div>
-
-                                    <div class="center-parent w-35">
-                                        <div>{{i+1}}</div>
+                                </td>
+                                <td class="select-filter">
+                                    <div class="text-truncate" *ngIf="j === 0">
+                                        {{ data.document?.name}}
                                     </div>
-                                </div>
-                            </td>
-                            <td class="select-filter">{{ data.rom}}</td>
-                            <td class="select-filter">{{ data.username}}</td>
-                            <td class="select-filter">{{ data.nameDocument}}</td>
-                            <td class="select-filter">{{ data.status}}</td>
-                            <td class="select-filter text-center">
-                                <div *ngIf="data.status =='Yêu cầu gửi lại'" class="col-md-4 offset-md-4 center-parent cursor-pointer">
-                                    <i [title]="'Yêu cầu gửi lại'" class="fa fa-paper-plane color-item-down"></i>
-                                </div>
-                            </td>
-                        </tr>
+                                </td>
+                                <td class="select-filter">
+                                    <div class="text-truncate" *ngIf="j === 0">
+                                        {{ data.department?.displayText}}
+                                    </div>
+                                </td>
+                                <td class="select-filter">{{ data.receivedEmployee?.employeeName}}</td>
+                                <td class="select-filter">{{ data.receiveStatus?.value}}</td>
+                                <td class="select-filter text-center">
+                                    <div *ngIf="data.receiveStatus?.key === 'YeuCauGuiLai'" class="col-md-4 offset-md-4 center-parent cursor-pointer" (click)="requestToreSubmitDoc(data.id)">
+                                        <i [title]="'Yêu cầu gửi lại'" class="fa fa-paper-plane color-item-down"></i>
+                                    </div>
+                                </td>
+                            </tr>
+                        </ng-container>
                     </tbody>
                 </table>
             </div>
-
         </div>
     </ng-template>
