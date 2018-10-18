@@ -26,8 +26,6 @@ export class NeedCreateTenderFormDirectorProposalComponent implements OnInit {
     ) { }
 
     ngOnInit() {
-        console.log('NeedCreateTenderFormComponent.formModel.tenderDirectorProposal',
-            NeedCreateTenderFormComponent.formModel.tenderDirectorProposal);
         this.routerAction = this.packageService.routerAction;
         this.packageService.routerAction$.subscribe(
             router => (this.routerAction = router)
@@ -40,11 +38,11 @@ export class NeedCreateTenderFormDirectorProposalComponent implements OnInit {
     }
 
     createForm() {
-        const formData =
-            NeedCreateTenderFormComponent.formModel.tenderDirectorProposal;
+        const formData = NeedCreateTenderFormComponent.formModel.tenderDirectorProposal ?
+            NeedCreateTenderFormComponent.formModel.tenderDirectorProposal : null;
         this.directorProposalForm = this.fb.group({
-            // isAgreedParticipating:
-            //     NeedCreateTenderFormComponent.formModel.isAgreedParticipating,
+            isAgreedParticipating:
+                NeedCreateTenderFormComponent.formModel.isAgreedParticipating,
             isAgreed: formData ? formData.isAgreed : true,
             reason: formData ? formData.reason : '',
             date: formData
@@ -71,8 +69,8 @@ export class NeedCreateTenderFormDirectorProposalComponent implements OnInit {
 
     mappingToLiveFormData(data) {
         NeedCreateTenderFormComponent.formModel.tenderDirectorProposal = data;
-        // NeedCreateTenderFormComponent.formModel.isAgreedParticipating =
-        //     data.isAgreedParticipating;
+        NeedCreateTenderFormComponent.formModel.isAgreedParticipating =
+            data.isAgreedParticipating;
         // tslint:disable-next-line:max-line-length
         NeedCreateTenderFormComponent.formModel.tenderDirectorProposal.date = DateTimeConvertHelper.fromDtObjectToSecon(
             data.date

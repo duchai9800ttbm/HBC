@@ -161,7 +161,7 @@ export class EditComponent implements OnInit {
 
     submitForm() {
         this.isSubmitted = true;
-        if (this.validateForm()) {
+        if (this.validateForm() && this.validateDate()) {
             this.packageService
                 .EditOpportunity(this.packageForm.value)
                 .subscribe(result => {
@@ -257,5 +257,28 @@ export class EditComponent implements OnInit {
         this.packageService.getEvaluationValue().subscribe(data => {
             this.dataEvaluation = data;
         });
+    }
+    validateDate(): boolean {
+        const startTrackingDate = moment(this.packageForm.get('startTrackingDate').value).unix(); // ngày bắt đầu
+        const submissionDate = moment(this.packageForm.get('submissionDate').value).unix(); // ngày nộp hồ sơ mời thầu
+        const resultEstimatedDate = moment(this.packageForm.get('resultEstimatedDate').value).unix(); // ngày dự kiến kết quả thầu
+        // tslint:disable-next-line:max-line-length
+        const projectEstimatedStartDate = moment(this.packageForm.get('projectEstimatedStartDate').value).unix(); // ngày khởi công dự án
+        const projectEstimatedEndDate = moment(this.packageForm.get('projectEstimatedEndDate').value).unix(); // ngày kết thúc dự án
+        if (startTrackingDate && submissionDate && startTrackingDate > submissionDate) {
+            this.alertService.error('Ngày bắt đầu phải nhỏ hơn hoặc bằng ngày nộp hồ sơ mời thầu');
+            return false;
+        } else if (submissionDate && resultEstimatedDate && submissionDate > resultEstimatedDate) {
+            this.alertService.error('Ngày nộp hồ sơ mời thầu phải nhỏ hơn hoặc bằng ngày dự kiến kết quả thầu');
+            return false;
+        } else if (projectEstimatedStartDate && projectEstimatedEndDate && projectEstimatedStartDate > projectEstimatedEndDate) {
+            this.alertService.error('Ngày khởi công dự án phải nhỏ hơn hoặc bằng ngày kết thúc dự án');
+            return false;
+        }
+         // else if (resultEstimatedDate && projectEstimatedStartDate && resultEstimatedDate > projectEstimatedStartDate) {
+        //     this.alertService.error('Ngày dự kiến kết quả thầu phải nhỏ hơn hoặc bằng ngày khởi công dự án');
+        //     return false;
+        // }
+        return true;
     }
 }
