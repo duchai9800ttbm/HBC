@@ -9,6 +9,35 @@
                 <div>{{item?.groupDesc}}</div>
             </div>
             <div class="w-85">
+                <ng-container *ngIf="item.customers.length === 0">
+                    <div class="d-flex flex-row w-100 mb-3">
+                        <div class="w-3 ml-3">
+                            <span class="form-control form-control-customer">
+                                <textarea disabled="true" class="form-control b-textarea h-100"></textarea>
+
+                            </span>
+                        </div>
+
+                        <div class="w-3 ml-3 d-flex flex-row">
+                            <div class="label-contact w-20 text-center center-parent">
+                                <div>Liên hệ</div>
+                            </div>
+                            <span class="form-control form-control-custom w-80">
+                                <textarea disabled="true" class="form-control b-textarea h-100"></textarea>
+
+                            </span>
+                        </div>
+                        <div class="w-3 ml-3 d-flex flex-row">
+                            <div class="label-contact w-20 text-center center-parent">
+                                <div>Ghi chú</div>
+                            </div>
+                            <span class="form-control form-control-custom w-80">
+                                <textarea disabled="true" class="form-control b-textarea h-100"></textarea>
+
+                            </span>
+                        </div>
+                    </div>
+                </ng-container>
                 <ng-container *ngFor="let customer of item.customers; index as k">
                     <div class="d-flex flex-row w-100 mb-3">
                         <div class="w-3 ml-3">
@@ -21,7 +50,7 @@
                             </div>
                             <span class="form-control form-control-custom w-80">
                                 <span *ngFor="let contact of customer.contacts; index as k">
-                                    <span *ngIf="k !== 0">,&nbsp;</span>{{contact.name}}
+                                    {{contact.name}}<span *ngIf="customer.contacts.length > 1">, </span>
                                 </span>
                             </span>
                         </div>
@@ -30,8 +59,7 @@
                                 <div>Ghi chú</div>
                             </div>
                             <span class="form-control form-control-custom w-80">
-                                <textarea [disabled]="isModeView" class="form-control b-textarea h-100" (input)="noteChange($event)"
-                                    [(ngModel)]="customer.note"></textarea>
+                                <textarea [disabled]="isModeView" class="form-control b-textarea h-100" (input)="noteChange($event)" [(ngModel)]="customer.note"></textarea>
                             </span>
                         </div>
                     </div>
