@@ -41,7 +41,7 @@ export class NeedCreateTenderComponent implements OnInit {
   pagedResultChangeHistoryList: PagedResult<ProposedTenderParticipationHistory[]> = new PagedResult<ProposedTenderParticipationHistory[]>();
   historyList;
   dialog;
-
+  indexItemHistoryChange: number;
   // get expectedDate() {
   //   return
   // }
@@ -75,13 +75,16 @@ export class NeedCreateTenderComponent implements OnInit {
       this.historyList = respone.items;
       this.pagedResultChangeHistoryList = respone;
       this.historyList = groupBy(this.pagedResultChangeHistoryList.items, [{ field: 'changedTime' }]);
-      this.historyList.forEach( (itemList, indexList) => {
-        itemList.items.forEach( (itemByChangedTimes, indexChangedTimes) => {
+      this.historyList.forEach((itemList, indexList) => {
+        itemList.items.forEach((itemByChangedTimes, indexChangedTimes) => {
           this.historyList[indexList].items[indexChangedTimes].liveFormChangeds =
             groupBy(itemByChangedTimes.liveFormChangeds, [{ field: 'liveFormStep' }]);
         });
       });
       console.log('this.historyList-after', this.historyList);
+      this.indexItemHistoryChange = Number(this.pagedResultChangeHistoryList.total)
+        - Number(this.pagedResultChangeHistoryList.pageSize) * Number(this.pagedResultChangeHistoryList.currentPage);
+      console.log('this.indexItemHistoryChange', this.indexItemHistoryChange);
       setTimeout(() => {
         this.dtTrigger2.next();
       });
@@ -149,19 +152,19 @@ export class NeedCreateTenderComponent implements OnInit {
   }
 
   sendApproveBidProposal() {
-      this.spinner.show();
-      this.packageService.sendApproveBidProposal(this.bidOpportunityId, DateTimeConvertHelper.fromDtObjectToSecon(this.dateApproveBid))
-        .subscribe(data => {
-          this.notificationService.change();
-          this.spinner.hide();
-          this.alertService.success('Gửi duyệt đề nghị dự thầu thành công!');
-          this.isShowDialog = false;
-          this.getPackageInfo();
-        }, err => {
-          this.spinner.hide();
-          this.alertService.error('Gửi duyệt đề nghị dự thầu thất bại!');
-          this.isShowDialog = false;
-        });
+    this.spinner.show();
+    this.packageService.sendApproveBidProposal(this.bidOpportunityId, DateTimeConvertHelper.fromDtObjectToSecon(this.dateApproveBid))
+      .subscribe(data => {
+        this.notificationService.change();
+        this.spinner.hide();
+        this.alertService.success('Gửi duyệt đề nghị dự thầu thành công!');
+        this.isShowDialog = false;
+        this.getPackageInfo();
+      }, err => {
+        this.spinner.hide();
+        this.alertService.error('Gửi duyệt đề nghị dự thầu thất bại!');
+        this.isShowDialog = false;
+      });
   }
 
   approveBidProposal() {

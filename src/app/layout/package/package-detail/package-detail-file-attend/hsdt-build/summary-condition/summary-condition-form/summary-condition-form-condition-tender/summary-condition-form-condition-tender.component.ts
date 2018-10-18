@@ -154,6 +154,8 @@ export class SummaryConditionFormConditionTenderComponent implements OnInit {
             };
             this.hoSoDuThauService.emitDataStepConditionTender(obj);
         });
+
+        console.log(this.dienGiaiDieuKienHSMT);
     }
 
     loadData() {
@@ -161,7 +163,7 @@ export class SummaryConditionFormConditionTenderComponent implements OnInit {
             const obj = data.dienGiaiDieuKienHSMT;
             if (obj) {
                 this.dienGiaiDieuKienHSMT = {
-                    theoHBC: obj.theoHSMT ? obj.theoHBC : {
+                    theoHBC: obj.theoHBC ? obj.theoHBC : {
                         baoLanhDuThau: {
                             giaTri: null,
                             hieuLuc: '',
@@ -188,6 +190,13 @@ export class SummaryConditionFormConditionTenderComponent implements OnInit {
                         donViTienTe: ''
                     }
                 };
+
+                if (this.dienGiaiDieuKienHSMT.theoHSMT.cacLoaiThue.length === 0) {
+                    this.dienGiaiDieuKienHSMT.theoHSMT.cacLoaiThue = [''];
+                }
+                if (this.dienGiaiDieuKienHSMT.theoHBC.cacLoaiThue.length === 0) {
+                    this.dienGiaiDieuKienHSMT.theoHBC.cacLoaiThue = [''];
+                }
             }
             if (!obj) {
                 this.dienGiaiDieuKienHSMT = {
@@ -234,6 +243,7 @@ export class SummaryConditionFormConditionTenderComponent implements OnInit {
     }
 
     removeFormArrayControl(name: string, idx: number) {
+        console.log('ádasdasd');
         const formArray = (this.dieuKienHSMTForm.get('theoHSMT') as FormGroup).controls.cacLoaiThue as FormArray;
         formArray.removeAt(idx);
     }

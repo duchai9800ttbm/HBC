@@ -154,6 +154,7 @@ export class PackageListComponent implements OnInit, AfterViewChecked {
     isShowPopup = false;
     userProfile: UserModel;
     administeredPackageList = AdministeredPackageList;
+    closeMyDrop = true;
     constructor(
         private activityService: ActivityService,
         private alertService: AlertService,
@@ -182,6 +183,8 @@ export class PackageListComponent implements OnInit, AfterViewChecked {
     public documentClick(event: any): void {
         if (!this.contains(event.target)) {
             this.cancel(this.myDrop);
+        } else {
+            this.closeMyDrop = true;
         }
         if (!this.containsDropTool(event.target)) {
             this.closeDropToll(this.DropTool);
@@ -198,7 +201,7 @@ export class PackageListComponent implements OnInit, AfterViewChecked {
             (this.DropTool2 ? this.DropTool2.nativeElement.contains(target) : false);
     }
     ngOnInit() {
-        this.dataService.getMaxopporunityamount().subscribe( response => {
+        this.dataService.getMaxopporunityamount().subscribe(response => {
             console.log(response);
             this.maxValue = response;
             this.someRange = [0, this.maxValue];
@@ -222,7 +225,7 @@ export class PackageListComponent implements OnInit, AfterViewChecked {
             this.listPrivileges = this.userModel.privileges;
             if (this.listPrivileges) {
                 // this.isManageBidOpportunitys = this.listPrivileges.some(x => x === 'ManageBidOpportunitys');
-                this.isManageBidOpportunitys = this.administeredPackageList.some( r => this.listPrivileges.includes(r));
+                this.isManageBidOpportunitys = this.administeredPackageList.some(r => this.listPrivileges.includes(r));
                 this.isViewBidOpportunitys = this.listPrivileges.some(x => x === 'ViewBidOpportunitys');
                 this.isCreateBidOpportunity = this.listPrivileges.some(x => x === 'CreateBidOpportunity');
                 this.isDeleteBidOpportunity = this.listPrivileges.some(x => x === 'DeleteBidOpportunity');
@@ -269,7 +272,7 @@ export class PackageListComponent implements OnInit, AfterViewChecked {
         // };
         // this.dtOptions['scrollX'] = true;
         // this.dtOptions['scrollCollapse'] = true;
-        
+
 
     }
     ngAfterViewChecked() {
@@ -525,14 +528,17 @@ export class PackageListComponent implements OnInit, AfterViewChecked {
     }
 
     cancel(myDrop) {
-        myDrop.close();
-        this.packageService.getListFields(this.getUserId).subscribe(data => {
-            this.listField = data;
-            this.listFieldNomarlized = [...this.listField].filter(x => x.hidden === true).map(x => x.fieldName);
-            this.sum = [...this.listField].filter(x => x.hidden === true).length;
-            this.tenGoithau = this.listFieldNomarlized.includes('ARBidOpportunityName');
-            this.dtTrigger.next();
-        });
+        if (this.closeMyDrop) {
+            myDrop.close();
+            this.packageService.getListFields(this.getUserId).subscribe(data => {
+                this.listField = data;
+                this.listFieldNomarlized = [...this.listField].filter(x => x.hidden === true).map(x => x.fieldName);
+                this.sum = [...this.listField].filter(x => x.hidden === true).length;
+                this.tenGoithau = this.listFieldNomarlized.includes('ARBidOpportunityName');
+                this.dtTrigger.next();
+                this.closeMyDrop = false;
+            });
+        }
     }
 
     apply(myDrop) {

@@ -49,4 +49,5 @@ export class DuLieuLiveFormDKDT {
     dienGiaiDieuKienHSMT: DienGiaiDieuKienHSMT;
     yeuCauDacBietKhac: TableYeuCauDacBiet;
     isChangeFormCacBenLienQuan: boolean;
+    ngayTao?: number;
 }

@@ -9,6 +9,7 @@ import { UserModel } from '../../../shared/models/user/user.model';
 import { SessionService } from '../../../shared/services/session.service';
 import { PackageInfoModel } from '../../../shared/models/package/package-info.model';
 import { LayoutService } from '../../../shared/services/layout.service';
+import { CheckStatusPackage } from '../../../shared/constants/check-status-package';
 
 @Component({
   selector: 'app-package-detail',
@@ -18,7 +19,9 @@ import { LayoutService } from '../../../shared/services/layout.service';
 
 })
 export class PackageDetailComponent implements OnInit {
-
+  static packageId;
+  checkStatusPackage = CheckStatusPackage;
+  statusPackage;
   constructor(
     private router: Router,
     private activetedRoute: ActivatedRoute,
@@ -27,7 +30,6 @@ export class PackageDetailComponent implements OnInit {
     private sessionService: SessionService,
     private layoutService: LayoutService
   ) { }
-  static packageId;
   public packageId: number;
   packageData = new PackageInfoModel();
   status = {
@@ -61,6 +63,8 @@ export class PackageDetailComponent implements OnInit {
 
     this.packageService.getInforPackageID(this.packageId).subscribe(result => {
       this.packageData = result;
+      this.statusPackage = this.checkStatusPackage[this.packageData.stageStatus.id];
+      console.log('statusPackage.idstatusPackage.id', this.statusPackage, this.checkStatusPackage.ChoKetQuaDuThau);
     }, err => {
     });
     this.layoutService.watchLayoutSubject().subscribe(data => {

@@ -34,7 +34,8 @@ export class NeedCreateTenderFormContractConditionComponent implements OnInit {
   }
 
   createForm() {
-    const formValue = NeedCreateTenderFormComponent.formModel.contractCondition;
+    const formValue = NeedCreateTenderFormComponent.formModel ?
+      NeedCreateTenderFormComponent.formModel.contractCondition : null;
     this.contractConditionForm = this.fb.group({
       typeOfContract: formValue ? formValue.typeOfContract : '',
       timeForCompletion: formValue ? formValue.timeForCompletion : 0,

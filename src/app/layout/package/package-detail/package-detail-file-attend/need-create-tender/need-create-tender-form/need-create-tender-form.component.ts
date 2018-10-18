@@ -20,6 +20,7 @@ import { Currency } from '../../../../../../shared/models/currency';
 import { FeeTenderInvitationDocument } from '../../../../../../shared/models/package/fee-tender-invitation-document';
 import { ContractConditionTenderParticipate } from '../../../../../../shared/models/package/contract-condition-tender-participate';
 import { TenderDirectorProposal } from '../../../../../../shared/models/package/tender-director-proposal';
+import { DecisionBoardGeneralDirector } from '../../../../../../shared/models/package/decision-board-general-director';
 
 @Component({
     selector: 'app-need-create-tender-form',
@@ -48,7 +49,7 @@ export class NeedCreateTenderFormComponent implements OnInit, OnDestroy {
         private sessionService: SessionService,
         private scrollTopService: ScrollToTopService,
         private confirmService: ConfirmationService,
-    ) {}
+    ) { }
 
     ngOnInit() {
         this.scrollTopService.isScrollTop = false;
@@ -83,14 +84,14 @@ export class NeedCreateTenderFormComponent implements OnInit, OnDestroy {
                     NeedCreateTenderFormComponent.formModel.contractCondition = new ContractConditionTenderParticipate();
                     NeedCreateTenderFormComponent.formModel.contractCondition.timeForCompletion = 0;
                     NeedCreateTenderFormComponent.formModel.contractCondition.timeForCompletionUnit = new Currency();
-                    NeedCreateTenderFormComponent.formModel.contractCondition.timeForCompletionUnit.key = 'VNĐ';
-                    NeedCreateTenderFormComponent.formModel.contractCondition.timeForCompletionUnit.value = 'VNĐ';
-                    NeedCreateTenderFormComponent.formModel.contractCondition.timeForCompletionUnit.displayText = 'VNĐ';
+                    NeedCreateTenderFormComponent.formModel.contractCondition.timeForCompletionUnit.key = 'Ngày';
+                    NeedCreateTenderFormComponent.formModel.contractCondition.timeForCompletionUnit.value = 'Ngày';
+                    NeedCreateTenderFormComponent.formModel.contractCondition.timeForCompletionUnit.displayText = 'Ngày';
                     NeedCreateTenderFormComponent.formModel.contractCondition.warrantyPeriod = 0;
                     NeedCreateTenderFormComponent.formModel.contractCondition.warrantyPeriodUnit = new Currency();
-                    NeedCreateTenderFormComponent.formModel.contractCondition.warrantyPeriodUnit.key = 'VNĐ';
-                    NeedCreateTenderFormComponent.formModel.contractCondition.warrantyPeriodUnit.value = 'VNĐ';
-                    NeedCreateTenderFormComponent.formModel.contractCondition.warrantyPeriodUnit.displayText = 'VNĐ';
+                    NeedCreateTenderFormComponent.formModel.contractCondition.warrantyPeriodUnit.key = 'Ngày';
+                    NeedCreateTenderFormComponent.formModel.contractCondition.warrantyPeriodUnit.value = 'Ngày';
+                    NeedCreateTenderFormComponent.formModel.contractCondition.warrantyPeriodUnit.displayText = 'Ngày';
                     NeedCreateTenderFormComponent.formModel.contractCondition.tenderSecurity = 0;
                     NeedCreateTenderFormComponent.formModel.contractCondition.tenderSecurityCurrency = new Currency();
                     NeedCreateTenderFormComponent.formModel.contractCondition.tenderSecurityCurrency.key = 'VNĐ';
@@ -105,6 +106,11 @@ export class NeedCreateTenderFormComponent implements OnInit, OnDestroy {
                     NeedCreateTenderFormComponent.formModel.tenderDirectorProposal = new TenderDirectorProposal();
                     // tslint:disable-next-line:max-line-length
                     NeedCreateTenderFormComponent.formModel.tenderDirectorProposal.expectedDate = DateTimeConvertHelper.fromDtObjectToTimestamp(new Date());
+                    NeedCreateTenderFormComponent.formModel.tenderDirectorProposal.date = DateTimeConvertHelper.fromDtObjectToTimestamp(new Date());
+                    // ====================
+                    // DecisionBoardGeneralDirector
+                    NeedCreateTenderFormComponent.formModel.decisionOfBoardOfGeneralDirector = new DecisionBoardGeneralDirector();
+                    NeedCreateTenderFormComponent.formModel.decisionOfBoardOfGeneralDirector.reason = '';
                 }
             }
         );
@@ -115,17 +121,17 @@ export class NeedCreateTenderFormComponent implements OnInit, OnDestroy {
         // tslint:disable-next-line:max-line-length
         this.dateApproveBid =
             this.dataModel &&
-            this.dataModel.tenderDirectorProposal &&
-            this.dataModel.tenderDirectorProposal.expectedDate
+                this.dataModel.tenderDirectorProposal &&
+                this.dataModel.tenderDirectorProposal.expectedDate
                 ? DateTimeConvertHelper.fromTimestampToDtObject(
-                      this.dataModel.tenderDirectorProposal.expectedDate * 1000
-                  )
+                    this.dataModel.tenderDirectorProposal.expectedDate * 1000
+                )
                 : new Date();
         this.bidOpportunityId = PackageDetailComponent.packageId;
         if (!NeedCreateTenderFormComponent.formModel) {
             this.router.navigate([
                 `package/detail/${
-                    PackageDetailComponent.packageId
+                PackageDetailComponent.packageId
                 }/attend/create-request`
             ]);
         } else {
@@ -170,7 +176,7 @@ export class NeedCreateTenderFormComponent implements OnInit, OnDestroy {
                     const day =
                         Math.abs(
                             this.packageInfo.submissionDate -
-                                this.packageInfo.startTrackingDate
+                            this.packageInfo.startTrackingDate
                         ) /
                         (60 * 60 * 24);
                     this.totalTime = `${day} ngày (days)`;
@@ -196,7 +202,7 @@ export class NeedCreateTenderFormComponent implements OnInit, OnDestroy {
                     this.spinner.hide();
                     this.router.navigate([
                         `package/detail/${
-                            PackageDetailComponent.packageId
+                        PackageDetailComponent.packageId
                         }/attend/create-request`
                     ]);
                     if (NeedCreateTenderFormComponent.formModel.id) {
@@ -232,7 +238,7 @@ export class NeedCreateTenderFormComponent implements OnInit, OnDestroy {
         this.packageService.setRouterAction('view');
         this.router.navigate([
             `package/detail/${
-                this.bidOpportunityId
+            this.bidOpportunityId
             }/attend/create-request`
         ]);
     }
@@ -241,7 +247,7 @@ export class NeedCreateTenderFormComponent implements OnInit, OnDestroy {
         this.packageService.setRouterAction('edit');
         this.router.navigate([
             `package/detail/${
-                this.bidOpportunityId
+            this.bidOpportunityId
             }/attend/create-request/form/edit`
         ]);
     }
@@ -260,7 +266,7 @@ export class NeedCreateTenderFormComponent implements OnInit, OnDestroy {
                     // this.getPackageInfo();
                     this.router.navigate([
                         `package/detail/${
-                            this.bidOpportunityId
+                        this.bidOpportunityId
                         }/attend/create-request`
                     ]);
                     this.alertService.success(
@@ -299,8 +305,8 @@ export class NeedCreateTenderFormComponent implements OnInit, OnDestroy {
 
     saveOfficially() {
         // this.draftsOrOfficially = false;
-        if ( NeedCreateTenderFormComponent.formModel.id ) {
-            if ( NeedCreateTenderFormComponent.formModel && !NeedCreateTenderFormComponent.formModel.isDraftVersion) {
+        if (NeedCreateTenderFormComponent.formModel.id) {
+            if (NeedCreateTenderFormComponent.formModel && !NeedCreateTenderFormComponent.formModel.isDraftVersion) {
                 this.isShowChanges = true;
             } else {
                 this.onSubmit(false);
@@ -318,11 +324,16 @@ export class NeedCreateTenderFormComponent implements OnInit, OnDestroy {
 
     checkSigned() {
         if (NeedCreateTenderFormComponent.formModel.tenderDirectorProposal.isSigned) {
-          this.isShowDialog = true;
+            this.isShowDialog = true;
         } else {
-          this.isShowDialog = false;
-          this.confirmService.missAction('Đề nghị dự thầu chưa được xác nhận ký bởi giám đốc dự thầu',
-            `/package/detail/${this.bidOpportunityId}/attend/create-request/form/edit/director-proposal`);
+            this.isShowDialog = false;
+            this.confirmService.missAction('Đề nghị dự thầu chưa được xác nhận ký bởi giám đốc dự thầu',
+                `/package/detail/${this.bidOpportunityId}/attend/create-request/form/edit/director-proposal`);
         }
-      }
+    }
+    actionSaveChangesLiveForm(e) {
+        if (e.code === 'Enter') {
+            this.saveChangesLiveForm();
+        }
+    }
 }
