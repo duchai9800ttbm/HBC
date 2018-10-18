@@ -112,11 +112,11 @@
 
 
         <div class="mt-2 scroll-list" id="set-height-scroll">
-            <ng-container *ngFor="let changeContent of pagedResult.items; index as i">
+            <div *ngFor="let changeContent of pagedResult.items; index as i">
 
                 <div class="d-flex custom-width">
                     <div class="mt-1">
-                        <img [src]="changeContent.changeEmployee && changeContent.changeEmployee.employeeAvatar ? changeContent.changeEmployee.employeeAvatar : 'assets/images/no-avatar.png'"
+                        <img [src]="changeContent.changeEmployee && changeContent.changeEmployee.employeeAvatar ? changeContent.changeEmployee.employeeAvatar.thumbSizeUrl : 'assets/images/no-avatar.png'"
                             width="30" height="30">
                     </div>
                     <div class="pl-2 pr-2">
@@ -141,7 +141,7 @@
                     </p>
                 </div>
 
-            </ng-container>
+            </div>
         </div>
         <div class="text-center" *ngIf="pagedResult.items?.length !== 0">
             <a class="pointer font-italic set-color" [routerLink]="['/change-list']">
