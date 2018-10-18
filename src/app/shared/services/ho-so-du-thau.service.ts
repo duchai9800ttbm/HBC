@@ -661,6 +661,7 @@ export class HoSoDuThauService {
   toTenderConditionalSummary(model: any, bidOpportunityId: number) {
     const dataOut = new DuLieuLiveFormDKDT();
     if (model) {
+      dataOut.ngayTao = model.createdDate;
       dataOut.id = model.id;
       dataOut.bidOpportunityId = model.bidOpportunityId;
       dataOut.documentName = model.documentName;

@@ -32,7 +32,7 @@
             <div class="col-md-8">
                 <div class="row no-gutters">
                     <div class="col-md-11">
-                        <input class="form-control" [(ngModel)]="amountFiles" readonly formControlName="soLuong">
+                        <input class="form-control"  formControlName="soLuong">
                     </div>
                     <div class="col-md-1">
                     </div>
@@ -47,7 +47,7 @@
                     <div class="col-md-11">
                         <span class="custom-dropdown w-100">
                             <select class="form-control" formControlName="ngonNgu">
-                                <option value="" selected disabled hidden>Choose here</option>
+                                <option value="" selected disabled hidden>--Chọn--</option>
                                 <option [value]="'Tiếng Việt'">Tiếng Việt</option>
                                 <option [value]="'Tiếng Anh'">Tiếng Anh</option>
                             </select>

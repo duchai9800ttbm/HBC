@@ -23,7 +23,6 @@ export class SummaryConditionFormTenderSubmissionComponent implements OnInit {
   get taiLieuLuuYFA(): FormArray {
     return this.hoSoDangLuuYForm.get('taiLieuLuuY') as FormArray;
   }
-  amountFiles;
   ngOnInit() {
     this.hoSoDuThauService.watchLiveformState().subscribe(data => {
       this.isModeView = data.isModeView;
@@ -45,7 +44,7 @@ export class SummaryConditionFormTenderSubmissionComponent implements OnInit {
       if (!obj) {
         this.hoSoDangLuuY = {
           taiLieuLuuY: [''],
-          soLuong: null,
+          soLuong: 0,
           ngonNgu: ''
         };
       }
@@ -83,14 +82,12 @@ export class SummaryConditionFormTenderSubmissionComponent implements OnInit {
       taiLieu: { value: data ? data.name : '', disabled: this.isModeView },
     });
     formArray.push(formItem);
-    this.amountFiles = formArray.length;
   }
 
 
   removeFormArrayControl(name: string, idx: number) {
     const formArray = this.hoSoDangLuuYForm.get(name) as FormArray;
     formArray.removeAt(idx);
-    this.amountFiles = formArray.length;
   }
 
 

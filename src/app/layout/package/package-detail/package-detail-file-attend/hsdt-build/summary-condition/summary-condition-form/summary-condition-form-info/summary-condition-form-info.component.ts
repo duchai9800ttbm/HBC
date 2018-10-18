@@ -35,6 +35,7 @@ export class SummaryConditionFormInfoComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+
     this.currentBidOpportunityId = +PackageDetailComponent.packageId;
     this.hoSoDuThauService.watchLiveformState().subscribe(data => {
       this.isModeView = data.isModeView;
@@ -54,6 +55,7 @@ export class SummaryConditionFormInfoComponent implements OnInit {
       lanPhongVan: { value: this.dataStepInfo.lanPhongVan, disabled: this.isModeView },
       dienGiaiThongTinDuAn: { value: this.dataStepInfo.dienGiaiThongTinDuAn, disabled: this.isModeView }
     });
+
 
     if (!this.isModeView) {
       this.thongTinDuAnForm.enable();
