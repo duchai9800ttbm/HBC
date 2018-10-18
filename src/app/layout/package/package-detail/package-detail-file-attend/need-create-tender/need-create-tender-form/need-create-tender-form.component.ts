@@ -20,6 +20,7 @@ import { Currency } from '../../../../../../shared/models/currency';
 import { FeeTenderInvitationDocument } from '../../../../../../shared/models/package/fee-tender-invitation-document';
 import { ContractConditionTenderParticipate } from '../../../../../../shared/models/package/contract-condition-tender-participate';
 import { TenderDirectorProposal } from '../../../../../../shared/models/package/tender-director-proposal';
+import { DecisionBoardGeneralDirector } from '../../../../../../shared/models/package/decision-board-general-director';
 
 @Component({
     selector: 'app-need-create-tender-form',
@@ -106,6 +107,10 @@ export class NeedCreateTenderFormComponent implements OnInit, OnDestroy {
                     // tslint:disable-next-line:max-line-length
                     NeedCreateTenderFormComponent.formModel.tenderDirectorProposal.expectedDate = DateTimeConvertHelper.fromDtObjectToTimestamp(new Date());
                     NeedCreateTenderFormComponent.formModel.tenderDirectorProposal.date = DateTimeConvertHelper.fromDtObjectToTimestamp(new Date());
+                    // ====================
+                    // DecisionBoardGeneralDirector
+                    NeedCreateTenderFormComponent.formModel.decisionOfBoardOfGeneralDirector = new DecisionBoardGeneralDirector();
+                    NeedCreateTenderFormComponent.formModel.decisionOfBoardOfGeneralDirector.reason = '';
                 }
             }
         );
@@ -324,6 +329,11 @@ export class NeedCreateTenderFormComponent implements OnInit, OnDestroy {
             this.isShowDialog = false;
             this.confirmService.missAction('Đề nghị dự thầu chưa được xác nhận ký bởi giám đốc dự thầu',
                 `/package/detail/${this.bidOpportunityId}/attend/create-request/form/edit/director-proposal`);
+        }
+    }
+    actionSaveChangesLiveForm(e) {
+        if (e.code === 'Enter') {
+            this.saveChangesLiveForm();
         }
     }
 }

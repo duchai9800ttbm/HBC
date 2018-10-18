@@ -129,7 +129,7 @@
             </div>
         </div>
         <div class="mt-4 text-center mb-2">
-            <button class="btn b-btn btn-primary" (click)="saveChangesLiveForm()">OK</button>
+            <button class="btn b-btn btn-primary" (keyup)="actionSaveChangesLiveForm($event)" (click)="saveChangesLiveForm()">OK</button>
         </div>
     </div>
 </kendo-dialog>
