@@ -192,7 +192,7 @@ export class UserService {
     }
     // Tìm kiếm người dùng theo họ tên
     searchUser(page: number, pageSize: number, searchTerm: string): Observable<PagedResult<UserModel>> {
-        const url = `user/search/${page}/${pageSize}?searchTerm=${searchTerm}`;
+        const url = `user/${page}/${pageSize}?searchTerm=${searchTerm}`;
         return this.apiService
             .get(url)
             .map(result => {

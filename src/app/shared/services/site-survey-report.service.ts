@@ -293,6 +293,7 @@ export class SiteSurveyReportService {
       return dataFormated;
     } else {
       // case: EDIT
+      dataFormated.isCreate = false;
       dataFormated.bidOpportunityId = model.bidOpportunityId;
       dataFormated.id = model.id;
       dataFormated.nguoiTao = model.createdEmployee && {

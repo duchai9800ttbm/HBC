@@ -46,7 +46,7 @@ export class SoilConditionComponent implements OnInit {
   }
   checkFlag() {
     if ((LiveformSiteReportComponent.formModel.isCreate)) {
-      const flag = LiveformSiteReportComponent.viewFlag;
+      const flag = LiveformSiteReportComponent.isViewMode;
       this.viewMode = flag;
       if (flag) {
         const inputs = document.getElementsByTagName('input');

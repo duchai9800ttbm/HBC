@@ -45,8 +45,9 @@ export class EditComponent implements OnInit, OnDestroy {
   departmentId;
   listUser: UserList[];
   ngayKhaoSat;
-  isDraft = true;
-  isCreate = false;
+  isDraft: boolean;
+  isCreate: boolean;
+  isViewMode: boolean;
   constructor(
     private siteSurveyReportService: SiteSurveyReportService,
     private packageService: PackageService,
@@ -59,11 +60,14 @@ export class EditComponent implements OnInit, OnDestroy {
     this.departmentId = 49;
     this.getInfoTenderPreparationPlanning();
     this.getAllUser();
-    this.isCreate = (LiveformSiteReportComponent.formModel.isCreate) ? LiveformSiteReportComponent.formModel.isCreate : false;
-    this.isDraft = (LiveformSiteReportComponent.formModel.isDraft) ? LiveformSiteReportComponent.formModel.isDraft : true;
+    this.isCreate = LiveformSiteReportComponent.formModel.isCreate;
+    this.isDraft = LiveformSiteReportComponent.formModel.isDraft;
+    this.isViewMode = LiveformSiteReportComponent.isViewMode;
     this.currentBidOpportunityId = +PackageDetailComponent.packageId;
     this.packageService.getInforPackageID(this.currentBidOpportunityId).subscribe(result => {
       this.packageData = result;
+    }, err => {
+      this.alertService.error('Tải thông tin gói thầu không thành công.');
     });
   }
   getAllUser() {
@@ -89,14 +93,20 @@ export class EditComponent implements OnInit, OnDestroy {
           }
         }
       });
+    }, err => {
+      this.alertService.error('Tải thông tin người dùng không thành công.');
     });
   }
   getInfoTenderPreparationPlanning() {
     this.packageService.getTenderPreparationPlanning(this.currentBidOpportunityId).subscribe(data => {
       this.ngayKhaoSat = data.finishDate;
+    }, err => {
+      this.alertService.error('Lấy thông tin Phân công tiến độ không thành công.');
     });
   }
   submitLiveForm(event) {
+    LiveformSiteReportComponent.isViewMode = true;
+    this.isViewMode = true;
     LiveformSiteReportComponent.formModel.phongBan = {
       id: this.departmentId,
       text: ''
@@ -105,7 +115,6 @@ export class EditComponent implements OnInit, OnDestroy {
       id: this.customerId,
       text: ''
     };
-    LiveformSiteReportComponent.formModel.isDraft = this.isDraft;
     this.showPopupConfirm = false;
     if (!event) {
       this.showPopupConfirm = false;
@@ -119,13 +128,15 @@ export class EditComponent implements OnInit, OnDestroy {
           this.showPopupConfirm = false;
           this.spinner.hide();
           this.router.navigate([`/package/detail/${this.currentBidOpportunityId}/attend/build/liveformsite/info/scale`]);
-          this.alertService.success('Đã cập nhật thành công!');
+          const message = (this.isCreate) ? 'Tạo' : 'Cập nhật';
+          this.alertService.success(`${message} Báo cáo khảo sát công trường thành công.`);
         }, err => {
           this.showPopupConfirm = false;
           this.spinner.hide();
-          this.alertService.error('Đã xảy ra lỗi. Cập nhật không thành công!');
+          const message = (this.isCreate) ? 'Tạo' : 'Cập nhật';
+          this.alertService.error(`Đã xảy ra lỗi. ${message} Báo cáo khảo sát công trường không thành công.`);
         });
-      // LiveformSiteReportComponent.viewFlag = true;
+      // LiveformSiteReportComponent.isViewMode = true;
     }
   }
 
@@ -146,6 +157,11 @@ export class EditComponent implements OnInit, OnDestroy {
   }
   cancelCreateUpdate() {
     this.router.navigate([`/package/detail/${this.currentBidOpportunityId}/attend/build/liveformsite`]);
+  }
+  editLiveform() {
+    LiveformSiteReportComponent.isViewMode = false;
+    this.isViewMode = false;
+    this.router.navigate([`/package/detail/${this.currentBidOpportunityId}/attend/build/liveformsite/edit`]);
   }
 
   disableSideMenu(event) {

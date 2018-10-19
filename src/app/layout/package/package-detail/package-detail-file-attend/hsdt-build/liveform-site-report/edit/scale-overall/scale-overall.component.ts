@@ -52,7 +52,7 @@ export class ScaleOverallComponent implements OnInit {
   structureImageUrls = [];
   requirementsImageUrls = [];
   url;
-  viewMode;
+  isViewMode;
   modalRef: BsModalRef;
   imageUrlArray = [];
   showPopupViewImage = false;
@@ -108,16 +108,12 @@ export class ScaleOverallComponent implements OnInit {
   }
 
   checkFlag() {
-    if (LiveformSiteReportComponent.formModel.isCreate) {
-      const flag = LiveformSiteReportComponent.viewFlag;
-      if (flag) {
-        const inputs = document.getElementsByTagName('input');
-        for (let i = 0; i < inputs.length; i++) {
-          inputs[i].style.pointerEvents = 'none';
-        }
+    this.isViewMode = LiveformSiteReportComponent.isViewMode;
+    if (this.isViewMode) {
+      const inputs = document.getElementsByTagName('input');
+      for (let i = 0; i < inputs.length; i++) {
+        inputs[i].style.pointerEvents = 'none';
       }
-    } else {
-      this.router.navigate([`/package/detail/${this.currentBidOpportunityId}/attend/build/liveformsite`]);
     }
   }
 

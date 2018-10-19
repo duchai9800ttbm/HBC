@@ -29,7 +29,7 @@ export class HsdtBuildComponent implements OnInit, AfterViewChecked {
     dtOptions: any = DATATABLE_CONFIG2;
     dtTrigger: Subject<any> = new Subject();
     packageId: number;
-    hideActionSiteReport: boolean;
+    // hideActionSiteReport: boolean;
     isShowSideMenu = false;
     isShowMenu = false;
     notShow = false;
@@ -48,10 +48,10 @@ export class HsdtBuildComponent implements OnInit, AfterViewChecked {
     ) { }
 
     ngOnInit() {
-        this.getDanhSachLoaiHoSo();
+        this.getDanhSachLoaiHoSo(false);
         this.packageId = +PackageDetailComponent.packageId;
         this.subscription = this.hoSoDuThauService.watchChangingUpload().subscribe(signal => {
-            this.getDanhSachLoaiHoSo();
+            this.getDanhSachLoaiHoSo(false);
         });
     }
 
@@ -63,10 +63,16 @@ export class HsdtBuildComponent implements OnInit, AfterViewChecked {
         });
     }
 
-    getDanhSachLoaiHoSo() {
+    getDanhSachLoaiHoSo(spinner: boolean) {
         this.packageId = +PackageDetailComponent.packageId;
         this.hoSoDuThauService.getDanhSachLoaiTaiLieu(this.packageId).subscribe(res => {
             this.danhSachLoaiTaiLieu = res;
+            if (spinner) {
+                this.spinner.hide();
+                this.alertService.success('Dữ liệu đã được cập nhật mới nhất!');
+            }
+        }, err => {
+            this.alertService.error('Tải thông tin Loại tài liệu không thành công.');
         });
     }
 
@@ -84,13 +90,16 @@ export class HsdtBuildComponent implements OnInit, AfterViewChecked {
 
     refresh(): void {
         this.spinner.show();
+        this.getDanhSachLoaiHoSo(true);
+        this.packageId = +PackageDetailComponent.packageId;
+        this.subscription = this.hoSoDuThauService.watchChangingUpload().subscribe(signal => {
+            this.getDanhSachLoaiHoSo(false);
+        });
         this.dtTrigger.next();
-        this.spinner.hide();
-        this.alertService.success('Dữ liệu đã được cập nhật mới nhất!');
     }
     onActivate(event) {
         this.routerName = event.constructor.name;
-        this.hideActionSiteReport = (this.routerName === 'LiveformSiteReportComponent') ? true : false;
+        // this.hideActionSiteReport = (this.routerName === 'LiveformSiteReportComponent') ? true : false;
     }
     taiTemplateHSDT() {
         this.hoSoDuThauService.taiTemplateHSDT().subscribe(file => {
