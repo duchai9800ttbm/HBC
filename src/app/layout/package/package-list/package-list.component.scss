@@ -55,6 +55,13 @@ span{
     overflow-y: scroll;
 }
 
+table{
+    th:not([type="check"]),td:not([type="check"]){
+        min-width: 130px;
+        max-width: 160px;  
+    }
+}
+
 .grid-container {
     display: grid;
     grid-template-columns: 30px freg
@@ -551,7 +558,7 @@ select.form-control:not([size]):not([multiple]){
 }
 .zui-wrapper {
     position: relative;
-    height: calc(100vh - 294px);
+    height: calc(100vh - 298px);
     overflow-x: scroll;
     &::-webkit-scrollbar {
         width: 6px;
