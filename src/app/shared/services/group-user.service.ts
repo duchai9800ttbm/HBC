@@ -62,6 +62,7 @@ export class GroupUserService implements OnInit {
         };
       }),
       isUsing: result.isUsing,
+      userCount: result.userCount
     };
   }
   constructor(

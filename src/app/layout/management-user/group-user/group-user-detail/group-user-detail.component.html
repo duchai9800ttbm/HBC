@@ -65,7 +65,7 @@
           <tr *ngFor="let item of pagedResult.items">
             <td class="text-center" style="width: 15px; padding-left: 7px;">
               <label class="custom-control custom-checkbox">
-                <input type="checkbox" class="custom-control-input" >
+                <input type="checkbox" class="custom-control-input">
                 <span class="custom-control-indicator"></span>
               </label>
             </td>
@@ -79,7 +79,7 @@
               {{ item.createdTime === 0 ? '' : (item.createdTime)*1000 | date:'dd/MM/yyyy': '+0000'}}
             </td>
             <td class="text-truncate">
-              {{item.isUsing === true ? 'Đã sử dụng' : 'Chưa sử dụng'}}
+              {{item.userCount > 0 ? 'Có ' + item.userCount + ' người dùng' : 'Chưa có người dùng'}}
             </td>
             <td class="text-truncate">
               <div class="center-parent w-100 h-100">

@@ -11,4 +11,5 @@ export class GroupUserList {
         text: string;
     }[];
     isUsing: boolean;
+    userCount: number;
 }
