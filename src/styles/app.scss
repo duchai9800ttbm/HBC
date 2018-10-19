@@ -901,10 +901,6 @@ Direction
     color: #f68e56;
 }
 
-.document-type {
-    //  padding-top: 3px!important;
-}
-
 pre {
     white-space: pre-wrap;
     /* CSS3 browsers  */
@@ -943,9 +939,10 @@ select.form-control:not([size]):not([multiple]) {
 
 ::-webkit-scrollbar {
     height: 8px;
+    width: 10px;
 }
 ::-webkit-scrollbar-thumb {
-    background: #888; 
+    background: #c1c1c1; 
 }
 
 
@@ -965,7 +962,3 @@ router-oulet {
     font-size: 1rem;
 }
 
-
-::-webkit-scrollbar { 
-    display: none; 
-}

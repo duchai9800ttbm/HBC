@@ -551,14 +551,14 @@ select.form-control:not([size]):not([multiple]){
 }
 .zui-wrapper {
     position: relative;
-    height: calc(100vh - 292px);
+    height: calc(100vh - 294px);
     overflow-x: scroll;
     &::-webkit-scrollbar {
         width: 6px;
         height: 0px;
     }
     &::-webkit-scrollbar-thumb {
-        background: #888; 
+        background: #c1c1c1; 
     }
 }
 .zui-scroller {
@@ -570,7 +570,7 @@ select.form-control:not([size]):not([multiple]){
         height: 0px !important;
     }
     &::-webkit-scrollbar-thumb {
-        background: #888; 
+        background: #c1c1c1; 
     }
 }
 .zui-table {
@@ -592,19 +592,19 @@ select.form-control:not([size]):not([multiple]){
     }
 }
 .scrollbar-fake {
-    height: 6px;
+    height: 10px;
     margin-left: 40px;
     margin-right: 120px;
     overflow: auto;
     &::-webkit-scrollbar {
-        height: 10px;
+        height: 10px!important;
     }
     &::-webkit-scrollbar-thumb {
-        background: #888; 
+        background: #c1c1c1!important; 
     }
     .scrollbar-fake-content {
         // width: 2512px;
-        height: 8px;
+        height: 10px!important;
     }
 }
 
