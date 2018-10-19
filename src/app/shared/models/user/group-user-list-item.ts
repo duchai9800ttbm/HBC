@@ -12,4 +12,5 @@ export class GroupUserList {
     }[];
     isUsing: boolean;
     userCount: number;
+    canBeMofify: boolean;
 }

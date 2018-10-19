@@ -67,6 +67,7 @@ export class PackageListComponent implements OnInit, AfterViewChecked {
     userListItem: UserItemModel[];
     user: UserModel;
     listField: FieldModel[];
+    listFieldTemp;
     listFieldNomarlized = [];
     sum;
     isManageBidOpportunitys;
@@ -183,8 +184,6 @@ export class PackageListComponent implements OnInit, AfterViewChecked {
     public documentClick(event: any): void {
         if (!this.contains(event.target)) {
             this.cancel(this.myDrop);
-        } else {
-            this.closeMyDrop = true;
         }
         if (!this.containsDropTool(event.target)) {
             this.closeDropToll(this.DropTool);
@@ -302,6 +301,7 @@ export class PackageListComponent implements OnInit, AfterViewChecked {
     refreshPopupConfig() {
         this.packageService.getListFields(this.getUserId).subscribe(data => {
             this.listField = data;
+            this.listFieldTemp = JSON.parse(JSON.stringify(data));
             this.listFieldNomarlized = [...this.listField].filter(x => x.hidden === true).map(x => x.fieldName);
             this.sum = [...this.listField].filter(x => x.hidden === true).length;
             this.tenDuAn = this.listFieldNomarlized.includes('ARBidOpportunityProjectName');
@@ -516,6 +516,7 @@ export class PackageListComponent implements OnInit, AfterViewChecked {
         this.packageService.getListFieldsDefault()
             .subscribe(data => {
                 this.listField = data;
+                this.listFieldTemp = JSON.parse(JSON.stringify(data));
                 this.sum = [...this.listField].filter(x => x.hidden === true).length;
                 this.apply(this.myDrop);
                 this.spinner.hide();
@@ -527,27 +528,37 @@ export class PackageListComponent implements OnInit, AfterViewChecked {
         DropTool.close();
     }
 
+    renderListField() {
+
+    }
+
     cancel(myDrop) {
-        if (this.closeMyDrop) {
-            myDrop.close();
-            this.packageService.getListFields(this.getUserId).subscribe(data => {
-                this.listField = data;
-                this.listFieldNomarlized = [...this.listField].filter(x => x.hidden === true).map(x => x.fieldName);
-                this.sum = [...this.listField].filter(x => x.hidden === true).length;
-                this.tenGoithau = this.listFieldNomarlized.includes('ARBidOpportunityName');
-                this.dtTrigger.next();
-                this.closeMyDrop = false;
-            });
+        myDrop.close();
+        if (this.listFieldTemp) {
+            this.listField = JSON.parse(JSON.stringify(this.listFieldTemp));
+            this.listFieldNomarlized = [...this.listField].filter(x => x.hidden === true).map(x => x.fieldName);
+            this.sum = [...this.listField].filter(x => x.hidden === true).length;
+            this.tenGoithau = this.listFieldNomarlized.includes('ARBidOpportunityName');
+            this.dtTrigger.next();
         }
+        // if (true) {
+        //     this.packageService.getListFields(this.getUserId).subscribe(data => {
+        //         this.listField = data;
+        //         this.listFieldNomarlized = [...this.listField].filter(x => x.hidden === true).map(x => x.fieldName);
+        //         this.sum = [...this.listField].filter(x => x.hidden === true).length;
+        //         this.tenGoithau = this.listFieldNomarlized.includes('ARBidOpportunityName');
+        //         this.dtTrigger.next();
+        //     });
+        // }
     }
 
     apply(myDrop) {
         this.spinner.show();
+        this.closeMyDrop = false;
         this.packageService.updateFieldConfigs(this.listField, this.getUserId)
             .subscribe(result => {
                 this.alertService.success('Đã cập nhật cấu hình thành công!');
                 this.refresh();
-
                 this.refreshPopupConfig();
                 myDrop.close();
                 this.spinner.hide();

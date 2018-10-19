@@ -82,15 +82,16 @@
               {{item.userCount > 0 ? 'Có ' + item.userCount + ' người dùng' : 'Chưa có người dùng'}}
             </td>
             <td class="text-truncate">
-              <div class="center-parent w-100 h-100">
-                <div class="col-md-6 center-parent cursor-pointer" (click)="openModalEdit(item.id, edit)">
-                  <i [title]="'Sửa'" class="fa fa-pencil cursor-pointer" style="color: #1e7e34"></i>
-                </div>
-                <div class="col-md-6 center-parent cursor-pointer" (click)="delete(item.id)">
-                  <i [title]="'Xóa'" class="fa fa-trash-o point cursor-pointer"></i>
+              <div *ngIf="!item.canBeMofify">
+                <div class="center-parent w-100 h-100">
+                  <div class="col-md-6 center-parent cursor-pointer" (click)="openModalEdit(item.id, edit)">
+                    <i [title]="'Sửa'" class="fa fa-pencil cursor-pointer" style="color: #1e7e34"></i>
+                  </div>
+                  <div class="col-md-6 center-parent cursor-pointer" (click)="delete(item.id)">
+                    <i [title]="'Xóa'" class="fa fa-trash-o point cursor-pointer"></i>
+                  </div>
                 </div>
               </div>
-
             </td>
           </tr>
         </tbody>
