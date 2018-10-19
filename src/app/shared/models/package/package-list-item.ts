@@ -103,7 +103,11 @@ export class PackageListItem {
     acceptanceReason: string;
     unacceptanceReason: string;
     cancelReason: string;
-    evaluation: string;
+    evaluation: {
+        displayText: string,
+        key: string,
+        value: string
+    };
     startTrackingDate: number;
     submissionDate: number;
     resultEstimatedDate: number;

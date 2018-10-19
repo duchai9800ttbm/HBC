@@ -22,4 +22,5 @@ export class DanhSachBoHsdtItem {
     fileUrl: string;
     interViewTimes: number;
     desc: string;
+    images: any;
 }

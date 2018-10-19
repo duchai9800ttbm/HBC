@@ -94,7 +94,8 @@ export class HoSoDuThauService {
       fileGuid: result.fileGuid,
       fileUrl: result.fileUrl,
       interViewTimes: result.interViewTimes,
-      desc: result.desc
+      desc: result.desc,
+      images: result.images
     };
   }
 
@@ -192,8 +193,8 @@ export class HoSoDuThauService {
     formData.append('Url', link);
     formData.append('Version', `${version ? version : ''}`);
     formData.append('InterviewTimes', `${interviewTimes ? interviewTimes : ''}`);
-    for (let image of imageIds) {
-      formData.append('Images', image);
+    for (const guid of imageIds) {
+      formData.append('ImageGuids', guid);
     }
     return this.apiService.postFile(url, formData).map(response => response).share();
   }
