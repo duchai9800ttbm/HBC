@@ -140,6 +140,7 @@ export class LiveformSiteReportComponent implements OnInit {
         this.updateInfoList = responseResultHistory.items;
         this.spinner.hide();
       }, err => {
+        this.alertService.error('Tải thêm trang thất bại. Xin vui lòng thử lại');
         this.spinner.hide();
       });
   }

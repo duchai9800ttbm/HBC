@@ -71,6 +71,8 @@ export class HsdtBuildComponent implements OnInit, AfterViewChecked {
                 this.spinner.hide();
                 this.alertService.success('Dữ liệu đã được cập nhật mới nhất!');
             }
+        }, err => {
+            this.alertService.error('Tải thông tin Loại tài liệu không thành công.');
         });
     }
 

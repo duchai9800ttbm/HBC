@@ -66,6 +66,8 @@ export class EditComponent implements OnInit, OnDestroy {
     this.currentBidOpportunityId = +PackageDetailComponent.packageId;
     this.packageService.getInforPackageID(this.currentBidOpportunityId).subscribe(result => {
       this.packageData = result;
+    }, err => {
+      this.alertService.error('Tải thông tin gói thầu không thành công.');
     });
   }
   getAllUser() {
@@ -91,11 +93,15 @@ export class EditComponent implements OnInit, OnDestroy {
           }
         }
       });
+    }, err => {
+      this.alertService.error('Tải thông tin người dùng không thành công.');
     });
   }
   getInfoTenderPreparationPlanning() {
     this.packageService.getTenderPreparationPlanning(this.currentBidOpportunityId).subscribe(data => {
       this.ngayKhaoSat = data.finishDate;
+    }, err => {
+      this.alertService.error('Lấy thông tin Phân công tiến độ không thành công.');
     });
   }
   submitLiveForm(event) {
