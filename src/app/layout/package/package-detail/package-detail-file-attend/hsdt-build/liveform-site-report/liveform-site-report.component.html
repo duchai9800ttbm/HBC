@@ -5,7 +5,7 @@
                 <div class="mr-auto d-flex align-items-end list-package mt-2 mb-2 title-header-report">
                     <div class="d-flex justify-content-start title-header-report-text">
                         <div class="mr-4">
-                            <div> báo cáo khảo sát công trường (site surveying report)</div>
+                            <div class="font__heading--size"> báo cáo khảo sát công trường (site surveying report)</div>
                         </div>
                     </div>
                 </div>
@@ -89,13 +89,13 @@
                                 <td class="text-center">
                                     <div class="d-flex justify-content-center">
                                         <div class="icon-mg">
-                                            <a title="Xem file" class="icon-view-file" (click)="onActivate($event, true)"
+                                            <a title="Xem file" class="icon-view-file" (click)="onActivate(true)"
                                                 [routerLink]="['./info']">
                                                 <i class="fa fa-eye" aria-hidden="true"></i>
                                             </a>
                                         </div>
                                         <div class="icon-mg">
-                                            <a title="Edit file" class="icon-edit-file" (click)="onActivate($event, false)"
+                                            <a title="Edit file" class="icon-edit-file" (click)="onActivate(false)"
                                                 [routerLink]="['./edit']">
                                                 <i class="fa fa-pencil" aria-hidden="true"></i>
                                             </a>

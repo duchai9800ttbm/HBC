@@ -198,7 +198,7 @@ export class HoSoDuThauService {
     return this.apiService.postFile(url, formData).map(response => response).share();
   }
   // Tải Template
-  taiTemplateHSDT(): Observable<any> {
+  taiTemplateHSDT() {
     const url = `tenderdocument/template/download`;
     return this.apiService.getFile(url).map(response => {
       return FileSaver.saveAs(

@@ -18,7 +18,7 @@ import { ScaleOverall } from '../../../../../../shared/models/site-survey-report
 })
 export class LiveformSiteReportComponent implements OnInit {
   static formModel: SiteSurveyReport = new SiteSurveyReport();
-  static viewFlag: boolean;
+  static isViewMode: boolean;
   bidOpportunityId: number;
   page: number;
   pageSize: number;
@@ -113,9 +113,7 @@ export class LiveformSiteReportComponent implements OnInit {
     this.pagedResult = pagedResult;
     this.dtTrigger.next();
   }
-  createMode() {
-    LiveformSiteReportComponent.formModel.isCreate = true;
-  }
+
   deleteDoc() {
     const that = this;
     this.confirmationService.confirm(
@@ -142,12 +140,12 @@ export class LiveformSiteReportComponent implements OnInit {
         this.updateInfoList = responseResultHistory.items;
         this.spinner.hide();
       }, err => {
+        this.alertService.error('Tải thêm trang thất bại. Xin vui lòng thử lại');
         this.spinner.hide();
       });
   }
 
-  onActivate(event, view) {
-    LiveformSiteReportComponent.viewFlag = view;
-    this.createMode();
+  onActivate(check) {
+    LiveformSiteReportComponent.isViewMode = check;
   }
 }

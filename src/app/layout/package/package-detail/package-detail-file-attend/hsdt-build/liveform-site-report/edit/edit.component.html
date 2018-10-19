@@ -17,15 +17,23 @@
     <div class="controll-bar">
         <div class="btn-toolbar mt-2 mb-2">
             <div class="d-flex">
-                <button id="printButton" *ngIf="isDraft" class="btn btn-primary ml-1" (click)="updateliveform(true)">
-                    Lưu bản nháp
-                </button>
-                <button id="printButton" class="btn btn-primary ml-1" (click)="updateliveform(false)">
-                    Lưu
-                </button>
-                <button type="button" class="btn btn-up disable ml-1" (click)="cancelCreateUpdate()">
-                    Hủy
-                </button>
+                <ng-container *ngIf="!isViewMode">
+                    <button *ngIf="isDraft" class="btn btn-primary ml-1" (click)="updateliveform(true)">
+                        Lưu bản nháp
+                    </button>
+                    <button class="btn btn-primary ml-1" (click)="updateliveform(false)">
+                        Lưu
+                    </button>
+                    <button type="button" class="btn btn-up disable ml-1" (click)="cancelCreateUpdate()">
+                        Hủy
+                    </button>
+                </ng-container>
+                <ng-container *ngIf="isViewMode">
+                    <button class="btn btn-primary ml-1" (click)="editLiveform()">
+                        Chỉnh sửa
+                    </button>
+                </ng-container>
+
                 <button class="btn btn-primary ml-1" (click)="refresh()">
                     <i class="fa fa-refresh" aria-hidden="true"></i>
                 </button>
@@ -108,7 +116,7 @@
 
                 <div class="d-flex flex-row mt-1 mb-1 h-25 align-content-center">
                     <div class="titleHeader w-40">Ngày khảo sát (Date):</div>
-                    <div class="infoHeader">{{ (ngayKhaoSat)*1000 | date:'dd/MM/yyyy' }}</div>
+                    <div class="infoHeader">{{ (ngayKhaoSat)*1000 | date:'dd/MM/yyyy HH:mm': '+0000' }}</div>
                 </div>
 
                 <div class="d-flex flex-row mt-1 mb-1 h-25 align-content-center hidden-tag">
