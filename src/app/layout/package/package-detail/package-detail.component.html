@@ -1,12 +1,12 @@
 <div [@routerTransition]>
   <div class="title-detail center-parent" [class.title-detail-toggle]="isToggle" *ngIf="packageData">
     <div class="mr-auto col-md-12">
-      <div class="media-header header-title" style="padding: 0px">
+      <div class="media-header header-title p-0">
         <div class="d-flex justify-content-between">
           <div class="text-truncate ellipsis">
-            <a [routerLink]='["/package/list"]' style="cursor: pointer;">
+            <a [routerLink]='["/package/list"]' class="pointer">
               <!-- <i class="fa fa-chevron-left mr-3" aria-hidden="true"></i> -->
-              <img width="12" height="12" class="pointer not-outline" src="assets\images\nghia.png" style="margin-bottom: 1px;">
+              <img width="12" height="12" class="pointer not-outline header-img--mar" src="assets\images\nghia.png">
             </a>
             <h4 class="d-inline mb-0 text-dark">
               <span>
@@ -17,7 +17,7 @@
           <div class="set-min-width-image">
             <span class="gr-icon">
               <img class="mr-3 pointer" src="assets\images\ic_permission_set.png" [routerLink]="['/package/permission', packageId]">
-              <img class="pointer" src="assets\images\ic_email_manage.png" (click)="routerEmail()" >
+              <img class="pointer" src="assets\images\ic_email_manage.png" (click)="routerEmail()">
               <!-- [routerLink]="['/package/email', packageId]" -->
             </span>
           </div>
@@ -26,22 +26,28 @@
     </div>
   </div>
   <div class="main-detail">
-    <div class="menu" id="bigMenu" style="margin-left: 20px; margin-right: 20px;margin-bottom: 5px;">
-      <div class="action" style="width: calc(25% - 10px)" [routerLinkActive]="['router-link-active']" [routerLink]="['/package/detail', packageId ,'info']">
+    <div class="menu toolbar" id="bigMenu">
+      <div class="action set-width" [routerLinkActive]="['router-link-active']" [routerLink]="['/package/detail', packageId ,'info']">
         THÔNG TIN CHI TIẾT
       </div>
-      <div class="action" style="width: calc(25% - 10px)" [routerLinkActive]="['router-link-active']" [routerLink]="['/package/detail', packageId ,'invitation']">
+      <div class="action set-width" [routerLinkActive]="['router-link-active']" [routerLink]="['/package/detail', packageId ,'invitation']">
         HỒ SƠ MỜI THẦU
       </div>
-      <div class="action" style="width: calc(25% - 10px)" [routerLinkActive]="['router-link-active']" [routerLink]="['/package/detail', packageId ,'attend']">
+      <div class="action set-width" [routerLinkActive]="['router-link-active']" [routerLink]="['/package/detail', packageId ,'attend']">
         DỰ THẦU
-        <!-- [routerLink]="['/package/detail', packageId ,'attend']" -->
       </div>
-      <div class="action" style="width: calc(25% - 10px)" [routerLinkActive]="['router-link-active']" [routerLink]="['/package/detail', packageId ,'result']">
-        <!-- [class.no-action]="statusPackage.id > checkStatusPackage.ChoKetQuaDuThau.id" -->
-        <!-- [routerLink]="['/package/detail', packageId ,'result']" -->
-        KẾT QUẢ DỰ THẦU
-      </div>
+      <ng-container *ngIf="(statusPackage.id > checkStatusPackage.ChoKetQuaDuThau.id)">
+        <div class="set-width" [routerLinkActive]="['router-link-active']" [class.action]="statusPackage.id > checkStatusPackage.ChoKetQuaDuThau.id"
+          [class.no-action]="!(statusPackage.id > checkStatusPackage.ChoKetQuaDuThau.id)" [routerLink]="['/package/detail', packageId ,'result']">
+          KẾT QUẢ DỰ THẦU
+        </div>
+      </ng-container>
+      <ng-container *ngIf="!(statusPackage.id > checkStatusPackage.ChoKetQuaDuThau.id)">
+        <div class="set-width" [routerLinkActive]="['router-link-active']" [class.action]="statusPackage.id > checkStatusPackage.ChoKetQuaDuThau.id"
+          [class.no-action]="!(statusPackage.id > checkStatusPackage.ChoKetQuaDuThau.id)">
+          KẾT QUẢ DỰ THẦU
+        </div>
+      </ng-container>
     </div>
     <div>
       <router-outlet></router-outlet>

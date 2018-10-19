@@ -131,6 +131,14 @@
             font-weight: 400;
             box-shadow: 0 16px 38px -12px rgb(204, 202, 202), 0 4px 25px 0 rgb(204, 202, 202), 0 8px 10px -5px rgb(204, 202, 202),
         }
+        .set-width{
+            width: calc(25% - 10px);
+        }
+    }
+    .toolbar{
+        margin-left: 20px;
+        margin-right: 20px;
+        margin-bottom: 5px;
     }
 }
 
@@ -189,6 +197,9 @@
 
 .header-title {
     padding: 0 15px;
+    .header-img--mar{
+        margin-bottom: 1px;
+    }
 }
 
 .gr-icon {
@@ -239,4 +250,6 @@
 .ellipsis{
     color: black;
 }
-
+.pointer{
+    cursor: pointer;
+}
