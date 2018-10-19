@@ -92,14 +92,15 @@ export class DocumentService {
             });
     }
 
-    bidDocumentMajortypes(): Observable<any> {
-        const url = `biddocumentmajortypes`;
+    bidDocumentMajortypes(bidOpportunityId: number): Observable<any> {
+        const url = `${bidOpportunityId}/biddocumentmajortypes`;
         return this.apiService.get(url).map(response => {
             const result = response.result;
             return result.map(i => {
                 return {
-                    id: i.key,
-                    text: i.value
+                    id: i.id,
+                    text: i.text,
+                    count: i.count
                 };
             });
         });

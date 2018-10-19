@@ -35,7 +35,7 @@
                 <div class="d-flex">
                     <div id="toggle-menu-item" *ngIf="majorTypeListItem">
                         <ng-container *ngFor="let item of majorTypeListItem; let i = index">
-                            <div class="toggle-menu-item" [title]="item.text" [class.hight-light]="!item.hightLight && (currentMajorTypeId != item.id)"
+                            <div class="toggle-menu-item" [title]="item.text" [class.hight-light]="!item.count > 0 && (currentMajorTypeId != item.id)"
                                 [class.active-menu]="(currentMajorTypeId == item.id)" (click)="filterMajorTypeListItem(item.id, item.text)">
                                 <span class="text-truncate">{{item?.text}}</span>
                             </div>

@@ -7,7 +7,12 @@
     width: 100%;
 }
 
+router-outlet{
+    height: 100%;
+}
+
 .main-detail {
+    height: 100%;
     margin: 15px 15px;
     min-height: 100px;
     padding-top: 40px;
@@ -153,4 +158,5 @@
 
 :host {
     background-color: #f6f6f6;
+    height: 100%;
 }

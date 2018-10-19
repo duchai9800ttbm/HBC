@@ -90,7 +90,7 @@
               </label>
             </td>
             <td class="text-truncate">
-              {{item.userName}}
+              <img class="avatar-img rounded-circle" [src]="item.avatar || 'assets/images/no-avatar.png'">&nbsp; {{item.userName}}
             </td>
             <td class="text-truncate">
               {{item.email}}

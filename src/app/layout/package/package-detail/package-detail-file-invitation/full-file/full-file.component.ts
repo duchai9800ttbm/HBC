@@ -95,7 +95,7 @@ export class FullFileComponent implements OnInit {
             this.userListItem = data;
         });
         this.spinner.show();
-        this.documentService.bidDocumentMajortypes().subscribe(data => {
+        this.documentService.bidDocumentMajortypes(this.packageId).subscribe(data => {
             this.majorTypeListItem = data;
             this.currentMajorTypeId = this.majorTypeListItem[0].id;
             this.documentService.read(this.packageId, this.currentMajorTypeId).subscribe(response => {

@@ -1,20 +1,14 @@
 .main-container {
     height: 100%;
     margin-top: 55px;
-  //  margin-left: 200px;
-  //  padding: 35px 25px;
     -ms-overflow-x: hidden;
     overflow-x: hidden; // overflow-y: scroll;
     position: relative;
-   // overflow: visible;
-   //box-sizing: border-box;
-
     background-color: #f6f6f6;
+    overflow: visible;
 }
 
-router-outlet{
-    height: 100%;
-}
+
 
 @media screen and (max-width: 992px) {
     .main-container {
@@ -27,11 +21,6 @@ router-outlet{
 
 }
 
-// @media screen and (min-width: 991px) {
-//     app-menu {
-//         display: none!important;
-//     }
-// }
 
 #footer { position: fixed; bottom: 0; }
 
@@ -39,25 +28,13 @@ router-outlet{
 .sectionIn {
     margin-left: 200px;
     transition: margin 0.5s; /* IE 10+, Fx 29+ */
-
-    // animation: sectionIn 0.4s ease-in-out;
 }
 
 .sectionOut {
     margin-left: 55px;
     transition: margin 0.5s;
-    // animation: sectionOut 0.8s ease-in-out;
 }
 
-// @keyframes sectionIn {
-//     0%   {margin-left: 0;}
-//     100% {margin-left: 200px;}
-// }
-
-// @keyframes sectionOut {
-//     0%   {margin-left: 200px;}
-//     100% {margin-left: 0;}
-// }
 :host{
     background-color: #f6f6f6;
 }
