@@ -82,12 +82,14 @@
                         </div>
                         <div class="image-demo-img">
                             <input type="file" accept="image/*" multiple #uploadPerspective (change)="uploadPerspectiveImage($event)">
-                            <div class="display-img" *ngFor="let url of perspectiveImageUrls" (click)="viewFullScreenImage(perspectiveImageUrls)">
-                                <img [src]="url.largeSizeUrl">
-                                <div class="icon-delete-image" [ngClass]="{'d-none': viewMode}" (click)="deletePerspectiveImage(url)">
-                                    <i class="fa fa-times delete-icon" aria-hidden="true"></i>
+                            <ng-container  *ngFor="let url of perspectiveImageUrls; index as k">
+                                <div class="display-img" (click)="viewFullScreenImage(perspectiveImageUrls, k)">
+                                    <img [src]="url.largeSizeUrl">
+                                    <div class="icon-delete-image" [ngClass]="{'d-none': viewMode}" (click)="deletePerspectiveImage(url)">
+                                        <i class="fa fa-times delete-icon" aria-hidden="true"></i>
+                                    </div>
                                 </div>
-                            </div>
+                            </ng-container>
                             <div class="perspective-image" [ngClass]="{'d-none': viewMode}" (click)="uploadPerspective.click()"
                                 tabindex="11">
                                 <i class="fa fa-plus" aria-hidden="true"></i>
@@ -150,4 +152,4 @@
 </form>
 
 <app-image-carousel class="d-flex justify-content-center align-items-center" *ngIf="showPopupViewImage"
-    [(imageUrlArray)]="imageUrlArray" (closed)="closeView()"></app-image-carousel>
+    [(imageUrlArray)]="imageUrlArray" [(indexOfImage)]="indexOfImage" (closed)="closeView()"></app-image-carousel>
