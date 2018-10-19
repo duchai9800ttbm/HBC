@@ -21,7 +21,11 @@ import { CheckStatusPackage } from '../../../shared/constants/check-status-packa
 export class PackageDetailComponent implements OnInit {
   static packageId;
   checkStatusPackage = CheckStatusPackage;
-  statusPackage;
+  statusPackage = {
+    text: '',
+    stage: '',
+    id: null,
+  };
   constructor(
     private router: Router,
     private activetedRoute: ActivatedRoute,
@@ -55,18 +59,16 @@ export class PackageDetailComponent implements OnInit {
       }
     }, 300);
 
-
     this.activetedRoute.params.subscribe(result => {
       this.packageId = +result.id;
       PackageDetailComponent.packageId = this.packageId;
     });
-
     this.packageService.getInforPackageID(this.packageId).subscribe(result => {
       this.packageData = result;
       this.statusPackage = this.checkStatusPackage[this.packageData.stageStatus.id];
-      console.log('statusPackage.idstatusPackage.id', this.statusPackage, this.checkStatusPackage.ChoKetQuaDuThau);
     }, err => {
     });
+
     this.layoutService.watchLayoutSubject().subscribe(data => {
       if (data) {
         this.isToggle = true;
@@ -102,11 +104,16 @@ export class PackageDetailComponent implements OnInit {
   }
 
   isActive(instruction: any[]): boolean {
-   return this.router.isActive(this.router.createUrlTree(instruction), false);
+    return this.router.isActive(this.router.createUrlTree(instruction), false);
   }
 
   routerEmail() {
     this.packageService.routerBeforeEmail = this.router.url;
     this.router.navigate([`/package/email/${this.packageId}`]);
   }
+  // routerModuleKQDT() {
+  //   if (this.statusPackage.id > this.checkStatusPackage.ChoKetQuaDuThau.id) {
+  //     this.router.navigate([`/package/detail/${this.packageId}/result`]);
+  //   }
+  // }
 }
