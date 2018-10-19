@@ -712,7 +712,7 @@
                             <td [class.d-none]="!hangMucCongTrinh" class="text-truncate" [title]="item.mainBuildingCategory?.value">{{ item.mainBuildingCategory?.value }}</td>
                             <td [class.d-none]="!diaDiem" class="text-truncate" [title]="item.place">{{ item.place }}</td>
                             <td [class.d-none]="!moTa" class="text-truncate" [title]="item.description">{{ item.description }}</td>
-                            <td [class.d-none]="!danhGiaDuAn" class="text-truncate" [title]="item.evaluation">{{ item.evaluation }}</td>
+                            <td [class.d-none]="!danhGiaDuAn" class="text-truncate" [title]="item.evaluation">{{ item.evaluation?.value }}</td>
                             <td style="max-width: 100px!important;" class="-right zui-sticky-col-right" type="check-action" [class.odd]="i % 2 == 0">
                                 <div class="d-flex justify-content-center align-items-center h-100">
                                     <div>

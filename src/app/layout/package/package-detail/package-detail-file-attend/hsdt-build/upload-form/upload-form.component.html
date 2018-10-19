@@ -234,8 +234,9 @@
                                 </a>
                             </td>
                             <!-- TODO: Fix lại chỗ này -->
-                            <td class="boder-table text-center text-truncate text-truncate-custom underline-dotted" [title]="'10 hình'" (click)="viewFullScreenImage(hoso.imageUrls)">
-                                <a href="javascript:;">{{ '10 hình' }}</a>
+                            <td class="boder-table text-center text-truncate text-truncate-custom underline-dotted" [title]="hoso.images.length">
+                                <a *ngIf="hoso?.images?.length !== 0" (click)="viewFullScreenImage(hoso.images)" href="javascript:;">{{ hoso?.images?.length }} hình ảnh</a>
+                                <div *ngIf="hoso?.images?.length === 0"></div>
                             </td>
 
                             <td class="boder-table text-center text-truncate text-truncate-custom" [title]="hoso.version ? hoso.version : ''">
