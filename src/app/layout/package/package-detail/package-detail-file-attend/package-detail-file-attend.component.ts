@@ -1,22 +1,26 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { PackageDetailComponent } from '../package-detail.component';
 import { PackageService } from '../../../../shared/services/package.service';
 import { PackageInfoModel } from '../../../../shared/models/package/package-info.model';
 import { Router, ActivatedRoute, NavigationEnd } from '../../../../../../node_modules/@angular/router';
 import { StatusObservableHsdtService } from '../../../../shared/services/status-observable-hsdt.service';
 import { BidStatus } from '../../../../shared/constants/bid-status';
+import { Subscription } from '../../../../../../node_modules/rxjs';
 @Component({
   selector: 'app-package-detail-file-attend',
   templateUrl: './package-detail-file-attend.component.html',
   styleUrls: ['./package-detail-file-attend.component.scss']
 })
-export class PackageDetailFileAttendComponent implements OnInit {
+export class PackageDetailFileAttendComponent implements OnInit, OnDestroy {
   packageId: number;
   packageData: PackageInfoModel;
   currentUrl;
   statusPackageID;
   statusPackageName;
   bidStatus = BidStatus;
+  isNgOnInit = true;
+  subscription: Subscription;
+  isComponentDetail = false;
   urlChirld = ['create-request', 'infomation-deployment', 'build', 'price-review', 'interview-negotiation'];
   bidProposal = ['CanLapDeNghiDuThau', 'ChoDuyetDeNghiDuThau', 'ThamGiaDuThau', 'DaTuChoi'];
   deployment = ['ChuaThongBaoTrienKhai', 'DaThongBaoTrienKhai', 'DaXacNhanPhanCong', 'DaGuiPhanCongTienDo'];
@@ -33,43 +37,54 @@ export class PackageDetailFileAttendComponent implements OnInit {
   ) {
 
   }
-
   ngOnInit() {
-    this.checkStatusPackage();
-    this.statusObservableHsdtService.statusPackageService.subscribe(value => {
-      this.packageService.getInforPackageID(this.packageId).subscribe(result => {
-        this.packageData = result;
-        this.statusPackageName = this.packageData.stageStatus.id;
-        for (let i = 0; i < this.listStatusPackage.length; i++) {
-          if (this.listStatusPackage[i].find(item => item === this.packageData.stageStatus.id)) {
-            this.statusPackageID = i;
-            if (i === 2) {
-              this.router.navigate([`/package/detail/${this.packageId}/attend/build`]);
-            }
-            break;
-          }
-        }
-      });
-    });
     this.packageId = +PackageDetailComponent.packageId;
-    this.packageService.getInforPackageID(this.packageId).subscribe(result => {
-      this.packageData = result;
-      this.statusPackageName = this.packageData.stageStatus.id;
-      this.redirectByStatus();
+    // this.checkStatusPackage();
+    this.statusObservableHsdtService.statusPackageService.subscribe(value => {
+      // this.packageService.getInforPackageID(this.packageId).subscribe(result => {
+      // this.packageData = result;
+      // this.statusPackageName = this.packageData.stageStatus.id;
+      // for (let i = 0; i < this.listStatusPackage.length; i++) {
+      //   if (this.listStatusPackage[i].find(item => item === this.packageData.stageStatus.id)) {
+      //     this.statusPackageID = i;
+      //     if (i === 2) {
+      //       this.router.navigate([`/package/detail/${this.packageId}/attend/build`]);
+      //     }
+      //     break;
+      //   }
+      // }
+      // });
+      if (!this.isNgOnInit) {
+        this.checkStatusPackage();
+      }
     });
+    // this.packageService.getInforPackageID(this.packageId).subscribe(result => {
+    //   this.packageData = result;
+    //   this.statusPackageName = this.packageData.stageStatus.id;
+    // });
+    if (this.isNgOnInit) {
+      this.checkStatusPackage();
+      this.redirectByStatus(); // Điều hướng
+      this.isNgOnInit = false;
+    }
+    this.isComponentDetail = true;
+  }
+
+  ngOnDestroy() {
+    this.subscription.unsubscribe();
+    this.isComponentDetail = false;
   }
 
   checkStatusPackage() {
-    this.packageId = +PackageDetailComponent.packageId;
     if (this.activeRouter.firstChild) {
       this.activeRouter.firstChild.url.subscribe(url => {
         this.currentUrl = url[0].path;
         if (this.urlChirld.find(item => item === this.currentUrl)) {
           this.packageService.getInforPackageID(this.packageId).subscribe(result => {
-            this.packageData = result;
-            this.statusPackageName = this.packageData.stageStatus.id;
+            // this.packageData = result;
+            this.statusPackageName = result.stageStatus.id;
             for (let i = 0; i < this.listStatusPackage.length; i++) {
-              if (this.listStatusPackage[i].find(item => item === this.packageData.stageStatus.id)) {
+              if (this.listStatusPackage[i].find(item => item === result.stageStatus.id)) {
                 this.statusPackageID = i;
                 break;
               }
@@ -77,29 +92,28 @@ export class PackageDetailFileAttendComponent implements OnInit {
           });
         }
       });
-    } else {
-      this.redirectByStatus();
     }
-    this.router.events.subscribe((val) => {
-      if ((val instanceof NavigationEnd) === true) {
-        if (this.activeRouter.firstChild) {
-          this.activeRouter.firstChild.url.subscribe(url => {
-            this.currentUrl = url[0].path;
-            if (this.urlChirld.find(item => item === this.currentUrl)) {
-              this.packageService.getInforPackageID(this.packageId).subscribe(result => {
-                this.packageData = result;
-                this.statusPackageName = this.packageData.stageStatus.id;
-                for (let i = 0; i < this.listStatusPackage.length; i++) {
-                  if (this.listStatusPackage[i].find(item => item === this.packageData.stageStatus.id)) {
-                    this.statusPackageID = i;
-                    break;
+    this.subscription = this.router.events.subscribe((val) => {
+      if (this.isComponentDetail) {
+        if ((val instanceof NavigationEnd) === true) {
+          if (this.activeRouter.firstChild) {
+            this.activeRouter.firstChild.url.subscribe(url => {
+              this.currentUrl = url[0].path;
+              if (this.urlChirld.find(item => item === this.currentUrl)) {
+                console.log('API');
+                this.packageService.getInforPackageID(this.packageId).subscribe(result => {
+                  // this.packageData = result;
+                  this.statusPackageName = result.stageStatus.id;
+                  for (let i = 0; i < this.listStatusPackage.length; i++) {
+                    if (this.listStatusPackage[i].find(item => item === result.stageStatus.id)) {
+                      this.statusPackageID = i;
+                      break;
+                    }
                   }
-                }
-              });
-            }
-          });
-        } else {
-          this.redirectByStatus();
+                });
+              }
+            });
+          }
         }
       }
     });

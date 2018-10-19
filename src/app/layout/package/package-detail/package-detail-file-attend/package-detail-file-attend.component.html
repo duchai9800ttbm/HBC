@@ -33,7 +33,7 @@
                 </span>
             </li>
             <!-- (statusPackageID > 2) ? ['./price-review'] : [] -->
-            <li class="triangle" [routerLink]="(statusPackageID > 2) ? ['./price-review'] : []" [class.noActive]="currentUrl !== 'price-review' && statusPackageID > 1"
+            <li class="triangle" [routerLink]="(statusPackageID > 1) ? ['./price-review'] : []" [class.noActive]="currentUrl !== 'price-review' && statusPackageID > 1"
                 [class.active]="currentUrl === 'price-review'" [class.allow]="(statusPackageID > 1)" [class.no-allow]="(statusPackageID < 2)">
                 <div style="width: 100%" class="center-parent">
                     <div class="arrow-down"></div>

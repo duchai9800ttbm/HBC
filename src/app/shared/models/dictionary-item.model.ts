@@ -17,4 +17,5 @@ export interface DictionaryItemHightLight {
     id: number;
     text: string;
     hightLight?: boolean;
+    count: number;
 }

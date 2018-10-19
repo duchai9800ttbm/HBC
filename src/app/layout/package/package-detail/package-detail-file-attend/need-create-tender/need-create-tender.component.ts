@@ -125,6 +125,7 @@ export class NeedCreateTenderComponent implements OnInit {
     this.packageService
       .getInforPackageID(this.bidOpportunityId)
       .subscribe(data => {
+        console.log('goi lan 1');
         this.packageInfo = data;
         this.spinner.hide();
       });

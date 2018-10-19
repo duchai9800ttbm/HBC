@@ -6,6 +6,6 @@
 
   </div>
 </div>
-<div [innerHTML]="htmlContent | safe: 'html'">
+<div *ngIf="htmlContent" [innerHTML]="htmlContent | safe: 'html'">
 
 </div>

@@ -488,7 +488,7 @@ export class PackageService {
                 totalTime: result.totalTime,
                 description: result.description
             };
-        });
+        }).share();
     }
 
 

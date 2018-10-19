@@ -96,44 +96,26 @@ export class AddFileComponent implements OnInit {
             this.userListItem = data;
         });
         this.spinner.show();
-        this.documentService.bidDocumentMajortypes().subscribe(data => {
+        this.documentService.bidDocumentMajortypes(this.packageId).subscribe(data => {
             this.majorTypeListItem = data;
             this.currentMajorTypeId = this.majorTypeListItem[0].id;
             this.documentService.read(this.packageId, this.currentMajorTypeId).subscribe(response => {
-                console.log(response);
-                // this.documentService.getListBiddocumenttypes().subscribe( response => {
-                    // biddocumenttypes.forEach((item, index) => {
-                    //     response.forEach(elemnet => {
-                    //         if (elemnet.documentType === item.text) {
-                    //             elemnet['id'] = index;
-                    //         }
-                    //     });
-                    //     if (index === 4) {
-                    //         return;
-                    //     }
-                    // });
-                    // response.sort(function (a, b) {
-                    //     return a.id - b.id;
-                    // });
-                    this.bidDocumentGroupListItem = response;
-                    this.bidDocumentGroupListItemSearchResult = response;
-                    this.showTable = this.bidDocumentGroupListItemSearchResult.length > 0;
-                    this.checkHightLight();
-                    this.dtTrigger.next();
-                    this.spinner.hide();
+                this.bidDocumentGroupListItem = response;
+                this.bidDocumentGroupListItemSearchResult = response;
+                this.showTable = this.bidDocumentGroupListItemSearchResult.length > 0;
+                this.dtTrigger.next();
+                this.spinner.hide();
             }, err => this.spinner.hide());
         });
+
+
     }
 
 
     checkHightLight() {
-        if (this.majorTypeListItem && this.majorTypeListItem.length) {
-            this.majorTypeListItem.forEach(element => {
-                this.documentService.read(this.packageId, element.id).subscribe(data => {
-                    element.hightLight = data.length > 0;
-                });
-            });
-        }
+        this.documentService.bidDocumentMajortypes(this.packageId).subscribe(data => {
+            this.majorTypeListItem = data;
+        });
     }
     toggleClick() {
         this.isShowMenu = !this.isShowMenu;
@@ -182,7 +164,7 @@ export class AddFileComponent implements OnInit {
         };
         this.showPopupAdd = true;
     }
-// TODO: FIX HARD CODE
+    // TODO: FIX HARD CODE
     openPopupUploadFile(documentType) {
         if (documentType === '2') {
             this.typeFileUpload = {
@@ -251,6 +233,7 @@ export class AddFileComponent implements OnInit {
             this.bidDocumentGroupListItemSearchResult = response;
             this.showTable = this.bidDocumentGroupListItemSearchResult.length > 0;
             this.checkHightLight();
+
             this.dtTrigger.next();
             this.spinner.hide();
         });

@@ -10,8 +10,16 @@
     z-index: 50;
     width: 100%;
 }
+router-outlet{
+}
+.setting{
+}
 
+:host(){
+    height: 100%;
+}
 .main-detail {
+    height: 100%;
     margin: 15px 15px;
     min-height: 100px;
     .menu {
