@@ -47,33 +47,47 @@
     <div id="toggle-menu">
 
         <div class="toggle-menu-item pointer" routerLink="./info" routerLinkActive="active-link">I. Thông tin dự án</div>
-        <div class="toggle-menu-item pointer" routerLink="./stackholder" routerLinkActive="active-link">II. Các bên liên quan</div>
-        <div class="toggle-menu-item pointer" routerLink="./scope" routerLinkActive="active-link">III. Phạm vi công việc
+        <div class="toggle-menu-item pointer" routerLink="./stackholder" routerLinkActive="active-link">II. Các bên
+            liên quan</div>
+        <div class="toggle-menu-item pointer" routerLink="./scope" routerLinkActive="active-link">III. Phạm vi công
+            việc
         </div>
-        <div class="toggle-menu-item pointer" routerLink="./nonminate" routerLinkActive="active-link">IV. Nhà thầu phụ được chỉ định</div>
-        <div class="toggle-menu-item pointer" routerLink="./main-material" routerLinkActive="active-link">V. Vật tư do CĐT cung cấp/ chỉ định</div>
-        <div class="toggle-menu-item pointer" routerLink="./tender-submission" routerLinkActive="active-link">VI. Hồ sơ phải nộp đáng lưu ý</div>
-        <div class="toggle-menu-item pointer" routerLink="./profile-destination" >Diễn giải chi tiết hồ sơ</div>
-        <div class="toggle-menu-item pointer" routerLink="./profile-destination" routerLinkActive="active-link">
-            <i class="fa fa-caret-right mr-3" aria-hidden="true"></i> VII. Yêu cầu hồ sơ</div>
-        <div class="toggle-menu-item pointer" routerLink="./tender-clarify" routerLinkActive="active-link">
-            <i class="fa fa-caret-right mr-3" aria-hidden="true"></i> VIII. Yêu cầu làm rõ HSMT</div>
-        <div class="toggle-menu-item pointer" routerLink="./condition-contract" routerLinkActive="active-link">
-            <i class="fa fa-caret-right mr-3" aria-hidden="true"></i> IX. Điều kiện hợp đồng</div>
-        <div class="toggle-menu-item pointer" routerLink="./condition-tender" routerLinkActive="active-link">
-            <i class="fa fa-caret-right mr-3" aria-hidden="true"></i> X. Điều kiện HSMT</div>
-        <div class="toggle-menu-item pointer" routerLink="./special-requirement" routerLinkActive="active-link">XI. Yêu cầu đặc biệt khác</div>
+        <div class="toggle-menu-item pointer" routerLink="./nonminate" routerLinkActive="active-link">IV. Nhà thầu phụ
+            được chỉ định</div>
+        <div class="toggle-menu-item pointer" routerLink="./main-material" routerLinkActive="active-link">V. Vật tư do
+            CĐT cung cấp/ chỉ định</div>
+        <div class="toggle-menu-item pointer" routerLink="./tender-submission" routerLinkActive="active-link">VI. Hồ sơ
+            phải nộp đáng lưu ý</div>
+        <div class="toggle-menu-item pointer" [class.active-parent]="YCHS.isActive || YCLR.isActive || DKHD.isActive || DKHSMT.isActive"
+            routerLink="./profile-destination">Diễn giải chi tiết hồ sơ</div>
+        <div class="toggle-menu-item pointer" routerLink="./profile-destination" #YCHS="routerLinkActive"
+            routerLinkActive="active-link">
+            <i class="fa fa-caret-right mr-3" aria-hidden="true"></i> VII. Yêu cầu hồ sơ
+        </div>
+        <div class="toggle-menu-item pointer" routerLink="./tender-clarify" #YCLR="routerLinkActive" routerLinkActive="active-link">
+            <i class="fa fa-caret-right mr-3" aria-hidden="true"></i> VIII. Yêu cầu làm rõ HSMT
+        </div>
+        <div class="toggle-menu-item pointer" routerLink="./condition-contract" #DKHD="routerLinkActive"
+            routerLinkActive="active-link">
+            <i class="fa fa-caret-right mr-3" aria-hidden="true"></i> IX. Điều kiện hợp đồng
+        </div>
+        <div class="toggle-menu-item pointer" routerLink="./condition-tender" #DKHSMT="routerLinkActive"
+            routerLinkActive="active-link">
+            <i class="fa fa-caret-right mr-3" aria-hidden="true"></i> X. Điều kiện HSMT
+        </div>
+        <div class="toggle-menu-item pointer" routerLink="./special-requirement" routerLinkActive="active-link">XI.
+            Yêu cầu đặc biệt khác</div>
 
     </div>
     <div class="w-100 ml-2">
         <div>
             <div class="row header m-0">
                 <div class="col-md-6">
-                    <p>Công trình (Project): {{package?.projectName}}</p>
-                    <p>Địa điểm (Location): {{package?.place}}</p>
+                    <p><span class="font-weight-bold">Công trình (Project):</span> {{package?.projectName}}</p>
+                    <p><span class="font-weight-bold">Địa điểm (Location):</span> {{package?.place}}</p>
                 </div>
                 <div class="col-md-6">
-                    <p>Gói thầu (Package): {{package?.opportunityName}}</p>
+                    <p><span class="font-weight-bold">Gói thầu (Package):</span> {{package?.opportunityName}}</p>
                 </div>
             </div>
         </div>

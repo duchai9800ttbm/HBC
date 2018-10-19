@@ -60,7 +60,7 @@ export class TrafficComponent implements OnInit {
 
   }
   checkFlag() {
-    if ((LiveformSiteReportComponent.formModel.isCreateOrEdit)) {
+    if ((LiveformSiteReportComponent.formModel.isCreate)) {
       const flag = LiveformSiteReportComponent.viewFlag;
       this.viewMode = flag;
       if (flag) {

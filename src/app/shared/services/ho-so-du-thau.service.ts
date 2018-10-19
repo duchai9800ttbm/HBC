@@ -93,7 +93,7 @@ export class HoSoDuThauService {
       uploadedDate: result.uploadedDate,
       fileGuid: result.fileGuid,
       fileUrl: result.fileUrl,
-      interViewTimes: result.interviewTimes,
+      interViewTimes: result.interViewTimes,
       desc: result.desc
     };
   }
@@ -156,6 +156,20 @@ export class HoSoDuThauService {
       };
     });
   }
+
+  // Upload ảnh - chung cho các form upload
+  uploadImageService(imageFile: File) {
+    const url = `image/upload`;
+    const formData = new FormData();
+    formData.append('imageFile', imageFile);
+    return this.apiService.postFile(url, formData).map(res => res.result);
+  }
+  // Xóa ảnh trên server - chung cho các form upload
+  deleteImageService(guid) {
+    const url = `image/delete`;
+    return this.apiService.post(url, guid);
+  }
+
   // Tải lên hồ sơ dự thầu
   taiLenHoSoDuThau(
     bidOpportunityId: number,
@@ -165,7 +179,8 @@ export class HoSoDuThauService {
     tenderDocumentFile: File,
     link: string,
     version: number,
-    interviewTimes: number
+    interviewTimes: number,
+    imageIds: any
   ) {
     const url = `tenderdocument/upload`;
     const formData = new FormData();
@@ -177,6 +192,9 @@ export class HoSoDuThauService {
     formData.append('Url', link);
     formData.append('Version', `${version ? version : ''}`);
     formData.append('InterviewTimes', `${interviewTimes ? interviewTimes : ''}`);
+    for (let image of imageIds) {
+      formData.append('Images', image);
+    }
     return this.apiService.postFile(url, formData).map(response => response).share();
   }
   // Tải Template
@@ -311,29 +329,20 @@ export class HoSoDuThauService {
         };
       });
   }
-
-  // danhSachBoHoSoDuThauInstantSearch(
-  //   bidOpportunityId: number,
-  //   searchTerm: Observable<string>,
-  //   hsdtFilter: HsdtFilterModel,
-  //   page: number,
-  //   pageSize: number
-  // ): Observable<PagedResult<DanhSachBoHsdtItem>> {
-  //   const url = `bidopportunity/${bidOpportunityId}/tenderdocuments/${page}/${pageSize}?searchTerm=`;
-  //   const urlParams = HoSoDuThauService.createFilterParams(hsdtFilter);
-  //   return this.instantSearchService
-  //     .searchWithFilter(url, searchTerm, urlParams)
-  //     .map(res => {
-  //       console.log(res.items);
-  //       return {
-  //         currentPage: res.pageIndex,
-  //         pageSize: res.pageSize,
-  //         pageCount: res.totalPages,
-  //         total: res.totalCount,
-  //         items: (res.items || [])
-  //       };
-  //     });
-  // }
+  // Get All File Without Search Param
+  getFileNoSearch(bidOpportunityId: number): Observable<PagedResult<DanhSachBoHsdtItem>> {
+    const url = `bidopportunity/${bidOpportunityId}/tenderdocuments/0/1000`;
+    return this.apiService.get(url).map(res => {
+      const response = res.result;
+      return {
+        currentPage: response.pageIndex,
+        pageSize: response.pageSize,
+        pageCount: response.totalPages,
+        total: response.totalCount,
+        items: (response.items || []).map(HoSoDuThauService.toDocumentTypeItem)
+      };
+    });
+  }
 
   updateStatus(tenderDocumentId: number, status: string) {
     const url = `tenderdocument/${tenderDocumentId}/${status.toLocaleLowerCase()}`;
@@ -894,7 +903,7 @@ export class HoSoDuThauService {
 
 
   // Xóa ảnh
-  deleteImage(guid): Observable<any> {
+  deleteImage(guid) {
     const url = `tenderconditionalsummary/deleteimage`;
     return this.apiService.post(url, guid);
   }
