@@ -18,6 +18,7 @@
                                     <div class="icon-delete-image" [ngClass]="{'d-none': viewMode}" (click)="deleteDemobilisationImage(url)">
                                         <i class="fa fa-times delete-icon" aria-hidden="true"></i>
                                     </div>
+                                </div>
                             </ng-container>
                         </div>
                         <div class="perspective-image" [ngClass]="{'d-none': viewMode}" (click)="uploadDemobilisation.click()">
@@ -83,7 +84,7 @@
             </div>
         </div>
     </div>
-    </div>
+
 </form>
 
 <app-image-carousel class="d-flex justify-content-center align-items-center" *ngIf="showPopupViewImage"

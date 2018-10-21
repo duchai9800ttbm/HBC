@@ -17,6 +17,7 @@
                                     <div class="icon-delete-image" [ngClass]="{'d-none': viewMode}" (click)="deleteTopographyImage(url)">
                                         <i class="fa fa-times delete-icon" aria-hidden="true"></i>
                                     </div>
+                                </div>
                             </ng-container>
                         </div>
                         <div class="perspective-image" [ngClass]="{'d-none': viewMode}" (click)="uploadTopography.click()">
@@ -43,6 +44,7 @@
                                 <div class="icon-delete-image" [ngClass]="{'d-none': viewMode}" (click)="deleteExistingBuildImage(url)">
                                     <i class="fa fa-times delete-icon" aria-hidden="true"></i>
                                 </div>
+                            </div>
                         </ng-container>
                     </div>
                     <div class="perspective-image" [ngClass]="{'d-none': viewMode}" (click)="uploadExistingBuild.click()">
@@ -70,6 +72,7 @@
                             <div class="icon-delete-image" [ngClass]="{'d-none': viewMode}" (click)="deleteStacaleImage(url)">
                                 <i class="fa fa-times delete-icon" aria-hidden="true"></i>
                             </div>
+                        </div>
                     </ng-container>
                 </div>
                 <div class="perspective-image" [ngClass]="{'d-none': viewMode}" (click)="uploadStacale.click()">
@@ -79,9 +82,9 @@
             </div>
         </div>
     </div>
-    </div>
-    </div>
-    </div>
+
+
+
 </form>
 
 <app-image-carousel class="d-flex justify-content-center align-items-center" *ngIf="showPopupViewImage"

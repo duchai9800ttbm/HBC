@@ -19,21 +19,6 @@
                     class="table-file-scroll table-selection row-border hover cell-border dataTable">
                         <thead>
                             <tr>
-                                <th class="stt" style="width: 4%; min-width: 15px;background-color: #f68e56!important;">
-                                    <div class="d-flex justify-content-around">
-                                        <div style="width: 40%;">
-                                            <div class="center-parent">
-                                                <label class="custom-control custom-checkbox">
-                                                    <input type="checkbox" class="custom-control-input">
-                                                    <span class="custom-control-indicator"></span>
-                                                </label>
-                                            </div>
-                                        </div>
-                                        <div style="width: 35%;" class="center-parent">
-                                            <div>STT</div>
-                                        </div>
-                                    </div>
-                                </th>
                                 <th style="width: 18%;background-color: #f68e56!important;">
                                     <div class="d-flex justify-content-center">
                                         <div class="center-parent">
@@ -71,17 +56,6 @@
 
                         <tbody>
                             <tr>
-                                <td class="stt">
-                                    <div class="center-parent d-inline-block">
-                                        <label class="custom-control custom-checkbox">
-                                            <input type="checkbox" class="custom-control-input">
-                                            <span class="custom-control-indicator"></span>
-                                        </label>
-                                    </div>
-                                    <div class="center-parent d-inline-block">
-                                        <div>1</div>
-                                    </div>
-                                </td>
                                 <td class="text-center">{{ documentData.tenTaiLieu }}</td>
                                 <td class="text-center">{{ documentData.lanPhongVan }}</td>
                                 <td class="text-center">{{ documentData.nguoiTao?.name }}</td>
@@ -105,12 +79,6 @@
                                                 <i class="fa fa-trash-o" aria-hidden="true"></i>
                                             </a>
                                         </div>
-                                        <div class="icon-mg icon-print-file">
-                                            <a title="In">
-                                                <i class="fa fa-print color-item-print" aria-hidden="true"></i>
-                                            </a>
-
-                                        </div>
                                     </div>
                                 </td>
                             </tr>
@@ -122,7 +90,7 @@
                 <div class="mt-5">
                     <div class="text-center">
                         <div class="mt-3">
-                            <button class="btn btn-primary" (click)="createMode($event)" [routerLink]="['./create']">
+                            <button class="btn btn-primary" [routerLink]="['./create']">
                                 Tạo mới báo cáo khảo sát công trường
                             </button>
                         </div>
@@ -150,22 +118,7 @@
                 class="table-file-scroll table-selection row-border hover cell-border dataTable">
                     <thead>
                         <tr>
-                            <th class="stt" style="width: 4%; min-width: 15px;background-color: #f68e56!important;">
-                                <div class="d-flex justify-content-around">
-                                    <div style="width: 40%;">
-                                        <div class="center-parent">
-                                            <label class="custom-control custom-checkbox">
-                                                <input type="checkbox" class="custom-control-input">
-                                                <span class="custom-control-indicator"></span>
-                                            </label>
-                                        </div>
-                                    </div>
-                                    <div style="width: 35%;" class="center-parent">
-                                        <div>STT</div>
-                                    </div>
-                                </div>
-                            </th>
-                            <th style="width: 18%;background-color: #f68e56!important;">
+                            <th style="width: 10%!important;background-color: #f68e56!important;">
                                 <div class="d-flex justify-content-center">
                                     <div class="center-parent">
                                         <div>Lần cập nhật</div>
@@ -204,17 +157,6 @@
                     </thead>
                     <tbody>
                         <tr *ngFor="let updateInfo of updateInfoList; index as i">
-                            <td class="stt">
-                                <div class="center-parent d-inline-block">
-                                    <label class="custom-control custom-checkbox">
-                                        <input type="checkbox" class="custom-control-input">
-                                        <span class="custom-control-indicator"></span>
-                                    </label>
-                                </div>
-                                <div class="center-parent d-inline-block">
-                                    <div>{{ pageIndex*10+i+1 }}</div>
-                                </div>
-                            </td>
                             <td class="text-center">{{ updateInfo.changedTimes }}</td>
                             <td class="text-center">{{ updateInfo.employee?.employeeName }}</td>
                             <td class="text-center">{{ (updateInfo.changedTime)*1000 | date:'dd/MM/yyyy' }}</td>
@@ -255,7 +197,7 @@
                 <img class="icon-ic-file" src="assets/images/file_empty.png">
                 <div class="mt-3">Hiện chưa có bản báo cáo khảo sát công trường nào</div>
                 <div class="mt-3">
-                    <button class="btn btn-primary" (click)="createMode($event)" [routerLink]="['./create']">
+                    <button class="btn btn-primary" [routerLink]="['./create']">
                         Tạo mới báo cáo khảo sát công trường
                     </button>
                 </div>

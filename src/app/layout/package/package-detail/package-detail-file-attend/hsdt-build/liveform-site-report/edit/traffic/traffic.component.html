@@ -20,6 +20,7 @@
                                     <div class="icon-delete-image" [ngClass]="{'d-none': viewMode}" (click)="deleteDisadvantageImage(url)">
                                         <i class="fa fa-times delete-icon" aria-hidden="true"></i>
                                     </div>
+                                </div>
                             </ng-container>
                         </div>
                         <div class="perspective-image" [ngClass]="{'d-none': viewMode}" (click)="uploaDisadvantage.click()">
@@ -42,6 +43,7 @@
                                 <div class="icon-delete-image" [ngClass]="{'d-none': viewMode}" (click)="deleteAdvantageImage(url)">
                                     <i class="fa fa-times delete-icon" aria-hidden="true"></i>
                                 </div>
+                            </div>
                         </ng-container>
                     </div>
                     <div class="perspective-image" [ngClass]="{'d-none': viewMode}" (click)="uploaAdvantage.click()">
@@ -69,6 +71,7 @@
                             <div class="icon-delete-image" [ngClass]="{'d-none': viewMode}" (click)="deleteDirectionImage(url)">
                                 <i class="fa fa-times delete-icon" aria-hidden="true"></i>
                             </div>
+                        </div>
                     </ng-container>
                 </div>
                 <div class="perspective-image" [ngClass]="{'d-none': viewMode}" (click)="uploadDirection.click()">
@@ -91,6 +94,7 @@
                         <div class="icon-delete-image" [ngClass]="{'d-none': viewMode}" (click)="deleteExistingImage(url)">
                             <i class="fa fa-times delete-icon" aria-hidden="true"></i>
                         </div>
+                    </div>
                 </ng-container>
             </div>
             <div class="perspective-image" [ngClass]="{'d-none': viewMode}" (click)="uploadExisting.click()">
@@ -142,10 +146,6 @@
                 <p>Image</p>
             </div>
         </div>
-    </div>
-    </div>
-    </div>
-    </div>
     </div>
 </form>
 
