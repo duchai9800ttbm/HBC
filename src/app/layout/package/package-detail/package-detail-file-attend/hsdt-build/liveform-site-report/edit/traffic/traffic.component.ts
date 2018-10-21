@@ -25,6 +25,7 @@ export class TrafficComponent implements OnInit {
   url;
   viewMode;
   imageUrlArray = [];
+  indexOfImage;
   showPopupViewImage = false;
   currentBidOpportunityId: number;
   trafficModel = new Traffic();
@@ -310,9 +311,10 @@ export class TrafficComponent implements OnInit {
     this.fenceImageUrls.splice(index, 1);
     this.trafficForm.get('yeuCauHangRaoList').patchValue(this.fenceImageUrls);
   }
-  viewFullScreenImage(listImage) {
+  viewFullScreenImage(listImage, indexImage?) {
     this.showPopupViewImage = true;
     this.imageUrlArray = [...listImage];
+    this.indexOfImage = indexImage;
   }
   closeView() {
     this.showPopupViewImage = false;

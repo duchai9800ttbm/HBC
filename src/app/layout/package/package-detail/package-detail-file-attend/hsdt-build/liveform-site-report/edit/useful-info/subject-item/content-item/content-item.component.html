@@ -10,12 +10,14 @@
     </div>
     <div class="image-demo-img">
         <input type="file" accept="image/*" multiple #uploadContent [ngClass]="{'view-mode-text': viewMode}" (change)="uploadContentImage($event)">
-        <div class="display-img" *ngFor="let url of contentItemImageList" (click)="viewFullScreenImage(contentItemImageList)">
-            <img [src]="url.largeSizeUrl">
-            <div class="icon-delete-image" [ngClass]="{'d-none': viewMode}" (click)="deleteContentImage(url)">
-                <i class="fa fa-times delete-icon" aria-hidden="true"></i>
+        <ng-container *ngFor="let url of contentItemImageList; index as k">
+            <div class="display-img" (click)="viewFullScreenImage(contentItemImageList, k)">
+                <img [src]="url.largeSizeUrl">
+                <div class="icon-delete-image" [ngClass]="{'d-none': viewMode}" (click)="deleteContentImage(url)">
+                    <i class="fa fa-times delete-icon" aria-hidden="true"></i>
+                </div>
             </div>
-        </div>
+        </ng-container>
         <div class="perspective-image" [ngClass]="{'d-none': viewMode}" (click)="uploadContent.click()">
             <i class="fa fa-plus" aria-hidden="true"></i>
             <p>Image</p>
@@ -23,4 +25,4 @@
     </div>
 </form>
 
-<app-image-carousel class="d-flex justify-content-center align-items-center" *ngIf="showPopupViewImage" [(imageUrlArray)]="imageUrlArray" (closed)="closeView()"></app-image-carousel>
+<app-image-carousel class="d-flex justify-content-center align-items-center" *ngIf="showPopupViewImage" [(imageUrlArray)]="imageUrlArray" [(indexOfImage)]="indexOfImage" (closed)="closeView()"></app-image-carousel>

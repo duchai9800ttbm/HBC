@@ -11,7 +11,7 @@ export class ImageCarouselComponent implements OnInit {
   @Input() indexOfImage;
   @Output() closed = new EventEmitter<boolean>();
   slideIndex = 1;
-  i = (this.indexOfImage) ? this.indexOfImage : 0;
+  i = 0;
   isShow;
   constructor(
     private alertService: AlertService
@@ -27,6 +27,7 @@ export class ImageCarouselComponent implements OnInit {
     document.addEventListener('keyup', e => {
       if (e.keyCode === 39) { this.nextButton(); }
     });
+    this.i = this.indexOfImage || 0;
     this.showOneImage(this.i);
   }
   prevButton() {

@@ -1,6 +1,7 @@
 <form [formGroup]="serviceConstructionForm" class="detail-info">
     <div id="step4" class="step-info">
-        <h6 class="big-title font-weight-bold">5.&nbsp;dịch vụ cơ điện phục vụ thi công (temporary building service for construction)</h6>
+        <h6 class="big-title font-weight-bold">5.&nbsp;dịch vụ cơ điện phục vụ thi công (temporary building service for
+            construction)</h6>
         <div>
             <div class="detail-each-title">
                 <h6 class="small-title font-weight-bold">5.1 Hệ thống nước/ Existing temp. supply water system</h6>
@@ -13,12 +14,14 @@
                         <div class="image-demo-img">
                             <input type="file" accept="image/*" multiple #uploadSupplySystem (change)="uploadSupplySystemImage($event)">
 
-                            <div class="display-img" *ngFor="let url of supplySystemImageUrls" (click)="viewFullScreenImage(supplySystemImageUrls)">
-                                <img [src]="url.largeSizeUrl">
-                                <div class="icon-delete-image"  [ngClass]="{'d-none': viewMode}" (click)="deleteSupplySystemImage(url)">
-                                    <i class="fa fa-times delete-icon" aria-hidden="true"></i>
+                            <ng-container *ngFor="let url of supplySystemImageUrls; index as k">
+                                <div class="display-img" (click)="viewFullScreenImage(supplySystemImageUrls, k)">
+                                    <img [src]="url.largeSizeUrl">
+                                    <div class="icon-delete-image" [ngClass]="{'d-none': viewMode}" (click)="deleteSupplySystemImage(url)">
+                                        <i class="fa fa-times delete-icon" aria-hidden="true"></i>
+                                    </div>
                                 </div>
-                            </div>
+                            </ng-container>
                             <div class="perspective-image" [ngClass]="{'d-none': viewMode}" (click)="uploadSupplySystem.click()">
                                 <i class="fa fa-plus" aria-hidden="true"></i>
                                 <p>Image</p>
@@ -33,12 +36,14 @@
                         <div class="image-demo-img">
                             <input type="file" accept="image/*" multiple #uploadSupplyPoint (change)="uploadSupplyPointImage($event)">
 
-                            <div class="display-img" *ngFor="let url of supplyPointImageUrls" (click)="viewFullScreenImage(supplyPointImageUrls)">
-                                <img [src]="url.largeSizeUrl">
-                                <div class="icon-delete-image"  [ngClass]="{'d-none': viewMode}" (click)="deleteSupplyPointImage(url)">
-                                    <i class="fa fa-times delete-icon" aria-hidden="true"></i>
+                            <ng-container *ngFor="let url of supplyPointImageUrls; index as k">
+                                <div class="display-img" (click)="viewFullScreenImage(supplyPointImageUrls, k)">
+                                    <img [src]="url.largeSizeUrl">
+                                    <div class="icon-delete-image" [ngClass]="{'d-none': viewMode}" (click)="deleteSupplyPointImage(url)">
+                                        <i class="fa fa-times delete-icon" aria-hidden="true"></i>
+                                    </div>
                                 </div>
-                            </div>
+                            </ng-container>
                             <div class="perspective-image" [ngClass]="{'d-none': viewMode}" (click)="uploadSupplyPoint.click()">
                                 <i class="fa fa-plus" aria-hidden="true"></i>
                                 <p>Image</p>
@@ -48,7 +53,8 @@
                 </div>
             </div>
             <div class="detail-each-title">
-                <h6 class="small-title font-weight-bold">5.2 Hệ thống nước thoát/ Existing temp. waste/ drainage water system</h6>
+                <h6 class="small-title font-weight-bold">5.2 Hệ thống nước thoát/ Existing temp. waste/ drainage water
+                    system</h6>
                 <div class="main-detail">
                     <div class="listDetail">
                         <div class="image-demo-des">
@@ -58,12 +64,14 @@
                         <div class="image-demo-img">
                             <input type="file" accept="image/*" multiple #uploadDrainageSystem (change)="uploadDrainageSystemImage($event)">
 
-                            <div class="display-img" *ngFor="let url of drainageSystemImageUrls" (click)="viewFullScreenImage(drainageSystemImageUrls)">
-                                <img [src]="url.largeSizeUrl">
-                                <div class="icon-delete-image"  [ngClass]="{'d-none': viewMode}" (click)="deleteDrainageSystemImage(url)">
-                                    <i class="fa fa-times delete-icon" aria-hidden="true"></i>
+                            <ng-container *ngFor="let url of drainageSystemImageUrls; index as k">
+                                <div class="display-img" (click)="viewFullScreenImage(drainageSystemImageUrls, k)">
+                                    <img [src]="url.largeSizeUrl">
+                                    <div class="icon-delete-image" [ngClass]="{'d-none': viewMode}" (click)="deleteDrainageSystemImage(url)">
+                                        <i class="fa fa-times delete-icon" aria-hidden="true"></i>
+                                    </div>
                                 </div>
-                            </div>
+                            </ng-container>
                             <div class="perspective-image" [ngClass]="{'d-none': viewMode}" (click)="uploadDrainageSystem.click()">
                                 <i class="fa fa-plus" aria-hidden="true"></i>
                                 <p>Image</p>
@@ -78,12 +86,14 @@
                         <div class="image-demo-img">
                             <input type="file" accept="image/*" multiple #uploadDrainagePoint (change)="uploadDrainagePointImage($event)">
 
-                            <div class="display-img" *ngFor="let url of drainagePointImageUrls" (click)="viewFullScreenImage(drainagePointImageUrls)">
-                                <img [src]="url.largeSizeUrl">
-                                <div class="icon-delete-image"  [ngClass]="{'d-none': viewMode}" (click)="deleteDrainagePointImage(url)">
-                                    <i class="fa fa-times delete-icon" aria-hidden="true"></i>
+                            <ng-container *ngFor="let url of drainagePointImageUrls; index as k">
+                                <div class="display-img" (click)="viewFullScreenImage(drainagePointImageUrls, k)">
+                                    <img [src]="url.largeSizeUrl">
+                                    <div class="icon-delete-image" [ngClass]="{'d-none': viewMode}" (click)="deleteDrainagePointImage(url)">
+                                        <i class="fa fa-times delete-icon" aria-hidden="true"></i>
+                                    </div>
                                 </div>
-                            </div>
+                            </ng-container>
                             <div class="perspective-image" [ngClass]="{'d-none': viewMode}" (click)="uploadDrainagePoint.click()">
                                 <i class="fa fa-plus" aria-hidden="true"></i>
                                 <p>Image</p>
@@ -103,12 +113,14 @@
                         <div class="image-demo-img">
                             <input type="file" accept="image/*" multiple #uploadPowerStation (change)="uploadPowerStationImage($event)">
 
-                            <div class="display-img" *ngFor="let url of powerStationImageUrls" (click)="viewFullScreenImage(powerStationImageUrls)">
-                                <img [src]="url.largeSizeUrl">
-                                <div class="icon-delete-image"  [ngClass]="{'d-none': viewMode}" (click)="deletePowerStationImage(url)">
-                                    <i class="fa fa-times delete-icon" aria-hidden="true"></i>
+                            <ng-container *ngFor="let url of powerStationImageUrls; index as k">
+                                <div class="display-img" (click)="viewFullScreenImage(powerStationImageUrls, k)">
+                                    <img [src]="url.largeSizeUrl">
+                                    <div class="icon-delete-image" [ngClass]="{'d-none': viewMode}" (click)="deletePowerStationImage(url)">
+                                        <i class="fa fa-times delete-icon" aria-hidden="true"></i>
+                                    </div>
                                 </div>
-                            </div>
+                            </ng-container>
                             <div class="perspective-image" [ngClass]="{'d-none': viewMode}" (click)="uploadPowerStation.click()">
                                 <i class="fa fa-plus" aria-hidden="true"></i>
                                 <p>Image</p>
@@ -117,18 +129,21 @@
                     </div>
                     <div class="listDetail">
                         <div class="image-demo-des">
-                            <label class="label-item" for="">Đường dây trung thế hiện hữu/ Existing medium voltage system</label>
+                            <label class="label-item" for="">Đường dây trung thế hiện hữu/ Existing medium voltage
+                                system</label>
                             <input type="text" formControlName="duongDayTrungTheDesc">
                         </div>
                         <div class="image-demo-img">
                             <input type="file" accept="image/*" multiple #uploadMediumVoltageSystem (change)="uploadMediumVoltageSystemImage($event)">
 
-                            <div class="display-img" *ngFor="let url of mediumVoltageSystemImageUrls" (click)="viewFullScreenImage(mediumVoltageSystemImageUrls)">
-                                <img [src]="url.largeSizeUrl">
-                                <div class="icon-delete-image"  [ngClass]="{'d-none': viewMode}" (click)="deleteMediumVoltageSystemImage(url)">
-                                    <i class="fa fa-times delete-icon" aria-hidden="true"></i>
+                            <ng-container *ngFor="let url of mediumVoltageSystemImageUrls; index as k">
+                                <div class="display-img" (click)="viewFullScreenImage(mediumVoltageSystemImageUrls, k)">
+                                    <img [src]="url.largeSizeUrl">
+                                    <div class="icon-delete-image" [ngClass]="{'d-none': viewMode}" (click)="deleteMediumVoltageSystemImage(url)">
+                                        <i class="fa fa-times delete-icon" aria-hidden="true"></i>
+                                    </div>
                                 </div>
-                            </div>
+                            </ng-container>
                             <div class="perspective-image" [ngClass]="{'d-none': viewMode}" (click)="uploadMediumVoltageSystem.click()">
                                 <i class="fa fa-plus" aria-hidden="true"></i>
                                 <p>Image</p>
@@ -143,12 +158,14 @@
                         <div class="image-demo-img">
                             <input type="file" accept="image/*" multiple #uploadPowerOther (change)="uploadPowerOtherImage($event)">
 
-                            <div class="display-img" *ngFor="let url of powerOtherImageUrls" (click)="viewFullScreenImage(powerOtherImageUrls)">
-                                <img [src]="url.largeSizeUrl">
-                                <div class="icon-delete-image"  [ngClass]="{'d-none': viewMode}" (click)="deletePowerOtherImage(url)">
-                                    <i class="fa fa-times delete-icon" aria-hidden="true"></i>
+                            <ng-container *ngFor="let url of powerOtherImageUrls; index as k">
+                                <div class="display-img" (click)="viewFullScreenImage(powerOtherImageUrls, k)">
+                                    <img [src]="url.largeSizeUrl">
+                                    <div class="icon-delete-image" [ngClass]="{'d-none': viewMode}" (click)="deletePowerOtherImage(url)">
+                                        <i class="fa fa-times delete-icon" aria-hidden="true"></i>
+                                    </div>
                                 </div>
-                            </div>
+                            </ng-container>
                             <div class="perspective-image" [ngClass]="{'d-none': viewMode}" (click)="uploadPowerOther.click()">
                                 <i class="fa fa-plus" aria-hidden="true"></i>
                                 <p>Image</p>
@@ -161,4 +178,5 @@
     </div>
 </form>
 
-<app-image-carousel class="d-flex justify-content-center align-items-center" *ngIf="showPopupViewImage" [(imageUrlArray)]="imageUrlArray" (closed)="closeView()"></app-image-carousel>
+<app-image-carousel class="d-flex justify-content-center align-items-center" *ngIf="showPopupViewImage"
+    [(imageUrlArray)]="imageUrlArray" [(indexOfImage)]="indexOfImage" (closed)="closeView()"></app-image-carousel>

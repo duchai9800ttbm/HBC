@@ -22,6 +22,7 @@ export class DescribeOverallComponent implements OnInit {
   url;
   viewMode;
   imageUrlArray = [];
+  indexOfImage;
   showPopupViewImage = false;
   currentBidOpportunityId: number;
   describeModel = new DescribeOverall();
@@ -184,9 +185,10 @@ export class DescribeOverallComponent implements OnInit {
     this.stacaleImageUrls.splice(index, 1);
     this.describeForm.get('yeuCauChuongNgaiList').patchValue(this.stacaleImageUrls);
   }
-  viewFullScreenImage(listImage) {
+  viewFullScreenImage(listImage, indexImage?) {
     this.showPopupViewImage = true;
     this.imageUrlArray = [...listImage];
+    this.indexOfImage = indexImage;
   }
   closeView() {
     this.showPopupViewImage = false;
