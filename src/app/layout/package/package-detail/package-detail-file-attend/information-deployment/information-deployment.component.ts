@@ -447,7 +447,8 @@ export class InformationDeploymentComponent implements OnInit {
     console.log('this.bidOpportunityId', this.bidOpportunityId);
     this.packageService.startSetHSDT(this.bidOpportunityId).subscribe(respone => {
       this.alertService.success('Bắt đầu lập HSDT thành công!');
-      this.statusObservableHsdtService.change();
+      // this.statusObservableHsdtService.change();
+      this.router.navigate([`/package/detail/${this.packageId}/attend/build/summary`]);
     },
       err => {
         this.alertService.error('Bắt đầu lập HSDT thất bại!');

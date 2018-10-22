@@ -9,13 +9,13 @@ export const CheckStatusPackage = {
         stage: 'HSDT',
         id: 2,
     },
-    ThamGiaDuThau: {
-        text: 'ThamGiaDuThau',
+    DaTuChoi: {
+        text: 'DaTuChoi',
         stage: 'HSDT',
         id: 3,
     },
-    DaTuChoi: {
-        text: 'DaTuChoi',
+    ThamGiaDuThau: {
+        text: 'ThamGiaDuThau',
         stage: 'HSDT',
         id: 4,
     },

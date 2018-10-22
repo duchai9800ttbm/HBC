@@ -16,6 +16,7 @@ import { GroupDescriptor, groupBy } from '../../../../../../../../node_modules/@
 import { Validators } from '../../../../../../../../node_modules/@angular/forms';
 import DateTimeConvertHelper from '../../../../../../shared/helpers/datetime-convert-helper';
 import { StatusObservableHsdtService } from '../../../../../../shared/services/status-observable-hsdt.service';
+import { CheckStatusPackage } from '../../../../../../shared/constants/check-status-package';
 @Component({
   selector: 'app-end-interview',
   templateUrl: './end-interview.component.html',
@@ -29,7 +30,11 @@ export class EndInterviewComponent implements OnInit {
   pagedResult: PagedResult<InterviewInvitationReportList> = new PagedResult<InterviewInvitationReportList>();
   dtTrigger: Subject<any> = new Subject();
   dtOptions: any = DATATABLE_CONFIG;
-  statusPackage;
+  statusPackage = {
+    text: 'DaChotCongTacChuanBiPhongVan',
+    stage: 'HSDT',
+    id: 18,
+  };
   bidStatus = BidStatus;
   peopleUploadList;
   dateUploadList;
@@ -39,6 +44,7 @@ export class EndInterviewComponent implements OnInit {
   isOnInit: boolean;
   currentFieldSort;
   statusSort;
+  checkStatusPackage = CheckStatusPackage;
   constructor(
     private dialogService: DialogService,
     private spinner: NgxSpinnerService,
@@ -88,7 +94,7 @@ export class EndInterviewComponent implements OnInit {
 
   getStatusPackage() {
     this.packageService.getInforPackageID(this.currentPackageId).subscribe(result => {
-      this.statusPackage = result.stageStatus.id;
+      this.statusPackage = this.checkStatusPackage[result.stageStatus.id];
     });
   }
 
@@ -128,7 +134,7 @@ export class EndInterviewComponent implements OnInit {
   }
 
   reloadData() {
-    if (this.statusPackage === this.bidStatus.DaChotCongTacChuanBiPhongVan) {
+    if (this.statusPackage.id === this.checkStatusPackage.DaChotCongTacChuanBiPhongVan.id) {
       this.interviewInvitationService.submitPrepareInterviews(this.currentPackageId).subscribe(response => {
         this.loadData();
       },
