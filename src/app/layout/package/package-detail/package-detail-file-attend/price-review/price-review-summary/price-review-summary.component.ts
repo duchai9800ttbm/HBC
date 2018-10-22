@@ -62,7 +62,7 @@ export class PriceReviewSummaryComponent implements OnInit {
     this.priceReviewService.viewShort(this.packageId).subscribe(data => {
       this.priceReview = data;
     });
-    this.priceReviewService.getDanhSachHSDTChinhThuc(230).subscribe(data => {
+    this.priceReviewService.getDanhSachHSDTChinhThuc(this.packageId).subscribe(data => {
       this.listItemHSDTChinhThuc = data;
       console.log('this.listItemHSDTChinhThuc', this.listItemHSDTChinhThuc);
     });
