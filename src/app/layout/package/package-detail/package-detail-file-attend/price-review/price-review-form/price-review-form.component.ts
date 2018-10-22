@@ -671,6 +671,10 @@ export class PriceReviewFormComponent implements OnInit, AfterViewInit {
   submit(isSaveDraft: boolean) {
     if (isSaveDraft) {
       this.priceReviewForm.get('isDraftVersion').patchValue(true);
+      this.priceReviewForm.get('updatedDesc').patchValue('');
+      this.priceReviewService.createOrEdit(this.priceReviewForm.value, this.packageId).subscribe(() => {
+        this.router.navigate([`/package/detail/${this.packageId}/attend/price-review/detail`]);
+      });
     } else {
       this.showPopupConfirm = true;
     }

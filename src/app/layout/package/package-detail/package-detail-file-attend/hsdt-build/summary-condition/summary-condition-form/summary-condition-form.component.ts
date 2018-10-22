@@ -22,7 +22,7 @@ export class SummaryConditionFormComponent implements OnInit, OnDestroy {
   showPopupConfirm = false;
   isModeView = false;
   isCreate = false;
-  isDraft = false;
+  isDraft = true;
   constructor(
     private packageService: PackageService,
     private hoSoDuThauService: HoSoDuThauService,
