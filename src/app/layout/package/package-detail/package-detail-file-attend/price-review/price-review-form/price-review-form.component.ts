@@ -77,8 +77,7 @@ export class PriceReviewFormComponent implements OnInit, AfterViewInit {
       phanMongCheck: {
         value: this.model.projectInformation
           && this.model.projectInformation.foudationPart
-          && this.model.projectInformation.foudationPart.scopeOfWorkIsInclude ?
-          this.model.projectInformation.foudationPart.scopeOfWorkIsInclude : null,
+          && this.model.projectInformation.foudationPart.scopeOfWorkIsInclude,
         disabled: this.isModeView
       },
       phanMongDesc: {
@@ -91,8 +90,7 @@ export class PriceReviewFormComponent implements OnInit, AfterViewInit {
       phanHamCheck: {
         value: this.model.projectInformation
           && this.model.projectInformation.basementPart
-          && this.model.projectInformation.basementPart.scopeOfWorkIsInclude ?
-          this.model.projectInformation.basementPart.scopeOfWorkIsInclude : null,
+          && this.model.projectInformation.basementPart.scopeOfWorkIsInclude,
         disabled: this.isModeView
       },
       phanHamDesc: {
@@ -105,8 +103,7 @@ export class PriceReviewFormComponent implements OnInit, AfterViewInit {
       ketCauCheck: {
         value: this.model.projectInformation
           && this.model.projectInformation.basementPartConstructionStructure
-          && this.model.projectInformation.basementPartConstructionStructure.scopeOfWorkIsInclude ?
-          this.model.projectInformation.basementPartConstructionStructure.scopeOfWorkIsInclude : null,
+          && this.model.projectInformation.basementPartConstructionStructure.scopeOfWorkIsInclude,
         disabled: this.isModeView
 
       },
@@ -120,8 +117,7 @@ export class PriceReviewFormComponent implements OnInit, AfterViewInit {
       hoanThienCheck: {
         value: this.model.projectInformation
           && this.model.projectInformation.basementPartConstructionCompletion
-          && this.model.projectInformation.basementPartConstructionCompletion.scopeOfWorkIsInclude ?
-          this.model.projectInformation.basementPartConstructionCompletion.scopeOfWorkIsInclude : null,
+          && this.model.projectInformation.basementPartConstructionCompletion.scopeOfWorkIsInclude,
         disabled: this.isModeView
       },
 
@@ -135,8 +131,7 @@ export class PriceReviewFormComponent implements OnInit, AfterViewInit {
       congViecKhacCheck: {
         value: this.model.projectInformation
           && this.model.projectInformation.basementPartOtherWork
-          && this.model.projectInformation.basementPartOtherWork.scopeOfWorkIsInclude ?
-          this.model.projectInformation.basementPartOtherWork.scopeOfWorkIsInclude : null,
+          && this.model.projectInformation.basementPartOtherWork.scopeOfWorkIsInclude,
         disabled: this.isModeView
       },
       congViecKhacDesc: {
@@ -148,8 +143,7 @@ export class PriceReviewFormComponent implements OnInit, AfterViewInit {
       phanThanCheck: {
         value: this.model.projectInformation
           && this.model.projectInformation.bodyPart
-          && this.model.projectInformation.bodyPart.scopeOfWorkIsInclude ?
-          this.model.projectInformation.basementPartOtherWork.scopeOfWorkIsInclude : null,
+          && this.model.projectInformation.bodyPart.scopeOfWorkIsInclude,
         disabled: this.isModeView
 
       },
@@ -163,8 +157,7 @@ export class PriceReviewFormComponent implements OnInit, AfterViewInit {
       phanThanKetCauCheck: {
         value: this.model.projectInformation
           && this.model.projectInformation.bodyPartConstructionStructure
-          && this.model.projectInformation.bodyPartConstructionStructure.scopeOfWorkIsInclude ?
-          this.model.projectInformation.bodyPartConstructionStructure.scopeOfWorkIsInclude : null,
+          && this.model.projectInformation.bodyPartConstructionStructure.scopeOfWorkIsInclude,
         disabled: this.isModeView
       },
 
@@ -177,8 +170,7 @@ export class PriceReviewFormComponent implements OnInit, AfterViewInit {
       phanThanHoanThienCheck: {
         value: this.model.projectInformation
           && this.model.projectInformation.bodyPartConstructionCompletion
-          && this.model.projectInformation.bodyPartConstructionCompletion.scopeOfWorkIsInclude ?
-          this.model.projectInformation.bodyPartConstructionCompletion.scopeOfWorkIsInclude : null,
+          && this.model.projectInformation.bodyPartConstructionCompletion.scopeOfWorkIsInclude,
         disabled: this.isModeView
       },
 
@@ -192,8 +184,7 @@ export class PriceReviewFormComponent implements OnInit, AfterViewInit {
       phanThancongViecKhacCheck: {
         value: this.model.projectInformation
           && this.model.projectInformation.bodyPartOtherWork
-          && this.model.projectInformation.bodyPartOtherWork.scopeOfWorkIsInclude ?
-          this.model.projectInformation.bodyPartOtherWork.scopeOfWorkIsInclude : null,
+          && this.model.projectInformation.bodyPartOtherWork.scopeOfWorkIsInclude,
         disabled: this.isModeView
       },
 
@@ -678,6 +669,9 @@ export class PriceReviewFormComponent implements OnInit, AfterViewInit {
   submit(isSaveDraft: boolean) {
     if (isSaveDraft) {
       this.priceReviewForm.get('isDraftVersion').patchValue(true);
+    }
+    if (!isSaveDraft) {
+      this.priceReviewForm.get('isDraftVersion').patchValue(false);
     }
     this.priceReviewService.createOrEdit(this.priceReviewForm.value, this.packageId).subscribe(() => {
       this.router.navigate([`/package/detail/${this.packageId}/attend/price-review/detail`]);
