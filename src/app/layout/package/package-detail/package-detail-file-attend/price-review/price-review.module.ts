@@ -13,6 +13,7 @@ import { InputTextareaModule } from 'primeng/inputtextarea';
 import { CommentComponent } from './price-review-form/comment/comment.component';
 import { PriceReviewService } from '../../../../../shared/services/price-review.service';
 import { UploadFileAttachComponent } from './components/upload-file-attach/upload-file-attach.component';
+import { PopupDescriptionComponent } from './price-review-form/popup-description/popup-description.component';
 
 @NgModule({
   imports: [
@@ -29,7 +30,8 @@ import { UploadFileAttachComponent } from './components/upload-file-attach/uploa
     PriceReviewCreateComponent,
     PriceReviewComponent,
     CommentComponent,
-    UploadFileAttachComponent
+    UploadFileAttachComponent,
+    PopupDescriptionComponent
   ],
   providers: [
     PriceReviewService

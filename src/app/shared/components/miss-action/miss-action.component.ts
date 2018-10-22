@@ -16,16 +16,17 @@ export class MissActionComponent implements OnInit {
     public activeModal: NgbActiveModal,
     private alertService: AlertService,
     private router: Router,
+    // private packageService: PackageService
   ) { }
 
   ngOnInit() {
   }
 
-  viewDetail() {
-    // if (this.setRouterAction) {
-    //   this.packageService.setRouterAction('view');
-    // }
-    this.activeModal.close('Close click');
-    this.router.navigate([this.routerLink]);
-  }
+  // viewDetail() {
+  //   if (this.setRouterAction) {
+  //     this.packageService.setRouterAction('view');
+  //   }
+  //   this.activeModal.close('Close click');
+  //   this.router.navigate([this.routerLink]);
+  // }
 }

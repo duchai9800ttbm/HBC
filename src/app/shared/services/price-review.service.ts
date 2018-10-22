@@ -372,6 +372,7 @@ export class PriceReviewService {
         note: formValue.tyLeNote
       }
     };
+    modelRequest.updatedDesc = formValue.updatedDesc;
     console.log(modelRequest);
     return this.apiService.post(url, modelRequest)
       .map(response => this.toTenderPriceApproval(response.result));
@@ -583,6 +584,7 @@ export class PriceReviewService {
           note: model.tentativeTenderPrice.oAndPPercentOfTotalCost.note
         }
       },
+      updatedDesc: ''
       // chờ Nghĩa map lại
       // interviewTimes: null,
       // createdEmployeeId: null,
