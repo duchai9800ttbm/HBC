@@ -194,7 +194,8 @@ export class NeedCreateTenderFormComponent implements OnInit, OnDestroy {
         }
         // NeedCreateTenderFormComponent.formModel.isAgreedParticipating = false;
         NeedCreateTenderFormComponent.formModel.isAgreedParticipating
-            = NeedCreateTenderFormComponent.formModel.tenderDirectorProposal.isAgreed;
+            = NeedCreateTenderFormComponent.formModel.tenderDirectorProposal ?
+                NeedCreateTenderFormComponent.formModel.tenderDirectorProposal.isAgreed : false;
         this.spinner.show();
         this.packageService
             .createOrUpdateProposedTenderParticipateReport(
