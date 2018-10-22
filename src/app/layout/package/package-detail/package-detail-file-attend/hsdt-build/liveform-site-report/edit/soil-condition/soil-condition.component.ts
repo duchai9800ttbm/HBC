@@ -21,6 +21,7 @@ export class SoilConditionComponent implements OnInit {
   url;
   viewMode;
   imageUrlArray = [];
+  indexOfImage;
   showPopupViewImage = false;
   currentBidOpportunityId: number;
   soilConditionModel = new SoilCondition();
@@ -145,9 +146,10 @@ export class SoilConditionComponent implements OnInit {
     this.investigationImageUrls.splice(index, 1);
     this.soilConditionForm.get('thongTinCongTrinhGanDoList').patchValue(this.investigationImageUrls);
   }
-  viewFullScreenImage(listImage) {
+  viewFullScreenImage(listImage, indexImage?) {
     this.showPopupViewImage = true;
     this.imageUrlArray = [...listImage];
+    this.indexOfImage = indexImage;
   }
   closeView() {
     this.showPopupViewImage = false;

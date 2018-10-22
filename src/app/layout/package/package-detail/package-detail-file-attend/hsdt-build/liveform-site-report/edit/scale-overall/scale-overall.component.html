@@ -82,7 +82,7 @@
                         </div>
                         <div class="image-demo-img">
                             <input type="file" accept="image/*" multiple #uploadPerspective (change)="uploadPerspectiveImage($event)">
-                            <ng-container  *ngFor="let url of perspectiveImageUrls; index as k">
+                            <ng-container *ngFor="let url of perspectiveImageUrls; index as k">
                                 <div class="display-img" (click)="viewFullScreenImage(perspectiveImageUrls, k)">
                                     <img [src]="url.largeSizeUrl">
                                     <div class="icon-delete-image" [ngClass]="{'d-none': viewMode}" (click)="deletePerspectiveImage(url)">
@@ -100,7 +100,8 @@
                 </div>
             </div>
             <div class="detail-each-title">
-                <h6 class="small-title font-weight-bold">1.3 Thông tin về kết cấu (gói thầu) hiện hữu/ Existing structure (existing
+                <h6 class="small-title font-weight-bold">1.3 Thông tin về kết cấu (gói thầu) hiện hữu/ Existing
+                    structure (existing
                     package structure)</h6>
                 <div class="main-detail">
                     <div class="text-des-input">
@@ -109,12 +110,14 @@
                     <div>
                         <div class="image-demo-img">
                             <input type="file" accept="image/*" multiple #uploadStructure (change)="uploadStructureImage($event)">
-                            <div class="display-img" *ngFor="let url of structureImageUrls" (click)="viewFullScreenImage(structureImageUrls)">
-                                <img [src]="url.largeSizeUrl">
-                                <div class="icon-delete-image" [ngClass]="{'d-none': viewMode}" (click)="deleteStructureImage(url)">
-                                    <i class="fa fa-times delete-icon" aria-hidden="true"></i>
+                            <ng-container *ngFor="let url of structureImageUrls; index as k">
+                                <div class="display-img" (click)="viewFullScreenImage(structureImageUrls, k)">
+                                    <img [src]="url.largeSizeUrl">
+                                    <div class="icon-delete-image" [ngClass]="{'d-none': viewMode}" (click)="deleteStructureImage(url)">
+                                        <i class="fa fa-times delete-icon" aria-hidden="true"></i>
+                                    </div>
                                 </div>
-                            </div>
+                            </ng-container>
                             <div class="perspective-image" [ngClass]="{'d-none': viewMode}" (click)="uploadStructure.click()"
                                 tabindex="13">
                                 <i class="fa fa-plus" aria-hidden="true"></i>
@@ -133,12 +136,14 @@
                     </div>
                     <div class="image-demo-img">
                         <input type="file" accept="image/*" multiple #uploadRequirements (change)="uploadRequirementsImage($event)">
-                        <div class="display-img" *ngFor="let url of requirementsImageUrls" (click)="viewFullScreenImage(requirementsImageUrls)">
-                            <img [src]="url.largeSizeUrl">
-                            <div class="icon-delete-image" [ngClass]="{'d-none': viewMode}" (click)="deleteRequirementsImage(url)">
-                                <i class="fa fa-times delete-icon" aria-hidden="true"></i>
+                        <ng-container *ngFor="let url of requirementsImageUrls; index as k">
+                            <div class="display-img" (click)="viewFullScreenImage(requirementsImageUrls, k)">
+                                <img [src]="url.largeSizeUrl">
+                                <div class="icon-delete-image" [ngClass]="{'d-none': viewMode}" (click)="deleteRequirementsImage(url)">
+                                    <i class="fa fa-times delete-icon" aria-hidden="true"></i>
+                                </div>
                             </div>
-                        </div>
+                        </ng-container>
                         <div class="perspective-image" [ngClass]="{'d-none': viewMode}" (click)="uploadRequirements.click()"
                             tabindex="15">
                             <i class="fa fa-plus" aria-hidden="true"></i>

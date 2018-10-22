@@ -312,8 +312,7 @@ export class ScaleOverallComponent implements OnInit {
     this.trangThaiCongTrinhChange();
   }
 
-  viewFullScreenImage(listImage, indexImage) {
-    console.log(indexImage);
+  viewFullScreenImage(listImage, indexImage?) {
     this.showPopupViewImage = true;
     this.imageUrlArray = [...listImage];
     this.indexOfImage = indexImage;

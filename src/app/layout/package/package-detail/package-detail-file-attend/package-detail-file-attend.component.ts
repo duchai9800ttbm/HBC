@@ -100,7 +100,6 @@ export class PackageDetailFileAttendComponent implements OnInit, OnDestroy {
             this.activeRouter.firstChild.url.subscribe(url => {
               this.currentUrl = url[0].path;
               if (this.urlChirld.find(item => item === this.currentUrl)) {
-                console.log('API');
                 this.packageService.getInforPackageID(this.packageId).subscribe(result => {
                   // this.packageData = result;
                   this.statusPackageName = result.stageStatus.id;

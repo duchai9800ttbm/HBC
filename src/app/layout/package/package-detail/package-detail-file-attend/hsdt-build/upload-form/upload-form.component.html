@@ -233,9 +233,10 @@
                                     {{ hoso?.documentName }}
                                 </a>
                             </td>
-                            <!-- TODO: Fix lại chỗ này -->
-                            <td class="boder-table text-center text-truncate text-truncate-custom underline-dotted" [title]="hoso.images.length">
-                                <a *ngIf="hoso?.images?.length !== 0" (click)="viewFullScreenImage(hoso.images)" href="javascript:;">{{ hoso?.images?.length }} hình ảnh</a>
+                            <td class="boder-table text-center text-truncate text-truncate-custom underline-dotted"
+                                [title]="hoso?.images?.length">
+                                <a *ngIf="hoso?.images?.length !== 0" (click)="viewFullScreenImage(hoso.images)" href="javascript:;">{{
+                                    hoso?.images?.length }} hình ảnh</a>
                                 <div *ngIf="hoso?.images?.length === 0"></div>
                             </td>
 
