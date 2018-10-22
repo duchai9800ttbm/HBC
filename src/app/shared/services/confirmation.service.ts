@@ -65,13 +65,13 @@ export class ConfirmationService {
         modalRef.componentInstance.message = passreset;
     }
 
-    missAction(message, routerLink, setRouterAction) {
+    missAction(message, routerLink) {
         const modalRef = this.modalService.open(
             MissActionComponent
         );
         modalRef.componentInstance.message = message;
         modalRef.componentInstance.routerLink = routerLink;
-        modalRef.componentInstance.setRouterAction = setRouterAction;
+        // modalRef.componentInstance.setRouterAction = setRouterAction;
     }
 
 }

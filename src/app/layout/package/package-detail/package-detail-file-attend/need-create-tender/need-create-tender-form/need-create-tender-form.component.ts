@@ -332,7 +332,7 @@ export class NeedCreateTenderFormComponent implements OnInit, OnDestroy {
         } else {
             this.isShowDialog = false;
             this.confirmService.missAction('Đề nghị dự thầu chưa được xác nhận ký bởi giám đốc dự thầu',
-                `/package/detail/${this.bidOpportunityId}/attend/create-request/form/edit/director-proposal`, false);
+                `/package/detail/${this.bidOpportunityId}/attend/create-request/form/edit/director-proposal`);
         }
     }
     actionSaveChangesLiveForm(e) {
