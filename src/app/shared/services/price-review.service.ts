@@ -218,39 +218,39 @@ export class PriceReviewService {
     modelRequest.documentName = formValue.documentName;
     modelRequest.projectInformation = {
       foudationPart: {
-        scopeOfWorkIsInclude: formValue.phanMongCheck ? formValue.phanMongCheck : false,
+        scopeOfWorkIsInclude: formValue.phanMongCheck,
         scopeOfWorkDesc: formValue.phanMongDesc,
       },
       basementPart: {
-        scopeOfWorkIsInclude: formValue.phanHamCheck ? formValue.phanHamCheck : false,
+        scopeOfWorkIsInclude: formValue.phanHamCheck,
         scopeOfWorkDesc: formValue.phanHamDesc,
       },
       basementPartConstructionStructure: {
-        scopeOfWorkIsInclude: formValue.ketCauCheck ? formValue.ketCauCheck : false,
+        scopeOfWorkIsInclude: formValue.ketCauCheck,
         scopeOfWorkDesc: formValue.ketCauDesc,
       },
       basementPartConstructionCompletion: {
-        scopeOfWorkIsInclude: formValue.hoanThienCheck ? formValue.hoanThienCheck : false,
+        scopeOfWorkIsInclude: formValue.hoanThienCheck,
         scopeOfWorkDesc: formValue.hoanThienDesc,
       },
       basementPartOtherWork: {
-        scopeOfWorkIsInclude: formValue.congViecKhacCheck ? formValue.congViecKhacCheck : false,
+        scopeOfWorkIsInclude: formValue.congViecKhacCheck,
         scopeOfWorkDesc: formValue.congViecKhacDesc,
       },
       bodyPart: {
-        scopeOfWorkIsInclude: formValue.phanThanCheck ? formValue.phanThanCheck : false,
+        scopeOfWorkIsInclude: formValue.phanThanCheck,
         scopeOfWorkDesc: formValue.phanThanDesc,
       },
       bodyPartConstructionStructure: {
-        scopeOfWorkIsInclude: formValue.phanThanKetCauCheck ? formValue.phanThanKetCauCheck : false,
+        scopeOfWorkIsInclude: formValue.phanThanKetCauCheck,
         scopeOfWorkDesc: formValue.phanThanKetCauDesc,
       },
       bodyPartConstructionCompletion: {
-        scopeOfWorkIsInclude: formValue.phanThanHoanThienCheck ? formValue.phanThanHoanThienCheck : false,
+        scopeOfWorkIsInclude: formValue.phanThanHoanThienCheck,
         scopeOfWorkDesc: formValue.phanThanhoanThienDesc,
       },
       bodyPartOtherWork: {
-        scopeOfWorkIsInclude: formValue.phanThancongViecKhacCheck ? formValue.phanThancongViecKhacCheck : false,
+        scopeOfWorkIsInclude: formValue.phanThancongViecKhacCheck,
         scopeOfWorkDesc: formValue.phanThancongViecKhacDesc,
       },
       gfa: formValue.infoGfa

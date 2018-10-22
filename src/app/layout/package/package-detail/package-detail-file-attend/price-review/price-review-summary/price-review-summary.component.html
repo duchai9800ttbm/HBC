@@ -24,7 +24,7 @@
                     <input type="text" class="form-control icon" placeholder="&#xf002; Tên tài liệu">
                 </div>
             </div>
-            <button type="button" class="btn btn-primary ml-1" *ngIf="package?.stageStatus?.id === 'CanLapTrinhDuyetGia'" (click)="guiDuyet()">Gửi duyệt trình duyệt giá</button>
+            <button type="button" class="btn btn-primary ml-1" *ngIf="priceReview?.isDraftVersion === false && package?.stageStatus?.id === 'CanLapTrinhDuyetGia'" (click)="guiDuyet()">Gửi duyệt trình duyệt giá</button>
             <button type="button" class="btn btn-primary ml-1" *ngIf="package?.stageStatus?.id === 'DaDuyetTrinhDuyetGia'" (click)="chotHoSo()">Chốt hồ sơ</button>
             <button type="button" class="btn btn-primary ml-1" *ngIf="package?.stageStatus?.id === 'CanDieuChinhTrinhDuyetGia'" (click)="guiDuyet()">Gửi lại trình duyệt giá</button>
             <button type="button" class="btn btn-primary ml-1" *ngIf="package?.stageStatus?.id === 'DaNopHSDT' || package?.stageStatus?.id === 'ChotHoSo'"
@@ -289,7 +289,7 @@
 
 
 
-<div class="content mt-4" *ngIf="package?.stageStatus?.id === 'DaNopHSDT' || package?.stageStatus?.id === 'ChotHoSo'">
+<div class="content mt-4" *ngIf="package?.stageStatus?.id === 'DaDuyetTrinhDuyetGia' || package?.stageStatus?.id === 'DaNopHSDT' || package?.stageStatus?.id === 'ChotHoSo'">
     <div class="mb-4 mt-1">
         <h5>HỒ SƠ DỰ THẦU ĐÃ PHÊ DUYỆT</h5>
     </div>
