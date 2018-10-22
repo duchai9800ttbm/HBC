@@ -8,6 +8,7 @@ import { AlertService } from '../../services';
 })
 export class ImageCarouselComponent implements OnInit {
   @Input() imageUrlArray;
+  @Input() indexOfImage;
   @Output() closed = new EventEmitter<boolean>();
   slideIndex = 1;
   i = 0;
@@ -26,6 +27,7 @@ export class ImageCarouselComponent implements OnInit {
     document.addEventListener('keyup', e => {
       if (e.keyCode === 39) { this.nextButton(); }
     });
+    this.i = this.indexOfImage || 0;
     this.showOneImage(this.i);
   }
   prevButton() {
@@ -33,7 +35,7 @@ export class ImageCarouselComponent implements OnInit {
       this.i -= 1;
       this.showOneImage(this.i);
     } else {
-      // this.alertService.error('Bạn đang xem hình đầu tiên!');
+      this.i = this.imageUrlArray.length - 1;
     }
   }
   nextButton() {
@@ -41,7 +43,7 @@ export class ImageCarouselComponent implements OnInit {
       this.i += 1;
       this.showOneImage(this.i);
     } else {
-      // this.alertService.error('Bạn đang xem hình cuối!');
+      this.i = 0;
     }
   }
   showOneImage(i) {

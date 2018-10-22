@@ -48,7 +48,6 @@ export class HsdtBuildComponent implements OnInit, AfterViewChecked {
     ) { }
 
     ngOnInit() {
-        this.getDanhSachLoaiHoSo(false);
         this.packageId = +PackageDetailComponent.packageId;
         this.subscription = this.hoSoDuThauService.watchChangingUpload().subscribe(signal => {
             this.getDanhSachLoaiHoSo(false);
@@ -90,9 +89,9 @@ export class HsdtBuildComponent implements OnInit, AfterViewChecked {
 
     refresh(): void {
         this.spinner.show();
-        this.getDanhSachLoaiHoSo(true);
         this.packageId = +PackageDetailComponent.packageId;
         this.subscription = this.hoSoDuThauService.watchChangingUpload().subscribe(signal => {
+            this.spinner.hide();
             this.getDanhSachLoaiHoSo(false);
         });
         this.dtTrigger.next();

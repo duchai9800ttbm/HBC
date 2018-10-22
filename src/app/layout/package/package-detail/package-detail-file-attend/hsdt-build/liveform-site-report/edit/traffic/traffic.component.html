@@ -1,6 +1,7 @@
 <form [formGroup]="trafficForm" class="detail-info">
     <div id="step2" class="step-info">
-        <h6 class="big-title font-weight-bold">3.&nbsp;giao thông và lối vào công trường (transportation and site entrance condition)</h6>
+        <h6 class="big-title font-weight-bold">3.&nbsp;giao thông và lối vào công trường (transportation and site
+            entrance condition)</h6>
         <div>
             <div class="detail-each-title">
                 <h6 class="small-title font-weight-bold">3.1 Những chi tiết địa hình/ Topography</h6>
@@ -13,127 +14,140 @@
                         <div class="image-demo-img">
                             <input type="file" #uploaDisadvantage (change)="uploaDisadvantageImage($event)">
 
-                            <div class="display-img" *ngFor="let url of disadvantageImageUrls" (click)="viewFullScreenImage(disadvantageImageUrls)">
-                                <img [src]="url.largeSizeUrl">
-                                <div class="icon-delete-image"  [ngClass]="{'d-none': viewMode}" (click)="deleteDisadvantageImage(url)">
-                                    <i class="fa fa-times delete-icon" aria-hidden="true"></i>
+                            <ng-container *ngFor="let url of disadvantageImageUrls; index as k">
+                                <div class="display-img" (click)="viewFullScreenImage(disadvantageImageUrls, k)">
+                                    <img [src]="url.largeSizeUrl">
+                                    <div class="icon-delete-image" [ngClass]="{'d-none': viewMode}" (click)="deleteDisadvantageImage(url)">
+                                        <i class="fa fa-times delete-icon" aria-hidden="true"></i>
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="perspective-image" [ngClass]="{'d-none': viewMode}" (click)="uploaDisadvantage.click()">
-                                <i class="fa fa-plus" aria-hidden="true"></i>
-                                <p>Image</p>
-                            </div>
+                            </ng-container>
                         </div>
-                    </div>
-                    <div class="text-des-input">
-                        <div class="img-demo-des">
-                            <label for="">Thuận lợi/ Advantage</label>
-                            <input type="text" formControlName="chiTietDiaHinhThuanLoiDesc">
-                        </div>
-                        <div class="image-demo-img">
-                            <input type="file" #uploaAdvantage (change)="uploaAdvantageImage($event)">
-
-                            <div class="display-img" *ngFor="let url of advantageImageUrls" (click)="viewFullScreenImage(advantageImageUrls)">
-                                <img [src]="url.largeSizeUrl">
-                                <div class="icon-delete-image"  [ngClass]="{'d-none': viewMode}" (click)="deleteAdvantageImage(url)">
-                                    <i class="fa fa-times delete-icon" aria-hidden="true"></i>
-                                </div>
-                            </div>
-                            <div class="perspective-image" [ngClass]="{'d-none': viewMode}" (click)="uploaAdvantage.click()">
-                                <i class="fa fa-plus" aria-hidden="true"></i>
-                                <p>Image</p>
-                            </div>
+                        <div class="perspective-image" [ngClass]="{'d-none': viewMode}" (click)="uploaDisadvantage.click()">
+                            <i class="fa fa-plus" aria-hidden="true"></i>
+                            <p>Image</p>
                         </div>
                     </div>
                 </div>
-            </div>
-            <div class="detail-each-title">
-                <h6 class="small-title font-weight-bold">3.2 Lối vào công trường/ Site entrance</h6>
-                <div class="main-detail">
-                    <div class="text-des-input">
-                        <div class="img-demo-des">
-                            <label for="">Hướng vào công trường/ Direction of the site entrance</label>
-                            <input type="text" formControlName="huongVaoCongTruongDesc">
-                        </div>
-                        <div class="image-demo-img">
-                            <input type="file" accept="image/*" multiple #uploadDirection (change)="uploadDirectionImage($event)">
-
-                            <div class="display-img" *ngFor="let url of directionImageUrls" (click)="viewFullScreenImage(directionImageUrls)">
-                                <img [src]="url.largeSizeUrl">
-                                <div class="icon-delete-image"  [ngClass]="{'d-none': viewMode}" (click)="deleteDirectionImage(url)">
-                                    <i class="fa fa-times delete-icon" aria-hidden="true"></i>
-                                </div>
-                            </div>
-                            <div class="perspective-image" [ngClass]="{'d-none': viewMode}" (click)="uploadDirection.click()">
-                                <i class="fa fa-plus" aria-hidden="true"></i>
-                                <p>Image</p>
-                            </div>
-                        </div>
+                <div class="text-des-input">
+                    <div class="img-demo-des">
+                        <label for="">Thuận lợi/ Advantage</label>
+                        <input type="text" formControlName="chiTietDiaHinhThuanLoiDesc">
                     </div>
-                    <div class="text-des-input">
-                        <div class="img-demo-des">
-                            <label for="">Đường hiện có trên công trường/ Existing road on site</label>
-                            <input type="text" formControlName="duongHienCoTrenCongTruongDesc">
-                        </div>
-                        <div class="image-demo-img">
-                            <input type="file" accept="image/*" multiple #uploadExisting (change)="uploadExistingImage($event)">
+                    <div class="image-demo-img">
+                        <input type="file" #uploaAdvantage (change)="uploaAdvantageImage($event)">
 
-                            <div class="display-img" *ngFor="let url of existingImageUrls" (click)="viewFullScreenImage(existingImageUrls)">
+                        <ng-container *ngFor="let url of advantageImageUrls; index as k">
+                            <div class="display-img" (click)="viewFullScreenImage(advantageImageUrls, k)">
                                 <img [src]="url.largeSizeUrl">
-                                <div class="icon-delete-image"  [ngClass]="{'d-none': viewMode}" (click)="deleteExistingImage(url)">
+                                <div class="icon-delete-image" [ngClass]="{'d-none': viewMode}" (click)="deleteAdvantageImage(url)">
                                     <i class="fa fa-times delete-icon" aria-hidden="true"></i>
                                 </div>
                             </div>
-                            <div class="perspective-image" [ngClass]="{'d-none': viewMode}" (click)="uploadExisting.click()">
-                                <i class="fa fa-plus" aria-hidden="true"></i>
-                                <p>Image</p>
-                            </div>
-                        </div>
+                        </ng-container>
                     </div>
-                    <div class="text-des-input">
-                        <div class="img-demo-des">
-                            <label for="">Yêu cầu đường tạm/ Temporary road's requirement</label>
-                            <input type="text" formControlName="yeuCauDuongTamDesc">
-                        </div>
-                        <div class="image-demo-img">
-                            <input type="file" accept="image/*" multiple #uploadRoad (change)="uploadRoadImage($event)">
-
-                            <div class="display-img" *ngFor="let url of roadImageUrls" (click)="viewFullScreenImage(roadImageUrls)">
-                                <img [src]="url.largeSizeUrl">
-                                <div class="icon-delete-image"  [ngClass]="{'d-none': viewMode}" (click)="deleteRoadImage(url)">
-                                    <i class="fa fa-times delete-icon" aria-hidden="true"></i>
-                                </div>
-                            </div>
-                            <div class="perspective-image" [ngClass]="{'d-none': viewMode}" (click)="uploadRoad.click()">
-                                <i class="fa fa-plus" aria-hidden="true"></i>
-                                <p>Image</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="text-des-input">
-                        <div class="img-demo-des">
-                            <label for="">Yêu cầu về hàng rào tạm/ Temporary fence's requirement</label>
-                            <input type="text" formControlName="yeuCauHangRaoDesc">
-                        </div>
-                        <div class="image-demo-img">
-                            <input type="file" accept="image/*" multiple #uploadFence (change)="uploadFenceImage($event)">
-
-                            <div class="display-img" *ngFor="let url of fenceImageUrls" (click)="viewFullScreenImage(fenceImageUrls)">
-                                <img [src]="url.largeSizeUrl">
-                                <div class="icon-delete-image"  [ngClass]="{'d-none': viewMode}" (click)="deleteFenceImage(url)">
-                                    <i class="fa fa-times delete-icon" aria-hidden="true"></i>
-                                </div>
-                            </div>
-                            <div class="perspective-image" [ngClass]="{'d-none': viewMode}" (click)="uploadFence.click()">
-                                <i class="fa fa-plus" aria-hidden="true"></i>
-                                <p>Image</p>
-                            </div>
-                        </div>
+                    <div class="perspective-image" [ngClass]="{'d-none': viewMode}" (click)="uploaAdvantage.click()">
+                        <i class="fa fa-plus" aria-hidden="true"></i>
+                        <p>Image</p>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+    <div class="detail-each-title">
+        <h6 class="small-title font-weight-bold">3.2 Lối vào công trường/ Site entrance</h6>
+        <div class="main-detail">
+            <div class="text-des-input">
+                <div class="img-demo-des">
+                    <label for="">Hướng vào công trường/ Direction of the site entrance</label>
+                    <input type="text" formControlName="huongVaoCongTruongDesc">
+                </div>
+                <div class="image-demo-img">
+                    <input type="file" accept="image/*" multiple #uploadDirection (change)="uploadDirectionImage($event)">
+
+                    <ng-container *ngFor="let url of directionImageUrls; index as k">
+                        <div class="display-img" (click)="viewFullScreenImage(directionImageUrls, k)">
+                            <img [src]="url.largeSizeUrl">
+                            <div class="icon-delete-image" [ngClass]="{'d-none': viewMode}" (click)="deleteDirectionImage(url)">
+                                <i class="fa fa-times delete-icon" aria-hidden="true"></i>
+                            </div>
+                        </div>
+                    </ng-container>
+                </div>
+                <div class="perspective-image" [ngClass]="{'d-none': viewMode}" (click)="uploadDirection.click()">
+                    <i class="fa fa-plus" aria-hidden="true"></i>
+                    <p>Image</p>
+                </div>
+            </div>
+        </div>
+        <div class="text-des-input">
+            <div class="img-demo-des">
+                <label for="">Đường hiện có trên công trường/ Existing road on site</label>
+                <input type="text" formControlName="duongHienCoTrenCongTruongDesc">
+            </div>
+            <div class="image-demo-img">
+                <input type="file" accept="image/*" multiple #uploadExisting (change)="uploadExistingImage($event)">
+
+                <ng-container *ngFor="let url of existingImageUrls; index as k">
+                    <div class="display-img" (click)="viewFullScreenImage(existingImageUrls, k)">
+                        <img [src]="url.largeSizeUrl">
+                        <div class="icon-delete-image" [ngClass]="{'d-none': viewMode}" (click)="deleteExistingImage(url)">
+                            <i class="fa fa-times delete-icon" aria-hidden="true"></i>
+                        </div>
+                    </div>
+                </ng-container>
+            </div>
+            <div class="perspective-image" [ngClass]="{'d-none': viewMode}" (click)="uploadExisting.click()">
+                <i class="fa fa-plus" aria-hidden="true"></i>
+                <p>Image</p>
+            </div>
+        </div>
+    </div>
+    <div class="text-des-input">
+        <div class="img-demo-des">
+            <label for="">Yêu cầu đường tạm/ Temporary road's requirement</label>
+            <input type="text" formControlName="yeuCauDuongTamDesc">
+        </div>
+        <div class="image-demo-img">
+            <input type="file" accept="image/*" multiple #uploadRoad (change)="uploadRoadImage($event)">
+
+            <ng-container *ngFor="let url of roadImageUrls; index as k">
+                <div class="display-img" (click)="viewFullScreenImage(roadImageUrls, k)">
+                    <img [src]="url.largeSizeUrl">
+                    <div class="icon-delete-image" [ngClass]="{'d-none': viewMode}" (click)="deleteRoadImage(url)">
+                        <i class="fa fa-times delete-icon" aria-hidden="true"></i>
+                    </div>
+                </div>
+            </ng-container>
+            <div class="perspective-image" [ngClass]="{'d-none': viewMode}" (click)="uploadRoad.click()">
+                <i class="fa fa-plus" aria-hidden="true"></i>
+                <p>Image</p>
+            </div>
+        </div>
+    </div>
+    <div class="text-des-input">
+        <div class="img-demo-des">
+            <label for="">Yêu cầu về hàng rào tạm/ Temporary fence's requirement</label>
+            <input type="text" formControlName="yeuCauHangRaoDesc">
+        </div>
+        <div class="image-demo-img">
+            <input type="file" accept="image/*" multiple #uploadFence (change)="uploadFenceImage($event)">
+
+            <ng-container *ngFor="let url of fenceImageUrls; index as k">
+                <div class="display-img" (click)="viewFullScreenImage(fenceImageUrls, k)">
+                    <img [src]="url.largeSizeUrl">
+                    <div class="icon-delete-image" [ngClass]="{'d-none': viewMode}" (click)="deleteFenceImage(url)">
+                        <i class="fa fa-times delete-icon" aria-hidden="true"></i>
+                    </div>
+                </div>
+            </ng-container>
+            <div class="perspective-image" [ngClass]="{'d-none': viewMode}" (click)="uploadFence.click()">
+                <i class="fa fa-plus" aria-hidden="true"></i>
+                <p>Image</p>
+            </div>
+        </div>
+    </div>
 </form>
 
-<app-image-carousel class="d-flex justify-content-center align-items-center" *ngIf="showPopupViewImage" [(imageUrlArray)]="imageUrlArray" (closed)="closeView()"></app-image-carousel>
+<app-image-carousel class="d-flex justify-content-center align-items-center" *ngIf="showPopupViewImage"
+    [(imageUrlArray)]="imageUrlArray" [(indexOfImage)]="indexOfImage" (closed)="closeView()"></app-image-carousel>

@@ -23,6 +23,7 @@ export class ContentItemComponent implements OnInit {
   contentItemImageList = [];
   deleteImageList = [];
   imageUrlArray = [];
+  indexOfImage;
   showPopupViewImage = false;
   currentBidOpportunityId: number;
   viewMode;
@@ -105,9 +106,10 @@ export class ContentItemComponent implements OnInit {
     this.deleteContent.emit(true);
   }
 
-  viewFullScreenImage(listImage) {
+  viewFullScreenImage(listImage, indexImage?) {
     this.showPopupViewImage = true;
     this.imageUrlArray = [...listImage];
+    this.indexOfImage = indexImage;
   }
   closeView() {
     this.showPopupViewImage = false;

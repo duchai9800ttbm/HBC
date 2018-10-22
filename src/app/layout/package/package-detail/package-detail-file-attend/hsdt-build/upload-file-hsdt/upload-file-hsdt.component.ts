@@ -129,7 +129,6 @@ export class UploadFileHsdtComponent implements OnInit {
       const interViewTimes = this.uploadForm.get('interViewTimes').value;
       const version = this.uploadForm.get('version').value;
       const imageIds = this.imageUrls.map(image => image.guid);
-      console.log(imageIds);
       if (file || linkFile) {
         this.spinner.show();
         this.typeOfDoc = (type) ? type : this.idFile;

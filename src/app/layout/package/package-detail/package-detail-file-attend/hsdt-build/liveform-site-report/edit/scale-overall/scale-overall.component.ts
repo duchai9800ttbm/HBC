@@ -55,6 +55,7 @@ export class ScaleOverallComponent implements OnInit {
   isViewMode;
   modalRef: BsModalRef;
   imageUrlArray = [];
+  indexOfImage;
   showPopupViewImage = false;
   currentBidOpportunityId: number;
   scaleModel = new ScaleOverall();
@@ -311,9 +312,10 @@ export class ScaleOverallComponent implements OnInit {
     this.trangThaiCongTrinhChange();
   }
 
-  viewFullScreenImage(listImage) {
+  viewFullScreenImage(listImage, indexImage?) {
     this.showPopupViewImage = true;
     this.imageUrlArray = [...listImage];
+    this.indexOfImage = indexImage;
   }
   closeView() {
     this.showPopupViewImage = false;

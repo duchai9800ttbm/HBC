@@ -3,7 +3,7 @@ app-info {
 }
 
 .headerInfo {
-    background-color: #FF8160;
+    background-color: #f68e56;
     padding: 10px 0;
     margin-bottom: 20px;
     color: #FFFFFF;
@@ -306,43 +306,24 @@ input[type=text] {
     font-weight: 900;
     border: none;
     color: #FFFFFF;
-    background-color: #FF8160;
+    background-color: #f68e56;
 }
 
 .option-set-width {
     width: 81%;
 }
 
-@media only screen and (max-width: 1174px) {
-    #header-table1 {
-        flex-direction: column;
-
-        .controll-bar {
-            width: 100% !important;
-
-            div {
-                flex-direction: row-reverse !important;
-            }
-        }
-    }
-}
-
-@media only screen and (max-width: 1175px) {
+@media only screen and (max-width: 1200px) {
     .headerInfo {
         flex-direction: column;
     }
 
-    .title-header-field {
-        width: 100%;
-    }
+    .header-container {
+        max-width: 100%;
 
-    .title-header-field-left {
-        padding-left: 1rem;
-    }
-
-    .title-header-field-right {
-        padding-right: unset;
-        padding-left: 1rem;
+        .reset-margintop {
+            margin-top: 0.5rem !important;
+        }
     }
 
     .hidden-tag {

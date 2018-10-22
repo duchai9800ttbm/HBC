@@ -25,6 +25,7 @@ export class ServiceConstructionComponent implements OnInit {
   url;
   viewMode;
   imageUrlArray = [];
+  indexOfImage;
   showPopupViewImage = false;
   currentBidOpportunityId: number;
   serviceConstructionModel = new ServiceConstruction();
@@ -378,9 +379,10 @@ export class ServiceConstructionComponent implements OnInit {
     this.powerOtherImageUrls.splice(index, 1);
     this.serviceConstructionForm.get('heThongDienKhacList').patchValue(this.powerOtherImageUrls);
   }
-  viewFullScreenImage(listImage) {
+  viewFullScreenImage(listImage, indexImage?) {
     this.showPopupViewImage = true;
     this.imageUrlArray = [...listImage];
+    this.indexOfImage = indexImage;
   }
   closeView() {
     this.showPopupViewImage = false;

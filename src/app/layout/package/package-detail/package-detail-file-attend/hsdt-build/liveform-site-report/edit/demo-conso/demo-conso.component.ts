@@ -22,6 +22,7 @@ export class DemoConsoComponent implements OnInit {
   url;
   viewMode;
   imageUrlArray = [];
+  indexOfImage;
   showPopupViewImage = false;
   currentBidOpportunityId: number;
   demoConsoModel = new DemoConso();
@@ -186,9 +187,10 @@ export class DemoConsoComponent implements OnInit {
     this.adjacentImageUrls.splice(index, 1);
     this.demoConsoForm.get('dieuKienHinhAnhList').patchValue(this.adjacentImageUrls);
   }
-  viewFullScreenImage(listImage) {
+  viewFullScreenImage(listImage, indexImage?) {
     this.showPopupViewImage = true;
     this.imageUrlArray = [...listImage];
+    this.indexOfImage = indexImage;
   }
   closeView() {
     this.showPopupViewImage = false;

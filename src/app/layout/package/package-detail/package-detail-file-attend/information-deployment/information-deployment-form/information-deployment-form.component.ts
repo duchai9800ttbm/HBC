@@ -63,20 +63,17 @@ export class InformationDeploymentFormComponent implements OnInit {
         this.bidOpportunityId = PackageDetailComponent.packageId;
         this.userService.getAllUser('').subscribe(data => {
             this.userList = data;
-            console.log('this.useLisst', this.userList);
         });
         this.getPackageInfo();
         if (this.routerAction === 'create') {
             this.packageService
                 .getDefaultTenderPreparationPlanning()
                 .subscribe(data => {
-                    console.log('getDefaultTenderPreparationPlanning', data);
                     this.createForm(data, true);
                 }
                 );
         } else {
             this.packageService.getTenderPreparationPlanning(this.bidOpportunityId).subscribe(data => {
-                console.log('getTenderPreparationPlanning', data);
                 this.createForm(data);
             });
         }
@@ -102,7 +99,6 @@ export class InformationDeploymentFormComponent implements OnInit {
         this.tasksFA.controls.forEach( (item, index) => {
             this.calculateTotalTime(index);
         });
-        console.log('projectDirectorEmployeeId-projectDirectorEmployeeId', this.planForm.get('projectDirectorEmployeeId').value);
         this.changeDirector(this.planForm.get('projectDirectorEmployeeId').value, 0);
         this.changeDirector(this.planForm.get('tenderDepartmentEmployeeId').value, 1);
         this.changeDirector(this.planForm.get('technicalDepartmentEmployeeId').value, 2);
@@ -195,7 +191,6 @@ export class InformationDeploymentFormComponent implements OnInit {
             .subscribe(data => {
                 this.packageInfo = data;
                 this.spinner.hide();
-                console.log(this.packageInfo);
             });
     }
 
@@ -213,7 +208,6 @@ export class InformationDeploymentFormComponent implements OnInit {
     }
 
     validateForm(formData: TenderPreparationPlanningRequest, isDraft: boolean): boolean {
-        console.log('planForm?.get.value', this.planForm.get('isDraftVersion').value) ;
         if (isDraft) {
             // lưu nháp thì ko cần validate
             return true;
@@ -262,7 +256,6 @@ export class InformationDeploymentFormComponent implements OnInit {
     }
 
     submitForm(isDraft: boolean) {
-        console.log('isDrafft', isDraft);
         if ( this.checkAssignment() ) {
             const data = this.getFormData();
             const isValid = this.validateForm(data, isDraft);
@@ -341,7 +334,6 @@ export class InformationDeploymentFormComponent implements OnInit {
     }
 
     getDateStr(data: number) {
-        console.log('data', data);
         return data ? DateTimeConvertHelper.fromTimestampToDtStr(data) : '';
     }
 
