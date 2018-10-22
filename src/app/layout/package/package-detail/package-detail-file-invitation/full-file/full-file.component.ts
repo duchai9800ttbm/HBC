@@ -102,22 +102,16 @@ export class FullFileComponent implements OnInit {
                 this.bidDocumentGroupListItem = response;
                 this.bidDocumentGroupListItemSearchResult = response;
                 this.showTable = this.bidDocumentGroupListItemSearchResult.length > 0;
-                this.checkHightLight();
                 this.dtTrigger.next();
                 this.spinner.hide();
-                console.log('this.response', this.bidDocumentGroupListItemSearchResult);
             }, err => this.spinner.hide());
         });
     }
 
     checkHightLight() {
-        if (this.majorTypeListItem && this.majorTypeListItem.length) {
-            this.majorTypeListItem.forEach(element => {
-                this.documentService.read(this.packageId, element.id).subscribe(data => {
-                    element.hightLight = data.length > 0;
-                });
-            });
-        }
+        this.documentService.bidDocumentMajortypes(this.packageId).subscribe(data => {
+            this.majorTypeListItem = data;
+        });
     }
     toggleClick() {
         this.isShowMenu = !this.isShowMenu;
