@@ -316,6 +316,9 @@ input[type=text] {
 .hidden-tag {
     visibility: hidden;
 }
+.disable-button{
+    cursor: not-allowed;
+}
 
 @media only screen and (max-width: 1200px) {
     .responsive-container {

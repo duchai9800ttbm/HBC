@@ -21,6 +21,7 @@ export class SummaryConditionFormComponent implements OnInit, OnDestroy {
   package: PackageInfoModel;
   showPopupConfirm = false;
   isModeView = false;
+  isCreate = false;
   constructor(
     private packageService: PackageService,
     private hoSoDuThauService: HoSoDuThauService,
@@ -46,6 +47,7 @@ export class SummaryConditionFormComponent implements OnInit, OnDestroy {
         case 'create': {
           this.isModeView = false;
           this.hoSoDuThauService.emitIsModeView(false);
+          this.isCreate = true;
           break;
         }
         case 'edit': {
@@ -86,7 +88,11 @@ export class SummaryConditionFormComponent implements OnInit, OnDestroy {
   onSubmit(check: boolean) {
     HoSoDuThauService.tempDataLiveFormDKDT.value.bidOpportunityId = this.packageId;
     HoSoDuThauService.tempDataLiveFormDKDT.value.isDraftVersion = check;
-    this.showPopupConfirm = true;
+    if (check) {
+      this.submitLiveForm(true);
+    } else {
+      this.showPopupConfirm = true;
+    }
   }
   backSummary() {
     this.router.navigate([`package/detail/${this.packageId}/attend/build/summary`]);
@@ -97,9 +103,11 @@ export class SummaryConditionFormComponent implements OnInit, OnDestroy {
     } else {
       this.hoSoDuThauService.createOrUpdateLiveFormTomTat().subscribe(res => {
         this.router.navigate([`package/detail/${this.packageId}/attend/build/summary`]);
-        this.alertService.success(`LiveForm đã được cập nhật!`);
+        const message = (this.isCreate) ? 'tạo' : 'cập nhật';
+        this.alertService.success(`LiveForm đã được ${message} thành công!`);
       }, err => {
-        this.alertService.error(`Đã có lỗi xảy ra. Cập nhật không thành công!`);
+        const message = (this.isCreate) ? 'Tạo' : 'Cập nhật';
+        this.alertService.error(`Đã có lỗi xảy ra. ${message} không thành công!`);
       });
       this.showPopupConfirm = false;
     }

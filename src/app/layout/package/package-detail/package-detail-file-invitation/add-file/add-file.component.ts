@@ -43,7 +43,6 @@ export class AddFileComponent implements OnInit {
         text: 'Quyển HSMT',
     };
     currentItem = {};
-    userListItem: UserItemModel[];
     ListItem: BidDocumentModel[];
     majorTypeListItem: DictionaryItemHightLight[];
     bidDocumentGroupListItem: BidDocumentGroupModel[];
@@ -91,10 +90,6 @@ export class AddFileComponent implements OnInit {
         // initFilterModel
         this.filterModel.status = '';
         this.filterModel.uploadedEmployeeId = null;
-        // danh sách người upload (lấy từ danh sách user)
-        this.userService.getAllUser('').subscribe(data => {
-            this.userListItem = data;
-        });
         this.spinner.show();
         this.documentService.bidDocumentMajortypes(this.packageId).subscribe(data => {
             this.majorTypeListItem = data;

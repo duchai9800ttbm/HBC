@@ -17,7 +17,7 @@
         <div class="btn-toolbar mt-2 mb-2">
             <div class="d-flex">
                 <ng-container *ngIf="!isViewMode">
-                    <button *ngIf="isDraft" class="btn btn-primary ml-1" (click)="updateliveform(true)">
+                    <button *ngIf="isDraft || isCreate" class="btn btn-primary ml-1" (click)="updateliveform(true)">
                         Lưu bản nháp
                     </button>
                     <button class="btn btn-primary ml-1" (click)="updateliveform(false)">
