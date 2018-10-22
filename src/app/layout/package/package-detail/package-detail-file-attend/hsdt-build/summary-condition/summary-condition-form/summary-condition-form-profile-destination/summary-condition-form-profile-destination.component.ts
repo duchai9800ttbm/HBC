@@ -5,6 +5,9 @@ import { ApiConvertHelper } from '../../../../../../../../shared/helpers/api-con
 import DateTimeConvertHelper from '../../../../../../../../shared/helpers/datetime-convert-helper';
 import { HoSoDuThauService } from '../../../../../../../../shared/services/ho-so-du-thau.service';
 import { DienGiaiYeuCauHoSo } from '../../../../../../../../shared/models/ho-so-du-thau/danh-sach-vat-tu';
+import { AlertService } from '../../../../../../../../shared/services';
+import { PackageService } from '../../../../../../../../shared/services/package.service';
+import { PackageDetailComponent } from '../../../../../package-detail.component';
 
 @Component({
   selector: 'app-summary-condition-form-profile-destination',
@@ -16,17 +19,30 @@ export class SummaryConditionFormProfileDestinationComponent implements OnInit {
   yeuCauHoSoForm: FormGroup;
   dienGiaiYeuCauHoSo = new DienGiaiYeuCauHoSo();
   isModeView = false;
+  packageId;
+  closingTime;
   constructor(
     private fb: FormBuilder,
-    private hoSoDuThauService: HoSoDuThauService
+    private hoSoDuThauService: HoSoDuThauService,
+    private packageService: PackageService,
+    private alertService: AlertService
   ) { }
 
   ngOnInit() {
+    this.packageId = +PackageDetailComponent.packageId;
     this.hoSoDuThauService.watchLiveformState().subscribe(data => {
       this.isModeView = data.isModeView;
     });
     this.loadData();
     this.createForm();
+  }
+  getInfoPackage() {
+    this.packageService.getInforPackageID(this.packageId).subscribe(result => {
+      this.closingTime = result.submissionDate;
+      console.log(this.closingTime);
+    }, err => {
+      this.alertService.error('Tải thông tin gói thầu thất bại.');
+    });
   }
 
   loadData() {
@@ -41,6 +57,7 @@ export class SummaryConditionFormProfileDestinationComponent implements OnInit {
           };
         }
         if (!model) {
+          console.log(this.closingTime);
           this.dienGiaiYeuCauHoSo = {
             noiNop: '',
             nguoiNhan: '',

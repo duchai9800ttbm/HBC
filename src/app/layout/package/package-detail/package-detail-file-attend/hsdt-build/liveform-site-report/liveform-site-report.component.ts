@@ -29,8 +29,9 @@ export class LiveformSiteReportComponent implements OnInit {
   pageIndex: number | string = 0;
   listConstructionType;
   pagedResult: PagedResult<SiteReportChangedHistory> = new PagedResult<SiteReportChangedHistory>();
+  dtOptions: any = DATATABLE_CONFIG;
   dtTrigger: Subject<any> = new Subject();
-  dtOptions: any = DATATABLE_CONFIG2;
+  dtTrigger2: Subject<any> = new Subject();
   constructor(
     private documentService: DocumentService,
     private siteSurveyReportService: SiteSurveyReportService,
@@ -92,8 +93,10 @@ export class LiveformSiteReportComponent implements OnInit {
       this.spinner.hide();
       this.alertService.error('Đã xảy ra lỗi, cập nhật dữ liệu lifeform không thành công');
     });
+    console.log(`run`);
     this.siteSurveyReportService.changedHistoryTenderSiteReport(this.bidOpportunityId, 0, 10)
       .subscribe(responseResultHistory => {
+        console.log(`run2`);
         this.pagedResult = responseResultHistory;
         this.updateInfoList = responseResultHistory.items;
         this.dtTrigger.next();
@@ -115,18 +118,14 @@ export class LiveformSiteReportComponent implements OnInit {
   }
 
   deleteDoc() {
-    const that = this;
     this.confirmationService.confirm(
       'Bạn có chắc chắn muốn xóa báo cáo này?',
       () => {
         this.siteSurveyReportService.deleteSiteSurveyingReport(this.bidOpportunityId).subscribe(res => {
-          that.alertService.success('Đã xóa báo cáo công trình!');
+          this.alertService.success('Đã xóa báo cáo công trình!');
           this.spinner.hide();
-          that.refresh();
-        },
-          err => {
-            that.alertService.error('Đã gặp lỗi, chưa xóa được báo cáo công trình!');
-          });
+          this.refresh();
+        }, err => this.alertService.error('Đã gặp lỗi, chưa xóa được báo cáo công trình!'));
       }
     );
   }

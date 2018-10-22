@@ -19,6 +19,7 @@
 
                     <th>Tên tài liệu</th>
                     <th>Lần phỏng vấn</th>
+                    <th>Tình trạng</th>
                     <th>Người tạo</th>
                     <th>Ngày tạo</th>
                     <th class="text-center">Thao tác</th>
@@ -29,6 +30,7 @@
 
                     <td>{{summaryCondition?.documentName}}</td>
                     <td>{{summaryCondition?.thongTinDuAn?.lanPhongVan}}</td>
+                    <td>{{ (summaryCondition?.isDraftVersion) ? 'Bản nháp' : 'Chính thức' }}</td>
                     <td>{{summaryCondition?.createdEmployee?.employeeName}}</td>
                     <td>{{summaryCondition.ngayTao*1000 | date:'dd/MM/yyyy HH:mm': '+0000' }}</td>
                     <td>

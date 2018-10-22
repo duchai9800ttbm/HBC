@@ -218,3 +218,20 @@ label {
 .view-mode-control {
     display: none;
 }
+// Set Font-Size
+.big-title {
+    font-size: 0.85rem;
+}
+
+.small-title {
+    font-size: 0.8rem;
+}
+
+input[type=text] {
+    font-size: 13px;
+}
+// Set FontStyle Italic & Color - Input Text
+input[type=text]::placeholder {
+    color: #cccccc;
+    font-style: italic;
+}

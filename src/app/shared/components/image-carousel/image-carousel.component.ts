@@ -59,4 +59,7 @@ export class ImageCarouselComponent implements OnInit {
     }
     e.returnValue = false;
   }
+  viewCurrentImage(index) {
+    this.isShow = index;
+  }
 }

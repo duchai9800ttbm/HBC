@@ -26,7 +26,6 @@ export class SummaryConditionComponent implements OnInit {
   dtOptions: any = DATATABLE_CONFIG;
   dtTrigger: Subject<any> = new Subject();
   dtTrigger2: Subject<any> = new Subject();
-
   historyList;
   pagedResultChangeHistoryList: PagedResult<HistoryLiveForm> = new PagedResult<HistoryLiveForm>();
 
@@ -43,6 +42,7 @@ export class SummaryConditionComponent implements OnInit {
     this.hoSoDuThauService.getInfoTenderConditionalSummary(this.packageId)
       .subscribe(data => {
         this.summaryCondition = data;
+        console.log(this.summaryCondition);
         setTimeout(() => {
           this.dtTrigger.next();
         }, 0);

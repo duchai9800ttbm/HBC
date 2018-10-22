@@ -426,7 +426,7 @@ export class HoSoDuThauService {
             }))
           }))
         }))
-      }, // TODO: Map lại chỗ này, tạm thời bỏ qua
+      },
       scopeOfWork: obj.phamViCongViec && {
         includedWorks: (obj.phamViCongViec.phamViBaoGom || []).map(x => ({
           name: x.congTac,
@@ -645,7 +645,6 @@ export class HoSoDuThauService {
         }
       },
       otherSpecialRequirement: obj.yeuCauDacBietKhac && {
-        // TODO: Map lại chỗ này
         greenBuildingStandardName: obj.yeuCauDacBietKhac.greenBuildingStandardName,
         greenBuildingStandardLink: obj.yeuCauDacBietKhac.greenBuildingStandardLink,
         tenderEvaluationStep1: obj.yeuCauDacBietKhac.tenderEvaluationStep1,
@@ -707,7 +706,6 @@ export class HoSoDuThauService {
         banVeMasterPlan: model.projectInformation.masterPlanImageUrls,
         dienGiaiThongTinDuAn: model.projectInformation.projectInformation
       };
-      // TODO: Map lại chỗ StackHolder
       dataOut.cacBenLienQuan = model.stakeholder && (model.stakeholder.stakeholderGroups || []).map(x => ({
         id: x.groupId,
         customers: (x.customers || []).map(customer => ({
@@ -866,8 +864,6 @@ export class HoSoDuThauService {
             ngayKhoiCong: model.tenderCondition.hbcTenderCondition.progressStartDate,
             thoiGianHoanThanh: model.tenderCondition.hbcTenderCondition.progressComletionDate
           },
-
-          // TODO: Chú ý map lại ID, KEY, DISPLAYTEXT
           cacLoaiThue: (model.tenderCondition.hbcTenderCondition.taxTypes || []).map(x => x.displayText),
           donViTienTe: model.tenderCondition.hbcTenderCondition.currency && model.tenderCondition.hbcTenderCondition.currency.displayText
         },
@@ -883,12 +879,10 @@ export class HoSoDuThauService {
             ngayKhoiCong: model.tenderCondition.hsmtTenderCondition.progressStartDate,
             thoiGianHoanThanh: model.tenderCondition.hsmtTenderCondition.progressComletionDate
           },
-          // TODO: Chú ý map lại ID, KEY, DISPLAYTEXT
           cacLoaiThue: (model.tenderCondition.hsmtTenderCondition.taxTypes || []).map(x => x.displayText),
           donViTienTe: model.tenderCondition.hsmtTenderCondition.currency && model.tenderCondition.hsmtTenderCondition.currency.displayText
         }
       };
-      // TODO: Map lại chỗ này
       dataOut.yeuCauDacBietKhac = model.otherSpecialRequirement && {
         greenBuildingStandardName: model.otherSpecialRequirement.greenBuildingStandardName,
         greenBuildingStandardLink: model.otherSpecialRequirement.greenBuildingStandardLink,

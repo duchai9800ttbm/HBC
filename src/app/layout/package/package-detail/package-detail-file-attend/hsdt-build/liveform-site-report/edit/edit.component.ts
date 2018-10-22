@@ -58,6 +58,7 @@ export class EditComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.departmentId = 49;
+    this.customerId = '';
     this.getInfoTenderPreparationPlanning();
     this.getAllUser();
     this.isCreate = LiveformSiteReportComponent.formModel.isCreate;

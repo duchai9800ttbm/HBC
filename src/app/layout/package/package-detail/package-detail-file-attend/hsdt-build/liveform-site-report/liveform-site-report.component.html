@@ -1,207 +1,97 @@
-<ng-container *ngIf="isHistory; else elseTemplate">
-    <div id="template0" class="d-flex flex-column">
-        <div class="table-report">
-            <div class=" title-list-package d-flex flex-wrap align-items-center status-filter">
-                <div class="mr-auto d-flex align-items-end list-package mt-2 mb-2 title-header-report">
-                    <div class="d-flex justify-content-start title-header-report-text">
-                        <div class="mr-4">
-                            <div class="font__heading--size"> báo cáo khảo sát công trường (site surveying report)</div>
-                        </div>
-                    </div>
-                </div>
-                <div class="btn-toolbar mt-2 mb-2">
-                </div>
-            </div>
-
-            <ng-container *ngIf="isData; else elseTemplate">
-                <div class="table-responsive custom-table-responsive">
-                    <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger"
-                    class="table-file-scroll table-selection row-border hover cell-border dataTable">
-                        <thead>
-                            <tr>
-                                <th style="width: 18%;background-color: #f68e56!important;">
-                                    <div class="d-flex justify-content-center">
-                                        <div class="center-parent">
-                                            <div>Tên tài liệu</div>
-                                        </div>
-                                    </div>
-                                </th>
-                                <th style="width: 18%;background-color: #f68e56!important;">
-                                    <div class="d-flex justify-content-center">
-                                        <div class="center-parent">
-                                            <div>Lần phỏng vấn</div>
-                                        </div>
-                                    </div>
-                                </th>
-                                <th style="width: 18%;background-color: #f68e56!important;">
-                                    <div class="d-flex justify-content-center">
-                                        <div class="center-parent">
-                                            <div>Người tạo</div>
-                                        </div>
-                                    </div>
-                                </th>
-                                <th style="width: 18%; background-color: #f68e56!important;">
-                                    <div class="d-flex justify-content-center">
-                                        <div class="center-parent">
-                                            <div>Ngày tạo</div>
-                                        </div>
-                                    </div>
-                                </th>
-                                <th class="table-action text-center" style="width: 24%; background-color: #f68e56!important;">
-                                    Thao tác
-                                </th>
-
-                            </tr>
-                        </thead>
-
-                        <tbody>
-                            <tr>
-                                <td class="text-center">{{ documentData.tenTaiLieu }}</td>
-                                <td class="text-center">{{ documentData.lanPhongVan }}</td>
-                                <td class="text-center">{{ documentData.nguoiTao?.name }}</td>
-                                <td class="text-center">{{ (documentData.ngayTao)*1000 | date:'dd/MM/yyyy' }}</td>
-                                <td class="text-center">
-                                    <div class="d-flex justify-content-center">
-                                        <div class="icon-mg">
-                                            <a title="Xem file" class="icon-view-file" (click)="onActivate(true)"
-                                                [routerLink]="['./info']">
-                                                <i class="fa fa-eye" aria-hidden="true"></i>
-                                            </a>
-                                        </div>
-                                        <div class="icon-mg">
-                                            <a title="Edit file" class="icon-edit-file" (click)="onActivate(false)"
-                                                [routerLink]="['./edit']">
-                                                <i class="fa fa-pencil" aria-hidden="true"></i>
-                                            </a>
-                                        </div>
-                                        <div class="icon-mg">
-                                            <a title="Xóa file" (click)="deleteDoc()">
-                                                <i class="fa fa-trash-o" aria-hidden="true"></i>
-                                            </a>
-                                        </div>
-                                    </div>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-            </ng-container>
-            <ng-template #elseTemplate>
-                <div class="mt-5">
-                    <div class="text-center">
-                        <div class="mt-3">
-                            <button class="btn btn-primary" [routerLink]="['./create']">
-                                Tạo mới báo cáo khảo sát công trường
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            </ng-template>
-
-        </div>
-
-        <div *ngIf="isHistory" class="table-history">
-            <div class=" title-list-package d-flex flex-wrap align-items-center status-filter">
-                <div class="mr-auto d-flex align-items-end list-package mt-2 mb-2 title-header-report">
-                    <div class="d-flex justify-content-start title-header-report-text">
-                        <div class="mr-4">
-                            <div> lịch sử cập nhật</div>
-                        </div>
-                    </div>
-                </div>
-                <div class="btn-toolbar mt-2 mb-2">
-                </div>
-            </div>
-
-            <div class="table-responsive">
-                <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger"
-                class="table-file-scroll table-selection row-border hover cell-border dataTable">
-                    <thead>
-                        <tr>
-                            <th style="width: 10%!important;background-color: #f68e56!important;">
-                                <div class="d-flex justify-content-center">
-                                    <div class="center-parent">
-                                        <div>Lần cập nhật</div>
-                                    </div>
-                                </div>
-                            </th>
-                            <th style="width: 18%;background-color: #f68e56!important;">
-                                <div class="d-flex justify-content-center">
-                                    <div class="center-parent">
-                                        <div>Người cập nhật</div>
-                                    </div>
-                                </div>
-                            </th>
-                            <th style="width: 18%; background-color: #f68e56!important;">
-                                <div class="d-flex justify-content-center">
-                                    <div class="center-parent">
-                                        <div>Ngày cập nhật</div>
-                                    </div>
-                                </div>
-                            </th>
-                            <th style="width: 18%; background-color: #f68e56!important;">
-                                <div class="d-flex justify-content-center">
-                                    <div class="center-parent">
-                                        <div>Nội dung cập nhật</div>
-                                    </div>
-                                </div>
-                            </th>
-                            <th style="width: 24%; background-color: #f68e56!important;">
-                                <div class="d-flex justify-content-center">
-                                    <div class="center-parent">
-                                        <div>Chi tiết cập nhật</div>
-                                    </div>
-                                </div>
-                            </th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr *ngFor="let updateInfo of updateInfoList; index as i">
-                            <td class="text-center">{{ updateInfo.changedTimes }}</td>
-                            <td class="text-center">{{ updateInfo.employee?.employeeName }}</td>
-                            <td class="text-center">{{ (updateInfo.changedTime)*1000 | date:'dd/MM/yyyy' }}</td>
-                            <td class="text-center">
-                                <p *ngIf="isData">Cập nhật tài liệu</p>
-                                <p *ngIf="!isData">Xóa tài liệu</p>
-                                <p *ngFor="let item of updateInfo.liveFormChangeds; index as j">
-                                    {{ item.liveFormTitle }}: {{ item.oldValue }} --- {{ item.newValue }}
-                                </p>
-                            </td>
-                            <td class="text-center">
-                                {{ (updateInfo?.updateDesc != 'undefined') ? updateInfo.updateDesc : '' }}
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-            <app-pagination [(pagedResult)]="pagedResult" (pagedResultChange)="pagedResultChange($event)"></app-pagination>
-        </div>
-    </div>
-</ng-container>
-<ng-template #elseTemplate>
-    <div class="pl-4" id="template1">
-        <div class=" title-list-package d-flex flex-wrap align-items-center status-filter">
-            <div class="mr-auto d-flex align-items-end list-package mt-2 mb-2">
-                <div class="d-flex justify-content-start">
-                    <div class="mr-4">
-                        <div class="text-uppercase title-report"> báo cáo khảo sát công trường (site
-                            surveying report)</div>
-                    </div>
-                </div>
-            </div>
-            <div class="btn-toolbar mt-2 mb-2">
-            </div>
-        </div>
-        <div class="mt-5">
-            <div class="text-center">
-                <img class="icon-ic-file" src="assets/images/file_empty.png">
-                <div class="mt-3">Hiện chưa có bản báo cáo khảo sát công trường nào</div>
-                <div class="mt-3">
-                    <button class="btn btn-primary" [routerLink]="['./create']">
-                        Tạo mới báo cáo khảo sát công trường
-                    </button>
-                </div>
+<div class="p-3">
+    <h5 class="text-uppercase font__heading--size">
+        báo cáo khảo sát công trường (site surveying report)
+    </h5>
+    <div class="mt-3" *ngIf="!documentData">
+        <div class="text-center">
+            <img class="image-empty" src="assets/images/file_empty.png">
+            <div class="mt-3">Hiện chưa có bản báo cáo khảo sát công trường nào</div>
+            <div class="mt-3 d-flex justify-content-center">
+                <button class="btn btn-primary" [routerLink]="['./create']">
+                    Tạo mới báo cáo khảo sát công trường
+                </button>
             </div>
         </div>
     </div>
-</ng-template>
+
+    <div class="mt-4" *ngIf="documentData">
+        <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="table-selection stripe row-border hover cell-border dataTable">
+            <thead>
+                <tr>
+
+                    <th>Tên tài liệu</th>
+                    <th>Lần phỏng vấn</th>
+                    <th>Tình trạng</th>
+                    <th>Người tạo</th>
+                    <th>Ngày tạo</th>
+                    <th class="text-center">Thao tác</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+
+                    <td>{{ documentData.tenTaiLieu }}</td>
+                    <td>{{ documentData.lanPhongVan }}</td>
+                    <td>{{ (documentData.isDraft) ? 'Bản nháp' : 'Chính thức' }}</td>
+                    <td>{{ documentData.nguoiTao?.name }}</td>
+                    <td>{{ (documentData.ngayTao)*1000 | date:'dd/MM/yyyy' }}</td>
+                    <td>
+                        <div class="d-flex justify-content-center">
+                            <div>
+                                <a title="Xem file" (click)="onActivate(true)" [routerLink]="['./info']">
+                                    <i class="fa fa-eye text-warning" aria-hidden="true"></i>
+                                </a>
+                                <a title="Edit file" class=" text-success ml-3" (click)="onActivate(false)"
+                                    [routerLink]="['./edit']">
+                                    <i class="fa fa-pencil cursor-pointer" aria-hidden="true"> </i>
+                                </a>
+                                <a class=" text-dark ml-3" (click)="deleteDoc()">
+                                    <i class="fa fa-trash-o" aria-hidden="true"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+<ngx-spinner bdColor="rgba(51, 51, 51, 0.7)" size="medium" color="#fff" type="ball-clip-rotate-multiple"></ngx-spinner>
+
+<div class="mt-5 p-3" *ngIf="isHistory">
+    <div class="d-flex justify-content-between">
+        <h5 class="text-uppercase mb-3">Lịch sử cập nhật</h5>
+    </div>
+
+    <div class="table-responsive">
+        <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger2" class="table-selection stripe row-border hover cell-border dataTable">
+            <thead>
+                <tr>
+                    <th class="w-10">Lần cập nhật</th>
+                    <th class="w-10">Người cập nhật</th>
+                    <th class="w-15">Ngày cập nhật</th>
+                    <th class="w-25">Nội dung cập nhật</th>
+                    <th class="w-40">Chi tiết cập nhật</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let updateInfo of updateInfoList; index as i">
+                    <td class="text-center">{{ updateInfo.changedTimes }}</td>
+                    <td class="text-center">{{ updateInfo.employee?.employeeName }}</td>
+                    <td class="text-center">{{ (updateInfo.changedTime)*1000 | date:'dd/MM/yyyy' }}</td>
+                    <td class="text-center">
+                        <p *ngIf="isData">Cập nhật tài liệu</p>
+                        <p *ngIf="!isData">Xóa tài liệu</p>
+                        <p *ngFor="let item of updateInfo.liveFormChangeds; index as j">
+                            {{ item.liveFormTitle }}: {{ item.oldValue }} --- {{ item.newValue }}
+                        </p>
+                    </td>
+                    <td class="text-center">
+                        {{ (updateInfo?.updateDesc != 'undefined') ? updateInfo.updateDesc : '' }}
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <app-pagination [(pagedResult)]="pagedResult" (pagedResultChange)="pagedResultChange($event)"></app-pagination>
+</div>

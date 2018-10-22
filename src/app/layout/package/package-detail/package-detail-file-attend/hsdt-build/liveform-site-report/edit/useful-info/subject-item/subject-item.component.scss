@@ -168,7 +168,7 @@ input[type=text] {
 }
 
 label {
-    font-size: 11px;
+    font-size: 13px;
 }
 
 .add-content-button {
@@ -196,4 +196,21 @@ label {
     font-size: 30px;
     left: 30px;
     top: 6px;
+}
+// Set Font-Size
+.big-title {
+    font-size: 0.85rem;
+}
+
+.small-title {
+    font-size: 0.8rem;
+}
+
+input[type=text] {
+    font-size: 13px;
+}
+// Set FontStyle Italic & Color - Input Text
+input[type=text]::placeholder {
+    color: #cccccc;
+    font-style: italic;
 }

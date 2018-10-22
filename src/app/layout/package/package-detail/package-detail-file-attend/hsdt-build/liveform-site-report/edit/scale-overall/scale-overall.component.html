@@ -3,11 +3,11 @@
         <div id="info-docs">
             <div class="label-info label-info-name">
                 <label for="">Tên tài liệu</label>
-                <input type="text" formControlName="tenTaiLieu" tabindex="1">
+                <input type="text" placeholder="Nhập text" formControlName="tenTaiLieu" tabindex="1">
             </div>
             <div class="label-info">
                 <label for="">Lần phỏng vấn</label>
-                <input type="text" appInputNumber formControlName="lanPhongVan" tabindex="2">
+                <input type="text" appInputNumber placeholder="Nhập text" formControlName="lanPhongVan" tabindex="2">
             </div>
         </div>
         <h6 class="big-title font-weight-bold">1.&nbsp;quy mô tổng quan công trình (project statistic/scale)</h6>
@@ -66,19 +66,19 @@
                         </div>
                         <div class="label-project-scale">
                             <label for="">Số tầng/ Total number of floor</label>
-                            <input class="no-boder cus-input text-right align-placeholder" type="text" formControlName="soTang"
+                            <input class="no-boder cus-input text-right align-placeholder" type="text" placeholder="Nhập text" formControlName="soTang"
                                 tabindex="8">
                         </div>
                         <div class="label-project-scale">
                             <label for="">Tiến độ dự kiến/ Construction period (ngày)</label>
-                            <input class="no-boder cus-input text-right align-placeholder" type="text" appInputNumber
+                            <input class="no-boder cus-input text-right align-placeholder" type="text" placeholder="0" appInputNumber
                                 formControlName="tienDo" tabindex="9">
                         </div>
                     </div>
                     <div>
                         <p><u>Hình ảnh phối cảnh dự án/ Perspective image of project</u></p>
                         <div class="text-des-input">
-                            <input type="text" value="Text" formControlName="hinhAnhPhoiCanhDesc" tabindex="10">
+                            <input type="text" placeholder="Nhập text" formControlName="hinhAnhPhoiCanhDesc" tabindex="10">
                         </div>
                         <div class="image-demo-img">
                             <input type="file" accept="image/*" multiple #uploadPerspective (change)="uploadPerspectiveImage($event)">
@@ -105,7 +105,7 @@
                     package structure)</h6>
                 <div class="main-detail">
                     <div class="text-des-input">
-                        <input type="text" value="Thông tin kết cấu" formControlName="thongTinVeKetCauDesc" tabindex="12">
+                        <input type="text" placeholder="Nhập text" formControlName="thongTinVeKetCauDesc" tabindex="12">
                     </div>
                     <div>
                         <div class="image-demo-img">
@@ -131,7 +131,7 @@
                 <h6 class="small-title font-weight-bold">1.4 Những yêu cầu đặc biệt (Special Requirements)</h6>
                 <div class="main-detail">
                     <div class="text-des-input">
-                        <input type="text" value="Special Requirements" formControlName="nhungYeuCauDacBietDesc"
+                        <input type="text" placeholder="Nhập text" formControlName="nhungYeuCauDacBietDesc"
                             tabindex="14">
                     </div>
                     <div class="image-demo-img">
