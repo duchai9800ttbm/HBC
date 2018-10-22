@@ -192,7 +192,9 @@ export class NeedCreateTenderFormComponent implements OnInit, OnDestroy {
         } else {
             NeedCreateTenderFormComponent.formModel.createdEmployeeId = this.sessionService.currentUser.employeeId;
         }
-        NeedCreateTenderFormComponent.formModel.isAgreedParticipating = false;
+        // NeedCreateTenderFormComponent.formModel.isAgreedParticipating = false;
+        NeedCreateTenderFormComponent.formModel.isAgreedParticipating
+            = NeedCreateTenderFormComponent.formModel.tenderDirectorProposal.isAgreed;
         this.spinner.show();
         this.packageService
             .createOrUpdateProposedTenderParticipateReport(
