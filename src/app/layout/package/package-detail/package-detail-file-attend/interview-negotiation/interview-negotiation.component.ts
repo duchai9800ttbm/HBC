@@ -14,6 +14,7 @@ import { ActivatedRoute, Router, NavigationEnd } from '../../../../../../../node
 import { NgxSpinnerService } from '../../../../../../../node_modules/ngx-spinner';
 import { AlertService } from '../../../../../shared/services';
 import { ReportEndInterviewComponent } from './end-interview/report-end-interview/report-end-interview.component';
+import { CheckStatusPackage } from '../../../../../shared/constants/check-status-package';
 
 
 @Component({
@@ -24,7 +25,11 @@ import { ReportEndInterviewComponent } from './end-interview/report-end-intervie
 export class InterviewNegotiationComponent implements OnInit, OnDestroy {
   changeKeySearchInterviewInvitation$ = new BehaviorSubject<string>('');
   packageId: number;
-  statusPackage;
+  statusPackage = {
+    text: 'DaNhanLoiMoi',
+    stage: 'HSDT',
+    id: 16,
+  };
   numberStatusPackageInterview;
   bidStatus = BidStatus;
   amountInterview: number;
@@ -35,6 +40,8 @@ export class InterviewNegotiationComponent implements OnInit, OnDestroy {
   currentStatusInterview;
   isNgOnInit = false;
   subscription: Subscription;
+  checkStatusPackage = CheckStatusPackage;
+  urlCurrent;
   constructor(
     private dialogService: DialogService,
     private packageService: PackageService,
@@ -52,10 +59,10 @@ export class InterviewNegotiationComponent implements OnInit, OnDestroy {
     this.bidStatus.ChuanBiPhongVan, this.bidStatus.DaChotCongTacChuanBiPhongVan, this.bidStatus.DaPhongVan];
     this.stattusCurrentList = ['create', 'prepare', 'end'];
     this.packageId = +PackageDetailComponent.packageId;
-    this.checkStatusPackage();
+    this.checkStatusPackageFuc();
     this.subscription = this.statusObservableHsdtService.statusPackageService.subscribe(value => {
       // this.directionalRouter();
-      this.checkStatusPackage();
+      this.checkStatusPackageFuc();
     });
     // this.changeKeySearchInterviewInvitation$.debounceTime(600)
     //   .distinctUntilChanged()
@@ -64,7 +71,7 @@ export class InterviewNegotiationComponent implements OnInit, OnDestroy {
     //   });
     const eventRouter = this.router.events.subscribe((val) => {
       if ((val instanceof NavigationEnd) === true) {
-        this.checkStatusPackage();
+        this.checkStatusPackageFuc();
       }
     });
     this.directionalRouter();
@@ -77,14 +84,12 @@ export class InterviewNegotiationComponent implements OnInit, OnDestroy {
 
   directionalRouter() {
     this.packageService.getInforPackageID(this.packageId).subscribe(result => {
-      console.log('this.bidStatus.ChuanBiPhongVan', this.bidStatus.ChuanBiPhongVan, result.stageStatus.id);
       switch (result.stageStatus.id) {
         case (this.bidStatus.DaNopHSDT || this.bidStatus.DaNhanLoiMoi): {
           this.router.navigate([`/package/detail/${this.packageId}/attend/interview-negotiation/create`]);
           break;
         }
         case this.bidStatus.ChuanBiPhongVan: {
-          console.log('chuẩn bị phỏng vấn');
           this.router.navigate([`/package/detail/${this.packageId}/attend/interview-negotiation/prepare`]);
           break;
         }
@@ -97,34 +102,33 @@ export class InterviewNegotiationComponent implements OnInit, OnDestroy {
     });
   }
 
-  checkStatusPackage() {
+  checkStatusPackageFuc() {
     this.packageService.getInforPackageID(this.packageId).subscribe(result => {
-      this.statusPackage = result.stageStatus.id;
+      this.statusPackage = this.checkStatusPackage[result.stageStatus.id];
       this.activeRouter.firstChild.url.subscribe(url => {
-        const urlCurrent = url[0].path;
+        this.urlCurrent = url[0].path;
+        console.log('urlCurrent', this.urlCurrent, this.statusPackage);
         for (let i = 0; i < this.stattusCurrentList.length; i++) {
-          if (this.stattusCurrentList[i] === urlCurrent) {
+          if (this.stattusCurrentList[i] === this.urlCurrent) {
             this.currentStatusInterview = i + 1;
             break;
           }
         }
         this.interviewInvitationService.changeUrlChirld(this.currentStatusInterview);
       });
-      for (let i = 0; i < this.statusInInterviewList.length; i++) {
-        if (this.statusInInterviewList[i] === this.statusPackage) {
-          this.numberStatusPackageInterview = i;
-          break;
-        }
-      }
-      console.log('this.currentStatusInterview', this.currentStatusInterview);
-      console.log('this.numberStatusPackageInterview', this.numberStatusPackageInterview);
+      // for (let i = 0; i < this.statusInInterviewList.length; i++) {
+      //   if (this.statusInInterviewList[i] === this.statusPackage) {
+      //     this.numberStatusPackageInterview = i;
+      //     break;
+      //   }
+      // }
     });
   }
   // =========================
   // Đã nộp HSDT
   refeshSubmittedHSDT() {
     // this.directionalRouter();
-    this.checkStatusPackage();
+    this.checkStatusPackageFuc();
     this.refreshCreateInterview();
   }
   // =========================

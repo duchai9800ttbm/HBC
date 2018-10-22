@@ -6,6 +6,7 @@ import { Router, ActivatedRoute, NavigationEnd } from '../../../../../../node_mo
 import { StatusObservableHsdtService } from '../../../../shared/services/status-observable-hsdt.service';
 import { BidStatus } from '../../../../shared/constants/bid-status';
 import { Subscription } from '../../../../../../node_modules/rxjs';
+import { CheckStatusPackage } from '../../../../shared/constants/check-status-package';
 @Component({
   selector: 'app-package-detail-file-attend',
   templateUrl: './package-detail-file-attend.component.html',
@@ -16,7 +17,11 @@ export class PackageDetailFileAttendComponent implements OnInit, OnDestroy {
   packageData: PackageInfoModel;
   currentUrl;
   statusPackageID;
-  statusPackageName;
+  statusPackage = {
+    text: '',
+    stage: '',
+    id: null,
+  };
   bidStatus = BidStatus;
   isNgOnInit = true;
   subscription: Subscription;
@@ -29,6 +34,7 @@ export class PackageDetailFileAttendComponent implements OnInit, OnDestroy {
     'CanDieuChinhTrinhDuyetGia', 'DaDuyetTrinhDuyetGia', 'ChotHoSo', 'DaNopHSDT'];
   interview = ['DaNhanLoiMoi', 'ChuanBiPhongVan', 'DaChotCongTacChuanBiPhongVan', 'DaPhongVan'];
   listStatusPackage = [this.bidProposal, this.deployment, this.setHSDT, this.priceReview, this.interview];
+  checkStatusPackage = CheckStatusPackage;
   constructor(
     private packageService: PackageService,
     private router: Router,
@@ -39,31 +45,13 @@ export class PackageDetailFileAttendComponent implements OnInit, OnDestroy {
   }
   ngOnInit() {
     this.packageId = +PackageDetailComponent.packageId;
-    // this.checkStatusPackage();
     this.statusObservableHsdtService.statusPackageService.subscribe(value => {
-      // this.packageService.getInforPackageID(this.packageId).subscribe(result => {
-      // this.packageData = result;
-      // this.statusPackageName = this.packageData.stageStatus.id;
-      // for (let i = 0; i < this.listStatusPackage.length; i++) {
-      //   if (this.listStatusPackage[i].find(item => item === this.packageData.stageStatus.id)) {
-      //     this.statusPackageID = i;
-      //     if (i === 2) {
-      //       this.router.navigate([`/package/detail/${this.packageId}/attend/build`]);
-      //     }
-      //     break;
-      //   }
-      // }
-      // });
       if (!this.isNgOnInit) {
-        this.checkStatusPackage();
+        this.checkStatusPackageFuc();
       }
     });
-    // this.packageService.getInforPackageID(this.packageId).subscribe(result => {
-    //   this.packageData = result;
-    //   this.statusPackageName = this.packageData.stageStatus.id;
-    // });
     if (this.isNgOnInit) {
-      this.checkStatusPackage();
+      this.checkStatusPackageFuc();
       this.redirectByStatus(); // Điều hướng
       this.isNgOnInit = false;
     }
@@ -75,20 +63,17 @@ export class PackageDetailFileAttendComponent implements OnInit, OnDestroy {
     this.isComponentDetail = false;
   }
 
-  checkStatusPackage() {
+  checkStatusPackageFuc() {
     if (this.activeRouter.firstChild) {
       this.activeRouter.firstChild.url.subscribe(url => {
         this.currentUrl = url[0].path;
         if (this.urlChirld.find(item => item === this.currentUrl)) {
           this.packageService.getInforPackageID(this.packageId).subscribe(result => {
-            // this.packageData = result;
-            this.statusPackageName = result.stageStatus.id;
-            for (let i = 0; i < this.listStatusPackage.length; i++) {
-              if (this.listStatusPackage[i].find(item => item === result.stageStatus.id)) {
-                this.statusPackageID = i;
-                break;
-              }
-            }
+            this.statusPackage = this.checkStatusPackage[result.stageStatus.id];
+            console.log('statusPackage111', this.statusPackage, this.currentUrl);
+            // if (this.statusPackage.id === this.checkStatusPackage.DangLapHSDT.id) {
+            //   this.router.navigate([`/package/detail/${this.packageId}/attend/build/summary`]);
+            // }
           });
         }
       });
@@ -102,14 +87,8 @@ export class PackageDetailFileAttendComponent implements OnInit, OnDestroy {
               if (this.urlChirld.find(item => item === this.currentUrl)) {
                 console.log('API');
                 this.packageService.getInforPackageID(this.packageId).subscribe(result => {
-                  // this.packageData = result;
-                  this.statusPackageName = result.stageStatus.id;
-                  for (let i = 0; i < this.listStatusPackage.length; i++) {
-                    if (this.listStatusPackage[i].find(item => item === result.stageStatus.id)) {
-                      this.statusPackageID = i;
-                      break;
-                    }
-                  }
+                  this.statusPackage = this.checkStatusPackage[result.stageStatus.id];
+                  console.log('statusPackage222', this.statusPackage, this.currentUrl);
                 });
               }
             });
@@ -200,6 +179,7 @@ export class PackageDetailFileAttendComponent implements OnInit, OnDestroy {
           break;
         }
         default: {
+          this.router.navigate([`/package/detail/${this.packageId}/attend/interview-negotiation/end`]);
           break;
         }
       }
