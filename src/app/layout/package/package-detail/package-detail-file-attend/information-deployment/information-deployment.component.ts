@@ -400,8 +400,18 @@ export class InformationDeploymentComponent implements OnInit {
         this.alertService.error('Gửi phân công tiến độ thất bại!');
       });
     } else {
-      this.confirmService.missAction('Bảng phân công tiến độ chưa được xác nhận ký tại Người tạo và người duyệt',
-        `/package/detail/${this.bidOpportunityId}/attend/infomation-deployment/edit`);
+      console.log('CHưa ký');
+      if (!this.tenderPlan.isSignedByPreparedPerson) {
+        console.log('CHưa ký-1');
+        this.packageService.setRouterAction('edit');
+        this.confirmService.missAction('Bảng phân công tiến độ chưa được xác nhận ký tại Người tạo và người duyệt',
+          `/package/detail/${this.bidOpportunityId}/attend/infomation-deployment/edit`);
+      } else if (!this.tenderPlan.isSignedByApprovalPerson) {
+        console.log('CHưa ký-2');
+        this.packageService.setRouterAction('view');
+        this.confirmService.missAction('Bảng phân công tiến độ chưa được xác nhận ký tại Người tạo và người duyệt',
+          `/package/detail/${this.bidOpportunityId}/attend/infomation-deployment/edit`);
+      }
     }
   }
 
