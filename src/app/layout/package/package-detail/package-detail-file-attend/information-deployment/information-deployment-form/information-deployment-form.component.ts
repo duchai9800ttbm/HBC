@@ -110,7 +110,8 @@ export class InformationDeploymentFormComponent implements OnInit {
                     { type: 'week' },
                     'month'
                 ],
-                height: 2832,
+                height: 3250,
+                // 2832
                 listWidth: 0,
                 showWorkHours: false,
                 showWorkDays: false,
