@@ -4,7 +4,7 @@
         <span class="custom-dropdown w-30">
             <select class="form-control" [ngClass]="{'view-mode-control': viewMode}" [(ngModel)]="usefulInfo.title"
                 (change)="selectedChange()">
-                <option [ngValue]="null">---Chọn---</option>
+                <option value="">---Chọn---</option>
                 <option [value]="subject" *ngFor="let subject of subjectList">{{ subject }}</option>
             </select>
         </span>

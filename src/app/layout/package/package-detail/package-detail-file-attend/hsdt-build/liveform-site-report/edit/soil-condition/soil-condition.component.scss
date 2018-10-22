@@ -156,7 +156,7 @@ input[type=text] {
 
         label {
             width: 40%;
-            // margin-bottom: 8px;
+            font-size: 13px;
         }
 
         input {
@@ -254,10 +254,6 @@ input[type=text] {
     font-size: 20px;
 }
 
-label {
-    font-size: 11px !important;
-}
-
 .view-mode-control {
     display: none;
 }
@@ -275,4 +271,22 @@ label {
     .responsive-label-input {
         width: 40% !important;
     }
+}
+
+// Set Font-Size
+.big-title {
+    font-size: 0.85rem;
+}
+
+.small-title {
+    font-size: 0.8rem;
+}
+
+input[type=text] {
+    font-size: 13px;
+}
+// Set FontStyle Italic & Color - Input Text
+input[type=text]::placeholder {
+    color: #cccccc;
+    font-style: italic;
 }

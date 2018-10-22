@@ -6,8 +6,7 @@
             <div class="center-parent  mr-4" style="font-size: 18px; text-transform: uppercase">
                 <div>
                     <a style="cursor: pointer;" [routerLink]="['../../liveformsite']">
-                        <img class="pointer not-outline" height="12" src="assets\images\nghia.png" style="margin-bottom: 1px;"
-                            width="12">
+                        <img class="pointer not-outline mb-1" height="12" width="12" src="assets\images\nghia.png">
                     </a>
                     báo cáo khảo sát công trường (site survey report)
                 </div>
@@ -68,62 +67,60 @@
     </div>
 
     <div id="info-document">
-        <div class="headerInfo d-flex">
-            <div class="col-lg-6 header-container">
-                <div class="row">
-                    <div class="col-lg-4 titleHeader"><strong>Công trình (Project):</strong></div>
-                    <div class="col-lg-8 infoHeader">{{ packageData.projectName }}</div>
-                </div>
-
-                <div class="row mt-2">
-                    <div class="col-lg-4 titleHeader"><strong>Địa điểm (Location):</strong></div>
-                    <div class="col-lg-8 infoHeader">{{ packageData.place }}</div>
-                </div>
-
-                <div class="row mt-2">
-                    <div class="col-lg-4 titleHeader"><strong>Ban CHCT/Phòng ban:</strong></div>
-                    <div class="col-lg-8 infoHeader">
-                        <select class="custom-select-option" [(ngModel)]="departmentId">
-                            <option *ngFor="let item of listDepartments" [value]="item.key">
-                                {{ item.value }}
-                            </option>
-                        </select>
+        <div class="headerInfo">
+                <div class="d-flex responsive-container">
+                    <div class="col-lg-6 d-flex responsive-item">
+                        <div class="col-lg-4"><strong>Công trình (Project):</strong></div>
+                        <div class="col-lg-8">{{ packageData.projectName }}</div>
+                    </div>
+                    <div class="col-lg-6 d-flex responsive-item">
+                        <div class="col-lg-4"><strong>Gói thầu (Package):</strong></div>
+                        <div class="col-lg-8">{{ packageData.opportunityName }}</div>
                     </div>
                 </div>
-
-                <div class="row mt-2">
-                    <div class="col-lg-4 titleHeader"><strong>Người khảo sát/liên hệ:</strong></div>
-                    <div class="col-lg-8 infoHeader">
-                        <select class="custom-select-option option-set-width" [(ngModel)]="customerId">
-                            <option [value]="null">---Chọn---</option>
-                            <option *ngFor="let item of listCustomerContact" [value]="item.employeeId">
-                                {{ item.employeeName }}
-                            </option>
-                        </select>
+                <div class="d-flex mt-2 responsive-container">
+                    <div class="col-lg-6 d-flex responsive-item responsive-item--nomargin">
+                        <div class="col-lg-4"><strong>Địa điểm (Location):</strong></div>
+                        <div class="col-lg-8">{{ packageData.place }}</div>
+                    </div>
+                    <div class="col-lg-6 d-flex responsive-item responsive-item--nomargin">
+                        <div class="col-lg-4"></div>
+                        <div class="col-lg-8"></div>
                     </div>
                 </div>
-            </div>
-            <div class="col-lg-6 header-container">
-                <div class="row reset-margintop">
-                    <div class="col-lg-4 titleHeader"><strong>Gói thầu (Package):</strong></div>
-                    <div class="col-lg-8 infoHeader">{{ packageData.opportunityName }}</div>
+                <div class="d-flex mt-2 responsive-container">
+                    <div class="col-lg-6 d-flex responsive-item responsive-item--nomargin">
+                        <div class="col-lg-4"><strong>Ban CHCT/Phòng ban:</strong></div>
+                        <div class="col-lg-8">
+                            <select class="custom-select-option" [(ngModel)]="departmentId">
+                                <option *ngFor="let item of listDepartments" [value]="item.key">
+                                    {{ item.value }}
+                                </option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-lg-6 d-flex responsive-item">
+                        <div class="col-lg-4"><strong>Ngày khảo sát (Date):</strong></div>
+                        <div class="col-lg-8">{{ (ngayKhaoSat)*1000 | date:'dd/MM/yyyy HH:mm': '+0000' }}</div>
+                    </div>
                 </div>
-
-                <div class="row hidden-tag">
-                    <div class="col-lg-4 titleHeader"></div>
-                    <div class="col-lg-8 infoHeader"></div>
+                <div class="d-flex mt-2 responsive-container">
+                    <div class="col-lg-6 d-flex responsive-item responsive-item--nomargin">
+                        <div class="col-lg-4"><strong>Người khảo sát/liên hệ:</strong></div>
+                        <div class="col-lg-8">
+                            <select class="custom-select-option option-set-width" [(ngModel)]="customerId">
+                                <option value="">---Chọn---</option>
+                                <option *ngFor="let item of listCustomerContact" [value]="item.employeeId">
+                                    {{ item.employeeName }}
+                                </option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-lg-6 d-flex responsive-item responsive-item--nomargin">
+                        <div class="col-lg-4"></div>
+                        <div class="col-lg-8"></div>
+                    </div>
                 </div>
-
-                <div class="row mt-4 reset-margintop">
-                    <div class="col-lg-4 titleHeader"><strong>Ngày khảo sát (Date):</strong></div>
-                    <div class="col-lg-8 infoHeader">{{ (ngayKhaoSat)*1000 | date:'dd/MM/yyyy HH:mm': '+0000' }}</div>
-                </div>
-
-                <div class="row hidden-tag">
-                    <div class="col-lg-4 titleHeader"></div>
-                    <div class="col-lg-8 infoHeader"></div>
-                </div>
-            </div>
         </div>
         <router-outlet (activate)="disableSideMenu($event)"></router-outlet>
     </div>

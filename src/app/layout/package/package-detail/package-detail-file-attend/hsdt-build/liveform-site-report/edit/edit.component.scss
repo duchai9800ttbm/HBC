@@ -313,20 +313,22 @@ input[type=text] {
     width: 81%;
 }
 
+.hidden-tag {
+    visibility: hidden;
+}
+
 @media only screen and (max-width: 1200px) {
-    .headerInfo {
+    .responsive-container {
         flex-direction: column;
-    }
+        margin-top: unset;
 
-    .header-container {
-        max-width: 100%;
-
-        .reset-margintop {
-            margin-top: 0.5rem !important;
+        .responsive-item {
+            max-width: 100%;
+            margin-top: 0.5rem;
         }
-    }
 
-    .hidden-tag {
-        position: absolute;
+        .responsive-item.responsive-item--nomargin {
+            margin-top: unset;
+        }
     }
 }

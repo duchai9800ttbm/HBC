@@ -229,14 +229,14 @@
                             <td *ngIf="k != 0" class="d-none"></td>
 
                             <td class="boder-table text-truncate-custom" [title]="hoso.documentName" (click)="viewDetail(hoso)">
-                                <a href="javascript:;">
+                                <a class="link-effect">
                                     {{ hoso?.documentName }}
                                 </a>
                             </td>
                             <td class="boder-table text-center text-truncate text-truncate-custom underline-dotted"
                                 [title]="hoso?.images?.length">
-                                <a *ngIf="hoso?.images?.length !== 0" (click)="viewFullScreenImage(hoso.images)" href="javascript:;">{{
-                                    hoso?.images?.length }} hình ảnh</a>
+                                <a class="link-effect" *ngIf="hoso?.images?.length !== 0" (click)="viewFullScreenImage(hoso.images)">
+                                    {{ hoso?.images?.length }} hình ảnh</a>
                                 <div *ngIf="hoso?.images?.length === 0"></div>
                             </td>
 
