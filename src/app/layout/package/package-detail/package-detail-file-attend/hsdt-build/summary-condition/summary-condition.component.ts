@@ -42,7 +42,6 @@ export class SummaryConditionComponent implements OnInit {
     this.hoSoDuThauService.getInfoTenderConditionalSummary(this.packageId)
       .subscribe(data => {
         this.summaryCondition = data;
-        console.log(this.summaryCondition);
         setTimeout(() => {
           this.dtTrigger.next();
         }, 0);

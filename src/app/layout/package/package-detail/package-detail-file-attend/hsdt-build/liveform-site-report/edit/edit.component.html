@@ -28,6 +28,9 @@
                     </button>
                 </ng-container>
                 <ng-container *ngIf="isViewMode">
+                    <button *ngIf="!isDraft" class="btn btn-primary ml-1" (click)="submiToApprove()">
+                        Gửi duyệt
+                    </button>
                     <button class="btn btn-primary ml-1" (click)="editLiveform()">
                         Chỉnh sửa
                     </button>
@@ -68,59 +71,59 @@
 
     <div id="info-document">
         <div class="headerInfo">
-                <div class="d-flex responsive-container">
-                    <div class="col-lg-6 d-flex responsive-item">
-                        <div class="col-lg-4"><strong>Công trình (Project):</strong></div>
-                        <div class="col-lg-8">{{ packageData.projectName }}</div>
-                    </div>
-                    <div class="col-lg-6 d-flex responsive-item">
-                        <div class="col-lg-4"><strong>Gói thầu (Package):</strong></div>
-                        <div class="col-lg-8">{{ packageData.opportunityName }}</div>
+            <div class="d-flex responsive-container">
+                <div class="col-lg-6 d-flex responsive-item">
+                    <div class="col-lg-4"><strong>Công trình (Project):</strong></div>
+                    <div class="col-lg-8">{{ packageData.projectName }}</div>
+                </div>
+                <div class="col-lg-6 d-flex responsive-item">
+                    <div class="col-lg-4"><strong>Gói thầu (Package):</strong></div>
+                    <div class="col-lg-8">{{ packageData.opportunityName }}</div>
+                </div>
+            </div>
+            <div class="d-flex mt-2 responsive-container">
+                <div class="col-lg-6 d-flex responsive-item responsive-item--nomargin">
+                    <div class="col-lg-4"><strong>Địa điểm (Location):</strong></div>
+                    <div class="col-lg-8">{{ packageData.place }}</div>
+                </div>
+                <div class="col-lg-6 d-flex responsive-item responsive-item--nomargin">
+                    <div class="col-lg-4"></div>
+                    <div class="col-lg-8"></div>
+                </div>
+            </div>
+            <div class="d-flex mt-2 responsive-container">
+                <div class="col-lg-6 d-flex responsive-item responsive-item--nomargin">
+                    <div class="col-lg-4"><strong>Ban CHCT/Phòng ban:</strong></div>
+                    <div class="col-lg-8">
+                        <select class="custom-select-option" [(ngModel)]="departmentId">
+                            <option *ngFor="let item of listDepartments" [value]="item.key">
+                                {{ item.value }}
+                            </option>
+                        </select>
                     </div>
                 </div>
-                <div class="d-flex mt-2 responsive-container">
-                    <div class="col-lg-6 d-flex responsive-item responsive-item--nomargin">
-                        <div class="col-lg-4"><strong>Địa điểm (Location):</strong></div>
-                        <div class="col-lg-8">{{ packageData.place }}</div>
-                    </div>
-                    <div class="col-lg-6 d-flex responsive-item responsive-item--nomargin">
-                        <div class="col-lg-4"></div>
-                        <div class="col-lg-8"></div>
+                <div class="col-lg-6 d-flex responsive-item">
+                    <div class="col-lg-4"><strong>Ngày khảo sát (Date):</strong></div>
+                    <div class="col-lg-8">{{ (ngayKhaoSat)*1000 | date:'dd/MM/yyyy HH:mm': '+0000' }}</div>
+                </div>
+            </div>
+            <div class="d-flex mt-2 responsive-container">
+                <div class="col-lg-6 d-flex responsive-item responsive-item--nomargin">
+                    <div class="col-lg-4"><strong>Người khảo sát/liên hệ:</strong></div>
+                    <div class="col-lg-8">
+                        <select class="custom-select-option option-set-width" [(ngModel)]="customerId">
+                            <option value="">---Chọn---</option>
+                            <option *ngFor="let item of listCustomerContact" [value]="item.employeeId">
+                                {{ item.employeeName }}
+                            </option>
+                        </select>
                     </div>
                 </div>
-                <div class="d-flex mt-2 responsive-container">
-                    <div class="col-lg-6 d-flex responsive-item responsive-item--nomargin">
-                        <div class="col-lg-4"><strong>Ban CHCT/Phòng ban:</strong></div>
-                        <div class="col-lg-8">
-                            <select class="custom-select-option" [(ngModel)]="departmentId">
-                                <option *ngFor="let item of listDepartments" [value]="item.key">
-                                    {{ item.value }}
-                                </option>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="col-lg-6 d-flex responsive-item">
-                        <div class="col-lg-4"><strong>Ngày khảo sát (Date):</strong></div>
-                        <div class="col-lg-8">{{ (ngayKhaoSat)*1000 | date:'dd/MM/yyyy HH:mm': '+0000' }}</div>
-                    </div>
+                <div class="col-lg-6 d-flex responsive-item responsive-item--nomargin">
+                    <div class="col-lg-4"></div>
+                    <div class="col-lg-8"></div>
                 </div>
-                <div class="d-flex mt-2 responsive-container">
-                    <div class="col-lg-6 d-flex responsive-item responsive-item--nomargin">
-                        <div class="col-lg-4"><strong>Người khảo sát/liên hệ:</strong></div>
-                        <div class="col-lg-8">
-                            <select class="custom-select-option option-set-width" [(ngModel)]="customerId">
-                                <option value="">---Chọn---</option>
-                                <option *ngFor="let item of listCustomerContact" [value]="item.employeeId">
-                                    {{ item.employeeName }}
-                                </option>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="col-lg-6 d-flex responsive-item responsive-item--nomargin">
-                        <div class="col-lg-4"></div>
-                        <div class="col-lg-8"></div>
-                    </div>
-                </div>
+            </div>
         </div>
         <router-outlet (activate)="disableSideMenu($event)"></router-outlet>
     </div>

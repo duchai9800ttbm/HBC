@@ -177,9 +177,9 @@ export class TenderPriceApproval {
             baseTenderAmount: number;
             alternativeTenderAmount: number;
             note: string
-        }
+        };
     };
-
+    updatedDesc: string;
 }
 
 

@@ -1444,6 +1444,8 @@
             </div>
         </form>
 
+        <app-popup-description *ngIf="showPopupConfirm" (closed)="submitLiveForm($event)"></app-popup-description>
+
     </div>
     <div class="sidebar-review" id="content-right" *ngIf="type !== 'create'">
         <app-comment-editor></app-comment-editor>

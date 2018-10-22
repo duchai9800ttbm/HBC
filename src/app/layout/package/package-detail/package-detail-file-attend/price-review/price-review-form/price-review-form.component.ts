@@ -29,6 +29,7 @@ export class PriceReviewFormComponent implements OnInit, AfterViewInit {
   isModeCreate;
   isModeEdit;
   packageId;
+  showPopupConfirm = false;
   @Input() model: TenderPriceApproval;
   @Input() type: string;
 
@@ -660,7 +661,8 @@ export class PriceReviewFormComponent implements OnInit, AfterViewInit {
       documentName: {
         value: this.model.documentName,
         disabled: this.isModeView
-      }
+      },
+      updatedDesc: ''
     });
   }
 
@@ -669,13 +671,19 @@ export class PriceReviewFormComponent implements OnInit, AfterViewInit {
   submit(isSaveDraft: boolean) {
     if (isSaveDraft) {
       this.priceReviewForm.get('isDraftVersion').patchValue(true);
+    } else {
+      this.showPopupConfirm = true;
     }
-    if (!isSaveDraft) {
-      this.priceReviewForm.get('isDraftVersion').patchValue(false);
+  }
+  submitLiveForm(check) {
+    if (check === false) {
+      this.showPopupConfirm = false;
+    } else {
+      this.priceReviewForm.get('updatedDesc').patchValue(check);
+      this.priceReviewService.createOrEdit(this.priceReviewForm.value, this.packageId).subscribe(() => {
+        this.router.navigate([`/package/detail/${this.packageId}/attend/price-review/detail`]);
+      });
     }
-    this.priceReviewService.createOrEdit(this.priceReviewForm.value, this.packageId).subscribe(() => {
-      this.router.navigate([`/package/detail/${this.packageId}/attend/price-review/detail`]);
-    });
   }
 
   refresh() {

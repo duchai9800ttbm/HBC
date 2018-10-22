@@ -128,7 +128,7 @@ export class EditComponent implements OnInit, OnDestroy {
         .subscribe(() => {
           this.showPopupConfirm = false;
           this.spinner.hide();
-          this.router.navigate([`/package/detail/${this.currentBidOpportunityId}/attend/build/liveformsite/info/scale`]);
+          this.router.navigate([`/package/detail/${this.currentBidOpportunityId}/attend/build/liveformsite`]);
           const message = (this.isCreate) ? 'Tạo' : 'Cập nhật';
           this.alertService.success(`${message} Báo cáo khảo sát công trường thành công.`);
         }, err => {
@@ -150,7 +150,7 @@ export class EditComponent implements OnInit, OnDestroy {
 
   updateliveform(check: boolean) {
     LiveformSiteReportComponent.formModel.isDraft = check;
-    if (this.isCreate) {
+    if (check || this.isCreate) {
       this.submitLiveForm(true);
     } else {
       this.showPopupConfirm = true;
@@ -158,6 +158,9 @@ export class EditComponent implements OnInit, OnDestroy {
   }
   cancelCreateUpdate() {
     this.router.navigate([`/package/detail/${this.currentBidOpportunityId}/attend/build/liveformsite`]);
+  }
+  submiToApprove() {
+    this.alertService.error('Chưa có API gửi duyệt LiveForm Công trình');
   }
   editLiveform() {
     LiveformSiteReportComponent.isViewMode = false;

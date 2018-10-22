@@ -93,10 +93,8 @@ export class LiveformSiteReportComponent implements OnInit {
       this.spinner.hide();
       this.alertService.error('Đã xảy ra lỗi, cập nhật dữ liệu lifeform không thành công');
     });
-    console.log(`run`);
     this.siteSurveyReportService.changedHistoryTenderSiteReport(this.bidOpportunityId, 0, 10)
       .subscribe(responseResultHistory => {
-        console.log(`run2`);
         this.pagedResult = responseResultHistory;
         this.updateInfoList = responseResultHistory.items;
         this.dtTrigger.next();

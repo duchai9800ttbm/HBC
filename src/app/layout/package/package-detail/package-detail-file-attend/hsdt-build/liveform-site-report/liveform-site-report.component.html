@@ -30,7 +30,7 @@
             <tbody>
                 <tr>
 
-                    <td>{{ documentData.tenTaiLieu }}</td>
+                    <td><a class="link-effect" [routerLink]="['./info']">{{ documentData.tenTaiLieu }}</a></td>
                     <td>{{ documentData.lanPhongVan }}</td>
                     <td>{{ (documentData.isDraft) ? 'Bản nháp' : 'Chính thức' }}</td>
                     <td>{{ documentData.nguoiTao?.name }}</td>

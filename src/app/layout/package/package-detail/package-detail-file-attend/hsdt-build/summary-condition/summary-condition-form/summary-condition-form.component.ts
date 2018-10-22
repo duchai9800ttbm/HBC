@@ -22,6 +22,7 @@ export class SummaryConditionFormComponent implements OnInit, OnDestroy {
   showPopupConfirm = false;
   isModeView = false;
   isCreate = false;
+  isDraft = false;
   constructor(
     private packageService: PackageService,
     private hoSoDuThauService: HoSoDuThauService,
@@ -71,6 +72,7 @@ export class SummaryConditionFormComponent implements OnInit, OnDestroy {
     this.hoSoDuThauService.getInfoTenderConditionalSummary(this.packageId).subscribe(data => {
       if (data) {
         this.hoSoDuThauService.emitDataAll(data);
+        this.isDraft = data.isDraftVersion;
       }
       if (!data) {
         const obj = new DuLieuLiveFormDKDT();
@@ -88,11 +90,14 @@ export class SummaryConditionFormComponent implements OnInit, OnDestroy {
   onSubmit(check: boolean) {
     HoSoDuThauService.tempDataLiveFormDKDT.value.bidOpportunityId = this.packageId;
     HoSoDuThauService.tempDataLiveFormDKDT.value.isDraftVersion = check;
-    if (check) {
+    if (check || this.isCreate) {
       this.submitLiveForm(true);
     } else {
       this.showPopupConfirm = true;
     }
+  }
+  submiToApprove() {
+    this.alertService.error('Chưa ráp API');
   }
   backSummary() {
     this.router.navigate([`package/detail/${this.packageId}/attend/build/summary`]);
