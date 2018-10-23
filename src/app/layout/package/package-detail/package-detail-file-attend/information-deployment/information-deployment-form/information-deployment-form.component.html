@@ -219,7 +219,6 @@
                         <tr *ngFor="let data of tasksFA.controls; let i = index" [formGroupName]="i" [class.b-k-alt]="i % 2 != 0">
                             <td class="text-center">{{data.get('itemNo').value}}</td>
                             <td>{{data.get('itemName').value}}</td>
-                            <!-- <td>{{data.get('itemDesc').value}}</td> -->
                             <td class="p-0 position-relative">
                                 <textarea class="form-control b-textarea h-100" formControlName="itemDesc"></textarea>
                                 <span *ngIf="!data.get('itemDesc').value" class="fake-placeholder">Nhập text</span>
@@ -261,7 +260,6 @@
                             </td>
                             <td class="text-center">
                                 {{data.get('totalTime') ? data.get('totalTime').value : ''}}
-                                <!-- {{getItemDuration(data.get('startDate').value, data.get('finishDate').value)}} -->
                             </td>
                         </tr>
                     </tbody>

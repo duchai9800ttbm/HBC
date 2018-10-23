@@ -222,3 +222,6 @@ table, thead, tbody, tfoot {
 :host /deep/ .ng-select .ng-select-container .ng-value-container .ng-placeholder {
     color: #495057;
 }
+:host /deep/ .ng-dropdown-panel.ng-select-top{
+    min-width: 8rem;
+}

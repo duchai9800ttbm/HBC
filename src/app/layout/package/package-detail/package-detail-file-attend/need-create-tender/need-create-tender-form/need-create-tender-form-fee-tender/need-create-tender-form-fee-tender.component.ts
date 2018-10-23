@@ -32,7 +32,7 @@ export class NeedCreateTenderFormFeeTenderComponent implements OnInit {
   createForm() {
     const formValue = NeedCreateTenderFormComponent.formModel.feeOfTenderInvitationDocument;
     this.feeTenderForm = this.fb.group({
-      feeOfTenderInvitationDocument: formValue ? formValue.feeOfTenderInvitationDocument : 0,
+      feeOfTenderInvitationDocument: formValue ? formValue.feeOfTenderInvitationDocument : null,
       feeOfTenderInvitationDocumentCurrency: this.fb.group({
         key: formValue && formValue.feeOfTenderInvitationDocumentCurrency ? formValue.feeOfTenderInvitationDocumentCurrency.key : 'VNĐ',
         value: formValue && formValue.feeOfTenderInvitationDocumentCurrency ? formValue.feeOfTenderInvitationDocumentCurrency.value : 'VNĐ',
@@ -51,6 +51,7 @@ export class NeedCreateTenderFormFeeTenderComponent implements OnInit {
 
   mappingToLiveFormData(data) {
     NeedCreateTenderFormComponent.formModel.feeOfTenderInvitationDocument = data;
+    console.log('data-mappingToLiveFormData', data);
     if (NeedCreateTenderFormComponent.formModel.feeOfTenderInvitationDocument.feeOfTenderInvitationDocument == null) {
       NeedCreateTenderFormComponent.formModel.feeOfTenderInvitationDocument.feeOfTenderInvitationDocument = 0;
     }
