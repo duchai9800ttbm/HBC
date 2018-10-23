@@ -8,10 +8,12 @@
                 <h4 class="mb-0" *ngIf="package?.stageStatus?.id === bidStatus.CanLapTrinhDuyetGia">{{package?.stageStatus?.text}}</h4>
                 <h4 class="mb-0" *ngIf="package?.stageStatus?.id === bidStatus.DaGuiDuyetTrinhDuyetGia">{{package?.stageStatus?.text}}</h4>
                 <h4 class="mb-0" *ngIf="package?.stageStatus?.id === bidStatus.DaDuyetTrinhDuyetGia">{{package?.stageStatus?.text}}</h4>
+                <h4 class="mb-0" *ngIf="package?.stageStatus?.id === bidStatus.CanDieuChinhTrinhDuyetGia">{{package?.stageStatus?.text}}</h4>
                 <h4 class="mb-0" *ngIf="package?.stageStatus?.id === bidStatus.ChotHoSo">{{package?.stageStatus?.text}}</h4>
                 <h4 class="mb-0" *ngIf="(package?.stageStatus?.id !== bidStatus.DangLapHSDT) && (package?.stageStatus?.id !== bidStatus.CanLapTrinhDuyetGia)
                 && (package?.stageStatus?.id !== bidStatus.DaGuiDuyetTrinhDuyetGia)
                 && (package?.stageStatus?.id !== bidStatus.DaDuyetTrinhDuyetGia)
+                && (package?.stageStatus?.id !== bidStatus.CanDieuChinhTrinhDuyetGia)
                 && (package?.stageStatus?.id !== bidStatus.ChotHoSo)">Đã nộp HSDT</h4>
             </div>
         </div>
