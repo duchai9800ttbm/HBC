@@ -298,9 +298,9 @@ export class PriceReviewSummaryComponent implements OnInit {
     this.confirmService.confirm('Bạn có chắc muốn xóa liveform trình duyệt giá?', () => {
       this.priceReviewService.delete(this.packageId).subscribe(data => {
         that.refresh(false);
-        that.alertService.success('Xóa thành công!');
+        that.alertService.success('Xóa trình duyệt giá thành công!');
       }, err => {
-        that.alertService.error('Xóa thất bại, vui lòng thử lại sau!');
+        that.alertService.error('Xóa trình duyệt giá thất bại!');
       });
     });
   }

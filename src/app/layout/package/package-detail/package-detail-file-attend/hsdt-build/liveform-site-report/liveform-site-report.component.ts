@@ -120,10 +120,10 @@ export class LiveformSiteReportComponent implements OnInit {
       'Bạn có chắc chắn muốn xóa báo cáo này?',
       () => {
         this.siteSurveyReportService.deleteSiteSurveyingReport(this.bidOpportunityId).subscribe(res => {
-          this.alertService.success('Đã xóa báo cáo công trình!');
+          this.alertService.success('Xóa báo cáo công trình thành công!');
           this.spinner.hide();
           this.refresh();
-        }, err => this.alertService.error('Đã gặp lỗi, chưa xóa được báo cáo công trình!'));
+        }, err => this.alertService.error('Xóa báo cáo công trình thất bại!'));
       }
     );
   }
