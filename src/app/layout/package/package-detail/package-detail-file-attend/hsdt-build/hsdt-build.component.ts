@@ -15,6 +15,8 @@ import { PagedResult } from '../../../../../shared/models';
 import { DATATABLE_CONFIG2 } from '../../../../../shared/configs';
 import { GroupUserService } from '../../../../../shared/services/group-user.service';
 import { ListUserItem } from '../../../../../shared/models/user/user-list-item.model';
+import { PackageInfoModel } from '../../../../../shared/models/package/package-info.model';
+import { BidStatus } from '../../../../../shared/constants/bid-status';
 @Component({
     selector: 'app-hsdt-build',
     templateUrl: './hsdt-build.component.html',
@@ -37,6 +39,8 @@ export class HsdtBuildComponent implements OnInit {
     routerName;
     isHighlight = 0;
     subscription: Subscription;
+    package = new PackageInfoModel();
+    bidStatus = BidStatus;
 
     constructor(
         private hoSoDuThauService: HoSoDuThauService,
@@ -52,11 +56,12 @@ export class HsdtBuildComponent implements OnInit {
         this.subscription = this.hoSoDuThauService.watchChangingUpload().subscribe(signal => {
             this.getDanhSachLoaiHoSo(false);
         });
-        // setTimeout(() => {
-        //     this.packageService.isSummaryConditionForm$.subscribe(data => {
-        //         this.isShowMenu = data;
-        //     });
-        // });
+
+        this.packageService.getInforPackageID(this.packageId).subscribe(result => {
+            this.package = result;
+        }, err => {
+        });
+
     }
 
     getDanhSachLoaiHoSo(spinner: boolean) {
@@ -115,6 +120,10 @@ export class HsdtBuildComponent implements OnInit {
                 this.hoSoDuThauService.chotHoSoDuThau(this.packageId).subscribe(res => {
                     this.alertService.success(`Đã chốt Hồ sơ dự thầu thành công!`);
                     this.spinner.hide();
+                    this.packageService.getInforPackageID(this.packageId).subscribe(result => {
+                        this.package = result;
+                    }, err => {
+                    });
                     this.refresh();
                 }, err => {
                     this.alertService.error(`Đã có lỗi. Chốt Hồ sơ dự thầu không thành công.`);

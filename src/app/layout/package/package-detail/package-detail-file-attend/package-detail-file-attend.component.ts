@@ -81,7 +81,7 @@ export class PackageDetailFileAttendComponent implements OnInit, OnDestroy {
     this.subscription = this.router.events.subscribe((val) => {
       if (this.isComponentDetail) {
         if ((val instanceof NavigationEnd) === true) {
-          if (this.activeRouter.firstChild) {
+           if (this.activeRouter.firstChild) {
             this.activeRouter.firstChild.url.subscribe(url => {
               this.currentUrl = url[0].path;
               if (this.urlChirld.find(item => item === this.currentUrl)) {

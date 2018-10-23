@@ -4,7 +4,7 @@
             <div class="rule mr-2">
             </div>
             <div class="center-parent mr-4">
-                <h4 class="mb-0" *ngIf="package?.stageStatus?.id === bidStatus.DangLapHSDT">{{package?.stageStatus?.text}}</h4>
+                <h4 class="mb-0" *ngIf="package?.stageStatus?.id === bidStatus.DangLapHSDT">Cần lập trình duyệt giá</h4>
                 <h4 class="mb-0" *ngIf="package?.stageStatus?.id === bidStatus.CanLapTrinhDuyetGia">{{package?.stageStatus?.text}}</h4>
                 <h4 class="mb-0" *ngIf="package?.stageStatus?.id === bidStatus.DaGuiDuyetTrinhDuyetGia">{{package?.stageStatus?.text}}</h4>
                 <h4 class="mb-0" *ngIf="package?.stageStatus?.id === bidStatus.DaDuyetTrinhDuyetGia">{{package?.stageStatus?.text}}</h4>
@@ -26,7 +26,8 @@
                     <input type="text" class="form-control icon" placeholder="&#xf002; Tên tài liệu">
                 </div>
             </div>
-            <button type="button" class="btn btn-primary ml-1" *ngIf="priceReview?.isDraftVersion === false && package?.stageStatus?.id === 'CanLapTrinhDuyetGia'" (click)="guiDuyet()">Gửi duyệt trình duyệt giá</button>
+            <button type="button" class="btn btn-primary ml-1" *ngIf="priceReview?.isDraftVersion === false && (package?.stageStatus?.id === 'CanLapTrinhDuyetGia' || package?.stageStatus?.id === bidStatus.DangLapHSDT) "
+                (click)="guiDuyet()">Gửi duyệt trình duyệt giá</button>
             <button type="button" class="btn btn-primary ml-1" *ngIf="package?.stageStatus?.id === 'DaDuyetTrinhDuyetGia'" (click)="chotHoSo()">Chốt hồ sơ</button>
             <button type="button" class="btn btn-primary ml-1" *ngIf="package?.stageStatus?.id === 'CanDieuChinhTrinhDuyetGia'" (click)="guiDuyet()">Gửi lại trình duyệt giá</button>
             <button type="button" class="btn btn-primary ml-1" *ngIf="package?.stageStatus?.id === 'DaNopHSDT' || package?.stageStatus?.id === 'ChotHoSo'"
@@ -46,7 +47,7 @@
 </div>
 <div class="mt-5 screen-empty" *ngIf="!priceReview">
     <div class="text-center">
-            <img class="image-empty" src="assets/images/file_empty.png">
+        <img class="image-empty" src="assets/images/file_empty.png">
     </div>
     <div class="text-center mt-3">
         Hiện chưa có trình duyệt giá nào
@@ -131,7 +132,9 @@
             </thead>
             <tbody>
                 <tr>
-                    <td class="select-filter" valign="baseline" routerLink="../detail"><a class="link-effect">Trình duyệt giá</a></td>
+                    <td class="select-filter" valign="baseline" routerLink="../detail">
+                        <a class="link-effect">Trình duyệt giá</a>
+                    </td>
                     <td style="padding: 0!important; max-width: 200px;">
                         <div class="attach-file">
                             <div class="item d-flex align-items-center" style="box-sizing: border-box" *ngFor="let item of priceReview.files">
