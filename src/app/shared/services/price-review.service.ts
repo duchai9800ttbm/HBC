@@ -12,6 +12,7 @@ import { PagedResult } from '../models';
 import { SiteReportChangedHistory } from '../models/site-survey-report/site-report-changed-history';
 import { HoSoDuThauService } from './ho-so-du-thau.service';
 import { HistoryLiveForm } from '../models/ho-so-du-thau/history-liveform.model';
+import { InstantSearchService } from './instant-search.service';
 
 @Injectable()
 export class PriceReviewService {
@@ -42,7 +43,8 @@ export class PriceReviewService {
 
   constructor(
     private apiService: ApiService,
-    private sessionService: SessionService
+    private sessionService: SessionService,
+    private instantSearchService: InstantSearchService,
   ) { }
 
   get employeeId() {
@@ -112,6 +114,14 @@ export class PriceReviewService {
   getDanhSachHSDTChinhThuc(bidOpportunityId: number) {
     const url = `bidopportunity/${bidOpportunityId}/approvaltenderdocs`;
     return this.apiService.get(url).map(response => response.result.map(this.toItemHSDTChinhThuc));
+  }
+
+  getDanhSachHSDTChinhThucInstantSearch(bidOpportunityId: number, terms: Observable<string>) {
+    const url = `bidopportunity/${bidOpportunityId}/approvaltenderdocs?searchTerm=`;
+    return this.instantSearchService
+      .search(url, terms)
+      .map(response => response.map(this.toItemHSDTChinhThuc));
+    // return this.apiService.get(url).map(response => response.result.map(this.toItemHSDTChinhThuc));
   }
 
   changedHistoryPriceReview(bidOpportunityId: number, page: string | number, pageSize: number | string)
