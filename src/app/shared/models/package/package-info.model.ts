@@ -82,4 +82,5 @@ export class PackageInfoModel {
     totalTime: string;
     description: string;
     isSubmittedHSDT: boolean;
+    isClosedHSDT: boolean;
 }

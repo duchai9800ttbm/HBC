@@ -6,8 +6,8 @@
                     <div class="rule mr-2">
                     </div>
                     <div class="center-parent  mr-4 res-header-title">
-                        <div *ngIf="package?.stageStatus?.id === bidStatus.DangLapHSDT">Đang lập HSDT</div>
-                        <div *ngIf="package?.stageStatus?.id !== bidStatus.DangLapHSDT">Đã chốt HSDT</div>
+                        <div *ngIf="!package?.isClosedHSDT">Đang lập HSDT</div>
+                        <div *ngIf="package?.isClosedHSDT">Đã chốt HSDT</div>
                     </div>
                 </div>
             </div>

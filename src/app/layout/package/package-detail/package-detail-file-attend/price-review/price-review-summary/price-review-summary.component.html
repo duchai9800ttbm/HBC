@@ -23,7 +23,7 @@
             <div>
                 <div class="input-group ml-auto max-width-name-document" *ngIf="package?.stageStatus?.id === 'DaNopHSDT' || package?.stageStatus?.id === 'ChotHoSo'">
                     <span class="input-group-addon">Tìm kiếm theo</span>
-                    <input type="text" class="form-control icon" placeholder="&#xf002; Tên tài liệu">
+                    <input  (keyup)="searchTerm$.next($event.target.value)" type="text" class="form-control icon" placeholder="&#xf002; Tên tài liệu">
                 </div>
             </div>
             <button type="button" class="btn btn-primary ml-1" *ngIf="priceReview?.isDraftVersion === false && (package?.stageStatus?.id === 'CanLapTrinhDuyetGia' || package?.stageStatus?.id === bidStatus.DangLapHSDT) "
@@ -59,7 +59,9 @@
     </div>
 </div>
 
-<div class="content" *ngIf="priceReview">
+<div class="content" *ngIf="priceReview && !(package?.stageStatus?.id === bidStatus.DaDuyetTrinhDuyetGia 
+                            || package?.stageStatus?.id === bidStatus.ChotHoSo
+                            || package?.stageStatus?.id === bidStatus.DaNopHSDT)">
     <div class="mb-4 mt-1">
         <h5>BẢNG TÓM TẮT THÔNG TIN DỰ ÁN - TRÌNH DUYỆT GIÁ THẦU</h5>
     </div>
@@ -198,40 +200,42 @@
 </div>
 
 
-
-<div class="content mt-5" *ngIf="historyList && historyList.length !== 0">
-    <div class="d-flex justify-content-between">
-        <h5 class="text-uppercase mb-3">Lịch sử cập nhật</h5>
-    </div>
-    <div class="table-responsive">
-        <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger2" class="w-100 table-selection stripe row-border hover cell-border dataTable">
-            <thead>
-                <tr>
-                    <th class="w-15">Lần cập nhật</th>
-                    <th class="w-10">Người cập nhật</th>
-                    <th class="w-15">Ngày cập nhật</th>
-                    <th class="w-20">Nội dung cập nhật</th>
-                    <th class="w-40">Chi tiết cập nhật</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr *ngFor="let itemByChangedTimes of historyList; let i = index">
-                    <td class="text-center">
-                        {{historyList.length - i}}
-                    </td>
-                    <td> {{itemByChangedTimes.items[0].employee?.employeeName}}</td>
-                    <td>{{ (itemByChangedTimes.items[0].changedTime)*1000 | date:'dd/MM/yyyy , HH:mm':'+0000' }}</td>
-                    <td>
-                        <div class="text-truncate" [title]="itemByChangedTimes.items[0].updateDesc">{{itemByChangedTimes.items[0].updateDesc}}</div>
-                    </td>
-                    <td class="font-size-90">
-                        <div *ngIf="itemByChangedTimes.items && itemByChangedTimes.items !== 0">
-                            <div *ngFor="let itemByChangeTime of itemByChangedTimes.items">
-                                <div *ngFor="let itemByLiveFormChanged of itemByChangeTime.liveFormChangeds">
-                                    <div class="text-truncate">
-                                        <div *ngFor="let itemByLiveFormStep of itemByLiveFormChanged.items">
-                                            <div *ngIf="!itemByChangeTime.liveFormChangeds[0].value">
-                                                <div *ngIf="!(itemByLiveFormStep.liveFormTitle === 'CostOfCapital' ||
+<ng-container *ngIf="priceReview && !(package?.stageStatus?.id === bidStatus.DaDuyetTrinhDuyetGia 
+|| package?.stageStatus?.id === bidStatus.ChotHoSo
+|| package?.stageStatus?.id === bidStatus.DaNopHSDT)">
+    <div class="content mt-5" *ngIf="historyList && historyList.length !== 0">
+        <div class="d-flex justify-content-between">
+            <h5 class="text-uppercase mb-3">Lịch sử cập nhật</h5>
+        </div>
+        <div class="table-responsive">
+            <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger2" class="w-100 table-selection stripe row-border hover cell-border dataTable">
+                <thead>
+                    <tr>
+                        <th class="w-15">Lần cập nhật</th>
+                        <th class="w-10">Người cập nhật</th>
+                        <th class="w-15">Ngày cập nhật</th>
+                        <th class="w-20">Nội dung cập nhật</th>
+                        <th class="w-40">Chi tiết cập nhật</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let itemByChangedTimes of historyList; let i = index">
+                        <td class="text-center">
+                            {{historyList.length - i}}
+                        </td>
+                        <td> {{itemByChangedTimes.items[0].employee?.employeeName}}</td>
+                        <td>{{ (itemByChangedTimes.items[0].changedTime)*1000 | date:'dd/MM/yyyy , HH:mm':'+0000' }}</td>
+                        <td>
+                            <div class="text-truncate" [title]="itemByChangedTimes.items[0].updateDesc">{{itemByChangedTimes.items[0].updateDesc}}</div>
+                        </td>
+                        <td class="font-size-90">
+                            <div *ngIf="itemByChangedTimes.items && itemByChangedTimes.items !== 0">
+                                <div *ngFor="let itemByChangeTime of itemByChangedTimes.items">
+                                    <div *ngFor="let itemByLiveFormChanged of itemByChangeTime.liveFormChangeds">
+                                        <div class="text-truncate">
+                                            <div *ngFor="let itemByLiveFormStep of itemByLiveFormChanged.items">
+                                                <div *ngIf="!itemByChangeTime.liveFormChangeds[0].value">
+                                                    <div *ngIf="!(itemByLiveFormStep.liveFormTitle === 'CostOfCapital' ||
                                                               itemByLiveFormStep.liveFormTitle === 'CostOfCapitalGeneralCost' ||
                                                               itemByLiveFormStep.liveFormTitle === 'CostOfCapitalPCPSValue' ||
                                                               itemByLiveFormStep.liveFormTitle === 'TotalCostOfCapital' ||
@@ -239,57 +243,59 @@
                                                               itemByLiveFormStep.liveFormTitle === 'TotalCostOfSubmission' ||
                                                               itemByLiveFormStep.liveFormTitle === 'GFA' ||
                                                               itemByLiveFormStep.liveFormTitle === 'CostOfCapitalValue')">
-                                                    <span>{{itemByLiveFormStep.liveFormTitle | translate}}:</span>&nbsp; từ
-                                                    <span class="font-weight-bold">{{itemByLiveFormStep.oldValue ? itemByLiveFormStep.oldValue : 'không
-                                                        có'}}
-                                                    </span>
-                                                    thành
-                                                    <span class="font-weight-bold">
-                                                        {{itemByLiveFormStep.newValue ? itemByLiveFormStep.newValue : 'không có'}}
-                                                    </span>
-                                                </div>
+                                                        <span>{{itemByLiveFormStep.liveFormTitle | translate}}:</span>&nbsp; từ
+                                                        <span class="font-weight-bold">{{itemByLiveFormStep.oldValue ? itemByLiveFormStep.oldValue : 'không
+                                                            có'}}
+                                                        </span>
+                                                        thành
+                                                        <span class="font-weight-bold">
+                                                            {{itemByLiveFormStep.newValue ? itemByLiveFormStep.newValue : 'không có'}}
+                                                        </span>
+                                                    </div>
 
-                                                <div *ngIf="itemByLiveFormStep.liveFormTitle === 'GFA'">
-                                                    <span>{{itemByLiveFormStep.liveFormTitle | translate}}:</span>&nbsp; từ
-                                                    <span class="font-weight-bold">{{itemByLiveFormStep.oldValue | numberArea}}</span>
-                                                    thành
-                                                    <span class="font-weight-bold">
-                                                        {{itemByLiveFormStep.newValue | numberArea}}
-                                                    </span>
-                                                </div>
+                                                    <div *ngIf="itemByLiveFormStep.liveFormTitle === 'GFA'">
+                                                        <span>{{itemByLiveFormStep.liveFormTitle | translate}}:</span>&nbsp; từ
+                                                        <span class="font-weight-bold">{{itemByLiveFormStep.oldValue | numberArea}}</span>
+                                                        thành
+                                                        <span class="font-weight-bold">
+                                                            {{itemByLiveFormStep.newValue | numberArea}}
+                                                        </span>
+                                                    </div>
 
 
-                                                <div *ngIf="itemByLiveFormStep.liveFormTitle === 'CostOfCapital' ||
+                                                    <div *ngIf="itemByLiveFormStep.liveFormTitle === 'CostOfCapital' ||
                                                             itemByLiveFormStep.liveFormTitle === 'CostOfCapitalGeneralCost'||
                                                             itemByLiveFormStep.liveFormTitle === 'CostOfCapitalPCPSValue' ||
                                                             itemByLiveFormStep.liveFormTitle === 'TotalCostOfCapital' ||
                                                             itemByLiveFormStep.liveFormTitle === 'TotalCostOfCapitalProfitCost' ||
                                                             itemByLiveFormStep.liveFormTitle === 'TotalCostOfSubmission' ||
                                                             itemByLiveFormStep.liveFormTitle === 'CostOfCapitalValue'">
-                                                    <span>{{itemByLiveFormStep.liveFormTitle | translate}}:</span>&nbsp; từ
-                                                    <span class="font-weight-bold">{{itemByLiveFormStep.oldValue | vnCurrency}}</span>
-                                                    thành
-                                                    <span class="font-weight-bold">
-                                                        {{itemByLiveFormStep.newValue | vnCurrency}}
-                                                    </span>
+                                                        <span>{{itemByLiveFormStep.liveFormTitle | translate}}:</span>&nbsp; từ
+                                                        <span class="font-weight-bold">{{itemByLiveFormStep.oldValue | vnCurrency}}</span>
+                                                        thành
+                                                        <span class="font-weight-bold">
+                                                            {{itemByLiveFormStep.newValue | vnCurrency}}
+                                                        </span>
+                                                    </div>
+
                                                 </div>
 
                                             </div>
-
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+
+        <app-pagination [(pagedResult)]="pagedResultChangeHistoryList" (pagedResultChange)="pagedResultChangeHistory($event)"></app-pagination>
     </div>
 
-
-    <app-pagination [(pagedResult)]="pagedResultChangeHistoryList" (pagedResultChange)="pagedResultChangeHistory($event)"></app-pagination>
-</div>
+</ng-container>
 
 
 

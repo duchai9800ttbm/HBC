@@ -20,6 +20,7 @@ import { GroupDescriptor, DataResult, process, groupBy } from '@progress/kendo-d
 import { DialogService } from '../../../../../../../../node_modules/@progress/kendo-angular-dialog';
 import { FormInComponent } from '../../../../../../shared/components/form-in/form-in.component';
 import { BidStatus } from '../../../../../../shared/constants/bid-status';
+import { BehaviorSubject } from '../../../../../../../../node_modules/rxjs/BehaviorSubject';
 
 @Component({
   selector: 'app-price-review-summary',
@@ -31,6 +32,7 @@ export class PriceReviewSummaryComponent implements OnInit {
   priceReview: TenderPriceApprovalShort;
   package = new PackageInfoModel();
   listItemHSDTChinhThuc: ItemHSDTChinhThuc[];
+  searchTerm$ = new BehaviorSubject<string>('');
   dtOptions: any = DATATABLE_CONFIG;
   dtTrigger: Subject<any> = new Subject();
   dtTrigger2: Subject<any> = new Subject();
@@ -62,7 +64,12 @@ export class PriceReviewSummaryComponent implements OnInit {
     this.priceReviewService.viewShort(this.packageId).subscribe(data => {
       this.priceReview = data;
     });
-    this.priceReviewService.getDanhSachHSDTChinhThuc(this.packageId).subscribe(data => {
+    // this.priceReviewService.getDanhSachHSDTChinhThuc(this.packageId).subscribe(data => {
+    //   this.listItemHSDTChinhThuc = data;
+    //   console.log(data);
+    // });
+
+    this.priceReviewService.getDanhSachHSDTChinhThucInstantSearch(this.packageId, this.searchTerm$).subscribe(data => {
       this.listItemHSDTChinhThuc = data;
     });
 
@@ -212,6 +219,8 @@ export class PriceReviewSummaryComponent implements OnInit {
     const that = this;
     this.confirmService.confirm('Bạn có chắc muốn hiệu chỉnh HSDT?', () => {
       this.priceReviewService.hieuChinhHSDT(this.packageId).subscribe(data => {
+        that.alertService.success('Hiệu chỉnh HSDT thành công!');
+
         that.refresh(false);
       }, err => {
         that.alertService.error('Thất bại, vui lòng thử lại sau!');
