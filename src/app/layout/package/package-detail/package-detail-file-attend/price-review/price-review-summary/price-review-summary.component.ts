@@ -64,7 +64,6 @@ export class PriceReviewSummaryComponent implements OnInit {
     });
     this.priceReviewService.getDanhSachHSDTChinhThuc(this.packageId).subscribe(data => {
       this.listItemHSDTChinhThuc = data;
-      console.log('this.listItemHSDTChinhThuc', this.listItemHSDTChinhThuc);
     });
 
     this.getChangeHistory(0, 10);
@@ -89,8 +88,6 @@ export class PriceReviewSummaryComponent implements OnInit {
         });
       });
 
-
-      console.log(this.historyList);
       setTimeout(() => {
         this.dtTrigger2.next();
       });
@@ -239,7 +236,6 @@ export class PriceReviewSummaryComponent implements OnInit {
     this.priceReviewService.changedHistoryPriceReview(this.packageId, this.pagedResult.currentPage, this.pagedResult.pageSize)
       .subscribe(data => {
         this.pagedResult = data;
-        console.log(data);
       });
   }
 

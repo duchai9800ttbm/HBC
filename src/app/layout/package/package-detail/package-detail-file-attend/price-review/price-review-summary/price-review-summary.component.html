@@ -131,7 +131,7 @@
             </thead>
             <tbody>
                 <tr>
-                    <td class="select-filter" valign="baseline">Trình duyệt giá</td>
+                    <td class="select-filter" valign="baseline" routerLink="../detail"><a class="link-effect">Trình duyệt giá</a></td>
                     <td style="padding: 0!important; max-width: 200px;">
                         <div class="attach-file">
                             <div class="item d-flex align-items-center" style="box-sizing: border-box" *ngFor="let item of priceReview.files">
@@ -214,7 +214,7 @@
             <tbody>
                 <tr *ngFor="let itemByChangedTimes of historyList; let i = index">
                     <td class="text-center">
-                        <!-- {{historyList.length - i}} -->
+                        {{historyList.length - i}}
                     </td>
                     <td> {{itemByChangedTimes.items[0].employee?.employeeName}}</td>
                     <td>{{ (itemByChangedTimes.items[0].changedTime)*1000 | date:'dd/MM/yyyy , HH:mm':'+0000' }}</td>
