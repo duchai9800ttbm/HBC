@@ -260,11 +260,10 @@ export class InformationDeploymentFormComponent implements OnInit {
                 return true;
             }
         });
-
     }
 
     submitForm(isDraft: boolean) {
-        if (this.checkAssignment()) {
+        if (isDraft) { // Lưu nháp
             const data = this.getFormData();
             const isValid = this.validateForm(data, isDraft);
             if (!isValid) {
@@ -276,7 +275,21 @@ export class InformationDeploymentFormComponent implements OnInit {
                 this.saveTenderPlan(isDraft);
             }
         } else {
-            this.alertService.error(`Bạn cần chọn ngày bắt đầu và ngày kết thúc cho công việc "${this.taskNoAssignment}"`);
+            // Lưu chính thức
+            if (this.checkAssignment()) {
+                const data = this.getFormData();
+                const isValid = this.validateForm(data, isDraft);
+                if (!isValid) {
+                    return;
+                }
+                if (data.id && !isDraft) {
+                    this.isShowChanges = true;
+                } else {
+                    this.saveTenderPlan(isDraft);
+                }
+            } else {
+                this.alertService.error(`Bạn cần chọn ngày bắt đầu và ngày kết thúc cho công việc "${this.taskNoAssignment}"`);
+            }
         }
     }
 

@@ -376,12 +376,35 @@ export class InformationDeploymentComponent implements OnInit {
     });
   }
 
+  checkAssignment(): boolean {
+    // const checkComfirm = this.tenderPlan.tasks.every( itemTask => {
+    //   if (itemTask.whoIsInChargeId && itemTask.whoIsInChargeId !== 0) {
+    //     return (itemTask.startDate && itemTask.finishDate);
+    //   } else if (itemTask.whoIsInCharges && itemTask.whoIsInCharges.length !== 0) {
+    //     return (itemTask.startDate && itemTask.finishDate);
+    //   } else {
+    //     return true;
+    //   }
+    // });
+    let check = true;
+    for (let i = 0; i < this.tenderPlan.tasks.length; i++) {
+      if (this.tenderPlan.tasks[i].whoIsInChargeId && this.tenderPlan.tasks[i].whoIsInChargeId !== 0) {
+        if (!this.tenderPlan.tasks[i].startDate || !this.tenderPlan.tasks[i].finishDate) {
+          check = false;
+          break;
+        }
+      } else if (this.tenderPlan.tasks[i].whoIsInCharges && this.tenderPlan.tasks[i].whoIsInCharges.length !== 0) {
+        if (!this.tenderPlan.tasks[i].startDate || !this.tenderPlan.tasks[i].finishDate) {
+          check = false;
+          break;
+        }
+      }
+    }
+    return check;
+  }
+
   confirmTenderPlan() {
-    const checkComfirm = this.tenderPlan.tasks.every(itemTask => {
-      return ((itemTask.whoIsInChargeId && itemTask.whoIsInChargeId !== 0)
-        || (itemTask.whoIsInCharges && itemTask.whoIsInCharges.length !== 0));
-    });
-    if (checkComfirm) {
+    if (this.checkAssignment()) {
       this.tenderPlan.isDraftVersion = false;
       this.packageService.createOrUpdateTenderPreparationPlanning(this.tenderPlan).subscribe(success => {
         this.spinner.hide();
