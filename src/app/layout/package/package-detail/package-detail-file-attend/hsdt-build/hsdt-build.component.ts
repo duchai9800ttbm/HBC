@@ -57,10 +57,18 @@ export class HsdtBuildComponent implements OnInit {
             this.getDanhSachLoaiHoSo(false);
         });
 
+        // setTimeout(() => {
+        //     this.packageService.isSummaryConditionForm$.subscribe(data => {
+        //         this.isShowMenu = data;
+        //     });
+        // });
+
+
         this.packageService.getInforPackageID(this.packageId).subscribe(result => {
             this.package = result;
         }, err => {
         });
+
 
     }
 

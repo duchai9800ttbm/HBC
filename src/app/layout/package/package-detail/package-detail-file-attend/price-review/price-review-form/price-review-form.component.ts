@@ -29,6 +29,7 @@ export class PriceReviewFormComponent implements OnInit, AfterViewInit {
   isModeCreate;
   isModeEdit;
   packageId;
+  listCustomer;
   showPopupConfirm = false;
   @Input() model: TenderPriceApproval;
   @Input() type: string;
@@ -37,7 +38,8 @@ export class PriceReviewFormComponent implements OnInit, AfterViewInit {
     console.log(this.model);
     this.getModeScreen();
     this.packageId = PackageDetailComponent.packageId;
-    this.getInfoPackge();
+    this.getAllCustomer();
+    // this.getInfoPackge();
     this.createForm();
     this.checkDuyet();
   }
@@ -71,6 +73,8 @@ export class PriceReviewFormComponent implements OnInit, AfterViewInit {
     this.priceReviewForm = this.fb.group({
       // Thông tin dự án
       id: this.model.id,
+      otherCompanyCustomerId: (this.model.otherCompanyCustomerId) ? this.model.otherCompanyCustomerId : '',
+      createdDate: (this.model.createdDate) ? this.model.createdDate : 0,
       infoGfa: {
         value: this.model.projectInformation && this.model.projectInformation.gfa,
         disabled: this.isModeView
@@ -775,13 +779,13 @@ export class PriceReviewFormComponent implements OnInit, AfterViewInit {
   }
 
   giamDocKhongDuyet() {
-      this.spinner.show();
-      this.priceReviewService.giamDocKhongDuyet(this.packageId).subscribe(() => {
-        this.checkDuyet();
-        this.spinner.hide();
-      }, err => {
-        this.spinner.hide();
-      });
+    this.spinner.show();
+    this.priceReviewService.giamDocKhongDuyet(this.packageId).subscribe(() => {
+      this.checkDuyet();
+      this.spinner.hide();
+    }, err => {
+      this.spinner.hide();
+    });
   }
 
   checkDuyet() {
@@ -791,6 +795,12 @@ export class PriceReviewFormComponent implements OnInit, AfterViewInit {
     //   this.priceReviewForm.controls['isApprovedByTenderManager'].disable();
     //   this.priceReviewForm.controls['isApprovedByTenderManager'].disable();
     // }
+  }
+  getAllCustomer() {
+    this.priceReviewService.getAllCustomer().subscribe(customers => {
+      this.listCustomer = customers;
+      console.log(this.listCustomer);
+    });
   }
 
 }

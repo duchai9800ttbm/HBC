@@ -14,7 +14,8 @@
                 <button *ngIf="isModeView" class="btn btn-primary" routerLink="../edit">Chỉnh sửa</button>
                 <button *ngIf="isModeCreate || isModeEdit" class="btn btn-secondary ml-1" routerLink="../summary">Hủy</button>
                 <button *ngIf="isModeCreate || isModeEdit" class="btn btn-primary ml-1" (click)="submit(false)">Lưu</button>
-                <button *ngIf="isModeCreate || (isModeEdit && model.isDraftVersion)" class="btn btn-primary ml-1" (click)="submit(true)">
+                <button *ngIf="isModeCreate || (isModeEdit && model.isDraftVersion)" class="btn btn-primary ml-1"
+                    (click)="submit(true)">
                     Lưu bản nháp
                 </button>
 
@@ -40,7 +41,8 @@
                             Địa điểm (Location):&nbsp;&nbsp;&nbsp;&nbsp; {{package?.place}}
                         </div>
                         <div class="col-md-6">
-                            Date:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                            Date:&nbsp;&nbsp;&nbsp;
+                            {{ (priceReviewForm.get('createdDate').value)*1000 | date:'dd/MM/yyyy HH:mm': '+0000' }}
                         </div>
                     </div>
 
@@ -54,6 +56,15 @@
                     <div class="row no-gutters row-item">
                         <div class="col-md-12">
                             Thông tin về công ty khác tham gia thầu:&nbsp;&nbsp;&nbsp;&nbsp;
+
+                            <select class="custom-select-option option-set-width" formControlName="otherCompanyCustomerId">
+                                <option value="">---Chọn---</option>
+                                <option *ngFor="let item of listCustomer" [value]="item.customerId">
+                                    {{ item.customerName }}
+                                </option>
+                            </select>
+
+
                         </div>
                     </div>
                 </div>
@@ -141,7 +152,8 @@
                                         <div class="two-col-1 center-parent">
                                             <div>
                                                 <label class="childcheck">
-                                                    <input type="radio" [value]=true name="phanMongCheck" formControlName="phanMongCheck">
+                                                    <input type="radio" [value]=true name="phanMongCheck"
+                                                        formControlName="phanMongCheck">
                                                     <span class="checkmark"></span>
                                                 </label>
                                             </div>
@@ -149,7 +161,8 @@
                                         <div class="two-col-2 center-parent">
                                             <div>
                                                 <label class="childcheck">
-                                                    <input type="radio" [value]=false name="phanMongCheck" formControlName="phanMongCheck">
+                                                    <input type="radio" [value]=false name="phanMongCheck"
+                                                        formControlName="phanMongCheck">
                                                     <span class="checkmark"></span>
                                                 </label>
                                             </div>
@@ -173,7 +186,8 @@
                                         <div class="two-col-1 center-parent">
                                             <div>
                                                 <label class="childcheck">
-                                                    <input type="radio" [value]=true name="phanHamCheck" formControlName="phanHamCheck">
+                                                    <input type="radio" [value]=true name="phanHamCheck"
+                                                        formControlName="phanHamCheck">
                                                     <span class="checkmark"></span>
                                                 </label>
                                             </div>
@@ -181,7 +195,8 @@
                                         <div class="two-col-2 center-parent">
                                             <div>
                                                 <label class="childcheck">
-                                                    <input type="radio" [value]=false name="phanHamCheck" formControlName="phanHamCheck">
+                                                    <input type="radio" [value]=false name="phanHamCheck"
+                                                        formControlName="phanHamCheck">
                                                     <span class="checkmark"></span>
                                                 </label>
                                             </div>
@@ -213,7 +228,8 @@
                                         <div class="two-col-2 center-parent">
                                             <div>
                                                 <label class="childcheck">
-                                                    <input type="radio" [value]=false name="ketCauCheck" formControlName="ketCauCheck">
+                                                    <input type="radio" [value]=false name="ketCauCheck"
+                                                        formControlName="ketCauCheck">
                                                     <span class="checkmark"></span>
                                                 </label>
                                             </div>
@@ -237,7 +253,8 @@
                                         <div class="two-col-1 center-parent">
                                             <div>
                                                 <label class="childcheck">
-                                                    <input type="radio" [value]=true name="hoanThienCheck" formControlName="hoanThienCheck">
+                                                    <input type="radio" [value]=true name="hoanThienCheck"
+                                                        formControlName="hoanThienCheck">
                                                     <span class="checkmark"></span>
                                                 </label>
                                             </div>
@@ -245,7 +262,8 @@
                                         <div class="two-col-2 center-parent">
                                             <div>
                                                 <label class="childcheck">
-                                                    <input type="radio" [value]=false name="hoanThienCheck" formControlName="hoanThienCheck">
+                                                    <input type="radio" [value]=false name="hoanThienCheck"
+                                                        formControlName="hoanThienCheck">
                                                     <span class="checkmark"></span>
                                                 </label>
                                             </div>
@@ -269,7 +287,8 @@
                                         <div class="two-col-1 center-parent">
                                             <div>
                                                 <label class="childcheck">
-                                                    <input type="radio" [value]=true name="congViecKhacCheck" formControlName="congViecKhacCheck">
+                                                    <input type="radio" [value]=true name="congViecKhacCheck"
+                                                        formControlName="congViecKhacCheck">
                                                     <span class="checkmark"></span>
                                                 </label>
                                             </div>
@@ -277,7 +296,8 @@
                                         <div class="two-col-2 center-parent">
                                             <div>
                                                 <label class="childcheck">
-                                                    <input type="radio" [value]=false name="congViecKhacCheck" formControlName="congViecKhacCheck">
+                                                    <input type="radio" [value]=false name="congViecKhacCheck"
+                                                        formControlName="congViecKhacCheck">
                                                     <span class="checkmark"></span>
                                                 </label>
                                             </div>
@@ -301,7 +321,8 @@
                                         <div class="two-col-1 center-parent">
                                             <div>
                                                 <label class="childcheck">
-                                                    <input type="radio" [value]=true name="phanThanCheck" formControlName="phanThanCheck">
+                                                    <input type="radio" [value]=true name="phanThanCheck"
+                                                        formControlName="phanThanCheck">
                                                     <span class="checkmark"></span>
                                                 </label>
                                             </div>
@@ -309,7 +330,8 @@
                                         <div class="two-col-2 center-parent">
                                             <div>
                                                 <label class="childcheck">
-                                                    <input type="radio" [value]=false name="phanThanCheck" formControlName="phanThanCheck">
+                                                    <input type="radio" [value]=false name="phanThanCheck"
+                                                        formControlName="phanThanCheck">
                                                     <span class="checkmark"></span>
                                                 </label>
                                             </div>
@@ -333,7 +355,8 @@
                                         <div class="two-col-1 center-parent">
                                             <div>
                                                 <label class="childcheck">
-                                                    <input type="radio" [value]=true name="phanThanKetCauCheck" formControlName="phanThanKetCauCheck">
+                                                    <input type="radio" [value]=true name="phanThanKetCauCheck"
+                                                        formControlName="phanThanKetCauCheck">
                                                     <span class="checkmark"></span>
                                                 </label>
                                             </div>
@@ -341,7 +364,8 @@
                                         <div class="two-col-2 center-parent">
                                             <div>
                                                 <label class="childcheck">
-                                                    <input type="radio" [value]=false name="phanThanKetCauCheck" formControlName="phanThanKetCauCheck">
+                                                    <input type="radio" [value]=false name="phanThanKetCauCheck"
+                                                        formControlName="phanThanKetCauCheck">
                                                     <span class="checkmark"></span>
                                                 </label>
                                             </div>
@@ -365,7 +389,8 @@
                                         <div class="two-col-1 center-parent">
                                             <div>
                                                 <label class="childcheck">
-                                                    <input type="radio" [value]=true name="phanThanHoanThienCheck" formControlName="phanThanHoanThienCheck">
+                                                    <input type="radio" [value]=true name="phanThanHoanThienCheck"
+                                                        formControlName="phanThanHoanThienCheck">
                                                     <span class="checkmark"></span>
                                                 </label>
                                             </div>
@@ -373,7 +398,8 @@
                                         <div class="two-col-2 center-parent">
                                             <div>
                                                 <label class="childcheck">
-                                                    <input type="radio" [value]=false name="phanThanHoanThienCheck" formControlName="phanThanHoanThienCheck">
+                                                    <input type="radio" [value]=false name="phanThanHoanThienCheck"
+                                                        formControlName="phanThanHoanThienCheck">
                                                     <span class="checkmark"></span>
                                                 </label>
                                             </div>
@@ -397,7 +423,8 @@
                                         <div class="two-col-1 center-parent">
                                             <div>
                                                 <label class="childcheck">
-                                                    <input type="radio" [value]=true name="phanThancongViecKhacCheck" formControlName="phanThancongViecKhacCheck">
+                                                    <input type="radio" [value]=true name="phanThancongViecKhacCheck"
+                                                        formControlName="phanThancongViecKhacCheck">
                                                     <span class="checkmark"></span>
                                                 </label>
                                             </div>
@@ -405,7 +432,8 @@
                                         <div class="two-col-2 center-parent">
                                             <div>
                                                 <label class="childcheck">
-                                                    <input type="radio" [value]=false name="phanThancongViecKhacCheck" formControlName="phanThancongViecKhacCheck">
+                                                    <input type="radio" [value]=false name="phanThancongViecKhacCheck"
+                                                        formControlName="phanThancongViecKhacCheck">
                                                     <span class="checkmark"></span>
                                                 </label>
                                             </div>
@@ -1314,7 +1342,8 @@
                                 <div class="ml-3 d-flex align-items-center item-1">
                                     <div>
                                         <label class="childcheck">
-                                            <input type="radio" (click)="truongNhomDuyet()" [value]=true name="isApprovedByTenderLeader" formControlName="isApprovedByTenderLeader">
+                                            <input type="radio" (click)="truongNhomDuyet()" [value]=true name="isApprovedByTenderLeader"
+                                                formControlName="isApprovedByTenderLeader">
                                             <span class="checkmark"></span>
                                         </label>
 
@@ -1328,7 +1357,8 @@
                                 <div class="ml-3 d-flex align-items-center item-1 mg-left">
                                     <div>
                                         <label class="childcheck">
-                                            <input type="radio" (click)="truongNhomKhongDuyet()" [value]=false name="isApprovedByTenderLeader" formControlName="isApprovedByTenderLeader">
+                                            <input type="radio" (click)="truongNhomKhongDuyet()" [value]=false name="isApprovedByTenderLeader"
+                                                formControlName="isApprovedByTenderLeader">
                                             <span class="checkmark"></span>
                                         </label>
 
@@ -1351,7 +1381,8 @@
                                 <div class="ml-3 d-flex align-items-center item-1">
                                     <div>
                                         <label class="childcheck">
-                                            <input type="radio" (click)="truongPhongDuyet()" [value]=true name="isApprovedByTenderManager" formControlName="isApprovedByTenderManager">
+                                            <input type="radio" (click)="truongPhongDuyet()" [value]=true name="isApprovedByTenderManager"
+                                                formControlName="isApprovedByTenderManager">
                                             <span class="checkmark"></span>
                                         </label>
 
@@ -1365,7 +1396,8 @@
                                 <div class="ml-3 d-flex align-items-center item-1 mg-left">
                                     <div>
                                         <label class="childcheck">
-                                            <input type="radio" (click)="truongPhongKhongDuyet()" [value]=false name="isApprovedByTenderManager" formControlName="isApprovedByTenderManager">
+                                            <input type="radio" (click)="truongPhongKhongDuyet()" [value]=false name="isApprovedByTenderManager"
+                                                formControlName="isApprovedByTenderManager">
                                             <span class="checkmark"></span>
                                         </label>
 
@@ -1388,7 +1420,8 @@
                                 <div class="ml-3 d-flex align-items-center item-1">
                                     <div>
                                         <label class="childcheck">
-                                            <input type="radio" (click)="giamDocDuyet()" [value]=true name="isApprovedByBoardOfDirector" formControlName="isApprovedByBoardOfDirector">
+                                            <input type="radio" (click)="giamDocDuyet()" [value]=true name="isApprovedByBoardOfDirector"
+                                                formControlName="isApprovedByBoardOfDirector">
                                             <span class="checkmark"></span>
                                         </label>
 
@@ -1402,7 +1435,8 @@
                                 <div class="ml-3 d-flex align-items-center item-1 mg-left">
                                     <div>
                                         <label class="childcheck">
-                                            <input formControlName="isApprovedByBoardOfDirector" type="radio" (click)="giamDocKhongDuyet()" [value]=false name="isApprovedByBoardOfDirector">
+                                            <input formControlName="isApprovedByBoardOfDirector" type="radio" (click)="giamDocKhongDuyet()"
+                                                [value]=false name="isApprovedByBoardOfDirector">
                                             <span class="checkmark"></span>
                                         </label>
 
