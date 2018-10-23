@@ -1062,8 +1062,10 @@ export class PackageService {
             element.finishDate = DateTimeConvertHelper.fromDtObjectToSecon(element.finishDate);
             const ids = [];
             if (element.whoIsInChargeIds && element.whoIsInChargeIds.length !== 0) {
-                element.whoIsInChargeIds.forEach(itemwhoIsInChargeId => {
-                    ids.push(itemwhoIsInChargeId.employeeId);
+                ([] || element.whoIsInChargeIds).forEach(itemwhoIsInChargeId => {
+                    if (itemwhoIsInChargeId.employeeId) {
+                        ids.push(itemwhoIsInChargeId.employeeId);
+                    }
                 });
             }
             element.whoIsInChargeIds = {

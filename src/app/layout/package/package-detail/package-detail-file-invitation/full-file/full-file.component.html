@@ -281,7 +281,7 @@
                                                         <i class="fa fa-external-link color-item-down" aria-hidden="true"></i>
                                                     </a>
                                                 </div>
-                                                <div (click)="deleteDocument(item.id)" style="cursor: pointer;" title="Xóa">
+                                                <div *ngIf="!item.isApproved" (click)="deleteDocument(item.id)" style="cursor: pointer;" title="Xóa">
                                                     <a class="text-success ml-3">
                                                         <i class="fa fa-trash-o" aria-hidden="true"></i>
                                                     </a>
