@@ -44,6 +44,7 @@ export class InformationDeploymentFormComponent implements OnInit {
     get tasksFA(): FormArray {
         return this.planForm.get('tasks') as FormArray;
     }
+    controlDisableForm: boolean;
     constructor(
         private spinner: NgxSpinnerService,
         private packageService: PackageService,
@@ -80,21 +81,46 @@ export class InformationDeploymentFormComponent implements OnInit {
         }
     }
 
+    // disableForm() {
+    //     this.planForm.controls.forEach( item => {
+    //         if ( item === FormArray) {
+    //             console.log('a', a);
+    //         }
+    //     })
+    // }
+
     createForm(planModel: TenderPreparationPlanningRequest, isCreate?) {
+        console.log('create-form', this.routerAction);
         this.tenderPlan = planModel;
         const taskArr = [];
+        this.controlDisableForm = this.routerAction === 'view' ? true : false;
         planModel.tasks.forEach(i => taskArr.push(this.createTaskItemFG(i)));
         this.planForm = this.fb.group({
             id: planModel.id,
             isDraftVersion: isCreate ? true : planModel.isDraftVersion,
-            projectDirectorEmployeeId: planModel.projectDirectorEmployee && planModel.projectDirectorEmployee.employeeId,
-            tenderDepartmentEmployeeId: planModel.tenderDepartmentEmployee && planModel.tenderDepartmentEmployee.employeeId,
-            technicalDepartmentEmployeeId: planModel.technicalDepartmentEmployee && planModel.technicalDepartmentEmployee.employeeId,
-            bimDepartmentEmployeeId: planModel.bimDepartmentEmployee && planModel.bimDepartmentEmployee.employeeId,
+            projectDirectorEmployeeId: {
+                value: planModel.projectDirectorEmployee && planModel.projectDirectorEmployee.employeeId,
+                disabled: this.controlDisableForm,
+            },
+            tenderDepartmentEmployeeId: {
+                value: planModel.tenderDepartmentEmployee && planModel.tenderDepartmentEmployee.employeeId,
+                disabled: this.controlDisableForm,
+            },
+            technicalDepartmentEmployeeId: {
+                value: planModel.technicalDepartmentEmployee && planModel.technicalDepartmentEmployee.employeeId,
+                disabled: this.controlDisableForm,
+            },
+            bimDepartmentEmployeeId: {
+                value: planModel.bimDepartmentEmployee && planModel.bimDepartmentEmployee.employeeId,
+                disabled: this.controlDisableForm,
+            },
             isSignedByPreparedPerson: planModel.isSignedByPreparedPerson,
             isSignedByApprovalPerson: planModel.isSignedByApprovalPerson,
             updatedDesc: '',
-            projectInformation: planModel.projectInformation ? planModel.projectInformation : 'Bảng phân công tiến độ',
+            projectInformation: {
+                value: planModel.projectInformation ? planModel.projectInformation : 'Bảng phân công tiến độ',
+                disabled: this.controlDisableForm,
+            },
             tasks: this.fb.array(taskArr)
         });
         this.tasksFA.controls.forEach((item, index) => {
@@ -171,21 +197,39 @@ export class InformationDeploymentFormComponent implements OnInit {
             itemId: data.itemId,
             itemNo: data.itemNo,
             itemName: data.itemName,
-            itemDesc: data.itemDesc,
-            whoIsInChargeId: data.whoIsInChargeId === 0 ? null : data.whoIsInChargeId,
-            whoIsInChargeIds: (data.whoIsInCharges && data.whoIsInCharges.length !== 0) ? data.whoIsInCharges[0] : [],
-            startDate: data.startDate
-                ? DateTimeConvertHelper.fromTimestampToDtObject(
-                    data.startDate * 1000
-                )
-                : null,
-            finishDate: data.finishDate
-                ? DateTimeConvertHelper.fromTimestampToDtObject(
-                    data.finishDate * 1000
-                )
-                : null,
+            itemDesc: {
+                value: data.itemDesc,
+                disabled: this.controlDisableForm,
+            },
+            whoIsInChargeId: {
+                value: data.whoIsInChargeId === 0 ? null : data.whoIsInChargeId,
+                disabled: this.controlDisableForm,
+            },
+            whoIsInChargeIds: {
+                value: (data.whoIsInCharges && data.whoIsInCharges.length !== 0) ? data.whoIsInCharges[0] : [],
+                disabled: this.controlDisableForm,
+            },
+            startDate: {
+                value: data.startDate
+                    ? DateTimeConvertHelper.fromTimestampToDtObject(
+                        data.startDate * 1000
+                    )
+                    : null,
+                disabled: this.controlDisableForm,
+            },
+            finishDate: {
+                value: data.finishDate
+                    ? DateTimeConvertHelper.fromTimestampToDtObject(
+                        data.finishDate * 1000
+                    )
+                    : null,
+                disabled: this.controlDisableForm,
+            },
             duration: data.duration,
-            isFinish: data.isFinish,
+            isFinish: {
+                value: data.isFinish,
+                disabled: this.controlDisableForm,
+            },
             totalTime: '',
         });
     }
@@ -387,8 +431,22 @@ export class InformationDeploymentFormComponent implements OnInit {
         });
     }
 
-    changeRouterAction(data: string) {
-        this.routerAction = data;
+    changeRouterAction(dataRouter: string) {
+        this.routerAction = dataRouter;
+        this.controlDisableForm = (this.routerAction === 'view') ? true : false;
+        this.planForm.get('projectDirectorEmployeeId').enable();
+        this.planForm.get('tenderDepartmentEmployeeId').enable();
+        this.planForm.get('technicalDepartmentEmployeeId').enable();
+        this.planForm.get('bimDepartmentEmployeeId').enable();
+        this.planForm.get('projectInformation').enable();
+        (this.planForm.get('tasks') as FormArray).controls.forEach( item => {
+            item.get('itemDesc').enable();
+            item.get('whoIsInChargeId').enable();
+            item.get('whoIsInChargeIds').enable();
+            item.get('startDate').enable();
+            item.get('finishDate').enable();
+            item.get('isFinish').enable();
+        });
     }
 
     closeShowChanges() {
