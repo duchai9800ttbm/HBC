@@ -10,7 +10,7 @@ import { Subject, Observable } from 'rxjs';
 import { FormBuilder, FormGroup, FormArray } from '@angular/forms';
 import { TenderPreparationPlanItem } from '../../../../../../shared/models/package/tender-preparation-plan-item';
 import DateTimeConvertHelper from '../../../../../../shared/helpers/datetime-convert-helper';
-import { UserService, AlertService, SessionService } from '../../../../../../shared/services';
+import { UserService, AlertService, SessionService, ConfirmationService } from '../../../../../../shared/services';
 import { UserItemModel } from '../../../../../../shared/models/user/user-item.model';
 import { TenderPreparationPlanningRequest } from '../../../../../../shared/models/api-request/package/tender-preparation-planning-request';
 import * as moment from 'moment';
@@ -51,7 +51,8 @@ export class InformationDeploymentFormComponent implements OnInit {
         private fb: FormBuilder,
         private router: Router,
         private alertService: AlertService,
-        private sessionService: SessionService
+        private sessionService: SessionService,
+        private confirmationService: ConfirmationService
     ) { }
 
     ngOnInit() {
@@ -248,6 +249,12 @@ export class InformationDeploymentFormComponent implements OnInit {
         return false;
     }
 
+    checkChooseAllTask() {
+        return this.tasksFA.value.every(item => {
+            return (item.whoIsInChargeId && item.whoIsInChargeId !== 0) || (item.whoIsInChargeIds && item.whoIsInChargeIds.length !== 0);
+        });
+    }
+
     checkAssignment(): boolean {
         return this.tasksFA.value.every(item => {
             if (item.whoIsInChargeId && item.whoIsInChargeId !== 0) {
@@ -264,32 +271,46 @@ export class InformationDeploymentFormComponent implements OnInit {
 
     submitForm(isDraft: boolean) {
         if (isDraft) { // Lưu nháp
-            const data = this.getFormData();
-            const isValid = this.validateForm(data, isDraft);
-            if (!isValid) {
-                return;
-            }
-            if (data.id && !isDraft) {
-                this.isShowChanges = true;
-            } else {
-                this.saveTenderPlan(isDraft);
-            }
+            this.actionSubmit(isDraft);
         } else {
             // Lưu chính thức
             if (this.checkAssignment()) {
-                const data = this.getFormData();
-                const isValid = this.validateForm(data, isDraft);
-                if (!isValid) {
-                    return;
-                }
-                if (data.id && !isDraft) {
-                    this.isShowChanges = true;
+                if (this.checkChooseAllTask()) {
+                    // const data = this.getFormData();
+                    // const isValid = this.validateForm(data, isDraft);
+                    // if (!isValid) {
+                    //     return;
+                    // }
+                    // if (data.id && !isDraft) {
+                    //     this.isShowChanges = true;
+                    // } else {
+                    //     this.saveTenderPlan(isDraft);
+                    // }
+                    this.actionSubmit(isDraft);
                 } else {
-                    this.saveTenderPlan(isDraft);
+                    this.confirmationService.confirm(
+                        'Chưa hoàn tất phân công tiến độ, bạn có muốn tiếp tục hay không?',
+                        () => {
+                            this.actionSubmit(isDraft);
+                        }
+                    );
                 }
             } else {
                 this.alertService.error(`Bạn cần chọn ngày bắt đầu và ngày kết thúc cho công việc "${this.taskNoAssignment}"`);
             }
+        }
+    }
+
+    actionSubmit(isDraft) {
+        const data = this.getFormData();
+        const isValid = this.validateForm(data, isDraft);
+        if (!isValid) {
+            return;
+        }
+        if (data.id && !isDraft) {
+            this.isShowChanges = true;
+        } else {
+            this.saveTenderPlan(isDraft);
         }
     }
 

@@ -377,15 +377,6 @@ export class InformationDeploymentComponent implements OnInit {
   }
 
   checkAssignment(): boolean {
-    // const checkComfirm = this.tenderPlan.tasks.every( itemTask => {
-    //   if (itemTask.whoIsInChargeId && itemTask.whoIsInChargeId !== 0) {
-    //     return (itemTask.startDate && itemTask.finishDate);
-    //   } else if (itemTask.whoIsInCharges && itemTask.whoIsInCharges.length !== 0) {
-    //     return (itemTask.startDate && itemTask.finishDate);
-    //   } else {
-    //     return true;
-    //   }
-    // });
     let check = true;
     for (let i = 0; i < this.tenderPlan.tasks.length; i++) {
       if (this.tenderPlan.tasks[i].whoIsInChargeId && this.tenderPlan.tasks[i].whoIsInChargeId !== 0) {
