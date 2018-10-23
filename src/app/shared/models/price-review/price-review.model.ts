@@ -22,6 +22,7 @@ export class TenderPriceApproval {
     approvalDate: number;
     approvalTimes: number;
     interviewTimes: number;
+    otherCompanyCustomerId: number;
     isApprovedByTenderLeader: boolean;
     isApprovedByTenderManager: boolean;
     isApprovedByBoardOfDirector: boolean;
@@ -180,6 +181,7 @@ export class TenderPriceApproval {
         };
     };
     updatedDesc: string;
+    createdDate: number;
 }
 
 
