@@ -64,7 +64,6 @@ export class PriceReviewSummaryComponent implements OnInit {
     });
     this.priceReviewService.getDanhSachHSDTChinhThuc(this.packageId).subscribe(data => {
       this.listItemHSDTChinhThuc = data;
-      console.log('this.listItemHSDTChinhThuc', this.listItemHSDTChinhThuc);
     });
 
     this.getChangeHistory(0, 10);
@@ -89,8 +88,6 @@ export class PriceReviewSummaryComponent implements OnInit {
         });
       });
 
-
-      console.log(this.historyList);
       setTimeout(() => {
         this.dtTrigger2.next();
       });
@@ -188,7 +185,12 @@ export class PriceReviewSummaryComponent implements OnInit {
         that.refresh(false);
         that.alertService.success('Chốt hồ sơ thành công!');
       }, err => {
-        that.alertService.error('Chốt hồ sơ thất bại, vui lòng thử lại sau!');
+        console.log(err);
+        if (err.json().errorCode === 'BusinessException') {
+          that.alertService.error(`${err.json().errorMessage}`);
+        } else {
+          that.alertService.error('Chốt hồ sơ thất bại, vui lòng thử lại sau!');
+        }
       });
     });
   }
@@ -239,7 +241,6 @@ export class PriceReviewSummaryComponent implements OnInit {
     this.priceReviewService.changedHistoryPriceReview(this.packageId, this.pagedResult.currentPage, this.pagedResult.pageSize)
       .subscribe(data => {
         this.pagedResult = data;
-        console.log(data);
       });
   }
 

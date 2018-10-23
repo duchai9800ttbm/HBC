@@ -30,11 +30,19 @@
             <tbody>
                 <tr>
 
-                    <td><a class="link-effect" [routerLink]="['./info']">{{ documentData.tenTaiLieu }}</a></td>
+                    <td [title]="documentData.tenTaiLieu">
+                        <a class="link-effect" [routerLink]="['./info']">{{ documentData.tenTaiLieu }}</a>
+                    </td>
                     <td>{{ documentData.lanPhongVan }}</td>
-                    <td>{{ (documentData.isDraft) ? 'Bản nháp' : 'Chính thức' }}</td>
-                    <td>{{ documentData.nguoiTao?.name }}</td>
-                    <td>{{ (documentData.ngayTao)*1000 | date:'dd/MM/yyyy' }}</td>
+                    <td [title]="(documentData.isDraft) ? 'Bản nháp' : 'Chính thức'">
+                        {{ (documentData.isDraft) ? 'Bản nháp' : 'Chính thức' }}
+                    </td>
+                    <td [title]="documentData.nguoiTao?.name">
+                        {{ documentData.nguoiTao?.name }}
+                    </td>
+                    <td [title]="(documentData.ngayTao)*1000 | date:'dd/MM/yyyy'">
+                        {{ (documentData.ngayTao)*1000 | date:'dd/MM/yyyy' }}
+                    </td>
                     <td>
                         <div class="d-flex justify-content-center">
                             <div>
@@ -76,7 +84,9 @@
             </thead>
             <tbody>
                 <tr *ngFor="let updateInfo of updateInfoList; index as i">
-                    <td class="text-center">{{ updateInfo.changedTimes }}</td>
+                    <td class="text-center">
+                        {{ (updateInfoList.length - i) }}
+                    </td>
                     <td class="text-center">{{ updateInfo.employee?.employeeName }}</td>
                     <td class="text-center">{{ (updateInfo.changedTime)*1000 | date:'dd/MM/yyyy' }}</td>
                     <td class="text-center">

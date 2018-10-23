@@ -81,4 +81,5 @@ export class PackageInfoModel {
     projectEstimatedEndDate: number;
     totalTime: string;
     description: string;
+    isSubmittedHSDT: boolean;
 }

@@ -59,49 +59,62 @@ input.icon {
     font-weight: normal;
     text-decoration: inherit;
 }
-.attach-file{
+
+.attach-file {
     width: 100%;
-    .item{
+
+    .item {
         border-bottom: 1px solid #d4d4d4;
-        .time{
+
+        .time {
             font-size: 70%;
         }
-        .name{
-        }
+
+        .name {}
     }
-    .item{
+
+    .item {
         min-height: 30px;
     }
-    .item:last-child{
-        border-bottom: none!important;
+
+    .item:last-child {
+        border-bottom: none !important;
     }
 }
 
-.xuong-dong{
-    white-space: pre-line!important;
+.xuong-dong {
+    white-space: pre-line !important;
 }
-.xuong-dong-2{
+
+.xuong-dong-2 {
     white-space: pre-wrap;
     overflow-wrap: break-word;
 }
-.min-width-action{
+
+.min-width-action {
     min-width: 100px;
 }
-.max-width-action{
+
+.max-width-action {
     max-width: 150px;
 }
-.max-width-name-document{
+
+.max-width-name-document {
     width: 250px;
 }
 
-.table-layout--fixed{
+.table-layout--fixed {
     table-layout: fixed
 }
 
-.w-15{
+.w-15 {
     width: 15%;
 }
 
-.image-empty{
+.image-empty {
     width: 80px;
- }
+}
+
+.link-effect {
+    color: #0e86b7 !important;
+}

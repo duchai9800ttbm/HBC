@@ -49,6 +49,11 @@ export class PriceReviewService {
     return this.sessionService.currentUser.employeeId;
   }
 
+  // Get All Customer
+  getAllCustomer() {
+    const url = `customer/getall`;
+    return this.apiService.get(url).map(res => res.result);
+  }
   truongNhomDuyet(bidOpportunityId: number) {
     const url = `bidopportunity/${bidOpportunityId}/approvedbytenderleader`;
     return this.apiService.post(url);
@@ -214,6 +219,7 @@ export class PriceReviewService {
     modelRequest.isDraftVersion = formValue.isDraftVersion ? formValue.isDraftVersion : false;
     modelRequest.approvalDate = DateTimeConvertHelper.fromDtObjectToTimestamp(formValue.approvalDate) / 1000;
     modelRequest.approvalTimes = formValue.approvalTimes;
+    modelRequest.otherCompanyCustomerId = formValue.otherCompanyCustomerId;
     modelRequest.interviewTimes = formValue.interviewTimes;
     modelRequest.documentName = formValue.documentName;
     modelRequest.projectInformation = {
@@ -427,6 +433,7 @@ export class PriceReviewService {
       approvalDate: model.approvalDate,
       approvalTimes: model.approvalTimes,
       interviewTimes: model.interviewTimes,
+      otherCompanyCustomerId: (model.otherCompanyCustomer) ? model.otherCompanyCustomer.customerId : '',
       isApprovedByTenderLeader: model.isApprovedByTenderLeader,
       isApprovedByTenderManager: model.isApprovedByTenderManager,
       isApprovedByBoardOfDirector: model.isApprovedByBoardOfDirector,
@@ -584,7 +591,8 @@ export class PriceReviewService {
           note: model.tentativeTenderPrice.oAndPPercentOfTotalCost.note
         }
       },
-      updatedDesc: ''
+      updatedDesc: '',
+      createdDate: model.createdDate
       // chờ Nghĩa map lại
       // interviewTimes: null,
       // createdEmployeeId: null,

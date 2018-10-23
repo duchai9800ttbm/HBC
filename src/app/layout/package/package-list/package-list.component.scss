@@ -47,7 +47,7 @@ span{
         width: 100px!important;
     }
     th:not([type="check"]),td:not([type="check"]){
-        min-width: 130px;
+        min-width: 100px;
         max-width: 160px;
        
     }
@@ -57,7 +57,7 @@ span{
 
 table{
     th:not([type="check"]),td:not([type="check"]){
-        min-width: 130px;
+        min-width: 100px;
         max-width: 160px;  
     }
 }

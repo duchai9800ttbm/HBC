@@ -20,7 +20,6 @@ export class SummaryConditionFormProfileDestinationComponent implements OnInit {
   dienGiaiYeuCauHoSo = new DienGiaiYeuCauHoSo();
   isModeView = false;
   packageId;
-  closingTime;
   constructor(
     private fb: FormBuilder,
     private hoSoDuThauService: HoSoDuThauService,
@@ -36,14 +35,14 @@ export class SummaryConditionFormProfileDestinationComponent implements OnInit {
     this.loadData();
     this.createForm();
   }
-  getInfoPackage() {
-    this.packageService.getInforPackageID(this.packageId).subscribe(result => {
-      this.closingTime = result.submissionDate;
-      console.log(this.closingTime);
-    }, err => {
-      this.alertService.error('Tải thông tin gói thầu thất bại.');
-    });
-  }
+  // getInfoPackage() {
+  //   this.packageService.getInforPackageID(this.packageId).subscribe(result => {
+  //     this.closingTime = result.submissionDate;
+  //     console.log(this.closingTime);
+  //   }, err => {
+  //     this.alertService.error('Tải thông tin gói thầu thất bại.');
+  //   });
+  // }
 
   loadData() {
     this.hoSoDuThauService.watchDataLiveForm()
@@ -57,12 +56,18 @@ export class SummaryConditionFormProfileDestinationComponent implements OnInit {
           };
         }
         if (!model) {
-          console.log(this.closingTime);
-          this.dienGiaiYeuCauHoSo = {
-            noiNop: '',
-            nguoiNhan: '',
-            hanNop: null
-          };
+          this.packageService.getInforPackageID(this.packageId).subscribe(result => {
+            const closingTime = result.submissionDate;
+            this.dienGiaiYeuCauHoSo = {
+              noiNop: '',
+              nguoiNhan: '',
+              hanNop: closingTime
+            };
+            console.log(closingTime);
+            console.log(this.dienGiaiYeuCauHoSo);
+          }, err => {
+            this.alertService.error('Tải thông tin gói thầu thất bại.');
+          });
         }
       });
   }

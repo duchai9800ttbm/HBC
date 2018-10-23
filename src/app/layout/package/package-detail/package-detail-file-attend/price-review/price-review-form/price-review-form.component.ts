@@ -29,15 +29,17 @@ export class PriceReviewFormComponent implements OnInit, AfterViewInit {
   isModeCreate;
   isModeEdit;
   packageId;
+  listCustomer;
   showPopupConfirm = false;
   @Input() model: TenderPriceApproval;
   @Input() type: string;
 
   ngOnInit() {
-    //  document.getElementById('content-right').style.maxHeight = `${elementHeight}`;
+    console.log(this.model);
     this.getModeScreen();
     this.packageId = PackageDetailComponent.packageId;
-    this.getInfoPackge();
+    this.getAllCustomer();
+    // this.getInfoPackge();
     this.createForm();
     this.checkDuyet();
   }
@@ -71,6 +73,8 @@ export class PriceReviewFormComponent implements OnInit, AfterViewInit {
     this.priceReviewForm = this.fb.group({
       // Thông tin dự án
       id: this.model.id,
+      otherCompanyCustomerId: (this.model.otherCompanyCustomerId) ? this.model.otherCompanyCustomerId : '',
+      createdDate: (this.model.createdDate) ? this.model.createdDate : 0,
       infoGfa: {
         value: this.model.projectInformation && this.model.projectInformation.gfa,
         disabled: this.isModeView
@@ -664,6 +668,16 @@ export class PriceReviewFormComponent implements OnInit, AfterViewInit {
       },
       updatedDesc: ''
     });
+
+    // this.priceReviewForm.valueChanges.subscribe(data => {
+    //   const giaTriPCBaseAmount = data.giaTriPCBaseAmount;
+    //   const giaTriBaseAmount = data.giaTriBaseAmount;
+    //   const chiPhiBaseAmount = data.chiPhiBaseAmount;
+    //   const totalGiaVonAmount = giaTriPCBaseAmount + giaTriBaseAmount + chiPhiBaseAmount;
+    //   console.log(data);
+    //   console.log(totalGiaVonAmount);
+    //   this.priceReviewForm.get('totalGiaVonAmount').patchValue(totalGiaVonAmount);
+    // });
   }
 
 
@@ -673,10 +687,18 @@ export class PriceReviewFormComponent implements OnInit, AfterViewInit {
       this.priceReviewForm.get('isDraftVersion').patchValue(true);
       this.priceReviewForm.get('updatedDesc').patchValue('');
       this.priceReviewService.createOrEdit(this.priceReviewForm.value, this.packageId).subscribe(() => {
-        this.router.navigate([`/package/detail/${this.packageId}/attend/price-review/detail`]);
+        this.router.navigate([`/package/detail/${this.packageId}/attend/price-review`]);
       });
     } else {
-      this.showPopupConfirm = true;
+      this.priceReviewForm.get('isDraftVersion').patchValue(false);
+      if (this.isModeCreate) {
+        this.priceReviewForm.get('updatedDesc').patchValue('');
+        this.priceReviewService.createOrEdit(this.priceReviewForm.value, this.packageId).subscribe(() => {
+          this.router.navigate([`/package/detail/${this.packageId}/attend/price-review`]);
+        });
+      } else {
+        this.showPopupConfirm = true;
+      }
     }
   }
   submitLiveForm(check) {
@@ -685,7 +707,7 @@ export class PriceReviewFormComponent implements OnInit, AfterViewInit {
     } else {
       this.priceReviewForm.get('updatedDesc').patchValue(check);
       this.priceReviewService.createOrEdit(this.priceReviewForm.value, this.packageId).subscribe(() => {
-        this.router.navigate([`/package/detail/${this.packageId}/attend/price-review/detail`]);
+        this.router.navigate([`/package/detail/${this.packageId}/attend/price-review`]);
       });
     }
   }
@@ -757,25 +779,28 @@ export class PriceReviewFormComponent implements OnInit, AfterViewInit {
   }
 
   giamDocKhongDuyet() {
-    const isApprovedByBoardOfDirector = this.priceReviewForm.get('isApprovedByBoardOfDirector').value;
-    if (isApprovedByBoardOfDirector) {
-      this.spinner.show();
-      this.priceReviewService.giamDocKhongDuyet(this.packageId).subscribe(() => {
-        this.checkDuyet();
-        this.spinner.hide();
-      }, err => {
-        this.spinner.hide();
-      });
-    }
+    this.spinner.show();
+    this.priceReviewService.giamDocKhongDuyet(this.packageId).subscribe(() => {
+      this.checkDuyet();
+      this.spinner.hide();
+    }, err => {
+      this.spinner.hide();
+    });
   }
 
   checkDuyet() {
-    const isApprovedByBoardOfDirector = this.priceReviewForm.get('isApprovedByBoardOfDirector').value;
-    if (isApprovedByBoardOfDirector) {
-      this.priceReviewForm.controls['isApprovedByBoardOfDirector'].disable();
-      this.priceReviewForm.controls['isApprovedByTenderManager'].disable();
-      this.priceReviewForm.controls['isApprovedByTenderManager'].disable();
-    }
+    // const isApprovedByBoardOfDirector = this.priceReviewForm.get('isApprovedByBoardOfDirector').value;
+    // if (isApprovedByBoardOfDirector) {
+    //   this.priceReviewForm.controls['isApprovedByBoardOfDirector'].disable();
+    //   this.priceReviewForm.controls['isApprovedByTenderManager'].disable();
+    //   this.priceReviewForm.controls['isApprovedByTenderManager'].disable();
+    // }
+  }
+  getAllCustomer() {
+    this.priceReviewService.getAllCustomer().subscribe(customers => {
+      this.listCustomer = customers;
+      console.log(this.listCustomer);
+    });
   }
 
 }

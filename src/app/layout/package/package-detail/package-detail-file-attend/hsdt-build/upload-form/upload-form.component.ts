@@ -58,11 +58,6 @@ export class UploadFormComponent implements OnInit, OnDestroy {
   ) { }
 
   ngOnInit() {
-    this.getDanhSachUser();
-    this.getDanhSachLoaiHoSo();
-    this.getDataDocumentOfType();
-    this.filterModel.status = '';
-    this.filterModel.uploadedEmployeeId = '';
     this.subscription = this.hoSoDuThauService.watchChangingRouter().subscribe(data => {
       this.getDanhSachUser();
       this.getDanhSachLoaiHoSo();

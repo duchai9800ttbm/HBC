@@ -14,9 +14,10 @@
                 <button *ngIf="isModeView" class="btn btn-primary" routerLink="../edit">Chỉnh sửa</button>
                 <button *ngIf="isModeCreate || isModeEdit" class="btn btn-secondary ml-1" routerLink="../summary">Hủy</button>
                 <button *ngIf="isModeCreate || isModeEdit" class="btn btn-primary ml-1" (click)="submit(false)">Lưu</button>
-
-                <button *ngIf="isModeCreate || isModeEdit" class="btn btn-primary ml-1" (click)="submit(true)">Lưu bản
-                    nháp</button>
+                <button *ngIf="isModeCreate || (isModeEdit && model.isDraftVersion)" class="btn btn-primary ml-1"
+                    (click)="submit(true)">
+                    Lưu bản nháp
+                </button>
 
 
             </div>
@@ -40,7 +41,8 @@
                             Địa điểm (Location):&nbsp;&nbsp;&nbsp;&nbsp; {{package?.place}}
                         </div>
                         <div class="col-md-6">
-                            Date:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                            Date:&nbsp;&nbsp;&nbsp;
+                            {{ (priceReviewForm.get('createdDate').value)*1000 | date:'dd/MM/yyyy HH:mm': '+0000' }}
                         </div>
                     </div>
 
@@ -54,6 +56,15 @@
                     <div class="row no-gutters row-item">
                         <div class="col-md-12">
                             Thông tin về công ty khác tham gia thầu:&nbsp;&nbsp;&nbsp;&nbsp;
+
+                            <select class="custom-select-option option-set-width" formControlName="otherCompanyCustomerId">
+                                <option value="">---Chọn---</option>
+                                <option *ngFor="let item of listCustomer" [value]="item.customerId">
+                                    {{ item.customerName }}
+                                </option>
+                            </select>
+
+
                         </div>
                     </div>
                 </div>
@@ -1424,7 +1435,8 @@
                                 <div class="ml-3 d-flex align-items-center item-1 mg-left">
                                     <div>
                                         <label class="childcheck">
-                                            <input type="radio" (click)="giamDocKhongDuyet()" [value]=false name="isApprovedByBoardOfDirector">
+                                            <input formControlName="isApprovedByBoardOfDirector" type="radio" (click)="giamDocKhongDuyet()"
+                                                [value]=false name="isApprovedByBoardOfDirector">
                                             <span class="checkmark"></span>
                                         </label>
 
