@@ -377,19 +377,23 @@ export class InformationDeploymentComponent implements OnInit {
   }
 
   confirmTenderPlan() {
-    this.tenderPlan.isDraftVersion = false;
-    console.log('this.tenderPlan', this.tenderPlan);
-    // this.tenderPlan.tasks.every( item => {
-    //   return  item.whoIsInChargeId || (item.whoIsInCharges && item.whoIsInCharges.length !== 0);
-    // });
-    this.packageService.createOrUpdateTenderPreparationPlanning(this.tenderPlan).subscribe(success => {
-      this.spinner.hide();
-      this.alertService.success('Xác nhận phân công tiến độ thành công!');
-      this.getPackageInfo();
-    }, err => {
-      this.spinner.hide();
-      this.alertService.error('Xác nhận phân công tiến độ thất bại!');
+    const checkComfirm = this.tenderPlan.tasks.every(itemTask => {
+      return ((itemTask.whoIsInChargeId && itemTask.whoIsInChargeId !== 0)
+        || (itemTask.whoIsInCharges && itemTask.whoIsInCharges.length !== 0));
     });
+    if (checkComfirm) {
+      this.tenderPlan.isDraftVersion = false;
+      this.packageService.createOrUpdateTenderPreparationPlanning(this.tenderPlan).subscribe(success => {
+        this.spinner.hide();
+        this.alertService.success('Xác nhận phân công tiến độ thành công!');
+        this.getPackageInfo();
+      }, err => {
+        this.spinner.hide();
+        this.alertService.error('Xác nhận phân công tiến độ thất bại!');
+      });
+    } else {
+      this.alertService.error('Bạn chưa hoàn tất phân công tiến độ, kiểm tra lại bảng phân công.');
+    }
   }
 
   sendTenderPlan() {
