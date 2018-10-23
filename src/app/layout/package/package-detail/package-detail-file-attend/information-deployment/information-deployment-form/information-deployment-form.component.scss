@@ -219,3 +219,6 @@ table, thead, tbody, tfoot {
     cursor: not-allowed;
     opacity: 1;
 }
+:host /deep/ .ng-select .ng-select-container .ng-value-container .ng-placeholder {
+    color: #495057;
+}
