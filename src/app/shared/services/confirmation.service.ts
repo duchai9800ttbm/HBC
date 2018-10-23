@@ -71,7 +71,6 @@ export class ConfirmationService {
         );
         modalRef.componentInstance.message = message;
         modalRef.componentInstance.routerLink = routerLink;
-        // modalRef.componentInstance.setRouterAction = setRouterAction;
     }
 
 }

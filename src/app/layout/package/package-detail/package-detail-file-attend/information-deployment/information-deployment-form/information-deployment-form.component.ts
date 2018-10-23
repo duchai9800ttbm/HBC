@@ -44,7 +44,6 @@ export class InformationDeploymentFormComponent implements OnInit {
     get tasksFA(): FormArray {
         return this.planForm.get('tasks') as FormArray;
     }
-
     constructor(
         private spinner: NgxSpinnerService,
         private packageService: PackageService,
@@ -74,6 +73,7 @@ export class InformationDeploymentFormComponent implements OnInit {
                 );
         } else {
             this.packageService.getTenderPreparationPlanning(this.bidOpportunityId).subscribe(data => {
+                console.log('getTenderPreparationPlanning', data);
                 this.createForm(data);
             });
         }
@@ -96,7 +96,7 @@ export class InformationDeploymentFormComponent implements OnInit {
             projectInformation: planModel.projectInformation ? planModel.projectInformation : 'Bảng phân công tiến độ',
             tasks: this.fb.array(taskArr)
         });
-        this.tasksFA.controls.forEach( (item, index) => {
+        this.tasksFA.controls.forEach((item, index) => {
             this.calculateTotalTime(index);
         });
         this.changeDirector(this.planForm.get('projectDirectorEmployeeId').value, 0);
@@ -104,28 +104,30 @@ export class InformationDeploymentFormComponent implements OnInit {
         this.changeDirector(this.planForm.get('technicalDepartmentEmployeeId').value, 2);
         this.changeDirector(this.planForm.get('bimDepartmentEmployeeId').value, 3);
         setTimeout(() => {
-            kendo.jQuery(this.ganttChart.nativeElement).kendoGantt({
-                views: [
-                    { type: 'day', selected: true },
-                    { type: 'week' },
-                    'month'
-                ],
-                height: 3250,
-                // 2832
-                listWidth: 0,
-                showWorkHours: false,
-                showWorkDays: false,
-                snap: false
-            }).data('kendoGantt');
-            this.updateGantt();
-            this.planForm.valueChanges.subscribe(_ => this.updateGantt());
+            if (this.ganttChart) {
+                kendo.jQuery(this.ganttChart.nativeElement).kendoGantt({
+                    views: [
+                        { type: 'day', selected: true },
+                        { type: 'week' },
+                        'month'
+                    ],
+                    height: 3250,
+                    // 2832
+                    listWidth: 0,
+                    showWorkHours: false,
+                    showWorkDays: false,
+                    snap: false
+                }).data('kendoGantt');
+                this.updateGantt();
+                this.planForm.valueChanges.subscribe(_ => this.updateGantt());
+            }
         }, 500);
     }
 
     getEmailUser(userId: number): string {
         // tslint:disable-next-line:triple-equals
         // tslint:disable-next-line:max-line-length
-        return ( this.userList && this.userList.find(i => i.employeeId === Number(userId)) ) ? this.userList.find(i => i.employeeId === Number(userId)).email : '';
+        return (this.userList && this.userList.find(i => i.employeeId === Number(userId))) ? this.userList.find(i => i.employeeId === Number(userId)).email : '';
     }
 
     changeDirector(userId, personnelType) {
@@ -169,6 +171,7 @@ export class InformationDeploymentFormComponent implements OnInit {
             itemName: data.itemName,
             itemDesc: data.itemDesc,
             whoIsInChargeId: data.whoIsInChargeId === 0 ? null : data.whoIsInChargeId,
+            whoIsInChargeIds: (data.whoIsInCharges && data.whoIsInCharges.length !== 0) ? data.whoIsInCharges[0] : [],
             startDate: data.startDate
                 ? DateTimeConvertHelper.fromTimestampToDtObject(
                     data.startDate * 1000
@@ -213,7 +216,7 @@ export class InformationDeploymentFormComponent implements OnInit {
             // lưu nháp thì ko cần validate
             return true;
         } else if (formData.tasks.every(i => i.whoIsInChargeId === 0 || i.whoIsInChargeId == null)) {
-            if ( this.planForm.get('isDraftVersion').value === false) {
+            if (this.planForm.get('isDraftVersion').value === false) {
                 this.alertService.error('Bạn chưa hoàn tất phân công tiến độ!');
             } else {
                 this.alertService.error('Bạn chưa hoàn tất phân công tiến độ, chọn "Lưu nháp" nếu muốn thực hiện sau.');
@@ -249,6 +252,9 @@ export class InformationDeploymentFormComponent implements OnInit {
             if (item.whoIsInChargeId && item.whoIsInChargeId !== 0) {
                 this.taskNoAssignment = item.itemName;
                 return (item.startDate && item.finishDate);
+            } else if (item.whoIsInChargeIds && item.whoIsInChargeIds.length !== 0) {
+                this.taskNoAssignment = item.itemName;
+                return (item.startDate && item.finishDate);
             } else {
                 return true;
             }
@@ -257,7 +263,7 @@ export class InformationDeploymentFormComponent implements OnInit {
     }
 
     submitForm(isDraft: boolean) {
-        if ( this.checkAssignment() ) {
+        if (this.checkAssignment()) {
             const data = this.getFormData();
             const isValid = this.validateForm(data, isDraft);
             if (!isValid) {
@@ -284,10 +290,7 @@ export class InformationDeploymentFormComponent implements OnInit {
         }
         // data.updatedDesc = this.updatedDetail;
         this.spinner.show();
-        // console.log('data-data', data.tasks.forEach( item => {
-        //     item.itemName = '';
-        // }));
-        data.tasks.forEach( item => {
+        data.tasks.forEach(item => {
             item.itemName = '';
         });
         this.packageService.createOrUpdateTenderPreparationPlanning(data).subscribe(res => {
@@ -323,11 +326,11 @@ export class InformationDeploymentFormComponent implements OnInit {
     // }
 
     calculateTotalTime(index) {
-        const end = DateTimeConvertHelper.fromDtObjectToSecon( (this.tasksFA.controls[index]).get('finishDate').value);
+        const end = DateTimeConvertHelper.fromDtObjectToSecon((this.tasksFA.controls[index]).get('finishDate').value);
         const start = DateTimeConvertHelper.fromDtObjectToSecon((this.tasksFA.controls[index]).get('startDate').value);
-        if ( start && end ) {
+        if (start && end) {
             this.tasksFA.controls[index].get('totalTime').patchValue(
-                Math.floor( (end - start) / (60 * 60 * 24) )
+                Math.floor((end - start) / (60 * 60 * 24))
             );
         } else {
             this.tasksFA.controls[index].get('totalTime').patchValue('');
@@ -339,13 +342,11 @@ export class InformationDeploymentFormComponent implements OnInit {
     }
 
     changeFinishStatus(value) {
-        console.log(value);
     }
 
     checkFinishTenderPlanItem(itemId: number) {
         // tạm thời chưa dùng, khi phân quyền sẽ dùng
         this.packageService.checkOrUncheckTenderPreparationPlanningItem(this.bidOpportunityId, itemId).subscribe(success => {
-            console.log(success);
         }, err => {
             this.alertService.error('Đã có lỗi xảy ra, vui lòng thử lại!');
         });
