@@ -42,7 +42,7 @@
                         </div>
                         <div class="col-md-6">
                             Date:&nbsp;&nbsp;&nbsp;
-                            {{ (priceReviewForm.get('createdDate').value)*1000 | date:'dd/MM/yyyy HH:mm': '+0000' }}
+                            {{ (priceReviewForm.get('createdDate').value == 0) ? '' : (priceReviewForm.get('createdDate').value)*1000 | date:'dd/MM/yyyy HH:mm': '+0000' }}
                         </div>
                     </div>
 
@@ -1044,7 +1044,7 @@
                         <div class="two d-flex">
                             <div class="item-1 d-flex align-items-center">
                                 <div>
-                                    <input formControlName="chiPhiBaseAmount" appInputMoney>
+                                    <input formControlName="chiPhiBaseAmount" appInputMoney (change)="countTotal($event)">
                                 </div>
                             </div>
                             <div class="item-2 d-flex align-items-center">
@@ -1086,7 +1086,7 @@
                         <div class="two d-flex">
                             <div class="item-1 d-flex align-items-center">
                                 <div>
-                                    <input formControlName="giaTriBaseAmount" appInputMoney>
+                                    <input formControlName="giaTriBaseAmount" appInputMoney  (change)="countTotal($event)">
                                 </div>
                             </div>
                             <div class="item-2 d-flex align-items-center">
@@ -1128,7 +1128,7 @@
                         <div class="two d-flex">
                             <div class="item-1 d-flex align-items-center">
                                 <div>
-                                    <input formControlName="giaTriPCBaseAmount" appInputMoney>
+                                    <input formControlName="giaTriPCBaseAmount" appInputMoney  (change)="countTotal($event)">
                                 </div>
                             </div>
                             <div class="item-2 d-flex align-items-center">
@@ -1162,7 +1162,7 @@
                         <div class="two d-flex">
                             <div class="item-1 d-flex align-items-center">
                                 <div>
-                                    <input formControlName="totalGiaVonAmount" appInputMoney>
+                                    <input readonly formControlName="totalGiaVonAmount" appInputMoney>
                                 </div>
                             </div>
                             <div class="item-2 d-flex align-items-center">
