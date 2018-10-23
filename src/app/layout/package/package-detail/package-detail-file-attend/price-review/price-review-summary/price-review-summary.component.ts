@@ -66,22 +66,11 @@ export class PriceReviewSummaryComponent implements OnInit {
     this.priceReviewService.viewShort(this.packageId).subscribe(data => {
       this.priceReview = data;
     });
-    // this.priceReviewService.getDanhSachHSDTChinhThuc(this.packageId).subscribe(data => {
-    //   this.listItemHSDTChinhThuc = data;
-    //   console.log(data);
-    // });
-
     this.priceReviewService.getDanhSachHSDTChinhThucInstantSearch(this.packageId, this.searchTerm$).subscribe(data => {
       this.listItemHSDTChinhThuc = data;
     });
 
     this.getChangeHistory(0, 10);
-
-
-    // this.priceReviewService.changedHistoryPriceReview(this.packageId, 0, 10)
-    //   .subscribe(data => {
-    //     this.pagedResult = data;
-    //   });
   }
 
   viewLiveForm(typeLiveForm) {
