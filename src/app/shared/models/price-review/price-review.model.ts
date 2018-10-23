@@ -176,7 +176,9 @@ export class TenderPriceApproval {
         };
         oAndPPercentOfTotalCost: {
             baseTenderAmount: number;
+            baseTenderGFA: number;
             alternativeTenderAmount: number;
+            // alternativeTenderGFA: number;
             note: string
         };
     };

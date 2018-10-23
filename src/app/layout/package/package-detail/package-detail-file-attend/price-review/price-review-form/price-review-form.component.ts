@@ -31,11 +31,14 @@ export class PriceReviewFormComponent implements OnInit, AfterViewInit {
   packageId;
   listCustomer;
   showPopupConfirm = false;
+  // Variable Check
+  valuePcps = false;
+  valueOnP = false;
+
   @Input() model: TenderPriceApproval;
   @Input() type: string;
 
   ngOnInit() {
-    console.log(this.model);
     this.getModeScreen();
     this.packageId = PackageDetailComponent.packageId;
     this.getAllCustomer();
@@ -443,25 +446,25 @@ export class PriceReviewFormComponent implements OnInit, AfterViewInit {
         value: this.model.tentativeTenderPrice
           && this.model.tentativeTenderPrice.costOfCapital
           && this.model.tentativeTenderPrice.costOfCapital.baseTenderAmount,
-        disabled: this.isModeView
+        disabled: true
       },
       giaVonBaseGfa: {
         value: this.model.tentativeTenderPrice
           && this.model.tentativeTenderPrice.costOfCapital
           && this.model.tentativeTenderPrice.costOfCapital.baseTenderGFA,
-        disabled: this.isModeView
+        disabled: true
       },
       giaVonAlterAmount: {
         value: this.model.tentativeTenderPrice
           && this.model.tentativeTenderPrice.costOfCapital
           && this.model.tentativeTenderPrice.costOfCapital.alternativeTenderAmount,
-        disabled: this.isModeView
+        disabled: true
       },
       giaVonAlterGfa: {
         value: this.model.tentativeTenderPrice
           && this.model.tentativeTenderPrice.costOfCapital
           && this.model.tentativeTenderPrice.costOfCapital.alternativeTenderGFA,
-        disabled: this.isModeView
+        disabled: true
       },
       giaVonCY: {
         value: this.model.tentativeTenderPrice
@@ -540,7 +543,7 @@ export class PriceReviewFormComponent implements OnInit, AfterViewInit {
         value: this.model.tentativeTenderPrice
           && this.model.tentativeTenderPrice.costOfCapitalPCPSValue
           && this.model.tentativeTenderPrice.costOfCapitalPCPSValue.baseTenderGFA,
-        disabled: this.isModeView
+        disabled: true
       },
       giaTriPCAlterAmount: {
         value: this.model.tentativeTenderPrice
@@ -565,7 +568,7 @@ export class PriceReviewFormComponent implements OnInit, AfterViewInit {
         value: this.model.tentativeTenderPrice
           && this.model.tentativeTenderPrice.totalCostOfCapital
           && this.model.tentativeTenderPrice.totalCostOfCapital.baseTenderAmount,
-        disabled: this.isModeView
+        disabled: true
       },
       totalGiaVonGfa: {
         value: this.model.tentativeTenderPrice
@@ -573,6 +576,19 @@ export class PriceReviewFormComponent implements OnInit, AfterViewInit {
           && this.model.tentativeTenderPrice.totalCostOfCapital.baseTenderGFA,
         disabled: this.isModeView
       },
+      totalAlterAmount: {
+        value: this.model.tentativeTenderPrice
+          && this.model.tentativeTenderPrice.totalCostOfCapital
+          && this.model.tentativeTenderPrice.totalCostOfCapital.alternativeTenderAmount,
+        disabled: true
+      },
+      totalAlterGfa: {
+        value: this.model.tentativeTenderPrice
+          && this.model.tentativeTenderPrice.totalCostOfCapital
+          && this.model.tentativeTenderPrice.totalCostOfCapital.alternativeTenderGFA,
+        disabled: this.isModeView
+      },
+
       totalGiaVonNote: {
         value: this.model.tentativeTenderPrice
           && this.model.tentativeTenderPrice.totalCostOfCapital
@@ -599,7 +615,7 @@ export class PriceReviewFormComponent implements OnInit, AfterViewInit {
         disabled: this.isModeView
       },
 
-
+      // TODO: Mapping
       giaDiNopThauAmount: {
         value: this.model.tentativeTenderPrice
           && this.model.tentativeTenderPrice.totalCostOfSubmission
@@ -631,10 +647,23 @@ export class PriceReviewFormComponent implements OnInit, AfterViewInit {
         disabled: this.isModeView
       },
 
-      tyLeGfa: {
+      // TODO: mapping under
+      tyleAmount: {
         value: this.model.tentativeTenderPrice
           && this.model.tentativeTenderPrice.oAndPPercentOfTotalCost
           && this.model.tentativeTenderPrice.oAndPPercentOfTotalCost.baseTenderAmount,
+        disabled: this.isModeView
+      },
+      tyleGfa: {
+        value: this.model.tentativeTenderPrice
+          && this.model.tentativeTenderPrice.oAndPPercentOfTotalCost
+          && this.model.tentativeTenderPrice.oAndPPercentOfTotalCost.baseTenderGFA,
+        disabled: this.isModeView
+      },
+      tyleAlter: {
+        value: this.model.tentativeTenderPrice
+          && this.model.tentativeTenderPrice.oAndPPercentOfTotalCost
+          && this.model.tentativeTenderPrice.oAndPPercentOfTotalCost.alternativeTenderAmount,
         disabled: this.isModeView
       },
       tyLeNote: {
@@ -643,6 +672,8 @@ export class PriceReviewFormComponent implements OnInit, AfterViewInit {
           && this.model.tentativeTenderPrice.oAndPPercentOfTotalCost.note,
         disabled: this.isModeView
       },
+
+      // TODO: mapping phần trên
       approvalDate: [
         DateTimeConvertHelper.fromTimestampToDtObject(
           this.model.approvalDate * 1000)
@@ -678,6 +709,15 @@ export class PriceReviewFormComponent implements OnInit, AfterViewInit {
     //   console.log(totalGiaVonAmount);
     //   this.priceReviewForm.get('totalGiaVonAmount').patchValue(totalGiaVonAmount);
     // });
+    if (this.priceReviewForm.value) {
+      const value = this.model.approvalDate;
+      if (!value) {
+        this.packageService.getProposedTenderParticipateReport(this.packageId).subscribe(data => {
+          const valueApprovalDate = data.tenderDirectorProposal.expectedDate;
+          this.priceReviewForm.get('approvalDate').patchValue(DateTimeConvertHelper.fromTimestampToDtObject(valueApprovalDate * 1000));
+        });
+      }
+    }
   }
 
 
@@ -799,8 +839,49 @@ export class PriceReviewFormComponent implements OnInit, AfterViewInit {
   getAllCustomer() {
     this.priceReviewService.getAllCustomer().subscribe(customers => {
       this.listCustomer = customers;
-      console.log(this.listCustomer);
     });
   }
 
+  // Count Total Gía vốn
+  countTotalBase(event) {
+    const chiPhiBaseAmount = (this.priceReviewForm.get('chiPhiBaseAmount').value) ?
+      this.priceReviewForm.get('chiPhiBaseAmount').value : 0;
+
+    const giaTriBaseAmount = (this.priceReviewForm.get('giaTriBaseAmount').value) ?
+      this.priceReviewForm.get('giaTriBaseAmount').value : 0;
+
+    const giaTriPCBaseAmount = (this.priceReviewForm.get('giaTriPCBaseAmount').value) ?
+      this.priceReviewForm.get('giaTriPCBaseAmount').value : 0;
+
+    const totalValue = +chiPhiBaseAmount + +giaTriBaseAmount + +giaTriPCBaseAmount;
+    this.priceReviewForm.get('totalGiaVonAmount').patchValue(+(totalValue));
+  }
+  countTotalAlter(event) {
+    const chiPhiAlterAmount = (this.priceReviewForm.get('chiPhiAlterAmount').value) ?
+      this.priceReviewForm.get('chiPhiAlterAmount').value : 0;
+
+    const giaTriAlterAmount = (this.priceReviewForm.get('giaTriAlterAmount').value) ?
+      this.priceReviewForm.get('giaTriAlterAmount').value : 0;
+
+    const giaTriPCAlterAmount = (this.priceReviewForm.get('giaTriPCAlterAmount').value) ?
+      this.priceReviewForm.get('giaTriPCAlterAmount').value : 0;
+
+    const totalValue = +chiPhiAlterAmount + +giaTriAlterAmount + +giaTriPCAlterAmount;
+    this.priceReviewForm.get('totalAlterAmount').patchValue(+(totalValue));
+  }
+  // GFA
+  getValueField() {
+    const chiPhiBaseGfa = this.priceReviewForm.get('chiPhiBaseGfa').value;
+    const giaTriBaseGfa = this.priceReviewForm.get('giaTriBaseGfa').value;
+    const chiPhiLoiNhuanAmountGfa = this.priceReviewForm.get('chiPhiLoiNhuanAmountGfa').value;
+
+    if (chiPhiBaseGfa && giaTriBaseGfa) {
+      this.priceReviewForm.get('giaTriPCBaseGfa').patchValue((+giaTriBaseGfa) / (+chiPhiBaseGfa));
+      this.valuePcps = true;
+    } else { this.valuePcps = false; }
+    if (chiPhiBaseGfa && chiPhiLoiNhuanAmountGfa) {
+      this.priceReviewForm.get('tyleGfa').patchValue((+chiPhiLoiNhuanAmountGfa) / (+chiPhiBaseGfa));
+      this.valueOnP = true;
+    } else { this.valueOnP = false; }
+  }
 }

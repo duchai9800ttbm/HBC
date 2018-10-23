@@ -42,7 +42,12 @@
                         </div>
                         <div class="col-md-6">
                             Date:&nbsp;&nbsp;&nbsp;
+<<<<<<< HEAD
+                            {{ (priceReviewForm.get('createdDate').value == 0) ? '' :
+                            (priceReviewForm.get('createdDate').value)*1000 | date:'dd/MM/yyyy HH:mm': '+0000' }}
+=======
                             {{ (priceReviewForm.get('createdDate').value == 0) ? '' : (priceReviewForm.get('createdDate').value)*1000 | date:'dd/MM/yyyy HH:mm': '+0000' }}
+>>>>>>> master
                         </div>
                     </div>
 
@@ -1002,7 +1007,8 @@
                         <div class="two d-flex">
                             <div class="item-1 d-flex align-items-center">
                                 <div>
-                                    <input formControlName="giaVonBaseAmount" appInputMoney appEnterPreventDefault>
+                                    <input formControlName="giaVonBaseAmount" appInputMoney
+                                        appEnterPreventDefault>
                                 </div>
                             </div>
                             <div class="item-2 d-flex align-items-center">
@@ -1013,13 +1019,15 @@
 
                             <div class="item-3 d-flex align-items-center">
                                 <div>
-                                    <input formControlName="giaVonAlterAmount" appInputMoney appEnterPreventDefault>
+                                    <input formControlName="giaVonAlterAmount" appInputMoney
+                                        appEnterPreventDefault>
                                 </div>
 
                             </div>
                             <div class="item-4 d-flex align-items-center">
                                 <div>
-                                    <input formControlName="giaVonAlterGfa" appInputArea appEnterPreventDefault>
+                                    <input formControlName="giaVonAlterGfa" appInputArea
+                                        appEnterPreventDefault>
                                 </div>
                             </div>
 
@@ -1044,18 +1052,22 @@
                         <div class="two d-flex">
                             <div class="item-1 d-flex align-items-center">
                                 <div>
+<<<<<<< HEAD
+                                    <input formControlName="chiPhiBaseAmount" appInputMoney (input)="countTotalBase($event)">
+=======
                                     <input formControlName="chiPhiBaseAmount" appInputMoney (change)="countTotal($event)">
+>>>>>>> master
                                 </div>
                             </div>
                             <div class="item-2 d-flex align-items-center">
                                 <div>
-                                    <input formControlName="chiPhiBaseGfa" appInputArea>
+                                    <input formControlName="chiPhiBaseGfa" appInputArea (input)="getValueField()">
                                 </div>
                             </div>
 
                             <div class="item-3 d-flex align-items-center">
                                 <div>
-                                    <input formControlName="chiPhiAlterAmount" appInputMoney>
+                                    <input formControlName="chiPhiAlterAmount" appInputMoney (input)="countTotalAlter($event)">
                                 </div>
 
                             </div>
@@ -1086,18 +1098,22 @@
                         <div class="two d-flex">
                             <div class="item-1 d-flex align-items-center">
                                 <div>
+<<<<<<< HEAD
+                                    <input formControlName="giaTriBaseAmount" appInputMoney (input)="countTotalBase($event)">
+=======
                                     <input formControlName="giaTriBaseAmount" appInputMoney  (change)="countTotal($event)">
+>>>>>>> master
                                 </div>
                             </div>
                             <div class="item-2 d-flex align-items-center">
                                 <div>
-                                    <input formControlName="giaTriBaseGfa" appInputArea>
+                                    <input formControlName="giaTriBaseGfa" appInputArea (input)="getValueField()">
                                 </div>
                             </div>
 
                             <div class="item-3 d-flex align-items-center">
                                 <div>
-                                    <input formControlName="giaTriAlterAmount" appInputMoney>
+                                    <input formControlName="giaTriAlterAmount" appInputMoney (input)="countTotalAlter($event)">
                                 </div>
 
                             </div>
@@ -1128,18 +1144,27 @@
                         <div class="two d-flex">
                             <div class="item-1 d-flex align-items-center">
                                 <div>
+<<<<<<< HEAD
+                                    <input formControlName="giaTriPCBaseAmount" appInputMoney (input)="countTotalBase($event)">
+=======
                                     <input formControlName="giaTriPCBaseAmount" appInputMoney  (change)="countTotal($event)">
+>>>>>>> master
                                 </div>
                             </div>
                             <div class="item-2 d-flex align-items-center">
-                                <div>
+                                <div *ngIf="valuePcps">
                                     <input formControlName="giaTriPCBaseGfa" appInputArea>
                                 </div>
+
+                                <div *ngIf="!valuePcps" class="center-parent w-100">
+                                    <div>/</div>
+                                </div>
+
                             </div>
 
                             <div class="item-3 d-flex align-items-center">
                                 <div>
-                                    <input formControlName="giaTriPCAlterAmount" appInputMoney>
+                                    <input formControlName="giaTriPCAlterAmount" appInputMoney (input)="countTotalAlter($event)">
                                 </div>
 
                             </div>
@@ -1172,14 +1197,14 @@
                             </div>
 
                             <div class="item-3 d-flex align-items-center">
-                                <div class="center-parent w-100">
-                                    <div>/</div>
+                                <div>
+                                    <input formControlName="totalAlterAmount" appInputMoney>
                                 </div>
 
                             </div>
                             <div class="item-4 d-flex align-items-center">
-                                <div class="center-parent w-100">
-                                    <div>/</div>
+                                <div>
+                                    <input formControlName="totalAlterGfa" appInputArea>
                                 </div>
                             </div>
 
@@ -1204,12 +1229,12 @@
                         <div class="two d-flex">
                             <div class="border-right w-50 d-flex align-items-center">
                                 <div class="w-100">
-                                    <input formControlName="chiPhiLoiNhuanAmountGfa" appInputMoney>
+                                    <input formControlName="chiPhiLoiNhuanAmountGfa" appInputMoney (input)="getValueField()">
                                 </div>
                             </div>
                             <div class="w-50 d-flex align-items-center">
                                 <div class="w-100">
-                                    <input formControlName="chiPhiLoiNhuanAlterAmountGfa" appInputMoney>
+                                    <input formControlName="chiPhiLoiNhuanAlterAmountGfa" appInputArea>
                                 </div>
                             </div>
 
@@ -1231,20 +1256,20 @@
                                 </div>
                             </div>
                             <div class="item-2 d-flex align-items-center">
-                                <div class="center-parent w-100">
-                                    <div>/</div>
+                                <div>
+                                    <input formControlName="giaDiNopThauGfa" appInputArea>
                                 </div>
                             </div>
 
                             <div class="item-3 d-flex align-items-center">
-                                <div class="center-parent w-100">
-                                    <div>/</div>
+                                <div>
+                                    <input formControlName="giaDiNopThauAlterAmount" appInputMoney>
                                 </div>
 
                             </div>
                             <div class="item-4 d-flex align-items-center">
-                                <div class="center-parent w-100">
-                                    <div>/</div>
+                                <div>
+                                    <input formControlName="giaDiNopThauAlterGfa" appInputArea>
                                 </div>
                             </div>
 
@@ -1269,19 +1294,23 @@
                         </div>
                         <div class="two d-flex">
                             <div class="item-1 d-flex align-items-center">
-                                <div class="center-parent w-100">
-                                    <div>/</div>
+                                <div>
+                                    <input formControlName="tyleAmount" appInputMoney>
                                 </div>
                             </div>
                             <div class="item-2 d-flex align-items-center">
-                                <div>
-                                    <input formControlName="tyLeGfa">
+                                <div *ngIf="valueOnP">
+                                    <input formControlName="tyleGfa" appInputArea>
+                                </div>
+
+                                <div *ngIf="!valueOnP" class="center-parent w-100">
+                                    <div>/</div>
                                 </div>
                             </div>
 
                             <div class="item-3 d-flex align-items-center">
-                                <div class="center-parent w-100">
-                                    <div>/</div>
+                                <div>
+                                    <input formControlName="tyleAlter" appInputMoney>
                                 </div>
 
                             </div>
