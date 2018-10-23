@@ -150,6 +150,7 @@ export class PriceReviewService {
         name: model.document.name,
         interviewTime: model.document.interviewTime
       },
+      isLiveForm: model.isLiveForm,
       childs: model.childs ? model.childs : []
     };
   }
@@ -175,6 +176,17 @@ export class PriceReviewService {
 
   download(tenderPriceApprovalDocumentId: number) {
     const url = `tenderpriceapproval/document/${tenderPriceApprovalDocumentId}/download`;
+    return this.apiService.getFile(url).map(response => {
+      return FileSaver.saveAs(
+        new Blob([response.file], {
+          type: `${response.file.type}`,
+        }), response.fileName
+      );
+    });
+  }
+
+  downloadTaiLieuHSDT(tenderDocumentId: number) {
+    const url = `tenderdocument/${tenderDocumentId}/download`;
     return this.apiService.getFile(url).map(response => {
       return FileSaver.saveAs(
         new Blob([response.file], {

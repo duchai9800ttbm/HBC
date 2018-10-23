@@ -14,7 +14,7 @@
                 <button *ngIf="isModeView" class="btn btn-primary" routerLink="../edit">Chỉnh sửa</button>
                 <button *ngIf="isModeCreate || isModeEdit" class="btn btn-secondary ml-1" routerLink="../summary">Hủy</button>
                 <button *ngIf="isModeCreate || isModeEdit" class="btn btn-primary ml-1" (click)="submit(false)">Lưu</button>
-                <button *ngIf="(isModeCreate || (isModeEdit && model.isDraftVersion)) && package.isSubmittedHSDT === false" class="btn btn-primary ml-1"
+                <button *ngIf="(isModeCreate || (isModeEdit && model.isDraftVersion)) && !package.isSubmittedHSDT" class="btn btn-primary ml-1"
                     (click)="submit(true)">
                     Lưu bản nháp
                 </button>

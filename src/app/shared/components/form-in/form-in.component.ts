@@ -42,6 +42,27 @@ export class FormInComponent implements OnInit {
           });
         break;
       }
+      case 'LiveFormTomTatDieuKienDuThau': {
+        this.printingDocumentService.printTenderCondition(this.packageId)
+          .subscribe(data => {
+            this.htmlContent = data;
+          });
+        break;
+      }
+      case 'LiveFormPhanCongTienDo': {
+        this.printingDocumentService.printTenderPreparationPlanningAssignment(this.packageId)
+          .subscribe(data => {
+            this.htmlContent = data;
+          });
+        break;
+      }
+      case 'LiveFormThamQuanBaoCaoCongTruong': {
+        this.printingDocumentService.printSiteSurveyReport(this.packageId)
+          .subscribe(data => {
+            this.htmlContent = data;
+          });
+        break;
+      }
       default: {
 
         break;
