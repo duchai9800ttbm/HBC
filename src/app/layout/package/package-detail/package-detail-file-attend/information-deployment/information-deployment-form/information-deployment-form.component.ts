@@ -165,6 +165,7 @@ export class InformationDeploymentFormComponent implements OnInit {
     }
 
     createTaskItemFG(data: TenderPreparationPlanItem): FormGroup {
+        // console.log('createTaskItemFG', data);
         return this.fb.group({
             itemId: data.itemId,
             itemNo: data.itemNo,
