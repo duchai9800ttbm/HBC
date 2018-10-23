@@ -686,9 +686,9 @@ export class PriceReviewFormComponent implements OnInit, AfterViewInit {
         value: this.model.interviewTimes,
         disabled: this.isModeView
       },
-      isApprovedByTenderLeader: this.model.isApprovedByTenderLeader,
-      isApprovedByTenderManager: this.model.isApprovedByTenderManager,
-      isApprovedByBoardOfDirector: this.model.isApprovedByBoardOfDirector,
+      isApprovedByTenderLeader: { value: this.model.isApprovedByTenderLeader, disabled: this.isModeEdit },
+      isApprovedByTenderManager: { value: this.model.isApprovedByTenderManager, disabled: this.isModeEdit },
+      isApprovedByBoardOfDirector: { value: this.model.isApprovedByBoardOfDirector, disabled: this.isModeEdit },
       bidOpportunityId: this.model.bidOpportunityId ? this.model.bidOpportunityId : this.packageId,
       createdEmployeeId: this.model.createdEmployee && this.model.createdEmployee.employeeId,
       updatedEmployeeId: this.model.updatedEmployee && this.model.updatedEmployee.employeeId,
