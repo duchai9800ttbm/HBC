@@ -21,6 +21,7 @@ import { DialogService } from '../../../../../../../../node_modules/@progress/ke
 import { FormInComponent } from '../../../../../../shared/components/form-in/form-in.component';
 import { BidStatus } from '../../../../../../shared/constants/bid-status';
 import { BehaviorSubject } from '../../../../../../../../node_modules/rxjs/BehaviorSubject';
+import { Router } from '../../../../../../../../node_modules/@angular/router';
 
 @Component({
   selector: 'app-price-review-summary',
@@ -50,7 +51,8 @@ export class PriceReviewSummaryComponent implements OnInit {
     private packageService: PackageService,
     private statusObservableHsdtService: StatusObservableHsdtService,
     private spinner: NgxSpinnerService,
-    private dialogService: DialogService
+    private dialogService: DialogService,
+    private router: Router
   ) { }
 
 
@@ -64,22 +66,78 @@ export class PriceReviewSummaryComponent implements OnInit {
     this.priceReviewService.viewShort(this.packageId).subscribe(data => {
       this.priceReview = data;
     });
-    // this.priceReviewService.getDanhSachHSDTChinhThuc(this.packageId).subscribe(data => {
-    //   this.listItemHSDTChinhThuc = data;
-    //   console.log(data);
-    // });
-
     this.priceReviewService.getDanhSachHSDTChinhThucInstantSearch(this.packageId, this.searchTerm$).subscribe(data => {
       this.listItemHSDTChinhThuc = data;
     });
 
     this.getChangeHistory(0, 10);
+  }
 
+  viewLiveForm(typeLiveForm) {
+    switch (typeLiveForm) {
+      case 'Trình Duyệt Giá': {
+        this.router.navigate([`package/detail/${this.packageId}/attend/price-review/detail`]);
+        break;
+      }
+      case 'Báo cáo tham quan công trình': {
+        this.router.navigate([`package/detail/${this.packageId}/attend/build/liveformsite/info`]);
+        break;
+      }
+      case 'Bảng tóm tắt ĐKDT': {
+        this.router.navigate([`package/detail/${this.packageId}/attend/build/summary/form/detail/info`]);
+        break;
+      }
+      default: break;
+    }
+  }
 
-    // this.priceReviewService.changedHistoryPriceReview(this.packageId, 0, 10)
-    //   .subscribe(data => {
-    //     this.pagedResult = data;
-    //   });
+  inLiveForm(typeLiveForm) {
+    switch (typeLiveForm) {
+      case 'Trình Duyệt Giá': {
+        this.dialog = this.dialogService.open({
+          title: 'FORM IN',
+          content: FormInComponent,
+          width: window.screen.availWidth * 0.8,
+          minWidth: 250,
+          height: window.screen.availHeight * 0.7
+        });
+        const instance = this.dialog.content.instance;
+        instance.type = 'LiveFormTrinhDuyetGia';
+        instance.packageId = this.packageId;
+        break;
+      }
+      case 'Báo cáo tham quan công trình': {
+        this.dialog = this.dialogService.open({
+          title: 'FORM IN',
+          content: FormInComponent,
+          width: window.screen.availWidth * 0.8,
+          minWidth: 250,
+          height: window.screen.availHeight * 0.7
+        });
+        const instance = this.dialog.content.instance;
+        instance.type = 'LiveFormThamQuanBaoCaoCongTruong';
+        instance.packageId = this.packageId;
+        break;
+      }
+      case 'Bảng tóm tắt ĐKDT': {
+        this.dialog = this.dialogService.open({
+          title: 'FORM IN',
+          content: FormInComponent,
+          width: window.screen.availWidth * 0.8,
+          minWidth: 250,
+          height: window.screen.availHeight * 0.7
+        });
+        const instance = this.dialog.content.instance;
+        instance.type = 'LiveFormTomTatDieuKienDuThau';
+        instance.packageId = this.packageId;
+        break;
+      }
+      default: break;
+    }
+  }
+
+  downloadHSDTChinhThuc(id) {
+    this.priceReviewService.downloadTaiLieuHSDT(id).subscribe();
   }
 
   getChangeHistory(page: number | string, pageSize: number | string) {
@@ -240,9 +298,9 @@ export class PriceReviewSummaryComponent implements OnInit {
     this.confirmService.confirm('Bạn có chắc muốn xóa liveform trình duyệt giá?', () => {
       this.priceReviewService.delete(this.packageId).subscribe(data => {
         that.refresh(false);
-        that.alertService.success('Xóa thành công!');
+        that.alertService.success('Xóa trình duyệt giá thành công!');
       }, err => {
-        that.alertService.error('Xóa thất bại, vui lòng thử lại sau!');
+        that.alertService.error('Xóa trình duyệt giá thất bại!');
       });
     });
   }

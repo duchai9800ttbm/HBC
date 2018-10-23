@@ -20,7 +20,7 @@
                         <button class="btn btn-primary ml-1">
                             Tải xuống tài liệu
                         </button>
-                        <button *ngIf="package?.stageStatus?.id === bidStatus.DangLapHSDT" class="btn btn-primary ml-1" (click)="chotHSDT($event)">
+                        <button *ngIf="!package?.isClosedHSDT" class="btn btn-primary ml-1" (click)="chotHSDT($event)">
                             Chốt HSDT
                         </button>
                         <button (click)="refresh()" class="btn btn-primary ml-1">

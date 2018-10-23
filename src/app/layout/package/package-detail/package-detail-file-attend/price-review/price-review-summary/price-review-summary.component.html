@@ -23,7 +23,7 @@
             <div>
                 <div class="input-group ml-auto max-width-name-document" *ngIf="package?.stageStatus?.id === 'DaNopHSDT' || package?.stageStatus?.id === 'ChotHoSo'">
                     <span class="input-group-addon">Tìm kiếm theo</span>
-                    <input  (keyup)="searchTerm$.next($event.target.value)" type="text" class="form-control icon" placeholder="&#xf002; Tên tài liệu">
+                    <input (keyup)="searchTerm$.next($event.target.value)" type="text" class="form-control icon" placeholder="&#xf002; Tên tài liệu">
                 </div>
             </div>
             <button type="button" class="btn btn-primary ml-1" *ngIf="priceReview?.isDraftVersion === false && (package?.stageStatus?.id === 'CanLapTrinhDuyetGia' || package?.stageStatus?.id === bidStatus.DangLapHSDT) "
@@ -135,7 +135,7 @@
             <tbody>
                 <tr>
                     <td class="select-filter" valign="baseline" routerLink="../detail">
-                        <a class="link-effect">Trình duyệt giá</a>
+                        <a class="link-effect">{{priceReview?.name}}</a>
                     </td>
                     <td style="padding: 0!important; max-width: 200px;">
                         <div class="attach-file">
@@ -372,13 +372,13 @@
                                 </td>
                                 <td class="min-width-action">
                                     <div class="d-flex justify-content-around">
-                                        <div style="cursor: pointer;" title="Xem">
-                                            <a>
+                                        <div style="cursor: pointer;" title="Xem" *ngIf="items?.isLiveForm">
+                                            <a (click)="viewLiveForm(items.typeName)">
                                                 <i class="fa fa-eye cursor-pointer icon-view" aria-hidden="true"></i>
                                             </a>
                                         </div>
-                                        <div style="cursor: pointer;" title="download">
-                                            <a>
+                                        <div style="cursor: pointer;" title="download" *ngIf="!items?.isLiveForm">
+                                            <a (click)="downloadHSDTChinhThuc(item.document?.id)">
                                                 <i class="fa fa-download cursor-pointer icon-view" aria-hidden="true"></i>
                                             </a>
                                         </div>
@@ -410,20 +410,20 @@
                             </td>
                             <td class="min-width-action">
                                 <div class="d-flex justify-content-around">
-                                    <div style="cursor: pointer;" title="Xem">
-                                        <a>
+                                    <div style="cursor: pointer;" title="Xem" *ngIf="items?.isLiveForm">
+                                        <a (click)="viewLiveForm(items.typeName)">
                                             <i class="fa fa-eye cursor-pointer icon-view" aria-hidden="true"></i>
                                         </a>
                                     </div>
 
-                                    <div style="cursor: pointer;" title="download">
-                                        <a>
+                                    <div style="cursor: pointer;" title="download" *ngIf="!items?.isLiveForm">
+                                        <a (click)="downloadHSDTChinhThuc(items.document?.id)">
                                             <i class="fa fa-download  cursor-pointer icon-view" aria-hidden="true"></i>
                                         </a>
                                     </div>
 
                                     <div style="cursor: pointer;" title="In">
-                                        <a class="text-success">
+                                        <a (click)="inLiveForm(items.typeName)" class="text-success">
                                             <i class="fa fa-print cursor-pointer icon-print" aria-hidden="true"></i>
                                         </a>
                                     </div>

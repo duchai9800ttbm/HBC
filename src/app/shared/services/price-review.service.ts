@@ -150,6 +150,7 @@ export class PriceReviewService {
         name: model.document.name,
         interviewTime: model.document.interviewTime
       },
+      isLiveForm: model.isLiveForm,
       childs: model.childs ? model.childs : []
     };
   }
@@ -175,6 +176,17 @@ export class PriceReviewService {
 
   download(tenderPriceApprovalDocumentId: number) {
     const url = `tenderpriceapproval/document/${tenderPriceApprovalDocumentId}/download`;
+    return this.apiService.getFile(url).map(response => {
+      return FileSaver.saveAs(
+        new Blob([response.file], {
+          type: `${response.file.type}`,
+        }), response.fileName
+      );
+    });
+  }
+
+  downloadTaiLieuHSDT(tenderDocumentId: number) {
+    const url = `tenderdocument/${tenderDocumentId}/download`;
     return this.apiService.getFile(url).map(response => {
       return FileSaver.saveAs(
         new Blob([response.file], {
@@ -366,8 +378,8 @@ export class PriceReviewService {
       totalCostOfCapital: {
         baseTenderAmount: formValue.totalGiaVonAmount,
         baseTenderGFA: formValue.totalGiaVonGfa,
-        alternativeTenderAmount: null,
-        alternativeTenderGFA: null,
+        alternativeTenderAmount: formValue.totalAlterAmount,
+        alternativeTenderGFA: formValue.totalAlterGfa,
         note: formValue.totalGiaVonNote
       },
       totalCostOfCapitalProfitCost: {
@@ -383,8 +395,9 @@ export class PriceReviewService {
         note: formValue.giaDiNopThauNote
       },
       oAndPPercentOfTotalCost: {
-        baseTenderAmount: formValue.tyLeGfa,
-        alternativeTenderAmount: null,
+        baseTenderAmount: formValue.tyleAmount,
+        baseTenderGFA: formValue.tyleGfa,
+        alternativeTenderAmount: formValue.tyleAlter,
         note: formValue.tyLeNote
       }
     };
@@ -597,6 +610,7 @@ export class PriceReviewService {
         },
         oAndPPercentOfTotalCost: model.tentativeTenderPrice.oAndPPercentOfTotalCost && {
           baseTenderAmount: model.tentativeTenderPrice.oAndPPercentOfTotalCost.baseTenderAmount,
+          baseTenderGFA: model.tentativeTenderPrice.oAndPPercentOfTotalCost.baseTenderGFA,
           alternativeTenderAmount: model.tentativeTenderPrice.oAndPPercentOfTotalCost.alternativeTenderAmount,
           note: model.tentativeTenderPrice.oAndPPercentOfTotalCost.note
         }

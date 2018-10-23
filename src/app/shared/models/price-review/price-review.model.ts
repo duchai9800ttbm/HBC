@@ -176,7 +176,9 @@ export class TenderPriceApproval {
         };
         oAndPPercentOfTotalCost: {
             baseTenderAmount: number;
+            baseTenderGFA: number;
             alternativeTenderAmount: number;
+            // alternativeTenderGFA: number;
             note: string
         };
     };
@@ -215,6 +217,7 @@ export class FileAttach {
 
 
 export class ItemHSDTChinhThuc {
+    isLiveForm: boolean;
     typeName: string;
     document: {
         type: string,

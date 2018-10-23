@@ -102,10 +102,21 @@ export class HsdtBuildComponent implements OnInit {
         this.packageId = +PackageDetailComponent.packageId;
         this.subscription = this.hoSoDuThauService.watchChangingUpload().subscribe(signal => {
             this.spinner.hide();
+            this.getDanhSachLoaiHoSo(true);
+        });
+        this.dtTrigger.next();
+    }
+
+    refresh2(): void {
+        this.spinner.show();
+        this.packageId = +PackageDetailComponent.packageId;
+        this.subscription = this.hoSoDuThauService.watchChangingUpload().subscribe(signal => {
+            this.spinner.hide();
             this.getDanhSachLoaiHoSo(false);
         });
         this.dtTrigger.next();
     }
+
     onActivate(event) {
         this.routerName = event.constructor.name;
         // this.hideActionSiteReport = (this.routerName === 'LiveformSiteReportComponent') ? true : false;
@@ -132,7 +143,7 @@ export class HsdtBuildComponent implements OnInit {
                         this.package = result;
                     }, err => {
                     });
-                    this.refresh();
+                    this.refresh2();
                 }, err => {
                     this.alertService.error(`Đã có lỗi. Chốt Hồ sơ dự thầu không thành công.`);
                 });

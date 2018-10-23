@@ -66,9 +66,9 @@ export class SummaryConditionComponent implements OnInit {
     this.confirmService.confirm('Bạn có chắc muốn xóa liveform tóm tắt điều kiện dự thầu?', () => {
       this.hoSoDuThauService.deleleLiveFormTTDKDuThau(this.packageId).subscribe(data => {
         that.refresh(false);
-        that.alertService.success('Xóa thành công!');
+        that.alertService.success('Xóa bảng tóm tắt điều kiện dự thầu thành công!');
       }, err => {
-        that.alertService.error('Xóa thất bại, vui lòng thử lại sau!');
+        that.alertService.error('Xóa bảng tóm tắt điều kiện dự thầu thất bại!');
       });
     });
   }
