@@ -409,6 +409,7 @@ export class PackageService {
                 amount: result.amount,
                 opportunityName: result.opportunityName,
                 projectName: result.projectName,
+                isSubmittedHSDT: result.isSubmittedHSDT,
                 projectType: result.projectType && {
                     id: result.projectType.key,
                     text: result.projectType.value

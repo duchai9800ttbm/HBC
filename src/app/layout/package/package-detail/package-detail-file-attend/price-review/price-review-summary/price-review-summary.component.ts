@@ -185,7 +185,12 @@ export class PriceReviewSummaryComponent implements OnInit {
         that.refresh(false);
         that.alertService.success('Chốt hồ sơ thành công!');
       }, err => {
-        that.alertService.error('Chốt hồ sơ thất bại, vui lòng thử lại sau!');
+        console.log(err);
+        if (err.json().errorCode === 'BusinessException') {
+          that.alertService.error(`${err.json().errorMessage}`);
+        } else {
+          that.alertService.error('Chốt hồ sơ thất bại, vui lòng thử lại sau!');
+        }
       });
     });
   }
