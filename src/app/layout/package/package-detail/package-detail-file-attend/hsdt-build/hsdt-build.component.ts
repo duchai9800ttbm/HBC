@@ -20,7 +20,7 @@ import { ListUserItem } from '../../../../../shared/models/user/user-list-item.m
     templateUrl: './hsdt-build.component.html',
     styleUrls: ['./hsdt-build.component.scss']
 })
-export class HsdtBuildComponent implements OnInit, AfterViewChecked {
+export class HsdtBuildComponent implements OnInit {
     page: number;
     pageSize: number;
     pageIndex: number | string = 0;
@@ -52,14 +52,11 @@ export class HsdtBuildComponent implements OnInit, AfterViewChecked {
         this.subscription = this.hoSoDuThauService.watchChangingUpload().subscribe(signal => {
             this.getDanhSachLoaiHoSo(false);
         });
-    }
-
-    ngAfterViewChecked() {
-        setTimeout(() => {
-            this.packageService.isSummaryConditionForm$.subscribe(data => {
-                this.isShowMenu = data;
-            });
-        });
+        // setTimeout(() => {
+        //     this.packageService.isSummaryConditionForm$.subscribe(data => {
+        //         this.isShowMenu = data;
+        //     });
+        // });
     }
 
     getDanhSachLoaiHoSo(spinner: boolean) {

@@ -137,7 +137,6 @@ export class EditComponent implements OnInit, OnDestroy {
           const message = (this.isCreate) ? 'Tạo' : 'Cập nhật';
           this.alertService.error(`Đã xảy ra lỗi. ${message} Báo cáo khảo sát công trường không thành công.`);
         });
-      // LiveformSiteReportComponent.isViewMode = true;
     }
   }
 
