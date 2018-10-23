@@ -68,6 +68,7 @@ export class DocumentService {
             },
             createdDate: result.createdDate,
             receivedDate: result.receivedDate,
+            isApproved: result.isApproved,
             desc: result.description,
             fileGuid: result.fileGuid,
             url: result.url
