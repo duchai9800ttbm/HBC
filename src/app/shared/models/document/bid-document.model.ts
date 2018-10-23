@@ -12,6 +12,7 @@ export class BidDocumentModel {
     };
     createdDate: number;
     receivedDate: number;
+    isApproved: boolean;
     fileGuid: string;
     desc: string;
     url?: string;
