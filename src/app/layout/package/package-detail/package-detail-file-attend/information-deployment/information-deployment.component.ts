@@ -117,7 +117,6 @@ export class InformationDeploymentComponent implements OnInit {
   }
 
   ngOnInit() {
-
     this.bidOpportunityId = PackageDetailComponent.packageId;
     this.emailService.searchbymail('').subscribe(response => {
       this.listEmailSearchTo = response;
@@ -316,6 +315,7 @@ export class InformationDeploymentComponent implements OnInit {
     };
   }
   sendCc() {
+    console.log('emailModel.to', this.emailModel.to);
     this.isSendCc = !this.isSendCc;
   }
   sendBcc() {
@@ -378,6 +378,10 @@ export class InformationDeploymentComponent implements OnInit {
 
   confirmTenderPlan() {
     this.tenderPlan.isDraftVersion = false;
+    console.log('this.tenderPlan', this.tenderPlan);
+    // this.tenderPlan.tasks.every( item => {
+    //   return  item.whoIsInChargeId || (item.whoIsInCharges && item.whoIsInCharges.length !== 0);
+    // });
     this.packageService.createOrUpdateTenderPreparationPlanning(this.tenderPlan).subscribe(success => {
       this.spinner.hide();
       this.alertService.success('Xác nhận phân công tiến độ thành công!');

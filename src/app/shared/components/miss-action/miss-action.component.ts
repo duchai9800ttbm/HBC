@@ -11,22 +11,17 @@ import { Router } from '../../../../../node_modules/@angular/router';
 export class MissActionComponent implements OnInit {
   @Input() message: any;
   @Input() routerLink: any;
-  // @Input() setRouterAction: any;
   constructor(
     public activeModal: NgbActiveModal,
     private alertService: AlertService,
     private router: Router,
-    // private packageService: PackageService
   ) { }
 
   ngOnInit() {
   }
 
-  // viewDetail() {
-  //   if (this.setRouterAction) {
-  //     this.packageService.setRouterAction('view');
-  //   }
-  //   this.activeModal.close('Close click');
-  //   this.router.navigate([this.routerLink]);
-  // }
+  viewDetail() {
+    this.activeModal.close('Close click');
+    this.router.navigate([this.routerLink]);
+  }
 }
