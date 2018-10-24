@@ -70,7 +70,9 @@ export class ReportEndInterviewComponent implements OnInit {
     if (fileList.length > 0) {
       this.file = fileList[0];
       if (this.file.size < 10485760) {
-        this.createFormReport.get('documentName').patchValue(event.target.files[0].name);
+        if (this.createFormReport.get('documentName').value === '') {
+          this.createFormReport.get('documentName').patchValue(event.target.files[0].name);
+        }
       } else {
         this.alertService.error('Dung lượng ảnh quá lớn! Vui lòng chọn ảnh dưới 10MB.');
       }

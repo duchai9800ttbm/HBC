@@ -104,11 +104,10 @@
             <div class="w-100  mr-auto">
                 <div>
                     <div class="body cus-header" id="info-main">
-                        <div class="w-100 center-parent" *ngIf="errorMess" class="alert alert-danger" role="alert">
-                            <span> {{errorMess}}</span>
+                        <div *ngIf="!((createFormReport.get('link').value &&  createFormReport.get('link').value !== '') || file) && isSubmitted" class="alert alert-danger" role="alert">
+                            <span>Vui lòng chọn file hoặc đường dẫn link đến file!</span>
                         </div>
                         <table class="w-100 table">
-
                             <tbody>
                                 <tr>
                                     <td class="w-30 label no-boder bold-title">Đường dẫn link</td>
@@ -135,14 +134,14 @@
                                         </div>
                                     </td>
                                 </tr>
-                                <tr *ngIf="!((createFormReport.get('link').value &&  createFormReport.get('link').value !== '') || file) && isSubmitted">
+                                <!-- <tr *ngIf="!((createFormReport.get('link').value &&  createFormReport.get('link').value !== '') || file) && isSubmitted">
                                     <td class="w-30 no-boder"></td>
                                     <td class="w-70 no-boder">
                                         <div class="invalid-feedback">
                                             Bạn phải nhập đường dẫn link hoặc đính kèm file
                                         </div>
                                     </td>
-                                </tr>
+                                </tr> -->
                                 <tr>
                                     <td class="w-30 label no-boder bold-title required">Tên</td>
                                     <td class="w-70 no-boder">
