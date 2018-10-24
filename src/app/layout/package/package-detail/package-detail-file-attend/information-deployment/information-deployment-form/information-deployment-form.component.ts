@@ -434,19 +434,7 @@ export class InformationDeploymentFormComponent implements OnInit {
     changeRouterAction(dataRouter: string) {
         this.routerAction = dataRouter;
         this.controlDisableForm = (this.routerAction === 'view') ? true : false;
-        this.planForm.get('projectDirectorEmployeeId').enable();
-        this.planForm.get('tenderDepartmentEmployeeId').enable();
-        this.planForm.get('technicalDepartmentEmployeeId').enable();
-        this.planForm.get('bimDepartmentEmployeeId').enable();
-        this.planForm.get('projectInformation').enable();
-        (this.planForm.get('tasks') as FormArray).controls.forEach( item => {
-            item.get('itemDesc').enable();
-            item.get('whoIsInChargeId').enable();
-            item.get('whoIsInChargeIds').enable();
-            item.get('startDate').enable();
-            item.get('finishDate').enable();
-            item.get('isFinish').enable();
-        });
+        this.planForm.enable();
     }
 
     closeShowChanges() {
