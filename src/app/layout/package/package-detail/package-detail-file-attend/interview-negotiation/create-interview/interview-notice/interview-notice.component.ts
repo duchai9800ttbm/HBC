@@ -87,7 +87,6 @@ export class InterviewNoticeComponent implements OnInit {
         this.interviewInvitationService.LoadFileCreateInterview(element.id).subscribe( response => {
           console.log('response', response, response[0]);
           this.file.push(response);
-          console.log('this.file', this.file);
         });
         const approvedDate = DateTimeConvertHelper.fromTimestampToDtObject(element.approvedDate * 1000);
         const approvedDateStr = approvedDate.getDate() + '/' + approvedDate.getMonth() + '/' + approvedDate.getFullYear();

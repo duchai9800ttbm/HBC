@@ -43,7 +43,6 @@ export class CreateNewInvitationComponent implements OnInit {
   }
 
   ngOnInit() {
-    console.log('this.edit', this.edit);
     this.currentPackageId = +PackageDetailComponent.packageId;
     this.packageService.getInforPackageID(this.currentPackageId).subscribe(result => {
       if (result.customer) {
@@ -51,6 +50,13 @@ export class CreateNewInvitationComponent implements OnInit {
         this.interviewInvitation.customer.customerName = result.customer.text;
       }
       this.createForm();
+      if (this.edit) {
+        this.interviewInvitationService.LoadFileCreateInterview(this.interviewInvitation.id).subscribe( response => {
+          this.file = response;
+          console.log('this.file', this.file);
+          this.createFormNewInvitation.get('attachedFiles').patchValue(this.file.name);
+        });
+      }
     });
   }
 
