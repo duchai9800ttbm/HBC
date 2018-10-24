@@ -107,6 +107,8 @@ export class NeedCreateTenderFormComponent implements OnInit, OnDestroy {
                     // tslint:disable-next-line:max-line-length
                     NeedCreateTenderFormComponent.formModel.tenderDirectorProposal.expectedDate = DateTimeConvertHelper.fromDtObjectToTimestamp(new Date());
                     NeedCreateTenderFormComponent.formModel.tenderDirectorProposal.date = DateTimeConvertHelper.fromDtObjectToTimestamp(new Date());
+                    NeedCreateTenderFormComponent.formModel.tenderDirectorProposal.isSigned = false;
+                    NeedCreateTenderFormComponent.formModel.tenderDirectorProposal.reason = '';
                     // ====================
                     // DecisionBoardGeneralDirector
                     NeedCreateTenderFormComponent.formModel.decisionOfBoardOfGeneralDirector = new DecisionBoardGeneralDirector();

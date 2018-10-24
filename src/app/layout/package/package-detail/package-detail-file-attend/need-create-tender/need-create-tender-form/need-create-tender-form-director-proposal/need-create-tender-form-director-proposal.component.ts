@@ -40,10 +40,9 @@ export class NeedCreateTenderFormDirectorProposalComponent implements OnInit {
     createForm() {
         const formData = NeedCreateTenderFormComponent.formModel ?
             NeedCreateTenderFormComponent.formModel.tenderDirectorProposal : null;
-        console.log('this.formData', formData);
         this.directorProposalForm = this.fb.group({
-            isAgreedParticipating:
-                NeedCreateTenderFormComponent.formModel.isAgreedParticipating,
+            isAgreedParticipating: NeedCreateTenderFormComponent.formModel ?
+                NeedCreateTenderFormComponent.formModel.isAgreedParticipating : true,
             isAgreed: (formData && formData.isAgreed) ? formData.isAgreed : true,
             reason: formData ? formData.reason : '',
             date: formData
