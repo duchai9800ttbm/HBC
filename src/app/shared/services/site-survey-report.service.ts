@@ -101,14 +101,14 @@ export class SiteSurveyReportService {
       documentName: (obj.scaleOverall) ? obj.scaleOverall.tenTaiLieu : '',
       projectStatistic: obj.scaleOverall && {
         projectStatistic: {
-          constructionType: obj.scaleOverall.loaiCongTrinh && obj.scaleOverall.loaiCongTrinh.forEach(x => ({
+          constructionType: obj.scaleOverall.loaiCongTrinh && obj.scaleOverall.loaiCongTrinh.map(x => ({
             value: x.value,
             text: x.text,
             checked: x.checked
           })),
-          constructionStatus: obj.scaleOverall.trangthaiCongTrinh && obj.scaleOverall.trangthaiCongTrinh.forEach(x => ({
+          constructionStatus: obj.scaleOverall.trangthaiCongTrinh && obj.scaleOverall.trangthaiCongTrinh.map(x => ({
             value: x.value,
-            text: x.value,
+            text: x.text,
             checked: x.checked
           })),
           projectScale: obj.scaleOverall.quyMoDuAn && {

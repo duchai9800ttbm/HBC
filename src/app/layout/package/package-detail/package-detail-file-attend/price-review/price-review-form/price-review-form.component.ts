@@ -676,7 +676,7 @@ export class PriceReviewFormComponent implements OnInit, AfterViewInit {
       // TODO: mapping phần trên
       approvalDate: [
         DateTimeConvertHelper.fromTimestampToDtObject(
-          this.model.approvalDate * 1000)
+          this.model.approvalDate * 1000000)
       ],
       approvalTimes: {
         value: this.model.approvalTimes,
@@ -714,7 +714,7 @@ export class PriceReviewFormComponent implements OnInit, AfterViewInit {
       if (!value) {
         this.packageService.getProposedTenderParticipateReport(this.packageId).subscribe(data => {
           const valueApprovalDate = data.tenderDirectorProposal.expectedDate;
-          this.priceReviewForm.get('approvalDate').patchValue(DateTimeConvertHelper.fromTimestampToDtObject(valueApprovalDate * 1000));
+          this.priceReviewForm.get('approvalDate').patchValue(DateTimeConvertHelper.fromTimestampToDtObject(valueApprovalDate * 1000000));
         });
       }
     }

@@ -60,13 +60,13 @@ export class ScaleOverallComponent implements OnInit {
   currentBidOpportunityId: number;
   scaleModel = new ScaleOverall();
 
-  get loaiCongTrinhListFA(): FormArray {
-    return this.loaiCongTrinhForm.get('loaiCongTrinhList') as FormArray;
-  }
+  // get loaiCongTrinhListFA(): FormArray {
+  //   return this.loaiCongTrinhForm.get('loaiCongTrinhList') as FormArray;
+  // }
 
-  get trangthaiCongTrinhListFA(): FormArray {
-    return this.trangThaiCongTrinhForm.get('trangthaiCongTrinhList') as FormArray;
-  }
+  // get trangthaiCongTrinhListFA(): FormArray {
+  //   return this.trangThaiCongTrinhForm.get('trangthaiCongTrinhList') as FormArray;
+  // }
   constructor(
     private modalService: BsModalService,
     private siteSurveyReportService: SiteSurveyReportService,
@@ -80,11 +80,15 @@ export class ScaleOverallComponent implements OnInit {
     this.currentBidOpportunityId = +PackageDetailComponent.packageId;
     this.checkFlag();
     this.initData();
+    this.createForm();
+  }
+
+  createForm() {
     this.scaleOverallForm = this.fb.group({
       tenTaiLieu: [this.scaleModel.tenTaiLieu],
       lanPhongVan: [this.scaleModel.lanPhongVan],
-      loaiCongTrinhList: [null],
-      trangthaiCongTrinhList: [null],
+      loaiCongTrinhList: [],
+      trangthaiCongTrinhList: [],
       dienTichCongTruong: [this.scaleModel.quyMoDuAn && this.scaleModel.quyMoDuAn.dienTichCongTruong],
       tongDienTichXayDung: [this.scaleModel.quyMoDuAn && this.scaleModel.quyMoDuAn.tongDienTichXayDung],
       soTang: [this.scaleModel.quyMoDuAn && this.scaleModel.quyMoDuAn.soTang],
@@ -96,7 +100,6 @@ export class ScaleOverallComponent implements OnInit {
       nhungYeuCauDacBietDesc: [this.scaleModel.nhungYeuCauDacBiet && this.scaleModel.nhungYeuCauDacBiet.description],
       nhungYeuCauDacBietList: [null]
     });
-
     const controlss = this.loaiCongTrinhList.map(c => new FormControl(false));
     this.loaiCongTrinhForm = this.fb.group({
       loaiCongTrinhList: new FormArray(controlss)
@@ -144,7 +147,8 @@ export class ScaleOverallComponent implements OnInit {
           text: 'Nâng cấp, cải tiến (Renovation)',
           value: '',
           checked: false
-        }, {
+        },
+        {
           text: 'Tháo dỡ & cải tiến (Demolishment & Renovation)',
           value: '',
           checked: false
@@ -171,12 +175,16 @@ export class ScaleOverallComponent implements OnInit {
       this.perspectiveImageUrls = this.scaleModel.hinhAnhPhoiCanh ? this.scaleModel.hinhAnhPhoiCanh.images : [];
       this.structureImageUrls = this.scaleModel.thongTinVeKetCau ? this.scaleModel.thongTinVeKetCau.images : [];
       this.requirementsImageUrls = this.scaleModel.nhungYeuCauDacBiet ? this.scaleModel.nhungYeuCauDacBiet.images : [];
+
+      // Check Value Of Status-Other
+      const other = this.trangthaiCongTrinhList.find(i => i.text === 'Khác (Other)');
+      if (other) {
+        this.valueOfOthers = (other.value !== 'null') ? other.value : '';
+        this.showValueOfOther = other.checked;
+      } else {
+        this.showValueOfOther = false;
+      }
     }
-    const res = this.trangthaiCongTrinhList.find(other => {
-      return other.text === 'Khác (Other)';
-    });
-    this.valueOfOthers = (res.value !== 'null') ? res.value : '';
-    this.showValueOfOther = res.checked;
   }
 
   mappingToLiveFormData(data) {
@@ -298,11 +306,11 @@ export class ScaleOverallComponent implements OnInit {
     this.scaleOverallForm.get('loaiCongTrinhList').patchValue(this.loaiCongTrinhList);
   }
   trangThaiCongTrinhChange() {
-    this.scaleOverallForm.get('trangthaiCongTrinhList').patchValue(this.trangthaiCongTrinhList);
     const result = this.trangthaiCongTrinhList.find(obj => {
       return obj.text === 'Khác (Other)';
     });
     this.showValueOfOther = result.checked;
+    this.scaleOverallForm.get('trangthaiCongTrinhList').patchValue(this.trangthaiCongTrinhList);
   }
   valueOfOther(event) {
     const result = this.trangthaiCongTrinhList.find(obj => {

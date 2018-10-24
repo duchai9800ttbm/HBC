@@ -35,7 +35,6 @@ export class SubjectItemComponent implements OnInit {
     this.checkFlag();
   }
   checkFlag() {
-    if ((LiveformSiteReportComponent.formModel.isCreate)) {
       const flag = LiveformSiteReportComponent.isViewMode;
       this.viewMode = flag;
       if (flag) {
@@ -44,9 +43,6 @@ export class SubjectItemComponent implements OnInit {
           inputs[i].style.pointerEvents = 'none';
         }
       }
-    } else {
-      this.router.navigate([`/package/detail/${this.currentBidOpportunityId}/attend/build/liveformsite`]);
-    }
   }
 
   addContent() {

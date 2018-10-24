@@ -22,7 +22,7 @@ import { BidStatus } from '../../../../../shared/constants/bid-status';
     templateUrl: './hsdt-build.component.html',
     styleUrls: ['./hsdt-build.component.scss']
 })
-export class HsdtBuildComponent implements OnInit {
+export class HsdtBuildComponent implements OnInit, AfterViewChecked {
     page: number;
     pageSize: number;
     pageIndex: number | string = 0;
@@ -56,20 +56,17 @@ export class HsdtBuildComponent implements OnInit {
         this.subscription = this.hoSoDuThauService.watchChangingUpload().subscribe(signal => {
             this.getDanhSachLoaiHoSo(false);
         });
-
-        // setTimeout(() => {
-        //     this.packageService.isSummaryConditionForm$.subscribe(data => {
-        //         this.isShowMenu = data;
-        //     });
-        // });
-
-
         this.packageService.getInforPackageID(this.packageId).subscribe(result => {
             this.package = result;
         }, err => {
         });
-
-
+    }
+    ngAfterViewChecked() {
+        setTimeout(() => {
+            this.packageService.isSummaryConditionForm$.subscribe(data => {
+                this.isShowMenu = data;
+            });
+        });
     }
 
     getDanhSachLoaiHoSo(spinner: boolean) {

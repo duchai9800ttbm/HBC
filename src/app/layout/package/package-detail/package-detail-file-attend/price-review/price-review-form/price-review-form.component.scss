@@ -11,34 +11,39 @@
         }
     }
 
-    .info{
-        .name{
+    .info {
+        .name {
             width: 80%;
         }
-        .gfa{
+
+        .gfa {
             width: 20%;
             border-right: 1px solid #d4d4d4;
 
         }
     }
+
     .content {
         padding-top: 25px;
-    
-        .row-item-group{
-            .item-2{
+
+        .row-item-group {
+            .item-2 {
                 border-bottom: 1px solid #d4d4d4;
                 width: 100%;
                 height: 100%;
                 min-height: 30px;
-                .one{
+
+                .one {
                     width: 50%;
-                    .one-col-1{
+
+                    .one-col-1 {
                         width: 60px;
                         height: 100%;
                         border-left: 1px solid #d4d4d4;
                         border-right: 1px solid #d4d4d4;
                     }
-                    .one-col-2{
+
+                    .one-col-2 {
                         min-height: 30px;
                         height: 100%;
                         width: calc(100% - 60px);
@@ -46,9 +51,11 @@
 
                     }
                 }
-                .two{
+
+                .two {
                     width: 50%;
-                    .two-col-1{
+
+                    .two-col-1 {
                         min-height: 30px;
                         width: 25%;
                         height: 100%;
@@ -56,7 +63,8 @@
 
 
                     }
-                    .two-col-2{
+
+                    .two-col-2 {
                         min-height: 30px;
 
                         width: 25%;
@@ -65,7 +73,8 @@
 
 
                     }
-                    .two-col-3{
+
+                    .two-col-3 {
                         min-height: 30px;
 
                         height: 100%;
@@ -75,43 +84,59 @@
                     }
                 }
             }
-           
+
         }
+
         .row-header {
             font-weight: 400;
             height: auto;
             min-height: 30px;
             height: 100%;
-            .ten-tai-lieu{
+
+            .ten-tai-lieu {
                 width: 40%;
+
                 .label-document {
                     height: 100%;
                     width: 140px;
                     min-height: 30px;
                     height: 100%;
                 }
+
                 .name-document {
                     height: 100%;
                     width: calc(100% - 140px);
                     min-height: 30px;
                     height: 100%;
                 }
-            
+
             }
-            .lan-phong-van{
+
+            .lan-phong-van {
                 width: 60%;
                 border-top: 1px solid #d4d4d4;
                 border-right: 1px solid #d4d4d4;
-                .name{
-                    width: 16.667%;
+
+                .name {
+                    width: calc(100%/3);
                     border-right: 1px solid #d4d4d4;
                     min-height: 30px;
                     height: 100%;
                 }
-                .value{
-                    width: 16.667%;
+
+                .value {
+                    width: calc(200%/3);
                     min-height: 30px;
                     height: 100%;
+
+                    div {
+                        width: 100%;
+
+                        input {
+                            width: 100%;
+                        }
+                    }
+
                 }
             }
         }
@@ -345,7 +370,7 @@
                 }
             }
 
-            .specify{
+            .specify {
                 border-right: 1px solid #d4d4d4;
 
             }
@@ -386,6 +411,7 @@
 
                 .required-2 {
                     width: 50%;
+
                     .one {
                         border-right: 1px solid #d4d4d4;
 
@@ -414,10 +440,12 @@
                     }
                 }
             }
-            .two-2{
+
+            .two-2 {
                 border-right: 1px solid #d4d4d4;
 
             }
+
             .three {
                 border-right: 1px solid #d4d4d4;
                 width: 20%;
@@ -431,10 +459,12 @@
                 border-bottom: 1px solid #d4d4d4;
                 min-height: 30px;
             }
-            .item-below{
+
+            .item-below {
                 height: calc(100% - 30px);
             }
         }
+
         .row-condition-2 {
             border-bottom: 1px solid #d4d4d4;
 
@@ -462,6 +492,7 @@
 
                 .required-2 {
                     width: 100%;
+
                     .one {
                         border-right: 1px solid #d4d4d4;
 
@@ -491,30 +522,32 @@
                 border-bottom: 1px solid #d4d4d4;
                 min-height: 30px;
             }
-            .item-below{
+
+            .item-below {
                 height: calc(100% - 30px);
             }
         }
 
-        .row-last-header{
+        .row-last-header {
             height: 30px;
             width: 100%;
             background-color: #ff8661;
             color: #ffffff;
         }
 
-        .row-last-item{
+        .row-last-item {
             width: 100%;
             border-bottom: 1px solid #d4d4d4;
 
-            .one{
+            .one {
                 width: 20%;
                 min-height: 40px;
                 border-left: 1px solid #d4d4d4;
                 border-right: 1px solid #d4d4d4;
                 height: 100%;
             }
-            .two{
+
+            .two {
                 border-right: 1px solid #d4d4d4;
 
                 width: 30%;
@@ -523,7 +556,8 @@
 
 
             }
-            .three{
+
+            .three {
                 border-right: 1px solid #d4d4d4;
 
                 width: 20%;
@@ -531,7 +565,8 @@
                 height: 100%;
 
             }
-            .four{
+
+            .four {
                 border-right: 1px solid #d4d4d4;
 
                 width: 30%;
@@ -541,10 +576,11 @@
             }
         }
 
-        .row-last-item-2{
+        .row-last-item-2 {
             min-height: 30px;
             border-bottom: 1px solid #d4d4d4;
-            .first{
+
+            .first {
                 width: 20%;
                 min-height: 30px;
                 border-right: 1px solid #d4d4d4;
@@ -552,24 +588,29 @@
                 height: 100%;
 
             }
-            .two{
+
+            .two {
                 min-height: 30px;
                 height: 100%;
 
                 width: 80%;
                 border-right: 1px solid #d4d4d4;
-                .mg-left{
-                    margin-left: 150px!important;
+
+                .mg-left {
+                    margin-left: 150px !important;
                 }
-                .pass{
+
+                .pass {
                     margin-left: 25px
                 }
-                .item-1{
+
+                .item-1 {
                     min-height: 30px;
                     height: 100%;
 
                 }
-                .item-2{
+
+                .item-2 {
                     min-height: 30px;
                     height: 100%;
 
@@ -577,67 +618,80 @@
             }
         }
 
-        .row-price{
+        .row-price {
             height: 60px;
             color: #FFFFFF;
             font-size: 110%;
             width: 100%;
             background-color: #ff8661;
 
-            .one{
+            .one {
                 border-right: 1px solid #d4d4d4;
                 border-left: 1px solid #d4d4d4;
 
                 height: 60px;
                 width: 40%;
-                .stt{
+
+                .stt {
                     width: 60px;
                 }
-                .name{
+
+                .name {
                     width: calc(100% - 60px);
                 }
             }
-            .two{
+
+            .two {
                 width: 40%;
                 height: 60px;
-                .item-1{
+
+                .item-1 {
                     width: 50%;
-                    .above{
+
+                    .above {
                         height: 30px;
                         border-bottom: 1px solid #d4d4d4;
                         border-right: 1px solid #d4d4d4;
 
                     }
-                    .below{
+
+                    .below {
                         height: 30px;
-                        .below-1{
+
+                        .below-1 {
                             width: 50%;
                             border-right: 1px solid #d4d4d4;
 
                         }
-                        .below-2{
+
+                        .below-2 {
                             width: 50%;
                             border-right: 1px solid #d4d4d4;
 
                         }
                     }
                 }
-                .item-2{
+
+                .item-2 {
                     width: 50%;
-                    .above{
+
+                    .above {
                         height: 30px;
                         border-bottom: 1px solid #d4d4d4;
                         border-right: 1px solid #d4d4d4;
 
                     }
-                    .below{
+
+                    .below {
                         height: 30px;
-                        .below-1{
+
+                        .below-1 {
                             width: 50%;
                             border-right: 1px solid #d4d4d4;
 
                         }
-                        .below-2{
+
+                        .below-2 {
                             width: 50%;
                             border-right: 1px solid #d4d4d4;
 
@@ -646,7 +700,8 @@
                 }
 
             }
-            .three{
+
+            .three {
                 width: 20%;
                 height: 60px;
                 border-right: 1px solid #d4d4d4;
@@ -654,20 +709,23 @@
             }
         }
 
-        .row-gia-von{
+        .row-gia-von {
             border-bottom: 1px solid #d4d4d4;
 
             min-height: 30px;
             height: 100%;
-            .border-right{
+
+            .border-right {
                 border-right: 1px solid #d4d4d4;
             }
-            .one{
+
+            .one {
                 border-right: 1px solid #d4d4d4;
                 border-left: 1px solid #d4d4d4;
                 min-height: 30px;
                 width: 40%;
-                .stt{
+
+                .stt {
                     width: 60px;
                     min-height: 30px;
                     height: 100%;
@@ -675,43 +733,50 @@
                     border-right: 1px solid #d4d4d4;
 
                 }
-                .name{
+
+                .name {
                     min-height: 30px;
                     height: 100%;
 
                     width: calc(100% - 60px);
                 }
             }
-            .two{
+
+            .two {
                 border-right: 1px solid #d4d4d4;
 
                 min-height: 30px;
 
                 width: 40%;
-                .item-1{
+
+                .item-1 {
                     min-height: 30px;
                     width: 25%;
                     border-right: 1px solid #d4d4d4;
 
                 }
-                .item-2{
+
+                .item-2 {
                     min-height: 30px;
                     width: 25%;
                     border-right: 1px solid #d4d4d4;
 
                 }
-                .item-3{
+
+                .item-3 {
                     min-height: 30px;
                     width: 25%;
                     border-right: 1px solid #d4d4d4;
 
                 }
-                .item-4{
+
+                .item-4 {
                     min-height: 30px;
                     width: 25%;
                 }
             }
-            .three{
+
+            .three {
                 border-right: 1px solid #d4d4d4;
 
                 height: 100%;
@@ -719,125 +784,143 @@
             }
         }
 
-        .row-condition-3{
+        .row-condition-3 {
             width: 100%;
             border-bottom: 1px solid #d4d4d4;
 
-            .colu-1{
+            .colu-1 {
                 width: 40%;
-                .stt{
+
+                .stt {
                     width: 60px;
                     border-right: 1px solid #d4d4d4;
                     border-left: 1px solid #d4d4d4;
                     height: 100%;
                     min-height: 30px
-
                 }
-                .name{
+
+                .name {
                     border-right: 1px solid #d4d4d4;
                     width: calc(100% - 60px);
                     height: 100%;
                     min-height: 30px
-
                 }
             }
-            .colu-2{
+
+            .colu-2 {
                 width: 40%;
 
-                .yeu-cau{
+                .yeu-cau {
                     width: 50%;
                     height: 100%;
                     min-height: 60px;
-                    .above{
+
+                    .above {
                         width: 100%;
-                        .column-1{
+
+                        .column-1 {
                             width: 50%;
                             border-right: 1px solid #d4d4d4;
                             height: 100%;
                             min-height: 30px;
                         }
-                        .column-2{
+
+                        .column-2 {
                             width: 50%;
                             border-right: 1px solid #d4d4d4;
                             height: 100%;
                             min-height: 30px;
 
                         }
+
                         border-bottom: 1px solid #d4d4d4;
                         height: 100%;
                         min-height: 30px
                     }
-                    .below{
+
+                    .below {
                         width: 100%;
-                        .column-1{
+
+                        .column-1 {
                             width: 50%;
                             border-right: 1px solid #d4d4d4;
                             height: 100%;
                             min-height: 30px;
 
                         }
-                        .column-2{
+
+                        .column-2 {
                             width: 50%;
                             border-right: 1px solid #d4d4d4;
                             height: 100%;
                             min-height: 30px;
 
                         }
+
                         height: 100%;
                         min-height: 30px
                     }
                 }
-                .de-xuat{
+
+                .de-xuat {
                     width: 50%;
                     height: 100%;
                     min-height: 60px;
-                    .above{
+
+                    .above {
                         width: 100%;
-                        .column-1{
+
+                        .column-1 {
                             width: 50%;
                             border-right: 1px solid #d4d4d4;
                             height: 100%;
                             min-height: 30px;
                         }
-                        .column-2{
+
+                        .column-2 {
                             width: 50%;
                             border-right: 1px solid #d4d4d4;
                             height: 100%;
                             min-height: 30px;
 
                         }
+
                         border-bottom: 1px solid #d4d4d4;
                         height: 100%;
                         min-height: 30px
                     }
-                    .below{
+
+                    .below {
                         width: 100%;
-                        .column-1{
+
+                        .column-1 {
                             width: 50%;
                             border-right: 1px solid #d4d4d4;
                             height: 100%;
                             min-height: 30px;
 
                         }
-                        .column-2{
+
+                        .column-2 {
                             width: 50%;
                             border-right: 1px solid #d4d4d4;
                             height: 100%;
                             min-height: 30px;
 
                         }
+
                         height: 100%;
                         min-height: 30px
                     }
                 }
 
             }
-            .colu-3{
+
+            .colu-3 {
                 width: 20%;
                 border-right: 1px solid #d4d4d4;
                 height: 100%;
                 min-height: 30px
-
             }
         }
     }
@@ -930,37 +1013,44 @@ textarea {
 }
 
 
-.main-layout{
+.main-layout {
     width: 100%;
-    .content{
+
+    .content {
         width: 100%;
-        .title{
+
+        .title {
             margin-left: 1rem;
             height: 50px;
         }
-        .icon{
+
+        .icon {
             width: calc(100% - 260px);
         }
-        .action{
+
+        .action {
             width: 260px;
             margin-left: 10px;
         }
     }
-    .sidebar-review{
+
+    .sidebar-review {
         margin-top: 50px;
         margin-left: 5px;
-        width: 280px!important;
+        width: 280px !important;
     }
 }
 
-.header-price-review{
-    .content{
+.header-price-review {
+    .content {
         width: calc(100% - 280px);
-        .tieu-de{
-            font-size: 150%!important;
+
+        .tieu-de {
+            font-size: 150% !important;
         }
     }
 }
+
 .custom-select-option {
     min-width: 150px;
     max-width: 200px;
@@ -969,6 +1059,7 @@ textarea {
     color: #FFFFFF;
     background-color: #ff8661;
 }
+
 .option-set-width {
     width: 81%;
 }

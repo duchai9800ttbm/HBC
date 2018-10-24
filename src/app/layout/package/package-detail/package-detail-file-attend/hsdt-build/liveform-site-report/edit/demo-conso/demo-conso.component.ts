@@ -48,17 +48,13 @@ export class DemoConsoComponent implements OnInit {
     this.demoConsoForm.valueChanges.subscribe(data => this.mappingToLiveFormData(data));
   }
   checkFlag() {
-    if ((LiveformSiteReportComponent.formModel.isCreate)) {
-      const flag = LiveformSiteReportComponent.isViewMode;
-      this.viewMode = flag;
-      if (flag) {
-        const inputs = document.getElementsByTagName('input');
-        for (let i = 0; i < inputs.length; i++) {
-          inputs[i].style.pointerEvents = 'none';
-        }
+    const flag = LiveformSiteReportComponent.isViewMode;
+    this.viewMode = flag;
+    if (flag) {
+      const inputs = document.getElementsByTagName('input');
+      for (let i = 0; i < inputs.length; i++) {
+        inputs[i].style.pointerEvents = 'none';
       }
-    } else {
-      this.router.navigate([`/package/detail/${this.currentBidOpportunityId}/attend/build/liveformsite`]);
     }
   }
 

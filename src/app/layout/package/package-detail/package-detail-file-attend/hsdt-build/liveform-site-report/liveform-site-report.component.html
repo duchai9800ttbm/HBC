@@ -7,7 +7,7 @@
             <img class="image-empty" src="assets/images/file_empty.png">
             <div class="mt-3">Hiện chưa có bản báo cáo khảo sát công trường nào</div>
             <div class="mt-3 d-flex justify-content-center">
-                <button class="btn btn-primary" [routerLink]="['./create']">
+                <button class="btn btn-primary" [routerLink]="['./create']" (click)="onActivate(false)">
                     Tạo mới báo cáo khảo sát công trường
                 </button>
             </div>

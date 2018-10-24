@@ -320,6 +320,10 @@ input[type=text] {
     cursor: not-allowed;
 }
 
+.modeView{
+    background-color: #ccc;
+}
+
 @media only screen and (max-width: 1200px) {
     .responsive-container {
         flex-direction: column;

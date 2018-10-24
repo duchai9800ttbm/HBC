@@ -107,8 +107,57 @@ export class LiveformSiteReportComponent implements OnInit {
         });
   }
   refresh() {
-    this.spinner.show();
-    this.ngOnInit();
+    this.siteSurveyReportService.tenderSiteSurveyingReport(this.bidOpportunityId).subscribe(res => {
+      if (!res) {
+        LiveformSiteReportComponent.formModel = new SiteSurveyReport();
+        LiveformSiteReportComponent.formModel.isCreate = true;
+        LiveformSiteReportComponent.formModel.bidOpportunityId = this.bidOpportunityId;
+        LiveformSiteReportComponent.formModel.scaleOverall = new ScaleOverall();
+        LiveformSiteReportComponent.formModel.scaleOverall.loaiCongTrinh = new Array;
+        LiveformSiteReportComponent.formModel.scaleOverall.trangthaiCongTrinh = [
+          {
+            text: 'Mới (New)',
+            value: '',
+            checked: false
+          },
+          {
+            text: 'Thay đổi & bổ sung (Alteration & Additional)',
+            value: '',
+            checked: false
+          },
+          {
+            text: 'Khác (Other)',
+            value: '',
+            checked: false
+          },
+          {
+            text: 'Nâng cấp, cải tiến (Renovation)',
+            value: '',
+            checked: false
+          }, {
+            text: 'Tháo dỡ & cải tiến (Demolishment & Renovation)',
+            value: '',
+            checked: false
+          }
+        ];
+      } else {
+        LiveformSiteReportComponent.formModel = res;
+      }
+      if (!LiveformSiteReportComponent.formModel.scaleOverall.loaiCongTrinh.length) {
+        this.siteSurveyReportService.getListConstructionType().subscribe(ress => {
+          this.listConstructionType = ress;
+          LiveformSiteReportComponent.formModel.scaleOverall.loaiCongTrinh = this.listConstructionType;
+        }, err => {
+          this.spinner.hide();
+          this.alertService.error('Đã xảy ra lỗi, danh sách loại công trình cập nhật không thành công');
+        });
+      }
+      this.isData = (LiveformSiteReportComponent.formModel.id) ? true : false;
+      this.documentData = res;
+    }, err => {
+      this.spinner.hide();
+      this.alertService.error('Đã xảy ra lỗi, cập nhật dữ liệu lifeform không thành công');
+    });
   }
   rerender(pagedResult: any) {
     this.pagedResult = pagedResult;
@@ -142,7 +191,7 @@ export class LiveformSiteReportComponent implements OnInit {
       });
   }
 
-  onActivate(check) {
+  onActivate(check: boolean) {
     LiveformSiteReportComponent.isViewMode = check;
   }
 }
