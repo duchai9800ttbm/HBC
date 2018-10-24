@@ -27,6 +27,7 @@ export class InterviewInvitationService {
   //
   currentStatusInterview: Subject<number> = new Subject<number>();
   interviewNotification;
+  maxInterViewTimes;
   // map theo model danh sách biên bản phỏng vấn
   private static toInterviewInvitationReportList(result: any): InterviewInvitationReportList {
     return {
@@ -299,7 +300,14 @@ export class InterviewInvitationService {
       .map(response => response)
       .share();
   }
-
+  // Lưu lại lần phỏng vấn lớn nhât
+  saveMaxInterViewTimes(maxInterViewTimes: number) {
+    this.maxInterViewTimes = maxInterViewTimes;
+  }
+  // Trả lại biến mạc địnhhh lần phỏng vấn
+  returnMaxInterViewTimes() {
+    return this.maxInterViewTimes;
+  }
   // Tải file lời mời phỏng vấn
   downloadFileCreateInterview(bidDocumentId: number) {
     const url = `bidinterviewinvitation/${bidDocumentId}/download `;
@@ -319,7 +327,6 @@ export class InterviewInvitationService {
       return new File([response.file], response.fileName, { type: response.contentType, lastModified: Date.now() });
     });
   }
-
   // ===============================
   // Chuẩn bị phỏng vấn
   // Map danh sách hồ sợ dự thầu đã phê duyệt theo model

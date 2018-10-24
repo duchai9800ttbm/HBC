@@ -62,7 +62,8 @@ export class CreateNewInvitationComponent implements OnInit {
         DateTimeConvertHelper.fromTimestampToDtObject(this.interviewInvitation.interviewDate) : null
         , [Validators.required]],
       place: [this.interviewInvitation.place, [Validators.required]],
-      interviewTimes: [this.interviewInvitation.interviewTimes, [Validators.required]],
+      interviewTimes: [this.interviewInvitation.interviewTimes ? this.interviewInvitation.interviewTimes
+          : this.interviewInvitationService.returnMaxInterViewTimes() + 1, [Validators.required]],
       content: [this.interviewInvitation.content],
       attachedFiles: ['']
     });

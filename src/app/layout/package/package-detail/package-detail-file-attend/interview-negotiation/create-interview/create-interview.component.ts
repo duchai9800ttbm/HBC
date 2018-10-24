@@ -106,6 +106,8 @@ export class CreateInterviewComponent implements OnInit , OnDestroy {
     this.numberOfInterviews = this.pagedResult.items ? this.pagedResult.items.map(item => item.interviewTimes) : [];
     this.numberOfInterviews = this.numberOfInterviews.sort((a, b) => a - b);
     this.numberOfInterviews = this.numberOfInterviews.filter((el, i, a) => i === a.indexOf(el));
+    const maxOfValue = Math.max.apply(Math, this.numberOfInterviews);
+    this.interviewInvitationService.saveMaxInterViewTimes(maxOfValue);
   }
 
   render(pagedResult: any) {
@@ -270,8 +272,10 @@ export class CreateInterviewComponent implements OnInit , OnDestroy {
   dowloadFileCreateInterview(id) {
     this.interviewInvitationService.downloadFileCreateInterview(id).subscribe(data => {
     }, err => {
-      if (err.json().errorCode) {
-        this.alertService.error('File không tồn tại hoặc đã bị xóa!');
+      console.log('err', err);
+      const error = err.json();
+      if (error.errorCode === 'BusinessException' && error.errorMessage === `File doesn't exits`) {
+        this.alertService.error('Lời mời phỏng vấn này không có file đính kèm.!');
       } else {
         this.alertService.error('Đã có lỗi xãy ra!');
       }
