@@ -78,22 +78,28 @@ export class InterviewNoticeComponent implements OnInit {
     this.packageId = +PackageDetailComponent.packageId;
     this.packageService.getInforPackageID(this.packageId).subscribe(response => {
       this.packageInfo = response;
-      this.emailModel.subject = `DỰ ÁN ${this.packageInfo.projectName}, GÓI THẦU ${this.packageInfo.opportunityName} THÔNG BÁO PHỎNG VẤN`;
+      if (this.packageInfo.projectName) {
+        // tslint:disable-next-line:max-line-length
+        this.emailModel.subject = `Dự án ${this.packageInfo.projectName}, gói thầu ${this.packageInfo.opportunityName} thông báo phỏng vấn`;
+      } else {
+        // tslint:disable-next-line:max-line-length
+        this.emailModel.subject = `Gói thầu ${this.packageInfo.opportunityName} thông báo phỏng vấn`;
+      }
     });
     if (this.interviewInvitationService.getChooseInterviewNotification()) {
       this.interviewChoose = this.interviewInvitationService.getChooseInterviewNotification();
       this.emailModel.content = `<br>`;
-      this.interviewChoose.forEach( (element, index) => {
-        this.interviewInvitationService.LoadFileCreateInterview(element.id).subscribe( response => {
+      this.interviewChoose.forEach((element, index) => {
+        this.interviewInvitationService.LoadFileCreateInterview(element.id).subscribe(response => {
           console.log('response', response, response[0]);
           this.file.push(response);
         });
         const approvedDate = DateTimeConvertHelper.fromTimestampToDtObject(element.approvedDate * 1000);
-        const approvedDateStr = approvedDate.getDate() + '/' + approvedDate.getMonth() + '/' + approvedDate.getFullYear();
+        const approvedDateStr = approvedDate.getDate() + '/' + (approvedDate.getMonth() + 1) + '/' + approvedDate.getFullYear();
         const interviewDate = DateTimeConvertHelper.fromTimestampToDtObject(element.interviewDate * 1000);
         const hour = interviewDate.getHours() < 10 ? '0' + interviewDate.getHours() : interviewDate.getHours();
         const minutes = interviewDate.getMinutes() < 10 ? '0' + interviewDate.getMinutes() : interviewDate.getMinutes();
-        const interviewDateStr = interviewDate.getDate() + '/' + interviewDate.getMonth() + '/' + interviewDate.getFullYear()
+        const interviewDateStr = interviewDate.getDate() + '/' + (interviewDate.getMonth() + 1) + '/' + interviewDate.getFullYear()
           + ',' + hour + ':' + minutes;
         this.emailModel.content = this.emailModel.content + `
                               <div>Lần phỏng vấn: ${index + 1}</div>
