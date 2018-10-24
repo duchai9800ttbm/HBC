@@ -210,6 +210,7 @@ export class PriceReviewService {
   view(bidOpportunityId: number) {
     const url = `bidopportunity/${bidOpportunityId}/tenderpriceapproval`;
     return this.apiService.get(url).map(response => {
+      console.log(response);
       if (!response.result) {
         return null;
       }
@@ -239,7 +240,7 @@ export class PriceReviewService {
     modelRequest.createdEmployeeId = formValue.id ? formValue.createdEmployeeId : this.employeeId;
     modelRequest.updatedEmployeeId = this.employeeId;
     modelRequest.isDraftVersion = formValue.isDraftVersion ? formValue.isDraftVersion : false;
-    modelRequest.approvalDate = DateTimeConvertHelper.fromDtObjectToTimestamp(formValue.approvalDate) / 1000;
+    modelRequest.approvalDate = +(DateTimeConvertHelper.fromDtObjectToTimestamp(formValue.approvalDate));
     modelRequest.approvalTimes = formValue.approvalTimes;
     modelRequest.otherCompanyCustomerId = formValue.otherCompanyCustomerId;
     modelRequest.interviewTimes = formValue.interviewTimes;
@@ -402,7 +403,6 @@ export class PriceReviewService {
       }
     };
     modelRequest.updatedDesc = formValue.updatedDesc;
-    console.log(modelRequest);
     return this.apiService.post(url, modelRequest)
       .map(response => this.toTenderPriceApproval(response.result));
   }

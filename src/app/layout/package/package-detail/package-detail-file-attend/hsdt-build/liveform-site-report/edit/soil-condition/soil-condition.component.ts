@@ -91,6 +91,7 @@ export class SoilConditionComponent implements OnInit {
       .uploadImageSiteSurveyingReport(files, this.currentBidOpportunityId)
       .subscribe(res => {
         this.footingImageUrls = [...this.footingImageUrls, ...res];
+        this.soilConditionForm.get('nenMongHienCoList').patchValue(this.footingImageUrls);
       }, err => {
         this.alertService.error('Upload hình ảnh thất bại. Xin vui lòng thử lại!');
         this.footingImageUrls.forEach(x => {
@@ -120,6 +121,7 @@ export class SoilConditionComponent implements OnInit {
       .uploadImageSiteSurveyingReport(files, this.currentBidOpportunityId)
       .subscribe(res => {
         this.investigationImageUrls = [...this.investigationImageUrls, ...res];
+        this.soilConditionForm.get('thongTinCongTrinhGanDoList').patchValue(this.investigationImageUrls);
       }, err => {
         this.alertService.error('Upload hình ảnh thất bại. Xin vui lòng thử lại!');
         this.investigationImageUrls.forEach(x => {

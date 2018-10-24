@@ -1,5 +1,5 @@
 import { Component, OnInit, AfterViewInit, Input, AfterViewChecked, AfterContentChecked } from '@angular/core';
-import { TenderPriceApproval } from '../../../../../../shared/models/price-review/price-review.model';
+import { TenderPriceApproval, TenderPriceApprovalShort } from '../../../../../../shared/models/price-review/price-review.model';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import DateTimeConvertHelper from '../../../../../../shared/helpers/datetime-convert-helper';
 import { PriceReviewService } from '../../../../../../shared/services/price-review.service';
@@ -8,6 +8,8 @@ import { NgxSpinnerService } from '../../../../../../../../node_modules/ngx-spin
 import { PackageInfoModel } from '../../../../../../shared/models/package/package-info.model';
 import { PackageService } from '../../../../../../shared/services/package.service';
 import { Router } from '../../../../../../../../node_modules/@angular/router';
+import { AlertService, ConfirmationService } from '../../../../../../shared/services';
+import { BidStatus } from '../../../../../../shared/constants/bid-status';
 
 @Component({
   selector: 'app-price-review-form',
@@ -17,12 +19,16 @@ import { Router } from '../../../../../../../../node_modules/@angular/router';
 export class PriceReviewFormComponent implements OnInit, AfterViewInit {
   priceReviewForm: FormGroup;
   package = new PackageInfoModel();
+  priceReview: TenderPriceApprovalShort;
+  bidStatus = BidStatus;
 
   constructor(
     private fb: FormBuilder,
     private priceReviewService: PriceReviewService,
     private spinner: NgxSpinnerService,
     private packageService: PackageService,
+    private confirmService: ConfirmationService,
+    private alertService: AlertService,
     private router: Router
   ) { }
   isModeView;
@@ -42,7 +48,7 @@ export class PriceReviewFormComponent implements OnInit, AfterViewInit {
     this.getModeScreen();
     this.packageId = PackageDetailComponent.packageId;
     this.getAllCustomer();
-    // this.getInfoPackge();
+    this.getInfoPackge();
     this.createForm();
     this.checkDuyet();
   }
@@ -676,7 +682,7 @@ export class PriceReviewFormComponent implements OnInit, AfterViewInit {
       // TODO: mapping phần trên
       approvalDate: [
         DateTimeConvertHelper.fromTimestampToDtObject(
-          this.model.approvalDate * 1000000)
+          this.model.approvalDate * 1000)
       ],
       approvalTimes: {
         value: this.model.approvalTimes,
@@ -714,7 +720,7 @@ export class PriceReviewFormComponent implements OnInit, AfterViewInit {
       if (!value) {
         this.packageService.getProposedTenderParticipateReport(this.packageId).subscribe(data => {
           const valueApprovalDate = data.tenderDirectorProposal.expectedDate;
-          this.priceReviewForm.get('approvalDate').patchValue(DateTimeConvertHelper.fromTimestampToDtObject(valueApprovalDate * 1000000));
+          this.priceReviewForm.get('approvalDate').patchValue(DateTimeConvertHelper.fromTimestampToDtObject(valueApprovalDate * 1000));
         });
       }
     }
@@ -883,5 +889,21 @@ export class PriceReviewFormComponent implements OnInit, AfterViewInit {
       this.priceReviewForm.get('tyleGfa').patchValue((+chiPhiLoiNhuanAmountGfa) / (+chiPhiBaseGfa));
       this.valueOnP = true;
     } else { this.valueOnP = false; }
+  }
+  // Gủi duyệt
+  guiDuyet() {
+    const that = this;
+    if (this.priceReview.isDraftVersion) {
+      this.alertService.error('Chưa đủ bản chính thức!');
+      return null;
+    }
+    this.confirmService.confirm('Bạn có chắc muốn gửi duyệt trình duyệt giá?', () => {
+      this.priceReviewService.guiDuyetTrinhDuyetGia(this.packageId).subscribe(data => {
+        that.alertService.success('Gửi duyệt trình duyệt giá thành công!');
+      }, err => {
+        that.alertService.error('Gửi duyệt trình duyệt giá thất bại, vui lòng thử lại sau!');
+      });
+    });
+
   }
 }

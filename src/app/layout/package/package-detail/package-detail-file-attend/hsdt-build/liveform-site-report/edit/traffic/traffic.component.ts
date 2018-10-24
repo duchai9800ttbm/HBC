@@ -140,6 +140,7 @@ export class TrafficComponent implements OnInit {
       .uploadImageSiteSurveyingReport(files, this.currentBidOpportunityId)
       .subscribe(res => {
         this.disadvantageImageUrls = [...this.disadvantageImageUrls, ...res];
+        this.trafficForm.get('chiTietDiaHinhKhoKhanList').patchValue(this.disadvantageImageUrls);
       }, err => {
         this.alertService.error('Upload hình ảnh thất bại. Xin vui lòng thử lại!');
         this.disadvantageImageUrls.forEach(x => {
@@ -169,6 +170,7 @@ export class TrafficComponent implements OnInit {
       .uploadImageSiteSurveyingReport(files, this.currentBidOpportunityId)
       .subscribe(res => {
         this.advantageImageUrls = [...this.advantageImageUrls, ...res];
+        this.trafficForm.get('chiTietDiaHinhThuanLoiList').patchValue(this.advantageImageUrls);
       }, err => {
         this.alertService.error('Upload hình ảnh thất bại. Xin vui lòng thử lại!');
         this.advantageImageUrls.forEach(x => {
@@ -198,6 +200,7 @@ export class TrafficComponent implements OnInit {
       .uploadImageSiteSurveyingReport(files, this.currentBidOpportunityId)
       .subscribe(res => {
         this.directionImageUrls = [...this.directionImageUrls, ...res];
+        this.trafficForm.get('huongVaoCongTruongList').patchValue(this.directionImageUrls);
       }, err => {
         this.alertService.error('Upload hình ảnh thất bại. Xin vui lòng thử lại!');
         this.directionImageUrls.forEach(x => {
@@ -227,6 +230,7 @@ export class TrafficComponent implements OnInit {
       .uploadImageSiteSurveyingReport(files, this.currentBidOpportunityId)
       .subscribe(res => {
         this.existingImageUrls = [...this.existingImageUrls, ...res];
+        this.trafficForm.get('duongHienCoTrenCongTruongList').patchValue(this.existingImageUrls);
       }, err => {
         this.alertService.error('Upload hình ảnh thất bại. Xin vui lòng thử lại!');
         this.existingImageUrls.forEach(x => {
@@ -256,6 +260,7 @@ export class TrafficComponent implements OnInit {
       .uploadImageSiteSurveyingReport(files, this.currentBidOpportunityId)
       .subscribe(res => {
         this.roadImageUrls = [...this.roadImageUrls, ...res];
+        this.trafficForm.get('yeuCauDuongTamList').patchValue(this.roadImageUrls);
       }, err => {
         this.alertService.error('Upload hình ảnh thất bại. Xin vui lòng thử lại!');
         this.roadImageUrls.forEach(x => {
@@ -285,6 +290,7 @@ export class TrafficComponent implements OnInit {
       .uploadImageSiteSurveyingReport(files, this.currentBidOpportunityId)
       .subscribe(res => {
         this.fenceImageUrls = [...this.fenceImageUrls, ...res];
+        this.trafficForm.get('yeuCauHangRaoList').patchValue(this.fenceImageUrls);
       }, err => {
         this.alertService.error('Upload hình ảnh thất bại. Xin vui lòng thử lại!');
         this.fenceImageUrls.forEach(x => {

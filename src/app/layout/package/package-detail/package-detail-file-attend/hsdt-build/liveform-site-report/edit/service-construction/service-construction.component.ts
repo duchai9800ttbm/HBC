@@ -178,6 +178,7 @@ export class ServiceConstructionComponent implements OnInit {
       .uploadImageSiteSurveyingReport(files, this.currentBidOpportunityId)
       .subscribe(res => {
         this.supplySystemImageUrls = [...this.supplySystemImageUrls, ...res];
+        this.serviceConstructionForm.get('heThongNuocHienHuuList').patchValue(this.supplySystemImageUrls);
       }, err => {
         this.alertService.error('Upload hình ảnh thất bại. Xin vui lòng thử lại!');
         this.supplySystemImageUrls.forEach(x => {
@@ -207,6 +208,7 @@ export class ServiceConstructionComponent implements OnInit {
       .uploadImageSiteSurveyingReport(files, this.currentBidOpportunityId)
       .subscribe(res => {
         this.supplyPointImageUrls = [...this.supplyPointImageUrls, ...res];
+        this.serviceConstructionForm.get('heThongNuocDiemDauNoiList').patchValue(this.supplyPointImageUrls);
       }, err => {
         this.alertService.error('Upload hình ảnh thất bại. Xin vui lòng thử lại!');
         this.supplyPointImageUrls.forEach(x => {
@@ -237,6 +239,7 @@ export class ServiceConstructionComponent implements OnInit {
       .uploadImageSiteSurveyingReport(files, this.currentBidOpportunityId)
       .subscribe(res => {
         this.drainageSystemImageUrls = [...this.drainageSystemImageUrls, ...res];
+        this.serviceConstructionForm.get('heThongNuocThoatHienHuuList').patchValue(this.drainageSystemImageUrls);
       }, err => {
         this.alertService.error('Upload hình ảnh thất bại. Xin vui lòng thử lại!');
         this.drainageSystemImageUrls.forEach(x => {
@@ -266,6 +269,7 @@ export class ServiceConstructionComponent implements OnInit {
       .uploadImageSiteSurveyingReport(files, this.currentBidOpportunityId)
       .subscribe(res => {
         this.drainagePointImageUrls = [...this.drainagePointImageUrls, ...res];
+        this.serviceConstructionForm.get('heThongNuocThoatDiemDauNoiList').patchValue(this.drainagePointImageUrls);
       }, err => {
         this.alertService.error('Upload hình ảnh thất bại. Xin vui lòng thử lại!');
         this.drainagePointImageUrls.forEach(x => {
@@ -295,6 +299,7 @@ export class ServiceConstructionComponent implements OnInit {
       .uploadImageSiteSurveyingReport(files, this.currentBidOpportunityId)
       .subscribe(res => {
         this.powerStationImageUrls = [...this.powerStationImageUrls, ...res];
+        this.serviceConstructionForm.get('tramHaTheList').patchValue(this.powerStationImageUrls);
       }, err => {
         this.alertService.error('Upload hình ảnh thất bại. Xin vui lòng thử lại!');
         this.powerStationImageUrls.forEach(x => {
@@ -324,6 +329,7 @@ export class ServiceConstructionComponent implements OnInit {
       .uploadImageSiteSurveyingReport(files, this.currentBidOpportunityId)
       .subscribe(res => {
         this.mediumVoltageSystemImageUrls = [...this.mediumVoltageSystemImageUrls, ...res];
+        this.serviceConstructionForm.get('duongDayTrungTheList').patchValue(this.mediumVoltageSystemImageUrls);
       }, err => {
         this.alertService.error('Upload hình ảnh thất bại. Xin vui lòng thử lại!');
         this.mediumVoltageSystemImageUrls.forEach(x => {
@@ -353,6 +359,7 @@ export class ServiceConstructionComponent implements OnInit {
       .uploadImageSiteSurveyingReport(files, this.currentBidOpportunityId)
       .subscribe(res => {
         this.powerOtherImageUrls = [...this.powerOtherImageUrls, ...res];
+        this.serviceConstructionForm.get('heThongDienKhacList').patchValue(this.powerOtherImageUrls);
       }, err => {
         this.alertService.error('Upload hình ảnh thất bại. Xin vui lòng thử lại!');
         this.powerOtherImageUrls.forEach(x => {
