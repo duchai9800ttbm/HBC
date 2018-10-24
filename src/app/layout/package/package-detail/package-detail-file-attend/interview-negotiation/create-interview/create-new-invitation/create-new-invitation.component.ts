@@ -48,18 +48,8 @@ export class CreateNewInvitationComponent implements OnInit {
         this.interviewInvitation.customer.customerId = result.customer.id;
         this.interviewInvitation.customer.customerName = result.customer.text;
       }
-      // this.interviewInvitationService.getListInterview(
-      //   this.currentPackageId,
-      //   0,
-      //   1000
-      // ).subscribe( response => {
-      //   this.interviewTimes = response.length + 1;
-      //   this.createForm();
-      // });
       this.createForm();
     });
-
-    // this.createForm();
   }
 
   createForm() {
@@ -67,7 +57,7 @@ export class CreateNewInvitationComponent implements OnInit {
       customerName: [this.interviewInvitation.customer && this.interviewInvitation.customer.customerName ?
         this.interviewInvitation.customer.customerName : ''],
       approvedDate: [this.interviewInvitation.approvedDate ?
-        DateTimeConvertHelper.fromTimestampToDtObject(this.interviewInvitation.approvedDate) : null, [Validators.required]],
+        DateTimeConvertHelper.fromTimestampToDtObject(this.interviewInvitation.approvedDate) : new Date(), [Validators.required]],
       interviewDate: [this.interviewInvitation.interviewDate ?
         DateTimeConvertHelper.fromTimestampToDtObject(this.interviewInvitation.interviewDate) : null
         , [Validators.required]],

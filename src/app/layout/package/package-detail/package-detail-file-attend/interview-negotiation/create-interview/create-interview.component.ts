@@ -59,7 +59,6 @@ export class CreateInterviewComponent implements OnInit , OnDestroy {
     this.filter();
     this.getSatusPackage();
     this.subscription = this.statusObservableHsdtService.statusPackageService.subscribe(value => {
-      console.log('statusPackageService');
       this.getSatusPackage();
       this.spinner.hide();
     });
@@ -67,13 +66,11 @@ export class CreateInterviewComponent implements OnInit , OnDestroy {
     this.filterModel.interviewTimes = null;
     this.filterModel.receivedDate = null;
     const getUrlChirld = this.interviewInvitationService.getUrlChirld().subscribe( value => {
-      console.log('getUrlChirld', value);
       this.currentStatusInterview = value;
       this.spinner.hide();
     });
     this.subscription.add(getUrlChirld);
     const interviewList = this.interviewInvitationService.watchInterviewInvitationList().subscribe(value => {
-      console.log('watchInterviewInvitationList');
       this.isNumberOfInterviews = true;
       this.filter();
       this.spinner.hide();
@@ -88,7 +85,6 @@ export class CreateInterviewComponent implements OnInit , OnDestroy {
     // this.subscription.add(searchKey);
 
     const refesh = this.interviewInvitationService.watchRefeshInterviewInvitationList().subscribe(value => {
-      console.log('watchRefeshInterviewInvitationList');
       this.refresh(this.isOnInit);
       this.spinner.hide();
     });
@@ -135,8 +131,6 @@ export class CreateInterviewComponent implements OnInit , OnDestroy {
       content: CreateNewInvitationComponent,
       width: 700,
       minWidth: 250,
-      // height: 78vh;
-      // width: 50vw;
     });
     const instance = this.dialog.content.instance;
     interviewCreate = new InterviewInvitation();
@@ -146,8 +140,9 @@ export class CreateInterviewComponent implements OnInit , OnDestroy {
   }
 
   closePopuup() {
-    this.filter();
+    // this.filter();
     this.dialog.close();
+    // this.spinner.hide();
   }
 
   filter() {
