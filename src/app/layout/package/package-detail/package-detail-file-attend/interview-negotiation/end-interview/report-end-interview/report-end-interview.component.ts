@@ -23,6 +23,7 @@ export class ReportEndInterviewComponent implements OnInit {
   isSubmitted: boolean;
   formErrors = {
     documentName: '',
+    interviewTimes: '',
   };
   constructor(
     private fb: FormBuilder,
@@ -42,7 +43,7 @@ export class ReportEndInterviewComponent implements OnInit {
       version: [this.interviewInvitationReport.version],
       uploadedBy: [this.interviewInvitationReport.uploadedBy],
       createdDate: [this.interviewInvitationReport.uploadedBy],
-      interviewTimes: [this.interviewInvitationReport.interviewTimes],
+      interviewTimes: [this.interviewInvitationReport.interviewTimes, CustomValidator.required],
       documentDesc: [this.interviewInvitationReport.documentDesc],
       link: [],
     });
