@@ -204,6 +204,7 @@ export class CreateInterviewComponent implements OnInit , OnDestroy {
     });
     const instance = this.dialog.content.instance;
     instance.interviewInvitation = interviewEdit;
+    instance.edit = true;
     instance.callBack = () => this.closePopuup();
   }
 
@@ -274,6 +275,7 @@ export class CreateInterviewComponent implements OnInit , OnDestroy {
     }, err => {
       console.log('err', err);
       const error = err.json();
+      console.log('jsonErr', error);
       if (error.errorCode === 'BusinessException' && error.errorMessage === `File doesn't exits`) {
         this.alertService.error('Lời mời phỏng vấn này không có file đính kèm.!');
       } else {

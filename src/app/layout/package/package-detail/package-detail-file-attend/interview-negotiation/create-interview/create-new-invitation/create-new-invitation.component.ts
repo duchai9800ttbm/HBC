@@ -19,6 +19,7 @@ export class CreateNewInvitationComponent implements OnInit {
   datePickerConfig = DATETIME_PICKER_CONFIG;
   @Input() callBack: Function;
   @Input() interviewInvitation: InterviewInvitation;
+  @Input() edit;
   createFormNewInvitation: FormGroup;
   // interviewInvitation = new InterviewInvitation();
   currentPackageId: number;
@@ -42,6 +43,7 @@ export class CreateNewInvitationComponent implements OnInit {
   }
 
   ngOnInit() {
+    console.log('this.edit', this.edit);
     this.currentPackageId = +PackageDetailComponent.packageId;
     this.packageService.getInforPackageID(this.currentPackageId).subscribe(result => {
       if (result.customer) {
@@ -57,13 +59,13 @@ export class CreateNewInvitationComponent implements OnInit {
       customerName: [this.interviewInvitation.customer && this.interviewInvitation.customer.customerName ?
         this.interviewInvitation.customer.customerName : ''],
       approvedDate: [this.interviewInvitation.approvedDate ?
-        DateTimeConvertHelper.fromTimestampToDtObject(this.interviewInvitation.approvedDate) : new Date(), [Validators.required]],
+        DateTimeConvertHelper.fromTimestampToDtObject(this.interviewInvitation.approvedDate * 1000) : new Date(), [Validators.required]],
       interviewDate: [this.interviewInvitation.interviewDate ?
-        DateTimeConvertHelper.fromTimestampToDtObject(this.interviewInvitation.interviewDate) : null
+        DateTimeConvertHelper.fromTimestampToDtObject(this.interviewInvitation.interviewDate * 1000) : null
         , [Validators.required]],
       place: [this.interviewInvitation.place, [Validators.required]],
       interviewTimes: [this.interviewInvitation.interviewTimes ? this.interviewInvitation.interviewTimes
-          : this.interviewInvitationService.returnMaxInterViewTimes() + 1, [Validators.required]],
+        : this.interviewInvitationService.returnMaxInterViewTimes() + 1, [Validators.required]],
       content: [this.interviewInvitation.content],
       attachedFiles: ['']
     });
@@ -116,7 +118,11 @@ export class CreateNewInvitationComponent implements OnInit {
           this.statusObservableHsdtService.change();
           this.interviewInvitationService.changeInterviewInvitationList();
           this.closePopup();
-          this.alertService.success('Thêm mới lời mời thành công!');
+          if (this.edit) {
+            this.alertService.success('Lời mời đã được cập nhật!');
+          } else {
+            this.alertService.success('Thêm mới lời mời thành công!');
+          }
         },
           err => {
             if (err.json().errorCode === 'BusinessException') {

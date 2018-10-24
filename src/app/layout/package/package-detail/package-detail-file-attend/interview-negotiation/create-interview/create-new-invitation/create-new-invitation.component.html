@@ -5,7 +5,7 @@
             </div>
             <div style="width: 60%;">
                 <div class="media-header center-parent">
-                    <h3 class="d-inline title bold-title">TẠO LỜI MỜI PHỎNG VẤN</h3>
+                    <h3 class="d-inline title bold-title">{{ edit ? 'CẬP NHẬT LỜI MỜI PHỎNG VẤN' : 'TẠO LỜI MỜI PHỎNG VẤN'}} </h3>
                 </div>
             </div>
             <div style="width: 20%;" class="d-flex justify-content-end">
@@ -106,7 +106,7 @@
             </div>
         </div>
         <div class="cus-button-popup">
-            <button type="submit" class="btn btn-primary widh-butt">Tạo mới</button>
+            <button type="submit" class="btn btn-primary widh-butt">{{ edit ? 'Lưu' : 'Tạo mới'}}</button>
             <button type="button" class="btn btn-secondary widh-butt" (click)="closePopup()">Hủy</button>
         </div>
     </div>
