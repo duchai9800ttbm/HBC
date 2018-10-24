@@ -19,6 +19,7 @@ import { ReportEndInterviewComponent } from './interview-negotiation/end-intervi
 import { InterviewNoticeComponent } from './interview-negotiation/create-interview/interview-notice/interview-notice.component';
 import { TagInputModule } from 'ngx-chips';
 import { StatusObservableHsdtService } from '../../../../shared/services/status-observable-hsdt.service';
+import { ViewDetailReportComponent } from './interview-negotiation/end-interview/view-detail-report/view-detail-report.component';
 TagInputModule.withDefaults({
   tagInput: {
     placeholder: 'Nhập địa chỉ email',
@@ -49,13 +50,15 @@ TagInputModule.withDefaults({
     CreateNewInvitationComponent,
     UploadFileHsdtComponent,
     ReportEndInterviewComponent,
-    InterviewNoticeComponent
+    InterviewNoticeComponent,
+    ViewDetailReportComponent
   ],
   entryComponents: [
     CreateNewInvitationComponent,
     UploadFileHsdtComponent,
     ReportEndInterviewComponent,
-    InterviewNoticeComponent
+    InterviewNoticeComponent,
+    ViewDetailReportComponent
   ],
   providers: [
     DocumentPriceReviewService,

@@ -17,6 +17,7 @@ import { Validators } from '../../../../../../../../node_modules/@angular/forms'
 import DateTimeConvertHelper from '../../../../../../shared/helpers/datetime-convert-helper';
 import { StatusObservableHsdtService } from '../../../../../../shared/services/status-observable-hsdt.service';
 import { CheckStatusPackage } from '../../../../../../shared/constants/check-status-package';
+import { ViewDetailReportComponent } from './view-detail-report/view-detail-report.component';
 @Component({
   selector: 'app-end-interview',
   templateUrl: './end-interview.component.html',
@@ -24,6 +25,7 @@ import { CheckStatusPackage } from '../../../../../../shared/constants/check-sta
 })
 export class EndInterviewComponent implements OnInit {
   dialog;
+  dialogViewDetailReport;
   currentPackageId: number;
   searchTerm$ = new BehaviorSubject<string>('');
   filterModel = new InterviewInvitationFilterReport();
@@ -293,5 +295,20 @@ export class EndInterviewComponent implements OnInit {
         break;
       }
     }
+  }
+  // Xem chi tiết
+  viewDetail(dataItem) {
+    this.dialogViewDetailReport = this.dialogService.open({
+      content: ViewDetailReportComponent,
+      width: 600,
+      minWidth: 600
+    });
+    const instance = this.dialogViewDetailReport.content.instance;
+    instance.callBack = () => this.closePopuupViewDetailReport();
+    instance.data = dataItem;
+  }
+
+  closePopuupViewDetailReport() {
+    this.dialogViewDetailReport.close();
   }
 }

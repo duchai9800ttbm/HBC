@@ -97,7 +97,7 @@
                 </div>
 
                 <div class="d-flex flex-row flex-wrap filter-bar">
-                        <!-- style="background-color: #fafbfc!important;" -->
+                    <!-- style="background-color: #fafbfc!important;" -->
                     <div class="d-flex form-inline flex-pad">
                         <div class="form-group ml-sm-2 py-2 pl-2">
                             <label for="" class="form-label">Người upload</label>
@@ -246,8 +246,10 @@
                                         <div>{{i + 1}}</div>
                                     </div>
                                 </td>
-                                <td [title]="item.documentName">
-                                    {{item.documentName}}
+                                <td [title]="item.documentName" (click)="viewDetail(item)">
+                                    <a href="javascript:;">
+                                        {{item.documentName}}
+                                    </a>
                                 </td>
                                 <td class="text-center" [title]="item.version">
                                     {{item.version}}
