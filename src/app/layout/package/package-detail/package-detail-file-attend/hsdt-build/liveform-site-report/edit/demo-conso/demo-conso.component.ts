@@ -103,6 +103,7 @@ export class DemoConsoComponent implements OnInit {
       .uploadImageSiteSurveyingReport(files, this.currentBidOpportunityId)
       .subscribe(res => {
         this.demobilisationImageUrls = [...this.demobilisationImageUrls, ...res];
+        this.demoConsoForm.get('phaVoKetCauList').patchValue(this.demobilisationImageUrls);
       }, err => {
         this.alertService.error('Upload hình ảnh thất bại. Xin vui lòng thử lại!');
         this.demobilisationImageUrls.forEach(x => {
@@ -132,6 +133,7 @@ export class DemoConsoComponent implements OnInit {
       .uploadImageSiteSurveyingReport(files, this.currentBidOpportunityId)
       .subscribe(res => {
         this.consolidationImageUrls = [...this.consolidationImageUrls, ...res];
+        this.demoConsoForm.get('giaCoKetCauList').patchValue(this.consolidationImageUrls);
       }, err => {
         this.alertService.error('Upload hình ảnh thất bại. Xin vui lòng thử lại!');
         this.consolidationImageUrls.forEach(x => {
@@ -161,6 +163,7 @@ export class DemoConsoComponent implements OnInit {
       .uploadImageSiteSurveyingReport(files, this.currentBidOpportunityId)
       .subscribe(res => {
         this.adjacentImageUrls = [...this.adjacentImageUrls, ...res];
+        this.demoConsoForm.get('dieuKienHinhAnhList').patchValue(this.adjacentImageUrls);
       }, err => {
         this.alertService.error('Upload hình ảnh thất bại. Xin vui lòng thử lại!');
         this.adjacentImageUrls.forEach(x => {

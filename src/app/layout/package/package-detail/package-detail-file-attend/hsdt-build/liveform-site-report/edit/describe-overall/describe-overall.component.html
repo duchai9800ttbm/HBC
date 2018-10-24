@@ -8,23 +8,23 @@
                     <div class="text-des-input">
                         <input type="text" placeholder="Nhập text" formControlName="chiTietDiaHinhDesc">
                     </div>
-                    <div>
-                        <div class="image-demo-img">
-                            <input type="file" accept="image/*" multiple #uploadTopography (change)="uploadTopographyImage($event)">
-                            <ng-container *ngFor="let url of topographyImageUrls; index as k">
-                                <div class="display-img" (click)="viewFullScreenImage(topographyImageUrls, k)">
-                                    <img [src]="url.largeSizeUrl">
-                                    <div class="icon-delete-image" [ngClass]="{'d-none': viewMode}" (click)="deleteTopographyImage(url)">
-                                        <i class="fa fa-times delete-icon" aria-hidden="true"></i>
-                                    </div>
+
+                    <div class="image-demo-img">
+                        <input type="file" accept="image/*" multiple #uploadTopography (change)="uploadTopographyImage($event)">
+                        <ng-container *ngFor="let url of topographyImageUrls; index as k">
+                            <div class="display-img" (click)="viewFullScreenImage(topographyImageUrls, k)">
+                                <img [src]="url.largeSizeUrl">
+                                <div class="icon-delete-image" [ngClass]="{'d-none': viewMode}" (click)="deleteTopographyImage(url)">
+                                    <i class="fa fa-times delete-icon" aria-hidden="true"></i>
                                 </div>
-                            </ng-container>
-                        </div>
+                            </div>
+                        </ng-container>
                         <div class="perspective-image" [ngClass]="{'d-none': viewMode}" (click)="uploadTopography.click()">
                             <i class="fa fa-plus" aria-hidden="true"></i>
                             <p>Image</p>
                         </div>
                     </div>
+
                 </div>
             </div>
         </div>
@@ -35,18 +35,18 @@
                 <div class="text-des-input">
                     <input type="text" placeholder="Nhập text" formControlName="kienTrucHienHuuDesc">
                 </div>
-                <div>
-                    <div class="image-demo-img">
-                        <input type="file" accept="image/*" multiple #uploadExistingBuild (change)="uploadExistingBuildImage($event)">
-                        <ng-container *ngFor="let url of existingBuildImageUrls; index as k">
-                            <div class="display-img" (click)="viewFullScreenImage(existingBuildImageUrls, k)">
-                                <img [src]="url.largeSizeUrl">
-                                <div class="icon-delete-image" [ngClass]="{'d-none': viewMode}" (click)="deleteExistingBuildImage(url)">
-                                    <i class="fa fa-times delete-icon" aria-hidden="true"></i>
-                                </div>
+
+                <div class="image-demo-img">
+                    <input type="file" accept="image/*" multiple #uploadExistingBuild (change)="uploadExistingBuildImage($event)">
+                    <ng-container *ngFor="let url of existingBuildImageUrls; index as k">
+                        <div class="display-img" (click)="viewFullScreenImage(existingBuildImageUrls, k)">
+                            <img [src]="url.largeSizeUrl">
+                            <div class="icon-delete-image" [ngClass]="{'d-none': viewMode}" (click)="deleteExistingBuildImage(url)">
+                                <i class="fa fa-times delete-icon" aria-hidden="true"></i>
                             </div>
-                        </ng-container>
-                    </div>
+                        </div>
+                    </ng-container>
+
                     <div class="perspective-image" [ngClass]="{'d-none': viewMode}" (click)="uploadExistingBuild.click()">
                         <i class="fa fa-plus" aria-hidden="true"></i>
                         <p>Image</p>
@@ -63,18 +63,18 @@
             <div class="text-des-input">
                 <input type="text" placeholder="Nhập text" formControlName="yeuCauChuongNgaiDesc">
             </div>
-            <div>
-                <div class="image-demo-img">
-                    <input type="file" accept="image/*" multiple #uploadStacale (change)="uploadStacaleImage($event)">
-                    <ng-container *ngFor="let url of stacaleImageUrls; index as k">
-                        <div class="display-img" (click)="viewFullScreenImage(stacaleImageUrls, k)">
-                            <img [src]="url.largeSizeUrl">
-                            <div class="icon-delete-image" [ngClass]="{'d-none': viewMode}" (click)="deleteStacaleImage(url)">
-                                <i class="fa fa-times delete-icon" aria-hidden="true"></i>
-                            </div>
+
+            <div class="image-demo-img">
+                <input type="file" accept="image/*" multiple #uploadStacale (change)="uploadStacaleImage($event)">
+                <ng-container *ngFor="let url of stacaleImageUrls; index as k">
+                    <div class="display-img" (click)="viewFullScreenImage(stacaleImageUrls, k)">
+                        <img [src]="url.largeSizeUrl">
+                        <div class="icon-delete-image" [ngClass]="{'d-none': viewMode}" (click)="deleteStacaleImage(url)">
+                            <i class="fa fa-times delete-icon" aria-hidden="true"></i>
                         </div>
-                    </ng-container>
-                </div>
+                    </div>
+                </ng-container>
+
                 <div class="perspective-image" [ngClass]="{'d-none': viewMode}" (click)="uploadStacale.click()">
                     <i class="fa fa-plus" aria-hidden="true"></i>
                     <p>Image</p>

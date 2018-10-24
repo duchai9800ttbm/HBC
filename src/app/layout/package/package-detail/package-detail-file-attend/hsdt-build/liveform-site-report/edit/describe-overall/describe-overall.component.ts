@@ -101,6 +101,7 @@ export class DescribeOverallComponent implements OnInit {
       .uploadImageSiteSurveyingReport(files, this.currentBidOpportunityId)
       .subscribe(res => {
         this.topographyImageUrls = [...this.topographyImageUrls, ...res];
+        this.describeForm.get('chiTietDiaHinhList').patchValue(this.topographyImageUrls);
       }, err => {
         this.alertService.error('Upload hình ảnh thất bại. Xin vui lòng thử lại!');
         this.topographyImageUrls.forEach(x => {
@@ -130,6 +131,7 @@ export class DescribeOverallComponent implements OnInit {
       .uploadImageSiteSurveyingReport(files, this.currentBidOpportunityId)
       .subscribe(res => {
         this.existingBuildImageUrls = [...this.existingBuildImageUrls, ...res];
+        this.describeForm.get('kienTrucHienHuuList').patchValue(this.existingBuildImageUrls);
       }, err => {
         this.alertService.error('Upload hình ảnh thất bại. Xin vui lòng thử lại!');
         this.existingBuildImageUrls.forEach(x => {
@@ -159,6 +161,7 @@ export class DescribeOverallComponent implements OnInit {
       .uploadImageSiteSurveyingReport(files, this.currentBidOpportunityId)
       .subscribe(res => {
         this.stacaleImageUrls = [...this.stacaleImageUrls, ...res];
+        this.describeForm.get('yeuCauChuongNgaiList').patchValue(this.stacaleImageUrls);
       }, err => {
         this.alertService.error('Upload hình ảnh thất bại. Xin vui lòng thử lại!');
         this.stacaleImageUrls.forEach(x => {
