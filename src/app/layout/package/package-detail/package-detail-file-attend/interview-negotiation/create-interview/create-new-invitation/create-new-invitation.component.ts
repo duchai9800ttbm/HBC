@@ -51,9 +51,8 @@ export class CreateNewInvitationComponent implements OnInit {
       }
       this.createForm();
       if (this.edit) {
-        this.interviewInvitationService.LoadFileCreateInterview(this.interviewInvitation.id).subscribe( response => {
+        this.interviewInvitationService.LoadFileCreateInterview(this.interviewInvitation.id).subscribe(response => {
           this.file = response;
-          console.log('this.file', this.file);
           this.createFormNewInvitation.get('attachedFiles').patchValue(this.file.name);
         });
       }
@@ -117,26 +116,41 @@ export class CreateNewInvitationComponent implements OnInit {
   onSubmit() {
     this.isSubmitted = true;
     if (this.validateForm()) {
-      this.interviewInvitationService.createInterviewInvitation(
-        this.interviewInvitation.customer && this.interviewInvitation.customer.customerId ?
-          this.interviewInvitation.customer.customerId : null,
-        this.currentPackageId, this.createFormNewInvitation.value, this.file).subscribe(response => {
-          this.statusObservableHsdtService.change();
-          this.interviewInvitationService.changeInterviewInvitationList();
-          this.closePopup();
-          if (this.edit) {
+      if (this.edit) {
+        this.interviewInvitationService.updateInterviewInvitation(
+          this.interviewInvitation.customer && this.interviewInvitation.customer.customerId ?
+            this.interviewInvitation.customer.customerId : null,
+          this.interviewInvitation.id, this.createFormNewInvitation.value, this.file).subscribe(response => {
+            this.statusObservableHsdtService.change();
+            this.interviewInvitationService.changeInterviewInvitationList();
+            this.closePopup();
             this.alertService.success('Lời mời đã được cập nhật!');
-          } else {
+          },
+            err => {
+              if (err.json().errorCode === 'BusinessException') {
+                this.alertService.error('Giai đoạn gói thầu không hợp lệ!');
+              } else {
+                this.alertService.error('Cập nhật lời mời thất bại, xin vui lòng thử lại!');
+              }
+            });
+      } else {
+        this.interviewInvitationService.createInterviewInvitation(
+          this.interviewInvitation.customer && this.interviewInvitation.customer.customerId ?
+            this.interviewInvitation.customer.customerId : null,
+          this.currentPackageId, this.createFormNewInvitation.value, this.file).subscribe(response => {
+            this.statusObservableHsdtService.change();
+            this.interviewInvitationService.changeInterviewInvitationList();
+            this.closePopup();
             this.alertService.success('Thêm mới lời mời thành công!');
-          }
-        },
-          err => {
-            if (err.json().errorCode === 'BusinessException') {
-              this.alertService.error('Giai đoạn gói thầu không hợp lệ!');
-            } else {
-              this.alertService.error('Tạo mới lời mời thất bại, xin vui lòng thử lại!');
-            }
-          });
+          },
+            err => {
+              if (err.json().errorCode === 'BusinessException') {
+                this.alertService.error('Giai đoạn gói thầu không hợp lệ!');
+              } else {
+                this.alertService.error('Tạo mới lời mời thất bại, xin vui lòng thử lại!');
+              }
+            });
+      }
     }
   }
 

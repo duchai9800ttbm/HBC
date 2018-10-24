@@ -278,18 +278,39 @@ export class InterviewInvitationService {
     createFormNewInvitationValue: any,
     file: File,
   ) {
-    console.log('createFormNewInvitationValue', createFormNewInvitationValue);
     const url = `bidinterviewinvitation/create`;
     const formData = new FormData();
     if (customerID) {
       formData.append('CustomerId', `${customerID}`);
     }
-    // formData.append('CustomerId', createFormNewInvitationValue.customerName);
     formData.append('BidOpportunityId', `${BidOpportunityId}`);
     formData.append('ReceivedDate', `${DateTimeConvertHelper.fromDtObjectToTimestamp(createFormNewInvitationValue.approvedDate)}`);
-    // formData.append('ReceivedDate', `${moment(createFormNewInvitationValue.approvedDate).unix()}`);
     formData.append('InterViewDate', `${DateTimeConvertHelper.fromDtObjectToTimestamp(createFormNewInvitationValue.interviewDate)}`);
-    // formData.append('InterViewDate', `${moment(createFormNewInvitationValue.interviewDate).unix()}`);
+    formData.append('Place', createFormNewInvitationValue.place);
+    formData.append('InterviewTimes', createFormNewInvitationValue.interviewTimes);
+    if (createFormNewInvitationValue.content) {
+      formData.append('Content', createFormNewInvitationValue.content);
+    }
+    formData.append('DocumentFile', file);
+    return this.apiService.postFile(url, formData)
+      .map(response => response)
+      .share();
+  }
+  // Chỉnh sửa lời mời phỏng vấn
+  updateInterviewInvitation(
+    customerID: number,
+    BidInterviewInvitationId: number,
+    createFormNewInvitationValue: any,
+    file: File,
+  ) {
+    const url = `bidinterviewinvitation/update`;
+    const formData = new FormData();
+    if (customerID) {
+      formData.append('CustomerId', `${customerID}`);
+    }
+    formData.append('BidInterviewInvitationId', `${BidInterviewInvitationId}`);
+    formData.append('ReceivedDate', `${DateTimeConvertHelper.fromDtObjectToTimestamp(createFormNewInvitationValue.approvedDate)}`);
+    formData.append('InterViewDate', `${DateTimeConvertHelper.fromDtObjectToTimestamp(createFormNewInvitationValue.interviewDate)}`);
     formData.append('Place', createFormNewInvitationValue.place);
     formData.append('InterviewTimes', createFormNewInvitationValue.interviewTimes);
     if (createFormNewInvitationValue.content) {
