@@ -192,7 +192,6 @@ export class InformationDeploymentFormComponent implements OnInit {
     }
 
     createTaskItemFG(data: TenderPreparationPlanItem): FormGroup {
-        // console.log('createTaskItemFG', data);
         return this.fb.group({
             itemId: data.itemId,
             itemNo: data.itemNo,
@@ -206,7 +205,8 @@ export class InformationDeploymentFormComponent implements OnInit {
                 disabled: this.controlDisableForm,
             },
             whoIsInChargeIds: {
-                value: (data.whoIsInCharges && data.whoIsInCharges.length !== 0) ? data.whoIsInCharges[0] : [],
+                value: [],
+                // (data.whoIsInCharges && data.whoIsInCharges.length !== 0) ? data.whoIsInCharges[0]
                 disabled: this.controlDisableForm,
             },
             startDate: {
@@ -258,10 +258,14 @@ export class InformationDeploymentFormComponent implements OnInit {
     }
 
     validateForm(formData: TenderPreparationPlanningRequest, isDraft: boolean): boolean {
+        console.log('validateForm', formData, this.planForm.get('isDraftVersion').value);
         if (isDraft) {
             // lưu nháp thì ko cần validate
             return true;
-        } else if (formData.tasks.every(i => i.whoIsInChargeId === 0 || i.whoIsInChargeId == null)) {
+        } else if (formData.tasks.every(i =>
+            (i.whoIsInChargeId === 0 || i.whoIsInChargeId == null) &&
+            (i.whoIsInChargeIds === null || (i.whoIsInChargeIds && i.whoIsInChargeIds.length) === 0))
+        ) {
             if (this.planForm.get('isDraftVersion').value === false) {
                 this.alertService.error('Bạn chưa hoàn tất phân công tiến độ!');
             } else {
@@ -287,7 +291,8 @@ export class InformationDeploymentFormComponent implements OnInit {
         // if (data.find(i => i.whoIsInChargeId && i.startDate && i.finishDate)) {
 
         // }
-        if (data.some(i => i.whoIsInChargeId != null || i.whoIsInChargeId !== 0)) {
+        if (data.some(i => i.whoIsInChargeId != null || i.whoIsInChargeId !== 0 ||
+            i.whoIsInChargeIds != null || i.whoIsInChargeIds.length !== 0)) {
             return true;
         }
         return false;
@@ -320,16 +325,6 @@ export class InformationDeploymentFormComponent implements OnInit {
             // Lưu chính thức
             if (this.checkAssignment()) {
                 if (this.checkChooseAllTask()) {
-                    // const data = this.getFormData();
-                    // const isValid = this.validateForm(data, isDraft);
-                    // if (!isValid) {
-                    //     return;
-                    // }
-                    // if (data.id && !isDraft) {
-                    //     this.isShowChanges = true;
-                    // } else {
-                    //     this.saveTenderPlan(isDraft);
-                    // }
                     this.actionSubmit(isDraft);
                 } else {
                     this.confirmationService.confirm(
@@ -360,6 +355,7 @@ export class InformationDeploymentFormComponent implements OnInit {
 
     saveTenderPlan(isDraft: boolean) {
         const data = this.getFormData();
+        console.log('this.getFormData()', this.getFormData());
         data.isDraftVersion = isDraft;
         data.bidOpportunityId = this.bidOpportunityId;
         if (data.createdEmployeeId) {

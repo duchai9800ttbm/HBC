@@ -1131,7 +1131,7 @@ export class PackageService {
 
     // tải template bảng phân công tiến độ
     downloadPreparationPlanningTemplate() {
-        const url = `template/downoad`;
+        const url = `template/download`;
         return this.apiService.getFile(url).map(response => {
             return FileSaver.saveAs(
                 new Blob([response.file], {

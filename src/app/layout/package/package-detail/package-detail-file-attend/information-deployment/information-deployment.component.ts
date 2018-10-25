@@ -472,7 +472,11 @@ export class InformationDeploymentComponent implements OnInit {
   }
 
   downloadTemplate() {
-    this.packageService.downloadPreparationPlanningTemplate().subscribe(data => console.log());
+    this.packageService.downloadPreparationPlanningTemplate().subscribe(data => {
+    },
+      err => {
+        this.alertService.error('Tải template phân công tiến độ không thành công!');
+      });
   }
 
   startSetHSDT() {
