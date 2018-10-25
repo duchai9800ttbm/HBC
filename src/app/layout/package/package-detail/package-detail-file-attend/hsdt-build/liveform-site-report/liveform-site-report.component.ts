@@ -11,6 +11,8 @@ import { DATATABLE_CONFIG, DATATABLE_CONFIG2 } from '../../../../../../shared/co
 import { ScaleOverall } from '../../../../../../shared/models/site-survey-report/scale-overall.model';
 import { HistoryLiveForm } from '../../../../../../shared/models/ho-so-du-thau/history-liveform.model';
 import { groupBy } from '@progress/kendo-data-query';
+import { DialogService } from '../../../../../../../../node_modules/@progress/kendo-angular-dialog';
+import { FormInComponent } from '../../../../../../shared/components/form-in/form-in.component';
 
 @Component({
   selector: 'app-liveform-site-report',
@@ -33,6 +35,7 @@ export class LiveformSiteReportComponent implements OnInit {
   dtOptions: any = DATATABLE_CONFIG;
   dtTrigger: Subject<any> = new Subject();
   dtTrigger2: Subject<any> = new Subject();
+  dialog;
   indexItemHistoryChange: number;
   constructor(
     private documentService: DocumentService,
@@ -40,6 +43,7 @@ export class LiveformSiteReportComponent implements OnInit {
     private alertService: AlertService,
     private confirmationService: ConfirmationService,
     private spinner: NgxSpinnerService,
+    private dialogService: DialogService
   ) { }
 
   ngOnInit() {
@@ -191,5 +195,18 @@ export class LiveformSiteReportComponent implements OnInit {
 
   onActivate(check: boolean) {
     LiveformSiteReportComponent.isViewMode = check;
+  }
+
+  print() {
+    this.dialog = this.dialogService.open({
+      title: 'FORM IN',
+      content: FormInComponent,
+      width: window.screen.availWidth * 0.8,
+      minWidth: 250,
+      height: window.screen.availHeight * 0.7
+    });
+    const instance = this.dialog.content.instance;
+    instance.type = 'LiveFormThamQuanBaoCaoCongTruong';
+    instance.packageId = this.bidOpportunityId;
   }
 }
