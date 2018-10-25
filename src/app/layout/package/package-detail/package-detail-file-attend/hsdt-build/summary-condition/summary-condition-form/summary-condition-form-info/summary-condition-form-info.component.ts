@@ -24,6 +24,7 @@ export class SummaryConditionFormInfoComponent implements OnInit {
   currentBidOpportunityId: number;
   showPopupViewImage = false;
   imageUrlArray = [];
+  indexOfImage;
   viewMode;
   isModeView = false;
 
@@ -171,9 +172,10 @@ export class SummaryConditionFormInfoComponent implements OnInit {
     this.thongTinDuAnForm.get('banVeMasterPlan').patchValue(this.banVeMasterPlanUrls);
   }
 
-  viewFullScreenImage(listImage) {
+  viewFullScreenImage(listImage, indexImage?) {
     this.showPopupViewImage = true;
     this.imageUrlArray = [...listImage];
+    this.indexOfImage = indexImage;
   }
 
   closeView() {
