@@ -43,7 +43,7 @@ export class NeedCreateTenderFormDirectorProposalComponent implements OnInit {
         this.directorProposalForm = this.fb.group({
             isAgreedParticipating: NeedCreateTenderFormComponent.formModel ?
                 NeedCreateTenderFormComponent.formModel.isAgreedParticipating : true,
-            isAgreed: (formData && formData.isAgreed) ? formData.isAgreed : true,
+            isAgreed: (formData && formData.isAgreed !== null) ? formData.isAgreed : true,
             reason: formData ? formData.reason : '',
             date: formData
                 ? DateTimeConvertHelper.fromTimestampToDtObject(
