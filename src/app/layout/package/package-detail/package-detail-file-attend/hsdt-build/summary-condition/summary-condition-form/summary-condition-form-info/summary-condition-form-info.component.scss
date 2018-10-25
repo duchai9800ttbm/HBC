@@ -98,3 +98,8 @@
 // input[type=number] {
 //     -moz-appearance:textfield;
 // }
+
+::-webkit-input-placeholder { /* Chrome/Opera/Safari */
+    color: #ced4da;
+    font-style: italic;
+}

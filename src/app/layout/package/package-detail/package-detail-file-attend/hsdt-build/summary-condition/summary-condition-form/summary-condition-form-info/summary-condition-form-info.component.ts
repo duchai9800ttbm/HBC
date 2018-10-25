@@ -52,7 +52,7 @@ export class SummaryConditionFormInfoComponent implements OnInit {
       tenTaiLieu: { value: this.dataStepInfo.tenTaiLieu, disabled: this.isModeView },
       hinhAnhPhoiCanh: this.dataStepInfo.hinhAnhPhoiCanh,
       banVeMasterPlan: this.dataStepInfo.banVeMasterPlan,
-      lanPhongVan: { value: this.dataStepInfo.lanPhongVan, disabled: this.isModeView },
+      lanPhongVan: { value: this.dataStepInfo.lanPhongVan > 0 ? this.dataStepInfo.lanPhongVan : 1, disabled: this.isModeView },
       dienGiaiThongTinDuAn: { value: this.dataStepInfo.dienGiaiThongTinDuAn, disabled: this.isModeView }
     });
 

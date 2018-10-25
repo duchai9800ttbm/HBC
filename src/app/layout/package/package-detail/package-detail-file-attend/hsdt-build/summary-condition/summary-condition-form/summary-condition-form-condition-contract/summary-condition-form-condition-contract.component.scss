@@ -20,3 +20,8 @@
 .w-24{
     width: 24%;
 }
+
+::-webkit-input-placeholder { /* Chrome/Opera/Safari */
+    color: #ced4da;
+    font-style: italic;
+}
