@@ -88,9 +88,9 @@
                             <a class=" text-dark ml-3" [class.disabled]="packageInfo?.stageStatus.id == bidStatus.DaGuiPhanCongTienDo" (click)="packageInfo?.stageStatus.id == bidStatus.DaGuiPhanCongTienDo ? null : deleteTenderPlan()">
                                 <i class="fa fa-trash-o" aria-hidden="true"></i>
                             </a>
-                            <!-- <a class="ml-3" (click)="printForm()">
-                                <i class="fa fa-print ic-print-color" aria-hidden="true"></i>
-                            </a> -->
+                            <a class="ml-3" (click)="print()">
+                                <i class="fa fa-print icon-print" aria-hidden="true"></i>
+                            </a>
                         </div>
                     </div>
                 </td>

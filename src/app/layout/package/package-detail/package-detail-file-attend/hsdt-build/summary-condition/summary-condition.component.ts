@@ -13,6 +13,8 @@ import { HoSoDuThauService } from '../../../../../../shared/services/ho-so-du-th
 import { HistoryLiveForm } from '../../../../../../shared/models/ho-so-du-thau/history-liveform.model';
 import { PagedResult } from '../../../../../../shared/models';
 import { GroupDescriptor, DataResult, process, groupBy } from '@progress/kendo-data-query';
+import { DialogService } from '../../../../../../../../node_modules/@progress/kendo-angular-dialog';
+import { FormInComponent } from '../../../../../../shared/components/form-in/form-in.component';
 
 @Component({
   selector: 'app-summary-condition',
@@ -27,6 +29,7 @@ export class SummaryConditionComponent implements OnInit {
   dtTrigger: Subject<any> = new Subject();
   dtTrigger2: Subject<any> = new Subject();
   historyList;
+  dialog;
   indexItemHistoryChange: number;
   pagedResultChangeHistoryList: PagedResult<HistoryLiveForm> = new PagedResult<HistoryLiveForm>();
 
@@ -35,7 +38,8 @@ export class SummaryConditionComponent implements OnInit {
     private packageService: PackageService,
     private spinner: NgxSpinnerService,
     private alertService: AlertService,
-    private confirmService: ConfirmationService
+    private confirmService: ConfirmationService,
+    private dialogService: DialogService
   ) { }
 
   ngOnInit() {
@@ -99,5 +103,18 @@ export class SummaryConditionComponent implements OnInit {
 
   pagedResultChangeHistory(e) {
     this.getChangeHistory(this.pagedResultChangeHistoryList.currentPage, this.pagedResultChangeHistoryList.pageSize);
+  }
+
+  print() {
+    this.dialog = this.dialogService.open({
+      title: 'FORM IN',
+      content: FormInComponent,
+      width: window.screen.availWidth * 0.8,
+      minWidth: 250,
+      height: window.screen.availHeight * 0.7
+    });
+    const instance = this.dialog.content.instance;
+    instance.type = 'LiveFormTomTatDieuKienDuThau';
+    instance.packageId = this.packageId;
   }
 }

@@ -24,6 +24,8 @@ import { BidStatus } from '../../../../../shared/constants/bid-status';
 import { TenderPreparationPlanningRequest } from '../../../../../shared/models/api-request/package/tender-preparation-planning-request';
 import { StatusObservableHsdtService } from '../../../../../shared/services/status-observable-hsdt.service';
 import { groupBy } from '@progress/kendo-data-query';
+import { DialogService } from '../../../../../../../node_modules/@progress/kendo-angular-dialog';
+import { FormInComponent } from '../../../../../shared/components/form-in/form-in.component';
 @Component({
   selector: 'app-information-deployment',
   templateUrl: './information-deployment.component.html',
@@ -101,6 +103,7 @@ export class InformationDeploymentComponent implements OnInit {
   bidStatus = BidStatus;
   tenderPlan: TenderPreparationPlanningRequest;
   historyList;
+  dialog;
   constructor(
     private modalService: BsModalService,
     private formBuilder: FormBuilder,
@@ -111,7 +114,8 @@ export class InformationDeploymentComponent implements OnInit {
     private emailService: EmailService,
     private packageService: PackageService,
     private statusObservableHsdtService: StatusObservableHsdtService,
-    private confirmService: ConfirmationService
+    private confirmService: ConfirmationService,
+    private dialogService: DialogService,
   ) {
     this.loadItems();
   }
@@ -485,6 +489,19 @@ export class InformationDeploymentComponent implements OnInit {
       err => {
         this.alertService.error('Bắt đầu lập HSDT thất bại!');
       });
+  }
+
+  print() {
+    this.dialog = this.dialogService.open({
+      title: 'FORM IN',
+      content: FormInComponent,
+      width: window.screen.availWidth * 0.8,
+      minWidth: 250,
+      height: window.screen.availHeight * 0.7
+    });
+    const instance = this.dialog.content.instance;
+    instance.type = 'LiveFormPhanCongTienDo';
+    instance.packageId = this.packageId;
   }
 
 }
