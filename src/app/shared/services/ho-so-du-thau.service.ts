@@ -494,7 +494,7 @@ export class HoSoDuThauService {
         hsmtContractCondition: obj.dienGiaiDieuKienHopDong.dieuKienTheoHSMT && {
           executiveGuaranteePercent:
             (obj.dienGiaiDieuKienHopDong.dieuKienTheoHSMT.baoLanhThucHien) ?
-              obj.dienGiaiDieuKienHopDong.dieuKienTheoHSMT.baoLanhThucHien.phanTram : 0,
+              +obj.dienGiaiDieuKienHopDong.dieuKienTheoHSMT.baoLanhThucHien.phanTram : 0,
 
           executiveGuaranteeEfficiency:
             (obj.dienGiaiDieuKienHopDong.dieuKienTheoHSMT.baoLanhThucHien) ?
@@ -502,7 +502,7 @@ export class HoSoDuThauService {
 
           advanceGuaranteePercent:
             (obj.dienGiaiDieuKienHopDong.dieuKienTheoHSMT.baoLanhTamUng) ?
-              obj.dienGiaiDieuKienHopDong.dieuKienTheoHSMT.baoLanhTamUng.phanTram : 0,
+              +obj.dienGiaiDieuKienHopDong.dieuKienTheoHSMT.baoLanhTamUng.phanTram : 0,
 
           advanceGuaranteeEfficiency:
             (obj.dienGiaiDieuKienHopDong.dieuKienTheoHSMT.baoLanhTamUng) ?
@@ -522,7 +522,7 @@ export class HoSoDuThauService {
 
           retainedPercent:
             (obj.dienGiaiDieuKienHopDong.dieuKienTheoHSMT.tienGiuLai) ?
-              obj.dienGiaiDieuKienHopDong.dieuKienTheoHSMT.tienGiuLai.phanTram : 0,
+              +obj.dienGiaiDieuKienHopDong.dieuKienTheoHSMT.tienGiuLai.phanTram : 0,
 
           retainedLimit:
             obj.dienGiaiDieuKienHopDong.dieuKienTheoHSMT.tienGiuLai ?
@@ -533,7 +533,7 @@ export class HoSoDuThauService {
               obj.dienGiaiDieuKienHopDong.dieuKienTheoHSMT.tienGiuLai.thanhToanTienGui : '',
           punishhOverduePercent:
             (obj.dienGiaiDieuKienHopDong.dieuKienTheoHSMT.phatTreTienDo) ?
-              obj.dienGiaiDieuKienHopDong.dieuKienTheoHSMT.phatTreTienDo.phanTram : 0,
+              +obj.dienGiaiDieuKienHopDong.dieuKienTheoHSMT.phatTreTienDo.phanTram : 0,
           punishhOverdueLimit:
             (obj.dienGiaiDieuKienHopDong.dieuKienTheoHSMT.phatTreTienDo) ?
               obj.dienGiaiDieuKienHopDong.dieuKienTheoHSMT.phatTreTienDo.gioiHanPhatTienDo : '',
@@ -570,7 +570,7 @@ export class HoSoDuThauService {
               obj.dienGiaiDieuKienHopDong.dieuKienTheoHBC.thanhToan.thanhToanKhiTapKet : '',
           retainedPercent:
             (obj.dienGiaiDieuKienHopDong.dieuKienTheoHBC.tienGiuLai) ?
-              obj.dienGiaiDieuKienHopDong.dieuKienTheoHBC.tienGiuLai.phanTram : 0,
+              +obj.dienGiaiDieuKienHopDong.dieuKienTheoHBC.tienGiuLai.phanTram : 0,
           retainedLimit:
             obj.dienGiaiDieuKienHopDong.dieuKienTheoHBC.tienGiuLai ?
               (obj.dienGiaiDieuKienHopDong.dieuKienTheoHBC.tienGiuLai.gioiHanTienGiuLai ?
@@ -580,7 +580,7 @@ export class HoSoDuThauService {
               obj.dienGiaiDieuKienHopDong.dieuKienTheoHBC.tienGiuLai.thanhToanTienGui : '',
           punishhOverduePercent:
             (obj.dienGiaiDieuKienHopDong.dieuKienTheoHBC.phatTreTienDo) ?
-              obj.dienGiaiDieuKienHopDong.dieuKienTheoHBC.phatTreTienDo.phanTram : 0,
+              +obj.dienGiaiDieuKienHopDong.dieuKienTheoHBC.phatTreTienDo.phanTram : 0,
           punishhOverdueLimit:
             (obj.dienGiaiDieuKienHopDong.dieuKienTheoHBC.phatTreTienDo) ?
               obj.dienGiaiDieuKienHopDong.dieuKienTheoHBC.phatTreTienDo.gioiHanPhatTienDo : '',
@@ -779,14 +779,12 @@ export class HoSoDuThauService {
           baoLanhThucHien: model.contractCondition.hsmtContractCondition && {
             phanTram: (model.contractCondition.hsmtContractCondition.executiveGuaranteePercent) ?
               model.contractCondition.hsmtContractCondition.executiveGuaranteePercent : 0,
-            hieuLuc: (model.contractCondition.hsmtContractCondition.executiveGuaranteeEfficiency) ?
-              model.contractCondition.hsmtContractCondition.executiveGuaranteeEfficiency : 0
+            hieuLuc: model.contractCondition.hsmtContractCondition.executiveGuaranteeEfficiency
           },
           baoLanhTamUng: model.contractCondition.hsmtContractCondition && {
             phanTram: (model.contractCondition.hsmtContractCondition.advanceGuaranteePercent) ?
               model.contractCondition.hsmtContractCondition.advanceGuaranteePercent : 0,
-            hieuLuc: (model.contractCondition.hsmtContractCondition.advanceGuaranteeEfficiency) ?
-              model.contractCondition.hsmtContractCondition.advanceGuaranteeEfficiency : 0
+            hieuLuc: model.contractCondition.hsmtContractCondition.advanceGuaranteeEfficiency
           },
           thanhToan: model.contractCondition.hsmtContractCondition && {
             loaiThanhToan: model.contractCondition.hsmtContractCondition.paymentType,

@@ -64,7 +64,7 @@
                     <div class="col-md-4">
                         <div formGroupName="dieuKienTheoHSMT">
                             <div formGroupName="baoLanhThucHien">
-                                <input formControlName="phanTram" type="number" class="form-control">
+                                <input formControlName="phanTram" appInputNumberNegativeDecimal [decimal]="true" class="form-control">
                             </div>
 
                         </div>
@@ -72,7 +72,7 @@
                     <div class="col-md-4">
                         <div formGroupName="dieuKienTheoHBC">
                             <div formGroupName="baoLanhThucHien">
-                                <input formControlName="phanTram" type="number" class="form-control">
+                                <input formControlName="phanTram" appInputNumberNegativeDecimal [decimal]="true" class="form-control">
                             </div>
                         </div>
                     </div>
@@ -226,7 +226,7 @@
                     <div class="col-md-4">
                         <div formGroupName="dieuKienTheoHSMT">
                             <div formGroupName="thanhToan">
-                                <input formControlName="thoiGianThanhToan" type="number" class="form-control">
+                                <input formControlName="thoiGianThanhToan" min="0" type="number" class="form-control">
                             </div>
 
                         </div>
@@ -234,7 +234,7 @@
                     <div class="col-md-4">
                         <div formGroupName="dieuKienTheoHBC">
                             <div formGroupName="thanhToan">
-                                <input formControlName="thoiGianThanhToan" type="number" class="form-control">
+                                <input formControlName="thoiGianThanhToan" min="0" type="number" class="form-control">
                             </div>
                         </div>
                     </div>
