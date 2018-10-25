@@ -42,6 +42,7 @@ export class PrepareInterviewComponent implements OnInit {
         this.isNgOnInit = true;
       },
         err => {
+          this.spinner.hide();
           this.alertService.error('Cập nhật dữ liệu thất bại!');
         }
       );

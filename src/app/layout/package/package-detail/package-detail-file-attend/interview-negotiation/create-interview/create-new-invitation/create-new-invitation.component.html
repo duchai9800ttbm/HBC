@@ -66,8 +66,7 @@
                 Lần phỏng vấn
             </div>
             <div class="width-content-field" style="padding-left: 0px">
-                <input appInputNumber class="font-size-control w-100" kendoTextBox formControlName="interviewTimes"
-                    type="text">
+                <input appInputNumber class="font-size-control w-100" kendoTextBox formControlName="interviewTimes" type="text">
             </div>
         </div>
         <div class="invalid-feedback width-content-field pl-0 content-form-err" *ngIf="formErrors.interviewTimes">
@@ -78,8 +77,7 @@
                 Nội dung
             </div>
             <div class="width-content-field" style="padding-left: 0px">
-                <textarea kendoTextArea cols="3" rows="3" class="form-control no-resize-textarea font-size-control w-100"
-                    formControlName="content"></textarea>
+                <textarea kendoTextArea cols="3" rows="3" class="form-control no-resize-textarea font-size-control w-100" formControlName="content"></textarea>
             </div>
         </div>
         <div class="w-100 d-flex pad-row">
@@ -94,7 +92,9 @@
                         <input type="file" class="upload" (change)="fileChange($event)" />
                     </div>
                     <div style="width: calc(100% - 120px);" class="d-flex justify-content-between">
-                        <div> <span class="text-truncate">{{this.createFormNewInvitation.get('attachedFiles')?.value}}</span></div>
+                        <div>
+                            <span class="text-truncate">{{this.createFormNewInvitation.get('attachedFiles')?.value}}</span>
+                        </div>
                         <div *ngIf="file">
                             <button (click)="deleteFileUpload()" class="btn btn-secondary">X</button>
                         </div>
