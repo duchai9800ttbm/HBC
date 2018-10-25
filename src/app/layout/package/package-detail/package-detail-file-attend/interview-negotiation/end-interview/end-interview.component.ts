@@ -107,7 +107,18 @@ export class EndInterviewComponent implements OnInit {
     //   }
     // });
     this.pagedResult = pagedResult;
+    this.getUploadedEmployeeList();
+    this.getInterviewTimeList();
+    this.dtTrigger.next();
+  }
+
+  getInterviewTimeList() {
     this.interviewTimeList = this.pagedResult.items ? this.pagedResult.items.map(item => item.interviewTimes) : [];
+    this.interviewTimeList = this.interviewTimeList.sort((a, b) => a - b);
+    this.interviewTimeList = this.interviewTimeList.filter((el, i, a) => i === a.indexOf(el));
+  }
+
+  getUploadedEmployeeList() {
     this.uploadedEmployeeList = this.pagedResult.items ? this.pagedResult.items.map(item => item.uploadedBy) : [];
     this.uploadedEmployeeList = groupBy(this.uploadedEmployeeList, [{ field: 'employeeId' }]);
     this.uploadedEmployeeList = this.uploadedEmployeeList.map(item => {
@@ -117,7 +128,6 @@ export class EndInterviewComponent implements OnInit {
       };
     });
     this.uploadedEmployeeList = this.uploadedEmployeeList.sort((a, b) => a.employeeId - b.employeeId);
-    this.dtTrigger.next();
   }
 
   uploadReportInterview() {
