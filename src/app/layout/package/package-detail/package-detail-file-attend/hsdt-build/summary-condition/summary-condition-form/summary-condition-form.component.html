@@ -23,11 +23,6 @@
                     Chỉnh sửa
                 </button>
             </div>
-            <div *ngIf="!isDraft && isModeView" class="mr-1">
-                <button class="btn btn-primary" (click)="submiToApprove()">
-                    Gửi duyệt
-                </button>
-            </div>
             <div *ngIf="!isModeView" class="mr-1">
                 <button class="btn btn-secondary" (click)="backSummary()">
                     Hủy

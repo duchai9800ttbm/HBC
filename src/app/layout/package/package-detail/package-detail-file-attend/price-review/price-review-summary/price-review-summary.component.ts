@@ -43,6 +43,7 @@ export class PriceReviewSummaryComponent implements OnInit {
   pagedResultChangeHistoryList: PagedResult<HistoryLiveForm> = new PagedResult<HistoryLiveForm>();
   showPopupAdd;
   pagedResult: PagedResult<PriceReviewItemChangedHistory> = new PagedResult<PriceReviewItemChangedHistory>();
+  indexItemHistoryChange: Number;
 
   constructor(
     private priceReviewService: PriceReviewService,
@@ -145,6 +146,7 @@ export class PriceReviewSummaryComponent implements OnInit {
     this.priceReviewService.changedHistoryPriceReview(this.packageId, page, pageSize).subscribe(respone => {
       this.historyList = respone.items;
       this.pagedResultChangeHistoryList = respone;
+      this.indexItemHistoryChange = +respone.total - +respone.pageSize * +respone.currentPage;
       this.historyList = groupBy(this.pagedResultChangeHistoryList.items, [{ field: 'changedTime' }]);
       this.historyList.forEach((itemList, indexList) => {
         itemList.items.forEach((itemByChangedTimes, indexChangedTimes) => {

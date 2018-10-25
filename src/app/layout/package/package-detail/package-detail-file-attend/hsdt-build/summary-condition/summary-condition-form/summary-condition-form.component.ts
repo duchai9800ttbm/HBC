@@ -96,9 +96,6 @@ export class SummaryConditionFormComponent implements OnInit, OnDestroy {
       this.showPopupConfirm = true;
     }
   }
-  submiToApprove() {
-    this.alertService.error('Chưa ráp API');
-  }
   backSummary() {
     this.router.navigate([`package/detail/${this.packageId}/attend/build/summary`]);
   }
@@ -108,11 +105,11 @@ export class SummaryConditionFormComponent implements OnInit, OnDestroy {
     } else {
       this.hoSoDuThauService.createOrUpdateLiveFormTomTat().subscribe(res => {
         this.router.navigate([`package/detail/${this.packageId}/attend/build/summary`]);
-        const message = (this.isCreate) ? 'tạo' : 'cập nhật';
-        this.alertService.success(`LiveForm đã được ${message} thành công!`);
+        const message = (this.isCreate) ? 'Tạo' : 'Cập nhật';
+        this.alertService.success(`${message} Bảng tóm tắt điều kiện dự thầu thành công!`);
       }, err => {
         const message = (this.isCreate) ? 'Tạo' : 'Cập nhật';
-        this.alertService.error(`Đã có lỗi xảy ra. ${message} không thành công!`);
+        this.alertService.error(`Đã có lỗi xảy ra. ${message} Bảng tóm tắt điều kiện dự thầu không thành công!`);
       });
       this.showPopupConfirm = false;
     }

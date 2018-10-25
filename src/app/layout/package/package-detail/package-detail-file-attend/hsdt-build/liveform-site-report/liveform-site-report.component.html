@@ -85,7 +85,7 @@
             <tbody>
                 <tr *ngFor="let updateInfo of updateInfoList; index as i">
                     <td class="text-center">
-                        {{ (updateInfoList.length - i) }}
+                        {{ indexItemHistoryChange - i }}
                     </td>
                     <td class="text-center">{{ updateInfo.employee?.employeeName }}</td>
                     <td class="text-center">{{ (updateInfo.changedTime)*1000 | date:'dd/MM/yyyy' }}</td>

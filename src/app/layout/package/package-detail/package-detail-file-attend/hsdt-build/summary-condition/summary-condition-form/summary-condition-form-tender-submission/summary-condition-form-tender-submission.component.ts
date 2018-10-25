@@ -57,7 +57,9 @@ export class SummaryConditionFormTenderSubmissionComponent implements OnInit {
       soLuong: { value: this.hoSoDangLuuY.soLuong, disabled: this.isModeView },
       ngonNgu: { value: this.hoSoDangLuuY.ngonNgu, disabled: this.isModeView }
     });
-
+    if (!this.hoSoDangLuuY.ngonNgu) {
+      this.hoSoDangLuuYForm.get('ngonNgu').patchValue('');
+    }
     this.hoSoDangLuuY.taiLieuLuuY.forEach(x => {
       const control = <FormArray>this.hoSoDangLuuYForm.controls.taiLieuLuuY;
       control.push(this.fb.group({
