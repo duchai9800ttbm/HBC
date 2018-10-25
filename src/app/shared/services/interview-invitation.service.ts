@@ -355,12 +355,16 @@ export class InterviewInvitationService {
     return {
       typeName: result.typeName,
       isLiveForm: result.isLiveForm,
-      document: result.document ? {
-        type: result.document.type,
-        id: result.document.id,
-        name: result.document.name,
-        interviewTime: result.document.interviewTime,
-      } : null,
+      document: (result.document && result.document.length !== 0) ? result.document.map(itemDocument => {
+        return {
+          type: itemDocument.type,
+          id: itemDocument.id,
+          name: itemDocument.name,
+          interviewTime: itemDocument.interviewTime,
+          isLiveForm: itemDocument.isLiveForm,
+          filerUrl: itemDocument.filerUrl,
+        };
+      }) : null,
       childs:
         result.childs ? result.childs.map(itemChirld => {
           return {
@@ -370,6 +374,8 @@ export class InterviewInvitationService {
               id: itemChirld.document.id,
               name: itemChirld.document.name,
               interviewTime: itemChirld.document.interviewTime,
+              isLiveForm: itemChirld.document.isLiveForm,
+              filerUrl: itemChirld.document.filerUrl,
             } : null,
           };
         }) : null,

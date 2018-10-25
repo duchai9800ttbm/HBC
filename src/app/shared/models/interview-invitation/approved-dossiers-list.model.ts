@@ -6,7 +6,9 @@ export class ApprovedDossiersList {
         id: number;
         name: string;
         interviewTime: number;
-    };
+        isLiveForm: boolean;
+        filerUrl: string;
+    }[];
     childs: {
         typeName: string;
         document: {
@@ -14,6 +16,8 @@ export class ApprovedDossiersList {
             id: number;
             name: string;
             interviewTime: number;
+            isLiveForm: boolean;
+            filerUrl: string;
         }
     }[];
 }

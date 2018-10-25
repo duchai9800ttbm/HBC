@@ -34,6 +34,7 @@ export class PrepareInterviewComponent implements OnInit {
       this.spinner.show();
       this.interviewInvitationService.getListApprovedDossiers(this.packageId, this.searchApprovedDossiers$.value).subscribe(response => {
         this.pagedResult = response;
+        console.log('this.pageResult', this.pagedResult);
         this.spinner.hide();
         if (this.isNgOnInit) {
           this.alertService.success('Dữ liệu đã được cập nhật mới nhất!');
@@ -65,24 +66,38 @@ export class PrepareInterviewComponent implements OnInit {
   }
 
   renderIndex(i, k) {
-    let dem = 0;
-    let tam = -1;
-    if (+i === 0) {
+    // let dem = 0;
+    // let tam = -1;
+    // if (+i === 0) {
+    //   return k + 1;
+    // } else {
+    //   this.pagedResult.forEach(ite => {
+    //     if (tam < +i - 1) {
+    //       if (!ite.childs) {
+    //         dem++;
+    //       } else {
+    //         ite.childs.forEach(e => {
+    //           dem++;
+    //         });
+    //       }
+    //     }
+    //     tam++;
+    //   });
+    //   return dem + k + 1;
+    // }
+    if (i === 0) {
       return k + 1;
     } else {
-      this.pagedResult.forEach(ite => {
-        if (tam < +i - 1) {
-          if (!ite.childs) {
-            dem++;
-          } else {
-            ite.childs.forEach(e => {
-              dem++;
-            });
-          }
+      let dem = 0;
+      for (let a = 0; a < i; a++) {
+        if (this.pagedResult[a].document && this.pagedResult[a].document.length !== 0) {
+          dem = dem + this.pagedResult[a].document.length;
+        } else if (this.pagedResult[a].childs && this.pagedResult[a].childs.length !== 0) {
+          dem = dem + this.pagedResult[a].childs.length;
         }
-        tam++;
-      });
-      return dem + k + 1;
+      }
+      dem = dem + k;
+      return dem + 1;
     }
   }
 
