@@ -9,8 +9,8 @@ import { Subject } from 'rxjs/Subject';
 import { SiteSurveyReportService } from '../../../../../../shared/services/site-survey-report.service';
 import { DATATABLE_CONFIG, DATATABLE_CONFIG2 } from '../../../../../../shared/configs';
 import { ScaleOverall } from '../../../../../../shared/models/site-survey-report/scale-overall.model';
-import { groupBy } from 'rxjs/operators';
 import { HistoryLiveForm } from '../../../../../../shared/models/ho-so-du-thau/history-liveform.model';
+import { groupBy } from '@progress/kendo-data-query';
 
 @Component({
   selector: 'app-liveform-site-report',
@@ -150,10 +150,6 @@ export class LiveformSiteReportComponent implements OnInit {
       this.alertService.error('Đã xảy ra lỗi, cập nhật dữ liệu lifeform không thành công');
     });
   }
-  rerender(pagedResult: any) {
-    // this.pagedResult = pagedResult;
-    // this.dtTrigger.next();
-  }
 
   deleteDoc() {
     this.confirmationService.confirm(
@@ -167,27 +163,30 @@ export class LiveformSiteReportComponent implements OnInit {
       }
     );
   }
+  pagedResultChangeHistory(e) {
+    this.getChangeHistory(this.pagedResultChangeHistoryList.currentPage, this.pagedResultChangeHistoryList.pageSize);
+  }
   getChangeHistory(page: number | string, pageSize: number | string) {
-    // this.spinner.show();
-    // this.siteSurveyReportService.changedHistoryTenderSiteReport(this.bidOpportunityId, page, pageSize).subscribe(respone => {
-    //   this.updateInfoList = respone.items;
-    //   this.pagedResultChangeHistoryList = respone;
-    //   this.indexItemHistoryChange = +respone.total - +respone.pageSize * +respone.currentPage;
-    //   this.updateInfoList = groupBy(this.pagedResultChangeHistoryList.items, [{ field: 'changedTime' }]);
-    //   this.updateInfoList.forEach((itemList, indexList) => {
-    //     itemList.items.forEach((itemByChangedTimes, indexChangedTimes) => {
-    //       this.updateInfoList[indexList].items[indexChangedTimes].liveFormChangeds =
-    //         groupBy(itemByChangedTimes.liveFormChangeds, [{ field: 'liveFormStep' }]);
-    //     });
-    //   });
-    //   setTimeout(() => {
-    //     this.dtTrigger2.next();
-    //   });
-    //   this.spinner.hide();
-    // },
-    //   err => {
-    //     this.spinner.hide();
-    //   });
+    this.spinner.show();
+    this.siteSurveyReportService.changedHistoryTenderSiteReport(this.bidOpportunityId, page, pageSize).subscribe(respone => {
+      this.updateInfoList = respone.items;
+      this.pagedResultChangeHistoryList = respone;
+      this.indexItemHistoryChange = +respone.total - +respone.pageSize * +respone.currentPage;
+      this.updateInfoList = groupBy(this.pagedResultChangeHistoryList.items, [{ field: 'changedTime' }]);
+      this.updateInfoList.forEach((itemList, indexList) => {
+        itemList.items.forEach((itemByChangedTimes, indexChangedTimes) => {
+          this.updateInfoList[indexList].items[indexChangedTimes].liveFormChangeds =
+            groupBy(itemByChangedTimes.liveFormChangeds, [{ field: 'liveFormStep' }]);
+        });
+      });
+      setTimeout(() => {
+        this.dtTrigger2.next();
+      });
+      this.spinner.hide();
+    },
+      err => {
+        this.spinner.hide();
+      });
   }
 
   onActivate(check: boolean) {

@@ -87,17 +87,13 @@
                     <td class="text-center">
                         {{ indexItemHistoryChange - i }}
                     </td>
-                    <td class="text-center">{{ updateInfo.employee?.employeeName }}</td>
-                    <td class="text-center">{{ (updateInfo.changedTime)*1000 | date:'dd/MM/yyyy' }}</td>
+                    <td class="text-center">{{ updateInfo.items[0].employee?.employeeName }}</td>
+                    <td class="text-center">{{ (updateInfo.items[0].changedTime)*1000 | date:'dd/MM/yyyy , HH:mm':'+0000' }}</td>
                     <td class="text-center">
-                        <p *ngIf="isData">Cập nhật tài liệu</p>
-                        <p *ngIf="!isData">Xóa tài liệu</p>
-                        <p *ngFor="let item of updateInfo.liveFormChangeds; index as j">
-                            {{ item.liveFormTitle }}: {{ item.oldValue }} --- {{ item.newValue }}
-                        </p>
+                            <div class="text-truncate" [title]="updateInfo.items[0].updateDesc">{{ updateInfo.items[0].updateDesc }}</div>
                     </td>
                     <td class="text-center">
-                        {{ (updateInfo?.updateDesc != 'undefined') ? updateInfo.updateDesc : '' }}
+                        <p>Chưa chỉnh sửa</p>
                     </td>
                 </tr>
             </tbody>

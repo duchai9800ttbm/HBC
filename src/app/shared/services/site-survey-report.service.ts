@@ -621,8 +621,7 @@ export class SiteSurveyReportService {
   changedHistoryTenderSiteReport(
     bidOpportunityId: number,
     page: number | string,
-    pageSize: number | string)
-    : Observable<PagedResult<HistoryLiveForm>> {
+    pageSize: number | string): Observable<PagedResult<HistoryLiveForm>> {
     const url = `bidopportunity/${bidOpportunityId}/tendersitesurveyingreport/changedhistory/${page}/${pageSize}`;
     return this.apiService.get(url).map(res => {
       const response = res.result;
