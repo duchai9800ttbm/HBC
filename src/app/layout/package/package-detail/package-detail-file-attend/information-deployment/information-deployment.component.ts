@@ -25,7 +25,10 @@ import { TenderPreparationPlanningRequest } from '../../../../../shared/models/a
 import { StatusObservableHsdtService } from '../../../../../shared/services/status-observable-hsdt.service';
 import { groupBy } from '@progress/kendo-data-query';
 import { PagedResult } from '../../../../../shared/models';
+// tslint:disable-next-line:max-line-length
 import { ProposedTenderParticipationHistory } from '../../../../../shared/models/api-response/package/proposed-tender-participation-history.model';
+import { DialogService } from '../../../../../../../node_modules/@progress/kendo-angular-dialog';
+import { FormInComponent } from '../../../../../shared/components/form-in/form-in.component';
 @Component({
   selector: 'app-information-deployment',
   templateUrl: './information-deployment.component.html',
@@ -105,6 +108,7 @@ export class InformationDeploymentComponent implements OnInit {
   historyList;
   pagedResultChangeHistoryList: PagedResult<ProposedTenderParticipationHistory[]> = new PagedResult<ProposedTenderParticipationHistory[]>();
   indexItemHistoryChange: number;
+  dialog;
   constructor(
     private modalService: BsModalService,
     private formBuilder: FormBuilder,
@@ -115,7 +119,8 @@ export class InformationDeploymentComponent implements OnInit {
     private emailService: EmailService,
     private packageService: PackageService,
     private statusObservableHsdtService: StatusObservableHsdtService,
-    private confirmService: ConfirmationService
+    private confirmService: ConfirmationService,
+    private dialogService: DialogService,
   ) {
     this.loadItems();
   }
@@ -511,6 +516,19 @@ export class InformationDeploymentComponent implements OnInit {
       err => {
         this.alertService.error('Bắt đầu lập HSDT thất bại!');
       });
+  }
+
+  print() {
+    this.dialog = this.dialogService.open({
+      title: 'FORM IN',
+      content: FormInComponent,
+      width: window.screen.availWidth * 0.8,
+      minWidth: 250,
+      height: window.screen.availHeight * 0.7
+    });
+    const instance = this.dialog.content.instance;
+    instance.type = 'LiveFormPhanCongTienDo';
+    instance.packageId = this.packageId;
   }
 
 }

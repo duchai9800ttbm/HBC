@@ -6,10 +6,13 @@ import { PackageDetailComponent } from '../../../package-detail.component';
 import { PagedResult } from '../../../../../../shared/models';
 import { AlertService, ConfirmationService } from '../../../../../../shared/services';
 import { Subject } from 'rxjs/Subject';
-import { SiteReportChangedHistory } from '../../../../../../shared/models/site-survey-report/site-report-changed-history';
 import { SiteSurveyReportService } from '../../../../../../shared/services/site-survey-report.service';
 import { DATATABLE_CONFIG, DATATABLE_CONFIG2 } from '../../../../../../shared/configs';
 import { ScaleOverall } from '../../../../../../shared/models/site-survey-report/scale-overall.model';
+import { HistoryLiveForm } from '../../../../../../shared/models/ho-so-du-thau/history-liveform.model';
+import { groupBy } from '@progress/kendo-data-query';
+import { DialogService } from '../../../../../../../../node_modules/@progress/kendo-angular-dialog';
+import { FormInComponent } from '../../../../../../shared/components/form-in/form-in.component';
 
 @Component({
   selector: 'app-liveform-site-report',
@@ -28,10 +31,11 @@ export class LiveformSiteReportComponent implements OnInit {
   updateInfoList;
   pageIndex: number | string = 0;
   listConstructionType;
-  pagedResult: PagedResult<SiteReportChangedHistory> = new PagedResult<SiteReportChangedHistory>();
+  pagedResultChangeHistoryList: PagedResult<HistoryLiveForm> = new PagedResult<HistoryLiveForm>();
   dtOptions: any = DATATABLE_CONFIG;
   dtTrigger: Subject<any> = new Subject();
   dtTrigger2: Subject<any> = new Subject();
+  dialog;
   indexItemHistoryChange: number;
   constructor(
     private documentService: DocumentService,
@@ -39,6 +43,7 @@ export class LiveformSiteReportComponent implements OnInit {
     private alertService: AlertService,
     private confirmationService: ConfirmationService,
     private spinner: NgxSpinnerService,
+    private dialogService: DialogService
   ) { }
 
   ngOnInit() {
@@ -94,20 +99,7 @@ export class LiveformSiteReportComponent implements OnInit {
       this.spinner.hide();
       this.alertService.error('Đã xảy ra lỗi, cập nhật dữ liệu lifeform không thành công');
     });
-    this.siteSurveyReportService.changedHistoryTenderSiteReport(this.bidOpportunityId, 0, 10)
-      .subscribe(responseResultHistory => {
-        this.pagedResult = responseResultHistory;
-        this.updateInfoList = responseResultHistory.items;
-        this.dtTrigger.next();
-        this.spinner.hide();
-        this.isHistory = (this.updateInfoList.length) ? true : false;
-        // Get Index Change History
-        this.indexItemHistoryChange = +this.pagedResult.total - +this.pagedResult.pageSize * +this.pagedResult.currentPage;
-      },
-        err => {
-          this.spinner.hide();
-          this.alertService.error('Đã xảy ra lỗi, cập nhật dữ liệu không thành công');
-        });
+    this.getChangeHistory(0, 10);
   }
   refresh() {
     this.siteSurveyReportService.tenderSiteSurveyingReport(this.bidOpportunityId).subscribe(res => {
@@ -162,10 +154,6 @@ export class LiveformSiteReportComponent implements OnInit {
       this.alertService.error('Đã xảy ra lỗi, cập nhật dữ liệu lifeform không thành công');
     });
   }
-  rerender(pagedResult: any) {
-    this.pagedResult = pagedResult;
-    this.dtTrigger.next();
-  }
 
   deleteDoc() {
     this.confirmationService.confirm(
@@ -179,23 +167,46 @@ export class LiveformSiteReportComponent implements OnInit {
       }
     );
   }
-  pagedResultChange(pagedResult: any) {
+  pagedResultChangeHistory(e) {
+    this.getChangeHistory(this.pagedResultChangeHistoryList.currentPage, this.pagedResultChangeHistoryList.pageSize);
+  }
+  getChangeHistory(page: number | string, pageSize: number | string) {
     this.spinner.show();
-    this.siteSurveyReportService
-      .changedHistoryTenderSiteReport(this.bidOpportunityId, pagedResult.currentPage, pagedResult.pageSize)
-      .subscribe(responseResultHistory => {
-        this.pagedResult = responseResultHistory;
-        this.pageIndex = responseResultHistory.currentPage;
-        this.updateInfoList = responseResultHistory.items;
-        this.indexItemHistoryChange = +this.pagedResult.total - +this.pagedResult.pageSize * +this.pagedResult.currentPage;
-        this.spinner.hide();
-      }, err => {
-        this.alertService.error('Tải thêm trang thất bại. Xin vui lòng thử lại');
+    this.siteSurveyReportService.changedHistoryTenderSiteReport(this.bidOpportunityId, page, pageSize).subscribe(respone => {
+      this.updateInfoList = respone.items;
+      this.pagedResultChangeHistoryList = respone;
+      this.indexItemHistoryChange = +respone.total - +respone.pageSize * +respone.currentPage;
+      this.updateInfoList = groupBy(this.pagedResultChangeHistoryList.items, [{ field: 'changedTime' }]);
+      this.updateInfoList.forEach((itemList, indexList) => {
+        itemList.items.forEach((itemByChangedTimes, indexChangedTimes) => {
+          this.updateInfoList[indexList].items[indexChangedTimes].liveFormChangeds =
+            groupBy(itemByChangedTimes.liveFormChangeds, [{ field: 'liveFormStep' }]);
+        });
+      });
+      setTimeout(() => {
+        this.dtTrigger2.next();
+      });
+      this.spinner.hide();
+    },
+      err => {
         this.spinner.hide();
       });
   }
 
   onActivate(check: boolean) {
     LiveformSiteReportComponent.isViewMode = check;
+  }
+
+  print() {
+    this.dialog = this.dialogService.open({
+      title: 'FORM IN',
+      content: FormInComponent,
+      width: window.screen.availWidth * 0.8,
+      minWidth: 250,
+      height: window.screen.availHeight * 0.7
+    });
+    const instance = this.dialog.content.instance;
+    instance.type = 'LiveFormThamQuanBaoCaoCongTruong';
+    instance.packageId = this.bidOpportunityId;
   }
 }

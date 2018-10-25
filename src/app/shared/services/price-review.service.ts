@@ -9,7 +9,6 @@ import DateTimeConvertHelper from '../helpers/datetime-convert-helper';
 import * as FileSaver from 'file-saver';
 import { Observable } from '../../../../node_modules/rxjs/Observable';
 import { PagedResult } from '../models';
-import { SiteReportChangedHistory } from '../models/site-survey-report/site-report-changed-history';
 import { HoSoDuThauService } from './ho-so-du-thau.service';
 import { HistoryLiveForm } from '../models/ho-so-du-thau/history-liveform.model';
 import { InstantSearchService } from './instant-search.service';

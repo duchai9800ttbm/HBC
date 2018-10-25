@@ -3,15 +3,38 @@ import { SessionService } from './session.service';
 import { ApiService } from './api.service';
 import { Observable } from 'rxjs/Observable';
 import { DictionaryItem, PagedResult } from '../models';
-import { SiteReportChangedHistory } from '../models/site-survey-report/site-report-changed-history';
 import { SiteSurveyReport } from '../models/site-survey-report/site-survey-report';
 import { ScaleOverall } from '../models/site-survey-report/scale-overall.model';
 import { ImageItem } from '../models/site-survey-report/image';
 import { AlertService } from './alert.service';
 import { UserList } from '../models/site-survey-report/user-list';
+import { HistoryLiveForm } from '../models/ho-so-du-thau/history-liveform.model';
 
 @Injectable()
 export class SiteSurveyReportService {
+  private static toHistoryLiveForm(result: any): HistoryLiveForm {
+    return {
+      employee: {
+        employeeId: result.employee.employeeId,
+        employeeNo: result.employee.employeeNo,
+        employeeName: result.employee.employeeName,
+        employeeAvatar: result.employee.employeeAvatar,
+        employeeEmail: result.employee.employeeEmail,
+      },
+      changedTime: result.changedTime,
+      changedTimes: result.changedTimes,
+      updateDesc: result.updateDesc,
+      liveFormChangeds: result.liveFormChangeds ? result.liveFormChangeds.map(item =>
+        ({
+          liveFormStep: item.liveFormStep,
+          liveFormSubject: item.liveFormSubject,
+          liveFormTitle: item.liveFormTitle,
+          oldValue: item.oldValue,
+          newValue: item.newValue,
+        })
+      ) : []
+    };
+  }
 
   constructor(
     private alertService: AlertService,
@@ -595,8 +618,10 @@ export class SiteSurveyReportService {
   }
 
   // Lịch sử thay đổi báo cáo công trình
-  changedHistoryTenderSiteReport(bidOpportunityId: number, page: number, pageSize: number)
-    : Observable<PagedResult<SiteReportChangedHistory>> {
+  changedHistoryTenderSiteReport(
+    bidOpportunityId: number,
+    page: number | string,
+    pageSize: number | string): Observable<PagedResult<HistoryLiveForm>> {
     const url = `bidopportunity/${bidOpportunityId}/tendersitesurveyingreport/changedhistory/${page}/${pageSize}`;
     return this.apiService.get(url).map(res => {
       const response = res.result;
@@ -605,7 +630,7 @@ export class SiteSurveyReportService {
         pageSize: response.pageSize,
         pageCount: response.totalPages,
         total: response.totalCount,
-        items: (response.items || [])
+        items: (response.items || []).map(SiteSurveyReportService.toHistoryLiveForm)
       };
     });
   }

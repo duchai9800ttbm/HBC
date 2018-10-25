@@ -17,7 +17,6 @@ import { guid } from '@progress/kendo-angular-grid/dist/es2015/utils';
 import { ScaleOverall } from '../models/site-survey-report/scale-overall.model';
 import { Image, ImageItem } from '../models/site-survey-report/image';
 import { DictionaryItem } from '../models';
-import { SiteReportChangedHistory } from '../models/site-survey-report/site-report-changed-history';
 
 @Injectable()
 export class DocumentService {

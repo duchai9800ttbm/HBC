@@ -18,7 +18,7 @@
                     <i class="fa fa-refresh" aria-hidden="true"></i>
                 </button>
             </div>
-            <div *ngIf="isModeView" class="mr-1">
+            <div *ngIf="isModeView && !isClosedHSDT" class="mr-1">
                 <button class="btn btn-primary" (click)="edit()">
                     Chỉnh sửa
                 </button>
