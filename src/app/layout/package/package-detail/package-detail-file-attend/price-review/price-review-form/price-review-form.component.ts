@@ -753,6 +753,11 @@ export class PriceReviewFormComponent implements OnInit, AfterViewInit {
       this.priceReviewForm.get('updatedDesc').patchValue(check);
       this.priceReviewService.createOrEdit(this.priceReviewForm.value, this.packageId).subscribe(() => {
         this.router.navigate([`/package/detail/${this.packageId}/attend/price-review`]);
+        const message = (this.isModeCreate) ? 'Tạo' : 'Cập nhật';
+        this.alertService.success(`${message} Trình duyệt giá thành công!`);
+      }, err => {
+        const message = (this.isModeCreate) ? 'Tạo' : 'Cập nhật';
+        this.alertService.error(`Đã có lỗi xảy ra. ${message} Trình duyệt giá không thành công!`);
       });
     }
   }

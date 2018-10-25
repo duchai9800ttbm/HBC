@@ -32,6 +32,7 @@ export class LiveformSiteReportComponent implements OnInit {
   dtOptions: any = DATATABLE_CONFIG;
   dtTrigger: Subject<any> = new Subject();
   dtTrigger2: Subject<any> = new Subject();
+  indexItemHistoryChange: number;
   constructor(
     private documentService: DocumentService,
     private siteSurveyReportService: SiteSurveyReportService,
@@ -100,6 +101,8 @@ export class LiveformSiteReportComponent implements OnInit {
         this.dtTrigger.next();
         this.spinner.hide();
         this.isHistory = (this.updateInfoList.length) ? true : false;
+        // Get Index Change History
+        this.indexItemHistoryChange = +this.pagedResult.total - +this.pagedResult.pageSize * +this.pagedResult.currentPage;
       },
         err => {
           this.spinner.hide();
@@ -184,6 +187,7 @@ export class LiveformSiteReportComponent implements OnInit {
         this.pagedResult = responseResultHistory;
         this.pageIndex = responseResultHistory.currentPage;
         this.updateInfoList = responseResultHistory.items;
+        this.indexItemHistoryChange = +this.pagedResult.total - +this.pagedResult.pageSize * +this.pagedResult.currentPage;
         this.spinner.hide();
       }, err => {
         this.alertService.error('Tải thêm trang thất bại. Xin vui lòng thử lại');

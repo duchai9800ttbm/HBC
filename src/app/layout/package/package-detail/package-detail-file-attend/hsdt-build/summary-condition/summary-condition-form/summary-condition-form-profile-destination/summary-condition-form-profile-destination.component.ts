@@ -35,14 +35,6 @@ export class SummaryConditionFormProfileDestinationComponent implements OnInit {
     this.loadData();
     this.createForm();
   }
-  // getInfoPackage() {
-  //   this.packageService.getInforPackageID(this.packageId).subscribe(result => {
-  //     this.closingTime = result.submissionDate;
-  //     console.log(this.closingTime);
-  //   }, err => {
-  //     this.alertService.error('Tải thông tin gói thầu thất bại.');
-  //   });
-  // }
 
   loadData() {
     this.hoSoDuThauService.watchDataLiveForm()
@@ -56,18 +48,11 @@ export class SummaryConditionFormProfileDestinationComponent implements OnInit {
           };
         }
         if (!model) {
-          this.packageService.getInforPackageID(this.packageId).subscribe(result => {
-            const closingTime = result.submissionDate;
-            this.dienGiaiYeuCauHoSo = {
-              noiNop: '',
-              nguoiNhan: '',
-              hanNop: closingTime
-            };
-            console.log(closingTime);
-            console.log(this.dienGiaiYeuCauHoSo);
-          }, err => {
-            this.alertService.error('Tải thông tin gói thầu thất bại.');
-          });
+          this.dienGiaiYeuCauHoSo = {
+            noiNop: '',
+            nguoiNhan: '',
+            hanNop: null
+          };
         }
       });
   }
@@ -87,6 +72,16 @@ export class SummaryConditionFormProfileDestinationComponent implements OnInit {
         disabled: this.isModeView
       }
     });
+    if (!this.dienGiaiYeuCauHoSo.hanNop) {
+      this.packageService.getInforPackageID(this.packageId).subscribe(result => {
+        const closingTime = result.submissionDate;
+        if (closingTime) {
+          this.yeuCauHoSoForm.get('hanNop').patchValue(DateTimeConvertHelper.fromTimestampToDtObject(closingTime * 1000));
+        }
+      }, err => {
+        this.alertService.error('Tải thông tin gói thầu thất bại.');
+      });
+    }
     this.yeuCauHoSoForm.valueChanges.subscribe(data => {
       let obj = new DienGiaiYeuCauHoSo();
       obj = data;

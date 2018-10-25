@@ -221,7 +221,7 @@
                 <tbody>
                     <tr *ngFor="let itemByChangedTimes of historyList; let i = index">
                         <td class="text-center">
-                            {{historyList.length - i}}
+                            {{ indexItemHistoryChange - i}}
                         </td>
                         <td> {{itemByChangedTimes.items[0].employee?.employeeName}}</td>
                         <td>{{ (itemByChangedTimes.items[0].changedTime)*1000 | date:'dd/MM/yyyy , HH:mm':'+0000' }}</td>
