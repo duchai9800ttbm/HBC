@@ -3,7 +3,7 @@
     <div class="mt-3" *ngIf="!summaryCondition">
         <div class="text-center">
             <img class="image-empty" src="assets/images/file_empty.png">
-            <div class="mt-3">Hiện chưa có bản tóm tắt điều kiện dự thầu nào</div>
+            <div class="mt-3">Hiện chưa có bảng tóm tắt điều kiện dự thầu nào</div>
             <div class="mt-3 d-flex justify-content-center">
                 <button class="btn btn-primary" routerLink="./form/create">
                     Tạo mới bảng tóm tắt điều kiện dự thầu
@@ -91,7 +91,7 @@
                 <tr *ngFor="let itemByChangedTimes of historyList; let i = index">
                     <!-- <td class="text-center">{{i + 1}}</td> -->
                     <td class="text-center">
-                        {{ historyList.length - i}}
+                        {{ indexItemHistoryChange - i }}
                     </td>
                     <td> {{itemByChangedTimes.items[0].employee?.employeeName}}</td>
                     <td>{{ (itemByChangedTimes.items[0].changedTime)*1000 | date:'dd/MM/yyyy , HH:mm':'+0000' }}</td>

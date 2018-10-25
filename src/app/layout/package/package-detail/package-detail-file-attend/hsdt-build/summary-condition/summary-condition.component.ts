@@ -27,6 +27,7 @@ export class SummaryConditionComponent implements OnInit {
   dtTrigger: Subject<any> = new Subject();
   dtTrigger2: Subject<any> = new Subject();
   historyList;
+  indexItemHistoryChange: number;
   pagedResultChangeHistoryList: PagedResult<HistoryLiveForm> = new PagedResult<HistoryLiveForm>();
 
   constructor(
@@ -78,6 +79,7 @@ export class SummaryConditionComponent implements OnInit {
     this.hoSoDuThauService.getChangeHistoryListProposedTender(this.packageId, page, pageSize).subscribe(respone => {
       this.historyList = respone.items;
       this.pagedResultChangeHistoryList = respone;
+      this.indexItemHistoryChange = +respone.total - +respone.pageSize * +respone.currentPage;
       this.historyList = groupBy(this.pagedResultChangeHistoryList.items, [{ field: 'changedTime' }]);
       this.historyList.forEach((itemList, indexList) => {
         itemList.items.forEach((itemByChangedTimes, indexChangedTimes) => {

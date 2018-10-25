@@ -19,3 +19,7 @@ td,
         margin: 0.3rem;
     }
 }
+::-webkit-input-placeholder { /* Chrome/Opera/Safari */
+    color: #ced4da;
+    font-style: italic;
+}

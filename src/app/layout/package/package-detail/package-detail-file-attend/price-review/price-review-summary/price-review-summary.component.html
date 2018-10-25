@@ -59,8 +59,7 @@
     </div>
 </div>
 
-<div class="content" *ngIf="priceReview && !(package?.stageStatus?.id === bidStatus.DaDuyetTrinhDuyetGia 
-                            || package?.stageStatus?.id === bidStatus.ChotHoSo
+<div class="content" *ngIf="priceReview && !(package?.stageStatus?.id === bidStatus.ChotHoSo
                             || package?.stageStatus?.id === bidStatus.DaNopHSDT)">
     <div class="mb-4 mt-1">
         <h5>BẢNG TÓM TẮT THÔNG TIN DỰ ÁN - TRÌNH DUYỆT GIÁ THẦU</h5>
@@ -200,8 +199,7 @@
 </div>
 
 
-<ng-container *ngIf="priceReview && !(package?.stageStatus?.id === bidStatus.DaDuyetTrinhDuyetGia 
-|| package?.stageStatus?.id === bidStatus.ChotHoSo
+<ng-container *ngIf="priceReview && !(package?.stageStatus?.id === bidStatus.ChotHoSo
 || package?.stageStatus?.id === bidStatus.DaNopHSDT)">
     <div class="content mt-5" *ngIf="historyList && historyList.length !== 0">
         <div class="d-flex justify-content-between">
@@ -221,7 +219,7 @@
                 <tbody>
                     <tr *ngFor="let itemByChangedTimes of historyList; let i = index">
                         <td class="text-center">
-                            {{historyList.length - i}}
+                            {{ indexItemHistoryChange - i}}
                         </td>
                         <td> {{itemByChangedTimes.items[0].employee?.employeeName}}</td>
                         <td>{{ (itemByChangedTimes.items[0].changedTime)*1000 | date:'dd/MM/yyyy , HH:mm':'+0000' }}</td>
@@ -300,7 +298,7 @@
 
 
 
-<div class="content mt-4" *ngIf="package?.stageStatus?.id === 'DaDuyetTrinhDuyetGia' || package?.stageStatus?.id === 'DaNopHSDT' || package?.stageStatus?.id === 'ChotHoSo'">
+<div class="content mt-4" *ngIf="package?.stageStatus?.id === 'DaNopHSDT' || package?.stageStatus?.id === 'ChotHoSo'">
     <div class="mb-4 mt-1">
         <h5>HỒ SƠ DỰ THẦU ĐÃ PHÊ DUYỆT</h5>
     </div>

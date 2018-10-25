@@ -9,3 +9,7 @@
     border-bottom-right-radius: 0;
     background-color: lightgray;
 }
+::-webkit-input-placeholder { /* Chrome/Opera/Safari */
+    color: #ced4da;
+    font-style: italic;
+}

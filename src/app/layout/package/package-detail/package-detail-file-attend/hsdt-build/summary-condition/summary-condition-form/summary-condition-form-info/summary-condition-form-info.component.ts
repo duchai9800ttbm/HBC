@@ -24,6 +24,7 @@ export class SummaryConditionFormInfoComponent implements OnInit {
   currentBidOpportunityId: number;
   showPopupViewImage = false;
   imageUrlArray = [];
+  indexOfImage;
   viewMode;
   isModeView = false;
 
@@ -52,7 +53,7 @@ export class SummaryConditionFormInfoComponent implements OnInit {
       tenTaiLieu: { value: this.dataStepInfo.tenTaiLieu, disabled: this.isModeView },
       hinhAnhPhoiCanh: this.dataStepInfo.hinhAnhPhoiCanh,
       banVeMasterPlan: this.dataStepInfo.banVeMasterPlan,
-      lanPhongVan: { value: this.dataStepInfo.lanPhongVan, disabled: this.isModeView },
+      lanPhongVan: { value: this.dataStepInfo.lanPhongVan > 0 ? this.dataStepInfo.lanPhongVan : 1, disabled: this.isModeView },
       dienGiaiThongTinDuAn: { value: this.dataStepInfo.dienGiaiThongTinDuAn, disabled: this.isModeView }
     });
 
@@ -171,9 +172,10 @@ export class SummaryConditionFormInfoComponent implements OnInit {
     this.thongTinDuAnForm.get('banVeMasterPlan').patchValue(this.banVeMasterPlanUrls);
   }
 
-  viewFullScreenImage(listImage) {
+  viewFullScreenImage(listImage, indexImage?) {
     this.showPopupViewImage = true;
     this.imageUrlArray = [...listImage];
+    this.indexOfImage = indexImage;
   }
 
   closeView() {

@@ -50,7 +50,6 @@ export class PriceReviewFormComponent implements OnInit, AfterViewInit {
     this.getAllCustomer();
     this.getInfoPackge();
     this.createForm();
-    this.checkDuyet();
   }
 
   ngAfterViewInit() {
@@ -73,6 +72,13 @@ export class PriceReviewFormComponent implements OnInit, AfterViewInit {
     this.spinner.show();
     this.packageService.getInforPackageID(this.packageId).subscribe(result => {
       this.package = result;
+      if (this.package.stageStatus && this.priceReviewForm.value) {
+        if (this.package.stageStatus.id === 'DaDuyetTrinhDuyetGia'
+          || this.package.stageStatus.id === 'ChotHoSo'
+          || this.package.stageStatus.id === 'DaNopHSDT') {
+          this.priceReviewForm.controls['isApprovedByBoardOfDirector'].disable();
+        }
+      }
       this.spinner.hide();
     }, err => {
       this.spinner.hide();
@@ -680,10 +686,9 @@ export class PriceReviewFormComponent implements OnInit, AfterViewInit {
       },
 
       // TODO: mapping phần trên
-      approvalDate: [
+      approvalDate:
         DateTimeConvertHelper.fromTimestampToDtObject(
-          this.model.approvalDate * 1000)
-      ],
+          this.model.approvalDate * 1000),
       approvalTimes: {
         value: this.model.approvalTimes,
         disabled: true
@@ -715,6 +720,13 @@ export class PriceReviewFormComponent implements OnInit, AfterViewInit {
     //   console.log(totalGiaVonAmount);
     //   this.priceReviewForm.get('totalGiaVonAmount').patchValue(totalGiaVonAmount);
     // });
+    if (this.package.stageStatus && this.priceReviewForm.value) {
+      if (this.package.stageStatus.id === 'DaDuyetTrinhDuyetGia'
+        || this.package.stageStatus.id === 'ChotHoSo'
+        || this.package.stageStatus.id === 'DaNopHSDT') {
+        this.priceReviewForm.controls['isApprovedByBoardOfDirector'].disable();
+      }
+    }
     if (this.priceReviewForm.value) {
       const value = this.model.approvalDate;
       if (!value) {
@@ -723,6 +735,7 @@ export class PriceReviewFormComponent implements OnInit, AfterViewInit {
           this.priceReviewForm.get('approvalDate').patchValue(DateTimeConvertHelper.fromTimestampToDtObject(valueApprovalDate * 1000));
         });
       }
+      this.checkDuyet();
     }
   }
 
@@ -754,6 +767,11 @@ export class PriceReviewFormComponent implements OnInit, AfterViewInit {
       this.priceReviewForm.get('updatedDesc').patchValue(check);
       this.priceReviewService.createOrEdit(this.priceReviewForm.value, this.packageId).subscribe(() => {
         this.router.navigate([`/package/detail/${this.packageId}/attend/price-review`]);
+        const message = (this.isModeCreate) ? 'Tạo' : 'Cập nhật';
+        this.alertService.success(`${message} Trình duyệt giá thành công!`);
+      }, err => {
+        const message = (this.isModeCreate) ? 'Tạo' : 'Cập nhật';
+        this.alertService.error(`Đã có lỗi xảy ra. ${message} Trình duyệt giá không thành công!`);
       });
     }
   }
@@ -835,12 +853,11 @@ export class PriceReviewFormComponent implements OnInit, AfterViewInit {
   }
 
   checkDuyet() {
-    // const isApprovedByBoardOfDirector = this.priceReviewForm.get('isApprovedByBoardOfDirector').value;
-    // if (isApprovedByBoardOfDirector) {
-    //   this.priceReviewForm.controls['isApprovedByBoardOfDirector'].disable();
-    //   this.priceReviewForm.controls['isApprovedByTenderManager'].disable();
-    //   this.priceReviewForm.controls['isApprovedByTenderManager'].disable();
-    // }
+
+    if (this.isModeView) {
+      this.priceReviewForm.controls['approvalDate'].disable();
+    }
+
   }
   getAllCustomer() {
     this.priceReviewService.getAllCustomer().subscribe(customers => {
@@ -893,7 +910,7 @@ export class PriceReviewFormComponent implements OnInit, AfterViewInit {
   // Gủi duyệt
   guiDuyet() {
     const that = this;
-    if (this.priceReview.isDraftVersion) {
+    if (this.model.isDraftVersion) {
       this.alertService.error('Chưa đủ bản chính thức!');
       return null;
     }
