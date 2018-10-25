@@ -72,23 +72,20 @@ export class EndInterviewComponent implements OnInit {
       this.currentPackageId, this.searchTerm$, this.filterModel, 0, 1000).subscribe(result => {
         this.render(result);
         this.spinner.hide();
-        // this.peopleUploadList = [result.items, { field: 'uploadedBy.employeeName' }];
-        //  this.peopleUploadList = result.items.map( filed => filed.uploadedBy.employeeName);
-        //  console.log( [...new Set(this.peopleUploadList).toJSON()] );
-        // this.peopleUploadList = [result.items, { field: 'uploadedBy.employeeName' }];
-        // this.dateUploadList = [result.items, { field: 'createdDate' }];
-        // console.log('this.peopleUploadList', this.peopleUploadList, this.dateUploadList);
         this.peopleUploadList = this.userService.getAllUser('');
       },
         err => {
           this.spinner.hide();
           this.alertService.error('Đã xảy ra lỗi!');
         });
+    this.getListFilter();
     this.interviewInvitationService.watchRefeshEndInterview().subscribe(result => {
+      this.getListFilter();
       this.refresh(this.isOnInit);
       this.spinner.hide();
     });
     this.interviewInvitationService.watchEndInterviewList().subscribe(result => {
+      this.getListFilter();
       this.filter();
       this.spinner.hide();
     });
@@ -101,25 +98,36 @@ export class EndInterviewComponent implements OnInit {
   }
 
   render(pagedResult: any) {
-    // pagedResult.items.forEach(element => {
-    //   if (element.remainningDay < 0) {
-    //     element['expiredDate'] = Math.abs(element.remainningDay);
-    //   }
-    // });
     this.pagedResult = pagedResult;
-    this.getUploadedEmployeeList();
-    this.getInterviewTimeList();
     this.dtTrigger.next();
   }
 
-  getInterviewTimeList() {
-    this.interviewTimeList = this.pagedResult.items ? this.pagedResult.items.map(item => item.interviewTimes) : [];
+  getListFilter() {
+    this.spinner.show();
+    const filter = new InterviewInvitationFilterReport();
+    this.interviewInvitationService
+      .filterListReport(
+        this.currentPackageId,
+        '',
+        filter,
+        0,
+        1000
+      )
+      .subscribe(result => {
+        this.getInterviewTimeList(result);
+        this.getUploadedEmployeeList(result);
+        this.spinner.hide();
+      }, err => this.spinner.hide());
+  }
+
+  getInterviewTimeList(result) {
+    this.interviewTimeList = result.items ? result.items.map(item => item.interviewTimes) : [];
     this.interviewTimeList = this.interviewTimeList.sort((a, b) => a - b);
     this.interviewTimeList = this.interviewTimeList.filter((el, i, a) => i === a.indexOf(el));
   }
 
-  getUploadedEmployeeList() {
-    this.uploadedEmployeeList = this.pagedResult.items ? this.pagedResult.items.map(item => item.uploadedBy) : [];
+  getUploadedEmployeeList(result) {
+    this.uploadedEmployeeList = result.items ? result.items.map(item => item.uploadedBy) : [];
     this.uploadedEmployeeList = groupBy(this.uploadedEmployeeList, [{ field: 'employeeId' }]);
     this.uploadedEmployeeList = this.uploadedEmployeeList.map(item => {
       return {
@@ -149,6 +157,7 @@ export class EndInterviewComponent implements OnInit {
     if (this.statusPackage.id === this.checkStatusPackage.DaChotCongTacChuanBiPhongVan.id) {
       this.interviewInvitationService.submitPrepareInterviews(this.currentPackageId).subscribe(response => {
         this.loadData();
+        this.getListFilter();
       },
         err => {
           this.alertService.error('Đã xảy ra lỗi. Chuyển trạng thái đã phỏng vấn không thành công!');

@@ -57,6 +57,7 @@ export class CreateInterviewComponent implements OnInit, OnDestroy {
     this.currentPackageId = +PackageDetailComponent.packageId;
     this.stattusCurrentList = ['create', 'prepare', 'end'];
     this.filter();
+    this.getListFilter();
     this.getSatusPackage();
     this.subscription = this.statusObservableHsdtService.statusPackageService.subscribe(value => {
       this.getSatusPackage();
@@ -73,6 +74,7 @@ export class CreateInterviewComponent implements OnInit, OnDestroy {
     const interviewList = this.interviewInvitationService.watchInterviewInvitationList().subscribe(value => {
       this.isNumberOfInterviews = true;
       this.filter();
+      this.getListFilter();
       this.spinner.hide();
     });
     this.subscription.add(interviewList);
@@ -85,6 +87,7 @@ export class CreateInterviewComponent implements OnInit, OnDestroy {
     // this.subscription.add(searchKey);
 
     const refesh = this.interviewInvitationService.watchRefeshInterviewInvitationList().subscribe(value => {
+      this.getListFilter();
       this.refresh(this.isOnInit);
       this.spinner.hide();
     });
@@ -102,8 +105,25 @@ export class CreateInterviewComponent implements OnInit, OnDestroy {
     });
   }
 
-  getListNumberOfInterviews() {
-    this.numberOfInterviews = this.pagedResult.items ? this.pagedResult.items.map(item => item.interviewTimes) : [];
+  getListFilter() {
+    this.spinner.show();
+    const filter = new InterviewInvitationFilter();
+    this.interviewInvitationService
+      .filterList(
+        this.currentPackageId,
+        '',
+        filter,
+        0,
+        1000
+      )
+      .subscribe(result => {
+        this.getListNumberOfInterviews(result);
+        this.spinner.hide();
+      }, err => this.spinner.hide());
+  }
+
+  getListNumberOfInterviews(result) {
+    this.numberOfInterviews = result.items ? result.items.map(item => item.interviewTimes) : [];
     this.numberOfInterviews = this.numberOfInterviews.sort((a, b) => a - b);
     this.numberOfInterviews = this.numberOfInterviews.filter((el, i, a) => i === a.indexOf(el));
     const maxOfValue = Math.max.apply(Math, this.numberOfInterviews);
@@ -121,7 +141,7 @@ export class CreateInterviewComponent implements OnInit, OnDestroy {
       this.pagedResult.items = this.pagedResult.items.sort((a, b) => a.id - b.id);
     }
     if (this.isNumberOfInterviews) {
-      this.getListNumberOfInterviews();
+      // this.getListNumberOfInterviews();
       this.isNumberOfInterviews = false;
     }
     this.isOnInit = true;
