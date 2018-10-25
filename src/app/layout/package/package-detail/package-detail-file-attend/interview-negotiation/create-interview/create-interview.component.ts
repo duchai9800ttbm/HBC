@@ -294,14 +294,12 @@ export class CreateInterviewComponent implements OnInit, OnDestroy {
   dowloadFileCreateInterview(id) {
     this.interviewInvitationService.downloadFileCreateInterview(id).subscribe(data => {
     }, err => {
-      console.log('err', err);
-      const error = err.json();
-      console.log('jsonErr', error);
-      if (error.errorCode === 'BusinessException' && error.errorMessage === `File doesn't exits`) {
-        this.alertService.error('Lời mời phỏng vấn này không có file đính kèm.!');
-      } else {
-        this.alertService.error('Đã có lỗi xãy ra!');
-      }
+      this.alertService.error('Lời mời phỏng vấn này không có file đính kèm.!');
+      // if (err.errorCode === 'BusinessException' && err.errorMessage === `File doesn't exits`) {
+      //   this.alertService.error('Lời mời phỏng vấn này không có file đính kèm.!');
+      // } else {
+      //   this.alertService.error('Đã có lỗi xãy ra!');
+      // }
     });
   }
 
