@@ -108,6 +108,7 @@ export class NeedCreateTenderFormComponent implements OnInit, OnDestroy {
                     NeedCreateTenderFormComponent.formModel.tenderDirectorProposal.expectedDate = DateTimeConvertHelper.fromDtObjectToTimestamp(new Date());
                     NeedCreateTenderFormComponent.formModel.tenderDirectorProposal.date = DateTimeConvertHelper.fromDtObjectToTimestamp(new Date());
                     NeedCreateTenderFormComponent.formModel.tenderDirectorProposal.isSigned = false;
+                    NeedCreateTenderFormComponent.formModel.tenderDirectorProposal.isAgreed = true;
                     NeedCreateTenderFormComponent.formModel.tenderDirectorProposal.reason = '';
                     // ====================
                     // DecisionBoardGeneralDirector
