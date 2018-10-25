@@ -916,11 +916,11 @@ export class PriceReviewFormComponent implements OnInit, AfterViewInit {
     }
     this.confirmService.confirm('Bạn có chắc muốn gửi duyệt trình duyệt giá?', () => {
       this.priceReviewService.guiDuyetTrinhDuyetGia(this.packageId).subscribe(data => {
+        that.getInfoPackge();
         that.alertService.success('Gửi duyệt trình duyệt giá thành công!');
       }, err => {
         that.alertService.error('Gửi duyệt trình duyệt giá thất bại, vui lòng thử lại sau!');
       });
     });
-
   }
 }
