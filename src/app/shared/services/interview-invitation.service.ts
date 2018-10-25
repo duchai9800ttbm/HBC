@@ -431,7 +431,9 @@ export class InterviewInvitationService {
     const formData = new FormData();
     formData.append('BidOpportunityId', `${BidOpportunityId}`);
     formData.append('DocumentName', `${createFormReportValue.documentName}`);
-    formData.append('DocumentDesc', `${createFormReportValue.documentDesc}`);
+    if (createFormReportValue.documentDesc) {
+      formData.append('DocumentDesc', `${createFormReportValue.documentDesc}`);
+    }
     formData.append('InterviewTimes', `${createFormReportValue.interviewTimes}`);
     if (file) {
       formData.append('DocumentFile', file);

@@ -24,7 +24,7 @@ import DateTimeConvertHelper from '../../../../../../shared/helpers/datetime-con
   templateUrl: './create-interview.component.html',
   styleUrls: ['./create-interview.component.scss']
 })
-export class CreateInterviewComponent implements OnInit , OnDestroy {
+export class CreateInterviewComponent implements OnInit, OnDestroy {
   currentPackageId: number;
   dialog;
   // searchTerm$ = new BehaviorSubject<string>('');
@@ -65,7 +65,7 @@ export class CreateInterviewComponent implements OnInit , OnDestroy {
     this.filterModel.status = '';
     this.filterModel.interviewTimes = null;
     this.filterModel.receivedDate = null;
-    const getUrlChirld = this.interviewInvitationService.getUrlChirld().subscribe( value => {
+    const getUrlChirld = this.interviewInvitationService.getUrlChirld().subscribe(value => {
       this.currentStatusInterview = value;
       this.spinner.hide();
     });
@@ -129,6 +129,7 @@ export class CreateInterviewComponent implements OnInit , OnDestroy {
   }
 
   createInvitation(interviewCreate: InterviewInvitation) {
+    this.interviewInvitationService.saveMaxInterViewTimes(0);
     this.dialog = this.dialogService.open({
       content: CreateNewInvitationComponent,
       width: 700,
@@ -192,8 +193,8 @@ export class CreateInterviewComponent implements OnInit , OnDestroy {
   }
 
   onSelectAll(value: boolean) {
-    this.pagedResult.items.forEach( item => item['checkboxSelected'] = value);
-    this.interviewInvitationService.chooseInterviewNotification(this.pagedResult.items.filter( item => item['checkboxSelected'] === true));
+    this.pagedResult.items.forEach(item => item['checkboxSelected'] = value);
+    this.interviewInvitationService.chooseInterviewNotification(this.pagedResult.items.filter(item => item['checkboxSelected'] === true));
   }
 
   EditInvitation(interviewEdit: InterviewInvitation) {
@@ -285,11 +286,11 @@ export class CreateInterviewComponent implements OnInit , OnDestroy {
   }
 
   saveChooseInterviewService(id) {
-    this.pagedResult.items.forEach( item => {
-      if ( item.id === id) {
+    this.pagedResult.items.forEach(item => {
+      if (item.id === id) {
         item['checkboxSelected'] = !item['checkboxSelected'];
       }
     });
-    this.interviewInvitationService.chooseInterviewNotification(this.pagedResult.items.filter( item => item['checkboxSelected'] === true));
+    this.interviewInvitationService.chooseInterviewNotification(this.pagedResult.items.filter(item => item['checkboxSelected'] === true));
   }
 }
