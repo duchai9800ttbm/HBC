@@ -323,6 +323,9 @@ input[type=text] {
 .modeView{
     background-color: #ccc;
 }
+.cursor-notalowed {
+    cursor: not-allowed;
+}
 
 @media only screen and (max-width: 1200px) {
     .responsive-container {

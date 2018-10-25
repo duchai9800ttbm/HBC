@@ -3,7 +3,6 @@ import { SessionService } from './session.service';
 import { ApiService } from './api.service';
 import { Observable } from 'rxjs/Observable';
 import { DictionaryItem, PagedResult } from '../models';
-import { SiteReportChangedHistory } from '../models/site-survey-report/site-report-changed-history';
 import { SiteSurveyReport } from '../models/site-survey-report/site-survey-report';
 import { ScaleOverall } from '../models/site-survey-report/scale-overall.model';
 import { ImageItem } from '../models/site-survey-report/image';
@@ -36,6 +35,7 @@ export class HoSoDuThauService {
   static uploadDocReload = new BehaviorSubject<boolean>(false);
   static stateLiveFormSummaryCondition = new BehaviorSubject<StateLiveFormSummaryCondition>(new StateLiveFormSummaryCondition());
   static idTenderDocumentTypesData;
+  static statusHSDT = new BehaviorSubject<boolean>(false);
 
   private static toHistoryLiveForm(result: any): HistoryLiveForm {
     return {
@@ -104,6 +104,15 @@ export class HoSoDuThauService {
     private instantSearchService: InstantSearchService,
     private sessionService: SessionService
   ) { }
+
+  // Check Status Package HSDT
+  watchStatusPackage() {
+    return HoSoDuThauService.statusHSDT;
+  }
+  detectStatusPackage(status) {
+    HoSoDuThauService.statusHSDT.next(status);
+  }
+  // --END: Check Status Package HSDT
 
   emitIsModeView(value: boolean) {
     const obj = new StateLiveFormSummaryCondition();
@@ -645,12 +654,15 @@ export class HoSoDuThauService {
         }
       },
       otherSpecialRequirement: obj.yeuCauDacBietKhac && {
-        greenBuildingStandardName: obj.yeuCauDacBietKhac.greenBuildingStandardName,
-        greenBuildingStandardLink: obj.yeuCauDacBietKhac.greenBuildingStandardLink,
+        tenderEvaluation: obj.yeuCauDacBietKhac.tenderEvaluation,
+        tenderEvaluationSteps: obj.yeuCauDacBietKhac.tenderEvaluationSteps,
         tenderEvaluationStep1: obj.yeuCauDacBietKhac.tenderEvaluationStep1,
         tenderEvaluationStep2: obj.yeuCauDacBietKhac.tenderEvaluationStep2,
-        profitValue: obj.yeuCauDacBietKhac.profitValue,
-        profitDesc: obj.yeuCauDacBietKhac.profitDesc
+        requirementDetails: obj.yeuCauDacBietKhac.requirementDetails.map(item => ({
+          requirementName: item.requirementName,
+          requirementDesc: item.requirementDesc,
+          requirementLink: item.requirementLink,
+        }))
       }
     };
     return this.apiService.post(url, infoReport).map(res => res);
@@ -882,12 +894,15 @@ export class HoSoDuThauService {
         }
       };
       dataOut.yeuCauDacBietKhac = model.otherSpecialRequirement && {
-        greenBuildingStandardName: model.otherSpecialRequirement.greenBuildingStandardName,
-        greenBuildingStandardLink: model.otherSpecialRequirement.greenBuildingStandardLink,
+        tenderEvaluation: model.otherSpecialRequirement.tenderEvaluation,
+        tenderEvaluationSteps: model.otherSpecialRequirement.tenderEvaluationSteps,
         tenderEvaluationStep1: model.otherSpecialRequirement.tenderEvaluationStep1,
         tenderEvaluationStep2: model.otherSpecialRequirement.tenderEvaluationStep2,
-        profitValue: model.otherSpecialRequirement.profitValue,
-        profitDesc: model.otherSpecialRequirement.profitDesc
+        requirementDetails: (model.requirementDetails || []).map(item => ({
+          requirementName: item.requirementName,
+          requirementDesc: item.requirementDesc,
+          requirementLink: item.requirementLink
+        }))
       };
       dataOut.noiDungCapNhat = '';
     }
