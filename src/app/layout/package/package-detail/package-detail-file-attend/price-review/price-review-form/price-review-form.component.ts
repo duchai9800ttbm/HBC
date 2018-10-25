@@ -680,10 +680,9 @@ export class PriceReviewFormComponent implements OnInit, AfterViewInit {
       },
 
       // TODO: mapping phần trên
-      approvalDate: [
+      approvalDate:
         DateTimeConvertHelper.fromTimestampToDtObject(
-          this.model.approvalDate * 1000)
-      ],
+          this.model.approvalDate * 1000),
       approvalTimes: {
         value: this.model.approvalTimes,
         disabled: true
@@ -835,6 +834,10 @@ export class PriceReviewFormComponent implements OnInit, AfterViewInit {
   }
 
   checkDuyet() {
+
+    if (this.isModeView) {
+      this.priceReviewForm.controls['approvalDate'].disable();
+    }
     // const isApprovedByBoardOfDirector = this.priceReviewForm.get('isApprovedByBoardOfDirector').value;
     // if (isApprovedByBoardOfDirector) {
     //   this.priceReviewForm.controls['isApprovedByBoardOfDirector'].disable();
@@ -893,7 +896,7 @@ export class PriceReviewFormComponent implements OnInit, AfterViewInit {
   // Gủi duyệt
   guiDuyet() {
     const that = this;
-    if (this.priceReview.isDraftVersion) {
+    if (this.model.isDraftVersion) {
       this.alertService.error('Chưa đủ bản chính thức!');
       return null;
     }
