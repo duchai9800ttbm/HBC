@@ -1107,7 +1107,7 @@ export class PackageService {
     getChangeHistoryListTenderPreparationPlanning(
         bidOpportunityId: number,
         page: number | string,
-        pageSize: number | string): Observable<PagedResult<ProposedTenderParticipationHistory>> {
+        pageSize: number | string): Observable<PagedResult<ProposedTenderParticipationHistory[]>> {
         const url = `bidopportunity/${bidOpportunityId}/tenderpreparationplanningassignment/changedhistory/${page}/${pageSize}`;
         return this.apiService.get(url).map(response => {
             const result = response.result;

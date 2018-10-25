@@ -53,22 +53,18 @@
 
 <div class="ml-3" *ngIf="tenderPlan">
     <h5 class="text-uppercase mb-3">bảng phân công tiến độ (tender preparation planning assignment)</h5>
-    <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger">
+    <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="table-layout--fixed">
         <thead>
             <tr>
-                <th>
-                </th>
-                <th>Tên tài liệu</th>
-                <th>Người duyệt</th>
-                <th>Người tạo</th>
-                <th>Ngày tạo</th>
-                <th class="text-center">Thao tác</th>
+                <th class="w-40">Tên tài liệu</th>
+                <th class="w-20">Người duyệt</th>
+                <th class="w-20">Người tạo</th>
+                <th class="w-20">Ngày tạo</th>
+                <th class="text-center w-tab">Thao tác</th>
             </tr>
         </thead>
         <tbody>
             <tr>
-                <td>
-                </td>
                 <td>
                     <a [routerLink]="['./view']" (click)="changeAction('view')">{{tenderPlan.projectInformation}}</a>
                 </td>
@@ -104,30 +100,51 @@
         <h5 class="text-uppercase mb-3">Lịch sử cập nhật</h5>
     </div>
 
-    <table datatable [dtOptions]="dtOptions2" [dtTrigger]="dtTrigger2">
+    <table datatable [dtOptions]="dtOptions2" [dtTrigger]="dtTrigger2" class="table-layout--fixed">
         <thead>
             <tr>
-                <!-- <th>STT</th> -->
-                <th>Lần cập nhật</th>
-                <th>Người cập nhật</th>
-                <th>Ngày cập nhật</th>
-                <th>Nội dung cập nhật</th>
+                <th class="w-10">Lần cập nhật</th>
+                <th class="w-10">Người cập nhật</th>
+                <th class="w-15">Ngày cập nhật</th>
+                <th class="w-20">Nội dung cập nhật</th>
+                <th class="w-40">Chi tiết cập nhật</th>
             </tr>
         </thead>
         <tbody>
-            <tr *ngFor="let item of historyList; let i = index">
-                <!-- <td>{{i + 1}}</td> -->
+            <tr *ngFor="let itemByChangedTimes of historyList; let i = index">
                 <td class="text-center">
-                    {{item.value + 1}}
+                    {{indexItemHistoryChange - i}}
                 </td>
-                <td> {{item.items[0].employee?.employeeName}}</td>
-                <td>{{ (item.items[0].changedTime)*1000 | date:'dd/MM/yyyy , HH:mm' : '+0000' }}</td>
+                <td> {{itemByChangedTimes.items[0].employee?.employeeName}}</td>
+                <td>{{ (itemByChangedTimes.items[0].changedTime)*1000 | date:'dd/MM/yyyy , HH:mm':'+0000' }}</td>
                 <td>
-                    <div class="text-truncate">{{item.items[0].updateDesc}}</div>
+                    <div class="text-truncate" [title]="itemByChangedTimes.items[0].updateDesc">{{itemByChangedTimes.items[0].updateDesc}}</div>
+                </td>
+                <td>
+                    <!-- <div *ngIf="itemByChangedTimes.items && itemByChangedTimes.items !== 0">
+                        <div *ngFor="let itemByChangeTime of itemByChangedTimes.items">
+                            <div *ngFor="let itemByLiveFormChanged of itemByChangeTime.liveFormChangeds">
+                                <div class="text-truncate" [class.d-flex]="!itemByChangeTime.liveFormChangeds[0].value" title="* {{itemByChangeTime.liveFormChangeds[0].value ? (itemByChangeTime.liveFormChangeds[0].value | translate) :
+                                            ('Tên tài liệu: từ ' +  (itemByLiveFormChanged.items[0].oldValue ? itemByLiveFormChanged.items[0].oldValue : 'không có') +' thành ' ) + (itemByLiveFormChanged.items[0].newValue ? itemByLiveFormChanged.items[0].newValue : 'không có')}}:">* {{itemByChangeTime.liveFormChangeds[0].value ? (itemByChangeTime.liveFormChangeds[0].value
+                                    | translate) : 'Tên tài liệu'}}:
+                                    <div *ngFor="let itemByLiveFormStep of itemByLiveFormChanged.items">
+                                        <div *ngIf="!itemByChangeTime.liveFormChangeds[0].value">&nbsp; từ
+                                            <span class="font-weight-bold">{{itemByLiveFormStep.oldValue ? itemByLiveFormStep.oldValue : 'không có'}}</span>
+                                            thành
+                                            <span class="font-weight-bold">
+                                                {{itemByLiveFormStep.newValue ? itemByLiveFormStep.newValue : 'không có'}}
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div> -->
                 </td>
             </tr>
         </tbody>
     </table>
+    <app-pagination [(pagedResult)]="pagedResultChangeHistoryList" (pagedResultChange)="pagedResultChangeHistory($event)"></app-pagination>
 </div>
 
 <!-- <app-assignment-progress *ngIf="showTabelAssignment && isShowTable" [dataConfirm]="dataConfirm" [hideButon]="hideButon"

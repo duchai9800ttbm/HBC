@@ -24,6 +24,8 @@ import { BidStatus } from '../../../../../shared/constants/bid-status';
 import { TenderPreparationPlanningRequest } from '../../../../../shared/models/api-request/package/tender-preparation-planning-request';
 import { StatusObservableHsdtService } from '../../../../../shared/services/status-observable-hsdt.service';
 import { groupBy } from '@progress/kendo-data-query';
+import { PagedResult } from '../../../../../shared/models';
+import { ProposedTenderParticipationHistory } from '../../../../../shared/models/api-response/package/proposed-tender-participation-history.model';
 @Component({
   selector: 'app-information-deployment',
   templateUrl: './information-deployment.component.html',
@@ -101,6 +103,8 @@ export class InformationDeploymentComponent implements OnInit {
   bidStatus = BidStatus;
   tenderPlan: TenderPreparationPlanningRequest;
   historyList;
+  pagedResultChangeHistoryList: PagedResult<ProposedTenderParticipationHistory[]> = new PagedResult<ProposedTenderParticipationHistory[]>();
+  indexItemHistoryChange: number;
   constructor(
     private modalService: BsModalService,
     private formBuilder: FormBuilder,
@@ -125,8 +129,8 @@ export class InformationDeploymentComponent implements OnInit {
     });
 
     this.getPackageInfo();
-    this.getTenderPlanInfo();
-    this.getChangeHistory();
+    this.getTenderPlanInfo(); this.getChangeHistory(0, 10);
+
     this.ckeConfig = {
       toolbar: [
         { name: 'basicstyles', items: ['Bold', 'Italic', 'Underline', 'Strike'] },
@@ -180,6 +184,7 @@ export class InformationDeploymentComponent implements OnInit {
   refresh() {
     this.getPackageInfo();
     this.getTenderPlanInfo();
+    this.getChangeHistory(this.pagedResultChangeHistoryList.currentPage, this.pagedResultChangeHistoryList.pageSize);
   }
 
   searchEmailTo(event) {
@@ -364,6 +369,7 @@ export class InformationDeploymentComponent implements OnInit {
       this.spinner.show();
       this.packageService.deleteTenderPreparationPlanning(this.bidOpportunityId).subscribe(data => {
         this.alertService.success('Xóa bảng phân công tiến độ thành công!');
+        this.getChangeHistory(this.pagedResultChangeHistoryList.currentPage, this.pagedResultChangeHistoryList.pageSize);
         this.spinner.hide();
         // this.proposedTender = null;
         // this.getProposedTenderParticipateReportInfo();
@@ -454,12 +460,24 @@ export class InformationDeploymentComponent implements OnInit {
   onChange(e) {
   }
 
-  getChangeHistory() {
+  getChangeHistory(page: number | string, pageSize: number | string) {
     this.spinner.show();
-    this.packageService.getChangeHistoryListTenderPreparationPlanning(this.bidOpportunityId, 0, 1000).subscribe(respone => {
+    this.packageService.getChangeHistoryListTenderPreparationPlanning(this.bidOpportunityId, page, pageSize).subscribe(respone => {
       this.historyList = respone.items;
-      this.historyList = this.historyList.sort((a, b) => parseFloat(a.changedTimes) < parseFloat(b.changedTimes));
-      this.historyList = groupBy(this.historyList, [{ field: 'changedTimes' }]);
+      this.pagedResultChangeHistoryList = respone;
+      console.log('this.historyList', this.historyList);
+      // this.historyList = this.historyList.sort((a, b) => parseFloat(a.changedTimes) < parseFloat(b.changedTimes));
+      // this.historyList = groupBy(this.historyList, [{ field: 'changedTimes' }]);
+      this.historyList = groupBy(respone.items, [{ field: 'changedTime' }]);
+      this.historyList.forEach((itemList, indexList) => {
+        itemList.items.forEach((itemByChangedTimes, indexChangedTimes) => {
+          this.historyList[indexList].items[indexChangedTimes].liveFormChangeds =
+            groupBy(itemByChangedTimes.liveFormChangeds, [{ field: 'liveFormSubject' }]);
+        });
+      });
+      console.log('this.historyList-after', this.historyList);
+      this.indexItemHistoryChange = Number(this.pagedResultChangeHistoryList.total)
+        - Number(this.pagedResultChangeHistoryList.pageSize) * Number(this.pagedResultChangeHistoryList.currentPage);
       setTimeout(() => {
         this.dtTrigger2.next();
         this.spinner.hide();
@@ -469,6 +487,10 @@ export class InformationDeploymentComponent implements OnInit {
         this.spinner.hide();
         // this.alertService.error('Lấy danh sách lịch sử thay đổi phiếu đề nghị dự thầu thất bại!');
       });
+  }
+
+  pagedResultChangeHistory(e) {
+    this.getChangeHistory(this.pagedResultChangeHistoryList.currentPage, this.pagedResultChangeHistoryList.pageSize);
   }
 
   downloadTemplate() {
