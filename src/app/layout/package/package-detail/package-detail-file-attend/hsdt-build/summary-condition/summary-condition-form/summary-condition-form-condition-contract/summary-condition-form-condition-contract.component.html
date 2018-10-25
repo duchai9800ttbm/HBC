@@ -185,27 +185,17 @@
                     <div class="col-md-4">
                         <div formGroupName="dieuKienTheoHSMT">
                             <div formGroupName="thanhToan">
-                                <span class="custom-dropdown w-100">
-                                    <select class="form-control" formControlName="loaiThanhToan">
-                                        <option [ngValue]="null">--Chọn--</option>
-                                        <option [value]="'Tiền mặt'">Tiền mặt</option>
-                                        <option [value]="'Chuyển khoản'">Chuyển khoản</option>
-
-                                    </select>
-                                </span>
+                                <input formControlName="loaiThanhToan" class="form-control">
                             </div>
-
                         </div>
                     </div>
                     <div class="col-md-4">
                         <div formGroupName="dieuKienTheoHBC">
                             <div formGroupName="thanhToan">
                                 <span class="custom-dropdown w-100">
-                                    <select class="form-control" formControlName="loaiThanhToan">
+                                    <select class="form-control" tabindex="13" formControlName="loaiThanhToan">
                                         <option [ngValue]="null">--Chọn--</option>
-                                        <option [value]="'Tiền mặt'">Tiền mặt</option>
-                                        <option [value]="'Chuyển khoản'">Chuyển khoản</option>
-
+                                        <option *ngFor="let payment of listPayment" [value]="payment">{{payment}}</option>
                                     </select>
                                 </span>
                             </div>

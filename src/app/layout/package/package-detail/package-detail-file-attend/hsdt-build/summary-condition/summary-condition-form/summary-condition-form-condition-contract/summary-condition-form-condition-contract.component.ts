@@ -4,6 +4,9 @@ import { HoSoDuThauService } from '../../../../../../../../shared/services/ho-so
 import { DienGiaiDieuKienHopDong } from '../../../../../../../../shared/models/ho-so-du-thau/dien-giai-yeu-cau';
 import DateTimeConvertHelper from '../../../../../../../../shared/helpers/datetime-convert-helper';
 import { SummaryConditionFormComponent } from '../summary-condition-form.component';
+import { PackageService } from '../../../../../../../../shared/services/package.service';
+import { PackageDetailComponent } from '../../../../../package-detail.component';
+import { ProposeTenderParticipateRequest } from '../../../../../../../../shared/models/api-request/package/propose-tender-participate-request';
 
 @Component({
     selector: 'app-summary-condition-form-condition-contract',
@@ -14,7 +17,9 @@ export class SummaryConditionFormConditionContractComponent implements OnInit {
     conditionContractForm: FormGroup;
     dataStepConditionContract = new DienGiaiDieuKienHopDong();
     isModeView = false;
-
+    packageId;
+    listPayment = ['Theo tháng (Monthly Payment)', 'Theo giai đoạn (Milestone)'];
+    proposeTenderParticipateRequestModel = new ProposeTenderParticipateRequest();
     get baoHiemMayMocHSMTFA(): FormArray {
         const dieuKienHSMT = this.conditionContractForm.get('dieuKienTheoHSMT') as FormGroup;
         const baoHiem = dieuKienHSMT.get('baoHiem') as FormGroup;
@@ -30,12 +35,15 @@ export class SummaryConditionFormConditionContractComponent implements OnInit {
     constructor(
         private fb: FormBuilder,
         private hoSoDuThauService: HoSoDuThauService,
+        private packageService: PackageService
     ) { }
 
     ngOnInit() {
+        this.packageId = PackageDetailComponent.packageId;
+
         this.hoSoDuThauService.watchLiveformState().subscribe(data => {
             this.isModeView = data.isModeView;
-          });
+        });
         this.loadData();
 
     }
@@ -241,7 +249,7 @@ export class SummaryConditionFormConditionContractComponent implements OnInit {
                         value: this.dataStepConditionContract && this.dataStepConditionContract.dieuKienTheoHSMT
                             && this.dataStepConditionContract.dieuKienTheoHSMT.thanhToan
                             && this.dataStepConditionContract.dieuKienTheoHSMT.thanhToan.loaiThanhToan,
-                        disabled: this.isModeView
+                        disabled: true
                     },
                     thoiGianThanhToan: {
                         value: this.dataStepConditionContract && this.dataStepConditionContract.dieuKienTheoHSMT
@@ -449,6 +457,19 @@ export class SummaryConditionFormConditionContractComponent implements OnInit {
                 }
             }));
         });
+
+        if (this.conditionContractForm.value) {
+            this.packageService.getProposedTenderParticipateReport(this.packageId)
+                .subscribe(data => {
+                    this.proposeTenderParticipateRequestModel = data;
+                    const monthlyPaymentOrMilestone = this.proposeTenderParticipateRequestModel.contractCondition.monthlyPaymentOrMilestone
+                        && this.proposeTenderParticipateRequestModel.contractCondition.monthlyPaymentOrMilestone.value;
+                    if (monthlyPaymentOrMilestone) {
+                        this.conditionContractForm.get('dieuKienTheoHSMT').get('thanhToan')
+                            .get('loaiThanhToan').patchValue(monthlyPaymentOrMilestone);
+                    }
+                });
+        }
 
 
         this.conditionContractForm.valueChanges.subscribe(data => {
