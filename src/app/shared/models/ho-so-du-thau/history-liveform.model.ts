@@ -1,4 +1,4 @@
-export class HistoryLiveForm{
+export class HistoryLiveForm {
     employee: {
         employeeId: number;
         employeeNo: string;

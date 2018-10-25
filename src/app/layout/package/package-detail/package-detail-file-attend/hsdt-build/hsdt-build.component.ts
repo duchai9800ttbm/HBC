@@ -58,6 +58,7 @@ export class HsdtBuildComponent implements OnInit, AfterViewChecked {
         });
         this.packageService.getInforPackageID(this.packageId).subscribe(result => {
             this.package = result;
+            this.hoSoDuThauService.detectStatusPackage(this.package.isClosedHSDT);
         }, err => {
         });
     }

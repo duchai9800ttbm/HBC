@@ -3,72 +3,67 @@
         <h5 class="text-uppercase font-weight-bold">XI. YÊU CẦU ĐẶC BIỆT KHÁC (OTHERS SPECIAL REQUIREMENT)</h5>
         <div>
             <div>
+                <div class="title-container d-flex align-items-center">
+                    <h6>Yêu cầu</h6>
+                    <i class="fa fa-plus-square-o ml-3 pointer" aria-hidden="true"
+                    (click)="addFormArrayControl('requirements')" *ngIf="!isModeView"></i>
+                </div>
 
                 <div class="container-table mt-3">
                     <table class="table-requirement">
-                        <tr class="tr-requirement">
-                            <td>
-                                <div class="index-row-table">1</div>
-                            </td>
-                            <td>
-                                Green Building Standard
-                            </td>
-                            <td>
-                                <input formControlName="descOne" class="form-control" type="text">
-                            </td>
-                            <td>
-                                <input formControlName="linkOne" class="form-control" type="text">
-                            </td>
-                        </tr>
 
                         <tr class="tr-requirement">
                             <td rowspan="2">
                                 <div class="index-row-table">2</div>
                             </td>
                             <td rowspan="2">
-                                Tender Evaluation
+                                <input type="text" class="form-control" formControlName="tenderEvaluation">
                             </td>
                             <td rowspan="2">
-                                Two (02) steps
+                                <input type="text" class="form-control" formControlName="tenderEvaluationSteps">
                             </td>
                             <td>
-                                <input type="text" class="form-control" formControlName="linkTwo">
+                                <input type="text" class="form-control" formControlName="tenderEvaluationStep1">
+                            </td>
+                        </tr>
+                        <tr class="tr-requirement">
+                            <td>
+                                <input type="text" class="form-control" formControlName="tenderEvaluationStep2">
                             </td>
                         </tr>
 
-                        <tr class="tr-requirement">
-                            <td>
-                                <input type="text" class="form-control" formControlName="link2Two">
-                            </td>
-                        </tr>
-
-                        <tr class="tr-requirement">
-                            <td>
-                                <div class="index-row-table">3</div>
-                            </td>
-                            <td>
-                                Profit, Overhead and Attendance
-                            </td>
-                            <td>
-                                <input type="text" class="form-control" formControlName="descThree">
-                            </td>
-                            <td>
-                                <input type="text" class="form-control" formControlName="linkThree">
-                            </td>
-                        </tr>
+                        <!-- Begin Map -->
+                        <ng-container formArrayName="requirements">
+                            <tr class="tr-requirement" *ngFor="let fControl of requirementsFA.controls; index as i"
+                                [formGroupName]="i">
+                                <td>
+                                    <div class="index-row-table text-center">{{ i+1 }}</div>
+                                </td>
+                                <td>
+                                    <input type="text" class="form-control" formControlName="requirementName">
+                                </td>
+                                <td>
+                                    <input type="text" class="form-control" formControlName="requirementLink">
+                                </td>
+                                <td>
+                                    <input type="text" class="form-control" formControlName="requirementDesc">
+                                </td>
+                            </tr>
+                        </ng-container>
+                        <!-- End Map -->
                     </table>
                 </div>
 
             </div>
         </div>
         <footer>
-                <div class="text-center mt-4">
-                        <button class="btn border" routerLink="../condition-tender">
-                            <i class="fa font-size-3 mr-3 fa-angle-left" aria-hidden="true"></i>
-                            Trở về
-                        </button>
-                    </div>
+            <div class="text-center mt-4">
+                <button class="btn border" routerLink="../condition-tender">
+                    <i class="fa font-size-3 mr-3 fa-angle-left" aria-hidden="true"></i>
+                    Trở về
+                </button>
+            </div>
         </footer>
-    
+
     </div>
 </form>

@@ -1,7 +1,7 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { DATETIME_PICKER_CONFIG } from '../../../../../../../shared/configs/datepicker.config';
 // tslint:disable-next-line:import-blacklist
-import { Subject } from 'rxjs';
+import { Subject, Subscription } from 'rxjs';
 import { Router } from '@angular/router';
 import { AlertService, SessionService, UserService } from '../../../../../../../shared/services';
 import { NgxSpinnerService } from 'ngx-spinner';
@@ -14,6 +14,7 @@ import { SiteSurveyReportService } from '../../../../../../../shared/services/si
 import { CustomerContact } from '../../../../../../../shared/models/site-survey-report/customer-contact';
 import { DepartmentList } from '../../../../../../../shared/models/site-survey-report/department-list';
 import { UserList } from '../../../../../../../shared/models/site-survey-report/user-list';
+import { HoSoDuThauService } from '../../../../../../../shared/services/ho-so-du-thau.service';
 
 @Component({
   selector: 'app-edit',
@@ -48,12 +49,15 @@ export class EditComponent implements OnInit, OnDestroy {
   isDraft: boolean;
   isCreate: boolean;
   isViewMode: boolean;
+  subscription: Subscription;
+  isClosedHSDT: boolean;
   constructor(
     private siteSurveyReportService: SiteSurveyReportService,
     private packageService: PackageService,
     private router: Router,
     private alertService: AlertService,
     private spinner: NgxSpinnerService,
+    private hoSoDuThauService: HoSoDuThauService
   ) { }
 
   ngOnInit() {
@@ -69,6 +73,10 @@ export class EditComponent implements OnInit, OnDestroy {
       this.packageData = result;
     }, err => {
       this.alertService.error('Tải thông tin gói thầu không thành công.');
+    });
+
+    this.subscription = this.hoSoDuThauService.watchStatusPackage().subscribe(status => {
+      this.isClosedHSDT = status;
     });
   }
   getAllUser() {

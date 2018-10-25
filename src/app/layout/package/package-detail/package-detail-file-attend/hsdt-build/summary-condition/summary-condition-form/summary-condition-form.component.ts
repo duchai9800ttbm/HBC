@@ -8,6 +8,7 @@ import { HoSoDuThauService } from '../../../../../../../shared/services/ho-so-du
 import { Router, ActivatedRoute } from '../../../../../../../../../node_modules/@angular/router';
 import { PackageInfoModel } from '../../../../../../../shared/models/package/package-info.model';
 import { DuLieuLiveFormDKDT } from '../../../../../../../shared/models/ho-so-du-thau/tom-tat-dkdt.model';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-summary-condition-form',
@@ -23,6 +24,8 @@ export class SummaryConditionFormComponent implements OnInit, OnDestroy {
   isModeView = false;
   isCreate = false;
   isDraft = true;
+  subscription: Subscription;
+  isClosedHSDT: boolean;
   constructor(
     private packageService: PackageService,
     private hoSoDuThauService: HoSoDuThauService,
@@ -38,8 +41,10 @@ export class SummaryConditionFormComponent implements OnInit, OnDestroy {
 
     this.packageService.getInforPackageID(this.packageId).subscribe(result => {
       this.package = result;
-
     }, err => {
+    });
+    this.subscription = this.hoSoDuThauService.watchStatusPackage().subscribe(status => {
+      this.isClosedHSDT = status;
     });
 
     this.activatedRoute.params.subscribe(data => {
