@@ -154,6 +154,7 @@ export class EndInterviewComponent implements OnInit {
   }
 
   reloadData() {
+    console.log('report');
     if (this.statusPackage.id === this.checkStatusPackage.DaChotCongTacChuanBiPhongVan.id) {
       this.interviewInvitationService.submitPrepareInterviews(this.currentPackageId).subscribe(response => {
         this.loadData();

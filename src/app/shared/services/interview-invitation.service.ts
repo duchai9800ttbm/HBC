@@ -446,6 +446,7 @@ export class InterviewInvitationService {
     } else {
       formData.append('FileUrl', `${createFormReportValue.link}`);
     }
+    formData.append('Version', `${createFormReportValue.version}`);
     return this.apiService.postFile(url, formData)
       .map(response => response)
       .share();

@@ -90,13 +90,17 @@ export class ReportEndInterviewComponent implements OnInit {
           this.closePopup();
           this.statusObservableHsdtService.change();
           this.interviewInvitationService.changeEndInterviewList();
-          this.reloadData();
           this.alertService.success('Thêm mới lời mời thành công!');
+          this.loadData();
         },
           err => {
             this.alertService.error('Tạo mới lời mời thất bại, xin vui lòng thử lại!');
           });
     }
+  }
+
+  loadData() {
+    this.reloadData();
   }
 
   deleteFileUpload() {
