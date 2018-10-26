@@ -1055,22 +1055,28 @@ export class PackageService {
 
     // tạo mới/ sửa LiveForm phân công tiến độ
     createOrUpdateTenderPreparationPlanning(data: any): Observable<any> {
-        console.log('createOrUpdateTenderPreparationPlanning', data);
         const url = `tenderpreparationplanningassignment/createorupdate`;
         data.tasks.forEach(element => {
             element.startDate = DateTimeConvertHelper.fromDtObjectToSecon(element.startDate);
             element.finishDate = DateTimeConvertHelper.fromDtObjectToSecon(element.finishDate);
-            const ids = [];
-            if (element.whoIsInChargeIds && element.whoIsInChargeIds.length !== 0) {
-                ([] || element.whoIsInChargeIds).forEach(itemwhoIsInChargeId => {
-                    if (itemwhoIsInChargeId.employeeId) {
-                        ids.push(itemwhoIsInChargeId.employeeId);
-                    }
-                });
-            }
+            let a = (element.whoIsInChargeIds && element.whoIsInChargeIds.length !== 0) ?
+                element.whoIsInChargeIds.map(item => item.employeeId) : [];
             element.whoIsInChargeIds = {
-                ids: ids,
+                ids: a,
             };
+            // const ids = [];
+            // if (element.whoIsInChargeIds && element.whoIsInChargeIds.length !== 0) {
+            //     ([] || element.whoIsInChargeIds).forEach(itemwhoIsInChargeId => {
+            //         if (itemwhoIsInChargeId.employeeId) {
+            //             ids.push(itemwhoIsInChargeId.employeeId);
+            //         }
+            //     });
+            // }
+            // console.log('ids', ids);
+            // element.whoIsInChargeIds = {
+            //     ids: ids,
+            // };
+
             // element.whoIsInChargeId = Number(element.whoIsInChargeId);
             // if (element.startDate && element.finishDate) {
             //     element.duration = Math.abs(element.startDate - element.finishDate) / (60 * 60 * 24);

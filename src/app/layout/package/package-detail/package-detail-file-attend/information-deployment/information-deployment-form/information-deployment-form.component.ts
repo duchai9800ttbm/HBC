@@ -75,7 +75,6 @@ export class InformationDeploymentFormComponent implements OnInit {
                 );
         } else {
             this.packageService.getTenderPreparationPlanning(this.bidOpportunityId).subscribe(data => {
-                console.log('getTenderPreparationPlanning', data);
                 this.createForm(data);
             });
         }
@@ -90,7 +89,6 @@ export class InformationDeploymentFormComponent implements OnInit {
     // }
 
     createForm(planModel: TenderPreparationPlanningRequest, isCreate?) {
-        console.log('create-form', this.routerAction);
         this.tenderPlan = planModel;
         const taskArr = [];
         this.controlDisableForm = this.routerAction === 'view' ? true : false;
@@ -151,6 +149,10 @@ export class InformationDeploymentFormComponent implements OnInit {
         }, 500);
     }
 
+    // valueChangeNg() {
+    //     console.log('this.valueChange', this.planForm);
+    // }
+
     getEmailUser(userId: number): string {
         // tslint:disable-next-line:triple-equals
         // tslint:disable-next-line:max-line-length
@@ -205,8 +207,7 @@ export class InformationDeploymentFormComponent implements OnInit {
                 disabled: this.controlDisableForm,
             },
             whoIsInChargeIds: {
-                value: [],
-                // (data.whoIsInCharges && data.whoIsInCharges.length !== 0) ? data.whoIsInCharges[0]
+                value: (data.whoIsInCharges && data.whoIsInCharges.length !== 0) ? data.whoIsInCharges : [],
                 disabled: this.controlDisableForm,
             },
             startDate: {
@@ -258,7 +259,6 @@ export class InformationDeploymentFormComponent implements OnInit {
     }
 
     validateForm(formData: TenderPreparationPlanningRequest, isDraft: boolean): boolean {
-        console.log('validateForm', formData, this.planForm.get('isDraftVersion').value);
         if (isDraft) {
             // lưu nháp thì ko cần validate
             return true;
@@ -355,7 +355,6 @@ export class InformationDeploymentFormComponent implements OnInit {
 
     saveTenderPlan(isDraft: boolean) {
         const data = this.getFormData();
-        console.log('this.getFormData()', this.getFormData());
         data.isDraftVersion = isDraft;
         data.bidOpportunityId = this.bidOpportunityId;
         if (data.createdEmployeeId) {
