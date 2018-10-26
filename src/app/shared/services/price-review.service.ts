@@ -143,12 +143,7 @@ export class PriceReviewService {
   toItemHSDTChinhThuc(model: any): ItemHSDTChinhThuc {
     return {
       typeName: model.typeName,
-      document: model.document && {
-        type: model.document.type,
-        id: model.document.id,
-        name: model.document.name,
-        interviewTime: model.document.interviewTime
-      },
+      document: model.document,
       isLiveForm: model.isLiveForm,
       childs: model.childs ? model.childs : []
     };

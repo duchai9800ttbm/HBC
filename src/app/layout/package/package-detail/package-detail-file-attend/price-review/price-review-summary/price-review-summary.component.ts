@@ -177,10 +177,13 @@ export class PriceReviewSummaryComponent implements OnInit {
     } else {
       this.listItemHSDTChinhThuc.forEach(ite => {
         if (tam < +i - 1) {
-          if (!ite.childs.length) {
+          // if (!ite.childs.length) {
+          //   dem++;
+          // }
+          (ite.childs || []).forEach(e => {
             dem++;
-          }
-          ite.childs.forEach(e => {
+          });
+          (ite.document || []).forEach(e => {
             dem++;
           });
         }
@@ -200,6 +203,18 @@ export class PriceReviewSummaryComponent implements OnInit {
   }
 
   refresh(isAlert: boolean) {
+    // this.packageService.getInforPackageID(this.packageId).subscribe(result => {
+    //   this.package = result;
+    // }, err => {
+    // });
+    // this.priceReviewService.viewShort(this.packageId).subscribe(data => {
+    //   this.priceReview = data;
+    //   if (isAlert) {
+    //     this.alertService.success('Dữ liệu đã được cập nhật mới nhất!');
+    //   }
+    // });
+
+    this.packageId = PackageDetailComponent.packageId;
     this.packageService.getInforPackageID(this.packageId).subscribe(result => {
       this.package = result;
     }, err => {
@@ -207,9 +222,14 @@ export class PriceReviewSummaryComponent implements OnInit {
     this.priceReviewService.viewShort(this.packageId).subscribe(data => {
       this.priceReview = data;
       if (isAlert) {
-        this.alertService.success('Dữ liệu đã được cập nhật mới nhất!');
-      }
+             this.alertService.success('Dữ liệu đã được cập nhật mới nhất!');
+           }
+      });
+    this.priceReviewService.getDanhSachHSDTChinhThucInstantSearch(this.packageId, this.searchTerm$).subscribe(data => {
+      this.listItemHSDTChinhThuc = data;
     });
+
+    this.getChangeHistory(0, 10);
   }
 
   guiDuyet() {

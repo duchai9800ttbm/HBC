@@ -219,12 +219,7 @@ export class FileAttach {
 export class ItemHSDTChinhThuc {
     isLiveForm: boolean;
     typeName: string;
-    document: {
-        type: string,
-        id: number,
-        name: string,
-        interviewTime: number,
-    };
+    document: any[];
     childs?: ItemHSDTChinhThuc[];
 }
 
