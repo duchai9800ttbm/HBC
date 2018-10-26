@@ -388,15 +388,17 @@ export class InformationDeploymentComponent implements OnInit {
   }
 
   checkAssignment(): boolean {
-    let check = true;
+    let check = false;
     console.log('tenderPlan.tasks', this.tenderPlan.tasks);
     for (let i = 0; i < this.tenderPlan.tasks.length; i++) {
       if (this.tenderPlan.tasks[i].whoIsInChargeId && this.tenderPlan.tasks[i].whoIsInChargeId !== 0) {
-        if (!this.tenderPlan.tasks[i].startDate || !this.tenderPlan.tasks[i].finishDate) {
+        check = true;
+        if (!this.tenderPlan.tasks[i].startDate && !this.tenderPlan.tasks[i].finishDate) {
           check = false;
           break;
         }
       } else if (this.tenderPlan.tasks[i].whoIsInCharges && this.tenderPlan.tasks[i].whoIsInCharges.length !== 0) {
+        check = true;
         if (!this.tenderPlan.tasks[i].startDate || !this.tenderPlan.tasks[i].finishDate) {
           check = false;
           break;
