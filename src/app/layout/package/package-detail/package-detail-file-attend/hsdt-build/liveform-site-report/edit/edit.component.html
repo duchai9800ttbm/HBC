@@ -113,8 +113,8 @@
                     <div class="col-lg-8">
                         <select class="custom-select-option option-set-width" [(ngModel)]="customerId">
                             <option value="">---Chọn---</option>
-                            <option *ngFor="let item of listCustomerContact" [value]="item.employeeId">
-                                {{ item.employeeName }}
+                            <option *ngFor="let customer of listCustomerContact" [value]="customer.employeeId">
+                                {{ customer.employeeName }}
                             </option>
                         </select>
                     </div>
@@ -129,11 +129,11 @@
     </div>
 </div>
 <div class="button-change-view d-flex flex-row flex-wrap justify-content-center">
-    <button [class.cursor-notalowed]="stepName == 'ScaleOverallComponent'" type="button" class="next-pre-button btn btn-default ml-1 mr-2"
+    <button [disabled]="stepName == 'ScaleOverallComponent'" [class.cursor-notalowed]="stepName == 'ScaleOverallComponent'" type="button" class="next-pre-button btn btn-default ml-1 mr-2"
         (click)="preStep()">
         <i class="fa fa-chevron-left" aria-hidden="true"></i> Trở về
     </button>
-    <button [class.cursor-notalowed]="stepName == 'UsefulInfoComponent'" type="button" class="next-pre-button btn btn-primary ml-1 mr-2"
+    <button [disabled]="stepName == 'UsefulInfoComponent'" [class.cursor-notalowed]="stepName == 'UsefulInfoComponent'" type="button" class="next-pre-button btn btn-primary ml-1 mr-2"
         (click)="nextStep()">
         Tiếp <i class="fa fa-chevron-right" aria-hidden="true"></i>
     </button>

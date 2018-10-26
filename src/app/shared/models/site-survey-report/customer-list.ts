@@ -1,12 +1,12 @@
-export class UserList {
+export class CustomerModel {
     id: number;
     employeeId: number;
     employeeNo: string;
     employeeName: string;
     employeeAvatar: string;
     department: {
-        key: number;
-        value: string;
+        key: number | string;
+        value: string
     };
     email: string;
 }

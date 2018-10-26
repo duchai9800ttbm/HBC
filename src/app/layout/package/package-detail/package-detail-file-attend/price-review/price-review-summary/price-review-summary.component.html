@@ -393,41 +393,51 @@
                     </ng-container>
 
                     <ng-container *ngIf="!items.childs.length">
-                        <tr>
-                            <td class="text-center">{{renderIndex(i,0)}}</td>
-                            <td>
-                                {{items?.typeName}}
-                            </td>
-                            <td>
-                            </td>
-                            <td>
-                                {{items?.document?.name}}
-                            </td>
-                            <td class="text-center">
-                                {{items?.document?.interviewTime}}
-                            </td>
-                            <td class="min-width-action">
-                                <div class="d-flex justify-content-around">
-                                    <div style="cursor: pointer;" title="Xem" *ngIf="items?.isLiveForm">
-                                        <a (click)="viewLiveForm(items.typeName)">
-                                            <i class="fa fa-eye cursor-pointer icon-view" aria-hidden="true"></i>
-                                        </a>
-                                    </div>
+                        <ng-container *ngFor="let item of items.document; let z = index;">
+                            <tr>
+                                <td class="text-center">{{renderIndex(i,z)}}</td>
+                                <td valign="baseline" [attr.rowspan]="items.document?.length" *ngIf="z == 0">
+                                    {{items?.typeName}}
+                                </td>
+                                <td>
+                                    <!-- {{item?.type}} -->
+                                </td>
+                                <td>
+                                    {{item?.name}}
+                                </td>
+                                <td class="text-center">
+                                    {{item?.interviewTime}}
+                                </td>
+                                <td class="min-width-action">
+                                    <div class="d-flex justify-content-around">
+                                        <div style="cursor: pointer;" title="Xem" *ngIf="items?.isLiveForm">
+                                            <a (click)="viewLiveForm(items.typeName)">
+                                                <i class="fa fa-eye cursor-pointer icon-view" aria-hidden="true"></i>
+                                            </a>
+                                        </div>
 
-                                    <div style="cursor: pointer;" title="download" *ngIf="!items?.isLiveForm">
-                                        <a (click)="downloadHSDTChinhThuc(items.document?.id)">
-                                            <i class="fa fa-download  cursor-pointer icon-view" aria-hidden="true"></i>
-                                        </a>
-                                    </div>
+                                        <div style="cursor: pointer;" title="download" *ngIf="!items?.isLiveForm && !item?.filerUrl">
+                                            <a (click)="downloadHSDTChinhThuc(item?.id)">
+                                                <i class="fa fa-download  cursor-pointer icon-view" aria-hidden="true"></i>
+                                            </a>
+                                        </div>
 
-                                    <div style="cursor: pointer;" title="In">
-                                        <a (click)="inLiveForm(items.typeName)" class="text-success">
-                                            <i class="fa fa-print cursor-pointer icon-print" aria-hidden="true"></i>
-                                        </a>
+                                        <div style="cursor: pointer;" *ngIf="item.filerUrl">
+                                            <a [href]="item.filerUrl" target="_blank">
+                                                <i class="fa fa-external-link color-item-down" aria-hidden="true"></i>
+                                            </a>
+                                        </div>
+
+                                        <div style="cursor: pointer;" title="In">
+                                            <a (click)="inLiveForm(items.typeName)" class="text-success">
+                                                <i class="fa fa-print cursor-pointer icon-print" aria-hidden="true"></i>
+                                            </a>
+                                        </div>
                                     </div>
-                                </div>
-                            </td>
-                        </tr>
+                                </td>
+                            </tr>
+                        </ng-container>
+
                     </ng-container>
 
 

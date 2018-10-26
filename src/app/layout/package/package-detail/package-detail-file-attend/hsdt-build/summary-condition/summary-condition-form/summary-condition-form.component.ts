@@ -9,6 +9,7 @@ import { Router, ActivatedRoute } from '../../../../../../../../../node_modules/
 import { PackageInfoModel } from '../../../../../../../shared/models/package/package-info.model';
 import { DuLieuLiveFormDKDT } from '../../../../../../../shared/models/ho-so-du-thau/tom-tat-dkdt.model';
 import { Subscription } from 'rxjs';
+import { ScrollToTopService } from '../../../../../../../shared/services/scroll-to-top.service';
 
 @Component({
   selector: 'app-summary-condition-form',
@@ -32,10 +33,12 @@ export class SummaryConditionFormComponent implements OnInit, OnDestroy {
     private spinner: NgxSpinnerService,
     private alertService: AlertService,
     private router: Router,
-    private activatedRoute: ActivatedRoute
+    private activatedRoute: ActivatedRoute,
+    private scrollTopService: ScrollToTopService
   ) { }
 
   ngOnInit() {
+    this.scrollTopService.isScrollTop = false;
     this.packageId = +PackageDetailComponent.packageId;
     this.packageService.setSummaryConditionForm(true);
 

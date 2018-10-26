@@ -3,18 +3,16 @@ import { DATETIME_PICKER_CONFIG } from '../../../../../../../shared/configs/date
 // tslint:disable-next-line:import-blacklist
 import { Subject, Subscription } from 'rxjs';
 import { Router } from '@angular/router';
-import { AlertService, SessionService, UserService } from '../../../../../../../shared/services';
+import { AlertService } from '../../../../../../../shared/services';
 import { NgxSpinnerService } from 'ngx-spinner';
-import { DocumentService } from '../../../../../../../shared/services/document.service';
 import { LiveformSiteReportComponent } from '../liveform-site-report.component';
 import { PackageDetailComponent } from '../../../../package-detail.component';
 import { PackageService } from '../../../../../../../shared/services/package.service';
 import { PackageInfoModel } from '../../../../../../../shared/models/package/package-info.model';
 import { SiteSurveyReportService } from '../../../../../../../shared/services/site-survey-report.service';
-import { CustomerContact } from '../../../../../../../shared/models/site-survey-report/customer-contact';
 import { DepartmentList } from '../../../../../../../shared/models/site-survey-report/department-list';
-import { UserList } from '../../../../../../../shared/models/site-survey-report/user-list';
 import { HoSoDuThauService } from '../../../../../../../shared/services/ho-so-du-thau.service';
+import { CustomerModel } from '../../../../../../../shared/models/site-survey-report/customer-list';
 
 @Component({
   selector: 'app-edit',
@@ -40,11 +38,10 @@ export class EditComponent implements OnInit, OnDestroy {
   stepName;
   currentBidOpportunityId: number;
   packageData = new PackageInfoModel();
-  listCustomerContact = new Array(new CustomerContact());
   customerId;
   listDepartments = new Array(new DepartmentList());
   departmentId;
-  listUser: UserList[];
+  listCustomerContact: CustomerModel[];
   ngayKhaoSat;
   isDraft: boolean;
   isCreate: boolean;
@@ -61,7 +58,7 @@ export class EditComponent implements OnInit, OnDestroy {
   ) { }
 
   ngOnInit() {
-    this.departmentId = 49;
+    this.departmentId = 49; // Set Default Value
     this.customerId = '';
     this.getInfoTenderPreparationPlanning();
     this.getAllUser();
@@ -81,20 +78,16 @@ export class EditComponent implements OnInit, OnDestroy {
   }
   getAllUser() {
     this.siteSurveyReportService.getAllUser('').subscribe(data => {
-      this.listUser = data;
-      this.listUser.forEach(x => {
-        this.listCustomerContact.push({
-          employeeId: x.employeeId,
-          employeeName: x.employeeName
-        });
+      this.listCustomerContact = data;
+      this.listCustomerContact.forEach(x => {
         if (x.department) {
-          let checkduplicate: boolean;
+          let isDuplicate: boolean;
           this.listDepartments.forEach(item => {
-            if (item.key === x.department.key) {
-              checkduplicate = true;
-            } else { checkduplicate = false; }
+            if (item.key == x.department.key) {
+              isDuplicate = true;
+            } else { isDuplicate = false; }
           });
-          if (!checkduplicate) {
+          if (!isDuplicate) {
             this.listDepartments.push({
               key: x.department.key,
               value: x.department.value
