@@ -68,6 +68,20 @@ export class InformationDeploymentFormComponent implements OnInit {
             this.userList = data;
         });
         this.getPackageInfo();
+    }
+
+    getPackageInfo() {
+        this.spinner.show();
+        this.packageService
+            .getInforPackageID(this.bidOpportunityId)
+            .subscribe(data => {
+                this.packageInfo = data;
+                this.checkAndCreateForm();
+                this.spinner.hide();
+            });
+    }
+
+    checkAndCreateForm() {
         if (this.routerAction === 'create') {
             this.packageService
                 .getDefaultTenderPreparationPlanning()
@@ -81,7 +95,6 @@ export class InformationDeploymentFormComponent implements OnInit {
             });
         }
     }
-
     // disableForm() {
     //     this.planForm.controls.forEach( item => {
     //         if ( item === FormArray) {
@@ -196,7 +209,9 @@ export class InformationDeploymentFormComponent implements OnInit {
     }
 
     createTaskItemFG(data: TenderPreparationPlanItem): FormGroup {
-        console.log('createTaskItemFG', data);
+        const isFinishDisabled =
+            (this.checkStatusPackage[this.packageInfo.stageStatus.id].id > this.checkStatusPackage.ThamGiaDuThau.id &&
+                this.checkStatusPackage[this.packageInfo.stageStatus.id].id < this.checkStatusPackage.ChoKetQuaDuThau.id);
         return this.fb.group({
             itemId: data.itemId,
             itemNo: data.itemNo,
@@ -232,21 +247,10 @@ export class InformationDeploymentFormComponent implements OnInit {
             duration: data.duration,
             isFinish: {
                 value: data.isFinish,
-                disabled: this.controlDisableForm,
+                disabled: !isFinishDisabled,
             },
             totalTime: '',
         });
-    }
-
-    getPackageInfo() {
-        this.spinner.show();
-        this.packageService
-            .getInforPackageID(this.bidOpportunityId)
-            .subscribe(data => {
-                this.packageInfo = data;
-                console.log(this.checkStatusPackage[this.packageInfo.stageStatus.id]);
-                this.spinner.hide();
-            });
     }
 
     getFormData(): TenderPreparationPlanningRequest {

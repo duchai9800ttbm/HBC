@@ -226,8 +226,8 @@
                                 <span *ngIf="!data.get('itemDesc').value" class="fake-placeholder">Nhập text</span>
                             </td>
                             <td class="pl-0" *ngIf="data.get('itemId').value !== 6">
-                                <span class="custom-dropdown w-100 b-dropdown-no-border">
-                                    <select class="form-control" formControlName="whoIsInChargeId">
+                                <span class="custom-dropdown w-100 b-dropdown-no-border" >
+                                    <select class="form-control" formControlName="whoIsInChargeId" [class.default-cusor]="routerAction === 'view'">
                                         <option [ngValue]="null">--Chọn--</option>
                                         <option *ngFor="let user of userList" [value]="user.employeeId">{{user.employeeName}}</option>
                                     </select>
@@ -236,7 +236,7 @@
                             <td *ngIf="data.get('itemId').value === 6">
                                 <ng-select class="w-100" [items]="userList" placeholder="--Chọn--" typeToSearchText="Nhập tên" clearAllText="Xóa tất cả"
                                     [hideSelected]="true" multiple="true" bindLabel="employeeName" formControlName="whoIsInChargeIds"
-                                    style="outline: none">
+                                    style="outline: none" [class.default-cusor]="routerAction === 'view'">
                                     <ng-template ng-option-tmp let-item="item" let-index="index" let-search="searchTerm">
                                         <table>
                                             <tr>{{item.employeeName}}</tr>
@@ -247,9 +247,9 @@
                             <td class="text-center">
                                 <label class="custom-control custom-checkbox z-ontop">
                                     <input type="checkbox" (click)="checkFinishTenderPlanItem(data.get('itemId').value)" class="custom-control-input input-checkbox"
-                                        [attr.disabled]="(this.checkStatusPackage[this.packageInfo.stageStatus.id] >= checkStatusPackage.DaThongBaoTrienKhai.id && 
-                                        this.checkStatusPackage[this.packageInfo.stageStatus.id] <= checkStatusPackage.DaPhongVan.id) ? false : null"
                                         [attr.disabled]="true" formControlName="isFinish">
+                                    <!-- [attr.disabled]="(this.checkStatusPackage[this.packageInfo.stageStatus.id].id >= checkStatusPackage.DaThongBaoTrienKhai.id && 
+                                        this.checkStatusPackage[this.packageInfo.stageStatus.id].id <= checkStatusPackage.DaPhongVan.id) ? false : null" -->
                                     <!-- [attr.disabled]="true" -->
                                     <span class="custom-control-indicator"></span>
                                 </label>

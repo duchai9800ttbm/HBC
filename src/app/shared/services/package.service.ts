@@ -1057,30 +1057,27 @@ export class PackageService {
     createOrUpdateTenderPreparationPlanning(data: any): Observable<any> {
         const url = `tenderpreparationplanningassignment/createorupdate`;
         data.tasks.forEach(element => {
-            element.startDate = DateTimeConvertHelper.fromDtObjectToSecon(element.startDate);
-            element.finishDate = DateTimeConvertHelper.fromDtObjectToSecon(element.finishDate);
+            element.startDate = DateTimeConvertHelper.fromDtObjectToTimestamp(element.startDate);
+            element.finishDate = DateTimeConvertHelper.fromDtObjectToTimestamp(element.finishDate);
             let a = (element.whoIsInChargeIds && element.whoIsInChargeIds.length !== 0) ?
                 element.whoIsInChargeIds.map(item => item.employeeId) : [];
             element.whoIsInChargeIds = {
                 ids: a,
             };
-            // const ids = [];
-            // if (element.whoIsInChargeIds && element.whoIsInChargeIds.length !== 0) {
-            //     ([] || element.whoIsInChargeIds).forEach(itemwhoIsInChargeId => {
-            //         if (itemwhoIsInChargeId.employeeId) {
-            //             ids.push(itemwhoIsInChargeId.employeeId);
-            //         }
-            //     });
-            // }
-            // console.log('ids', ids);
-            // element.whoIsInChargeIds = {
-            //     ids: ids,
-            // };
+        });
+        return this.apiService.post(url, data).map(response => response.result);
+    }
 
-            // element.whoIsInChargeId = Number(element.whoIsInChargeId);
-            // if (element.startDate && element.finishDate) {
-            //     element.duration = Math.abs(element.startDate - element.finishDate) / (60 * 60 * 24);
-            // }
+    // Xác nhận phân công tiến độ
+    comfirmTenderPreparationPlanning(data: any): Observable<any> {
+        const url = `tenderpreparationplanningassignment/createorupdate`;
+        console.log('task-comfirmTenderPreparationPlanning', data);
+        data.tasks.forEach(element => {
+            let a = (element.whoIsInCharges && element.whoIsInCharges.length !== 0) ?
+                element.whoIsInCharges.map(item => item.employeeId) : [];
+            element.whoIsInChargeIds = {
+                ids: a,
+            };
         });
         return this.apiService.post(url, data).map(response => response.result);
     }

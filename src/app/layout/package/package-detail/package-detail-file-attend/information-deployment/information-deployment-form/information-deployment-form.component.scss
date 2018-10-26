@@ -228,3 +228,9 @@ table, thead, tbody, tfoot {
 :host /deep/ .form-control:disabled, .form-control[readonly] {
     background-color: white;
 }
+.default-cusor{
+    cursor: default !important;
+}
+:host /deep/ .custom-dropdown select[disabled]{
+    color: #495057;
+}

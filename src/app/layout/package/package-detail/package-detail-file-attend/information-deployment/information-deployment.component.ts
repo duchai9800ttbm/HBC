@@ -411,7 +411,14 @@ export class InformationDeploymentComponent implements OnInit {
   confirmTenderPlan() {
     if (this.checkAssignment()) {
       this.tenderPlan.isDraftVersion = false;
-      this.packageService.createOrUpdateTenderPreparationPlanning(this.tenderPlan).subscribe(success => {
+      // tslint:disable-next-line:max-line-length
+      this.tenderPlan.projectDirectorEmployeeId = this.tenderPlan.projectDirectorEmployee ? this.tenderPlan.projectDirectorEmployee.employeeId : null;
+      this.tenderPlan.tenderDepartmentEmployeeId = this.tenderPlan.tenderDepartmentEmployee ? this.tenderPlan.tenderDepartmentEmployee.employeeId : null;
+      // tslint:disable-next-line:max-line-length
+      this.tenderPlan.technicalDepartmentEmployeeId = this.tenderPlan.technicalDepartmentEmployee ? this.tenderPlan.technicalDepartmentEmployee.employeeId : null;
+      // tslint:disable-next-line:max-line-length
+      this.tenderPlan.bimDepartmentEmployeeId = this.tenderPlan.bimDepartmentEmployee ? this.tenderPlan.bimDepartmentEmployee.employeeId : null;
+      this.packageService.comfirmTenderPreparationPlanning(this.tenderPlan).subscribe(success => {
         this.spinner.hide();
         this.alertService.success('Xác nhận phân công tiến độ thành công!');
         this.getPackageInfo();
