@@ -225,3 +225,6 @@ table, thead, tbody, tfoot {
 :host /deep/ .ng-dropdown-panel.ng-select-top{
     min-width: 8rem;
 }
+:host /deep/ .form-control:disabled, .form-control[readonly] {
+    background-color: white;
+}

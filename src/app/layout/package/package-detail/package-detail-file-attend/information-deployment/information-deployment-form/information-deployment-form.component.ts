@@ -16,6 +16,7 @@ import { TenderPreparationPlanningRequest } from '../../../../../../shared/model
 import * as moment from 'moment';
 import { Router } from '@angular/router';
 import { BidStatus } from '../../../../../../shared/constants/bid-status';
+import { CheckStatusPackage } from '../../../../../../shared/constants/check-status-package';
 declare let kendo: any;
 
 @Component({
@@ -45,6 +46,7 @@ export class InformationDeploymentFormComponent implements OnInit {
         return this.planForm.get('tasks') as FormArray;
     }
     controlDisableForm: boolean;
+    checkStatusPackage = CheckStatusPackage;
     constructor(
         private spinner: NgxSpinnerService,
         private packageService: PackageService,
@@ -194,6 +196,7 @@ export class InformationDeploymentFormComponent implements OnInit {
     }
 
     createTaskItemFG(data: TenderPreparationPlanItem): FormGroup {
+        console.log('createTaskItemFG', data);
         return this.fb.group({
             itemId: data.itemId,
             itemNo: data.itemNo,
@@ -241,6 +244,7 @@ export class InformationDeploymentFormComponent implements OnInit {
             .getInforPackageID(this.bidOpportunityId)
             .subscribe(data => {
                 this.packageInfo = data;
+                console.log(this.checkStatusPackage[this.packageInfo.stageStatus.id]);
                 this.spinner.hide();
             });
     }
@@ -419,6 +423,7 @@ export class InformationDeploymentFormComponent implements OnInit {
     }
 
     checkFinishTenderPlanItem(itemId: number) {
+        console.log('itemId', itemId);
         // tạm thời chưa dùng, khi phân quyền sẽ dùng
         this.packageService.checkOrUncheckTenderPreparationPlanningItem(this.bidOpportunityId, itemId).subscribe(success => {
         }, err => {

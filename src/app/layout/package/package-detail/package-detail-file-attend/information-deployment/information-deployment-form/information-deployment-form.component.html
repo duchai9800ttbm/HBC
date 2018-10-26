@@ -67,7 +67,8 @@
                 </div>
                 <div class="col-md-3 pl-0">
                     <div class="">
-                        <strong>Ngày duyệt (Date): </strong>{{tenderPlan?.approvedDate * 1000 | date: 'dd/MM/yyyy' : '+0000'}}</div>
+                        <strong>Ngày duyệt (Date): </strong>{{ (tenderPlan && tenderPlan.approvedDate && tenderPlan.approvedDate
+                        !== 0) ? (tenderPlan?.approvedDate * 1000 | date: 'dd/MM/yyyy' : '+0000') : ''}}</div>
                     <div class=""></div>
                 </div>
             </div>
@@ -79,7 +80,8 @@
                     <div class="">{{packageInfo?.opportunityName}}</div>
                 </div>
                 <div class="col-md-3 pl-0">
-                    <button class="btn btn-primary btn-sign position-absolute" *ngIf="!planForm.get('isSignedByPreparedPerson').value" (click)="clickSignPrepare()">Xác nhận ký</button>
+                    <button class="btn btn-primary btn-sign position-absolute" *ngIf="!planForm.get('isSignedByPreparedPerson').value" [disabled]="routerAction === 'view'"
+                        [class.not-allow]="routerAction === 'view'" (click)="clickSignPrepare()">Xác nhận ký</button>
                     <button class="btn btn-primary btn-sign position-absolute" *ngIf="planForm.get('isSignedByPreparedPerson').value">
                         <i class="fa fa-check icon-check" aria-hidden="true"></i> Đã ký
                     </button>
@@ -245,8 +247,10 @@
                             <td class="text-center">
                                 <label class="custom-control custom-checkbox z-ontop">
                                     <input type="checkbox" (click)="checkFinishTenderPlanItem(data.get('itemId').value)" class="custom-control-input input-checkbox"
-                                        [attr.disabled]="packageInfo?.stageStatus.id != bidStatus.DaGuiPhanCongTienDo ? '' : null"
-                                        formControlName="isFinish">
+                                        [attr.disabled]="(this.checkStatusPackage[this.packageInfo.stageStatus.id] >= checkStatusPackage.DaThongBaoTrienKhai.id && 
+                                        this.checkStatusPackage[this.packageInfo.stageStatus.id] <= checkStatusPackage.DaPhongVan.id) ? false : null"
+                                        [attr.disabled]="true" formControlName="isFinish">
+                                    <!-- [attr.disabled]="true" -->
                                     <span class="custom-control-indicator"></span>
                                 </label>
                             </td>
