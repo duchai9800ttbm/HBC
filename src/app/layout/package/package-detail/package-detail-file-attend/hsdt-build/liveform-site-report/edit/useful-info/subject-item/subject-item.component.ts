@@ -16,7 +16,7 @@ export class SubjectItemComponent implements OnInit {
   @Output() deleteContent = new EventEmitter<number>();
   @Output() deleteSubjectEmit = new EventEmitter<boolean>();
 
-  viewMode;
+  isViewMode = false;
   currentBidOpportunityId: number;
 
   subjectList = [
@@ -35,14 +35,7 @@ export class SubjectItemComponent implements OnInit {
     this.checkFlag();
   }
   checkFlag() {
-      const flag = LiveformSiteReportComponent.isViewMode;
-      this.viewMode = flag;
-      if (flag) {
-        const inputs = document.getElementsByTagName('input');
-        for (let i = 0; i < inputs.length; i++) {
-          inputs[i].style.pointerEvents = 'none';
-        }
-      }
+    this.isViewMode = LiveformSiteReportComponent.actionMode === 'viewMode';
   }
 
   addContent() {

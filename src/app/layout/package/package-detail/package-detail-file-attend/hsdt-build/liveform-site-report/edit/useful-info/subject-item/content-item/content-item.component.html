@@ -1,24 +1,24 @@
 <form [formGroup]="contentItemForm" class="fix-position-form">
     <div class="img-demo-des">
         <label class="invisible"> </label>
-        <input type="text" placeholder="Nhập text" class="input-name-content" [ngClass]="{'view-mode-text': viewMode}" formControlName="tenNoidung">
-        <i (click)="deleteContentItem()" [ngClass]="{'d-none': viewMode}" class="fa fa-times-circle remove-content-button" aria-hidden="true"></i>
+        <input type="text" placeholder="Nhập text" class="input-name-content" [ngClass]="{'view-mode-text': isViewMode}" formControlName="tenNoidung">
+        <i (click)="deleteContentItem()" [ngClass]="{'d-none': isViewMode}" class="fa fa-times-circle remove-content-button" aria-hidden="true"></i>
     </div>
     <div class="img-demo-des">
         <label class="invisible">Nội dung</label>
-        <textarea class="desc-content" placeholder="Nhập text" [ngClass]="{'view-mode-text': viewMode}" cols="20" rows="5" formControlName="chiTietNoiDung"></textarea>
+        <textarea class="desc-content" placeholder="Nhập text" [ngClass]="{'view-mode-text': isViewMode}" cols="20" rows="5" formControlName="chiTietNoiDung"></textarea>
     </div>
     <div class="image-demo-img">
-        <input type="file" accept="image/*" multiple #uploadContent [ngClass]="{'view-mode-text': viewMode}" (change)="uploadContentImage($event)">
+        <input type="file" accept="image/*" multiple #uploadContent (change)="uploadContentImage($event)">
         <ng-container *ngFor="let url of contentItemImageList; index as k">
             <div class="display-img" (click)="viewFullScreenImage(contentItemImageList, k)">
                 <img [src]="url.largeSizeUrl">
-                <div class="icon-delete-image" [ngClass]="{'d-none': viewMode}" (click)="deleteContentImage(url)">
+                <div class="icon-delete-image" [ngClass]="{'d-none': isViewMode}" (click)="deleteContentImage(url)">
                     <i class="fa fa-times delete-icon" aria-hidden="true"></i>
                 </div>
             </div>
         </ng-container>
-        <div class="perspective-image" [ngClass]="{'d-none': viewMode}" (click)="uploadContent.click()">
+        <div class="perspective-image" [ngClass]="{'d-none': isViewMode}" (click)="uploadContent.click()">
             <i class="fa fa-plus" aria-hidden="true"></i>
             <p>Image</p>
         </div>

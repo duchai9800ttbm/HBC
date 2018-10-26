@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { DescribeOverall } from '../../../../../../../../shared/models/site-survey-report/describe-overall.model';
 import { FormGroup, FormBuilder } from '@angular/forms';
 import { EditComponent } from '../edit.component';
@@ -14,13 +14,16 @@ import { SiteSurveyReportService } from '../../../../../../../../shared/services
   styleUrls: ['./describe-overall.component.scss']
 })
 export class DescribeOverallComponent implements OnInit {
+  @ViewChild('uploadTopography') uploadTopography;
+  @ViewChild('uploadExistingBuild') uploadExistingBuild;
+  @ViewChild('uploadStacale') uploadStacale;
   describeForm: FormGroup;
 
   topographyImageUrls = [];
   existingBuildImageUrls = [];
   stacaleImageUrls = [];
   url;
-  viewMode;
+  isViewMode = false;
   imageUrlArray = [];
   indexOfImage;
   showPopupViewImage = false;
@@ -48,14 +51,7 @@ export class DescribeOverallComponent implements OnInit {
     this.describeForm.valueChanges.subscribe(data => this.mappingToLiveFormData(data));
   }
   checkFlag() {
-    const flag = LiveformSiteReportComponent.isViewMode;
-    this.viewMode = flag;
-    if (flag) {
-      const inputs = document.getElementsByTagName('input');
-      for (let i = 0; i < inputs.length; i++) {
-        inputs[i].style.pointerEvents = 'none';
-      }
-    }
+    this.isViewMode = LiveformSiteReportComponent.actionMode === 'viewMode';
   }
 
   initData() {
@@ -102,6 +98,7 @@ export class DescribeOverallComponent implements OnInit {
       .subscribe(res => {
         this.topographyImageUrls = [...this.topographyImageUrls, ...res];
         this.describeForm.get('chiTietDiaHinhList').patchValue(this.topographyImageUrls);
+        this.uploadTopography.nativeElement.value = null;
       }, err => {
         this.alertService.error('Upload hình ảnh thất bại. Xin vui lòng thử lại!');
         this.topographyImageUrls.forEach(x => {
@@ -132,6 +129,7 @@ export class DescribeOverallComponent implements OnInit {
       .subscribe(res => {
         this.existingBuildImageUrls = [...this.existingBuildImageUrls, ...res];
         this.describeForm.get('kienTrucHienHuuList').patchValue(this.existingBuildImageUrls);
+        this.uploadExistingBuild.nativeElement.value = null;
       }, err => {
         this.alertService.error('Upload hình ảnh thất bại. Xin vui lòng thử lại!');
         this.existingBuildImageUrls.forEach(x => {
@@ -162,6 +160,7 @@ export class DescribeOverallComponent implements OnInit {
       .subscribe(res => {
         this.stacaleImageUrls = [...this.stacaleImageUrls, ...res];
         this.describeForm.get('yeuCauChuongNgaiList').patchValue(this.stacaleImageUrls);
+        this.uploadStacale.nativeElement.value = null;
       }, err => {
         this.alertService.error('Upload hình ảnh thất bại. Xin vui lòng thử lại!');
         this.stacaleImageUrls.forEach(x => {

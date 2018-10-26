@@ -51,7 +51,7 @@ export class InputNumberNegativeDecimalDirective implements OnInit {
     }
 
     transformNotDenominations(value: number | string, fractionSize: number = 2): string {
-        if (!value) { return '0'; }
+        if (!value) { return ''; }
         if (isNaN(+value)) { return value.toString(); }
         let [integer, fraction = ''] = (+value).toString()
             .split(this.DECIMAL_SEPARATOR);

@@ -1,16 +1,16 @@
 <form [formGroup]="soilConditionForm" class="detail-info">
     <div id="step5" class="step-info">
-        <h6 class="big-title font-weight-bold">6.&nbsp;điều kiện về đất nền hiện hữu (có thể thấy được)/ existing soil
-            condition
-            (seeable)</h6>
+        <h6 class="big-title font-weight-bold">
+            6.&nbsp;điều kiện về đất nền hiện hữu (có thể thấy được)/ existing soil condition (seeable)
+        </h6>
         <div>
             <div class="detail-each-title">
-                <h6 class="small-title font-weight-bold">6.1 Nền móng hiện có hoặc công trình lân cận/ Existing footing
-                    (or adjacent
-                    building if seeable))</h6>
+                <h6 class="small-title font-weight-bold">
+                    6.1 Nền móng hiện có hoặc công trình lân cận/ Existing footing (or adjacent building if seeable)
+                </h6>
                 <div class="main-detail">
                     <div class="text-des-input">
-                        <input type="text" placeholder="Nhập text" formControlName="nenMongHienCoDesc">
+                        <input type="text" placeholder="Nhập text" formControlName="nenMongHienCoDesc" [ngClass]="{'view-mode-control': isViewMode}">
                     </div>
                     <div>
                         <div class="image-demo-img">
@@ -19,12 +19,12 @@
                             <ng-container *ngFor="let url of footingImageUrls; index as k">
                                 <div class="display-img" (click)="viewFullScreenImage(footingImageUrls, k)">
                                     <img [src]="url.largeSizeUrl">
-                                    <div class="icon-delete-image" [ngClass]="{'d-none': viewMode}" (click)="deleteFootingImage(url)">
+                                    <div class="icon-delete-image" [ngClass]="{'d-none': isViewMode}" (click)="deleteFootingImage(url)">
                                         <i class="fa fa-times delete-icon" aria-hidden="true"></i>
                                     </div>
                                 </div>
                             </ng-container>
-                            <div class="perspective-image" [ngClass]="{'d-none': viewMode}" (click)="uploadFooting.click()">
+                            <div class="perspective-image" [ngClass]="{'d-none': isViewMode}" (click)="uploadFooting.click()">
                                 <i class="fa fa-plus" aria-hidden="true"></i>
                                 <p>Image</p>
                             </div>
@@ -33,28 +33,36 @@
                 </div>
             </div>
             <div class="detail-each-title">
-                <h6 class="small-title font-weight-bold">6.2 Địa tầng lớp đất (trong trường hợp Design và Build)/ Soil
-                    investigation (in
-                    case Design and Build))</h6>
+                <h6 class="small-title font-weight-bold">
+                    6.2 Địa tầng lớp đất (trong trường hợp Design và Build)/ Soil investigation (in case Design and Build)
+                </h6>
                 <div class="main-detail">
                     <div class="text-des-input">
                         <div class="img-demo-des responsive-label">
-                            <label class="responsive-label-label" for="">Thông tin công trình gần đó/ Soil
-                                investigation of similar project</label>
-                            <input class="responsive-label-input" type="text" placeholder="Nhập text" formControlName="thongTinCongTrinhGanDoDesc">
+                            <label class="responsive-label-label unset-margin w-100">
+                                Thông tin công trình gần đó/ Soil investigation of similar project
+                            </label>
                         </div>
+
+                        <div class="img-demo-des responsive-label">
+                            <input class="responsive-label-input w-50" type="text" placeholder="Nhập text" formControlName="thongTinCongTrinhGanDoDesc" [ngClass]="{'view-mode-control': isViewMode}">
+                        </div>
+
+
+
+
                         <div class="image-demo-img">
                             <input type="file" accept="image/*" multiple #uploadInvestigation (change)="uploadInvestigationImage($event)">
 
                             <ng-container *ngFor="let url of investigationImageUrls; index as k">
                                 <div class="display-img" (click)="viewFullScreenImage(investigationImageUrls, k)">
                                     <img [src]="url.largeSizeUrl">
-                                    <div class="icon-delete-image" [ngClass]="{'d-none': viewMode}" (click)="deleteInvestigationImage(url)">
+                                    <div class="icon-delete-image" [ngClass]="{'d-none': isViewMode}" (click)="deleteInvestigationImage(url)">
                                         <i class="fa fa-times delete-icon" aria-hidden="true"></i>
                                     </div>
                                 </div>
                             </ng-container>
-                            <div class="perspective-image" [ngClass]="{'d-none': viewMode}" (click)="uploadInvestigation.click()">
+                            <div class="perspective-image" [ngClass]="{'d-none': isViewMode}" (click)="uploadInvestigation.click()">
                                 <i class="fa fa-plus" aria-hidden="true"></i>
                                 <p>Image</p>
                             </div>

@@ -110,6 +110,20 @@ export class SummaryConditionFormSpecialRequirementComponent implements OnInit {
         };
       } else {
         this.otherRequirement = data.yeuCauDacBietKhac;
+        if (this.otherRequirement.requirementDetails.length === 0) {
+          this.otherRequirement.requirementDetails = [
+            {
+              requirementName: 'Green Building Standard',
+              requirementDesc: '',
+              requirementLink: 'Green Mark'
+            },
+            {
+              requirementName: 'Profit, Overhead and Attendance',
+              requirementDesc: 'Maximum',
+              requirementLink: '3%'
+            }
+          ];
+        }
       }
     });
   }

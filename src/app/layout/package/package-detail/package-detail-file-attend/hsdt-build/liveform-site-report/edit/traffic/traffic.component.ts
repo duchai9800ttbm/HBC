@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { Traffic } from '../../../../../../../../shared/models/site-survey-report/traffic.model';
 import { EditComponent } from '../edit.component';
 import { FormBuilder, FormGroup } from '@angular/forms';
@@ -14,6 +14,12 @@ import { SiteSurveyReportService } from '../../../../../../../../shared/services
   styleUrls: ['./traffic.component.scss']
 })
 export class TrafficComponent implements OnInit {
+  @ViewChild('uploaDisadvantage') uploaDisadvantage;
+  @ViewChild('uploaAdvantage') uploaAdvantage;
+  @ViewChild('uploadDirection') uploadDirection;
+  @ViewChild('uploadExisting') uploadExisting;
+  @ViewChild('uploadRoad') uploadRoad;
+  @ViewChild('uploadFence') uploadFence;
   trafficForm: FormGroup;
 
   disadvantageImageUrls = [];
@@ -23,7 +29,7 @@ export class TrafficComponent implements OnInit {
   roadImageUrls = [];
   fenceImageUrls = [];
   url;
-  viewMode;
+  isViewMode;
   imageUrlArray = [];
   indexOfImage;
   showPopupViewImage = false;
@@ -61,14 +67,7 @@ export class TrafficComponent implements OnInit {
 
   }
   checkFlag() {
-    const flag = LiveformSiteReportComponent.isViewMode;
-    this.viewMode = flag;
-    if (flag) {
-      const inputs = document.getElementsByTagName('input');
-      for (let i = 0; i < inputs.length; i++) {
-        inputs[i].style.pointerEvents = 'none';
-      }
-    }
+    this.isViewMode = LiveformSiteReportComponent.actionMode === 'viewMode';
   }
   initData() {
     const obj = LiveformSiteReportComponent.formModel.traffic;
@@ -141,6 +140,7 @@ export class TrafficComponent implements OnInit {
       .subscribe(res => {
         this.disadvantageImageUrls = [...this.disadvantageImageUrls, ...res];
         this.trafficForm.get('chiTietDiaHinhKhoKhanList').patchValue(this.disadvantageImageUrls);
+        this.uploaDisadvantage.nativeElement.value = null;
       }, err => {
         this.alertService.error('Upload hình ảnh thất bại. Xin vui lòng thử lại!');
         this.disadvantageImageUrls.forEach(x => {
@@ -171,6 +171,7 @@ export class TrafficComponent implements OnInit {
       .subscribe(res => {
         this.advantageImageUrls = [...this.advantageImageUrls, ...res];
         this.trafficForm.get('chiTietDiaHinhThuanLoiList').patchValue(this.advantageImageUrls);
+        this.uploaAdvantage.nativeElement.value = null;
       }, err => {
         this.alertService.error('Upload hình ảnh thất bại. Xin vui lòng thử lại!');
         this.advantageImageUrls.forEach(x => {
@@ -201,6 +202,7 @@ export class TrafficComponent implements OnInit {
       .subscribe(res => {
         this.directionImageUrls = [...this.directionImageUrls, ...res];
         this.trafficForm.get('huongVaoCongTruongList').patchValue(this.directionImageUrls);
+        this.uploadDirection.nativeElement.value = null;
       }, err => {
         this.alertService.error('Upload hình ảnh thất bại. Xin vui lòng thử lại!');
         this.directionImageUrls.forEach(x => {
@@ -231,6 +233,7 @@ export class TrafficComponent implements OnInit {
       .subscribe(res => {
         this.existingImageUrls = [...this.existingImageUrls, ...res];
         this.trafficForm.get('duongHienCoTrenCongTruongList').patchValue(this.existingImageUrls);
+        this.uploadExisting.nativeElement.value = null;
       }, err => {
         this.alertService.error('Upload hình ảnh thất bại. Xin vui lòng thử lại!');
         this.existingImageUrls.forEach(x => {
@@ -261,6 +264,7 @@ export class TrafficComponent implements OnInit {
       .subscribe(res => {
         this.roadImageUrls = [...this.roadImageUrls, ...res];
         this.trafficForm.get('yeuCauDuongTamList').patchValue(this.roadImageUrls);
+        this.uploadRoad.nativeElement.value = null;
       }, err => {
         this.alertService.error('Upload hình ảnh thất bại. Xin vui lòng thử lại!');
         this.roadImageUrls.forEach(x => {
@@ -291,6 +295,7 @@ export class TrafficComponent implements OnInit {
       .subscribe(res => {
         this.fenceImageUrls = [...this.fenceImageUrls, ...res];
         this.trafficForm.get('yeuCauHangRaoList').patchValue(this.fenceImageUrls);
+        this.uploadFence.nativeElement.value = null;
       }, err => {
         this.alertService.error('Upload hình ảnh thất bại. Xin vui lòng thử lại!');
         this.fenceImageUrls.forEach(x => {

@@ -136,7 +136,7 @@ input[type=text] {
     margin: 10px 0;
 
     input {
-        width: 40%;
+        width: 50%;
     }
 }
 
@@ -219,7 +219,7 @@ label {
 }
 
 .view-mode-control {
-    display: none;
+    pointer-events: none;
 }
 // Set Font-Size
 .big-title {

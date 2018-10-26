@@ -6,7 +6,7 @@
                 <h6 class="small-title font-weight-bold">2.1 Những chi tiết địa hình/Topography</h6>
                 <div class="main-detail">
                     <div class="text-des-input">
-                        <input type="text" placeholder="Nhập text" formControlName="chiTietDiaHinhDesc">
+                        <input type="text" placeholder="Nhập text" formControlName="chiTietDiaHinhDesc" [ngClass]="{'view-mode-control': isViewMode}">
                     </div>
 
                     <div class="image-demo-img">
@@ -14,12 +14,12 @@
                         <ng-container *ngFor="let url of topographyImageUrls; index as k">
                             <div class="display-img" (click)="viewFullScreenImage(topographyImageUrls, k)">
                                 <img [src]="url.largeSizeUrl">
-                                <div class="icon-delete-image" [ngClass]="{'d-none': viewMode}" (click)="deleteTopographyImage(url)">
+                                <div class="icon-delete-image" [ngClass]="{'d-none': isViewMode}" (click)="deleteTopographyImage(url)">
                                     <i class="fa fa-times delete-icon" aria-hidden="true"></i>
                                 </div>
                             </div>
                         </ng-container>
-                        <div class="perspective-image" [ngClass]="{'d-none': viewMode}" (click)="uploadTopography.click()">
+                        <div class="perspective-image" [ngClass]="{'d-none': isViewMode}" (click)="uploadTopography.click()">
                             <i class="fa fa-plus" aria-hidden="true"></i>
                             <p>Image</p>
                         </div>
@@ -33,7 +33,7 @@
                 on the site</h6>
             <div class="main-detail">
                 <div class="text-des-input">
-                    <input type="text" placeholder="Nhập text" formControlName="kienTrucHienHuuDesc">
+                    <input type="text" placeholder="Nhập text" formControlName="kienTrucHienHuuDesc" [ngClass]="{'view-mode-control': isViewMode}">
                 </div>
 
                 <div class="image-demo-img">
@@ -41,13 +41,13 @@
                     <ng-container *ngFor="let url of existingBuildImageUrls; index as k">
                         <div class="display-img" (click)="viewFullScreenImage(existingBuildImageUrls, k)">
                             <img [src]="url.largeSizeUrl">
-                            <div class="icon-delete-image" [ngClass]="{'d-none': viewMode}" (click)="deleteExistingBuildImage(url)">
+                            <div class="icon-delete-image" [ngClass]="{'d-none': isViewMode}" (click)="deleteExistingBuildImage(url)">
                                 <i class="fa fa-times delete-icon" aria-hidden="true"></i>
                             </div>
                         </div>
                     </ng-container>
 
-                    <div class="perspective-image" [ngClass]="{'d-none': viewMode}" (click)="uploadExistingBuild.click()">
+                    <div class="perspective-image" [ngClass]="{'d-none': isViewMode}" (click)="uploadExistingBuild.click()">
                         <i class="fa fa-plus" aria-hidden="true"></i>
                         <p>Image</p>
                     </div>
@@ -61,7 +61,7 @@
             site</h6>
         <div class="main-detail">
             <div class="text-des-input">
-                <input type="text" placeholder="Nhập text" formControlName="yeuCauChuongNgaiDesc">
+                <input type="text" placeholder="Nhập text" formControlName="yeuCauChuongNgaiDesc" [ngClass]="{'view-mode-control': isViewMode}">
             </div>
 
             <div class="image-demo-img">
@@ -69,13 +69,13 @@
                 <ng-container *ngFor="let url of stacaleImageUrls; index as k">
                     <div class="display-img" (click)="viewFullScreenImage(stacaleImageUrls, k)">
                         <img [src]="url.largeSizeUrl">
-                        <div class="icon-delete-image" [ngClass]="{'d-none': viewMode}" (click)="deleteStacaleImage(url)">
+                        <div class="icon-delete-image" [ngClass]="{'d-none': isViewMode}" (click)="deleteStacaleImage(url)">
                             <i class="fa fa-times delete-icon" aria-hidden="true"></i>
                         </div>
                     </div>
                 </ng-container>
 
-                <div class="perspective-image" [ngClass]="{'d-none': viewMode}" (click)="uploadStacale.click()">
+                <div class="perspective-image" [ngClass]="{'d-none': isViewMode}" (click)="uploadStacale.click()">
                     <i class="fa fa-plus" aria-hidden="true"></i>
                     <p>Image</p>
                 </div>

@@ -7,7 +7,7 @@
                     or building</h6>
                 <div class="main-detail">
                     <div class="text-des-input">
-                        <input type="text" placeholder="Nhập text" formControlName="phaVoKetCauDesc">
+                        <input type="text" placeholder="Nhập text" formControlName="phaVoKetCauDesc" [ngClass]="{'view-mode-control': isViewMode}">
                     </div>
                     <div>
                         <div class="image-demo-img">
@@ -15,13 +15,13 @@
                             <ng-container *ngFor="let url of demobilisationImageUrls; index as k">
                                 <div class="display-img" (click)="viewFullScreenImage(demobilisationImageUrls, k)">
                                     <img [src]="url.largeSizeUrl">
-                                    <div class="icon-delete-image" [ngClass]="{'d-none': viewMode}" (click)="deleteDemobilisationImage(url)">
+                                    <div class="icon-delete-image" [ngClass]="{'d-none': isViewMode}" (click)="deleteDemobilisationImage(url)">
                                         <i class="fa fa-times delete-icon" aria-hidden="true"></i>
                                     </div>
                                 </div>
                             </ng-container>
                         </div>
-                        <div class="perspective-image" [ngClass]="{'d-none': viewMode}" (click)="uploadDemobilisation.click()">
+                        <div class="perspective-image" [ngClass]="{'d-none': isViewMode}" (click)="uploadDemobilisation.click()">
                             <i class="fa fa-plus" aria-hidden="true"></i>
                             <p>Image</p>
                         </div>
@@ -34,7 +34,7 @@
                 building</h6>
             <div class="main-detail">
                 <div class="text-des-input">
-                    <input type="text" placeholder="Nhập text" formControlName="giaCoKetCauDesc">
+                    <input type="text" placeholder="Nhập text" formControlName="giaCoKetCauDesc" [ngClass]="{'view-mode-control': isViewMode}">
                 </div>
                 <div>
                     <div class="image-demo-img">
@@ -43,12 +43,12 @@
                         <ng-container *ngFor="let url of consolidationImageUrls; index as k">
                             <div class="display-img" (click)="viewFullScreenImage(consolidationImageUrls, k)">
                                 <img [src]="url.largeSizeUrl">
-                                <div class="icon-delete-image" [ngClass]="{'d-none': viewMode}" (click)="deleteConsolidationImage(url)">
+                                <div class="icon-delete-image" [ngClass]="{'d-none': isViewMode}" (click)="deleteConsolidationImage(url)">
                                     <i class="fa fa-times delete-icon" aria-hidden="true"></i>
                                 </div>
                             </div>
                         </ng-container>
-                        <div class="perspective-image" [ngClass]="{'d-none': viewMode}" (click)="uploadConsolidation.click()">
+                        <div class="perspective-image" [ngClass]="{'d-none': isViewMode}" (click)="uploadConsolidation.click()">
                             <i class="fa fa-plus" aria-hidden="true"></i>
                             <p>Image</p>
                         </div>
@@ -61,21 +61,21 @@
                 conditions/figuring by picture</h6>
             <div class="main-detail">
                 <div class="text-des-input">
-                    <input type="text" placeholder="Nhập text" formControlName="dieuKienHinhAnhDesc">
+                    <input type="text" placeholder="Nhập text" formControlName="dieuKienHinhAnhDesc" [ngClass]="{'view-mode-control': isViewMode}">
                 </div>
                 <div>
                     <div class="image-demo-img">
-                        <input type="file" #uploaAdjacent (change)="uploaAdjacentImage($event)">
+                        <input type="file" #uploaAdjacent multiple (change)="uploaAdjacentImage($event)">
 
                         <ng-container *ngFor="let url of adjacentImageUrls; index as k">
                             <div class="display-img" (click)="viewFullScreenImage(adjacentImageUrls, k)">
                                 <img [src]="url.largeSizeUrl">
-                                <div class="icon-delete-image" [ngClass]="{'d-none': viewMode}" (click)="deleteAdjacentImage(url)">
+                                <div class="icon-delete-image" [ngClass]="{'d-none': isViewMode}" (click)="deleteAdjacentImage(url)">
                                     <i class="fa fa-times delete-icon" aria-hidden="true"></i>
                                 </div>
                             </div>
                         </ng-container>
-                        <div class="perspective-image" [ngClass]="{'d-none': viewMode}" (click)="uploaAdjacent.click()">
+                        <div class="perspective-image" [ngClass]="{'d-none': isViewMode}" (click)="uploaAdjacent.click()">
                             <i class="fa fa-plus" aria-hidden="true"></i>
                             <p>Image</p>
                         </div>

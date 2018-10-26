@@ -21,7 +21,7 @@ import { FormInComponent } from '../../../../../../shared/components/form-in/for
 })
 export class LiveformSiteReportComponent implements OnInit {
   static formModel: SiteSurveyReport = new SiteSurveyReport();
-  static isViewMode: boolean;
+  static actionMode: string;
   bidOpportunityId: number;
   page: number;
   pageSize: number;
@@ -174,6 +174,7 @@ export class LiveformSiteReportComponent implements OnInit {
     this.spinner.show();
     this.siteSurveyReportService.changedHistoryTenderSiteReport(this.bidOpportunityId, page, pageSize).subscribe(respone => {
       this.updateInfoList = respone.items;
+      console.log(this.updateInfoList);
       this.pagedResultChangeHistoryList = respone;
       this.indexItemHistoryChange = +respone.total - +respone.pageSize * +respone.currentPage;
       this.updateInfoList = groupBy(this.pagedResultChangeHistoryList.items, [{ field: 'changedTime' }]);
@@ -193,8 +194,8 @@ export class LiveformSiteReportComponent implements OnInit {
       });
   }
 
-  onActivate(check: boolean) {
-    LiveformSiteReportComponent.isViewMode = check;
+  onActivate(actionMode: string) {
+    LiveformSiteReportComponent.actionMode = actionMode;
   }
 
   print() {

@@ -136,7 +136,7 @@ input[type=text] {
     margin: 10px 0;
 
     input {
-        width: 40%;
+        width: 50%;
     }
 }
 
@@ -161,7 +161,7 @@ input[type=text] {
         }
 
         input {
-            width: 30%;
+            width: 50%;
         }
     }
 }
@@ -239,7 +239,7 @@ label {
 }
 
 .view-mode-control {
-    display: none;
+    pointer-events: none;
 }
 // Set Font-Size
 .big-title {
@@ -257,4 +257,7 @@ input[type=text] {
 input[type=text]::placeholder {
     color: #cccccc;
     font-style: italic;
+}
+.unset-margin {
+    margin-bottom: unset;
 }
