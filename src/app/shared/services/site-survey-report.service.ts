@@ -5,10 +5,9 @@ import { Observable } from 'rxjs/Observable';
 import { DictionaryItem, PagedResult } from '../models';
 import { SiteSurveyReport } from '../models/site-survey-report/site-survey-report';
 import { ScaleOverall } from '../models/site-survey-report/scale-overall.model';
-import { ImageItem } from '../models/site-survey-report/image';
 import { AlertService } from './alert.service';
-import { UserList } from '../models/site-survey-report/user-list';
 import { HistoryLiveForm } from '../models/ho-so-du-thau/history-liveform.model';
+import { CustomerModel } from '../models/site-survey-report/customer-list';
 
 @Injectable()
 export class SiteSurveyReportService {
@@ -59,7 +58,7 @@ export class SiteSurveyReportService {
     });
   }
   // Get Danh sách User
-  getAllUser(searchTerm: string): Observable<UserList[]> {
+  getAllUser(searchTerm: string): Observable<CustomerModel[]> {
     const url = `user/search/?searchTerm=${searchTerm}`;
     return this.apiService.get(url)
       .map(response => response.result).share();

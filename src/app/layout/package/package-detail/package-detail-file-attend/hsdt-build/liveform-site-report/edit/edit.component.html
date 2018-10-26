@@ -113,8 +113,8 @@
                     <div class="col-lg-8">
                         <select class="custom-select-option option-set-width" [(ngModel)]="customerId">
                             <option value="">---Chọn---</option>
-                            <option *ngFor="let item of listCustomerContact" [value]="item.employeeId">
-                                {{ item.employeeName }}
+                            <option *ngFor="let customer of listCustomerContact" [value]="customer.employeeId">
+                                {{ customer.employeeName }}
                             </option>
                         </select>
                     </div>

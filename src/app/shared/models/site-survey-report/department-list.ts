@@ -1,4 +1,4 @@
 export class DepartmentList {
-    key: number;
-    value: string;
+    key: number | string;
+    value: number | string;
 }
