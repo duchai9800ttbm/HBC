@@ -36,6 +36,7 @@ export class InterviewNoticeComponent implements OnInit {
   file = [];
   packageInfo;
   interviewChoose;
+  maxBidInterviewInvitationId = 1;
   constructor(
     private emailService: EmailService,
     private spinner: NgxSpinnerService,
@@ -88,10 +89,12 @@ export class InterviewNoticeComponent implements OnInit {
     });
     if (this.interviewInvitationService.getChooseInterviewNotification()) {
       this.interviewChoose = this.interviewInvitationService.getChooseInterviewNotification();
+      // this.maxBidInterviewInvitationId = Math.max.apply(Math, this.interviewChoose.map(item => item.interviewTimes));
+      const sortInterviewTimes = this.interviewChoose.sort((a, b) => b.interviewTimes - a.interviewTimes);
+      this.maxBidInterviewInvitationId = sortInterviewTimes[0].id;
       this.emailModel.content = `<br>`;
       this.interviewChoose.forEach((element, index) => {
         this.interviewInvitationService.LoadFileCreateInterview(element.id).subscribe(response => {
-          console.log('response', response, response[0]);
           this.file.push(response);
         });
         const approvedDate = DateTimeConvertHelper.fromTimestampToDtObject(element.approvedDate * 1000);
@@ -170,7 +173,8 @@ export class InterviewNoticeComponent implements OnInit {
     if (this.emailModel && this.emailModel.to) {
       this.emailModel.bidOpportunityId = this.packageId;
       this.spinner.show();
-      this.emailService.sendEmailInterview(this.emailModel, this.file).subscribe(result => {
+      console.log('this.max', this.maxBidInterviewInvitationId);
+      this.emailService.sendEmailInterview(this.emailModel, this.file, this.maxBidInterviewInvitationId).subscribe(result => {
         this.closePopup();
         this.statusObservableHsdtService.change();
         this.router.navigate([`/package/detail/${this.packageId}/attend/interview-negotiation/prepare`]);

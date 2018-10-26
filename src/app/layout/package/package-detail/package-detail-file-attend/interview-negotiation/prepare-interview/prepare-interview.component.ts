@@ -27,23 +27,26 @@ export class PrepareInterviewComponent implements OnInit {
   searchApprovedDossiers$ = new BehaviorSubject<string>('');
   pagedResult: ApprovedDossiersList[];
   indexTable = 0;
-  isNgOnInit: boolean;
+  isNgOnInit = false;
   ngOnInit() {
     this.packageId = +PackageDetailComponent.packageId;
     this.interviewInvitationService.watchRefeshPrepareInterview().subscribe(value => {
       this.spinner.show();
       this.interviewInvitationService.getListApprovedDossiers(this.packageId, this.searchApprovedDossiers$.value).subscribe(response => {
         this.pagedResult = response;
-        console.log('this.pageResult', this.pagedResult);
         this.spinner.hide();
         if (this.isNgOnInit) {
           this.alertService.success('Dữ liệu đã được cập nhật mới nhất!');
+
         }
         this.isNgOnInit = true;
       },
         err => {
           this.spinner.hide();
-          this.alertService.error('Cập nhật dữ liệu thất bại!');
+          console.log('this.isNgOnInit', this.isNgOnInit);
+          if (this.isNgOnInit) {
+            this.alertService.error('Cập nhật dữ liệu thất bại!');
+          }
         }
       );
     });
@@ -57,7 +60,11 @@ export class PrepareInterviewComponent implements OnInit {
           this.spinner.hide();
         },
           err => {
-            this.alertService.error('Cập nhật dữ liệu thất bại!');
+            this.spinner.hide();
+            if (this.isNgOnInit) {
+              this.alertService.error('Cập nhật dữ liệu thất bại!');
+            }
+            this.isNgOnInit = true;
           });
       });
   }
@@ -133,6 +140,7 @@ export class PrepareInterviewComponent implements OnInit {
     this.interviewInvitationService.downloadTenderdocument(tenderDocumentId).subscribe(response => {
     },
       err => {
+        this.spinner.hide();
         this.alertService.error('Tải tài liệu hồ sơ dự thầu không thành công!');
       });
   }

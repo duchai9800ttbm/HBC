@@ -177,7 +177,7 @@ export class EmailService {
   }
 
   // gửi thư thông báo triển khai
-  sendEmailDeployment(data: SendEmailModel,  file: File[]) {
+  sendEmailDeployment(data: SendEmailModel, file: File[]) {
     const url = `bidopportunity/hsdt/guithuthongbaotrienkhai`;
     const dataObj = new FormData();
     dataObj.append('BidOpportunityId', data.bidOpportunityId + '');
@@ -185,7 +185,7 @@ export class EmailService {
     data.recipientEmails.forEach((item, index) => {
       dataObj.append('RecipientEmails[' + index + ']', item);
     });
-    file.forEach( item => {
+    file.forEach(item => {
       dataObj.append('AttachmentFiles', item);
     });
     dataObj.append('Content', data.content);
@@ -210,16 +210,16 @@ export class EmailService {
   }
 
   // gửi thư thông báo phỏng vấn
-  sendEmailInterview(data: SendEmailModel,  file: File[]) {
-    console.log('data-phỏng vấn', data, file);
-    const url = `bidopportunity/hsdt/sendmailtostakeholders`;
+  sendEmailInterview(data: SendEmailModel, file: File[], bidInterviewInvitationId: number) {
+    console.log('data-phỏng vấn', data, file, bidInterviewInvitationId);
+    const url = `bidopportunity/hsdt/sendmailtostakeholders/${bidInterviewInvitationId}`;
     const dataObj = new FormData();
     dataObj.append('BidOpportunityId', data.bidOpportunityId + '');
     dataObj.append('Subject', data.subject);
     data.recipientEmails.forEach((item, index) => {
       dataObj.append('RecipientEmails[' + index + ']', item);
     });
-    file.forEach( item => {
+    file.forEach(item => {
       dataObj.append('AttachmentFiles', item);
     });
     dataObj.append('Content', data.content);
