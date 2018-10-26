@@ -7,7 +7,7 @@
             <img class="image-empty" src="assets/images/file_empty.png">
             <div class="mt-3">Hiện chưa có bản báo cáo khảo sát công trường nào</div>
             <div class="mt-3 d-flex justify-content-center">
-                <button class="btn btn-primary" [routerLink]="['./create']" (click)="onActivate(false)">
+                <button class="btn btn-primary" [routerLink]="['./create']" (click)="onActivate('createMode')">
                     Tạo mới báo cáo khảo sát công trường
                 </button>
             </div>
@@ -41,15 +41,15 @@
                         {{ documentData.nguoiTao?.name }}
                     </td>
                     <td [title]="(documentData.ngayTao)*1000 | date:'dd/MM/yyyy'">
-                        {{ (documentData.ngayTao)*1000 | date:'dd/MM/yyyy' }}
+                        {{ (documentData.ngayTao)*1000 | date:'dd/MM/yyyy HH:mm': '+0000' }}
                     </td>
                     <td>
                         <div class="d-flex justify-content-center">
                             <div>
-                                <a title="Xem file" (click)="onActivate(true)" [routerLink]="['./info']">
+                                <a title="Xem file" (click)="onActivate('viewMode')" [routerLink]="['./info']">
                                     <i class="fa fa-eye text-warning" aria-hidden="true"></i>
                                 </a>
-                                <a title="Edit file" class=" text-success ml-3" (click)="onActivate(false)"
+                                <a title="Edit file" class=" text-success ml-3" (click)="onActivate('editMode')"
                                     [routerLink]="['./edit']">
                                     <i class="fa fa-pencil cursor-pointer" aria-hidden="true"> </i>
                                 </a>

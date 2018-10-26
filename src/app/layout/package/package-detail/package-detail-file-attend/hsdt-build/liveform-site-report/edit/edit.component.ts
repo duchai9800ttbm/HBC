@@ -1,18 +1,18 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { DATETIME_PICKER_CONFIG } from '../../../../../../../shared/configs/datepicker.config';
 // tslint:disable-next-line:import-blacklist
-import { Subject, Subscription } from 'rxjs';
+import { Subject, Subscription, Observable } from 'rxjs';
 import { Router } from '@angular/router';
-import { AlertService } from '../../../../../../../shared/services';
+import { AlertService, DataService } from '../../../../../../../shared/services';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { LiveformSiteReportComponent } from '../liveform-site-report.component';
 import { PackageDetailComponent } from '../../../../package-detail.component';
 import { PackageService } from '../../../../../../../shared/services/package.service';
 import { PackageInfoModel } from '../../../../../../../shared/models/package/package-info.model';
 import { SiteSurveyReportService } from '../../../../../../../shared/services/site-survey-report.service';
-import { DepartmentList } from '../../../../../../../shared/models/site-survey-report/department-list';
 import { HoSoDuThauService } from '../../../../../../../shared/services/ho-so-du-thau.service';
 import { CustomerModel } from '../../../../../../../shared/models/site-survey-report/customer-list';
+import { DepartmentsFormBranches } from '../../../../../../../shared/models/user/departments-from-branches';
 
 @Component({
   selector: 'app-edit',
@@ -39,13 +39,19 @@ export class EditComponent implements OnInit, OnDestroy {
   currentBidOpportunityId: number;
   packageData = new PackageInfoModel();
   customerId;
-  listDepartments = new Array(new DepartmentList());
+  customerName;
+  listDepartments: Observable<DepartmentsFormBranches[]>;
   departmentId;
+  departmentName;
   listCustomerContact: CustomerModel[];
   ngayKhaoSat;
   isDraft: boolean;
   isCreate: boolean;
-  isViewMode: boolean;
+  // Set ActionMode
+  isViewMode = false;
+  isCreateMode = false;
+  isEditMode = false;
+  // End Set ActionMode
   subscription: Subscription;
   isClosedHSDT: boolean;
   constructor(
@@ -54,18 +60,22 @@ export class EditComponent implements OnInit, OnDestroy {
     private router: Router,
     private alertService: AlertService,
     private spinner: NgxSpinnerService,
-    private hoSoDuThauService: HoSoDuThauService
+    private hoSoDuThauService: HoSoDuThauService,
+    private dataService: DataService
   ) { }
 
   ngOnInit() {
-    this.departmentId = 49; // Set Default Value
-    this.customerId = '';
+    this.currentBidOpportunityId = +PackageDetailComponent.packageId;
+    this.listDepartments = this.dataService.getListDepartmentsFromBranches();
     this.getInfoTenderPreparationPlanning();
     this.getAllUser();
     this.isCreate = LiveformSiteReportComponent.formModel.isCreate;
     this.isDraft = LiveformSiteReportComponent.formModel.isDraft;
-    this.isViewMode = LiveformSiteReportComponent.isViewMode;
-    this.currentBidOpportunityId = +PackageDetailComponent.packageId;
+    // Check Action Mode
+    this.isCreateMode = LiveformSiteReportComponent.actionMode === 'createMode';
+    this.isEditMode = LiveformSiteReportComponent.actionMode === 'editMode';
+    this.isViewMode = LiveformSiteReportComponent.actionMode === 'viewMode';
+    // End Check Action Mode
     this.packageService.getInforPackageID(this.currentBidOpportunityId).subscribe(result => {
       this.packageData = result;
     }, err => {
@@ -75,39 +85,33 @@ export class EditComponent implements OnInit, OnDestroy {
     this.subscription = this.hoSoDuThauService.watchStatusPackage().subscribe(status => {
       this.isClosedHSDT = status;
     });
+    this.loadData();
+  }
+  loadData() {
+    const phongBan = LiveformSiteReportComponent.formModel.phongBan;
+    this.departmentId = (phongBan) ? phongBan.id : 49;
+    this.departmentName = (phongBan) ? phongBan.text : '';
+    const nguoiKhaoSat = LiveformSiteReportComponent.formModel.nguoiKhaoSat;
+    this.customerId = (nguoiKhaoSat) ? nguoiKhaoSat.id : '';
+    this.customerName = (nguoiKhaoSat) ? nguoiKhaoSat.text : '';
   }
   getAllUser() {
     this.siteSurveyReportService.getAllUser('').subscribe(data => {
       this.listCustomerContact = data;
-      this.listCustomerContact.forEach(x => {
-        if (x.department) {
-          let isDuplicate: boolean;
-          this.listDepartments.forEach(item => {
-            if (item.key == x.department.key) {
-              isDuplicate = true;
-            } else { isDuplicate = false; }
-          });
-          if (!isDuplicate) {
-            this.listDepartments.push({
-              key: x.department.key,
-              value: x.department.value
-            });
-          }
-        }
-      });
     }, err => {
       this.alertService.error('Tải thông tin người dùng không thành công.');
     });
   }
   getInfoTenderPreparationPlanning() {
     this.packageService.getTenderPreparationPlanning(this.currentBidOpportunityId).subscribe(data => {
-      this.ngayKhaoSat = data.finishDate;
+      const tempDataTasks = data.tasks;
+      this.ngayKhaoSat = tempDataTasks.find(item => item.itemId == 6).finishDate;
     }, err => {
       this.alertService.error('Lấy thông tin Phân công tiến độ không thành công.');
     });
   }
   submitLiveForm(event) {
-    LiveformSiteReportComponent.isViewMode = true;
+    LiveformSiteReportComponent.actionMode = 'viewMode';
     this.isViewMode = true;
     LiveformSiteReportComponent.formModel.phongBan = {
       id: this.departmentId,
@@ -159,11 +163,10 @@ export class EditComponent implements OnInit, OnDestroy {
   cancelCreateUpdate() {
     this.router.navigate([`/package/detail/${this.currentBidOpportunityId}/attend/build/liveformsite`]);
   }
-  submiToApprove() {
-    this.alertService.error('Chưa có API gửi duyệt LiveForm Công trình');
-  }
   editLiveform() {
-    LiveformSiteReportComponent.isViewMode = false;
+    LiveformSiteReportComponent.actionMode = 'editMode';
+    this.isEditMode = true;
+    this.isCreateMode = false;
     this.isViewMode = false;
     this.router.navigate([`/package/detail/${this.currentBidOpportunityId}/attend/build/liveformsite/edit`]);
   }

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { DemoConso } from '../../../../../../../../shared/models/site-survey-report/demo-conso.model';
 import { FormGroup, FormBuilder } from '@angular/forms';
 import { EditComponent } from '../edit.component';
@@ -14,13 +14,16 @@ import { SiteSurveyReportService } from '../../../../../../../../shared/services
   styleUrls: ['./demo-conso.component.scss']
 })
 export class DemoConsoComponent implements OnInit {
+  @ViewChild('uploadDemobilisation') uploadDemobilisation;
+  @ViewChild('uploadConsolidation') uploadConsolidation;
+  @ViewChild('uploaAdjacent') uploaAdjacent;
   demoConsoForm: FormGroup;
 
   demobilisationImageUrls = [];
   consolidationImageUrls = [];
   adjacentImageUrls = [];
   url;
-  viewMode;
+  isViewMode = false;
   imageUrlArray = [];
   indexOfImage;
   showPopupViewImage = false;
@@ -48,14 +51,7 @@ export class DemoConsoComponent implements OnInit {
     this.demoConsoForm.valueChanges.subscribe(data => this.mappingToLiveFormData(data));
   }
   checkFlag() {
-    const flag = LiveformSiteReportComponent.isViewMode;
-    this.viewMode = flag;
-    if (flag) {
-      const inputs = document.getElementsByTagName('input');
-      for (let i = 0; i < inputs.length; i++) {
-        inputs[i].style.pointerEvents = 'none';
-      }
-    }
+    this.isViewMode = LiveformSiteReportComponent.actionMode === 'viewMode';
   }
 
   initData() {
@@ -104,6 +100,7 @@ export class DemoConsoComponent implements OnInit {
       .subscribe(res => {
         this.demobilisationImageUrls = [...this.demobilisationImageUrls, ...res];
         this.demoConsoForm.get('phaVoKetCauList').patchValue(this.demobilisationImageUrls);
+        this.uploadDemobilisation.nativeElement.value = null;
       }, err => {
         this.alertService.error('Upload hình ảnh thất bại. Xin vui lòng thử lại!');
         this.demobilisationImageUrls.forEach(x => {
@@ -134,6 +131,7 @@ export class DemoConsoComponent implements OnInit {
       .subscribe(res => {
         this.consolidationImageUrls = [...this.consolidationImageUrls, ...res];
         this.demoConsoForm.get('giaCoKetCauList').patchValue(this.consolidationImageUrls);
+        this.uploadConsolidation.nativeElement.value = null;
       }, err => {
         this.alertService.error('Upload hình ảnh thất bại. Xin vui lòng thử lại!');
         this.consolidationImageUrls.forEach(x => {
@@ -164,6 +162,7 @@ export class DemoConsoComponent implements OnInit {
       .subscribe(res => {
         this.adjacentImageUrls = [...this.adjacentImageUrls, ...res];
         this.demoConsoForm.get('dieuKienHinhAnhList').patchValue(this.adjacentImageUrls);
+        this.uploaAdjacent.nativeElement.value = null;
       }, err => {
         this.alertService.error('Upload hình ảnh thất bại. Xin vui lòng thử lại!');
         this.adjacentImageUrls.forEach(x => {

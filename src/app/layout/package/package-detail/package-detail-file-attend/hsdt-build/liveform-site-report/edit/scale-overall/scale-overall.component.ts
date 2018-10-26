@@ -1,33 +1,22 @@
 import {
   Component,
   OnInit,
-  TemplateRef,
   ViewChild
 } from '@angular/core';
 import {
   ScaleOverall
 } from '../../../../../../../../shared/models/site-survey-report/scale-overall.model';
 import {
-  Router
-} from '@angular/router';
-import {
   FormGroup,
   FormBuilder,
   FormArray,
   FormControl
 } from '@angular/forms';
-import {
-  EditComponent
-} from '../edit.component';
-import {
-  Image,
-  ImageItem
-} from '../../../../../../../../shared/models/site-survey-report/image';
 import { LiveformSiteReportComponent } from '../../liveform-site-report.component';
 import { PackageDetailComponent } from '../../../../../package-detail.component';
 import { AlertService } from '../../../../../../../../shared/services';
 import { SiteSurveyReportService } from '../../../../../../../../shared/services/site-survey-report.service';
-import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
+import { BsModalRef } from 'ngx-bootstrap/modal';
 @Component({
   selector: 'app-scale-overall',
   templateUrl: './scale-overall.component.html',
@@ -52,7 +41,7 @@ export class ScaleOverallComponent implements OnInit {
   structureImageUrls = [];
   requirementsImageUrls = [];
   url;
-  isViewMode;
+  isViewMode = false;
   modalRef: BsModalRef;
   imageUrlArray = [];
   indexOfImage;
@@ -68,10 +57,8 @@ export class ScaleOverallComponent implements OnInit {
   //   return this.trangThaiCongTrinhForm.get('trangthaiCongTrinhList') as FormArray;
   // }
   constructor(
-    private modalService: BsModalService,
     private siteSurveyReportService: SiteSurveyReportService,
     private alertService: AlertService,
-    private router: Router,
     private fb: FormBuilder
 
   ) { }
@@ -112,13 +99,7 @@ export class ScaleOverallComponent implements OnInit {
   }
 
   checkFlag() {
-    this.isViewMode = LiveformSiteReportComponent.isViewMode;
-    if (this.isViewMode) {
-      const inputs = document.getElementsByTagName('input');
-      for (let i = 0; i < inputs.length; i++) {
-        inputs[i].style.pointerEvents = 'none';
-      }
-    }
+    this.isViewMode = LiveformSiteReportComponent.actionMode === 'viewMode';
   }
 
   initData() {

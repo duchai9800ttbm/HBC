@@ -1,6 +1,6 @@
 <div class="detail-info">
     <div class="step-info">
-        <h6 class="big-title font-weight-bold">7.&nbsp;các thông tin hữu ích khác/ usefull infomation</h6>
+        <h6 class="big-title font-weight-bold">7.&nbsp;các thông tin hữu ích khác/ useful infomation</h6>
         <div>
             <div class="detail-each-title">
                 <h6 class="small-title font-weight-bold">
@@ -18,7 +18,7 @@
                             (deleteSubjectEmit)="deleteSubject(i)"></app-subject-item>
                     </ng-container>
                 </ng-container>
-                <div class="main-detail">
+                <div class="main-detail" [ngClass]="{'d-none': isViewMode}">
                     <button type="button" class="btn btn-primary" (click)="addSubject()">Thêm chủ đề</button>
                 </div>
             </div>

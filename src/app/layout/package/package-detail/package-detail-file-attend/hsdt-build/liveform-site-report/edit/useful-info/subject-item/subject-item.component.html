@@ -2,20 +2,20 @@
     <div class="img-demo-des">
         <label class="label-hide"></label>
         <span class="custom-dropdown w-30">
-            <select class="form-control" [ngClass]="{'view-mode-control': viewMode}" [(ngModel)]="usefulInfo.title"
+            <select class="form-control" [ngClass]="{'view-mode-control': isViewMode}" [(ngModel)]="usefulInfo.title"
                 (change)="selectedChange()">
                 <option value="">---Chọn---</option>
                 <option [value]="subject" *ngFor="let subject of subjectList">{{ subject }}</option>
             </select>
         </span>
-        <i (click)="deleteSubject()" [ngClass]="{'d-none': viewMode}" class="fa fa-times-circle icon-delete" aria-hidden="true"></i>
+        <i (click)="deleteSubject()" [ngClass]="{'d-none': isViewMode}" class="fa fa-times-circle icon-delete" aria-hidden="true"></i>
     </div>
     <div class="topic7" *ngFor="let content of usefulInfo.content; let i = index">
         <ng-container>
 
             <div class="img-demo-des">
                 <label>Nội dung {{ i+1 }}
-                    <span class="add-content-button" [ngClass]="{'d-none': viewMode}" (click)="addContent($event)"
+                    <span class="add-content-button" [ngClass]="{'d-none': isViewMode}" (click)="addContent($event)"
                         *ngIf="(i+1) == usefulInfo.content.length">
                         <i class="fa fa-plus-square-o" aria-hidden="true"></i>
                     </span>

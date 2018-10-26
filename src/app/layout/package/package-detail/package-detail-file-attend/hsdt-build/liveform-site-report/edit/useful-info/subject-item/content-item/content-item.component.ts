@@ -1,11 +1,8 @@
-import { Component, OnInit, Output, Input, EventEmitter } from '@angular/core';
+import { Component, OnInit, Output, Input, EventEmitter, ViewChild } from '@angular/core';
 
 import { FormBuilder, FormGroup } from '@angular/forms';
-import { UsefulInfo, ContentItem } from '../../../../../../../../../../shared/models/site-survey-report/useful-info.model';
-import { EditComponent } from '../../../edit.component';
-import { userInfo } from 'os';
+import { ContentItem } from '../../../../../../../../../../shared/models/site-survey-report/useful-info.model';
 import { LiveformSiteReportComponent } from '../../../../liveform-site-report.component';
-import { Router } from '@angular/router';
 import { PackageDetailComponent } from '../../../../../../../package-detail.component';
 import { AlertService } from '../../../../../../../../../../shared/services';
 import { SiteSurveyReportService } from '../../../../../../../../../../shared/services/site-survey-report.service';
@@ -16,6 +13,7 @@ import { SiteSurveyReportService } from '../../../../../../../../../../shared/se
   styleUrls: ['./content-item.component.scss']
 })
 export class ContentItemComponent implements OnInit {
+  @ViewChild('uploadContent') uploadContent;
   @Input() contentItemModel: ContentItem;
   @Output() valueChange = new EventEmitter<ContentItem>();
   @Output() deleteContent = new EventEmitter<boolean>();
@@ -26,13 +24,12 @@ export class ContentItemComponent implements OnInit {
   indexOfImage;
   showPopupViewImage = false;
   currentBidOpportunityId: number;
-  viewMode;
+  isViewMode = false;
 
   constructor(
     private siteSurveyReportService: SiteSurveyReportService,
     private alertService: AlertService,
-    private fb: FormBuilder,
-    private router: Router,
+    private fb: FormBuilder
   ) { }
 
   ngOnInit() {
@@ -42,14 +39,7 @@ export class ContentItemComponent implements OnInit {
     this.contentItemForm.valueChanges.subscribe(data => this.mappingData(data));
   }
   checkFlag() {
-    const flag = LiveformSiteReportComponent.isViewMode;
-    this.viewMode = flag;
-    if (flag) {
-      const inputs = document.getElementsByTagName('input');
-      for (let i = 0; i < inputs.length; i++) {
-        inputs[i].style.pointerEvents = 'none';
-      }
-    }
+    this.isViewMode = LiveformSiteReportComponent.actionMode === 'viewMode';
   }
 
   createForm() {
@@ -76,6 +66,7 @@ export class ContentItemComponent implements OnInit {
       .subscribe(res => {
         this.contentItemImageList = [...this.contentItemImageList, ...res];
         this.contentItemForm.get('chiTietNoiDungList').patchValue(this.contentItemImageList);
+        this.uploadContent.nativeElement.value = null;
       }, err => {
         this.alertService.error('Upload hình ảnh thất bại. Xin vui lòng thử lại!');
         this.contentItemImageList.forEach(x => {

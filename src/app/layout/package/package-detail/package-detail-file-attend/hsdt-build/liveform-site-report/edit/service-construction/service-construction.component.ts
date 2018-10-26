@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { ServiceConstruction } from '../../../../../../../../shared/models/site-survey-report/service-construction.model';
 import { FormGroup, FormBuilder } from '@angular/forms';
 import { EditComponent } from '../edit.component';
@@ -14,6 +14,13 @@ import { SiteSurveyReportService } from '../../../../../../../../shared/services
   styleUrls: ['./service-construction.component.scss']
 })
 export class ServiceConstructionComponent implements OnInit {
+  @ViewChild('uploadSupplySystem') uploadSupplySystem;
+  @ViewChild('uploadSupplyPoint') uploadSupplyPoint;
+  @ViewChild('uploadDrainageSystem') uploadDrainageSystem;
+  @ViewChild('uploadDrainagePoint') uploadDrainagePoint;
+  @ViewChild('uploadPowerStation') uploadPowerStation;
+  @ViewChild('uploadMediumVoltageSystem') uploadMediumVoltageSystem;
+  @ViewChild('uploadPowerOther') uploadPowerOther;
   serviceConstructionForm: FormGroup;
   supplySystemImageUrls = [];
   supplyPointImageUrls = [];
@@ -23,7 +30,7 @@ export class ServiceConstructionComponent implements OnInit {
   mediumVoltageSystemImageUrls = [];
   powerOtherImageUrls = [];
   url;
-  viewMode;
+  isViewMode;
   imageUrlArray = [];
   indexOfImage;
   showPopupViewImage = false;
@@ -82,14 +89,7 @@ export class ServiceConstructionComponent implements OnInit {
 
   }
   checkFlag() {
-    const flag = LiveformSiteReportComponent.isViewMode;
-    this.viewMode = flag;
-    if (flag) {
-      const inputs = document.getElementsByTagName('input');
-      for (let i = 0; i < inputs.length; i++) {
-        inputs[i].style.pointerEvents = 'none';
-      }
-    }
+    this.isViewMode = LiveformSiteReportComponent.actionMode === 'viewMode';
   }
   initData() {
     const obj = LiveformSiteReportComponent.formModel.serviceConstruction;
@@ -179,6 +179,7 @@ export class ServiceConstructionComponent implements OnInit {
       .subscribe(res => {
         this.supplySystemImageUrls = [...this.supplySystemImageUrls, ...res];
         this.serviceConstructionForm.get('heThongNuocHienHuuList').patchValue(this.supplySystemImageUrls);
+        this.uploadSupplySystem.nativeElement.value = null;
       }, err => {
         this.alertService.error('Upload hình ảnh thất bại. Xin vui lòng thử lại!');
         this.supplySystemImageUrls.forEach(x => {
@@ -209,6 +210,7 @@ export class ServiceConstructionComponent implements OnInit {
       .subscribe(res => {
         this.supplyPointImageUrls = [...this.supplyPointImageUrls, ...res];
         this.serviceConstructionForm.get('heThongNuocDiemDauNoiList').patchValue(this.supplyPointImageUrls);
+        this.uploadSupplyPoint.nativeElement.value = null;
       }, err => {
         this.alertService.error('Upload hình ảnh thất bại. Xin vui lòng thử lại!');
         this.supplyPointImageUrls.forEach(x => {
@@ -240,6 +242,7 @@ export class ServiceConstructionComponent implements OnInit {
       .subscribe(res => {
         this.drainageSystemImageUrls = [...this.drainageSystemImageUrls, ...res];
         this.serviceConstructionForm.get('heThongNuocThoatHienHuuList').patchValue(this.drainageSystemImageUrls);
+        this.uploadDrainageSystem.nativeElement.value = null;
       }, err => {
         this.alertService.error('Upload hình ảnh thất bại. Xin vui lòng thử lại!');
         this.drainageSystemImageUrls.forEach(x => {
@@ -270,6 +273,7 @@ export class ServiceConstructionComponent implements OnInit {
       .subscribe(res => {
         this.drainagePointImageUrls = [...this.drainagePointImageUrls, ...res];
         this.serviceConstructionForm.get('heThongNuocThoatDiemDauNoiList').patchValue(this.drainagePointImageUrls);
+        this.uploadDrainagePoint.nativeElement.value = null;
       }, err => {
         this.alertService.error('Upload hình ảnh thất bại. Xin vui lòng thử lại!');
         this.drainagePointImageUrls.forEach(x => {
@@ -300,6 +304,7 @@ export class ServiceConstructionComponent implements OnInit {
       .subscribe(res => {
         this.powerStationImageUrls = [...this.powerStationImageUrls, ...res];
         this.serviceConstructionForm.get('tramHaTheList').patchValue(this.powerStationImageUrls);
+        this.uploadPowerStation.nativeElement.value = null;
       }, err => {
         this.alertService.error('Upload hình ảnh thất bại. Xin vui lòng thử lại!');
         this.powerStationImageUrls.forEach(x => {
@@ -330,6 +335,7 @@ export class ServiceConstructionComponent implements OnInit {
       .subscribe(res => {
         this.mediumVoltageSystemImageUrls = [...this.mediumVoltageSystemImageUrls, ...res];
         this.serviceConstructionForm.get('duongDayTrungTheList').patchValue(this.mediumVoltageSystemImageUrls);
+        this.uploadMediumVoltageSystem.nativeElement.value = null;
       }, err => {
         this.alertService.error('Upload hình ảnh thất bại. Xin vui lòng thử lại!');
         this.mediumVoltageSystemImageUrls.forEach(x => {
@@ -360,6 +366,7 @@ export class ServiceConstructionComponent implements OnInit {
       .subscribe(res => {
         this.powerOtherImageUrls = [...this.powerOtherImageUrls, ...res];
         this.serviceConstructionForm.get('heThongDienKhacList').patchValue(this.powerOtherImageUrls);
+        this.uploadPowerOther.nativeElement.value = null;
       }, err => {
         this.alertService.error('Upload hình ảnh thất bại. Xin vui lòng thử lại!');
         this.powerOtherImageUrls.forEach(x => {

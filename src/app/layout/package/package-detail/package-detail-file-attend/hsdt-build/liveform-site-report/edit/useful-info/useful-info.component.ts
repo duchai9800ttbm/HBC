@@ -17,10 +17,9 @@ export class UsefulInfoComponent implements OnInit {
   usefulInfoForm: FormGroup;
   topicLists = [];
   url;
-  viewMode;
   currentBidOpportunityId: number;
-  usefulInfoData = new Array(new UsefulInfo());
-  // usefulInfoData = [new UsefulInfo()];
+  usefulInfoData = new Array<UsefulInfo>();
+  isViewMode = false;
   constructor(
     private router: Router
   ) { }
@@ -30,15 +29,9 @@ export class UsefulInfoComponent implements OnInit {
     this.checkFlag();
     this.initdata();
   }
+
   checkFlag() {
-    const flag = LiveformSiteReportComponent.isViewMode;
-    this.viewMode = flag;
-    if (flag) {
-      const inputs = document.getElementsByTagName('input');
-      for (let i = 0; i < inputs.length; i++) {
-        inputs[i].style.pointerEvents = 'none';
-      }
-    }
+    this.isViewMode = LiveformSiteReportComponent.actionMode === 'viewMode';
   }
   addSubject() {
     const obj = new UsefulInfo();

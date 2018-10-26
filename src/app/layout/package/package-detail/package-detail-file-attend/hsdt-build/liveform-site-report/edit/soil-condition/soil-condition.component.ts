@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { SoilCondition } from '../../../../../../../../shared/models/site-survey-report/soil-condition.model';
 import { FormGroup, FormBuilder } from '@angular/forms';
 import { EditComponent } from '../edit.component';
@@ -14,12 +14,14 @@ import { SiteSurveyReportService } from '../../../../../../../../shared/services
   styleUrls: ['./soil-condition.component.scss']
 })
 export class SoilConditionComponent implements OnInit {
+  @ViewChild('uploadFooting') uploadFooting;
+  @ViewChild('uploadInvestigation') uploadInvestigation;
   soilConditionForm: FormGroup;
 
   footingImageUrls = [];
   investigationImageUrls = [];
   url;
-  viewMode;
+  isViewMode;
   imageUrlArray = [];
   indexOfImage;
   showPopupViewImage = false;
@@ -46,14 +48,7 @@ export class SoilConditionComponent implements OnInit {
     this.soilConditionForm.valueChanges.subscribe(data => this.mappingToLiveFormData(data));
   }
   checkFlag() {
-    const flag = LiveformSiteReportComponent.isViewMode;
-    this.viewMode = flag;
-    if (flag) {
-      const inputs = document.getElementsByTagName('input');
-      for (let i = 0; i < inputs.length; i++) {
-        inputs[i].style.pointerEvents = 'none';
-      }
-    }
+    this.isViewMode = LiveformSiteReportComponent.actionMode === 'viewMode';
   }
 
   initData() {
@@ -92,6 +87,7 @@ export class SoilConditionComponent implements OnInit {
       .subscribe(res => {
         this.footingImageUrls = [...this.footingImageUrls, ...res];
         this.soilConditionForm.get('nenMongHienCoList').patchValue(this.footingImageUrls);
+        this.uploadFooting.nativeElement.value = null;
       }, err => {
         this.alertService.error('Upload hình ảnh thất bại. Xin vui lòng thử lại!');
         this.footingImageUrls.forEach(x => {
@@ -122,6 +118,7 @@ export class SoilConditionComponent implements OnInit {
       .subscribe(res => {
         this.investigationImageUrls = [...this.investigationImageUrls, ...res];
         this.soilConditionForm.get('thongTinCongTrinhGanDoList').patchValue(this.investigationImageUrls);
+        this.uploadInvestigation.nativeElement.value = null;
       }, err => {
         this.alertService.error('Upload hình ảnh thất bại. Xin vui lòng thử lại!');
         this.investigationImageUrls.forEach(x => {
