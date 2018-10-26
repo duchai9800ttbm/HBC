@@ -148,10 +148,10 @@
                                             {{ item?.uploadDate*1000 | date:'dd/MM/yyyy HH:mm': '+0000' }} </div>
                                     </div>
                                     <div>
-                                        <a (click)="downloadFileAttach(item.id)" *ngIf="!item.url">
+                                        <a (click)="downloadFileAttach(item.id)" *ngIf="!item?.url">
                                             <i class="fa fa-download color-item-down" aria-hidden="true"></i>
                                         </a>
-                                        <a [href]="item.url" target="_blank" *ngIf="item.url">
+                                        <a [href]="item?.url" target="_blank" *ngIf="item?.url">
                                             <i class="fa fa-external-link color-item-down" aria-hidden="true"></i>
                                         </a>
                                     </div>
@@ -422,14 +422,14 @@
                                             </a>
                                         </div>
 
-                                        <div style="cursor: pointer;" *ngIf="item.filerUrl">
-                                            <a [href]="item.filerUrl" target="_blank">
+                                        <div style="cursor: pointer;" *ngIf="item?.filerUrl">
+                                            <a [href]="item?.filerUrl" target="_blank">
                                                 <i class="fa fa-external-link color-item-down" aria-hidden="true"></i>
                                             </a>
                                         </div>
 
                                         <div style="cursor: pointer;" title="In">
-                                            <a (click)="inLiveForm(items.typeName)" class="text-success">
+                                            <a (click)="inLiveForm(items?.typeName)" class="text-success">
                                                 <i class="fa fa-print cursor-pointer icon-print" aria-hidden="true"></i>
                                             </a>
                                         </div>
