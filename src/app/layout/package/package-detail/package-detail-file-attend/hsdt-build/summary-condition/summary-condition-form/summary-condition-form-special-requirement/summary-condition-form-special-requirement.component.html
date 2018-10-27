@@ -13,14 +13,14 @@
                     <table class="table-requirement">
 
                         <tr class="tr-requirement">
-                            <td rowspan="2">
+                            <td rowspan="2" class="text-center">
                                 <div class="index-row-table">2</div>
                             </td>
                             <td rowspan="2">
-                                <input type="text" class="form-control" formControlName="tenderEvaluation">
+                                <textarea rows="3" class="form-control tenderEvaluation-text" formControlName="tenderEvaluation"></textarea>
                             </td>
                             <td rowspan="2">
-                                <input type="text" class="form-control" formControlName="tenderEvaluationSteps">
+                                <textarea rows="3" class="form-control tenderEvaluation-text" formControlName="tenderEvaluationSteps"></textarea>
                             </td>
                             <td>
                                 <input type="text" class="form-control" formControlName="tenderEvaluationStep1">
@@ -34,10 +34,16 @@
 
                         <!-- Begin Map -->
                         <ng-container formArrayName="requirements">
-                            <tr class="tr-requirement" *ngFor="let fControl of requirementsFA.controls; index as i"
-                                [formGroupName]="i">
-                                <td>
-                                    <div class="index-row-table text-center">{{ i+1 }}</div>
+                            <tr class="tr-requirement hover-row" *ngFor="let fControl of requirementsFA.controls; index as i"
+                                [formGroupName]="i" id="requirementsrow{{i}}">
+                                <td class="text-center">
+                                    <div class="index-row-table text-center" [ngClass]="{'index-row': i>1 && !isModeView}">
+                                        {{ (i==0)? (i+1) : (i+2) }}
+                                    </div>
+                                    <div *ngIf="i>1 && !isModeView" class="index-row-table text-center delete-icon">
+                                        <i (click)="removeFormArrayControl('requirements', i)" class="fa fa-times-circle pointer"
+                                            aria-hidden="true"></i>
+                                    </div>
                                 </td>
                                 <td>
                                     <input type="text" class="form-control" formControlName="requirementName">
