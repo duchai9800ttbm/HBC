@@ -32,7 +32,7 @@ import { AdministeredPackageList } from '../../../shared/constants/administered-
     selector: 'app-package-list',
     templateUrl: './package-list.component.html',
     styleUrls: ['./package-list.component.scss'],
-    animations: [routerTransition()],
+    // // animations: [routerTransition()],
     providers: [NgbDropdownConfig] // add NgbDropdownConfig to the component providers
 
 })

@@ -8,7 +8,7 @@ import { SessionService } from '../../shared/services/session.service';
     selector: 'app-settings',
     templateUrl: './settings.component.html',
     styleUrls: ['./settings.component.scss'],
-    animations: [routerTransition()]
+    // animations: [routerTransition()]
 })
 export class SettingsComponent implements OnInit {
     isManageSettings;

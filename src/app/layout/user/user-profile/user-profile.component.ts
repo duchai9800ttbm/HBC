@@ -15,7 +15,7 @@ const defaultAvatarSrc = 'assets/images/no-avatar.png';
   selector: 'app-user-profile',
   templateUrl: './user-profile.component.html',
   styleUrls: ['./user-profile.component.scss'],
-  animations: [routerTransition()],
+  // animations: [routerTransition()],
 })
 export class UserProfileComponent implements OnInit {
 

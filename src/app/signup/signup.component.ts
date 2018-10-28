@@ -5,7 +5,7 @@ import { routerTransition } from '../router.animations';
     selector: 'app-signup',
     templateUrl: './signup.component.html',
     styleUrls: ['./signup.component.scss'],
-    animations: [routerTransition()]
+    // animations: [routerTransition()]
 })
 export class SignupComponent implements OnInit {
     constructor() {}

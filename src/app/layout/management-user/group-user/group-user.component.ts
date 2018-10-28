@@ -7,7 +7,7 @@ import { Router } from '@angular/router';
   selector: 'app-group-user',
   templateUrl: './group-user.component.html',
   styleUrls: ['./group-user.component.scss'],
-  animations: [routerTransition()]
+  // animations: [routerTransition()]
 })
 export class GroupUserComponent implements OnInit {
   isManageUsers;

@@ -39,7 +39,7 @@ import { PackageInfoModel } from '../../../../../shared/models/package/package-i
   selector: 'app-pending',
   templateUrl: './pending.component.html',
   styleUrls: ['./pending.component.scss'],
-  animations: [routerTransition()]
+  // animations: [routerTransition()]
 
 })
 export class PendingComponent implements OnInit {

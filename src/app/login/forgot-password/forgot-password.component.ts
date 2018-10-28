@@ -6,7 +6,7 @@ import { Router } from '@angular/router';
   selector: 'app-forgot-password',
   templateUrl: './forgot-password.component.html',
   styleUrls: ['./forgot-password.component.scss'],
-  animations: [routerTransition()],
+  // animations: [routerTransition()],
 })
 export class ForgotPasswordComponent implements OnInit {
 

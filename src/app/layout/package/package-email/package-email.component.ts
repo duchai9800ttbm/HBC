@@ -9,7 +9,7 @@ import { PackageService } from '../../../shared/services/package.service';
   selector: 'app-package-email',
   templateUrl: './package-email.component.html',
   styleUrls: ['./package-email.component.scss'],
-  animations: [routerTransition()]
+  // animations: [routerTransition()]
 })
 export class PackageEmailComponent implements OnInit {
   static packageId;

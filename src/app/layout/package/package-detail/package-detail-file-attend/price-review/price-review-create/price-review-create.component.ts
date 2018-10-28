@@ -6,7 +6,7 @@ import { TenderPriceApproval } from '../../../../../../shared/models/price-revie
   selector: 'app-price-review-create',
   templateUrl: './price-review-create.component.html',
   styleUrls: ['./price-review-create.component.scss'],
-  animations: [routerTransition()]
+  // animations: [routerTransition()]
 })
 export class PriceReviewCreateComponent implements OnInit {
   model: TenderPriceApproval;
