@@ -55,6 +55,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { UploadModule } from '@progress/kendo-angular-upload';
 import { NgSelectModule } from '@ng-select/ng-select';
 import { BsDropdownModule } from '../../../node_modules/ngx-bootstrap';
+import { NgxLoadingModule, ngxLoadingAnimationTypes } from 'ngx-loading';
 @NgModule({
     imports: [
         HttpClientModule,
@@ -102,6 +103,14 @@ import { BsDropdownModule } from '../../../node_modules/ngx-bootstrap';
         CKEditorModule,
         NgSelectModule,
         BsDropdownModule.forRoot(),
+        NgxLoadingModule.forRoot({
+            animationType: ngxLoadingAnimationTypes.threeBounce,
+            backdropBackgroundColour: 'rgba(0,0,0,0.08)',
+            backdropBorderRadius: '4px',
+            primaryColour: '#ffffff',
+            secondaryColour: '#ffffff',
+            tertiaryColour: '#ffffff'
+        })
         // ScrollToTopService
     ],
     exports: [
@@ -146,6 +155,7 @@ import { BsDropdownModule } from '../../../node_modules/ngx-bootstrap';
         MenuModule,
         NgSelectModule,
         BsDropdownModule,
+        NgxLoadingModule
         // ScrollToTopService
     ]
 })

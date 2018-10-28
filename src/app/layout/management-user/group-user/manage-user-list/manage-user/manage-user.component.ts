@@ -18,6 +18,7 @@ import { NgxSpinnerService } from '../../../../../../../node_modules/ngx-spinner
   styleUrls: ['./manage-user.component.scss']
 })
 export class ManageUserComponent implements OnInit {
+  loading = true;
   dtOptions: any = DATATABLE_CONFIG;
   dtTrigger: Subject<any> = new Subject();
   searchTerm$ = new BehaviorSubject<string>('');
@@ -61,15 +62,15 @@ export class ManageUserComponent implements OnInit {
       this.searchTerm$ = this.groupUserService.getSearchTerm();
     }
     console.log('this.SearchTerm', this.searchTerm$.value);
-    this.spinner.show();
+    this.loading  = true;
     this.groupUserService
       .searchKeyWord(this.searchTerm$, 0, 10)
       .subscribe(result => {
         this.groupUserService.saveSearchTerm(this.searchTerm$);
         this.rerender(result);
-        this.spinner.hide();
+        this.loading  = false;
       }, err => {
-        this.spinner.hide();
+        this.loading  = false;
       });
   }
 
@@ -81,14 +82,14 @@ export class ManageUserComponent implements OnInit {
 
   loadPage() {
     // this.refresh(0, 10);
-    this.spinner.show();
+    this.loading  = true;
     this.groupUserService.getdataGroupUser(0, 10).subscribe(data => {
       this.pagedResult = data;
-      this.spinner.hide();
+      this.loading  = false;
       this.alertService.success('Dữ liệu được cập nhật mới nhất!');
     },
       err => {
-        this.spinner.hide();
+        this.loading  = false;
         this.alertService.error('Đã xảy ra lỗi, dữ liệu không được cập nhật');
       });
   }
@@ -99,17 +100,17 @@ export class ManageUserComponent implements OnInit {
       .searchKeyWord(this.searchTerm$, pagedResult.currentPage, pagedResult.pageSize)
       .subscribe(result => {
         this.rerender(result);
-        this.spinner.hide();
+        this.loading  = false;
       }, err => {
-        this.spinner.hide();
+        this.loading  = false;
       });
   }
 
   refresh(page: string | number, pageSize: string | number) {
-    this.spinner.show();
+    this.loading  = true;
     this.groupUserService.getdataGroupUser(page, pageSize).subscribe(data => {
       this.pagedResult = data;
-      this.spinner.hide();
+      this.loading  = false;
     });
   }
 
@@ -185,10 +186,10 @@ export class ManageUserComponent implements OnInit {
 
   changeActive(idUser: number, isActive: boolean) {
     this.groupUserService.activeOrDeactiveUser(idUser, isActive).subscribe(response => {
-      // this.spinner.show();
+      // this.loading  = true;
       // this.groupUserService.getdataGroupUser(this.pagedResult.currentPage, this.pagedResult.pageSize).subscribe(data => {
       //   this.pagedResult = data;
-      //   // this.spinner.hide();
+      //   // this.loading  = false;
       //   this.alertService.success('Thay đổi tình trạng người dùng thành công!');
       // });
 
@@ -210,17 +211,17 @@ export class ManageUserComponent implements OnInit {
   }
 
   changeGroupUser() {
-    this.spinner.show();
+    this.loading  = true;
     this.groupUserService.changeGroupUser(this.changeUser.id, this.changeUser.userGroup.key).subscribe(response => {
       this.groupUserService.getdataGroupUser(this.pagedResult.currentPage, this.pagedResult.pageSize).subscribe(data => {
         this.pagedResult = data;
-        this.spinner.hide();
+        this.loading  = false;
         this.modalRef.hide();
         this.alertService.success('Thay đổi nhóm cho người dùng thành công!');
       });
     },
       err => {
-        this.spinner.hide();
+        this.loading  = false;
         this.modalRef.hide();
         const error = err.json();
         if (error.errorCode === 'BusinessException') {

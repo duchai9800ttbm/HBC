@@ -78,6 +78,7 @@ export class GroupUserDetailComponent implements OnInit {
   userModel: UserModel;
   listPrivileges = [];
   isManageUserGroups;
+  loading = false;
   constructor(
     private alertService: AlertService,
     private modalService: BsModalService,
@@ -113,7 +114,7 @@ export class GroupUserDetailComponent implements OnInit {
 
     // Test API GroupUser
     // Danh sách quyền
-    this.spinner.show();
+    this.loading = true;
 
     this.dataService.getListPrivileges().subscribe(response => {
       this.listPrivilegesData = response;
@@ -122,9 +123,9 @@ export class GroupUserDetailComponent implements OnInit {
         this.pagedResult = responsepageResultUserGroup;
         this.listGroupUser = this.pagedResult.items;
         this.dtTrigger.next();
-        this.spinner.hide();
+        this.loading = false;
       });
-    }, err => this.spinner.hide());
+    }, err => this.loading = false);
   }
 
   checkBox(id: number) {
@@ -349,10 +350,10 @@ export class GroupUserDetailComponent implements OnInit {
     this.dataService.getListPrivileges().subscribe(response => {
       this.listPrivilegesData = response;
       // Danh sách nhóm người dùng
-      this.spinner.show();
+      this.loading = true;
       this.groupUserService.listGroupUser(0, 10).subscribe(responsepageResultUserGroup => {
         this.pagedResult = responsepageResultUserGroup;
-        this.spinner.hide();
+        this.loading = false;
         this.listGroupUser = this.pagedResult.items.map(i => i);
         const toStringListPrivilegesData = this.listPrivilegesData.map(i => JSON.stringify(i));
         this.listGroupUser.map(element => {
@@ -365,7 +366,7 @@ export class GroupUserDetailComponent implements OnInit {
         }
       },
         err => {
-          this.spinner.hide();
+          this.loading = false;
           if (isAlert) {
             this.alertService.error('Đã xảy ra lỗi, dữ liệu không được cập nhật');
           }
