@@ -54,29 +54,9 @@ export class SidebarComponent implements OnInit {
     @Output() listPhoneCall: EventEmitter<any> = new EventEmitter<any>();
     @Output() toggleMenuFromSidebar: EventEmitter<any> = new EventEmitter<any>();
     ngOnInit(): void {
-        // this.auditService.getAudits(0, 5).subscribe(pagedResult => {
-        //     this.pagedResult = pagedResult;
-        //     this.audits = pagedResult.items;
-        //     this.audits.forEach(element => {
-        //         if (element.id) {
-        //             this.userService
-        //                 .getAvatarByUserId(element.id)
-        //                 .subscribe(result => {
-        //                     element.avatar = result.avatar
-        //                         ? `data:image/jpeg;base64,${result.avatar}`
-        //                         : null;
-        //                 });
-        //         } else {
-        //             element.avatar = null;
-        //         }
-        //     });
-        // });
 
-        // IntervalObservable.create(3000).subscribe(() => {
-        //     this.getListPhoneNumberIsCall();
-        //     this.getListPhoneCallAway();
-        // });
         this.getDataChangeRecently();
+        this.getActivites();
     }
     toggleSidebar() {
         const width = document.getElementById('sidebar').offsetWidth;
@@ -118,7 +98,29 @@ export class SidebarComponent implements OnInit {
         }, err => {
             this.alertService.error('Đã có lỗi khi tải nội dung thay đổi gần đây!');
         });
+
+
+
     }
+    getActivites() {
+        var self = this;
+
+        setInterval(function () {
+            console.log('getting activities');
+
+            if (!self.sessionService.currentUser) {
+                return;
+            }
+            self.layoutService.getDataChangeRecently(0, 5).subscribe(data => {
+                self.pagedResult = data;
+            }, err => {
+                self.alertService.error('Đã có lỗi khi tải nội dung thay đổi gần đây!');
+            });
+        }, 1 * 60 * 1000);
+    }
+
+
+
     renderDataChangeRecently(action: string, target?: string, data?: any) {
         let resultpackage = '';
         if (data) {
