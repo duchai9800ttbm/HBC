@@ -255,7 +255,7 @@
                   {{ item.approvedDate !== 0 ? ((item.approvedDate)*1000 | date:'dd/MM/yyyy':'+0000') : ''}}
                 </td>
                 <td class="text-align-number">
-                  {{ item.interviewDate !==0 ? ((item.interviewDate)*1000 | date:'dd/MM/yyyy':'+0000') : ''}}
+                  {{ item.interviewDate !==0 ? ((item.interviewDate)*1000 | date:'dd/MM/yyyy HH:mm':'+0000') : ''}}
                 </td>
                 <td [title]="item.place">
                   {{item.place}}
