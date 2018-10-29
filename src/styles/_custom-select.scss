@@ -41,20 +41,34 @@
 
 .custom-dropdown::after {
     /*  Custom dropdown arrow */
-    content: '\25BC';
-    height: 0.8em;
-    position: absolute;
-    right: 1em;
-    top: 25%;
+    // content: '\25BC';
+    // height: 0.8em;
+    // position: absolute;
+    // right: 1em;
+    // top: 25%;
+
+    content: "\25BC";
+    height: 1em;
+    font-size: .625em;
+    line-height: 1;
+    right: .85rem;
+    top: 50%;
+    margin-top: -.5em;
 }
 
 .custom-dropdown::before { /*  Custom dropdown arrow cover */
-  width: 41px;
-  right: 0;
-  top: 0;
-  bottom: 0;
-  border-radius: 0 3px 3px 0;
+  // width: 41px;
+  // right: 0;
+  // top: 0;
+  // bottom: 0;
+  // border-radius: 0 3px 3px 0;
   background-color: #00a0e3;
+
+  width: 2.2rem;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    border-radius: 0 3px 3px 0;
 }
 
 .custom-dropdown::after {
