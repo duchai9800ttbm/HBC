@@ -1059,6 +1059,8 @@ export class PackageService {
     // tạo mới/ sửa LiveForm phân công tiến độ
     createOrUpdateTenderPreparationPlanning(data: any): Observable<any> {
         const url = `tenderpreparationplanningassignment/createorupdate`;
+        console.log('data-createOrUpdateTen-derPreparationPlanning', data);
+        data.queryDeadline = DateTimeConvertHelper.fromDtObjectToTimestamp(data.queryDeadline);
         data.tasks.forEach(element => {
             element.startDate = DateTimeConvertHelper.fromDtObjectToTimestamp(element.startDate);
             element.finishDate = DateTimeConvertHelper.fromDtObjectToTimestamp(element.finishDate);

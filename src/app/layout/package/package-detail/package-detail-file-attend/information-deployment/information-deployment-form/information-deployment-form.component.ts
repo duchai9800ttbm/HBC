@@ -123,6 +123,14 @@ export class InformationDeploymentFormComponent implements OnInit {
                 value: planModel.technicalDepartmentEmployee && planModel.technicalDepartmentEmployee.employeeId,
                 disabled: this.controlDisableForm,
             },
+            queryDeadline: {
+                value: planModel.queryDeadline
+                    ? DateTimeConvertHelper.fromTimestampToDtObject(
+                        planModel.queryDeadline * 1000
+                    )
+                    : null,
+                disabled: this.controlDisableForm,
+            },
             bimDepartmentEmployeeId: {
                 value: planModel.bimDepartmentEmployee && planModel.bimDepartmentEmployee.employeeId,
                 disabled: this.controlDisableForm,

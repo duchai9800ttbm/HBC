@@ -44,7 +44,7 @@
                 </div>
                 <div class="col-md-3 pl-0">
                     <div class="">
-                        <strong>Người lập (Prepare by): </strong>{{tenderPlan?.createdEmployee?.employeeName}}</div>
+                        <strong>Người lập (Prepared by): </strong>{{tenderPlan?.createdEmployee?.employeeName}}</div>
                     <div class=""></div>
                 </div>
                 <div class="col-md-3 pl-0">
@@ -177,7 +177,7 @@
                         <td>Query's Deadline</td>
                         <td>
                             <!-- <kendo-datepicker class="form-control b-datepicker-no-border"></kendo-datepicker> -->
-                            <kendo-datepicker class="w-100" [max]="packageInfo?.submissionDate"></kendo-datepicker>
+                            <kendo-datepicker class="w-100" [max]="packageInfo?.submissionDate" formControlName="queryDeadline"></kendo-datepicker>
                             <!-- {{packageInfo?.submissionDate ? getDateStr(packageInfo?.submissionDate * 1000 - (1000 * 60 * 60 * 24 * 7)) : ''}} -->
                         </td>
                     </tr>
