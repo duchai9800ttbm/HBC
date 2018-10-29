@@ -7,10 +7,12 @@ import { StatusObservableHsdtService } from '../../../../shared/services/status-
 import { BidStatus } from '../../../../shared/constants/bid-status';
 import { Subscription } from '../../../../../../node_modules/rxjs';
 import { CheckStatusPackage } from '../../../../shared/constants/check-status-package';
+import { slideToLeft } from '../../../../router.animations';
 @Component({
   selector: 'app-package-detail-file-attend',
   templateUrl: './package-detail-file-attend.component.html',
-  styleUrls: ['./package-detail-file-attend.component.scss']
+  styleUrls: ['./package-detail-file-attend.component.scss'],
+  animations: [slideToLeft()]
 })
 export class PackageDetailFileAttendComponent implements OnInit, OnDestroy {
   packageId: number;

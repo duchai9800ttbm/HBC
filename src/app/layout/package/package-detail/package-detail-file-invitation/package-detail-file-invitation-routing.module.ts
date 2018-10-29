@@ -16,7 +16,7 @@ const routes: Routes = [
         path: '',
         component: PackageDetailFileInvitationComponent,
         children: [
-            { path: '', redirectTo: 'add-file' },
+            { path: '', redirectTo: 'full-file' },
             { path: 'add-file', component: AddFileComponent },
             { path: 'full-file', component: FullFileComponent },
             //   { path: 'evaluate', component: EvaluateComponent },

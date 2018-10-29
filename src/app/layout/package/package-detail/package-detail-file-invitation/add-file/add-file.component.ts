@@ -26,7 +26,7 @@ import { forEach } from '../../../../../../../node_modules/@angular/router/src/u
 })
 export class AddFileComponent implements OnInit {
     isShowMenu = false;
-
+    loading = false;
     checkboxSeclectAll: boolean;
     dtOptions: any = DATATABLE_CONFIG2;
     dtTrigger: Subject<any> = new Subject();
@@ -90,7 +90,7 @@ export class AddFileComponent implements OnInit {
         // initFilterModel
         this.filterModel.status = '';
         this.filterModel.uploadedEmployeeId = null;
-        this.spinner.show();
+        this.loading = true;
         this.documentService.bidDocumentMajortypes(this.packageId).subscribe(data => {
             this.majorTypeListItem = data;
             this.currentMajorTypeId = this.majorTypeListItem[0].id;
@@ -99,8 +99,8 @@ export class AddFileComponent implements OnInit {
                 this.bidDocumentGroupListItemSearchResult = response;
                 this.showTable = this.bidDocumentGroupListItemSearchResult.length > 0;
                 this.dtTrigger.next();
-                this.spinner.hide();
-            }, err => this.spinner.hide());
+                this.loading = false;
+            }, err => this.loading = false);
         });
 
 
@@ -222,7 +222,7 @@ export class AddFileComponent implements OnInit {
 
     closePopup(params) {
         this.showPopupAdd = false;
-        this.spinner.show();
+        this.loading = true;
         this.documentService.read(this.packageId, this.currentMajorTypeId).subscribe(response => {
             this.bidDocumentGroupListItem = response;
             this.bidDocumentGroupListItemSearchResult = response;
@@ -230,7 +230,7 @@ export class AddFileComponent implements OnInit {
             this.checkHightLight();
 
             this.dtTrigger.next();
-            this.spinner.hide();
+            this.loading = false;
         });
     }
     closePopupDetail() {
@@ -238,14 +238,14 @@ export class AddFileComponent implements OnInit {
     }
 
     refresh(): void {
-        this.spinner.show();
+        this.loading = true;
         this.documentService.read(this.packageId, this.currentMajorTypeId).subscribe(response => {
             this.bidDocumentGroupListItem = response;
             this.bidDocumentGroupListItemSearchResult = response;
             this.showTable = this.bidDocumentGroupListItemSearchResult.length > 0;
             this.checkHightLight();
             this.dtTrigger.next();
-            this.spinner.hide();
+            this.loading = false;
             this.alertService.success('Dữ liệu đã được cập nhật mới nhất!');
         });
     }
@@ -318,7 +318,7 @@ export class AddFileComponent implements OnInit {
                     this.showTable = this.bidDocumentGroupListItemSearchResult.length > 0;
                     this.checkHightLight();
                     this.dtTrigger.next();
-                    this.spinner.hide();
+                    this.loading = false;
                     this.alertService.success('Dữ liệu đã được cập nhật mới nhất!');
                 });
             });
@@ -332,7 +332,7 @@ export class AddFileComponent implements OnInit {
                     this.showTable = this.bidDocumentGroupListItemSearchResult.length > 0;
 
                     this.dtTrigger.next();
-                    this.spinner.hide();
+                    this.loading = false;
                     this.alertService.success('Dữ liệu đã được cập nhật mới nhất!');
                 });
             });
@@ -349,7 +349,7 @@ export class AddFileComponent implements OnInit {
                 this.documentService.delete(id).subscribe(data => {
                     that.alertService.success('Đã xóa tài liệu!');
                     that.refresh();
-                }, err => this.spinner.hide());
+                }, err => this.loading = false);
             }
         );
     }
@@ -384,14 +384,14 @@ export class AddFileComponent implements OnInit {
     fullHSMT() {
         const that = this;
         this.confirmationService.confirm('Bạn có chắc chắn muốn chuyển trạng thái đã có HSMT?', () => {
-            this.spinner.show();
+            this.loading = true;
             this.opportunityHsmtService.daDuHSMT(this.packageId)
                 .subscribe(data => {
                     that.spinner.hide();
                     that.router.navigate([`/package/detail/${this.packageId}/invitation/full-file`]);
                     that.alertService.success('Đã chuyển sang trang thái đã có HSMT thành công!');
                 }, err => {
-                    this.spinner.hide();
+                    this.loading = false;
                     if (err.json().errorCode === 'BusinessException') {
                         that.alertService.error('Không có tài liệu trong các bộ hồ sơ mời thầu!');
                     } else {
@@ -409,7 +409,7 @@ export class AddFileComponent implements OnInit {
             this.bidDocumentGroupListItemSearchResult = response;
             this.showTable = this.bidDocumentGroupListItemSearchResult.length > 0;
             this.dtTrigger.next();
-            this.spinner.hide();
-        }, err => this.spinner.hide());
+            this.loading = false;
+        }, err => this.loading = false);
     }
 }

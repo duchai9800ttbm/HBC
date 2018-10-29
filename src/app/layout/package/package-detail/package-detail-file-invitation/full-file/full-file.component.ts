@@ -25,7 +25,7 @@ import { PackageDetailComponent } from '../../package-detail.component';
 export class FullFileComponent implements OnInit {
 
     isShowMenu = false;
-
+    loading = false;
     checkboxSeclectAll: boolean;
     dtOptions: any = DATATABLE_CONFIG;
     dtTrigger: Subject<any> = new Subject();
@@ -94,7 +94,7 @@ export class FullFileComponent implements OnInit {
         this.userService.getAllUser('').subscribe(data => {
             this.userListItem = data;
         });
-        this.spinner.show();
+        this.loading = true;
         this.documentService.bidDocumentMajortypes(this.packageId).subscribe(data => {
             this.majorTypeListItem = data;
             this.currentMajorTypeId = this.majorTypeListItem[0].id;
@@ -103,8 +103,8 @@ export class FullFileComponent implements OnInit {
                 this.bidDocumentGroupListItemSearchResult = response;
                 this.showTable = this.bidDocumentGroupListItemSearchResult.length > 0;
                 this.dtTrigger.next();
-                this.spinner.hide();
-            }, err => this.spinner.hide());
+                this.loading = false;
+            }, err => this.loading = false);
         });
     }
 
@@ -225,29 +225,29 @@ export class FullFileComponent implements OnInit {
 
     closePopup(params) {
         this.showPopupAdd = false;
-        this.spinner.show();
+        this.loading = true;
         this.documentService.read(this.packageId, this.currentMajorTypeId).subscribe(response => {
             this.bidDocumentGroupListItem = response;
             this.bidDocumentGroupListItemSearchResult = response;
             this.showTable = this.bidDocumentGroupListItemSearchResult.length > 0;
             this.checkHightLight();
             this.dtTrigger.next();
-            this.spinner.hide();
-        }, err => this.spinner.hide());
+            this.loading = false;
+        }, err => this.loading = false);
     }
     closePopupDetail() {
         this.showPopupDetail = false;
     }
 
     refresh(): void {
-        this.spinner.show();
+        this.loading = true;
         this.documentService.read(this.packageId, this.currentMajorTypeId).subscribe(response => {
             this.bidDocumentGroupListItem = response;
             this.bidDocumentGroupListItemSearchResult = response;
             this.showTable = this.bidDocumentGroupListItemSearchResult.length > 0;
             this.checkHightLight();
             this.dtTrigger.next();
-            this.spinner.hide();
+            this.loading = false;
             this.alertService.success('Dữ liệu đã được cập nhật mới nhất!');
         });
     }
@@ -315,7 +315,7 @@ export class FullFileComponent implements OnInit {
                     this.showTable = this.bidDocumentGroupListItemSearchResult.length > 0;
                     this.checkHightLight();
                     this.dtTrigger.next();
-                    this.spinner.hide();
+                    this.loading = false;
                     this.alertService.success('Dữ liệu đã được cập nhật mới nhất!');
                 });
             });
@@ -329,7 +329,7 @@ export class FullFileComponent implements OnInit {
                     this.showTable = this.bidDocumentGroupListItemSearchResult.length > 0;
                     this.checkHightLight();
                     this.dtTrigger.next();
-                    this.spinner.hide();
+                    this.loading = false;
                     this.alertService.success('Dữ liệu đã được cập nhật mới nhất!');
                 });
             });
@@ -346,7 +346,7 @@ export class FullFileComponent implements OnInit {
                 this.documentService.delete(id).subscribe(data => {
                     that.alertService.success('Đã xóa tài liệu!');
                     that.refresh();
-                }, err => this.spinner.hide());
+                }, err => this.loading = false);
             }
         );
     }
@@ -381,13 +381,13 @@ export class FullFileComponent implements OnInit {
     fullHSMT() {
         const that = this;
         this.confirmationService.confirm('Bạn có chắc chắn muốn chuyển trạng thái đã có HSMT?', () => {
-            this.spinner.show();
+            this.loading = true;
             this.opportunityHsmtService.daDuHSMT(this.packageId)
                 .subscribe(data => {
                     that.spinner.hide();
                     that.router.navigate([`/package/detail/${this.packageId}/invitation/full-file`]);
                     that.alertService.success('Đã chuyển sang trang thái đã có HSMT thành công!');
-                }, err => this.spinner.hide());
+                }, err => this.loading = false);
         });
     }
 
@@ -403,7 +403,7 @@ export class FullFileComponent implements OnInit {
             if (document.getElementsByClassName('dataTables_empty')[0]) {
                 document.getElementsByClassName('dataTables_empty')[0].remove();
             }
-            this.spinner.hide();
-        }, err => this.spinner.hide());
+            this.loading = false;
+        }, err => this.loading = false);
     }
 }

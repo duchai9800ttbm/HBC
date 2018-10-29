@@ -1,4 +1,4 @@
-<div class="mx-20 detail-container">
+<div [@routerTransition] class="mx-20 detail-container">
     <div class="d-flex">
         <ul class="progressbar">
             <li class="triangle" [routerLink]="['./create-request']" [class.noActive]="(currentUrl !== 'create-request') && (statusPackage.id >= checkStatusPackage.CanLapDeNghiDuThau.id)"
