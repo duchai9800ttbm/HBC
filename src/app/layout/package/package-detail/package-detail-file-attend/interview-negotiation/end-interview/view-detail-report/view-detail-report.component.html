@@ -15,7 +15,7 @@
   <div class="w-100  mr-auto">
     <div>
       <div class="body cus-header" id="info-main">
-        <div class="d-flex w-100" *ngIf="model.url">
+        <div class="d-flex w-100" *ngIf="data.fileUrl">
           <div class="w-40 font-weight-bold">
             <div class="d-flex justify-content-between">
               <div>
@@ -25,7 +25,7 @@
             </div>
           </div>
           <div class="w-60">
-            <a class="color-link color-link" target="_blank" [href]="model?.url">
+            <a class="color-link color-link" target="_blank" [href]="data.fileUrl">
               <span class="word-wrap">{{data.fileUrl}}</span>
             </a>
           </div>
