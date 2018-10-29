@@ -21,6 +21,7 @@ export class TenderPreparationPlanningRequest {
     finishDate: number;
     deadline: number;
     duration: number;
+    queryDeadline: number;
     isDraftVersion = true;
     createDate: number;
     updatedDesc: string;

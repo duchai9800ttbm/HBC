@@ -234,3 +234,6 @@ table, thead, tbody, tfoot {
 :host /deep/ .custom-dropdown select[disabled]{
     color: #495057;
 }
+:host /deep/ .k-disabled, .k-state-disabled, .k-widget:disabled, .k-widget[disabled]{
+    opacity: 1;
+}

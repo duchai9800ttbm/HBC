@@ -44,7 +44,7 @@
                 </div>
                 <div class="col-md-3 pl-0">
                     <div class="">
-                        <strong>Người lập (Prepare by): </strong>{{tenderPlan?.createdEmployee?.employeeName}}</div>
+                        <strong>Người lập (Prepared by): </strong>{{tenderPlan?.createdEmployee?.employeeName}}</div>
                     <div class=""></div>
                 </div>
                 <div class="col-md-3 pl-0">
@@ -177,7 +177,7 @@
                         <td>Query's Deadline</td>
                         <td>
                             <!-- <kendo-datepicker class="form-control b-datepicker-no-border"></kendo-datepicker> -->
-                            <kendo-datepicker class="w-100" [max]="packageInfo?.submissionDate"></kendo-datepicker>
+                            <kendo-datepicker class="w-100" [max]="packageInfo?.submissionDate" formControlName="queryDeadline"></kendo-datepicker>
                             <!-- {{packageInfo?.submissionDate ? getDateStr(packageInfo?.submissionDate * 1000 - (1000 * 60 * 60 * 24 * 7)) : ''}} -->
                         </td>
                     </tr>
@@ -247,7 +247,11 @@
                             </td>
                             <td class="text-center">
                                 <label class="custom-control custom-checkbox z-ontop">
-                                    <input type="checkbox" (click)="checkFinishTenderPlanItem(data.get('itemId').value)" class="custom-control-input input-checkbox"
+                                    <input type="checkbox"
+                                    [attr.disabled]="(data.get('whoIsInChargeId').value && data.get('whoIsInChargeId').value !==0 && data.get('startDate').value && data.get('finishDate').value)
+                                     || (data.get('whoIsInChargeIds').value && data.get('whoIsInChargeIds').value.length !==0 && data.get('startDate').value && data.get('finishDate').value) ?
+                                     null : ''"
+                                    (click)="routerAction === 'view' ? checkFinishTenderPlanItem(data.get('itemId').value) : null" class="custom-control-input input-checkbox"
                                         formControlName="isFinish">
                                     <!-- [attr.disabled]="(this.checkStatusPackage[this.packageInfo.stageStatus.id].id >= checkStatusPackage.DaThongBaoTrienKhai.id && 
                                         this.checkStatusPackage[this.packageInfo.stageStatus.id].id <= checkStatusPackage.DaPhongVan.id) ? false : null" -->
