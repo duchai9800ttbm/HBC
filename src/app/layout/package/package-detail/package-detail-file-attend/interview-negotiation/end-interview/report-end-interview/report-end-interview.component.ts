@@ -15,6 +15,7 @@ import { StatusObservableHsdtService } from '../../../../../../../shared/service
 export class ReportEndInterviewComponent implements OnInit {
   @Input() callBack: Function;
   @Input() reloadData: Function;
+  @Input() interviewOfPackage;
   createFormReport: FormGroup;
   interviewInvitationReport = new InterviewInvitationReport();
   file: File;
@@ -33,6 +34,7 @@ export class ReportEndInterviewComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+    console.log('this.interviewOfPackage', this.interviewOfPackage);
     this.currentPackageId = +PackageDetailComponent.packageId;
     this.createForm();
   }
@@ -43,7 +45,8 @@ export class ReportEndInterviewComponent implements OnInit {
       version: [this.interviewInvitationReport.version],
       uploadedBy: [this.interviewInvitationReport.uploadedBy],
       createdDate: [this.interviewInvitationReport.uploadedBy],
-      interviewTimes: [this.interviewInvitationReport.interviewTimes, CustomValidator.required],
+      interviewTimes: [this.interviewOfPackage, CustomValidator.required],
+      // this.interviewInvitationReport.interviewTimes
       documentDesc: [this.interviewInvitationReport.documentDesc],
       link: [],
     });

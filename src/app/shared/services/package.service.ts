@@ -411,6 +411,9 @@ export class PackageService {
                 projectName: result.projectName,
                 isSubmittedHSDT: result.isSubmittedHSDT,
                 isClosedHSDT: result.isClosedHSDT,
+                interviewInvitation: result.interviewInvitation ? {
+                    interviewTimes: result.interviewInvitation.interviewTimes.toString(),
+                } : null,
                 projectType: result.projectType && {
                     id: result.projectType.key,
                     text: result.projectType.value
