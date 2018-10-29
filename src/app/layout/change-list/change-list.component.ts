@@ -3,6 +3,7 @@ import { AlertService } from '../../shared/services';
 import { PagedResult } from '../../shared/models';
 import { LayoutService } from '../../shared/services/layout.service';
 import { ChangeDactivitites } from '../../shared/models/side-bar/change-dactivitites.model';
+import { debounceTime } from 'rxjs/operators';
 
 @Component({
   selector: 'app-change-list',
@@ -15,6 +16,8 @@ export class ChangeListComponent implements OnInit {
     private layoutService: LayoutService,
     private alertService: AlertService
   ) { }
+
+  loading = false;
   audits: ChangeDactivitites[];
   pagedResult: PagedResult<ChangeDactivitites>;
   showButton = true;
@@ -43,13 +46,17 @@ export class ChangeListComponent implements OnInit {
       });
   }
   onLoadMore() {
+    this.loading = true;
     this.layoutService.getDataChangeRecently(+this.pagedResult.currentPage + 1, +this.pagedResult.pageSize)
+    .pipe(debounceTime(1000))
       .subscribe(pagedResult => {
         this.showButton = (pagedResult.items.length > 0) && (+pagedResult.currentPage + 1 < pagedResult.pageCount);
         this.pagedResult = pagedResult;
         this.audits = this.audits.concat(pagedResult.items);
+        this.loading = false;
       }, err => {
         this.alertService.error(`Đã xảy ra lỗi khi tải danh sách thay đổi gần đây!`);
+        this.loading = false;
       });
   }
   renderDataChangeRecently(action: string, target?: string, data?: any, typereturn?: any) {

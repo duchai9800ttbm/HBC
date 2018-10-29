@@ -1,4 +1,4 @@
-<div class="pl-5 pt-5 col-12" *ngIf="audits">
+<div class="wrapper px-5 pt-5" *ngIf="audits">
 
     <h3 class="mb-3 text-uppercase">thay đổi gần đây</h3>
 
@@ -48,9 +48,8 @@
 
         </ng-container>
     </div>
-</div>
-<div class="pl-5 col-12">
-    <div class="text-center cursor-pointer mt-2 mb-4" *ngIf="showButton">
-        <a class="text-primary" (click)="onLoadMore()">Xem thêm</a>
-    </div>
+        <div class="position-relative infinite-scroll text-center mt-2 mb-4" *ngIf="showButton" (click)="onLoadMore()">
+            <span *ngIf="!loading">Xem thêm</span>
+            <ngx-loading [show]="loading"></ngx-loading>
+        </div>
 </div>
