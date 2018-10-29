@@ -18,11 +18,13 @@ import { PagedResult } from '../../../../../shared/models';
 import { GroupDescriptor, DataResult, process, groupBy } from '@progress/kendo-data-query';
 import { DialogService } from '../../../../../../../node_modules/@progress/kendo-angular-dialog';
 import { FormInComponent } from '../../../../../shared/components/form-in/form-in.component';
+import { slideToLeft } from '../../../../../router.animations';
 
 @Component({
   selector: 'app-need-create-tender',
   templateUrl: './need-create-tender.component.html',
-  styleUrls: ['./need-create-tender.component.scss']
+  styleUrls: ['./need-create-tender.component.scss'],
+  animations: [slideToLeft()]
 })
 export class NeedCreateTenderComponent implements OnInit {
 

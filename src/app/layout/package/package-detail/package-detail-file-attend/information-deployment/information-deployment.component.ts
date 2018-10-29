@@ -29,10 +29,12 @@ import { PagedResult } from '../../../../../shared/models';
 import { ProposedTenderParticipationHistory } from '../../../../../shared/models/api-response/package/proposed-tender-participation-history.model';
 import { DialogService } from '../../../../../../../node_modules/@progress/kendo-angular-dialog';
 import { FormInComponent } from '../../../../../shared/components/form-in/form-in.component';
+import { slideToLeft } from '../../../../../router.animations';
 @Component({
   selector: 'app-information-deployment',
   templateUrl: './information-deployment.component.html',
-  styleUrls: ['./information-deployment.component.scss']
+  styleUrls: ['./information-deployment.component.scss'],
+  animations: [slideToLeft()]
 })
 export class InformationDeploymentComponent implements OnInit {
   file = [];

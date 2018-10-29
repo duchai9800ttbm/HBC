@@ -1,3 +1,4 @@
+<div [@routerTransition]>
 <div class=" title-list-package d-flex flex-wrap align-items-center status-filter pl-3">
     <div class="mr-auto d-flex align-items-end list-package mt-2 mb-2">
         <div class="d-flex justify-content-start h-40">
@@ -447,5 +448,5 @@
     </div>
 </div>
 
-
+</div>
 <app-upload-file-attach *ngIf="showPopupAdd" (closed)="closePopup($event)" [packageId]="packageId"></app-upload-file-attach>

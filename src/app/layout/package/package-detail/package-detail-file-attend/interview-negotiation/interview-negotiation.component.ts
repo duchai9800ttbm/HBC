@@ -15,12 +15,14 @@ import { NgxSpinnerService } from '../../../../../../../node_modules/ngx-spinner
 import { AlertService } from '../../../../../shared/services';
 import { ReportEndInterviewComponent } from './end-interview/report-end-interview/report-end-interview.component';
 import { CheckStatusPackage } from '../../../../../shared/constants/check-status-package';
+import { slideToLeft } from '../../../../../router.animations';
 
 
 @Component({
   selector: 'app-interview-negotiation',
   templateUrl: './interview-negotiation.component.html',
-  styleUrls: ['./interview-negotiation.component.scss']
+  styleUrls: ['./interview-negotiation.component.scss'],
+  animations: [slideToLeft()]
 })
 export class InterviewNegotiationComponent implements OnInit, OnDestroy {
   changeKeySearchInterviewInvitation$ = new BehaviorSubject<string>('');

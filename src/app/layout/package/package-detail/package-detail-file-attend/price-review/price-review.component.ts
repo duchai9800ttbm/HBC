@@ -8,11 +8,13 @@ import { NgxSpinnerService } from 'ngx-spinner';
 import { PackageDetailComponent } from '../../package-detail.component';
 import { DocumentPriceReviewService } from '../../../../../shared/services/document-price-review.service';
 import { Subscription } from 'rxjs';
+import { slideToLeft } from '../../../../../router.animations';
 
 @Component({
     selector: 'app-price-review',
     templateUrl: './price-review.component.html',
-    styleUrls: ['./price-review.component.scss']
+    styleUrls: ['./price-review.component.scss'],
+    animations: [slideToLeft()]
 })
 export class PriceReviewComponent implements OnInit, OnDestroy {
     packageId;

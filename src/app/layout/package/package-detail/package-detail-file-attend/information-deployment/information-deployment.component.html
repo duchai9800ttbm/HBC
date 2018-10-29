@@ -1,3 +1,5 @@
+<div [@routerTransition]>
+
 <div class=" title-list-package d-flex flex-wrap align-items-center status-filter" style=" padding:0px 20px 20px 30px;">
 
     <div class="mr-auto d-flex align-items-end list-package mt-2 mb-2">
@@ -5,11 +7,13 @@
             <div class="rule mr-2">
             </div>
             <div class="center-parent mr-4" style="font-size: 18px">
-                <div *ngIf="packageInfo?.stageStatus.id == bidStatus.ChuaThongBaoTrienKhai || packageInfo?.stageStatus.id == bidStatus.ThamGiaDuThau">Chưa thông báo triển khai</div>
+                <div *ngIf="packageInfo?.stageStatus.id == bidStatus.ChuaThongBaoTrienKhai || packageInfo?.stageStatus.id == bidStatus.ThamGiaDuThau">Chưa
+                    thông báo triển khai</div>
                 <div *ngIf="packageInfo?.stageStatus.id == bidStatus.DaThongBaoTrienKhai">Đã thông báo triển khai</div>
                 <div *ngIf="packageInfo?.stageStatus.id == bidStatus.DaXacNhanPhanCong">Đã xác nhận phân công</div>
                 <div *ngIf="(packageInfo?.stageStatus.id !== bidStatus.ChuaThongBaoTrienKhai) && (packageInfo?.stageStatus.id !== bidStatus.ThamGiaDuThau)
-                    && (packageInfo?.stageStatus.id !== bidStatus.DaThongBaoTrienKhai) && (packageInfo?.stageStatus.id !== bidStatus.DaXacNhanPhanCong)">Đã gửi phân công tiến độ</div>
+                    && (packageInfo?.stageStatus.id !== bidStatus.DaThongBaoTrienKhai) && (packageInfo?.stageStatus.id !== bidStatus.DaXacNhanPhanCong)">Đã
+                    gửi phân công tiến độ</div>
             </div>
         </div>
     </div>
@@ -17,7 +21,8 @@
         <div class="btn-toolbar mt-2 mb-2">
             <button type="button" *ngIf="packageInfo?.stageStatus.id === bidStatus.DaGuiPhanCongTienDo" class="btn btn-primary mr-1"
                 (click)="startSetHSDT()">Bắt đầu lập HSDT</button>
-            <button type="button" *ngIf="isconfirmProgress" [ngClass]="{'btn-dep':isconfirmProgress == true}" class="btn btn-up" (click)="openModeSendAssignment(SendAssignment)">{{textConfirmProgress}}</button>
+            <button type="button" *ngIf="isconfirmProgress" [ngClass]="{'btn-dep':isconfirmProgress == true}" class="btn btn-up"
+                (click)="openModeSendAssignment(SendAssignment)">{{textConfirmProgress}}</button>
             <button type="button" *ngIf="packageInfo?.stageStatus.id == bidStatus.ChuaThongBaoTrienKhai || packageInfo?.stageStatus.id == bidStatus.ThamGiaDuThau"
                 class="btn btn-up btn-dep" (click)="openModalDeployment(informationDeployment)">Thông báo triển khai</button>
             <button type="button" *ngIf="packageInfo?.stageStatus.id !== bidStatus.ChuaThongBaoTrienKhai && packageInfo?.stageStatus.id !== bidStatus.ThamGiaDuThau"
@@ -26,8 +31,10 @@
             <!-- <button type="button" *ngIf="isconfirmProgress" class="btn btn-up disable">Upload file</button>
             <button type="button" *ngIf="!isconfirmProgress" [ngClass]="{ 'btn-dep': dowloadTem === true,'disable': dowloadTem === false }"
                 (click)="openModalUpload(Upload)" class="btn btn-up ">Upload file</button> -->
-            <button class="btn btn-primary mr-1" *ngIf="packageInfo?.stageStatus.id == bidStatus.DaXacNhanPhanCong" (click)="sendTenderPlan()">Gửi phân công tiến độ</button>
-            <button *ngIf="tenderPlan?.isDraftVersion" class="btn btn-primary mr-1" (click)="confirmTenderPlan()">Xác nhận phân công tiến độ</button>
+            <button class="btn btn-primary mr-1" *ngIf="packageInfo?.stageStatus.id == bidStatus.DaXacNhanPhanCong"
+                (click)="sendTenderPlan()">Gửi phân công tiến độ</button>
+            <button *ngIf="tenderPlan?.isDraftVersion" class="btn btn-primary mr-1" (click)="confirmTenderPlan()">Xác
+                nhận phân công tiến độ</button>
             <button type="button" class="btn btn-primary " (click)="refresh()">
                 <i class="fa fa-refresh" aria-hidden="true"></i>
             </button>
@@ -68,7 +75,8 @@
                 <td>
                     <a [routerLink]="['./view']" (click)="changeAction('view')">{{tenderPlan.projectInformation}}</a>
                 </td>
-                <td>{{tenderPlan.approvedEmployee?.employeeName ? tenderPlan.approvedEmployee?.employeeName : 'Chưa duyệt'}}</td>
+                <td>{{tenderPlan.approvedEmployee?.employeeName ? tenderPlan.approvedEmployee?.employeeName : 'Chưa
+                    duyệt'}}</td>
                 <td>{{tenderPlan.createdEmployee?.employeeName}}</td>
                 <td>{{tenderPlan.createDate * 1000 | date: 'dd/MM/yyyy':'+0000'}}</td>
                 <td>
@@ -77,11 +85,13 @@
                             <a [routerLink]="['./view']" (click)="changeAction('view')">
                                 <i class="fa fa-eye text-warning" aria-hidden="true"></i>
                             </a>
-                            <a class=" text-success ml-3" [class.disabled]="packageInfo?.stageStatus.id == bidStatus.DaGuiPhanCongTienDo" [routerLink]="packageInfo?.stageStatus.id == bidStatus.DaGuiPhanCongTienDo ? [] : ['./edit']"
+                            <a class=" text-success ml-3" [class.disabled]="packageInfo?.stageStatus.id == bidStatus.DaGuiPhanCongTienDo"
+                                [routerLink]="packageInfo?.stageStatus.id == bidStatus.DaGuiPhanCongTienDo ? [] : ['./edit']"
                                 (click)="changeAction('edit')">
                                 <i class="fa fa-pencil cursor-pointer" aria-hidden="true"> </i>
                             </a>
-                            <a class=" text-dark ml-3" [class.disabled]="packageInfo?.stageStatus.id == bidStatus.DaGuiPhanCongTienDo" (click)="packageInfo?.stageStatus.id == bidStatus.DaGuiPhanCongTienDo ? null : deleteTenderPlan()">
+                            <a class=" text-dark ml-3" [class.disabled]="packageInfo?.stageStatus.id == bidStatus.DaGuiPhanCongTienDo"
+                                (click)="packageInfo?.stageStatus.id == bidStatus.DaGuiPhanCongTienDo ? null : deleteTenderPlan()">
                                 <i class="fa fa-trash-o" aria-hidden="true"></i>
                             </a>
                             <a class="ml-3" (click)="print()">
@@ -169,8 +179,9 @@
     <div class="modal-body">
         <div class="input-group mb-3">
             <span class="input-group-addon">To:</span>
-            <ng-select class="w-100" [items]="listEmailSearchTo" typeToSearchText="Nhập email" addTagText="Thêm email:" clearAllText="Xóa tất cả"
-                [addTag]="true" [hideSelected]="true" multiple="true" bindLabel="employeeName" [searchFn]="customSearchFn" [(ngModel)]="emailModel.to">
+            <ng-select class="w-100" [items]="listEmailSearchTo" typeToSearchText="Nhập email" addTagText="Thêm email:"
+                clearAllText="Xóa tất cả" [addTag]="true" [hideSelected]="true" multiple="true" bindLabel="employeeName"
+                [searchFn]="customSearchFn" [(ngModel)]="emailModel.to">
                 <ng-template ng-option-tmp let-item="item" let-index="index" let-search="searchTerm">
                     <table>
                         <tr>{{item.employeeName}}</tr>
@@ -182,8 +193,9 @@
 
         <div class="input-group mb-3" *ngIf="isSendCc">
             <span class="input-group-addon" id="basic-addon1">Cc:</span>
-            <ng-select class="w-100" [items]="listEmailSearchCc" addTagText="Thêm email:" clearAllText="Xóa tất cả" [addTag]="true" [hideSelected]="true"
-                multiple="true" bindLabel="employeeName" [searchFn]="customSearchFn" [(ngModel)]="emailModel.cc">
+            <ng-select class="w-100" [items]="listEmailSearchCc" addTagText="Thêm email:" clearAllText="Xóa tất cả"
+                [addTag]="true" [hideSelected]="true" multiple="true" bindLabel="employeeName" [searchFn]="customSearchFn"
+                [(ngModel)]="emailModel.cc">
                 <ng-template ng-option-tmp let-item="item" let-index="index" let-search="searchTerm">
                     <table>
                         <tr>{{item.employeeName}}</tr>
@@ -195,8 +207,9 @@
 
         <div class="input-group mb-3" *ngIf="isSendBcc">
             <span class="input-group-addon" id="basic-addon1">Bcc:</span>
-            <ng-select class="w-100" [items]="listEmailSearchBcc" addTagText="Thêm email:" clearAllText="Xóa tất cả" [addTag]="true"
-                [hideSelected]="true" multiple="true" bindLabel="employeeName" [searchFn]="customSearchFn" [(ngModel)]="emailModel.bcc">
+            <ng-select class="w-100" [items]="listEmailSearchBcc" addTagText="Thêm email:" clearAllText="Xóa tất cả"
+                [addTag]="true" [hideSelected]="true" multiple="true" bindLabel="employeeName" [searchFn]="customSearchFn"
+                [(ngModel)]="emailModel.bcc">
                 <ng-template ng-option-tmp let-item="item" let-index="index" let-search="searchTerm">
                     <table>
                         <tr>{{item.employeeName}}</tr>
@@ -218,12 +231,14 @@
             <div class="input-group-prepend">
                 <span class="input-group-text" id="basic-addon1">Tiêu đề:</span>
             </div>
-            <input type="text" [(ngModel)]="emailModel.subject" class="form-control boder-left-none" placeholder="" aria-label="Tiede"
-                aria-describedby="basic-addon1">
+            <input type="text" [(ngModel)]="emailModel.subject" class="form-control boder-left-none" placeholder=""
+                aria-label="Tiede" aria-describedby="basic-addon1">
         </div>
         <div class="body-ckeditor">
-            <ckeditor [(ngModel)]="emailModel.content" [config]="ckeConfig" #ckeditor debounce="500" (change)="onChange($event)" (paster)="onPaste($event)">
-                <ckbutton [name]="'saveButton'" [command]="'saveCmd'" [icon]="'save.png'" [label]="'Save Document'" [toolbar]="'clipboard,1'">
+            <ckeditor [(ngModel)]="emailModel.content" [config]="ckeConfig" #ckeditor debounce="500" (change)="onChange($event)"
+                (paster)="onPaste($event)">
+                <ckbutton [name]="'saveButton'" [command]="'saveCmd'" [icon]="'save.png'" [label]="'Save Document'"
+                    [toolbar]="'clipboard,1'">
                 </ckbutton>
             </ckeditor>
         </div>
@@ -315,8 +330,8 @@
           <span class="input-group-addon">
             <i class="fa fa-calendar"></i>
           </span> -->
-                    <input [placeholder]="datePickerConfig.datePlaceHolder" class="input-date-time input-date-time-bar" readonly [owlDateTimeTrigger]="dt"
-                        [owlDateTime]="dt">
+                    <input [placeholder]="datePickerConfig.datePlaceHolder" class="input-date-time input-date-time-bar"
+                        readonly [owlDateTimeTrigger]="dt" [owlDateTime]="dt">
                     <owl-date-time #dt pickerType="calendar"></owl-date-time>
                     <span [owlDateTimeTrigger]="dt" class="input-group-addon">
                         <i class="fa fa-calendar"></i>
@@ -362,7 +377,8 @@
                                 <div style="width: 40%;">
                                     <div class="center-parent">
                                         <label class="custom-control custom-checkbox">
-                                            <input type="checkbox" class="custom-control-input" [checked]="checked" [(ngModel)]="checkboxSeclectAll" (change)="onSelectAll($event.target.checked)">
+                                            <input type="checkbox" class="custom-control-input" [checked]="checked"
+                                                [(ngModel)]="checkboxSeclectAll" (change)="onSelectAll($event.target.checked)">
                                             <span class="custom-control-indicator"></span>
                                         </label>
                                     </div>
@@ -403,7 +419,8 @@
                                 <div style="width: 40%;">
                                     <div class="center-parent">
                                         <label class="custom-control custom-checkbox">
-                                            <input type="checkbox" class="custom-control-input" [checked]="data.checkboxSelected" [(ngModel)]="data.checkboxSelected">
+                                            <input type="checkbox" class="custom-control-input" [checked]="data.checkboxSelected"
+                                                [(ngModel)]="data.checkboxSelected">
                                             <span class="custom-control-indicator"></span>
                                         </label>
                                     </div>
@@ -524,4 +541,6 @@
 
     </div>
 </ng-template>
-<ngx-spinner bdColor="rgba(51, 51, 51, 0.7)" size = "default" color="#fff" type="ball-scale"></ngx-spinner>
+<ngx-spinner bdColor="rgba(51, 51, 51, 0.7)" size="default" color="#fff" type="ball-scale"></ngx-spinner>
+
+</div>

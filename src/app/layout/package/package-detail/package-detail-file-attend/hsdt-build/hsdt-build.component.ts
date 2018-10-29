@@ -17,10 +17,12 @@ import { GroupUserService } from '../../../../../shared/services/group-user.serv
 import { ListUserItem } from '../../../../../shared/models/user/user-list-item.model';
 import { PackageInfoModel } from '../../../../../shared/models/package/package-info.model';
 import { BidStatus } from '../../../../../shared/constants/bid-status';
+import { slideToLeft } from '../../../../../router.animations';
 @Component({
     selector: 'app-hsdt-build',
     templateUrl: './hsdt-build.component.html',
-    styleUrls: ['./hsdt-build.component.scss']
+    styleUrls: ['./hsdt-build.component.scss'],
+    animations: [slideToLeft()]
 })
 export class HsdtBuildComponent implements OnInit, AfterViewChecked {
     page: number;

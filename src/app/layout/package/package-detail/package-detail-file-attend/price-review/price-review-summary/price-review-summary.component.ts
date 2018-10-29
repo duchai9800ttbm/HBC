@@ -22,11 +22,13 @@ import { FormInComponent } from '../../../../../../shared/components/form-in/for
 import { BidStatus } from '../../../../../../shared/constants/bid-status';
 import { BehaviorSubject } from '../../../../../../../../node_modules/rxjs/BehaviorSubject';
 import { Router } from '../../../../../../../../node_modules/@angular/router';
+import { slideToLeft } from '../../../../../../router.animations';
 
 @Component({
   selector: 'app-price-review-summary',
   templateUrl: './price-review-summary.component.html',
-  styleUrls: ['./price-review-summary.component.scss']
+  styleUrls: ['./price-review-summary.component.scss'],
+  animations: [slideToLeft()]
 })
 export class PriceReviewSummaryComponent implements OnInit {
   packageId;

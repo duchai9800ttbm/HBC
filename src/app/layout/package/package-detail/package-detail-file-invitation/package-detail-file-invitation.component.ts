@@ -1,12 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { routerTransition, slideToRight, slideToLeft } from '../../../../router.animations';
+import { slideToTop } from '../../../../router.animations';
 
 @Component({
   selector: 'app-package-detail-file-invitation',
   templateUrl: './package-detail-file-invitation.component.html',
   styleUrls: ['./package-detail-file-invitation.component.scss'],
-  animations: [slideToLeft()]
+  animations: [slideToTop()]
 })
 export class PackageDetailFileInvitationComponent implements OnInit {
   public packageId;

@@ -1,13 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { PackageService } from '../../../../shared/services/package.service';
-import { slideToLeft } from '../../../../router.animations';
+import { slideToTop } from '../../../../router.animations';
 
 @Component({
   selector: 'app-package-detail-result',
   templateUrl: './package-detail-result.component.html',
   styleUrls: ['./package-detail-result.component.scss'],
-  animations: [slideToLeft()]
+  animations: [slideToTop()]
 })
 export class PackageDetailResultComponent implements OnInit {
     public packageId;
