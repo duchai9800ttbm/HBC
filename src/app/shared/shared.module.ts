@@ -105,7 +105,7 @@ import { NgxLoadingModule, ngxLoadingAnimationTypes } from 'ngx-loading';
         BsDropdownModule.forRoot(),
         NgxLoadingModule.forRoot({
             animationType: ngxLoadingAnimationTypes.threeBounce,
-            backdropBackgroundColour: 'rgba(0,0,0,0.08)',
+            backdropBackgroundColour: 'rgba(0,0,0,0.05)',
             backdropBorderRadius: '3px',
             primaryColour: '#cceffc',
             secondaryColour: '#cceffc',
