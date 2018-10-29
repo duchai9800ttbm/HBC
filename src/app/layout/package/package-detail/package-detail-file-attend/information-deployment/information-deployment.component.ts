@@ -37,6 +37,7 @@ import { slideToLeft } from '../../../../../router.animations';
   animations: [slideToLeft()]
 })
 export class InformationDeploymentComponent implements OnInit {
+  loading = false;
   file = [];
   public gridView: GridDataResult;
   public items: any[] = listUsers;
@@ -129,10 +130,13 @@ export class InformationDeploymentComponent implements OnInit {
 
   ngOnInit() {
     this.bidOpportunityId = PackageDetailComponent.packageId;
+    this.loading = true;
     this.emailService.searchbymail('').subscribe(response => {
+
       this.listEmailSearchTo = response;
       this.listEmailSearchCc = response;
       this.listEmailSearchBcc = response;
+      this.loading = false;
     });
 
     this.getPackageInfo();
@@ -199,15 +203,15 @@ export class InformationDeploymentComponent implements OnInit {
   }
 
   getTenderPlanInfo() {
-    this.spinner.show();
+    this.loading = true;
     this.packageService.getTenderPreparationPlanning(this.bidOpportunityId).subscribe(data => {
       this.tenderPlan = data;
-      this.spinner.hide();
+      this.loading = false;
       setTimeout(() => {
         this.dtTrigger.next();
       });
     }, err => {
-      this.spinner.hide();
+      this.loading = false;
       this.alertService.error('Lấy thông tin bảng phân công tiến độ thất bại');
     });
   }
@@ -217,12 +221,12 @@ export class InformationDeploymentComponent implements OnInit {
   }
 
   getPackageInfo() {
-    this.spinner.show();
+    this.loading = true;
     this.packageService
       .getInforPackageID(this.bidOpportunityId)
       .subscribe(data => {
         this.packageInfo = data;
-        this.spinner.hide();
+        this.loading = false;
         const isTrienKhai = this.packageInfo.stageStatus.id === this.bidStatus.DaThongBaoTrienKhai;
         // tslint:disable-next-line:max-line-length
         this.toggleTextUpFile = isTrienKhai ? 'Hiện chưa có bảng phân công tiến độ nào' : 'Bạn cần phải thông báo triển khai trước khi phân công tiến độ thực hiện';
@@ -247,7 +251,7 @@ export class InformationDeploymentComponent implements OnInit {
   SendInformation() {
     if (this.emailModel && this.emailModel.to) {
       this.emailModel.bidOpportunityId = this.packageId;
-      this.spinner.show();
+      // this.loading = true;
       this.emailService.sendEmailDeployment(this.emailModel, this.file).subscribe(result => {
         this.statusObservableHsdtService.change();
         this.isSendInformation = !this.isSendInformation;
@@ -255,7 +259,7 @@ export class InformationDeploymentComponent implements OnInit {
         this.dowloadTem = true;
         this.alertService.success('Gửi thông báo triển khai thành công!');
         this.modalRef.hide();
-        this.spinner.hide();
+        this.loading = false;
         this.getPackageInfo();
       },
         err => {
@@ -265,7 +269,7 @@ export class InformationDeploymentComponent implements OnInit {
             this.alertService.error('Đã xảy ra lỗi. Gửi thông báo triển khai không thành công!');
           }
           this.modalRef.hide();
-          this.spinner.hide();
+          this.loading = false;
         });
     }
   }
@@ -345,9 +349,9 @@ export class InformationDeploymentComponent implements OnInit {
     this.confirmationService.confirm(
       'Bạn có muốn lập hồ sơ dự thầu?',
       () => {
-        this.spinner.show();
+        // this.loading = true;
         this.router.navigate([`/package/detail/${this.packageId}/attend/build`]);
-        this.spinner.hide();
+        this.loading = false;
         this.alertService.success('Triển khai & phân công tiến độ thành công!');
       }
     );
@@ -373,18 +377,18 @@ export class InformationDeploymentComponent implements OnInit {
 
   deleteTenderPlan() {
     this.confirmationService.confirm('Bạn có chắc chắn muốn xóa bảng phân công tiến độ này?', () => {
-      this.spinner.show();
+      // this.loading = true;
       this.packageService.deleteTenderPreparationPlanning(this.bidOpportunityId).subscribe(data => {
         this.alertService.success('Xóa bảng phân công tiến độ thành công!');
         this.getChangeHistory(this.pagedResultChangeHistoryList.currentPage, this.pagedResultChangeHistoryList.pageSize);
-        this.spinner.hide();
+        this.loading = false;
         // this.proposedTender = null;
         // this.getProposedTenderParticipateReportInfo();
         this.tenderPlan = null;
         this.getPackageInfo();
       }, err => {
         this.alertService.error('Xóa bảng phân công tiến độ thất bại!');
-        this.spinner.hide();
+        this.loading = false;
       });
     });
   }
@@ -421,11 +425,11 @@ export class InformationDeploymentComponent implements OnInit {
       // tslint:disable-next-line:max-line-length
       this.tenderPlan.bimDepartmentEmployeeId = this.tenderPlan.bimDepartmentEmployee ? this.tenderPlan.bimDepartmentEmployee.employeeId : null;
       this.packageService.comfirmTenderPreparationPlanning(this.tenderPlan).subscribe(success => {
-        this.spinner.hide();
+        this.loading = false;
         this.alertService.success('Xác nhận phân công tiến độ thành công!');
         this.getPackageInfo();
       }, err => {
-        this.spinner.hide();
+        this.loading = false;
         this.alertService.error('Xác nhận phân công tiến độ thất bại!');
       });
     } else {
@@ -435,13 +439,13 @@ export class InformationDeploymentComponent implements OnInit {
 
   sendTenderPlan() {
     if (this.tenderPlan.isSignedByApprovalPerson && this.tenderPlan.isSignedByPreparedPerson) {
-      this.spinner.show();
+      // this.loading = true;
       this.packageService.sendTenderPreparationPlanning(this.bidOpportunityId).subscribe(success => {
-        this.spinner.hide();
+        this.loading = false;
         this.alertService.success('Gửi phân công tiến độ thành công!');
         this.getPackageInfo();
       }, err => {
-        this.spinner.hide();
+        this.loading = false;
         this.alertService.error('Gửi phân công tiến độ thất bại!');
       });
     } else {
@@ -465,12 +469,12 @@ export class InformationDeploymentComponent implements OnInit {
     return item.employeeName.toLocaleLowerCase().indexOf(term) > -1 || item.employeeEmail.toLocaleLowerCase().indexOf(term) > -1;
   }
   // sendTenderPlan() {
-  //   this.spinner.show();
+  //   this.loading = true;
   //   this.packageService.sendTenderPreparationPlanning(this.bidOpportunityId).subscribe(success => {
-  //     this.spinner.hide();
+  //     this.loading = false;
   //     this.alertService.success('Gửi phân công tiến độ thành công!');
   //   }, err => {
-  //     this.spinner.hide();
+  //     this.loading = false;
   //     this.alertService.error('Gửi phân công tiến độ thất bại!');
   //   });
   // }
@@ -478,7 +482,7 @@ export class InformationDeploymentComponent implements OnInit {
   }
 
   getChangeHistory(page: number | string, pageSize: number | string) {
-    this.spinner.show();
+    // this.loading = true;
     this.packageService.getChangeHistoryListTenderPreparationPlanning(this.bidOpportunityId, page, pageSize).subscribe(respone => {
       this.historyList = respone.items;
       this.pagedResultChangeHistoryList = respone;
@@ -497,11 +501,11 @@ export class InformationDeploymentComponent implements OnInit {
         - Number(this.pagedResultChangeHistoryList.pageSize) * Number(this.pagedResultChangeHistoryList.currentPage);
       setTimeout(() => {
         this.dtTrigger2.next();
-        this.spinner.hide();
+        this.loading = false;
       });
     },
       err => {
-        this.spinner.hide();
+        this.loading = false;
         // this.alertService.error('Lấy danh sách lịch sử thay đổi phiếu đề nghị dự thầu thất bại!');
       });
   }
