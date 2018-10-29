@@ -44,6 +44,52 @@
 </div>
 
 <div *ngIf = "!loading">
+        <div class="ml-3" *ngIf="tenderPlan">
+                <h5 class="text-uppercase mb-3">bảng phân công tiến độ (tender preparation planning assignment)</h5>
+                <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="table-layout--fixed">
+                    <thead>
+                        <tr>
+                            <th class="w-40">Tên tài liệu</th>
+                            <th class="w-20">Người duyệt</th>
+                            <th class="w-20">Người tạo</th>
+                            <th class="w-20">Ngày tạo</th>
+                            <th class="text-center w-tab">Thao tác</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>
+                                <a [routerLink]="['./view']" (click)="changeAction('view')">{{tenderPlan.projectInformation}}</a>
+                            </td>
+                            <td>{{tenderPlan.approvedEmployee?.employeeName ? tenderPlan.approvedEmployee?.employeeName : 'Chưa
+                                duyệt'}}</td>
+                            <td>{{tenderPlan.createdEmployee?.employeeName}}</td>
+                            <td>{{tenderPlan.createDate * 1000 | date: 'dd/MM/yyyy':'+0000'}}</td>
+                            <td>
+                                <div class="d-flex justify-content-center">
+                                    <div>
+                                        <a [routerLink]="['./view']" (click)="changeAction('view')">
+                                            <i class="fa fa-eye text-warning" aria-hidden="true"></i>
+                                        </a>
+                                        <a class=" text-success ml-3" [class.disabled]="packageInfo?.stageStatus.id == bidStatus.DaGuiPhanCongTienDo"
+                                            [routerLink]="packageInfo?.stageStatus.id == bidStatus.DaGuiPhanCongTienDo ? [] : ['./edit']"
+                                            (click)="changeAction('edit')">
+                                            <i class="fa fa-pencil cursor-pointer" aria-hidden="true"> </i>
+                                        </a>
+                                        <a class=" text-dark ml-3" [class.disabled]="packageInfo?.stageStatus.id == bidStatus.DaGuiPhanCongTienDo"
+                                            (click)="packageInfo?.stageStatus.id == bidStatus.DaGuiPhanCongTienDo ? null : deleteTenderPlan()">
+                                            <i class="fa fa-trash-o" aria-hidden="true"></i>
+                                        </a>
+                                        <a class="ml-3" (click)="print()">
+                                            <i class="fa fa-print icon-print" aria-hidden="true"></i>
+                                        </a>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
     <div class="mt-5" *ngIf="!tenderPlan">
         <div class="text-center">
             <img class="icon-filter" src="assets/images/ic-file0.png" alt="">
@@ -58,52 +104,7 @@
         </div>
     </div>
     
-    <div class="ml-3" *ngIf="tenderPlan">
-        <h5 class="text-uppercase mb-3">bảng phân công tiến độ (tender preparation planning assignment)</h5>
-        <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="table-layout--fixed">
-            <thead>
-                <tr>
-                    <th class="w-40">Tên tài liệu</th>
-                    <th class="w-20">Người duyệt</th>
-                    <th class="w-20">Người tạo</th>
-                    <th class="w-20">Ngày tạo</th>
-                    <th class="text-center w-tab">Thao tác</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td>
-                        <a [routerLink]="['./view']" (click)="changeAction('view')">{{tenderPlan.projectInformation}}</a>
-                    </td>
-                    <td>{{tenderPlan.approvedEmployee?.employeeName ? tenderPlan.approvedEmployee?.employeeName : 'Chưa
-                        duyệt'}}</td>
-                    <td>{{tenderPlan.createdEmployee?.employeeName}}</td>
-                    <td>{{tenderPlan.createDate * 1000 | date: 'dd/MM/yyyy':'+0000'}}</td>
-                    <td>
-                        <div class="d-flex justify-content-center">
-                            <div>
-                                <a [routerLink]="['./view']" (click)="changeAction('view')">
-                                    <i class="fa fa-eye text-warning" aria-hidden="true"></i>
-                                </a>
-                                <a class=" text-success ml-3" [class.disabled]="packageInfo?.stageStatus.id == bidStatus.DaGuiPhanCongTienDo"
-                                    [routerLink]="packageInfo?.stageStatus.id == bidStatus.DaGuiPhanCongTienDo ? [] : ['./edit']"
-                                    (click)="changeAction('edit')">
-                                    <i class="fa fa-pencil cursor-pointer" aria-hidden="true"> </i>
-                                </a>
-                                <a class=" text-dark ml-3" [class.disabled]="packageInfo?.stageStatus.id == bidStatus.DaGuiPhanCongTienDo"
-                                    (click)="packageInfo?.stageStatus.id == bidStatus.DaGuiPhanCongTienDo ? null : deleteTenderPlan()">
-                                    <i class="fa fa-trash-o" aria-hidden="true"></i>
-                                </a>
-                                <a class="ml-3" (click)="print()">
-                                    <i class="fa fa-print icon-print" aria-hidden="true"></i>
-                                </a>
-                            </div>
-                        </div>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
-    </div>
+   
 </div>
 
 

@@ -48,8 +48,11 @@
 
         </ng-container>
     </div>
-        <div class="position-relative infinite-scroll text-center mt-2 mb-4" *ngIf="showButton" (click)="onLoadMore()">
-            <span *ngIf="!loading">Xem thêm</span>
-            <ngx-loading [show]="loading"></ngx-loading>
+    <div class="position-relative">
+        <div class="infinite-scroll text-center mt-2 mb-4" *ngIf="showButton && !loading" (click)="onLoadMore()">
+            <span >Xem thêm</span>
         </div>
+        <ngx-loading [show]="loading"></ngx-loading>
+    </div>
+
 </div>

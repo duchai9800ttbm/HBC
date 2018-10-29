@@ -1,23 +1,20 @@
-import { Component, OnInit, TemplateRef, ViewChild, ElementRef, ViewChildren } from '@angular/core';
+import { Component, OnInit, TemplateRef, ViewChild, ViewChildren } from '@angular/core';
 import { BsModalService } from 'ngx-bootstrap/modal';
 import { BsModalRef } from 'ngx-bootstrap/modal/bs-modal-ref.service';
 import { PackageDetailComponent } from '../../package-detail.component';
 import { DATETIME_PICKER_CONFIG } from '../../../../../shared/configs/datepicker.config';
 import { UploadItem } from '../../../../../shared/models/upload/upload-item.model';
-import { from } from 'rxjs/observable/from';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { GridDataResult, PageChangeEvent, } from '@progress/kendo-angular-grid';
-import { SortDescriptor, orderBy } from '@progress/kendo-data-query';
+import { GridDataResult, } from '@progress/kendo-angular-grid';
+import { SortDescriptor } from '@progress/kendo-data-query';
 import { Router } from '@angular/router';
 import { DATATABLE_CONFIG } from '../../../../../shared/configs';
-import { Observable, BehaviorSubject, Subject } from '../../../../../../../node_modules/rxjs';
+import { BehaviorSubject, Subject } from '../../../../../../../node_modules/rxjs';
 import { ConfirmationService, AlertService } from '../../../../../shared/services';
 import { SendEmailModel } from '../../../../../shared/models/send-email-model';
 import { EmailService } from '../../../../../shared/services/email.service';
-import { COMMON_CONSTANTS } from '../../../../../shared/configs/common.config';
 import { SearchEmailModel } from '../../../../../shared/models/search-email.model';
 import { NgxSpinnerService } from '../../../../../../../node_modules/ngx-spinner';
-import { map } from 'rxjs/operators/map';
 import { PackageService } from '../../../../../shared/services/package.service';
 import { PackageInfoModel } from '../../../../../shared/models/package/package-info.model';
 import { BidStatus } from '../../../../../shared/constants/bid-status';
@@ -107,7 +104,7 @@ export class InformationDeploymentComponent implements OnInit {
   bidOpportunityId;
   packageInfo: PackageInfoModel;
   bidStatus = BidStatus;
-  tenderPlan: TenderPreparationPlanningRequest;
+  tenderPlan: TenderPreparationPlanningRequest = null;
   historyList;
   pagedResultChangeHistoryList: PagedResult<ProposedTenderParticipationHistory[]> = new PagedResult<ProposedTenderParticipationHistory[]>();
   indexItemHistoryChange: number;
@@ -117,7 +114,6 @@ export class InformationDeploymentComponent implements OnInit {
     private formBuilder: FormBuilder,
     private router: Router,
     private confirmationService: ConfirmationService,
-    private spinner: NgxSpinnerService,
     private alertService: AlertService,
     private emailService: EmailService,
     private packageService: PackageService,
@@ -206,14 +202,15 @@ export class InformationDeploymentComponent implements OnInit {
     this.loading = true;
     this.packageService.getTenderPreparationPlanning(this.bidOpportunityId).subscribe(data => {
       this.tenderPlan = data;
-      this.loading = false;
+      
       setTimeout(() => {
         this.dtTrigger.next();
+        this.loading = false;
       });
-    }, err => {
-      this.loading = false;
-      this.alertService.error('Lấy thông tin bảng phân công tiến độ thất bại');
-    });
+    }, () => {
+        this.loading = false;
+        this.alertService.error('Lấy thông tin bảng phân công tiến độ thất bại');
+      });
   }
 
   onPaste(e) {
@@ -252,7 +249,7 @@ export class InformationDeploymentComponent implements OnInit {
     if (this.emailModel && this.emailModel.to) {
       this.emailModel.bidOpportunityId = this.packageId;
       // this.loading = true;
-      this.emailService.sendEmailDeployment(this.emailModel, this.file).subscribe(result => {
+      this.emailService.sendEmailDeployment(this.emailModel, this.file).subscribe(() => {
         this.statusObservableHsdtService.change();
         this.isSendInformation = !this.isSendInformation;
         this.isTeamPlate = !this.isTeamPlate;
@@ -320,7 +317,7 @@ export class InformationDeploymentComponent implements OnInit {
     this.alertService.success('Gửi phân công tiến độ thành công!');
   }
 
-  public sortChange(sort: SortDescriptor[]): void {
+  public sortChange(): void {
     this.loadItems();
   }
 
@@ -378,7 +375,7 @@ export class InformationDeploymentComponent implements OnInit {
   deleteTenderPlan() {
     this.confirmationService.confirm('Bạn có chắc chắn muốn xóa bảng phân công tiến độ này?', () => {
       // this.loading = true;
-      this.packageService.deleteTenderPreparationPlanning(this.bidOpportunityId).subscribe(data => {
+      this.packageService.deleteTenderPreparationPlanning(this.bidOpportunityId).subscribe(() => {
         this.alertService.success('Xóa bảng phân công tiến độ thành công!');
         this.getChangeHistory(this.pagedResultChangeHistoryList.currentPage, this.pagedResultChangeHistoryList.pageSize);
         this.loading = false;
@@ -386,10 +383,10 @@ export class InformationDeploymentComponent implements OnInit {
         // this.getProposedTenderParticipateReportInfo();
         this.tenderPlan = null;
         this.getPackageInfo();
-      }, err => {
-        this.alertService.error('Xóa bảng phân công tiến độ thất bại!');
-        this.loading = false;
-      });
+      }, () => {
+          this.alertService.error('Xóa bảng phân công tiến độ thất bại!');
+          this.loading = false;
+        });
     });
   }
 
@@ -424,14 +421,14 @@ export class InformationDeploymentComponent implements OnInit {
       this.tenderPlan.technicalDepartmentEmployeeId = this.tenderPlan.technicalDepartmentEmployee ? this.tenderPlan.technicalDepartmentEmployee.employeeId : null;
       // tslint:disable-next-line:max-line-length
       this.tenderPlan.bimDepartmentEmployeeId = this.tenderPlan.bimDepartmentEmployee ? this.tenderPlan.bimDepartmentEmployee.employeeId : null;
-      this.packageService.comfirmTenderPreparationPlanning(this.tenderPlan).subscribe(success => {
+      this.packageService.comfirmTenderPreparationPlanning(this.tenderPlan).subscribe(() => {
         this.loading = false;
         this.alertService.success('Xác nhận phân công tiến độ thành công!');
         this.getPackageInfo();
-      }, err => {
-        this.loading = false;
-        this.alertService.error('Xác nhận phân công tiến độ thất bại!');
-      });
+      }, () => {
+          this.loading = false;
+          this.alertService.error('Xác nhận phân công tiến độ thất bại!');
+        });
     } else {
       this.alertService.error('Bạn chưa hoàn tất phân công tiến độ, kiểm tra lại bảng phân công.');
     }
@@ -440,14 +437,14 @@ export class InformationDeploymentComponent implements OnInit {
   sendTenderPlan() {
     if (this.tenderPlan.isSignedByApprovalPerson && this.tenderPlan.isSignedByPreparedPerson) {
       // this.loading = true;
-      this.packageService.sendTenderPreparationPlanning(this.bidOpportunityId).subscribe(success => {
+      this.packageService.sendTenderPreparationPlanning(this.bidOpportunityId).subscribe(() => {
         this.loading = false;
         this.alertService.success('Gửi phân công tiến độ thành công!');
         this.getPackageInfo();
-      }, err => {
-        this.loading = false;
-        this.alertService.error('Gửi phân công tiến độ thất bại!');
-      });
+      }, () => {
+          this.loading = false;
+          this.alertService.error('Gửi phân công tiến độ thất bại!');
+        });
     } else {
       console.log('CHưa ký');
       if (!this.tenderPlan.isSignedByPreparedPerson) {
@@ -478,7 +475,7 @@ export class InformationDeploymentComponent implements OnInit {
   //     this.alertService.error('Gửi phân công tiến độ thất bại!');
   //   });
   // }
-  onChange(e) {
+  onChange() {
   }
 
   getChangeHistory(page: number | string, pageSize: number | string) {
@@ -504,32 +501,31 @@ export class InformationDeploymentComponent implements OnInit {
         this.loading = false;
       });
     },
-      err => {
+      () => {
         this.loading = false;
-        // this.alertService.error('Lấy danh sách lịch sử thay đổi phiếu đề nghị dự thầu thất bại!');
       });
   }
 
-  pagedResultChangeHistory(e) {
+  pagedResultChangeHistory() {
     this.getChangeHistory(this.pagedResultChangeHistoryList.currentPage, this.pagedResultChangeHistoryList.pageSize);
   }
 
   downloadTemplate() {
-    this.packageService.downloadPreparationPlanningTemplate().subscribe(data => {
+    this.packageService.downloadPreparationPlanningTemplate().subscribe(() => {
     },
-      err => {
+      () => {
         this.alertService.error('Tải template phân công tiến độ không thành công!');
       });
   }
 
   startSetHSDT() {
     console.log('this.bidOpportunityId', this.bidOpportunityId);
-    this.packageService.startSetHSDT(this.bidOpportunityId).subscribe(respone => {
+    this.packageService.startSetHSDT(this.bidOpportunityId).subscribe(() => {
       this.alertService.success('Bắt đầu lập HSDT thành công!');
       // this.statusObservableHsdtService.change();
       this.router.navigate([`/package/detail/${this.packageId}/attend/build/summary`]);
     },
-      err => {
+      () => {
         this.alertService.error('Bắt đầu lập HSDT thất bại!');
       });
   }
