@@ -177,7 +177,8 @@
                         <td>Query's Deadline</td>
                         <td>
                             <!-- <kendo-datepicker class="form-control b-datepicker-no-border"></kendo-datepicker> -->
-                            {{packageInfo?.submissionDate ? getDateStr(packageInfo?.submissionDate * 1000 - (1000 * 60 * 60 * 24 * 7)) : ''}}
+                            <kendo-datepicker class="w-100" [max]="packageInfo?.submissionDate"></kendo-datepicker>
+                            <!-- {{packageInfo?.submissionDate ? getDateStr(packageInfo?.submissionDate * 1000 - (1000 * 60 * 60 * 24 * 7)) : ''}} -->
                         </td>
                     </tr>
                     <tr>
@@ -247,7 +248,7 @@
                             <td class="text-center">
                                 <label class="custom-control custom-checkbox z-ontop">
                                     <input type="checkbox" (click)="checkFinishTenderPlanItem(data.get('itemId').value)" class="custom-control-input input-checkbox"
-                                        [attr.disabled]="true" formControlName="isFinish">
+                                        formControlName="isFinish">
                                     <!-- [attr.disabled]="(this.checkStatusPackage[this.packageInfo.stageStatus.id].id >= checkStatusPackage.DaThongBaoTrienKhai.id && 
                                         this.checkStatusPackage[this.packageInfo.stageStatus.id].id <= checkStatusPackage.DaPhongVan.id) ? false : null" -->
                                     <!-- [attr.disabled]="true" -->

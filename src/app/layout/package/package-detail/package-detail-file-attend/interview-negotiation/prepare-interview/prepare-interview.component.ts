@@ -7,11 +7,13 @@ import { Subject, BehaviorSubject } from '../../../../../../../../node_modules/r
 import { ApprovedDossiersList } from '../../../../../../shared/models/interview-invitation/approved-dossiers-list.model';
 import { NgxSpinnerService } from '../../../../../../../../node_modules/ngx-spinner';
 import { AlertService } from '../../../../../../shared/services';
+import { NgbDropdownConfig } from '../../../../../../../../node_modules/@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'app-prepare-interview',
   templateUrl: './prepare-interview.component.html',
   styleUrls: ['./prepare-interview.component.scss'],
+  providers: [NgbDropdownConfig],
 })
 export class PrepareInterviewComponent implements OnInit {
   constructor(
@@ -28,39 +30,42 @@ export class PrepareInterviewComponent implements OnInit {
   pagedResult: ApprovedDossiersList[];
   indexTable = 0;
   isNgOnInit = false;
+  loading = false;
   ngOnInit() {
     this.packageId = +PackageDetailComponent.packageId;
     this.interviewInvitationService.watchRefeshPrepareInterview().subscribe(value => {
-      this.spinner.show();
-      this.interviewInvitationService.getListApprovedDossiers(this.packageId, this.searchApprovedDossiers$.value).subscribe(response => {
-        this.pagedResult = response;
-        this.spinner.hide();
-        if (this.isNgOnInit) {
-          this.alertService.success('Dữ liệu đã được cập nhật mới nhất!');
-
-        }
-        this.isNgOnInit = true;
-      },
-        err => {
+      if (this.isNgOnInit) {
+        this.spinner.show();
+        this.loading = true;
+        this.interviewInvitationService.getListApprovedDossiers(this.packageId, this.searchApprovedDossiers$.value).subscribe(response => {
+          this.pagedResult = response;
+          this.loading = false;
           this.spinner.hide();
-          console.log('this.isNgOnInit', this.isNgOnInit);
-          if (this.isNgOnInit) {
+          this.alertService.success('Dữ liệu đã được cập nhật mới nhất!');
+        },
+          err => {
+            this.spinner.hide();
+            this.loading = false;
             this.alertService.error('Cập nhật dữ liệu thất bại!');
           }
-        }
-      );
+        );
+      }
     });
     this.searchApprovedDossiers$.debounceTime(600)
       .distinctUntilChanged()
       .subscribe(keySearch => {
         this.spinner.show();
+        this.loading = true;
         this.interviewInvitationService.getListApprovedDossiers(this.packageId, keySearch).subscribe(response => {
           this.pagedResult = response;
           console.log('this.result', this.pagedResult);
           this.spinner.hide();
+          this.loading = false;
+          this.isNgOnInit = true;
         },
           err => {
             this.spinner.hide();
+            this.loading = false;
             if (this.isNgOnInit) {
               this.alertService.error('Cập nhật dữ liệu thất bại!');
             }

@@ -25,7 +25,7 @@
                                     <input [formControlName]="i" type="checkbox" [checked]="loaiCongTrinhList[i].checked"
                                         (change)="loaiCongTrinhList[i].checked = !loaiCongTrinhList[i].checked; loaiCongTrinhChange($event)"
                                         name="construcType">
-                                    {{ loaiCongTrinhList[i].text }}
+                                    {{ loaiCongTrinhList[i].text }} {{ (loaiCongTrinhList[i].value) ? ('('+ loaiCongTrinhList[i].value +')') : '' }}
                                     <span class="checkmark" tabindex="3"></span>
                                 </label>
                             </div>
@@ -97,7 +97,7 @@
                                     </div>
                                 </div>
                             </ng-container>
-                            <div class="perspective-image" [ngClass]="{'d-none': isViewMode}" (click)="uploadPerspective.click()"
+                            <div class="perspective-image cursor-pointer" [ngClass]="{'d-none': isViewMode}" (click)="uploadPerspective.click()"
                                 tabindex="11">
                                 <i class="fa fa-plus" aria-hidden="true"></i>
                                 <p>Image</p>
@@ -125,7 +125,7 @@
                                     </div>
                                 </div>
                             </ng-container>
-                            <div class="perspective-image" [ngClass]="{'d-none': isViewMode}" (click)="uploadStructure.click()"
+                            <div class="perspective-image cursor-pointer" [ngClass]="{'d-none': isViewMode}" (click)="uploadStructure.click()"
                                 tabindex="13">
                                 <i class="fa fa-plus" aria-hidden="true"></i>
                                 <p>Image</p>
@@ -150,7 +150,7 @@
                                 </div>
                             </div>
                         </ng-container>
-                        <div class="perspective-image" [ngClass]="{'d-none': isViewMode}" (click)="uploadRequirements.click()"
+                        <div class="perspective-image cursor-pointer" [ngClass]="{'d-none': isViewMode}" (click)="uploadRequirements.click()"
                             tabindex="15">
                             <i class="fa fa-plus" aria-hidden="true"></i>
                             <p>Image</p>

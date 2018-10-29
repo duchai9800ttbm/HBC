@@ -16,7 +16,6 @@ export class ScaleOverall {
     nhungYeuCauDacBiet: Image;
 }
 
-
 export class ConstructionItem {
     text: string;
     value: string;

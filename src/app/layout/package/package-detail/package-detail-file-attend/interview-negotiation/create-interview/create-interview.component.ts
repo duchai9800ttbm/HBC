@@ -19,10 +19,12 @@ import { PackageService } from '../../../../../../shared/services/package.servic
 import { BidStatus } from '../../../../../../shared/constants/bid-status';
 import { groupBy } from '../../../../../../../../node_modules/@progress/kendo-data-query';
 import DateTimeConvertHelper from '../../../../../../shared/helpers/datetime-convert-helper';
+import { NgbDropdownConfig } from '../../../../../../../../node_modules/@ng-bootstrap/ng-bootstrap';
 @Component({
   selector: 'app-create-interview',
   templateUrl: './create-interview.component.html',
-  styleUrls: ['./create-interview.component.scss']
+  styleUrls: ['./create-interview.component.scss'],
+  providers: [NgbDropdownConfig],
 })
 export class CreateInterviewComponent implements OnInit, OnDestroy {
   currentPackageId: number;
@@ -43,6 +45,8 @@ export class CreateInterviewComponent implements OnInit, OnDestroy {
   stattusCurrentList;
   currentStatusInterview: number;
   subscription: Subscription;
+  isNgOnInit = false;
+  loading = false;
   constructor(
     private dialogService: DialogService,
     private interviewInvitationService: InterviewInvitationService,
@@ -72,10 +76,12 @@ export class CreateInterviewComponent implements OnInit, OnDestroy {
     });
     this.subscription.add(getUrlChirld);
     const interviewList = this.interviewInvitationService.watchInterviewInvitationList().subscribe(value => {
-      this.isNumberOfInterviews = true;
-      this.filter();
-      this.getListFilter();
-      this.spinner.hide();
+      if (this.isNgOnInit) {
+        this.isNumberOfInterviews = true;
+        this.filter();
+        this.getListFilter();
+        this.spinner.hide();
+      }
     });
     this.subscription.add(interviewList);
 
@@ -170,6 +176,7 @@ export class CreateInterviewComponent implements OnInit, OnDestroy {
 
   filter() {
     this.spinner.show();
+    this.loading = true;
     this.interviewInvitationService
       .filterList(
         this.currentPackageId,
@@ -181,7 +188,13 @@ export class CreateInterviewComponent implements OnInit, OnDestroy {
       .subscribe(result => {
         this.render(result);
         this.spinner.hide();
-      }, err => this.spinner.hide());
+        this.isNgOnInit = true;
+        this.loading = false;
+      }, err => {
+        this.spinner.hide();
+        this.loading = false;
+        this.isNgOnInit = true;
+      });
   }
 
   clearFilter() {

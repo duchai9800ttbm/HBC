@@ -248,7 +248,9 @@ input[type=text] {
     left: 35px;
     text-align: center;
 }
-
+.cursor-pointer {
+    cursor: pointer;
+}
 .delete-icon {
     color: #2b2323;
     font-size: 20px;

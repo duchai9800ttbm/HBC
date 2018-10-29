@@ -18,10 +18,12 @@ import DateTimeConvertHelper from '../../../../../../shared/helpers/datetime-con
 import { StatusObservableHsdtService } from '../../../../../../shared/services/status-observable-hsdt.service';
 import { CheckStatusPackage } from '../../../../../../shared/constants/check-status-package';
 import { ViewDetailReportComponent } from './view-detail-report/view-detail-report.component';
+import { NgbDropdownConfig } from '../../../../../../../../node_modules/@ng-bootstrap/ng-bootstrap';
 @Component({
   selector: 'app-end-interview',
   templateUrl: './end-interview.component.html',
-  styleUrls: ['./end-interview.component.scss']
+  styleUrls: ['./end-interview.component.scss'],
+  providers: [NgbDropdownConfig],
 })
 export class EndInterviewComponent implements OnInit {
   dialog;
@@ -48,6 +50,7 @@ export class EndInterviewComponent implements OnInit {
   statusSort;
   checkStatusPackage = CheckStatusPackage;
   interviewOfPackage = '';
+  loading = false;
   constructor(
     private dialogService: DialogService,
     private spinner: NgxSpinnerService,
@@ -191,6 +194,7 @@ export class EndInterviewComponent implements OnInit {
 
   filter() {
     this.spinner.show();
+    this.loading = true;
     this.interviewInvitationService
       .filterListReport(
         this.currentPackageId,
@@ -202,6 +206,7 @@ export class EndInterviewComponent implements OnInit {
       .subscribe(result => {
         this.render(result);
         this.spinner.hide();
+        this.loading = false;
       }, err => this.spinner.hide());
   }
 

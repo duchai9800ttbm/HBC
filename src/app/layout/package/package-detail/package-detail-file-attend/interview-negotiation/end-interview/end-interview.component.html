@@ -132,7 +132,7 @@
                     </div>
                 </div>
 
-                <div class="bot-table table-responsive">
+                <div class="bot-table table-responsive" *ngIf="!loading">
                     <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="table-selection row-border hover cell-border dataTable table table-layout">
                         <thead>
                             <tr>
@@ -291,9 +291,10 @@
                             </tr>
                         </tbody>
                     </table>
+                    <ngx-loading [show]="loading"></ngx-loading>
                 </div>
             </div>
         </div>
     </div>
 </div>
-<ngx-spinner bdColor="rgba(51, 51, 51, 0.7)" size = "default" color="#fff" type="ball-scale"></ngx-spinner>
+<!-- <ngx-spinner bdColor="rgba(51, 51, 51, 0.7)" size = "default" color="#fff" type="ball-scale"></ngx-spinner> -->
