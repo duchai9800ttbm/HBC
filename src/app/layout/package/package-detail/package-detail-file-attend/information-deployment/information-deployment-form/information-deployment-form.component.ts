@@ -159,7 +159,10 @@ export class InformationDeploymentFormComponent implements OnInit {
                     snap: false
                 }).data('kendoGantt');
                 this.updateGantt();
-                this.planForm.valueChanges.subscribe(_ => this.updateGantt());
+                this.planForm.valueChanges.subscribe(_ => {
+                    this.updateGantt();
+                    // this.enableCheckbox();
+                });
             }
         }, 500);
     }
@@ -209,9 +212,9 @@ export class InformationDeploymentFormComponent implements OnInit {
     }
 
     createTaskItemFG(data: TenderPreparationPlanItem): FormGroup {
-        const isFinishDisabled =
-            (this.checkStatusPackage[this.packageInfo.stageStatus.id].id > this.checkStatusPackage.ThamGiaDuThau.id &&
-                this.checkStatusPackage[this.packageInfo.stageStatus.id].id < this.checkStatusPackage.ChoKetQuaDuThau.id);
+        // const isFinishDisabled =
+        //     (this.checkStatusPackage[this.packageInfo.stageStatus.id].id > this.checkStatusPackage.ThamGiaDuThau.id &&
+        //         this.checkStatusPackage[this.packageInfo.stageStatus.id].id < this.checkStatusPackage.ChoKetQuaDuThau.id);
         return this.fb.group({
             itemId: data.itemId,
             itemNo: data.itemNo,
@@ -247,7 +250,7 @@ export class InformationDeploymentFormComponent implements OnInit {
             duration: data.duration,
             isFinish: {
                 value: data.isFinish,
-                disabled: !isFinishDisabled,
+                disabled: true,
             },
             totalTime: '',
         });
@@ -472,4 +475,11 @@ export class InformationDeploymentFormComponent implements OnInit {
         this.packageService.getTenderPreparationPlanning(this.bidOpportunityId).subscribe(data => this.createForm(data));
         this.getPackageInfo();
     }
+    // enableCheckbox() {
+    //     this.tasksFA.value.every(item => {
+    //         if (item.whoIsInChargeId && item.startDate && item.finishDate) {
+    //             console.log(item.isFinish);
+    //         }
+    //     });
+    // }
 }

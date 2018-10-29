@@ -21,6 +21,7 @@ export class SiteSurveyReport {
     isDraft: boolean;
     phongBan: {
         id: number,
+        key: string,
         text: string
     };
     nguoiKhaoSat: {

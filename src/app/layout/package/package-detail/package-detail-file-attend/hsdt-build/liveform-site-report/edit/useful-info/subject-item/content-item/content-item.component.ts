@@ -57,7 +57,6 @@ export class ContentItemComponent implements OnInit {
     obj.detail = data.chiTietNoiDung;
     obj.imageUrls = this.contentItemImageList;
     this.valueChange.emit(obj);
-    console.log(obj);
   }
   uploadContentImage(event) {
     const files = event.target.files;

@@ -42,6 +42,7 @@ export class EditComponent implements OnInit, OnDestroy {
   customerName;
   listDepartments: Observable<DepartmentsFormBranches[]>;
   departmentId;
+  departmentNo;
   departmentName;
   listCustomerContact: CustomerModel[];
   ngayKhaoSat;
@@ -90,6 +91,7 @@ export class EditComponent implements OnInit, OnDestroy {
   loadData() {
     const phongBan = LiveformSiteReportComponent.formModel.phongBan;
     this.departmentId = (phongBan) ? phongBan.id : 49;
+    // this.departmentNo = (phongBan) ? phongBan.id : 'PDUTHAU';  // Default PDT
     this.departmentName = (phongBan) ? phongBan.text : '';
     const nguoiKhaoSat = LiveformSiteReportComponent.formModel.nguoiKhaoSat;
     this.customerId = (nguoiKhaoSat) ? nguoiKhaoSat.id : '';
@@ -115,6 +117,7 @@ export class EditComponent implements OnInit, OnDestroy {
     this.isViewMode = true;
     LiveformSiteReportComponent.formModel.phongBan = {
       id: this.departmentId,
+      key: this.departmentNo,
       text: ''
     };
     LiveformSiteReportComponent.formModel.nguoiKhaoSat = {
