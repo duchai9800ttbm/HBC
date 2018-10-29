@@ -18,6 +18,7 @@ import { LevelListItem } from '../../../shared/models/setting/level-list-item';
   styleUrls: ['./setting-position.component.scss']
 })
 export class SettingPositionComponent implements OnInit {
+  loading = false;
   dtTrigger: Subject<any> = new Subject();
   searchTerm$ = new BehaviorSubject<string>('');
   dtOptions: any = DATATABLE_CONFIG;
@@ -35,7 +36,7 @@ export class SettingPositionComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.spinner.show();
+    this.loading = true;
     this.searchTerm$
       .debounceTime(COMMON_CONSTANTS.SearchDelayTimeInMs)
       .distinctUntilChanged()
@@ -74,7 +75,7 @@ export class SettingPositionComponent implements OnInit {
     this.settingService.readLevel(this.searchTerm$.value, page, pageSize).subscribe(data => {
       this.pagedResult = data;
       this.dtTrigger.next();
-      this.spinner.hide();
+      this.loading = false;
     });
   }
 

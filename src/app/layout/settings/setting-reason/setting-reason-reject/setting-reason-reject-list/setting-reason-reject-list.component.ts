@@ -18,6 +18,7 @@ import { NgxSpinnerService } from '../../../../../../../node_modules/ngx-spinner
     styleUrls: ['./setting-reason-reject-list.component.scss']
 })
 export class SettingReasonRejectListComponent implements OnInit {
+    loading = false;
     dtTrigger: Subject<any> = new Subject();
     searchTerm$ = new BehaviorSubject<string>('');
     dtOptions: any = DATATABLE_CONFIG;
@@ -34,7 +35,7 @@ export class SettingReasonRejectListComponent implements OnInit {
     ) {}
 
     ngOnInit() {
-        this.spinner.show();
+        this.loading = true;
         this.searchTerm$
         .debounceTime(COMMON_CONSTANTS.SearchDelayTimeInMs)
         .distinctUntilChanged()
@@ -70,12 +71,13 @@ export class SettingReasonRejectListComponent implements OnInit {
     }
 
     refresh(page: string | number, pageSize: string | number) {
+        this.loading = true;
         this.settingService
             .readOpportunityReason(this.searchTerm$.value, page, pageSize, SETTING_REASON.Cancel)
             .subscribe(data => {
                 this.pagedResult = data;
                 this.dtTrigger.next();
-                this.spinner.hide();
+                this.loading = false;
             });
     }
 

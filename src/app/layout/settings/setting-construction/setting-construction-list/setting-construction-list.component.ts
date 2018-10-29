@@ -13,6 +13,7 @@ import { NgxSpinnerService } from '../../../../../../node_modules/ngx-spinner';
     styleUrls: ['./setting-construction-list.component.scss']
 })
 export class SettingConstructionListComponent implements OnInit {
+    loading = false;
     dtTrigger: Subject<any> = new Subject();
     searchTerm$ = new BehaviorSubject<string>('');
     dtOptions: any = DATATABLE_CONFIG;
@@ -29,7 +30,7 @@ export class SettingConstructionListComponent implements OnInit {
     ) { }
 
     ngOnInit() {
-        this.spinner.show();
+        this.loading = true;
         this.searchTerm$
         .debounceTime(COMMON_CONSTANTS.SearchDelayTimeInMs)
         .distinctUntilChanged()
@@ -68,7 +69,7 @@ export class SettingConstructionListComponent implements OnInit {
         this.settingService.readConstruction(this.searchTerm$.value, page, pageSize).subscribe(data => {
             this.pagedResult = data;
             this.dtTrigger.next();
-            this.spinner.hide();
+            this.loading = false;
         });
     }
 

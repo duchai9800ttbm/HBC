@@ -18,7 +18,7 @@ import { NgxSpinnerService } from '../../../../../../../node_modules/ngx-spinner
   styleUrls: ['./manage-user.component.scss']
 })
 export class ManageUserComponent implements OnInit {
-  loading = true;
+  loading = false;
   dtOptions: any = DATATABLE_CONFIG;
   dtTrigger: Subject<any> = new Subject();
   searchTerm$ = new BehaviorSubject<string>('');

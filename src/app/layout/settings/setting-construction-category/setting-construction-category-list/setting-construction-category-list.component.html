@@ -14,30 +14,8 @@
             </button>
         </div>
     </div>
-    <div>
-        <!-- <kendo-grid [data]="pagedResult.items" [loading]="gridLoading" [selectable]="{enabled: true, mode: 'multiple', checkboxOnly: true}"
-            [kendoGridSelectBy]="'id'" [selectedKeys]="mySelection" (selectedKeysChange)="onSelectedKeysChange($event)">
-            <kendo-grid-checkbox-column [headerClass]="'custom-table-header'" width="40" showSelectAll="true">
-            </kendo-grid-checkbox-column>
-            <kendo-grid-column headerClass="custom-table-header" field="constructionCategoryName" title="Tên hạng mục">
-            </kendo-grid-column>
-            <kendo-grid-column headerClass="custom-table-header" field="constructionCategoryNo" title="Mã hạng mục">
-            </kendo-grid-column>
-            <kendo-grid-column headerClass="custom-table-header" field="constructionCategoryDesc" title="Mô tả">
-            </kendo-grid-column>
-            <kendo-grid-column headerClass="custom-table-header" title="Thao tác" width="150">
-                <ng-template kendoGridCellTemplate let-dataItem>
-                    <a [routerLink]="['/settings/construction-category/edit',dataItem.id]" class=" text-success ml-3">
-                        <i class="fa fa-pencil  cursor-pointer" aria-hidden="true"> </i>
-                    </a>
-                    <a class=" text-dark ml-3">
-                        <i (click)="deleteConstructionCategory(dataItem.id)" class="fa fa-trash-o pointer" aria-hidden="true"></i>
-                    </a>
-                </ng-template>
-            </kendo-grid-column>
-            <kendo-grid-messages noRecords="Không có dữ liệu"></kendo-grid-messages>
-        </kendo-grid> -->
-        <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="table-selection stripe hover fix-table-layout">
+    <div class="position-relative">
+        <table *ngIf="!loading" class="zui-table table table-striped table-hover">
             <thead>
                 <tr style="width: 100%">
                     <th class="text-center set-width-checkbox">
@@ -86,7 +64,8 @@
                 </tr>
             </tbody>
         </table>
-        <app-pagination [(pagedResult)]="pagedResult" (pagedResultChange)="pagedResultChange($event)"></app-pagination>
+        <ngx-loading [show]="loading"></ngx-loading>
+        <app-pagination *ngIf="!loading" [(pagedResult)]="pagedResult" (pagedResultChange)="pagedResultChange($event)"></app-pagination>
     </div>
 </div>
 <ngx-spinner bdColor="rgba(51, 51, 51, 0.7)" size = "default" color="#fff" type="ball-scale"></ngx-spinner>

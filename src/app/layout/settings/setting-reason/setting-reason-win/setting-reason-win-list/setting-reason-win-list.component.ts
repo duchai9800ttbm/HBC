@@ -18,6 +18,7 @@ import { NgxSpinnerService } from '../../../../../../../node_modules/ngx-spinner
     styleUrls: ['./setting-reason-win-list.component.scss']
 })
 export class SettingReasonWinListComponent implements OnInit {
+    loading = false;
     dtTrigger: Subject<any> = new Subject();
     searchTerm$ = new BehaviorSubject<string>('');
     dtOptions: any = DATATABLE_CONFIG;
@@ -35,7 +36,7 @@ export class SettingReasonWinListComponent implements OnInit {
 
     ngOnInit() {
         // this.refresh(0, 10);
-        this.spinner.show();
+        this.loading = true;
         this.searchTerm$
         .debounceTime(COMMON_CONSTANTS.SearchDelayTimeInMs)
         .distinctUntilChanged()
@@ -77,7 +78,7 @@ export class SettingReasonWinListComponent implements OnInit {
             .subscribe(data => {
                 this.pagedResult = data;
                 this.dtTrigger.next();
-                this.spinner.hide();
+                this.loading = false;
             });
     }
 

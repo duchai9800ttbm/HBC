@@ -25,9 +25,8 @@
       </div>
     </div>
 
-    <div class="data-list menu" style="padding-top: 10px;">
-
-      <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="table-selection stripe hover fix-layout-table">
+    <div class="position-relative mt-3">
+      <table *ngIf="!loading" class="zui-table table table-striped table-hover">
         <thead *ngIf="pagedResult.items">
           <tr style="width: 100%">
             <th class="text-center min-width-stt">
@@ -98,8 +97,9 @@
         </tbody>
        
       </table>
+      <ngx-loading [show]="loading"></ngx-loading>
+      <app-pagination *ngIf="!loading" [(pagedResult)]="pagedResult" (pagedResultChange)="pagedResultChange($event)"></app-pagination>
     </div>
-    <app-pagination [(pagedResult)]="pagedResult" (pagedResultChange)="pagedResultChange($event)"></app-pagination>
 
   </div>
 </div>
