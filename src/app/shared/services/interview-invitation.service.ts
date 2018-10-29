@@ -49,7 +49,8 @@ export class InterviewInvitationService {
       },
       createdDate: result.createdDate,
       interviewTimes: result.interviewTimes,
-      desc: result.desc
+      desc: result.desc,
+      fileUrl: result.fileUrl,
       // fileGuid: result.fileGuid,
       // receivedDate: result.receivedDate,
       // url: result.url,

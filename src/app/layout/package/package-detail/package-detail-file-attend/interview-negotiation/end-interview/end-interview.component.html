@@ -268,11 +268,16 @@
                                 </td>
                                 <td class="text-center">
                                     <div class="d-flex justify-content-around">
-                                        <div (click)="downloadReport(item.id)">
+                                        <div *ngIf="!item.fileUrl" (click)="downloadReport(item.id)">
                                             <a title="Tải file">
                                                 <i class="fa fa-download icon-download--color" aria-hidden="true"></i>
                                             </a>
                                         </div>
+                                        <div *ngIf="item.fileUrl" title="Tới link">
+                                            <a [href]="item.fileUrl" target="_blank">
+                                              <i class="fa fa-external-link color-item-down" aria-hidden="true"></i>
+                                            </a>
+                                          </div>
                                         <div>
                                             <a title="In file">
                                                 <i class="fa fa-print icon-print--color" aria-hidden="true"></i>
