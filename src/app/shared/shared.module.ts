@@ -105,11 +105,11 @@ import { NgxLoadingModule, ngxLoadingAnimationTypes } from 'ngx-loading';
         BsDropdownModule.forRoot(),
         NgxLoadingModule.forRoot({
             animationType: ngxLoadingAnimationTypes.threeBounce,
-            backdropBackgroundColour: 'rgba(0,0,0,0.05)',
+            backdropBackgroundColour: 'rgba(0,0,0,0)',
             backdropBorderRadius: '3px',
-            primaryColour: '#cceffc',
-            secondaryColour: '#cceffc',
-            tertiaryColour: '#cceffc'
+            primaryColour: '#00a0e3',
+            secondaryColour: '#00a0e3',
+            tertiaryColour: '#00a0e3'
         })
         // ScrollToTopService
     ],
