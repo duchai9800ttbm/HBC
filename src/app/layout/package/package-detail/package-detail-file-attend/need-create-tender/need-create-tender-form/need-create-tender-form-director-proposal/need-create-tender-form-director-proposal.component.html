@@ -30,7 +30,7 @@
                 Ngày/ Date
             </div>
             <div class="col-md-8">
-                <kendo-datepicker tabindex="4" formControlName="date" class="form-control"></kendo-datepicker>
+                <kendo-datepicker [format]="'dd/MM/yyyy HH:mm:ss'" tabindex="4" formControlName="date" class="form-control"></kendo-datepicker>
             </div>
         </div>
         <div class="row mt-3">
@@ -38,7 +38,7 @@
                 Thời gian mong đợi được duyệt
             </div>
             <div class="col-md-8">
-                <kendo-datepicker tabindex="5" formControlName="expectedDate" class="form-control"></kendo-datepicker>
+                <kendo-datepicker [format]="'dd/MM/yyyy HH:mm:ss'" tabindex="5" formControlName="expectedDate" class="form-control"></kendo-datepicker>
             </div>
         </div>
         <div class="row mt-3">

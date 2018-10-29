@@ -122,8 +122,8 @@
                                 <div class="text-truncate" [class.d-flex]="!itemByChangeTime.liveFormChangeds[0].value" title="* {{itemByChangeTime.liveFormChangeds[0].value ? (itemByChangeTime.liveFormChangeds[0].value | translate) :
                                     ('Tên tài liệu: từ ' +  (itemByLiveFormChanged.items[0].oldValue ? itemByLiveFormChanged.items[0].oldValue : 'không có') +' thành ' ) + (itemByLiveFormChanged.items[0].newValue ? itemByLiveFormChanged.items[0].newValue : 'không có')}}:">* {{itemByChangeTime.liveFormChangeds[0].value ? (itemByChangeTime.liveFormChangeds[0].value
                                     | translate) : 'Tên tài liệu'}}:
-                                    <div *ngFor="let itemByLiveFormStep of itemByLiveFormChanged.items">
-                                        <div *ngIf="!itemByChangeTime.liveFormChangeds[0].value">&nbsp; từ
+                                    <div *ngFor="let itemByLiveFormStep of itemByLiveFormChanged.items" class="text-truncate">
+                                        <div *ngIf="!itemByChangeTime.liveFormChangeds[0].value" class="text-truncate">&nbsp; từ
                                             <span class="font-weight-bold">{{itemByLiveFormStep.oldValue ? itemByLiveFormStep.oldValue : 'không có'}}</span>
                                             thành
                                             <span class="font-weight-bold">
@@ -248,7 +248,7 @@
                     Thời gian mong đợi được duyệt
                 </div>
                 <div class="col-md-5">
-                    <kendo-datepicker [(ngModel)]="dateApproveBid" class="form-control"></kendo-datepicker>
+                    <kendo-datepicker [format]="'dd/MM/yyyy HH:mm:ss'" [(ngModel)]="dateApproveBid" class="form-control"></kendo-datepicker>
                 </div>
             </div>
         </div>
@@ -295,4 +295,4 @@
     </div>
 
 </kendo-dialog>
-<ngx-spinner bdColor="rgba(51, 51, 51, 0.7)" size = "default" color="#fff" type="ball-scale"></ngx-spinner>
+<ngx-spinner bdColor="rgba(51, 51, 51, 0.7)" size="default" color="#fff" type="ball-scale"></ngx-spinner>
