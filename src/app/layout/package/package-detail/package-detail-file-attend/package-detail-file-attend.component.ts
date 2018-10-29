@@ -7,7 +7,7 @@ import { StatusObservableHsdtService } from '../../../../shared/services/status-
 import { BidStatus } from '../../../../shared/constants/bid-status';
 import { Subscription } from '../../../../../../node_modules/rxjs';
 import { CheckStatusPackage } from '../../../../shared/constants/check-status-package';
-import { slideToTop } from '../../../../router.animations';
+import { slideToTop, slideToBottom, slideToRight, slideInOut, slideToLeft } from '../../../../router.animations';
 @Component({
   selector: 'app-package-detail-file-attend',
   templateUrl: './package-detail-file-attend.component.html',
