@@ -47,6 +47,7 @@ export class InformationDeploymentFormComponent implements OnInit {
     }
     controlDisableForm: boolean;
     checkStatusPackage = CheckStatusPackage;
+    submissionDate: Date;
     constructor(
         private spinner: NgxSpinnerService,
         private packageService: PackageService,
@@ -76,6 +77,11 @@ export class InformationDeploymentFormComponent implements OnInit {
             .getInforPackageID(this.bidOpportunityId)
             .subscribe(data => {
                 this.packageInfo = data;
+                this.submissionDate =
+                DateTimeConvertHelper.fromTimestampToDtObject(
+                    this.packageInfo.submissionDate * 1000
+                );
+                console.log('this.submissionDate', this.submissionDate);
                 this.checkAndCreateForm();
                 this.spinner.hide();
             });
@@ -339,24 +345,40 @@ export class InformationDeploymentFormComponent implements OnInit {
     }
 
     submitForm(isDraft: boolean) {
-        if (isDraft) { // Lưu nháp
-            this.actionSubmit(isDraft);
-        } else {
-            // Lưu chính thức
-            if (this.checkAssignment()) {
-                if (this.checkChooseAllTask()) {
-                    this.actionSubmit(isDraft);
-                } else {
-                    this.confirmationService.confirm(
-                        'Chưa hoàn tất phân công tiến độ, bạn có muốn tiếp tục hay không?',
-                        () => {
-                            this.actionSubmit(isDraft);
-                        }
-                    );
-                }
+        if (this.checkQueryDeadline()) {
+            if (isDraft) { // Lưu nháp
+                this.actionSubmit(isDraft);
             } else {
-                this.alertService.error(`Bạn cần chọn ngày bắt đầu và ngày kết thúc cho công việc "${this.taskNoAssignment}"`);
+                // Lưu chính thức
+                if (this.checkAssignment()) {
+                    if (this.checkChooseAllTask()) {
+                        this.actionSubmit(isDraft);
+                    } else {
+                        this.confirmationService.confirm(
+                            'Chưa hoàn tất phân công tiến độ, bạn có muốn tiếp tục hay không?',
+                            () => {
+                                this.actionSubmit(isDraft);
+                            }
+                        );
+                    }
+                } else {
+                    this.alertService.error(`Bạn cần chọn ngày bắt đầu và ngày kết thúc cho công việc "${this.taskNoAssignment}"`);
+                }
             }
+        } else {
+            this.alertService.error(`Ngày đặt câu hỏi cần nhỏ hơn ngày nộp HSMT.`);
+        }
+    }
+
+    checkQueryDeadline(): boolean {
+        if (this.packageInfo && this.packageInfo.submissionDate && this.planForm.get('queryDeadline').value) {
+            if (this.planForm.get('queryDeadline').value > this.packageInfo.submissionDate) {
+                return false;
+            } else {
+                return true;
+            }
+        } else {
+            return true;
         }
     }
 

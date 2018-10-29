@@ -177,7 +177,7 @@
                         <td>Query's Deadline</td>
                         <td>
                             <!-- <kendo-datepicker class="form-control b-datepicker-no-border"></kendo-datepicker> -->
-                            <kendo-datepicker class="w-100" [max]="packageInfo?.submissionDate" formControlName="queryDeadline"></kendo-datepicker>
+                            <kendo-datepicker class="w-100" [max]="submissionDate ? submissionDate : null" formControlName="queryDeadline"></kendo-datepicker>
                             <!-- {{packageInfo?.submissionDate ? getDateStr(packageInfo?.submissionDate * 1000 - (1000 * 60 * 60 * 24 * 7)) : ''}} -->
                         </td>
                     </tr>
