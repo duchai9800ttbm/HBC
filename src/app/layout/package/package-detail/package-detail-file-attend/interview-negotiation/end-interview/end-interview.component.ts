@@ -47,6 +47,7 @@ export class EndInterviewComponent implements OnInit {
   currentFieldSort;
   statusSort;
   checkStatusPackage = CheckStatusPackage;
+  interviewOfPackage = '';
   constructor(
     private dialogService: DialogService,
     private spinner: NgxSpinnerService,
@@ -94,6 +95,7 @@ export class EndInterviewComponent implements OnInit {
   getStatusPackage() {
     this.packageService.getInforPackageID(this.currentPackageId).subscribe(result => {
       this.statusPackage = this.checkStatusPackage[result.stageStatus.id];
+      this.interviewOfPackage = result.interviewInvitation ? result.interviewInvitation.interviewTimes : null;
     });
   }
 
@@ -147,6 +149,7 @@ export class EndInterviewComponent implements OnInit {
     const instance = this.dialog.content.instance;
     instance.callBack = () => this.closePopuup();
     instance.reloadData = () => this.reloadData();
+    instance.interviewOfPackage = this.interviewOfPackage;
   }
 
   closePopuup() {

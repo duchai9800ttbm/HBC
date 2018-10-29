@@ -93,10 +93,12 @@ export class InterviewNoticeComponent implements OnInit {
       const sortInterviewTimes = this.interviewChoose.sort((a, b) => b.interviewTimes - a.interviewTimes);
       this.maxBidInterviewInvitationId = sortInterviewTimes[0].id;
       this.emailModel.content = `<br>`;
+      this.interviewChoose = this.interviewChoose.sort( (a, b) => a.interviewTimes - b.interviewTimes);
       this.interviewChoose.forEach((element, index) => {
         this.interviewInvitationService.LoadFileCreateInterview(element.id).subscribe(response => {
           this.file.push(response);
         });
+        console.log('element-interview', element);
         const approvedDate = DateTimeConvertHelper.fromTimestampToDtObject(element.approvedDate * 1000);
         const approvedDateStr = approvedDate.getDate() + '/' + (approvedDate.getMonth() + 1) + '/' + approvedDate.getFullYear();
         const interviewDate = DateTimeConvertHelper.fromTimestampToDtObject(element.interviewDate * 1000);
@@ -105,7 +107,7 @@ export class InterviewNoticeComponent implements OnInit {
         const interviewDateStr = interviewDate.getDate() + '/' + (interviewDate.getMonth() + 1) + '/' + interviewDate.getFullYear()
           + ',' + hour + ':' + minutes;
         this.emailModel.content = this.emailModel.content + `
-                              <div>Lần phỏng vấn: ${index + 1}</div>
+                              <div>Lần phỏng vấn: ${element.interviewTimes}</div>
                               <li> <span>Khách hàng:</span>&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;<span>${element.customer && element.customer.customerName ? element.customer.customerName : ''}</span></li>
                               <li> <span>Ngày nhận phỏng vấn:</span>&emsp;&ensp;<span>${approvedDateStr}</span></li>
                               <li> <span>Thời gian phỏng vấn:</span>&emsp;&emsp;<span>${interviewDateStr}</span></li>

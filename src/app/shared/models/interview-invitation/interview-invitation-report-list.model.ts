@@ -22,4 +22,5 @@ export class InterviewInvitationReportList {
     // description: string;
     interviewTimes: number;
     desc: string;
+    fileUrl: string;
 }
