@@ -24,7 +24,7 @@ import { PackageInfoModel } from '../../../../../shared/models/package/package-i
   selector: 'app-approved',
   templateUrl: './approved.component.html',
   styleUrls: ['./approved.component.scss'],
-  animations: [routerTransition()]
+  // animations: [routerTransition()]
 
 })
 export class ApprovedComponent implements OnInit {

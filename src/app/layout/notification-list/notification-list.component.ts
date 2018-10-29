@@ -12,7 +12,7 @@ import { AlertService, ConfirmationService } from '../../shared/services';
   selector: 'app-notification-list',
   templateUrl: './notification-list.component.html',
   styleUrls: ['./notification-list.component.scss'],
-  animations: [routerTransition()],
+  // animations: [routerTransition()],
   providers: [NotificationService],
 })
 export class NotificationListComponent implements OnInit {

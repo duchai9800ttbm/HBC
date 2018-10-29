@@ -20,7 +20,7 @@ import { PackageDetailComponent } from '../package-detail.component';
   selector: 'app-package-edit-2',
   templateUrl: './package-edit-2.component.html',
   styleUrls: ['./package-edit-2.component.scss'],
-  animations: [routerTransition()]
+  // animations: [routerTransition()]
 })
 export class PackageEdit2Component implements OnInit {
   package = new PackageModel();

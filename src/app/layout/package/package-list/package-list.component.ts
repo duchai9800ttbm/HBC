@@ -32,7 +32,7 @@ import { AdministeredPackageList } from '../../../shared/constants/administered-
     selector: 'app-package-list',
     templateUrl: './package-list.component.html',
     styleUrls: ['./package-list.component.scss'],
-    animations: [routerTransition()],
+    // // animations: [routerTransition()],
     providers: [NgbDropdownConfig] // add NgbDropdownConfig to the component providers
 
 })
@@ -43,6 +43,8 @@ export class PackageListComponent implements OnInit, AfterViewChecked {
     @ViewChild('DropTool2') DropTool2: ElementRef;
     @ViewChild('tablePin') tablePin: ElementRef;
     @ViewChild('fakeScrollBar') fakeScrollBar: ElementRef;
+
+    loading: boolean = false;
     activityStatusList: Observable<DictionaryItem[]>;
     checkboxSeclectAll: boolean;
     dtOptions: any = DATATABLE_CONFIG2;
@@ -236,6 +238,7 @@ export class PackageListComponent implements OnInit, AfterViewChecked {
             }
         }, 300);
         this.spinner.show();
+        this.loading = true;
         // this.packageService
         //     .instantSearchWithFilter(this.searchTerm$, this.filterModel, 0, 10)
         //     .subscribe(result => {
@@ -388,6 +391,7 @@ export class PackageListComponent implements OnInit, AfterViewChecked {
 
     filter(clear: boolean = false) {
         this.spinner.show();
+        this.loading = true;
         this.packageService
             .filterList(
                 this.searchTerm$.value,
@@ -398,6 +402,7 @@ export class PackageListComponent implements OnInit, AfterViewChecked {
             .subscribe(result => {
                 this.rerender(result);
                 this.spinner.hide();
+                this.loading = false;
             }, err => this.spinner.hide());
     }
 
@@ -437,6 +442,7 @@ export class PackageListComponent implements OnInit, AfterViewChecked {
     refresh(displayAlert: boolean = false): void {
         // this.filterModel.sorting = '';
         this.spinner.show();
+        this.loading = true;
         this.packageService
             .filterList(
                 this.searchTerm$.value,
@@ -446,18 +452,18 @@ export class PackageListComponent implements OnInit, AfterViewChecked {
             )
             .subscribe(result => {
                 this.rerender(result);
-                this.spinner.hide();
+                this.loading = false;
                 if (displayAlert) {
                     this.alertService.success(
                         'Dữ liệu đã được cập nhật mới nhất'
                     );
                 }
-            }, err => this.spinner.hide());
+            }, err => this.loading = false);
     }
 
     refreshGlobal(displayAlert: boolean = false): void {
         this.filterModel.sorting = '';
-        this.spinner.show();
+        this.loading = true;
         this.packageService
             .filterList(
                 this.searchTerm$.value,
@@ -467,13 +473,13 @@ export class PackageListComponent implements OnInit, AfterViewChecked {
             )
             .subscribe(result => {
                 this.rerender(result);
-                this.spinner.hide();
+                this.loading = false;
                 if (displayAlert) {
                     this.alertService.success(
                         'Dữ liệu đã được cập nhật mới nhất'
                     );
                 }
-            }, err => this.spinner.hide());
+            }, err =>  this.loading = false);
     }
 
     rerender(pagedResult: any) {

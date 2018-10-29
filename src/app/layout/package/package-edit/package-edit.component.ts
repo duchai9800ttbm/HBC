@@ -8,7 +8,7 @@ import { FakePackageData } from '../../../shared/fake-data/package-data';
   selector: 'app-package-edit',
   templateUrl: './package-edit.component.html',
   styleUrls: ['./package-edit.component.scss'],
-  animations: [routerTransition()]
+  // animations: [routerTransition()]
 })
 export class PackageEditComponent implements OnInit {
   // package$: Observable<PackageModel>;

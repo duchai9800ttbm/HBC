@@ -9,7 +9,7 @@ import { Observable } from 'rxjs/Observable';
     selector: 'app-branch-selection',
     templateUrl: './branch-selection.component.html',
     styleUrls: ['./branch-selection.component.scss'],
-    animations: [routerTransition()]
+    // animations: [routerTransition()]
 })
 export class BranchSelectionComponent implements OnInit {
     branches: Observable<DictionaryItem[]>;

@@ -1,4 +1,4 @@
-<div [@routerTransition] class="parent">
+<div class="parent">
     <div class="search-box  title-list-package center-parent status-filter" [class.title-detail-toggle]="isToggle">
         <!-- <div class="mr-auto d-flex align-items-end list-package">DANH SÁCH GÓI THẦU</div> -->
         <h4 class="d-inline mb-0 mr-auto text-dark">DANH SÁCH GÓI THẦU</h4>
@@ -729,16 +729,21 @@
                                 </div>
                             </td>
                         </tr>
+                    
                     </tbody>
                 </table>
-                <div class="center-parent" *ngIf="!pagedResult.items || pagedResult.items.length === 0">Không có dữ liệu</div>
+                <div class="center-parent" *ngIf="!loading && (!pagedResult.items || pagedResult.items.length === 0)">Không có dữ liệu</div>
+                <ngx-loading [show]="loading"></ngx-loading>
             </div>
         </div>
         <div class="scrollbar-fake" #wrap2 (scroll)="syncScroll2(wrap1, wrap2)">
             <div class="scrollbar-fake-content" #fakeScrollBar></div>
         </div>
         <app-pagination [(pagedResult)]="pagedResult" (pagedResultChange)="pagedResultChange($event)"></app-pagination>
+
+        
+
     </div>
 
 </div>
-<ngx-spinner bdColor="rgba(51, 51, 51, 0.7)" size="medium" color="#fff" type="ball-clip-rotate-multiple"></ngx-spinner>
+<!-- <ngx-spinner bdColor="rgba(51, 51, 51, 0.7)" size = "default" color="#fff" type="ball-scale"></ngx-spinner> -->

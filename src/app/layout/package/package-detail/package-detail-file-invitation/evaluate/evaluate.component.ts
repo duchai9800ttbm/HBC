@@ -37,7 +37,7 @@ import { PackageInfoModel } from '../../../../../shared/models/package/package-i
     selector: 'app-evaluate',
     templateUrl: './evaluate.component.html',
     styleUrls: ['./evaluate.component.scss'],
-    animations: [routerTransition()]
+    // animations: [routerTransition()]
 
 })
 export class EvaluateComponent implements OnInit {

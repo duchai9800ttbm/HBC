@@ -22,7 +22,7 @@ import { forEach } from '../../../../../../../node_modules/@angular/router/src/u
     selector: 'app-add-file',
     templateUrl: './add-file.component.html',
     styleUrls: ['./add-file.component.scss'],
-    animations: [routerTransition()]
+    // animations: [routerTransition()]
 })
 export class AddFileComponent implements OnInit {
     isShowMenu = false;

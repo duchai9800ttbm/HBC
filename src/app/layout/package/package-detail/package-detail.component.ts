@@ -15,7 +15,7 @@ import { CheckStatusPackage } from '../../../shared/constants/check-status-packa
   selector: 'app-package-detail',
   templateUrl: './package-detail.component.html',
   styleUrls: ['./package-detail.component.scss'],
-  animations: [routerTransition()]
+  // animations: [routerTransition()]
 
 })
 export class PackageDetailComponent implements OnInit {

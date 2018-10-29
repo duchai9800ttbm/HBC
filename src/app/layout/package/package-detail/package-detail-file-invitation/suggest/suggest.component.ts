@@ -25,7 +25,7 @@ import { PackageInfoModel } from '../../../../../shared/models/package/package-i
     selector: 'app-suggest',
     templateUrl: './suggest.component.html',
     styleUrls: ['./suggest.component.scss'],
-    animations: [routerTransition()]
+    // animations: [routerTransition()]
 
 })
 export class SuggestComponent implements OnInit {

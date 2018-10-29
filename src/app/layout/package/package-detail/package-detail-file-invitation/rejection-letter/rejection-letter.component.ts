@@ -21,7 +21,7 @@ import { PackageInfoModel } from '../../../../../shared/models/package/package-i
   selector: 'app-rejection-letter',
   templateUrl: './rejection-letter.component.html',
   styleUrls: ['./rejection-letter.component.scss'],
-  animations: [routerTransition()]
+  // animations: [routerTransition()]
 
 })
 export class RejectionLetterComponent implements OnInit {

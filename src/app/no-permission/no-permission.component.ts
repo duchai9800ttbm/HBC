@@ -4,7 +4,7 @@ import { routerTransition } from '../router.animations';
   selector: 'app-no-permission',
   templateUrl: './no-permission.component.html',
   styleUrls: ['./no-permission.component.scss'],
-  animations: [routerTransition()],
+  // animations: [routerTransition()],
 })
 export class NoPermissionComponent implements OnInit {
 

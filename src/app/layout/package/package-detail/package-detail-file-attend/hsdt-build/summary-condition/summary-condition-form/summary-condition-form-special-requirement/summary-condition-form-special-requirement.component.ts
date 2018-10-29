@@ -1,8 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, AfterViewInit } from '@angular/core';
 import { FormGroup, FormBuilder, FormArray } from '@angular/forms';
-import { SummaryConditionFormComponent } from '../summary-condition-form.component';
-import { Requirement } from '../../../../../../../../shared/models/package/requirement';
-import { TenderOtherSpecRequirement } from '../../../../../../../../shared/models/package/tender-other-spec-requirement';
 import { HoSoDuThauService } from '../../../../../../../../shared/services/ho-so-du-thau.service';
 import { TableYeuCauDacBiet, RequirementDetail } from '../../../../../../../../shared/models/ho-so-du-thau/table-yeu-cau';
 
@@ -11,7 +8,7 @@ import { TableYeuCauDacBiet, RequirementDetail } from '../../../../../../../../s
   templateUrl: './summary-condition-form-special-requirement.component.html',
   styleUrls: ['./summary-condition-form-special-requirement.component.scss']
 })
-export class SummaryConditionFormSpecialRequirementComponent implements OnInit {
+export class SummaryConditionFormSpecialRequirementComponent implements OnInit, AfterViewInit {
 
   specialRequirementForm: FormGroup;
   otherRequirement = new TableYeuCauDacBiet();
@@ -30,6 +27,9 @@ export class SummaryConditionFormSpecialRequirementComponent implements OnInit {
     });
     this.loadData();
     this.createForm();
+  }
+  ngAfterViewInit() {
+    this.swapRow();
   }
   createForm() {
     this.specialRequirementForm = this.fb.group({
@@ -75,7 +75,7 @@ export class SummaryConditionFormSpecialRequirementComponent implements OnInit {
         tenderEvaluationSteps: data.tenderEvaluationSteps,
         tenderEvaluationStep1: data.tenderEvaluationStep1,
         tenderEvaluationStep2: data.tenderEvaluationStep2,
-        requirementDetails: (data.requirement || []).map(x => ({
+        requirementDetails: (data.requirements || []).map(x => ({
           requirementName: x.requirementName,
           requirementDesc: x.requirementDesc,
           requirementLink: x.requirementLink
@@ -150,5 +150,11 @@ export class SummaryConditionFormSpecialRequirementComponent implements OnInit {
   removeFormArrayControl(name: string, index: number) {
     const formArray = this.specialRequirementForm.get(name) as FormArray;
     formArray.removeAt(index);
+  }
+  swapRow() {
+    const row = document.getElementById('requirementsrow0');
+    const sibling = row.previousElementSibling.previousElementSibling;
+    const parent = row.parentNode;
+    parent.insertBefore(row, sibling);
   }
 }

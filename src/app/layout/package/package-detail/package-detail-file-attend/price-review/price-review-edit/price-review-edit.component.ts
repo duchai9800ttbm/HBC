@@ -9,7 +9,7 @@ import { Observable } from 'rxjs/Observable';
   selector: 'app-price-review-edit',
   templateUrl: './price-review-edit.component.html',
   styleUrls: ['./price-review-edit.component.scss'],
-  animations: [routerTransition()]
+  // animations: [routerTransition()]
 
 })
 export class PriceReviewEditComponent implements OnInit {

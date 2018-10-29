@@ -23,7 +23,7 @@ import { PackageInfoModel } from '../../../../../shared/models/package/package-i
   selector: 'app-has-declined',
   templateUrl: './has-declined.component.html',
   styleUrls: ['./has-declined.component.scss'],
-  animations: [routerTransition()]
+  // animations: [routerTransition()]
 
 })
 export class HasDeclinedComponent implements OnInit {

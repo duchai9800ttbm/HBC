@@ -658,11 +658,7 @@ export class HoSoDuThauService {
         tenderEvaluationSteps: obj.yeuCauDacBietKhac.tenderEvaluationSteps,
         tenderEvaluationStep1: obj.yeuCauDacBietKhac.tenderEvaluationStep1,
         tenderEvaluationStep2: obj.yeuCauDacBietKhac.tenderEvaluationStep2,
-        requirementDetails: obj.yeuCauDacBietKhac.requirementDetails.map(item => ({
-          requirementName: item.requirementName,
-          requirementDesc: item.requirementDesc,
-          requirementLink: item.requirementLink,
-        }))
+        requimentDetails: obj.yeuCauDacBietKhac.requirementDetails
       }
     };
     return this.apiService.post(url, infoReport).map(res => res);
@@ -898,7 +894,7 @@ export class HoSoDuThauService {
         tenderEvaluationSteps: model.otherSpecialRequirement.tenderEvaluationSteps,
         tenderEvaluationStep1: model.otherSpecialRequirement.tenderEvaluationStep1,
         tenderEvaluationStep2: model.otherSpecialRequirement.tenderEvaluationStep2,
-        requirementDetails: (model.requirementDetails || []).map(item => ({
+        requirementDetails: (model.otherSpecialRequirement.requimentDetails || []).map(item => ({
           requirementName: item.requirementName,
           requirementDesc: item.requirementDesc,
           requirementLink: item.requirementLink

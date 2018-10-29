@@ -8,7 +8,7 @@ import { UserModel } from '../../../shared/models/user/user.model';
     selector: 'app-package-create',
     templateUrl: './package-create.component.html',
     styleUrls: ['./package-create.component.scss'],
-    animations: [routerTransition()]
+    // animations: [routerTransition()]
 })
 export class PackageCreateComponent implements OnInit {
     packageModel = new PackageModel();

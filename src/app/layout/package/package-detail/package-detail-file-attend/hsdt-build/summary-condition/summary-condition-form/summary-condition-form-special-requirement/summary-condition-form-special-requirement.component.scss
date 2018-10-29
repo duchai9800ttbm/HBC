@@ -38,3 +38,34 @@ td,
 .cursor-cancel {
     cursor: not-allowed;
 }
+
+.tenderEvaluation-text {
+    border: none;
+    text-align: center;
+}
+
+.fa.fa-times-circle.pointer {
+    color: #c0c0c0;
+    font-size: 1.2rem
+}
+
+.hover-row {
+    .index-row {
+        display: unset;
+    }
+
+    .delete-icon {
+        display: none;
+    }
+
+    &:hover {
+        .index-row {
+            display: none;
+        }
+
+        .delete-icon {
+            display: unset;
+            margin: unset;
+        }
+    }
+}

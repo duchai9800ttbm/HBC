@@ -5,7 +5,7 @@ import { routerTransition } from '../../../../router.animations';
   selector: 'app-setting-reason',
   templateUrl: './setting-reason.component.html',
   styleUrls: ['./setting-reason.component.scss'],
-  animations: [routerTransition()]
+  // animations: [routerTransition()]
 })
 export class SettingReasonComponent implements OnInit {
 
