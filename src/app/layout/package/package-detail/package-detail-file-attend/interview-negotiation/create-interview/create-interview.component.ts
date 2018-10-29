@@ -294,7 +294,7 @@ export class CreateInterviewComponent implements OnInit, OnDestroy {
   dowloadFileCreateInterview(id) {
     this.interviewInvitationService.downloadFileCreateInterview(id).subscribe(data => {
     }, err => {
-      this.alertService.error('Lời mời phỏng vấn này không có file đính kèm.!');
+      this.alertService.error('Lời mời phỏng vấn này không có file đính kèm.');
       // if (err.errorCode === 'BusinessException' && err.errorMessage === `File doesn't exits`) {
       //   this.alertService.error('Lời mời phỏng vấn này không có file đính kèm.!');
       // } else {
