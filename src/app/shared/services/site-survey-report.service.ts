@@ -4,7 +4,7 @@ import { ApiService } from './api.service';
 import { Observable } from 'rxjs/Observable';
 import { DictionaryItem, PagedResult } from '../models';
 import { SiteSurveyReport } from '../models/site-survey-report/site-survey-report';
-import { ScaleOverall } from '../models/site-survey-report/scale-overall.model';
+import { ScaleOverall, ConstructionItem } from '../models/site-survey-report/scale-overall.model';
 import { AlertService } from './alert.service';
 import { HistoryLiveForm } from '../models/ho-so-du-thau/history-liveform.model';
 import { CustomerModel } from '../models/site-survey-report/customer-list';
@@ -57,6 +57,21 @@ export class SiteSurveyReportService {
       };
     });
   }
+  // Get Danh sách Phòng ban nhánh 1
+  getListDepartmentsFromBranches() {
+    const url = `data/branches/1/departments`;
+    return this.apiService.get(url)
+      .map(response => {
+        const result = response.result;
+        return result.map(item => {
+          return {
+            id: item.id,
+            departmentNo: item.departmentNo,
+            departmentName: item.departmentName
+          };
+        });
+      });
+  }
   // Get Danh sách User
   getAllUser(searchTerm: string): Observable<CustomerModel[]> {
     const url = `user/search/?searchTerm=${searchTerm}`;
@@ -64,15 +79,16 @@ export class SiteSurveyReportService {
       .map(response => response.result).share();
   }
   // Danh sách loại công trình
-  getListConstructionType(): Observable<DictionaryItem> {
-    const url = `bidconstructiontype/constructiontypes`;
-    return this.apiService.get(url).map(res =>
-      res.result.map(response => ({
-        text: response.value,
-        value: '',
+  getListConstructionType() {
+    const url = `bidconstructiontype/filter/0/1000`;
+    return this.apiService.get(url).map(res => {
+      const result = res.result.items.map(x => ({
+        text: x.constructionTypeName,
+        value: x.constructionTypeNameEng,
         checked: false
-      }))
-    );
+      }));
+      return result;
+    });
   }
 
   // Thông tin bảng báo cáo công trình
@@ -282,6 +298,7 @@ export class SiteSurveyReportService {
       };
       dataFormated.phongBan = model.department && {
         id: model.department.id,
+        key: model.department.departmentNo,
         text: model.department.departmentName
       };
       dataFormated.scaleOverall = new ScaleOverall();
@@ -329,6 +346,7 @@ export class SiteSurveyReportService {
       dataFormated.isDraft = model.isDraftVersion;
       dataFormated.phongBan = model.department && {
         id: model.department.id,
+        key: model.department, // TODO: Fix
         text: model.department.departmentName
       };
       dataFormated.ngayTao = model.createTime;

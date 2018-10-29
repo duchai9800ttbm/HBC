@@ -8,7 +8,7 @@ import { AlertService, ConfirmationService } from '../../../../../../shared/serv
 import { Subject } from 'rxjs/Subject';
 import { SiteSurveyReportService } from '../../../../../../shared/services/site-survey-report.service';
 import { DATATABLE_CONFIG, DATATABLE_CONFIG2 } from '../../../../../../shared/configs';
-import { ScaleOverall } from '../../../../../../shared/models/site-survey-report/scale-overall.model';
+import { ScaleOverall, ConstructionItem } from '../../../../../../shared/models/site-survey-report/scale-overall.model';
 import { HistoryLiveForm } from '../../../../../../shared/models/ho-so-du-thau/history-liveform.model';
 import { groupBy } from '@progress/kendo-data-query';
 import { DialogService } from '../../../../../../../../node_modules/@progress/kendo-angular-dialog';
@@ -26,11 +26,9 @@ export class LiveformSiteReportComponent implements OnInit {
   page: number;
   pageSize: number;
   isData;
-  isHistory;
   documentData = new SiteSurveyReport();
   updateInfoList;
   pageIndex: number | string = 0;
-  listConstructionType;
   pagedResultChangeHistoryList: PagedResult<HistoryLiveForm> = new PagedResult<HistoryLiveForm>();
   dtOptions: any = DATATABLE_CONFIG;
   dtTrigger: Subject<any> = new Subject();
@@ -86,8 +84,7 @@ export class LiveformSiteReportComponent implements OnInit {
       }
       if (!LiveformSiteReportComponent.formModel.scaleOverall.loaiCongTrinh.length) {
         this.siteSurveyReportService.getListConstructionType().subscribe(ress => {
-          this.listConstructionType = ress;
-          LiveformSiteReportComponent.formModel.scaleOverall.loaiCongTrinh = this.listConstructionType;
+          LiveformSiteReportComponent.formModel.scaleOverall.loaiCongTrinh = ress;
         }, err => {
           this.spinner.hide();
           this.alertService.error('Đã xảy ra lỗi, danh sách loại công trình cập nhật không thành công');
@@ -140,8 +137,7 @@ export class LiveformSiteReportComponent implements OnInit {
       }
       if (!LiveformSiteReportComponent.formModel.scaleOverall.loaiCongTrinh.length) {
         this.siteSurveyReportService.getListConstructionType().subscribe(ress => {
-          this.listConstructionType = ress;
-          LiveformSiteReportComponent.formModel.scaleOverall.loaiCongTrinh = this.listConstructionType;
+          LiveformSiteReportComponent.formModel.scaleOverall.loaiCongTrinh = ress;
         }, err => {
           this.spinner.hide();
           this.alertService.error('Đã xảy ra lỗi, danh sách loại công trình cập nhật không thành công');
@@ -174,7 +170,6 @@ export class LiveformSiteReportComponent implements OnInit {
     this.spinner.show();
     this.siteSurveyReportService.changedHistoryTenderSiteReport(this.bidOpportunityId, page, pageSize).subscribe(respone => {
       this.updateInfoList = respone.items;
-      console.log(this.updateInfoList);
       this.pagedResultChangeHistoryList = respone;
       this.indexItemHistoryChange = +respone.total - +respone.pageSize * +respone.currentPage;
       this.updateInfoList = groupBy(this.pagedResultChangeHistoryList.items, [{ field: 'changedTime' }]);
@@ -184,6 +179,7 @@ export class LiveformSiteReportComponent implements OnInit {
             groupBy(itemByChangedTimes.liveFormChangeds, [{ field: 'liveFormStep' }]);
         });
       });
+      console.log(this.updateInfoList);
       setTimeout(() => {
         this.dtTrigger2.next();
       });
