@@ -212,9 +212,10 @@ export class InformationDeploymentFormComponent implements OnInit {
     }
 
     createTaskItemFG(data: TenderPreparationPlanItem): FormGroup {
-        // const isFinishDisabled =
-        //     (this.checkStatusPackage[this.packageInfo.stageStatus.id].id > this.checkStatusPackage.ThamGiaDuThau.id &&
-        //         this.checkStatusPackage[this.packageInfo.stageStatus.id].id < this.checkStatusPackage.ChoKetQuaDuThau.id);
+        const isFinishDisabled =
+            (this.checkStatusPackage[this.packageInfo.stageStatus.id].id > this.checkStatusPackage.ThamGiaDuThau.id &&
+                this.checkStatusPackage[this.packageInfo.stageStatus.id].id < this.checkStatusPackage.ChoKetQuaDuThau.id);
+        console.log('isFinishDisabled', isFinishDisabled);
         return this.fb.group({
             itemId: data.itemId,
             itemNo: data.itemNo,
@@ -250,7 +251,7 @@ export class InformationDeploymentFormComponent implements OnInit {
             duration: data.duration,
             isFinish: {
                 value: data.isFinish,
-                disabled: true,
+                disabled: !isFinishDisabled,
             },
             totalTime: '',
         });
@@ -430,7 +431,6 @@ export class InformationDeploymentFormComponent implements OnInit {
     }
 
     checkFinishTenderPlanItem(itemId: number) {
-        console.log('itemId', itemId);
         // tạm thời chưa dùng, khi phân quyền sẽ dùng
         this.packageService.checkOrUncheckTenderPreparationPlanningItem(this.bidOpportunityId, itemId).subscribe(success => {
         }, err => {
@@ -475,6 +475,7 @@ export class InformationDeploymentFormComponent implements OnInit {
         this.packageService.getTenderPreparationPlanning(this.bidOpportunityId).subscribe(data => this.createForm(data));
         this.getPackageInfo();
     }
+
     // enableCheckbox() {
     //     this.tasksFA.value.every(item => {
     //         if (item.whoIsInChargeId && item.startDate && item.finishDate) {
