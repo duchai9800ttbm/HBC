@@ -23,3 +23,10 @@ input.placeholder-icon {
 .fix-table-layout{
     table-layout: fixed;
 }
+
+    table {
+        th,
+        td {
+            max-width: 330px!important;
+        }
+    }

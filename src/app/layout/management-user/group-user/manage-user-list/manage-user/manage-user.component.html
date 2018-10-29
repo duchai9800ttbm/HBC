@@ -1,4 +1,4 @@
-<div class="boder-table back-ground-table">
+<div class="back-ground-table">
   <div class="table-body">
     <div class="row menu">
       <div class="col-md-6">
@@ -24,8 +24,8 @@
         </div>
       </div>
     </div>
-    <div class="position-relative mt-3">
-      <table *ngIf="!loading" class="zui-table table table-striped table-hover">
+    <div class="boder-table position-relative mt-3">
+      <table *ngIf="!loading" class="zui-table table-striped table-hover">
         <thead *ngIf="pagedResult.items">
           <tr style="width: 100%">
             <th class="text-cente min-width-stt">
@@ -83,7 +83,7 @@
         </thead>
         <tbody>
           <tr *ngFor="let item of pagedResult.items">
-            <td class="text-center" style="width: 15px; padding-left: 7px;">
+            <td class="text-center min-width-stt">
               <label class="custom-control custom-checkbox">
                 <input type="checkbox" class="custom-control-input" [(ngModel)]="item.checkboxSelected">
                 <span class="custom-control-indicator"></span>
@@ -149,8 +149,9 @@
         </tbody>
       </table>
       <ngx-loading [show]="loading"></ngx-loading>
-      <app-pagination *ngIf="!loading" [(pagedResult)]="pagedResult" (pagedResultChange)="pagedResultChange($event)"></app-pagination>
+      
     </div>
+    <app-pagination *ngIf="!loading" [(pagedResult)]="pagedResult" (pagedResultChange)="pagedResultChange($event)"></app-pagination>
 
   </div>
 </div>

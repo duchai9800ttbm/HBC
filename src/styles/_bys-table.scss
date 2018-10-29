@@ -107,7 +107,9 @@
     }
 }
 
-.table th, .table td {
+.zui-table th, .zui-table td {
     border-top: none;
+            vertical-align: middle;
+        padding: 0.5rem 0.8rem;
 }
 /* table pin col */

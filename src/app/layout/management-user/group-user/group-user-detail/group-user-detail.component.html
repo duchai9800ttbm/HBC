@@ -1,4 +1,4 @@
-<div class="border-table">
+<div class="bg-white">
   <div class="table-body">
     <div class="row menu">
       <div class="col-md-6">
@@ -25,8 +25,8 @@
       </div>
     </div>
 
-    <div class="position-relative mt-3">
-      <table *ngIf="!loading" class="zui-table table table-striped table-hover">
+    <div class="boder-table position-relative mt-3">
+      <table *ngIf="!loading" class="zui-table table-striped table-hover">
         <thead *ngIf="pagedResult.items">
           <tr style="width: 100%">
             <th class="text-center min-width-stt">
@@ -81,7 +81,7 @@
               {{item.userCount > 0 ? 'Có ' + item.userCount + ' người dùng' : 'Chưa có người dùng'}}
             </td>
             <td class="text-truncate">
-              <div *ngIf="!item.canBeMofify">
+              <div *ngIf="item.canBeMofify">
                 <div class="center-parent w-100 h-100">
                   <div class="col-md-6 center-parent cursor-pointer" (click)="openModalEdit(item.id, edit)">
                     <i [title]="'Sửa'" class="fa fa-pencil cursor-pointer" style="color: #1e7e34"></i>
@@ -98,8 +98,9 @@
        
       </table>
       <ngx-loading [show]="loading"></ngx-loading>
-      <app-pagination *ngIf="!loading" [(pagedResult)]="pagedResult" (pagedResultChange)="pagedResultChange($event)"></app-pagination>
+     
     </div>
+    <app-pagination *ngIf="!loading" [(pagedResult)]="pagedResult" (pagedResultChange)="pagedResultChange($event)"></app-pagination>
 
   </div>
 </div>
