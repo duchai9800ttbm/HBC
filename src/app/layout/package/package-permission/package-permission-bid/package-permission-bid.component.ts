@@ -85,6 +85,8 @@ export class PackagePermissionBidComponent implements OnInit {
                     this.listBidPermissionUserGroup.push(listItem);
                 });
                 this.listFormData = data;
+
+                console.log('asdasd', this.listFormData);
                 this.createForms(data);
                 setTimeout(() => {
                     this.dtTrigger.next();

@@ -10,6 +10,9 @@ import { SessionService } from '../../../shared/services/session.service';
 import { PackageInfoModel } from '../../../shared/models/package/package-info.model';
 import { LayoutService } from '../../../shared/services/layout.service';
 import { CheckStatusPackage } from '../../../shared/constants/check-status-package';
+import { PermissionService } from '../../../shared/services/permission.service';
+import { IntervalObservable } from '../../../../../node_modules/rxjs/observable/IntervalObservable';
+import { Subscription } from '../../../../../node_modules/rxjs';
 
 @Component({
   selector: 'app-package-detail',
@@ -32,10 +35,12 @@ export class PackageDetailComponent implements OnInit {
     private packageService: PackageService,
     private spinner: NgxSpinnerService,
     private sessionService: SessionService,
-    private layoutService: LayoutService
+    private layoutService: LayoutService,
+    private permissionService: PermissionService
   ) { }
   public packageId: number;
   packageData = new PackageInfoModel();
+  sub: Subscription;
   status = {
     DisabledfileAttend: true,
     Disabledresult: true
@@ -47,6 +52,11 @@ export class PackageDetailComponent implements OnInit {
   isViewBidOpportunityDetail;
   isToggle = false;
   ngOnInit() {
+    this.activetedRoute.params.subscribe(result => {
+      this.packageId = +result.id;
+      PackageDetailComponent.packageId = this.packageId;
+      const that = this;
+    });
     setTimeout(() => {
       this.userModel = this.sessionService.userInfo;
       this.listPrivileges = this.userModel.privileges;
@@ -59,9 +69,14 @@ export class PackageDetailComponent implements OnInit {
       }
     }, 300);
 
-    this.activetedRoute.params.subscribe(result => {
-      this.packageId = +result.id;
-      PackageDetailComponent.packageId = this.packageId;
+  
+
+    IntervalObservable.create(1 * 10 * 1000).subscribe(_ => {
+      this.sub = this.permissionService.getListPermission(this.packageId).subscribe(listPermission => {
+         this.permissionService.set(listPermission);
+         this.sub.unsubscribe();
+      });
+    
     });
     this.packageService.getInforPackageID(this.packageId).subscribe(result => {
       this.packageData = result;

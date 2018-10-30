@@ -18,6 +18,7 @@ import { ListUserItem } from '../../../../../shared/models/user/user-list-item.m
 import { PackageInfoModel } from '../../../../../shared/models/package/package-info.model';
 import { BidStatus } from '../../../../../shared/constants/bid-status';
 import { slideToLeft } from '../../../../../router.animations';
+import { PermissionService } from '../../../../../shared/services/permission.service';
 @Component({
     selector: 'app-hsdt-build',
     templateUrl: './hsdt-build.component.html',
@@ -77,11 +78,14 @@ export class HsdtBuildComponent implements OnInit, AfterViewChecked {
         private packageService: PackageService,
         private router: Router,
         private spinner: NgxSpinnerService,
-        private confirmationService: ConfirmationService
+        private confirmationService: ConfirmationService,
+        private permissionService: PermissionService
     ) { }
 
     ngOnInit() {
         this.packageId = +PackageDetailComponent.packageId;
+        this.permissionService.get().subscribe(data => {
+          });
         this.subscription = this.hoSoDuThauService.watchChangingUpload().subscribe(signal => {
             this.getDanhSachLoaiHoSo(false);
         });

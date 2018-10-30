@@ -42,6 +42,7 @@ import { NG_SELECT_DEFAULT_CONFIG } from '../../node_modules/@ng-select/ng-selec
 import { NotificationService } from './shared/services/notification.service';
 import { InterviewInvitationService } from './shared/services/interview-invitation.service';
 import { PrintingDocumentService } from './shared/services/printing-document.service';
+import { PermissionService } from './shared/services/permission.service';
 
 // AoT requires an exported function for factories
 export function createTranslateLoader(http: HttpClient) {
@@ -101,6 +102,7 @@ registerLocaleData(localeFrCa, localeFrCaExtra);
         LayoutService,
         PrintingDocumentService,
         InterviewInvitationService,
+        PermissionService,
         { provide: LocationStrategy, useClass: HashLocationStrategy },
         {
             // Set default locale to bg-BG
