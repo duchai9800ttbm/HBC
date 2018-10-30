@@ -355,7 +355,7 @@ export class InterviewInvitationService {
     return {
       typeName: result.typeName,
       isLiveForm: result.isLiveForm,
-      document: (result.document && result.document.length !== 0) ? result.document.map(itemDocument => {
+      document: (result.document && result.document.length !== 0 && result.document[0] !== null) ? result.document.map(itemDocument => {
         return {
           type: itemDocument.type,
           id: itemDocument.id,

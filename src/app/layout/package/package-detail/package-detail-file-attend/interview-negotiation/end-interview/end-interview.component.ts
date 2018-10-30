@@ -104,7 +104,6 @@ export class EndInterviewComponent implements OnInit {
 
   render(pagedResult: any) {
     this.pagedResult = pagedResult;
-    this.dtTrigger.next();
   }
 
   getListFilter() {
@@ -160,7 +159,6 @@ export class EndInterviewComponent implements OnInit {
   }
 
   reloadData() {
-    console.log('report');
     if (this.statusPackage.id === this.checkStatusPackage.DaChotCongTacChuanBiPhongVan.id) {
       this.interviewInvitationService.submitPrepareInterviews(this.currentPackageId).subscribe(response => {
         this.loadData();

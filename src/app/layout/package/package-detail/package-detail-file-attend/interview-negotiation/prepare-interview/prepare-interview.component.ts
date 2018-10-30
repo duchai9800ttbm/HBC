@@ -58,7 +58,6 @@ export class PrepareInterviewComponent implements OnInit {
         this.loading = true;
         this.interviewInvitationService.getListApprovedDossiers(this.packageId, keySearch).subscribe(response => {
           this.pagedResult = response;
-          console.log('this.result', this.pagedResult);
           this.spinner.hide();
           this.loading = false;
           this.isNgOnInit = true;
@@ -120,7 +119,6 @@ export class PrepareInterviewComponent implements OnInit {
 
 
   viewDetailLiveForm(type: string) {
-    console.log('typeliveForm', type);
     switch (type) {
       // Bản tóm tắt điều kiện dự thầu
       case 'TenderConditionalSummary': {
@@ -141,7 +139,6 @@ export class PrepareInterviewComponent implements OnInit {
   }
 
   dowloadDocument(tenderDocumentId: number) {
-    console.log('tenderDocumentId', tenderDocumentId);
     this.interviewInvitationService.downloadTenderdocument(tenderDocumentId).subscribe(response => {
     },
       err => {
