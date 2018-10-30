@@ -268,6 +268,7 @@ export class NeedCreateTenderFormComponent implements OnInit, OnDestroy {
             )
             .subscribe(
                 data => {
+                    this.getProposedTenderParticipateReportInfo();
                     this.spinner.hide();
                     this.isShowDialog = false;
                     // this.getPackageInfo();
@@ -288,6 +289,21 @@ export class NeedCreateTenderFormComponent implements OnInit, OnDestroy {
                     this.isShowDialog = false;
                 }
             );
+    }
+
+    getProposedTenderParticipateReportInfo() {
+        this.spinner.show();
+        this.packageService.getProposedTenderParticipateReport(this.bidOpportunityId).subscribe(data => {
+            if (data) {
+                NeedCreateTenderFormComponent.formModel = data;
+            } else {
+                NeedCreateTenderFormComponent.formModel = new ProposeTenderParticipateRequest();
+            }
+            this.spinner.hide();
+        }, err => {
+            this.spinner.hide();
+            // this.alertService.error('Lấy thông tin phiếu đề nghị dự thầu thất bại!');
+        });
     }
 
     closeDialog() {

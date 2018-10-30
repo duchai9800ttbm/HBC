@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { FilterPipe } from '../../../../node_modules/ngx-filter-pipe';
 import * as moment from 'moment';
 import DateTimeConvertHelper from '../helpers/datetime-convert-helper';
-import { Observable } from '../../../../node_modules/rxjs';
+import { Observable, BehaviorSubject } from '../../../../node_modules/rxjs';
 import { ActivityFilter } from '../models/activity/activity-filter.model';
 import { PackageListItem } from '../models/package/package-list-item';
 import { PackageFilter } from '../models/package/package-filter.model';
@@ -31,7 +31,7 @@ export class PackageService {
     private userIdSub = new Subject<any>();
     public kickOff = new Subject<any>();
     public routerAction = '';
-    private routerActionSub = new Subject<string>();
+    private routerActionSub = new BehaviorSubject<string>('create');
     routerAction$ = this.routerActionSub.asObservable();
     userId$ = this.userIdSub.asObservable();
     kickOff$ = this.kickOff.asObservable();

@@ -158,6 +158,7 @@ export class NeedCreateTenderComponent implements OnInit {
     this.spinner.show();
     this.packageService.sendApproveBidProposal(this.bidOpportunityId, DateTimeConvertHelper.fromDtObjectToSecon(this.dateApproveBid))
       .subscribe(data => {
+        this.getProposedTenderParticipateReportInfo();
         this.notificationService.change();
         this.spinner.hide();
         this.alertService.success('Gửi duyệt đề nghị dự thầu thành công!');

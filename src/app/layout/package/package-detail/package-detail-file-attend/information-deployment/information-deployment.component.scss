@@ -589,5 +589,24 @@ a.disabled {
 .icon-print {
     color: #f26522;
     outline: none;
-
+}
+table th {
+    border-bottom: 1px solid #f68e56 !important;
+    background-color: #f68e56;
+    color: #ffff;
+    font-weight: bold;
+    padding: 6px 8px !important;
+    box-sizing: content-box;
+}
+table {
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+    .with-file-name{
+        width: calc(40% - 10rem) !important;
+    }
+}
+table td {
+    padding: 6px 8px !important;
+}
+.table-email--box-shadow{
+    box-shadow: none;
 }
