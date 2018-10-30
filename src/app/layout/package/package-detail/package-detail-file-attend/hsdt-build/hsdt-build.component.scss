@@ -569,17 +569,17 @@ table.dataTable th {
     transform: translateX(-56%) !important;
 }
 
-.dropdown-menu::before {
-    position: absolute;
-    top: -12px;
-    left: 572px;
-    display: inline-block;
-    border-right: 12px solid transparent;
-    border-bottom: 12px solid #CCCCCC;
-    border-left: 12px solid transparent;
-    border-bottom-color: rgba(0, 0, 0, 0.2);
-    content: '';
-}
+// .dropdown-menu::before {
+//     position: absolute;
+//     top: -12px;
+//     left: 572px;
+//     display: inline-block;
+//     border-right: 12px solid transparent;
+//     border-bottom: 12px solid #CCCCCC;
+//     border-left: 12px solid transparent;
+//     border-bottom-color: rgba(0, 0, 0, 0.2);
+//     content: '';
+// }
 
 .toggle-menu-item.color-text-gray {
     color: #a5a2a2;

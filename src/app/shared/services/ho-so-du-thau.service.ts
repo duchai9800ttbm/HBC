@@ -167,6 +167,9 @@ export class HoSoDuThauService {
     });
   }
 
+
+
+
   // Upload ảnh - chung cho các form upload
   uploadImageService(imageFile: File) {
     const url = `image/upload`;
@@ -956,6 +959,73 @@ export class HoSoDuThauService {
           HoSoDuThauService.toHistoryLiveForm
         )
       };
+    });
+  }
+
+
+  downloadTemplateHuongDanLapHSDT() {
+    const url = ``;
+    return this.apiService.getFile(url).map(response => {
+      return FileSaver.saveAs(
+        new Blob([response.file], {
+          type: `${response.file.type}`,
+        }), response.fileName
+      );
+    });
+  }
+
+  downloadTemplateBangTomTat() {
+    const url = ``;
+    return this.apiService.getFile(url).map(response => {
+      return FileSaver.saveAs(
+        new Blob([response.file], {
+          type: `${response.file.type}`,
+        }), response.fileName
+      );
+    });
+  }
+
+  downloadTemplateBangDanhSachCungUngThauPhu() {
+    const url = ``;
+    return this.apiService.getFile(url).map(response => {
+      return FileSaver.saveAs(
+        new Blob([response.file], {
+          type: `${response.file.type}`,
+        }), response.fileName
+      );
+    });
+  }
+
+  downloadTemplateBaoCaoThamQuanCongTrinh() {
+    const url = ``;
+    return this.apiService.getFile(url).map(response => {
+      return FileSaver.saveAs(
+        new Blob([response.file], {
+          type: `${response.file.type}`,
+        }), response.fileName
+      );
+    });
+  }
+
+  downloadTemplateBangTinhChiPhuChungVaCongTac() {
+    const url = ``;
+    return this.apiService.getFile(url).map(response => {
+      return FileSaver.saveAs(
+        new Blob([response.file], {
+          type: `${response.file.type}`,
+        }), response.fileName
+      );
+    });
+  }
+
+  downloadTemplateBangLamRoHSMT() {
+    const url = ``;
+    return this.apiService.getFile(url).map(response => {
+      return FileSaver.saveAs(
+        new Blob([response.file], {
+          type: `${response.file.type}`,
+        }), response.fileName
+      );
     });
   }
 }
