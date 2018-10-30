@@ -151,7 +151,6 @@ export class CreateInterviewComponent implements OnInit, OnDestroy {
       this.isNumberOfInterviews = false;
     }
     this.isOnInit = true;
-    this.dtTrigger.next();
   }
 
   createInvitation(interviewCreate: InterviewInvitation) {

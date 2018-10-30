@@ -96,7 +96,7 @@ export class UploadFileComponent implements OnInit {
   }
   deleteFileUpload() {
     this.uploadForm.get('link').enable();
-    if (this.uploadForm.get('editName').value === this.file.name) {
+    if (this.uploadForm.get('editName') && this.file && (this.uploadForm.get('editName').value === this.file.name) ) {
       this.file = null;
       this.uploadForm.get('nameFile').patchValue('');
       this.uploadForm.get('editName').patchValue('');
