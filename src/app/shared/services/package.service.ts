@@ -21,11 +21,14 @@ import * as FileSaver from 'file-saver';
 import { TenderPreparationPlanningRequest } from '../models/api-request/package/tender-preparation-planning-request';
 import { ProposedTenderParticipationHistory } from '../models/api-response/package/proposed-tender-participation-history.model';
 import { StakeHolder } from '../models/ho-so-du-thau/stack-holder.model';
+import { CheckStatusPackage } from '../constants/check-status-package';
 
 @Injectable()
 export class PackageService {
     private statusPackage = new Subject<boolean>();
     public statusPackage$ = this.statusPackage.asObservable();
+    private statusPackageValue = new Subject<boolean>();
+    public statusPackageValue$ = this.statusPackageValue.asObservable();
     private isSummaryConditionForm = new Subject<boolean>();
     public isSummaryConditionForm$ = this.isSummaryConditionForm.asObservable();
     private userIdSub = new Subject<any>();
@@ -36,6 +39,7 @@ export class PackageService {
     userId$ = this.userIdSub.asObservable();
     kickOff$ = this.kickOff.asObservable();
     routerBeforeEmail: string;
+    checkStatusPackage = CheckStatusPackage;
     private static createFilterParams(filter: PackageFilter): URLSearchParams {
         const urlFilterParams = new URLSearchParams();
         urlFilterParams.append('projectName', filter.projectName);
@@ -226,6 +230,10 @@ export class PackageService {
 
     setStatusPackage() {
         this.statusPackage.next();
+    }
+
+    changeStatusPackageValue(texNameStatus: string) {
+        this.statusPackageValue.next(this.checkStatusPackage[texNameStatus]);
     }
 
     setSummaryConditionForm(data: boolean) {

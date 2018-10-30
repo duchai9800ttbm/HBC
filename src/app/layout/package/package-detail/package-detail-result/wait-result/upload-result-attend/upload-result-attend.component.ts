@@ -14,6 +14,7 @@ import { Router } from '../../../../../../../../node_modules/@angular/router';
 })
 export class UploadResultAttendComponent implements OnInit {
   @Input() callBack: Function;
+  @Input() callBackAndNavigate: Function;
   @Input() typeBid: string;
   uploadResultForm: FormGroup;
   file;
@@ -27,7 +28,7 @@ export class UploadResultAttendComponent implements OnInit {
     private fb: FormBuilder,
     private alertService: AlertService,
     private detailResultPackageService: DetailResultPackageService,
-    private router: Router
+    private router: Router,
   ) { }
 
   ngOnInit() {
@@ -107,5 +108,9 @@ export class UploadResultAttendComponent implements OnInit {
 
   closePopup() {
     this.callBack();
+  }
+
+  closePopupAndNegative() {
+    this.callBackAndNavigate();
   }
 }

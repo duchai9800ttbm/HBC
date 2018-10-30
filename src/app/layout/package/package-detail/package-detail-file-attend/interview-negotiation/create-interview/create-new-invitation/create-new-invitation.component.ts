@@ -44,7 +44,6 @@ export class CreateNewInvitationComponent implements OnInit {
 
   ngOnInit() {
     this.currentPackageId = +PackageDetailComponent.packageId;
-    console.log('this.interviewInvitationService.returnMaxInterViewTimes()', this.interviewInvitationService.returnMaxInterViewTimes());
     this.packageService.getInforPackageID(this.currentPackageId).subscribe(result => {
       if (result.customer) {
         this.interviewInvitation.customer.customerId = result.customer.id;

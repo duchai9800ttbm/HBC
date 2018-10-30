@@ -191,6 +191,11 @@ export class PackageSuccessService {
             })
             .share();
     }
+    // Nhận kết quả dự thầu
+    receiveBidResult(bidOpportunityId: number) {
+        const url = `bidopportunity/kqdt/${bidOpportunityId}/nhanketquaduthau`;
+        return this.apiService.post(url);
+    }
 
     // kết quả dự thầu: trúng/trật/hủy thầu
     sendBidResult(bidOpportunityId: number, reasonId: number, type: string): Observable<any> {

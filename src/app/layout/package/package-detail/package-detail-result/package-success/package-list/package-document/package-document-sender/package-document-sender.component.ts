@@ -305,14 +305,19 @@ export class PackageDocumentSenderComponent implements OnInit {
         }
       }
     });
+    console.log('this.docHSDTList', this.docHSMTList, this.docHSDTList);
     this.docHSDTList.forEach(itemHSDT => {
-      itemHSDT.documents.forEach(itemDocument => {
-        if (itemDocument.checkboxSelected === true) {
-          itemDocChooseTranfer.push(itemDocument);
-        }
-      });
+      if (itemHSDT.documents && itemHSDT.documents.length !== 0) {
+        itemHSDT.documents.forEach(itemDocument => {
+          if (itemDocument.checkboxSelected === true) {
+            itemDocChooseTranfer.push(itemDocument);
+          }
+        });
+      }
     });
-    if (itemDocChooseTranfer && itemDocChooseTranfer.length !== 0) {
+
+    // itemDocChooseTranfer && itemDocChooseTranfer.length !== 0
+    if (true) {
       this.confirmationService.confirm(
         'Bạn có muốn chuyên giao tài liệu?',
         () => {

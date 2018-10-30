@@ -34,7 +34,6 @@ export class ReportEndInterviewComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    console.log('this.interviewOfPackage', this.interviewOfPackage);
     this.currentPackageId = +PackageDetailComponent.packageId;
     this.createForm();
   }
@@ -74,7 +73,6 @@ export class ReportEndInterviewComponent implements OnInit {
     if (fileList.length > 0) {
       this.file = fileList[0];
       if (this.file.size < 10485760) {
-        console.log('documentName', this.createFormReport.get('documentName') );
         if (this.createFormReport.get('documentName').value === null || this.createFormReport.get('documentName').value === '') {
           this.createFormReport.get('documentName').patchValue(event.target.files[0].name);
         }

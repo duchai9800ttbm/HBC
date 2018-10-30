@@ -109,10 +109,8 @@ export class InterviewNegotiationComponent implements OnInit, OnDestroy {
     this.packageService.getInforPackageID(this.packageId).subscribe(result => {
       this.statusPackage = this.checkStatusPackage[result.stageStatus.id];
       this.interviewOfPackage = result.interviewInvitation ? result.interviewInvitation.interviewTimes : null;
-      console.log('this.result-packaeg', result, this.interviewOfPackage);
       this.activeRouter.firstChild.url.subscribe(url => {
         this.urlCurrent = url[0].path;
-        console.log('urlCurrent', this.urlCurrent, this.statusPackage);
         for (let i = 0; i < this.stattusCurrentList.length; i++) {
           if (this.stattusCurrentList[i] === this.urlCurrent) {
             this.currentStatusInterview = i + 1;
@@ -214,7 +212,6 @@ export class InterviewNegotiationComponent implements OnInit, OnDestroy {
       minWidth: 250
     });
     const instance = this.dialogEndInterview.content.instance;
-    console.log('this.interviewOfPackage', this.interviewOfPackage);
     instance.interviewOfPackage = this.interviewOfPackage;
     instance.callBack = () => this.closePopuupEndInterview();
   }

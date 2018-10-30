@@ -17,6 +17,8 @@ import { DialogService } from '../../../../../../../node_modules/@progress/kendo
 // tslint:disable-next-line:max-line-length
 import { UploadResultFileAttendComponent } from '../package-success/package-list/upload-result-file-attend/upload-result-file-attend.component';
 import { UploadResultAttendComponent } from './upload-result-attend/upload-result-attend.component';
+import { PackageService } from '../../../../../shared/services/package.service';
+import { CheckStatusPackage } from '../../../../../shared/constants/check-status-package';
 
 @Component({
     selector: 'app-wait-result',
@@ -55,6 +57,7 @@ export class WaitResultComponent implements OnInit {
     submitted = false;
     modalRef: BsModalRef;
     dialogUploadResultAttend;
+    checkStatusPackage = CheckStatusPackage;
     constructor(
         private modalService: BsModalService,
         private router: Router,
@@ -63,7 +66,8 @@ export class WaitResultComponent implements OnInit {
         private alertService: AlertService,
         private spinner: NgxSpinnerService,
         private packageSuccessService: PackageSuccessService,
-        private dialogService: DialogService
+        private dialogService: DialogService,
+        private packageService: PackageService,
     ) { }
 
     ngOnInit() {
@@ -155,49 +159,85 @@ export class WaitResultComponent implements OnInit {
                     typeBid = SETTING_REASON.Cancel;
                     break;
             }
-
-            this.packageSuccessService.sendBidResult(this.currentPackageId, Number(this.reasonForm.get('reasonName').value), typeBid)
-                .subscribe(data => {
-                    this.modaltrungThau.hide();
-                    this.alertService.success(`Gửi lý do ${this.textTrungThau} thầu thành công!`);
-                    switch (typeBid) {
-                        case 'win': {
-                            this.dialogUploadResultAttend = this.dialogService.open({
-                                content: UploadResultAttendComponent,
-                                width: 650,
-                                minWidth: 250
-                            });
-                            const instance = this.dialogUploadResultAttend.content.instance;
-                            instance.callBack = () => this.closePopuup();
-                            instance.typeBid = typeBid;
-                            break;
-                        }
-                        case 'lose': {
-                            this.dialogUploadResultAttend = this.dialogService.open({
-                                content: UploadResultAttendComponent,
-                                width: 650,
-                                minWidth: 250
-                            });
-                            const instance = this.dialogUploadResultAttend.content.instance;
-                            instance.callBack = () => this.closePopuup();
-                            instance.typeBid = typeBid;
-                            break;
-                        }
-                        case 'cancel': {
-                            this.router.navigate([`/package/detail/${this.currentPackageId}/result/package-cancel`]);
+            this.packageSuccessService.receiveBidResult(this.currentPackageId).subscribe(response => {
+                this.getAPIWinOrRLoseOrReject(typeBid);
+            }, err => {
+                this.packageService.getInforPackageID(this.currentPackageId).subscribe(result => {
+                    console.log('result-Infor', result.stageStatus.id, this.checkStatusPackage.KetQuaDuThau.text);
+                    if (result.stageStatus) {
+                        if (result.stageStatus.id === this.checkStatusPackage.KetQuaDuThau.text) {
+                            this.getAPIWinOrRLoseOrReject(typeBid);
+                        } else {
+                            this.modaltrungThau.hide();
+                            this.alertService.error('Đã xảy ra lỗi!');
                         }
                     }
-                    this.spinner.hide();
-                }, err => {
-                    this.modaltrungThau.hide();
-                    this.alertService.error(`Gửi lý do ${this.textTrungThau} thầu thất bại!`);
-                    this.spinner.hide();
                 });
+                this.modaltrungThau.hide();
+                this.spinner.hide();
+                this.alertService.error('Đã xảy ra lỗi!');
+            });
         }
+    }
+
+    getAPIWinOrRLoseOrReject(typeBid) {
+        this.packageSuccessService.sendBidResult(this.currentPackageId, Number(this.reasonForm.get('reasonName').value), typeBid)
+            .subscribe(data => {
+                this.modaltrungThau.hide();
+                this.alertService.success(`Gửi lý do ${this.textTrungThau} thầu thành công!`);
+                switch (typeBid) {
+                    case 'win': {
+                        this.dialogUploadResultAttend = this.dialogService.open({
+                            content: UploadResultAttendComponent,
+                            width: 650,
+                            minWidth: 250
+                        });
+                        const instance = this.dialogUploadResultAttend.content.instance;
+                        instance.callBack = () => this.closePopuup();
+                        instance.callBackAndNavigate = () => this.closePopuupNevigate(typeBid);
+                        instance.typeBid = typeBid;
+                        break;
+                    }
+                    case 'lose': {
+                        this.dialogUploadResultAttend = this.dialogService.open({
+                            content: UploadResultAttendComponent,
+                            width: 650,
+                            minWidth: 250
+                        });
+                        const instance = this.dialogUploadResultAttend.content.instance;
+                        instance.callBack = () => this.closePopuup();
+                        instance.callBackAndNavigate = () => this.closePopuupNevigate(typeBid);
+                        instance.typeBid = typeBid;
+                        break;
+                    }
+                    case 'cancel': {
+                        this.router.navigate([`/package/detail/${this.currentPackageId}/result/package-cancel`]);
+                    }
+                }
+                this.spinner.hide();
+            }, err => {
+                this.modaltrungThau.hide();
+                this.alertService.error(`Gửi lý do ${this.textTrungThau} thầu thất bại!`);
+                this.spinner.hide();
+            });
     }
 
     closePopuup() {
         this.dialogUploadResultAttend.close();
+    }
+
+    closePopuupNevigate(typeBid) {
+        this.dialogUploadResultAttend.close();
+        switch (typeBid) {
+            case 'win': {
+                this.router.navigate([`/package/detail/${this.currentPackageId}/result/package-success`]);
+                break;
+            }
+            case 'lose': {
+                this.router.navigate([`/package/detail/${this.currentPackageId}/result/package-failed`]);
+                break;
+            }
+        }
     }
 
     validateForm() {

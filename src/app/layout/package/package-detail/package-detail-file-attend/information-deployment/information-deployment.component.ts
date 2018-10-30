@@ -195,7 +195,6 @@ export class InformationDeploymentComponent implements OnInit {
   }
 
   searchEmailTo(event) {
-    console.log('searchEmailTo', event);
   }
 
   getTenderPlanInfo() {
@@ -213,7 +212,6 @@ export class InformationDeploymentComponent implements OnInit {
   }
 
   onPaste(e) {
-    console.log(e);
   }
 
   getPackageInfo() {
@@ -226,7 +224,6 @@ export class InformationDeploymentComponent implements OnInit {
         const isTrienKhai = this.packageInfo.stageStatus.id === this.bidStatus.DaThongBaoTrienKhai;
         // tslint:disable-next-line:max-line-length
         this.toggleTextUpFile = isTrienKhai ? 'Hiện chưa có bảng phân công tiến độ nào' : 'Bạn cần phải thông báo triển khai trước khi phân công tiến độ thực hiện';
-        console.log(data);
       });
   }
 
@@ -327,7 +324,6 @@ export class InformationDeploymentComponent implements OnInit {
     };
   }
   sendCc() {
-    console.log('emailModel.to', this.emailModel.to);
     this.isSendCc = !this.isSendCc;
   }
   sendBcc() {
@@ -391,7 +387,6 @@ export class InformationDeploymentComponent implements OnInit {
 
   checkAssignment(): boolean {
     let check = false;
-    console.log('tenderPlan.tasks', this.tenderPlan.tasks);
     for (let i = 0; i < this.tenderPlan.tasks.length; i++) {
       if (this.tenderPlan.tasks[i].whoIsInChargeId && this.tenderPlan.tasks[i].whoIsInChargeId !== 0) {
         check = true;
@@ -445,14 +440,11 @@ export class InformationDeploymentComponent implements OnInit {
           this.alertService.error('Gửi phân công tiến độ thất bại!');
         });
     } else {
-      console.log('CHưa ký');
       if (!this.tenderPlan.isSignedByPreparedPerson) {
-        console.log('CHưa ký-1');
         this.packageService.setRouterAction('edit');
         this.confirmService.missAction('Bảng phân công tiến độ chưa được xác nhận ký tại Người tạo và người duyệt',
           `/package/detail/${this.bidOpportunityId}/attend/infomation-deployment/edit`);
       } else if (!this.tenderPlan.isSignedByApprovalPerson) {
-        console.log('CHưa ký-2');
         this.packageService.setRouterAction('view');
         this.confirmService.missAction('Bảng phân công tiến độ chưa được xác nhận ký tại Người tạo và người duyệt',
           `/package/detail/${this.bidOpportunityId}/attend/infomation-deployment/edit`);
@@ -482,7 +474,6 @@ export class InformationDeploymentComponent implements OnInit {
     this.packageService.getChangeHistoryListTenderPreparationPlanning(this.bidOpportunityId, page, pageSize).subscribe(respone => {
       this.historyList = respone.items;
       this.pagedResultChangeHistoryList = respone;
-      console.log('this.historyList', this.historyList);
       // this.historyList = this.historyList.sort((a, b) => parseFloat(a.changedTimes) < parseFloat(b.changedTimes));
       // this.historyList = groupBy(this.historyList, [{ field: 'changedTimes' }]);
       this.historyList = groupBy(respone.items, [{ field: 'changedTime' }]);
@@ -492,7 +483,6 @@ export class InformationDeploymentComponent implements OnInit {
             groupBy(itemByChangedTimes.liveFormChangeds, [{ field: 'liveFormSubject' }]);
         });
       });
-      console.log('this.historyList-after', this.historyList);
       this.indexItemHistoryChange = Number(this.pagedResultChangeHistoryList.total)
         - Number(this.pagedResultChangeHistoryList.pageSize) * Number(this.pagedResultChangeHistoryList.currentPage);
       setTimeout(() => {
@@ -518,7 +508,6 @@ export class InformationDeploymentComponent implements OnInit {
   }
 
   startSetHSDT() {
-    console.log('this.bidOpportunityId', this.bidOpportunityId);
     this.packageService.startSetHSDT(this.bidOpportunityId).subscribe(() => {
       this.alertService.success('Bắt đầu lập HSDT thành công!');
       // this.statusObservableHsdtService.change();

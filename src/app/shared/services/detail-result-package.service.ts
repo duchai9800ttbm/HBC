@@ -194,14 +194,17 @@ export class DetailResultPackageService {
             value: itemNeedTransferDocument.documentType.value,
             displayText: itemNeedTransferDocument.documentType.displayText,
           } : null,
-          documents: itemNeedTransferDocument.documents ? itemNeedTransferDocument.documents.map(itemParDocuments =>
-            ({
-              type: itemParDocuments.type,
-              id: itemParDocuments.id,
-              name: itemParDocuments.name,
-              interviewTime: itemParDocuments.interviewTime,
-              isLiveForm: itemParDocuments.isLiveForm,
-            })) : null,
+          documents: (itemNeedTransferDocument.documents &&
+            itemNeedTransferDocument.documents.length !== 0 &&
+            itemNeedTransferDocument.documents[0] !== null)
+            ? itemNeedTransferDocument.documents.map(itemParDocuments =>
+              ({
+                type: itemParDocuments.type,
+                id: itemParDocuments.id,
+                name: itemParDocuments.name,
+                interviewTime: itemParDocuments.interviewTime,
+                isLiveForm: itemParDocuments.isLiveForm,
+              })) : null,
           childDocuments: itemNeedTransferDocument.childDocuments ? itemNeedTransferDocument.childDocuments.map(itemChildDocuments => {
             return {
               documentType: itemChildDocuments.documentType ? {
@@ -387,10 +390,11 @@ export class DetailResultPackageService {
             value: itemTransferDocument.documentType.value,
             displayText: itemTransferDocument.documentType.displayText,
           } : null,
-          documents: (itemTransferDocument.documents && itemTransferDocument.documents.length !== 0) ?
+          // tslint:disable-next-line:max-line-length
+          documents: (itemTransferDocument.documents && itemTransferDocument.documents.length !== 0 && itemTransferDocument.documents[0] !== null) ?
             itemTransferDocument.documents.map(itemdocument => {
               return {
-                departments: (itemdocument.departments && itemdocument.departments.length !== 0) ?
+                departments: (itemdocument.departments && itemdocument.departments.length !== 0 && itemdocument.departments[0] !== null) ?
                   itemdocument.departments.map(itemDepartments => {
                     return {
                       key: itemDepartments ? itemDepartments.key : null,

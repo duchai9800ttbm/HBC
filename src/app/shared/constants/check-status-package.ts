@@ -104,6 +104,11 @@ export const CheckStatusPackage = {
         stage: 'KQDT',
         id: 20,
     },
+    KetQuaDuThau: {
+        text: 'KetQuaDuThau',
+        stage: 'KQDT',
+        id: 20,
+    },
     TratThau: {
         text: 'TratThau',
         stage: 'KQDT',
