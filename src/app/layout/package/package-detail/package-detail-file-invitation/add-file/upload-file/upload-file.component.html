@@ -59,7 +59,7 @@
                                         <td class="w-30 label no-boder bold-title">Loại HSMT</td>
                                         <td class="no-boder d-flex">
                                             <kendo-dropdownlist class="w-100" tabindex="3" formControlName="type" [textField]="'text'"
-                                                [valueField]="'id'" [data]="listTypeFile">
+                                                [valueField]="'id'" [data]="listTypeFile" (valueChange)="valueTypeDocChange($event)">
                                             </kendo-dropdownlist>
                                         </td>
                                     </tr>

@@ -275,14 +275,15 @@ export class DocumentService {
                 const month2 = moment.utc(y.receivedDate * 1000).get('month');
                 const year2 = moment.utc(y.receivedDate * 1000).get('year');
                 return {
-                    id: y.id,
-                    documentType: y.documentType,
-                    documentName: y.documentName,
-                    version: y.version,
-                    status: y.status,
-                    uploadedBy: y.uploadedBy,
-                    createdDate: y.createdDate,
-                    receivedDate: y.receivedDate,
+                    // id: y.id,
+                    ...y,
+                    // documentType: y.documentType,
+                    // documentName: y.documentName,
+                    // version: y.version,
+                    // status: y.status,
+                    // uploadedBy: y.uploadedBy,
+                    // createdDate: y.createdDate,
+                    // receivedDate: y.receivedDate,
                     day: day,
                     month: month + 1,
                     year: year,

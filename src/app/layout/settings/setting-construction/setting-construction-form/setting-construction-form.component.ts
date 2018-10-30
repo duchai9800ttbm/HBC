@@ -55,6 +55,13 @@ export class SettingConstructionFormComponent implements OnInit {
           : `Loại công trình ${constructionTypeName} đã được tạo mới thành công.`;
         this.router.navigate([`/settings/construction`]);
         this.alertService.success(message);
+      }, err => {
+        const error = err.json();
+        if (error.errorCode === 'BusinessException') {
+          this.alertService.error(`"${constructionTypeName}" này đã tồn tại`);
+        } else {
+          this.alertService.error('Đã xảy ra lỗi ! Vui lòng thử lại sau.');
+        }
       });
     }
   }

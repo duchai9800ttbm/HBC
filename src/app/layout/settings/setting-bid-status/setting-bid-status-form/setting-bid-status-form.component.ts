@@ -53,6 +53,8 @@ export class SettingBidStatusFormComponent implements OnInit {
           : 'Tình trạng gói thầu đã được tạo mới thành công.';
         this.router.navigate([`/settings/bid-status`]);
         this.alertService.success(message);
+      }, err => {
+        this.alertService.error('Đã xảy ra lỗi ! Vui lòng thử lại sau.');
       });
     }
   }

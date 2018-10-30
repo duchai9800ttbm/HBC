@@ -79,6 +79,7 @@ export class GroupUserDetailComponent implements OnInit {
   listPrivileges = [];
   isManageUserGroups;
   loading = false;
+  checkboxSeclectAll: boolean;
   constructor(
     private alertService: AlertService,
     private modalService: BsModalService,
@@ -351,7 +352,7 @@ export class GroupUserDetailComponent implements OnInit {
       this.listPrivilegesData = response;
       // Danh sách nhóm người dùng
       this.loading = true;
-      this.groupUserService.listGroupUser(0, 10).subscribe(responsepageResultUserGroup => {
+      this.groupUserService.instantSearchGroupUser(this.searchTerm$, 0, 10).subscribe(responsepageResultUserGroup => {
         this.pagedResult = responsepageResultUserGroup;
         this.loading = false;
         this.listGroupUser = this.pagedResult.items.map(i => i);
@@ -449,10 +450,12 @@ export class GroupUserDetailComponent implements OnInit {
 
   pagedResultChange(pagedResult: any) {
     this.spinner.show();
-    this.groupUserService.searchGroupUser(this.searchTerm$.value,
+    this.groupUserService.instantSearchGroupUser(this.searchTerm$,
       pagedResult.currentPage, pagedResult.pageSize).subscribe(responsepageResultUserGroup => {
         this.pagedResult = responsepageResultUserGroup;
         this.listGroupUser = this.pagedResult.items;
+        this.dtTrigger.next();
+        this.loading = false;
         this.spinner.hide();
       }, err => this.spinner.hide());
   }
@@ -553,7 +556,7 @@ export class GroupUserDetailComponent implements OnInit {
 
   refeshPage() {
     this.spinner.show();
-    this.groupUserService.listGroupUser(this.pagedResult.currentPage, this.pagedResult.pageSize)
+    this.groupUserService.instantSearchGroupUser(this.searchTerm$, this.pagedResult.currentPage, this.pagedResult.pageSize)
       .subscribe(responsepageResultUserGroup => {
         this.pagedResult = responsepageResultUserGroup;
         this.listGroupUser = this.pagedResult.items;
@@ -572,7 +575,7 @@ export class GroupUserDetailComponent implements OnInit {
           privilegeIds: this.groupEditOrCreate.privileges.map(i => Number(i.id)),
         };
         this.groupUserService.editGroupUser(resquestModel).subscribe(response => {
-          this.groupUserService.listGroupUser(this.pagedResult.currentPage, this.pagedResult.pageSize)
+          this.groupUserService.instantSearchGroupUser(this.searchTerm$, this.pagedResult.currentPage, this.pagedResult.pageSize)
             .subscribe(responsepageResultUserGroup => {
               this.pagedResult = responsepageResultUserGroup;
               this.listGroupUser = this.pagedResult.items.map(i => i);
@@ -594,10 +597,10 @@ export class GroupUserDetailComponent implements OnInit {
       if (this.groupEditOrCreate.name) {
         this.groupEditOrCreate.userGroupName = this.groupEditOrCreate.name;
         this.groupUserService.createGroupUser(this.groupEditOrCreate).subscribe(response => {
-          this.groupUserService.listGroupUser(this.pagedResult.currentPage, this.pagedResult.pageSize)
+          this.groupUserService.instantSearchGroupUser(this.searchTerm$, this.pagedResult.currentPage, this.pagedResult.pageSize)
             .subscribe(responsepageResultUserGroup => {
               this.pagedResult = responsepageResultUserGroup;
-              this.listGroupUser = this.pagedResult.items.map(i => i);
+              this.listGroupUser = this.pagedResult.items;
               this.modalRef.hide();
               this.userService.getUserProfile().subscribe(result =>
                 this.sessionService.saveUserInfo(result)
@@ -672,7 +675,7 @@ export class GroupUserDetailComponent implements OnInit {
             this.listPrivilegesData = j;
             // Danh sách nhóm người dùng
             this.spinner.show();
-            this.groupUserService.listGroupUser(this.pagedResult.currentPage, this.pagedResult.pageSize)
+            this.groupUserService.instantSearchGroupUser(this.searchTerm$, this.pagedResult.currentPage, this.pagedResult.pageSize)
               .subscribe(responsepageResultUserGroup => {
                 this.pagedResult = responsepageResultUserGroup;
                 this.spinner.hide();
@@ -713,23 +716,16 @@ export class GroupUserDetailComponent implements OnInit {
   multiDelete() {
     const deleteIds = this.listGroupUser
       .filter(x => x.checkboxSelected)
-      .map(x => {
-        return {
-          id: +x.id,
-        };
-      });
-    if (deleteIds.length === 0) {
+      .map(x => x.id);
+    if (deleteIds && deleteIds.length === 0) {
       this.alertService.error(
         'Bạn phải chọn ít nhất một đối tượng để xóa!'
       );
     } else {
-      const request = {
-        ids: deleteIds.map(x => x.id),
-      };
       this.confirmationService.confirm(
         'Bạn có chắc chắn muốn xóa những nhóm người dùng được chọn?',
         () => {
-          this.groupUserService.deleteListGroupUser(request).subscribe(response => {
+          this.groupUserService.deleteListGroupUser(deleteIds).subscribe(response => {
             this.alertService.success('Xóa nhóm người dùng thành công!');
             this.refesh(false);
           },

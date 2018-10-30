@@ -60,6 +60,22 @@ export class UploadFileComponent implements OnInit {
     this.documentService.bidDocumentType().subscribe(data => {
       this.listTypeFile = data;
       this.uploadForm.get('type').patchValue(this.typeFile);
+      this.getVersionValue(this.typeFile);
+    });
+  }
+  valueTypeDocChange(event) {
+    this.getVersionValue(this.uploadForm.get('type').value);
+  }
+  getVersionValue(typeDocId) {
+    this.documentService.read(this.packageId, typeDocId.id).subscribe(response => {
+      if (!response[0]) {
+        this.uploadForm.get('version').patchValue(1);
+      } else {
+        const maxVersion = Math.max.apply(Math, response[0].items.map(item => item.version));
+        this.uploadForm.get('version').patchValue(maxVersion + 1);
+      }
+    }, err => {
+      this.alertService.error('Cập nhật phiên bản không thành công.');
     });
   }
 

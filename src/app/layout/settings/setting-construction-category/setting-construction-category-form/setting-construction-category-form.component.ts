@@ -54,6 +54,13 @@ export class SettingConstructionCategoryFormComponent implements OnInit {
           : `Hạng mục thi công công trình ${constructionCategoryName} đã được tạo mới thành công.`;
         this.router.navigate([`/settings/construction-category`]);
         this.alertService.success(message);
+      }, err => {
+        const error = err.json();
+        if (error.errorCode === 'BusinessException') {
+          this.alertService.error(`"${constructionCategoryName}" này đã tồn tại`);
+        } else {
+          this.alertService.error('Đã xảy ra lỗi ! Vui lòng thử lại sau.');
+        }
       });
     }
   }
