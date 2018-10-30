@@ -35,6 +35,7 @@ export class PackageDetailResultComponent implements OnInit {
 
     getInforPackageID() {
         this.packageService.getInforPackageID(this.packageId).subscribe(result => {
+            this.packageService.changeStatusPackageValue(result.stageStatus.id);
             switch (this.checkStatusPackage[result.stageStatus.id].id) {
                 case (this.checkStatusPackage.ChoKetQuaDuThau.id): {
                     //

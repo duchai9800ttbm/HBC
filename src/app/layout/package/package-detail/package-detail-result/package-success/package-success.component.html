@@ -12,7 +12,7 @@
                 </div>
             </li>
             
-            <li *ngIf="!arrow" class="triangle2" [routerLinkActive]="['active']" (click)="onClickContract();" [ngClass]="{ 'active' : isActive === true }" [routerLink]="['../package-success/contract-signed']">
+            <li *ngIf="!arrow" class="triangle2" [routerLinkActive]="['active']" (click)="onClickContract();" [ngClass]="{ 'active' : statusPackage.id >= checkStatusPackage.DaPhanHoiDenPHopDong.id  }" [routerLink]="['../package-success/contract-signed']">
                 <div style="width: 100%" class="center-parent">
                     <div [ngClass]="{'': showArrow == false,'arrow-down':showArrow==true}"></div>
                 </div>
@@ -23,7 +23,7 @@
                 </div>
             </li>
 
-            <li *ngIf="!kickOffActive" class="triangle3" [routerLinkActive]="['active']" (click)="onClickKickOff();"  [ngClass]="{ 'active' : kickOff === true }" [routerLink]="['../package-success/meeting-kickoff']">
+            <li *ngIf="!kickOffActive" class="triangle3" [routerLinkActive]="['active']" (click)="onClickKickOff();"  [ngClass]="{ 'active' : statusPackage.id >= checkStatusPackage.DaNhanTaiLieu.id }" [routerLink]="['../package-success/meeting-kickoff']">
                 <div style="width: 100%" class="center-parent">
                     <div [ngClass]="{'': arrowKickOff == false,'arrow-down':arrowKickOff==true}"></div>
                 </div>

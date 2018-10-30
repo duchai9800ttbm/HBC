@@ -119,23 +119,23 @@ export const CheckStatusPackage = {
         stage: 'KQDT',
         id: 22,
     },
-    DaThongBaoCacBenLienQuan: {
-        text: 'DaThongBaoCacBenLienQuan',
-        stage: 'KQDT',
-        id: 23,
-    },
     CoBaiHocKinhNghiem: {
         text: 'CoBaiHocKinhNghiem',
         stage: 'KQDT',
-        id: 24,
+        id: 23,
     },
     TrungThau: {
         text: 'TrungThau',
         stage: 'KQDT',
-        id: 25,
+        id: 24,
     },
     DaPhanHoiDenPHopDong: {
         text: 'DaPhanHoiDenPHopDong',
+        stage: 'KQDT',
+        id: 25,
+    },
+    DaThongBaoCacBenLienQuan: {
+        text: 'DaThongBaoCacBenLienQuan',
         stage: 'KQDT',
         id: 26,
     },

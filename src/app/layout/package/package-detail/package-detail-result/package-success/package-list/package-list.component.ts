@@ -18,6 +18,7 @@ import { NotificationContractComponent } from './notification-contract/notificat
 import { SendEmailModel } from '../../../../../../shared/models/send-email-model';
 import { EmailService } from '../../../../../../shared/services/email.service';
 import { BidStatus } from '../../../../../../shared/constants/bid-status';
+import { CheckStatusPackage } from '../../../../../../shared/constants/check-status-package';
 @Component({
   selector: 'app-package-list',
   templateUrl: './package-list.component.html',
@@ -54,7 +55,6 @@ export class PackageListComponent implements OnInit {
   listEmailSearchCc;
   listEmailSearchBcc;
   actionSendEmail = 'ContractRoom';
-  statusPackage;
   bidStatus = BidStatus;
   @Output() active: EventEmitter<any> = new EventEmitter<any>();
   resultData: any = [
@@ -66,6 +66,12 @@ export class PackageListComponent implements OnInit {
     { id: 2, username: 'Van Dinh', email: 'vandinh@gmail.com' },
     { id: 3, username: 'Huy Nhat', email: 'huynhat@gmail.com' }
   ];
+  statusPackage = {
+    text: 'TrungThau',
+    stage: 'KQDT',
+    id: 24,
+  };
+  checkStatusPackage = CheckStatusPackage;
   constructor(
     private modalService: BsModalService,
     private router: Router,
@@ -81,6 +87,9 @@ export class PackageListComponent implements OnInit {
 
   ngOnInit() {
     this.currentPackageId = +PackageDetailComponent.packageId;
+    this.packageService.statusPackageValue$.subscribe(status => {
+      this.statusPackage = status;
+    });
     this.ckeConfig = {
       toolbar: [
         { name: 'basicstyles', items: ['Bold', 'Italic', 'Underline', 'Strike'] },
@@ -99,9 +108,9 @@ export class PackageListComponent implements OnInit {
       this.listEmailSearchCc = response;
       this.listEmailSearchBcc = response;
     });
-    this.packageService.getInforPackageID(this.currentPackageId).subscribe(result => {
-      this.statusPackage = result.stageStatus.id;
-    });
+    // this.packageService.getInforPackageID(this.currentPackageId).subscribe(result => {
+    //   this.statusPackage = result.stageStatus.id;
+    // });
     this.refesh(false);
     this.detailResultPackageService.watchListFileResult().subscribe(response => {
       this.refesh(false);
@@ -250,7 +259,7 @@ export class PackageListComponent implements OnInit {
   }
   render(listFileResult: any) {
     this.listFileResult = listFileResult;
-    this.dtTrigger.next();
+    // this.dtTrigger.next();
   }
   sortField(fieldSort: string, statusSort: string) {
     this.currentFieldSort = fieldSort;
@@ -357,6 +366,7 @@ export class PackageListComponent implements OnInit {
       switch (this.actionSendEmail) {
         case ('ContractRoom'): {
           this.detailResultPackageService.sendFeedbackToContractRoom(this.emailModel, this.file).subscribe(result => {
+            this.packageService.changeStatusPackageValue(this.checkStatusPackage.DaPhanHoiDenPHopDong.text);
             this.emailModel = new SendEmailModel();
             this.file = [];
             this.alertService.success('Gửi phản hồi đến phòng hợp đồng thành công!');
@@ -372,6 +382,7 @@ export class PackageListComponent implements OnInit {
         }
         case ('Stakeholders'): {
           this.detailResultPackageService.sendFeedbackToStakeholders(this.emailModel, this.file).subscribe(result => {
+            this.packageService.changeStatusPackageValue(this.checkStatusPackage.DaThongBaoCacBenLienQuan.text);
             this.emailModel = new SendEmailModel();
             this.file = [];
             this.alertService.success('Gửi phản hồi đến phòng hợp đồng thành công!');

@@ -27,7 +27,7 @@ import { CheckStatusPackage } from '../constants/check-status-package';
 export class PackageService {
     private statusPackage = new Subject<boolean>();
     public statusPackage$ = this.statusPackage.asObservable();
-    private statusPackageValue = new Subject<boolean>();
+    private statusPackageValue = new Subject<any>();
     public statusPackageValue$ = this.statusPackageValue.asObservable();
     private isSummaryConditionForm = new Subject<boolean>();
     public isSummaryConditionForm$ = this.isSummaryConditionForm.asObservable();
