@@ -149,7 +149,6 @@ export class AddFileComponent implements OnInit {
     }
     viewDetail(item) {
         this.currentItem = item;
-        console.log(item);
         this.showPopupDetail = true;
     }
     uploadHSMT() {

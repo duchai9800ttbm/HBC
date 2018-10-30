@@ -26,10 +26,6 @@
     padding-left: 40px;
 }
 
-.step-info {
-    // font-weight: bold;
-}
-
 .big-title {
     text-transform: uppercase;
     margin-bottom: 20px;
@@ -57,6 +53,30 @@ input[type=text] {
     border: 1px solid #ced4da;
     border-radius: 0.25rem;
     padding: 0.375rem 0.75rem;
+    font-size: 13px;
+
+    &::placeholder {
+        color: #cccccc;
+        font-style: italic;
+    }
+}
+
+input[type=number] {
+    border: 1px solid #ced4da;
+    border-radius: 0.25rem;
+    padding: 0.375rem 0.75rem;
+    font-size: 13px;
+
+    &::placeholder {
+        color: #cccccc;
+        font-style: italic;
+    }
+
+    &::-webkit-inner-spin-button,
+    &::-webkit-outer-spin-button {
+        -webkit-appearance: none;
+        margin: 0;
+    }
 }
 
 .childcheck {
@@ -237,6 +257,7 @@ input[type=text] {
     left: 35px;
     text-align: center;
 }
+
 .cursor-pointer {
     cursor: pointer;
 }
@@ -265,16 +286,6 @@ label {
 
 .small-title {
     font-size: 0.8rem;
-}
-
-input[type=text] {
-    font-size: 13px;
-}
-
-// Set FontStyle Italic & Color - Input Text
-input[type=text]::placeholder {
-    color: #cccccc;
-    font-style: italic;
 }
 
 @media only screen and (max-width: 1121px) {

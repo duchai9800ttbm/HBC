@@ -54,6 +54,13 @@ export class SettingLocationFormComponent implements OnInit {
           : `Khu vực ${locationName} đã được tạo mới thành công.`;
         this.router.navigate([`/settings/location`]);
         this.alertService.success(message);
+      }, err => {
+        const error = err.json();
+        if (error.errorCode === 'BusinessException') {
+          this.alertService.error(`"${locationName}" này đã tồn tại`);
+        } else {
+          this.alertService.error('Đã xảy ra lỗi ! Vui lòng thử lại sau.');
+        }
       });
     }
   }

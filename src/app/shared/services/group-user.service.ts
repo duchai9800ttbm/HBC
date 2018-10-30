@@ -316,7 +316,7 @@ export class GroupUserService implements OnInit {
     const url = `usergroup/create`;
     const requestModel = {
       name: inforGroupUser.userGroupName || inforGroupUser.name,
-      description: inforGroupUser.description,
+      description: inforGroupUser.desc,
       privilegeIds: inforGroupUser.privileges.map(i => Number(i.id)),
       isActive: true,
     };
@@ -340,7 +340,8 @@ export class GroupUserService implements OnInit {
   // Xóa nhiều nhóm người dùng
   deleteListGroupUser(listIdGroupUser: any): Observable<any> {
     const url = `usergroup/delete`;
-    return this.apiService.post(url, listIdGroupUser);
+    const model = { ids: listIdGroupUser};
+    return this.apiService.post(url, model);
   }
   // Cập nhật danh sách chức năng của nhóm người dùng
   changePrivilegesGroupUser(listPrivilegesUpdate: GroupUserPrivilegesRequest): Observable<any> {

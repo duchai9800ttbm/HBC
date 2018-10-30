@@ -137,12 +137,14 @@ export class EditComponent implements OnInit, OnDestroy {
           this.showPopupConfirm = false;
           this.spinner.hide();
           this.router.navigate([`/package/detail/${this.currentBidOpportunityId}/attend/build/liveformsite`]);
-          const message = (this.isCreate) ? 'Tạo' : 'Cập nhật';
+          const message = (this.isCreate) ? 'Tạo mới' : 'Cập nhật';
           this.alertService.success(`${message} Báo cáo khảo sát công trường thành công.`);
         }, err => {
           this.showPopupConfirm = false;
           this.spinner.hide();
-          const message = (this.isCreate) ? 'Tạo' : 'Cập nhật';
+          const message = (this.isCreate) ? 'Tạo mới' : 'Cập nhật';
+          LiveformSiteReportComponent.actionMode = (this.isCreate) ? 'createMode' : 'editMode';
+          this.isViewMode = false;
           this.alertService.error(`Đã xảy ra lỗi. ${message} Báo cáo khảo sát công trường không thành công.`);
         });
     }
