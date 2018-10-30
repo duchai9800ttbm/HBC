@@ -148,7 +148,7 @@ export class DetailResultPackageService {
   }
   // Gửi thư thông báo cho các bên liên quan
   sendFeedbackToStakeholders(data: SendEmailModel, file: File[]) {
-    const url = `bidopportunity/kqdt/sendfeedbacktocontractroom`;
+    const url = `bidopportunity/kqdt/sendmailtostakeholders`;
     const dataObj = new FormData();
     dataObj.append('BidOpportunityId', data.bidOpportunityId + '');
     dataObj.append('Subject', data.subject ? data.subject : '');

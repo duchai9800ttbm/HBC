@@ -316,8 +316,7 @@ export class PackageDocumentSenderComponent implements OnInit {
       }
     });
 
-    // itemDocChooseTranfer && itemDocChooseTranfer.length !== 0
-    if (true) {
+    if (itemDocChooseTranfer && itemDocChooseTranfer.length !== 0) {
       this.confirmationService.confirm(
         'Bạn có muốn chuyên giao tài liệu?',
         () => {
