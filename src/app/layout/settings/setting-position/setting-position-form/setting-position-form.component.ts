@@ -52,6 +52,13 @@ export class SettingPositionFormComponent implements OnInit {
           : `Vị trị/Chức vụ ${levelName} đã được tạo mới thành công.`;
         this.router.navigate([`/settings/position`]);
         this.alertService.success(message);
+      }, err => {
+        const error = err.json();
+        if (error.errorCode === 'BusinessException') {
+          this.alertService.error(`"${levelName}" này đã tồn tại`);
+        } else {
+          this.alertService.error('Đã xảy ra lỗi ! Vui lòng thử lại sau.');
+        }
       });
     }
   }

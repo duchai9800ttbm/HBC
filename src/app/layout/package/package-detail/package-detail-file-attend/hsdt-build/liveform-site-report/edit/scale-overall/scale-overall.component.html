@@ -3,11 +3,11 @@
         <div id="info-docs">
             <div class="label-info label-info-name">
                 <label for="">Tên tài liệu</label>
-                <input type="text" placeholder="Nhập text" formControlName="tenTaiLieu" tabindex="1"  [ngClass]="{'view-mode-control': isViewMode}">
+                <input type="text" placeholder="Nhập text" formControlName="tenTaiLieu" autofocus tabindex="1"  [ngClass]="{'view-mode-control': isViewMode}">
             </div>
             <div class="label-info">
                 <label for="">Lần phỏng vấn</label>
-                <input type="text" appInputNumber placeholder="Nhập số lần phỏng vấn" formControlName="lanPhongVan" [ngClass]="{'view-mode-control': isViewMode}"
+                <input type="number" appInputNumberInteger placeholder="Nhập số lần phỏng vấn" formControlName="lanPhongVan" [ngClass]="{'view-mode-control': isViewMode}"
                     tabindex="2">
             </div>
         </div>
@@ -78,8 +78,8 @@
                         </div>
                         <div class="label-project-scale">
                             <label for="">Tiến độ dự kiến/ Construction period (ngày)</label>
-                            <input class="no-boder cus-input text-right align-placeholder" type="text" placeholder="Nhập số ngày" [ngClass]="{'view-mode-control': isViewMode}"
-                                appInputNumber formControlName="tienDo" tabindex="9">
+                            <input class="no-boder cus-input text-right align-placeholder" type="number" placeholder="Nhập số ngày" [ngClass]="{'view-mode-control': isViewMode}"
+                            appInputNumberInteger formControlName="tienDo" tabindex="9">
                         </div>
                     </div>
                     <div>

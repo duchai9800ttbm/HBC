@@ -46,10 +46,11 @@
 <div *ngIf = "!loading">
         <div class="ml-3" *ngIf="tenderPlan">
                 <h5 class="text-uppercase mb-3">bảng phân công tiến độ (tender preparation planning assignment)</h5>
-                <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="table-layout--fixed">
+                <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="table-layout--fixed w-100">
+                        <!-- datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" -->
                     <thead>
                         <tr>
-                            <th class="w-40">Tên tài liệu</th>
+                            <th class="with-file-name">Tên tài liệu</th>
                             <th class="w-20">Người duyệt</th>
                             <th class="w-20">Người tạo</th>
                             <th class="w-20">Ngày tạo</th>
@@ -113,11 +114,11 @@
         <h5 class="text-uppercase mb-3">Lịch sử cập nhật</h5>
     </div>
 
-    <table datatable [dtOptions]="dtOptions2" [dtTrigger]="dtTrigger2" class="table-layout--fixed">
+    <table class="table-layout--fixed">
         <thead>
             <tr>
                 <th class="w-10">Lần cập nhật</th>
-                <th class="w-10">Người cập nhật</th>
+                <th class="w-15">Người cập nhật</th>
                 <th class="w-15">Ngày cập nhật</th>
                 <th class="w-20">Nội dung cập nhật</th>
                 <th class="w-40">Chi tiết cập nhật</th>
@@ -186,7 +187,7 @@
                 clearAllText="Xóa tất cả" [addTag]="true" [hideSelected]="true" multiple="true" bindLabel="employeeName"
                 [searchFn]="customSearchFn" [(ngModel)]="emailModel.to">
                 <ng-template ng-option-tmp let-item="item" let-index="index" let-search="searchTerm">
-                    <table>
+                    <table class="table-email--box-shadow">
                         <tr>{{item.employeeName}}</tr>
                         <tr>{{item.employeeEmail}}</tr>
                     </table>

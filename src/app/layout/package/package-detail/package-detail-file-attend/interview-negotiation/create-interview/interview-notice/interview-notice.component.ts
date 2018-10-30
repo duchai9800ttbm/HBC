@@ -98,7 +98,6 @@ export class InterviewNoticeComponent implements OnInit {
         this.interviewInvitationService.LoadFileCreateInterview(element.id).subscribe(response => {
           this.file.push(response);
         });
-        console.log('element-interview', element);
         const approvedDate = DateTimeConvertHelper.fromTimestampToDtObject(element.approvedDate * 1000);
         const approvedDateStr = approvedDate.getDate() + '/' + (approvedDate.getMonth() + 1) + '/' + approvedDate.getFullYear();
         const interviewDate = DateTimeConvertHelper.fromTimestampToDtObject(element.interviewDate * 1000);
@@ -157,10 +156,8 @@ export class InterviewNoticeComponent implements OnInit {
 
   uploadfile(event) {
     const fileList: FileList = event.target.files;
-    console.log(fileList);
     if (fileList.length > 0) {
       for (let i = 0; i < fileList.length; i++) {
-        console.log('fileList[i]', fileList[i]);
         this.file.push(fileList[i]);
       }
       event.target.value = null;
@@ -175,7 +172,6 @@ export class InterviewNoticeComponent implements OnInit {
     if (this.emailModel && this.emailModel.to) {
       this.emailModel.bidOpportunityId = this.packageId;
       this.spinner.show();
-      console.log('this.max', this.maxBidInterviewInvitationId);
       this.emailService.sendEmailInterview(this.emailModel, this.file, this.maxBidInterviewInvitationId).subscribe(result => {
         this.closePopup();
         this.statusObservableHsdtService.change();

@@ -202,9 +202,8 @@ export class InformationDeploymentComponent implements OnInit {
     this.loading = true;
     this.packageService.getTenderPreparationPlanning(this.bidOpportunityId).subscribe(data => {
       this.tenderPlan = data;
-      
       setTimeout(() => {
-        this.dtTrigger.next();
+        // this.dtTrigger.next();
         this.loading = false;
       });
     }, () => {
@@ -497,7 +496,7 @@ export class InformationDeploymentComponent implements OnInit {
       this.indexItemHistoryChange = Number(this.pagedResultChangeHistoryList.total)
         - Number(this.pagedResultChangeHistoryList.pageSize) * Number(this.pagedResultChangeHistoryList.currentPage);
       setTimeout(() => {
-        this.dtTrigger2.next();
+        // this.dtTrigger2.next();
         this.loading = false;
       });
     },

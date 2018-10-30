@@ -69,27 +69,35 @@ export class PackageDetailComponent implements OnInit {
       }
     }, 300);
 
-  
-
     IntervalObservable.create(1 * 10 * 1000).subscribe(_ => {
       this.sub = this.permissionService.getListPermission(this.packageId).subscribe(listPermission => {
          this.permissionService.set(listPermission);
          this.sub.unsubscribe();
       });
-    
-    });
-    this.packageService.getInforPackageID(this.packageId).subscribe(result => {
-      this.packageData = result;
-      this.statusPackage = this.checkStatusPackage[this.packageData.stageStatus.id];
-    }, err => {
     });
 
+    this.activetedRoute.params.subscribe(result => {
+      this.packageId = +result.id;
+      PackageDetailComponent.packageId = this.packageId;
+    });
+    this.getInforPackage();
     this.layoutService.watchLayoutSubject().subscribe(data => {
       if (data) {
         this.isToggle = true;
       } else {
         this.isToggle = false;
       }
+    });
+    this.packageService.statusPackage$.subscribe( value => {
+      this.getInforPackage();
+    });
+  }
+
+  getInforPackage() {
+    this.packageService.getInforPackageID(this.packageId).subscribe(result => {
+      this.packageData = result;
+      this.statusPackage = this.checkStatusPackage[this.packageData.stageStatus.id];
+    }, err => {
     });
   }
 
