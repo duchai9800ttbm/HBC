@@ -22,8 +22,8 @@
                 <div class="d-flex">
                     <div id="toggle-menu-item" *ngIf="majorTypeListItem">
                         <ng-container *ngFor="let item of majorTypeListItem; let i = index">
-                            <div class="toggle-menu-item" [title]="item.text" [class.hight-light]="!item.count && (currentMajorTypeId != item.id)"
-                                [class.active-menu]="(currentMajorTypeId == item.id)" (click)="filterMajorTypeListItem(item.id, item.text)">
+                            <div class="toggle-menu-item" [title]="item.text" [class.hight-light]="!item.count && (currentMajorTypeId != item.id)" [class.active-menu]="(currentMajorTypeId == item.id)"
+                                (click)="filterMajorTypeListItem(item.id, item.text)">
                                 <span class="text-truncate">{{item?.text}}</span>
                             </div>
                             <div class="line" *ngIf="!(majorTypeListItem.length == i+1)" style="width: calc(100% - 10px); border-top: #ccecf9 solid 1px; height: 1px; border-left: 1px; margin-left: 10px;"></div>
@@ -48,35 +48,38 @@
                     <!-- <button class="btn btn-primary ml-1">
                             Tải xuống tài liệu
                         </button> -->
-                    <div *ngIf="currentMajorTypeId == 1" class="btn-group ml-1" ngbDropdown>
-                        <button type="button" class="btn btn-primary" ngbDropdownToggle data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            Upload HSMT
-                        </button>
-                        <div class="dropdown-menu" ngbDropdownMenu>
-                            <div class="fileUpload dropdown-item" (click)="openPopupUploadFile('2')">
-                                <a>Quyển HSMT</a>
-                            </div>
-                            <div class="dropdown-divider"></div>
-                            <div class="fileUpload dropdown-item" (click)="openPopupUploadFile('3')">
-                                <a>Bản vẽ thuyết minh</a>
-                            </div>
-                            <div class="dropdown-divider"></div>
-                            <div class="fileUpload dropdown-item" (click)="openPopupUploadFile('4')">
-                                <a>BOQ</a>
-                            </div>
-                            <div class="dropdown-divider"></div>
-                            <div class="fileUpload dropdown-item" (click)="openPopupUploadFile('5')">
-                                <a>Tiêu chí kỹ thuật (Specs)</a>
-                            </div>
-                            <div class="dropdown-divider"></div>
-                            <div class="fileUpload dropdown-item" (click)="openPopupUploadFile('6')">
-                                <a>Các báo cáo và các tài liệu kỹ thuật (KSDQ)</a>
+                    <ng-container *ngIf="UploadHSMT">
+                        <div *ngIf="currentMajorTypeId == 1" class="btn-group ml-1" ngbDropdown>
+                            <button type="button" class="btn btn-primary" ngbDropdownToggle data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                Upload HSMT
+                            </button>
+                            <div class="dropdown-menu" ngbDropdownMenu>
+                                <div class="fileUpload dropdown-item" (click)="openPopupUploadFile('2')">
+                                    <a>Quyển HSMT</a>
+                                </div>
+                                <div class="dropdown-divider"></div>
+                                <div class="fileUpload dropdown-item" (click)="openPopupUploadFile('3')">
+                                    <a>Bản vẽ thuyết minh</a>
+                                </div>
+                                <div class="dropdown-divider"></div>
+                                <div class="fileUpload dropdown-item" (click)="openPopupUploadFile('4')">
+                                    <a>BOQ</a>
+                                </div>
+                                <div class="dropdown-divider"></div>
+                                <div class="fileUpload dropdown-item" (click)="openPopupUploadFile('5')">
+                                    <a>Tiêu chí kỹ thuật (Specs)</a>
+                                </div>
+                                <div class="dropdown-divider"></div>
+                                <div class="fileUpload dropdown-item" (click)="openPopupUploadFile('6')">
+                                    <a>Các báo cáo và các tài liệu kỹ thuật (KSDQ)</a>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                    <button *ngIf="currentMajorTypeId != 1" class="btn btn-primary ml-1" (click)="uploadHSMT()">
-                        Upload HSMT
-                    </button>
+                        <button *ngIf="currentMajorTypeId != 1" class="btn btn-primary ml-1" (click)="uploadHSMT()">
+                            Upload HSMT
+                        </button>
+                    </ng-container>
+
                     <button class="btn btn-primary ml-1" (click)="refresh()">
                         <i class="fa fa-refresh" aria-hidden="true"></i>
                     </button>
@@ -272,21 +275,27 @@
                                         </td>
                                         <td>
                                             <div class="d-flex justify-content-around">
-                                                <div *ngIf="!item.url" style="cursor: pointer;" title="Tải file" (click)="dowloadDocument(item.id)">
-                                                    <a>
-                                                        <i class="fa fa-download color-item-down" aria-hidden="true"></i>
-                                                    </a>
-                                                </div>
+                                                <ng-container *ngIf="DownloadFile">
+                                                    <div *ngIf="!item.url" style="cursor: pointer;" title="Tải file" (click)="dowloadDocument(item.id)">
+                                                        <a>
+                                                            <i class="fa fa-download color-item-down" aria-hidden="true"></i>
+                                                        </a>
+                                                    </div>
+                                                </ng-container>
+
                                                 <div style="cursor: pointer;" *ngIf="item.url">
                                                     <a [href]="item.url" target="_blank">
                                                         <i class="fa fa-external-link color-item-down" aria-hidden="true"></i>
                                                     </a>
                                                 </div>
-                                                <div *ngIf="!item.isApproved" (click)="deleteDocument(item.id)" style="cursor: pointer;" title="Xóa">
-                                                    <a class="text-success ml-3">
-                                                        <i class="fa fa-trash-o" aria-hidden="true"></i>
-                                                    </a>
-                                                </div>
+                                                <ng-container *ngIf="XoaFile">
+                                                    <div *ngIf="!item.isApproved" (click)="deleteDocument(item.id)" style="cursor: pointer;" title="Xóa">
+                                                        <a class="text-success ml-3">
+                                                            <i class="fa fa-trash-o" aria-hidden="true"></i>
+                                                        </a>
+                                                    </div>
+                                                </ng-container>
+
                                             </div>
                                         </td>
                                     </tr>

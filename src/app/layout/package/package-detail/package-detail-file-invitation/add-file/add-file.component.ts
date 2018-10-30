@@ -18,6 +18,8 @@ import { UserItemModel } from '../../../../../shared/models/user/user-item.model
 import { PackageService } from '../../../../../shared/services/package.service';
 import { PackageInfoModel } from '../../../../../shared/models/package/package-info.model';
 import { forEach } from '../../../../../../../node_modules/@angular/router/src/utils/collection';
+import { PermissionModel } from '../../../../../shared/models/permission/Permission.model';
+import { PermissionService } from '../../../../../shared/services/permission.service';
 @Component({
     selector: 'app-add-file',
     templateUrl: './add-file.component.html',
@@ -53,6 +55,12 @@ export class AddFileComponent implements OnInit {
     currentMajorTypeText = '';
     sum = 0;
     showTable = false;
+    listPermission: Array<PermissionModel>;
+    listPermissionScreen = [];
+    XacNhanDaDuHSMT = false;
+    XoaFile = false;
+    DownloadFile = false;
+    UploadHSMT = false;
     get titleStr() {
         if (this.majorTypeListItem && this.majorTypeListItem.length > 0) {
             return this.majorTypeListItem.find(i => i.id === this.currentMajorTypeId).text;
@@ -67,11 +75,34 @@ export class AddFileComponent implements OnInit {
         private userService: UserService,
         private opportunityHsmtService: OpportunityHsmtService,
         private packageService: PackageService,
-        private dataService: DataService
+        private dataService: DataService,
+        private permissionService: PermissionService
     ) {
     }
     ngOnInit() {
         this.packageId = +PackageDetailComponent.packageId;
+        this.permissionService.get().subscribe(data => {
+            this.listPermission = data;
+            const hsdt = this.listPermission.length &&
+                this.listPermission.filter(x => x.bidOpportunityStage === 'HSMT')[0];
+            if (!hsdt) {
+                this.listPermissionScreen = [];
+            }
+            if (hsdt) {
+                const screen = hsdt.userPermissionDetails.length
+                    && hsdt.userPermissionDetails.filter(y => y.permissionGroup.value === 'HSMT')[0];
+                if (!screen) {
+                    this.listPermissionScreen = [];
+                }
+                if (screen) {
+                    this.listPermissionScreen = screen.permissions.map(z => z.value);
+                }
+            }
+            this.XacNhanDaDuHSMT = this.listPermissionScreen.includes('XacNhanDaDuHSMT');
+            this.XoaFile = this.listPermissionScreen.includes('XoaFile');
+            this.DownloadFile = this.listPermissionScreen.includes('DownloadFile');
+            this.UploadHSMT = this.listPermissionScreen.includes('UploadHSMT');
+        });
         this.packageService.getInforPackageID(this.packageId).subscribe(result => {
             this.packageData = result;
             switch (this.packageData.hsmtStatus.id) {
