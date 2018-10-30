@@ -24,6 +24,8 @@ import { StakeHolder } from '../models/ho-so-du-thau/stack-holder.model';
 
 @Injectable()
 export class PackageService {
+    private statusPackage = new Subject<boolean>();
+    public statusPackage$ = this.statusPackage.asObservable();
     private isSummaryConditionForm = new Subject<boolean>();
     public isSummaryConditionForm$ = this.isSummaryConditionForm.asObservable();
     private userIdSub = new Subject<any>();
@@ -220,6 +222,10 @@ export class PackageService {
     }
     setActiveKickoff(data: boolean) {
         this.kickOff.next(data);
+    }
+
+    setStatusPackage() {
+        this.statusPackage.next();
     }
 
     setSummaryConditionForm(data: boolean) {

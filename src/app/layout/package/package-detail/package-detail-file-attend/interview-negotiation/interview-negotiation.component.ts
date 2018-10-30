@@ -243,6 +243,7 @@ export class InterviewNegotiationComponent implements OnInit, OnDestroy {
 
   closeInterview() {
     this.interviewInvitationService.closeInterview(this.packageId).subscribe(response => {
+      this.packageService.setStatusPackage();
       this.alertService.success('Đóng phỏng vấn thành công!');
       this.router.navigate([`/package/detail/${this.packageId}/result/wait-result`]);
     },

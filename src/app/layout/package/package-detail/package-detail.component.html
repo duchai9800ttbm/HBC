@@ -36,15 +36,15 @@
       <div class="action set-width" [routerLinkActive]="['router-link-active']" [routerLink]="['/package/detail', packageId ,'attend']">
         DỰ THẦU
       </div>
-      <ng-container *ngIf="(statusPackage.id > checkStatusPackage.ChoKetQuaDuThau.id)">
-        <div class="set-width" [routerLinkActive]="['router-link-active']" [class.action]="statusPackage.id > checkStatusPackage.ChoKetQuaDuThau.id"
-          [class.no-action]="!(statusPackage.id > checkStatusPackage.ChoKetQuaDuThau.id)" [routerLink]="['/package/detail', packageId ,'result']">
+      <ng-container *ngIf="(statusPackage.id >= checkStatusPackage.ChoKetQuaDuThau.id)">
+        <div class="set-width" [routerLinkActive]="['router-link-active']" [class.action]="statusPackage.id >= checkStatusPackage.ChoKetQuaDuThau.id"
+          [class.no-action]="!(statusPackage.id >= checkStatusPackage.ChoKetQuaDuThau.id)" [routerLink]="['/package/detail', packageId ,'result']">
           KẾT QUẢ DỰ THẦU
         </div>
       </ng-container>
-      <ng-container *ngIf="!(statusPackage.id > checkStatusPackage.ChoKetQuaDuThau.id)">
-        <div class="set-width" [routerLinkActive]="['router-link-active']" [class.action]="statusPackage.id > checkStatusPackage.ChoKetQuaDuThau.id"
-          [class.no-action]="!(statusPackage.id > checkStatusPackage.ChoKetQuaDuThau.id)">
+      <ng-container *ngIf="!(statusPackage.id >= checkStatusPackage.ChoKetQuaDuThau.id)">
+        <div class="set-width" [routerLinkActive]="['router-link-active']" [class.action]="statusPackage.id >= checkStatusPackage.ChoKetQuaDuThau.id"
+          [class.no-action]="!(statusPackage.id >= checkStatusPackage.ChoKetQuaDuThau.id)">
           KẾT QUẢ DỰ THẦU
         </div>
       </ng-container>

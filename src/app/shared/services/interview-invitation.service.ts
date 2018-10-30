@@ -241,7 +241,6 @@ export class InterviewInvitationService {
     page: number | string,
     pageSize: number | string
   ): Observable<PagedResult<InterviewInvitationList>> {
-    console.log('searchTerm-searchTerm', searchTerm);
     const filterUrl = `bidopportunity/${bidOpportunityId}/bidinterviewinvitations/filter/${page}/${pageSize}`;
     const urlParams = InterviewInvitationService.createFilterParams(filter);
     urlParams.append('searchTerm', searchTerm);
@@ -462,7 +461,6 @@ export class InterviewInvitationService {
     pageSize: number | string
   ): Observable<PagedResult<InterviewInvitationReportList>> {
     const searchUrl = `bidopportunity/${bidOpportunityId}/bidinterviewreportdocs/filter/${page}/${pageSize}?searchTerm=`;
-    console.log('searchUrl', searchUrl);
     return this.instantSearchService
       .searchWithFilter(
         searchUrl,
@@ -487,7 +485,6 @@ export class InterviewInvitationService {
     page: number | string,
     pageSize: number | string
   ): Observable<PagedResult<InterviewInvitationList>> {
-    console.log('searchTerm-searchTerm', searchTerm, filter);
     const filterUrl = `bidopportunity/${bidOpportunityId}/bidinterviewreportdocs/filter/${page}/${pageSize}`;
     const urlParams = InterviewInvitationService.createFilterParamsReport(filter);
     urlParams.append('searchTerm', searchTerm);

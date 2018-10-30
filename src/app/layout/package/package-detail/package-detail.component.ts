@@ -32,7 +32,7 @@ export class PackageDetailComponent implements OnInit {
     private packageService: PackageService,
     private spinner: NgxSpinnerService,
     private sessionService: SessionService,
-    private layoutService: LayoutService
+    private layoutService: LayoutService,
   ) { }
   public packageId: number;
   packageData = new PackageInfoModel();
@@ -58,23 +58,28 @@ export class PackageDetailComponent implements OnInit {
         }
       }
     }, 300);
-
     this.activetedRoute.params.subscribe(result => {
       this.packageId = +result.id;
       PackageDetailComponent.packageId = this.packageId;
     });
-    this.packageService.getInforPackageID(this.packageId).subscribe(result => {
-      this.packageData = result;
-      this.statusPackage = this.checkStatusPackage[this.packageData.stageStatus.id];
-    }, err => {
-    });
-
+    this.getInforPackage();
     this.layoutService.watchLayoutSubject().subscribe(data => {
       if (data) {
         this.isToggle = true;
       } else {
         this.isToggle = false;
       }
+    });
+    this.packageService.statusPackage$.subscribe( value => {
+      this.getInforPackage();
+    });
+  }
+
+  getInforPackage() {
+    this.packageService.getInforPackageID(this.packageId).subscribe(result => {
+      this.packageData = result;
+      this.statusPackage = this.checkStatusPackage[this.packageData.stageStatus.id];
+    }, err => {
     });
   }
 
