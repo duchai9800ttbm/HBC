@@ -134,7 +134,7 @@ export class FullFileComponent implements OnInit {
                 this.bidDocumentGroupListItem = response;
                 this.bidDocumentGroupListItemSearchResult = response;
                 this.showTable = this.bidDocumentGroupListItemSearchResult.length > 0;
-                this.dtTrigger.next();
+                // this.dtTrigger.next();
                 this.loading = false;
             }, err => this.loading = false);
         });
@@ -161,7 +161,7 @@ export class FullFileComponent implements OnInit {
             .filter(this.searchTerm, this.filterModel, this.bidDocumentGroupListItem);
         this.showTable = this.bidDocumentGroupListItemSearchResult.length > 0;
 
-        this.dtTrigger.next();
+        // this.dtTrigger.next();
     }
 
     filter() {
@@ -169,7 +169,7 @@ export class FullFileComponent implements OnInit {
             .filter(this.searchTerm, this.filterModel, this.bidDocumentGroupListItem);
         this.showTable = this.bidDocumentGroupListItemSearchResult.length > 0;
 
-        this.dtTrigger.next();
+        // this.dtTrigger.next();
     }
 
     clearFilter() {
@@ -180,7 +180,7 @@ export class FullFileComponent implements OnInit {
             .filter(this.searchTerm, this.filterModel, this.bidDocumentGroupListItem);
         this.showTable = this.bidDocumentGroupListItemSearchResult.length > 0;
 
-        this.dtTrigger.next();
+        // this.dtTrigger.next();
     }
 
     viewDetail(item) {
@@ -263,7 +263,7 @@ export class FullFileComponent implements OnInit {
             this.bidDocumentGroupListItemSearchResult = response;
             this.showTable = this.bidDocumentGroupListItemSearchResult.length > 0;
             this.checkHightLight();
-            this.dtTrigger.next();
+            // this.dtTrigger.next();
             this.loading = false;
         }, err => this.loading = false);
     }
@@ -278,7 +278,7 @@ export class FullFileComponent implements OnInit {
             this.bidDocumentGroupListItemSearchResult = response;
             this.showTable = this.bidDocumentGroupListItemSearchResult.length > 0;
             this.checkHightLight();
-            this.dtTrigger.next();
+            // this.dtTrigger.next();
             this.loading = false;
             this.alertService.success('Dữ liệu đã được cập nhật mới nhất!');
         });
@@ -346,7 +346,7 @@ export class FullFileComponent implements OnInit {
                     this.bidDocumentGroupListItemSearchResult = response;
                     this.showTable = this.bidDocumentGroupListItemSearchResult.length > 0;
                     this.checkHightLight();
-                    this.dtTrigger.next();
+                    // this.dtTrigger.next();
                     this.loading = false;
                     this.alertService.success('Dữ liệu đã được cập nhật mới nhất!');
                 });
@@ -360,7 +360,7 @@ export class FullFileComponent implements OnInit {
                     this.bidDocumentGroupListItemSearchResult = response;
                     this.showTable = this.bidDocumentGroupListItemSearchResult.length > 0;
                     this.checkHightLight();
-                    this.dtTrigger.next();
+                    // this.dtTrigger.next();
                     this.loading = false;
                     this.alertService.success('Dữ liệu đã được cập nhật mới nhất!');
                 });
@@ -431,7 +431,7 @@ export class FullFileComponent implements OnInit {
             this.bidDocumentGroupListItemSearchResult = response;
             this.showTable = this.bidDocumentGroupListItemSearchResult.length > 0;
 
-            this.dtTrigger.next();
+            // this.dtTrigger.next();
             if (document.getElementsByClassName('dataTables_empty')[0]) {
                 document.getElementsByClassName('dataTables_empty')[0].remove();
             }

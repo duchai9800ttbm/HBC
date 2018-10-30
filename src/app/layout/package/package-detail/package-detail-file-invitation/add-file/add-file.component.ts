@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { routerTransition } from '../../../../../router.animations';
 import { DictionaryItem, PagedResult, DictionaryItemHightLight } from '../../../../../shared/models';
 import { DATATABLE_CONFIG, DATATABLE_CONFIG2 } from '../../../../../shared/configs';
@@ -20,13 +20,14 @@ import { PackageInfoModel } from '../../../../../shared/models/package/package-i
 import { forEach } from '../../../../../../../node_modules/@angular/router/src/utils/collection';
 import { PermissionModel } from '../../../../../shared/models/permission/Permission.model';
 import { PermissionService } from '../../../../../shared/services/permission.service';
+import { Subscription } from '../../../../../../../node_modules/rxjs';
 @Component({
     selector: 'app-add-file',
     templateUrl: './add-file.component.html',
     styleUrls: ['./add-file.component.scss'],
     // animations: [routerTransition()]
 })
-export class AddFileComponent implements OnInit {
+export class AddFileComponent implements OnInit, OnDestroy {
     isShowMenu = false;
     loading = false;
     checkboxSeclectAll: boolean;
@@ -61,6 +62,7 @@ export class AddFileComponent implements OnInit {
     XoaFile = false;
     DownloadFile = false;
     UploadHSMT = false;
+    subscription: Subscription;
     get titleStr() {
         if (this.majorTypeListItem && this.majorTypeListItem.length > 0) {
             return this.majorTypeListItem.find(i => i.id === this.currentMajorTypeId).text;
@@ -81,7 +83,7 @@ export class AddFileComponent implements OnInit {
     }
     ngOnInit() {
         this.packageId = +PackageDetailComponent.packageId;
-        this.permissionService.get().subscribe(data => {
+        this.subscription = this.permissionService.get().subscribe(data => {
             this.listPermission = data;
             const hsdt = this.listPermission.length &&
                 this.listPermission.filter(x => x.bidOpportunityStage === 'HSMT')[0];
@@ -129,14 +131,15 @@ export class AddFileComponent implements OnInit {
                 this.bidDocumentGroupListItem = response;
                 this.bidDocumentGroupListItemSearchResult = response;
                 this.showTable = this.bidDocumentGroupListItemSearchResult.length > 0;
-                this.dtTrigger.next();
+                // this.dtTrigger.next();
                 this.loading = false;
             }, err => this.loading = false);
         });
-
-
     }
 
+    ngOnDestroy() {
+        this.subscription.unsubscribe();
+    }
 
     checkHightLight() {
         this.documentService.bidDocumentMajortypes(this.packageId).subscribe(data => {
@@ -158,14 +161,14 @@ export class AddFileComponent implements OnInit {
         this.bidDocumentGroupListItemSearchResult = this.documentService
             .filter(this.searchTerm, this.filterModel, this.bidDocumentGroupListItem);
         this.showTable = this.bidDocumentGroupListItemSearchResult.length > 0;
-        this.dtTrigger.next();
+        // this.dtTrigger.next();
     }
 
     filter() {
         this.bidDocumentGroupListItemSearchResult = this.documentService
             .filter(this.searchTerm, this.filterModel, this.bidDocumentGroupListItem);
         this.showTable = this.bidDocumentGroupListItemSearchResult.length > 0;
-        this.dtTrigger.next();
+        // this.dtTrigger.next();
     }
 
     clearFilter() {
@@ -176,7 +179,7 @@ export class AddFileComponent implements OnInit {
             .filter(this.searchTerm, this.filterModel, this.bidDocumentGroupListItem);
         this.showTable = this.bidDocumentGroupListItemSearchResult.length > 0;
 
-        this.dtTrigger.next();
+        // this.dtTrigger.next();
     }
     viewDetail(item) {
         this.currentItem = item;
@@ -259,7 +262,7 @@ export class AddFileComponent implements OnInit {
             this.showTable = this.bidDocumentGroupListItemSearchResult.length > 0;
             this.checkHightLight();
 
-            this.dtTrigger.next();
+            // this.dtTrigger.next();
             this.loading = false;
         });
     }
@@ -274,7 +277,7 @@ export class AddFileComponent implements OnInit {
             this.bidDocumentGroupListItemSearchResult = response;
             this.showTable = this.bidDocumentGroupListItemSearchResult.length > 0;
             this.checkHightLight();
-            this.dtTrigger.next();
+            // this.dtTrigger.next();
             this.loading = false;
             this.alertService.success('Dữ liệu đã được cập nhật mới nhất!');
         });
@@ -347,7 +350,7 @@ export class AddFileComponent implements OnInit {
                     this.bidDocumentGroupListItemSearchResult = response;
                     this.showTable = this.bidDocumentGroupListItemSearchResult.length > 0;
                     this.checkHightLight();
-                    this.dtTrigger.next();
+                    // this.dtTrigger.next();
                     this.loading = false;
                     this.alertService.success('Dữ liệu đã được cập nhật mới nhất!');
                 });
@@ -361,7 +364,7 @@ export class AddFileComponent implements OnInit {
                     this.bidDocumentGroupListItemSearchResult = response;
                     this.showTable = this.bidDocumentGroupListItemSearchResult.length > 0;
 
-                    this.dtTrigger.next();
+                    // this.dtTrigger.next();
                     this.loading = false;
                     this.alertService.success('Dữ liệu đã được cập nhật mới nhất!');
                 });
@@ -438,7 +441,7 @@ export class AddFileComponent implements OnInit {
             this.bidDocumentGroupListItem = response;
             this.bidDocumentGroupListItemSearchResult = response;
             this.showTable = this.bidDocumentGroupListItemSearchResult.length > 0;
-            this.dtTrigger.next();
+            // this.dtTrigger.next();
             this.loading = false;
         }, err => this.loading = false);
     }
