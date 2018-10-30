@@ -58,10 +58,11 @@ export class NeedCreateTenderFormDecisionBoardComponent implements OnInit {
                 .decisionOfBoardOfGeneralDirector;
         const directorData =
             NeedCreateTenderFormComponent.formModel.tenderDirectorProposal;
-        this.expectedTimeStr =
-            directorData && directorData.expectedDate
-                ? moment(directorData.expectedDate * 1000).format('DD/MM/YYYY')
-                : '';
+        // this.expectedTimeStr =
+        //     directorData && directorData.expectedDate
+        //         ? moment(directorData.expectedDate * 1000).format('DD/MM/YYYY')
+        //         : '';
+        this.expectedTimeStr = (directorData && directorData.expectedDate) ? directorData.expectedDate : null;
         this.decisionBoardForm = this.fb.group({
             isAgreed: formData ? formData.isAgreed : true,
             reason: formData ? formData.reason : '',
