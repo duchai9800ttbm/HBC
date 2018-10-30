@@ -14,21 +14,43 @@
             <div>
                 <div class="btn-toolbar mt-2 mb-2">
                     <div class="d-flex">
-                        <button class="btn btn-primary" (click)="taiTemplateHSDT()">
-                            Tải Template
-                        </button>
-                        <button class="btn btn-primary ml-1">
-                            Tải xuống tài liệu
-                        </button>
-                        <button *ngIf="!package?.isClosedHSDT" class="btn btn-primary ml-1" (click)="chotHSDT($event)">
-                            Chốt HSDT
-                        </button>
-                        <button *ngIf="package?.isClosedHSDT" class="btn btn-secondary ml-1 cursor-notallowed" disabled>
-                            Đã chốt HSDT
-                        </button>
-                        <button (click)="refresh()" class="btn btn-primary ml-1">
-                            <i class="fa fa-refresh" aria-hidden="true"></i>
-                        </button>
+                        <div class="btn-group ml-1" ngbDropdown>
+                            <button type="button" class="btn btn-primary" ngbDropdownToggle data-toggle="dropdown">
+                                Tải template
+                            </button>
+
+                            <div class="" ngbDropdownMenu>
+                                <ng-container *ngFor="let item of listTemplateHSDT; let k = index;">
+                                    <div class="dropdown-divider" *ngIf="k !== 0"></div>
+                                    <div class="fileUpload dropdown-item" (click)="downloadTemplate(item.key)">
+                                        <a>{{item.value}}</a>
+                                    </div>
+                                </ng-container>
+                            </div>
+                        </div>
+                        <div class="ml-1">
+                            <button class="btn btn-primary">
+                                Tải xuống tài liệu
+                            </button>
+                        </div>
+                        <div class="ml-1" *ngIf="!package?.isClosedHSDT">
+                            <button class="btn btn-primary" (click)="chotHSDT($event)">
+                                Chốt HSDT
+                            </button>
+                        </div>
+
+                        <div class="ml-1" *ngIf="package?.isClosedHSDT">
+                            <button class="btn btn-secondary cursor-notallowed" disabled>
+                                Đã chốt HSDT
+                            </button>
+                        </div>
+
+                        <div class="ml-1">
+                            <button (click)="refresh()" class="btn btn-primary">
+                                <i class="fa fa-refresh" aria-hidden="true"></i>
+                            </button>
+                        </div>
+
                     </div>
                 </div>
             </div>

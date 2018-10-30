@@ -44,6 +44,33 @@ export class HsdtBuildComponent implements OnInit, AfterViewChecked {
     package = new PackageInfoModel();
     bidStatus = BidStatus;
 
+    listTemplateHSDT = [
+        {
+            key: 'HuongDanLapHSDT',
+            value: 'Hướng dẫn lập hồ sơ dự thầu'
+        },
+        {
+            key: 'BangTomTatDKDT',
+            value: 'Bảng tóm tắt điều kiện dự thầu'
+        },
+        {
+            key: 'BangDanhSachCungUngThauPhu',
+            value: 'Bảng danh sách nhà cung ứng và thầu phụ mời chào giá cho gói thầu'
+        },
+        {
+            key: 'BaoCaoThamQuanCongTrinh',
+            value: 'Báo cáo tham quan công trình'
+        },
+        {
+            key: 'BangTinhChiPhuChungVaCongTac',
+            value: 'Bảng tính chi phí chung và công tác tạm phụ vụ thi công'
+        },
+        {
+            key: 'BangLamRoHSMT',
+            value: 'Bảng làm rõ hồ sơ mời thầu'
+        },
+    ];
+
     constructor(
         private hoSoDuThauService: HoSoDuThauService,
         private alertService: AlertService,
@@ -70,6 +97,36 @@ export class HsdtBuildComponent implements OnInit, AfterViewChecked {
                 this.isShowMenu = data;
             });
         });
+    }
+
+    downloadTemplate(typeTemplate) {
+        switch (typeTemplate) {
+            case 'HuongDanLapHSDT': {
+
+                break;
+            }
+            case 'BangTomTatDKDT': {
+
+                break;
+            }
+            case 'BangDanhSachCungUngThauPhu': {
+
+                break;
+            }
+            case 'BaoCaoThamQuanCongTrinh': {
+
+                break;
+            }
+            case 'BangTinhChiPhuChungVaCongTac': {
+
+                break;
+            }
+            case 'BangLamRoHSMT': {
+                
+                break;
+            }
+            default: break;
+        }
     }
 
     getDanhSachLoaiHoSo(spinner: boolean) {
