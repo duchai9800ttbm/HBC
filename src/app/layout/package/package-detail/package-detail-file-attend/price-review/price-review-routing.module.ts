@@ -7,7 +7,7 @@ import { PriceReviewDetailComponent } from './price-review-detail/price-review-d
 
 const routes: Routes = [
   { path: '', redirectTo: 'summary' },
-  { path: 'summary', pathMatch: 'full', component: PriceReviewSummaryComponent },
+  { path: 'summary', component: PriceReviewSummaryComponent },
   { path: 'create', component: PriceReviewCreateComponent },
   { path: 'edit', component: PriceReviewEditComponent },
   { path: 'detail', component: PriceReviewDetailComponent },

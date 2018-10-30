@@ -906,15 +906,16 @@ export class DataService {
         return this.apiService.get(url).map(response => response.result);
     }
     // Danh sách loại tài liệu hồ sơ dự thầu
+    
     getListTenderDocumentType(): Observable<DictionaryItem[]> {
-        const url = `tenderdocumenttype/getall`;
+        const url = `tenderdocumentfiletypes`;
         return this.apiService.get(url)
             .map( response => {
                 const result = response.result;
                 return result.map( item => {
                     return {
-                        id: item.key,
-                        text: item.value
+                        id: item.id,
+                        text: item.name
                     };
                 });
             });

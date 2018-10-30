@@ -15,6 +15,8 @@ import { PagedResult } from '../../../../../../shared/models';
 import { GroupDescriptor, DataResult, process, groupBy } from '@progress/kendo-data-query';
 import { DialogService } from '../../../../../../../../node_modules/@progress/kendo-angular-dialog';
 import { FormInComponent } from '../../../../../../shared/components/form-in/form-in.component';
+import { PermissionService } from '../../../../../../shared/services/permission.service';
+import { PermissionModel } from '../../../../../../shared/models/permission/Permission.model';
 
 @Component({
   selector: 'app-summary-condition',
@@ -32,6 +34,8 @@ export class SummaryConditionComponent implements OnInit {
   dialog;
   indexItemHistoryChange: number;
   pagedResultChangeHistoryList: PagedResult<HistoryLiveForm> = new PagedResult<HistoryLiveForm>();
+  listPermission: Array<PermissionModel>;
+  listPermissionScreen = [];
 
   constructor(
     private hoSoDuThauService: HoSoDuThauService,
@@ -39,11 +43,27 @@ export class SummaryConditionComponent implements OnInit {
     private spinner: NgxSpinnerService,
     private alertService: AlertService,
     private confirmService: ConfirmationService,
-    private dialogService: DialogService
+    private dialogService: DialogService,
+    private permissionService: PermissionService
   ) { }
 
   ngOnInit() {
     this.packageId = PackageDetailComponent.packageId;
+
+    this.permissionService.get().subscribe(data => {
+      this.listPermission = data;
+      const hsdt = this.listPermission.length &&
+        this.listPermission.filter(x => x.bidOpportunityStage === 'HSDT')[0];
+      if (hsdt) {
+        const screen = hsdt.userPermissionDetails.length
+          && hsdt.userPermissionDetails.filter(y => y.permissionGroup.value === 'TrinhDuyetGia')[0];
+        if (screen) {
+          this.listPermissionScreen = screen.permissions.filter(z => z.value);
+        }
+      }
+    });
+
+
     this.hoSoDuThauService.getInfoTenderConditionalSummary(this.packageId)
       .subscribe(data => {
         this.summaryCondition = data;

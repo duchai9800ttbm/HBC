@@ -23,6 +23,9 @@ import { BidStatus } from '../../../../../../shared/constants/bid-status';
 import { BehaviorSubject } from '../../../../../../../../node_modules/rxjs/BehaviorSubject';
 import { Router } from '../../../../../../../../node_modules/@angular/router';
 import { slideToLeft } from '../../../../../../router.animations';
+import { PermissionService } from '../../../../../../shared/services/permission.service';
+import { PermissionModel } from '../../../../../../shared/models/permission/Permission.model';
+import { takeUntil } from '../../../../../../../../node_modules/rxjs/operator/takeUntil';
 
 @Component({
   selector: 'app-price-review-summary',
@@ -40,6 +43,8 @@ export class PriceReviewSummaryComponent implements OnInit {
   dtTrigger: Subject<any> = new Subject();
   dtTrigger2: Subject<any> = new Subject();
   historyList;
+  listPermission: Array<PermissionModel>;
+  listPermissionScreen = [];
   dialog;
   bidStatus = BidStatus;
   pagedResultChangeHistoryList: PagedResult<HistoryLiveForm> = new PagedResult<HistoryLiveForm>();
@@ -55,13 +60,28 @@ export class PriceReviewSummaryComponent implements OnInit {
     private statusObservableHsdtService: StatusObservableHsdtService,
     private spinner: NgxSpinnerService,
     private dialogService: DialogService,
-    private router: Router
+    private router: Router,
+    private permissionService: PermissionService
   ) { }
 
 
 
   ngOnInit() {
     this.packageId = PackageDetailComponent.packageId;
+
+    this.permissionService.get().subscribe(data => {
+      this.listPermission = data;
+      const hsdt = this.listPermission.length &&
+        this.listPermission.filter(x => x.bidOpportunityStage === 'HSDT')[0];
+      if (hsdt) {
+        const screen = hsdt.userPermissionDetails.length
+          && hsdt.userPermissionDetails.filter(y => y.permissionGroup.value === 'TrinhDuyetGia')[0];
+        if (screen) {
+          this.listPermissionScreen = screen.permissions.filter(z => z.value);
+        }
+      }
+    });
+
     this.packageService.getInforPackageID(this.packageId).subscribe(result => {
       this.package = result;
     }, err => {
@@ -224,9 +244,9 @@ export class PriceReviewSummaryComponent implements OnInit {
     this.priceReviewService.viewShort(this.packageId).subscribe(data => {
       this.priceReview = data;
       if (isAlert) {
-             this.alertService.success('Dữ liệu đã được cập nhật mới nhất!');
-           }
-      });
+        this.alertService.success('Dữ liệu đã được cập nhật mới nhất!');
+      }
+    });
     this.priceReviewService.getDanhSachHSDTChinhThucInstantSearch(this.packageId, this.searchTerm$).subscribe(data => {
       this.listItemHSDTChinhThuc = data;
     });

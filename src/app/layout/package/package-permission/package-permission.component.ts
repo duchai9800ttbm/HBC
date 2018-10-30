@@ -6,7 +6,7 @@ import { ActivatedRoute } from '@angular/router';
   selector: 'app-package-permission',
   templateUrl: './package-permission.component.html',
   styleUrls: ['./package-permission.component.scss'],
-  // animations: [routerTransition()]
+  animations: [routerTransition()]
 })
 export class PackagePermissionComponent implements OnInit {
 
