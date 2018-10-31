@@ -24,8 +24,8 @@ import { BehaviorSubject } from '../../../../../../../../node_modules/rxjs/Behav
 import { Router } from '../../../../../../../../node_modules/@angular/router';
 import { slideToLeft } from '../../../../../../router.animations';
 import { PermissionService } from '../../../../../../shared/services/permission.service';
-import { PermissionModel } from '../../../../../../shared/models/permission/Permission.model';
 import { takeUntil } from '../../../../../../../../node_modules/rxjs/operator/takeUntil';
+import { PermissionModel } from '../../../../../../shared/models/permission/permission.model';
 
 @Component({
   selector: 'app-price-review-summary',

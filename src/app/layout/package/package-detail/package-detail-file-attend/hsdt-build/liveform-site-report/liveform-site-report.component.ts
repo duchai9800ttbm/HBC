@@ -179,7 +179,6 @@ export class LiveformSiteReportComponent implements OnInit {
             groupBy(itemByChangedTimes.liveFormChangeds, [{ field: 'liveFormStep' }]);
         });
       });
-      console.log(this.updateInfoList);
       setTimeout(() => {
         this.dtTrigger2.next();
       });

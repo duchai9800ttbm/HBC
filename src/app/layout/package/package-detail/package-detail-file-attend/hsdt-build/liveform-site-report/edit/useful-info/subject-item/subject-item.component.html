@@ -1,14 +1,20 @@
 <div class="list-detail">
     <div class="img-demo-des">
         <label class="label-hide"></label>
-        <span class="custom-dropdown w-30">
-            <select class="form-control" [ngClass]="{'view-mode-control': isViewMode}" [(ngModel)]="usefulInfo.title"
-                (change)="selectedChange()">
+
+        <!-- --- -->
+        <h6 *ngIf="isViewMode" class="mb-1 mt-2 font-weight-bold w-30 d-inline-block">
+            {{ usefulInfo.title }}
+        </h6>
+        <!-- --- -->
+        <span [ngClass]="{'d-none': isViewMode}" class="custom-dropdown w-30">
+            <select class="form-control" [(ngModel)]="usefulInfo.title" (change)="selectedChange()">
                 <option value="">---Chọn---</option>
                 <option [value]="subject" *ngFor="let subject of subjectList">{{ subject }}</option>
             </select>
         </span>
-        <i (click)="deleteSubject()" [ngClass]="{'d-none': isViewMode}" class="fa fa-times-circle icon-delete" aria-hidden="true"></i>
+        <i (click)="deleteSubject()" [ngClass]="{'d-none': isViewMode}" class="fa fa-times-circle icon-delete"
+            aria-hidden="true"></i>
     </div>
     <div class="topic7" *ngFor="let content of usefulInfo.content; let i = index">
         <ng-container>

@@ -127,14 +127,15 @@ export class SiteSurveyReportService {
   }
 
   // Tạo mới - cập nhật báo cáo công trình
-  createOrUpdateSiteSurveyingReport(obj: SiteSurveyReport): Observable<any> {
+  createOrUpdateSiteSurveyingReport(obj: SiteSurveyReport) {
     const url = `bidopportunity/tendersitesurveyingreport/createorupdate`;
     const infoReport = {
       bidOpportunityId: obj.bidOpportunityId,
       createdEmployeeId: (obj.nguoiTao) ? obj.nguoiTao.id : this.employeeId,
       updatedEmployeeId: this.employeeId,
       isDraftVersion: obj.isDraft,
-      departmentId: (obj.phongBan) ? obj.phongBan.id : 0,
+      departmentId: (obj.phongBan) ? +obj.phongBan.id : 0,
+      departmentNo: (obj.phongBan) ? obj.phongBan.key : '',
       surveyEmployeeId: (obj.nguoiKhaoSat) ? obj.nguoiKhaoSat.id : 0,
       documentName: (obj.scaleOverall) ? obj.scaleOverall.tenTaiLieu : '',
       projectStatistic: obj.scaleOverall && {
@@ -346,7 +347,7 @@ export class SiteSurveyReportService {
       dataFormated.isDraft = model.isDraftVersion;
       dataFormated.phongBan = model.department && {
         id: model.department.id,
-        key: model.department, // TODO: Fix
+        key: model.department.departmentNo,
         text: model.department.departmentName
       };
       dataFormated.ngayTao = model.createTime;

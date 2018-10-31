@@ -3,12 +3,13 @@
         <div id="info-docs">
             <div class="label-info label-info-name">
                 <label for="">Tên tài liệu</label>
-                <input type="text" placeholder="Nhập text" formControlName="tenTaiLieu" autofocus tabindex="1"  [ngClass]="{'view-mode-control': isViewMode}">
+                <input type="text" placeholder="Nhập text" formControlName="tenTaiLieu" autofocus tabindex="1"
+                    [ngClass]="{'view-mode-control': isViewMode}">
             </div>
             <div class="label-info">
                 <label for="">Lần phỏng vấn</label>
-                <input type="number" appInputNumberInteger placeholder="Nhập số lần phỏng vấn" formControlName="lanPhongVan" [ngClass]="{'view-mode-control': isViewMode}"
-                    tabindex="2">
+                <input type="number" appInputNumberInteger placeholder="Nhập số lần phỏng vấn" formControlName="lanPhongVan"
+                    [ngClass]="{'view-mode-control': isViewMode}" tabindex="2">
             </div>
         </div>
         <h6 class="big-title font-weight-bold">1.&nbsp;quy mô tổng quan công trình (project statistic/scale)</h6>
@@ -19,13 +20,14 @@
                     <!-- -- -->
                     <form [formGroup]="loaiCongTrinhForm">
                         <div class="single-row">
-                            <div class="child childcheck" [ngClass]="{'view-mode-control': isViewMode}" formArrayName="loaiCongTrinhList"
-                                *ngFor="let item of loaiCongTrinhForm?.controls.loaiCongTrinhList?.controls; let i = index">
+                            <div class="child childcheck pr-3" [ngClass]="{'view-mode-control': isViewMode}"
+                                formArrayName="loaiCongTrinhList" *ngFor="let item of loaiCongTrinhForm?.controls.loaiCongTrinhList?.controls; let i = index">
                                 <label>
                                     <input [formControlName]="i" type="checkbox" [checked]="loaiCongTrinhList[i].checked"
                                         (change)="loaiCongTrinhList[i].checked = !loaiCongTrinhList[i].checked; loaiCongTrinhChange($event)"
                                         name="construcType">
-                                    {{ loaiCongTrinhList[i].text }} {{ (loaiCongTrinhList[i].value) ? ('('+ loaiCongTrinhList[i].value +')') : '' }}
+                                    {{ loaiCongTrinhList[i].text }} {{ (loaiCongTrinhList[i].value) ? ('('+
+                                    loaiCongTrinhList[i].value +')') : '' }}
                                     <span class="checkmark" tabindex="3"></span>
                                 </label>
                             </div>
@@ -36,7 +38,7 @@
                     <!-- -- -->
                     <form [formGroup]="trangThaiCongTrinhForm">
                         <div class="single-row reponsive-checkbox">
-                            <div class="child childcheck reponsive-checkbox-child" formArrayName="trangthaiCongTrinhList"
+                            <div class="child childcheck reponsive-checkbox-child pr-3" formArrayName="trangthaiCongTrinhList"
                                 [ngClass]="{'view-mode-control': isViewMode}" *ngFor="let item of trangThaiCongTrinhForm?.controls.trangthaiCongTrinhList?.controls; let i = index">
                                 <label>
                                     <input [formControlName]="i" type="checkbox" [checked]="trangthaiCongTrinhList[i].checked"
@@ -58,34 +60,44 @@
             <div class="detail-each-title">
                 <h6 class="small-title font-weight-bold">1.2 Quy mô hạng mục dự án (Project scale)</h6>
                 <div class="main-detail">
-                    <div>
-                        <div class="label-project-scale">
-                            <label for="">Diện tích công trường/ Site area (m2)</label>
-                            <input class="no-boder cus-input text-right align-placeholder" type="text" appInputArea [ngClass]="{'view-mode-control': isViewMode}"
-                                formControlName="dienTichCongTruong" tabindex="6">
-
+                    <!-- --- -->
+                    <div class="d-flex flex-column">
+                        <div class="label-project-scale row">
+                            <label for="" class="col-lg-5">Diện tích công trường/ Site area (m2)</label>
+                            <div class="col-lg-7">
+                                <input type="text" class="no-boder cus-input text-right align-placeholder" appInputArea [ngClass]="{'view-mode-control': isViewMode}"
+                                    formControlName="dienTichCongTruong" tabindex="6">
+                            </div>
                         </div>
-                        <div class="label-project-scale">
-                            <label for="">Tổng diện tích xây dựng/ Gross floor area (m2)</label>
-                            <input class="no-boder cus-input text-right align-placeholder" type="text" appInputArea [ngClass]="{'view-mode-control': isViewMode}"
-                                formControlName="tongDienTichXayDung" tabindex="7">
-
+                        <div class="label-project-scale row">
+                            <label for="" class="col-lg-5">Tổng diện tích xây dựng/ Gross floor area (m2)</label>
+                            <div class="col-lg-7">
+                                <input type="text" class="no-boder cus-input text-right align-placeholder" appInputArea [ngClass]="{'view-mode-control': isViewMode}"
+                                    formControlName="tongDienTichXayDung" tabindex="7">
+                            </div>
                         </div>
-                        <div class="label-project-scale">
-                            <label for="">Số tầng/ Total number of floor</label>
-                            <input class="no-boder cus-input text-right align-placeholder" type="text" placeholder="Nhập text" [ngClass]="{'view-mode-control': isViewMode}"
-                                formControlName="soTang" tabindex="8">
+                        <div class="label-project-scale row">
+                            <label for="" class="col-lg-5">Số tầng/ Total number of floor</label>
+                            <div class="col-lg-7">
+                                <input type="text" class="no-boder cus-input text-right align-placeholder" placeholder="Nhập text" [ngClass]="{'view-mode-control': isViewMode}"
+                                    formControlName="soTang" tabindex="8">
+                            </div>
                         </div>
-                        <div class="label-project-scale">
-                            <label for="">Tiến độ dự kiến/ Construction period (ngày)</label>
-                            <input class="no-boder cus-input text-right align-placeholder" type="number" placeholder="Nhập số ngày" [ngClass]="{'view-mode-control': isViewMode}"
-                            appInputNumberInteger formControlName="tienDo" tabindex="9">
+                        <div class="label-project-scale row">
+                            <label for="" class="col-lg-5">Tiến độ dự kiến/ Construction period (ngày)</label>
+                            <div class="col-lg-7">
+                                <input type="number" class="no-boder cus-input text-right align-placeholder"
+                                    placeholder="Nhập số ngày" [ngClass]="{'view-mode-control': isViewMode}"
+                                    appInputNumberInteger formControlName="tienDo" tabindex="9">
+                            </div>
                         </div>
                     </div>
+                    <!-- --- -->
                     <div>
                         <p><u>Hình ảnh phối cảnh dự án/ Perspective image of project</u></p>
                         <div class="text-des-input">
-                            <input class="w-50" type="text" placeholder="Nhập text" formControlName="hinhAnhPhoiCanhDesc" tabindex="10" [ngClass]="{'view-mode-control': isViewMode}">
+                            <input class="w-50" type="text" placeholder="Nhập text" formControlName="hinhAnhPhoiCanhDesc"
+                                tabindex="10" [ngClass]="{'view-mode-control': isViewMode}">
                         </div>
                         <div class="image-demo-img">
                             <input type="file" accept="image/*" multiple #uploadPerspective (change)="uploadPerspectiveImage($event)">
@@ -112,7 +124,8 @@
                     package structure)</h6>
                 <div class="main-detail">
                     <div class="text-des-input">
-                        <input class="w-50" type="text" placeholder="Nhập text" formControlName="thongTinVeKetCauDesc" tabindex="12" [ngClass]="{'view-mode-control': isViewMode}">
+                        <input class="w-50" type="text" placeholder="Nhập text" formControlName="thongTinVeKetCauDesc"
+                            tabindex="12" [ngClass]="{'view-mode-control': isViewMode}">
                     </div>
                     <div>
                         <div class="image-demo-img">
@@ -138,7 +151,8 @@
                 <h6 class="small-title font-weight-bold">1.4 Những yêu cầu đặc biệt (Special Requirements)</h6>
                 <div class="main-detail">
                     <div class="text-des-input">
-                        <input class="w-50" type="text" placeholder="Nhập text" formControlName="nhungYeuCauDacBietDesc" tabindex="14" [ngClass]="{'view-mode-control': isViewMode}">
+                        <input class="w-50" type="text" placeholder="Nhập text" formControlName="nhungYeuCauDacBietDesc"
+                            tabindex="14" [ngClass]="{'view-mode-control': isViewMode}">
                     </div>
                     <div class="image-demo-img">
                         <input type="file" accept="image/*" multiple #uploadRequirements (change)="uploadRequirementsImage($event)">

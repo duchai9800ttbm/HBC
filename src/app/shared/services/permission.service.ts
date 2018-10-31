@@ -2,7 +2,9 @@ import { Injectable } from '@angular/core';
 import { ApiService } from './api.service';
 import { SessionService } from '.';
 import { BehaviorSubject, Subject } from '../../../../node_modules/rxjs';
-import { PermissionModel } from '../models/permission/Permission.model';
+import { PermissionModel } from '../models/permission/permission.model';
+
+
 
 @Injectable()
 export class PermissionService {

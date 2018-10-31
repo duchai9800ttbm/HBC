@@ -40,7 +40,7 @@ export class EditComponent implements OnInit, OnDestroy {
   packageData = new PackageInfoModel();
   customerId;
   customerName;
-  listDepartments: Observable<DepartmentsFormBranches[]>;
+  listDepartments = new Array<DepartmentsFormBranches>();
   departmentId;
   departmentNo;
   departmentName;
@@ -67,7 +67,9 @@ export class EditComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.currentBidOpportunityId = +PackageDetailComponent.packageId;
-    this.listDepartments = this.dataService.getListDepartmentsFromBranches();
+    this.siteSurveyReportService.getListDepartmentsFromBranches().subscribe(res => {
+      this.listDepartments = [...res];
+    });
     this.getInfoTenderPreparationPlanning();
     this.getAllUser();
     this.isCreate = LiveformSiteReportComponent.formModel.isCreate;
@@ -90,8 +92,7 @@ export class EditComponent implements OnInit, OnDestroy {
   }
   loadData() {
     const phongBan = LiveformSiteReportComponent.formModel.phongBan;
-    this.departmentId = (phongBan) ? phongBan.id : 49;
-    // this.departmentNo = (phongBan) ? phongBan.id : 'PDUTHAU';  // Default PDT
+    this.departmentNo = (phongBan) ? phongBan.key : 'PDUTHAU';  // Default PDT
     this.departmentName = (phongBan) ? phongBan.text : '';
     const nguoiKhaoSat = LiveformSiteReportComponent.formModel.nguoiKhaoSat;
     this.customerId = (nguoiKhaoSat) ? nguoiKhaoSat.id : '';
@@ -115,6 +116,7 @@ export class EditComponent implements OnInit, OnDestroy {
   submitLiveForm(event) {
     LiveformSiteReportComponent.actionMode = 'viewMode';
     this.isViewMode = true;
+    this.departmentId = this.listDepartments.find(item => item.departmentNo === this.departmentNo).id;
     LiveformSiteReportComponent.formModel.phongBan = {
       id: this.departmentId,
       key: this.departmentNo,
