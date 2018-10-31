@@ -27,6 +27,7 @@ import { PDFExportModule } from '@progress/kendo-angular-pdf-export';
 import { ImageCarouselComponent } from './image-carousel/image-carousel.component';
 import { MissActionComponent } from './miss-action/miss-action.component';
 import { FormInComponent } from './form-in/form-in.component';
+import { InfiniteScroll } from './infinite-scroll/infinite-scroll';
 @NgModule({
     imports: [
         PDFExportModule,
@@ -60,6 +61,7 @@ import { FormInComponent } from './form-in/form-in.component';
         ImageCarouselComponent,
         MissActionComponent,
         FormInComponent,
+        InfiniteScroll,
     ],
     exports: [
         // AlertComponent,
@@ -78,6 +80,7 @@ import { FormInComponent } from './form-in/form-in.component';
         ImageCarouselComponent,
         MissActionComponent,
         FormInComponent,
+        InfiniteScroll,
     ],
     entryComponents: [
         ConfirmationPopupComponent,

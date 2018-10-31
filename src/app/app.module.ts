@@ -43,6 +43,7 @@ import { NotificationService } from './shared/services/notification.service';
 import { InterviewInvitationService } from './shared/services/interview-invitation.service';
 import { PrintingDocumentService } from './shared/services/printing-document.service';
 import { PermissionService } from './shared/services/permission.service';
+import { ScrollService } from './shared/services/scroll.service';
 
 // AoT requires an exported function for factories
 export function createTranslateLoader(http: HttpClient) {
@@ -103,6 +104,7 @@ registerLocaleData(localeFrCa, localeFrCaExtra);
         PrintingDocumentService,
         InterviewInvitationService,
         PermissionService,
+        ScrollService,
         { provide: LocationStrategy, useClass: HashLocationStrategy },
         {
             // Set default locale to bg-BG
