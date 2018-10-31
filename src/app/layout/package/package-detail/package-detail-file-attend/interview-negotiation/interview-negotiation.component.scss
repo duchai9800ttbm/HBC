@@ -93,3 +93,9 @@ input.icon {
 .title-status--size{
     font-size: 150%;
 }
+.but-close--not-allow{
+    cursor: not-allowed;
+    background-color: #cccccc;
+    border-color: #cccccc;
+    opacity: 0.65;
+}

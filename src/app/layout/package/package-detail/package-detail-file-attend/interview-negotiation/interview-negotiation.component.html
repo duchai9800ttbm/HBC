@@ -97,7 +97,7 @@
             <button class="btn btn-primary ml-1" (click)="downloadTemplateEnd()">
                 Tải template
             </button>
-            <button class="btn btn-primary ml-1" (click)="closeInterview()">
+            <button class="btn btn-primary ml-1" (click)="closeInterview()" [disabled]="statusPackage.id > checkStatusPackage.DaPhongVan.id" [class.but-close--not-allow]="statusPackage.id > checkStatusPackage.DaPhongVan.id">
                 Đóng phỏng vấn
             </button>
             <button class="btn btn-primary ml-1" (click)="refreshEndInterview()">
