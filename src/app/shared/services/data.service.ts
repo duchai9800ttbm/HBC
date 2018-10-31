@@ -883,7 +883,7 @@ export class DataService {
                         departmentName: item.departmentName
                     };
                 });
-            });
+            }).share();
     }
     // Danh sách chức vụ
     getListLevels(): Observable<Levels[]> {

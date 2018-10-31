@@ -68,33 +68,26 @@
 
     <div id="info-document">
         <div class="headerInfo">
-            <div class="d-flex responsive-container">
-                <div class="col-lg-6 d-flex responsive-item">
+            <!-- --- -->
+            <div class="d-flex flex-column pl-4 pr-4">
+                <div class="row mb-2">
                     <div class="col-lg-4"><strong>Công trình (Project):</strong></div>
                     <div class="col-lg-8">{{ packageData.projectName }}</div>
                 </div>
-                <div class="col-lg-6 d-flex responsive-item">
+                <div class="row mb-2">
                     <div class="col-lg-4"><strong>Gói thầu (Package):</strong></div>
                     <div class="col-lg-8">{{ packageData.opportunityName }}</div>
                 </div>
-            </div>
-            <div class="d-flex mt-2 responsive-container">
-                <div class="col-lg-6 d-flex responsive-item responsive-item--nomargin">
+                <div class="row mb-2">
                     <div class="col-lg-4"><strong>Địa điểm (Location):</strong></div>
                     <div class="col-lg-8">{{ packageData.place }}</div>
                 </div>
-                <div class="col-lg-6 d-flex responsive-item responsive-item--nomargin">
-                    <div class="col-lg-4"></div>
-                    <div class="col-lg-8"></div>
-                </div>
-            </div>
-            <div class="d-flex mt-2 responsive-container">
-                <div class="col-lg-6 d-flex responsive-item responsive-item--nomargin">
+                <div class="row mb-2">
                     <div class="col-lg-4"><strong>Ban CHCT/Phòng ban:</strong></div>
                     <div class="col-lg-8">
                         <ng-container *ngIf="!isViewMode">
-                            <select class="custom-select-option" [(ngModel)]="departmentId">
-                                <option *ngFor="let item of listDepartments | async" [value]="item.id">
+                            <select class="custom-select-option" [(ngModel)]="departmentNo">
+                                <option *ngFor="let item of listDepartments" [value]="item.departmentNo">
                                     {{ item.departmentName }}
                                 </option>
                             </select>
@@ -102,13 +95,7 @@
                         <ng-container *ngIf="isViewMode">{{ departmentName }}</ng-container>
                     </div>
                 </div>
-                <div class="col-lg-6 d-flex responsive-item">
-                    <div class="col-lg-4"><strong>Ngày khảo sát (Date):</strong></div>
-                    <div class="col-lg-8">{{ (ngayKhaoSat != 0) ? ((ngayKhaoSat)*1000 | date:'dd/MM/yyyy') : '' }}</div>
-                </div>
-            </div>
-            <div class="d-flex mt-2 responsive-container">
-                <div class="col-lg-6 d-flex responsive-item responsive-item--nomargin">
+                <div class="row mb-2">
                     <div class="col-lg-4"><strong>Người khảo sát/liên hệ:</strong></div>
                     <div class="col-lg-8">
                         <ng-container *ngIf="!isViewMode">
@@ -122,11 +109,12 @@
                         <ng-container *ngIf="isViewMode">{{ customerName }}</ng-container>
                     </div>
                 </div>
-                <div class="col-lg-6 d-flex responsive-item responsive-item--nomargin">
-                    <div class="col-lg-4"></div>
-                    <div class="col-lg-8"></div>
+                <div class="row">
+                    <div class="col-lg-4"><strong>Ngày khảo sát (Date):</strong></div>
+                    <div class="col-lg-8">{{ (ngayKhaoSat != 0) ? ((ngayKhaoSat)*1000 | date:'dd/MM/yyyy') : '' }}</div>
                 </div>
             </div>
+            <!-- --- -->
         </div>
         <router-outlet (activate)="disableSideMenu($event)"></router-outlet>
     </div>
@@ -142,4 +130,4 @@
     </button>
 </div>
 <app-update-confirm-popup *ngIf="showPopupConfirm" (closed)="submitLiveForm($event)"></app-update-confirm-popup>
-<ngx-spinner bdColor="rgba(51, 51, 51, 0.7)" size = "default" color="#fff" type="ball-scale"></ngx-spinner>
+<ngx-spinner bdColor="rgba(51, 51, 51, 0.7)" size="default" color="#fff" type="ball-scale"></ngx-spinner>

@@ -30,7 +30,6 @@ export class SubjectItemComponent implements OnInit {
   constructor(private router: Router) { }
 
   ngOnInit() {
-    this.usefulInfo.title = '';
     this.currentBidOpportunityId = +PackageDetailComponent.packageId;
     this.checkFlag();
   }
