@@ -1,4 +1,4 @@
-import { Component, OnInit, TemplateRef } from '@angular/core';
+import { Component, OnInit, TemplateRef, Input } from '@angular/core';
 import { BsModalService } from 'ngx-bootstrap/modal';
 import { BsModalRef } from 'ngx-bootstrap/modal/bs-modal-ref.service';
 import { DATETIME_PICKER_CONFIG } from '../../../../../../../../shared/configs/datepicker.config';
@@ -22,6 +22,8 @@ import { DocumentService } from '../../../../../../../../shared/services/documen
 import { HoSoDuThauService } from '../../../../../../../../shared/services/ho-so-du-thau.service';
 import { HadTransferList } from '../../../../../../../../shared/models/result-attend/had-transfer-list.model';
 import { ManageNeedTranferList } from '../../../../../../../../shared/models/result-attend/manage-need-transfer-list.model';
+import { PackageService } from '../../../../../../../../shared/services/package.service';
+import { CheckStatusPackage } from '../../../../../../../../shared/constants/check-status-package';
 
 @Component({
   selector: 'app-package-document-sender',
@@ -30,6 +32,7 @@ import { ManageNeedTranferList } from '../../../../../../../../shared/models/res
   providers: [HoSoDuThauService]
 })
 export class PackageDocumentSenderComponent implements OnInit {
+  @Input() statusPackage;
   datePickerConfig = DATETIME_PICKER_CONFIG;
   dtTrigger: Subject<any> = new Subject();
   dtOptions: any = DATATABLE_CONFIG;
@@ -81,6 +84,7 @@ export class PackageDocumentSenderComponent implements OnInit {
   get tranferDocHSDTormControls() {
     return this.formHSMTTranferDoc.get('docs') as FormArray;
   }
+  checkStatusPackage = CheckStatusPackage;
   constructor(
     private packageSuccessService: PackageSuccessService,
     private modalService: BsModalService,
@@ -94,12 +98,18 @@ export class PackageDocumentSenderComponent implements OnInit {
     private fb: FormBuilder,
     private emailService: EmailService,
     private documentService: DocumentService,
-    private hoSoDuThauService: HoSoDuThauService
+    private hoSoDuThauService: HoSoDuThauService,
+    private packageService: PackageService
   ) { }
 
   ngOnInit() {
     this.currentPackageId = +PackageDetailComponent.packageId;
     this.userInfo = this.sessionService.userInfo;
+    console.log('status-package-sender', this.statusPackage);
+    // this.packageService.statusPackageValue$.subscribe(status => {
+    //   this.statusPackage = status;
+    //   console.log('status-package-sender', status);
+    // });
     this.isDataHsmt = true;
     this.isDataHsdt = true;
     this.isManageTransfer = false;
@@ -243,6 +253,9 @@ export class PackageDocumentSenderComponent implements OnInit {
       dateUse: '',
       interviewTimes: ChildChild.documents[0].interviewTime,
     });
+  }
+  defaultHSMTDocument() {
+    console.log('this.defaulttransferNameHSMT', this.defaulttransferNameHSMT);
   }
   // Form HSDT
   createFormHSDTTranferDoc() {

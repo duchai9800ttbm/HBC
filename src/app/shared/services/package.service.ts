@@ -29,12 +29,18 @@ export class PackageService {
     public statusPackage$ = this.statusPackage.asObservable();
     private statusPackageValue = new Subject<any>();
     public statusPackageValue$ = this.statusPackageValue.asObservable();
+    statusPackageValue2 = {
+        text: 'TrungThau',
+        stage: 'KQDT',
+        id: null,
+    };
     private isSummaryConditionForm = new Subject<boolean>();
     public isSummaryConditionForm$ = this.isSummaryConditionForm.asObservable();
     private userIdSub = new Subject<any>();
     public kickOff = new Subject<any>();
     public routerAction = '';
     private routerActionSub = new BehaviorSubject<string>('create');
+
     routerAction$ = this.routerActionSub.asObservable();
     userId$ = this.userIdSub.asObservable();
     kickOff$ = this.kickOff.asObservable();

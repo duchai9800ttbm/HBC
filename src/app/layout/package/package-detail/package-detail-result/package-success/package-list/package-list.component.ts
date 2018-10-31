@@ -67,9 +67,9 @@ export class PackageListComponent implements OnInit {
     { id: 3, username: 'Huy Nhat', email: 'huynhat@gmail.com' }
   ];
   statusPackage = {
-    text: 'TrungThau',
+    text: 'DaThongBaoCacBenLienQuan',
     stage: 'KQDT',
-    id: 24,
+    id: null,
   };
   checkStatusPackage = CheckStatusPackage;
   constructor(
@@ -86,6 +86,7 @@ export class PackageListComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+    this.statusPackage = this.packageService.statusPackageValue2;
     this.currentPackageId = +PackageDetailComponent.packageId;
     this.packageService.statusPackageValue$.subscribe(status => {
       this.statusPackage = status;

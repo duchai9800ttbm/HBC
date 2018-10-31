@@ -12,7 +12,7 @@ export class PackageDocumentComponent implements OnInit {
   statusPackage = {
     text: 'TrungThau',
     stage: 'KQDT',
-    id: 24,
+    id: null,
   };
   checkStatusPackage = CheckStatusPackage;
   constructor(
@@ -20,6 +20,7 @@ export class PackageDocumentComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+    this.statusPackage = this.packageService.statusPackageValue2;
     this.packageService.statusPackageValue$.subscribe(status => {
       this.statusPackage = status;
     });

@@ -18,23 +18,26 @@ export class PackageDetailResultComponent implements OnInit {
         private activatedRoute: ActivatedRoute,
         private packageService: PackageService,
         private router: Router,
+        private activeRouter: ActivatedRoute,
     ) { }
 
     ngOnInit() {
         this.packageId = +PackageDetailComponent.packageId;
         this.getInforPackageID(); // Điều hướng
         this.activatedRoute.params.subscribe(result => {
-            console.log('channge-params');
             // this.packageId = +result.id;
-            console.log('channge-params', this.packageId);
         });
         this.packageService.statusPackageValue$.subscribe(status => {
             console.log('this.s-tatusPackage', status);
+        });
+        this.activeRouter.firstChild.url.subscribe(url => {
+            console.log('activeRouter');
         });
     }
 
     getInforPackageID() {
         this.packageService.getInforPackageID(this.packageId).subscribe(result => {
+            this.packageService.statusPackageValue2 = this.checkStatusPackage[result.stageStatus.id];
             this.packageService.changeStatusPackageValue(result.stageStatus.id);
             switch (this.checkStatusPackage[result.stageStatus.id].id) {
                 case (this.checkStatusPackage.ChoKetQuaDuThau.id): {

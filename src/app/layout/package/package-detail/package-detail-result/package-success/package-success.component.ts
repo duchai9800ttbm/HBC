@@ -30,6 +30,7 @@ export class PackageSuccessComponent implements OnInit {
   ngOnInit() {
     this.packageService.statusPackageValue$.subscribe(status => {
       this.statusPackage = status;
+      console.log('package-success');
     });
     this.packageId = +PackageDetailComponent.packageId;
     this.isActive = false;
