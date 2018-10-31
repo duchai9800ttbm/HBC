@@ -651,24 +651,14 @@ export class GroupUserDetailComponent implements OnInit {
     this.modalRef = this.modalService.show(template);
   }
 
-  delete(ids: any | any[]) {
-    const that = this;
-    let deleteIds = {};
-    if (ids.length > 0) {
-      deleteIds = {
-        ids: ids.map(x => x.id),
-      };
-    } else {
-      deleteIds = {
-        ids: [ids],
-      };
-    }
-    this.groupSlected = this.listGroupUser.filter(elemnt => elemnt.id === ids)[0];
+  delete(id) {
+    const deleteId = [id];
+    this.groupSlected = this.listGroupUser.filter(elemnt => elemnt.id === id)[0];
     this.confirmationService.confirm(
       (this.groupSlected.isUsing === true) ? `Nhóm người dùng "${this.groupSlected.name}" đã được sử dụng, bạn có chắc chắn muốn xóa?`
         : 'Bạn có chắc chắn muốn xóa nhóm người dùng này?',
       () => {
-        this.groupUserService.deleteListGroupUser(deleteIds).subscribe(response => {
+        this.groupUserService.deleteListGroupUser(deleteId).subscribe(response => {
           // this.alertService.success('Xóa nhóm người dùng thành công!');
           // Danh sách quyền
           this.dataService.getListPrivileges().subscribe(j => {
@@ -700,7 +690,7 @@ export class GroupUserDetailComponent implements OnInit {
 
         },
           err => {
-            this.alertService.success('Đã xảy ra lỗi. Xóa nhóm người dùng không thành công!');
+            this.alertService.error('Đã xảy ra lỗi. Xóa nhóm người dùng không thành công!');
           });
         // this.modalRef.hide();
       }

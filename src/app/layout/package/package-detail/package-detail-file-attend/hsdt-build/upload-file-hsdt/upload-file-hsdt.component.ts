@@ -159,6 +159,7 @@ export class UploadFileHsdtComponent implements OnInit {
   }
 
   uploadFile(event) {
+    this.uploadForm.get('linkFile').disable();
     this.tempFile = event.target.files;
     this.displayName = this.tempFile[0].name;
     if (!this.uploadForm.get('editName').value) {
@@ -173,6 +174,7 @@ export class UploadFileHsdtComponent implements OnInit {
   }
 
   deleteFileUpload() {
+    this.uploadForm.get('linkFile').enable();
     this.uploadForm.get('file').patchValue(null);
     this.tempFile = null;
     if (this.uploadForm.get('editName').value === this.displayName) {

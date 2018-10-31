@@ -31,7 +31,7 @@
                 <tr>
 
                     <td [title]="documentData.tenTaiLieu">
-                        <a class="link-effect" [routerLink]="['./info']">{{ documentData.tenTaiLieu }}</a>
+                        <a class="link-effect" (click)="onActivate('viewMode')" [routerLink]="['./info']">{{ documentData.tenTaiLieu }}</a>
                     </td>
                     <td>{{ documentData.lanPhongVan }}</td>
                     <td [title]="(documentData.isDraft) ? 'Bản nháp' : 'Chính thức'">
