@@ -86,4 +86,5 @@ export class PackageInfoModel {
     interviewInvitation: {
         interviewTimes: string;
     };
+    isSignedContract: boolean;
 }

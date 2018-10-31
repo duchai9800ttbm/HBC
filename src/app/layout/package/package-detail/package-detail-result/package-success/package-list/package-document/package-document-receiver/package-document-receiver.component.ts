@@ -107,27 +107,17 @@ export class PackageDocumentReceiverComponent implements OnInit {
           }
         }
       });
+      // Hồ sơ mời thầu
       this.docHSMTListTranferred.forEach((itemPra, indexPra) => {
-        if (itemPra.childDocuments && itemPra.childDocuments.length !== 0) {
-          itemPra.childDocuments.forEach((item, index) =>
-            itemPra.childDocuments[index].documentType = JSON.stringify(item.documentType));
-          this.docHSMTListTranferred[indexPra].childDocuments = groupBy(itemPra.childDocuments,
-            [{ field: 'documentType' }]);
-          this.docHSMTListTranferred[indexPra].childDocuments.forEach((item, indexChirl) => {
-            this.docHSMTListTranferred[indexPra].childDocuments[indexChirl].value = JSON.parse(item.value);
-          });
-        }
+        itemPra['documentTypeStr'] =  JSON.stringify(itemPra.documentType);
       });
+      this.docHSMTListTranferred = groupBy(this.docHSMTListTranferred, [{ field: 'documentTypeStr' }]);
+
+      // Hồ sơ dự thầu
       this.docHSDTListTranferred.forEach((itemPra, indexPra) => {
-        if (itemPra.childDocuments && itemPra.childDocuments.length !== 0) {
-          itemPra.childDocuments.forEach((item, index) => itemPra.childDocuments[index].documentType = JSON.stringify(item.documentType));
-          this.docHSDTListTranferred[indexPra].childDocuments = groupBy(itemPra.childDocuments,
-            [{ field: 'documentType' }]);
-          this.docHSDTListTranferred[indexPra].childDocuments.forEach((item, indexChirl) => {
-            this.docHSDTListTranferred[indexPra].childDocuments[indexChirl].value = JSON.parse(item.value);
-          });
-        }
+        itemPra['documentTypeStr'] =  JSON.stringify(itemPra.documentType);
       });
+      this.docHSDTListTranferred = groupBy(this.docHSDTListTranferred, [{ field: 'documentTypeStr' }]);
       console.log('this.transferredDocList-3', this.docHSMTListTranferred, this.docHSDTListTranferred);
       if (alertShow) {
         this.alertService.success('Dữ liệu đã được cập nhật mới nhất!');

@@ -65,6 +65,7 @@ export class ContractSignedComponent implements OnInit, OnDestroy {
     id: null,
   };
   checkStatusPackage = CheckStatusPackage;
+  isSignedContractAPI = false;
   constructor(
     private modalService: BsModalService,
     private formBuilder: FormBuilder,
@@ -83,6 +84,9 @@ export class ContractSignedComponent implements OnInit, OnDestroy {
     this.statusPackage = this.packageService.statusPackageValue2;
     this.packageService.statusPackageValue$.subscribe(status => {
       this.statusPackage = status;
+    });
+    this.packageService.getInforPackageID(this.currentPackageId).subscribe( response => {
+      this.isSignedContractAPI = response.isSignedContract;
     });
     this.filterModel.uploadedDate = null;
     this.filterModel.uploadedByEmployeeId = null;
