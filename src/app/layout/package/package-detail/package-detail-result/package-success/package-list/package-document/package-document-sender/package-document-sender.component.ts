@@ -147,7 +147,17 @@ export class PackageDocumentSenderComponent implements OnInit {
           });
         }
       });
-      console.log('this.docHSMTList', this.docHSMTList);
+      this.docHSDTList.forEach((itemPra, indexPra) => {
+        if (itemPra.childDocuments && itemPra.childDocuments.length !== 0) {
+          itemPra.childDocuments.forEach((item, index) => itemPra.childDocuments[index].documentType = JSON.stringify(item.documentType));
+          this.docHSDTList[indexPra].childDocuments = groupBy(itemPra.childDocuments,
+            [{ field: 'documentType' }]);
+          this.docHSDTList[indexPra].childDocuments.forEach((item, indexChirl) => {
+            this.docHSDTList[indexPra].childDocuments[indexChirl].value = JSON.parse(item.value);
+          });
+        }
+      });
+      console.log('this.docHSMTList-this.docHSDTList', this.docHSMTList, this.docHSDTList);
     });
     this.detailResultPackageService.getHadTransferredList(this.currentPackageId).subscribe(response => {
       this.hadTransferList = response;
@@ -254,8 +264,41 @@ export class PackageDocumentSenderComponent implements OnInit {
       interviewTimes: ChildChild.documents[0].interviewTime,
     });
   }
-  defaultHSMTDocument() {
-    console.log('this.defaulttransferNameHSMT', this.defaulttransferNameHSMT);
+  defaulttransferNameHSMTFuc() {
+    if (this.docHSMTList && this.docHSMTList.length !== 0) {
+      this.docHSMTList.forEach(itemchildDocuments => {
+        if (itemchildDocuments.childDocuments && itemchildDocuments.childDocuments.length !== 0) {
+          itemchildDocuments.childDocuments.forEach(itemChild => {
+            itemChild.items.forEach(items => {
+              items.documents[0].transferName = this.defaulttransferNameHSMT;
+            });
+          });
+        }
+        if (!itemchildDocuments.childDocuments) {
+          itemchildDocuments.documents.forEach(documents => {
+            documents.transferName = this.defaulttransferNameHSMT;
+          });
+        }
+      });
+    }
+  }
+  defaultdateUseHSMTFuc() {
+    if (this.docHSMTList && this.docHSMTList.length !== 0) {
+      this.docHSMTList.forEach(itemchildDocuments => {
+        if (itemchildDocuments.childDocuments && itemchildDocuments.childDocuments.length !== 0) {
+          itemchildDocuments.childDocuments.forEach(itemChild => {
+            itemChild.items.forEach(items => {
+              items.documents[0].dateUse = this.defaultdateUseHSMT;
+            });
+          });
+        }
+        if (!itemchildDocuments.childDocuments) {
+          itemchildDocuments.documents.forEach(documents => {
+            documents.dateUse = this.defaultdateUseHSMT;
+          });
+        }
+      });
+    }
   }
   // Form HSDT
   createFormHSDTTranferDoc() {
@@ -282,15 +325,66 @@ export class PackageDocumentSenderComponent implements OnInit {
           });
         });
       } else {
-        itemHSMT.documents[0].checkboxSelected = value;
+        // itemHSMT.documents[0].checkboxSelected = value;
+        itemHSMT.documents.forEach(itemChild => {
+          itemChild.checkboxSelected = value;
+        });
       }
     });
     this.docHSDTList.forEach(itemHSDT => {
-      itemHSDT.documents.forEach(itemDocument => {
-        itemDocument.checkboxSelected = value;
-      });
+      // itemHSDT.documents.forEach(itemDocument => {
+      //   itemDocument.checkboxSelected = value;
+      // });
+      if (itemHSDT.childDocuments) {
+        itemHSDT.childDocuments.forEach(itemChild => {
+          itemChild.items.forEach(itemChildChild => {
+            itemChildChild.documents[0].checkboxSelected = value;
+          });
+        });
+      } else {
+        itemHSDT.documents.forEach(itemChild => {
+          itemChild.checkboxSelected = value;
+        });
+      }
     });
   }
+  defaulttransferNameHSDTFuc() {
+    if (this.docHSDTList && this.docHSDTList.length !== 0) {
+      this.docHSDTList.forEach(itemchildDocuments => {
+        if (itemchildDocuments.childDocuments && itemchildDocuments.childDocuments.length !== 0) {
+          itemchildDocuments.childDocuments.forEach(itemChild => {
+            itemChild.items.forEach(items => {
+              items.documents[0].transferName = this.defaulttransferNameHSDT;
+            });
+          });
+        }
+        if (!itemchildDocuments.childDocuments) {
+          itemchildDocuments.documents.forEach(documents => {
+            documents.transferName = this.defaulttransferNameHSDT;
+          });
+        }
+      });
+    }
+  }
+  defaultdateUseHSDTFuc() {
+    if (this.docHSDTList && this.docHSDTList.length !== 0) {
+      this.docHSDTList.forEach(itemchildDocuments => {
+        if (itemchildDocuments.childDocuments && itemchildDocuments.childDocuments.length !== 0) {
+          itemchildDocuments.childDocuments.forEach(itemChild => {
+            itemChild.items.forEach(items => {
+              items.documents[0].dateUse = this.defaultdateUseHSDT;
+            });
+          });
+        }
+        if (!itemchildDocuments.childDocuments) {
+          itemchildDocuments.documents.forEach(documents => {
+            documents.dateUse = this.defaultdateUseHSDT;
+          });
+        }
+      });
+    }
+  }
+
   showhsmt() {
     this.isDataHsmt = !this.isDataHsmt;
   }
@@ -318,7 +412,6 @@ export class PackageDocumentSenderComponent implements OnInit {
         }
       }
     });
-    console.log('this.docHSDTList', this.docHSMTList, this.docHSDTList);
     this.docHSDTList.forEach(itemHSDT => {
       if (itemHSDT.documents && itemHSDT.documents.length !== 0) {
         itemHSDT.documents.forEach(itemDocument => {
@@ -334,6 +427,7 @@ export class PackageDocumentSenderComponent implements OnInit {
         'Bạn có muốn chuyên giao tài liệu?',
         () => {
           this.detailResultPackageService.tranferDocs(this.currentPackageId, itemDocChooseTranfer).subscribe(response => {
+            this.packageService.changeStatusPackageValue(this.checkStatusPackage.DaChuyenGiaoTaiLieu.text);
             this.detailResultPackageService.getHadTransferredList(this.currentPackageId).subscribe(responseHadTransferList => {
               this.hadTransferList = responseHadTransferList;
             });
@@ -393,7 +487,7 @@ export class PackageDocumentSenderComponent implements OnInit {
         this.alertService.error('Tải template tài liệu cần chuyển giao không thành công!');
       });
   }
-  renderIndex(i, j, k) {
+  renderIndexHSMTTransfer(i, j, k) {
     let dem = 0;
     for (let indexPar = 0; indexPar < i + 1; indexPar++) {
       if (this.docHSMTList[indexPar].childDocuments) {
@@ -413,7 +507,40 @@ export class PackageDocumentSenderComponent implements OnInit {
           }
         }
       } else {
-        dem++;
+        if (indexPar < i) {
+          dem = dem + this.docHSMTList[indexPar].documents.length;
+        } else {
+          dem = dem + j + 1;
+        }
+      }
+    }
+    return dem;
+  }
+  renderIndexHSDTTransfer(i, j, k) {
+    let dem = 0;
+    for (let indexPar = 0; indexPar < i + 1; indexPar++) {
+      if (this.docHSDTList[indexPar].childDocuments) {
+        if (indexPar < i) {
+          for (let indexChild = 0; indexChild < this.docHSDTList[indexPar].childDocuments.length; indexChild++) {
+            dem = dem + this.docHSDTList[indexPar].childDocuments[indexChild].items.length;
+          }
+        } else {
+          for (let indexChild = 0; indexChild < j + 1; indexChild++) {
+            if (indexChild < j) {
+              dem = dem + this.docHSDTList[indexPar].childDocuments[indexChild].items.length;
+            } else {
+              for (let indexChildChild = 0; indexChildChild < k + 1; indexChildChild++) {
+                dem++;
+              }
+            }
+          }
+        }
+      } else {
+        if (indexPar < i) {
+          dem = dem + this.docHSDTList[indexPar].documents.length;
+        } else {
+          dem = dem + j + 1;
+        }
       }
     }
     return dem;
