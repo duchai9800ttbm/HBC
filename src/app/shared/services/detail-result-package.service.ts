@@ -526,6 +526,7 @@ export class DetailResultPackageService {
     urlParams.append('searchTerm', searchTerm);
     return this.apiService.get(filterUrl, urlParams).map(response => {
       const result = response.result;
+      console.log('filterTransferDocDetailsList', result);
       return (result || []).map(this.toTransferredDoc);
     });
   }

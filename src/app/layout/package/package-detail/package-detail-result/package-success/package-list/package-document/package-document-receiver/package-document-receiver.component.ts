@@ -1,4 +1,4 @@
-import { Component, OnInit, TemplateRef } from '@angular/core';
+import { Component, OnInit, TemplateRef, Input } from '@angular/core';
 import { BsModalService } from 'ngx-bootstrap/modal';
 import { BsModalRef } from 'ngx-bootstrap/modal/bs-modal-ref.service';
 import { DATETIME_PICKER_CONFIG } from '../../../../../../../../shared/configs/datepicker.config';
@@ -15,6 +15,7 @@ import { DepartmentsFormBranches } from '../../../../../../../../shared/models/u
 import { HadTransferList } from '../../../../../../../../shared/models/result-attend/had-transfer-list.model';
 import { FilterTransferredDoc } from '../../../../../../../../shared/models/result-attend/filter-transferred-doc.model';
 import { TransferredDoc } from '../../../../../../../../shared/models/result-attend/transferred-doc.model';
+import { groupBy } from '../../../../../../../../../../node_modules/@progress/kendo-data-query';
 
 @Component({
   selector: 'app-package-document-receiver',
@@ -48,6 +49,7 @@ export class PackageDocumentReceiverComponent implements OnInit {
   docHSMTListTranferred;
   docHSDTListTranferred;
   public data: DocumentItem[] = this.packageSuccessService.getdataGetDocument();
+  @Input() statusPackage;
   constructor(
     private packageSuccessService: PackageSuccessService,
     private modalService: BsModalService,
@@ -82,22 +84,6 @@ export class PackageDocumentReceiverComponent implements OnInit {
   }
   onSelectAll(value: boolean) {
     this.data.forEach(x => (x['checkboxSelected'] = value));
-    // this.docHSMTList.forEach(itemHSMT => {
-    //   if (itemHSMT.childDocuments) {
-    //     itemHSMT.childDocuments.forEach(itemChild => {
-    //       itemChild.items.forEach(itemChildChild => {
-    //         itemChildChild.documents[0].checkboxSelected = value;
-    //       });
-    //     });
-    //   } else {
-    //     itemHSMT.documents[0].checkboxSelected = value;
-    //   }
-    // });
-    // this.docHSDTList.forEach(itemHSDT => {
-    //   itemHSDT.documents.forEach(itemDocument => {
-    //     itemDocument.checkboxSelected = value;
-    //   });
-    // });
   }
   refesh() {
     this.filterFuc(true);
@@ -119,6 +105,27 @@ export class PackageDocumentReceiverComponent implements OnInit {
             this.docHSDTListTranferred = item.bidTransferDocDetails;
             break;
           }
+        }
+      });
+      this.docHSMTListTranferred.forEach((itemPra, indexPra) => {
+        if (itemPra.childDocuments && itemPra.childDocuments.length !== 0) {
+          itemPra.childDocuments.forEach((item, index) =>
+            itemPra.childDocuments[index].documentType = JSON.stringify(item.documentType));
+          this.docHSMTListTranferred[indexPra].childDocuments = groupBy(itemPra.childDocuments,
+            [{ field: 'documentType' }]);
+          this.docHSMTListTranferred[indexPra].childDocuments.forEach((item, indexChirl) => {
+            this.docHSMTListTranferred[indexPra].childDocuments[indexChirl].value = JSON.parse(item.value);
+          });
+        }
+      });
+      this.docHSDTListTranferred.forEach((itemPra, indexPra) => {
+        if (itemPra.childDocuments && itemPra.childDocuments.length !== 0) {
+          itemPra.childDocuments.forEach((item, index) => itemPra.childDocuments[index].documentType = JSON.stringify(item.documentType));
+          this.docHSDTListTranferred[indexPra].childDocuments = groupBy(itemPra.childDocuments,
+            [{ field: 'documentType' }]);
+          this.docHSDTListTranferred[indexPra].childDocuments.forEach((item, indexChirl) => {
+            this.docHSDTListTranferred[indexPra].childDocuments[indexChirl].value = JSON.parse(item.value);
+          });
         }
       });
       console.log('this.transferredDocList-3', this.docHSMTListTranferred, this.docHSDTListTranferred);

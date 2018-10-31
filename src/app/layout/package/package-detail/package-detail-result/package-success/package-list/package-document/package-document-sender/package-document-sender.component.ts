@@ -105,7 +105,6 @@ export class PackageDocumentSenderComponent implements OnInit {
   ngOnInit() {
     this.currentPackageId = +PackageDetailComponent.packageId;
     this.userInfo = this.sessionService.userInfo;
-    console.log('status-package-sender', this.statusPackage);
     // this.packageService.statusPackageValue$.subscribe(status => {
     //   this.statusPackage = status;
     //   console.log('status-package-sender', status);
@@ -157,7 +156,6 @@ export class PackageDocumentSenderComponent implements OnInit {
           });
         }
       });
-      console.log('this.docHSMTList-this.docHSDTList', this.docHSMTList, this.docHSDTList);
     });
     this.detailResultPackageService.getHadTransferredList(this.currentPackageId).subscribe(response => {
       this.hadTransferList = response;
@@ -181,6 +179,17 @@ export class PackageDocumentSenderComponent implements OnInit {
             [{ field: 'documentType' }]);
           this.docHSMTHadTransfer[indexPra].childDocuments.forEach((item, indexChirl) => {
             this.docHSMTHadTransfer[indexPra].childDocuments[indexChirl].value = JSON.parse(item.value);
+          });
+        }
+      });
+      this.docHSDTHadTransfer.forEach((itemPra, indexPra) => {
+        if (itemPra.childDocuments && itemPra.childDocuments.length !== 0) {
+          itemPra.childDocuments.forEach((item, index) =>
+            itemPra.childDocuments[index].documentType = JSON.stringify(item.documentType));
+          this.docHSDTHadTransfer[indexPra].childDocuments = groupBy(itemPra.childDocuments,
+            [{ field: 'documentType' }]);
+          this.docHSDTHadTransfer[indexPra].childDocuments.forEach((item, indexChirl) => {
+            this.docHSDTHadTransfer[indexPra].childDocuments[indexChirl].value = JSON.parse(item.value);
           });
         }
       });
@@ -447,10 +456,18 @@ export class PackageDocumentSenderComponent implements OnInit {
   manageTransferDocument(template: TemplateRef<any>) {
     this.detailResultPackageService.manageTransferDocs(this.currentPackageId).subscribe(response => {
       this.manageNeedTranferList = response;
-      this.manageNeedTranferList.forEach((itemEmployee, indexEmployee) => {
-        this.manageNeedTranferList[indexEmployee]['receivedEmployeeStr'] = JSON.stringify(itemEmployee.receivedEmployee);
+      this.manageNeedTranferList.forEach(item => {
+        item['documentTypeStr'] = JSON.stringify(item.document);
       });
-      this.manageNeedTranferList = groupBy(this.manageNeedTranferList, [{ field: 'receivedEmployeeStr' }]);
+      this.manageNeedTranferList = groupBy(this.manageNeedTranferList, [{ field: 'documentTypeStr' }]);
+      this.manageNeedTranferList.forEach(itemDocumentType => {
+        itemDocumentType.items.forEach(itemDepart => {
+          itemDepart['itemDepartStr'] = JSON.stringify(itemDepart.department);
+        });
+      });
+      this.manageNeedTranferList.forEach(itemDocumentType => {
+        itemDocumentType.items = groupBy(itemDocumentType.items, [{ field: 'itemDepartStr' }]);
+      });
       console.log('this.manageNeedTranferList', this.manageNeedTranferList);
     });
     this.modalRef = this.modalService.show(
@@ -475,7 +492,6 @@ export class PackageDocumentSenderComponent implements OnInit {
   // }
   render(needTransferDocsList: any) {
     this.needTransferDocsList = needTransferDocsList;
-    this.dtTrigger.next();
   }
   // refesh() {
   //   this.filter(true);
@@ -559,7 +575,7 @@ export class PackageDocumentSenderComponent implements OnInit {
         this.alertService.error('Tải tài liệu không thành công!');
       });
   }
-  renderIndexHadTransfer(i, j, k) {
+  renderIndexHSMTHadTransfer(i, j, k) {
     let dem = 0;
     for (let indexPar = 0; indexPar < i + 1; indexPar++) {
       if (this.docHSMTHadTransfer[indexPar].childDocuments) {
@@ -579,7 +595,40 @@ export class PackageDocumentSenderComponent implements OnInit {
           }
         }
       } else {
-        dem++;
+        if (indexPar < i) {
+          dem = dem + this.docHSMTHadTransfer[indexPar].documents.length;
+        } else {
+          dem = dem + j + 1;
+        }
+      }
+    }
+    return dem;
+  }
+  renderIndexHSDTHadTransfer(i, j, k) {
+    let dem = 0;
+    for (let indexPar = 0; indexPar < i + 1; indexPar++) {
+      if (this.docHSDTHadTransfer[indexPar].childDocuments) {
+        if (indexPar < i) {
+          for (let indexChild = 0; indexChild < this.docHSDTHadTransfer[indexPar].childDocuments.length; indexChild++) {
+            dem = dem + this.docHSDTHadTransfer[indexPar].childDocuments[indexChild].items.length;
+          }
+        } else {
+          for (let indexChild = 0; indexChild < j + 1; indexChild++) {
+            if (indexChild < j) {
+              dem = dem + this.docHSDTHadTransfer[indexPar].childDocuments[indexChild].items.length;
+            } else {
+              for (let indexChildChild = 0; indexChildChild < k + 1; indexChildChild++) {
+                dem++;
+              }
+            }
+          }
+        }
+      } else {
+        if (indexPar < i) {
+          dem = dem + this.docHSDTHadTransfer[indexPar].documents.length;
+        } else {
+          dem = dem + j + 1;
+        }
       }
     }
     return dem;
@@ -598,32 +647,47 @@ export class PackageDocumentSenderComponent implements OnInit {
       }
     });
     this.docHSDTHadTransfer.forEach(itemHSDT => {
-      itemHSDT.documents.forEach(itemDocument => {
-        itemDocument.checkboxSelected = value;
-      });
+      if (itemHSDT.childDocuments) {
+        itemHSDT.childDocuments.forEach(itemChild => {
+          itemChild.items.forEach(itemChildChild => {
+            itemChildChild.documents[0].checkboxSelected = value;
+          });
+        });
+      } else {
+        itemHSDT.documents.forEach(itemChild => {
+          itemChild.checkboxSelected = value;
+        });
+      }
     });
   }
   // Quản lý tài liệu
-  onSelectDocument(value: boolean) {
-    this.manageNeedTranferList.forEach(x => (x['selectedDocument'] = value));
-  }
-  renderIndexManage(i, k) {
-    let dem = 0;
-    let tam = -1;
-    if (+i === 0) {
-      this.sum = k + 1;
-      return k + 1;
-    } else {
-      this.manageNeedTranferList.forEach(ite => {
-        if (tam < +i - 1) {
-          ite.items.forEach(e => {
-            dem++;
-          });
-        }
-        tam++;
+  onSelectDocumentManage(value: boolean) {
+    this.manageNeedTranferList.forEach(tranferListByDocumentTypes => {
+      tranferListByDocumentTypes.items.forEach(itemsTranferListByDocumentType => {
+        itemsTranferListByDocumentType.items.forEach(itemsTranferListByDepart => {
+          itemsTranferListByDepart.selectedDocument = value;
+        });
       });
-      this.sum = dem + k + 1;
-      return dem + k + 1;
+    });
+  }
+  renderIndexManage(i, j, k) {
+    let dem = 0;
+    for (let indexPar = 0; indexPar < this.manageNeedTranferList.length; indexPar++) {
+      if (indexPar < i) {
+        for (let indexChild = 0; indexChild < this.manageNeedTranferList[indexPar].items.length; indexChild++) {
+          dem = dem + this.manageNeedTranferList[indexPar].items[indexChild].items.length;
+        }
+      }
+      if (indexPar === i) {
+        for (let indexChild = 0; indexChild < this.manageNeedTranferList[indexPar].items.length; indexChild++) {
+          if (indexChild < j) {
+            dem = dem + this.manageNeedTranferList[indexPar].items[indexChild].items.length;
+          }
+          if (indexChild === j) {
+            return dem = dem + k + 1;
+          }
+        }
+      }
     }
   }
   requestToreSubmitDoc(bidTransferDocDetailId: number) {
@@ -633,5 +697,22 @@ export class PackageDocumentSenderComponent implements OnInit {
       err => {
         this.alertService.error('Yêu cầu gửi lại tài liệu không thành công!');
       });
+  }
+  // Router live form
+  viewDetailLiveForm(typeLiveForm) {
+    switch (typeLiveForm) {
+      case 'TenderConditionalSummary': {
+        this.router.navigate([`/package/detail/${this.currentPackageId}/attend/build/summary`]);
+        break;
+      }
+      case 'SiteSurveyingReport': {
+        this.router.navigate([`/package/detail/${this.currentPackageId}/attend/build/liveformsite`]);
+        break;
+      }
+      case 'TenderPriceApproval': {
+        this.router.navigate([`/package/detail/${this.currentPackageId}/attend/price-review/detail`]);
+        break;
+      }
+    }
   }
 }

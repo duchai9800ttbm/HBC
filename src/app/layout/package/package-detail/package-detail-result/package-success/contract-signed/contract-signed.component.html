@@ -1,5 +1,4 @@
-<div class="outer" id="outer" *ngIf="fasle">
-    <!-- statusPackage === bidStatus.DaPhanHoiDenPHopDong -->
+<div class="outer" id="outer" *ngIf="statusPackage.id >= checkStatusPackage.DaPhanHoiDenPHopDong.id">
     <div id="outer-img">
         <img src="assets/images/kykethd.png" alt="">
         <h5>Bạn đã hoàn tất ký kết hợp đồng</h5>
@@ -8,35 +7,7 @@
         </div>
     </div>
 </div>
-<div class="outer" id="outer" *ngIf="true">
-    <!-- statusPackage === bidStatus.DaKyKetHopDong -->
-    <!-- <div class=" title-list-package d-flex flex-wrap align-items-center">
-        <div class="mr-auto d-flex align-items-end list-package mt-2 mb-2">
-            <div class="d-flex justify-content-start">
-                <div class="rule mr-2">
-                </div>
-                <div class="center-parent  mr-4">
-                    <div class="fs"> {{textContract}}</div>
-                </div>
-            </div>
-        </div>
-        <div>
-            <div class="btn-toolbar mt-2 mb-2">
-                <button class="btn btn-primary ml-2" (click)="openModalNotification(notificationrRlatedParties)">
-                    Thông báo cho các bên liên quan
-                </button>
-                <button class="btn btn-primary ml-2">
-                    Tải Template
-                </button>
-                <button class="btn btn-primary ml-2">
-                    Tải xuống tài liệu
-                </button>
-                <button class="btn btn-primary ml-2">
-                    <i class="fa fa-refresh" aria-hidden="true"></i>
-                </button>
-            </div>
-        </div>
-    </div> -->
+<div class="outer" id="outer" *ngIf="statusPackage.id >= checkStatusPackage.DaPhanHoiDenPHopDong.id">
     <div class=" title-list-package d-flex flex-wrap align-items-center">
         <div class="mr-auto d-flex align-items-end list-package mt-2 mb-2">
             <div class="d-flex justify-content-start">

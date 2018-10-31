@@ -20,6 +20,7 @@ import { FilterContractSigning } from '../../../../../../shared/models/result-at
 import { PagedResult } from '../../../../../../shared/models';
 import { ContractSigningList } from '../../../../../../shared/models/result-attend/contract-signing.list.model';
 import { groupBy } from '../../../../../../../../node_modules/@progress/kendo-data-query';
+import { CheckStatusPackage } from '../../../../../../shared/constants/check-status-package';
 
 @Component({
   selector: 'app-contract-signed',
@@ -48,7 +49,6 @@ export class ContractSignedComponent implements OnInit, OnDestroy {
   emailModel: SendEmailModel = new SendEmailModel();
   dialogUploadContractSigning;
   bidStatus = BidStatus;
-  statusPackage;
   public resultData: any[] = this.packageSuccessService.getDataResult();
   subscription: Subscription;
   searchTerm$ = new BehaviorSubject<string>('');
@@ -59,6 +59,12 @@ export class ContractSignedComponent implements OnInit, OnDestroy {
   interviewTimeList;
   currentFieldSort;
   statusSort;
+  statusPackage = {
+    text: 'TrungThau',
+    stage: 'KQDT',
+    id: null,
+  };
+  checkStatusPackage = CheckStatusPackage;
   constructor(
     private modalService: BsModalService,
     private formBuilder: FormBuilder,
@@ -74,6 +80,10 @@ export class ContractSignedComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.currentPackageId = +PackageDetailComponent.packageId;
+    this.statusPackage = this.packageService.statusPackageValue2;
+    this.packageService.statusPackageValue$.subscribe(status => {
+      this.statusPackage = status;
+    });
     this.filterModel.uploadedDate = null;
     this.filterModel.uploadedByEmployeeId = null;
     this.filterModel.contractDate = null;
@@ -96,12 +106,12 @@ export class ContractSignedComponent implements OnInit, OnDestroy {
       this.listEmailSearchCc = response;
       this.listEmailSearchBcc = response;
     });
-    this.packageService.getInforPackageID(this.currentPackageId).subscribe(result => {
-      this.statusPackage = result.stageStatus.id;
-    });
+    // this.packageService.getInforPackageID(this.currentPackageId).subscribe(result => {
+    //   this.statusPackage = result.stageStatus.id;
+    // });
     this.filter(false);
     this.subscription = this.detailResultPackageService.watchListContractSigning().subscribe(value => {
-      this.statusPackage = this.bidStatus.DaKyKetHopDong;
+      // this.statusPackage = this.bidStatus.DaKyKetHopDong;
       this.filter(false);
     });
     this.searchTerm$.debounceTime(600)
