@@ -4,8 +4,6 @@ import { SessionService } from '.';
 import { BehaviorSubject, Subject } from '../../../../node_modules/rxjs';
 import { PermissionModel } from '../models/permission/permission.model';
 
-
-
 @Injectable()
 export class PermissionService {
 

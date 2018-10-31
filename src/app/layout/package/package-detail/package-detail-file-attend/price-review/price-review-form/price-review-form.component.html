@@ -33,35 +33,35 @@
                 <div class="overview-package">
 
                     <div class="row no-gutters row-item">
-                        <div class="col-md-6">
-                            Công trình (Project):&nbsp;&nbsp;&nbsp;&nbsp; {{package?.projectName}}
+                        <div class="col-md-8">
+                            <strong>Công trình (Project):</strong>&nbsp;&nbsp;&nbsp;&nbsp; {{package?.projectName}}
                         </div>
-                        <div class="col-md-6">
-                            Prepare by:&nbsp;&nbsp;&nbsp;&nbsp;{{model?.createdEmployee?.employeeName}}
+                        <div class="col-md-4">
+                            <strong>Prepared by:</strong>&nbsp;&nbsp;&nbsp;&nbsp; {{model?.createdEmployee?.employeeName}}
                         </div>
                     </div>
 
                     <div class="row no-gutters row-item">
-                        <div class="col-md-6">
-                            Địa điểm (Location):&nbsp;&nbsp;&nbsp;&nbsp; {{package?.place}}
+                        <div class="col-md-8">
+                            <strong>Địa điểm (Location):</strong>&nbsp;&nbsp;&nbsp;&nbsp; {{package?.place}}
                         </div>
-                        <div class="col-md-6">
-                            Date:&nbsp;&nbsp;&nbsp;
+                        <div class="col-md-4">
+                            <strong>Date:</strong>&nbsp;&nbsp;&nbsp;
                             {{ (priceReviewForm.get('createdDate').value == 0) ? '' :
                             (priceReviewForm.get('createdDate').value)*1000 | date:'dd/MM/yyyy HH:mm': '+0000' }}
                         </div>
                     </div>
 
                     <div class="row no-gutters row-item">
-                        <div class="col-md-6">
-                            Gói thầu (Package):&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; {{package?.opportunityName}}
+                        <div class="col-md-8">
+                            <strong>Gói thầu (Package):</strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; {{package?.opportunityName}}
                         </div>
-                        <div class="col-md-6">
+                        <div class="col-md-4">
                         </div>
                     </div>
                     <div class="row no-gutters row-item">
                         <div class="col-md-12">
-                            Thông tin về công ty khác tham gia thầu:&nbsp;&nbsp;&nbsp;&nbsp;
+                            <strong>Thông tin về công ty khác tham gia thầu:</strong>&nbsp;&nbsp;&nbsp;&nbsp;
 
                             <select class="custom-select-option option-set-width" formControlName="otherCompanyCustomerId">
                                 <option value="">---Chọn---</option>

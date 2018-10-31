@@ -16,7 +16,8 @@ export class VnCurrencyPipe implements PipeTransform {
     this.CURRENCY_UNIT = ' đ';
   }
 
-  transform(value: number | string, fractionSize: number = 0): string {
+  transform(value: number | string, fractionSize: number = 0, placeholder?: boolean): string {
+    if (!value && !placeholder) { return ''; }
     if (!value) { return '0' + this.CURRENCY_UNIT; }
     if (isNaN(+value)) { return value.toString(); }
 

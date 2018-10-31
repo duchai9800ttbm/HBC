@@ -787,6 +787,9 @@ export class PriceReviewFormComponent implements OnInit, AfterViewInit {
   }
 
   refresh() {
+    if (this.isModeView) {
+      return this.alertService.success('Dữ liệu đã được cập nhật mới nhất');
+    }
     this.createForm();
   }
 

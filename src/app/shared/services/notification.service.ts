@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { ApiService } from './api.service';
 import { NotificationItem } from '../models/notification/notification-item.model';
 import { Observable, Subject, BehaviorSubject } from '../../../../node_modules/rxjs';
+import { PagedResult } from '../models';
 
 @Injectable()
 export class NotificationService {
@@ -44,12 +45,38 @@ export class NotificationService {
   ) {
   }
 
+  // Đếm số thông báo
+  count(): Observable<number> {
+    const url = `bidusernotification/count`;
+    return this.apiService.get(url).map(response => {
+      return response.result;
+    });
+  }
+
   // Danh sách các thông báo của người dùng
   getListNotification(): Observable<NotificationItem[]> {
     const url = `bidusernotification`;
     return this.apiService.get(url).map(response => {
       const result = response.result;
       return (result || []).map(NotificationService.toNotificationList);
+    });
+  }
+
+  // Danh sách các thông báo của người dùng phan trang
+  getListNotifications(page: number, pageSize: number): Observable<PagedResult<NotificationItem>> {
+    const url = `bidusernotification/${page}/${pageSize}`;
+    return this.apiService.get(url).map(response => {
+      const result = response.result;
+
+      return {
+        currentPage: result.pageIndex,
+        pageSize: result.pageSize,
+        pageCount: result.totalPages,
+        total: result.totalCount,
+        items: (result.items || []).map(
+          NotificationService.toNotificationList
+        )
+      };
     });
   }
 
