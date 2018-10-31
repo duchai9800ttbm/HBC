@@ -14,7 +14,8 @@ export class NumberAreaPipe implements PipeTransform {
     this.THOUSANDS_SEPARATOR = ',';
     this.CURRENCY_UNIT = ' m2';
   }
-  transform(value: number | string, fractionSize: number = 2): string {
+  transform(value: number | string, fractionSize: number = 2, placeholder?: boolean): string {
+    if (!value && !placeholder) { return ''; }
     if (!value) { return '0' + this.CURRENCY_UNIT; }
     if (isNaN(+value)) { return value.toString(); }
 

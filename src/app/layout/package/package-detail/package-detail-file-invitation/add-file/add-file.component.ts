@@ -18,7 +18,7 @@ import { UserItemModel } from '../../../../../shared/models/user/user-item.model
 import { PackageService } from '../../../../../shared/services/package.service';
 import { PackageInfoModel } from '../../../../../shared/models/package/package-info.model';
 import { forEach } from '../../../../../../../node_modules/@angular/router/src/utils/collection';
-import { PermissionModel } from '../../../../../shared/models/permission/Permission.model';
+import { PermissionModel } from '../../../../../shared/models/permission/permission.model';
 import { PermissionService } from '../../../../../shared/services/permission.service';
 import { Subscription } from '../../../../../../../node_modules/rxjs';
 @Component({

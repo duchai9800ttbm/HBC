@@ -17,7 +17,7 @@ import { OpportunityHsmtService } from '../../../../../shared/services/opportuni
 import { PackageService } from '../../../../../shared/services/package.service';
 import { PackageDetailComponent } from '../../package-detail.component';
 import { PermissionService } from '../../../../../shared/services/permission.service';
-import { PermissionModel } from '../../../../../shared/models/permission/Permission.model';
+import { PermissionModel } from '../../../../../shared/models/permission/permission.model';
 
 @Component({
     selector: 'app-full-file',
