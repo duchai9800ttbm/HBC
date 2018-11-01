@@ -87,4 +87,7 @@ export class PackageInfoModel {
         interviewTimes: string;
     };
     isSignedContract: boolean;
+    winReasonName: string;
+    loseReasonName: string;
+    cancelReasonName: string;
 }

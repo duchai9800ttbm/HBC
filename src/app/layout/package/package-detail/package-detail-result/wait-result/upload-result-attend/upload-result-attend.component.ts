@@ -6,6 +6,7 @@ import { PackageDetailComponent } from '../../../package-detail.component';
 import CustomValidator from '../../../../../../shared/helpers/custom-validator.helper';
 import ValidationHelper from '../../../../../../shared/helpers/validation.helper';
 import { Router } from '../../../../../../../../node_modules/@angular/router';
+import { CheckStatusPackage } from '../../../../../../shared/constants/check-status-package';
 
 @Component({
   selector: 'app-upload-result-attend',
@@ -28,6 +29,7 @@ export class UploadResultAttendComponent implements OnInit {
   isSubmitted: boolean;
   invalidMessages: string[];
   currentPackageId: number;
+  checkStatusPackage = CheckStatusPackage;
   constructor(
     private fb: FormBuilder,
     private alertService: AlertService,
@@ -74,6 +76,11 @@ export class UploadResultAttendComponent implements OnInit {
         this.file
       ).subscribe(response => {
         this.closePopup();
+        if (this.winOrLost) {
+          this.packageService.changeStatusPackageValue(this.checkStatusPackage.TrungThau.text);
+        } else {
+          this.packageService.changeStatusPackageValue(this.checkStatusPackage.TratThau.text);
+        }
         this.alertService.success('Upload kết quả dự thầu thành công!');
         switch (this.typeBid) {
           case 'win': {

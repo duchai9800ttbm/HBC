@@ -160,6 +160,7 @@ export class WaitResultComponent implements OnInit {
                     break;
             }
             this.packageSuccessService.receiveBidResult(this.currentPackageId).subscribe(response => {
+                this.packageService.changeStatusPackageValue(this.checkStatusPackage.KetQuaDuThau.text);
                 this.getAPIWinOrRLoseOrReject(typeBid);
             }, err => {
                 this.packageService.getInforPackageID(this.currentPackageId).subscribe(result => {
