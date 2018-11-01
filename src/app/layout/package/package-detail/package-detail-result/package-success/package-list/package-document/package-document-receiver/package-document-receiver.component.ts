@@ -50,6 +50,8 @@ export class PackageDocumentReceiverComponent implements OnInit {
   docHSDTListTranferred;
   public data: DocumentItem[] = this.packageSuccessService.getdataGetDocument();
   @Input() statusPackage;
+  documentTypeList;
+  statusList;
   constructor(
     private packageSuccessService: PackageSuccessService,
     private modalService: BsModalService,
@@ -67,8 +69,8 @@ export class PackageDocumentReceiverComponent implements OnInit {
     this.filter.documentTypeId = null;
     this.filter.status = '';
     this.userInfo = this.sessionService.userInfo;
-    this.isDataHsmt = false;
-    this.isDataHsdt = false;
+    this.isDataHsmt = true;
+    this.isDataHsdt = true;
     this.isManageTransfer = false;
     this.userGetDocument = true;
     this.btnManageTransfer = false;
@@ -84,10 +86,40 @@ export class PackageDocumentReceiverComponent implements OnInit {
   }
   onSelectAll(value: boolean) {
     this.data.forEach(x => (x['checkboxSelected'] = value));
+    this.docHSMTListTranferred.forEach(itemPar => {
+      itemPar.items.forEach(itemChild => {
+        itemChild.checkboxSelected = value;
+      });
+    });
+    this.docHSDTListTranferred.forEach(itemPar => {
+      itemPar.items.forEach(itemChild => {
+        itemChild.checkboxSelected = value;
+      });
+    });
   }
   refesh() {
     this.filterFuc(true);
   }
+
+  filterList() {
+    const newfilter = new FilterTransferredDoc();
+    this.detailResultPackageService.filterTransferDocDetailsList(
+      this.currentPackageId,
+      '',
+      newfilter
+    ).subscribe(response => {
+      this.transferredDocList = response;
+      response.forEach(item => {
+        this.documentTypeList = item.bidTransferDocDetails.map(itembidTransfer => itembidTransfer.documentType);
+        this.documentTypeList = this.documentTypeList.sort((a, b) => a - b);
+        this.documentTypeList = this.documentTypeList.filter((el, i, a) => i === a.indexOf(el));
+      });
+      console.log(this.documentTypeList);
+    },
+      err => {
+      });
+  }
+
   filterFuc(alertShow: boolean) {
     this.detailResultPackageService.filterTransferDocDetailsList(
       this.currentPackageId,
@@ -107,15 +139,17 @@ export class PackageDocumentReceiverComponent implements OnInit {
           }
         }
       });
+
+      console.log('filterFuc', this.docHSMTListTranferred, this.docHSDTListTranferred);
       // Hồ sơ mời thầu
       this.docHSMTListTranferred.forEach((itemPra, indexPra) => {
-        itemPra['documentTypeStr'] =  JSON.stringify(itemPra.documentType);
+        itemPra['documentTypeStr'] = JSON.stringify(itemPra.documentType);
       });
       this.docHSMTListTranferred = groupBy(this.docHSMTListTranferred, [{ field: 'documentTypeStr' }]);
 
       // Hồ sơ dự thầu
       this.docHSDTListTranferred.forEach((itemPra, indexPra) => {
-        itemPra['documentTypeStr'] =  JSON.stringify(itemPra.documentType);
+        itemPra['documentTypeStr'] = JSON.stringify(itemPra.documentType);
       });
       this.docHSDTListTranferred = groupBy(this.docHSDTListTranferred, [{ field: 'documentTypeStr' }]);
       console.log('this.transferredDocList-3', this.docHSMTListTranferred, this.docHSDTListTranferred);
