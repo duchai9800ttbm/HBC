@@ -1,4 +1,4 @@
-import { Component, OnInit, AfterViewInit, Input, AfterViewChecked, AfterContentChecked } from '@angular/core';
+import { Component, OnInit, AfterViewInit, Input, Output, EventEmitter, OnChanges } from '@angular/core';
 import { TenderPriceApproval, TenderPriceApprovalShort } from '../../../../../../shared/models/price-review/price-review.model';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import DateTimeConvertHelper from '../../../../../../shared/helpers/datetime-convert-helper';
@@ -16,7 +16,7 @@ import { BidStatus } from '../../../../../../shared/constants/bid-status';
   templateUrl: './price-review-form.component.html',
   styleUrls: ['./price-review-form.component.scss']
 })
-export class PriceReviewFormComponent implements OnInit, AfterViewInit {
+export class PriceReviewFormComponent implements OnChanges, OnInit, AfterViewInit {
   priceReviewForm: FormGroup;
   package = new PackageInfoModel();
   priceReview: TenderPriceApprovalShort;
@@ -43,12 +43,17 @@ export class PriceReviewFormComponent implements OnInit, AfterViewInit {
 
   @Input() model: TenderPriceApproval;
   @Input() type: string;
+  @Output() refreshData = new EventEmitter<boolean>();
 
   ngOnInit() {
     this.getModeScreen();
     this.packageId = PackageDetailComponent.packageId;
     this.getAllCustomer();
     this.getInfoPackge();
+    this.createForm();
+  }
+
+  ngOnChanges() {
     this.createForm();
   }
 
@@ -88,7 +93,10 @@ export class PriceReviewFormComponent implements OnInit, AfterViewInit {
     this.priceReviewForm = this.fb.group({
       // Thông tin dự án
       id: this.model.id,
-      otherCompanyCustomerId: (this.model.otherCompanyCustomerId) ? this.model.otherCompanyCustomerId : '',
+      otherCompanyCustomerId: {
+        value: (this.model.otherCompanyCustomerId) ? this.model.otherCompanyCustomerId : '',
+        disabled: this.isModeView
+      },
       createdDate: (this.model.createdDate) ? this.model.createdDate : 0,
       infoGfa: {
         value: this.model.projectInformation && this.model.projectInformation.gfa,
@@ -787,10 +795,9 @@ export class PriceReviewFormComponent implements OnInit, AfterViewInit {
   }
 
   refresh() {
-    if (this.isModeView) {
-      return this.alertService.success('Dữ liệu đã được cập nhật mới nhất');
-    }
-    this.createForm();
+    this.refreshData.emit(true);
+    // return this.alertService.success('Dữ liệu đã được cập nhật mới nhất');
+
   }
 
 

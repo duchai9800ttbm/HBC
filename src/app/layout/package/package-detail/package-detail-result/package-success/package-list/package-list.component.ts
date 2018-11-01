@@ -56,6 +56,8 @@ export class PackageListComponent implements OnInit {
   listEmailSearchBcc;
   actionSendEmail = 'ContractRoom';
   bidStatus = BidStatus;
+  maxVersion = 0;
+  maxInterviewTimes = 0;
   @Output() active: EventEmitter<any> = new EventEmitter<any>();
   resultData: any = [
     { id: 1, bidReviewDocumentName: 'Tài liệu cung cấp vật tư', bidReviewDocumentVersion: 1, bidReviewDocumentStatus: 'Danh sách tài liệu cung cấp vật tư', employeeName: 'Oliver Dinh', bidReviewDocumentUploadDate: '01/01/2018 ,09:00', interview: 1 },
@@ -164,9 +166,6 @@ export class PackageListComponent implements OnInit {
     this.textTitleSendMail = this.showBtnNotification ? 'Gửi thư thông báo đến các bên liên quan' : 'Gửi thư phản hồi đến phòng hợp đồng';
     this.alertService.success('Thông báo đến đến các bên liên quan thành công!');
   }
-  // uploadkqdt (template: TemplateRef<any>) {
-  //   this.modalUpload = this.modalService.show(template);
-  // }
   uploadkqdt() {
     this.dialogUploadResultAttend = this.dialogService.open({
       content: UploadResultFileAttendComponent,
@@ -175,7 +174,8 @@ export class PackageListComponent implements OnInit {
     });
     const instance = this.dialogUploadResultAttend.content.instance;
     instance.callBack = () => this.closePopuup();
-    // // instance.reloadData = () => this.reloadData();
+    instance.version = this.maxVersion + 1;
+    instance.interviewTimes = this.maxInterviewTimes + 1;
   }
   closePopuup() {
     this.dialogUploadResultAttend.close();
@@ -193,6 +193,8 @@ export class PackageListComponent implements OnInit {
     this.spinner.show();
     this.detailResultPackageService.getListFileResult(this.currentPackageId).subscribe(response => {
       this.listFileResult = response;
+      this.maxVersion = Math.max.apply(Math, this.listFileResult.map(item => item.version));
+      this.maxInterviewTimes = Math.max.apply(Math, this.listFileResult.map(item => item.interviewTimes));
       if (alert) {
         this.spinner.hide();
         this.alertService.success('Dữ liệu đã được cập nhật mới nhất!');

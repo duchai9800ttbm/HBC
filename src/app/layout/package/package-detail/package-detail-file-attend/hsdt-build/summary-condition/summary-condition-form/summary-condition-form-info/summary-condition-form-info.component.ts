@@ -48,7 +48,6 @@ export class SummaryConditionFormInfoComponent implements OnInit {
   }
 
   createForm() {
-    console.log(this.dataStepInfo);
     this.thongTinDuAnForm = this.fb.group({
       tenTaiLieu: { value: this.dataStepInfo.tenTaiLieu, disabled: this.isModeView },
       hinhAnhPhoiCanh: this.dataStepInfo.hinhAnhPhoiCanh,

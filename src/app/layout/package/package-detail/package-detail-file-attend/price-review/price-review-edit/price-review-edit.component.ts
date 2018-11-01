@@ -24,7 +24,10 @@ export class PriceReviewEditComponent implements OnInit {
 
   ngOnInit() {
     this.packageId = PackageDetailComponent.packageId;
-    this.priceReview$ = this.priceReviewService.view(this.packageId);
+    this.priceReviewService.view(this.packageId).subscribe(data => this.model = data);
+  }
+  refresh() {
+    this.priceReviewService.view(this.packageId).subscribe(data => this.model = data);
   }
 
 }

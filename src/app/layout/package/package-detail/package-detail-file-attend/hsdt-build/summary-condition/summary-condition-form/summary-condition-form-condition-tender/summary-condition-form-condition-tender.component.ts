@@ -154,8 +154,6 @@ export class SummaryConditionFormConditionTenderComponent implements OnInit {
             };
             this.hoSoDuThauService.emitDataStepConditionTender(obj);
         });
-
-        console.log(this.dienGiaiDieuKienHSMT);
     }
 
     loadData() {
@@ -243,7 +241,6 @@ export class SummaryConditionFormConditionTenderComponent implements OnInit {
     }
 
     removeFormArrayControl(name: string, idx: number) {
-        console.log('ádasdasd');
         const formArray = (this.dieuKienHSMTForm.get('theoHSMT') as FormGroup).controls.cacLoaiThue as FormArray;
         formArray.removeAt(idx);
     }
