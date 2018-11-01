@@ -13,6 +13,8 @@ import { DetailResultPackageService } from '../../../../../../../shared/services
 })
 export class UploadResultFileAttendComponent implements OnInit {
   @Input() callBack: Function;
+  @Input() version: number;
+  @Input() interviewTimes: number;
   uploadResultForm: FormGroup;
   file;
   formErrors = {
@@ -34,10 +36,10 @@ export class UploadResultFileAttendComponent implements OnInit {
   createForm() {
     this.uploadResultForm = this.fb.group({
       documentName: ['', CustomValidator.required],
-      version: [],
+      version: [this.version],
       uploadedBy: [],
-      receivedDate: [],
-      interviewTimes: [],
+      receivedDate: [new Date()],
+      interviewTimes: [this.interviewTimes],
       documentDesc: [],
       link: [],
     });

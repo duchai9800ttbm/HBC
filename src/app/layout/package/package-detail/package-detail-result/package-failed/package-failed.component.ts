@@ -36,6 +36,8 @@ export class PackageFailedComponent implements OnInit, OnDestroy {
   modalUpload: BsModalRef;
   formUpload: FormGroup;
   submitted = false;
+  maxVersion = 0;
+  maxInterviewTimes = 0;
   bidDocumentReviewListItemSearchResult: any = [
     { id: 1, bidReviewDocumentName: 'Tài liệu cung cấp vật tư', bidReviewDocumentVersion: 1, bidReviewDocumentStatus: 'Danh sách tài liệu cung cấp vật tư', employeeName: 'Oliver Dinh', bidReviewDocumentUploadDate: '01/01/2018 ,09:00', interview: 1 },
     { id: 2, bidReviewDocumentName: 'Tài liệu cung cấp giấy tờ liên quan', bidReviewDocumentVersion: 1.1, bidReviewDocumentStatus: '', employeeName: 'Van Dinh', bidReviewDocumentUploadDate: '02/02/2018,09:00', interview: 1 }
@@ -132,6 +134,8 @@ export class PackageFailedComponent implements OnInit, OnDestroy {
     this.spinner.show();
     this.detailResultPackageService.getListFileResult(this.currentPackageId).subscribe(response => {
       this.listFileResult = response;
+      this.maxVersion = Math.max.apply(Math, this.listFileResult.map(item => item.version));
+      this.maxInterviewTimes = Math.max.apply(Math, this.listFileResult.map(item => item.interviewTimes));
       if (alert) {
         this.spinner.hide();
         this.alertService.success('Dữ liệu đã được cập nhật mới nhất!');
@@ -282,6 +286,8 @@ export class PackageFailedComponent implements OnInit, OnDestroy {
     });
     const instance = this.dialogUploadResultAttend.content.instance;
     instance.callBack = () => this.closePopuup();
+    instance.version = this.maxVersion + 1;
+    instance.interviewTimes = this.maxInterviewTimes + 1;
     // // instance.reloadData = () => this.reloadData();
   }
   closePopuup() {

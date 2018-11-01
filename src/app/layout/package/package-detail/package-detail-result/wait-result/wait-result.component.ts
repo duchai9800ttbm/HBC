@@ -15,7 +15,6 @@ import ValidationHelper from '../../../../../shared/helpers/validation.helper';
 import { SETTING_REASON } from '../../../../../shared/configs/common.config';
 import { DialogService } from '../../../../../../../node_modules/@progress/kendo-angular-dialog';
 // tslint:disable-next-line:max-line-length
-import { UploadResultFileAttendComponent } from '../package-success/package-list/upload-result-file-attend/upload-result-file-attend.component';
 import { UploadResultAttendComponent } from './upload-result-attend/upload-result-attend.component';
 import { PackageService } from '../../../../../shared/services/package.service';
 import { CheckStatusPackage } from '../../../../../shared/constants/check-status-package';
@@ -138,6 +137,7 @@ export class WaitResultComponent implements OnInit {
     }
 
     closeModel() {
+        this.isSubmitted = false;
         this.modaltrungThau.hide();
     }
 
