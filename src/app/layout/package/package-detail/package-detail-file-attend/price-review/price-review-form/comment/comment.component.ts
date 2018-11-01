@@ -25,8 +25,6 @@ export class CommentComponent implements OnInit {
       this.comments = this.pagedResult.items;
       this.showButtonLoadMore = (this.pagedResult.items.length > 0) &&
         (+this.pagedResult.currentPage + 1 < +this.pagedResult.pageCount);
-      console.log(this.showButtonLoadMore);
-      console.log(this.pagedResult);
     });
   }
 
@@ -43,8 +41,6 @@ export class CommentComponent implements OnInit {
           this.showButtonLoadMore = (this.pagedResult.items.length > 0) &&
             (+this.pagedResult.currentPage + 1 < +this.pagedResult.pageCount);
           this.comments = this.pagedResult.items;
-          console.log(this.showButtonLoadMore);
-          console.log(this.pagedResult);
         });
       });
   }
@@ -70,8 +66,6 @@ export class CommentComponent implements OnInit {
       this.pagedResult = result;
       this.showButtonLoadMore = (this.pagedResult.items.length > 0) && (+this.pagedResult.currentPage + 1 < this.pagedResult.pageCount);
       this.comments = this.comments.concat(this.pagedResult.items);
-      console.log(this.showButtonLoadMore);
-      console.log(this.pagedResult);
     });
 
   }

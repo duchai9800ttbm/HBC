@@ -16,7 +16,9 @@
             <!-- <button class="btn btn-primary ml-2">
                 Import dữ liệu theo mẫu
             </button> -->
-            <button type="button" class="btn btn-primary ml-1" (click)="checkSigned()" *ngIf="routerAction == 'view' && packageInfo?.stageStatus.id == bidStatus.CanLapDeNghiDuThau && !dataModel?.isDraftVersion">Gửi duyệt đề nghị DT</button>
+            <ng-container *ngIf="GuiDuyetDNDT">
+                    <button type="button" class="btn btn-primary ml-1" (click)="checkSigned()" *ngIf="routerAction == 'view' && packageInfo?.stageStatus.id == bidStatus.CanLapDeNghiDuThau && !dataModel?.isDraftVersion">Gửi duyệt đề nghị DT</button>
+            </ng-container>
             <button class="btn btn-primary ml-1" (click)="edit()" *ngIf="routerAction == 'view' && packageInfo?.stageStatus.id == bidStatus.CanLapDeNghiDuThau">Sửa</button>
             <button class="btn btn-primary ml-1" (click)="saveDrafts()" *ngIf="routerAction != 'view' && dataModel?.isDraftVersion">
                 Lưu nháp
@@ -106,7 +108,10 @@
             </div>
         </div>
         <div class="mt-5 text-center mb-2">
-            <button class="btn b-btn btn-primary" (click)="sendApproveBidProposal()">Đồng ý</button>
+            <ng-container *ngIf="GuiDuyetDNDT">
+                    <button class="btn b-btn btn-primary" (click)="sendApproveBidProposal()">Đồng ý</button>
+
+            </ng-container>
         </div>
     </div>
 </kendo-dialog>

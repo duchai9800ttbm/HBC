@@ -38,7 +38,7 @@ export class PackagePermissionBidComponent implements OnInit {
         private alertService: AlertService,
         private spinner: NgxSpinnerService,
         private cdr: ChangeDetectorRef
-    ) {}
+    ) { }
 
     ngOnInit() {
         this.spinner.show();
@@ -107,15 +107,16 @@ export class PackagePermissionBidComponent implements OnInit {
             );
             if (listData.list.length > 0) {
                 listData.list.forEach(user => {
-                    e.bidPermissionGroupName !== 'LapHoSoDuThau'
+                    (e.bidPermissionGroupName !== 'LapHoSoDuThauFile' && e.bidPermissionGroupName !== 'LapHoSoDuThauLiveForm')
                         ? this.addFormArrayItem(e, user)
                         : this.addFormArrayBidItem(e, user);
                 });
             } else {
-                e.bidPermissionGroupName !== 'LapHoSoDuThau'
+                (e.bidPermissionGroupName !== 'LapHoSoDuThauFile' && e.bidPermissionGroupName !== 'LapHoSoDuThauLiveForm')
                     ? this.addFormArrayItem(e, {})
                     : this.addFormArrayBidItem(e, {});
             }
+
         });
         console.log(this.packagePermissionReviewForm.value);
     }
@@ -175,7 +176,7 @@ export class PackagePermissionBidComponent implements OnInit {
             });
         } else {
             const item = this.createFormArrayDocumentTypeItem(formData, {}, {});
-                arrayItem.push(item);
+            arrayItem.push(item);
         }
         const formArrayItem = this.fb.group({});
         formArrayItem.addControl('userName', this.fb.control(user.userGroupId));
@@ -209,7 +210,7 @@ export class PackagePermissionBidComponent implements OnInit {
         const formArrayControl = this.packagePermissionReviewForm.get(formData.bidPermissionGroupName).get('permission') as FormArray;
         formArrayControl.removeAt(idx);
         setTimeout(() => {
-          this.dtTrigger.next();
+            this.dtTrigger.next();
         });
     }
 
@@ -219,7 +220,7 @@ export class PackagePermissionBidComponent implements OnInit {
         childArrayControl.removeAt(childIndex);
         setTimeout(() => {
             this.dtTrigger.next();
-          });
+        });
     }
 
     onSubmit() {
@@ -234,7 +235,34 @@ export class PackagePermissionBidComponent implements OnInit {
                 };
                 formValue[pData.bidPermissionGroupName]['permission'].forEach(
                     user => {
-                        if (pData.bidPermissionGroupName === 'LapHoSoDuThau') {
+                        if (pData.bidPermissionGroupName === 'LapHoSoDuThauFile') {
+                            const dataItem = {
+                                bidUserGroupId: user.userName,
+                                documentTypeIds: []
+                            };
+                            user.documentTypes.forEach(t => {
+                                if (t[permission.bidPermissionName]) {
+                                    if (t.userName) {
+                                        dataItem.bidUserGroupId = Number(t.userName);
+                                    }
+                                    dataItem.documentTypeIds.push(Number(t.documentId));
+                                }
+                            });
+                            if (dataItem.documentTypeIds.length > 0) {
+                                item.userGroupIdentitys.push(dataItem);
+                            }
+                        } else {
+                            if (
+                                user[permission.bidPermissionName] &&
+                                user['userName']
+                            ) {
+                                item.userGroupIdentitys.push({
+                                    bidUserGroupId: user['userName']
+                                });
+                            }
+                        }
+
+                        if (pData.bidPermissionGroupName === 'LapHoSoDuThauLiveForm') {
                             const dataItem = {
                                 bidUserGroupId: user.userName,
                                 documentTypeIds: []
@@ -284,7 +312,14 @@ export class PackagePermissionBidComponent implements OnInit {
     }
 
     customUpdateFormValue(formData) {
-        formData.LapHoSoDuThau.permission.forEach(f => {
+        formData.LapHoSoDuThauFile.permission.forEach(f => {
+            f.documentTypes.forEach(t => {
+                if (t.userName) {
+                    f.userName = Number(t.userName);
+                }
+            });
+        });
+        formData.LapHoSoDuThauLiveForm.permission.forEach(f => {
             f.documentTypes.forEach(t => {
                 if (t.userName) {
                     f.userName = Number(t.userName);
@@ -306,7 +341,19 @@ export class PackagePermissionBidComponent implements OnInit {
     }
 
     checkAllBidItem(checked: boolean, parentIdx: number, childIdx: number) {
-        const parentArrayControl = this.packagePermissionReviewForm.get('LapHoSoDuThau').get('permission') as FormArray;
+        const parentArrayControl = this.packagePermissionReviewForm.get('LapHoSoDuThauFile').get('permission') as FormArray;
+        const childArrayControl = parentArrayControl.controls[parentIdx].get('documentTypes') as FormArray;
+        const childGroupControl = childArrayControl.controls[childIdx] as FormGroup;
+        for (const fControl in childGroupControl.controls) {
+            if (fControl !== 'userName' && fControl !== 'documentId') {
+                childGroupControl.get(fControl).patchValue(checked);
+            }
+        }
+    }
+
+
+    checkAllBidItemLiveForm(checked: boolean, parentIdx: number, childIdx: number) {
+        const parentArrayControl = this.packagePermissionReviewForm.get('LapHoSoDuThauLiveForm').get('permission') as FormArray;
         const childArrayControl = parentArrayControl.controls[parentIdx].get('documentTypes') as FormArray;
         const childGroupControl = childArrayControl.controls[childIdx] as FormGroup;
         for (const fControl in childGroupControl.controls) {

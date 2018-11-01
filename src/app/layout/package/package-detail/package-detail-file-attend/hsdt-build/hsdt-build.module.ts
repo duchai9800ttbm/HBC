@@ -8,6 +8,7 @@ import { SharedComponentsModule } from '../../../../../shared/components/shared-
 import { HoSoDuThauService } from '../../../../../shared/services/ho-so-du-thau.service';
 import { UploadFormComponent } from './upload-form/upload-form.component';
 import { ViewDetailFileComponent } from './upload-form/view-detail-file/view-detail-file.component';
+import { SiteSurveyReportService } from '../../../../../shared/services/site-survey-report.service';
 
 @NgModule({
     imports: [
@@ -22,7 +23,8 @@ import { ViewDetailFileComponent } from './upload-form/view-detail-file/view-det
         ViewDetailFileComponent
     ],
     providers: [
-        HoSoDuThauService
+        HoSoDuThauService,
+        SiteSurveyReportService
     ]
 })
 export class HsdtBuildModule { }

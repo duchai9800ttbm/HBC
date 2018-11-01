@@ -204,7 +204,6 @@ export class PriceReviewService {
   view(bidOpportunityId: number) {
     const url = `bidopportunity/${bidOpportunityId}/tenderpriceapproval`;
     return this.apiService.get(url).map(response => {
-      console.log(response);
       if (!response.result) {
         return null;
       }

@@ -906,7 +906,6 @@ export class DataService {
         return this.apiService.get(url).map(response => response.result);
     }
     // Danh sách loại tài liệu hồ sơ dự thầu
-    
     getListTenderDocumentType(): Observable<DictionaryItem[]> {
         const url = `tenderdocumentfiletypes`;
         return this.apiService.get(url)

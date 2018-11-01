@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { DATATABLE_CONFIG } from '../../../../../shared/configs';
 import { BidDocumentFilter } from '../../../../../shared/models/document/bid-document-filter.model';
 import { Subject } from 'rxjs/Subject';
@@ -18,13 +18,14 @@ import { PackageService } from '../../../../../shared/services/package.service';
 import { PackageDetailComponent } from '../../package-detail.component';
 import { PermissionService } from '../../../../../shared/services/permission.service';
 import { PermissionModel } from '../../../../../shared/models/permission/permission.model';
+import { Subscription } from '../../../../../../../node_modules/rxjs';
 
 @Component({
     selector: 'app-full-file',
     templateUrl: './full-file.component.html',
     styleUrls: ['./full-file.component.scss']
 })
-export class FullFileComponent implements OnInit {
+export class FullFileComponent implements OnInit, OnDestroy {
 
     isShowMenu = false;
     loading = false;
@@ -62,6 +63,7 @@ export class FullFileComponent implements OnInit {
     XoaFile = false;
     DownloadFile = false;
     UploadHSMT = false;
+    subscription: Subscription;
     get titleStr() {
         if (this.majorTypeListItem && this.majorTypeListItem.length > 0) {
             return this.majorTypeListItem.find(i => i.id == this.currentMajorTypeId).text;
@@ -81,7 +83,7 @@ export class FullFileComponent implements OnInit {
     }
     ngOnInit() {
         this.packageId = +PackageDetailComponent.packageId;
-        this.permissionService.get().subscribe(data => {
+        this.subscription = this.permissionService.get().subscribe(data => {
             this.listPermission = data;
             const hsdt = this.listPermission.length &&
                 this.listPermission.filter(x => x.bidOpportunityStage === 'HSMT')[0];
@@ -138,6 +140,12 @@ export class FullFileComponent implements OnInit {
                 this.loading = false;
             }, err => this.loading = false);
         });
+    }
+
+    ngOnDestroy(): void {
+        if (this.subscription) {
+            this.subscription.unsubscribe();
+        }
     }
 
     checkHightLight() {

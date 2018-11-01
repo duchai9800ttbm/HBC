@@ -67,9 +67,6 @@ export class EditComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.currentBidOpportunityId = +PackageDetailComponent.packageId;
-    this.siteSurveyReportService.getListDepartmentsFromBranches().subscribe(res => {
-      this.listDepartments = [...res];
-    });
     this.getInfoTenderPreparationPlanning();
     this.getAllUser();
     this.isCreate = LiveformSiteReportComponent.formModel.isCreate;
@@ -79,6 +76,11 @@ export class EditComponent implements OnInit, OnDestroy {
     this.isEditMode = LiveformSiteReportComponent.actionMode === 'editMode';
     this.isViewMode = LiveformSiteReportComponent.actionMode === 'viewMode';
     // End Check Action Mode
+    if (!this.isViewMode) {
+      this.siteSurveyReportService.getListDepartmentsFromBranches().subscribe(res => {
+        this.listDepartments = [...res];
+      });
+    }
     this.packageService.getInforPackageID(this.currentBidOpportunityId).subscribe(result => {
       this.packageData = result;
     }, err => {
@@ -141,6 +143,9 @@ export class EditComponent implements OnInit, OnDestroy {
           this.router.navigate([`/package/detail/${this.currentBidOpportunityId}/attend/build/liveformsite`]);
           const message = (this.isCreate) ? 'Tạo mới' : 'Cập nhật';
           this.alertService.success(`${message} Báo cáo khảo sát công trường thành công.`);
+          if (!LiveformSiteReportComponent.formModel.isDraft) {
+            this.hoSoDuThauService.detectCondition(true);
+          }
         }, err => {
           this.showPopupConfirm = false;
           this.spinner.hide();
@@ -160,12 +165,10 @@ export class EditComponent implements OnInit, OnDestroy {
   }
 
   updateliveform(check: boolean) {
+    const statusPrevious = LiveformSiteReportComponent.formModel.isDraft;
     LiveformSiteReportComponent.formModel.isDraft = check;
-    if (check || this.isCreate) {
-      this.submitLiveForm(true);
-    } else {
-      this.showPopupConfirm = true;
-    }
+    if (this.isCreate || check || statusPrevious) { return this.submitLiveForm(true); }
+    return this.showPopupConfirm = true;
   }
   cancelCreateUpdate() {
     this.router.navigate([`/package/detail/${this.currentBidOpportunityId}/attend/build/liveformsite`]);

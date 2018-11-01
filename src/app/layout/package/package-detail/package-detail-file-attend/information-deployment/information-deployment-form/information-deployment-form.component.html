@@ -14,19 +14,19 @@
         </div>
         <div>
             <div class="btn-toolbar mt-2 mb-2">
-                <!-- <button class="btn btn-primary ml-2">
-              Import dữ liệu theo mẫu
-          </button> -->
-                <button class="btn btn-primary ml-1" (click)="changeRouterAction('edit')" *ngIf="routerAction == 'view' && packageInfo?.stageStatus.id != bidStatus.DaGuiPhanCongTienDo">Sửa</button>
-                <button class="btn btn-primary ml-1" (click)="submitForm(true)" *ngIf="planForm?.get('isDraftVersion').value && routerAction != 'view'">
-                    Lưu nháp
-                </button>
-                <button class="btn btn-primary ml-1" *ngIf="routerAction != 'view'" (click)="submitForm(false)">
-                    Lưu
-                </button>
-                <button class="btn btn-secondary ml-1" *ngIf="routerAction != 'view'" routerLink="../">
-                    Hủy
-                </button>
+                <ng-container *ngIf="TaoMoiBangPCTD || SuaBangPCTD">
+                    <button class="btn btn-primary ml-1" (click)="changeRouterAction('edit')" *ngIf="routerAction == 'view' && packageInfo?.stageStatus.id != bidStatus.DaGuiPhanCongTienDo">Sửa</button>
+                    <button class="btn btn-primary ml-1" (click)="submitForm(true)" *ngIf="planForm?.get('isDraftVersion').value && routerAction != 'view'">
+                        Lưu nháp
+                    </button>
+                    <button class="btn btn-primary ml-1" *ngIf="routerAction != 'view'" (click)="submitForm(false)">
+                        Lưu
+                    </button>
+                    <button class="btn btn-secondary ml-1" *ngIf="routerAction != 'view'" routerLink="../">
+                        Hủy
+                    </button>
+                </ng-container>
+
                 <button class="btn btn-primary ml-1" (click)="refesh()">
                     <i class="fa fa-refresh" aria-hidden="true"></i>
                 </button>
@@ -80,16 +80,22 @@
                     <div class="">{{packageInfo?.opportunityName}}</div>
                 </div>
                 <div class="col-md-3 pl-0">
-                    <button class="btn btn-primary btn-sign position-absolute" *ngIf="!planForm.get('isSignedByPreparedPerson').value" [disabled]="routerAction === 'view'"
-                        [class.not-allow]="routerAction === 'view'" (click)="clickSignPrepare()">Xác nhận ký</button>
+                    <ng-container *ngIf="XacNhanKyPrepared">
+                        <button class="btn btn-primary btn-sign position-absolute" *ngIf="!planForm.get('isSignedByPreparedPerson').value" [disabled]="routerAction === 'view'"
+                            [class.not-allow]="routerAction === 'view'" (click)="clickSignPrepare()">Xác nhận ký</button>
+                    </ng-container>
+
                     <button class="btn btn-primary btn-sign position-absolute" *ngIf="planForm.get('isSignedByPreparedPerson').value">
                         <i class="fa fa-check icon-check" aria-hidden="true"></i> Đã ký
                     </button>
                 </div>
                 <div class="col-md-3 pl-0">
-                    <button class="btn btn-primary btn-sign position-absolute" [disabled]="!planForm.get('isSignedByPreparedPerson').value || routerAction !== 'view'"
-                        [class.not-allow]="!planForm.get('isSignedByPreparedPerson').value || routerAction !== 'view'" *ngIf="!planForm.get('isSignedByApprovalPerson').value"
-                        (click)="clickSignApproved()">Xác nhận ký</button>
+                    <ng-container *ngIf="XacNhanKyApproved">
+                        <button class="btn btn-primary btn-sign position-absolute" [disabled]="!planForm.get('isSignedByPreparedPerson').value || routerAction !== 'view'"
+                            [class.not-allow]="!planForm.get('isSignedByPreparedPerson').value || routerAction !== 'view'" *ngIf="!planForm.get('isSignedByApprovalPerson').value"
+                            (click)="clickSignApproved()">Xác nhận ký</button>
+                    </ng-container>
+
                     <button class="btn btn-primary btn-sign position-absolute" *ngIf="planForm.get('isSignedByApprovalPerson').value">
                         <i class="fa fa-check icon-check" aria-hidden="true"></i> Đã ký
                     </button>
@@ -227,7 +233,7 @@
                                 <span *ngIf="!data.get('itemDesc').value" class="fake-placeholder">Nhập text</span>
                             </td>
                             <td class="pl-0" *ngIf="data.get('itemId').value !== 6">
-                                <span class="custom-dropdown w-100 b-dropdown-no-border" >
+                                <span class="custom-dropdown w-100 b-dropdown-no-border">
                                     <select class="form-control" formControlName="whoIsInChargeId" [class.default-cusor]="routerAction === 'view'">
                                         <option [ngValue]="null">--Chọn--</option>
                                         <option *ngFor="let user of userList" [value]="user.employeeId">{{user.employeeName}}</option>
@@ -247,12 +253,10 @@
                             </td>
                             <td class="text-center">
                                 <label class="custom-control custom-checkbox z-ontop">
-                                    <input type="checkbox"
-                                    [attr.disabled]="(data.get('whoIsInChargeId').value && data.get('whoIsInChargeId').value !==0 && data.get('startDate').value && data.get('finishDate').value)
+                                    <input type="checkbox" [attr.disabled]="(data.get('whoIsInChargeId').value && data.get('whoIsInChargeId').value !==0 && data.get('startDate').value && data.get('finishDate').value)
                                      || (data.get('whoIsInChargeIds').value && data.get('whoIsInChargeIds').value.length !==0 && data.get('startDate').value && data.get('finishDate').value) ?
-                                     null : ''"
-                                    (click)="routerAction === 'view' ? checkFinishTenderPlanItem(data.get('itemId').value) : null" class="custom-control-input input-checkbox"
-                                        formControlName="isFinish">
+                                     null : ''" (click)="routerAction === 'view' ? checkFinishTenderPlanItem(data.get('itemId').value) : null"
+                                        class="custom-control-input input-checkbox" formControlName="isFinish">
                                     <!-- [attr.disabled]="(this.checkStatusPackage[this.packageInfo.stageStatus.id].id >= checkStatusPackage.DaThongBaoTrienKhai.id && 
                                         this.checkStatusPackage[this.packageInfo.stageStatus.id].id <= checkStatusPackage.DaPhongVan.id) ? false : null" -->
                                     <!-- [attr.disabled]="true" -->
@@ -303,4 +307,4 @@
         </div>
     </kendo-dialog>
 </form>
-<ngx-spinner bdColor="rgba(51, 51, 51, 0.7)" size = "default" color="#fff" type="ball-scale"></ngx-spinner>
+<ngx-spinner bdColor="rgba(51, 51, 51, 0.7)" size="default" color="#fff" type="ball-scale"></ngx-spinner>

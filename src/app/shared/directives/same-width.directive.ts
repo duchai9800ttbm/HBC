@@ -49,8 +49,6 @@ export class SameWidthDirective implements AfterViewChecked {
             x => x.getBoundingClientRect().width
         );
 
-        
-
         // apply max width
         Array.from(children).forEach(
             (x: HTMLElement) => (x.style.width = `${maxwidth}px`)

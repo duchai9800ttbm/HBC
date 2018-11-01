@@ -19,13 +19,14 @@ import { PackageInfoModel } from '../../../../../shared/models/package/package-i
 import { BidStatus } from '../../../../../shared/constants/bid-status';
 import { slideToLeft } from '../../../../../router.animations';
 import { PermissionService } from '../../../../../shared/services/permission.service';
+import { SiteSurveyReportService } from '../../../../../shared/services/site-survey-report.service';
 @Component({
     selector: 'app-hsdt-build',
     templateUrl: './hsdt-build.component.html',
     styleUrls: ['./hsdt-build.component.scss'],
     animations: [slideToLeft()]
 })
-export class HsdtBuildComponent implements OnInit, AfterViewChecked {
+export class HsdtBuildComponent implements OnInit, AfterViewChecked, OnDestroy {
     page: number;
     pageSize: number;
     pageIndex: number | string = 0;
@@ -71,9 +72,13 @@ export class HsdtBuildComponent implements OnInit, AfterViewChecked {
             value: 'Bảng làm rõ hồ sơ mời thầu'
         },
     ];
+    checkTenderSummary: boolean;
+    checkSiteSurvey: boolean;
+    checkDocFile: boolean;
 
     constructor(
         private hoSoDuThauService: HoSoDuThauService,
+        private siteSurveyReportService: SiteSurveyReportService,
         private alertService: AlertService,
         private packageService: PackageService,
         private router: Router,
@@ -85,10 +90,14 @@ export class HsdtBuildComponent implements OnInit, AfterViewChecked {
     ngOnInit() {
         this.packageId = +PackageDetailComponent.packageId;
         this.permissionService.get().subscribe(data => {
-          });
+        });
         this.subscription = this.hoSoDuThauService.watchChangingUpload().subscribe(signal => {
             this.getDanhSachLoaiHoSo(false);
         });
+        const conditionApproval$ = this.hoSoDuThauService.watchCondition().subscribe(signal => {
+            this.checkConditionApproval();
+        });
+        this.subscription.add(conditionApproval$);
         this.packageService.getInforPackageID(this.packageId).subscribe(result => {
             this.package = result;
             this.hoSoDuThauService.detectStatusPackage(this.package.isClosedHSDT);
@@ -102,35 +111,49 @@ export class HsdtBuildComponent implements OnInit, AfterViewChecked {
             });
         });
     }
+    ngOnDestroy() {
+        if (this.subscription) {
+            this.subscription.unsubscribe();
+        }
+    }
 
     downloadTemplate(typeTemplate) {
+        let key = '';
         switch (typeTemplate) {
             case 'HuongDanLapHSDT': {
-
+                key = 'guideline';
                 break;
             }
             case 'BangTomTatDKDT': {
-
+                key = 'tenderconditionalsummary';
                 break;
             }
             case 'BangDanhSachCungUngThauPhu': {
-
+                key = 'supplier';
                 break;
             }
             case 'BaoCaoThamQuanCongTrinh': {
-
+                key = 'tendersitesurveyingreport';
                 break;
             }
             case 'BangTinhChiPhuChungVaCongTac': {
-
+                key = 'generalcost';
                 break;
             }
             case 'BangLamRoHSMT': {
-                
+                key = 'clarification';
                 break;
             }
             default: break;
         }
+        this.hoSoDuThauService.downloadTemplateHSDT(key).subscribe(() => {
+        }, err => {
+            if (err.json().errorCode) {
+                this.alertService.error('File không tồn tại hoặc đã bị xóa!');
+            } else {
+                this.alertService.error('Đã có lỗi xãy ra. Vui lòng thử lại!');
+            }
+        });
     }
 
     getDanhSachLoaiHoSo(spinner: boolean) {
@@ -192,24 +215,45 @@ export class HsdtBuildComponent implements OnInit, AfterViewChecked {
             }
         });
     }
+    // Check the condition of approval
+    checkConditionApproval() {
+        this.hoSoDuThauService
+            .getFileNoSearch(this.packageId)
+            .subscribe(responseResultDocument => {
+                const checkDocUpload = responseResultDocument.items;
+                this.checkDocFile = checkDocUpload.some(item => item.status == "Official");
+            });
+        this.hoSoDuThauService.getInfoTenderConditionalSummary(this.packageId).subscribe(result => {
+            this.checkTenderSummary = (result) ? result.isDraftVersion : true;
+        });
+        this.siteSurveyReportService.tenderSiteSurveyingReport(this.packageId).subscribe(result => {
+            this.checkSiteSurvey = (result) ? result.isDraft : true;
+        });
+    }
+    // End check
 
     chotHSDT(event) {
-        this.confirmationService.confirm(
-            `Bạn có chắc chắn muốn chốt Hồ sơ dự thầu?`,
-            () => {
-                this.hoSoDuThauService.chotHoSoDuThau(this.packageId).subscribe(res => {
-                    this.alertService.success(`Đã chốt Hồ sơ dự thầu thành công!`);
-                    this.spinner.hide();
-                    this.packageService.getInforPackageID(this.packageId).subscribe(result => {
-                        this.package = result;
+        if (this.checkDocFile || !this.checkTenderSummary || !this.checkSiteSurvey) {
+            this.confirmationService.confirm(
+                `Bạn có chắc chắn muốn chốt Hồ sơ dự thầu?`,
+                () => {
+                    this.hoSoDuThauService.chotHoSoDuThau(this.packageId).subscribe(res => {
+                        this.alertService.success(`Đã chốt Hồ sơ dự thầu thành công!`);
+                        this.spinner.hide();
+                        this.packageService.getInforPackageID(this.packageId).subscribe(result => {
+                            this.package = result;
+                        }, err => {
+                        });
+                        this.refresh2();
                     }, err => {
+                        this.alertService.error(`Đã có lỗi. Chốt Hồ sơ dự thầu không thành công.`);
                     });
-                    this.refresh2();
-                }, err => {
-                    this.alertService.error(`Đã có lỗi. Chốt Hồ sơ dự thầu không thành công.`);
-                });
-            }
-        );
+                }
+            );
+        } else {
+            this.alertService.error('Bạn chưa có tài liệu dự thầu chính thức nào.');
+        }
+
     }
     emitData(id, checkliveform) {
         if (id !== 21) {

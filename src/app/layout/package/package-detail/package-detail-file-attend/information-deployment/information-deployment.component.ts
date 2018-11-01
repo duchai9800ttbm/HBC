@@ -1,4 +1,4 @@
-import { Component, OnInit, TemplateRef, ViewChild, ViewChildren } from '@angular/core';
+import { Component, OnInit, TemplateRef, ViewChild, ViewChildren, OnDestroy } from '@angular/core';
 import { BsModalService } from 'ngx-bootstrap/modal';
 import { BsModalRef } from 'ngx-bootstrap/modal/bs-modal-ref.service';
 import { PackageDetailComponent } from '../../package-detail.component';
@@ -9,7 +9,7 @@ import { GridDataResult, } from '@progress/kendo-angular-grid';
 import { SortDescriptor } from '@progress/kendo-data-query';
 import { Router } from '@angular/router';
 import { DATATABLE_CONFIG } from '../../../../../shared/configs';
-import { BehaviorSubject, Subject } from '../../../../../../../node_modules/rxjs';
+import { BehaviorSubject, Subject, Subscription } from '../../../../../../../node_modules/rxjs';
 import { ConfirmationService, AlertService } from '../../../../../shared/services';
 import { SendEmailModel } from '../../../../../shared/models/send-email-model';
 import { EmailService } from '../../../../../shared/services/email.service';
@@ -27,13 +27,15 @@ import { ProposedTenderParticipationHistory } from '../../../../../shared/models
 import { DialogService } from '../../../../../../../node_modules/@progress/kendo-angular-dialog';
 import { FormInComponent } from '../../../../../shared/components/form-in/form-in.component';
 import { slideToLeft } from '../../../../../router.animations';
+import { PermissionService } from '../../../../../shared/services/permission.service';
+import { PermissionModel } from '../../../../../shared/models/permission/Permission.model';
 @Component({
   selector: 'app-information-deployment',
   templateUrl: './information-deployment.component.html',
   styleUrls: ['./information-deployment.component.scss'],
   animations: [slideToLeft()]
 })
-export class InformationDeploymentComponent implements OnInit {
+export class InformationDeploymentComponent implements OnInit, OnDestroy {
   loading = false;
   file = [];
   public gridView: GridDataResult;
@@ -109,6 +111,21 @@ export class InformationDeploymentComponent implements OnInit {
   pagedResultChangeHistoryList: PagedResult<ProposedTenderParticipationHistory[]> = new PagedResult<ProposedTenderParticipationHistory[]>();
   indexItemHistoryChange: number;
   dialog;
+  subscription: Subscription;
+  listPermission: Array<PermissionModel>;
+  listPermissionScreen = [];
+  ThongBaoTrienKhai = false;
+  XemEmail = false;
+  TaoMoiBangPCTD = false;
+  XemBangPCTD = false;
+  SuaBangPCTD = false;
+  XoaBangPCTD = false;
+  InBangPCTD = false;
+  XacNhanKyPrepared = false;
+  XacNhanKyApproved = false;
+  GuiPCTD = false;
+  TaiTemplatePCTD = false;
+  BatDauLapHSDT = false;
   constructor(
     private modalService: BsModalService,
     private formBuilder: FormBuilder,
@@ -120,6 +137,7 @@ export class InformationDeploymentComponent implements OnInit {
     private statusObservableHsdtService: StatusObservableHsdtService,
     private confirmService: ConfirmationService,
     private dialogService: DialogService,
+    private permissionService: PermissionService
   ) {
     this.loadItems();
   }
@@ -127,6 +145,39 @@ export class InformationDeploymentComponent implements OnInit {
   ngOnInit() {
     this.bidOpportunityId = PackageDetailComponent.packageId;
     this.loading = true;
+
+    this.subscription = this.permissionService.get().subscribe(data => {
+      this.listPermission = data;
+      const hsdt = this.listPermission.length &&
+        this.listPermission.filter(x => x.bidOpportunityStage === 'HSDT')[0];
+      console.log(this.listPermission);
+      if (!hsdt) {
+        this.listPermissionScreen = [];
+      }
+      if (hsdt) {
+        const screen = hsdt.userPermissionDetails.length
+          && hsdt.userPermissionDetails.filter(y => y.permissionGroup.value === 'TrienKhaiVaPhanCongTienDo')[0];
+        if (!screen) {
+          this.listPermissionScreen = [];
+        }
+        if (screen) {
+          this.listPermissionScreen = screen.permissions.map(z => z.value);
+        }
+      }
+      this.ThongBaoTrienKhai = this.listPermissionScreen.includes('ThongBaoTrienKhai');
+      this.XemEmail = this.listPermissionScreen.includes('XemEmail');
+      this.TaoMoiBangPCTD = this.listPermissionScreen.includes('TaoMoiBangPCTD');
+      this.XemBangPCTD = this.listPermissionScreen.includes('XemBangPCTD');
+      this.SuaBangPCTD = this.listPermissionScreen.includes('SuaBangPCTD');
+      this.XoaBangPCTD = this.listPermissionScreen.includes('XoaBangPCTD');
+      this.InBangPCTD = this.listPermissionScreen.includes('InBangPCTD');
+      this.XacNhanKyPrepared = this.listPermissionScreen.includes('XacNhanKyPrepared');
+      this.XacNhanKyApproved = this.listPermissionScreen.includes('XacNhanKyApproved');
+      this.GuiPCTD = this.listPermissionScreen.includes('GuiPCTD');
+      this.TaiTemplatePCTD = this.listPermissionScreen.includes('TaiTemplatePCTD');
+      this.BatDauLapHSDT = this.listPermissionScreen.includes('BatDauLapHSDT');
+
+    });
     this.emailService.searchbymail('').subscribe(response => {
 
       this.listEmailSearchTo = response;
@@ -188,6 +239,12 @@ export class InformationDeploymentComponent implements OnInit {
     //   });
   }
 
+  ngOnDestroy(): void {
+    if (this.subscription) {
+      this.subscription.unsubscribe();
+    }
+  }
+
   refresh() {
     this.getPackageInfo();
     this.getTenderPlanInfo();
@@ -206,9 +263,9 @@ export class InformationDeploymentComponent implements OnInit {
         this.loading = false;
       });
     }, () => {
-        this.loading = false;
-        this.alertService.error('Lấy thông tin bảng phân công tiến độ thất bại');
-      });
+      this.loading = false;
+      this.alertService.error('Lấy thông tin bảng phân công tiến độ thất bại');
+    });
   }
 
   onPaste(e) {
@@ -379,9 +436,9 @@ export class InformationDeploymentComponent implements OnInit {
         this.tenderPlan = null;
         this.getPackageInfo();
       }, () => {
-          this.alertService.error('Xóa bảng phân công tiến độ thất bại!');
-          this.loading = false;
-        });
+        this.alertService.error('Xóa bảng phân công tiến độ thất bại!');
+        this.loading = false;
+      });
     });
   }
 
@@ -420,9 +477,9 @@ export class InformationDeploymentComponent implements OnInit {
         this.alertService.success('Xác nhận phân công tiến độ thành công!');
         this.getPackageInfo();
       }, () => {
-          this.loading = false;
-          this.alertService.error('Xác nhận phân công tiến độ thất bại!');
-        });
+        this.loading = false;
+        this.alertService.error('Xác nhận phân công tiến độ thất bại!');
+      });
     } else {
       this.alertService.error('Bạn chưa hoàn tất phân công tiến độ, kiểm tra lại bảng phân công.');
     }
@@ -436,9 +493,9 @@ export class InformationDeploymentComponent implements OnInit {
         this.alertService.success('Gửi phân công tiến độ thành công!');
         this.getPackageInfo();
       }, () => {
-          this.loading = false;
-          this.alertService.error('Gửi phân công tiến độ thất bại!');
-        });
+        this.loading = false;
+        this.alertService.error('Gửi phân công tiến độ thất bại!');
+      });
     } else {
       if (!this.tenderPlan.isSignedByPreparedPerson) {
         this.packageService.setRouterAction('edit');

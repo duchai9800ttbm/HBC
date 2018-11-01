@@ -6,7 +6,7 @@ import { PackageInfoModel } from '../../../../../../shared/models/package/packag
 import { PackageDetailComponent } from '../../../package-detail.component';
 import { DATATABLE_CONFIG } from '../../../../../../shared/configs';
 // tslint:disable-next-line:import-blacklist
-import { Subject, Observable } from 'rxjs';
+import { Subject, Observable, Subscription } from 'rxjs';
 import { FormBuilder, FormGroup, FormArray } from '@angular/forms';
 import { TenderPreparationPlanItem } from '../../../../../../shared/models/package/tender-preparation-plan-item';
 import DateTimeConvertHelper from '../../../../../../shared/helpers/datetime-convert-helper';
@@ -17,6 +17,8 @@ import * as moment from 'moment';
 import { Router } from '@angular/router';
 import { BidStatus } from '../../../../../../shared/constants/bid-status';
 import { CheckStatusPackage } from '../../../../../../shared/constants/check-status-package';
+import { PermissionService } from '../../../../../../shared/services/permission.service';
+import { PermissionModel } from '../../../../../../shared/models/permission/Permission.model';
 declare let kendo: any;
 
 @Component({
@@ -48,6 +50,22 @@ export class InformationDeploymentFormComponent implements OnInit {
     controlDisableForm: boolean;
     checkStatusPackage = CheckStatusPackage;
     submissionDate: Date;
+
+    subscription: Subscription;
+    listPermission: Array<PermissionModel>;
+    listPermissionScreen = [];
+    ThongBaoTrienKhai = false;
+    XemEmail = false;
+    TaoMoiBangPCTD = false;
+    XemBangPCTD = false;
+    SuaBangPCTD = false;
+    XoaBangPCTD = false;
+    InBangPCTD = false;
+    XacNhanKyPrepared = false;
+    XacNhanKyApproved = false;
+    GuiPCTD = false;
+    TaiTemplatePCTD = false;
+    BatDauLapHSDT = false;
     constructor(
         private spinner: NgxSpinnerService,
         private packageService: PackageService,
@@ -56,7 +74,8 @@ export class InformationDeploymentFormComponent implements OnInit {
         private router: Router,
         private alertService: AlertService,
         private sessionService: SessionService,
-        private confirmationService: ConfirmationService
+        private confirmationService: ConfirmationService,
+        private permissionService: PermissionService
     ) { }
 
     ngOnInit() {
@@ -65,6 +84,39 @@ export class InformationDeploymentFormComponent implements OnInit {
         });
         this.routerAction = this.packageService.routerAction;
         this.bidOpportunityId = PackageDetailComponent.packageId;
+        // Phân quyền
+
+        this.subscription = this.permissionService.get().subscribe(data => {
+            this.listPermission = data;
+            const hsdt = this.listPermission.length &&
+              this.listPermission.filter(x => x.bidOpportunityStage === 'HSDT')[0];
+            console.log(this.listPermission);
+            if (!hsdt) {
+              this.listPermissionScreen = [];
+            }
+            if (hsdt) {
+              const screen = hsdt.userPermissionDetails.length
+                && hsdt.userPermissionDetails.filter(y => y.permissionGroup.value === 'TrienKhaiVaPhanCongTienDo')[0];
+              if (!screen) {
+                this.listPermissionScreen = [];
+              }
+              if (screen) {
+                this.listPermissionScreen = screen.permissions.map(z => z.value);
+              }
+            }
+            this.ThongBaoTrienKhai = this.listPermissionScreen.includes('ThongBaoTrienKhai');
+            this.XemEmail = this.listPermissionScreen.includes('XemEmail');
+            this.TaoMoiBangPCTD = this.listPermissionScreen.includes('TaoMoiBangPCTD');
+            this.XemBangPCTD = this.listPermissionScreen.includes('XemBangPCTD');
+            this.SuaBangPCTD = this.listPermissionScreen.includes('SuaBangPCTD');
+            this.XoaBangPCTD = this.listPermissionScreen.includes('XoaBangPCTD');
+            this.InBangPCTD = this.listPermissionScreen.includes('InBangPCTD');
+            this.XacNhanKyPrepared = this.listPermissionScreen.includes('XacNhanKyPrepared');
+            this.XacNhanKyApproved = this.listPermissionScreen.includes('XacNhanKyApproved');
+            this.GuiPCTD = this.listPermissionScreen.includes('GuiPCTD');
+            this.TaiTemplatePCTD = this.listPermissionScreen.includes('TaiTemplatePCTD');
+            this.BatDauLapHSDT = this.listPermissionScreen.includes('BatDauLapHSDT');
+          });
         this.userService.getAllUser('').subscribe(data => {
             this.userList = data;
         });
