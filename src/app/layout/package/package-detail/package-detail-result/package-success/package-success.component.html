@@ -50,8 +50,9 @@
                         <div [ngClass]="{'': arrowKickOff == false,'arrow-down':arrowKickOff==true}"></div>
                     </div>
                 </li>
-                <li *ngIf="kickOffActive" class="triangle3 active" [routerLinkActive]="['active']" (click)="onClickKickOff();" [ngClass]="{ 'active' : kickOff === true }"
+                <li *ngIf="kickOffActive" class="triangle3 active" [routerLinkActive]="['active']" (click)="onClickKickOff();" 
                     [routerLink]="['../package-success/meeting-kickoff']">
+                    <!-- [ngClass]="{ 'active' : kickOff === true }" -->
                     <div style="width: 100%" class="center-parent">
                         <div></div>
                     </div>
@@ -64,7 +65,8 @@
                         <div [ngClass]="{'': arrowKickOff == false,'arrow-down':arrowKickOff==true}"></div>
                     </div>
                 </li>
-                <li *ngIf="kickOffActive" class="triangle3 active" [routerLinkActive]="['active']" [ngClass]="{ 'active' : kickOff === true }">
+                <li *ngIf="kickOffActive" class="triangle3 active" [routerLinkActive]="['active']">
+                        <!-- [ngClass]="{ 'active' : kickOff === true }" -->
                     <div style="width: 100%" class="center-parent">
                         <div></div>
                     </div>
