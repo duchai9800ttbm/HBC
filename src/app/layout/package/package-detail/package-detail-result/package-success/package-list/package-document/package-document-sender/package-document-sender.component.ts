@@ -334,16 +334,14 @@ export class PackageDocumentSenderComponent implements OnInit {
           });
         });
       } else {
-        // itemHSMT.documents[0].checkboxSelected = value;
-        itemHSMT.documents.forEach(itemChild => {
-          itemChild.checkboxSelected = value;
-        });
+        if (itemHSMT.documents && itemHSMT.documents.length !== 0) {
+          itemHSMT.documents.forEach(itemChild => {
+            itemChild.checkboxSelected = value;
+          });
+        }
       }
     });
     this.docHSDTList.forEach(itemHSDT => {
-      // itemHSDT.documents.forEach(itemDocument => {
-      //   itemDocument.checkboxSelected = value;
-      // });
       if (itemHSDT.childDocuments) {
         itemHSDT.childDocuments.forEach(itemChild => {
           itemChild.items.forEach(itemChildChild => {
@@ -351,9 +349,11 @@ export class PackageDocumentSenderComponent implements OnInit {
           });
         });
       } else {
-        itemHSDT.documents.forEach(itemChild => {
-          itemChild.checkboxSelected = value;
-        });
+        if (itemHSDT.documents && itemHSDT.documents.length !== 0) {
+          itemHSDT.documents.forEach(itemChild => {
+            itemChild.checkboxSelected = value;
+          });
+        }
       }
     });
   }
@@ -401,9 +401,7 @@ export class PackageDocumentSenderComponent implements OnInit {
     this.isDataHsdt = !this.isDataHsdt;
   }
   transferofdocuments() {
-    // this.isManageTransfer = true;
-    // this.btnManageTransfer = false;
-    // Chọn các tài liệu checkbox = true
+
     const itemDocChooseTranfer = [];
     this.docHSMTList.forEach(itemHSMT => {
       if (itemHSMT.childDocuments) {
@@ -429,27 +427,37 @@ export class PackageDocumentSenderComponent implements OnInit {
         });
       }
     });
-
-    if (itemDocChooseTranfer && itemDocChooseTranfer.length !== 0) {
-      this.confirmationService.confirm(
-        'Bạn có muốn chuyên giao tài liệu?',
-        () => {
-          this.detailResultPackageService.tranferDocs(this.currentPackageId, itemDocChooseTranfer).subscribe(response => {
-            this.packageService.changeStatusPackageValue(this.checkStatusPackage.DaChuyenGiaoTaiLieu.text);
-            this.detailResultPackageService.getHadTransferredList(this.currentPackageId).subscribe(responseHadTransferList => {
-              this.hadTransferList = responseHadTransferList;
-            });
-            // this.textmovedata = this.isManageTransfer ? 'Đã chuyển giao tài liệu' : 'Chưa chuyển giao tài liệu';
-            this.alertService.success('Chuyển giao tài liệu thành công!');
-          },
-            err => {
-              this.alertService.error('Chuyển giao tài liệu không thành công!');
-            });
-        }
-      );
+    if (this.checkDepartmentAndDateUse(itemDocChooseTranfer)) {
+      if (itemDocChooseTranfer && itemDocChooseTranfer.length !== 0) {
+        this.confirmationService.confirm(
+          'Bạn có muốn chuyên giao tài liệu?',
+          () => {
+            this.detailResultPackageService.tranferDocs(this.currentPackageId, itemDocChooseTranfer).subscribe(response => {
+              this.packageService.changeStatusPackageValue(this.checkStatusPackage.DaChuyenGiaoTaiLieu.text);
+              this.detailResultPackageService.getHadTransferredList(this.currentPackageId).subscribe(responseHadTransferList => {
+                this.hadTransferList = responseHadTransferList;
+              });
+              // this.textmovedata = this.isManageTransfer ? 'Đã chuyển giao tài liệu' : 'Chưa chuyển giao tài liệu';
+              this.alertService.success('Chuyển giao tài liệu thành công!');
+            },
+              err => {
+                this.alertService.error('Chuyển giao tài liệu không thành công!');
+              });
+          }
+        );
+      } else {
+        this.alertService.error('Bạn phải chọn ít nhất một tài liệu để chuyển giao!');
+      }
     } else {
-      this.alertService.error('Bạn phải chọn ít nhất một tài liệu để chuyển giao!');
+      this.alertService.error('Bạn cần chọn phòng ban và số ngày sử dụng cho phòng ban đã chọn.');
     }
+  }
+
+  checkDepartmentAndDateUse(itemDocChooseTranfer) {
+    return itemDocChooseTranfer.every(itemDocTranfer => {
+      return (itemDocTranfer.transferName && itemDocTranfer.transferName.length !== 0
+        && itemDocTranfer.dateUse && itemDocTranfer.dateUse !== '0');
+    });
   }
 
 
@@ -635,30 +643,34 @@ export class PackageDocumentSenderComponent implements OnInit {
   }
   // Tài liệu đã chuyển giao
   onSelectAllHadTransfer(value: boolean) {
-    this.docHSMTHadTransfer.forEach(itemHSMT => {
-      if (itemHSMT.childDocuments) {
-        itemHSMT.childDocuments.forEach(itemChild => {
-          itemChild.items.forEach(itemChildChild => {
-            itemChildChild.documents[0].checkboxSelected = value;
+    if (this.docHSMTHadTransfer && this.docHSMTHadTransfer.length !== 0) {
+      this.docHSMTHadTransfer.forEach(itemHSMT => {
+        if (itemHSMT.childDocuments) {
+          itemHSMT.childDocuments.forEach(itemChild => {
+            itemChild.items.forEach(itemChildChild => {
+              itemChildChild.documents[0].checkboxSelected = value;
+            });
           });
-        });
-      } else {
-        itemHSMT.documents[0].checkboxSelected = value;
-      }
-    });
-    this.docHSDTHadTransfer.forEach(itemHSDT => {
-      if (itemHSDT.childDocuments) {
-        itemHSDT.childDocuments.forEach(itemChild => {
-          itemChild.items.forEach(itemChildChild => {
-            itemChildChild.documents[0].checkboxSelected = value;
+        } else {
+          itemHSMT.documents[0].checkboxSelected = value;
+        }
+      });
+    }
+    if (this.docHSDTHadTransfer && this.docHSDTHadTransfer.length !== 0) {
+      this.docHSDTHadTransfer.forEach(itemHSDT => {
+        if (itemHSDT.childDocuments) {
+          itemHSDT.childDocuments.forEach(itemChild => {
+            itemChild.items.forEach(itemChildChild => {
+              itemChildChild.documents[0].checkboxSelected = value;
+            });
           });
-        });
-      } else {
-        itemHSDT.documents.forEach(itemChild => {
-          itemChild.checkboxSelected = value;
-        });
-      }
-    });
+        } else {
+          itemHSDT.documents.forEach(itemChild => {
+            itemChild.checkboxSelected = value;
+          });
+        }
+      });
+    }
   }
   // Quản lý tài liệu
   onSelectDocumentManage(value: boolean) {
