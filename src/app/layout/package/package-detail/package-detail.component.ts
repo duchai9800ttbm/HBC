@@ -70,6 +70,10 @@ export class PackageDetailComponent implements OnInit, OnDestroy {
       }
     }, 300);
 
+    const subFirst = this.permissionService.getListPermission(this.packageId).subscribe(listPermission => {
+      this.permissionService.set(listPermission);
+      subFirst.unsubscribe();
+    });
     this.subInterval = IntervalObservable.create(1 * 10 * 1000).subscribe(_ => {
       this.sub = this.permissionService.getListPermission(this.packageId).subscribe(listPermission => {
         this.permissionService.set(listPermission);
