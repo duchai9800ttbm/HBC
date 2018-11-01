@@ -401,9 +401,8 @@ export class PackageDocumentSenderComponent implements OnInit {
     this.isDataHsdt = !this.isDataHsdt;
   }
   transferofdocuments() {
-    this.isManageTransfer = true;
-    this.btnManageTransfer = false;
-    this.textmovedata = this.isManageTransfer ? 'Đã chuyển giao tài liệu' : 'Chưa chuyển giao tài liệu';
+    // this.isManageTransfer = true;
+    // this.btnManageTransfer = false;
     // Chọn các tài liệu checkbox = true
     const itemDocChooseTranfer = [];
     this.docHSMTList.forEach(itemHSMT => {
@@ -440,6 +439,7 @@ export class PackageDocumentSenderComponent implements OnInit {
             this.detailResultPackageService.getHadTransferredList(this.currentPackageId).subscribe(responseHadTransferList => {
               this.hadTransferList = responseHadTransferList;
             });
+            // this.textmovedata = this.isManageTransfer ? 'Đã chuyển giao tài liệu' : 'Chưa chuyển giao tài liệu';
             this.alertService.success('Chuyển giao tài liệu thành công!');
           },
             err => {

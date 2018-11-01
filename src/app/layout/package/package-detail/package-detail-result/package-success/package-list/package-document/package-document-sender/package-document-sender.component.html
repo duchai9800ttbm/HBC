@@ -5,7 +5,8 @@
                 <div class="rule mr-2">
                 </div>
                 <div class="center-parent  mr-4">
-                    <div>{{textmovedata}}</div>
+                    <div *ngIf="(statusPackage.id === checkStatusPackage.DaThongBaoCacBenLienQuan.id)">Chưa chuyển giao tài liệu</div>
+                    <div *ngIf="(statusPackage.id === checkStatusPackage.DaChuyenGiaoTaiLieu.id) || (statusPackage.id === checkStatusPackage.ChuaNhanTaiLieu.id)">Đã chuyển giao tài liệu</div>
                 </div>
             </div>
         </div>
