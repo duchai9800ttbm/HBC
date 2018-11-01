@@ -424,7 +424,7 @@
                 </table>
                 <!-- End Màn hình CHƯA chuyển giao tài liệu -->
                 <!-- Start Màn hình ĐÃ chuyển giao tài liệu -->
-                <table *ngIf="(statusPackage.id === checkStatusPackage.DaChuyenGiaoTaiLieu.id) || (statusPackage.id === checkStatusPackage.ChuaNhanTaiLieu.id)"
+                <table *ngIf="(statusPackage.id >= checkStatusPackage.DaChuyenGiaoTaiLieu.id) || (statusPackage.id === checkStatusPackage.ChuaNhanTaiLieu.id)"
                     class="table-selection stripe row-border hover cell-border dataTable">
                     <thead>
                         <tr>

@@ -6,6 +6,8 @@ import { PackageDetailComponent } from '../../../package-detail.component';
 import CustomValidator from '../../../../../../shared/helpers/custom-validator.helper';
 import ValidationHelper from '../../../../../../shared/helpers/validation.helper';
 import { Router } from '../../../../../../../../node_modules/@angular/router';
+import { CheckStatusPackage } from '../../../../../../shared/constants/check-status-package';
+import { PackageService } from '../../../../../../shared/services/package.service';
 
 @Component({
   selector: 'app-upload-result-attend',
@@ -16,19 +18,25 @@ export class UploadResultAttendComponent implements OnInit {
   @Input() callBack: Function;
   @Input() callBackAndNavigate: Function;
   @Input() typeBid: string;
+  @Input() version: number;
+  @Input() interviewTimes: number;
+  @Input() winOrLost: boolean;
   uploadResultForm: FormGroup;
   file;
   formErrors = {
     documentName: '',
+    receivedDate: ''
   };
   isSubmitted: boolean;
   invalidMessages: string[];
   currentPackageId: number;
+  checkStatusPackage = CheckStatusPackage;
   constructor(
     private fb: FormBuilder,
     private alertService: AlertService,
     private detailResultPackageService: DetailResultPackageService,
     private router: Router,
+    private packageService: PackageService
   ) { }
 
   ngOnInit() {
@@ -38,10 +46,10 @@ export class UploadResultAttendComponent implements OnInit {
   createForm() {
     this.uploadResultForm = this.fb.group({
       documentName: ['', CustomValidator.required],
-      version: [],
+      version: [this.version],
       uploadedBy: [],
-      receivedDate: [],
-      interviewTimes: [],
+      receivedDate: [new Date(), CustomValidator.requiredDate],
+      interviewTimes: [this.interviewTimes],
       documentDesc: [],
       link: [],
     });
@@ -70,6 +78,11 @@ export class UploadResultAttendComponent implements OnInit {
         this.file
       ).subscribe(response => {
         this.closePopup();
+        if (this.winOrLost) {
+          this.packageService.changeStatusPackageValue(this.checkStatusPackage.TrungThau.text);
+        } else {
+          this.packageService.changeStatusPackageValue(this.checkStatusPackage.TratThau.text);
+        }
         this.alertService.success('Upload kết quả dự thầu thành công!');
         switch (this.typeBid) {
           case 'win': {

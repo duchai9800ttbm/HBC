@@ -160,6 +160,7 @@ export class WaitResultComponent implements OnInit {
                     break;
             }
             this.packageSuccessService.receiveBidResult(this.currentPackageId).subscribe(response => {
+                this.packageService.changeStatusPackageValue(this.checkStatusPackage.KetQuaDuThau.text);
                 this.getAPIWinOrRLoseOrReject(typeBid);
             }, err => {
                 this.packageService.getInforPackageID(this.currentPackageId).subscribe(result => {
@@ -196,6 +197,8 @@ export class WaitResultComponent implements OnInit {
                         instance.callBack = () => this.closePopuup();
                         instance.callBackAndNavigate = () => this.closePopuupNevigate(typeBid);
                         instance.typeBid = typeBid;
+                        instance.interviewTimes = 1;
+                        instance.winOrLost = true;
                         break;
                     }
                     case 'lose': {
@@ -208,6 +211,8 @@ export class WaitResultComponent implements OnInit {
                         instance.callBack = () => this.closePopuup();
                         instance.callBackAndNavigate = () => this.closePopuupNevigate(typeBid);
                         instance.typeBid = typeBid;
+                        instance.interviewTimes = 1;
+                        instance.winOrLost = false;
                         break;
                     }
                     case 'cancel': {

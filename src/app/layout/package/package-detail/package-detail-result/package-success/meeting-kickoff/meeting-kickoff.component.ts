@@ -14,6 +14,8 @@ import { DetailResultPackageService } from '../../../../../../shared/services/de
 import { NgxSpinnerService } from '../../../../../../../../node_modules/ngx-spinner';
 import { UploadKickOffComponent } from './upload-kick-off/upload-kick-off.component';
 import { DialogService } from '../../../../../../../../node_modules/@progress/kendo-angular-dialog';
+import { PackageService } from '../../../../../../shared/services/package.service';
+import { CheckStatusPackage } from '../../../../../../shared/constants/check-status-package';
 
 @Component({
   selector: 'app-meeting-kickoff',
@@ -52,6 +54,14 @@ export class MeetingKickoffComponent implements OnInit {
   file = [];
   actionEmail: string;
   dialogUploadMettingKickOff;
+  statusPackage = {
+    text: 'TrungThau',
+    stage: 'KQDT',
+    id: null,
+  };
+  checkStatusPackage = CheckStatusPackage;
+  loading = false;
+  isData = false;
   constructor(
     private modalService: BsModalService,
     private router: Router,
@@ -62,7 +72,8 @@ export class MeetingKickoffComponent implements OnInit {
     private emailService: EmailService,
     private detailResultPackageService: DetailResultPackageService,
     private spinner: NgxSpinnerService,
-    private dialogService: DialogService
+    private dialogService: DialogService,
+    private packageService: PackageService
   ) { }
 
   ngOnInit() {
@@ -76,6 +87,9 @@ export class MeetingKickoffComponent implements OnInit {
       link: ['']
     });
     this.currentPackageId = +PackageDetailComponent.packageId;
+    this.packageService.statusPackageValue$.subscribe(status => {
+      this.statusPackage = status;
+    });
     this.textMetting = 'Đã nhận tài liệu';
     this.textTitleSendMail = 'Gửi thư thông báo họp kich-off dự án';
     this.doNotiMeeting = false;
@@ -102,6 +116,14 @@ export class MeetingKickoffComponent implements OnInit {
     });
   }
 
+  endAPIFuction(event) {
+    this.loading = event;
+    console.log('endAPIFuction', event);
+  }
+  isDataFuction(event) {
+    this.isData = event;
+    console.log('isDataFuction', event);
+  }
   sendCc() {
     this.isSendCc = !this.isSendCc;
   }
@@ -152,15 +174,6 @@ export class MeetingKickoffComponent implements OnInit {
     this.modalRef.hide();
   }
 
-  // modalUp(template: TemplateRef<any>, type: number) {
-  //   this.type = type;
-  //   if (this.type === 1) {
-  //     this.textUploadReport = 'Upload biên bản cuộc họp';
-  //   } else {
-  //     this.textUploadReport = 'Upload file presentation';
-  //   }
-  //   this.modalUpload = this.modalService.show(template);
-  // }
   modelViewListData(template: TemplateRef<any>) {
     this.modalViewData = this.modalService.show(template);
   }
@@ -182,6 +195,7 @@ export class MeetingKickoffComponent implements OnInit {
       this.emailModel.bidOpportunityId = this.currentPackageId;
       this.spinner.show();
       this.detailResultPackageService.notiMeetingKickOff(this.emailModel, this.file).subscribe(result => {
+        this.packageService.changeStatusPackageValue(this.checkStatusPackage.DaThongBaoHopKickOff.text);
         this.emailModel = new SendEmailModel();
         this.file = [];
         this.alertService.success('Gửi thư thông báo họp kick-off dự án thành công!');
@@ -209,5 +223,6 @@ export class MeetingKickoffComponent implements OnInit {
   closePopuup() {
     this.dialogUploadMettingKickOff.close();
   }
+
 
 }

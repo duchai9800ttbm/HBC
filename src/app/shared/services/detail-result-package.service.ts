@@ -22,6 +22,8 @@ import { TransferredDoc } from '../models/result-attend/transferred-doc.model';
 export class DetailResultPackageService {
   listFileResult: Subject<any> = new Subject();
   listContractSigning: Subject<any> = new Subject();
+  listReportMeeting: Subject<any> = new Subject();
+  listFilePresentationMeeting: Subject<any> = new Subject();
   constructor(
     private apiService: ApiService,
   ) { }
@@ -365,6 +367,11 @@ export class DetailResultPackageService {
   // Yêu cầu gửi lại tài liệu
   requestToreSubmitdoc(bidTransferDocDetailId: number) {
     const url = `bidtransferdocdetail/${bidTransferDocDetailId}/requesttoresubmitdoc`;
+    return this.apiService.get(url);
+  }
+  // Gửi lại tài liệu
+  resubmitDoc(bidTransferDocDetailId: number) {
+    const url = `bidtransferdocdetail/${bidTransferDocDetailId}/resubmitdoc`;
     return this.apiService.get(url);
   }
   // Xác nhận đã nhận
@@ -862,4 +869,22 @@ export class DetailResultPackageService {
     };
     return this.apiService.post(url, request);
   }
+  // Có sự thay đổi listReportMeeting
+  changeListReportMeeting() {
+    this.listReportMeeting.next();
+  }
+  // Obserable listReportMeeting
+  watchListListReportMeeting() {
+    return this.listReportMeeting;
+  }
+
+  // Có sự thay đổi listReportMeeting
+  changeListFilePresentationMeeting() {
+    this.listFilePresentationMeeting.next();
+  }
+  // Obserable listReportMeeting
+  watchListFilePresentationMeeting() {
+    return this.listFilePresentationMeeting;
+  }
+
 }

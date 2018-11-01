@@ -1,4 +1,4 @@
-import { Component, OnInit, TemplateRef, Input } from '@angular/core';
+import { Component, OnInit, TemplateRef, Input, EventEmitter, Output } from '@angular/core';
 import { BsModalService } from 'ngx-bootstrap/modal';
 import { BsModalRef } from 'ngx-bootstrap/modal/bs-modal-ref.service';
 import { DATATABLE_CONFIG } from '../../../../../../../shared/configs';
@@ -24,6 +24,8 @@ import { groupBy } from '../../../../../../../../../node_modules/@progress/kendo
 })
 export class ReportMeetingComponent implements OnInit {
   @Input() reportFile;
+  @Output() endAPI = new EventEmitter<boolean>();
+  @Output() isData = new EventEmitter<boolean>();
   dtTriggerReport: Subject<any> = new Subject();
   dtTriggerFile: Subject<any> = new Subject();
   dtOptions: any = DATATABLE_CONFIG;
@@ -57,6 +59,8 @@ export class ReportMeetingComponent implements OnInit {
   interviewTimesReport;
   employeeListFile;
   interviewTimesFile;
+  loadingFilterMeetingReportList = true;
+  loadingFilterFileList = true;
   constructor(
     private packageSuccessService: PackageSuccessService,
     private modalService: BsModalService,
@@ -93,12 +97,14 @@ export class ReportMeetingComponent implements OnInit {
     this.filterMeetingReport.createdDate = null;
     this.filterMeetingReport.meetingTime = null;
     this.filterMeetingReport.interviewTimes = null;
-    // this.filterMeetingReportList(false);
     this.searchTermMeetingReport$.debounceTime(600)
       .distinctUntilChanged()
       .subscribe(keySearch => {
         this.filterMeetingReportList(false);
       });
+    this.detailResultPackageService.watchListListReportMeeting().subscribe(value => {
+      this.filterMeetingReportList(false);
+    });
     // filter file
     this.filterFile.uploadedEmployeeId = null;
     this.filterFile.createdDate = null;
@@ -109,6 +115,9 @@ export class ReportMeetingComponent implements OnInit {
       .subscribe(keySearch => {
         this.filterFileList(false);
       });
+    this.detailResultPackageService.watchListFilePresentationMeeting().subscribe(value => {
+      this.filterFileList(false);
+    });
   }
   get f() { return this.formUpload.controls; }
   onSubmit() {
@@ -131,21 +140,13 @@ export class ReportMeetingComponent implements OnInit {
     this.totalFileUpload = this.dataFileUpload.length;
     this.modalUpload.hide();
   }
-  // modalUp(template: TemplateRef<any>, type: number) {
-  //   this.type = type;
-  //   console.log('type', type);
-  //   if (this.type === 1) {
-  //     this.textUploadReport = 'Upload biên bản cuộc họp';
-  //   } else {
-  //     this.textUploadReport = 'Upload file presentation';
-  //   }
-  //   this.modalUpload = this.modalService.show(template);
-  // }
   // ====
   // ráp API
   // Report
   filterMeetingReportList(alertReload: boolean) {
     this.spinner.show();
+    this.loadingFilterMeetingReportList = true;
+    this.endAPI.emit(true);
     this.detailResultPackageService.getBidMeetingReportDocsList(
       this.currentPackageId,
       this.searchTermMeetingReport$.value,
@@ -154,6 +155,12 @@ export class ReportMeetingComponent implements OnInit {
       1000
     ).subscribe(response => {
       this.meetingReportList = response.items;
+      this.loadingFilterMeetingReportList = false;
+      this.endAPI.emit(false);
+      console.log('this.meetingFileList.length', this.meetingReportList.length, this.meetingFileList.length);
+      if ((this.meetingReportList && this.meetingReportList.length !== 0) || (this.meetingFileList && this.meetingFileList.length !== 0)) {
+        this.isData.emit(true);
+      }
       this.getListFilterReport();
       this.spinner.hide();
       if (alertReload) {
@@ -161,6 +168,8 @@ export class ReportMeetingComponent implements OnInit {
       }
     },
       err => {
+        this.loadingFilterMeetingReportList = false;
+        this.endAPI.emit(false);
         this.spinner.hide();
         this.alertService.error('Không thể cập nhật danh sách biên bản cuộc họp!');
       });
@@ -205,6 +214,8 @@ export class ReportMeetingComponent implements OnInit {
   // File
   filterFileList(alertReload: boolean) {
     this.spinner.show();
+    this.loadingFilterFileList = true;
+    this.endAPI.emit(true);
     this.detailResultPackageService.getBidMeetingFileList(
       this.currentPackageId,
       this.searchTermFile$.value,
@@ -213,6 +224,11 @@ export class ReportMeetingComponent implements OnInit {
       1000
     ).subscribe(response => {
       this.meetingFileList = response.items;
+      this.loadingFilterFileList = false;
+      this.endAPI.emit(false);
+      if ((this.meetingReportList && this.meetingReportList.length !== 0) || (this.meetingFileList && this.meetingFileList.length !== 0)) {
+        this.isData.emit(true);
+      }
       this.getListFilterFile();
       this.spinner.hide();
       if (alertReload) {
@@ -221,6 +237,8 @@ export class ReportMeetingComponent implements OnInit {
     },
       err => {
         this.spinner.hide();
+        this.loadingFilterFileList = false;
+        this.endAPI.emit(false);
         this.alertService.error('Không thể cập nhật danh sách file presentation!');
       });
   }

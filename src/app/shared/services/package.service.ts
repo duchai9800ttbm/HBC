@@ -27,7 +27,11 @@ import { CheckStatusPackage } from '../constants/check-status-package';
 export class PackageService {
     private statusPackage = new Subject<boolean>();
     public statusPackage$ = this.statusPackage.asObservable();
-    private statusPackageValue = new Subject<any>();
+    private statusPackageValue = new BehaviorSubject<any>({
+        text: 'TrungThau',
+        stage: 'KQDT',
+        id: null,
+    });
     public statusPackageValue$ = this.statusPackageValue.asObservable();
     statusPackageValue2 = {
         text: 'TrungThau',
@@ -512,7 +516,11 @@ export class PackageService {
                 projectEstimatedEndDate: result.projectEstimatedEndDate,
                 totalTime: result.totalTime,
                 description: result.description,
-                isSignedContract: result.isSignedContract
+                // KQDT
+                isSignedContract: result.isSignedContract,
+                winReasonName: result.winReasonName,
+                loseReasonName: result.loseReasonName,
+                cancelReasonName: result.cancelReasonName,
             };
         }).share();
     }

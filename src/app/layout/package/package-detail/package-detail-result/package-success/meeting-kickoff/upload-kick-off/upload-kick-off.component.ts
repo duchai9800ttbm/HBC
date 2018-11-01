@@ -72,8 +72,8 @@ export class UploadKickOffComponent implements OnInit {
             this.uploadMeetingKickOff.value,
             this.file
           ).subscribe(response => {
-            this.closePopupAndReload();
-            this.detailResultPackageService.changeListFileResult();
+            this.closePopup();
+            this.detailResultPackageService.changeListReportMeeting();
             this.alertService.success('Upload biên bản cuộc họp thành công!');
           },
             err => {
@@ -87,8 +87,8 @@ export class UploadKickOffComponent implements OnInit {
             this.uploadMeetingKickOff.value,
             this.file
           ).subscribe(response => {
-            this.closePopupAndReload();
-            this.detailResultPackageService.changeListFileResult();
+            this.closePopup();
+            this.detailResultPackageService.changeListFilePresentationMeeting();
             this.alertService.success('Upload file presentation thành công!');
           },
             err => {

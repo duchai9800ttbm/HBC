@@ -288,7 +288,7 @@ export class PackageFailedComponent implements OnInit, OnDestroy {
     instance.callBack = () => this.closePopuup();
     instance.version = this.maxVersion + 1;
     instance.interviewTimes = this.maxInterviewTimes + 1;
-    // // instance.reloadData = () => this.reloadData();
+    instance.winOrLost = false;
   }
   closePopuup() {
     this.dialogUploadResultAttend.close();

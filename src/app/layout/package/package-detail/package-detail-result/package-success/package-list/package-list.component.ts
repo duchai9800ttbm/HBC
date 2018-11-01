@@ -176,6 +176,7 @@ export class PackageListComponent implements OnInit {
     instance.callBack = () => this.closePopuup();
     instance.version = this.maxVersion + 1;
     instance.interviewTimes = this.maxInterviewTimes + 1;
+    instance.winOrLost = true;
   }
   closePopuup() {
     this.dialogUploadResultAttend.close();

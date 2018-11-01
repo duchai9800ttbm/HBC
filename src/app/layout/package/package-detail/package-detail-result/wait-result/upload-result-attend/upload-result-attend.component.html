@@ -1,118 +1,116 @@
 <div class="example-wrapper">
-  <form [formGroup]="uploadResultForm">
-      <div class="title-detail center-parent">
-          <div class="w-20">
-          </div>
-          <div class="w-80">
-              <div class="media-header center-parent">
-                  <h3 class="d-inline mb-0 text-dark bold-title">UPLOAD KẾT QUẢ DỰ THẦU</h3>
-              </div>
-          </div>
-          <div class="d-flex justify-content-end w-20">
-              <div>
-                  <div>
-                      <img (click)="closePopupAndNegative()" width="15" height="15" class="cursor-pointer not-outline" src="assets\images\close.png">
-                  </div>
-              </div>
-          </div>
-      </div>
-      <hr>
-      <div class="d-flex">
-          <div class="w-100  mr-auto">
-              <div>
-                  <div class="body cus-header" id="info-main">
-                      <div class="w-100 center-parent" *ngIf="errorMess" class="alert alert-danger" role="alert">
-                          <span> {{errorMess}}</span>
-                      </div>
-                      <table class="w-100 table">
+    <form [formGroup]="uploadResultForm">
+        <div class="title-detail center-parent">
+            <div class="w-20">
+            </div>
+            <div class="w-80">
+                <div class="media-header center-parent">
+                    <h3 class="d-inline mb-0 text-dark bold-title">UPLOAD KẾT QUẢ DỰ THẦU</h3>
+                </div>
+            </div>
+            <div class="d-flex justify-content-end w-20">
+                <div>
+                    <div>
+                        <img (click)="closePopupAndNegative()" width="15" height="15" class="cursor-pointer not-outline" src="assets\images\close.png">
+                    </div>
+                </div>
+            </div>
+        </div>
+        <hr>
+        <div class="d-flex">
+            <div class="w-100  mr-auto">
+                <div>
+                    <div class="body cus-header" id="info-main">
+                        <div class="w-100 center-parent" *ngIf="errorMess" class="alert alert-danger" role="alert">
+                            <span> {{errorMess}}</span>
+                        </div>
+                        <table class="w-100 table">
 
-                          <tbody>
-                              <tr>
-                                  <td class="w-30 label no-boder bold-title">Đường dẫn link</td>
-                                  <td class="w-70 no-boder">
-                                      <input class="w-100" [attr.disabled]="file ? '' : null" class="form-control"
-                                          tabindex="1" type="text" formControlName="link">
-                                  </td>
-                              </tr>
-                              <tr>
-                                  <td class="w-30 label no-boder bold-title">Hoặc</td>
-                                  <td class="no-boder d-flex justify-content-between">
-                                      <div class="fileUpload">
-                                          <button class="btn btn-primary" [disabled]="uploadResultForm.get('link').value">
-                                              <i class="fa fa-cloud-upload" aria-hidden="true"></i>&nbsp;&nbsp; Chọn
-                                              File</button>
-                                          <input type="file" class="upload" tabindex="2" (change)="fileChange($event)"
-                                              [disabled]="uploadResultForm.get('link').value" />
-                                      </div>
-                                      <div class="d-flex justify-content-between name-file--width">
-                                          <div>
-                                              <span class="text-truncate">{{file?.name}}</span>
-                                          </div>
-                                          <div *ngIf="file">
-                                              <button (click)="deleteFileUpload()" class="btn btn-secondary">X</button>
-                                          </div>
-                                      </div>
-                                  </td>
-                              </tr>
-                              <tr *ngIf="!((uploadResultForm.get('link').value &&  uploadResultForm.get('link').value !== '') || file) && isSubmitted">
-                                  <td class="w-30 no-boder"></td>
-                                  <td class="w-70 no-boder">
-                                      <div class="invalid-feedback">
-                                          Bạn phải nhập đường dẫn link hoặc đính kèm file
-                                      </div>
-                                  </td>
-                              </tr>
-                              <tr>
-                                  <td class="w-30 label no-boder bold-title required">Tên</td>
-                                  <td class="w-70 no-boder">
-                                      <input class="w-100" kendoTextBox tabindex="4" type="text" formControlName="documentName"
-                                          [class.is-invalid]="formErrors.documentName">
-                                      <div class="invalid-feedback" *ngIf="formErrors.documentName">
-                                          {{formErrors.documentName}}
-                                      </div>
-                                  </td>
-                              </tr>
-                              <tr>
-                                  <td class="w-30 label no-boder bold-title">Phiên bản</td>
-                                  <td class="w-70 no-boder">
-                                      <input appInputNumberInteger class="w-100" kendoTextBox tabindex="5" type="text"
-                                          formControlName="version">
-                                  </td>
-                              </tr>
-                              <tr>
-                                  <td class="w-30 label no-boder bold-title">Lần phỏng vấn</td>
-                                  <td class="no-boder d-flex">
-                                      <input appInputNumberInteger class="w-100" kendoTextBox tabindex="6" type="text"
-                                          formControlName="interviewTimes">
-                                  </td>
-                              </tr>
-                              <tr>
-                                  <td class="w-30 label no-boder bold-title">Ngày nhận kết quả</td>
-                                  <td class="no-boder d-flex">
-                                      <!-- <input appInputNumberInteger class="w-100" kendoTextBox tabindex="6" type="text" formControlName="interviewTimes"> -->
-                                      <kendo-datepicker class="w-100" tabindex="7" formControlName="receivedDate"></kendo-datepicker>
-                                  </td>
-                              </tr>
-                              <tr>
-                                  <td class="w-30 label no-boder bold-title">Mô tả/Nội dung cập nhật</td>
-                                  <td class="w-70 no-boder">
-                                      <textarea kendoTextArea tabindex="8" cols="3" rows="3" class="w-100 form-control no-resize-textarea"
-                                          formControlName="documentDesc"></textarea>
-                                  </td>
-                              </tr>
-                          </tbody>
-                      </table>
-                  </div>
+                            <tbody>
+                                <tr>
+                                    <td class="w-30 label no-boder bold-title">Đường dẫn link</td>
+                                    <td class="w-70 no-boder">
+                                        <input class="w-100" [attr.disabled]="file ? '' : null" class="form-control" tabindex="1" type="text" formControlName="link">
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="w-30 label no-boder bold-title">Hoặc</td>
+                                    <td class="no-boder d-flex justify-content-between">
+                                        <div class="fileUpload">
+                                            <button class="btn btn-primary" [disabled]="uploadResultForm.get('link').value">
+                                                <i class="fa fa-cloud-upload" aria-hidden="true"></i>&nbsp;&nbsp; Chọn File
+                                            </button>
+                                            <input type="file" class="upload" tabindex="2" (change)="fileChange($event)" [disabled]="uploadResultForm.get('link').value"
+                                            />
+                                        </div>
+                                        <div class="d-flex justify-content-between name-file--width">
+                                            <div>
+                                                <span class="text-truncate">{{file?.name}}</span>
+                                            </div>
+                                            <div *ngIf="file">
+                                                <button (click)="deleteFileUpload()" class="btn btn-secondary">X</button>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr *ngIf="!((uploadResultForm.get('link').value &&  uploadResultForm.get('link').value !== '') || file) && isSubmitted">
+                                    <td class="w-30 no-boder"></td>
+                                    <td class="w-70 no-boder">
+                                        <div class="invalid-feedback">
+                                            Bạn phải nhập đường dẫn link hoặc đính kèm file
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="w-30 label no-boder bold-title required">Tên</td>
+                                    <td class="w-70 no-boder">
+                                        <input class="w-100" kendoTextBox tabindex="4" type="text" formControlName="documentName" [class.is-invalid]="formErrors.documentName">
+                                        <div class="invalid-feedback" *ngIf="formErrors.documentName">
+                                            {{formErrors.documentName}}
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="w-30 label no-boder bold-title">Phiên bản</td>
+                                    <td class="w-70 no-boder">
+                                        <input appInputNumberInteger class="w-100" kendoTextBox tabindex="5" type="text" formControlName="version">
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="w-30 label no-boder bold-title">Lần phỏng vấn</td>
+                                    <td class="no-boder d-flex">
+                                        <input appInputNumberInteger class="w-100" kendoTextBox tabindex="6" type="text" formControlName="interviewTimes">
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="w-30 label no-boder bold-title">Ngày nhận kết quả</td>
+                                    <td class="no-boder">
+                                        <!-- <input appInputNumberInteger class="w-100" kendoTextBox tabindex="6" type="text" formControlName="interviewTimes"> -->
+                                        <kendo-datepicker class="w-100" tabindex="7" formControlName="receivedDate" [class.is-invalid]="formErrors.receivedDate"></kendo-datepicker>
+                                        <div class="invalid-feedback" *ngIf="formErrors.receivedDate">
+                                            {{formErrors.receivedDate}}
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="w-30 label no-boder bold-title">Mô tả/Nội dung cập nhật</td>
+                                    <td class="w-70 no-boder">
+                                        <textarea kendoTextArea tabindex="8" cols="3" rows="3" class="w-100 form-control no-resize-textarea" formControlName="documentDesc"></textarea>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
 
-              </div>
-              <div class="action-bar alignment-but center-parent">
-                  <button type="submit" class="btn btn-primary 1 cus-but-cs" (click)="Upload()">Upload
-                  </button>
-                  <button class="btn btn-secondary ml-1 cus-but-cs" (click)="closePopupAndNegative()">Hủy
-                  </button>
-              </div>
-          </div>
-      </div>
-  </form>
+                </div>
+                <div class="action-bar alignment-but center-parent">
+                    <button type="submit" class="btn btn-primary 1 cus-but-cs" (click)="Upload()">Upload
+                    </button>
+                    <button class="btn btn-secondary ml-1 cus-but-cs" (click)="closePopupAndNegative()">Hủy
+                    </button>
+                </div>
+            </div>
+        </div>
+    </form>
 </div>
-<ngx-spinner bdColor="rgba(51, 51, 51, 0.7)" size = "default" color="#fff" type="ball-scale"></ngx-spinner>
+<ngx-spinner bdColor="rgba(51, 51, 51, 0.7)" size="default" color="#fff" type="ball-scale"></ngx-spinner>

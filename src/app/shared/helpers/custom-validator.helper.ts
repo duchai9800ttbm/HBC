@@ -25,6 +25,15 @@ export default class CustomValidator {
             : null;
     }
 
+    static requiredDate(control: AbstractControl): ValidationErrors | null {
+        return (control.value === null)
+            ? {
+                required: {
+                    valid: false
+                }
+            }
+            : null;
+    }
 
     static website(control: AbstractControl): ValidationErrors | null {
         const WEBSITE_REGEX = /^(?:http(s)?:\/\/)?[\w.-]+(?:\.[\w\.-]+)+[\w\-\._~:/?#[\]@!\$&'\(\)\*\+,;=.]+$/gm;
