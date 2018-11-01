@@ -367,6 +367,11 @@ export class DetailResultPackageService {
     const url = `bidtransferdocdetail/${bidTransferDocDetailId}/requesttoresubmitdoc`;
     return this.apiService.get(url);
   }
+  // Gửi lại tài liệu
+  resubmitDoc(bidTransferDocDetailId: number) {
+    const url = `bidtransferdocdetail/${bidTransferDocDetailId}/resubmitdoc`;
+    return this.apiService.get(url);
+  }
   // Xác nhận đã nhận
   confirmReceiveDocs(idsArray: number[]) {
     const url = `bidtransferdocdetail/confirmreceivedocs`;

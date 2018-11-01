@@ -16,10 +16,14 @@ export class UploadResultAttendComponent implements OnInit {
   @Input() callBack: Function;
   @Input() callBackAndNavigate: Function;
   @Input() typeBid: string;
+  @Input() version: number;
+  @Input() interviewTimes: number;
+  @Input() winOrLost: boolean;
   uploadResultForm: FormGroup;
   file;
   formErrors = {
     documentName: '',
+    receivedDate: ''
   };
   isSubmitted: boolean;
   invalidMessages: string[];
@@ -38,10 +42,10 @@ export class UploadResultAttendComponent implements OnInit {
   createForm() {
     this.uploadResultForm = this.fb.group({
       documentName: ['', CustomValidator.required],
-      version: [],
+      version: [this.version],
       uploadedBy: [],
-      receivedDate: [],
-      interviewTimes: [],
+      receivedDate: [new Date(), CustomValidator.requiredDate],
+      interviewTimes: [this.interviewTimes],
       documentDesc: [],
       link: [],
     });

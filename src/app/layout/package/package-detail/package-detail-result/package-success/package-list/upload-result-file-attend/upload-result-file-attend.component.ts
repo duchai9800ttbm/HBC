@@ -5,6 +5,8 @@ import ValidationHelper from '../../../../../../../shared/helpers/validation.hel
 import { AlertService } from '../../../../../../../shared/services';
 import { PackageDetailComponent } from '../../../../package-detail.component';
 import { DetailResultPackageService } from '../../../../../../../shared/services/detail-result-package.service';
+import { PackageService } from '../../../../../../../shared/services/package.service';
+import { CheckStatusPackage } from '../../../../../../../shared/constants/check-status-package';
 
 @Component({
   selector: 'app-upload-result-file-attend',
@@ -15,18 +17,22 @@ export class UploadResultFileAttendComponent implements OnInit {
   @Input() callBack: Function;
   @Input() version: number;
   @Input() interviewTimes: number;
+  @Input() winOrLost: boolean;
   uploadResultForm: FormGroup;
   file;
   formErrors = {
     documentName: '',
+    receivedDate: ''
   };
   isSubmitted: boolean;
   invalidMessages: string[];
   currentPackageId: number;
+  checkStatusPackage = CheckStatusPackage;
   constructor(
     private fb: FormBuilder,
     private alertService: AlertService,
     private detailResultPackageService: DetailResultPackageService,
+    private packageService: PackageService
   ) { }
 
   ngOnInit() {
@@ -38,7 +44,7 @@ export class UploadResultFileAttendComponent implements OnInit {
       documentName: ['', CustomValidator.required],
       version: [this.version],
       uploadedBy: [],
-      receivedDate: [new Date()],
+      receivedDate: [new Date(), CustomValidator.requiredDate],
       interviewTimes: [this.interviewTimes],
       documentDesc: [],
       link: [],
@@ -49,6 +55,7 @@ export class UploadResultFileAttendComponent implements OnInit {
 
   validateForm() {
     this.invalidMessages = ValidationHelper.getInvalidMessages(this.uploadResultForm, this.formErrors);
+    console.log('this.uploadResultForm', this.uploadResultForm.get('receivedDate'), this.uploadResultForm.get('receivedDate').valid);
     return this.invalidMessages.length === 0;
   }
 
@@ -68,6 +75,11 @@ export class UploadResultFileAttendComponent implements OnInit {
         this.file
       ).subscribe(response => {
         this.closePopup();
+        if (this.winOrLost) {
+          this.packageService.changeStatusPackageValue(this.checkStatusPackage.TrungThau.text);
+        } else {
+          this.packageService.changeStatusPackageValue(this.checkStatusPackage.TratThau.text);
+        }
         this.detailResultPackageService.changeListFileResult();
         this.alertService.success('Upload kết quả dự thầu thành công!');
       },

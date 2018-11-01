@@ -196,6 +196,8 @@ export class WaitResultComponent implements OnInit {
                         instance.callBack = () => this.closePopuup();
                         instance.callBackAndNavigate = () => this.closePopuupNevigate(typeBid);
                         instance.typeBid = typeBid;
+                        instance.interviewTimes = 1;
+                        instance.winOrLost = true;
                         break;
                     }
                     case 'lose': {
@@ -208,6 +210,8 @@ export class WaitResultComponent implements OnInit {
                         instance.callBack = () => this.closePopuup();
                         instance.callBackAndNavigate = () => this.closePopuupNevigate(typeBid);
                         instance.typeBid = typeBid;
+                        instance.interviewTimes = 1;
+                        instance.winOrLost = false;
                         break;
                     }
                     case 'cancel': {

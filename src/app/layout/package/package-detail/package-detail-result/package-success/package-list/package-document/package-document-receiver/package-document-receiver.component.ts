@@ -218,6 +218,22 @@ export class PackageDocumentReceiverComponent implements OnInit {
   }
 
   confirmGot() {
+    const idsArray = [];
+    this.docHSMTListTranferred.forEach(itemPar => {
+      itemPar.items.forEach(itemChild => {
+        if (itemChild.checkboxSelected === true) {
+          idsArray.push(itemChild.id);
+        }
+      });
+    });
+    this.docHSDTListTranferred.forEach(itemPar => {
+      itemPar.items.forEach(itemChild => {
+        if (itemChild.checkboxSelected === true) {
+          idsArray.push(itemChild.id);
+        }
+      });
+    });
+    console.log('this.idss', idsArray);
     this.confirmationService.confirm(
       'Bạn có muốn xác nhận nhận tài liệu?',
       () => {

@@ -691,7 +691,7 @@ export class PackageDocumentSenderComponent implements OnInit {
     }
   }
   requestToreSubmitDoc(bidTransferDocDetailId: number) {
-    this.detailResultPackageService.requestToreSubmitdoc(bidTransferDocDetailId).subscribe(response => {
+    this.detailResultPackageService.resubmitDoc(bidTransferDocDetailId).subscribe(response => {
       this.alertService.success('Yêu cầu gửi lại tài liệu thành công!');
     },
       err => {
