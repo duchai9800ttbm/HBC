@@ -26,7 +26,7 @@ import { SiteSurveyReportService } from '../../../../../shared/services/site-sur
     styleUrls: ['./hsdt-build.component.scss'],
     animations: [slideToLeft()]
 })
-export class HsdtBuildComponent implements OnInit, AfterViewChecked {
+export class HsdtBuildComponent implements OnInit, AfterViewChecked, OnDestroy {
     page: number;
     pageSize: number;
     pageIndex: number | string = 0;
@@ -111,35 +111,49 @@ export class HsdtBuildComponent implements OnInit, AfterViewChecked {
             });
         });
     }
+    ngOnDestroy() {
+        if (this.subscription) {
+            this.subscription.unsubscribe();
+        }
+    }
 
     downloadTemplate(typeTemplate) {
+        let key = '';
         switch (typeTemplate) {
             case 'HuongDanLapHSDT': {
-
+                key = 'guideline';
                 break;
             }
             case 'BangTomTatDKDT': {
-
+                key = 'tenderconditionalsummary';
                 break;
             }
             case 'BangDanhSachCungUngThauPhu': {
-
+                key = 'supplier';
                 break;
             }
             case 'BaoCaoThamQuanCongTrinh': {
-
+                key = 'tendersitesurveyingreport';
                 break;
             }
             case 'BangTinhChiPhuChungVaCongTac': {
-
+                key = 'generalcost';
                 break;
             }
             case 'BangLamRoHSMT': {
-
+                key = 'clarification';
                 break;
             }
             default: break;
         }
+        this.hoSoDuThauService.downloadTemplateHSDT(key).subscribe(() => {
+        }, err => {
+            if (err.json().errorCode) {
+                this.alertService.error('File không tồn tại hoặc đã bị xóa!');
+            } else {
+                this.alertService.error('Đã có lỗi xãy ra. Vui lòng thử lại!');
+            }
+        });
     }
 
     getDanhSachLoaiHoSo(spinner: boolean) {

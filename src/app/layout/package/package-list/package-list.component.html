@@ -650,19 +650,19 @@
                                     {{ item.opportunityName}}
                                 </a>
                             </td>
-                            <td [class.d-none]="!tenKhachHang" class="text-truncate" [title]="item.customer?.customerName">{{ item.customer?.customerName }}</td>
-                            <td [class.d-none]="!lienHe" class="text-truncate" [title]="item.customerContact?.name">{{ item.customerContact?.name }}</td>
-                            <td [class.d-none]="!vaiTro" class="text-truncate" [title]="item.hbcRole?.name">{{ item.hbcRole?.name }}</td>
-                            <td [class.d-none]="!chuTri" class="text-truncate" [title]="item.chairEmployee?.employeeName">{{ item.chairEmployee?.employeeName }}</td>
-                            <td [class.d-none]="!loaiKhachHang" class="text-truncate" [title]="item.classify">
+                            <td [class.d-none]="!tenKhachHang" class="text-truncate" [title]="(item.customer?.customerName)?item.customer?.customerName:'' ">{{ item.customer?.customerName }}</td>
+                            <td [class.d-none]="!lienHe" class="text-truncate" [title]="(item.customerContact?.name)?item.customerContact?.name:''">{{ item.customerContact?.name }}</td>
+                            <td [class.d-none]="!vaiTro" class="text-truncate" [title]="(item.hbcRole?.name)?item.hbcRole?.name:''">{{ item.hbcRole?.name }}</td>
+                            <td [class.d-none]="!chuTri" class="text-truncate" [title]="(item.chairEmployee?.employeeName)?item.chairEmployee?.employeeName:''">{{ item.chairEmployee?.employeeName }}</td>
+                            <td [class.d-none]="!loaiKhachHang" class="text-truncate" [title]="(item.classify)?item.classify:''">
                                 <span *ngIf="item && item.classify">
                                     {{ item.classify | translate }}
                                 </span>
                             </td>
-                            <td [class.d-none]="!loaiCongTrinh" class="text-truncate" [title]="item.projectType?.value">{{ item.projectType?.value }}</td>
+                            <td [class.d-none]="!loaiCongTrinh" class="text-truncate" [title]="(item.projectType?.value)?item.projectType?.value:''">{{ item.projectType?.value }}</td>
 
-                            <td [class.d-none]="!tongGiaTri" class="text-truncate text-right" [title]="item.amount">{{ item.amount | vnCurrency }}</td>
-                            <td [class.d-none]="!quyMo" class="color" [title]="item.magnitude">{{item.magnitude }}</td>
+                            <td [class.d-none]="!tongGiaTri" class="text-truncate text-right" [title]="(item.amount)?item.amount:''">{{ item.amount | vnCurrency }}</td>
+                            <td [class.d-none]="!quyMo" class="color" [title]="(item.magnitude)?item.magnitude:''">{{item.magnitude }}</td>
                             <td [class.d-none]="!giaiDoan" class="" style="text-align: center;">
                                 <div class="d-flex flex-column p-2">
                                     <div class="center-parent" [class.type-HSMT]="item.stage?.key == 'HSMT'" [class.type-HSDT]="item.stage?.key == 'HSDT'" [class.type-KQDT]="item.stage?.key == 'KQDT'">
@@ -674,25 +674,25 @@
                                     </div>
                                 </div>
                             </td>
-                            <td [class.d-none]="!khuVuc" class="text-truncate" [title]="item.location?.value">{{item.location?.value}}</td>
+                            <td [class.d-none]="!khuVuc" class="text-truncate" [title]="(item.location?.value)?item.location?.value:''">{{item.location?.value}}</td>
                             <!-- <td [class.d-none]="!congViec" class="text-truncate">{{ item.job }}</td> -->
-                            <td [class.d-none]="!tienDoThucHien" class="text-truncate text-right" [title]="item.progress">{{ item.progress }} %</td>
-                            <td [class.d-none]="!linkTaiLieu" class="text-truncate cus-pointer ellipsis" [title]="item.documentLink">
+                            <td [class.d-none]="!tienDoThucHien" class="text-truncate text-right" [title]="(item.progress)?item.progress:''">{{ item.progress }} %</td>
+                            <td [class.d-none]="!linkTaiLieu" class="text-truncate cus-pointer ellipsis" [title]="(item.documentLink)?item.documentLink:''">
                                 <!-- (click)="openLinkDocument(item.documentLink)" -->
                                 <!-- <a title="link tài liệu">{{ item.documentLink }}</a> -->
                                 <a target="_blank" [href]="item.documentLink | safeUrl">{{ item.documentLink }}</a>
                             </td>
-                            <td [class.d-none]="!tongThoiGian" class="text-truncate" [title]="item.totalTime">{{ item.totalTime }}</td>
-                            <td [class.d-none]="!quy" class="text-truncate" [title]="item.quarter?.name">{{ item.quarter?.name }}</td>
-                            <td [class.d-none]="!donViTuVan" class="text-truncate" [title]="item.consultantUnitCustomer?.customerName">{{ item.consultantUnitCustomer?.customerName }}</td>
-                            <td [class.d-none]="!diaChiDVTV" class="text-truncate" [title]="item.consultantAddress">{{ item.consultantAddress }}</td>
-                            <td [class.d-none]="!soDienThoaiDVTV" class="text-truncate" [title]="item.consultantPhone">{{ item.consultantPhone }}</td>
-                            <td [class.d-none]="!dientichsan" class="text-truncate text-right" [title]="item.floorArea">{{ item.floorArea | numberArea}}</td>
+                            <td [class.d-none]="!tongThoiGian" class="text-truncate" [title]="(item.totalTime)?item.totalTime:''">{{ item.totalTime }}</td>
+                            <td [class.d-none]="!quy" class="text-truncate" [title]="(item.quarter?.name)?item.quarter?.name:''">{{ item.quarter?.name }}</td>
+                            <td [class.d-none]="!donViTuVan" class="text-truncate" [title]="(item.consultantUnitCustomer?.customerName)?item.consultantUnitCustomer?.customerName:''">{{ item.consultantUnitCustomer?.customerName }}</td>
+                            <td [class.d-none]="!diaChiDVTV" class="text-truncate" [title]="(item.consultantAddress)?item.consultantAddress:''">{{ item.consultantAddress }}</td>
+                            <td [class.d-none]="!soDienThoaiDVTV" class="text-truncate" [title]="(item.consultantPhone)?item.consultantPhone:''">{{ item.consultantPhone }}</td>
+                            <td [class.d-none]="!dientichsan" class="text-truncate text-right" [title]="(item.floorArea)?item.floorArea:''">{{ item.floorArea | numberArea}}</td>
 
 
-                            <td [class.d-none]="!lyDoTrungThau" class="text-truncate" [title]="item.acceptanceReason">{{ item.acceptanceReason }}</td>
-                            <td [class.d-none]="!lyDoTratThau" class="text-truncate" [title]="item.unacceptanceReason">{{ item.unacceptanceReason }}</td>
-                            <td [class.d-none]="!lydohuythau" class="text-truncate" [title]="item.cancelReason">{{ item.cancelReason }}</td>
+                            <td [class.d-none]="!lyDoTrungThau" class="text-truncate" [title]="(item.acceptanceReason)?item.acceptanceReason:''">{{ item.acceptanceReason }}</td>
+                            <td [class.d-none]="!lyDoTratThau" class="text-truncate" [title]="(item.unacceptanceReason)?item.unacceptanceReason:''">{{ item.unacceptanceReason }}</td>
+                            <td [class.d-none]="!lydohuythau" class="text-truncate" [title]="(item.cancelReason)?item.cancelReason:''">{{ item.cancelReason }}</td>
                             <td [class.d-none]="!ngayBatDau" class="text-truncate">
                                 <span *ngIf="item.startTrackingDate">{{ item.startTrackingDate*1000 | date:'dd/MM/yyyy' }}</span>
                             </td>
@@ -708,10 +708,10 @@
                             <td [class.d-none]="!ngayKetThucDuAn" class="text-truncate">
                                 <span *ngIf=" item.projectEstimatedEndDate">{{ item.projectEstimatedEndDate*1000 | date:'dd/MM/yyyy' }}</span>
                             </td>
-                            <td [class.d-none]="!hangMucCongTrinh" class="text-truncate" [title]="item.mainBuildingCategory?.value">{{ item.mainBuildingCategory?.value }}</td>
-                            <td [class.d-none]="!diaDiem" class="text-truncate" [title]="item.place">{{ item.place }}</td>
-                            <td [class.d-none]="!moTa" class="text-truncate" [title]="item.description">{{ item.description }}</td>
-                            <td [class.d-none]="!danhGiaDuAn" class="text-truncate" [title]="item.evaluation">{{ item.evaluation?.value }}</td>
+                            <td [class.d-none]="!hangMucCongTrinh" class="text-truncate" [title]="(item.mainBuildingCategory?.value)?item.mainBuildingCategory?.value:''">{{ item.mainBuildingCategory?.value }}</td>
+                            <td [class.d-none]="!diaDiem" class="text-truncate" [title]="(item.place)?item.place:''">{{ item.place }}</td>
+                            <td [class.d-none]="!moTa" class="text-truncate" [title]="(item.description)?item.description:''">{{ item.description }}</td>
+                            <td [class.d-none]="!danhGiaDuAn" class="text-truncate" [title]="(item.evaluation)?item.evaluation:''">{{ item.evaluation?.value }}</td>
                             <td style="max-width: 100px!important;" class="-right zui-sticky-col-right" type="check" [class.odd]="i % 2 == 0">
                                 <div class="d-flex justify-content-center align-items-center h-100">
                                     <div>

@@ -971,9 +971,9 @@ export class HoSoDuThauService {
     });
   }
 
-
-  downloadTemplateHuongDanLapHSDT() {
-    const url = ``;
+  // Download Template
+  downloadTemplateHSDT(key) {
+    const url = `${key}/template/download`;
     return this.apiService.getFile(url).map(response => {
       return FileSaver.saveAs(
         new Blob([response.file], {
@@ -982,59 +982,5 @@ export class HoSoDuThauService {
       );
     });
   }
-
-  downloadTemplateBangTomTat() {
-    const url = ``;
-    return this.apiService.getFile(url).map(response => {
-      return FileSaver.saveAs(
-        new Blob([response.file], {
-          type: `${response.file.type}`,
-        }), response.fileName
-      );
-    });
-  }
-
-  downloadTemplateBangDanhSachCungUngThauPhu() {
-    const url = ``;
-    return this.apiService.getFile(url).map(response => {
-      return FileSaver.saveAs(
-        new Blob([response.file], {
-          type: `${response.file.type}`,
-        }), response.fileName
-      );
-    });
-  }
-
-  downloadTemplateBaoCaoThamQuanCongTrinh() {
-    const url = ``;
-    return this.apiService.getFile(url).map(response => {
-      return FileSaver.saveAs(
-        new Blob([response.file], {
-          type: `${response.file.type}`,
-        }), response.fileName
-      );
-    });
-  }
-
-  downloadTemplateBangTinhChiPhuChungVaCongTac() {
-    const url = ``;
-    return this.apiService.getFile(url).map(response => {
-      return FileSaver.saveAs(
-        new Blob([response.file], {
-          type: `${response.file.type}`,
-        }), response.fileName
-      );
-    });
-  }
-
-  downloadTemplateBangLamRoHSMT() {
-    const url = ``;
-    return this.apiService.getFile(url).map(response => {
-      return FileSaver.saveAs(
-        new Blob([response.file], {
-          type: `${response.file.type}`,
-        }), response.fileName
-      );
-    });
-  }
+  // -- End: Download Template
 }

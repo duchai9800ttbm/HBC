@@ -67,9 +67,6 @@ export class EditComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.currentBidOpportunityId = +PackageDetailComponent.packageId;
-    this.siteSurveyReportService.getListDepartmentsFromBranches().subscribe(res => {
-      this.listDepartments = [...res];
-    });
     this.getInfoTenderPreparationPlanning();
     this.getAllUser();
     this.isCreate = LiveformSiteReportComponent.formModel.isCreate;
@@ -79,6 +76,11 @@ export class EditComponent implements OnInit, OnDestroy {
     this.isEditMode = LiveformSiteReportComponent.actionMode === 'editMode';
     this.isViewMode = LiveformSiteReportComponent.actionMode === 'viewMode';
     // End Check Action Mode
+    if (!this.isViewMode) {
+      this.siteSurveyReportService.getListDepartmentsFromBranches().subscribe(res => {
+        this.listDepartments = [...res];
+      });
+    }
     this.packageService.getInforPackageID(this.currentBidOpportunityId).subscribe(result => {
       this.packageData = result;
     }, err => {
