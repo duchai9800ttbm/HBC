@@ -8,12 +8,14 @@ import { SessionService } from './session.service';
 import { UserModel } from '../models/user/user.model';
 import { PagedResult } from '../models/paging-result.model';
 import { UserItemModel } from '../models/user/user-item.model';
+import { PermissionService } from './permission.service';
 
 @Injectable()
 export class UserService {
     constructor(
         private apiService: ApiService,
-        private sessionService: SessionService
+        private sessionService: SessionService,
+        private permissionService: PermissionService
     ) { }
     get employeeId() {
         return this.sessionService.currentUser.userId;
@@ -59,9 +61,10 @@ export class UserService {
 
     setAuth(session: any) {
         this.sessionService.saveSession(session);
-        this.getUserProfile().subscribe(result =>
-            this.sessionService.saveUserInfo(result)
-        );
+        this.getUserProfile().subscribe(result => {
+            this.sessionService.saveUserInfo(result);
+            this.permissionService.setUser(result);
+        });
     }
 
     purgeAuth() {

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import {
   TenderPriceApproval,
   TenderPriceApprovalShort,
@@ -26,6 +26,7 @@ import { slideToLeft } from '../../../../../../router.animations';
 import { PermissionService } from '../../../../../../shared/services/permission.service';
 import { takeUntil } from '../../../../../../../../node_modules/rxjs/operator/takeUntil';
 import { PermissionModel } from '../../../../../../shared/models/permission/permission.model';
+import { Subscription } from '../../../../../../../../node_modules/rxjs/Subscription';
 
 @Component({
   selector: 'app-price-review-summary',
@@ -33,7 +34,7 @@ import { PermissionModel } from '../../../../../../shared/models/permission/perm
   styleUrls: ['./price-review-summary.component.scss'],
   animations: [slideToLeft()]
 })
-export class PriceReviewSummaryComponent implements OnInit {
+export class PriceReviewSummaryComponent implements OnInit, OnDestroy {
   packageId;
   priceReview: TenderPriceApprovalShort;
   package = new PackageInfoModel();
@@ -43,8 +44,6 @@ export class PriceReviewSummaryComponent implements OnInit {
   dtTrigger: Subject<any> = new Subject();
   dtTrigger2: Subject<any> = new Subject();
   historyList;
-  listPermission: Array<PermissionModel>;
-  listPermissionScreen = [];
   dialog;
   bidStatus = BidStatus;
   pagedResultChangeHistoryList: PagedResult<HistoryLiveForm> = new PagedResult<HistoryLiveForm>();
@@ -52,6 +51,24 @@ export class PriceReviewSummaryComponent implements OnInit {
   pagedResult: PagedResult<PriceReviewItemChangedHistory> = new PagedResult<PriceReviewItemChangedHistory>();
   indexItemHistoryChange: Number;
 
+  subscription: Subscription;
+  listPermission: Array<PermissionModel>;
+  listPermissionScreen = [];
+  listPermissionScreen2 = [];
+
+  TaoMoiTDG = false;
+  XemTDG = false;
+  SuaTDG = false;
+  XoaTDG = false;
+  InTDG = false;
+  DuyetTDGTNDuThau = false;
+  TaiTemplateTDG = false;
+  DuyetTDGTPDuThau = false;
+  GuiDuyet = false;
+  DuyetTDGBGD = false;
+  ChotHoSo = false;
+  NopHSDT = false;
+  HieuChinhHSDT = false;
   constructor(
     private priceReviewService: PriceReviewService,
     private alertService: AlertService,
@@ -69,17 +86,46 @@ export class PriceReviewSummaryComponent implements OnInit {
   ngOnInit() {
     this.packageId = PackageDetailComponent.packageId;
 
-    this.permissionService.get().subscribe(data => {
+    this.subscription = this.permissionService.get().subscribe(data => {
       this.listPermission = data;
       const hsdt = this.listPermission.length &&
         this.listPermission.filter(x => x.bidOpportunityStage === 'HSDT')[0];
+      console.log(this.listPermission);
+      if (!hsdt) {
+        this.listPermissionScreen = [];
+      }
       if (hsdt) {
         const screen = hsdt.userPermissionDetails.length
           && hsdt.userPermissionDetails.filter(y => y.permissionGroup.value === 'TrinhDuyetGia')[0];
+        if (!screen) {
+          this.listPermissionScreen = [];
+        }
         if (screen) {
-          this.listPermissionScreen = screen.permissions.filter(z => z.value);
+          this.listPermissionScreen = screen.permissions.map(z => z.value);
+        }
+
+        const screen2 = hsdt.userPermissionDetails.length
+          && hsdt.userPermissionDetails.filter(y => y.permissionGroup.value === 'ChotVaNopHSDT')[0];
+        if (!screen2) {
+          this.listPermissionScreen2 = [];
+        }
+        if (screen2) {
+          this.listPermissionScreen2 = screen2.permissions.map(z => z.value);
         }
       }
+      this.TaoMoiTDG = this.listPermissionScreen.includes('TaoMoiTDG');
+      this.XemTDG = this.listPermissionScreen.includes('XemTDG');
+      this.SuaTDG = this.listPermissionScreen.includes('SuaTDG');
+      this.XoaTDG = this.listPermissionScreen.includes('XoaTDG');
+      this.InTDG = this.listPermissionScreen.includes('InTDG');
+      this.DuyetTDGTNDuThau = this.listPermissionScreen.includes('DuyetTDGTNDuThau');
+      this.TaiTemplateTDG = this.listPermissionScreen.includes('TaiTemplateTDG');
+      this.DuyetTDGTPDuThau = this.listPermissionScreen.includes('DuyetTDGTPDuThau');
+      this.GuiDuyet = this.listPermissionScreen.includes('GuiDuyet');
+      this.DuyetTDGBGD = this.listPermissionScreen.includes('DuyetTDGBGD');
+      this.ChotHoSo = this.listPermissionScreen2.includes('ChotHoSo');
+      this.NopHSDT = this.listPermissionScreen2.includes('NopHSDT');
+      this.HieuChinhHSDT = this.listPermissionScreen2.includes('HieuChinhHSDT');
     });
 
     this.packageService.getInforPackageID(this.packageId).subscribe(result => {
@@ -94,6 +140,12 @@ export class PriceReviewSummaryComponent implements OnInit {
     });
 
     this.getChangeHistory(0, 10);
+  }
+
+  ngOnDestroy() {
+    if (this.subscription) {
+      this.subscription.unsubscribe();
+    }
   }
 
   viewLiveForm(typeLiveForm) {

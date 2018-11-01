@@ -1,4 +1,4 @@
-import { Component, OnInit, AfterViewInit, Input, Output, EventEmitter, OnChanges } from '@angular/core';
+import { Component, OnInit, AfterViewInit, Input, Output, EventEmitter, OnChanges, OnDestroy } from '@angular/core';
 import { TenderPriceApproval, TenderPriceApprovalShort } from '../../../../../../shared/models/price-review/price-review.model';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import DateTimeConvertHelper from '../../../../../../shared/helpers/datetime-convert-helper';
@@ -10,13 +10,17 @@ import { PackageService } from '../../../../../../shared/services/package.servic
 import { Router } from '../../../../../../../../node_modules/@angular/router';
 import { AlertService, ConfirmationService } from '../../../../../../shared/services';
 import { BidStatus } from '../../../../../../shared/constants/bid-status';
+import { Subscription } from '../../../../../../../../node_modules/rxjs/Subscription';
+import { PermissionModel } from '../../../../../../shared/models/permission/Permission.model';
+import { PermissionService } from '../../../../../../shared/services/permission.service';
+import { UserModel } from '../../../../../../shared/models/user/user.model';
 
 @Component({
   selector: 'app-price-review-form',
   templateUrl: './price-review-form.component.html',
   styleUrls: ['./price-review-form.component.scss']
 })
-export class PriceReviewFormComponent implements OnChanges, OnInit, AfterViewInit {
+export class PriceReviewFormComponent implements OnChanges, OnInit, AfterViewInit, OnDestroy {
   priceReviewForm: FormGroup;
   package = new PackageInfoModel();
   priceReview: TenderPriceApprovalShort;
@@ -29,7 +33,8 @@ export class PriceReviewFormComponent implements OnChanges, OnInit, AfterViewIni
     private packageService: PackageService,
     private confirmService: ConfirmationService,
     private alertService: AlertService,
-    private router: Router
+    private router: Router,
+    private permissionService: PermissionService
   ) { }
   isModeView;
   isModeCreate;
@@ -41,6 +46,20 @@ export class PriceReviewFormComponent implements OnChanges, OnInit, AfterViewIni
   valuePcps = false;
   valueOnP = false;
 
+  subscription: Subscription;
+  listPermission: Array<PermissionModel>;
+  listPermissionScreen = [];
+  userModel: UserModel;
+  TaoMoiTDG = false;
+  XemTDG = false;
+  SuaTDG = false;
+  XoaTDG = false;
+  InTDG = false;
+  DuyetTDGTNDuThau = false;
+  TaiTemplateTDG = false;
+  DuyetTDGTPDuThau = false;
+  GuiDuyet = false;
+  DuyetTDGBGD = false;
   @Input() model: TenderPriceApproval;
   @Input() type: string;
   @Output() refreshData = new EventEmitter<boolean>();
@@ -48,6 +67,42 @@ export class PriceReviewFormComponent implements OnChanges, OnInit, AfterViewIni
   ngOnInit() {
     this.getModeScreen();
     this.packageId = PackageDetailComponent.packageId;
+    // Phân quyền
+    this.subscription = this.permissionService.get().subscribe(data => {
+      this.listPermission = data;
+      const hsdt = this.listPermission.length &&
+        this.listPermission.filter(x => x.bidOpportunityStage === 'HSDT')[0];
+      console.log(this.listPermission);
+      if (!hsdt) {
+        this.listPermissionScreen = [];
+      }
+      if (hsdt) {
+        const screen = hsdt.userPermissionDetails.length
+          && hsdt.userPermissionDetails.filter(y => y.permissionGroup.value === 'TrinhDuyetGia')[0];
+        if (!screen) {
+          this.listPermissionScreen = [];
+        }
+        if (screen) {
+          this.listPermissionScreen = screen.permissions.map(z => z.value);
+        }
+      }
+      this.TaoMoiTDG = this.listPermissionScreen.includes('TaoMoiTDG');
+      this.XemTDG = this.listPermissionScreen.includes('XemTDG');
+      this.SuaTDG = this.listPermissionScreen.includes('SuaTDG');
+      this.XoaTDG = this.listPermissionScreen.includes('XoaTDG');
+      this.InTDG = this.listPermissionScreen.includes('InTDG');
+      this.DuyetTDGTNDuThau = this.listPermissionScreen.includes('DuyetTDGTNDuThau');
+      this.TaiTemplateTDG = this.listPermissionScreen.includes('TaiTemplateTDG');
+      this.DuyetTDGTPDuThau = this.listPermissionScreen.includes('DuyetTDGTPDuThau');
+      this.GuiDuyet = this.listPermissionScreen.includes('GuiDuyet');
+      this.DuyetTDGBGD = this.listPermissionScreen.includes('DuyetTDGBGD');
+    });
+
+    const sub = this.permissionService.getUser().subscribe(data => {
+      this.userModel = data;
+    });
+
+    this.subscription.add(sub);
     this.getAllCustomer();
     this.getInfoPackge();
     this.createForm();
@@ -55,6 +110,12 @@ export class PriceReviewFormComponent implements OnChanges, OnInit, AfterViewIni
 
   ngOnChanges() {
     this.createForm();
+  }
+
+  ngOnDestroy() {
+    if (this.subscription) {
+      this.subscription.unsubscribe();
+    }
   }
 
   ngAfterViewInit() {
@@ -78,10 +139,26 @@ export class PriceReviewFormComponent implements OnChanges, OnInit, AfterViewIni
     this.packageService.getInforPackageID(this.packageId).subscribe(result => {
       this.package = result;
       if (this.package.stageStatus && this.priceReviewForm.value) {
-        if (this.package.stageStatus.id === 'DaDuyetTrinhDuyetGia'
-          || this.package.stageStatus.id === 'ChotHoSo'
-          || this.package.stageStatus.id === 'DaNopHSDT') {
+        if ((this.package.stageStatus.id !== 'DangLapHSDT')
+          && (this.package.stageStatus.id !== 'CanLapTrinhDuyetGia')
+          && (this.package.stageStatus.id !== 'DaGuiDuyetTrinhDuyetGia')
+          && (this.package.stageStatus.id !== 'CanDieuChinhTrinhDuyetGia')) {
           this.priceReviewForm.controls['isApprovedByBoardOfDirector'].disable();
+        } else {
+          if ((this.userModel && this.userModel.department
+            && this.userModel.department.text === 'BAN TỔNG GIÁM ĐỐC')) {
+            this.priceReviewForm.controls['isApprovedByBoardOfDirector'].enable();
+          }
+          if (this.DuyetTDGTPDuThau || (this.userModel && this.userModel.department
+            && this.userModel.department.text === 'PHÒNG DỰ THẦU'
+            && this.userModel.level && this.userModel.level.text === 'Trưởng phòng')) {
+            this.priceReviewForm.controls['isApprovedByTenderManager'].enable();
+          }
+          if (this.DuyetTDGTPDuThau || (this.userModel && this.userModel.department
+            && this.userModel.department.text === 'PHÒNG DỰ THẦU'
+            && this.userModel.level && this.userModel.level.text === 'Trưởng nhóm')) {
+            this.priceReviewForm.controls['isApprovedByTenderLeader'].enable();
+          }
         }
       }
       this.spinner.hide();
@@ -705,9 +782,9 @@ export class PriceReviewFormComponent implements OnChanges, OnInit, AfterViewIni
         value: this.model.interviewTimes,
         disabled: this.isModeView
       },
-      isApprovedByTenderLeader: { value: this.model.isApprovedByTenderLeader, disabled: this.isModeEdit },
-      isApprovedByTenderManager: { value: this.model.isApprovedByTenderManager, disabled: this.isModeEdit },
-      isApprovedByBoardOfDirector: { value: this.model.isApprovedByBoardOfDirector, disabled: this.isModeEdit },
+      isApprovedByTenderLeader: { value: this.model.isApprovedByTenderLeader, disabled: true },
+      isApprovedByTenderManager: { value: this.model.isApprovedByTenderManager, disabled: true },
+      isApprovedByBoardOfDirector: { value: this.model.isApprovedByBoardOfDirector, disabled: true },
       bidOpportunityId: this.model.bidOpportunityId ? this.model.bidOpportunityId : this.packageId,
       createdEmployeeId: this.model.createdEmployee && this.model.createdEmployee.employeeId,
       updatedEmployeeId: this.model.updatedEmployee && this.model.updatedEmployee.employeeId,
@@ -719,21 +796,29 @@ export class PriceReviewFormComponent implements OnChanges, OnInit, AfterViewIni
       updatedDesc: ''
     });
 
-    // this.priceReviewForm.valueChanges.subscribe(data => {
-    //   const giaTriPCBaseAmount = data.giaTriPCBaseAmount;
-    //   const giaTriBaseAmount = data.giaTriBaseAmount;
-    //   const chiPhiBaseAmount = data.chiPhiBaseAmount;
-    //   const totalGiaVonAmount = giaTriPCBaseAmount + giaTriBaseAmount + chiPhiBaseAmount;
-    //   console.log(data);
-    //   console.log(totalGiaVonAmount);
-    //   this.priceReviewForm.get('totalGiaVonAmount').patchValue(totalGiaVonAmount);
-    // });
     if (this.package.stageStatus && this.priceReviewForm.value) {
-      if (this.package.stageStatus.id === 'DaDuyetTrinhDuyetGia'
-        || this.package.stageStatus.id === 'ChotHoSo'
-        || this.package.stageStatus.id === 'DaNopHSDT') {
+      if ((this.package.stageStatus.id !== 'DangLapHSDT')
+        && (this.package.stageStatus.id !== 'CanLapTrinhDuyetGia')
+        && (this.package.stageStatus.id !== 'DaGuiDuyetTrinhDuyetGia')
+        && (this.package.stageStatus.id !== 'CanDieuChinhTrinhDuyetGia')) {
         this.priceReviewForm.controls['isApprovedByBoardOfDirector'].disable();
+      } else {
+        if ((this.userModel && this.userModel.department
+          && this.userModel.department.text === 'BAN TỔNG GIÁM ĐỐC')) {
+          this.priceReviewForm.controls['isApprovedByBoardOfDirector'].enable();
+        }
+        if (this.DuyetTDGTPDuThau || (this.userModel && this.userModel.department
+          && this.userModel.department.text === 'PHÒNG DỰ THẦU'
+          && this.userModel.level && this.userModel.level.text === 'Trưởng phòng')) {
+          this.priceReviewForm.controls['isApprovedByTenderManager'].enable();
+        }
+        if (this.DuyetTDGTPDuThau || (this.userModel && this.userModel.department
+          && this.userModel.department.text === 'PHÒNG DỰ THẦU'
+          && this.userModel.level && this.userModel.level.text === 'Trưởng nhóm')) {
+          this.priceReviewForm.controls['isApprovedByTenderLeader'].enable();
+        }
       }
+
     }
     if (this.priceReviewForm.value) {
       const value = this.model.approvalDate;
@@ -797,7 +882,6 @@ export class PriceReviewFormComponent implements OnChanges, OnInit, AfterViewIni
   refresh() {
     this.refreshData.emit(true);
     // return this.alertService.success('Dữ liệu đã được cập nhật mới nhất');
-
   }
 
 
