@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Router, ActivatedRoute } from '../../../../../node_modules/@angular/router';
 import { routerTransition } from '../../../router.animations';
 import { PackageModel } from '../../../shared/models/package/package.model';
