@@ -21,7 +21,7 @@ import { Subscription } from '../../../../../node_modules/rxjs';
   // animations: [routerTransition()]
 
 })
-export class PackageDetailComponent implements OnInit {
+export class PackageDetailComponent implements OnInit, OnDestroy {
   static packageId;
   checkStatusPackage = CheckStatusPackage;
   statusPackage = {
@@ -41,6 +41,7 @@ export class PackageDetailComponent implements OnInit {
   public packageId: number;
   packageData = new PackageInfoModel();
   sub: Subscription;
+  subInterval: Subscription;
   status = {
     DisabledfileAttend: true,
     Disabledresult: true
@@ -69,10 +70,10 @@ export class PackageDetailComponent implements OnInit {
       }
     }, 300);
 
-    IntervalObservable.create(1 * 10 * 1000).subscribe(_ => {
+    this.subInterval = IntervalObservable.create(1 * 10 * 1000).subscribe(_ => {
       this.sub = this.permissionService.getListPermission(this.packageId).subscribe(listPermission => {
-         this.permissionService.set(listPermission);
-         this.sub.unsubscribe();
+        this.permissionService.set(listPermission);
+        this.sub.unsubscribe();
       });
     });
 
@@ -88,9 +89,15 @@ export class PackageDetailComponent implements OnInit {
         this.isToggle = false;
       }
     });
-    this.packageService.statusPackage$.subscribe( value => {
+    this.packageService.statusPackage$.subscribe(value => {
       this.getInforPackage();
     });
+  }
+
+  ngOnDestroy(): void {
+    if (this.subInterval) {
+      this.subInterval.unsubscribe();
+    }
   }
 
   getInforPackage() {
