@@ -21,6 +21,8 @@ import { FeeTenderInvitationDocument } from '../../../../../../shared/models/pac
 import { ContractConditionTenderParticipate } from '../../../../../../shared/models/package/contract-condition-tender-participate';
 import { TenderDirectorProposal } from '../../../../../../shared/models/package/tender-director-proposal';
 import { DecisionBoardGeneralDirector } from '../../../../../../shared/models/package/decision-board-general-director';
+import { PermissionService } from '../../../../../../shared/services/permission.service';
+import { PermissionModel } from '../../../../../../shared/models/permission/Permission.model';
 
 @Component({
     selector: 'app-need-create-tender-form',
@@ -41,6 +43,17 @@ export class NeedCreateTenderFormComponent implements OnInit, OnDestroy {
     draftsOrOfficially = true;
     isShowChanges = false;
     updatedDetail = '';
+    listPermission: Array<PermissionModel>;
+    listPermissionScreen = [];
+    TaoMoiDNDT = false;
+    XemDNDT = false;
+    SuaDNDT = false;
+    XoaDNDT = false;
+    InDNDT = false;
+    XacNhanKy = false;
+    GuiDuyetDNDT = false;
+    ChapThuanKhongChapThuan = false;
+    TaiTemplate = false;
     constructor(
         private packageService: PackageService,
         private alertService: AlertService,
@@ -49,11 +62,41 @@ export class NeedCreateTenderFormComponent implements OnInit, OnDestroy {
         private sessionService: SessionService,
         private scrollTopService: ScrollToTopService,
         private confirmService: ConfirmationService,
+        private permissionService: PermissionService
     ) { }
 
     ngOnInit() {
         this.scrollTopService.isScrollTop = false;
         this.routerAction = this.packageService.routerAction;
+        // phân quyền
+        this.permissionService.get().subscribe(data => {
+            this.listPermission = data;
+            const hsdt = this.listPermission.length &&
+                this.listPermission.filter(x => x.bidOpportunityStage === 'HSDT')[0];
+            console.log(this.listPermission);
+            if (!hsdt) {
+                this.listPermissionScreen = [];
+            }
+            if (hsdt) {
+                const screen = hsdt.userPermissionDetails.length
+                    && hsdt.userPermissionDetails.filter(y => y.permissionGroup.value === 'PhieuDeNghiDuThau')[0];
+                if (!screen) {
+                    this.listPermissionScreen = [];
+                }
+                if (screen) {
+                    this.listPermissionScreen = screen.permissions.map(z => z.value);
+                }
+            }
+            this.TaoMoiDNDT = this.listPermissionScreen.includes('TaoMoiDNDT');
+            this.XemDNDT = this.listPermissionScreen.includes('XemDNDT');
+            this.SuaDNDT = this.listPermissionScreen.includes('SuaDNDT');
+            this.XoaDNDT = this.listPermissionScreen.includes('XoaDNDT');
+            this.InDNDT = this.listPermissionScreen.includes('InDNDT');
+            this.XacNhanKy = this.listPermissionScreen.includes('XacNhanKy');
+            this.GuiDuyetDNDT = this.listPermissionScreen.includes('GuiDuyetDNDT');
+            this.ChapThuanKhongChapThuan = this.listPermissionScreen.includes('ChapThuanKhongChapThuan');
+            this.TaiTemplate = this.listPermissionScreen.includes('TaiTemplate');
+        });
         this.packageService.routerAction$.subscribe(
             router => {
                 this.routerAction = router;
