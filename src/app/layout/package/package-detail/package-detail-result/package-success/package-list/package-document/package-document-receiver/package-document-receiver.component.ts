@@ -16,11 +16,18 @@ import { HadTransferList } from '../../../../../../../../shared/models/result-at
 import { FilterTransferredDoc } from '../../../../../../../../shared/models/result-attend/filter-transferred-doc.model';
 import { TransferredDoc } from '../../../../../../../../shared/models/result-attend/transferred-doc.model';
 import { groupBy } from '../../../../../../../../../../node_modules/@progress/kendo-data-query';
+import { DocumentService } from '../../../../../../../../shared/services/document.service';
+import { DictionaryItemHightLight } from '../../../../../../../../shared/models';
+import { HoSoDuThauService } from '../../../../../../../../shared/services/ho-so-du-thau.service';
 
 @Component({
   selector: 'app-package-document-receiver',
   templateUrl: './package-document-receiver.component.html',
-  styleUrls: ['./package-document-receiver.component.scss']
+  styleUrls: ['./package-document-receiver.component.scss'],
+  providers: [
+    DocumentService,
+    HoSoDuThauService
+  ]
 })
 export class PackageDocumentReceiverComponent implements OnInit {
 
@@ -49,6 +56,8 @@ export class PackageDocumentReceiverComponent implements OnInit {
   docHSMTListTranferred;
   docHSDTListTranferred;
   public data: DocumentItem[] = this.packageSuccessService.getdataGetDocument();
+  majorTypeListItem: DictionaryItemHightLight[];
+  danhSachLoaiTaiLieu;
   @Input() statusPackage;
   documentTypeList;
   statusList;
@@ -60,11 +69,15 @@ export class PackageDocumentReceiverComponent implements OnInit {
     private alertService: AlertService,
     private confirmationService: ConfirmationService,
     private detailResultPackageService: DetailResultPackageService,
-    private dataService: DataService
+    private dataService: DataService,
+    private documentService: DocumentService,
+    private hoSoDuThauService: HoSoDuThauService,
   ) { }
 
   ngOnInit() {
     this.currentPackageId = +PackageDetailComponent.packageId;
+    this.getListHSMTDocType();
+    this.getListHSDTDocType();
     this.filter.documentType = '';
     this.filter.documentTypeId = null;
     this.filter.status = '';
@@ -84,6 +97,23 @@ export class PackageDocumentReceiverComponent implements OnInit {
         this.filterFuc(false);
       });
   }
+
+  // Danh sách tài liệu HSMT
+  getListHSMTDocType() {
+    this.documentService.bidDocumentMajortypes(this.currentPackageId).subscribe(data => {
+      this.majorTypeListItem = data;
+      console.log('getListHSMTDocType', this.majorTypeListItem);
+    });
+  }
+
+  // Danh sách tài liệu HSDT
+  getListHSDTDocType() {
+    this.hoSoDuThauService.getDanhSachLoaiTaiLieu(this.currentPackageId).subscribe(res => {
+      this.danhSachLoaiTaiLieu = res;
+      console.log('getListHSDTDocType', this.danhSachLoaiTaiLieu);
+    });
+  }
+
   onSelectAll(value: boolean) {
     this.data.forEach(x => (x['checkboxSelected'] = value));
     this.docHSMTListTranferred.forEach(itemPar => {
@@ -193,7 +223,7 @@ export class PackageDocumentReceiverComponent implements OnInit {
       () => {
         this.alertService.success('Xác nhận nhận tài liệu thành công!');
         this.bntConfirm = true;
-        this.packageService.setActiveKickoff(this.bntConfirm)
+        this.packageService.setActiveKickoff(this.bntConfirm);
         this.textmovedata = this.bntConfirm ? 'Đã nhận tài liệu được chuyển giao' : 'Chưa nhận tài liệu được chuyển giao';
       }
     );
