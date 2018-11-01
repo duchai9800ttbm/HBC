@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { DialogService } from '../../../../../../../../node_modules/@progress/kendo-angular-dialog';
 import { ReportEndInterviewComponent } from './report-end-interview/report-end-interview.component';
 import { PackageDetailComponent } from '../../../package-detail.component';
@@ -6,7 +6,7 @@ import { NgxSpinnerService } from '../../../../../../../../node_modules/ngx-spin
 import { InterviewInvitationService } from '../../../../../../shared/services/interview-invitation.service';
 import { InterviewInvitationFilterReport } from '../../../../../../shared/models/interview-invitation/interview-invitation-filter-report';
 import { PagedResult, DictionaryItem } from '../../../../../../shared/models';
-import { Subject, BehaviorSubject, Observable } from '../../../../../../../../node_modules/rxjs';
+import { Subject, BehaviorSubject, Observable, Subscription } from '../../../../../../../../node_modules/rxjs';
 import { AlertService, DataService, UserService } from '../../../../../../shared/services';
 import { DATATABLE_CONFIG2, DATATABLE_CONFIG } from '../../../../../../shared/configs';
 import { InterviewInvitationReportList } from '../../../../../../shared/models/interview-invitation/interview-invitation-report-list.model';
@@ -19,13 +19,15 @@ import { StatusObservableHsdtService } from '../../../../../../shared/services/s
 import { CheckStatusPackage } from '../../../../../../shared/constants/check-status-package';
 import { ViewDetailReportComponent } from './view-detail-report/view-detail-report.component';
 import { NgbDropdownConfig } from '../../../../../../../../node_modules/@ng-bootstrap/ng-bootstrap';
+import { PermissionModel } from '../../../../../../shared/models/permission/Permission.model';
+import { PermissionService } from '../../../../../../shared/services/permission.service';
 @Component({
   selector: 'app-end-interview',
   templateUrl: './end-interview.component.html',
   styleUrls: ['./end-interview.component.scss'],
   providers: [NgbDropdownConfig],
 })
-export class EndInterviewComponent implements OnInit {
+export class EndInterviewComponent implements OnInit, OnDestroy {
   dialog;
   dialogViewDetailReport;
   currentPackageId: number;
@@ -51,6 +53,20 @@ export class EndInterviewComponent implements OnInit {
   checkStatusPackage = CheckStatusPackage;
   interviewOfPackage = '';
   loading = false;
+  subscription: Subscription;
+
+  listPermission: Array<PermissionModel>;
+  listPermissionScreen = [];
+  listPermissionScreen2 = [];
+
+  TaoMoiLMPV = false;
+  CapNhatLMPV = false;
+  ThongBaoPV = false;
+  XemEmailTBPV = false;
+  ChotCongTacChuanBiPhongVan = false;
+  UploadBBPV = false;
+  DongPV = false;
+  HieuChinhHSDT = false;
   constructor(
     private dialogService: DialogService,
     private spinner: NgxSpinnerService,
@@ -59,12 +75,49 @@ export class EndInterviewComponent implements OnInit {
     private packageService: PackageService,
     private userService: UserService,
     private statusObservableHsdtService: StatusObservableHsdtService,
+    private permissionService: PermissionService
+
   ) { }
   ngOnInit() {
     this.filterModel.interviewtimes = null;
     this.filterModel.uploadedEmployeeId = null;
     this.filterModel.createdDate = null;
     this.currentPackageId = +PackageDetailComponent.packageId;
+    this.subscription = this.permissionService.get().subscribe(data => {
+      this.listPermission = data;
+      const hsdt = this.listPermission.length &&
+        this.listPermission.filter(x => x.bidOpportunityStage === 'HSDT')[0];
+      if (!hsdt) {
+        this.listPermissionScreen = [];
+      }
+      if (hsdt) {
+        const screen = hsdt.userPermissionDetails.length
+          && hsdt.userPermissionDetails.filter(y => y.permissionGroup.value === 'QuanLyPhongVanThuongThao')[0];
+        if (!screen) {
+          this.listPermissionScreen = [];
+        }
+        if (screen) {
+          this.listPermissionScreen = screen.permissions.map(z => z.value);
+        }
+
+        const screen2 = hsdt.userPermissionDetails.length
+          && hsdt.userPermissionDetails.filter(y => y.permissionGroup.value === 'ChotVaNopHSDT')[0];
+        if (!screen2) {
+          this.listPermissionScreen2 = [];
+        }
+        if (screen2) {
+          this.listPermissionScreen2 = screen2.permissions.map(z => z.value);
+        }
+      }
+      this.TaoMoiLMPV = this.listPermissionScreen.includes('TaoMoiLMPV');
+      this.CapNhatLMPV = this.listPermissionScreen.includes('CapNhatLMPV');
+      this.ThongBaoPV = this.listPermissionScreen.includes('ThongBaoPV');
+      this.XemEmailTBPV = this.listPermissionScreen.includes('XemEmailTBPV');
+      this.ChotCongTacChuanBiPhongVan = this.listPermissionScreen.includes('ChotCongTacChuanBiPhongVan');
+      this.UploadBBPV = this.listPermissionScreen.includes('UploadBBPV');
+      this.DongPV = this.listPermissionScreen.includes('DongPV');
+      this.HieuChinhHSDT = this.listPermissionScreen2.includes('HieuChinhHSDT');
+    });
     this.spinner.show();
     this.getStatusPackage();
     this.statusObservableHsdtService.statusPackageService.subscribe(value => {
@@ -93,6 +146,12 @@ export class EndInterviewComponent implements OnInit {
       this.filter();
       this.spinner.hide();
     });
+  }
+
+  ngOnDestroy(): void {
+    if (this.subscription) {
+      this.subscription.unsubscribe();
+    }
   }
 
   getStatusPackage() {

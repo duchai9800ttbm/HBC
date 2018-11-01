@@ -4,11 +4,15 @@
             <div class="col-md-12 center-parent">
                 <img class="class-image" src="assets/images/chotPhongVan.png" width="250" class="d-inline-block" alt="">
             </div>
-            <div class="col-md-12 center-parent message-create-interview">XÁC NHẬN NẾU BẠN ĐÃ THỰC HIỆN PHỎNG VẤN VÀ THƯƠNG THẢO HỒ SƠ DỰ THẦU?</div>
+            <div class="col-md-12 center-parent message-create-interview">XÁC NHẬN NẾU BẠN ĐÃ THỰC HIỆN PHỎNG VẤN VÀ
+                THƯƠNG THẢO HỒ SƠ DỰ THẦU?</div>
             <div class="col-md-12 center-parent">
-                <button class="btn btn-primary ml-1" (click)="uploadReportInterview()">
-                    Đã thực hiện phỏng vấn
-                </button>
+                <ng-container *ngIf="UploadBBPV">
+                    <button class="btn btn-primary ml-1" (click)="uploadReportInterview()">
+                        Đã thực hiện phỏng vấn
+                    </button>
+                </ng-container>
+
             </div>
         </div>
         <div *ngIf="statusPackage.id >= checkStatusPackage.DaPhongVan.id" class="w-100 pl-3">
@@ -92,12 +96,12 @@
                                     <div class="d-flex justify-content-between">
                                         <div>Tên tài liệu</div>
                                         <div class="center-parent ml-1">
-                                            <img *ngIf="currentFieldSort !== 'documentName' ||  (currentFieldSort === 'documentName' && statusSort === '')" class="icon-sort"
-                                                src="assets/images/sort.svg" (click)="sortField('documentName', 'asc')">
-                                            <img *ngIf="currentFieldSort === 'documentName' && statusSort === 'asc'" class="icon-sort-down-up" src="assets/images/sort-down.svg"
-                                                (click)="sortField('documentName', 'desc')">
-                                            <img *ngIf="currentFieldSort === 'documentName' && statusSort === 'desc'" class="icon-sort-down-up" src="assets/images/sort-up.svg"
-                                                (click)="sortField('documentName', '')">
+                                            <img *ngIf="currentFieldSort !== 'documentName' ||  (currentFieldSort === 'documentName' && statusSort === '')"
+                                                class="icon-sort" src="assets/images/sort.svg" (click)="sortField('documentName', 'asc')">
+                                            <img *ngIf="currentFieldSort === 'documentName' && statusSort === 'asc'"
+                                                class="icon-sort-down-up" src="assets/images/sort-down.svg" (click)="sortField('documentName', 'desc')">
+                                            <img *ngIf="currentFieldSort === 'documentName' && statusSort === 'desc'"
+                                                class="icon-sort-down-up" src="assets/images/sort-up.svg" (click)="sortField('documentName', '')">
                                         </div>
                                     </div>
                                 </th>
@@ -106,12 +110,12 @@
                                     <div class="d-flex justify-content-between">
                                         <div>Phiên bản</div>
                                         <div class="center-parent ml-1">
-                                            <img *ngIf="currentFieldSort !== 'version' ||  (currentFieldSort === 'version' && statusSort === '')" class="icon-sort" src="assets/images/sort.svg"
-                                                (click)="sortField('version', 'asc')">
-                                            <img *ngIf="currentFieldSort === 'version' && statusSort === 'asc'" class="icon-sort-down-up" src="assets/images/sort-down.svg"
-                                                (click)="sortField('version', 'desc')">
-                                            <img *ngIf="currentFieldSort === 'version' && statusSort === 'desc'" class="icon-sort-down-up" src="assets/images/sort-up.svg"
-                                                (click)="sortField('version', '')">
+                                            <img *ngIf="currentFieldSort !== 'version' ||  (currentFieldSort === 'version' && statusSort === '')"
+                                                class="icon-sort" src="assets/images/sort.svg" (click)="sortField('version', 'asc')">
+                                            <img *ngIf="currentFieldSort === 'version' && statusSort === 'asc'" class="icon-sort-down-up"
+                                                src="assets/images/sort-down.svg" (click)="sortField('version', 'desc')">
+                                            <img *ngIf="currentFieldSort === 'version' && statusSort === 'desc'" class="icon-sort-down-up"
+                                                src="assets/images/sort-up.svg" (click)="sortField('version', '')">
                                         </div>
                                     </div>
                                 </th>
@@ -123,12 +127,12 @@
                                     <div class="d-flex justify-content-between">
                                         <div>Người upload</div>
                                         <div class="center-parent ml-1">
-                                            <img *ngIf="currentFieldSort !== 'employeeName' ||  (currentFieldSort === 'employeeName' && statusSort === '')" class="icon-sort"
-                                                src="assets/images/sort.svg" (click)="sortField('employeeName', 'asc')">
-                                            <img *ngIf="currentFieldSort === 'employeeName' && statusSort === 'asc'" class="icon-sort-down-up" src="assets/images/sort-down.svg"
-                                                (click)="sortField('employeeName', 'desc')">
-                                            <img *ngIf="currentFieldSort === 'employeeName' && statusSort === 'desc'" class="icon-sort-down-up" src="assets/images/sort-up.svg"
-                                                (click)="sortField('employeeName', '')">
+                                            <img *ngIf="currentFieldSort !== 'employeeName' ||  (currentFieldSort === 'employeeName' && statusSort === '')"
+                                                class="icon-sort" src="assets/images/sort.svg" (click)="sortField('employeeName', 'asc')">
+                                            <img *ngIf="currentFieldSort === 'employeeName' && statusSort === 'asc'"
+                                                class="icon-sort-down-up" src="assets/images/sort-down.svg" (click)="sortField('employeeName', 'desc')">
+                                            <img *ngIf="currentFieldSort === 'employeeName' && statusSort === 'desc'"
+                                                class="icon-sort-down-up" src="assets/images/sort-up.svg" (click)="sortField('employeeName', '')">
                                         </div>
                                     </div>
                                 </th>
@@ -137,12 +141,12 @@
                                     <div class="d-flex justify-content-between">
                                         <div>Ngày upload</div>
                                         <div class="center-parent ml-1">
-                                            <img *ngIf="currentFieldSort !== 'createdDate' ||  (currentFieldSort === 'createdDate' && statusSort === '')" class="icon-sort"
-                                                src="assets/images/sort.svg" (click)="sortField('createdDate', 'asc')">
-                                            <img *ngIf="currentFieldSort === 'createdDate' && statusSort === 'asc'" class="icon-sort-down-up" src="assets/images/sort-down.svg"
-                                                (click)="sortField('createdDate', 'desc')">
-                                            <img *ngIf="currentFieldSort === 'createdDate' && statusSort === 'desc'" class="icon-sort-down-up" src="assets/images/sort-up.svg"
-                                                (click)="sortField('createdDate', '')">
+                                            <img *ngIf="currentFieldSort !== 'createdDate' ||  (currentFieldSort === 'createdDate' && statusSort === '')"
+                                                class="icon-sort" src="assets/images/sort.svg" (click)="sortField('createdDate', 'asc')">
+                                            <img *ngIf="currentFieldSort === 'createdDate' && statusSort === 'asc'"
+                                                class="icon-sort-down-up" src="assets/images/sort-down.svg" (click)="sortField('createdDate', 'desc')">
+                                            <img *ngIf="currentFieldSort === 'createdDate' && statusSort === 'desc'"
+                                                class="icon-sort-down-up" src="assets/images/sort-up.svg" (click)="sortField('createdDate', '')">
                                         </div>
                                     </div>
                                 </th>
@@ -151,12 +155,12 @@
                                     <div class="d-flex justify-content-between">
                                         <div>Lần phỏng vấn</div>
                                         <div class="center-parent ml-1">
-                                            <img *ngIf="currentFieldSort !== 'interviewTimes' ||  (currentFieldSort === 'interviewTimes' && statusSort === '')" class="icon-sort"
-                                                src="assets/images/sort.svg" (click)="sortField('interviewTimes', 'asc')">
-                                            <img *ngIf="currentFieldSort === 'interviewTimes' && statusSort === 'asc'" class="icon-sort-down-up" src="assets/images/sort-down.svg"
-                                                (click)="sortField('interviewTimes', 'desc')">
-                                            <img *ngIf="currentFieldSort === 'interviewTimes' && statusSort === 'desc'" class="icon-sort-down-up" src="assets/images/sort-up.svg"
-                                                (click)="sortField('interviewTimes', '')">
+                                            <img *ngIf="currentFieldSort !== 'interviewTimes' ||  (currentFieldSort === 'interviewTimes' && statusSort === '')"
+                                                class="icon-sort" src="assets/images/sort.svg" (click)="sortField('interviewTimes', 'asc')">
+                                            <img *ngIf="currentFieldSort === 'interviewTimes' && statusSort === 'asc'"
+                                                class="icon-sort-down-up" src="assets/images/sort-down.svg" (click)="sortField('interviewTimes', 'desc')">
+                                            <img *ngIf="currentFieldSort === 'interviewTimes' && statusSort === 'desc'"
+                                                class="icon-sort-down-up" src="assets/images/sort-up.svg" (click)="sortField('interviewTimes', '')">
                                         </div>
                                     </div>
                                 </th>
