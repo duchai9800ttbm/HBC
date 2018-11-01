@@ -427,28 +427,37 @@ export class PackageDocumentSenderComponent implements OnInit {
         });
       }
     });
-    console.log('itemDocChooseTranfer', itemDocChooseTranfer);
-
-    if (itemDocChooseTranfer && itemDocChooseTranfer.length !== 0) {
-      this.confirmationService.confirm(
-        'Bạn có muốn chuyên giao tài liệu?',
-        () => {
-          this.detailResultPackageService.tranferDocs(this.currentPackageId, itemDocChooseTranfer).subscribe(response => {
-            this.packageService.changeStatusPackageValue(this.checkStatusPackage.DaChuyenGiaoTaiLieu.text);
-            this.detailResultPackageService.getHadTransferredList(this.currentPackageId).subscribe(responseHadTransferList => {
-              this.hadTransferList = responseHadTransferList;
-            });
-            // this.textmovedata = this.isManageTransfer ? 'Đã chuyển giao tài liệu' : 'Chưa chuyển giao tài liệu';
-            this.alertService.success('Chuyển giao tài liệu thành công!');
-          },
-            err => {
-              this.alertService.error('Chuyển giao tài liệu không thành công!');
-            });
-        }
-      );
+    if (this.checkDepartmentAndDateUse(itemDocChooseTranfer)) {
+      if (itemDocChooseTranfer && itemDocChooseTranfer.length !== 0) {
+        this.confirmationService.confirm(
+          'Bạn có muốn chuyên giao tài liệu?',
+          () => {
+            this.detailResultPackageService.tranferDocs(this.currentPackageId, itemDocChooseTranfer).subscribe(response => {
+              this.packageService.changeStatusPackageValue(this.checkStatusPackage.DaChuyenGiaoTaiLieu.text);
+              this.detailResultPackageService.getHadTransferredList(this.currentPackageId).subscribe(responseHadTransferList => {
+                this.hadTransferList = responseHadTransferList;
+              });
+              // this.textmovedata = this.isManageTransfer ? 'Đã chuyển giao tài liệu' : 'Chưa chuyển giao tài liệu';
+              this.alertService.success('Chuyển giao tài liệu thành công!');
+            },
+              err => {
+                this.alertService.error('Chuyển giao tài liệu không thành công!');
+              });
+          }
+        );
+      } else {
+        this.alertService.error('Bạn phải chọn ít nhất một tài liệu để chuyển giao!');
+      }
     } else {
-      this.alertService.error('Bạn phải chọn ít nhất một tài liệu để chuyển giao!');
+      this.alertService.error('Bạn cần chọn phòng ban và số ngày sử dụng cho phòng ban đã chọn.');
     }
+  }
+
+  checkDepartmentAndDateUse(itemDocChooseTranfer) {
+    return itemDocChooseTranfer.every(itemDocTranfer => {
+      return (itemDocTranfer.transferName && itemDocTranfer.transferName.length !== 0
+        && itemDocTranfer.dateUse && itemDocTranfer.dateUse !== '0');
+    });
   }
 
 
