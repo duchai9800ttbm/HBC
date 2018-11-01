@@ -348,3 +348,9 @@
     opacity: 0;
     filter: alpha(opacity=0);
 }
+.width-but-upload{
+    width: 128px;
+}
+.width-add-file-upload{
+    width: calc(100% - 105px);
+}

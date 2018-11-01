@@ -448,7 +448,7 @@ export class PackageDocumentSenderComponent implements OnInit {
         }
       );
     } else {
-      this.alertService.error('Bạn phải chọn ít nhất một tài liều để chuyển giao!');
+      this.alertService.error('Bạn phải chọn ít nhất một tài liệu để chuyển giao!');
     }
   }
 

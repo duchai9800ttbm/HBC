@@ -60,6 +60,8 @@ export class MeetingKickoffComponent implements OnInit {
     id: null,
   };
   checkStatusPackage = CheckStatusPackage;
+  loading = false;
+  isData = false;
   constructor(
     private modalService: BsModalService,
     private router: Router,
@@ -114,6 +116,14 @@ export class MeetingKickoffComponent implements OnInit {
     });
   }
 
+  endAPIFuction(event) {
+    this.loading = event;
+    console.log('endAPIFuction', event);
+  }
+  isDataFuction(event) {
+    this.isData = event;
+    console.log('isDataFuction', event);
+  }
   sendCc() {
     this.isSendCc = !this.isSendCc;
   }
@@ -164,15 +174,6 @@ export class MeetingKickoffComponent implements OnInit {
     this.modalRef.hide();
   }
 
-  // modalUp(template: TemplateRef<any>, type: number) {
-  //   this.type = type;
-  //   if (this.type === 1) {
-  //     this.textUploadReport = 'Upload biên bản cuộc họp';
-  //   } else {
-  //     this.textUploadReport = 'Upload file presentation';
-  //   }
-  //   this.modalUpload = this.modalService.show(template);
-  // }
   modelViewListData(template: TemplateRef<any>) {
     this.modalViewData = this.modalService.show(template);
   }
@@ -194,6 +195,7 @@ export class MeetingKickoffComponent implements OnInit {
       this.emailModel.bidOpportunityId = this.currentPackageId;
       this.spinner.show();
       this.detailResultPackageService.notiMeetingKickOff(this.emailModel, this.file).subscribe(result => {
+        this.packageService.changeStatusPackageValue(this.checkStatusPackage.DaThongBaoHopKickOff.text);
         this.emailModel = new SendEmailModel();
         this.file = [];
         this.alertService.success('Gửi thư thông báo họp kick-off dự án thành công!');
@@ -221,5 +223,6 @@ export class MeetingKickoffComponent implements OnInit {
   closePopuup() {
     this.dialogUploadMettingKickOff.close();
   }
+
 
 }
