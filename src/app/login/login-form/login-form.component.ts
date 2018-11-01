@@ -12,7 +12,7 @@ import { AdministeredPackageList } from '../../shared/constants/administered-pac
     selector: 'app-login-form',
     templateUrl: './login-form.component.html',
     styleUrls: ['./login-form.component.scss'],
-    // animations: [routerTransition()],
+    animations: [routerTransition()],
     providers: [UserService]
 })
 export class LoginFormComponent implements OnInit {
