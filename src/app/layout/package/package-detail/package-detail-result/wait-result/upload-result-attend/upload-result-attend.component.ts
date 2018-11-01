@@ -7,6 +7,7 @@ import CustomValidator from '../../../../../../shared/helpers/custom-validator.h
 import ValidationHelper from '../../../../../../shared/helpers/validation.helper';
 import { Router } from '../../../../../../../../node_modules/@angular/router';
 import { CheckStatusPackage } from '../../../../../../shared/constants/check-status-package';
+import { PackageService } from '../../../../../../shared/services/package.service';
 
 @Component({
   selector: 'app-upload-result-attend',
@@ -35,6 +36,7 @@ export class UploadResultAttendComponent implements OnInit {
     private alertService: AlertService,
     private detailResultPackageService: DetailResultPackageService,
     private router: Router,
+    private packageService: PackageService
   ) { }
 
   ngOnInit() {

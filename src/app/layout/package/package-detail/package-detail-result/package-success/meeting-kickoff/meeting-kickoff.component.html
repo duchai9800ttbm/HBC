@@ -10,26 +10,29 @@
         </div>
       </div>
     </div>
-    <div>
+    <!-- <div>
       <div class="btn-toolbar mt-2 mb-2">
         <button class="btn btn-primary ml-1" *ngIf="doNotiMeeting" (click)="modalNoti(notiKickOff)">
-            <!-- *ngIf="doNotiMeeting" -->
           Gửi lại email thông báo kick-off
         </button>
         <button class="btn btn-primary ml-1" (click)="refresh(true)">
           <i class="fa fa-refresh" aria-hidden="true"></i>
         </button>
       </div>
+    </div> -->
+  </div>
+  <div id="outer-img" class="status-filter" *ngIf="statusPackage.id === checkStatusPackage.DaNhanTaiLieu.id">
+    <img src="assets/images/kickOffMetting.png" alt="">
+    <h5>Bạn chưa thông báo họp kick-off dự án?</h5>
+    <div class="confirm-button">
+      <button class="btn btn-primary" id="success" (click)="modalNoti(notiKickOff)">Thông báo họp kick-off</button>
     </div>
   </div>
-  <div id="outer-img" class="status-filter">
-    <img *ngIf="!doNotiMeeting" src="assets/images/kickOffMetting.png" alt="">
-    <img *ngIf="doNotiMeeting" src="assets/images/onKickOff.png" alt="">
-    <h5 *ngIf="1doNotiMeeting">Bạn chưa thông báo họp kick-off dự án?</h5>
+  <div id="outer-img" class="status-filter" *ngIf="statusPackage.id === checkStatusPackage.DaThongBaoHopKickOff.id">
+    <img src="assets/images/onKickOff.png" alt="">
     <div class="confirm-button">
-      <button *ngIf="!doNotiMeeting" class="btn btn-primary" id="success" (click)="modalNoti(notiKickOff)">Thông báo họp kick-off</button>
       <div>
-          <!-- *ngIf="doNotiMeeting" -->
+        <!-- *ngIf="doNotiMeeting" -->
         <button class="btn btn-primary" (click)="modalUp('report')">Upload biên bản cuộc họp</button>
         <button class="btn btn-primary" (click)="modalUp('file')">Upload file presentation</button>
       </div>

@@ -19,6 +19,7 @@ import { groupBy } from '../../../../../../../../../../node_modules/@progress/ke
 import { DocumentService } from '../../../../../../../../shared/services/document.service';
 import { DictionaryItemHightLight } from '../../../../../../../../shared/models';
 import { HoSoDuThauService } from '../../../../../../../../shared/services/ho-so-du-thau.service';
+import { CheckStatusPackage } from '../../../../../../../../shared/constants/check-status-package';
 
 @Component({
   selector: 'app-package-document-receiver',
@@ -61,6 +62,7 @@ export class PackageDocumentReceiverComponent implements OnInit {
   @Input() statusPackage;
   documentTypeList;
   statusList;
+  checkStatusPackage = CheckStatusPackage;
   constructor(
     private packageSuccessService: PackageSuccessService,
     private modalService: BsModalService,
@@ -78,6 +80,9 @@ export class PackageDocumentReceiverComponent implements OnInit {
     this.currentPackageId = +PackageDetailComponent.packageId;
     this.getListHSMTDocType();
     this.getListHSDTDocType();
+    this.packageService.statusPackageValue$.subscribe(status => {
+      this.statusPackage = status;
+    });
     this.filter.documentType = '';
     this.filter.documentTypeId = null;
     this.filter.status = '';
@@ -233,17 +238,22 @@ export class PackageDocumentReceiverComponent implements OnInit {
         }
       });
     });
-    console.log('this.idss', idsArray);
-    this.confirmationService.confirm(
-      'Bạn có muốn xác nhận nhận tài liệu?',
-      () => {
-        this.alertService.success('Xác nhận nhận tài liệu thành công!');
-        this.bntConfirm = true;
-        this.packageService.setActiveKickoff(this.bntConfirm);
-        this.textmovedata = this.bntConfirm ? 'Đã nhận tài liệu được chuyển giao' : 'Chưa nhận tài liệu được chuyển giao';
-      }
-    );
-
+    if (idsArray && idsArray.length !== 0) {
+      this.confirmationService.confirm(
+        'Bạn có muốn xác nhận nhận tài liệu?',
+        () => {
+          this.detailResultPackageService.confirmReceiveDocs(idsArray).subscribe(response => {
+            this.packageService.changeStatusPackageValue(this.checkStatusPackage.DaNhanTaiLieu.text);
+            this.alertService.success('Xác nhận nhận tài liệu thành công!');
+            this.bntConfirm = true;
+            this.packageService.setActiveKickoff(this.bntConfirm);
+            this.textmovedata = this.bntConfirm ? 'Đã nhận tài liệu được chuyển giao' : 'Chưa nhận tài liệu được chuyển giao';
+          });
+        }
+      );
+    } else {
+      this.alertService.error('Bạn chưa chọn tài liệu muốn xác nhận.');
+    }
   }
 
   manageTransferDocument(template: TemplateRef<any>) {
