@@ -23,6 +23,7 @@ import { TenderDirectorProposal } from '../../../../../../shared/models/package/
 import { DecisionBoardGeneralDirector } from '../../../../../../shared/models/package/decision-board-general-director';
 import { PermissionService } from '../../../../../../shared/services/permission.service';
 import { PermissionModel } from '../../../../../../shared/models/permission/Permission.model';
+import { Subscription } from '../../../../../../../../node_modules/rxjs';
 
 @Component({
     selector: 'app-need-create-tender-form',
@@ -54,6 +55,7 @@ export class NeedCreateTenderFormComponent implements OnInit, OnDestroy {
     GuiDuyetDNDT = false;
     ChapThuanKhongChapThuan = false;
     TaiTemplate = false;
+    subscription: Subscription;
     constructor(
         private packageService: PackageService,
         private alertService: AlertService,
@@ -69,7 +71,7 @@ export class NeedCreateTenderFormComponent implements OnInit, OnDestroy {
         this.scrollTopService.isScrollTop = false;
         this.routerAction = this.packageService.routerAction;
         // phân quyền
-        this.permissionService.get().subscribe(data => {
+        this.subscription = this.permissionService.get().subscribe(data => {
             this.listPermission = data;
             const hsdt = this.listPermission.length &&
                 this.listPermission.filter(x => x.bidOpportunityStage === 'HSDT')[0];
@@ -96,6 +98,9 @@ export class NeedCreateTenderFormComponent implements OnInit, OnDestroy {
             this.GuiDuyetDNDT = this.listPermissionScreen.includes('GuiDuyetDNDT');
             this.ChapThuanKhongChapThuan = this.listPermissionScreen.includes('ChapThuanKhongChapThuan');
             this.TaiTemplate = this.listPermissionScreen.includes('TaiTemplate');
+            if (!this.XemDNDT) {
+                this.router.navigate(['not-found']);
+            }
         });
         this.packageService.routerAction$.subscribe(
             router => {
@@ -361,11 +366,12 @@ export class NeedCreateTenderFormComponent implements OnInit, OnDestroy {
 
     ngOnDestroy() {
         this.scrollTopService.isScrollTop = true;
+        if (this.subscription) {
+            this.subscription.unsubscribe();
+        }
     }
 
     saveDrafts() {
-        // this.isShowChanges = true;
-        // this.draftsOrOfficially = true;
         this.onSubmit(true);
     }
 
@@ -402,4 +408,6 @@ export class NeedCreateTenderFormComponent implements OnInit, OnDestroy {
             this.saveChangesLiveForm();
         }
     }
+
+    
 }

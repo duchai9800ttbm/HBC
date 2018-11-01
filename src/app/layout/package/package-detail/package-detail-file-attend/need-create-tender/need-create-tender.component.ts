@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { PackageDetailComponent } from '../../package-detail.component';
 import { NeedCreateTenderFormComponent } from './need-create-tender-form/need-create-tender-form.component';
 import { ProposeTenderParticipateRequest } from '../../../../../shared/models/api-request/package/propose-tender-participate-request';
@@ -6,7 +6,7 @@ import { PackageService } from '../../../../../shared/services/package.service';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { AlertService, ConfirmationService } from '../../../../../shared/services';
 import { DATATABLE_CONFIG } from '../../../../../shared/configs';
-import { Subject } from 'rxjs';
+import { Subject, Subscription } from 'rxjs';
 import DateTimeConvertHelper from '../../../../../shared/helpers/datetime-convert-helper';
 import { PackageInfoModel } from '../../../../../shared/models/package/package-info.model';
 import { BidStatus } from '../../../../../shared/constants/bid-status';
@@ -28,7 +28,7 @@ import { PermissionService } from '../../../../../shared/services/permission.ser
   styleUrls: ['./need-create-tender.component.scss'],
   animations: [slideToLeft()]
 })
-export class NeedCreateTenderComponent implements OnInit {
+export class NeedCreateTenderComponent implements OnInit, OnDestroy {
 
   dtOptions: any = DATATABLE_CONFIG;
   dtOptions2: any = DATATABLE_CONFIG;
@@ -51,7 +51,7 @@ export class NeedCreateTenderComponent implements OnInit {
   // }
   listPermission: Array<PermissionModel>;
   listPermissionScreen = [];
-  TaoMoiDNDT= false;
+  TaoMoiDNDT = false;
   XemDNDT = false;
   SuaDNDT = false;
   XoaDNDT = false;
@@ -60,6 +60,7 @@ export class NeedCreateTenderComponent implements OnInit {
   GuiDuyetDNDT = false;
   ChapThuanKhongChapThuan = false;
   TaiTemplate = false;
+  subscription: Subscription;
   constructor(
     private packageService: PackageService,
     private spinner: NgxSpinnerService,
@@ -77,23 +78,23 @@ export class NeedCreateTenderComponent implements OnInit {
     this.getChangeHistory(0, 10);
     this.getPackageInfo();
     // phân quyền
-    this.permissionService.get().subscribe(data => {
+    this.subscription = this.permissionService.get().subscribe(data => {
       this.listPermission = data;
       const hsdt = this.listPermission.length &&
-          this.listPermission.filter(x => x.bidOpportunityStage === 'HSDT')[0];
+        this.listPermission.filter(x => x.bidOpportunityStage === 'HSDT')[0];
       console.log(this.listPermission);
       if (!hsdt) {
-          this.listPermissionScreen = [];
+        this.listPermissionScreen = [];
       }
       if (hsdt) {
-          const screen = hsdt.userPermissionDetails.length
-              && hsdt.userPermissionDetails.filter(y => y.permissionGroup.value === 'PhieuDeNghiDuThau')[0];
-          if (!screen) {
-              this.listPermissionScreen = [];
-          }
-          if (screen) {
-              this.listPermissionScreen = screen.permissions.map(z => z.value);
-          }
+        const screen = hsdt.userPermissionDetails.length
+          && hsdt.userPermissionDetails.filter(y => y.permissionGroup.value === 'PhieuDeNghiDuThau')[0];
+        if (!screen) {
+          this.listPermissionScreen = [];
+        }
+        if (screen) {
+          this.listPermissionScreen = screen.permissions.map(z => z.value);
+        }
       }
       this.TaoMoiDNDT = this.listPermissionScreen.includes('TaoMoiDNDT');
       this.XemDNDT = this.listPermissionScreen.includes('XemDNDT');
@@ -104,7 +105,13 @@ export class NeedCreateTenderComponent implements OnInit {
       this.GuiDuyetDNDT = this.listPermissionScreen.includes('GuiDuyetDNDT');
       this.ChapThuanKhongChapThuan = this.listPermissionScreen.includes('ChapThuanKhongChapThuan');
       this.TaiTemplate = this.listPermissionScreen.includes('TaiTemplate');
-  });
+    });
+  }
+
+  ngOnDestroy(): void {
+    if (this.subscription) {
+      this.subscription.unsubscribe();
+    }
   }
 
   refresh() {
