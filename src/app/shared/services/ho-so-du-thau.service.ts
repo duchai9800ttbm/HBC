@@ -36,6 +36,7 @@ export class HoSoDuThauService {
   static stateLiveFormSummaryCondition = new BehaviorSubject<StateLiveFormSummaryCondition>(new StateLiveFormSummaryCondition());
   static idTenderDocumentTypesData;
   static statusHSDT = new BehaviorSubject<boolean>(false);
+  static checkConditionApproval = new BehaviorSubject<boolean>(false);
 
   private static toHistoryLiveForm(result: any): HistoryLiveForm {
     return {
@@ -104,6 +105,14 @@ export class HoSoDuThauService {
     private instantSearchService: InstantSearchService,
     private sessionService: SessionService
   ) { }
+  // Check Condition of approval
+  watchCondition() {
+    return HoSoDuThauService.checkConditionApproval;
+  }
+  detectCondition(condition) {
+    HoSoDuThauService.checkConditionApproval.next(condition);
+  }
+  // --END: Check Condition of approval
 
   // Check Status Package HSDT
   watchStatusPackage() {

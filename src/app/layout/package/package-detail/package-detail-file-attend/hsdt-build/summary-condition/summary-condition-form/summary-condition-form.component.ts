@@ -51,7 +51,6 @@ export class SummaryConditionFormComponent implements OnInit, OnDestroy {
     });
 
     this.activatedRoute.params.subscribe(data => {
-      console.log(data);
       switch (data.action) {
         case 'create': {
           this.isModeView = false;
@@ -115,6 +114,7 @@ export class SummaryConditionFormComponent implements OnInit, OnDestroy {
         this.router.navigate([`package/detail/${this.packageId}/attend/build/summary`]);
         const message = (this.isCreate) ? 'Tạo' : 'Cập nhật';
         this.alertService.success(`${message} Bảng tóm tắt điều kiện dự thầu thành công!`);
+        if (!res.result.isDraftVersion) { this.hoSoDuThauService.detectCondition(true); }
       }, err => {
         const message = (this.isCreate) ? 'Tạo' : 'Cập nhật';
         this.alertService.error(`Đã có lỗi xảy ra. ${message} Bảng tóm tắt điều kiện dự thầu không thành công!`);

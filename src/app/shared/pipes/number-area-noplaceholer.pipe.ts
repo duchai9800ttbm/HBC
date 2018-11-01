@@ -2,9 +2,9 @@ import { Pipe, PipeTransform } from '@angular/core';
 const PADDING = '000000';
 
 @Pipe({
-  name: 'numberArea'
+  name: 'numberAreaNoplaceholder'
 })
-export class NumberAreaPipe implements PipeTransform {
+export class NumberAreaPipeNoplaceholder implements PipeTransform {
   private DECIMAL_SEPARATOR: string;
   private THOUSANDS_SEPARATOR: string;
   private CURRENCY_UNIT: string;
@@ -15,6 +15,7 @@ export class NumberAreaPipe implements PipeTransform {
     this.CURRENCY_UNIT = ' m2';
   }
   transform(value: number | string, fractionSize: number = 2, placeholder?: boolean): string {
+    if (!value && !placeholder) { return ''; }
     if (!value) { return '0' + this.CURRENCY_UNIT; }
     if (isNaN(+value)) { return value.toString(); }
 
@@ -38,14 +39,4 @@ export class NumberAreaPipe implements PipeTransform {
 
     return +integer;
   }
-
-  // parseDouble(value: string, fractionSize: number = 3): number {
-  //   if (!isNaN(+value)) { return parseFloat(value); }
-
-  //   let integer = (value || '').replace(this.CURRENCY_UNIT, '');
-
-  //   integer = integer.split(this.THOUSANDS_SEPARATOR).join('');
-  //   return parseFloat(integer);
-  // }
-
 }

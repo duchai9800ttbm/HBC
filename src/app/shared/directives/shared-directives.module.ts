@@ -16,6 +16,10 @@ import { AutoFocusDirective } from './auto-focus.directive';
 import { InputNumberNegativeDecimalDirective } from './input-number-negative-decimal.directive';
 import { RowHoverDirective } from './row-hover.directive';
 import { InputDateDirective } from './input-date.directive';
+import { InputMoneyNoplaceholderDirective } from './input-money-noplaceholder.directive';
+import { VnCurrencyPipeNoPlaceholder } from '../pipes/vn-currency-pipe-noplaceholder.module';
+import { NumberAreaPipeNoplaceholder } from '../pipes/number-area-noplaceholer.pipe';
+import { InputAreaNoplaceholderDirective } from './input-area-noplaceholder.directive';
 
 @NgModule({
     imports: [
@@ -35,7 +39,9 @@ import { InputDateDirective } from './input-date.directive';
         AutoFocusDirective,
         InputNumberNegativeDecimalDirective,
         RowHoverDirective,
-        InputDateDirective
+        InputDateDirective,
+        InputMoneyNoplaceholderDirective,
+        InputAreaNoplaceholderDirective
     ],
     exports: [
         InputNumberDirective,
@@ -51,11 +57,15 @@ import { InputDateDirective } from './input-date.directive';
         AutoFocusDirective,
         InputNumberNegativeDecimalDirective,
         RowHoverDirective,
-        InputDateDirective
+        InputDateDirective,
+        InputMoneyNoplaceholderDirective,
+        InputAreaNoplaceholderDirective
     ],
     providers: [
         VnCurrencyPipe,
-        NumberAreaPipe
+        NumberAreaPipe,
+        VnCurrencyPipeNoPlaceholder,
+        NumberAreaPipeNoplaceholder
     ]
 })
 export class SharedDirectivesModule { }

@@ -8,6 +8,8 @@ import { VnNumberPipe } from './vn-number-pipe.module';
 import { NumberAreaPipe } from './number-area.pipe';
 import { SafeUrlPipe } from './safe-url.pipe';
 import { SafePipe } from './safe.pipe';
+import { VnCurrencyPipeNoPlaceholder } from './vn-currency-pipe-noplaceholder.module';
+import { NumberAreaPipeNoplaceholder } from './number-area-noplaceholer.pipe';
 
 @NgModule({
         imports: [
@@ -15,21 +17,25 @@ import { SafePipe } from './safe.pipe';
         ],
         declarations: [
                 VnCurrencyPipe,
+                VnCurrencyPipeNoPlaceholder,
                 FromNowPipe,
                 TimesPipe,
                 ShortenedName,
                 VnNumberPipe,
                 NumberAreaPipe,
+                NumberAreaPipeNoplaceholder,
                 SafeUrlPipe,
                 SafePipe
         ],
         exports: [
                 VnCurrencyPipe,
+                VnCurrencyPipeNoPlaceholder,
                 FromNowPipe,
                 TimesPipe,
                 ShortenedName,
                 VnNumberPipe,
                 NumberAreaPipe,
+                NumberAreaPipeNoplaceholder,
                 SafeUrlPipe,
                 SafePipe
         ],

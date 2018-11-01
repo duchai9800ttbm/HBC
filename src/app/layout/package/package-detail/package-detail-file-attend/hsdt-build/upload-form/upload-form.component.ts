@@ -270,6 +270,7 @@ export class UploadFormComponent implements OnInit, OnDestroy {
       this.hoSoDuThauService.updateStatus(id, 'Official').subscribe(res => {
         this.getDataDocumentOfType(false, false);
         this.dtTrigger.next();
+        this.hoSoDuThauService.detectCondition(true);
       }, err => {
         this.dtTrigger.next();
         this.alertService.error('Đã có lỗi. Dữ liệu chưa được cập nhật!');
@@ -279,6 +280,7 @@ export class UploadFormComponent implements OnInit, OnDestroy {
       this.hoSoDuThauService.updateStatus(id, 'Draft').subscribe(res => {
         this.getDataDocumentOfType(false, false);
         this.dtTrigger.next();
+        this.hoSoDuThauService.detectCondition(true);
       }, err => {
         this.dtTrigger.next();
         this.alertService.error('Đã có lỗi. Dữ liệu chưa được cập nhật!');
