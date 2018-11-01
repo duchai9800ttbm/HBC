@@ -65,7 +65,7 @@
     margin: 0 auto 10px auto;
     background-color: #fff;
     z-index: 30;
-    cursor: pointer;    
+    // cursor: pointer;    
     box-shadow: 0 1pt 12pt rgba(0, 0, 0, 0.15)
 }
 
@@ -108,6 +108,7 @@
 .progressbar li.active:before {
     border-color: #00a0e3;
     background-color: #00a0e3;
+    cursor: pointer;  
     .arrow-down {
         width: 0;
         height: 0;
@@ -198,3 +199,4 @@
         width: 100% !important;
     }
 }
+

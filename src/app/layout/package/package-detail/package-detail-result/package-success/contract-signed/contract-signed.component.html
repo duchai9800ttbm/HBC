@@ -37,7 +37,7 @@
         <div class="d-flex">
             <div class="input-group btn-rg">
                 <span class="input-group-addon">Tìm kiếm theo</span>
-                <input type="text" class="form-control icon" placeholder="&#xf002; Nhập tên" (keyup)="searchTerm$.next($event.target.value)">
+                <input type="text" class="form-control icon" placeholder="&#xf002; Tên tài liệu" (keyup)="searchTerm$.next($event.target.value)">
             </div>
             <button class="btn btn-primary ml-1">
                 Tải xuống tài liệu
@@ -237,7 +237,7 @@
                         <td class="description">{{item.desc}} </td>
                         <td class="text-center employeeName">{{item.uploadByEmployee?.employeeName}}</td>
                         <td class="text-center">{{item.uploadDate*1000 | date:'dd/MM/yyyy HH:mm':'+0000'}}</td>
-                        <td class="text-center">{{item.contractDate*1000 | date:'dd/MM/yyyy HH:mm':'+0000'}}</td>
+                        <td class="text-center">{{item.contractDate*1000 | date:'dd/MM/yyyy':'+0000'}}</td>
                         <td class="text-center">{{item.interviewTime}}</td>
                         <td class="text-center">
                             <div class="d-flex justify-content-around">

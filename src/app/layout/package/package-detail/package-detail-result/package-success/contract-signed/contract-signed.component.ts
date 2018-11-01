@@ -85,7 +85,7 @@ export class ContractSignedComponent implements OnInit, OnDestroy {
     // this.packageService.statusPackageValue$.subscribe(status => {
     //   this.statusPackage = status;
     // });
-    this.packageService.getInforPackageID(this.currentPackageId).subscribe( response => {
+    this.packageService.getInforPackageID(this.currentPackageId).subscribe(response => {
       this.isSignedContractAPI = response.isSignedContract;
     });
     this.filterModel.uploadedDate = null;
@@ -110,13 +110,11 @@ export class ContractSignedComponent implements OnInit, OnDestroy {
       this.listEmailSearchCc = response;
       this.listEmailSearchBcc = response;
     });
-    // this.packageService.getInforPackageID(this.currentPackageId).subscribe(result => {
-    //   this.statusPackage = result.stageStatus.id;
-    // });
     this.filter(false);
+    this.filterList();
     this.subscription = this.detailResultPackageService.watchListContractSigning().subscribe(value => {
-      // this.statusPackage = this.bidStatus.DaKyKetHopDong;
       this.filter(false);
+      this.filterList();
     });
     this.searchTerm$.debounceTime(600)
       .distinctUntilChanged()
@@ -138,6 +136,24 @@ export class ContractSignedComponent implements OnInit, OnDestroy {
 
   ngOnDestroy() {
     this.subscription.unsubscribe();
+  }
+
+  filterList() {
+    const filterModelNew = new FilterContractSigning();
+    this.spinner.show();
+    this.detailResultPackageService
+      .filterContractSigning(
+        this.currentPackageId,
+        '',
+        filterModelNew,
+        0,
+        1000
+      )
+      .subscribe(result => {
+        this.getUploadList(result);
+        this.getInterviewTimeList(result);
+        this.spinner.hide();
+      }, err => this.spinner.hide());
   }
 
   filter(displayAlert: boolean) {
@@ -170,13 +186,11 @@ export class ContractSignedComponent implements OnInit, OnDestroy {
 
   render(pagedResult: any) {
     this.pagedResult = pagedResult;
-    this.getUploadList();
-    this.getInterviewTimeList();
     // this.dtTrigger.next();
   }
 
-  getUploadList() {
-    this.uploadList = this.pagedResult.items ? this.pagedResult.items.map(item => item.uploadByEmployee) : [];
+  getUploadList(result) {
+    this.uploadList = result.items ? result.items.map(item => item.uploadByEmployee) : [];
     this.uploadList = groupBy(this.uploadList, [{ field: 'employeeId' }]);
     this.uploadList = this.uploadList.map(item => {
       return {
@@ -187,8 +201,8 @@ export class ContractSignedComponent implements OnInit, OnDestroy {
     this.uploadList = this.uploadList.sort((a, b) => a.employeeId - b.employeeId);
   }
 
-  getInterviewTimeList() {
-    this.interviewTimeList = this.pagedResult.items ? this.pagedResult.items.map(item => item.interviewTime) : [];
+  getInterviewTimeList(result) {
+    this.interviewTimeList = result.items ? result.items.map(item => item.interviewTime) : [];
     this.interviewTimeList = this.interviewTimeList.sort((a, b) => a - b);
     this.interviewTimeList = this.interviewTimeList.filter((el, i, a) => i === a.indexOf(el));
   }
@@ -248,6 +262,7 @@ export class ContractSignedComponent implements OnInit, OnDestroy {
   }
   refesh() {
     this.filter(true);
+    this.filterList();
   }
   deleteContractSign() {
     const listItemCheckbox = [];
