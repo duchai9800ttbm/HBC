@@ -334,16 +334,14 @@ export class PackageDocumentSenderComponent implements OnInit {
           });
         });
       } else {
-        // itemHSMT.documents[0].checkboxSelected = value;
-        itemHSMT.documents.forEach(itemChild => {
-          itemChild.checkboxSelected = value;
-        });
+        if (itemHSMT.documents && itemHSMT.documents.length !== 0) {
+          itemHSMT.documents.forEach(itemChild => {
+            itemChild.checkboxSelected = value;
+          });
+        }
       }
     });
     this.docHSDTList.forEach(itemHSDT => {
-      // itemHSDT.documents.forEach(itemDocument => {
-      //   itemDocument.checkboxSelected = value;
-      // });
       if (itemHSDT.childDocuments) {
         itemHSDT.childDocuments.forEach(itemChild => {
           itemChild.items.forEach(itemChildChild => {
@@ -351,9 +349,11 @@ export class PackageDocumentSenderComponent implements OnInit {
           });
         });
       } else {
-        itemHSDT.documents.forEach(itemChild => {
-          itemChild.checkboxSelected = value;
-        });
+        if (itemHSDT.documents && itemHSDT.documents.length !== 0) {
+          itemHSDT.documents.forEach(itemChild => {
+            itemChild.checkboxSelected = value;
+          });
+        }
       }
     });
   }
@@ -401,9 +401,7 @@ export class PackageDocumentSenderComponent implements OnInit {
     this.isDataHsdt = !this.isDataHsdt;
   }
   transferofdocuments() {
-    // this.isManageTransfer = true;
-    // this.btnManageTransfer = false;
-    // Chọn các tài liệu checkbox = true
+
     const itemDocChooseTranfer = [];
     this.docHSMTList.forEach(itemHSMT => {
       if (itemHSMT.childDocuments) {
@@ -429,6 +427,7 @@ export class PackageDocumentSenderComponent implements OnInit {
         });
       }
     });
+    console.log('itemDocChooseTranfer', itemDocChooseTranfer);
 
     if (itemDocChooseTranfer && itemDocChooseTranfer.length !== 0) {
       this.confirmationService.confirm(
@@ -635,30 +634,34 @@ export class PackageDocumentSenderComponent implements OnInit {
   }
   // Tài liệu đã chuyển giao
   onSelectAllHadTransfer(value: boolean) {
-    this.docHSMTHadTransfer.forEach(itemHSMT => {
-      if (itemHSMT.childDocuments) {
-        itemHSMT.childDocuments.forEach(itemChild => {
-          itemChild.items.forEach(itemChildChild => {
-            itemChildChild.documents[0].checkboxSelected = value;
+    if (this.docHSMTHadTransfer && this.docHSMTHadTransfer.length !== 0) {
+      this.docHSMTHadTransfer.forEach(itemHSMT => {
+        if (itemHSMT.childDocuments) {
+          itemHSMT.childDocuments.forEach(itemChild => {
+            itemChild.items.forEach(itemChildChild => {
+              itemChildChild.documents[0].checkboxSelected = value;
+            });
           });
-        });
-      } else {
-        itemHSMT.documents[0].checkboxSelected = value;
-      }
-    });
-    this.docHSDTHadTransfer.forEach(itemHSDT => {
-      if (itemHSDT.childDocuments) {
-        itemHSDT.childDocuments.forEach(itemChild => {
-          itemChild.items.forEach(itemChildChild => {
-            itemChildChild.documents[0].checkboxSelected = value;
+        } else {
+          itemHSMT.documents[0].checkboxSelected = value;
+        }
+      });
+    }
+    if (this.docHSDTHadTransfer && this.docHSDTHadTransfer.length !== 0) {
+      this.docHSDTHadTransfer.forEach(itemHSDT => {
+        if (itemHSDT.childDocuments) {
+          itemHSDT.childDocuments.forEach(itemChild => {
+            itemChild.items.forEach(itemChildChild => {
+              itemChildChild.documents[0].checkboxSelected = value;
+            });
           });
-        });
-      } else {
-        itemHSDT.documents.forEach(itemChild => {
-          itemChild.checkboxSelected = value;
-        });
-      }
-    });
+        } else {
+          itemHSDT.documents.forEach(itemChild => {
+            itemChild.checkboxSelected = value;
+          });
+        }
+      });
+    }
   }
   // Quản lý tài liệu
   onSelectDocumentManage(value: boolean) {

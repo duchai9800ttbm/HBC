@@ -177,16 +177,19 @@ export class PackageDocumentReceiverComponent implements OnInit {
 
       console.log('filterFuc', this.docHSMTListTranferred, this.docHSDTListTranferred);
       // Hồ sơ mời thầu
-      this.docHSMTListTranferred.forEach((itemPra, indexPra) => {
-        itemPra['documentTypeStr'] = JSON.stringify(itemPra.documentType);
-      });
-      this.docHSMTListTranferred = groupBy(this.docHSMTListTranferred, [{ field: 'documentTypeStr' }]);
-
+      if (this.docHSMTListTranferred && this.docHSMTListTranferred.length !== 0) {
+        this.docHSMTListTranferred.forEach((itemPra, indexPra) => {
+          itemPra['documentTypeStr'] = JSON.stringify(itemPra.documentType);
+        });
+        this.docHSMTListTranferred = groupBy(this.docHSMTListTranferred, [{ field: 'documentTypeStr' }]);
+      }
       // Hồ sơ dự thầu
-      this.docHSDTListTranferred.forEach((itemPra, indexPra) => {
-        itemPra['documentTypeStr'] = JSON.stringify(itemPra.documentType);
-      });
-      this.docHSDTListTranferred = groupBy(this.docHSDTListTranferred, [{ field: 'documentTypeStr' }]);
+      if (this.docHSDTListTranferred && this.docHSDTListTranferred.length !== 0) {
+        this.docHSDTListTranferred.forEach((itemPra, indexPra) => {
+          itemPra['documentTypeStr'] = JSON.stringify(itemPra.documentType);
+        });
+        this.docHSDTListTranferred = groupBy(this.docHSDTListTranferred, [{ field: 'documentTypeStr' }]);
+      }
       console.log('this.transferredDocList-3', this.docHSMTListTranferred, this.docHSDTListTranferred);
       if (alertShow) {
         this.alertService.success('Dữ liệu đã được cập nhật mới nhất!');
