@@ -103,6 +103,7 @@ export class ReportMeetingComponent implements OnInit {
         this.filterMeetingReportList(false);
       });
     this.detailResultPackageService.watchListListReportMeeting().subscribe(value => {
+      console.log('filterMeetingReportList');
       this.filterMeetingReportList(false);
     });
     // filter file

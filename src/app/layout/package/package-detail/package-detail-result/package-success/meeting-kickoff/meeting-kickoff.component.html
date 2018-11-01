@@ -289,4 +289,4 @@
   </div>
 </ng-template>
 
-<app-report-meeting *ngIf="!(isData === false)" (isData)="isDataFuction($event)" (endAPI)="endAPIFuction($event)" [reportFile]="reportFile"></app-report-meeting>
+<app-report-meeting (isData)="isDataFuction($event)" (endAPI)="endAPIFuction($event)" [reportFile]="reportFile"></app-report-meeting>
