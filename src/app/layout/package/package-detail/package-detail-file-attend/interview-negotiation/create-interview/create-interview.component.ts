@@ -20,6 +20,8 @@ import { BidStatus } from '../../../../../../shared/constants/bid-status';
 import { groupBy } from '../../../../../../../../node_modules/@progress/kendo-data-query';
 import DateTimeConvertHelper from '../../../../../../shared/helpers/datetime-convert-helper';
 import { NgbDropdownConfig } from '../../../../../../../../node_modules/@ng-bootstrap/ng-bootstrap';
+import { PermissionModel } from '../../../../../../shared/models/permission/Permission.model';
+import { PermissionService } from '../../../../../../shared/services/permission.service';
 @Component({
   selector: 'app-create-interview',
   templateUrl: './create-interview.component.html',
@@ -47,6 +49,19 @@ export class CreateInterviewComponent implements OnInit, OnDestroy {
   subscription: Subscription;
   isNgOnInit = false;
   loading = false;
+
+  listPermission: Array<PermissionModel>;
+  listPermissionScreen = [];
+  listPermissionScreen2 = [];
+
+  TaoMoiLMPV = false;
+  CapNhatLMPV = false;
+  ThongBaoPV = false;
+  XemEmailTBPV = false;
+  ChotCongTacChuanBiPhongVan = false;
+  UploadBBPV = false;
+  DongPV = false;
+  HieuChinhHSDT = false;
   constructor(
     private dialogService: DialogService,
     private interviewInvitationService: InterviewInvitationService,
@@ -55,18 +70,57 @@ export class CreateInterviewComponent implements OnInit, OnDestroy {
     private alertService: AlertService,
     private statusObservableHsdtService: StatusObservableHsdtService,
     private packageService: PackageService,
+    private permissionService: PermissionService
+
   ) { }
 
   ngOnInit() {
     this.currentPackageId = +PackageDetailComponent.packageId;
+    this.subscription = this.permissionService.get().subscribe(data => {
+      this.listPermission = data;
+      const hsdt = this.listPermission.length &&
+        this.listPermission.filter(x => x.bidOpportunityStage === 'HSDT')[0];
+      if (!hsdt) {
+        this.listPermissionScreen = [];
+      }
+      if (hsdt) {
+        const screen = hsdt.userPermissionDetails.length
+          && hsdt.userPermissionDetails.filter(y => y.permissionGroup.value === 'QuanLyPhongVanThuongThao')[0];
+        if (!screen) {
+          this.listPermissionScreen = [];
+        }
+        if (screen) {
+          this.listPermissionScreen = screen.permissions.map(z => z.value);
+        }
+
+        const screen2 = hsdt.userPermissionDetails.length
+          && hsdt.userPermissionDetails.filter(y => y.permissionGroup.value === 'ChotVaNopHSDT')[0];
+        if (!screen2) {
+          this.listPermissionScreen2 = [];
+        }
+        if (screen2) {
+          this.listPermissionScreen2 = screen2.permissions.map(z => z.value);
+        }
+      }
+      this.TaoMoiLMPV = this.listPermissionScreen.includes('TaoMoiLMPV');
+      this.CapNhatLMPV = this.listPermissionScreen.includes('CapNhatLMPV');
+      this.ThongBaoPV = this.listPermissionScreen.includes('ThongBaoPV');
+      this.XemEmailTBPV = this.listPermissionScreen.includes('XemEmailTBPV');
+      this.ChotCongTacChuanBiPhongVan = this.listPermissionScreen.includes('ChotCongTacChuanBiPhongVan');
+      this.UploadBBPV = this.listPermissionScreen.includes('UploadBBPV');
+      this.DongPV = this.listPermissionScreen.includes('DongPV');
+      this.HieuChinhHSDT = this.listPermissionScreen2.includes('HieuChinhHSDT');
+    });
     this.stattusCurrentList = ['create', 'prepare', 'end'];
     this.filter();
     this.getListFilter();
     this.getSatusPackage();
-    this.subscription = this.statusObservableHsdtService.statusPackageService.subscribe(value => {
+
+    const status$ = this.statusObservableHsdtService.statusPackageService.subscribe(value => {
       this.getSatusPackage();
       this.spinner.hide();
     });
+    this.subscription.add(status$);
     this.filterModel.status = '';
     this.filterModel.interviewTimes = null;
     this.filterModel.receivedDate = null;
@@ -102,7 +156,9 @@ export class CreateInterviewComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    this.subscription.unsubscribe();
+    if (this.subscription) {
+      this.subscription.unsubscribe();
+    }
   }
 
   getSatusPackage() {

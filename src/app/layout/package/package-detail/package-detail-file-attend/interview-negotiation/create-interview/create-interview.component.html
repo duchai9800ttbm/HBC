@@ -6,9 +6,12 @@
       </div>
       <div class="col-md-12 center-parent message-create-interview py-3">VUI LÒNG TẠO LỜI MỜI PHỎNG VẤN</div>
       <div class="col-md-12 center-parent">
-        <button class="btn btn-primary ml-1" (click)="createInvitation()">
-          Tạo lời mời phỏng vấn
-        </button>
+        <ng-container *ngIf="TaoMoiLMPV">
+            <button class="btn btn-primary ml-1" (click)="createInvitation()">
+                Tạo lời mời phỏng vấn
+              </button>
+        </ng-container>
+        
       </div>
     </div>
     <div class="set-width-content pt-2" *ngIf="(currentStatusInterview > 0 || statusPackage === bidStatus.DaNhanLoiMoi) && statusPackage !== bidStatus.DaNopHSDT">
@@ -227,19 +230,18 @@
                           alt="">
                       </a>
                     </div>
-                    <div>
-                      <a title="Chỉnh sửa">
-                        <i class="fa fa-pencil color-item-down" aria-hidden="true" (click)="EditInvitation(item)"></i>
-                      </a>
-                    </div>
+                    <ng-container *ngIf="CapNhatLMPV">
+                        <div>
+                            <a title="Chỉnh sửa">
+                              <i class="fa fa-pencil color-item-down" aria-hidden="true" (click)="EditInvitation(item)"></i>
+                            </a>
+                          </div>
+                    </ng-container>
+                    
                   </div>
                 </td>
               </tr>
-              <!-- <tr *ngIf="!pagedResult.items || pagedResult.items.length === 0">
-                <td colspan="10">
-                  <div class="center-parent">Không có dữ liệu</div>
-                </td>
-              </tr> -->
+            
             </tbody>
           </table>
           <div *ngIf="!loading && (!pagedResult.items || pagedResult.items.length === 0)" class="center-parent">Không có dữ liệu</div>
@@ -249,4 +251,3 @@
     </div>
   </div>
 </div>
-<!-- <ngx-spinner bdColor="rgba(51, 51, 51, 0.7)" size = "default" color="#fff" type="ball-scale"></ngx-spinner> -->

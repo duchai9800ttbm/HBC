@@ -16,6 +16,8 @@ import { AlertService } from '../../../../../shared/services';
 import { ReportEndInterviewComponent } from './end-interview/report-end-interview/report-end-interview.component';
 import { CheckStatusPackage } from '../../../../../shared/constants/check-status-package';
 import { slideToLeft } from '../../../../../router.animations';
+import { PermissionService } from '../../../../../shared/services/permission.service';
+import { PermissionModel } from '../../../../../shared/models/permission/Permission.model';
 
 
 @Component({
@@ -45,6 +47,19 @@ export class InterviewNegotiationComponent implements OnInit, OnDestroy {
   checkStatusPackage = CheckStatusPackage;
   urlCurrent;
   interviewOfPackage = '';
+
+  listPermission: Array<PermissionModel>;
+  listPermissionScreen = [];
+  listPermissionScreen2 = [];
+
+  TaoMoiLMPV = false;
+  CapNhatLMPV = false;
+  ThongBaoPV = false;
+  XemEmailTBPV = false;
+  ChotCongTacChuanBiPhongVan = false;
+  UploadBBPV = false;
+  DongPV = false;
+  HieuChinhHSDT = false;
   constructor(
     private dialogService: DialogService,
     private packageService: PackageService,
@@ -54,6 +69,8 @@ export class InterviewNegotiationComponent implements OnInit, OnDestroy {
     private router: Router,
     private spinner: NgxSpinnerService,
     private alertService: AlertService,
+    private permissionService: PermissionService
+
   ) {
   }
 
@@ -62,16 +79,46 @@ export class InterviewNegotiationComponent implements OnInit, OnDestroy {
     this.bidStatus.ChuanBiPhongVan, this.bidStatus.DaChotCongTacChuanBiPhongVan, this.bidStatus.DaPhongVan];
     this.stattusCurrentList = ['create', 'prepare', 'end'];
     this.packageId = +PackageDetailComponent.packageId;
+    this.subscription = this.permissionService.get().subscribe(data => {
+      this.listPermission = data;
+      const hsdt = this.listPermission.length &&
+        this.listPermission.filter(x => x.bidOpportunityStage === 'HSDT')[0];
+      if (!hsdt) {
+        this.listPermissionScreen = [];
+      }
+      if (hsdt) {
+        const screen = hsdt.userPermissionDetails.length
+          && hsdt.userPermissionDetails.filter(y => y.permissionGroup.value === 'QuanLyPhongVanThuongThao')[0];
+        if (!screen) {
+          this.listPermissionScreen = [];
+        }
+        if (screen) {
+          this.listPermissionScreen = screen.permissions.map(z => z.value);
+        }
+
+        const screen2 = hsdt.userPermissionDetails.length
+          && hsdt.userPermissionDetails.filter(y => y.permissionGroup.value === 'ChotVaNopHSDT')[0];
+        if (!screen2) {
+          this.listPermissionScreen2 = [];
+        }
+        if (screen2) {
+          this.listPermissionScreen2 = screen2.permissions.map(z => z.value);
+        }
+      }
+      this.TaoMoiLMPV = this.listPermissionScreen.includes('TaoMoiLMPV');
+      this.CapNhatLMPV = this.listPermissionScreen.includes('CapNhatLMPV');
+      this.ThongBaoPV = this.listPermissionScreen.includes('ThongBaoPV');
+      this.XemEmailTBPV = this.listPermissionScreen.includes('XemEmailTBPV');
+      this.ChotCongTacChuanBiPhongVan = this.listPermissionScreen.includes('ChotCongTacChuanBiPhongVan');
+      this.UploadBBPV = this.listPermissionScreen.includes('UploadBBPV');
+      this.DongPV = this.listPermissionScreen.includes('DongPV');
+      this.HieuChinhHSDT = this.listPermissionScreen2.includes('HieuChinhHSDT');
+    });
     this.checkStatusPackageFuc();
-    this.subscription = this.statusObservableHsdtService.statusPackageService.subscribe(value => {
-      // this.directionalRouter();
+    const status$ = this.statusObservableHsdtService.statusPackageService.subscribe(value => {
       this.checkStatusPackageFuc();
     });
-    // this.changeKeySearchInterviewInvitation$.debounceTime(600)
-    //   .distinctUntilChanged()
-    //   .subscribe(keySearch => {
-    //     this.interviewInvitationService.changeKeySearchInterviewInvitation(keySearch);
-    //   });
+    this.subscription.add(status$);
     const eventRouter = this.router.events.subscribe((val) => {
       if ((val instanceof NavigationEnd) === true) {
         this.checkStatusPackageFuc();
@@ -82,7 +129,9 @@ export class InterviewNegotiationComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    this.subscription.unsubscribe();
+    if (this.subscription) {
+      this.subscription.unsubscribe();
+    }
   }
 
   directionalRouter() {
@@ -119,12 +168,6 @@ export class InterviewNegotiationComponent implements OnInit, OnDestroy {
         }
         this.interviewInvitationService.changeUrlChirld(this.currentStatusInterview);
       });
-      // for (let i = 0; i < this.statusInInterviewList.length; i++) {
-      //   if (this.statusInInterviewList[i] === this.statusPackage) {
-      //     this.numberStatusPackageInterview = i;
-      //     break;
-      //   }
-      // }
     });
   }
   // =========================

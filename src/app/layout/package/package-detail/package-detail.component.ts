@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Router, ActivatedRoute } from '../../../../../node_modules/@angular/router';
 import { routerTransition } from '../../../router.animations';
 import { PackageModel } from '../../../shared/models/package/package.model';
@@ -21,7 +21,7 @@ import { Subscription } from '../../../../../node_modules/rxjs';
   // animations: [routerTransition()]
 
 })
-export class PackageDetailComponent implements OnInit {
+export class PackageDetailComponent implements OnInit, OnDestroy {
   static packageId;
   checkStatusPackage = CheckStatusPackage;
   statusPackage = {
@@ -41,6 +41,7 @@ export class PackageDetailComponent implements OnInit {
   public packageId: number;
   packageData = new PackageInfoModel();
   sub: Subscription;
+  subInterval: Subscription;
   status = {
     DisabledfileAttend: true,
     Disabledresult: true
@@ -69,10 +70,14 @@ export class PackageDetailComponent implements OnInit {
       }
     }, 300);
 
-    IntervalObservable.create(1 * 10 * 1000).subscribe(_ => {
+    const subFirst = this.permissionService.getListPermission(this.packageId).subscribe(listPermission => {
+      this.permissionService.set(listPermission);
+      subFirst.unsubscribe();
+    });
+    this.subInterval = IntervalObservable.create(1 * 10 * 1000).subscribe(_ => {
       this.sub = this.permissionService.getListPermission(this.packageId).subscribe(listPermission => {
-         this.permissionService.set(listPermission);
-         this.sub.unsubscribe();
+        this.permissionService.set(listPermission);
+        this.sub.unsubscribe();
       });
     });
 
@@ -88,9 +93,15 @@ export class PackageDetailComponent implements OnInit {
         this.isToggle = false;
       }
     });
-    this.packageService.statusPackage$.subscribe( value => {
+    this.packageService.statusPackage$.subscribe(value => {
       this.getInforPackage();
     });
+  }
+
+  ngOnDestroy(): void {
+    if (this.subInterval) {
+      this.subInterval.unsubscribe();
+    }
   }
 
   getInforPackage() {
