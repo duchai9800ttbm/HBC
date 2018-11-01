@@ -82,9 +82,9 @@ export class ContractSignedComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.currentPackageId = +PackageDetailComponent.packageId;
     this.statusPackage = this.packageService.statusPackageValue2;
-    this.packageService.statusPackageValue$.subscribe(status => {
-      this.statusPackage = status;
-    });
+    // this.packageService.statusPackageValue$.subscribe(status => {
+    //   this.statusPackage = status;
+    // });
     this.packageService.getInforPackageID(this.currentPackageId).subscribe( response => {
       this.isSignedContractAPI = response.isSignedContract;
     });
@@ -172,7 +172,7 @@ export class ContractSignedComponent implements OnInit, OnDestroy {
     this.pagedResult = pagedResult;
     this.getUploadList();
     this.getInterviewTimeList();
-    this.dtTrigger.next();
+    // this.dtTrigger.next();
   }
 
   getUploadList() {
