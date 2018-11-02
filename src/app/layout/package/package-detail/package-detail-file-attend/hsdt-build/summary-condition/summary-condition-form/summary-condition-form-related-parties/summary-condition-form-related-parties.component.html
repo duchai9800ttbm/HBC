@@ -32,8 +32,7 @@
                                 <div>Ghi chú</div>
                             </div>
                             <span class="form-control form-control-custom w-80">
-                                <textarea disabled="true" class="form-control b-textarea h-100"></textarea>
-
+                                <textarea #autofocusone tabindex="1" disabled="true" class="form-control b-textarea h-100"></textarea>
                             </span>
                         </div>
                     </div>
@@ -59,7 +58,7 @@
                                 <div>Ghi chú</div>
                             </div>
                             <span class="form-control form-control-custom w-80">
-                                <textarea [disabled]="isModeView" class="form-control b-textarea h-100" (input)="noteChange($event)" [(ngModel)]="customer.note"></textarea>
+                                <textarea id="ghichu{{k}}" tabindex="k+2" [disabled]="isModeView" class="form-control b-textarea h-100" (input)="noteChange($event)" [(ngModel)]="customer.note"></textarea>
                             </span>
                         </div>
                     </div>
@@ -76,7 +75,7 @@
             <i class="fa font-size-3 mr-3 fa-angle-left" aria-hidden="true"></i>
             Trở về
         </button>
-        <button class="btn btn-primary ml-1" routerLink="../scope">
+        <button tabindex="8" class="btn btn-primary ml-1" routerLink="../scope">
             Tiếp
             <i class="fa font-size-3 ml-3 fa-angle-right" aria-hidden="true"></i>
         </button>

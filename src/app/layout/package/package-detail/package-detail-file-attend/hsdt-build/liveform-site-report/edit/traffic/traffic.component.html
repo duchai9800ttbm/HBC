@@ -11,7 +11,7 @@
                             <label class="unset-margin w-100">Khó khăn/Disadvantage</label>
                         </div>
                         <div class="img-demo-des">
-                            <input class="w-50" type="text" placeholder="Nhập text" formControlName="chiTietDiaHinhKhoKhanDesc"
+                            <input tabindex="1" #autofocus class="w-50" type="text" placeholder="Nhập text" formControlName="chiTietDiaHinhKhoKhanDesc"
                                 [ngClass]="{'view-mode-control': isViewMode}">
                         </div>
                         <div class="image-demo-img">
@@ -25,7 +25,7 @@
                                     </div>
                                 </div>
                             </ng-container>
-                            <div class="perspective-image cursor-pointer" [ngClass]="{'d-none': isViewMode}" (click)="uploaDisadvantage.click()">
+                            <div tabindex="2" class="perspective-image cursor-pointer" [ngClass]="{'d-none': isViewMode}" (click)="uploaDisadvantage.click()">
                                 <i class="fa fa-plus" aria-hidden="true"></i>
                                 <p>Image</p>
                             </div>
@@ -38,7 +38,7 @@
                             <label class="unset-margin w-100">Thuận lợi/ Advantage</label>
                         </div>
                         <div class="img-demo-des">
-                            <input class="w-50" type="text" placeholder="Nhập text" formControlName="chiTietDiaHinhThuanLoiDesc"
+                            <input tabindex="3" class="w-50" type="text" placeholder="Nhập text" formControlName="chiTietDiaHinhThuanLoiDesc"
                                 [ngClass]="{'view-mode-control': isViewMode}">
                         </div>
                         <div class="image-demo-img">
@@ -53,7 +53,7 @@
                                 </div>
                             </ng-container>
 
-                            <div class="perspective-image cursor-pointer" [ngClass]="{'d-none': isViewMode}" (click)="uploaAdvantage.click()">
+                            <div tabindex="4" class="perspective-image cursor-pointer" [ngClass]="{'d-none': isViewMode}" (click)="uploaAdvantage.click()">
                                 <i class="fa fa-plus" aria-hidden="true"></i>
                                 <p>Image</p>
                             </div>
@@ -71,7 +71,7 @@
                     <label class="unset-margin w-100">Hướng vào công trường/ Direction of the site entrance</label>
                 </div>
                 <div class="img-demo-des">
-                    <input class="w-50" type="text" placeholder="Nhập text" formControlName="huongVaoCongTruongDesc"
+                    <input tabindex="5" class="w-50" type="text" placeholder="Nhập text" formControlName="huongVaoCongTruongDesc"
                         [ngClass]="{'view-mode-control': isViewMode}">
                 </div>
                 <div class="image-demo-img">
@@ -85,7 +85,7 @@
                             </div>
                         </div>
                     </ng-container>
-                    <div class="perspective-image cursor-pointer" [ngClass]="{'d-none': isViewMode}" (click)="uploadDirection.click()">
+                    <div tabindex="6" class="perspective-image cursor-pointer" [ngClass]="{'d-none': isViewMode}" (click)="uploadDirection.click()">
                         <i class="fa fa-plus" aria-hidden="true"></i>
                         <p>Image</p>
                     </div>
@@ -97,7 +97,7 @@
                     <label class="unset-margin w-100">Đường hiện có trên công trường/ Existing road on site</label>
                 </div>
                 <div class="img-demo-des">
-                    <input class="w-50" type="text" placeholder="Nhập text" formControlName="duongHienCoTrenCongTruongDesc"
+                    <input tabindex="7" class="w-50" type="text" placeholder="Nhập text" formControlName="duongHienCoTrenCongTruongDesc"
                         [ngClass]="{'view-mode-control': isViewMode}">
                 </div>
                 <div class="image-demo-img">
@@ -111,7 +111,7 @@
                             </div>
                         </div>
                     </ng-container>
-                    <div class="perspective-image cursor-pointer" [ngClass]="{'d-none': isViewMode}" (click)="uploadExisting.click()">
+                    <div tabindex="8" class="perspective-image cursor-pointer" [ngClass]="{'d-none': isViewMode}" (click)="uploadExisting.click()">
                         <i class="fa fa-plus" aria-hidden="true"></i>
                         <p>Image</p>
                     </div>
@@ -123,7 +123,7 @@
                     <label class="unset-margin w-100">Yêu cầu đường tạm/ Temporary road's requirement</label>
                 </div>
                 <div class="img-demo-des">
-                    <input class="w-50" type="text" placeholder="Nhập text" formControlName="yeuCauDuongTamDesc"
+                    <input tabindex="9" class="w-50" type="text" placeholder="Nhập text" formControlName="yeuCauDuongTamDesc"
                         [ngClass]="{'view-mode-control': isViewMode}">
                 </div>
                 <div class="image-demo-img">
@@ -137,7 +137,7 @@
                             </div>
                         </div>
                     </ng-container>
-                    <div class="perspective-image cursor-pointer" [ngClass]="{'d-none': isViewMode}" (click)="uploadRoad.click()">
+                    <div tabindex="10" class="perspective-image cursor-pointer" [ngClass]="{'d-none': isViewMode}" (click)="uploadRoad.click()">
                         <i class="fa fa-plus" aria-hidden="true"></i>
                         <p>Image</p>
                     </div>
@@ -148,7 +148,7 @@
                     <label class="unset-margin w-100">Yêu cầu về hàng rào tạm/ Temporary fence's requirement</label>
                 </div>
                 <div class="img-demo-des">
-                    <input class="w-50" type="text" placeholder="Nhập text" formControlName="yeuCauHangRaoDesc"
+                    <input tabindex="11" class="w-50" type="text" placeholder="Nhập text" formControlName="yeuCauHangRaoDesc"
                         [ngClass]="{'view-mode-control': isViewMode}">
                 </div>
                 <div class="image-demo-img">
@@ -162,7 +162,7 @@
                             </div>
                         </div>
                     </ng-container>
-                    <div class="perspective-image cursor-pointer" [ngClass]="{'d-none': isViewMode}" (click)="uploadFence.click()">
+                    <div tabindex="12" class="perspective-image cursor-pointer" [ngClass]="{'d-none': isViewMode}" (click)="uploadFence.click()">
                         <i class="fa fa-plus" aria-hidden="true"></i>
                         <p>Image</p>
                     </div>

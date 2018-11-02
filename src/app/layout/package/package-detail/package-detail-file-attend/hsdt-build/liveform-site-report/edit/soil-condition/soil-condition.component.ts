@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, AfterViewInit } from '@angular/core';
 import { SoilCondition } from '../../../../../../../../shared/models/site-survey-report/soil-condition.model';
 import { FormGroup, FormBuilder } from '@angular/forms';
 import { EditComponent } from '../edit.component';
@@ -13,9 +13,10 @@ import { SiteSurveyReportService } from '../../../../../../../../shared/services
   templateUrl: './soil-condition.component.html',
   styleUrls: ['./soil-condition.component.scss']
 })
-export class SoilConditionComponent implements OnInit {
+export class SoilConditionComponent implements OnInit, AfterViewInit {
   @ViewChild('uploadFooting') uploadFooting;
   @ViewChild('uploadInvestigation') uploadInvestigation;
+  @ViewChild('autofocus') autofocus;
   soilConditionForm: FormGroup;
 
   footingImageUrls = [];
@@ -46,6 +47,11 @@ export class SoilConditionComponent implements OnInit {
       thongTinCongTrinhGanDoList: null
     });
     this.soilConditionForm.valueChanges.subscribe(data => this.mappingToLiveFormData(data));
+  }
+  ngAfterViewInit() {
+    if (!this.isViewMode) {
+      this.autofocus.nativeElement.focus();
+    }
   }
   checkFlag() {
     this.isViewMode = LiveformSiteReportComponent.actionMode === 'viewMode';

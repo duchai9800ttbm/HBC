@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, AfterViewInit } from '@angular/core';
 import { DemoConso } from '../../../../../../../../shared/models/site-survey-report/demo-conso.model';
 import { FormGroup, FormBuilder } from '@angular/forms';
 import { EditComponent } from '../edit.component';
@@ -13,10 +13,11 @@ import { SiteSurveyReportService } from '../../../../../../../../shared/services
   templateUrl: './demo-conso.component.html',
   styleUrls: ['./demo-conso.component.scss']
 })
-export class DemoConsoComponent implements OnInit {
+export class DemoConsoComponent implements OnInit, AfterViewInit {
   @ViewChild('uploadDemobilisation') uploadDemobilisation;
   @ViewChild('uploadConsolidation') uploadConsolidation;
   @ViewChild('uploaAdjacent') uploaAdjacent;
+  @ViewChild('autofocus') autofocus;
   demoConsoForm: FormGroup;
 
   demobilisationImageUrls = [];
@@ -49,6 +50,11 @@ export class DemoConsoComponent implements OnInit {
       dieuKienHinhAnhList: [null]
     });
     this.demoConsoForm.valueChanges.subscribe(data => this.mappingToLiveFormData(data));
+  }
+  ngAfterViewInit() {
+    if (!this.isViewMode) {
+      this.autofocus.nativeElement.focus();
+    }
   }
   checkFlag() {
     this.isViewMode = LiveformSiteReportComponent.actionMode === 'viewMode';

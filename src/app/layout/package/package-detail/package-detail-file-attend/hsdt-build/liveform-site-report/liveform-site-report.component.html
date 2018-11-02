@@ -87,14 +87,14 @@
             </thead>
             <tbody>
                 <tr *ngFor="let updateInfo of updateInfoList; index as i">
-                    <td class="text-center">
+                    <td>
                         {{ indexItemHistoryChange - i }}
                     </td>
-                    <td class="text-center" [title]="updateInfo.items[0].employee?.employeeName">{{ updateInfo.items[0].employee?.employeeName }}</td>
-                    <td class="text-center">{{ (updateInfo.items[0].changedTime)*1000 | date:'dd/MM/yyyy ,
+                    <td [title]="updateInfo.items[0].employee?.employeeName">{{ updateInfo.items[0].employee?.employeeName }}</td>
+                    <td>{{ (updateInfo.items[0].changedTime)*1000 | date:'dd/MM/yyyy ,
                         HH:mm':'+0000' }}</td>
-                    <td class="text-center">
-                        <div class="text-truncate" [title]="updateInfo.items[0].updateDesc">
+                    <td>
+                        <div class="text-truncate whitespace-normal" [title]="updateInfo.items[0].updateDesc">
                             {{ updateInfo.items[0].updateDesc }}
                         </div>
                     </td>
@@ -211,9 +211,6 @@
                                 </div>
                             </div>
                         </td>
-                    <!-- <td class="text-center">
-                        <p>Chưa chỉnh sửa</p>
-                    </td> -->
                 </tr>
             </tbody>
         </table>

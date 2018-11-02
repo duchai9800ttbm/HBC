@@ -31,19 +31,19 @@ export class ImageCarouselComponent implements OnInit {
     this.showOneImage(this.i);
   }
   prevButton() {
-    if (this.i > 0) {
-      this.i -= 1;
-      this.showOneImage(this.i);
+    if (this.isShow > 0) {
+      this.isShow -= 1;
+      this.showOneImage(this.isShow);
     } else {
-      this.i = this.imageUrlArray.length - 1;
+      this.isShow = this.imageUrlArray.length - 1;
     }
   }
   nextButton() {
-    if (this.i < this.imageUrlArray.length - 1) {
-      this.i += 1;
-      this.showOneImage(this.i);
+    if (this.isShow < this.imageUrlArray.length - 1) {
+      this.isShow += 1;
+      this.showOneImage(this.isShow);
     } else {
-      this.i = 0;
+      this.isShow = 0;
     }
   }
   showOneImage(i) {

@@ -1,4 +1,4 @@
-import { Component, OnInit, Output, Input, EventEmitter, ViewChild } from '@angular/core';
+import { Component, OnInit, Output, Input, EventEmitter, ViewChild, AfterViewInit } from '@angular/core';
 
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { ContentItem } from '../../../../../../../../../../shared/models/site-survey-report/useful-info.model';
@@ -12,8 +12,9 @@ import { SiteSurveyReportService } from '../../../../../../../../../../shared/se
   templateUrl: './content-item.component.html',
   styleUrls: ['./content-item.component.scss']
 })
-export class ContentItemComponent implements OnInit {
+export class ContentItemComponent implements OnInit, AfterViewInit {
   @ViewChild('uploadContent') uploadContent;
+  @ViewChild('autofocus') autofocus;
   @Input() contentItemModel: ContentItem;
   @Output() valueChange = new EventEmitter<ContentItem>();
   @Output() deleteContent = new EventEmitter<boolean>();
@@ -37,6 +38,11 @@ export class ContentItemComponent implements OnInit {
     this.checkFlag();
     this.createForm();
     this.contentItemForm.valueChanges.subscribe(data => this.mappingData(data));
+  }
+  ngAfterViewInit() {
+    if (!this.isViewMode) {
+      this.autofocus.nativeElement.focus();
+    }
   }
   checkFlag() {
     this.isViewMode = LiveformSiteReportComponent.actionMode === 'viewMode';

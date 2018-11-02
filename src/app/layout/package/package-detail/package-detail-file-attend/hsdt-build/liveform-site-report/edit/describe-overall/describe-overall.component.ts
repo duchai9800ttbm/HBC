@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, AfterViewInit } from '@angular/core';
 import { DescribeOverall } from '../../../../../../../../shared/models/site-survey-report/describe-overall.model';
 import { FormGroup, FormBuilder } from '@angular/forms';
 import { EditComponent } from '../edit.component';
@@ -13,10 +13,11 @@ import { SiteSurveyReportService } from '../../../../../../../../shared/services
   templateUrl: './describe-overall.component.html',
   styleUrls: ['./describe-overall.component.scss']
 })
-export class DescribeOverallComponent implements OnInit {
+export class DescribeOverallComponent implements OnInit, AfterViewInit {
   @ViewChild('uploadTopography') uploadTopography;
   @ViewChild('uploadExistingBuild') uploadExistingBuild;
   @ViewChild('uploadStacale') uploadStacale;
+  @ViewChild('autofocus') autofocus;
   describeForm: FormGroup;
 
   topographyImageUrls = [];
@@ -49,6 +50,11 @@ export class DescribeOverallComponent implements OnInit {
       yeuCauChuongNgaiList: [null],
     });
     this.describeForm.valueChanges.subscribe(data => this.mappingToLiveFormData(data));
+  }
+  ngAfterViewInit() {
+    if (!this.isViewMode) {
+      this.autofocus.nativeElement.focus();
+    }
   }
   checkFlag() {
     this.isViewMode = LiveformSiteReportComponent.actionMode === 'viewMode';

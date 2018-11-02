@@ -7,7 +7,7 @@
             {{ usefulInfo.title }}
         </h6>
         <!-- --- -->
-        <span [ngClass]="{'d-none': isViewMode}" class="custom-dropdown w-30">
+        <span tabindex="1" [ngClass]="{'d-none': isViewMode}" class="custom-dropdown w-30">
             <select class="form-control" [(ngModel)]="usefulInfo.title" (change)="selectedChange()">
                 <option value="">---Chọn---</option>
                 <option [value]="subject" *ngFor="let subject of subjectList">{{ subject }}</option>
