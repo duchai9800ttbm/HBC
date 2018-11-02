@@ -62,6 +62,18 @@ export class SummaryConditionFormConditionTenderComponent implements OnInit {
                         && this.dienGiaiDieuKienHSMT.theoHSMT.tienDo.thoiGianHoanThanh,
                     disabled: this.isModeView
                 },
+                thoiGianHoanThanhTheoNhaThau: {
+                    value: this.dienGiaiDieuKienHSMT && this.dienGiaiDieuKienHSMT.theoHSMT
+                        && this.dienGiaiDieuKienHSMT.theoHSMT.tienDo
+                        && this.dienGiaiDieuKienHSMT.theoHSMT.tienDo.thoiGianHoanThanhTheoNhaThau,
+                    disabled: this.isModeView
+                },
+                thoiGianHoanThanhTheoNhaThauCount: {
+                    value: this.dienGiaiDieuKienHSMT && this.dienGiaiDieuKienHSMT.theoHSMT
+                        && this.dienGiaiDieuKienHSMT.theoHSMT.tienDo
+                        && this.dienGiaiDieuKienHSMT.theoHSMT.tienDo.thoiGianHoanThanhTheoNhaThauCount,
+                    disabled: this.isModeView
+                },
                 cacLoaiThue: this.fb.array([]),
                 donViTienTe: {
                     value: this.dienGiaiDieuKienHSMT && this.dienGiaiDieuKienHSMT.theoHSMT
@@ -133,7 +145,9 @@ export class SummaryConditionFormConditionTenderComponent implements OnInit {
                     hieuLucHoSo: data.theoHSMT.hieuLucHoSo,
                     tienDo: {
                         ngayKhoiCong: DateTimeConvertHelper.fromDtObjectToTimestamp(data.theoHSMT.ngayKhoiCong),
-                        thoiGianHoanThanh: data.theoHSMT.thoiGianHoanThanh
+                        thoiGianHoanThanh: data.theoHSMT.thoiGianHoanThanh,
+                        thoiGianHoanThanhTheoNhaThau: data.theoHSMT.thoiGianHoanThanhTheoNhaThau,
+                        thoiGianHoanThanhTheoNhaThauCount: data.theoHSMT.thoiGianHoanThanhTheoNhaThauCount
                     },
                     cacLoaiThue: (data.theoHSMT.cacLoaiThue || []).map(x => x.thue),
                     donViTienTe: data.theoHSMT.donViTienTe
@@ -146,7 +160,9 @@ export class SummaryConditionFormConditionTenderComponent implements OnInit {
                     hieuLucHoSo: data.theoHBC.hieuLucHoSo,
                     tienDo: {
                         ngayKhoiCong: DateTimeConvertHelper.fromDtObjectToTimestamp(data.theoHBC.ngayKhoiCong),
-                        thoiGianHoanThanh: data.theoHBC.thoiGianHoanThanh
+                        thoiGianHoanThanh: data.theoHBC.thoiGianHoanThanh,
+                        thoiGianHoanThanhTheoNhaThau: null,
+                        thoiGianHoanThanhTheoNhaThauCount: null
                     },
                     cacLoaiThue: (data.theoHBC.cacLoaiThue || []).map(x => x.thue),
                     donViTienTe: data.theoHBC.donViTienTe
@@ -170,6 +186,8 @@ export class SummaryConditionFormConditionTenderComponent implements OnInit {
                         tienDo: {
                             ngayKhoiCong: null,
                             thoiGianHoanThanh: null,
+                            thoiGianHoanThanhTheoNhaThau: null,
+                            thoiGianHoanThanhTheoNhaThauCount: null
                         },
                         cacLoaiThue: [''],
                         donViTienTe: ''
@@ -183,6 +201,8 @@ export class SummaryConditionFormConditionTenderComponent implements OnInit {
                         tienDo: {
                             ngayKhoiCong: null,
                             thoiGianHoanThanh: null,
+                            thoiGianHoanThanhTheoNhaThau: null,
+                            thoiGianHoanThanhTheoNhaThauCount: null
                         },
                         cacLoaiThue: [''],
                         donViTienTe: ''
@@ -207,6 +227,8 @@ export class SummaryConditionFormConditionTenderComponent implements OnInit {
                         tienDo: {
                             ngayKhoiCong: null,
                             thoiGianHoanThanh: null,
+                            thoiGianHoanThanhTheoNhaThau: null,
+                            thoiGianHoanThanhTheoNhaThauCount: null
                         },
                         cacLoaiThue: [''],
                         donViTienTe: ''
@@ -220,6 +242,8 @@ export class SummaryConditionFormConditionTenderComponent implements OnInit {
                         tienDo: {
                             ngayKhoiCong: null,
                             thoiGianHoanThanh: null,
+                            thoiGianHoanThanhTheoNhaThau: null,
+                            thoiGianHoanThanhTheoNhaThauCount: null
                         },
                         cacLoaiThue: [''],
                         donViTienTe: ''

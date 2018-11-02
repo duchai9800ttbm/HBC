@@ -69,6 +69,7 @@ export class PriceReviewSummaryComponent implements OnInit, OnDestroy {
   ChotHoSo = false;
   NopHSDT = false;
   HieuChinhHSDT = false;
+  isLoading = true;
   constructor(
     private priceReviewService: PriceReviewService,
     private alertService: AlertService,
@@ -130,6 +131,7 @@ export class PriceReviewSummaryComponent implements OnInit, OnDestroy {
 
     this.packageService.getInforPackageID(this.packageId).subscribe(result => {
       this.package = result;
+      this.isLoading = false;
     }, err => {
     });
     this.priceReviewService.viewShort(this.packageId).subscribe(data => {

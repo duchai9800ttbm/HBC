@@ -81,22 +81,47 @@
             <div class="col-md-8">
                 <div class="row">
                     <div class="col-md-6" formGroupName="theoHSMT">
-                        <input type="number" formControlName="thoiGianHoanThanh" class="form-control">
+                        <input formControlName="thoiGianHoanThanh" appInputNumberNegativeDecimal [decimal]="true" class="form-control">
 
                     </div>
                     <div class="col-md-6" formGroupName="theoHBC">
-                        <input type="number" formControlName="thoiGianHoanThanh" class="form-control">
+                        <input formControlName="thoiGianHoanThanh" appInputNumberNegativeDecimal [decimal]="true" class="form-control">
 
                     </div>
                 </div>
             </div>
         </div>
+
+        <div class="row mt-3">
+            <div class="col-md-3"></div>
+            <div class="col-md-8">
+                <div class="row">
+                    <div class="col-md-6" formGroupName="theoHSMT">
+                        <div>
+                            <label class="mr-3" for="yes">
+                                <input formControlName="thoiGianHoanThanhTheoNhaThau" class="mr-2" name="thoiGianHoanThanhTheoNhaThau" type="radio" id="yes">
+                                Có
+                            </label>
+                            <label class="mr-3" for="no">
+                                <input class="mr-2" name="thoiGianHoanThanhTheoNhaThau" type="radio" id="no">
+                                Không
+                            </label>
+                        </div>
+                        <input formControlName="thoiGianHoanThanhTheoNhaThauCount" type="number" appInputNumberNegativeDecimal class="form-control">
+                    </div>
+                    <div class="col-md-6"></div>
+                </div>
+            </div>
+        </div>
+
+
         <div class="row mt-3">
             <div class="col-md-3"><strong><u>4. Các loại thuế</u></strong></div>
         </div>
         <div class="row mt-3">
             <div class="col-md-3">Chọn loại thuế
-                <i (click)="addFormArrayControl('cacLoaiThue')" *ngIf="!isModeView" class="fa fa-plus-square-o ml-3 pointer" aria-hidden="true"></i>
+                <i (click)="addFormArrayControl('cacLoaiThue')" *ngIf="!isModeView" class="fa fa-plus-square-o ml-3 pointer"
+                    aria-hidden="true"></i>
 
             </div>
             <div class="col-md-8">
@@ -110,8 +135,9 @@
                                         <input formControlName="thue" class="form-control">
 
                                     </div>
-                                    <div class="set-position-button "  (click)="removeFormArrayControl('cacLoaiThue', i)" >
-                                        <i *ngIf="i !== 0" class="fa fa-times-circle pointer times-color custom-z-index " aria-hidden="true"></i>
+                                    <div class="set-position-button " (click)="removeFormArrayControl('cacLoaiThue', i)">
+                                        <i *ngIf="i !== 0" class="fa fa-times-circle pointer times-color custom-z-index "
+                                            aria-hidden="true"></i>
                                     </div>
 
                                 </div>
