@@ -1,4 +1,4 @@
-import { Component, OnInit, TemplateRef } from '@angular/core';
+import { Component, OnInit, TemplateRef, OnDestroy } from '@angular/core';
 import { BsModalService } from 'ngx-bootstrap/modal';
 import { BsModalRef } from 'ngx-bootstrap/modal/bs-modal-ref.service';
 import { Router, ActivatedRoute, ParamMap } from '@angular/router';
@@ -6,7 +6,7 @@ import { PackageDetailComponent } from '../../../package-detail.component';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { DATETIME_PICKER_CONFIG } from '../../../../../../shared/configs/datepicker.config';
 import { DATATABLE_CONFIG } from '../../../../../../shared/configs';
-import { Observable, BehaviorSubject, Subject } from '../../../../../../../../node_modules/rxjs';
+import { Observable, BehaviorSubject, Subject, Subscription } from '../../../../../../../../node_modules/rxjs';
 import { ConfirmationService, AlertService } from '../../../../../../shared/services';
 import { EmailService } from '../../../../../../shared/services/email.service';
 import { SendEmailModel } from '../../../../../../shared/models/send-email-model';
@@ -22,7 +22,7 @@ import { CheckStatusPackage } from '../../../../../../shared/constants/check-sta
   templateUrl: './meeting-kickoff.component.html',
   styleUrls: ['./meeting-kickoff.component.scss']
 })
-export class MeetingKickoffComponent implements OnInit {
+export class MeetingKickoffComponent implements OnInit, OnDestroy {
   formUpload: FormGroup;
   submitted = false;
   currentPackageId: number;
@@ -62,6 +62,11 @@ export class MeetingKickoffComponent implements OnInit {
   checkStatusPackage = CheckStatusPackage;
   loading = false;
   isData = false;
+  maxVersionReport = 0;
+  maxInterviewTimesReport = 0;
+  maxVersionFileList = 0;
+  maxInterviewTimesFileList= 0;
+  subscription: Subscription;
   constructor(
     private modalService: BsModalService,
     private router: Router,
@@ -87,7 +92,7 @@ export class MeetingKickoffComponent implements OnInit {
       link: ['']
     });
     this.currentPackageId = +PackageDetailComponent.packageId;
-    this.packageService.statusPackageValue$.subscribe(status => {
+    this.subscription = this.packageService.statusPackageValue$.subscribe(status => {
       this.statusPackage = status;
     });
     this.textMetting = 'Đã nhận tài liệu';
@@ -116,13 +121,22 @@ export class MeetingKickoffComponent implements OnInit {
     });
   }
 
+  ngOnDestroy() {
+    this.subscription.unsubscribe();
+  }
+
   endAPIFuction(event) {
     this.loading = event;
     console.log('endAPIFuction', event);
   }
   isDataFuction(event) {
-    this.isData = event;
-    console.log('isDataFuction', event);
+    this.isData = event.isData;
+    this.maxVersionReport = event.maxVersionReport;
+    this.maxInterviewTimesReport = event.maxInterviewTimesReport;
+    this.maxVersionFileList = event.maxVersionFileList;
+    this.maxInterviewTimesFileList = event.maxInterviewTimesFileList;
+    console.log('this.maxVersionReport', this.maxVersionReport, this.maxInterviewTimesReport,
+      this.maxVersionFileList, this.maxInterviewTimesFileList);
   }
   sendCc() {
     this.isSendCc = !this.isSendCc;
@@ -219,6 +233,18 @@ export class MeetingKickoffComponent implements OnInit {
     const instance = this.dialogUploadMettingKickOff.content.instance;
     instance.callBack = () => this.closePopuup();
     instance.action = action;
+    switch (action) {
+      case 'report': {
+        instance.version = this.maxVersionReport + 1;
+        instance.interviewTimes = this.maxInterviewTimesReport + 1;
+        break;
+      }
+      case 'file': {
+        instance.version = this.maxVersionFileList + 1;
+        instance.interviewTimes = this.maxInterviewTimesFileList + 1;
+        break;
+      }
+    }
   }
   closePopuup() {
     this.dialogUploadMettingKickOff.close();

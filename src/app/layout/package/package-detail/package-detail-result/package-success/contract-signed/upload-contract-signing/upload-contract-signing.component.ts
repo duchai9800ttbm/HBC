@@ -13,6 +13,8 @@ import { AlertService } from '../../../../../../../shared/services';
 })
 export class UploadContractSigningComponent implements OnInit {
   @Input()callBack: Function;
+  @Input()version;
+  @Input()interviewTimes;
   currentPackageId;
   uploadContractForm: FormGroup;
   invalidMessages: string[];
@@ -36,10 +38,10 @@ export class UploadContractSigningComponent implements OnInit {
   createForm() {
     this.uploadContractForm = this.fb.group({
       documentName: ['', CustomValidator.required],
-      version: [],
+      version: [this.version],
       uploadedBy: [],
       receivedDate: [],
-      interviewTimes: [],
+      interviewTimes: [this.interviewTimes],
       documentDesc: [],
       link: [],
     });

@@ -66,6 +66,8 @@ export class ContractSignedComponent implements OnInit, OnDestroy {
   };
   checkStatusPackage = CheckStatusPackage;
   isSignedContractAPI = false;
+  maxVersion = 0;
+  maxInterviewTimes = 0;
   constructor(
     private modalService: BsModalService,
     private formBuilder: FormBuilder,
@@ -189,6 +191,9 @@ export class ContractSignedComponent implements OnInit, OnDestroy {
 
   render(pagedResult: any) {
     this.pagedResult = pagedResult;
+    // tslint:disable-next-line:max-line-length
+    this.maxVersion = (pagedResult.items && pagedResult.items.length !== 0) ? Math.max.apply(Math, pagedResult.items.map(item => item.version)) : 0;
+    this.maxInterviewTimes = (pagedResult.items && pagedResult.items.length !== 0) ? Math.max.apply(Math, pagedResult.items.map(item => item.interviewTimes)) : 0;
     // this.dtTrigger.next();
   }
 
@@ -224,7 +229,7 @@ export class ContractSignedComponent implements OnInit, OnDestroy {
       return;
     }
     this.isSignedContract = true;
-    this.packageService.setActiveKickoff(this.isSignedContract)
+    this.packageService.setActiveKickoff(this.isSignedContract);
     this.alertService.success('Upload hợp đồng ký kết thành công!');
     this.textContract = this.isSignedContract ? 'Đã ký kết hợp đồng' : 'Đã phản hồi đến phòng hợp đồng'
     this.modalUpload.hide();
@@ -249,6 +254,8 @@ export class ContractSignedComponent implements OnInit, OnDestroy {
       minWidth: 250
     });
     const instance = this.dialogUploadContractSigning.content.instance;
+    instance.version = this.maxVersion + 1;
+    instance.interviewTimes = this.maxInterviewTimes + 1;
     instance.callBack = () => this.closePopuup();
   }
 

@@ -194,8 +194,9 @@ export class PackageListComponent implements OnInit {
     this.spinner.show();
     this.detailResultPackageService.getListFileResult(this.currentPackageId).subscribe(response => {
       this.listFileResult = response;
-      this.maxVersion = Math.max.apply(Math, this.listFileResult.map(item => item.version));
-      this.maxInterviewTimes = Math.max.apply(Math, this.listFileResult.map(item => item.interviewTimes));
+      this.maxVersion = (response && response.length !== 0) ? Math.max.apply(Math, this.listFileResult.map(item => item.version)) : 0;
+      // tslint:disable-next-line:max-line-length
+      this.maxInterviewTimes = (response && response.length !== 0) ? Math.max.apply(Math, this.listFileResult.map(item => item.interviewTimes)) : 0;
       if (alert) {
         this.spinner.hide();
         this.alertService.success('Dữ liệu đã được cập nhật mới nhất!');
