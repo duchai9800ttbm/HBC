@@ -64,7 +64,7 @@ export class MeetingKickoffComponent implements OnInit, OnDestroy {
   checkStatusPackage = CheckStatusPackage;
   loading = false;
   isData = false;
-  subscription: Subscription;
+
 
   listPermission: Array<PermissionModel>;
   listPermissionScreen = [];
@@ -76,6 +76,13 @@ export class MeetingKickoffComponent implements OnInit, OnDestroy {
   UploadFilePresentation = false;
   TaiXuongFilePresentation = false;
   XoaFilePresentation = false;
+
+  maxVersionReport = 0;
+  maxInterviewTimesReport = 0;
+  maxVersionFileList = 0;
+  maxInterviewTimesFileList = 0;
+  subscription: Subscription;
+
   constructor(
     private modalService: BsModalService,
     private router: Router,
@@ -131,9 +138,12 @@ export class MeetingKickoffComponent implements OnInit, OnDestroy {
       this.XoaFilePresentation = this.listPermissionScreen.includes('XoaFilePresentation');
     });
 
-    this.packageService.statusPackageValue$.subscribe(status => {
-      this.statusPackage = status;
+    const status$ = this.packageService.statusPackageValue$.subscribe(status => {
+          this.statusPackage = status;
     });
+
+    this.subscription.add(status$);
+
     this.textMetting = 'Đã nhận tài liệu';
     this.textTitleSendMail = 'Gửi thư thông báo họp kich-off dự án';
     this.doNotiMeeting = false;
@@ -168,11 +178,15 @@ export class MeetingKickoffComponent implements OnInit, OnDestroy {
 
   endAPIFuction(event) {
     this.loading = event;
-    console.log('endAPIFuction', event);
   }
   isDataFuction(event) {
-    this.isData = event;
-    console.log('isDataFuction', event);
+    this.isData = event.isData;
+    this.maxVersionReport = event.maxVersionReport;
+    this.maxInterviewTimesReport = event.maxInterviewTimesReport;
+    this.maxVersionFileList = event.maxVersionFileList;
+    this.maxInterviewTimesFileList = event.maxInterviewTimesFileList;
+    console.log('this.maxVersionReport', this.maxVersionReport, this.maxInterviewTimesReport,
+      this.maxVersionFileList, this.maxInterviewTimesFileList);
   }
   sendCc() {
     this.isSendCc = !this.isSendCc;
@@ -269,6 +283,18 @@ export class MeetingKickoffComponent implements OnInit, OnDestroy {
     const instance = this.dialogUploadMettingKickOff.content.instance;
     instance.callBack = () => this.closePopuup();
     instance.action = action;
+    switch (action) {
+      case 'report': {
+        instance.version = this.maxVersionReport + 1;
+        instance.interviewTimes = this.maxInterviewTimesReport + 1;
+        break;
+      }
+      case 'file': {
+        instance.version = this.maxVersionFileList + 1;
+        instance.interviewTimes = this.maxInterviewTimesFileList + 1;
+        break;
+      }
+    }
   }
   closePopuup() {
     this.dialogUploadMettingKickOff.close();

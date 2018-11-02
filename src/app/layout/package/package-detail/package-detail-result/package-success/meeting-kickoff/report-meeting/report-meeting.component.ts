@@ -27,7 +27,7 @@ import { PermissionService } from '../../../../../../../shared/services/permissi
 export class ReportMeetingComponent implements OnInit, OnDestroy {
   @Input() reportFile;
   @Output() endAPI = new EventEmitter<boolean>();
-  @Output() isData = new EventEmitter<boolean>();
+  @Output() isData = new EventEmitter<any>();
   isDataChild = false;
   dtTriggerReport: Subject<any> = new Subject();
   dtTriggerFile: Subject<any> = new Subject();
@@ -65,7 +65,6 @@ export class ReportMeetingComponent implements OnInit, OnDestroy {
   loadingFilterMeetingReportList = true;
   loadingFilterFileList = true;
 
-  subscription: Subscription;
 
   listPermission: Array<PermissionModel>;
   listPermissionScreen = [];
@@ -77,6 +76,15 @@ export class ReportMeetingComponent implements OnInit, OnDestroy {
   UploadFilePresentation = false;
   TaiXuongFilePresentation = false;
   XoaFilePresentation = false;
+
+  isDataObject = {
+    isData: false,
+    maxVersionReport: 0,
+    maxInterviewTimesReport: 0,
+    maxVersionFileList: 0,
+    maxInterviewTimesFileList: 0,
+  };
+  subscription: Subscription;
   constructor(
     private packageSuccessService: PackageSuccessService,
     private modalService: BsModalService,
@@ -115,7 +123,6 @@ export class ReportMeetingComponent implements OnInit, OnDestroy {
       this.UploadBBCuocHop = this.listPermissionScreen.includes('UploadBBCuocHop');
       this.TaiXuongBBCuocHop = this.listPermissionScreen.includes('TaiXuongBBCuocHop');
       this.XoaBBCuocHop = this.listPermissionScreen.includes('XoaBBCuocHop');
-     
       this.UploadFilePresentation = this.listPermissionScreen.includes('UploadFilePresentation');
       this.TaiXuongFilePresentation = this.listPermissionScreen.includes('TaiXuongFilePresentation');
       this.XoaFilePresentation = this.listPermissionScreen.includes('XoaFilePresentation');
@@ -148,8 +155,7 @@ export class ReportMeetingComponent implements OnInit, OnDestroy {
       .subscribe(keySearch => {
         this.filterMeetingReportList(false);
       });
-    this.detailResultPackageService.watchListListReportMeeting().subscribe(value => {
-      console.log('filterMeetingReportList');
+    this.subscription = this.detailResultPackageService.watchListListReportMeeting().subscribe(value => {
       this.filterMeetingReportList(false);
     });
     // filter file
@@ -162,9 +168,10 @@ export class ReportMeetingComponent implements OnInit, OnDestroy {
       .subscribe(keySearch => {
         this.filterFileList(false);
       });
-    this.detailResultPackageService.watchListFilePresentationMeeting().subscribe(value => {
+    const watchListFilePresentationMeeting = this.detailResultPackageService.watchListFilePresentationMeeting().subscribe(value => {
       this.filterFileList(false);
     });
+    this.subscription.add(watchListFilePresentationMeeting);
   }
 
   ngOnDestroy() {
@@ -172,6 +179,7 @@ export class ReportMeetingComponent implements OnInit, OnDestroy {
       this.subscription.unsubscribe();
     }
   }
+
   get f() { return this.formUpload.controls; }
   onSubmit() {
     this.submitted = true;
@@ -211,7 +219,20 @@ export class ReportMeetingComponent implements OnInit, OnDestroy {
       this.loadingFilterMeetingReportList = false;
       this.endAPI.emit(false);
       if ((this.meetingReportList && this.meetingReportList.length !== 0) || (this.meetingFileList && this.meetingFileList.length !== 0)) {
-        this.isData.emit(true);
+        // tslint:disable-next-line:max-line-length
+        const maxVersionReport = (this.meetingReportList && this.meetingReportList.length !== 0) ? Math.max.apply(Math, this.meetingReportList.map(item => item.version)) : 0;
+        const maxInterviewTimesReport = (this.meetingReportList && this.meetingReportList.length !== 0) ? Math.max.apply(Math, this.meetingReportList.map(item => item.interviewTimes)) : 0;
+        // tslint:disable-next-line:max-line-length
+        const maxVersionFileList = (this.meetingFileList && this.meetingFileList.length !== 0) ? Math.max.apply(Math, this.meetingFileList.map(item => item.version)) : 0;
+        const maxInterviewTimesFileList = (this.meetingFileList && this.meetingFileList.length !== 0) ? Math.max.apply(Math, this.meetingFileList.map(item => item.interviewTimes)) : 0;
+        this.isDataObject = {
+          isData: true,
+          maxVersionReport: maxVersionReport,
+          maxInterviewTimesReport: maxInterviewTimesReport,
+          maxVersionFileList: maxVersionFileList,
+          maxInterviewTimesFileList: maxInterviewTimesFileList,
+        };
+        this.isData.emit(this.isDataObject);
         this.isDataChild = true;
       }
       this.getListFilterReport();
@@ -280,7 +301,20 @@ export class ReportMeetingComponent implements OnInit, OnDestroy {
       this.loadingFilterFileList = false;
       this.endAPI.emit(false);
       if ((this.meetingReportList && this.meetingReportList.length !== 0) || (this.meetingFileList && this.meetingFileList.length !== 0)) {
-        this.isData.emit(true);
+        // tslint:disable-next-line:max-line-length
+        const maxVersionReport = (this.meetingReportList && this.meetingReportList.length !== 0) ? Math.max.apply(Math, this.meetingReportList.map(item => item.version)) : 0;
+        const maxInterviewTimesReport = (this.meetingReportList && this.meetingReportList.length !== 0) ? Math.max.apply(Math, this.meetingReportList.map(item => item.interviewTimes)) : 0;
+        // tslint:disable-next-line:max-line-length
+        const maxVersionFileList = (this.meetingFileList && this.meetingFileList.length !== 0) ? Math.max.apply(Math, this.meetingFileList.map(item => item.version)) : 0;
+        const maxInterviewTimesFileList = (this.meetingFileList && this.meetingFileList.length !== 0) ? Math.max.apply(Math, this.meetingFileList.map(item => item.interviewTimes)) : 0;
+        this.isDataObject = {
+          isData: true,
+          maxVersionReport: maxVersionReport,
+          maxInterviewTimesReport: maxInterviewTimesReport,
+          maxVersionFileList: maxVersionFileList,
+          maxInterviewTimesFileList: maxInterviewTimesFileList,
+        };
+        this.isData.emit(this.isDataObject);
         this.isDataChild = true;
       }
       this.getListFilterFile();
@@ -339,6 +373,18 @@ export class ReportMeetingComponent implements OnInit, OnDestroy {
     instance.callBack = () => this.closePopuup();
     instance.addAndReload = () => this.addAndReload();
     instance.action = action;
+    switch (action) {
+      case 'report': {
+        instance.version = this.isDataObject.maxVersionReport + 1;
+        instance.interviewTimes = this.isDataObject.maxInterviewTimesReport + 1;
+        break;
+      }
+      case 'file': {
+        instance.version = this.isDataObject.maxVersionFileList + 1;
+        instance.interviewTimes = this.isDataObject.maxInterviewTimesFileList + 1;
+        break;
+      }
+    }
   }
   addAndReload() {
     this.dialogUploadMettingKickOff.close();

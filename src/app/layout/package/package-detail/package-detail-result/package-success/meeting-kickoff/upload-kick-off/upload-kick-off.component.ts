@@ -16,6 +16,8 @@ export class UploadKickOffComponent implements OnInit {
   @Input() callBack: Function;
   @Input() addAndReload: Function;
   @Input() action: string;
+  @Input() version: string;
+  @Input() interviewTimes: string;
   uploadMeetingKickOff: FormGroup;
   file;
   formErrors = {
@@ -38,11 +40,11 @@ export class UploadKickOffComponent implements OnInit {
   createForm() {
     this.uploadMeetingKickOff = this.fb.group({
       documentName: ['', CustomValidator.required],
-      version: [],
+      version: [this.version],
       uploadedBy: [],
       receivedDate: [],
       meetingTime: [],
-      interviewTimes: [],
+      interviewTimes: [this.interviewTimes],
       documentDesc: [],
       link: [],
     });

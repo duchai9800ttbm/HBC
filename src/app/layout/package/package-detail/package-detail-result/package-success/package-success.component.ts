@@ -51,7 +51,7 @@ export class PackageSuccessComponent implements OnInit {
     this.showArrow = true;
     this.arrow = false;
     this.arrowKickOff = false;
-    // this.kickOffActive = true;
+    this.kickOffActive = true;
   }
 
   onClickList() {
