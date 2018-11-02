@@ -27,7 +27,7 @@ export class PackageDetailComponent implements OnInit, OnDestroy {
   statusPackage = {
     text: '',
     stage: '',
-    id: null,
+    id: 0,
   };
   constructor(
     private router: Router,

@@ -1,4 +1,4 @@
-import { Component, OnInit, TemplateRef, Input } from '@angular/core';
+import { Component, OnInit, TemplateRef, Input, ViewChild, ElementRef } from '@angular/core';
 import { BsModalService } from 'ngx-bootstrap/modal';
 import { BsModalRef } from 'ngx-bootstrap/modal/bs-modal-ref.service';
 import { DATETIME_PICKER_CONFIG } from '../../../../../../../../shared/configs/datepicker.config';
@@ -33,6 +33,7 @@ import { CheckStatusPackage } from '../../../../../../../../shared/constants/che
 })
 export class PackageDocumentSenderComponent implements OnInit {
   @Input() statusPackage;
+  @ViewChild('nameit') private elementRef: ElementRef;
   datePickerConfig = DATETIME_PICKER_CONFIG;
   dtTrigger: Subject<any> = new Subject();
   dtOptions: any = DATATABLE_CONFIG;
@@ -86,6 +87,7 @@ export class PackageDocumentSenderComponent implements OnInit {
   }
   checkStatusPackage = CheckStatusPackage;
   isShowEdit = false;
+  currentEdit = 0;
   constructor(
     private packageSuccessService: PackageSuccessService,
     private modalService: BsModalService,
@@ -562,7 +564,7 @@ export class PackageDocumentSenderComponent implements OnInit {
         }
       } else {
         if (indexPar < i) {
-          dem = dem + this.docHSDTList[indexPar].documents.length;
+          dem = dem + (this.docHSDTList[indexPar].documents || []).length;
         } else {
           dem = dem + j + 1;
         }
@@ -728,7 +730,35 @@ export class PackageDocumentSenderComponent implements OnInit {
       }
     }
   }
-  formatToNumber() {
-    
+  formatToNumber(itemdoc) {
+    console.log('Goi API cập nhật ngày sử dụng!');
+    this.currentEdit = 0;
+  }
+  showEdit(e, i, j, k) {
+    const table = e as HTMLElement;
+    const index = this.renderIndexHSMTHadTransfer(i, j, k) * 2;
+    this.currentEdit = index;
+    const item = table.getElementsByTagName('input');
+    item[index].disabled = false;
+    item[index].focus();
+  }
+
+  showEditSHDT(e, i, j, k) {
+    let dem = 0;
+    if (this.docHSMTHadTransfer && this.docHSMTHadTransfer.length !== 0) {
+      for (let indexPar = 0; indexPar < this.docHSMTHadTransfer.length; indexPar++) {
+        if (this.docHSMTHadTransfer[indexPar].childDocuments) {
+          for (let indexChild = 0; indexChild < this.docHSMTHadTransfer[indexPar].childDocuments.length; indexChild++) {
+            dem = dem + this.docHSMTHadTransfer[indexPar].childDocuments[indexChild].items.length;
+          }
+        } else {
+          dem = dem + this.docHSMTHadTransfer[indexPar].documents.length;
+        }
+      }
+    }
+    const table = e as HTMLElement;
+    const index = (dem + this.renderIndexHSDTHadTransfer(i, j, k)) * 2;
+    const item = table.getElementsByTagName('input');
+    item[index].focus();
   }
 }

@@ -273,8 +273,8 @@ table.dataTable th {
     }
     .div-edit-number--posotion{
         position: absolute;
-        top: 2px;
-        right: 0px;
+        top: 4px;
+        right: 11px;
         cursor: pointer;
     }
 }
@@ -311,4 +311,6 @@ table.dataTable th {
 .tilte-cus--height{
     height: 40px;
 }
-
+:host /deep/ .ng-select.ng-select-multiple .ng-select-container .ng-value-container .ng-value{
+    white-space: initial;
+}
