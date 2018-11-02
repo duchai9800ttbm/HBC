@@ -13,11 +13,13 @@ import { Observable } from 'rxjs';
 import { PackagePermissionComponent } from '../../package-permission.component';
 import { SETTING_BID_USER } from '../../../../../shared/configs/common.config';
 import { NgxSpinnerService } from 'ngx-spinner';
+import { slideToTop } from '../../../../../router.animations';
 
 @Component({
     selector: 'app-user-bid-group-member-form',
     templateUrl: './user-bid-group-member-form.component.html',
-    styleUrls: ['./user-bid-group-member-form.component.scss']
+    styleUrls: ['./user-bid-group-member-form.component.scss'],
+    animations: [slideToTop()]
 })
 export class UserBidGroupMemberFormComponent implements OnInit {
     packagePermissionBidUserGroupForm: FormGroup;
