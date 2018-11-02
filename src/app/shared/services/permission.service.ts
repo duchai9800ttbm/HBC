@@ -29,7 +29,6 @@ export class PermissionService {
 
   getUser() {
     if (!PermissionService.user.value) {
-      console.log('abcd');
       const sub = this.getUserProfile().subscribe(result => {
         this.setUser(result);
         sub.unsubscribe();

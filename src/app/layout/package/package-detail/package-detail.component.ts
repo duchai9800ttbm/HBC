@@ -44,7 +44,7 @@ export class PackageDetailComponent implements OnInit, OnDestroy {
   sub: Subscription;
   subInterval: Subscription;
   subUser: Subscription;
-
+  subFirst: Subscription;
   status = {
     DisabledfileAttend: true,
     Disabledresult: true
@@ -81,11 +81,19 @@ export class PackageDetailComponent implements OnInit, OnDestroy {
         if (this.subInterval) {
           this.subInterval.unsubscribe();
         }
+        if (this.subFirst) {
+          this.subInterval.unsubscribe();
+        }
       } else {
-        console.log('nhảy vào lần đầu tiên');
-        const subFirst = this.permissionService.getListPermission(this.packageId).subscribe(listPermission => {
+        if (this.subInterval) {
+          this.subInterval.unsubscribe();
+        }
+        if (this.subFirst) {
+          this.subInterval.unsubscribe();
+        }
+        this.subFirst = this.permissionService.getListPermission(this.packageId).subscribe(listPermission => {
           this.permissionService.set(listPermission);
-          subFirst.unsubscribe();
+          this.subFirst.unsubscribe();
         });
         this.subInterval = IntervalObservable.create(1 * 10 * 1000).subscribe(_ => {
           this.sub = this.permissionService.getListPermission(this.packageId).subscribe(listPermission => {
@@ -122,6 +130,9 @@ export class PackageDetailComponent implements OnInit, OnDestroy {
     }
     if (this.subUser) {
       this.subUser.unsubscribe();
+    }
+    if (this.subFirst) {
+      this.subInterval.unsubscribe();
     }
   }
 
