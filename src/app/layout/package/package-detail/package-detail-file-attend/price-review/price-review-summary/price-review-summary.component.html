@@ -72,8 +72,7 @@
         </div>
     </div>
 
-    <div class="content" *ngIf="priceReview && !(package?.stageStatus?.id === bidStatus.ChotHoSo
-                            || package?.stageStatus?.id === bidStatus.DaNopHSDT)">
+    <div class="content" *ngIf="priceReview && (package?.stageStatus?.id === bidStatus.ChotHoSo || package?.stageStatus?.id === bidStatus.DaNopHSDT)">
         <div class="mb-4 mt-1">
             <h5>BẢNG TÓM TẮT THÔNG TIN DỰ ÁN - TRÌNH DUYỆT GIÁ THẦU</h5>
         </div>
@@ -230,8 +229,7 @@
     </div>
 
 
-    <ng-container *ngIf="priceReview && !(package?.stageStatus?.id === bidStatus.ChotHoSo
-|| package?.stageStatus?.id === bidStatus.DaNopHSDT)">
+    <ng-container *ngIf="priceReview && (package?.stageStatus?.id === bidStatus.ChotHoSo || package?.stageStatus?.id === bidStatus.DaNopHSDT)">
         <div class="content mt-5" *ngIf="historyList && historyList.length !== 0">
             <div class="d-flex justify-content-between">
                 <h5 class="text-uppercase mb-3">Lịch sử cập nhật</h5>
@@ -332,7 +330,8 @@
 
 
 
-    <div class="content mt-4" *ngIf="package?.stageStatus?.id === 'DaNopHSDT' || package?.stageStatus?.id === 'ChotHoSo'">
+    <div class="content mt-4" 
+    *ngIf="package?.stageStatus?.id !== 'DangLapHSDT' && package?.stageStatus?.id !== 'CanLapTrinhDuyetGia' && package?.stageStatus?.id !== 'DaGuiDuyetTrinhDuyetGia' && package?.stageStatus?.id !== 'DaDuyetTrinhDuyetGia' && package?.stageStatus?.id !== 'CanDieuChinhTrinhDuyetGia'">
         <div class="mb-4 mt-1">
             <h5>HỒ SƠ DỰ THẦU ĐÃ PHÊ DUYỆT</h5>
         </div>
@@ -414,7 +413,7 @@
                                                     <i class="fa fa-download cursor-pointer icon-view" aria-hidden="true"></i>
                                                 </a>
                                             </div>
-                                            <div style="cursor: pointer;" title="In">
+                                            <div style="cursor: pointer;" title="In" *ngIf="items?.isLiveForm">
                                                 <a class="text-success" (click)="print()">
                                                     <i class="fa fa-print cursor-pointer icon-print" aria-hidden="true"></i>
                                                 </a>
@@ -462,7 +461,7 @@
                                                 </a>
                                             </div>
 
-                                            <div style="cursor: pointer;" title="In">
+                                            <div style="cursor: pointer;" title="In" *ngIf="items?.isLiveForm">
                                                 <a (click)="inLiveForm(items?.typeName)" class="text-success">
                                                     <i class="fa fa-print cursor-pointer icon-print" aria-hidden="true"></i>
                                                 </a>
