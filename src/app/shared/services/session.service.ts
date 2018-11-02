@@ -26,41 +26,42 @@ export class SessionService {
     }
 
     get currentSession() {
-        if (!window.localStorage['session']) {
+        if (!window.localStorage['tender_session']) {
             return null;
         }
 
-        return JSON.parse(window.localStorage['session']);
-    }
-
-    get currentUserInfo() {
-        if (!window.localStorage['userInfo']) {
-            return null;
-        }
-
-        return JSON.parse(window.localStorage['userInfo']);
+        return JSON.parse(window.localStorage['tender_session']);
     }
 
     saveSession(session: any) {
-        window.localStorage['session'] = JSON.stringify(session);
+        window.localStorage['tender_session'] = JSON.stringify(session);
+    }
+
+    get currentUserInfo() {
+        if (!window.localStorage['tender_userInfo']) {
+            return null;
+        }
+
+        return JSON.parse(window.localStorage['tender_userInfo']);
     }
 
     saveUserInfo(userInfo: UserModel) {
         this.userSubject.next(userInfo);
-        window.localStorage['userInfo'] = JSON.stringify(userInfo);
+        window.localStorage['tender_userInfo'] = JSON.stringify(userInfo);
     }
 
     saveAvatarUser(userInfo: UserModel) {
         this.avatarUserSubject.next(userInfo);
-        window.localStorage['userInfo'] = JSON.stringify(userInfo);
+        window.localStorage['tender_userInfo'] = JSON.stringify(userInfo);
     }
+
     watchAvatarUser(): Observable<UserModel> {
         return this.avatarUserSubject;
     }
 
     saveAvatarContact(avatarString: string) {
         this.avatarSubject.next(avatarString);
-        window.localStorage['avatarContact'] = avatarString;
+        window.localStorage['tender_avatarContact'] = avatarString;
     }
 
     getAvatarContact(): Observable<string> {
@@ -72,22 +73,26 @@ export class SessionService {
     }
 
     get userInfo(): UserModel {
-        if (!window.localStorage["userInfo"]) {
+        if (!window.localStorage['tender_userInfo']) {
             return new UserModel();
         }
 
-        return JSON.parse(window.localStorage["userInfo"]);
+        return JSON.parse(window.localStorage['tender_userInfo']);
     }
 
     destroySession() {
-        window.localStorage.clear();
+        window.localStorage.removeItem('tender_user');
+        window.localStorage.removeItem('tender_userInfo');
+        window.localStorage.removeItem('tender_branchId');
+        window.localStorage.removeItem('tender_avatarContact');
+        window.localStorage.removeItem('tender_session');
     }
 
     set branchId(id: number) {
-        window.localStorage["branchId"] = id;
+        window.localStorage['tender_branchId'] = id;
     }
 
     get branchId(): number {
-        return window.localStorage["branchId"];
+        return window.localStorage['tender_branchId'];
     }
 }

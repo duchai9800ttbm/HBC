@@ -67,6 +67,7 @@ export class UserService {
         });
     }
 
+
     purgeAuth() {
         this.sessionService.destroySession();
     }

@@ -38,7 +38,7 @@ export class OpportunityTableComponent implements OnInit {
       .subscribe(result => {
         this.rerender(result);
       });
-    const session = JSON.parse(window.localStorage.getItem('session'));
+    const session = JSON.parse(window.localStorage.getItem('tender_session'));
     const leaders = session.isLeaders;
     this.isLeader = leaders.some(x => x.isLeader === true);
   }
