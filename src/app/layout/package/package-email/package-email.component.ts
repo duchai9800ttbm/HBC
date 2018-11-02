@@ -110,6 +110,7 @@ export class PackageEmailComponent implements OnInit, OnDestroy {
           && hsdt.userPermissionDetails.filter(y => y.permissionGroup.value === 'TrienKhaiVaPhanCongTienDo')[0];
         if (!screen) {
           this.listPermissionScreen = [];
+          this.listPermissionScreen2 = [];
         }
         if (screen) {
           this.listPermissionScreen = screen.permissions.map(z => z.value);
@@ -133,7 +134,9 @@ export class PackageEmailComponent implements OnInit, OnDestroy {
       const hsdt2 = this.listPermission.length &&
         this.listPermission.filter(x => x.bidOpportunityStage === 'KQDT')[0];
       if (!hsdt2) {
-        this.listPermissionScreen = [];
+        this.listPermissionScreenKQ = [];
+        this.listPermissionScreenKQ2 = [];
+
       }
       if (hsdt2) {
         const screenKQ = hsdt2.userPermissionDetails.length
