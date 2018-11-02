@@ -1,8 +1,8 @@
-import { Component, OnInit, TemplateRef, Input, EventEmitter, Output } from '@angular/core';
+import { Component, OnInit, TemplateRef, Input, EventEmitter, Output, OnDestroy } from '@angular/core';
 import { BsModalService } from 'ngx-bootstrap/modal';
 import { BsModalRef } from 'ngx-bootstrap/modal/bs-modal-ref.service';
 import { DATATABLE_CONFIG } from '../../../../../../../shared/configs';
-import { Observable, BehaviorSubject, Subject } from '../../../../../../../../../node_modules/rxjs';
+import { Observable, BehaviorSubject, Subject, Subscription } from '../../../../../../../../../node_modules/rxjs';
 import { PackageSuccessService } from '../../../../../../../shared/services/package-success.service';
 import { DocumentItem } from '../../../../../../../shared/models/document-item';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
@@ -16,13 +16,15 @@ import { DialogService } from '../../../../../../../../../node_modules/@progress
 import { PackageDetailComponent } from '../../../../package-detail.component';
 import { NgxSpinnerService } from '../../../../../../../../../node_modules/ngx-spinner';
 import { groupBy } from '../../../../../../../../../node_modules/@progress/kendo-data-query';
+import { PermissionModel } from '../../../../../../../shared/models/permission/Permission.model';
+import { PermissionService } from '../../../../../../../shared/services/permission.service';
 
 @Component({
   selector: 'app-report-meeting',
   templateUrl: './report-meeting.component.html',
   styleUrls: ['./report-meeting.component.scss']
 })
-export class ReportMeetingComponent implements OnInit {
+export class ReportMeetingComponent implements OnInit, OnDestroy {
   @Input() reportFile;
   @Output() endAPI = new EventEmitter<boolean>();
   @Output() isData = new EventEmitter<boolean>();
@@ -62,6 +64,19 @@ export class ReportMeetingComponent implements OnInit {
   interviewTimesFile;
   loadingFilterMeetingReportList = true;
   loadingFilterFileList = true;
+
+  subscription: Subscription;
+
+  listPermission: Array<PermissionModel>;
+  listPermissionScreen = [];
+  ThongBaoHopKickoff = false;
+  XemDanhSachEmailDaGui = false;
+  UploadBBCuocHop = false;
+  TaiXuongBBCuocHop = false;
+  XoaBBCuocHop = false;
+  UploadFilePresentation = false;
+  TaiXuongFilePresentation = false;
+  XoaFilePresentation = false;
   constructor(
     private packageSuccessService: PackageSuccessService,
     private modalService: BsModalService,
@@ -71,10 +86,40 @@ export class ReportMeetingComponent implements OnInit {
     private detailResultPackageService: DetailResultPackageService,
     private dialogService: DialogService,
     private spinner: NgxSpinnerService,
+    private permissionService: PermissionService
+
   ) { }
 
   ngOnInit() {
     this.currentPackageId = +PackageDetailComponent.packageId;
+
+    this.subscription = this.permissionService.get().subscribe(data => {
+      this.listPermission = data;
+      const hsdt = this.listPermission.length &&
+        this.listPermission.filter(x => x.bidOpportunityStage === 'KQDT')[0];
+      if (!hsdt) {
+        this.listPermissionScreen = [];
+      }
+      if (hsdt) {
+        const screen = hsdt.userPermissionDetails.length
+          && hsdt.userPermissionDetails.filter(y => y.permissionGroup.value === 'HopKickOff')[0];
+        if (!screen) {
+          this.listPermissionScreen = [];
+        }
+        if (screen) {
+          this.listPermissionScreen = screen.permissions.map(z => z.value);
+        }
+      }
+      this.ThongBaoHopKickoff = this.listPermissionScreen.includes('ThongBaoHopKickoff');
+    //  this.XemDanhSachEmailDaGui = this.listPermissionScreen.includes('XemDanhSachEmailDaGui');
+      this.UploadBBCuocHop = this.listPermissionScreen.includes('UploadBBCuocHop');
+      this.TaiXuongBBCuocHop = this.listPermissionScreen.includes('TaiXuongBBCuocHop');
+      this.XoaBBCuocHop = this.listPermissionScreen.includes('XoaBBCuocHop');
+     
+      this.UploadFilePresentation = this.listPermissionScreen.includes('UploadFilePresentation');
+      this.TaiXuongFilePresentation = this.listPermissionScreen.includes('TaiXuongFilePresentation');
+      this.XoaFilePresentation = this.listPermissionScreen.includes('XoaFilePresentation');
+    });
     this.formUpload = this.formBuilder.group({
       name: [''],
       description: [''],
@@ -121,6 +166,12 @@ export class ReportMeetingComponent implements OnInit {
       this.filterFileList(false);
     });
   }
+
+  ngOnDestroy() {
+    if (this.subscription) {
+      this.subscription.unsubscribe();
+    }
+  }
   get f() { return this.formUpload.controls; }
   onSubmit() {
     this.submitted = true;
@@ -159,7 +210,6 @@ export class ReportMeetingComponent implements OnInit {
       this.meetingReportList = response.items;
       this.loadingFilterMeetingReportList = false;
       this.endAPI.emit(false);
-      console.log('this.meetingFileList.length', this.meetingReportList.length, this.meetingFileList.length);
       if ((this.meetingReportList && this.meetingReportList.length !== 0) || (this.meetingFileList && this.meetingFileList.length !== 0)) {
         this.isData.emit(true);
         this.isDataChild = true;

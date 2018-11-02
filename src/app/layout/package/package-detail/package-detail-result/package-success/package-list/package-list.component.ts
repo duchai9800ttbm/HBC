@@ -1,8 +1,8 @@
-import { Component, OnInit, TemplateRef, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, TemplateRef, Output, EventEmitter, OnDestroy } from '@angular/core';
 import { BsModalService } from 'ngx-bootstrap/modal';
 import { BsModalRef } from 'ngx-bootstrap/modal/bs-modal-ref.service';
 import { DATATABLE_CONFIG } from '../../../../../../shared/configs';
-import { Observable, BehaviorSubject, Subject } from '../../../../../../../../node_modules/rxjs';
+import { Observable, BehaviorSubject, Subject, Subscription } from '../../../../../../../../node_modules/rxjs';
 import { Router } from '@angular/router';
 import { PackageService } from '../../../../../../shared/services/package.service';
 import { ConfirmationService, AlertService } from '../../../../../../shared/services';
@@ -19,12 +19,14 @@ import { SendEmailModel } from '../../../../../../shared/models/send-email-model
 import { EmailService } from '../../../../../../shared/services/email.service';
 import { BidStatus } from '../../../../../../shared/constants/bid-status';
 import { CheckStatusPackage } from '../../../../../../shared/constants/check-status-package';
+import { PermissionModel } from '../../../../../../shared/models/permission/Permission.model';
+import { PermissionService } from '../../../../../../shared/services/permission.service';
 @Component({
   selector: 'app-package-list',
   templateUrl: './package-list.component.html',
   styleUrls: ['./package-list.component.scss']
 })
-export class PackageListComponent implements OnInit {
+export class PackageListComponent implements OnInit, OnDestroy {
   packageId: number;
   modalRef: BsModalRef;
   modalViewData: BsModalRef;
@@ -73,6 +75,21 @@ export class PackageListComponent implements OnInit {
     stage: 'KQDT',
     id: null,
   };
+
+  listPermission: Array<PermissionModel>;
+  listPermissionScreen = [];
+  ChonKQDT = false;
+  UploadKQDT = false;
+  TaiXuongKQDT = false;
+  TaiTemplate = false;
+  XoaKQDT = false;
+  ThongBaoDenPhongHopDong = false;
+  XemEmailPhanHoi = false;
+  ThongBaoStakeholders = false;
+  XemMailThongBaoTrungThau = false;
+  ChuyenGiaoTaiLieu = false;
+  XemMailChuyenGiao = false;
+  subscription: Subscription;
   checkStatusPackage = CheckStatusPackage;
   constructor(
     private modalService: BsModalService,
@@ -85,11 +102,40 @@ export class PackageListComponent implements OnInit {
     private detailResultPackageService: DetailResultPackageService,
     private confirmationService: ConfirmationService,
     private emailService: EmailService,
+    private permissionService: PermissionService
+
   ) { }
 
   ngOnInit() {
     this.statusPackage = this.packageService.statusPackageValue2;
     this.currentPackageId = +PackageDetailComponent.packageId;
+    this.subscription = this.permissionService.get().subscribe(data => {
+      this.listPermission = data;
+      const hsdt = this.listPermission.length &&
+        this.listPermission.filter(x => x.bidOpportunityStage === 'KQDT')[0];
+      if (!hsdt) {
+        this.listPermissionScreen = [];
+      }
+      if (hsdt) {
+        const screen = hsdt.userPermissionDetails.length
+          && hsdt.userPermissionDetails.filter(y => y.permissionGroup.value === 'KetQuaDuThau')[0];
+        if (!screen) {
+          this.listPermissionScreen = [];
+        }
+        if (screen) {
+          this.listPermissionScreen = screen.permissions.map(z => z.value);
+        }
+      }
+      this.ChonKQDT = this.listPermissionScreen.includes('ChonKQDT');
+      this.UploadKQDT = this.listPermissionScreen.includes('UploadKQDT');
+      this.TaiXuongKQDT = this.listPermissionScreen.includes('TaiXuongKQDT');
+      this.TaiTemplate = this.listPermissionScreen.includes('TaiTemplate');
+      this.XoaKQDT = this.listPermissionScreen.includes('XoaKQDT');
+      this.ThongBaoDenPhongHopDong = this.listPermissionScreen.includes('ThongBaoDenPhongHopDong');
+      this.ThongBaoStakeholders = this.listPermissionScreen.includes('ThongBaoStakeholders');
+      this.ChuyenGiaoTaiLieu = this.listPermissionScreen.includes('ChuyenGiaoTaiLieu');
+      
+    });
     this.packageService.statusPackageValue$.subscribe(status => {
       this.statusPackage = status;
     });
@@ -131,6 +177,11 @@ export class PackageListComponent implements OnInit {
     this.isSendCc = false;
     this.isSendBcc = false;
     this.textTrungThau = 'Trúng thầu';
+  }
+  ngOnDestroy() {
+    if (this.subscription) {
+      this.subscription.unsubscribe();
+    }
   }
   openModalNotification(template: TemplateRef<any>, actionSendEmail: string) {
     this.actionSendEmail = actionSendEmail;

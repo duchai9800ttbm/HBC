@@ -21,6 +21,8 @@ import { PagedResult } from '../../../../../../shared/models';
 import { ContractSigningList } from '../../../../../../shared/models/result-attend/contract-signing.list.model';
 import { groupBy } from '../../../../../../../../node_modules/@progress/kendo-data-query';
 import { CheckStatusPackage } from '../../../../../../shared/constants/check-status-package';
+import { PermissionService } from '../../../../../../shared/services/permission.service';
+import { PermissionModel } from '../../../../../../shared/models/permission/Permission.model';
 
 @Component({
   selector: 'app-contract-signed',
@@ -66,6 +68,14 @@ export class ContractSignedComponent implements OnInit, OnDestroy {
   };
   checkStatusPackage = CheckStatusPackage;
   isSignedContractAPI = false;
+
+
+  listPermission: Array<PermissionModel>;
+  listPermissionScreen = [];
+  ThemMoiHD = false;
+  TaiXuongHD = false;
+  XoaHD = false;
+
   constructor(
     private modalService: BsModalService,
     private formBuilder: FormBuilder,
@@ -77,14 +87,35 @@ export class ContractSignedComponent implements OnInit, OnDestroy {
     private dialogService: DialogService,
     private detailResultPackageService: DetailResultPackageService,
     private spinner: NgxSpinnerService,
+    private permissionService: PermissionService
+
   ) { }
 
   ngOnInit() {
     this.currentPackageId = +PackageDetailComponent.packageId;
+
+    this.subscription = this.permissionService.get().subscribe(data => {
+      this.listPermission = data;
+      const hsdt = this.listPermission.length &&
+        this.listPermission.filter(x => x.bidOpportunityStage === 'KQDT')[0];
+      if (!hsdt) {
+        this.listPermissionScreen = [];
+      }
+      if (hsdt) {
+        const screen = hsdt.userPermissionDetails.length
+          && hsdt.userPermissionDetails.filter(y => y.permissionGroup.value === 'HopDongKiKet')[0];
+        if (!screen) {
+          this.listPermissionScreen = [];
+        }
+        if (screen) {
+          this.listPermissionScreen = screen.permissions.map(z => z.value);
+        }
+      }
+      this.ThemMoiHD = this.listPermissionScreen.includes('ThemMoiHD');
+      this.TaiXuongHD = this.listPermissionScreen.includes('TaiXuongHD');
+      this.XoaHD = this.listPermissionScreen.includes('XoaHD');
+    });
     this.statusPackage = this.packageService.statusPackageValue2;
-    // this.packageService.statusPackageValue$.subscribe(status => {
-    //   this.statusPackage = status;
-    // });
     this.packageService.getInforPackageID(this.currentPackageId).subscribe(response => {
       this.isSignedContractAPI = response.isSignedContract;
     });
@@ -115,10 +146,11 @@ export class ContractSignedComponent implements OnInit, OnDestroy {
     });
     this.filter(false);
     this.filterList();
-    this.subscription = this.detailResultPackageService.watchListContractSigning().subscribe(value => {
+    const detail$ = this.detailResultPackageService.watchListContractSigning().subscribe(value => {
       this.filter(false);
       this.filterList();
     });
+    this.subscription.add(detail$);
     this.searchTerm$.debounceTime(600)
       .distinctUntilChanged()
       .subscribe(keySearch => {

@@ -1,4 +1,4 @@
-import { Component, OnInit, TemplateRef } from '@angular/core';
+import { Component, OnInit, TemplateRef, OnDestroy } from '@angular/core';
 import { BsModalService } from 'ngx-bootstrap/modal';
 import { BsModalRef } from 'ngx-bootstrap/modal/bs-modal-ref.service';
 import { Router, ActivatedRoute, ParamMap } from '@angular/router';
@@ -6,7 +6,7 @@ import { PackageDetailComponent } from '../../../package-detail.component';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { DATETIME_PICKER_CONFIG } from '../../../../../../shared/configs/datepicker.config';
 import { DATATABLE_CONFIG } from '../../../../../../shared/configs';
-import { Observable, BehaviorSubject, Subject } from '../../../../../../../../node_modules/rxjs';
+import { Observable, BehaviorSubject, Subject, Subscription } from '../../../../../../../../node_modules/rxjs';
 import { ConfirmationService, AlertService } from '../../../../../../shared/services';
 import { EmailService } from '../../../../../../shared/services/email.service';
 import { SendEmailModel } from '../../../../../../shared/models/send-email-model';
@@ -16,13 +16,15 @@ import { UploadKickOffComponent } from './upload-kick-off/upload-kick-off.compon
 import { DialogService } from '../../../../../../../../node_modules/@progress/kendo-angular-dialog';
 import { PackageService } from '../../../../../../shared/services/package.service';
 import { CheckStatusPackage } from '../../../../../../shared/constants/check-status-package';
+import { PermissionModel } from '../../../../../../shared/models/permission/Permission.model';
+import { PermissionService } from '../../../../../../shared/services/permission.service';
 
 @Component({
   selector: 'app-meeting-kickoff',
   templateUrl: './meeting-kickoff.component.html',
   styleUrls: ['./meeting-kickoff.component.scss']
 })
-export class MeetingKickoffComponent implements OnInit {
+export class MeetingKickoffComponent implements OnInit, OnDestroy {
   formUpload: FormGroup;
   submitted = false;
   currentPackageId: number;
@@ -62,6 +64,18 @@ export class MeetingKickoffComponent implements OnInit {
   checkStatusPackage = CheckStatusPackage;
   loading = false;
   isData = false;
+  subscription: Subscription;
+
+  listPermission: Array<PermissionModel>;
+  listPermissionScreen = [];
+  ThongBaoHopKickoff = false;
+  XemDanhSachEmailDaGui = false;
+  UploadBBCuocHop = false;
+  TaiXuongBBCuocHop = false;
+  XoaBBCuocHop = false;
+  UploadFilePresentation = false;
+  TaiXuongFilePresentation = false;
+  XoaFilePresentation = false;
   constructor(
     private modalService: BsModalService,
     private router: Router,
@@ -73,7 +87,9 @@ export class MeetingKickoffComponent implements OnInit {
     private detailResultPackageService: DetailResultPackageService,
     private spinner: NgxSpinnerService,
     private dialogService: DialogService,
-    private packageService: PackageService
+    private packageService: PackageService,
+    private permissionService: PermissionService
+
   ) { }
 
   ngOnInit() {
@@ -87,6 +103,34 @@ export class MeetingKickoffComponent implements OnInit {
       link: ['']
     });
     this.currentPackageId = +PackageDetailComponent.packageId;
+
+    this.subscription = this.permissionService.get().subscribe(data => {
+      this.listPermission = data;
+      const hsdt = this.listPermission.length &&
+        this.listPermission.filter(x => x.bidOpportunityStage === 'KQDT')[0];
+      if (!hsdt) {
+        this.listPermissionScreen = [];
+      }
+      if (hsdt) {
+        const screen = hsdt.userPermissionDetails.length
+          && hsdt.userPermissionDetails.filter(y => y.permissionGroup.value === 'HopKickOff')[0];
+        if (!screen) {
+          this.listPermissionScreen = [];
+        }
+        if (screen) {
+          this.listPermissionScreen = screen.permissions.map(z => z.value);
+        }
+      }
+      this.ThongBaoHopKickoff = this.listPermissionScreen.includes('ThongBaoHopKickoff');
+      this.XemDanhSachEmailDaGui = this.listPermissionScreen.includes('XemDanhSachEmailDaGui');
+      this.UploadBBCuocHop = this.listPermissionScreen.includes('UploadBBCuocHop');
+      this.TaiXuongBBCuocHop = this.listPermissionScreen.includes('TaiXuongBBCuocHop');
+      this.XoaBBCuocHop = this.listPermissionScreen.includes('XoaBBCuocHop');
+      this.UploadFilePresentation = this.listPermissionScreen.includes('UploadFilePresentation');
+      this.TaiXuongFilePresentation = this.listPermissionScreen.includes('TaiXuongFilePresentation');
+      this.XoaFilePresentation = this.listPermissionScreen.includes('XoaFilePresentation');
+    });
+
     this.packageService.statusPackageValue$.subscribe(status => {
       this.statusPackage = status;
     });
@@ -114,6 +158,12 @@ export class MeetingKickoffComponent implements OnInit {
       this.listEmailSearchCc = response;
       this.listEmailSearchBcc = response;
     });
+  }
+
+  ngOnDestroy() {
+    if (this.subscription) {
+      this.subscription.unsubscribe();
+    }
   }
 
   endAPIFuction(event) {

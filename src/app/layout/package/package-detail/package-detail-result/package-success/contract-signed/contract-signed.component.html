@@ -2,9 +2,12 @@
     <div id="outer-img">
         <img src="assets/images/kykethd.png" alt="">
         <h5>Bạn đã hoàn tất ký kết hợp đồng</h5>
-        <div class="confirm-button">
-            <button class="btn btn-primary" id="success" (click)="uploadContractSigning()">Thêm mới hợp đồng ký kết</button>
-        </div>
+        <ng-container *ngIf="ThemMoiHD">
+            <div class="confirm-button">
+                <button class="btn btn-primary" id="success" (click)="uploadContractSigning()">Thêm mới hợp đồng ký kết</button>
+            </div>
+        </ng-container>
+
     </div>
 </div>
 <div class="outer" id="outer" *ngIf="isSignedContractAPI !== false">
@@ -23,9 +26,12 @@
                 <button class="btn btn-primary ml-1" (click)="downloadTemplateContractSigning()">
                     Tải Template
                 </button>
-                <button class="btn btn-primary ml-1" (click)="uploadContractSigning()">
-                    Upload file
-                </button>
+                <ng-container *ngIf="ThemMoiHD">
+                    <button class="btn btn-primary ml-1" (click)="uploadContractSigning()">
+                        Upload file
+                    </button>
+                </ng-container>
+
                 <button class="btn btn-primary ml-1" (click)="refesh()">
                     <i class="fa fa-refresh" aria-hidden="true"></i>
                 </button>
@@ -39,12 +45,16 @@
                 <span class="input-group-addon">Tìm kiếm theo</span>
                 <input type="text" class="form-control icon" placeholder="&#xf002; Tên tài liệu" (keyup)="searchTerm$.next($event.target.value)">
             </div>
-            <button class="btn btn-primary ml-1">
-                Tải xuống tài liệu
-            </button>
-            <button class="btn btn-primary ml-1" (click)="deleteContractSign()">
-                Xóa
-            </button>
+            <ng-container *ngIf="TaiXuongHD">
+                <button class="btn btn-primary ml-1">
+                    Tải xuống tài liệu
+                </button>
+            </ng-container>
+            <ng-container *ngIf="XoaHD">
+                <button class="btn btn-primary ml-1" (click)="deleteContractSign()">
+                    Xóa
+                </button>
+            </ng-container>
         </div>
     </div>
     <div class="main-table" *ngIf="true">
@@ -241,16 +251,20 @@
                         <td class="text-center">{{item.interviewTime}}</td>
                         <td class="text-center">
                             <div class="d-flex justify-content-around">
-                                <div id="mr">
-                                    <a title="Tải file" (click)="downloadFileItem(item.id)">
-                                        <i class="fa fa-download color-item-down" aria-hidden="true"></i>
-                                    </a>
-                                </div>
-                                <div id="mr">
-                                    <a title="Xóa file" (click)="deleteFileItem(item.id)">
-                                        <i class="fa fa-trash-o" aria-hidden="true"></i>
-                                    </a>
-                                </div>
+                                <ng-container *ngIf="TaiXuongHD">
+                                    <div id="mr">
+                                        <a title="Tải file" (click)="downloadFileItem(item.id)">
+                                            <i class="fa fa-download color-item-down" aria-hidden="true"></i>
+                                        </a>
+                                    </div>
+                                </ng-container>
+                                <ng-container *ngIf="XoaHD">
+                                    <div id="mr">
+                                        <a title="Xóa file" (click)="deleteFileItem(item.id)">
+                                            <i class="fa fa-trash-o" aria-hidden="true"></i>
+                                        </a>
+                                    </div>
+                                </ng-container>
                                 <div id="mr">
                                     <a title="In">
                                         <i class="fa fa-print color-item-print" aria-hidden="true"></i>

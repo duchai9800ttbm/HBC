@@ -11,22 +11,32 @@
         </div>
         <div>
             <div class="mt-2 mb-2">
-                <button class="btn btn-primary ml-1" (click)="openModalNotification(notification, 'ContractRoom')">
-                    Thông báo cho phòng hợp đồng
-                </button>
-                <button class="btn btn-primary ml-1" (click)="downloadTemplate()">
-                    Tải Template
-                </button>
-                <button class="btn btn-primary ml-1">
-                    Tải xuống tài liệu
-                </button>
-                <button class="btn btn-primary ml-1" *ngIf="!showBtnNotification" (click)="deleteFileResult()">
-                    Xóa
-                </button>
-                <button class="btn btn-primary ml-1" *ngIf="!showBtnNotification" (click)="uploadkqdt()">
-                    Upload&nbsp;
-                    <span class="text-uppercase" *ngIf="!showBtnNotification">kqdt</span>
-                </button>
+                <ng-container *ngIf="ThongBaoDenPhongHopDong">
+                    <button class="btn btn-primary ml-1" (click)="openModalNotification(notification, 'ContractRoom')">
+                        Thông báo cho phòng hợp đồng
+                    </button>
+                </ng-container>
+                <ng-container *ngIf="TaiTemplate">
+                    <button class="btn btn-primary ml-1" (click)="downloadTemplate()">
+                        Tải Template
+                    </button>
+                </ng-container>
+                <ng-container *ngIf="TaiXuongKQDT">
+                    <button class="btn btn-primary ml-1">
+                        Tải xuống tài liệu
+                    </button>
+                </ng-container>
+                <ng-container *ngIf="XoaKQDT">
+                    <button class="btn btn-primary ml-1" *ngIf="!showBtnNotification" (click)="deleteFileResult()">
+                        Xóa
+                    </button>
+                </ng-container>
+                <ng-container *ngIf="UploadKQDT">
+                    <button class="btn btn-primary ml-1" *ngIf="!showBtnNotification" (click)="uploadkqdt()">
+                        Upload&nbsp;
+                        <span class="text-uppercase" *ngIf="!showBtnNotification">kqdt</span>
+                    </button>
+                </ng-container>
                 <button class="btn btn-primary ml-1" (click)="refesh(true)">
                     <i class="fa fa-refresh" aria-hidden="true"></i>
                 </button>
@@ -45,15 +55,21 @@
         </div>
         <div>
             <div class="mt-2 mb-2">
-                <button class="btn btn-primary ml-1" (click)="openModalNotification(notification, 'Stakeholders')">
-                    Thông báo cho các bên liên quan
-                </button>
-                <button class="btn btn-primary ml-1" (click)="downloadTemplate()">
-                    Tải Template
-                </button>
-                <button class="btn btn-primary ml-1">
-                    Tải xuống tài liệu
-                </button>
+                <ng-container *ngIf="ThongBaoStakeholders">
+                    <button class="btn btn-primary ml-1" (click)="openModalNotification(notification, 'Stakeholders')">
+                        Thông báo cho các bên liên quan
+                    </button>
+                </ng-container>
+                <ng-container *ngIf="TaiTemplate">
+                    <button class="btn btn-primary ml-1" (click)="downloadTemplate()">
+                        Tải Template
+                    </button>
+                </ng-container>
+                <ng-container *ngIf="TaiXuongKQDT">
+                    <button class="btn btn-primary ml-1">
+                        Tải xuống tài liệu
+                    </button>
+                </ng-container>
                 <button class="btn btn-primary ml-1" (click)="refesh(true)">
                     <i class="fa fa-refresh" aria-hidden="true"></i>
                 </button>
@@ -61,37 +77,36 @@
         </div>
     </div>
     <div class=" title-list-package d-flex flex-wrap align-items-center status-filter" *ngIf="statusPackage.id >= checkStatusPackage.DaThongBaoCacBenLienQuan.id">
-            <div class="mr-auto d-flex align-items-end list-package mt-2 mb-2">
-                <div class="d-flex justify-content-start">
-                    <div class="rule mr-2">
-                    </div>
-                    <div class="center-parent  mr-4">
-                        <div class="title-header">Đã thông báo các bên liên quan</div>
-                    </div>
+        <div class="mr-auto d-flex align-items-end list-package mt-2 mb-2">
+            <div class="d-flex justify-content-start">
+                <div class="rule mr-2">
                 </div>
-            </div>
-            <div>
-                <div class="mt-2 mb-2">
-                    <button class="btn btn-primary ml-1" (click)="openModalNotification(notification, 'Stakeholders')">
-                        Thông báo lại cho các bên liên quan
-                    </button>
-                    <button class="btn btn-primary ml-1" (click)="downloadTemplate()">
-                        Tải Template
-                    </button>
-                    <button class="btn btn-primary ml-1" (click)="refesh(true)">
-                        <i class="fa fa-refresh" aria-hidden="true"></i>
-                    </button>
+                <div class="center-parent  mr-4">
+                    <div class="title-header">Đã thông báo các bên liên quan</div>
                 </div>
             </div>
         </div>
+        <div>
+            <div class="mt-2 mb-2">
+                <ng-container *ngIf="ThongBaoDenPhongHopDong">
+                    <button class="btn btn-primary ml-1" (click)="openModalNotification(notification, 'Stakeholders')">
+                        Thông báo lại cho các bên liên quan
+                    </button>
+                </ng-container>
+
+                <ng-container *ngIf="TaiTemplate">
+                    <button class="btn btn-primary ml-1" (click)="downloadTemplate()">
+                        Tải Template
+                    </button>
+                </ng-container>
+                <button class="btn btn-primary ml-1" (click)="refesh(true)">
+                    <i class="fa fa-refresh" aria-hidden="true"></i>
+                </button>
+            </div>
+        </div>
+    </div>
     <div class="d-flex form-group status-filter">
         <h5 class="d-inline mb-0 mr-auto text-dark text-uppercase pd-t title-header-chirl">kết quả dự thầu</h5>
-        <!-- <div class="btn-toolbar">
-                <div class="input-group btn-rg">
-                    <span class="input-group-addon">Tìm kiếm theo</span>
-                    <input type="text" class="form-control icon" placeholder="&#xf002; Nhập tên" (keyup)="searchTerm$.next($event.target.value)">
-                </div>
-            </div> -->
     </div>
 
     <div class="main-table">
@@ -231,17 +246,20 @@
                         <td class="select-filter text-center">{{ item.interviewTimes }}</td>
                         <td class="text-center">
                             <div class="d-flex justify-content-around">
-                                <div id="mr">
-                                    <a title="Tải file" (click)="downloadFileItem(item.id)">
-                                        <i class="fa fa-download color-item-down" aria-hidden="true"></i>
-                                    </a>
-                                </div>
-                                <div id="mr" (click)="deleteFileItem(item.id)">
-                                    <!-- *ngIf="!showBtnNotification" -->
-                                    <a title="Xóa file">
-                                        <i class="fa fa-trash-o" aria-hidden="true"></i>
-                                    </a>
-                                </div>
+                                <ng-container *ngIf="TaiXuongKQDT">
+                                    <div id="mr">
+                                        <a title="Tải file" (click)="downloadFileItem(item.id)">
+                                            <i class="fa fa-download color-item-down" aria-hidden="true"></i>
+                                        </a>
+                                    </div>
+                                </ng-container>
+                                <ng-container *ngIf="XoaKQDT">
+                                    <div id="mr" (click)="deleteFileItem(item.id)">
+                                        <a title="Xóa file">
+                                            <i class="fa fa-trash-o" aria-hidden="true"></i>
+                                        </a>
+                                    </div>
+                                </ng-container>
                                 <div>
                                     <a title="In">
                                         <i class="fa fa-print color-item-print" aria-hidden="true"></i>
