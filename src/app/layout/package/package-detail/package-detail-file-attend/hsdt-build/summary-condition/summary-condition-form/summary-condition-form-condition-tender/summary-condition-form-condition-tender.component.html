@@ -93,21 +93,24 @@
         </div>
 
         <div class="row mt-3">
-            <div class="col-md-3"></div>
+            <div class="col-md-3">T/gian h/thành (theo nhà thầu)</div>
             <div class="col-md-8">
                 <div class="row">
                     <div class="col-md-6" formGroupName="theoHSMT">
-                        <div>
+                        <div [ngClass]="{'event-none': isModeView}">
                             <label class="mr-3" for="yes">
-                                <input formControlName="thoiGianHoanThanhTheoNhaThau" class="mr-2" name="thoiGianHoanThanhTheoNhaThau" type="radio" id="yes">
+                                <input (click)="chooseRadio('yes')" [checked]="isShowInputBox" class="mr-2" name="thoiGianHoanThanhTheoNhaThau"
+                                    type="radio" id="yes">
                                 Có
                             </label>
                             <label class="mr-3" for="no">
-                                <input class="mr-2" name="thoiGianHoanThanhTheoNhaThau" type="radio" id="no">
+                                <input (click)="chooseRadio('no')" [checked]="!isShowInputBox" class="mr-2" name="thoiGianHoanThanhTheoNhaThau"
+                                    type="radio" id="no">
                                 Không
                             </label>
                         </div>
-                        <input formControlName="thoiGianHoanThanhTheoNhaThauCount" type="number" appInputNumberNegativeDecimal class="form-control">
+                        <input [ngClass]="{'d-none': !isShowInputBox}" formControlName="thoiGianHoanThanhTheoNhaThauCount"
+                            type="number" appInputNumberNegativeDecimal class="form-control">
                     </div>
                     <div class="col-md-6"></div>
                 </div>

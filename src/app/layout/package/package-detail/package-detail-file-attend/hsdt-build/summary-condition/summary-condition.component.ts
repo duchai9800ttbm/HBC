@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { PackageDetailComponent } from '../../../package-detail.component';
 import { PackageService } from '../../../../../../shared/services/package.service';
 import { TenderConditionSummaryRequest } from '../../../../../../shared/models/api-request/package/tender-condition-summary-request';
@@ -6,7 +6,7 @@ import { NgxSpinnerService } from 'ngx-spinner';
 import { AlertService, ConfirmationService } from '../../../../../../shared/services';
 import { DATATABLE_CONFIG } from '../../../../../../shared/configs';
 // tslint:disable-next-line:import-blacklist
-import { Subject } from 'rxjs';
+import { Subject, Subscription } from 'rxjs';
 import { SummaryConditionFormComponent } from './summary-condition-form/summary-condition-form.component';
 import { DuLieuLiveFormDKDT } from '../../../../../../shared/models/ho-so-du-thau/tom-tat-dkdt.model';
 import { HoSoDuThauService } from '../../../../../../shared/services/ho-so-du-thau.service';
@@ -23,7 +23,7 @@ import { PermissionModel } from '../../../../../../shared/models/permission/perm
   templateUrl: './summary-condition.component.html',
   styleUrls: ['./summary-condition.component.scss']
 })
-export class SummaryConditionComponent implements OnInit {
+export class SummaryConditionComponent implements OnInit, OnDestroy {
 
   packageId;
   summaryCondition: DuLieuLiveFormDKDT;
@@ -36,6 +36,8 @@ export class SummaryConditionComponent implements OnInit {
   pagedResultChangeHistoryList: PagedResult<HistoryLiveForm> = new PagedResult<HistoryLiveForm>();
   listPermission: Array<PermissionModel>;
   listPermissionScreen = [];
+  isClosedHSDT: boolean;
+  subscription: Subscription;
 
   constructor(
     private hoSoDuThauService: HoSoDuThauService,
@@ -48,6 +50,9 @@ export class SummaryConditionComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+    this.subscription = this.hoSoDuThauService.watchStatusPackage().subscribe(status => {
+      this.isClosedHSDT = status;
+    });
     this.packageId = PackageDetailComponent.packageId;
 
     this.permissionService.get().subscribe(data => {
@@ -72,6 +77,9 @@ export class SummaryConditionComponent implements OnInit {
         }, 0);
       });
     this.getChangeHistory(0, 10);
+  }
+  ngOnDestroy() {
+    this.subscription.unsubscribe();
   }
 
   refresh(isAlert: boolean) {

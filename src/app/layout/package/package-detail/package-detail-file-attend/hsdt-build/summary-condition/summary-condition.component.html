@@ -49,7 +49,7 @@
                                 <a [routerLink]="['./form/detail']">
                                     <i class="fa fa-eye text-warning" aria-hidden="true"></i>
                                 </a>
-                                <a class=" text-success ml-3" [routerLink]="['./form/edit']">
+                                <a *ngIf="!isClosedHSDT" class=" text-success ml-3" [routerLink]="['./form/edit']">
                                     <i class="fa fa-pencil cursor-pointer" aria-hidden="true"> </i>
                                 </a>
                                 <a class=" text-dark ml-3" (click)="delete()">

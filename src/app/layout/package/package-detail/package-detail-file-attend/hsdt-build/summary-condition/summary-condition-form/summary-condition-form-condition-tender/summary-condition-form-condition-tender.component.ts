@@ -15,6 +15,7 @@ export class SummaryConditionFormConditionTenderComponent implements OnInit {
     dieuKienHSMTForm: FormGroup;
     dienGiaiDieuKienHSMT = new DienGiaiDieuKienHSMT();
     isModeView = false;
+    isShowInputBox = false;
     constructor(
         private fb: FormBuilder,
         private hoSoDuThauService: HoSoDuThauService
@@ -139,7 +140,7 @@ export class SummaryConditionFormConditionTenderComponent implements OnInit {
             obj = {
                 theoHSMT: {
                     baoLanhDuThau: {
-                        giaTri: data.theoHSMT.giaTri,
+                        giaTri: (data.theoHSMT.giaTri) ? data.theoHSMT.giaTri : 0,
                         hieuLuc: data.theoHSMT.hieuLuc
                     },
                     hieuLucHoSo: data.theoHSMT.hieuLucHoSo,
@@ -154,7 +155,7 @@ export class SummaryConditionFormConditionTenderComponent implements OnInit {
                 },
                 theoHBC: {
                     baoLanhDuThau: {
-                        giaTri: data.theoHBC.giaTri,
+                        giaTri: (data.theoHBC.giaTri) ? data.theoHBC.giaTri : 0,
                         hieuLuc: data.theoHBC.hieuLuc
                     },
                     hieuLucHoSo: data.theoHBC.hieuLucHoSo,
@@ -215,6 +216,7 @@ export class SummaryConditionFormConditionTenderComponent implements OnInit {
                 if (this.dienGiaiDieuKienHSMT.theoHBC.cacLoaiThue.length === 0) {
                     this.dienGiaiDieuKienHSMT.theoHBC.cacLoaiThue = [''];
                 }
+                this.isShowInputBox = obj.theoHSMT && obj.theoHSMT.tienDo && obj.theoHSMT.tienDo.thoiGianHoanThanhTheoNhaThau;
             }
             if (!obj) {
                 this.dienGiaiDieuKienHSMT = {
@@ -267,5 +269,16 @@ export class SummaryConditionFormConditionTenderComponent implements OnInit {
     removeFormArrayControl(name: string, idx: number) {
         const formArray = (this.dieuKienHSMTForm.get('theoHSMT') as FormGroup).controls.cacLoaiThue as FormArray;
         formArray.removeAt(idx);
+    }
+    chooseRadio(choose: string) {
+        if (choose === 'yes') {
+            this.dieuKienHSMTForm.get('theoHSMT').get('thoiGianHoanThanhTheoNhaThau').patchValue(true);
+            this.isShowInputBox = this.dieuKienHSMTForm.get('theoHSMT').get('thoiGianHoanThanhTheoNhaThau').value;
+        }
+        if (choose === 'no') {
+            this.dieuKienHSMTForm.get('theoHSMT').get('thoiGianHoanThanhTheoNhaThau').patchValue(false);
+            this.dieuKienHSMTForm.get('theoHSMT').get('thoiGianHoanThanhTheoNhaThauCount').patchValue('');
+            this.isShowInputBox = this.dieuKienHSMTForm.get('theoHSMT').get('thoiGianHoanThanhTheoNhaThau').value;
+        }
     }
 }

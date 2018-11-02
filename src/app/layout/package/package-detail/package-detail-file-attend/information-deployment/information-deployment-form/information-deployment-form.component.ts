@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef, OnDestroy } from '@angular/core';
 import '@progress/kendo-ui';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { PackageService } from '../../../../../../shared/services/package.service';
@@ -26,7 +26,7 @@ declare let kendo: any;
     templateUrl: './information-deployment-form.component.html',
     styleUrls: ['./information-deployment-form.component.scss']
 })
-export class InformationDeploymentFormComponent implements OnInit {
+export class InformationDeploymentFormComponent implements OnInit, OnDestroy {
     @ViewChild('ganttChart')
     ganttChart: ElementRef;
     bidOpportunityId;
@@ -89,20 +89,20 @@ export class InformationDeploymentFormComponent implements OnInit {
         this.subscription = this.permissionService.get().subscribe(data => {
             this.listPermission = data;
             const hsdt = this.listPermission.length &&
-              this.listPermission.filter(x => x.bidOpportunityStage === 'HSDT')[0];
+                this.listPermission.filter(x => x.bidOpportunityStage === 'HSDT')[0];
             console.log(this.listPermission);
             if (!hsdt) {
-              this.listPermissionScreen = [];
+                this.listPermissionScreen = [];
             }
             if (hsdt) {
-              const screen = hsdt.userPermissionDetails.length
-                && hsdt.userPermissionDetails.filter(y => y.permissionGroup.value === 'TrienKhaiVaPhanCongTienDo')[0];
-              if (!screen) {
-                this.listPermissionScreen = [];
-              }
-              if (screen) {
-                this.listPermissionScreen = screen.permissions.map(z => z.value);
-              }
+                const screen = hsdt.userPermissionDetails.length
+                    && hsdt.userPermissionDetails.filter(y => y.permissionGroup.value === 'TrienKhaiVaPhanCongTienDo')[0];
+                if (!screen) {
+                    this.listPermissionScreen = [];
+                }
+                if (screen) {
+                    this.listPermissionScreen = screen.permissions.map(z => z.value);
+                }
             }
             this.ThongBaoTrienKhai = this.listPermissionScreen.includes('ThongBaoTrienKhai');
             this.XemEmail = this.listPermissionScreen.includes('XemEmail');
@@ -116,11 +116,14 @@ export class InformationDeploymentFormComponent implements OnInit {
             this.GuiPCTD = this.listPermissionScreen.includes('GuiPCTD');
             this.TaiTemplatePCTD = this.listPermissionScreen.includes('TaiTemplatePCTD');
             this.BatDauLapHSDT = this.listPermissionScreen.includes('BatDauLapHSDT');
-          });
+        });
         this.userService.getAllUser('').subscribe(data => {
             this.userList = data;
         });
         this.getPackageInfo();
+    }
+    ngOnDestroy() {
+        this.subscription.unsubscribe();
     }
 
     getPackageInfo() {
@@ -130,9 +133,9 @@ export class InformationDeploymentFormComponent implements OnInit {
             .subscribe(data => {
                 this.packageInfo = data;
                 this.submissionDate =
-                DateTimeConvertHelper.fromTimestampToDtObject(
-                    this.packageInfo.submissionDate * 1000
-                );
+                    DateTimeConvertHelper.fromTimestampToDtObject(
+                        this.packageInfo.submissionDate * 1000
+                    );
                 console.log('this.submissionDate', this.submissionDate);
                 this.checkAndCreateForm();
                 this.spinner.hide();

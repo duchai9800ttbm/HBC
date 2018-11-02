@@ -10,6 +10,7 @@ import { PackageInfoModel } from '../../../../../../../shared/models/package/pac
 import { DuLieuLiveFormDKDT } from '../../../../../../../shared/models/ho-so-du-thau/tom-tat-dkdt.model';
 import { Subscription } from 'rxjs';
 import { ScrollToTopService } from '../../../../../../../shared/services/scroll-to-top.service';
+import { ThongTinDuAn } from '../../../../../../../shared/models/ho-so-du-thau/thong-tin-du-an';
 
 @Component({
   selector: 'app-summary-condition-form',
@@ -83,6 +84,8 @@ export class SummaryConditionFormComponent implements OnInit, OnDestroy {
       }
       if (!data) {
         const obj = new DuLieuLiveFormDKDT();
+        obj.thongTinDuAn = new ThongTinDuAn();
+        obj.thongTinDuAn.lanPhongVan = 1;
         this.hoSoDuThauService.emitDataAll(obj);
       }
     });
@@ -92,6 +95,8 @@ export class SummaryConditionFormComponent implements OnInit, OnDestroy {
     this.packageService.setSummaryConditionForm(false);
     const obj = new DuLieuLiveFormDKDT();
     this.hoSoDuThauService.emitDataAll(obj);
+    this.subscription.unsubscribe();
+
   }
 
   onSubmit(check: boolean) {

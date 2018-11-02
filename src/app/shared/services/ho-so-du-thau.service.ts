@@ -431,7 +431,7 @@ export class HoSoDuThauService {
       updatedDesc: obj.noiDungCapNhat,
       projectInformation: obj.thongTinDuAn && {
         projectInformation: obj.thongTinDuAn.dienGiaiThongTinDuAn,
-        interviewTimes: obj.thongTinDuAn.lanPhongVan,
+        interviewTimes: (obj.thongTinDuAn.lanPhongVan) ? obj.thongTinDuAn.lanPhongVan : 1,
         perspectiveImageUrls: obj.thongTinDuAn.hinhAnhPhoiCanh,
         masterPlanImageUrls: obj.thongTinDuAn.banVeMasterPlan
       },
@@ -619,7 +619,7 @@ export class HoSoDuThauService {
       tenderCondition: obj.dienGiaiDieuKienHSMT && {
         hbcTenderCondition: obj.dienGiaiDieuKienHSMT.theoHBC && {
           tenderGuaranteeValue: (obj.dienGiaiDieuKienHSMT.theoHBC.baoLanhDuThau) ?
-            obj.dienGiaiDieuKienHSMT.theoHBC.baoLanhDuThau.giaTri : '',
+            obj.dienGiaiDieuKienHSMT.theoHBC.baoLanhDuThau.giaTri : 0,
           tenderGuaranteeEfficiency:
             (obj.dienGiaiDieuKienHSMT.theoHBC.baoLanhDuThau) ?
               obj.dienGiaiDieuKienHSMT.theoHBC.baoLanhDuThau.hieuLuc : '',

@@ -277,5 +277,6 @@ export class EditComponent implements OnInit, OnDestroy {
     elem.style.display = 'unset';
     elemm.style.visibility = 'unset';
     elemm.style.position = 'static';
+    this.subscription.unsubscribe();
   }
 }
