@@ -41,7 +41,7 @@
                                             [disabled]="lockField" (change)="uploadFile($event)" />
                                     </div>
                                     <div style="width: calc(100% - 120px);" class="d-flex justify-content-between">
-                                        <div> <span class="text-truncate">{{ displayName }}</span></div>
+                                        <div> <span class="text-breakline">{{ displayName }}</span></div>
                                         <div *ngIf="displayName">
                                             <button (click)="deleteFileUpload()" class="btn btn-secondary">X</button>
                                         </div>
@@ -83,7 +83,7 @@
                             <tr>
                                 <td class="w-30 label no-boder bold-title required">Tên</td>
                                 <td class="w-70 no-boder">
-                                    <input class="w-100" kendoTextBox type="text" formControlName="editName" tabindex="4"
+                                    <input class="w-100 text-truncate" kendoTextBox type="text" formControlName="editName" tabindex="4"
                                         [class.is-invalid]="formErrors.editName">
                                     <div class="invalid-feedback" *ngIf="formErrors.editName">
                                         {{formErrors.editName}}

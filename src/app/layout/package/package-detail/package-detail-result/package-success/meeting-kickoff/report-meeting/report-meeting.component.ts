@@ -16,6 +16,8 @@ import { DialogService } from '../../../../../../../../../node_modules/@progress
 import { PackageDetailComponent } from '../../../../package-detail.component';
 import { NgxSpinnerService } from '../../../../../../../../../node_modules/ngx-spinner';
 import { groupBy } from '../../../../../../../../../node_modules/@progress/kendo-data-query';
+import { PermissionModel } from '../../../../../../../shared/models/permission/Permission.model';
+import { PermissionService } from '../../../../../../../shared/services/permission.service';
 
 @Component({
   selector: 'app-report-meeting',
@@ -62,6 +64,19 @@ export class ReportMeetingComponent implements OnInit, OnDestroy {
   interviewTimesFile;
   loadingFilterMeetingReportList = true;
   loadingFilterFileList = true;
+
+
+  listPermission: Array<PermissionModel>;
+  listPermissionScreen = [];
+  ThongBaoHopKickoff = false;
+  XemDanhSachEmailDaGui = false;
+  UploadBBCuocHop = false;
+  TaiXuongBBCuocHop = false;
+  XoaBBCuocHop = false;
+  UploadFilePresentation = false;
+  TaiXuongFilePresentation = false;
+  XoaFilePresentation = false;
+
   isDataObject = {
     isData: false,
     maxVersionReport: 0,
@@ -79,10 +94,39 @@ export class ReportMeetingComponent implements OnInit, OnDestroy {
     private detailResultPackageService: DetailResultPackageService,
     private dialogService: DialogService,
     private spinner: NgxSpinnerService,
+    private permissionService: PermissionService
+
   ) { }
 
   ngOnInit() {
     this.currentPackageId = +PackageDetailComponent.packageId;
+
+    this.subscription = this.permissionService.get().subscribe(data => {
+      this.listPermission = data;
+      const hsdt = this.listPermission.length &&
+        this.listPermission.filter(x => x.bidOpportunityStage === 'KQDT')[0];
+      if (!hsdt) {
+        this.listPermissionScreen = [];
+      }
+      if (hsdt) {
+        const screen = hsdt.userPermissionDetails.length
+          && hsdt.userPermissionDetails.filter(y => y.permissionGroup.value === 'HopKickOff')[0];
+        if (!screen) {
+          this.listPermissionScreen = [];
+        }
+        if (screen) {
+          this.listPermissionScreen = screen.permissions.map(z => z.value);
+        }
+      }
+      this.ThongBaoHopKickoff = this.listPermissionScreen.includes('ThongBaoHopKickoff');
+    //  this.XemDanhSachEmailDaGui = this.listPermissionScreen.includes('XemDanhSachEmailDaGui');
+      this.UploadBBCuocHop = this.listPermissionScreen.includes('UploadBBCuocHop');
+      this.TaiXuongBBCuocHop = this.listPermissionScreen.includes('TaiXuongBBCuocHop');
+      this.XoaBBCuocHop = this.listPermissionScreen.includes('XoaBBCuocHop');
+      this.UploadFilePresentation = this.listPermissionScreen.includes('UploadFilePresentation');
+      this.TaiXuongFilePresentation = this.listPermissionScreen.includes('TaiXuongFilePresentation');
+      this.XoaFilePresentation = this.listPermissionScreen.includes('XoaFilePresentation');
+    });
     this.formUpload = this.formBuilder.group({
       name: [''],
       description: [''],
@@ -129,9 +173,13 @@ export class ReportMeetingComponent implements OnInit, OnDestroy {
     });
     this.subscription.add(watchListFilePresentationMeeting);
   }
+
   ngOnDestroy() {
-    this.subscription.unsubscribe();
+    if (this.subscription) {
+      this.subscription.unsubscribe();
+    }
   }
+
   get f() { return this.formUpload.controls; }
   onSubmit() {
     this.submitted = true;

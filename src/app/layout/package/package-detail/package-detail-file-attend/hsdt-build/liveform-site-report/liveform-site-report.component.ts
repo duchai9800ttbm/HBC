@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { SiteSurveyReport } from '../../../../../../shared/models/site-survey-report/site-survey-report';
 import { DocumentService } from '../../../../../../shared/services/document.service';
 import { NgxSpinnerService } from 'ngx-spinner';
@@ -13,13 +13,15 @@ import { HistoryLiveForm } from '../../../../../../shared/models/ho-so-du-thau/h
 import { groupBy } from '@progress/kendo-data-query';
 import { DialogService } from '../../../../../../../../node_modules/@progress/kendo-angular-dialog';
 import { FormInComponent } from '../../../../../../shared/components/form-in/form-in.component';
+import { Subscription } from 'rxjs';
+import { HoSoDuThauService } from '../../../../../../shared/services/ho-so-du-thau.service';
 
 @Component({
   selector: 'app-liveform-site-report',
   templateUrl: './liveform-site-report.component.html',
   styleUrls: ['./liveform-site-report.component.scss']
 })
-export class LiveformSiteReportComponent implements OnInit {
+export class LiveformSiteReportComponent implements OnInit, OnDestroy {
   static formModel: SiteSurveyReport = new SiteSurveyReport();
   static actionMode: string;
   bidOpportunityId: number;
@@ -35,8 +37,10 @@ export class LiveformSiteReportComponent implements OnInit {
   dtTrigger2: Subject<any> = new Subject();
   dialog;
   indexItemHistoryChange: number;
+  isClosedHSDT: boolean;
+  subscription: Subscription;
   constructor(
-    private documentService: DocumentService,
+    private hoSoDuThauService: HoSoDuThauService,
     private siteSurveyReportService: SiteSurveyReportService,
     private alertService: AlertService,
     private confirmationService: ConfirmationService,
@@ -45,6 +49,9 @@ export class LiveformSiteReportComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+    this.subscription = this.hoSoDuThauService.watchStatusPackage().subscribe(status => {
+      this.isClosedHSDT = status;
+    });
     this.bidOpportunityId = +PackageDetailComponent.packageId;
     this.siteSurveyReportService.tenderSiteSurveyingReport(this.bidOpportunityId).subscribe(res => {
       if (!res) {
@@ -97,6 +104,9 @@ export class LiveformSiteReportComponent implements OnInit {
       this.alertService.error('Đã xảy ra lỗi, cập nhật dữ liệu lifeform không thành công');
     });
     this.getChangeHistory(0, 10);
+  }
+  ngOnDestroy() {
+    this.subscription.unsubscribe();
   }
   refresh() {
     this.siteSurveyReportService.tenderSiteSurveyingReport(this.bidOpportunityId).subscribe(res => {

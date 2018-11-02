@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { PagedResult } from '../../../../../shared/models';
 import { EmailItemModel, EmailFilter, MultipeDelete } from '../../../../../shared/models/email/email-item.model';
 import { BehaviorSubject } from '../../../../../../../node_modules/rxjs/BehaviorSubject';
@@ -7,14 +7,17 @@ import { AlertService, ConfirmationService } from '../../../../../shared/service
 import { NgxSpinnerService } from '../../../../../../../node_modules/ngx-spinner';
 import { Router } from '../../../../../../../node_modules/@angular/router';
 import { PackageEmailComponent } from '../../package-email.component';
+import { Subscription } from '../../../../../../../node_modules/rxjs/Subscription';
+import { PermissionModel } from '../../../../../shared/models/permission/Permission.model';
+import { PermissionService } from '../../../../../shared/services/permission.service';
 
 @Component({
   selector: 'app-win-package-notice-list',
   templateUrl: './win-package-notice-list.component.html',
   styleUrls: ['./win-package-notice-list.component.scss']
 })
-export class WinPackageNoticeListComponent implements OnInit {
-
+export class WinPackageNoticeListComponent implements OnInit, OnDestroy {
+  loading = false;
   pagedResult: PagedResult<EmailItemModel> = new PagedResult<EmailItemModel>();
   searchTerm$ = new BehaviorSubject<string>('');
   filterModel = new EmailFilter();
@@ -23,35 +26,84 @@ export class WinPackageNoticeListComponent implements OnInit {
   isShowButtonUp: boolean;
   isShowButtonDown: boolean;
   isShowEmpty = false;
+
+  subscription: Subscription;
+  listPermission: Array<PermissionModel>;
+  listPermissionScreen = [];
+  listPermissionScreen2 = [];
+  listPermissionScreenKQ = [];
+  listPermissionScreenKQ2 = [];
+
+  XemEmail = false;
+  XemEmailTBPV = false;
+  XemEmailPhanHoi = false;
+  XemMailThongBaoTrungThau = false;
+  XemMailChuyenGiao = false;
+  XemDanhSachEmailDaGui = false;
   constructor(
     private emailService: EmailService,
     private alertService: AlertService,
     private confirmationService: ConfirmationService,
     private spinner: NgxSpinnerService,
-    private router: Router
+    private router: Router,
+    private permissionService: PermissionService
+
   ) {
 
   }
   ngOnInit() {
     this.packageId = +PackageEmailComponent.packageId;
+
+    this.subscription = this.permissionService.get().subscribe(data => {
+      this.listPermission = data;
+
+      const hsdt2 = this.listPermission.length &&
+        this.listPermission.filter(x => x.bidOpportunityStage === 'KQDT')[0];
+      if (!hsdt2) {
+        this.listPermissionScreenKQ = [];
+      }
+      if (hsdt2) {
+        const screenKQ = hsdt2.userPermissionDetails.length
+          && hsdt2.userPermissionDetails.filter(y => y.permissionGroup.value === 'KetQuaDuThau')[0];
+        if (!screenKQ) {
+          this.listPermissionScreenKQ = [];
+        }
+        if (screenKQ) {
+          this.listPermissionScreenKQ = screenKQ.permissions.map(z => z.value);
+        }
+      }
+      this.XemMailThongBaoTrungThau = this.listPermissionScreenKQ.includes('XemMailThongBaoTrungThau');
+      setTimeout(() => {
+        if (!this.XemMailThongBaoTrungThau) {
+          this.router.navigate(['not-found']);
+        }
+      }, 300);
+    });
+
     this.filterModel.category = 'AnnouncePassBidOpportunity';
-    this.spinner.show();
+    this.loading = true;
     this.emailService.instantSearchWithFilter(this.packageId, this.searchTerm$, this.filterModel, 0, 5)
       .subscribe(result => {
         this.rerender(result);
-        this.spinner.hide();
-      }, err => this.spinner.hide());
+        this.loading = false;
+      }, err => this.loading = false);
 
+  }
+
+  ngOnDestroy() {
+    if (this.subscription) {
+      this.subscription.unsubscribe();
+    }
   }
 
   down() {
     if (+this.pagedResult.currentPage > 0) {
-      this.spinner.show();
+      this.loading = true;
       this.emailService.searchWithFilter(this.packageId, this.searchTerm$.value, this.filterModel, +this.pagedResult.currentPage - 1, 5)
         .subscribe(result => {
           this.rerender(result);
-          this.spinner.hide();
-        }, err => this.spinner.hide());
+          this.loading = false;
+        }, err => this.loading = false);
     } else {
       this.alertService.error('Bạn đang ở trang đầu tiên!');
     }
@@ -59,12 +111,12 @@ export class WinPackageNoticeListComponent implements OnInit {
 
   up() {
     if (+this.pagedResult.pageCount > (+this.pagedResult.currentPage + 1)) {
-      this.spinner.show();
+      this.loading = true;
       this.emailService.searchWithFilter(this.packageId, this.searchTerm$.value, this.filterModel, +this.pagedResult.currentPage + 1, 5)
         .subscribe(result => {
           this.rerender(result);
-          this.spinner.hide();
-        }, err => this.spinner.hide());
+          this.loading = false;
+        }, err => this.loading = false);
     } else {
       this.alertService.error('Bạn đang ở trang cuối cùng!');
     }
@@ -72,14 +124,14 @@ export class WinPackageNoticeListComponent implements OnInit {
 
   refresh() {
     this.filterModel.category = 'AnnouncePassBidOpportunity';
-    this.spinner.show();
+    this.loading = true;
     this.emailService.searchWithFilter(this.packageId, this.searchTerm$.value,
       this.filterModel, this.pagedResult.currentPage, this.pagedResult.pageSize)
       .subscribe(result => {
         this.rerender(result);
-        this.spinner.hide();
+        this.loading = false;
         this.alertService.success('Dữ liệu đã được cập nhật mới nhất!');
-      }, err => this.spinner.hide());
+      }, err => this.loading = false);
   }
 
   rerender(pagedResult: any) {

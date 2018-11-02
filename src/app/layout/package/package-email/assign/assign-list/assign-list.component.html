@@ -105,8 +105,10 @@
 
         </tbody>
       </table>
+      <ngx-loading [show]="loading"></ngx-loading>
+
     </div>
-    <div class="center-parent" *ngIf="isShowEmpty">
+    <div class="center-parent" *ngIf="isShowEmpty && !loading">
       <div>Không có dữ liệu!</div>
     </div>
   </div>

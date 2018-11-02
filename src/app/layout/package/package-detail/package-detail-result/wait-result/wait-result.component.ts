@@ -1,4 +1,4 @@
-import { Component, OnInit, TemplateRef } from '@angular/core';
+import { Component, OnInit, TemplateRef, OnDestroy } from '@angular/core';
 import { BsModalService } from 'ngx-bootstrap/modal';
 import { BsModalRef } from 'ngx-bootstrap/modal/bs-modal-ref.service';
 import { Router, ActivatedRoute, ParamMap } from '@angular/router';
@@ -9,7 +9,7 @@ import { AlertService } from '../../../../../shared/services';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { PackageSuccessService } from '../../../../../shared/services/package-success.service';
 import { PagedResult } from '../../../../../shared/models/paging-result.model';
-import { Subject } from '../../../../../../../node_modules/rxjs';
+import { Subject, Subscription } from '../../../../../../../node_modules/rxjs';
 import { CancelItem } from '../../../../../shared/models/reason/cancel-item';
 import ValidationHelper from '../../../../../shared/helpers/validation.helper';
 import { SETTING_REASON } from '../../../../../shared/configs/common.config';
@@ -18,13 +18,15 @@ import { DialogService } from '../../../../../../../node_modules/@progress/kendo
 import { UploadResultAttendComponent } from './upload-result-attend/upload-result-attend.component';
 import { PackageService } from '../../../../../shared/services/package.service';
 import { CheckStatusPackage } from '../../../../../shared/constants/check-status-package';
+import { PermissionModel } from '../../../../../shared/models/permission/Permission.model';
+import { PermissionService } from '../../../../../shared/services/permission.service';
 
 @Component({
     selector: 'app-wait-result',
     templateUrl: './wait-result.component.html',
     styleUrls: ['./wait-result.component.scss']
 })
-export class WaitResultComponent implements OnInit {
+export class WaitResultComponent implements OnInit, OnDestroy {
     reasonForm: FormGroup;
     isSubmitted: boolean;
     formErrors = {
@@ -57,6 +59,22 @@ export class WaitResultComponent implements OnInit {
     modalRef: BsModalRef;
     dialogUploadResultAttend;
     checkStatusPackage = CheckStatusPackage;
+
+
+    listPermission: Array<PermissionModel>;
+    listPermissionScreen = [];
+    ChonKQDT = false;
+    UploadKQDT = false;
+    TaiXuongKQDT = false;
+    TaiTemplate = false;
+    XoaKQDT = false;
+    ThongBaoDenPhongHopDong = false;
+    XemEmailPhanHoi = false;
+    ThongBaoStakeholders = false;
+    XemMailThongBaoTrungThau = false;
+    ChuyenGiaoTaiLieu = false;
+    XemMailChuyenGiao = false;
+    subscription: Subscription;
     constructor(
         private modalService: BsModalService,
         private router: Router,
@@ -67,6 +85,7 @@ export class WaitResultComponent implements OnInit {
         private packageSuccessService: PackageSuccessService,
         private dialogService: DialogService,
         private packageService: PackageService,
+        private permissionService: PermissionService
     ) { }
 
     ngOnInit() {
@@ -86,6 +105,26 @@ export class WaitResultComponent implements OnInit {
         });
 
         this.currentPackageId = +PackageDetailComponent.packageId;
+
+        this.subscription = this.permissionService.get().subscribe(data => {
+            this.listPermission = data;
+            const hsdt = this.listPermission.length &&
+                this.listPermission.filter(x => x.bidOpportunityStage === 'KQDT')[0];
+            if (!hsdt) {
+                this.listPermissionScreen = [];
+            }
+            if (hsdt) {
+                const screen = hsdt.userPermissionDetails.length
+                    && hsdt.userPermissionDetails.filter(y => y.permissionGroup.value === 'KetQuaDuThau')[0];
+                if (!screen) {
+                    this.listPermissionScreen = [];
+                }
+                if (screen) {
+                    this.listPermissionScreen = screen.permissions.map(z => z.value);
+                }
+            }
+            this.ChonKQDT = this.listPermissionScreen.includes('ChonKQDT');
+        });
 
         this.spinner.show();
         this.packageSuccessService.getReasonCancel(0, 10).subscribe(
@@ -118,6 +157,12 @@ export class WaitResultComponent implements OnInit {
                 this.spinner.hide();
             }
         );
+    }
+
+    ngOnDestroy() {
+        if (this.subscription) {
+            this.subscription.unsubscribe();
+        }
     }
 
     modalTrungThau(template: TemplateRef<any>, type: string) {

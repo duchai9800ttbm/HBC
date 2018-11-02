@@ -7,6 +7,8 @@ export class DieuKienHoSo {
     tienDo: {
         ngayKhoiCong: number;
         thoiGianHoanThanh: number;
+        thoiGianHoanThanhTheoNhaThau: boolean;
+        thoiGianHoanThanhTheoNhaThauCount: number;
     };
     cacLoaiThue: string[];
     donViTienTe: string;

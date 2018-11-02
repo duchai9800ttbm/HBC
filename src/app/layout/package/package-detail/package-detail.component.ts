@@ -13,6 +13,7 @@ import { CheckStatusPackage } from '../../../shared/constants/check-status-packa
 import { PermissionService } from '../../../shared/services/permission.service';
 import { IntervalObservable } from '../../../../../node_modules/rxjs/observable/IntervalObservable';
 import { Subscription } from '../../../../../node_modules/rxjs';
+import { AdminPermissions } from '../../../shared/data-admin/admin.permission';
 
 @Component({
   selector: 'app-package-detail',
@@ -42,6 +43,8 @@ export class PackageDetailComponent implements OnInit, OnDestroy {
   packageData = new PackageInfoModel();
   sub: Subscription;
   subInterval: Subscription;
+  subUser: Subscription;
+  subFirst: Subscription;
   status = {
     DisabledfileAttend: true,
     Disabledresult: true
@@ -56,7 +59,6 @@ export class PackageDetailComponent implements OnInit, OnDestroy {
     this.activetedRoute.params.subscribe(result => {
       this.packageId = +result.id;
       PackageDetailComponent.packageId = this.packageId;
-      const that = this;
     });
     setTimeout(() => {
       this.userModel = this.sessionService.userInfo;
@@ -70,15 +72,36 @@ export class PackageDetailComponent implements OnInit, OnDestroy {
       }
     }, 300);
 
-    const subFirst = this.permissionService.getListPermission(this.packageId).subscribe(listPermission => {
-      this.permissionService.set(listPermission);
-      subFirst.unsubscribe();
-    });
-    this.subInterval = IntervalObservable.create(1 * 10 * 1000).subscribe(_ => {
-      this.sub = this.permissionService.getListPermission(this.packageId).subscribe(listPermission => {
-        this.permissionService.set(listPermission);
-        this.sub.unsubscribe();
-      });
+    const that = this;
+    this.subUser = this.permissionService.getUser().subscribe(data => {
+      if (data && data.userGroup && data.userGroup.text === 'Admin') {
+        console.log('admin đang login');
+        const arrayPermission = AdminPermissions;
+        this.permissionService.set(arrayPermission);
+        if (this.subInterval) {
+          this.subInterval.unsubscribe();
+        }
+        if (this.subFirst) {
+          this.subInterval.unsubscribe();
+        }
+      } else {
+        if (this.subInterval) {
+          this.subInterval.unsubscribe();
+        }
+        if (this.subFirst) {
+          this.subInterval.unsubscribe();
+        }
+        this.subFirst = this.permissionService.getListPermission(this.packageId).subscribe(listPermission => {
+          this.permissionService.set(listPermission);
+          this.subFirst.unsubscribe();
+        });
+        this.subInterval = IntervalObservable.create(1 * 10 * 1000).subscribe(_ => {
+          this.sub = this.permissionService.getListPermission(this.packageId).subscribe(listPermission => {
+            this.permissionService.set(listPermission);
+            that.sub.unsubscribe();
+          });
+        });
+      }
     });
 
     this.activetedRoute.params.subscribe(result => {
@@ -100,6 +123,15 @@ export class PackageDetailComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     if (this.subInterval) {
+      this.subInterval.unsubscribe();
+    }
+    if (this.sub) {
+      this.sub.unsubscribe();
+    }
+    if (this.subUser) {
+      this.subUser.unsubscribe();
+    }
+    if (this.subFirst) {
       this.subInterval.unsubscribe();
     }
   }

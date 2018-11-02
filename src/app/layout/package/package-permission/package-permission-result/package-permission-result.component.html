@@ -1,4 +1,4 @@
- <form [formGroup]="packagePermissionReviewForm" *ngIf="packagePermissionReviewForm">
+<form [formGroup]="packagePermissionReviewForm" *ngIf="packagePermissionReviewForm">
     <div class="boder-table mt-3">
         <div class="">
             <div class="media-header" style="text-align: right; padding-right: 1rem; margin-top: -0.75rem;">
@@ -20,41 +20,45 @@
                         </th>
                         <th></th>
                         <th>
-                            <div class="text-center">Chọn kết quả DT</div>
+                            <div class="text-center">Chọn KQDT (Trúng/Trật/Huỷ)</div>
                         </th>
                         <th>
-                            <div class="text-center">Upload KQDT</div>
+                            <div class="text-center">Upload KQDT (Trúng/Trật)</div>
                         </th>
                         <th>
-                            <div class="text-center">Xóa</div>
-                        </th>
-                        <th>
-                            <div class="text-center">In</div>
-                        </th>
-                        <th>
-                            <div class="text-center">Tải xuống tệp tin</div>
+                            <div class="text-center">Tải xuống KQDT</div>
                         </th>
                         <th>
                             <div class="text-center">Tải template</div>
                         </th>
                         <th>
-                            <div class="text-center">Thông báo KQDT</div>
+                            <div class="text-center">Xóa KQDT</div>
                         </th>
                         <th>
-                            <div class="text-center">Thông báo phòng giám đốc</div>
+                            <div class="text-center">Thông báo đến P.Hợp đồng</div>
+                        </th>
+                        <th>
+                            <div class="text-center">Xem email phản hồi</div>
+                        </th>
+                        <th>
+                            <div class="text-center">Thông báo đến Stakeholders</div>
+                        </th>
+                        <th>
+                            <div class="text-center">Xem email thông báo trúng thầu</div>
                         </th>
                         <th>
                             <div class="text-center">Chuyển giao tài liệu</div>
                         </th>
                         <th>
-                            <div class="text-center">Nhận tài liệu chuyển giao</div>
+                            <div class="text-center">Xem email chuyển giao</div>
                         </th>
 
                     </tr>
                 </thead>
                 <tbody [formGroupName]="'KetQuaDuThau'">
                     <ng-container [formArrayName]="'permission'">
-                        <tr *ngFor="let item of packagePermissionReviewForm.get('KetQuaDuThau').get('permission').controls; let i = index;" [formGroupName]="i" [class.odd]="i % 2 == 0">
+                        <tr *ngFor="let item of packagePermissionReviewForm.get('KetQuaDuThau').get('permission').controls; let i = index;" [formGroupName]="i"
+                            [class.odd]="i % 2 == 0">
                             <td>
                                 <div class="grid-container-3">
                                     <div class="btn-icon btn-icon-plus" (click)="addFormArrayItem(listFormData[0], {})">
@@ -81,7 +85,7 @@
                             </td>
                             <td class="text-center">
                                 <label class="custom-control custom-checkbox">
-                                    <input type="checkbox" class="custom-control-input" formControlName="ChonKetQuaDT">
+                                    <input type="checkbox" class="custom-control-input" formControlName="ChonKQDT">
                                     <span class="custom-control-indicator"></span>
                                 </label>
                             </td>
@@ -93,19 +97,7 @@
                             </td>
                             <td class="text-center">
                                 <label class="custom-control custom-checkbox">
-                                    <input type="checkbox" class="custom-control-input" formControlName="Xoa">
-                                    <span class="custom-control-indicator"></span>
-                                </label>
-                            </td>
-                            <td class="text-center">
-                                <label class="custom-control custom-checkbox">
-                                    <input type="checkbox" class="custom-control-input" formControlName="In">
-                                    <span class="custom-control-indicator"></span>
-                                </label>
-                            </td>
-                            <td class="text-center">
-                                <label class="custom-control custom-checkbox">
-                                    <input type="checkbox" class="custom-control-input" formControlName="TaiXuongTepTin">
+                                    <input type="checkbox" class="custom-control-input" formControlName="TaiXuongKQDT">
                                     <span class="custom-control-indicator"></span>
                                 </label>
                             </td>
@@ -117,25 +109,43 @@
                             </td>
                             <td class="text-center">
                                 <label class="custom-control custom-checkbox">
-                                    <input type="checkbox" class="custom-control-input" formControlName="ThongBaoKQDT">
+                                    <input type="checkbox" class="custom-control-input" formControlName="XoaKQDT">
                                     <span class="custom-control-indicator"></span>
                                 </label>
                             </td>
                             <td class="text-center">
                                 <label class="custom-control custom-checkbox">
-                                    <input type="checkbox" class="custom-control-input" formControlName="ThongBaoPhongGamDoc">
+                                    <input type="checkbox" class="custom-control-input" formControlName="ThongBaoDenPhongHopDong">
                                     <span class="custom-control-indicator"></span>
                                 </label>
                             </td>
                             <td class="text-center">
                                 <label class="custom-control custom-checkbox">
-                                    <input type="checkbox" class="custom-control-input" formControlName="ChuyenGiaoTailieu">
+                                    <input type="checkbox" class="custom-control-input" formControlName="XemEmailPhanHoi">
                                     <span class="custom-control-indicator"></span>
                                 </label>
                             </td>
                             <td class="text-center">
                                 <label class="custom-control custom-checkbox">
-                                    <input type="checkbox" class="custom-control-input" formControlName="NhanTaiLieuChuyenGiao">
+                                    <input type="checkbox" class="custom-control-input" formControlName="ThongBaoStakeholders">
+                                    <span class="custom-control-indicator"></span>
+                                </label>
+                            </td>
+                            <td class="text-center">
+                                <label class="custom-control custom-checkbox">
+                                    <input type="checkbox" class="custom-control-input" formControlName="XemMailThongBaoTrungThau">
+                                    <span class="custom-control-indicator"></span>
+                                </label>
+                            </td>
+                            <td class="text-center">
+                                <label class="custom-control custom-checkbox">
+                                    <input type="checkbox" class="custom-control-input" formControlName="ChuyenGiaoTaiLieu">
+                                    <span class="custom-control-indicator"></span>
+                                </label>
+                            </td>
+                            <td class="text-center">
+                                <label class="custom-control custom-checkbox">
+                                    <input type="checkbox" class="custom-control-input" formControlName="XemMailChuyenGiao">
                                     <span class="custom-control-indicator"></span>
                                 </label>
                             </td>
@@ -148,35 +158,24 @@
                 <thead>
                     <tr style="width: 100%">
                         <th style="width: 280px !important">
-                            <div class="text-center">Hợp đồng ký kết & họp kick-off</div>
+                            <div class="text-center">Hợp đồng ký kết</div>
                         </th>
                         <th></th>
                         <th>
-                            <div class="text-center">Upload hợp đồng ký kết</div>
+                            <div class="text-center">Thêm mới hợp đồng</div>
                         </th>
                         <th>
-                            <div class="text-center">Xóa</div>
+                            <div class="text-center">Tải xuống hợp đồng</div>
                         </th>
                         <th>
-                            <div class="text-center">In</div>
-                        </th>
-                        <th>
-                            <div class="text-center">Tải xuống tệp tin</div>
-                        </th>
-                        <th>
-                            <div class="text-center">Tải template</div>
-                        </th>
-                        <th>
-                            <div class="text-center">Thông báo kí kết hợp đồng</div>
-                        </th>
-                        <th>
-                            <div class="text-center">Thông báo họp kick-off</div>
+                            <div class="text-center">Xóa hợp đồng</div>
                         </th>
                     </tr>
                 </thead>
-                <tbody [formGroupName]="'HopDongKiKetVaHopKichOff'">
+                <tbody [formGroupName]="'HopDongKiKet'">
                     <ng-container [formArrayName]="'permission'">
-                        <tr *ngFor="let item of packagePermissionReviewForm.get('HopDongKiKetVaHopKichOff').get('permission').controls; let i = index;" [formGroupName]="i" [class.odd]="i % 2 == 0">
+                        <tr *ngFor="let item of packagePermissionReviewForm.get('HopDongKiKet').get('permission').controls; let i = index;" [formGroupName]="i"
+                            [class.odd]="i % 2 == 0">
                             <td>
                                 <div class="grid-container-3">
                                     <div class="btn-icon btn-icon-plus" (click)="addFormArrayItem(listFormData[1], {})">
@@ -197,52 +196,146 @@
                             </td>
                             <td class="text-center">
                                 <label class="custom-control custom-checkbox">
-                                    <input type="checkbox" class="custom-control-input" (click)="checkAll($event.target.checked, 'HopDongKiKetVaHopKichOff', i)">
+                                    <input type="checkbox" class="custom-control-input" (click)="checkAll($event.target.checked, 'HopDongKiKet', i)">
                                     <span class="custom-control-indicator"></span>
                                 </label>
                             </td>
                             <td class="text-center">
                                 <label class="custom-control custom-checkbox">
-                                    <input type="checkbox" class="custom-control-input" formControlName="UploadHopDongKiKet">
+                                    <input type="checkbox" class="custom-control-input" formControlName="ThemMoiHD">
                                     <span class="custom-control-indicator"></span>
                                 </label>
                             </td>
                             <td class="text-center">
                                 <label class="custom-control custom-checkbox">
-                                    <input type="checkbox" class="custom-control-input" formControlName="Xoa">
+                                    <input type="checkbox" class="custom-control-input" formControlName="TaiXuongHD">
                                     <span class="custom-control-indicator"></span>
                                 </label>
                             </td>
                             <td class="text-center">
                                 <label class="custom-control custom-checkbox">
-                                    <input type="checkbox" class="custom-control-input" formControlName="In">
+                                    <input type="checkbox" class="custom-control-input" formControlName="XoaHD">
+                                    <span class="custom-control-indicator"></span>
+                                </label>
+                            </td>
+                        </tr>
+                    </ng-container>
+                </tbody>
+            </table>
+
+
+            <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="table-selection stripe hover mt-4">
+                <thead>
+                    <tr style="width: 100%">
+                        <th style="width: 280px !important">
+                            <div class="text-center">Họp kick-off</div>
+                        </th>
+                        <th></th>
+                        <th>
+                            <div class="text-center">Thông báo họp kick-off</div>
+                        </th>
+                        <th>
+                            <div class="text-center">Xem danh sách email đã gửi</div>
+                        </th>
+                        <th>
+                            <div class="text-center">Upload BB cuộc họp</div>
+                        </th>
+                        <th>
+                            <div class="text-center">Tải xuống BB cuộc họp</div>
+                        </th>
+                        <th>
+                            <div class="text-center">Xoá BB cuộc họp</div>
+                        </th>
+                        <th>
+                            <div class="text-center">Upload file Presentation</div>
+                        </th>
+                        <th>
+                            <div class="text-center">Tải xuống file Presentation</div>
+                        </th>
+                        <th>
+                            <div class="text-center">Xoá file Presentation</div>
+                        </th>
+
+                    </tr>
+                </thead>
+                <tbody [formGroupName]="'HopKickOff'">
+                    <ng-container [formArrayName]="'permission'">
+                        <tr *ngFor="let item of packagePermissionReviewForm.get('HopKickOff').get('permission').controls; let i = index;" [formGroupName]="i"
+                            [class.odd]="i % 2 == 0">
+                            <td>
+                                <div class="grid-container-3">
+                                    <div class="btn-icon btn-icon-plus" (click)="addFormArrayItem(listFormData[2], {})">
+                                        <i class="fa fa-plus" style="margin-top: 2px" aria-hidden="true"></i>
+                                    </div>
+                                    <div class="btn-icon btn-icon-minus" [class.invisible]="i == 0" (click)="removeFormItem(listFormData[2], i)">
+                                        <i class="fa fa-minus" style="margin-top: 2px" aria-hidden="true" *ngIf="i != 0"></i>
+                                    </div>
+                                    <div>
+                                        <span style="margin-left: 12px" class="custom-dropdown w-100">
+                                            <select class="form-control" formControlName="userName">
+                                                <option [ngValue]="null">--Chọn--</option>
+                                                <option *ngFor="let user of listBidGroupUser" [value]="user.id">{{user.desc}}</option>
+                                            </select>
+                                        </span>
+                                    </div>
+                                </div>
+                            </td>
+                            <td class="text-center">
+                                <label class="custom-control custom-checkbox">
+                                    <input type="checkbox" class="custom-control-input" (click)="checkAll($event.target.checked, 'HopKickOff', i)">
                                     <span class="custom-control-indicator"></span>
                                 </label>
                             </td>
                             <td class="text-center">
                                 <label class="custom-control custom-checkbox">
-                                    <input type="checkbox" class="custom-control-input" formControlName="TaiXuongTepTin">
+                                    <input type="checkbox" class="custom-control-input" formControlName="ThongBaoHopKickoff">
                                     <span class="custom-control-indicator"></span>
                                 </label>
                             </td>
                             <td class="text-center">
                                 <label class="custom-control custom-checkbox">
-                                    <input type="checkbox" class="custom-control-input" formControlName="TaiTemplate">
+                                    <input type="checkbox" class="custom-control-input" formControlName="XemDanhSachEmailDaGui">
                                     <span class="custom-control-indicator"></span>
                                 </label>
                             </td>
                             <td class="text-center">
                                 <label class="custom-control custom-checkbox">
-                                    <input type="checkbox" class="custom-control-input" formControlName="ThongBaoKiKetHopDong">
+                                    <input type="checkbox" class="custom-control-input" formControlName="UploadBBCuocHop">
                                     <span class="custom-control-indicator"></span>
                                 </label>
                             </td>
                             <td class="text-center">
                                 <label class="custom-control custom-checkbox">
-                                    <input type="checkbox" class="custom-control-input" formControlName="ThongBaoHopKickOff">
+                                    <input type="checkbox" class="custom-control-input" formControlName="TaiXuongBBCuocHop">
                                     <span class="custom-control-indicator"></span>
                                 </label>
                             </td>
+                            <td class="text-center">
+                                <label class="custom-control custom-checkbox">
+                                    <input type="checkbox" class="custom-control-input" formControlName="XoaBBCuocHop">
+                                    <span class="custom-control-indicator"></span>
+                                </label>
+                            </td>
+                            <td class="text-center">
+                                <label class="custom-control custom-checkbox">
+                                    <input type="checkbox" class="custom-control-input" formControlName="UploadFilePresentation">
+                                    <span class="custom-control-indicator"></span>
+                                </label>
+                            </td>
+                            <td class="text-center">
+                                <label class="custom-control custom-checkbox">
+                                    <input type="checkbox" class="custom-control-input" formControlName="TaiXuongFilePresentation">
+                                    <span class="custom-control-indicator"></span>
+                                </label>
+                            </td>
+                            <td class="text-center">
+                                <label class="custom-control custom-checkbox">
+                                    <input type="checkbox" class="custom-control-input" formControlName="XoaFilePresentation">
+                                    <span class="custom-control-indicator"></span>
+                                </label>
+                            </td>
+        
+
                         </tr>
                     </ng-container>
                 </tbody>
@@ -251,4 +344,4 @@
     </div>
 
 </form>
-<ngx-spinner bdColor="rgba(51, 51, 51, 0.7)" size = "default" color="#fff" type="ball-scale"></ngx-spinner>
+<!-- <ngx-spinner bdColor="rgba(51, 51, 51, 0.7)" size="default" color="#fff" type="ball-scale"></ngx-spinner> -->

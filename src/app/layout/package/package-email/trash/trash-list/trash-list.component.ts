@@ -14,6 +14,7 @@ import { PackageEmailComponent } from '../../package-email.component';
   styleUrls: ['./trash-list.component.scss']
 })
 export class TrashListComponent implements OnInit {
+  loading = false;
   pagedResult: PagedResult<EmailItemModel> = new PagedResult<EmailItemModel>();
   searchTerm$ = new BehaviorSubject<string>('');
   filterModel = new EmailFilter();
@@ -34,23 +35,23 @@ export class TrashListComponent implements OnInit {
   ngOnInit() {
     this.packageId = +PackageEmailComponent.packageId;
     this.filterModel.category = 'TrashCan';
-    this.spinner.show();
+    this.loading = true;
     this.emailService.instantSearchWithFilter(this.packageId, this.searchTerm$, this.filterModel, 0, 5)
       .subscribe(result => {
         this.rerender(result);
-        this.spinner.hide();
-      }, err => this.spinner.hide());
+        this.loading = false;
+      }, err => this.loading = false);
 
   }
 
   down() {
     if (+this.pagedResult.currentPage > 0) {
-      this.spinner.show();
+      this.loading = true;
       this.emailService.instantSearchWithFilter(this.packageId, this.searchTerm$, this.filterModel, +this.pagedResult.currentPage - 1, 5)
         .subscribe(result => {
           this.rerender(result);
-          this.spinner.hide();
-        }, err => this.spinner.hide());
+          this.loading = false;
+        }, err => this.loading = false);
     } else {
       this.alertService.error('Bạn đang ở trang đầu tiên!');
     }
@@ -58,12 +59,12 @@ export class TrashListComponent implements OnInit {
 
   up() {
     if (+this.pagedResult.pageCount > (+this.pagedResult.currentPage + 1)) {
-      this.spinner.show();
+      this.loading = true;
       this.emailService.instantSearchWithFilter(this.packageId, this.searchTerm$, this.filterModel, +this.pagedResult.currentPage + 1, 5)
         .subscribe(result => {
           this.rerender(result);
-          this.spinner.hide();
-        }, err => this.spinner.hide());
+          this.loading = false;
+        }, err => this.loading = false);
     } else {
       this.alertService.error('Bạn đang ở trang cuối cùng!');
     }
@@ -71,14 +72,14 @@ export class TrashListComponent implements OnInit {
 
   refresh() {
     this.filterModel.category = 'TrashCan';
-    this.spinner.show();
+    this.loading = true;
     this.emailService.searchWithFilter(this.packageId, this.searchTerm$.value,
       this.filterModel, this.pagedResult.currentPage, this.pagedResult.pageSize)
       .subscribe(result => {
         this.rerender(result);
-        this.spinner.hide();
+        this.loading = false;
         this.alertService.success('Dữ liệu đã được cập nhật mới nhất!');
-      }, err => this.spinner.hide());
+      }, err => this.loading = false);
   }
 
   rerender(pagedResult: any) {

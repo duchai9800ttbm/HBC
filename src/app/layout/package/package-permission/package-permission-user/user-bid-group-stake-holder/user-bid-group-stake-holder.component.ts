@@ -7,11 +7,13 @@ import { UserService, AlertService } from '../../../../../shared/services';
 import { UserItemModel } from '../../../../../shared/models/user/user-item.model';
 import { DictionaryItem } from '../../../../../shared/models';
 import { NgxSpinnerService } from 'ngx-spinner';
+import { slideToTop } from '../../../../../router.animations';
 
 @Component({
   selector: 'app-user-bid-group-stake-holder',
   templateUrl: './user-bid-group-stake-holder.component.html',
-  styleUrls: ['./user-bid-group-stake-holder.component.scss']
+  styleUrls: ['./user-bid-group-stake-holder.component.scss'],
+  animations: [slideToTop()]
 })
 export class UserBidGroupStakeHolderComponent implements OnInit {
   packageId: number;

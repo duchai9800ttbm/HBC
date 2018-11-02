@@ -22,12 +22,16 @@
           <button class="btn btn-primary ml-1">
             Tải xuống tài liệu
           </button>
-          <button class="btn btn-primary ml-1" (click)="deleteButMeetingReportOrFile('report')">
-            Xóa
-          </button>
-          <button class="btn btn-primary ml-1" (click)="modalUp('report')">
-            Upload&nbsp;biên bản cuộc họp
-          </button>
+          <ng-container *ngIf="XoaBBCuocHop">
+            <button class="btn btn-primary ml-1" (click)="deleteButMeetingReportOrFile('report')">
+              Xóa
+            </button>
+          </ng-container>
+          <ng-container *ngIf="UploadBBCuocHop">
+            <button class="btn btn-primary ml-1" (click)="modalUp('report')">
+              Upload&nbsp;biên bản cuộc họp
+            </button>
+          </ng-container>
           <button class="btn btn-primary ml-1" (click)="refeshListReport()">
             <i class="fa fa-refresh" aria-hidden="true"></i>
           </button>
@@ -228,16 +232,20 @@
               <td>{{item.meetingTime*1000 | date:'dd/MM/yyyy'}}</td>
               <td class="text-center">
                 <div class="d-flex justify-content-around">
-                  <div id="mr">
-                    <a title="Tải file" (click)="downloadMeetingReportOrFile('report', item.id)">
-                      <i class="fa fa-download color-item-down" aria-hidden="true"></i>
-                    </a>
-                  </div>
-                  <div id="mr">
-                    <a title="Xóa file" (click)="deleteMeetingReportOrFile('report', item.id)">
-                      <i class="fa fa-trash-o" aria-hidden="true"></i>
-                    </a>
-                  </div>
+                  <ng-container *ngIf="TaiXuongBBCuocHop">
+                    <div id="mr">
+                      <a title="Tải file" (click)="downloadMeetingReportOrFile('report', item.id)">
+                        <i class="fa fa-download color-item-down" aria-hidden="true"></i>
+                      </a>
+                    </div>
+                  </ng-container>
+                  <ng-container *ngIf="XoaBBCuocHop">
+                    <div id="mr">
+                      <a title="Xóa file" (click)="deleteMeetingReportOrFile('report', item.id)">
+                        <i class="fa fa-trash-o" aria-hidden="true"></i>
+                      </a>
+                    </div>
+                  </ng-container>
                   <div>
                     <a title="In">
                       <i class="fa fa-print color-item-print" aria-hidden="true"></i>
@@ -266,15 +274,21 @@
         <button class="btn btn-primary ml-1">
           Tải Template
         </button>
-        <button class="btn btn-primary ml-1">
-          Tải xuống tài liệu
-        </button>
-        <button class="btn btn-primary ml-1" (click)="deleteButMeetingReportOrFile('file')">
-          Xóa
-        </button>
-        <button class="btn btn-primary ml-1" (click)="modalUp('file')">
-          Upload file presentation
-        </button>
+        <ng-container *ngIf="TaiXuongFilePresentation">
+          <button class="btn btn-primary ml-1">
+            Tải xuống tài liệu
+          </button>
+        </ng-container>
+        <ng-container *ngIf="XoaFilePresentation">
+          <button class="btn btn-primary ml-1" (click)="deleteButMeetingReportOrFile('file')">
+            Xóa
+          </button>
+        </ng-container>
+        <ng-container *ngIf="UploadFilePresentation">
+          <button class="btn btn-primary ml-1" (click)="modalUp('file')">
+            Upload file presentation
+          </button>
+        </ng-container>
         <button class="btn btn-primary ml-1" (click)="refeshListFile()">
           <i class="fa fa-refresh" aria-hidden="true"></i>
         </button>
@@ -449,16 +463,20 @@
               <td class="text-center tdup-name">{{ item.interviewTimes }}</td>
               <td class="text-center" style="width: 12%;">
                 <div class="d-flex justify-content-around">
-                  <div id="mr">
-                    <a title="Tải file" (click)="downloadMeetingReportOrFile('file', item.id)">
-                      <i class="fa fa-download color-item-down" aria-hidden="true"></i>
-                    </a>
-                  </div>
-                  <div id="mr">
-                    <a title="Xóa file" (click)="deleteMeetingReportOrFile('file', item.id)">
-                      <i class="fa fa-trash-o" aria-hidden="true"></i>
-                    </a>
-                  </div>
+                  <ng-container *ngIf="TaiXuongFilePresentation">
+                    <div id="mr">
+                      <a title="Tải file" (click)="downloadMeetingReportOrFile('file', item.id)">
+                        <i class="fa fa-download color-item-down" aria-hidden="true"></i>
+                      </a>
+                    </div>
+                  </ng-container>
+                  <ng-container *ngIf="XoaFilePresentation">
+                    <div id="mr">
+                      <a title="Xóa file" (click)="deleteMeetingReportOrFile('file', item.id)">
+                        <i class="fa fa-trash-o" aria-hidden="true"></i>
+                      </a>
+                    </div>
+                  </ng-container>
                   <div>
                     <a title="In">
                       <i class="fa fa-print color-item-print" aria-hidden="true"></i>

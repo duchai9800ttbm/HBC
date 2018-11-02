@@ -21,9 +21,11 @@
         <img src="assets/images/icon-wailt.png" alt="">
         <h5>bạn đã nhận kết quả dự thầu từ khách hàng?</h5>
         <div class="confirm-button">
-            <button class="btn btn-primary" id="success" (click)="modalTrungThau(trungthau, 'trúng')">trúng thầu</button>
-            <button class="btn btn-primary" id="fail" (click)="modalTrungThau(trungthau, 'trật')">trật thầu</button>
-            <button class="btn btn-primary" id="cancel" (click)="modalTrungThau(trungthau, 'hủy')">hủy thầu</button>
+            <ng-container *ngIf="ChonKQDT">
+                    <button class="btn btn-primary" id="success" (click)="modalTrungThau(trungthau, 'trúng')">trúng thầu</button>
+                    <button class="btn btn-primary" id="fail" (click)="modalTrungThau(trungthau, 'trật')">trật thầu</button>
+                    <button class="btn btn-primary" id="cancel" (click)="modalTrungThau(trungthau, 'hủy')">hủy thầu</button>
+            </ng-container>
         </div>
     </div>
 </div>

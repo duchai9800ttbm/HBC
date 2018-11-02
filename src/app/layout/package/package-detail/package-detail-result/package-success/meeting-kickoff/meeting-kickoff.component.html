@@ -12,11 +12,13 @@
       </div>
     </div>
     <div id="outer-img" class="status-filter">
-      <img src="assets/images/kickOffMetting.png" alt="">
-      <h5>Bạn chưa thông báo họp kick-off dự án?</h5>
-      <div class="confirm-button">
-        <button class="btn btn-primary" id="success" (click)="modalNoti(notiKickOff)">Thông báo họp kick-off</button>
-      </div>
+      <ng-container *ngIf="ThongBaoHopKickoff">
+          <img src="assets/images/kickOffMetting.png" alt="">
+          <h5>Bạn chưa thông báo họp kick-off dự án?</h5>
+          <div class="confirm-button">
+            <button class="btn btn-primary" id="success" (click)="modalNoti(notiKickOff)">Thông báo họp kick-off</button>
+          </div>
+      </ng-container>
     </div>
   </div>
 
@@ -47,8 +49,13 @@
       <img src="assets/images/onKickOff.png" alt="">
       <div class="confirm-button">
         <div>
-          <button class="btn btn-primary" (click)="modalUp('report')">Upload biên bản cuộc họp</button>
-          <button class="btn btn-primary" (click)="modalUp('file')">Upload file presentation</button>
+          <ng-container *ngIf="UploadBBCuocHop">
+              <button class="btn btn-primary" (click)="modalUp('report')">Upload biên bản cuộc họp</button>
+
+          </ng-container>
+          <ng-container *ngIf="UploadFilePresentation">
+              <button class="btn btn-primary" (click)="modalUp('file')">Upload file presentation</button>
+            </ng-container>
         </div>
       </div>
     </div>

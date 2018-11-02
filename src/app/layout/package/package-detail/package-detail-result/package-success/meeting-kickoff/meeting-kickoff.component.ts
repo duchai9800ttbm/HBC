@@ -16,6 +16,8 @@ import { UploadKickOffComponent } from './upload-kick-off/upload-kick-off.compon
 import { DialogService } from '../../../../../../../../node_modules/@progress/kendo-angular-dialog';
 import { PackageService } from '../../../../../../shared/services/package.service';
 import { CheckStatusPackage } from '../../../../../../shared/constants/check-status-package';
+import { PermissionModel } from '../../../../../../shared/models/permission/Permission.model';
+import { PermissionService } from '../../../../../../shared/services/permission.service';
 
 @Component({
   selector: 'app-meeting-kickoff',
@@ -62,11 +64,25 @@ export class MeetingKickoffComponent implements OnInit, OnDestroy {
   checkStatusPackage = CheckStatusPackage;
   loading = false;
   isData = false;
+
+
+  listPermission: Array<PermissionModel>;
+  listPermissionScreen = [];
+  ThongBaoHopKickoff = false;
+  XemDanhSachEmailDaGui = false;
+  UploadBBCuocHop = false;
+  TaiXuongBBCuocHop = false;
+  XoaBBCuocHop = false;
+  UploadFilePresentation = false;
+  TaiXuongFilePresentation = false;
+  XoaFilePresentation = false;
+
   maxVersionReport = 0;
   maxInterviewTimesReport = 0;
   maxVersionFileList = 0;
-  maxInterviewTimesFileList= 0;
+  maxInterviewTimesFileList = 0;
   subscription: Subscription;
+
   constructor(
     private modalService: BsModalService,
     private router: Router,
@@ -78,7 +94,9 @@ export class MeetingKickoffComponent implements OnInit, OnDestroy {
     private detailResultPackageService: DetailResultPackageService,
     private spinner: NgxSpinnerService,
     private dialogService: DialogService,
-    private packageService: PackageService
+    private packageService: PackageService,
+    private permissionService: PermissionService
+
   ) { }
 
   ngOnInit() {
@@ -92,9 +110,40 @@ export class MeetingKickoffComponent implements OnInit, OnDestroy {
       link: ['']
     });
     this.currentPackageId = +PackageDetailComponent.packageId;
-    this.subscription = this.packageService.statusPackageValue$.subscribe(status => {
-      this.statusPackage = status;
+
+    this.subscription = this.permissionService.get().subscribe(data => {
+      this.listPermission = data;
+      const hsdt = this.listPermission.length &&
+        this.listPermission.filter(x => x.bidOpportunityStage === 'KQDT')[0];
+      if (!hsdt) {
+        this.listPermissionScreen = [];
+      }
+      if (hsdt) {
+        const screen = hsdt.userPermissionDetails.length
+          && hsdt.userPermissionDetails.filter(y => y.permissionGroup.value === 'HopKickOff')[0];
+        if (!screen) {
+          this.listPermissionScreen = [];
+        }
+        if (screen) {
+          this.listPermissionScreen = screen.permissions.map(z => z.value);
+        }
+      }
+      this.ThongBaoHopKickoff = this.listPermissionScreen.includes('ThongBaoHopKickoff');
+      this.XemDanhSachEmailDaGui = this.listPermissionScreen.includes('XemDanhSachEmailDaGui');
+      this.UploadBBCuocHop = this.listPermissionScreen.includes('UploadBBCuocHop');
+      this.TaiXuongBBCuocHop = this.listPermissionScreen.includes('TaiXuongBBCuocHop');
+      this.XoaBBCuocHop = this.listPermissionScreen.includes('XoaBBCuocHop');
+      this.UploadFilePresentation = this.listPermissionScreen.includes('UploadFilePresentation');
+      this.TaiXuongFilePresentation = this.listPermissionScreen.includes('TaiXuongFilePresentation');
+      this.XoaFilePresentation = this.listPermissionScreen.includes('XoaFilePresentation');
     });
+
+    const status$ = this.packageService.statusPackageValue$.subscribe(status => {
+          this.statusPackage = status;
+    });
+
+    this.subscription.add(status$);
+
     this.textMetting = 'Đã nhận tài liệu';
     this.textTitleSendMail = 'Gửi thư thông báo họp kich-off dự án';
     this.doNotiMeeting = false;
@@ -122,12 +171,13 @@ export class MeetingKickoffComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    this.subscription.unsubscribe();
+    if (this.subscription) {
+      this.subscription.unsubscribe();
+    }
   }
 
   endAPIFuction(event) {
     this.loading = event;
-    console.log('endAPIFuction', event);
   }
   isDataFuction(event) {
     this.isData = event.isData;

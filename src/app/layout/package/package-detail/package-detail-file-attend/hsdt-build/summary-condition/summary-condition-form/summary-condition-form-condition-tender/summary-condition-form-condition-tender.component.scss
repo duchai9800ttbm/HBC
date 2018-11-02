@@ -4,15 +4,19 @@
     z-index: 100;
 
 }
-.custom-z-index{
+
+.times-color {
+    color: #c0c0c0;
+    font-size: 1.2rem;
+
 }
 
-.times-color{
-    color: #c0c0c0; 
-    font-size: 1.2rem;
-  
-}
-::-webkit-input-placeholder { /* Chrome/Opera/Safari */
+::-webkit-input-placeholder {
+    /* Chrome/Opera/Safari */
     color: #ced4da;
     font-style: italic;
+}
+
+.event-none {
+    pointer-events: none;
 }

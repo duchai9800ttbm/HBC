@@ -67,7 +67,7 @@ export class SummaryConditionFormInfoComponent implements OnInit, AfterViewInit 
       let obj = new ThongTinDuAn();
       obj = {
         tenTaiLieu: data.tenTaiLieu,
-        lanPhongVan: data.lanPhongVan ? data.lanPhongVan : 0,
+        lanPhongVan: data.lanPhongVan ? data.lanPhongVan : 1,
         dienGiaiThongTinDuAn: data.dienGiaiThongTinDuAn,
         hinhAnhPhoiCanh: this.hinhAnhPhoiCanhUrls,
         banVeMasterPlan: this.banVeMasterPlanUrls
