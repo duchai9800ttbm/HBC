@@ -652,6 +652,10 @@ export class HoSoDuThauService {
             obj.dienGiaiDieuKienHSMT.theoHSMT.tienDo.ngayKhoiCong : '',
           progressComletionDate: (obj.dienGiaiDieuKienHSMT.theoHSMT.tienDo) ?
             obj.dienGiaiDieuKienHSMT.theoHSMT.tienDo.thoiGianHoanThanh : '',
+          isProgressCompletionDate: (obj.dienGiaiDieuKienHSMT.theoHSMT.tienDo) ?
+            obj.dienGiaiDieuKienHSMT.theoHSMT.tienDo.thoiGianHoanThanhTheoNhaThau : false,
+          progressCompletionContractorDate: (obj.dienGiaiDieuKienHSMT.theoHSMT.tienDo) ?
+            obj.dienGiaiDieuKienHSMT.theoHSMT.tienDo.thoiGianHoanThanhTheoNhaThauCount : '',
           taxTypes: (obj.dienGiaiDieuKienHSMT.theoHSMT.cacLoaiThue) ?
             (obj.dienGiaiDieuKienHSMT.theoHSMT.cacLoaiThue || []).map(x => ({
               key: '',
@@ -880,7 +884,9 @@ export class HoSoDuThauService {
           hieuLucHoSo: model.tenderCondition.hbcTenderCondition.tenderEfficiency,
           tienDo: model.tenderCondition.hbcTenderCondition && {
             ngayKhoiCong: model.tenderCondition.hbcTenderCondition.progressStartDate,
-            thoiGianHoanThanh: model.tenderCondition.hbcTenderCondition.progressComletionDate
+            thoiGianHoanThanh: model.tenderCondition.hbcTenderCondition.progressComletionDate,
+            thoiGianHoanThanhTheoNhaThau: null,
+            thoiGianHoanThanhTheoNhaThauCount: null
           },
           cacLoaiThue: (model.tenderCondition.hbcTenderCondition.taxTypes || []).map(x => x.displayText),
           donViTienTe: model.tenderCondition.hbcTenderCondition.currency && model.tenderCondition.hbcTenderCondition.currency.displayText
@@ -895,7 +901,9 @@ export class HoSoDuThauService {
           hieuLucHoSo: model.tenderCondition.hsmtTenderCondition.tenderEfficiency,
           tienDo: model.tenderCondition.hsmtTenderCondition && {
             ngayKhoiCong: model.tenderCondition.hsmtTenderCondition.progressStartDate,
-            thoiGianHoanThanh: model.tenderCondition.hsmtTenderCondition.progressComletionDate
+            thoiGianHoanThanh: model.tenderCondition.hsmtTenderCondition.progressComletionDate,
+            thoiGianHoanThanhTheoNhaThau: model.tenderCondition.hsmtTenderCondition.isProgressCompletionDate,
+            thoiGianHoanThanhTheoNhaThauCount: model.tenderCondition.hsmtTenderCondition.progressCompletionContractorDate
           },
           cacLoaiThue: (model.tenderCondition.hsmtTenderCondition.taxTypes || []).map(x => x.displayText),
           donViTienTe: model.tenderCondition.hsmtTenderCondition.currency && model.tenderCondition.hsmtTenderCondition.currency.displayText
