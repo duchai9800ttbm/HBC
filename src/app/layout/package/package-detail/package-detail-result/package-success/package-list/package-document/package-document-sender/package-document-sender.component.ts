@@ -85,6 +85,7 @@ export class PackageDocumentSenderComponent implements OnInit {
     return this.formHSMTTranferDoc.get('docs') as FormArray;
   }
   checkStatusPackage = CheckStatusPackage;
+  isShowEdit = false;
   constructor(
     private packageSuccessService: PackageSuccessService,
     private modalService: BsModalService,
@@ -726,5 +727,8 @@ export class PackageDocumentSenderComponent implements OnInit {
         break;
       }
     }
+  }
+  formatToNumber() {
+    
   }
 }

@@ -227,14 +227,14 @@ export class PackageDocumentReceiverComponent implements OnInit {
 
   confirmGot() {
     const idsArray = [];
-    this.docHSMTListTranferred.forEach(itemPar => {
+    (this.docHSMTListTranferred || []).forEach(itemPar => {
       itemPar.items.forEach(itemChild => {
         if (itemChild.checkboxSelected === true) {
           idsArray.push(itemChild.id);
         }
       });
     });
-    this.docHSDTListTranferred.forEach(itemPar => {
+    (this.docHSDTListTranferred || []).forEach(itemPar => {
       itemPar.items.forEach(itemChild => {
         if (itemChild.checkboxSelected === true) {
           idsArray.push(itemChild.id);

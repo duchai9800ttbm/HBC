@@ -26,6 +26,7 @@ export class ReportMeetingComponent implements OnInit {
   @Input() reportFile;
   @Output() endAPI = new EventEmitter<boolean>();
   @Output() isData = new EventEmitter<boolean>();
+  isDataChild = false;
   dtTriggerReport: Subject<any> = new Subject();
   dtTriggerFile: Subject<any> = new Subject();
   dtOptions: any = DATATABLE_CONFIG;
@@ -161,6 +162,7 @@ export class ReportMeetingComponent implements OnInit {
       console.log('this.meetingFileList.length', this.meetingReportList.length, this.meetingFileList.length);
       if ((this.meetingReportList && this.meetingReportList.length !== 0) || (this.meetingFileList && this.meetingFileList.length !== 0)) {
         this.isData.emit(true);
+        this.isDataChild = true;
       }
       this.getListFilterReport();
       this.spinner.hide();
@@ -229,6 +231,7 @@ export class ReportMeetingComponent implements OnInit {
       this.endAPI.emit(false);
       if ((this.meetingReportList && this.meetingReportList.length !== 0) || (this.meetingFileList && this.meetingFileList.length !== 0)) {
         this.isData.emit(true);
+        this.isDataChild = true;
       }
       this.getListFilterFile();
       this.spinner.hide();

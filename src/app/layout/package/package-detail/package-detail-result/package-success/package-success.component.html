@@ -65,7 +65,7 @@
                         <div [ngClass]="{'': arrowKickOff == false,'arrow-down':arrowKickOff==true}"></div>
                     </div>
                 </li>
-                <li *ngIf="kickOffActive" class="triangle3 active" [routerLinkActive]="['active']">
+                <li *ngIf="kickOffActive" class="triangle3" [routerLinkActive]="['active']" [ngClass]="{ 'active' : statusPackage.id >= checkStatusPackage.DaNhanTaiLieu.id }">
                         <!-- [ngClass]="{ 'active' : kickOff === true }" -->
                     <div style="width: 100%" class="center-parent">
                         <div></div>

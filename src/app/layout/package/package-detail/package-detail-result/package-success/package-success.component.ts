@@ -30,7 +30,7 @@ export class PackageSuccessComponent implements OnInit {
   ngOnInit() {
     this.packageService.statusPackageValue$.subscribe(status => {
       this.statusPackage = status;
-      console.log('package-success');
+      console.log('package-success', this.statusPackage.id, this.checkStatusPackage.DaNhanTaiLieu.id);
     });
     this.packageId = +PackageDetailComponent.packageId;
     this.isActive = false;
@@ -51,7 +51,7 @@ export class PackageSuccessComponent implements OnInit {
     this.showArrow = true;
     this.arrow = false;
     this.arrowKickOff = false;
-    this.kickOffActive = true;
+    // this.kickOffActive = true;
   }
 
   onClickList() {

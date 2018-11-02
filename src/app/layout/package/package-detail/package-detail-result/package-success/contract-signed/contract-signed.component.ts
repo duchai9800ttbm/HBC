@@ -88,6 +88,9 @@ export class ContractSignedComponent implements OnInit, OnDestroy {
     this.packageService.getInforPackageID(this.currentPackageId).subscribe(response => {
       this.isSignedContractAPI = response.isSignedContract;
     });
+    this.detailResultPackageService.watchListContractSigning().subscribe( value => {
+      this.isSignedContractAPI = value;
+    });
     this.filterModel.uploadedDate = null;
     this.filterModel.uploadedByEmployeeId = null;
     this.filterModel.contractDate = null;

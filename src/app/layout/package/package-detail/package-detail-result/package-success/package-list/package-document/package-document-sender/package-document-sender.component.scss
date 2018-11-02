@@ -271,9 +271,19 @@ table.dataTable th {
         top: 8px;
         right: 9px;
     }
+    .div-edit-number--posotion{
+        position: absolute;
+        top: 2px;
+        right: 0px;
+        cursor: pointer;
+    }
 }
 .number-date--pad{
     padding: 0.375rem 1.5rem 0.375rem 0.5rem
+}
+.div-number-date--pad{
+    // padding: 0.375rem 1.5rem 0.375rem 0.5rem
+    padding-right: 14px;
 }
 .td--overflow{
     overflow: unset !important;
@@ -301,3 +311,4 @@ table.dataTable th {
 .tilte-cus--height{
     height: 40px;
 }
+
