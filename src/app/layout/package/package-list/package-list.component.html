@@ -650,8 +650,13 @@
                                     {{ item.opportunityName}}
                                 </a>
                             </td>
-                            <td [class.d-none]="!tenKhachHang" class="text-truncate" [title]="(item.customer?.customerName)?item.customer?.customerName:'' ">{{ item.customer?.customerName }}</td>
-                            <td [class.d-none]="!lienHe" class="text-truncate" [title]="(item.customerContact?.name)?item.customerContact?.name:''">{{ item.customerContact?.name }}</td>
+                            <td [class.d-none]="!tenKhachHang" class="text-truncate" [title]="(item.customer?.customerName)?item.customer?.customerName:'' ">
+                                <a [href]="redirectToCRM('tenKhachHang', item.customer?.customerId)" target="_blank">{{ item.customer?.customerName }}</a>
+                            </td>
+                            <td [class.d-none]="!lienHe" class="text-truncate" [title]="(item.customerContact?.name)?item.customerContact?.name:''">
+                                    <a [href]="redirectToCRM('lienHe', item.customerContact?.id)" target="_blank">{{ item.customerContact?.name }}</a>
+                                
+                            </td>
                             <td [class.d-none]="!vaiTro" class="text-truncate" [title]="(item.hbcRole?.name)?item.hbcRole?.name:''">{{ item.hbcRole?.name }}</td>
                             <td [class.d-none]="!chuTri" class="text-truncate" [title]="(item.chairEmployee?.employeeName)?item.chairEmployee?.employeeName:''">{{ item.chairEmployee?.employeeName }}</td>
                             <td [class.d-none]="!loaiKhachHang" class="text-truncate" [title]="(item.classify)?item.classify:''">
@@ -684,7 +689,10 @@
                             </td>
                             <td [class.d-none]="!tongThoiGian" class="text-truncate" [title]="(item.totalTime)?item.totalTime:''">{{ item.totalTime }}</td>
                             <td [class.d-none]="!quy" class="text-truncate" [title]="(item.quarter?.name)?item.quarter?.name:''">{{ item.quarter?.name }}</td>
-                            <td [class.d-none]="!donViTuVan" class="text-truncate" [title]="(item.consultantUnitCustomer?.customerName)?item.consultantUnitCustomer?.customerName:''">{{ item.consultantUnitCustomer?.customerName }}</td>
+                            <td [class.d-none]="!donViTuVan" class="text-truncate" [title]="(item.consultantUnitCustomer?.customerName)?item.consultantUnitCustomer?.customerName:''">
+                                    <a [href]="redirectToCRM('donViTuVan',item.consultantUnitCustomer?.customerId)" target="_blank">{{ item.consultantUnitCustomer?.customerName }}</a>
+                                
+                            </td>
                             <td [class.d-none]="!diaChiDVTV" class="text-truncate" [title]="(item.consultantAddress)?item.consultantAddress:''">{{ item.consultantAddress }}</td>
                             <td [class.d-none]="!soDienThoaiDVTV" class="text-truncate" [title]="(item.consultantPhone)?item.consultantPhone:''">{{ item.consultantPhone }}</td>
                             <td [class.d-none]="!dientichsan" class="text-truncate text-right" [title]="(item.floorArea)?item.floorArea:''">{{ item.floorArea | numberArea}}</td>

@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, AfterViewInit } from '@angular/core';
 import { FormGroup, FormBuilder } from '@angular/forms';
 import { HoSoDuThauService } from '../../../../../../../../shared/services/ho-so-du-thau.service';
 import { Router } from '@angular/router';
@@ -12,11 +12,10 @@ import { PackageDetailComponent } from '../../../../../package-detail.component'
   templateUrl: './summary-condition-form-info.component.html',
   styleUrls: ['./summary-condition-form-info.component.scss']
 })
-export class SummaryConditionFormInfoComponent implements OnInit {
-
+export class SummaryConditionFormInfoComponent implements OnInit, AfterViewInit {
+  @ViewChild('autofocus') autofocus;
   @ViewChild('uploadMasterplan') uploadMasterplan;
   @ViewChild('uploadPhoiCanh') uploadPhoiCanh;
-
   thongTinDuAnForm: FormGroup;
   hinhAnhPhoiCanhUrls = [];
   banVeMasterPlanUrls = [];
@@ -45,6 +44,9 @@ export class SummaryConditionFormInfoComponent implements OnInit {
       }
     });
     this.loadData();
+  }
+  ngAfterViewInit() {
+    this.autofocus.nativeElement.focus();
   }
 
   createForm() {

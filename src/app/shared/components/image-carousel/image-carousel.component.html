@@ -12,15 +12,19 @@
                 <button class="button-thumb mr-5 d-inline-block cursor-pointer" (click)="prevButton()"><i class="fa fa-chevron-left"
                         aria-hidden="true"></i></button>
                 <div class="d-inline-block">
-                    <ng-container *ngIf="isShow === (imageUrlArray.length -1) && imageUrlArray[i-2]?.largeSizeUrl">
-                        <img [src]="imageUrlArray[i-2]?.largeSizeUrl" (click)="viewCurrentImage(i-2)">
+                    <ng-container *ngIf="isShow === (imageUrlArray.length -1) && imageUrlArray[isShow-2]?.largeSizeUrl">
+                        <img [src]="imageUrlArray[isShow-2]?.largeSizeUrl" (click)="viewCurrentImage(isShow-2)">
                     </ng-container>
-                    <img *ngIf="imageUrlArray[i-1]" [src]="imageUrlArray[i-1]?.largeSizeUrl" (click)="viewCurrentImage(i-1)">
+
+                    <img *ngIf="imageUrlArray[isShow-1]" [src]="imageUrlArray[isShow-1]?.largeSizeUrl" (click)="viewCurrentImage(isShow-1)">
+
                     <img *ngFor="let image of imageUrlArray; index as j" [src]="image.largeSizeUrl" [class.noThumb]="isShow !== j"
                         [class.thumb]="isShow === j" [class.shining]="isShow === j" (click)="viewCurrentImage(j)">
-                    <img *ngIf="imageUrlArray[i+1]" [src]="imageUrlArray[i+1]?.largeSizeUrl" (click)="viewCurrentImage(i+1)">
-                    <ng-container *ngIf="isShow === 0 && imageUrlArray[i+2]?.largeSizeUrl">
-                        <img [src]="imageUrlArray[i+2]?.largeSizeUrl" (click)="viewCurrentImage(i+2)">
+
+                    <img *ngIf="imageUrlArray[isShow+1]" [src]="imageUrlArray[isShow+1]?.largeSizeUrl" (click)="viewCurrentImage(isShow+1)">
+
+                    <ng-container *ngIf="isShow === 0 && imageUrlArray[isShow+2]?.largeSizeUrl">
+                        <img [src]="imageUrlArray[isShow+2]?.largeSizeUrl" (click)="viewCurrentImage(isShow+2)">
                     </ng-container>
                 </div>
                 <button class="button-thumb ml-5 d-inline-block cursor-pointer" (click)="nextButton()"><i class="fa fa-chevron-right"

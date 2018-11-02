@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, AfterViewInit } from '@angular/core';
 import { Traffic } from '../../../../../../../../shared/models/site-survey-report/traffic.model';
 import { EditComponent } from '../edit.component';
 import { FormBuilder, FormGroup } from '@angular/forms';
@@ -13,13 +13,14 @@ import { SiteSurveyReportService } from '../../../../../../../../shared/services
   templateUrl: './traffic.component.html',
   styleUrls: ['./traffic.component.scss']
 })
-export class TrafficComponent implements OnInit {
+export class TrafficComponent implements OnInit, AfterViewInit {
   @ViewChild('uploaDisadvantage') uploaDisadvantage;
   @ViewChild('uploaAdvantage') uploaAdvantage;
   @ViewChild('uploadDirection') uploadDirection;
   @ViewChild('uploadExisting') uploadExisting;
   @ViewChild('uploadRoad') uploadRoad;
   @ViewChild('uploadFence') uploadFence;
+  @ViewChild('autofocus') autofocus;
   trafficForm: FormGroup;
 
   disadvantageImageUrls = [];
@@ -65,6 +66,11 @@ export class TrafficComponent implements OnInit {
     });
     this.trafficForm.valueChanges.subscribe(data => this.mappingToLiveFormData(data));
 
+  }
+  ngAfterViewInit() {
+    if (!this.isViewMode) {
+      this.autofocus.nativeElement.focus();
+    }
   }
   checkFlag() {
     this.isViewMode = LiveformSiteReportComponent.actionMode === 'viewMode';

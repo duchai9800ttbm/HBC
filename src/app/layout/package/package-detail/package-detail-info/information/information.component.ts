@@ -38,6 +38,15 @@ export class InformationComponent implements OnInit {
       this.spinner.hide();
     });
   }
+  redirectToCRM(detail: string, id: number) {
+    if (detail === 'tenKhachHang' || detail === 'donViTuVan') {
+      return `http://demo.bys.vn/hbc/crm/#/customer/detail/${id}/overview`;
+    }
+    if (detail === 'lienHe') {
+      return `http://demo.bys.vn/hbc/crm/#/contact/detail/${id}/overview`;
+    }
+    return null;
+  }
 
   // rerender(result: any) {
   //   this.packageData = result.items;

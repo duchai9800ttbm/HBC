@@ -6,7 +6,7 @@
                 <h6 class="small-title font-weight-bold">2.1 Những chi tiết địa hình/Topography</h6>
                 <div class="main-detail">
                     <div class="text-des-input">
-                        <input type="text" placeholder="Nhập text" formControlName="chiTietDiaHinhDesc" [ngClass]="{'view-mode-control': isViewMode}">
+                        <input tabindex="1" #autofocus type="text" placeholder="Nhập text" formControlName="chiTietDiaHinhDesc" [ngClass]="{'view-mode-control': isViewMode}">
                     </div>
 
                     <div class="image-demo-img">
@@ -19,7 +19,7 @@
                                 </div>
                             </div>
                         </ng-container>
-                        <div class="perspective-image cursor-pointer" [ngClass]="{'d-none': isViewMode}" (click)="uploadTopography.click()">
+                        <div tabindex="2" class="perspective-image cursor-pointer" [ngClass]="{'d-none': isViewMode}" (click)="uploadTopography.click()">
                             <i class="fa fa-plus" aria-hidden="true"></i>
                             <p>Image</p>
                         </div>
@@ -33,7 +33,7 @@
                 on the site</h6>
             <div class="main-detail">
                 <div class="text-des-input">
-                    <input type="text" placeholder="Nhập text" formControlName="kienTrucHienHuuDesc" [ngClass]="{'view-mode-control': isViewMode}">
+                    <input tabindex="3" type="text" placeholder="Nhập text" formControlName="kienTrucHienHuuDesc" [ngClass]="{'view-mode-control': isViewMode}">
                 </div>
 
                 <div class="image-demo-img">
@@ -47,7 +47,7 @@
                         </div>
                     </ng-container>
 
-                    <div class="perspective-image cursor-pointer" [ngClass]="{'d-none': isViewMode}" (click)="uploadExistingBuild.click()">
+                    <div tabindex="4" class="perspective-image cursor-pointer" [ngClass]="{'d-none': isViewMode}" (click)="uploadExistingBuild.click()">
                         <i class="fa fa-plus" aria-hidden="true"></i>
                         <p>Image</p>
                     </div>
@@ -61,7 +61,7 @@
             site</h6>
         <div class="main-detail">
             <div class="text-des-input">
-                <input type="text" placeholder="Nhập text" formControlName="yeuCauChuongNgaiDesc" [ngClass]="{'view-mode-control': isViewMode}">
+                <input tabindex="5" type="text" placeholder="Nhập text" formControlName="yeuCauChuongNgaiDesc" [ngClass]="{'view-mode-control': isViewMode}">
             </div>
 
             <div class="image-demo-img">
@@ -75,7 +75,7 @@
                     </div>
                 </ng-container>
 
-                <div class="perspective-image cursor-pointer" [ngClass]="{'d-none': isViewMode}" (click)="uploadStacale.click()">
+                <div tabindex="6" class="perspective-image cursor-pointer" [ngClass]="{'d-none': isViewMode}" (click)="uploadStacale.click()">
                     <i class="fa fa-plus" aria-hidden="true"></i>
                     <p>Image</p>
                 </div>

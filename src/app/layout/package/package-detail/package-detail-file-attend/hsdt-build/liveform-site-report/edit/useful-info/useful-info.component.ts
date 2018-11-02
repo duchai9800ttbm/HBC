@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild, AfterViewInit } from '@angular/core';
 import { AlertService, ConfirmationService } from '../../../../../../../../shared/services';
 import { FormGroup, FormBuilder, FormArray } from '@angular/forms';
 import { UsefulInfo, ContentItem } from '../../../../../../../../shared/models/site-survey-report/useful-info.model';
@@ -13,7 +13,8 @@ import { PackageDetailComponent } from '../../../../../package-detail.component'
   templateUrl: './useful-info.component.html',
   styleUrls: ['./useful-info.component.scss']
 })
-export class UsefulInfoComponent implements OnInit {
+export class UsefulInfoComponent implements OnInit, AfterViewInit {
+  @ViewChild('autofocus') autofocus;
   usefulInfoForm: FormGroup;
   topicLists = [];
   url;
@@ -28,6 +29,11 @@ export class UsefulInfoComponent implements OnInit {
     this.currentBidOpportunityId = +PackageDetailComponent.packageId;
     this.checkFlag();
     this.initData();
+  }
+  ngAfterViewInit() {
+    if (this.usefulInfoData.length === 0 && !this.isViewMode) {
+      this.autofocus.nativeElement.focus();
+    }
   }
 
   checkFlag() {

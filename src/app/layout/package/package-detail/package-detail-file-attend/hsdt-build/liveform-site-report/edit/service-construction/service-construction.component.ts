@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, AfterViewInit } from '@angular/core';
 import { ServiceConstruction } from '../../../../../../../../shared/models/site-survey-report/service-construction.model';
 import { FormGroup, FormBuilder } from '@angular/forms';
 import { EditComponent } from '../edit.component';
@@ -13,7 +13,7 @@ import { SiteSurveyReportService } from '../../../../../../../../shared/services
   templateUrl: './service-construction.component.html',
   styleUrls: ['./service-construction.component.scss']
 })
-export class ServiceConstructionComponent implements OnInit {
+export class ServiceConstructionComponent implements OnInit, AfterViewInit {
   @ViewChild('uploadSupplySystem') uploadSupplySystem;
   @ViewChild('uploadSupplyPoint') uploadSupplyPoint;
   @ViewChild('uploadDrainageSystem') uploadDrainageSystem;
@@ -21,6 +21,7 @@ export class ServiceConstructionComponent implements OnInit {
   @ViewChild('uploadPowerStation') uploadPowerStation;
   @ViewChild('uploadMediumVoltageSystem') uploadMediumVoltageSystem;
   @ViewChild('uploadPowerOther') uploadPowerOther;
+  @ViewChild('autofocus') autofocus;
   serviceConstructionForm: FormGroup;
   supplySystemImageUrls = [];
   supplyPointImageUrls = [];
@@ -87,6 +88,11 @@ export class ServiceConstructionComponent implements OnInit {
     });
     this.serviceConstructionForm.valueChanges.subscribe(data => this.mappingToLiveFormData(data));
 
+  }
+  ngAfterViewInit() {
+    if (!this.isViewMode) {
+      this.autofocus.nativeElement.focus();
+    }
   }
   checkFlag() {
     this.isViewMode = LiveformSiteReportComponent.actionMode === 'viewMode';

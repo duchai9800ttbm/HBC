@@ -1,7 +1,8 @@
 import {
   Component,
   OnInit,
-  ViewChild
+  ViewChild,
+  AfterViewInit
 } from '@angular/core';
 import {
   ScaleOverall
@@ -22,10 +23,11 @@ import { BsModalRef } from 'ngx-bootstrap/modal';
   templateUrl: './scale-overall.component.html',
   styleUrls: ['./scale-overall.component.scss']
 })
-export class ScaleOverallComponent implements OnInit {
+export class ScaleOverallComponent implements OnInit, AfterViewInit {
   @ViewChild('uploadPerspective') uploadPerspective;
   @ViewChild('uploadStructure') uploadStructure;
   @ViewChild('uploadRequirements') uploadRequirements;
+  @ViewChild('autofocus') autofocus;
   scaleOverallForm: FormGroup;
   siteArea;
   totalBuildArea;
@@ -69,7 +71,11 @@ export class ScaleOverallComponent implements OnInit {
     this.initData();
     this.createForm();
   }
-
+  ngAfterViewInit() {
+    if (!this.isViewMode) {
+      this.autofocus.nativeElement.focus();
+    }
+  }
   createForm() {
     this.scaleOverallForm = this.fb.group({
       tenTaiLieu: [this.scaleModel.tenTaiLieu],

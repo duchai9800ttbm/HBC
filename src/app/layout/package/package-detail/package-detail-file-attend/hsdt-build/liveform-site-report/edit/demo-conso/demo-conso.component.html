@@ -7,7 +7,7 @@
                     or building</h6>
                 <div class="main-detail">
                     <div class="text-des-input">
-                        <input type="text" placeholder="Nhập text" formControlName="phaVoKetCauDesc" [ngClass]="{'view-mode-control': isViewMode}">
+                        <input tabindex="1" #autofocus type="text" placeholder="Nhập text" formControlName="phaVoKetCauDesc" [ngClass]="{'view-mode-control': isViewMode}">
                     </div>
                     <div>
                         <div class="image-demo-img">
@@ -20,7 +20,7 @@
                                     </div>
                                 </div>
                             </ng-container>
-                            <div class="perspective-image cursor-pointer" [ngClass]="{'d-none': isViewMode}" (click)="uploadDemobilisation.click()">
+                            <div tabindex="2" class="perspective-image cursor-pointer" [ngClass]="{'d-none': isViewMode}" (click)="uploadDemobilisation.click()">
                                 <i class="fa fa-plus" aria-hidden="true"></i>
                                 <p>Image</p>
                             </div>
@@ -34,7 +34,7 @@
                 building</h6>
             <div class="main-detail">
                 <div class="text-des-input">
-                    <input type="text" placeholder="Nhập text" formControlName="giaCoKetCauDesc" [ngClass]="{'view-mode-control': isViewMode}">
+                    <input tabindex="3" type="text" placeholder="Nhập text" formControlName="giaCoKetCauDesc" [ngClass]="{'view-mode-control': isViewMode}">
                 </div>
                 <div>
                     <div class="image-demo-img">
@@ -48,7 +48,7 @@
                                 </div>
                             </div>
                         </ng-container>
-                        <div class="perspective-image cursor-pointer" [ngClass]="{'d-none': isViewMode}" (click)="uploadConsolidation.click()">
+                        <div tabindex="4" class="perspective-image cursor-pointer" [ngClass]="{'d-none': isViewMode}" (click)="uploadConsolidation.click()">
                             <i class="fa fa-plus" aria-hidden="true"></i>
                             <p>Image</p>
                         </div>
@@ -61,7 +61,7 @@
                 conditions/figuring by picture</h6>
             <div class="main-detail">
                 <div class="text-des-input">
-                    <input type="text" placeholder="Nhập text" formControlName="dieuKienHinhAnhDesc" [ngClass]="{'view-mode-control': isViewMode}">
+                    <input tabindex="5" type="text" placeholder="Nhập text" formControlName="dieuKienHinhAnhDesc" [ngClass]="{'view-mode-control': isViewMode}">
                 </div>
                 <div>
                     <div class="image-demo-img">
@@ -75,7 +75,7 @@
                                 </div>
                             </div>
                         </ng-container>
-                        <div class="perspective-image cursor-pointer" [ngClass]="{'d-none': isViewMode}" (click)="uploaAdjacent.click()">
+                        <div tabindex="6" class="perspective-image cursor-pointer" [ngClass]="{'d-none': isViewMode}" (click)="uploaAdjacent.click()">
                             <i class="fa fa-plus" aria-hidden="true"></i>
                             <p>Image</p>
                         </div>

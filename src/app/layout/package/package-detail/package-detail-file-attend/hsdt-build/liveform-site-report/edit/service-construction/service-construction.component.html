@@ -11,7 +11,7 @@
                             <label class="label-item unset-margin w-100">Hệ thống hiện hữu/ Existing system</label>
                         </div>
                         <div class="image-demo-des">
-                            <input class="w-50" type="text" placeholder="Nhập text" formControlName="heThongNuocHienHuuDesc" [ngClass]="{'view-mode-control': isViewMode}">
+                            <input tabindex="1" #autofocus class="w-50" type="text" placeholder="Nhập text" formControlName="heThongNuocHienHuuDesc" [ngClass]="{'view-mode-control': isViewMode}">
                         </div>
                         <div class="image-demo-img">
                             <input type="file" accept="image/*" multiple #uploadSupplySystem (change)="uploadSupplySystemImage($event)">
@@ -24,7 +24,7 @@
                                     </div>
                                 </div>
                             </ng-container>
-                            <div class="perspective-image cursor-pointer" [ngClass]="{'d-none': isViewMode}" (click)="uploadSupplySystem.click()">
+                            <div tabindex="2" class="perspective-image cursor-pointer" [ngClass]="{'d-none': isViewMode}" (click)="uploadSupplySystem.click()">
                                 <i class="fa fa-plus" aria-hidden="true"></i>
                                 <p>Image</p>
                             </div>
@@ -35,7 +35,7 @@
                             <label class="label-item unset-margin w-100" for="">Điểm đấu nối/ Existing connection point</label>
                         </div>
                         <div class="image-demo-des">
-                            <input class="w-50" type="text" placeholder="Nhập text" formControlName="heThongNuocDiemDauNoiDesc" [ngClass]="{'view-mode-control': isViewMode}">
+                            <input tabindex="3" class="w-50" type="text" placeholder="Nhập text" formControlName="heThongNuocDiemDauNoiDesc" [ngClass]="{'view-mode-control': isViewMode}">
                         </div>
                         <div class="image-demo-img">
                             <input type="file" accept="image/*" multiple #uploadSupplyPoint (change)="uploadSupplyPointImage($event)">
@@ -48,7 +48,7 @@
                                     </div>
                                 </div>
                             </ng-container>
-                            <div class="perspective-image cursor-pointer" [ngClass]="{'d-none': isViewMode}" (click)="uploadSupplyPoint.click()">
+                            <div tabindex="4" class="perspective-image cursor-pointer" [ngClass]="{'d-none': isViewMode}" (click)="uploadSupplyPoint.click()">
                                 <i class="fa fa-plus" aria-hidden="true"></i>
                                 <p>Image</p>
                             </div>
@@ -65,7 +65,7 @@
                             <label class="label-item unset-margin w-100" for="">Hệ thống hiện hữu/ Existing system</label>
                         </div>
                         <div class="image-demo-des">
-                            <input class="w-50" type="text" placeholder="Nhập text" formControlName="heThongNuocThoatHienHuuDesc" [ngClass]="{'view-mode-control': isViewMode}">
+                            <input tabindex="5" class="w-50" type="text" placeholder="Nhập text" formControlName="heThongNuocThoatHienHuuDesc" [ngClass]="{'view-mode-control': isViewMode}">
                         </div>
                         <div class="image-demo-img">
                             <input type="file" accept="image/*" multiple #uploadDrainageSystem (change)="uploadDrainageSystemImage($event)">
@@ -78,7 +78,7 @@
                                     </div>
                                 </div>
                             </ng-container>
-                            <div class="perspective-image cursor-pointer" [ngClass]="{'d-none': isViewMode}" (click)="uploadDrainageSystem.click()">
+                            <div tabindex="6" class="perspective-image cursor-pointer" [ngClass]="{'d-none': isViewMode}" (click)="uploadDrainageSystem.click()">
                                 <i class="fa fa-plus" aria-hidden="true"></i>
                                 <p>Image</p>
                             </div>
@@ -89,7 +89,7 @@
                             <label class="label-item unset-margin w-100" for="">Điểm đấu nối/ Existing connection point</label>
                         </div>
                         <div class="image-demo-des">
-                            <input class="w-50" type="text" placeholder="Nhập text" formControlName="heThongNuocThoatDiemDauNoiDesc" [ngClass]="{'view-mode-control': isViewMode}">
+                            <input tabindex="7" class="w-50" type="text" placeholder="Nhập text" formControlName="heThongNuocThoatDiemDauNoiDesc" [ngClass]="{'view-mode-control': isViewMode}">
                         </div>
                         <div class="image-demo-img">
                             <input type="file" accept="image/*" multiple #uploadDrainagePoint (change)="uploadDrainagePointImage($event)">
@@ -102,7 +102,7 @@
                                     </div>
                                 </div>
                             </ng-container>
-                            <div class="perspective-image cursor-pointer" [ngClass]="{'d-none': isViewMode}" (click)="uploadDrainagePoint.click()">
+                            <div tabindex="8" class="perspective-image cursor-pointer" [ngClass]="{'d-none': isViewMode}" (click)="uploadDrainagePoint.click()">
                                 <i class="fa fa-plus" aria-hidden="true"></i>
                                 <p>Image</p>
                             </div>
@@ -118,7 +118,7 @@
                             <label class="label-item unset-margin w-100" for="">Trạm hạ thế/Transformer station</label>
                         </div>
                         <div class="image-demo-des">
-                            <input class="w-50" type="text" placeholder="Nhập text" formControlName="tramHaTheDesc" [ngClass]="{'view-mode-control': isViewMode}">
+                            <input tabindex="9" class="w-50" type="text" placeholder="Nhập text" formControlName="tramHaTheDesc" [ngClass]="{'view-mode-control': isViewMode}">
                         </div>
                         <div class="image-demo-img">
                             <input type="file" accept="image/*" multiple #uploadPowerStation (change)="uploadPowerStationImage($event)">
@@ -131,7 +131,7 @@
                                     </div>
                                 </div>
                             </ng-container>
-                            <div class="perspective-image cursor-pointer" [ngClass]="{'d-none': isViewMode}" (click)="uploadPowerStation.click()">
+                            <div tabindex="10" class="perspective-image cursor-pointer" [ngClass]="{'d-none': isViewMode}" (click)="uploadPowerStation.click()">
                                 <i class="fa fa-plus" aria-hidden="true"></i>
                                 <p>Image</p>
                             </div>
@@ -144,7 +144,7 @@
                             </label>
                         </div>
                         <div class="image-demo-des">
-                            <input class="w-50" type="text" placeholder="Nhập text" formControlName="duongDayTrungTheDesc" [ngClass]="{'view-mode-control': isViewMode}">
+                            <input tabindex="11" class="w-50" type="text" placeholder="Nhập text" formControlName="duongDayTrungTheDesc" [ngClass]="{'view-mode-control': isViewMode}">
                         </div>
                         <div class="image-demo-img">
                             <input type="file" accept="image/*" multiple #uploadMediumVoltageSystem (change)="uploadMediumVoltageSystemImage($event)">
@@ -157,7 +157,7 @@
                                     </div>
                                 </div>
                             </ng-container>
-                            <div class="perspective-image cursor-pointer" [ngClass]="{'d-none': isViewMode}" (click)="uploadMediumVoltageSystem.click()">
+                            <div tabindex="12" class="perspective-image cursor-pointer" [ngClass]="{'d-none': isViewMode}" (click)="uploadMediumVoltageSystem.click()">
                                 <i class="fa fa-plus" aria-hidden="true"></i>
                                 <p>Image</p>
                             </div>
@@ -168,7 +168,7 @@
                             <label class="label-item unset-margin w-100" for="">Khác/ Other</label>
                         </div>
                         <div class="image-demo-des">
-                                <input class="w-50" type="text" placeholder="Nhập text" formControlName="heThongDienKhacDesc" [ngClass]="{'view-mode-control': isViewMode}">
+                                <input tabindex="13" class="w-50" type="text" placeholder="Nhập text" formControlName="heThongDienKhacDesc" [ngClass]="{'view-mode-control': isViewMode}">
                             </div>
                         <div class="image-demo-img">
                             <input type="file" accept="image/*" multiple #uploadPowerOther (change)="uploadPowerOtherImage($event)">
@@ -181,7 +181,7 @@
                                     </div>
                                 </div>
                             </ng-container>
-                            <div class="perspective-image cursor-pointer" [ngClass]="{'d-none': isViewMode}" (click)="uploadPowerOther.click()">
+                            <div tabindex="14" class="perspective-image cursor-pointer" [ngClass]="{'d-none': isViewMode}" (click)="uploadPowerOther.click()">
                                 <i class="fa fa-plus" aria-hidden="true"></i>
                                 <p>Image</p>
                             </div>
