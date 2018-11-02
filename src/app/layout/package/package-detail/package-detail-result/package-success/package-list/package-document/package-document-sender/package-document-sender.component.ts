@@ -108,10 +108,6 @@ export class PackageDocumentSenderComponent implements OnInit {
   ngOnInit() {
     this.currentPackageId = +PackageDetailComponent.packageId;
     this.userInfo = this.sessionService.userInfo;
-    // this.packageService.statusPackageValue$.subscribe(status => {
-    //   this.statusPackage = status;
-    //   console.log('status-package-sender', status);
-    // });
     this.isDataHsmt = true;
     this.isDataHsdt = true;
     this.isManageTransfer = false;
@@ -125,6 +121,11 @@ export class PackageDocumentSenderComponent implements OnInit {
     this.filterModel.documentType = '';
     this.filterModel.documentTypeId = null;
     this.filterModel.interviewTimes = null;
+    this.getListNeedTransferDocs(false);
+    this.getHadTransferredList(false);
+  }
+
+  getListNeedTransferDocs(alert: boolean) {
     this.detailResultPackageService.getListNeedTransferDocs(this.currentPackageId).subscribe(response => {
       response.forEach(item => {
         switch (item.bidOpportunityStage.key) {
@@ -159,7 +160,14 @@ export class PackageDocumentSenderComponent implements OnInit {
           });
         }
       });
+      if (alert) {
+        this.alertService.success('Dữ liệu được cập nhật mới nhât!');
+      }
+    }, err => {
+      this.alertService.error('Đã xảy ra lỗi!');
     });
+  }
+  getHadTransferredList(alert: boolean) {
     this.detailResultPackageService.getHadTransferredList(this.currentPackageId).subscribe(response => {
       this.hadTransferList = response;
       response.forEach(item => {
@@ -196,7 +204,11 @@ export class PackageDocumentSenderComponent implements OnInit {
           });
         }
       });
-      console.log('this.docHSMTHadTransfer', this.docHSMTHadTransfer, this.docHSDTHadTransfer);
+      if (alert) {
+        this.alertService.success('Dữ liệu được cập nhật mới nhât!');
+      }
+    }, err => {
+      this.alertService.error('Đã xảy ra lỗi!');
     });
   }
   // Form HSMT
@@ -504,9 +516,13 @@ export class PackageDocumentSenderComponent implements OnInit {
   render(needTransferDocsList: any) {
     this.needTransferDocsList = needTransferDocsList;
   }
-  // refesh() {
-  //   this.filter(true);
-  // }
+  refesh() {
+    if (this.statusPackage.id === this.checkStatusPackage.DaThongBaoCacBenLienQuan.id) {
+      this.getListNeedTransferDocs(true);
+    } else {
+      this.getHadTransferredList(true);
+    }
+  }
   downloadTemplate() {
     this.detailResultPackageService.downloadTemplateDoc().subscribe(response => {
     },

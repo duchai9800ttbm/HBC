@@ -20,6 +20,7 @@ import { DocumentService } from '../../../../../../../../shared/services/documen
 import { DictionaryItemHightLight } from '../../../../../../../../shared/models';
 import { HoSoDuThauService } from '../../../../../../../../shared/services/ho-so-du-thau.service';
 import { CheckStatusPackage } from '../../../../../../../../shared/constants/check-status-package';
+import { Router } from '../../../../../../../../../../node_modules/@angular/router';
 
 @Component({
   selector: 'app-package-document-receiver',
@@ -74,6 +75,7 @@ export class PackageDocumentReceiverComponent implements OnInit {
     private dataService: DataService,
     private documentService: DocumentService,
     private hoSoDuThauService: HoSoDuThauService,
+    private router: Router
   ) { }
 
   ngOnInit() {
@@ -229,34 +231,26 @@ export class PackageDocumentReceiverComponent implements OnInit {
     const idsArray = [];
     (this.docHSMTListTranferred || []).forEach(itemPar => {
       itemPar.items.forEach(itemChild => {
-        if (itemChild.checkboxSelected === true) {
-          idsArray.push(itemChild.id);
-        }
+        idsArray.push(itemChild.id);
       });
     });
     (this.docHSDTListTranferred || []).forEach(itemPar => {
       itemPar.items.forEach(itemChild => {
-        if (itemChild.checkboxSelected === true) {
-          idsArray.push(itemChild.id);
-        }
+        idsArray.push(itemChild.id);
       });
     });
-    if (idsArray && idsArray.length !== 0) {
-      this.confirmationService.confirm(
-        'Bạn có muốn xác nhận nhận tài liệu?',
-        () => {
-          this.detailResultPackageService.confirmReceiveDocs(idsArray).subscribe(response => {
-            this.packageService.changeStatusPackageValue(this.checkStatusPackage.DaNhanTaiLieu.text);
-            this.alertService.success('Xác nhận nhận tài liệu thành công!');
-            this.bntConfirm = true;
-            this.packageService.setActiveKickoff(this.bntConfirm);
-            this.textmovedata = this.bntConfirm ? 'Đã nhận tài liệu được chuyển giao' : 'Chưa nhận tài liệu được chuyển giao';
-          });
-        }
-      );
-    } else {
-      this.alertService.error('Bạn chưa chọn tài liệu muốn xác nhận.');
-    }
+    this.confirmationService.confirm(
+      'Bạn có muốn xác nhận nhận tài liệu?',
+      () => {
+        this.detailResultPackageService.confirmReceiveDocs(idsArray).subscribe(response => {
+          this.packageService.changeStatusPackageValue(this.checkStatusPackage.DaNhanTaiLieu.text);
+          this.alertService.success('Xác nhận nhận tài liệu thành công!');
+          this.bntConfirm = true;
+          this.packageService.setActiveKickoff(this.bntConfirm);
+          this.textmovedata = this.bntConfirm ? 'Đã nhận tài liệu được chuyển giao' : 'Chưa nhận tài liệu được chuyển giao';
+        });
+      }
+    );
   }
 
   manageTransferDocument(template: TemplateRef<any>) {
@@ -266,4 +260,42 @@ export class PackageDocumentReceiverComponent implements OnInit {
     );
   }
 
+  // Router live form
+  viewDetailLiveForm(typeLiveForm) {
+    switch (typeLiveForm) {
+      case 'TenderConditionalSummary': {
+        this.router.navigate([`/package/detail/${this.currentPackageId}/attend/build/summary`]);
+        break;
+      }
+      case 'SiteSurveyingReport': {
+        this.router.navigate([`/package/detail/${this.currentPackageId}/attend/build/liveformsite`]);
+        break;
+      }
+      case 'TenderPriceApproval': {
+        this.router.navigate([`/package/detail/${this.currentPackageId}/attend/price-review/detail`]);
+        break;
+      }
+    }
+  }
+  // Render index
+  renderIndexHSMT(i, j): number {
+    let dem = 0;
+    if (this.docHSMTListTranferred && this.docHSMTListTranferred.length !== 0) {
+      for (let indexPar = 0; indexPar < i; indexPar++) {
+        dem = dem + this.docHSMTListTranferred[indexPar].items.length;
+      }
+      dem = dem + j + 1;
+    }
+    return dem;
+  }
+  renderIndexHSDT(i, j): number {
+    let dem = 0;
+    if (this.docHSDTListTranferred && this.docHSDTListTranferred.length !== 0) {
+      for (let indexPar = 0; indexPar < i; indexPar++) {
+        dem = dem + this.docHSMTListTranferred[indexPar].items.length;
+      }
+      dem = dem + j + 1;
+    }
+    return dem;
+  }
 }

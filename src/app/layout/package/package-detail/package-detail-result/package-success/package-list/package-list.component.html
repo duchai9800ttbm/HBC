@@ -253,7 +253,7 @@
                                         </a>
                                     </div>
                                 </ng-container>
-                                <ng-container *ngIf="XoaKQDT">
+                                <ng-container *ngIf="statusPackage.id < checkStatusPackage.DaPhanHoiDenPHopDong.id">
                                     <div id="mr" (click)="deleteFileItem(item.id)">
                                         <a title="Xóa file">
                                             <i class="fa fa-trash-o" aria-hidden="true"></i>

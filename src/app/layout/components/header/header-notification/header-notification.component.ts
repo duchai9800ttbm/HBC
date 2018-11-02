@@ -74,10 +74,10 @@ export class HeaderNotificationComponent implements OnInit {
     } else {
       this.isShow = true;
     }
-    }
+  }
 
   ngOnInit() {
-    this.notificationService.watchNotificationAmontSubject().subscribe( value => {
+    this.notificationService.watchNotificationAmontSubject().subscribe(value => {
       this.getListNotification();
     });
     this.getListNotification();
@@ -138,7 +138,7 @@ export class HeaderNotificationComponent implements OnInit {
         break;
       }
       case NotificationStatus.ChuyenGiaoTaiLieu: {
-        // this.router.navigate([`/package/detail/${item.bidOpportunityId}/attend/price-review`]);
+        this.router.navigate([`/package/detail/${item.bidOpportunityId}/result/package-success/package-list`]);
         break;
       }
     }
