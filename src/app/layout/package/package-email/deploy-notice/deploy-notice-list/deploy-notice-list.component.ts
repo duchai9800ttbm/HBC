@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { PagedResult } from '../../../../../shared/models';
 import { EmailItemModel, EmailFilter, MultipeDelete } from '../../../../../shared/models/email/email-item.model';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
@@ -7,13 +7,16 @@ import { AlertService, ConfirmationService } from '../../../../../shared/service
 import { NgxSpinnerService } from 'ngx-spinner';
 import { Router } from '@angular/router';
 import { PackageEmailComponent } from '../../package-email.component';
+import { Subscription } from '../../../../../../../node_modules/rxjs/Subscription';
+import { PermissionModel } from '../../../../../shared/models/permission/Permission.model';
+import { PermissionService } from '../../../../../shared/services/permission.service';
 
 @Component({
   selector: 'app-deploy-notice-list',
   templateUrl: './deploy-notice-list.component.html',
   styleUrls: ['./deploy-notice-list.component.scss']
 })
-export class DeployNoticeListComponent implements OnInit {
+export class DeployNoticeListComponent implements OnInit, OnDestroy {
   loading = false;
   pagedResult: PagedResult<EmailItemModel> = new PagedResult<EmailItemModel>();
   searchTerm$ = new BehaviorSubject<string>('');
@@ -23,17 +26,52 @@ export class DeployNoticeListComponent implements OnInit {
   isShowButtonUp: boolean;
   isShowButtonDown: boolean;
   isShowEmpty = false;
+  subscription: Subscription;
+  listPermission: Array<PermissionModel>;
+  listPermissionScreen = [];
+
+
+  XemEmail = false;
+
   constructor(
     private emailService: EmailService,
     private alertService: AlertService,
     private confirmationService: ConfirmationService,
     private spinner: NgxSpinnerService,
-    private router: Router
+    private router: Router,
+    private permissionService: PermissionService
   ) {
 
   }
   ngOnInit() {
     this.packageId = +PackageEmailComponent.packageId;
+
+    this.subscription = this.permissionService.get().subscribe(data => {
+      this.listPermission = data;
+      const hsdt = this.listPermission.length &&
+        this.listPermission.filter(x => x.bidOpportunityStage === 'HSDT')[0];
+      if (!hsdt) {
+        this.listPermissionScreen = [];
+      }
+      if (hsdt) {
+        const screen = hsdt.userPermissionDetails.length
+          && hsdt.userPermissionDetails.filter(y => y.permissionGroup.value === 'TrienKhaiVaPhanCongTienDo')[0];
+        if (!screen) {
+          this.listPermissionScreen = [];
+        }
+        if (screen) {
+          this.listPermissionScreen = screen.permissions.map(z => z.value);
+        }
+      }
+      this.XemEmail = this.listPermissionScreen.includes('XemEmail');
+      setTimeout(() => {
+        if (!this.XemEmail) {
+          this.router.navigate(['not-found']);
+        }
+      }, 300);
+    });
+
+
     this.filterModel.category = 'AnnounceDeployment';
     this.loading = true;
     this.emailService.instantSearchWithFilter(this.packageId, this.searchTerm$, this.filterModel, 0, 5)
@@ -42,6 +80,12 @@ export class DeployNoticeListComponent implements OnInit {
         this.loading = false;
       }, err => this.loading = false);
 
+  }
+
+  ngOnDestroy() {
+    if (this.subscription) {
+      this.subscription.unsubscribe();
+    }
   }
 
   down() {
