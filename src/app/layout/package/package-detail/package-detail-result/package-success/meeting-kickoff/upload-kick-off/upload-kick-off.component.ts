@@ -46,7 +46,7 @@ export class UploadKickOffComponent implements OnInit {
       version: [(this.version).toString(), CustomValidator.required],
       uploadedBy: [],
       receivedDate: [],
-      meetingTime: [, CustomValidator.requiredDate],
+      meetingTime: [, (this.action === 'report') ? CustomValidator.requiredDate : null],
       interviewTimes: [this.interviewTimes.toString(), CustomValidator.required],
       documentDesc: [],
       link: [],
@@ -57,6 +57,7 @@ export class UploadKickOffComponent implements OnInit {
 
   validateForm() {
     this.invalidMessages = ValidationHelper.getInvalidMessages(this.uploadMeetingKickOff, this.formErrors);
+    console.log('this.uploadMeetingKickOff', this.uploadMeetingKickOff, this.invalidMessages);
     return this.invalidMessages.length === 0;
   }
 
@@ -68,6 +69,7 @@ export class UploadKickOffComponent implements OnInit {
 
   Upload() {
     this.isSubmitted = true;
+    console.log('this.validateForm()', this.validateForm());
     if (this.validateForm() &&
       ((this.uploadMeetingKickOff.get('link').value && this.uploadMeetingKickOff.get('link').value !== '') || (this.file))) {
       switch (this.action) {

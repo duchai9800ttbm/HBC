@@ -154,9 +154,11 @@ export class ReportMeetingComponent implements OnInit, OnDestroy {
       .distinctUntilChanged()
       .subscribe(keySearch => {
         this.filterMeetingReportList(false);
+        this.filterMeetingReportListFilter();
       });
     this.subscription = this.detailResultPackageService.watchListListReportMeeting().subscribe(value => {
       this.filterMeetingReportList(false);
+      this.filterMeetingReportListFilter();
     });
     // filter file
     this.filterFile.uploadedEmployeeId = null;
@@ -167,9 +169,11 @@ export class ReportMeetingComponent implements OnInit, OnDestroy {
       .distinctUntilChanged()
       .subscribe(keySearch => {
         this.filterFileList(false);
+        this.filterFileListFilter();
       });
     const watchListFilePresentationMeeting = this.detailResultPackageService.watchListFilePresentationMeeting().subscribe(value => {
       this.filterFileList(false);
+      this.filterFileListFilter();
     });
     this.subscription.add(watchListFilePresentationMeeting);
   }
@@ -247,7 +251,7 @@ export class ReportMeetingComponent implements OnInit, OnDestroy {
         this.alertService.error('Không thể cập nhật danh sách biên bản cuộc họp!');
       });
   }
-  filterMeetingReportListFilter(alertReload: boolean) {
+  filterMeetingReportListFilter() {
     this.spinner.show();
     const filterReportMeetingNew = new FilterReportMeeting();
     this.detailResultPackageService.getBidMeetingReportDocsList(
@@ -287,6 +291,7 @@ export class ReportMeetingComponent implements OnInit, OnDestroy {
 
   refeshListReport() {
     this.filterMeetingReportList(true);
+    this.filterMeetingReportListFilter();
   }
   filterReport() {
     this.filterMeetingReportList(false);
@@ -384,6 +389,7 @@ export class ReportMeetingComponent implements OnInit, OnDestroy {
   }
   refeshListFile() {
     this.filterFileList(true);
+    this.filterFileListFilter();
   }
   filterFileFunction() {
     this.filterFileList(false);
@@ -423,10 +429,12 @@ export class ReportMeetingComponent implements OnInit, OnDestroy {
     switch (this.actionUpload) {
       case 'report': {
         this.filterMeetingReportList(false);
+        this.filterMeetingReportListFilter();
         break;
       }
       case 'file': {
         this.filterFileList(false);
+        this.filterFileListFilter();
         break;
       }
     }
@@ -461,11 +469,13 @@ export class ReportMeetingComponent implements OnInit, OnDestroy {
             case 'report': {
               this.alertService.success('Xóa biên bản thành công!');
               this.filterMeetingReportList(false);
+              this.filterMeetingReportListFilter();
               break;
             }
             case 'file': {
               this.alertService.success('Xóa file presentation thành công!');
               this.filterFileList(false);
+              this.filterFileListFilter();
             }
           }
         }, err => {
@@ -501,6 +511,7 @@ export class ReportMeetingComponent implements OnInit, OnDestroy {
               () => {
                 this.detailResultPackageService.deleteMeetingReportOrFile(listItemCheckbox[0]).subscribe(response => {
                   this.filterMeetingReportList(false);
+                  this.filterMeetingReportListFilter();
                   this.alertService.success('Xóa biên bản thành công!');
                 },
                   err => {
@@ -515,6 +526,7 @@ export class ReportMeetingComponent implements OnInit, OnDestroy {
               () => {
                 this.detailResultPackageService.deleteMutipleMeetingReportOrFile(listItemCheckbox).subscribe(response => {
                   this.filterMeetingReportList(false);
+                  this.filterMeetingReportListFilter();
                   this.alertService.success('Xóa biên bản thành công!');
                 },
                   err => {
@@ -542,6 +554,7 @@ export class ReportMeetingComponent implements OnInit, OnDestroy {
               () => {
                 this.detailResultPackageService.deleteMeetingReportOrFile(listItemCheckbox[0]).subscribe(response => {
                   this.filterFileList(false);
+                  this.filterFileListFilter();
                   this.alertService.success('Xóa file presentation thành công!');
                 },
                   err => {
@@ -556,6 +569,7 @@ export class ReportMeetingComponent implements OnInit, OnDestroy {
               () => {
                 this.detailResultPackageService.deleteMutipleMeetingReportOrFile(listItemCheckbox).subscribe(response => {
                   this.filterFileList(false);
+                  this.filterFileListFilter();
                   this.alertService.success('Xóa file presentation thành công!');
                 },
                   err => {
