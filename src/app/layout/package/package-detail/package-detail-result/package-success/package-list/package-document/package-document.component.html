@@ -1,4 +1,6 @@
-<app-package-document-sender *ngIf="(statusPackage.id >= checkStatusPackage.DaThongBaoCacBenLienQuan.id) && checkUser" [statusPackage]="statusPackage"></app-package-document-sender>
-<!-- isContract -->
-<app-package-document-receiver *ngIf="(statusPackage.id >= checkStatusPackage.DaThongBaoCacBenLienQuan.id) && !checkUser" [statusPackage]="statusPackage"></app-package-document-receiver>
+<app-package-document-sender *ngIf="(statusPackage.id >= checkStatusPackage.DaThongBaoCacBenLienQuan.id) && ChuyenGiaoTaiLieu" [statusPackage]="statusPackage"></app-package-document-sender>
+<!--  && checkUser -->
+<!-- isContract --> 
+<app-package-document-receiver *ngIf="(statusPackage.id >= checkStatusPackage.DaThongBaoCacBenLienQuan.id) && !ChuyenGiaoTaiLieu" [statusPackage]="statusPackage"></app-package-document-receiver>
+<!-- && !checkUser -->
 <!-- !isContract -->

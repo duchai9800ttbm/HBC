@@ -104,7 +104,8 @@
             <div class="w-100  mr-auto">
                 <div>
                     <div class="body cus-header" id="info-main">
-                        <div *ngIf="!((createFormReport.get('link').value &&  createFormReport.get('link').value !== '') || file) && isSubmitted" class="alert alert-danger" role="alert">
+                        <div *ngIf="!((createFormReport.get('link').value &&  createFormReport.get('link').value !== '') || file) && isSubmitted"
+                            class="alert alert-danger" role="alert">
                             <span>Vui lòng chọn file hoặc đường dẫn link đến file!</span>
                         </div>
                         <table class="w-100 table">
@@ -152,9 +153,12 @@
                                     </td>
                                 </tr>
                                 <tr>
-                                    <td class="w-30 label no-boder bold-title">Phiên bản</td>
+                                    <td class="w-30 label no-boder bold-title required">Phiên bản</td>
                                     <td class="w-70 no-boder">
-                                        <input appInputNumberInteger class="w-100" kendoTextBox tabindex="5" type="text" formControlName="version">
+                                        <input appInputNumberInteger class="w-100" kendoTextBox tabindex="5" type="text" formControlName="version" [class.is-invalid]="formErrors.version">
+                                        <div class="invalid-feedback" *ngIf="formErrors.version">
+                                            {{formErrors.version}}
+                                        </div>
                                     </td>
                                 </tr>
                                 <tr>
@@ -187,4 +191,4 @@
         </div>
     </form>
 </div>
-<ngx-spinner bdColor="rgba(51, 51, 51, 0.7)" size = "default" color="#fff" type="ball-scale"></ngx-spinner>
+<ngx-spinner bdColor="rgba(51, 51, 51, 0.7)" size="default" color="#fff" type="ball-scale"></ngx-spinner>

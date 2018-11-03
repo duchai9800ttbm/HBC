@@ -166,7 +166,7 @@ export class HsdtBuildComponent implements OnInit, AfterViewChecked, OnDestroy {
             }
             if (hsdt2) {
                 const screen2 = hsdt2.userPermissionDetails.length
-                    && hsdt.userPermissionDetails.filter(y => y.permissionGroup.value === 'LapHoSoDuThauLiveForm')[0];
+                    && hsdt2.userPermissionDetails.filter(y => y.permissionGroup.value === 'LapHoSoDuThauLiveForm')[0];
                 if (!screen2) {
                     this.listPermissionScreen2 = [];
                 }

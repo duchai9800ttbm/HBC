@@ -161,6 +161,7 @@ export class PackageDocumentSenderComponent implements OnInit {
           });
         }
       });
+      console.log('this.docHSDTList-this.docHSDTList', this.docHSDTList);
       if (alert) {
         this.alertService.success('Dữ liệu được cập nhật mới nhât!');
       }

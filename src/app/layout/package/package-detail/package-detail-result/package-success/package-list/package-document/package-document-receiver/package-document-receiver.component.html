@@ -5,7 +5,8 @@
                 <div class="rule mr-2">
                 </div>
                 <div class="center-parent mr-4">
-                    <div class="header-title">{{textmovedata}}</div>
+                    <div class="header-title" *ngIf="(statusPackage.id <= checkStatusPackage.DaChuyenGiaoTaiLieu.id || statusPackage.id === checkStatusPackage.ChuaNhanTaiLieu.id)">Chưa nhận tài liệu được chuyển giao</div>
+                    <div class="header-title" *ngIf="statusPackage.id >= checkStatusPackage.DaNhanTaiLieu.id">Đã nhận tài liệu được chuyển giao</div>
                 </div>
             </div>
         </div>
