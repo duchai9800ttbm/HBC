@@ -1,4 +1,5 @@
-<div class="outer" id="outer" *ngIf="isSignedContractAPI === false">
+<div *ngIf="isShow">
+<div class="outer" id="outer" *ngIf="!isSignedContractAPI">
     <div id="header-table-build" class=" title-list-package d-flex flex-wrap align-items-center status-filter" [hidden]="isShowMenu">
         <div class="mr-auto d-flex align-items-end list-package mt-2 mb-2">
             <div class="d-flex justify-content-start res-header-bar" id="res-header">
@@ -32,7 +33,7 @@
 
     </div>
 </div>
-<div class="outer" id="outer" *ngIf="isSignedContractAPI !== false">
+<div class="outer" id="outer" *ngIf="isSignedContractAPI">
     <div class=" title-list-package d-flex flex-wrap align-items-center">
         <div class="mr-auto d-flex align-items-end list-package mt-2 mb-2">
             <div class="d-flex justify-content-start">
@@ -300,6 +301,7 @@
             <div *ngIf="!pagedResult.items || pagedResult.items.length === 0" class="center-parent">Không có dữ liệu</div>
         </div>
     </div>
+</div>
 </div>
 
 <ng-template #hopdong>

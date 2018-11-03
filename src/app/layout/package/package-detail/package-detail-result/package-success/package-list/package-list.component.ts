@@ -134,7 +134,7 @@ export class PackageListComponent implements OnInit, OnDestroy {
       this.ThongBaoDenPhongHopDong = this.listPermissionScreen.includes('ThongBaoDenPhongHopDong');
       this.ThongBaoStakeholders = this.listPermissionScreen.includes('ThongBaoStakeholders');
       this.ChuyenGiaoTaiLieu = this.listPermissionScreen.includes('ChuyenGiaoTaiLieu');
-      
+
     });
     this.packageService.statusPackageValue$.subscribe(status => {
       this.statusPackage = status;
@@ -177,6 +177,46 @@ export class PackageListComponent implements OnInit, OnDestroy {
     this.isSendCc = false;
     this.isSendBcc = false;
     this.textTrungThau = 'Trúng thầu';
+    // tslint:disable-next-line:max-line-length
+    this.emailModel.content = `<p style="text-align: center;"><span style="font-size:16px;"><strong>THƯ CẢM ƠN TH&Ocirc;NG B&Aacute;O KẾT QUẢ TR&Uacute;NG THẦU</strong></span></p>
+
+    <p>Dự &aacute;n: &lt;tenduan&gt;</p>
+    
+    <p>G&oacute;i thầu: &lt;tengoithau&gt;</p>
+    
+    <p>Địa điểm: &lt;diadiem&gt;</p>
+    
+    <p>K&iacute;nh gửi: <strong>Qu&yacute; &lt;tenkhachhang&gt;</strong></p>
+    
+    <p>Truớc ti&ecirc;n, Ph&ograve;ng Dự thầu C&ocirc;ng ty CP XD &amp; Kinh Doanh Địa Ốc Ho&agrave; B&igrave;nh cảm ơn Qu&yacute; c&ocirc;ng ty đ&atilde; hợp t&aacute;c với ch&uacute;ng t&ocirc;i trong suốt qu&aacute; tr&igrave;nh đấu thầu. Trong thời gian qua, Ph&ograve;ng Dự thầu nhận được sự hỗ trợ v&agrave; hợp t&aacute;c tốt từ Qu&yacute; c&ocirc;ng ty l&agrave; điều ch&uacute;ng t&ocirc;i lu&ocirc;n lu&ocirc;n đ&aacute;nh gi&aacute; cao v&agrave; ghi nhận.</p>
+    
+    <p>Hiện nay, ch&uacute;ng t&ocirc;i xin được th&ocirc;ng b&aacute;o đến Qu&yacute; c&ocirc;ng ty rằng: C&ocirc;ng ty CP XD &amp; Kinh Doanh Địa Ốc Ho&agrave; B&igrave;nh đ&atilde; <u><strong>TR&Uacute;NG THẦU</strong></u>&nbsp;dự &aacute;n tr&ecirc;n.</p>
+    
+    <p>Mọi th&ocirc;ng tin li&ecirc;n lạc của qu&yacute; c&ocirc;ng ty, Ph&ograve;ng Dự thầu đ&atilde; chuyển cho c&aacute;c Bản Chỉ Huy C&ocirc;ng Truờng v&agrave; Ph&ograve;ng ban li&ecirc;n quan để tiếp tục qu&aacute; tr&igrave;nh chọn thầu theo Quy tr&igrave;nh của c&ocirc;ng ty Ho&agrave; B&igrave;nh.</p>
+    
+    <p>Qu&yacute; c&ocirc;ng ty vui l&ograve;ng li&ecirc;n hệ với c&aacute;c th&agrave;nh vi&ecirc;n sau của c&ocirc;ng ty Ho&agrave; B&igrave;nh để chuẩn bị tiếp c&aacute;c buớc tiếp theo về qu&aacute; tr&igrave;nh chọn nh&agrave; thầu phụ/ cung cấp của C&ocirc;ng ty ch&uacute;ng t&ocirc;i:</p>
+    
+    <p><strong>&nbsp; &nbsp; &nbsp; &nbsp; 1. Ban chỉ huy c&ocirc;ng tr&igrave;nh:</strong></p>
+    
+    <p>&nbsp; &nbsp; &nbsp; &nbsp; &Ocirc;ng/b&agrave;: ........................................ Điện thoại ................................ Email ................................</p>
+    
+    <p><strong>&nbsp; &nbsp; &nbsp; &nbsp; 2. Ph&ograve;ng QS - Hợp đồng:</strong></p>
+    
+    <p>&nbsp; &nbsp; &nbsp; &nbsp; &Ocirc;ng/b&agrave;: ........................................ Điện thoại ................................ Email ................................</p>
+    
+    <p>Cần hỗ trợ th&ocirc;ng tin g&igrave; th&ecirc;m từ Ph&ograve;ng Dự Thầu, vui l&ograve;ng li&ecirc;n hệ với Trưởng nh&oacute;m dự thầu:</p>
+    
+    <p>&nbsp; &nbsp; &nbsp; &nbsp; &Ocirc;ng/b&agrave;: ........................................ Điện thoại ................................ Email ................................</p>
+    
+    <p>Lần nữa, cảm ơn Qu&yacute; c&ocirc;ng ty đ&atilde; đồng h&agrave;nh v&agrave; hợp t&aacute;c th&agrave;nh c&ocirc;ng tốt đẹp với c&ocirc;ng ty Ho&agrave; B&igrave;nh tại dự &aacute;n n&agrave;y, Ch&uacute;ng t&ocirc;i hy vọng sẽ đuợc Qu&yacute; c&ocirc;ng ty hỗ trợ cho c&aacute;c dự &aacute;n kh&aacute;c trong tương lai.</p>
+    
+    <p>Tr&acirc;n trọng.</p>
+    
+    <p style="text-align: right;">Tp.HCM, ng&agrave;y ...... th&aacute;ng ....... năm ........</p>
+    
+    <p style="text-align: right;">Truởng nh&oacute;m dự thầu,&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;</p>
+    
+    <p>&nbsp;</p>`;
   }
   ngOnDestroy() {
     if (this.subscription) {
@@ -415,6 +455,7 @@ export class PackageListComponent implements OnInit, OnDestroy {
     this.file.splice(index, 1);
   }
   SendInformation() {
+    // console.log(this.emailModel.content)
     if (this.emailModel && this.emailModel.to) {
       this.emailModel.bidOpportunityId = this.currentPackageId;
       this.spinner.show();

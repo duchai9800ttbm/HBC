@@ -24,15 +24,6 @@ export class PackageDetailResultComponent implements OnInit {
     ngOnInit() {
         this.packageId = +PackageDetailComponent.packageId;
         this.getInforPackageID(); // Điều hướng
-        this.activatedRoute.params.subscribe(result => {
-            // this.packageId = +result.id;
-        });
-        this.packageService.statusPackageValue$.subscribe(status => {
-            console.log('this.s-tatusPackage', status);
-        });
-        this.activeRouter.firstChild.url.subscribe(url => {
-            console.log('activeRouter');
-        });
     }
 
     getInforPackageID() {

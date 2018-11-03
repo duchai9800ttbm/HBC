@@ -68,6 +68,7 @@ export class ContractSignedComponent implements OnInit, OnDestroy {
   };
   checkStatusPackage = CheckStatusPackage;
   isSignedContractAPI = false;
+  isShow = false;
   listPermission: Array<PermissionModel>;
   listPermissionScreen = [];
   ThemMoiHD = false;
@@ -118,6 +119,7 @@ export class ContractSignedComponent implements OnInit, OnDestroy {
     this.statusPackage = this.packageService.statusPackageValue2;
     this.packageService.getInforPackageID(this.currentPackageId).subscribe(response => {
       this.isSignedContractAPI = response.isSignedContract;
+      this.isShow = true;
     });
     // this.detailResultPackageService.watchListContractSigning().subscribe( value => {
     //   this.isSignedContractAPI = value;
@@ -147,6 +149,7 @@ export class ContractSignedComponent implements OnInit, OnDestroy {
     this.filter(false);
     this.filterList();
     const detail$ = this.detailResultPackageService.watchListContractSigning().subscribe(value => {
+      this.isShow = true;
       this.isSignedContractAPI = value;
       this.filter(false);
       this.filterList();
@@ -230,8 +233,6 @@ export class ContractSignedComponent implements OnInit, OnDestroy {
     // tslint:disable-next-line:max-line-length
     this.maxVersion = (pagedResult.items && pagedResult.items.length !== 0) ? Math.max.apply(Math, pagedResult.items.map(item => item.version)) : 0;
     this.maxInterviewTimes = (pagedResult.items && pagedResult.items.length !== 0) ? Math.max.apply(Math, pagedResult.items.map(item => item.interviewTime)) : 0;
-    console.log('this.maxInterviewTimes', this.maxInterviewTimes);
-    // this.dtTrigger.next();
   }
 
   getUploadList(result) {
