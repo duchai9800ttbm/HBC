@@ -139,6 +139,7 @@ export class PackageDocumentSenderComponent implements OnInit {
           }
         }
       });
+      console.log('this.docHSMTList', this.docHSMTList);
       this.docHSMTList.forEach((itemPra, indexPra) => {
         if (itemPra.childDocuments && itemPra.childDocuments.length !== 0) {
           itemPra.childDocuments.forEach((item, index) =>
