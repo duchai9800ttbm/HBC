@@ -418,7 +418,7 @@
                                     </ng-container>
                                 </ng-container>
                             </ng-container>
-                            <ng-container *ngIf="!itemchildDocuments.childDocuments">
+                            <ng-container *ngIf="!itemchildDocuments.childDocuments || (itemchildDocuments.childDocuments.length === 0)">
                                 <ng-container *ngFor="let documents of itemchildDocuments.documents; let j = index">
                                     <tr>
                                         <td class="stt w5 bg-default wstt">
