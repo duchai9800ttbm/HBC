@@ -874,9 +874,9 @@ export class DataService {
     getListDepartmentsFromBranches(): Observable<DepartmentsFormBranches[]> {
         const url = `data/branches/1/departments`;
         return this.apiService.get(url)
-            .map( response => {
+            .map(response => {
                 const result = response.result;
-                return result.map( item => {
+                return result.map(item => {
                     return {
                         id: item.id,
                         departmentNo: item.departmentNo,
@@ -889,9 +889,9 @@ export class DataService {
     getListLevels(): Observable<Levels[]> {
         const url = `data/levels`;
         return this.apiService.get(url)
-            .map( response => {
+            .map(response => {
                 const result = response.result;
-                return result.map( item => {
+                return result.map(item => {
                     return {
                         id: item.id,
                         levelNo: item.levelNo,
@@ -909,9 +909,23 @@ export class DataService {
     getListTenderDocumentType(): Observable<DictionaryItem[]> {
         const url = `tenderdocumentfiletypes`;
         return this.apiService.get(url)
-            .map( response => {
+            .map(response => {
                 const result = response.result;
-                return result.map( item => {
+                return result.map(item => {
+                    return {
+                        id: item.id,
+                        text: item.name
+                    };
+                });
+            });
+    }
+    // Danh sách loại liveform
+    getLiveFormTypes(): Observable<DictionaryItem[]> {
+        const url = `tenderdocumentliveformtypes`;
+        return this.apiService.get(url)
+            .map(response => {
+                const result = response.result;
+                return result.map(item => {
                     return {
                         id: item.id,
                         text: item.name
@@ -923,7 +937,7 @@ export class DataService {
     getMaxopporunityamount(): Observable<number> {
         const url = `bidopportunity/maxopporunityamount`;
         return this.apiService.get(url)
-            .map( response => {
+            .map(response => {
                 return response.result;
             });
     }

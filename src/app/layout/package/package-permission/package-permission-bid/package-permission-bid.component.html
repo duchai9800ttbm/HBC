@@ -420,7 +420,7 @@
                                         <span style="padding-left: 12px" class="custom-dropdown w-100">
                                             <select class="form-control" formControlName="documentId">
                                                 <option [ngValue]="null">--Chọn--</option>
-                                                <option *ngFor="let document of listDocumentType" [value]="document.id">{{document.text}}</option>
+                                                <option *ngFor="let document of listLiveformType" [value]="document.id">{{document.text}}</option>
                                             </select>
                                         </span>
                                     </div>
@@ -474,7 +474,7 @@
                                     </label>
                                 </div>
                                 <div class="text-center">
-                                    <label class="custom-control custom-checkbox">
+                                    <label class="custom-control custom-checkbox" *ngIf="j == 0">
                                         <input type="checkbox" class="custom-control-input" formControlName="ChotHSDT">
                                         <span class="custom-control-indicator"></span>
                                     </label>
@@ -520,9 +520,9 @@
                         <th>
                             <div class="text-center">Gửi duyệt/Gửi duyệt lại TDG</div>
                         </th>
-                        <th>
+                        <!-- <th>
                             <div class="text-center">Duyệt TDG (BGĐ)</div>
-                        </th>
+                        </th> -->
                     </tr>
                 </thead>
                 <tbody [formGroupName]="'TrinhDuyetGia'">
@@ -608,12 +608,12 @@
                                     <span class="custom-control-indicator"></span>
                                 </label>
                             </td>
-                            <td class="text-center">
+                            <!-- <td class="text-center">
                                 <label class="custom-control custom-checkbox">
                                     <input type="checkbox" class="custom-control-input" formControlName="DuyetTDGBGD">
                                     <span class="custom-control-indicator"></span>
                                 </label>
-                            </td>
+                            </td> -->
                         </tr>
                     </ng-container>
                 </tbody>

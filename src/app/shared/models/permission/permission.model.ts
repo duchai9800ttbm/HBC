@@ -1,4 +1,4 @@
-export class PermissionModel  {
+export class PermissionModel {
     bidOpportunityStage: string;
     userPermissionDetails: {
         permissionGroup: {
@@ -10,6 +10,7 @@ export class PermissionModel  {
             key: string;
             value: string;
             displayText: string
+            tenderDocumentTypeId?: number;
         }[]
     }[];
 }
