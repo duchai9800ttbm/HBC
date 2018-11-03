@@ -121,3 +121,11 @@ table {
     border-top-left-radius: 0 !important;
     border-bottom-left-radius: 0 !important;
 }
+
+.name-file--width {
+    div:first-child() {
+        max-width: 260px;
+        text-overflow: ellipsis;
+        overflow: hidden;
+    }
+}

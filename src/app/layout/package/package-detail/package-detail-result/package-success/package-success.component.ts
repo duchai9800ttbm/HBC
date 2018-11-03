@@ -39,19 +39,19 @@ export class PackageSuccessComponent implements OnInit {
     this.packageService.kickOff$.subscribe(result => {
       this.kickOff = result;
     });
+    this.statusPackage = this.packageService.statusPackageValue2;
     this.packageService.statusPackageValue$.subscribe(status => {
       this.statusPackage = status;
-      console.log('aaaaa');
+      console.log(this.statusPackage);
       if ((this.statusPackage.id > this.checkStatusPackage.DaNhanTaiLieu.id)
         || (this.statusPackage.id === this.checkStatusPackage.DaNhanTaiLieu.id)) {
-        console.log('bbbbbbbbbbbbbbbbbbbb');
         this.kickOffActive = false;
         this.arrowKickOff = true;
         this.showArrow = false;
         this.arrow = true;
         this.arrowSuccess = true;
-      } else if ((this.statusPackage.id > this.checkStatusPackage.DaPhanHoiDenPHopDong.id)
-        || (this.statusPackage.id === this.checkStatusPackage.DaPhanHoiDenPHopDong.id)) {
+      } else if ((this.statusPackage.id > this.checkStatusPackage.DaPhanHoiDenPhongHopDong.id)
+        || (this.statusPackage.id === this.checkStatusPackage.DaPhanHoiDenPhongHopDong.id)) {
         this.isActive = true;
         this.arrowSuccess = true;
         this.showArrow = true;

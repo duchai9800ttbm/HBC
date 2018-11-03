@@ -30,13 +30,13 @@ export class PackageService {
     private statusPackageValue = new BehaviorSubject<any>({
         text: 'TrungThau',
         stage: 'KQDT',
-        id: null,
+        id: 0,
     });
     public statusPackageValue$ = this.statusPackageValue.asObservable();
     statusPackageValue2 = {
         text: 'TrungThau',
         stage: 'KQDT',
-        id: null,
+        id: 0,
     };
     private isSummaryConditionForm = new Subject<boolean>();
     public isSummaryConditionForm$ = this.isSummaryConditionForm.asObservable();

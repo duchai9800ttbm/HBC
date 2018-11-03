@@ -255,14 +255,14 @@ export class PackageListComponent implements OnInit, OnDestroy {
     },
       err => {
         this.spinner.hide();
-        this.alertService.error('Đã xảy ra lỗi!');
+        this.alertService.error('Đã xảy ra lỗi 1!');
       });
   }
   downloadTemplate() {
     this.detailResultPackageService.downloadTemplateResult().subscribe(response => {
     },
       err => {
-        this.alertService.error('Đã xảy ra lỗi!');
+        this.alertService.error('Đã xảy ra lỗi 2!');
       });
   }
   deleteFileResult() {
@@ -422,7 +422,7 @@ export class PackageListComponent implements OnInit, OnDestroy {
       switch (this.actionSendEmail) {
         case ('ContractRoom'): {
           this.detailResultPackageService.sendFeedbackToContractRoom(this.emailModel, this.file).subscribe(result => {
-            this.packageService.changeStatusPackageValue(this.checkStatusPackage.DaPhanHoiDenPHopDong.text);
+            this.packageService.changeStatusPackageValue(this.checkStatusPackage.DaPhanHoiDenPhongHopDong.text);
             this.emailModel = new SendEmailModel();
             this.file = [];
             this.alertService.success('Gửi phản hồi đến phòng hợp đồng thành công!');

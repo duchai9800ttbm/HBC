@@ -1,4 +1,26 @@
 <div class="outer" id="outer" *ngIf="isSignedContractAPI === false">
+    <div id="header-table-build" class=" title-list-package d-flex flex-wrap align-items-center status-filter" [hidden]="isShowMenu">
+        <div class="mr-auto d-flex align-items-end list-package mt-2 mb-2">
+            <div class="d-flex justify-content-start res-header-bar" id="res-header">
+                <div class="rule mr-2">
+                </div>
+                <div class="center-parent  mr-4 title-header">
+                    Đã phản hồi đến Phòng hợp đồng
+                </div>
+            </div>
+        </div>
+        <div>
+            <div class="btn-toolbar mt-2 mb-2">
+                <div class="d-flex">
+                    <div class="ml-1">
+                        <button (click)="refresh()" class="btn btn-primary">
+                            <i class="fa fa-refresh" aria-hidden="true"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
     <div id="outer-img">
         <img src="assets/images/kykethd.png" alt="">
         <h5>Bạn đã hoàn tất ký kết hợp đồng</h5>
@@ -36,7 +58,7 @@
         </div>
     </div>
     <div class="d-flex form-group">
-        <h5 class="d-inline mb-0 mr-auto text-dark text-uppercase pd-t title-header-chirld">Hợp đồng ký kết</h5>
+        <div class="d-flex align-items-center mb-0 mr-auto text-dark text-uppercase pd-t title-header-chirld">Hợp đồng ký kết</div>
         <div class="d-flex">
             <div class="input-group btn-rg">
                 <span class="input-group-addon">Tìm kiếm theo</span>
@@ -123,12 +145,12 @@
                                     <div>Tên tài liệu</div>
                                 </div>
                                 <div class="center-parent ml-2">
-                                    <img *ngIf="currentFieldSort !== 'name' ||  (currentFieldSort === 'name' && statusSort === '')" class="icon-sort" src="assets/images/sort.svg"
-                                        (click)="sortField('name', 'asc')">
-                                    <img *ngIf="currentFieldSort === 'name' && statusSort === 'asc'" class="icon-sort-down-up" src="assets/images/sort-down.svg"
-                                        (click)="sortField('name', 'desc')">
-                                    <img *ngIf="currentFieldSort === 'name' && statusSort === 'desc'" class="icon-sort-down-up" src="assets/images/sort-up.svg"
-                                        (click)="sortField('name', '')">
+                                    <img *ngIf="currentFieldSort !== 'name' ||  (currentFieldSort === 'name' && statusSort === '')"
+                                        class="icon-sort" src="assets/images/sort.svg" (click)="sortField('name', 'asc')">
+                                    <img *ngIf="currentFieldSort === 'name' && statusSort === 'asc'" class="icon-sort-down-up"
+                                        src="assets/images/sort-down.svg" (click)="sortField('name', 'desc')">
+                                    <img *ngIf="currentFieldSort === 'name' && statusSort === 'desc'" class="icon-sort-down-up"
+                                        src="assets/images/sort-up.svg" (click)="sortField('name', '')">
                                 </div>
                             </div>
 
@@ -139,12 +161,12 @@
                                     <div>Phiên bản</div>
                                 </div>
                                 <div class="center-parent ml-2">
-                                    <img *ngIf="currentFieldSort !== 'version' ||  (currentFieldSort === 'version' && statusSort === '')" class="icon-sort" src="assets/images/sort.svg"
-                                        (click)="sortField('version', 'asc')">
-                                    <img *ngIf="currentFieldSort === 'version' && statusSort === 'asc'" class="icon-sort-down-up" src="assets/images/sort-down.svg"
-                                        (click)="sortField('version', 'desc')">
-                                    <img *ngIf="currentFieldSort === 'version' && statusSort === 'desc'" class="icon-sort-down-up" src="assets/images/sort-up.svg"
-                                        (click)="sortField('version', '')">
+                                    <img *ngIf="currentFieldSort !== 'version' ||  (currentFieldSort === 'version' && statusSort === '')"
+                                        class="icon-sort" src="assets/images/sort.svg" (click)="sortField('version', 'asc')">
+                                    <img *ngIf="currentFieldSort === 'version' && statusSort === 'asc'" class="icon-sort-down-up"
+                                        src="assets/images/sort-down.svg" (click)="sortField('version', 'desc')">
+                                    <img *ngIf="currentFieldSort === 'version' && statusSort === 'desc'" class="icon-sort-down-up"
+                                        src="assets/images/sort-up.svg" (click)="sortField('version', '')">
                                 </div>
                             </div>
                         </th>
@@ -161,12 +183,12 @@
                                     <div>Người upload</div>
                                 </div>
                                 <div class="center-parent ml-2">
-                                    <img *ngIf="currentFieldSort !== 'employeeName' ||  (currentFieldSort === 'employeeName' && statusSort === '')" class="icon-sort"
-                                        src="assets/images/sort.svg" (click)="sortField('employeeName', 'asc')">
-                                    <img *ngIf="currentFieldSort === 'employeeName' && statusSort === 'asc'" class="icon-sort-down-up" src="assets/images/sort-down.svg"
-                                        (click)="sortField('employeeName', 'desc')">
-                                    <img *ngIf="currentFieldSort === 'employeeName' && statusSort === 'desc'" class="icon-sort-down-up" src="assets/images/sort-up.svg"
-                                        (click)="sortField('employeeName', '')">
+                                    <img *ngIf="currentFieldSort !== 'employeeName' ||  (currentFieldSort === 'employeeName' && statusSort === '')"
+                                        class="icon-sort" src="assets/images/sort.svg" (click)="sortField('employeeName', 'asc')">
+                                    <img *ngIf="currentFieldSort === 'employeeName' && statusSort === 'asc'" class="icon-sort-down-up"
+                                        src="assets/images/sort-down.svg" (click)="sortField('employeeName', 'desc')">
+                                    <img *ngIf="currentFieldSort === 'employeeName' && statusSort === 'desc'" class="icon-sort-down-up"
+                                        src="assets/images/sort-up.svg" (click)="sortField('employeeName', '')">
                                 </div>
                             </div>
                         </th>
@@ -177,12 +199,12 @@
                                     <div>Ngày upload</div>
                                 </div>
                                 <div class="center-parent ml-2">
-                                    <img *ngIf="currentFieldSort !== 'uploadDate' ||  (currentFieldSort === 'uploadDate' && statusSort === '')" class="icon-sort"
-                                        src="assets/images/sort.svg" (click)="sortField('uploadDate', 'asc')">
-                                    <img *ngIf="currentFieldSort === 'uploadDate' && statusSort === 'asc'" class="icon-sort-down-up" src="assets/images/sort-down.svg"
-                                        (click)="sortField('uploadDate', 'desc')">
-                                    <img *ngIf="currentFieldSort === 'uploadDate' && statusSort === 'desc'" class="icon-sort-down-up" src="assets/images/sort-up.svg"
-                                        (click)="sortField('uploadDate', '')">
+                                    <img *ngIf="currentFieldSort !== 'uploadDate' ||  (currentFieldSort === 'uploadDate' && statusSort === '')"
+                                        class="icon-sort" src="assets/images/sort.svg" (click)="sortField('uploadDate', 'asc')">
+                                    <img *ngIf="currentFieldSort === 'uploadDate' && statusSort === 'asc'" class="icon-sort-down-up"
+                                        src="assets/images/sort-down.svg" (click)="sortField('uploadDate', 'desc')">
+                                    <img *ngIf="currentFieldSort === 'uploadDate' && statusSort === 'desc'" class="icon-sort-down-up"
+                                        src="assets/images/sort-up.svg" (click)="sortField('uploadDate', '')">
                                 </div>
                             </div>
                         </th>
@@ -192,12 +214,12 @@
                                     <div>Ngày ký kết hợp đồng</div>
                                 </div>
                                 <div class="center-parent ml-2">
-                                    <img *ngIf="currentFieldSort !== 'contractDate' ||  (currentFieldSort === 'contractDate' && statusSort === '')" class="icon-sort"
-                                        src="assets/images/sort.svg" (click)="sortField('contractDate', 'asc')">
-                                    <img *ngIf="currentFieldSort === 'contractDate' && statusSort === 'asc'" class="icon-sort-down-up" src="assets/images/sort-down.svg"
-                                        (click)="sortField('contractDate', 'desc')">
-                                    <img *ngIf="currentFieldSort === 'contractDate' && statusSort === 'desc'" class="icon-sort-down-up" src="assets/images/sort-up.svg"
-                                        (click)="sortField('contractDate', '')">
+                                    <img *ngIf="currentFieldSort !== 'contractDate' ||  (currentFieldSort === 'contractDate' && statusSort === '')"
+                                        class="icon-sort" src="assets/images/sort.svg" (click)="sortField('contractDate', 'asc')">
+                                    <img *ngIf="currentFieldSort === 'contractDate' && statusSort === 'asc'" class="icon-sort-down-up"
+                                        src="assets/images/sort-down.svg" (click)="sortField('contractDate', 'desc')">
+                                    <img *ngIf="currentFieldSort === 'contractDate' && statusSort === 'desc'" class="icon-sort-down-up"
+                                        src="assets/images/sort-up.svg" (click)="sortField('contractDate', '')">
                                 </div>
                             </div>
                         </th>
@@ -207,12 +229,12 @@
                                     <div>Lần phỏng vấn</div>
                                 </div>
                                 <div class="center-parent ml-2">
-                                    <img *ngIf="currentFieldSort !== 'interviewTimes' ||  (currentFieldSort === 'interviewTimes' && statusSort === '')" class="icon-sort"
-                                        src="assets/images/sort.svg" (click)="sortField('interviewTimes', 'asc')">
-                                    <img *ngIf="currentFieldSort === 'interviewTimes' && statusSort === 'asc'" class="icon-sort-down-up" src="assets/images/sort-down.svg"
-                                        (click)="sortField('interviewTimes', 'desc')">
-                                    <img *ngIf="currentFieldSort === 'interviewTimes' && statusSort === 'desc'" class="icon-sort-down-up" src="assets/images/sort-up.svg"
-                                        (click)="sortField('interviewTimes', '')">
+                                    <img *ngIf="currentFieldSort !== 'interviewTimes' ||  (currentFieldSort === 'interviewTimes' && statusSort === '')"
+                                        class="icon-sort" src="assets/images/sort.svg" (click)="sortField('interviewTimes', 'asc')">
+                                    <img *ngIf="currentFieldSort === 'interviewTimes' && statusSort === 'asc'" class="icon-sort-down-up"
+                                        src="assets/images/sort-down.svg" (click)="sortField('interviewTimes', 'desc')">
+                                    <img *ngIf="currentFieldSort === 'interviewTimes' && statusSort === 'desc'" class="icon-sort-down-up"
+                                        src="assets/images/sort-up.svg" (click)="sortField('interviewTimes', '')">
                                 </div>
                             </div>
                         </th>
@@ -243,8 +265,10 @@
                         <td class="text-center" [title]="item.version">{{item.version}}</td>
                         <td class="description" [title]="item.desc">{{item.desc}} </td>
                         <td class="text-center employeeName" [title]="item.uploadByEmployee?.employeeName">{{item.uploadByEmployee?.employeeName}}</td>
-                        <td class="text-center" [title]="item.uploadDate*1000 | date:'dd/MM/yyyy HH:mm':'+0000'">{{item.uploadDate*1000 | date:'dd/MM/yyyy HH:mm':'+0000'}}</td>
-                        <td class="text-center" [title]="item.contractDate*1000 | date:'dd/MM/yyyy':'+0000'">{{item.contractDate*1000 | date:'dd/MM/yyyy':'+0000'}}</td>
+                        <td class="text-center" [title]="item.uploadDate*1000 | date:'dd/MM/yyyy HH:mm':'+0000'">{{item.uploadDate*1000
+                            | date:'dd/MM/yyyy HH:mm':'+0000'}}</td>
+                        <td class="text-center" [title]="item.contractDate*1000 | date:'dd/MM/yyyy':'+0000'">{{item.contractDate*1000
+                            | date:'dd/MM/yyyy':'+0000'}}</td>
                         <td class="text-center" [title]="item.interviewTime">{{item.interviewTime}}</td>
                         <td class="text-center">
                             <div class="d-flex justify-content-around">
@@ -376,8 +400,9 @@
     <div class="modal-body">
         <div class="input-group mb-3">
             <span class="input-group-addon">To:</span>
-            <ng-select class="w-100" [items]="listEmailSearchTo" typeToSearchText="Nhập email" addTagText="Thêm email:" clearAllText="Xóa tất cả"
-                [addTag]="true" [hideSelected]="true" multiple="true" bindLabel="employeeName" [searchFn]="customSearchFn" [(ngModel)]="emailModel.to">
+            <ng-select class="w-100" [items]="listEmailSearchTo" typeToSearchText="Nhập email" addTagText="Thêm email:"
+                clearAllText="Xóa tất cả" [addTag]="true" [hideSelected]="true" multiple="true" bindLabel="employeeName"
+                [searchFn]="customSearchFn" [(ngModel)]="emailModel.to">
                 <ng-template ng-option-tmp let-item="item" let-index="index" let-search="searchTerm">
                     <table>
                         <tr>{{item.employeeName}}</tr>
@@ -389,8 +414,9 @@
 
         <div class="input-group mb-3" *ngIf="isSendCc">
             <span class="input-group-addon" id="basic-addon1">Cc:</span>
-            <ng-select class="w-100" [items]="listEmailSearchCc" addTagText="Thêm email:" clearAllText="Xóa tất cả" [addTag]="true" [hideSelected]="true"
-                multiple="true" bindLabel="employeeName" [searchFn]="customSearchFn" [(ngModel)]="emailModel.cc">
+            <ng-select class="w-100" [items]="listEmailSearchCc" addTagText="Thêm email:" clearAllText="Xóa tất cả"
+                [addTag]="true" [hideSelected]="true" multiple="true" bindLabel="employeeName" [searchFn]="customSearchFn"
+                [(ngModel)]="emailModel.cc">
                 <ng-template ng-option-tmp let-item="item" let-index="index" let-search="searchTerm">
                     <table>
                         <tr>{{item.employeeName}}</tr>
@@ -402,8 +428,9 @@
 
         <div class="input-group mb-3" *ngIf="isSendBcc">
             <span class="input-group-addon" id="basic-addon1">Bcc:</span>
-            <ng-select class="w-100" [items]="listEmailSearchBcc" addTagText="Thêm email:" clearAllText="Xóa tất cả" [addTag]="true"
-                [hideSelected]="true" multiple="true" bindLabel="employeeName" [searchFn]="customSearchFn" [(ngModel)]="emailModel.bcc">
+            <ng-select class="w-100" [items]="listEmailSearchBcc" addTagText="Thêm email:" clearAllText="Xóa tất cả"
+                [addTag]="true" [hideSelected]="true" multiple="true" bindLabel="employeeName" [searchFn]="customSearchFn"
+                [(ngModel)]="emailModel.bcc">
                 <ng-template ng-option-tmp let-item="item" let-index="index" let-search="searchTerm">
                     <table>
                         <tr>{{item.employeeName}}</tr>
@@ -425,12 +452,13 @@
             <div class="input-group-prepend">
                 <span class="input-group-text" id="basic-addon1">Tiêu đề:</span>
             </div>
-            <input type="text" [(ngModel)]="emailModel.subject" class="form-control boder-left-none" placeholder="" aria-label="Tiede"
-                aria-describedby="basic-addon1">
+            <input type="text" [(ngModel)]="emailModel.subject" class="form-control boder-left-none" placeholder=""
+                aria-label="Tiede" aria-describedby="basic-addon1">
         </div>
         <div class="body-ckeditor">
             <ckeditor [(ngModel)]="emailModel.content" [config]="ckeConfig" #ckeditor debounce="500" (paster)="onPaste($event)">
-                <ckbutton [name]="'saveButton'" [command]="'saveCmd'" [icon]="'save.png'" [label]="'Save Document'" [toolbar]="'clipboard,1'">
+                <ckbutton [name]="'saveButton'" [command]="'saveCmd'" [icon]="'save.png'" [label]="'Save Document'"
+                    [toolbar]="'clipboard,1'">
                 </ckbutton>
             </ckeditor>
         </div>

@@ -1,8 +1,8 @@
 <div [@routerTransition] class="mx-20 detail-container">
     <div class="d-flex">
         <ul class="progressbar">
-            <li class="triangle" [routerLink]="['./create-request']" [class.noActive]="(currentUrl !== 'create-request') && (statusPackage.id >= checkStatusPackage.CanLapDeNghiDuThau.id)"
-                [class.active]="currentUrl === 'create-request'" [class.allow]="(statusPackage.id > checkStatusPackage.CanLapDeNghiDuThau.id)">
+            <li class="triangle" [routerLink]="['./create-request']" [class.noActive]="(currentUrl !== 'create-request') && (statusPackage?.id >= checkStatusPackage.CanLapDeNghiDuThau.id)"
+                [class.active]="currentUrl === 'create-request'" [class.allow]="(statusPackage?.id > checkStatusPackage.CanLapDeNghiDuThau.id)">
                 <div style="width: 100%" class="center-parent">
                     <div class="arrow-down"></div>
                 </div>
@@ -10,10 +10,10 @@
                     <strong>Cần lập đề nghị dự thầu</strong>
                 </span>
             </li>
-            <li class="triangle" [routerLink]="(statusPackage.id >= checkStatusPackage.ThamGiaDuThau.id) ? ['./infomation-deployment'] : []"
-                [class.noActive]="(statusPackage.id >= checkStatusPackage.ThamGiaDuThau.id) && (currentUrl !== 'infomation-deployment')" [class.allow]="(statusPackage.id >= checkStatusPackage.ThamGiaDuThau.id)"
+            <li class="triangle" [routerLink]="(statusPackage?.id >= checkStatusPackage.ThamGiaDuThau.id) ? ['./infomation-deployment'] : []"
+                [class.noActive]="(statusPackage?.id >= checkStatusPackage.ThamGiaDuThau.id) && (currentUrl !== 'infomation-deployment')" [class.allow]="(statusPackage?.id >= checkStatusPackage.ThamGiaDuThau.id)"
                 [class.active]="currentUrl === 'infomation-deployment'"
-                [class.no-allow]="(statusPackage.id < checkStatusPackage.ThamGiaDuThau.id)">
+                [class.no-allow]="(statusPackage?.id < checkStatusPackage.ThamGiaDuThau.id)">
                 <div style="width: 100%" class="center-parent">
                     <div class="arrow-down"></div>
                 </div>
@@ -21,8 +21,8 @@
                     <strong>Triển khai &amp; phân công tiến độ</strong>
                 </span>
             </li>
-            <li class="triangle" [routerLink]="(statusPackage.id >= checkStatusPackage.DangLapHSDT.id) ? ['./build'] : []" [class.noActive]="currentUrl !== 'build' && (statusPackage.id >= checkStatusPackage.DangLapHSDT.id)"
-                [class.active]="currentUrl === 'build'" [class.allow]="(statusPackage.id >= checkStatusPackage.DangLapHSDT.id)" [class.no-allow]="(statusPackage.id < checkStatusPackage.DangLapHSDT.id)">
+            <li class="triangle" [routerLink]="(statusPackage?.id >= checkStatusPackage.DangLapHSDT.id) ? ['./build'] : []" [class.noActive]="currentUrl !== 'build' && (statusPackage?.id >= checkStatusPackage.DangLapHSDT.id)"
+                [class.active]="currentUrl === 'build'" [class.allow]="(statusPackage?.id >= checkStatusPackage.DangLapHSDT.id)" [class.no-allow]="(statusPackage?.id < checkStatusPackage.DangLapHSDT.id)">
                 <div style="width: 100%" class="center-parent">
                     <div class="arrow-down"></div>
                 </div>
@@ -30,8 +30,8 @@
                     <strong>Lập HSDT</strong>
                 </span>
             </li>
-            <li class="triangle" [routerLink]="(statusPackage.id >= checkStatusPackage.DangLapHSDT.id) ? ['./price-review'] : []" [class.noActive]="currentUrl !== 'price-review' && (statusPackage.id >= checkStatusPackage.DangLapHSDT.id)"
-                [class.active]="currentUrl === 'price-review'" [class.allow]="(statusPackage.id >= checkStatusPackage.DangLapHSDT.id)" [class.no-allow]="(statusPackage.id < checkStatusPackage.DangLapHSDT.id)">
+            <li class="triangle" [routerLink]="(statusPackage?.id >= checkStatusPackage.DangLapHSDT.id) ? ['./price-review'] : []" [class.noActive]="currentUrl !== 'price-review' && (statusPackage?.id >= checkStatusPackage.DangLapHSDT.id)"
+                [class.active]="currentUrl === 'price-review'" [class.allow]="(statusPackage?.id >= checkStatusPackage.DangLapHSDT.id)" [class.no-allow]="(statusPackage?.id < checkStatusPackage.DangLapHSDT.id)">
                 <div style="width: 100%" class="center-parent">
                     <div class="arrow-down"></div>
                 </div>
@@ -39,9 +39,9 @@
                     <strong>Trình duyệt giá</strong>
                 </span>
             </li>
-            <li class="triangle" [routerLink]="(statusPackage.id >= checkStatusPackage.DaNopHSDT.id)  ? ['./interview-negotiation'] : []" [class.noActive]="(currentUrl !== 'interview-negotiation' && (statusPackage.id >= checkStatusPackage.DaNopHSDT.id) )"
-                [class.active]="currentUrl === 'interview-negotiation'" [class.allow]="(statusPackage.id >= checkStatusPackage.DaNopHSDT.id)"
-                [class.no-allow]="(statusPackage.id < checkStatusPackage.DaNopHSDT.id)">
+            <li class="triangle" [routerLink]="(statusPackage?.id >= checkStatusPackage.DaNopHSDT.id)  ? ['./interview-negotiation'] : []" [class.noActive]="(currentUrl !== 'interview-negotiation' && (statusPackage?.id >= checkStatusPackage.DaNopHSDT.id) )"
+                [class.active]="currentUrl === 'interview-negotiation'" [class.allow]="(statusPackage?.id >= checkStatusPackage.DaNopHSDT.id)"
+                [class.no-allow]="(statusPackage?.id < checkStatusPackage.DaNopHSDT.id)">
                 <div style="width: 100%" class="center-parent">
                     <div class="arrow-down"></div>
                 </div>

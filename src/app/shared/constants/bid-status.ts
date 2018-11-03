@@ -24,7 +24,7 @@ export enum BidStatus {
     DaThongBaoCacBenLienQuan = 'DaThongBaoCacBenLienQuan',
     CoBaiHocKinhNghiem = 'CoBaiHocKinhNghiem',
     TrungThau = 'TrungThau',
-    DaPhanHoiDenPHopDong = 'DaPhanHoiDenPHopDong',
+    DaPhanHoiDenPhongHopDong = 'DaPhanHoiDenPhongHopDong',
     DaKyKetHopDong = 'DaKyKetHopDong',
     DaChuyenGiaoTaiLieu = 'DaChuyenGiaoTaiLieu',
     ChuaNhanTaiLieu = 'ChuaNhanTaiLieu',

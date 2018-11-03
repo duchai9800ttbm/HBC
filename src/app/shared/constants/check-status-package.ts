@@ -129,8 +129,8 @@ export const CheckStatusPackage = {
         stage: 'KQDT',
         id: 24,
     },
-    DaPhanHoiDenPHopDong: {
-        text: 'DaPhanHoiDenPHopDong',
+    DaPhanHoiDenPhongHopDong: {
+        text: 'DaPhanHoiDenPhongHopDong',
         stage: 'KQDT',
         id: 25,
     },

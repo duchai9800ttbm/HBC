@@ -174,6 +174,11 @@ export class ContractSignedComponent implements OnInit, OnDestroy {
     this.subscription.unsubscribe();
   }
 
+  refresh() {
+    this.filter(false);
+    this.filterList();
+  }
+
   filterList() {
     const filterModelNew = new FilterContractSigning();
     this.spinner.show();
@@ -263,8 +268,9 @@ export class ContractSignedComponent implements OnInit, OnDestroy {
     this.isSignedContract = true;
     this.packageService.setActiveKickoff(this.isSignedContract);
     this.alertService.success('Upload hợp đồng ký kết thành công!');
-    this.textContract = this.isSignedContract ? 'Đã ký kết hợp đồng' : 'Đã phản hồi đến phòng hợp đồng'
+    this.textContract = this.isSignedContract ? 'Đã ký kết hợp đồng' : 'Đã phản hồi đến phòng hợp đồng';
     this.modalUpload.hide();
+    this.refesh();
   }
   openModalNotification(template: TemplateRef<any>) {
     this.modalRef = this.modalService.show(
