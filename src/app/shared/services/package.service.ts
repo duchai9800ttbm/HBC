@@ -22,6 +22,7 @@ import { TenderPreparationPlanningRequest } from '../models/api-request/package/
 import { ProposedTenderParticipationHistory } from '../models/api-response/package/proposed-tender-participation-history.model';
 import { StakeHolder } from '../models/ho-so-du-thau/stack-holder.model';
 import { CheckStatusPackage } from '../constants/check-status-package';
+import { GroupChaired } from '../models/package/group-chaired.model';
 
 @Injectable()
 export class PackageService {
@@ -1176,4 +1177,40 @@ export class PackageService {
             );
         });
     }
+
+    // ======
+    // Mapping model danh sách người dùng nhóm chủ trì, phân trang
+    toGetListGroupChaired(result: any): GroupChaired {
+        return {
+            id: result.id,
+            userName: result.userName,
+            employeeName: result.employeeName,
+            employeeNo: result.employeeNo,
+            department: result.employeeNo ? {
+                id: result.employeeNo.id,
+                text: result.employeeNo.text,
+                displayText: result.employeeNo.displayText,
+            } : null,
+            avatarUrl: result.avatarUrl,
+            employeeId: result.employeeId,
+            email: result.email,
+        };
+    }
+    // Danh sách người dùng nhóm chủ trì, phân trang
+    getListGroupChaired(page: number, pageSize: number, searchTerm: string): Observable<PagedResult<GroupChaired>> {
+        const url = `user/chairuser/${page}/${pageSize}?searchTerm=${searchTerm}`;
+        return this.apiService.get(url).map(response => {
+            const result = response.result;
+            return {
+                currentPage: result.pageIndex,
+                pageSize: result.pageSize,
+                pageCount: result.totalPages,
+                total: result.totalCount,
+                items: (result.items || []).map(
+                    this.toGetListGroupChaired
+                )
+            };
+        })
+    }
+
 }
