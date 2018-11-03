@@ -18,27 +18,29 @@
                     <i class="fa fa-refresh" aria-hidden="true"></i>
                 </button>
             </div>
-            <div *ngIf="isModeView && !isClosedHSDT" class="mr-1">
-                <button class="btn btn-primary" (click)="edit()">
-                    Chỉnh sửa
-                </button>
-            </div>
-            <div *ngIf="!isModeView" class="mr-1">
-                <button class="btn btn-secondary" (click)="backSummary()">
-                    Hủy
-                </button>
-            </div>
-
-            <div *ngIf="!isModeView" class="mr-1">
-                <button class="btn btn-primary" (click)="onSubmit(false)">
-                    Lưu
-                </button>
-            </div>
-            <div *ngIf="!isModeView && isDraft" class="mr-1">
-                <button class="btn btn-primary" (click)="onSubmit(true)">
-                    Lưu nháp
-                </button>
-            </div>
+            <ng-container *ngIf="!isClosedHSDT">
+                <div *ngIf="isModeView" class="mr-1">
+                    <button class="btn btn-primary" (click)="edit()">
+                        Chỉnh sửa
+                    </button>
+                </div>
+                <div *ngIf="!isModeView" class="mr-1">
+                    <button class="btn btn-secondary" (click)="backSummary()">
+                        Hủy
+                    </button>
+                </div>
+                
+                <div *ngIf="!isModeView" class="mr-1">
+                    <button class="btn btn-primary" (click)="onSubmit(false)">
+                        Lưu
+                    </button>
+                </div>
+                <div *ngIf="!isModeView && isDraft" class="mr-1">
+                    <button class="btn btn-primary" (click)="onSubmit(true)">
+                        Lưu nháp
+                    </button>
+                </div>
+            </ng-container>
         </div>
     </div>
 

@@ -57,7 +57,7 @@ export class SettingLocationFormComponent implements OnInit {
       }, err => {
         const error = err.json();
         if (error.errorCode === 'BusinessException') {
-          this.alertService.error(`"${locationName}" này đã tồn tại`);
+          this.alertService.error(`Khu vực này đã tồn tại`);
         } else {
           this.alertService.error('Đã xảy ra lỗi ! Vui lòng thử lại sau.');
         }

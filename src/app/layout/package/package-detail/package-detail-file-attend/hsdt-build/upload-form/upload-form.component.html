@@ -16,16 +16,16 @@
                 <button class="btn btn-primary ml-1" (click)="multiDelete()">
                     Xóa
                 </button>
-                <button *ngIf="!isTypeChildDoc" class="btn btn-primary ml-1" (click)="showDialogUploadFile()">
+                <button *ngIf="!isTypeChildDoc" class="btn btn-primary ml-1" [ngClass]="{'btn-secondary': isClosedHSDT}" (click)="showDialogUploadFile()">
                     Thêm mới HSDT
                 </button>
 
                 <div *ngIf="isTypeChildDoc" class="btn-group ml-1" ngbDropdown placement="bottom-right">
-                    <button type="button" class="btn btn-primary" ngbDropdownToggle data-toggle="dropdown"
+                    <button type="button" class="btn btn-primary" (click)="showError()" [ngClass]="{'btn-secondary': isClosedHSDT}" ngbDropdownToggle data-toggle="dropdown"
                         aria-haspopup="true" aria-expanded="false">
                         Thêm mới HSDT
                     </button>
-                    <div class="dropdown-menu" ngbDropdownMenu>
+                    <div [ngClass]="{'d-none': isClosedHSDT}" class="dropdown-menu" ngbDropdownMenu>
                         <ng-container *ngFor="let children of childrenOfTypeDocument; index as i">
                             <div class="dropdown-item" (click)="showDialogUploadFile(children.item.id)">
                                 <a>{{ children.item?.name }}</a>
@@ -274,7 +274,7 @@
                                             <i class="fa fa-external-link color-item-down" aria-hidden="true"></i>
                                         </a>
                                     </div>
-                                    <div class="pointer-link" (click)="deleteDocument(hoso.id)" title="Xóa">
+                                    <div *ngIf="!isClosedHSDT" class="pointer-link" (click)="deleteDocument(hoso.id)" title="Xóa">
                                         <a>
                                             <i class="fa fa-trash-o" aria-hidden="true"></i>
                                         </a>

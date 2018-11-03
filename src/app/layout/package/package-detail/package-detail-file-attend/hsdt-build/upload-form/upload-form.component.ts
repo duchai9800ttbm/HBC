@@ -48,6 +48,7 @@ export class UploadFormComponent implements OnInit, OnDestroy {
   currentItem = {};
   showPopupViewImage = false;
   imageUrlArray = [];
+  isClosedHSDT: boolean;
   constructor(
     private hoSoDuThauService: HoSoDuThauService,
     private dialogService: DialogService,
@@ -65,13 +66,25 @@ export class UploadFormComponent implements OnInit, OnDestroy {
       this.filterModel.status = '';
       this.filterModel.uploadedEmployeeId = '';
     });
+    const statusPackage$ = this.hoSoDuThauService.watchStatusPackage().subscribe(status => {
+      this.isClosedHSDT = status;
+    });
+    this.subscription.add(statusPackage$);
   }
   ngOnDestroy() {
     this.subscription.unsubscribe();
   }
 
-
+  showError(){
+    if (this.isClosedHSDT) {
+      return this.alertService.error('Bạn không thể upload file khi đã chốt hồ sơ');
+    }
+    return null;
+  }
   showDialogUploadFile(i) {
+    if (this.isClosedHSDT) {
+      return this.alertService.error('Bạn không thể upload file khi đã chốt hồ sơ');
+    }
     this.dialog = this.dialogService.open({
       content: UploadFileHsdtComponent,
       width: 750,
@@ -94,11 +107,9 @@ export class UploadFormComponent implements OnInit, OnDestroy {
     this.getDataDocumentOfType(false, false);
   }
   getDataDocumentOfType(alert = false, spiner = true) {
-    if (spiner) { this.spinner.show(); }
     this.hoSoDuThauService
       .danhSachBoHoSoDuThauInstantSearch(this.packageId, this.searchTerm$, this.filterModel, 0, 1000)
       .subscribe(responseResultDocument => {
-        this.spinner.hide();
         if (alert) {
           this.alertService.success(`Dữ liệu đã được cập nhật mới nhất!`);
         }
@@ -113,7 +124,6 @@ export class UploadFormComponent implements OnInit, OnDestroy {
         this.pagedResult.items = this.dataDocumentOfType;
         this.dtTrigger.next();
       }, err => {
-        this.spinner.hide();
         this.alertService.error(`Đã có lỗi xảy ra. Xin vui lòng thử lại!`);
       });
   }
@@ -156,11 +166,9 @@ export class UploadFormComponent implements OnInit, OnDestroy {
   }
 
   pagedResultChange(pagedResult: any) {
-    this.spinner.show();
     this.hoSoDuThauService
       .danhSachBoHoSoDuThauInstantSearch(this.packageId, this.searchTerm$, this.filterModel, pagedResult.currentPage, pagedResult.pageSize)
       .subscribe(responseResultDocument => {
-        this.spinner.hide();
         if (alert) {
           this.alertService.success(`Dữ liệu đã được cập nhật mới nhất!`);
         }
@@ -175,7 +183,6 @@ export class UploadFormComponent implements OnInit, OnDestroy {
         this.pagedResult.items = this.dataDocumentOfType;
         this.dtTrigger.next();
       }, err => {
-        this.spinner.hide();
         this.alertService.error(`Đã có lỗi xảy ra. Xin vui lòng thử lại!`);
       });
   }
@@ -220,14 +227,11 @@ export class UploadFormComponent implements OnInit, OnDestroy {
     } else {
       this.confirmationService.confirm('Bạn có chắc chắn muốn xóa những tài liệu này?',
         () => {
-          this.spinner.show();
           this.hoSoDuThauService.xoaNhieuHoSoDuThau(listId).subscribe(res => {
-            this.spinner.hide();
             this.alertService.success('Đã xóa tài liệu!');
             this.hoSoDuThauService.detectUploadFile(true);
             this.refresh();
           }, err => {
-            this.spinner.hide();
             this.alertService.error(`Đã có lỗi. Tài liệu chưa được xóa!`);
           });
         });
@@ -237,11 +241,9 @@ export class UploadFormComponent implements OnInit, OnDestroy {
     this.getDataDocumentOfType(true, true);
   }
   filter() {
-    this.spinner.show();
     this.hoSoDuThauService
       .danhSachBoHoSoDuThau(this.packageId, this.searchTerm$.value, this.filterModel, 0, 1000)
       .subscribe(responseResultBoHSDT => {
-        this.spinner.hide();
         this.rerender(responseResultBoHSDT);
         this.dataDocumentOfType = responseResultBoHSDT.items.filter(item =>
           item.tenderDocumentType.id === HoSoDuThauService.idTenderDocumentTypesData ||
@@ -253,7 +255,6 @@ export class UploadFormComponent implements OnInit, OnDestroy {
         this.pagedResult.items = this.dataDocumentOfType;
         this.dtTrigger.next();
       }, err => {
-        this.spinner.hide();
         this.alertService.error(`Đã có lỗi xảy ra. Xin vui lòng thử lại!`);
       });
     this.dtTrigger.next();

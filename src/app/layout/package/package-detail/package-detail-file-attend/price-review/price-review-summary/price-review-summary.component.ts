@@ -376,7 +376,7 @@ export class PriceReviewSummaryComponent implements OnInit, OnDestroy {
     this.confirmService.confirm('Bạn có chắc muốn hiệu chỉnh HSDT?', () => {
       this.priceReviewService.hieuChinhHSDT(this.packageId).subscribe(data => {
         that.alertService.success('Hiệu chỉnh HSDT thành công!');
-
+        
         that.refresh(false);
       }, err => {
         that.alertService.error('Thất bại, vui lòng thử lại sau!');

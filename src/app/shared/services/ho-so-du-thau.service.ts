@@ -187,9 +187,10 @@ export class HoSoDuThauService {
     return this.apiService.postFile(url, formData).map(res => res.result);
   }
   // Xóa ảnh trên server - chung cho các form upload
-  deleteImageService(guid) {
+  deleteImageService(id) {
     const url = `image/delete`;
-    return this.apiService.post(url, guid);
+    const dateSent = { guid: id };
+    return this.apiService.post(url, dateSent);
   }
 
   // Tải lên hồ sơ dự thầu
