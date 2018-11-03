@@ -873,6 +873,18 @@ export class DetailResultPackageService {
     };
     return this.apiService.post(url, request);
   }
+  // Tải template biên bản cuộc họp
+  meetingReportTemplate() {
+    const url = `meetingreport/template/download`;
+    return this.apiService.getFile(url).map(response => {
+      return FileSaver.saveAs(
+        new Blob([response.file], {
+          type: `${response.file.type}`,
+        }), response.fileName
+      );
+    });
+  }
+
   // Có sự thay đổi listReportMeeting
   changeListReportMeeting() {
     this.listReportMeeting.next();

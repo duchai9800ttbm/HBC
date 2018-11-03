@@ -119,7 +119,7 @@ export class ReportMeetingComponent implements OnInit, OnDestroy {
         }
       }
       this.ThongBaoHopKickoff = this.listPermissionScreen.includes('ThongBaoHopKickoff');
-    //  this.XemDanhSachEmailDaGui = this.listPermissionScreen.includes('XemDanhSachEmailDaGui');
+      //  this.XemDanhSachEmailDaGui = this.listPermissionScreen.includes('XemDanhSachEmailDaGui');
       this.UploadBBCuocHop = this.listPermissionScreen.includes('UploadBBCuocHop');
       this.TaiXuongBBCuocHop = this.listPermissionScreen.includes('TaiXuongBBCuocHop');
       this.XoaBBCuocHop = this.listPermissionScreen.includes('XoaBBCuocHop');
@@ -235,7 +235,6 @@ export class ReportMeetingComponent implements OnInit, OnDestroy {
         this.isData.emit(this.isDataObject);
         this.isDataChild = true;
       }
-      this.getListFilterReport();
       this.spinner.hide();
       if (alertReload) {
         this.alertService.success('Danh sách biên bản cuộc họp đã được cập nhật mới nhất!');
@@ -248,12 +247,29 @@ export class ReportMeetingComponent implements OnInit, OnDestroy {
         this.alertService.error('Không thể cập nhật danh sách biên bản cuộc họp!');
       });
   }
-  getListFilterReport() {
-    this.getUploadListReport();
-    this.getInterviewTimeListReport();
+  filterMeetingReportListFilter(alertReload: boolean) {
+    this.spinner.show();
+    const filterReportMeetingNew = new FilterReportMeeting();
+    this.detailResultPackageService.getBidMeetingReportDocsList(
+      this.currentPackageId,
+      '',
+      filterReportMeetingNew,
+      0,
+      1000
+    ).subscribe(response => {
+      this.getListFilterReport(response);
+      this.spinner.hide();
+    },
+      err => {
+        this.spinner.hide();
+      });
   }
-  getUploadListReport() {
-    this.employeeListReport = this.meetingReportList ? this.meetingReportList.map(item => item.uploadedBy) : [];
+  getListFilterReport(response) {
+    this.getUploadListReport(response);
+    this.getInterviewTimeListReport(response);
+  }
+  getUploadListReport(response) {
+    this.employeeListReport = this.meetingReportList ? response.items.map(item => item.uploadedBy) : [];
     this.employeeListReport = groupBy(this.employeeListReport, [{ field: 'employeeId' }]);
     this.employeeListReport = this.employeeListReport.map(item => {
       return {
@@ -263,8 +279,8 @@ export class ReportMeetingComponent implements OnInit, OnDestroy {
     });
     this.employeeListReport = this.employeeListReport.sort((a, b) => a.employeeId - b.employeeId);
   }
-  getInterviewTimeListReport() {
-    this.interviewTimesReport = this.meetingReportList ? this.meetingReportList.map(item => item.interviewTimes) : [];
+  getInterviewTimeListReport(response) {
+    this.interviewTimesReport = this.meetingReportList ? response.items.map(item => item.interviewTimes) : [];
     this.interviewTimesReport = this.interviewTimesReport.sort((a, b) => a - b);
     this.interviewTimesReport = this.interviewTimesReport.filter((el, i, a) => i === a.indexOf(el));
   }
@@ -317,7 +333,6 @@ export class ReportMeetingComponent implements OnInit, OnDestroy {
         this.isData.emit(this.isDataObject);
         this.isDataChild = true;
       }
-      this.getListFilterFile();
       this.spinner.hide();
       if (alertReload) {
         this.alertService.success('Danh sách file presentation đã được cập nhật mới nhất!');
@@ -330,12 +345,29 @@ export class ReportMeetingComponent implements OnInit, OnDestroy {
         this.alertService.error('Không thể cập nhật danh sách file presentation!');
       });
   }
-  getListFilterFile() {
-    this.getUploadListFile();
-    this.getInterviewTimeListFile();
+  filterFileListFilter() {
+    this.spinner.show();
+    const FilterReportMeetingNew = new FilterReportMeeting();
+    this.detailResultPackageService.getBidMeetingFileList(
+      this.currentPackageId,
+      '',
+      FilterReportMeetingNew,
+      0,
+      1000
+    ).subscribe(response => {
+      this.getListFilterFile(response);
+      this.spinner.hide();
+    },
+      err => {
+        this.spinner.hide();
+      });
   }
-  getUploadListFile() {
-    this.employeeListFile = this.meetingFileList ? this.meetingFileList.map(item => item.uploadedBy) : [];
+  getListFilterFile(response) {
+    this.getUploadListFile(response);
+    this.getInterviewTimeListFile(response);
+  }
+  getUploadListFile(response) {
+    this.employeeListFile = this.meetingFileList ? response.items.map(item => item.uploadedBy) : [];
     this.employeeListFile = groupBy(this.employeeListFile, [{ field: 'employeeId' }]);
     this.employeeListFile = this.employeeListFile.map(item => {
       return {
@@ -345,8 +377,8 @@ export class ReportMeetingComponent implements OnInit, OnDestroy {
     });
     this.employeeListFile = this.employeeListFile.sort((a, b) => a.employeeId - b.employeeId);
   }
-  getInterviewTimeListFile() {
-    this.interviewTimesFile = this.meetingFileList ? this.meetingFileList.map(item => item.interviewTimes) : [];
+  getInterviewTimeListFile(response) {
+    this.interviewTimesFile = this.meetingFileList ? response.items.map(item => item.interviewTimes) : [];
     this.interviewTimesFile = this.interviewTimesFile.sort((a, b) => a - b);
     this.interviewTimesFile = this.interviewTimesFile.filter((el, i, a) => i === a.indexOf(el));
   }
@@ -687,5 +719,13 @@ export class ReportMeetingComponent implements OnInit, OnDestroy {
         break;
       }
     }
+  }
+
+  // Tải template
+  downloadTemplate() {
+    this.detailResultPackageService.meetingReportTemplate().subscribe(response => { },
+      err => {
+        this.alertService.error('Đã có lỗi xảy ra!');
+      });
   }
 }

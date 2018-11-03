@@ -659,9 +659,9 @@
                             </td>
                             <td [class.d-none]="!vaiTro" class="text-truncate" [title]="(item.hbcRole?.name)?item.hbcRole?.name:''">{{ item.hbcRole?.name }}</td>
                             <td [class.d-none]="!chuTri" class="text-truncate" [title]="(item.chairEmployee?.employeeName)?item.chairEmployee?.employeeName:''">{{ item.chairEmployee?.employeeName }}</td>
-                            <td [class.d-none]="!loaiKhachHang" class="text-truncate" [title]="(item.classify)?item.classify:''">
-                                <span *ngIf="item && item.classify">
-                                    {{ item.classify | translate }}
+                            <td [class.d-none]="!loaiKhachHang" class="text-truncate" [title]="(item.customer?.customerNewOldType)? (item.customer?.customerNewOldType | translate):''">
+                                <span *ngIf="item && item.customer">
+                                    {{ item.customer?.customerNewOldType | translate }}
                                 </span>
                             </td>
                             <td [class.d-none]="!loaiCongTrinh" class="text-truncate" [title]="(item.projectType?.value)?item.projectType?.value:''">{{ item.projectType?.value }}</td>
@@ -699,7 +699,7 @@
 
 
                             <td [class.d-none]="!lyDoTrungThau" class="text-truncate" [title]="(item.acceptanceReason)?item.acceptanceReason:''">{{ item.acceptanceReason }}</td>
-                            <td [class.d-none]="!lyDoTratThau" class="text-truncate" [title]="(item.unacceptanceReason)?item.unacceptanceReason:''">{{ item.unacceptanceReason }}</td>
+                            <td [class.d-none]="!lyDoTratThau" class="text-truncate" [title]="(item.loseReasonName)?item.loseReasonName:''">{{ item.loseReasonName }}</td>
                             <td [class.d-none]="!lydohuythau" class="text-truncate" [title]="(item.cancelReason)?item.cancelReason:''">{{ item.cancelReason }}</td>
                             <td [class.d-none]="!ngayBatDau" class="text-truncate">
                                 <span *ngIf="item.startTrackingDate">{{ item.startTrackingDate*1000 | date:'dd/MM/yyyy' }}</span>

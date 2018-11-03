@@ -304,6 +304,7 @@ export class PackageListComponent implements OnInit, AfterViewChecked {
     refreshPopupConfig() {
         this.packageService.getListFields(this.getUserId).subscribe(data => {
             this.listField = data;
+            console.log('this.listField-this.listField', this.listField);
             this.listFieldTemp = JSON.parse(JSON.stringify(data));
             this.listFieldNomarlized = [...this.listField].filter(x => x.hidden === true).map(x => x.fieldName);
             this.sum = [...this.listField].filter(x => x.hidden === true).length;
