@@ -49,6 +49,9 @@ export class DemoConsoComponent implements OnInit, AfterViewInit {
       dieuKienHinhAnhDesc: [this.demoConsoModel.dieuKien && this.demoConsoModel.dieuKien.description],
       dieuKienHinhAnhList: [null]
     });
+    if (this.isViewMode) {
+      this.demoConsoForm.disable();
+    }
     this.demoConsoForm.valueChanges.subscribe(data => this.mappingToLiveFormData(data));
   }
   ngAfterViewInit() {

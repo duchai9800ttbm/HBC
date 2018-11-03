@@ -47,6 +47,9 @@ export class SoilConditionComponent implements OnInit, AfterViewInit {
       thongTinCongTrinhGanDoList: null
     });
     this.soilConditionForm.valueChanges.subscribe(data => this.mappingToLiveFormData(data));
+    if (this.isViewMode) {
+      this.soilConditionForm.disable();
+    }
   }
   ngAfterViewInit() {
     if (!this.isViewMode) {

@@ -147,7 +147,8 @@ export class SummaryConditionFormConditionTenderComponent implements OnInit {
                     tienDo: {
                         ngayKhoiCong: DateTimeConvertHelper.fromDtObjectToTimestamp(data.theoHSMT.ngayKhoiCong),
                         thoiGianHoanThanh: data.theoHSMT.thoiGianHoanThanh,
-                        thoiGianHoanThanhTheoNhaThau: data.theoHSMT.thoiGianHoanThanhTheoNhaThau,
+                        thoiGianHoanThanhTheoNhaThau: (data.theoHSMT.thoiGianHoanThanhTheoNhaThau) ?
+                            data.theoHSMT.thoiGianHoanThanhTheoNhaThau : false,
                         thoiGianHoanThanhTheoNhaThauCount: data.theoHSMT.thoiGianHoanThanhTheoNhaThauCount
                     },
                     cacLoaiThue: (data.theoHSMT.cacLoaiThue || []).map(x => x.thue),

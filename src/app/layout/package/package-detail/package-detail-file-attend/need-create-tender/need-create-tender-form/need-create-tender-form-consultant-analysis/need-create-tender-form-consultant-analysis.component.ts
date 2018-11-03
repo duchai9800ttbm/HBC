@@ -22,10 +22,14 @@ export class NeedCreateTenderFormConsultantAnalysisComponent implements OnInit {
 
   ngOnInit() {
     this.routerAction = this.packageService.routerAction;
-    console.log(this.routerAction);
-    this.packageService.routerAction$.subscribe(router => this.routerAction = router);
-    this.createForm();
-    this.consultantAnalysForm.valueChanges.subscribe(data => this.mappingToLiveFormData(data));
+    this.packageService.routerAction$.subscribe(router => {
+      this.routerAction = router;
+      this.createForm();
+      if (this.routerAction === 'view') {
+        this.consultantAnalysForm.disable();
+      }
+      this.consultantAnalysForm.valueChanges.subscribe(data => this.mappingToLiveFormData(data));
+    });
   }
 
   createForm() {

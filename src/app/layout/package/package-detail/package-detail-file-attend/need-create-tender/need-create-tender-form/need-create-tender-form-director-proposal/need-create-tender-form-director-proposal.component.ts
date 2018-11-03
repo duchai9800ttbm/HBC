@@ -27,14 +27,14 @@ export class NeedCreateTenderFormDirectorProposalComponent implements OnInit {
 
     ngOnInit() {
         this.routerAction = this.packageService.routerAction;
-        this.packageService.routerAction$.subscribe(
-            router => (this.routerAction = router)
-        );
-        this.createForm();
-        this.directorProposalForm.valueChanges.subscribe(data =>
-            this.mappingToLiveFormData(data)
-        );
-        this.mappingToLiveFormData(this.directorProposalForm.value);
+        this.packageService.routerAction$.subscribe(router => {
+            this.routerAction = router;
+            this.createForm();
+            if (this.routerAction === 'view') {
+                this.directorProposalForm.disable();
+            }
+            this.directorProposalForm.valueChanges.subscribe(data => this.mappingToLiveFormData(data));
+        });
     }
 
     createForm() {

@@ -1,34 +1,43 @@
-:host(){
+:host() {
     font-size: 80%;
 }
-.close-popup{
+
+.close-popup {
     font-size: 20px;
     font-weight: bold;
     cursor: pointer;
 }
+
 .center-parent {
     display: flex;
     justify-content: center;
     align-items: center;
 }
-.bold-title{
-    font-weight: bold;    
-    }
-.cus-but-cs{
+
+.bold-title {
+    font-weight: bold;
+}
+
+.cus-but-cs {
     width: 13%;
 }
-.cus-header{
+
+.cus-header {
     padding: 0.75rem 1.25rem;
 }
-.no-boder{
+
+.no-boder {
     border: none;
 }
-.no-resize-textarea{
+
+.no-resize-textarea {
     resize: none;
 }
-.boder-input-choose-file{
+
+.boder-input-choose-file {
     border-radius: 0.25rem 0rem 0rem 0.25rem;
 }
+
 .fileUpload {
     position: relative;
     overflow: hidden;
@@ -36,6 +45,7 @@
     width: auto;
 
 }
+
 .fileUpload input.upload {
     position: absolute;
     top: 0;
@@ -48,3 +58,6 @@
     filter: alpha(opacity=0);
 }
 
+.text-breakline {
+    white-space: normal;
+}

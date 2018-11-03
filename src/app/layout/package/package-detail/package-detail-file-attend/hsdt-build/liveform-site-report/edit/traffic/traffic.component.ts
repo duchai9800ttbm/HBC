@@ -65,6 +65,9 @@ export class TrafficComponent implements OnInit, AfterViewInit {
       yeuCauHangRaoList: null
     });
     this.trafficForm.valueChanges.subscribe(data => this.mappingToLiveFormData(data));
+    if (this.isViewMode) {
+      this.trafficForm.disable();
+    }
 
   }
   ngAfterViewInit() {

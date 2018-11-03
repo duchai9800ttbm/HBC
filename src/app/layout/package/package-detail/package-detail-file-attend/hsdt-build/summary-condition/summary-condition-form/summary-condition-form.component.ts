@@ -95,8 +95,9 @@ export class SummaryConditionFormComponent implements OnInit, OnDestroy {
     this.packageService.setSummaryConditionForm(false);
     const obj = new DuLieuLiveFormDKDT();
     this.hoSoDuThauService.emitDataAll(obj);
-    this.subscription.unsubscribe();
-
+    if (this.subscription) {
+      this.subscription.unsubscribe();
+    }
   }
 
   onSubmit(check: boolean) {
@@ -116,6 +117,7 @@ export class SummaryConditionFormComponent implements OnInit, OnDestroy {
       this.showPopupConfirm = false;
     } else {
       this.hoSoDuThauService.createOrUpdateLiveFormTomTat().subscribe(res => {
+        this.hoSoDuThauService.detectUploadFile(true);
         this.router.navigate([`package/detail/${this.packageId}/attend/build/summary`]);
         const message = (this.isCreate) ? 'Tạo' : 'Cập nhật';
         this.alertService.success(`${message} Bảng tóm tắt điều kiện dự thầu thành công!`);

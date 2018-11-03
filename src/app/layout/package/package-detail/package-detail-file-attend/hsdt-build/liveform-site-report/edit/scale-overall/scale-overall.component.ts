@@ -101,6 +101,9 @@ export class ScaleOverallComponent implements OnInit, AfterViewInit {
     this.trangThaiCongTrinhForm = this.fb.group({
       trangthaiCongTrinhList: new FormArray(controls)
     });
+    if (this.isViewMode) {
+      this.scaleOverallForm.disable();
+    }
     this.scaleOverallForm.valueChanges.subscribe(data => this.mappingToLiveFormData(data));
   }
 

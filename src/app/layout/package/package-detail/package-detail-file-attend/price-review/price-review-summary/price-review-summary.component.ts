@@ -91,7 +91,6 @@ export class PriceReviewSummaryComponent implements OnInit, OnDestroy {
       this.listPermission = data;
       const hsdt = this.listPermission.length &&
         this.listPermission.filter(x => x.bidOpportunityStage === 'HSDT')[0];
-      console.log(this.listPermission);
       if (!hsdt) {
         this.listPermissionScreen = [];
       }
@@ -131,6 +130,7 @@ export class PriceReviewSummaryComponent implements OnInit, OnDestroy {
 
     this.packageService.getInforPackageID(this.packageId).subscribe(result => {
       this.package = result;
+      console.log(this.package.stageStatus.id);
       this.isLoading = false;
     }, err => {
     });

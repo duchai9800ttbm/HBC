@@ -2,13 +2,11 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder } from '@angular/forms';
 import { NeedCreateTenderFormComponent } from '../need-create-tender-form.component';
 import DateTimeConvertHelper from '../../../../../../../shared/helpers/datetime-convert-helper';
-import * as moment from 'moment';
 import { PackageService } from '../../../../../../../shared/services/package.service';
 import {
     AlertService,
     SessionService
 } from '../../../../../../../shared/services';
-import { NgxSpinnerService } from 'ngx-spinner';
 import { PackageDetailComponent } from '../../../../package-detail.component';
 import { PackageInfoModel } from '../../../../../../../shared/models/package/package-info.model';
 import { BidStatus } from '../../../../../../../shared/constants/bid-status';
@@ -32,7 +30,6 @@ export class NeedCreateTenderFormDecisionBoardComponent implements OnInit {
         private fb: FormBuilder,
         private packageService: PackageService,
         private sessionService: SessionService,
-        private spinner: NgxSpinnerService,
         private alertService: AlertService,
         private statusObservableHsdtService: StatusObservableHsdtService,
         private router: Router
@@ -43,13 +40,14 @@ export class NeedCreateTenderFormDecisionBoardComponent implements OnInit {
         this.isDirector = (this.sessionService.currentUserInfo && this.sessionService.currentUserInfo.department
             && this.sessionService.currentUserInfo.department.id === '42');
         this.routerAction = this.packageService.routerAction;
-        this.packageService.routerAction$.subscribe(
-            router => (this.routerAction = router)
-        );
-        this.createForm();
-        this.decisionBoardForm.valueChanges.subscribe(data =>
-            this.mappingToLiveFormData(data)
-        );
+        this.packageService.routerAction$.subscribe(router => {
+            this.routerAction = router;
+            this.createForm();
+            if (this.routerAction === 'view') {
+                this.decisionBoardForm.disable();
+            }
+            this.decisionBoardForm.valueChanges.subscribe(data => this.mappingToLiveFormData(data));
+        });
     }
 
     createForm() {
@@ -58,10 +56,6 @@ export class NeedCreateTenderFormDecisionBoardComponent implements OnInit {
                 .decisionOfBoardOfGeneralDirector;
         const directorData =
             NeedCreateTenderFormComponent.formModel.tenderDirectorProposal;
-        // this.expectedTimeStr =
-        //     directorData && directorData.expectedDate
-        //         ? moment(directorData.expectedDate * 1000).format('DD/MM/YYYY')
-        //         : '';
         this.expectedTimeStr = (directorData && directorData.expectedDate) ? directorData.expectedDate : null;
         this.decisionBoardForm = this.fb.group({
             isAgreed: formData ? formData.isAgreed : true,
@@ -81,9 +75,6 @@ export class NeedCreateTenderFormDecisionBoardComponent implements OnInit {
         this.decisionBoardForm.get('isSigned').patchValue(true);
         // khi view có thể ký
         if (this.routerAction === 'view') {
-            // console.log('VII', NeedCreateTenderFormComponent.formModel.tenderDirectorProposal.isAgreed);
-            // console.log('VIII', this.decisionBoardForm.get('isAgreed').value);
-            // this.onSubmit();
             if (this.decisionBoardForm.get('isAgreed').value) {
                 if (NeedCreateTenderFormComponent.formModel.tenderDirectorProposal.isAgreed) {
                     this.approveBidProposal('Xác nhận tham gia dự thầu thành công!', 'Xác nhận tham gia dự thầu không thành công!');
@@ -101,30 +92,24 @@ export class NeedCreateTenderFormDecisionBoardComponent implements OnInit {
     }
 
     approveBidProposal(message: string, messageErr: string) {
-        this.spinner.show();
         this.packageService.approveBidProposal(this.bidOpportunityId, this.decisionBoardForm.get('reason').value)
             .subscribe(data => {
-                this.spinner.hide();
                 this.statusObservableHsdtService.change();
                 this.alertService.success(message);
                 this.getPackageInfo();
             }, err => {
-                this.spinner.hide();
                 this.alertService.error(messageErr);
 
             });
     }
 
     notApproveBidProposal(message: string, messageErr: string) {
-        this.spinner.show();
         this.packageService.notApproveBidProposal(this.bidOpportunityId, this.decisionBoardForm.get('reason').value)
             .subscribe(data => {
-                this.spinner.hide();
                 this.statusObservableHsdtService.change();
                 this.alertService.success(message);
                 this.getPackageInfo();
             }, err => {
-                this.spinner.hide();
                 this.alertService.error(messageErr);
             });
     }
@@ -141,21 +126,17 @@ export class NeedCreateTenderFormDecisionBoardComponent implements OnInit {
     }
 
     onSubmit() {
-        // NeedCreateTenderFormComponent.formModel.isDraftVersion = isDraf;
-        // NeedCreateTenderFormComponent.formModel.bidOpportunityId = this.bidOpportunityId;
         if (NeedCreateTenderFormComponent.formModel.createdEmployeeId) {
             NeedCreateTenderFormComponent.formModel.updatedEmployeeId = this.sessionService.currentUser.employeeId;
         } else {
             NeedCreateTenderFormComponent.formModel.createdEmployeeId = this.sessionService.currentUser.employeeId;
         }
-        this.spinner.show();
         this.packageService
             .createOrUpdateProposedTenderParticipateReport(
                 NeedCreateTenderFormComponent.formModel
             )
             .subscribe(
                 data => {
-                    this.spinner.hide();
                     if (NeedCreateTenderFormComponent.formModel.id) {
                         this.alertService.success(
                             'Cập nhật phiếu đề nghị dự thầu thành công!'
@@ -176,7 +157,6 @@ export class NeedCreateTenderFormDecisionBoardComponent implements OnInit {
                             'Tạo phiếu đề nghị dự thầu thất bại!'
                         );
                     }
-                    this.spinner.hide();
                 }
             );
     }

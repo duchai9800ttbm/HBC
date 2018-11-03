@@ -55,6 +55,9 @@ export class ContentItemComponent implements OnInit, AfterViewInit {
       chiTietNoiDungList: [this.contentItemModel.imageUrls]
     });
     this.contentItemImageList = this.contentItemModel.imageUrls;
+    if (this.isViewMode) {
+      this.contentItemForm.disable();
+    }
   }
 
   mappingData(data) {
