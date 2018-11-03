@@ -28,6 +28,7 @@ import { NgbDropdownConfig } from '@ng-bootstrap/ng-bootstrap';
 import { PackageListItem } from '../../../shared/models/package/package-list-item';
 import { AdministeredPackageList } from '../../../shared/constants/administered-package';
 import { EvaluationModel } from '../../../shared/models/package/evaluation.model';
+import { GroupChaired } from '../../../shared/models/package/group-chaired.model';
 @Component({
     selector: 'app-package-list',
     templateUrl: './package-list.component.html',
@@ -66,7 +67,7 @@ export class PackageListComponent implements OnInit, AfterViewChecked {
     listPhasePackage: Observable<DictionaryItem[]>;
     listPresideHBC = PresideHBC;
     listNameProjectListPackage = NameProjectListPackage;
-    userListItem: UserItemModel[];
+    userListItem: GroupChaired[];
     user: UserModel;
     listField: FieldModel[];
     listFieldTemp;
@@ -195,9 +196,10 @@ export class PackageListComponent implements OnInit, AfterViewChecked {
         this.refreshPopupConfig();
         this.listClassifyCustomer = this.dataService.getListOpportunityClassifies();
         this.listPhasePackage = this.dataService.getListBidOpportunityStages();
-        this.userService.getAllUser('').subscribe(data => {
-            this.userListItem = data;
-        });
+        // this.userService.getAllUser('').subscribe(data => {
+        //     this.userListItem = data;
+        // });
+        this.packageService.getListGroupChaired(0, 100, '').subscribe( data => this.userListItem = data.items);
         setTimeout(() => {
             this.userModel = this.sessionService.userInfo;
             this.listPrivileges = this.userModel.privileges;

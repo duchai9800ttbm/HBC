@@ -1210,7 +1210,6 @@ export class PackageService {
                     this.toGetListGroupChaired
                 )
             };
-        })
+        });
     }
-
 }

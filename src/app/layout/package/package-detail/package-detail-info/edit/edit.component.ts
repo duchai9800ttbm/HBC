@@ -29,6 +29,7 @@ import { UserItemModel } from '../../../../../shared/models/user/user-item.model
 import CustomValidator from '../../../../../shared/helpers/custom-validator.helper';
 import { EvaluationModel } from '../../../../../shared/models/package/evaluation.model';
 import { moment } from '../../../../../../../node_modules/ngx-bootstrap/chronos/test/chain';
+import { GroupChaired } from '../../../../../shared/models/package/group-chaired.model';
 @Component({
     selector: 'app-edit',
     templateUrl: './edit.component.html',
@@ -66,7 +67,7 @@ export class EditComponent implements OnInit {
     editPackage: any;
     assignSearchResults: DictionaryItem[];
     customersSearchResults: any[];
-    userListItem: UserItemModel[];
+    userListItem: GroupChaired[];
     dataEvaluation: EvaluationModel[];
 
     constructor(
@@ -82,7 +83,8 @@ export class EditComponent implements OnInit {
 
     ngOnInit() {
         this.getDataEvaluation();
-        this.userService.getAllUser('').subscribe(data => this.userListItem = data);
+        // this.userService.getAllUser('').subscribe(data => this.userListItem = data);
+        this.packageService.getListGroupChaired(0, 100, '').subscribe( data => this.userListItem = data.items);
         this.packageId = +PackageDetailComponent.packageId;
         this.listZone = this.dataService.getListRegionTypes();
         this.listQuarterOfYear = this.dataService.getListQuatersOfYear();
@@ -243,12 +245,12 @@ export class EditComponent implements OnInit {
             this.alertService.success(message);
         }
     }
-    mapNewUser(employeeId) {
-        this.userService.getAllUser('').subscribe(data => {
-            this.userListItem = data;
-            this.packageForm.get('chairEmployeeId').patchValue(employeeId);
-        });
-    }
+    // mapNewUser(employeeId) {
+    //     this.userService.getAllUser('').subscribe(data => {
+    //         this.userListItem = data;
+    //         this.packageForm.get('chairEmployeeId').patchValue(employeeId);
+    //     });
+    // }
 
     mapNewCustomer(obj) {
         this.packageForm.get('customerId').patchValue(obj);
