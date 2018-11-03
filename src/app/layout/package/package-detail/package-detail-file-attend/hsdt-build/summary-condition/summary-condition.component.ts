@@ -17,6 +17,7 @@ import { DialogService } from '../../../../../../../../node_modules/@progress/ke
 import { FormInComponent } from '../../../../../../shared/components/form-in/form-in.component';
 import { PermissionService } from '../../../../../../shared/services/permission.service';
 import { PermissionModel } from '../../../../../../shared/models/permission/permission.model';
+import { DocumentTypeId } from '../../../../../../shared/constants/document-type-id';
 
 @Component({
   selector: 'app-summary-condition',
@@ -34,11 +35,22 @@ export class SummaryConditionComponent implements OnInit, OnDestroy {
   dialog;
   indexItemHistoryChange: number;
   pagedResultChangeHistoryList: PagedResult<HistoryLiveForm> = new PagedResult<HistoryLiveForm>();
-  listPermission: Array<PermissionModel>;
-  listPermissionScreen = [];
   isClosedHSDT: boolean;
   subscription: Subscription;
 
+
+  
+  listPermission: Array<PermissionModel>;
+  listPermissionScreen2 = [];
+  documentTypeId = DocumentTypeId;
+
+  ChotHSDT = false;
+  TaoMoiLiveForm = false;
+  XemLiveForm = false;
+  SuaLiveForm = false;
+  XoaLiveForm = false;
+  InLiveForm = false;
+  TaiTemplate = false;
   constructor(
     private hoSoDuThauService: HoSoDuThauService,
     private packageService: PackageService,
@@ -54,21 +66,33 @@ export class SummaryConditionComponent implements OnInit, OnDestroy {
       this.isClosedHSDT = status;
     });
     this.packageId = PackageDetailComponent.packageId;
-
-    this.permissionService.get().subscribe(data => {
+    const permission$ = this.permissionService.get().subscribe(data => {
       this.listPermission = data;
-      const hsdt = this.listPermission.length &&
+      const hsdt2 = this.listPermission.length &&
         this.listPermission.filter(x => x.bidOpportunityStage === 'HSDT')[0];
-      if (hsdt) {
-        const screen = hsdt.userPermissionDetails.length
-          && hsdt.userPermissionDetails.filter(y => y.permissionGroup.value === 'TrinhDuyetGia')[0];
-        if (screen) {
-          this.listPermissionScreen = screen.permissions.filter(z => z.value);
+      if (!hsdt2) {
+        this.listPermissionScreen2 = [];
+      }
+      if (hsdt2) {
+        const screen2 = hsdt2.userPermissionDetails.length
+          && hsdt2.userPermissionDetails.filter(y => y.permissionGroup.value === 'LapHoSoDuThauLiveForm')[0];
+        if (!screen2) {
+          this.listPermissionScreen2 = [];
+        }
+        if (screen2) {
+          this.listPermissionScreen2 = screen2.permissions
+            .filter(t => t.tenderDocumentTypeId === this.documentTypeId.BangTomTatDK).map(z => z.value);
         }
       }
+      this.ChotHSDT = this.listPermissionScreen2.includes('ChotHSDT');
+      this.TaoMoiLiveForm = this.listPermissionScreen2.includes('TaoMoiLiveForm');
+      this.XemLiveForm = this.listPermissionScreen2.includes('XemLiveForm');
+      this.SuaLiveForm = this.listPermissionScreen2.includes('SuaLiveForm');
+      this.XoaLiveForm = this.listPermissionScreen2.includes('XoaLiveForm');
+      this.InLiveForm = this.listPermissionScreen2.includes('InLiveForm');
+      this.TaiTemplate = this.listPermissionScreen2.includes('TaiTemplate');
     });
-
-
+    this.subscription.add(permission$);
     this.hoSoDuThauService.getInfoTenderConditionalSummary(this.packageId)
       .subscribe(data => {
         this.summaryCondition = data;

@@ -4,30 +4,34 @@ export const AdminPermissions = [
         userPermissionDetails: [
             {
                 permissionGroup: {
-                    key: '1',
+                    key: 1,
                     value: 'HSMT',
                     displayText: 'Hồ sơ mời thầu'
                 },
                 permissions: [
                     {
-                        key: '73',
+                        key: 73,
                         value: 'UploadHSMT',
-                        displayText: 'Upload HSMT'
+                        displayText: 'Upload HSMT',
+                        tenderDocumentTypeId: 0
                     },
                     {
-                        key: '74',
+                        key: 74,
                         value: 'DownloadFile',
-                        displayText: 'Download file'
+                        displayText: 'Download file',
+                        tenderDocumentTypeId: 0
                     },
                     {
-                        key: '75',
+                        key: 75,
                         value: 'XoaFile',
-                        displayText: 'Xóa file'
+                        displayText: 'Xóa file',
+                        tenderDocumentTypeId: 0
                     },
                     {
-                        key: '76',
+                        key: 76,
                         value: 'XacNhanDaDuHSMT',
-                        displayText: 'Xác nhận Đã đủ HSMT'
+                        displayText: 'Xác nhận Đã đủ HSMT',
+                        tenderDocumentTypeId: 0
                     }
                 ]
             }
@@ -38,124 +42,145 @@ export const AdminPermissions = [
         userPermissionDetails: [
             {
                 permissionGroup: {
-                    key: '2',
+                    key: 2,
                     value: 'PhieuDeNghiDuThau',
                     displayText: 'Phiếu đề nghị dự thầu'
                 },
                 permissions: [
                     {
-                        key: '77',
+                        key: 77,
                         value: 'TaoMoiDNDT',
-                        displayText: 'Tạo mới ĐNDT'
+                        displayText: 'Tạo mới ĐNDT',
+                        tenderDocumentTypeId: 0
                     },
                     {
-                        key: '78',
+                        key: 78,
                         value: 'XemDNDT',
-                        displayText: 'Xem ĐNDT'
+                        displayText: 'Xem ĐNDT',
+                        tenderDocumentTypeId: 0
                     },
                     {
-                        key: '79',
+                        key: 79,
                         value: 'SuaDNDT',
-                        displayText: 'Sửa ĐNDT'
+                        displayText: 'Sửa ĐNDT',
+                        tenderDocumentTypeId: 0
                     },
                     {
-                        key: '80',
+                        key: 80,
                         value: 'XoaDNDT',
-                        displayText: 'Xóa ĐNDT'
+                        displayText: 'Xóa ĐNDT',
+                        tenderDocumentTypeId: 0
                     },
                     {
-                        key: '81',
+                        key: 81,
                         value: 'InDNDT',
-                        displayText: 'In ĐNDT'
+                        displayText: 'In ĐNDT',
+                        tenderDocumentTypeId: 0
                     },
                     {
-                        key: '82',
+                        key: 82,
                         value: 'XacNhanKy',
-                        displayText: 'Xác nhân ký (Giám đốc DT)'
+                        displayText: 'Xác nhân ký (Giám đốc DT)',
+                        tenderDocumentTypeId: 0
                     },
                     {
-                        key: '83',
+                        key: 83,
                         value: 'GuiDuyetDNDT',
-                        displayText: 'Gửi duyệt ĐNDT'
+                        displayText: 'Gửi duyệt ĐNDT',
+                        tenderDocumentTypeId: 0
                     },
                     {
-                        key: '84',
+                        key: 84,
                         value: 'ChapThuanKhongChapThuan',
-                        displayText: 'Chấp thuận/Không chấp thuận ĐNDT (BGĐ)'
+                        displayText: 'Chấp thuận/Không chấp thuận ĐNDT (BGĐ)',
+                        tenderDocumentTypeId: 0
                     },
                     {
-                        key: '85',
+                        key: 85,
                         value: 'TaiTemplate',
-                        displayText: 'Tải template ĐNDT'
+                        displayText: 'Tải template ĐNDT',
+                        tenderDocumentTypeId: 0
                     }
                 ]
             },
             {
                 permissionGroup: {
-                    key: '3',
+                    key: 3,
                     value: 'TrienKhaiVaPhanCongTienDo',
                     displayText: 'Triển khai & phân công tiến độ (PCTĐ)'
                 },
                 permissions: [
                     {
-                        key: '86',
+                        key: 86,
                         value: 'ThongBaoTrienKhai',
-                        displayText: 'Thông báo triển khai'
+                        displayText: 'Thông báo triển khai',
+                        tenderDocumentTypeId: 0
                     },
                     {
-                        key: '87',
+                        key: 87,
                         value: 'XemEmail',
-                        displayText: 'Xem email'
+                        displayText: 'Xem email',
+                        tenderDocumentTypeId: 0
                     },
                     {
-                        key: '88',
+                        key: 88,
                         value: 'TaoMoiBangPCTD',
-                        displayText: 'Tạo mói bảng PCTĐ'
+                        displayText: 'Tạo mói bảng PCTĐ',
+                        tenderDocumentTypeId: 0
                     },
                     {
-                        key: '89',
+                        key: 89,
                         value: 'XemBangPCTD',
-                        displayText: 'Xem Bảng PCTĐ'
+                        displayText: 'Xem Bảng PCTĐ',
+                        tenderDocumentTypeId: 0
                     },
                     {
-                        key: '90',
+                        key: 90,
                         value: 'SuaBangPCTD',
-                        displayText: 'Sửa Bảng PCTĐ'
+                        displayText: 'Sửa Bảng PCTĐ',
+                        tenderDocumentTypeId: 0
                     },
                     {
-                        key: '91',
+                        key: 91,
                         value: 'XoaBangPCTD',
-                        displayText: 'Xoá Bảng PCTĐ'
+                        displayText: 'Xoá Bảng PCTĐ',
+                        tenderDocumentTypeId: 0
                     },
                     {
-                        key: '92',
+                        key: 92,
                         value: 'InBangPCTD',
-                        displayText: 'In Bảng PCTĐ'
+                        displayText: 'In Bảng PCTĐ',
+                        tenderDocumentTypeId: 0
                     },
                     {
-                        key: '93',
+                        key: 93,
                         value: 'XacNhanKyPrepared',
-                        displayText: 'Xác nhận ký (Prepared by)'
+                        displayText: 'Xác nhận ký (Prepared by)',
+                        tenderDocumentTypeId: 0
                     },
                     {
-                        key: '94',
+                        key: 94,
                         value: 'XacNhanKyApproved',
-                        displayText: 'Xác nhận ký (Approved by)'
+                        displayText: 'Xác nhận ký (Approved by)',
+                        tenderDocumentTypeId: 0
                     },
                     {
-                        key: '95',
+                        key: 95,
                         value: 'GuiPCTD',
-                        displayText: 'Gửi PCTĐ'
+                        displayText: 'Gửi PCTĐ',
+                        tenderDocumentTypeId: 0
                     },
                     {
-                        key: '96',
+                        key: 96,
                         value: 'TaiTemplatePCTD',
-                        displayText: 'Tải template PCTĐ'
+                        displayText: 'Tải template PCTĐ',
+                        tenderDocumentTypeId: 0
                     },
                     {
-                        key: '97',
+                        key: 97,
                         value: 'BatDauLapHSDT',
-                        displayText: 'Bắt đầu lập HSTD'
+                        displayText: 'Bắt đầu lập HSTD',
+                        tenderDocumentTypeId: 0
                     }
                 ]
             },
@@ -167,54 +192,64 @@ export const AdminPermissions = [
                 },
                 permissions: [
                     {
-                        key: '109',
+                        key: 109,
                         value: 'TaoMoiTDG',
-                        displayText: 'Tạo mới TDG'
+                        displayText: 'Tạo mới TDG',
+                        tenderDocumentTypeId: 0
                     },
                     {
-                        key: '110',
+                        key: 110,
                         value: 'XemTDG',
-                        displayText: 'Xem TDG'
+                        displayText: 'Xem TDG',
+                        tenderDocumentTypeId: 0
                     },
                     {
-                        key: '111',
+                        key: 111,
                         value: 'SuaTDG',
-                        displayText: 'Sửa TDG'
+                        displayText: 'Sửa TDG',
+                        tenderDocumentTypeId: 0
                     },
                     {
-                        key: '112',
+                        key: 112,
                         value: 'XoaTDG',
-                        displayText: 'Xoá TDG'
+                        displayText: 'Xoá TDG',
+                        tenderDocumentTypeId: 0
                     },
                     {
-                        key: '113',
+                        key: 113,
                         value: 'InTDG',
-                        displayText: 'In TDG'
+                        displayText: 'In TDG',
+                        tenderDocumentTypeId: 0
                     },
                     {
-                        key: '114',
+                        key: 114,
                         value: 'DuyetTDGTNDuThau',
-                        displayText: 'Duyệt TDG (TN Dự thầu)'
+                        displayText: 'Duyệt TDG (TN Dự thầu)',
+                        tenderDocumentTypeId: 0
                     },
                     {
-                        key: '115',
+                        key: 115,
                         value: 'TaiTemplateTDG',
-                        displayText: 'Tải template TDG'
+                        displayText: 'Tải template TDG',
+                        tenderDocumentTypeId: 0
                     },
                     {
-                        key: '116',
+                        key: 116,
                         value: 'DuyetTDGTPDuThau',
-                        displayText: 'Duyệt TDG (TP. Dự thầu)'
+                        displayText: 'Duyệt TDG (TP. Dự thầu)',
+                        tenderDocumentTypeId: 0
                     },
                     {
-                        key: '117',
+                        key: 117,
                         value: 'GuiDuyet',
-                        displayText: 'Gửi duyệt/Gửi duyệt lại TDG'
+                        displayText: 'Gửi duyệt/Gửi duyệt lại TDG',
+                        tenderDocumentTypeId: 0
                     },
                     {
-                        key: '118',
+                        key: 118,
                         value: 'DuyetTDGBGD',
-                        displayText: 'Duyệt TDG (BGĐ)'
+                        displayText: 'Duyệt TDG (BGĐ)',
+                        tenderDocumentTypeId: 0
                     }
                 ]
             },
@@ -226,19 +261,22 @@ export const AdminPermissions = [
                 },
                 permissions: [
                     {
-                        key: '119',
+                        key: 119,
                         value: 'ChotHoSo',
-                        displayText: 'Chốt hồ sơ'
+                        displayText: 'Chốt hồ sơ',
+                        tenderDocumentTypeId: 0
                     },
                     {
-                        key: '120',
+                        key: 120,
                         value: 'NopHSDT',
-                        displayText: 'Nộp HSDT'
+                        displayText: 'Nộp HSDT',
+                        tenderDocumentTypeId: 0
                     },
                     {
-                        key: '121',
+                        key: 121,
                         value: 'HieuChinhHSDT',
-                        displayText: 'Hiệu chỉnh HSDT'
+                        displayText: 'Hiệu chỉnh HSDT',
+                        tenderDocumentTypeId: 0
                     }
                 ]
             },
@@ -250,68 +288,46 @@ export const AdminPermissions = [
                 },
                 permissions: [
                     {
-                        key: '122',
+                        key: 122,
                         value: 'TaoMoiLMPV',
-                        displayText: 'Tạo mới lời mời phỏng vấn'
+                        displayText: 'Tạo mới lời mời phỏng vấn',
+                        tenderDocumentTypeId: 0
                     },
                     {
-                        key: '123',
+                        key: 123,
                         value: 'CapNhatLMPV',
-                        displayText: 'Cập nhật lời mời phỏng vấn'
+                        displayText: 'Cập nhật lời mời phỏng vấn',
+                        tenderDocumentTypeId: 0
                     },
                     {
-                        key: '124',
+                        key: 124,
                         value: 'ThongBaoPV',
-                        displayText: 'Thông báo phỏng vấn'
+                        displayText: 'Thông báo phỏng vấn',
+                        tenderDocumentTypeId: 0
                     },
                     {
-                        key: '125',
+                        key: 125,
                         value: 'XemEmailTBPV',
-                        displayText: 'Xem email thông báo PV'
+                        displayText: 'Xem email thông báo PV',
+                        tenderDocumentTypeId: 0
                     },
                     {
-                        key: '126',
+                        key: 126,
                         value: 'ChotCongTacChuanBiPhongVan',
-                        displayText: 'Chốt công tác chuẩn bị PV'
+                        displayText: 'Chốt công tác chuẩn bị PV',
+                        tenderDocumentTypeId: 0
                     },
                     {
-                        key: '127',
+                        key: 127,
                         value: 'UploadBBPV',
-                        displayText: 'Upload BBPV'
+                        displayText: 'Upload BBPV',
+                        tenderDocumentTypeId: 0
                     },
                     {
-                        key: '128',
+                        key: 128,
                         value: 'DongPV',
-                        displayText: 'Đóng phỏng vấn'
-                    }
-                ]
-            },
-            {
-                permissionGroup: {
-                    key: '4',
-                    value: 'LapHoSoDuThauFile',
-                    displayText: 'Lập HSDT (upload file)\r\n'
-                },
-                permissions: [
-                    {
-                        key: '98',
-                        value: 'UploadHSDT',
-                        displayText: 'Upload HSDT'
-                    },
-                    {
-                        key: '99',
-                        value: 'DownloadFile',
-                        displayText: 'Download file'
-                    },
-                    {
-                        key: '100',
-                        value: 'XoaFile',
-                        displayText: 'Xoá file'
-                    },
-                    {
-                        key: '101',
-                        value: 'TaiTemplate',
-                        displayText: 'Tải template'
+                        displayText: 'Đóng phỏng vấn',
+                        tenderDocumentTypeId: 0
                     }
                 ]
             },
@@ -323,39 +339,265 @@ export const AdminPermissions = [
                 },
                 permissions: [
                     {
-                        key: '102',
+                        key: 102,
                         value: 'TaoMoiLiveForm',
-                        displayText: 'Tạo mới liveform'
+                        displayText: 'Tạo mới liveform',
+                        tenderDocumentTypeId: 3
                     },
                     {
-                        key: '103',
+                        key: 103,
                         value: 'XemLiveForm',
-                        displayText: 'Xem liveform'
+                        displayText: 'Xem liveform',
+                        tenderDocumentTypeId: 3
                     },
                     {
-                        key: '104',
+                        key: 104,
                         value: 'SuaLiveForm',
-                        displayText: 'Sửa liveform'
+                        displayText: 'Sửa liveform',
+                        tenderDocumentTypeId: 3
                     },
                     {
-                        key: '105',
+                        key: 105,
                         value: 'XoaLiveForm',
-                        displayText: 'Xoá liveform'
+                        displayText: 'Xoá liveform',
+                        tenderDocumentTypeId: 3
                     },
                     {
-                        key: '106',
+                        key: 106,
                         value: 'InLiveForm',
-                        displayText: 'In liveform'
+                        displayText: 'In liveform',
+                        tenderDocumentTypeId: 3
                     },
                     {
-                        key: '107',
+                        key: 107,
                         value: 'TaiTemplate',
-                        displayText: 'Tải template'
+                        displayText: 'Tải template',
+                        tenderDocumentTypeId: 3
                     },
                     {
-                        key: '108',
+                        key: 102,
+                        value: 'TaoMoiLiveForm',
+                        displayText: 'Tạo mới liveform',
+                        tenderDocumentTypeId: 1
+                    },
+                    {
+                        key: 103,
+                        value: 'XemLiveForm',
+                        displayText: 'Xem liveform',
+                        tenderDocumentTypeId: 1
+                    },
+                    {
+                        key: 104,
+                        value: 'SuaLiveForm',
+                        displayText: 'Sửa liveform',
+                        tenderDocumentTypeId: 1
+                    },
+                    {
+                        key: 105,
+                        value: 'XoaLiveForm',
+                        displayText: 'Xoá liveform',
+                        tenderDocumentTypeId: 1
+                    },
+                    {
+                        key: 106,
+                        value: 'InLiveForm',
+                        displayText: 'In liveform',
+                        tenderDocumentTypeId: 1
+                    },
+                    {
+                        key: 107,
+                        value: 'TaiTemplate',
+                        displayText: 'Tải template',
+                        tenderDocumentTypeId: 1
+                    },
+                    {
+                        key: 108,
                         value: 'ChotHSDT',
-                        displayText: 'Chốt HSDT'
+                        displayText: 'Chốt HSDT',
+                        tenderDocumentTypeId: 3
+                    },
+                    {
+                        key: 108,
+                        value: 'ChotHSDT',
+                        displayText: 'Chốt HSDT',
+                        tenderDocumentTypeId: 1
+                    }
+                ]
+            },
+            {
+                permissionGroup: {
+                    key: 4,
+                    value: 'LapHoSoDuThauFile',
+                    displayText: 'Lập HSDT (upload file)\r\n'
+                },
+                permissions: [
+                    {
+                        key: 98,
+                        value: 'UploadHSDT',
+                        displayText: 'Upload HSDT',
+                        tenderDocumentTypeId: 6
+                    },
+                    {
+                        key: 101,
+                        value: 'TaiTemplate',
+                        displayText: 'Tải template',
+                        tenderDocumentTypeId: 6
+                    },
+                    {
+                        key: 101,
+                        value: 'TaiTemplate',
+                        displayText: 'Tải template',
+                        tenderDocumentTypeId: 5
+                    },
+                    {
+                        key: 101,
+                        value: 'TaiTemplate',
+                        displayText: 'Tải template',
+                        tenderDocumentTypeId: 2
+                    },
+                    {
+                        key: 98,
+                        value: 'UploadHSDT',
+                        displayText: 'Upload HSDT',
+                        tenderDocumentTypeId: 5
+                    },
+                    {
+                        key: 99,
+                        value: 'DownloadFile',
+                        displayText: 'Download file',
+                        tenderDocumentTypeId: 5
+                    },
+                    {
+                        key: 100,
+                        value: 'XoaFile',
+                        displayText: 'Xoá file',
+                        tenderDocumentTypeId: 5
+                    },
+                    {
+                        key: 98,
+                        value: 'UploadHSDT',
+                        displayText: 'Upload HSDT',
+                        tenderDocumentTypeId: 2
+                    },
+                    {
+                        key: 98,
+                        value: 'UploadHSDT',
+                        displayText: 'Upload HSDT',
+                        tenderDocumentTypeId: 4
+                    },
+                    {
+                        key: 98,
+                        value: 'UploadHSDT',
+                        displayText: 'Upload HSDT',
+                        tenderDocumentTypeId: 7
+                    },
+                    {
+                        key: 98,
+                        value: 'UploadHSDT',
+                        displayText: 'Upload HSDT',
+                        tenderDocumentTypeId: 8
+                    },
+                    {
+                        key: 98,
+                        value: 'UploadHSDT',
+                        displayText: 'Upload HSDT',
+                        tenderDocumentTypeId: 21
+                    },
+                    {
+                        key: 99,
+                        value: 'DownloadFile',
+                        displayText: 'Download file',
+                        tenderDocumentTypeId: 2
+                    },
+                    {
+                        key: 99,
+                        value: 'DownloadFile',
+                        displayText: 'Download file',
+                        tenderDocumentTypeId: 4
+                    },
+                    {
+                        key: 99,
+                        value: 'DownloadFile',
+                        displayText: 'Download file',
+                        tenderDocumentTypeId: 6
+                    },
+                    {
+                        key: 99,
+                        value: 'DownloadFile',
+                        displayText: 'Download file',
+                        tenderDocumentTypeId: 7
+                    },
+                    {
+                        key: 99,
+                        value: 'DownloadFile',
+                        displayText: 'Download file',
+                        tenderDocumentTypeId: 8
+                    },
+                    {
+                        key: 99,
+                        value: 'DownloadFile',
+                        displayText: 'Download file',
+                        tenderDocumentTypeId: 21
+                    },
+                    {
+                        key: 100,
+                        value: 'XoaFile',
+                        displayText: 'Xoá file',
+                        tenderDocumentTypeId: 2
+                    },
+                    {
+                        key: 100,
+                        value: 'XoaFile',
+                        displayText: 'Xoá file',
+                        tenderDocumentTypeId: 4
+                    },
+                    {
+                        key: 100,
+                        value: 'XoaFile',
+                        displayText: 'Xoá file',
+                        tenderDocumentTypeId: 6
+                    },
+                    {
+                        key: 100,
+                        value: 'XoaFile',
+                        displayText: 'Xoá file',
+                        tenderDocumentTypeId: 7
+                    },
+                    {
+                        key: 100,
+                        value: 'XoaFile',
+                        displayText: 'Xoá file',
+                        tenderDocumentTypeId: 8
+                    },
+                    {
+                        key: 100,
+                        value: 'XoaFile',
+                        displayText: 'Xoá file',
+                        tenderDocumentTypeId: 21
+                    },
+                    {
+                        key: 101,
+                        value: 'TaiTemplate',
+                        displayText: 'Tải template',
+                        tenderDocumentTypeId: 4
+                    },
+                    {
+                        key: 101,
+                        value: 'TaiTemplate',
+                        displayText: 'Tải template',
+                        tenderDocumentTypeId: 7
+                    },
+                    {
+                        key: 101,
+                        value: 'TaiTemplate',
+                        displayText: 'Tải template',
+                        tenderDocumentTypeId: 8
+                    },
+                    {
+                        key: 101,
+                        value: 'TaiTemplate',
+                        displayText: 'Tải template',
+                        tenderDocumentTypeId: 21
                     }
                 ]
             }
@@ -366,138 +608,160 @@ export const AdminPermissions = [
         userPermissionDetails: [
             {
                 permissionGroup: {
-                    key: '9',
+                    key: 9,
                     value: 'KetQuaDuThau',
                     displayText: 'Kết quả dự thầu'
                 },
                 permissions: [
                     {
-                        key: '129',
+                        key: 129,
                         value: 'ChonKQDT',
-                        displayText: 'Chọn KQDT (Trúng/Trật/Huỷ)'
+                        displayText: 'Chọn KQDT (Trúng/Trật/Huỷ)',
+                        tenderDocumentTypeId: 0
                     },
                     {
-                        key: '130',
+                        key: 130,
                         value: 'UploadKQDT',
-                        displayText: 'Upload KQDT (Trúng/Trật)'
+                        displayText: 'Upload KQDT (Trúng/Trật)',
+                        tenderDocumentTypeId: 0
                     },
                     {
-                        key: '131',
+                        key: 131,
                         value: 'TaiXuongKQDT',
-                        displayText: ' Tải xuống KQDT'
+                        displayText: ' Tải xuống KQDT',
+                        tenderDocumentTypeId: 0
                     },
                     {
-                        key: '132',
+                        key: 132,
                         value: 'TaiTemplate',
-                        displayText: 'Tải template'
+                        displayText: 'Tải template',
+                        tenderDocumentTypeId: 0
                     },
                     {
-                        key: '133',
+                        key: 133,
                         value: 'XoaKQDT',
-                        displayText: 'Xoá KQDT'
+                        displayText: 'Xoá KQDT',
+                        tenderDocumentTypeId: 0
                     },
                     {
-                        key: '134',
+                        key: 134,
                         value: 'ThongBaoDenPhongHopDong',
-                        displayText: 'Thông báo đến P.Hợp đồng'
+                        displayText: 'Thông báo đến P.Hợp đồng',
+                        tenderDocumentTypeId: 0
                     },
                     {
-                        key: '135',
+                        key: 135,
                         value: 'XemEmailPhanHoi',
-                        displayText: 'Xem email phản hồi'
+                        displayText: 'Xem email phản hồi',
+                        tenderDocumentTypeId: 0
                     },
                     {
-                        key: '136',
+                        key: 136,
                         value: 'ThongBaoStakeholders',
-                        displayText: 'Thông báo đến Stakeholders'
+                        displayText: 'Thông báo đến Stakeholders',
+                        tenderDocumentTypeId: 0
                     },
                     {
-                        key: '137',
+                        key: 137,
                         value: 'XemMailThongBaoTrungThau',
-                        displayText: 'Xem email thông báo trúng thầu'
+                        displayText: 'Xem email thông báo trúng thầu',
+                        tenderDocumentTypeId: 0
                     },
                     {
-                        key: '138',
+                        key: 138,
                         value: 'ChuyenGiaoTaiLieu',
-                        displayText: 'Chuyển giao tài liệu'
+                        displayText: 'Chuyển giao tài liệu',
+                        tenderDocumentTypeId: 0
                     },
                     {
-                        key: '139',
+                        key: 139,
                         value: 'XemMailChuyenGiao',
-                        displayText: 'Xem email chuyển giao'
+                        displayText: 'Xem email chuyển giao',
+                        tenderDocumentTypeId: 0
                     }
                 ]
             },
             {
                 permissionGroup: {
-                    key: '10',
+                    key: 10,
                     value: 'HopDongKiKet',
                     displayText: 'Hợp đồng kí kết'
                 },
                 permissions: [
                     {
-                        key: '140',
+                        key: 140,
                         value: 'ThemMoiHD',
-                        displayText: 'Thêm mới HĐ'
+                        displayText: 'Thêm mới HĐ',
+                        tenderDocumentTypeId: 0
                     },
                     {
-                        key: '141',
+                        key: 141,
                         value: 'TaiXuongHD',
-                        displayText: 'Tải xuống HĐ'
+                        displayText: 'Tải xuống HĐ',
+                        tenderDocumentTypeId: 0
                     },
                     {
-                        key: '142',
+                        key: 142,
                         value: 'XoaHD',
-                        displayText: 'Xoá HĐ'
+                        displayText: 'Xoá HĐ',
+                        tenderDocumentTypeId: 0
                     }
                 ]
             },
             {
                 permissionGroup: {
-                    key: '12',
+                    key: 12,
                     value: 'HopKickOff',
                     displayText: 'Họp kick-off\r\n'
                 },
                 permissions: [
                     {
-                        key: '143',
+                        key: 143,
                         value: 'ThongBaoHopKickoff',
-                        displayText: 'Thông báo họp kick-off'
+                        displayText: 'Thông báo họp kick-off',
+                        tenderDocumentTypeId: 0
                     },
                     {
-                        key: '144',
+                        key: 144,
                         value: 'XemDanhSachEmailDaGui',
-                        displayText: 'Xem danh sách email đã gửi'
+                        displayText: 'Xem danh sách email đã gửi',
+                        tenderDocumentTypeId: 0
                     },
                     {
-                        key: '145',
+                        key: 145,
                         value: 'UploadBBCuocHop',
-                        displayText: 'Upload BB cuộc họp'
+                        displayText: 'Upload BB cuộc họp',
+                        tenderDocumentTypeId: 0
                     },
                     {
-                        key: '146',
+                        key: 146,
                         value: 'TaiXuongBBCuocHop',
-                        displayText: 'Tải xuống BB cuộc họp'
+                        displayText: 'Tải xuống BB cuộc họp',
+                        tenderDocumentTypeId: 0
                     },
                     {
-                        key: '147',
+                        key: 147,
                         value: 'XoaBBCuocHop',
-                        displayText: 'Xoá BB cuộc họp'
+                        displayText: 'Xoá BB cuộc họp',
+                        tenderDocumentTypeId: 0
                     },
                     {
-                        key: '148',
+                        key: 148,
                         value: 'UploadFilePresentation',
-                        displayText: 'Upload file Presentation'
+                        displayText: 'Upload file Presentation',
+                        tenderDocumentTypeId: 0
                     },
                     {
-                        key: '149',
+                        key: 149,
                         value: 'TaiXuongFilePresentation',
-                        displayText: 'Tải xuống file Presentation'
+                        displayText: 'Tải xuống file Presentation',
+                        tenderDocumentTypeId: 0
                     },
                     {
-                        key: '150',
+                        key: 150,
                         value: 'XoaFilePresentation',
-                        displayText: 'Xoá file Presentation'
+                        displayText: 'Xoá file Presentation',
+                        tenderDocumentTypeId: 0
                     }
                 ]
             }
