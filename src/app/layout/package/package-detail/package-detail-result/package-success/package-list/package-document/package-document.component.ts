@@ -31,28 +31,30 @@ export class PackageDocumentComponent implements OnInit {
   ngOnInit() {
     this.currentPackageId = +PackageDetailComponent.packageId;
     this.statusPackage = this.packageService.statusPackageValue2;
-    this.packageService.statusPackageValue$.subscribe(status => {
-      this.statusPackage = status;
-    });
     this.isContract = false;
     const userInfo = this.sessionService.currentUserInfo;
-    this.detailResultPackageService.filterTransferDocDetailsList(
-      this.currentPackageId,
-      '',
-      this.newfilter
-    ).subscribe(response => {
-      this.checkUser = response.some(itemResponse => {
-        if (itemResponse.bidTransferDocDetails && itemResponse.bidTransferDocDetails.length !== 0) {
-          return itemResponse.bidTransferDocDetails.some(itemDoc => {
-            if (itemDoc.sendEmployee && (itemDoc.sendEmployee.employeeId === userInfo.employeeId)) {
-              return true;
-            } else {
-              return false;
-            }
-          });
-        } else {
-          return false;
-        }
+    this.packageService.statusPackageValue$.subscribe(status => {
+      this.statusPackage = status;
+      this.detailResultPackageService.filterTransferDocDetailsList(
+        this.currentPackageId,
+        '',
+        this.newfilter
+      ).subscribe(response => {
+        console.log('QUYHEEFFFF', response);
+        this.checkUser = response.some(itemResponse => {
+          if (itemResponse.bidTransferDocDetails && itemResponse.bidTransferDocDetails.length !== 0) {
+            return itemResponse.bidTransferDocDetails.some(itemDoc => {
+              if (itemDoc.sendEmployee && (itemDoc.sendEmployee.employeeId === userInfo.employeeId)) {
+                return true;
+              } else {
+                return false;
+              }
+            });
+          } else {
+            return false;
+          }
+        });
+        console.log('this.statusPackage-Q-check', this.statusPackage, this.checkUser);
       });
     });
   }

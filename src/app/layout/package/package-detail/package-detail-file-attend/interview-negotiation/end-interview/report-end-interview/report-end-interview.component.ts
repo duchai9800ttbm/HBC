@@ -25,6 +25,7 @@ export class ReportEndInterviewComponent implements OnInit {
   formErrors = {
     documentName: '',
     interviewTimes: '',
+    version: ''
   };
   constructor(
     private fb: FormBuilder,
@@ -41,7 +42,7 @@ export class ReportEndInterviewComponent implements OnInit {
   createForm() {
     this.createFormReport = this.fb.group({
       documentName: [this.interviewInvitationReport.documentName, CustomValidator.required],
-      version: [this.interviewInvitationReport.version],
+      version: [this.interviewInvitationReport.version, CustomValidator.required],
       uploadedBy: [this.interviewInvitationReport.uploadedBy],
       createdDate: [this.interviewInvitationReport.uploadedBy],
       interviewTimes: [this.interviewOfPackage, CustomValidator.required],
