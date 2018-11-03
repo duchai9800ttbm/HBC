@@ -29,6 +29,7 @@ export class PackagePermissionBidComponent implements OnInit {
     }[] = [];
     listFormData: BidPermissionGroupResponsive[];
     listDocumentType: DictionaryItem[];
+    listLiveformType: DictionaryItem[];
     listFormDocumentType: any[];
 
     constructor(
@@ -48,6 +49,9 @@ export class PackagePermissionBidComponent implements OnInit {
         });
         this.dataService.getListTenderDocumentType().subscribe(data => {
             this.listDocumentType = data;
+        });
+        this.dataService.getLiveFormTypes().subscribe(data => {
+            this.listLiveformType = data;
         });
         this.packageService
             .getBidPermissionGroupByStage(

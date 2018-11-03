@@ -79,7 +79,9 @@ export class SummaryConditionComponent implements OnInit, OnDestroy {
     this.getChangeHistory(0, 10);
   }
   ngOnDestroy() {
-    this.subscription.unsubscribe();
+    if (this.subscription) {
+      this.subscription.unsubscribe();
+    }
   }
 
   refresh(isAlert: boolean) {
@@ -99,6 +101,7 @@ export class SummaryConditionComponent implements OnInit, OnDestroy {
     this.confirmService.confirm('Bạn có chắc muốn xóa liveform tóm tắt điều kiện dự thầu?', () => {
       this.hoSoDuThauService.deleleLiveFormTTDKDuThau(this.packageId).subscribe(data => {
         that.refresh(false);
+        this.hoSoDuThauService.detectUploadFile(true);
         that.alertService.success('Xóa bảng tóm tắt điều kiện dự thầu thành công!');
       }, err => {
         that.alertService.error('Xóa bảng tóm tắt điều kiện dự thầu thất bại!');

@@ -25,9 +25,14 @@ export class NeedCreateTenderFormEstimatedBudgetComponent implements OnInit {
 
   ngOnInit() {
     this.routerAction = this.packageService.routerAction;
-    this.packageService.routerAction$.subscribe(router => this.routerAction = router);
-    this.createForm();
-    this.estimatedBudgetForm.valueChanges.subscribe(data => this.mappingToLiveFormData(data));
+    this.packageService.routerAction$.subscribe(router => {
+      this.routerAction = router;
+      this.createForm();
+      if (this.routerAction === 'view') {
+        this.estimatedBudgetForm.disable();
+      }
+      this.estimatedBudgetForm.valueChanges.subscribe(data => this.mappingToLiveFormData(data));
+    });
   }
 
   createForm() {

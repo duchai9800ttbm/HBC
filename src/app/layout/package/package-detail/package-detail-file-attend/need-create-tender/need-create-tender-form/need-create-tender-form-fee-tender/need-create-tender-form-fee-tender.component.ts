@@ -24,9 +24,14 @@ export class NeedCreateTenderFormFeeTenderComponent implements OnInit {
 
   ngOnInit() {
     this.routerAction = this.packageService.routerAction;
-    this.packageService.routerAction$.subscribe(router => this.routerAction = router);
-    this.createForm();
-    this.feeTenderForm.valueChanges.subscribe(data => this.mappingToLiveFormData(data));
+    this.packageService.routerAction$.subscribe(router => {
+      this.routerAction = router;
+      this.createForm();
+      if (this.routerAction === 'view') {
+        this.feeTenderForm.disable();
+      }
+      this.feeTenderForm.valueChanges.subscribe(data => this.mappingToLiveFormData(data));
+    });
   }
 
   createForm() {

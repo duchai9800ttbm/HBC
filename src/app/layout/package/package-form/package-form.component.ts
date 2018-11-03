@@ -30,6 +30,7 @@ import { PopupCreateChairComponent } from '../../../shared/components/popup-crea
 import { UserFormComponent } from './user-form/user-form.component';
 import { EvaluationModel } from '../../../shared/models/package/evaluation.model';
 import { moment } from '../../../../../node_modules/ngx-bootstrap/chronos/test/chain';
+import { GroupChaired } from '../../../shared/models/package/group-chaired.model';
 @Component({
     selector: 'app-package-form',
     templateUrl: './package-form.component.html',
@@ -66,7 +67,7 @@ export class PackageFormComponent implements OnInit {
     customersSearchResults: any[];
     contactsSearchResults: DictionaryItem[];
     assignSearchResults: DictionaryItem[];
-    userListItem: UserItemModel[];
+    userListItem: GroupChaired[];
     dataEvaluation: EvaluationModel[];
     public min: Date = new Date(1917, 0, 1);
     public max: Date = new Date(2000, 11, 31);
@@ -84,9 +85,10 @@ export class PackageFormComponent implements OnInit {
     ) { }
 
     ngOnInit() {
-        this.userService.getAllUser('').subscribe(data => {
-            this.userListItem = data;
-        });
+        // this.userService.getAllUser('').subscribe(data => {
+        //     this.userListItem = data;
+        // });
+        this.packageService.getListGroupChaired(0, 100, '').subscribe( data => this.userListItem = data.items);
         this.listZone = this.dataService.getListRegionTypes();
         this.listQuarterOfYear = this.dataService.getListQuatersOfYear();
         this.listCustomerType = this.dataService.getListOpportunityClassifies();
@@ -203,12 +205,12 @@ export class PackageFormComponent implements OnInit {
             this.alertService.success(message);
         }
     }
-    mapNewUser(employeeId) {
-        this.userService.getAllUser('').subscribe(data => {
-            this.userListItem = data;
-            this.packageForm.get('chairEmployeeId').patchValue(employeeId);
-        });
-    }
+    // mapNewUser(employeeId) {
+    //     this.userService.getAllUser('').subscribe(data => {
+    //         this.userListItem = data;
+    //         this.packageForm.get('chairEmployeeId').patchValue(employeeId);
+    //     });
+    // }
 
     mapNewCustomer(obj) {
         this.packageForm.get('customerId').patchValue(obj);

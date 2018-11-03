@@ -20,6 +20,8 @@ import { BidStatus } from '../../../../../shared/constants/bid-status';
 import { slideToLeft } from '../../../../../router.animations';
 import { PermissionService } from '../../../../../shared/services/permission.service';
 import { SiteSurveyReportService } from '../../../../../shared/services/site-survey-report.service';
+import { PermissionModel } from '../../../../../shared/models/permission/Permission.model';
+import { DocumentTypeId } from '../../../../../shared/constants/document-type-id';
 @Component({
     selector: 'app-hsdt-build',
     templateUrl: './hsdt-build.component.html',
@@ -35,7 +37,6 @@ export class HsdtBuildComponent implements OnInit, AfterViewChecked, OnDestroy {
     dtOptions: any = DATATABLE_CONFIG2;
     dtTrigger: Subject<any> = new Subject();
     packageId: number;
-    // hideActionSiteReport: boolean;
     isShowSideMenu = false;
     isShowMenu = false;
     notShow = false;
@@ -48,26 +49,32 @@ export class HsdtBuildComponent implements OnInit, AfterViewChecked, OnDestroy {
 
     listTemplateHSDT = [
         {
+            id: 0,
             key: 'HuongDanLapHSDT',
             value: 'Hướng dẫn lập hồ sơ dự thầu'
         },
         {
+            id: 1,
             key: 'BangTomTatDKDT',
             value: 'Bảng tóm tắt điều kiện dự thầu'
         },
         {
+            id: 2,
             key: 'BangDanhSachCungUngThauPhu',
             value: 'Bảng danh sách nhà cung ứng và thầu phụ mời chào giá cho gói thầu'
         },
         {
+            id: 3,
             key: 'BaoCaoThamQuanCongTrinh',
             value: 'Báo cáo tham quan công trình'
         },
         {
+            id: 5,
             key: 'BangTinhChiPhuChungVaCongTac',
             value: 'Bảng tính chi phí chung và công tác tạm phụ vụ thi công'
         },
         {
+            id: 6,
             key: 'BangLamRoHSMT',
             value: 'Bảng làm rõ hồ sơ mời thầu'
         },
@@ -75,6 +82,27 @@ export class HsdtBuildComponent implements OnInit, AfterViewChecked, OnDestroy {
     checkTenderSummary: boolean;
     checkSiteSurvey: boolean;
     checkDocFile: boolean;
+
+    listPermission: Array<PermissionModel>;
+
+    listPerTomTatDK = [];
+    listPerYeuCauBaoGiaVatTu = [];
+    listPerBaoCaoThamQuanCongTrinh = [];
+    listPerBangTinhChiPhiChung = [];
+    listPerCauHoiLamRo = [];
+
+
+    listPermissionScreen2 = [];
+
+    documentTypeId = DocumentTypeId;
+    ChotHSDT = false;
+
+    BangTomTatDKTemplate = false;
+    YeuCauBaoGiaVatTuTemplate = false;
+    BaoCaoThamQuanCongTrinhTemplate = false;
+    BangTinhChiPhiChungTemplate = false;
+    BangCauHoiLamRoTemplate = false;
+
 
     constructor(
         private hoSoDuThauService: HoSoDuThauService,
@@ -89,11 +117,70 @@ export class HsdtBuildComponent implements OnInit, AfterViewChecked, OnDestroy {
 
     ngOnInit() {
         this.packageId = +PackageDetailComponent.packageId;
-        this.permissionService.get().subscribe(data => {
+
+
+        this.subscription = this.permissionService.get().subscribe(data => {
+            this.listPermission = data;
+            const hsdt = this.listPermission.length &&
+                this.listPermission.filter(x => x.bidOpportunityStage === 'HSDT')[0];
+            if (!hsdt) {
+                this.listPerTomTatDK = [];
+                this.listPerYeuCauBaoGiaVatTu = [];
+                this.listPerBaoCaoThamQuanCongTrinh = [];
+                this.listPerBangTinhChiPhiChung = [];
+                this.listPerCauHoiLamRo = [];
+            }
+            if (hsdt) {
+                const screen = hsdt.userPermissionDetails.length
+                    && hsdt.userPermissionDetails.filter(y => y.permissionGroup.value === 'LapHoSoDuThauFile')[0];
+                if (!screen) {
+                    this.listPerTomTatDK = [];
+                    this.listPerYeuCauBaoGiaVatTu = [];
+                    this.listPerBaoCaoThamQuanCongTrinh = [];
+                    this.listPerBangTinhChiPhiChung = [];
+                    this.listPerCauHoiLamRo = [];
+                }
+                if (screen) {
+                    this.listPerTomTatDK = screen.permissions
+                        .filter(t => t.tenderDocumentTypeId === this.documentTypeId.BangTomTatDK).map(z => z.value);
+                    this.listPerYeuCauBaoGiaVatTu = screen.permissions
+                        .filter(t => t.tenderDocumentTypeId === this.documentTypeId.YeuCauBaoGiaVatTu).map(z => z.value);
+                    this.listPerBaoCaoThamQuanCongTrinh = screen.permissions
+                        .filter(t => t.tenderDocumentTypeId === this.documentTypeId.BaoCaoThamQuanCongTrinh).map(z => z.value);
+                    this.listPerBangTinhChiPhiChung = screen.permissions
+                        .filter(t => t.tenderDocumentTypeId === this.documentTypeId.BangTinhChiPhiChung).map(z => z.value);
+                    this.listPerCauHoiLamRo = screen.permissions
+                        .filter(t => t.tenderDocumentTypeId === this.documentTypeId.BangCauHoiLamRo).map(z => z.value);
+                }
+            }
+            this.BangTomTatDKTemplate = this.listPerTomTatDK.includes('TaiTemplate');
+            this.YeuCauBaoGiaVatTuTemplate = this.listPerYeuCauBaoGiaVatTu.includes('TaiTemplate');
+            this.BaoCaoThamQuanCongTrinhTemplate = this.listPerBaoCaoThamQuanCongTrinh.includes('TaiTemplate');
+            this.BangTinhChiPhiChungTemplate = this.listPerBangTinhChiPhiChung.includes('TaiTemplate');
+            this.BangCauHoiLamRoTemplate = this.listPerCauHoiLamRo.includes('TaiTemplate');
+
+            const hsdt2 = this.listPermission.length &&
+                this.listPermission.filter(x => x.bidOpportunityStage === 'HSDT')[0];
+            if (!hsdt2) {
+                this.listPermissionScreen2 = [];
+            }
+            if (hsdt2) {
+                const screen2 = hsdt2.userPermissionDetails.length
+                    && hsdt.userPermissionDetails.filter(y => y.permissionGroup.value === 'LapHoSoDuThauLiveForm')[0];
+                if (!screen2) {
+                    this.listPermissionScreen2 = [];
+                }
+                if (screen2) {
+                    this.listPermissionScreen2 = screen2.permissions.map(z => z.value);
+                }
+            }
+            this.ChotHSDT = this.listPermissionScreen2.includes('ChotHSDT');
         });
-        this.subscription = this.hoSoDuThauService.watchChangingUpload().subscribe(signal => {
+
+        const changingUpload$ = this.hoSoDuThauService.watchChangingUpload().subscribe(signal => {
             this.getDanhSachLoaiHoSo(false);
         });
+        this.subscription.add(changingUpload$);
         const conditionApproval$ = this.hoSoDuThauService.watchCondition().subscribe(signal => {
             this.checkConditionApproval();
         });

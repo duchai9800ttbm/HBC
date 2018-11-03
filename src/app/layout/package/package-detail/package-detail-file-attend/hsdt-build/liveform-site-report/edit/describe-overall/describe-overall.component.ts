@@ -49,6 +49,9 @@ export class DescribeOverallComponent implements OnInit, AfterViewInit {
       yeuCauChuongNgaiDesc: [this.describeModel.yeuCauChuongNgai && this.describeModel.yeuCauChuongNgai.description],
       yeuCauChuongNgaiList: [null],
     });
+    if (this.isViewMode) {
+      this.describeForm.disable();
+    }
     this.describeForm.valueChanges.subscribe(data => this.mappingToLiveFormData(data));
   }
   ngAfterViewInit() {

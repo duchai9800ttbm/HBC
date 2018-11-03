@@ -28,9 +28,14 @@ export class NeedCreateTenderFormContractConditionComponent implements OnInit {
 
   ngOnInit() {
     this.routerAction = this.packageService.routerAction;
-    this.packageService.routerAction$.subscribe(router => this.routerAction = router);
-    this.createForm();
-    this.contractConditionForm.valueChanges.subscribe(data => this.mappingToLiveFormData(data));
+    this.packageService.routerAction$.subscribe(router => {
+      this.routerAction = router;
+      this.createForm();
+      if (this.routerAction === 'view') {
+        this.contractConditionForm.disable();
+      }
+      this.contractConditionForm.valueChanges.subscribe(data => this.mappingToLiveFormData(data));
+    });
   }
 
   createForm() {

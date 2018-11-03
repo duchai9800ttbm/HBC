@@ -14,6 +14,9 @@ import { HsdtFilterModel } from '../../../../../../shared/models/ho-so-du-thau/h
 import { UploadFileHsdtComponent } from '../upload-file-hsdt/upload-file-hsdt.component';
 import { ListDocumentTypeIdGroup } from '../../../../../../shared/models/ho-so-du-thau/list-document-type.model';
 import { UserItemModel } from '../../../../../../shared/models/user/user-item.model';
+import { PermissionService } from '../../../../../../shared/services/permission.service';
+import { PermissionModel } from '../../../../../../shared/models/permission/Permission.model';
+import { DocumentTypeId } from '../../../../../../shared/constants/document-type-id';
 
 @Component({
   selector: 'app-upload-form',
@@ -49,13 +52,38 @@ export class UploadFormComponent implements OnInit, OnDestroy {
   showPopupViewImage = false;
   imageUrlArray = [];
   isClosedHSDT: boolean;
+
+  listPermission: Array<PermissionModel>;
+
+  listPerTomTatDK = [];
+  listPerYeuCauBaoGiaVatTu = [];
+  listPerBaoCaoThamQuanCongTrinh = [];
+  listPerBangTinhChiPhiChung = [];
+  listPerCauHoiLamRo = [];
+
+  currentDocumentTypeId = 0;
+  listPermissionScreen3 = [];
+  documentTypeId = DocumentTypeId;
+  ChotHSDT = false;
+
+  BangTomTatDKTemplate = false;
+  YeuCauBaoGiaVatTuTemplate = false;
+  BaoCaoThamQuanCongTrinhTemplate = false;
+  BangTinhChiPhiChungTemplate = false;
+  BangCauHoiLamRoTemplate = false;
+
+
+  XoaFile = false;
+  UploadFile = false;
+  DownLoadFile = false;
   constructor(
     private hoSoDuThauService: HoSoDuThauService,
     private dialogService: DialogService,
     private alertService: AlertService,
     private spinner: NgxSpinnerService,
     private confirmationService: ConfirmationService,
-    private userService: UserService
+    private userService: UserService,
+    private permissionService: PermissionService
   ) { }
 
   ngOnInit() {
@@ -66,16 +94,69 @@ export class UploadFormComponent implements OnInit, OnDestroy {
       this.filterModel.status = '';
       this.filterModel.uploadedEmployeeId = '';
     });
+
+    const permission$ = this.permissionService.get().subscribe(data => {
+      this.listPermission = data;
+      const hsdt = this.listPermission.length &&
+        this.listPermission.filter(x => x.bidOpportunityStage === 'HSDT')[0];
+      if (!hsdt) {
+        this.listPerTomTatDK = [];
+        this.listPerYeuCauBaoGiaVatTu = [];
+        this.listPerBaoCaoThamQuanCongTrinh = [];
+        this.listPerBangTinhChiPhiChung = [];
+        this.listPerCauHoiLamRo = [];
+        this.listPermissionScreen3 = [];
+      }
+      if (hsdt) {
+        const screen = hsdt.userPermissionDetails.length
+          && hsdt.userPermissionDetails.filter(y => y.permissionGroup.value === 'LapHoSoDuThauFile')[0];
+        if (!screen) {
+          this.listPerTomTatDK = [];
+          this.listPerYeuCauBaoGiaVatTu = [];
+          this.listPerBaoCaoThamQuanCongTrinh = [];
+          this.listPerBangTinhChiPhiChung = [];
+          this.listPerCauHoiLamRo = [];
+        }
+        if (screen) {
+          this.listPermissionScreen3 = screen.permissions
+            .filter(t => t.tenderDocumentTypeId === this.currentDocumentTypeId).map(z => z.value);
+          this.listPerTomTatDK = screen.permissions
+            .filter(t => t.tenderDocumentTypeId === this.documentTypeId.BangTomTatDK).map(z => z.value);
+          this.listPerYeuCauBaoGiaVatTu = screen.permissions
+            .filter(t => t.tenderDocumentTypeId === this.documentTypeId.YeuCauBaoGiaVatTu).map(z => z.value);
+          this.listPerBaoCaoThamQuanCongTrinh = screen.permissions
+            .filter(t => t.tenderDocumentTypeId === this.documentTypeId.BaoCaoThamQuanCongTrinh).map(z => z.value);
+          this.listPerBangTinhChiPhiChung = screen.permissions
+            .filter(t => t.tenderDocumentTypeId === this.documentTypeId.BangTinhChiPhiChung).map(z => z.value);
+          this.listPerCauHoiLamRo = screen.permissions
+            .filter(t => t.tenderDocumentTypeId === this.documentTypeId.BangCauHoiLamRo).map(z => z.value);
+        }
+      }
+      this.BangTomTatDKTemplate = this.listPerTomTatDK.includes('TaiTemplate');
+      this.YeuCauBaoGiaVatTuTemplate = this.listPerYeuCauBaoGiaVatTu.includes('TaiTemplate');
+      this.BaoCaoThamQuanCongTrinhTemplate = this.listPerBaoCaoThamQuanCongTrinh.includes('TaiTemplate');
+      this.BangTinhChiPhiChungTemplate = this.listPerBangTinhChiPhiChung.includes('TaiTemplate');
+      this.BangCauHoiLamRoTemplate = this.listPerCauHoiLamRo.includes('TaiTemplate');
+
+      this.XoaFile = this.listPermissionScreen3.includes('XoaFile');
+      this.UploadFile = this.listPermissionScreen3.includes('UploadHSDT');
+      this.DownLoadFile = this.listPermissionScreen3.includes('DownloadFile');
+
+    });
+
+    this.subscription.add(permission$);
     const statusPackage$ = this.hoSoDuThauService.watchStatusPackage().subscribe(status => {
       this.isClosedHSDT = status;
     });
     this.subscription.add(statusPackage$);
   }
   ngOnDestroy() {
-    this.subscription.unsubscribe();
+    if (this.subscription) {
+      this.subscription.unsubscribe();
+    }
   }
 
-  showError(){
+  showError() {
     if (this.isClosedHSDT) {
       return this.alertService.error('Bạn không thể upload file khi đã chốt hồ sơ');
     }
@@ -299,6 +380,55 @@ export class UploadFormComponent implements OnInit, OnDestroy {
       this.danhSachLoaiTaiLieu = res;
       this.dataOfChildComponent = this.danhSachLoaiTaiLieu.filter(x => x.item.id === HoSoDuThauService.idTenderDocumentTypesData)[0];
       this.nameOfTypeDocument = (this.dataOfChildComponent && this.dataOfChildComponent.item) ? this.dataOfChildComponent.item.name : '';
+      this.currentDocumentTypeId = HoSoDuThauService.idTenderDocumentTypesData;
+
+      const hsdt = this.listPermission.length &&
+        this.listPermission.filter(x => x.bidOpportunityStage === 'HSDT')[0];
+      if (!hsdt) {
+        this.listPerTomTatDK = [];
+        this.listPerYeuCauBaoGiaVatTu = [];
+        this.listPerBaoCaoThamQuanCongTrinh = [];
+        this.listPerBangTinhChiPhiChung = [];
+        this.listPerCauHoiLamRo = [];
+        this.listPermissionScreen3 = [];
+      }
+      if (hsdt) {
+        const screen = hsdt.userPermissionDetails.length
+          && hsdt.userPermissionDetails.filter(y => y.permissionGroup.value === 'LapHoSoDuThauFile')[0];
+        if (!screen) {
+          this.listPerTomTatDK = [];
+          this.listPerYeuCauBaoGiaVatTu = [];
+          this.listPerBaoCaoThamQuanCongTrinh = [];
+          this.listPerBangTinhChiPhiChung = [];
+          this.listPerCauHoiLamRo = [];
+        }
+        if (screen) {
+          this.listPermissionScreen3 = screen.permissions
+            .filter(t => t.tenderDocumentTypeId === this.currentDocumentTypeId).map(z => z.value);
+          this.listPerTomTatDK = screen.permissions
+            .filter(t => t.tenderDocumentTypeId === this.documentTypeId.BangTomTatDK).map(z => z.value);
+          this.listPerYeuCauBaoGiaVatTu = screen.permissions
+            .filter(t => t.tenderDocumentTypeId === this.documentTypeId.YeuCauBaoGiaVatTu).map(z => z.value);
+          this.listPerBaoCaoThamQuanCongTrinh = screen.permissions
+            .filter(t => t.tenderDocumentTypeId === this.documentTypeId.BaoCaoThamQuanCongTrinh).map(z => z.value);
+          this.listPerBangTinhChiPhiChung = screen.permissions
+            .filter(t => t.tenderDocumentTypeId === this.documentTypeId.BangTinhChiPhiChung).map(z => z.value);
+          this.listPerCauHoiLamRo = screen.permissions
+            .filter(t => t.tenderDocumentTypeId === this.documentTypeId.BangCauHoiLamRo).map(z => z.value);
+        }
+      }
+      this.BangTomTatDKTemplate = this.listPerTomTatDK.includes('TaiTemplate');
+      this.YeuCauBaoGiaVatTuTemplate = this.listPerYeuCauBaoGiaVatTu.includes('TaiTemplate');
+      this.BaoCaoThamQuanCongTrinhTemplate = this.listPerBaoCaoThamQuanCongTrinh.includes('TaiTemplate');
+      this.BangTinhChiPhiChungTemplate = this.listPerBangTinhChiPhiChung.includes('TaiTemplate');
+      this.BangCauHoiLamRoTemplate = this.listPerCauHoiLamRo.includes('TaiTemplate');
+
+      this.XoaFile = this.listPermissionScreen3.includes('XoaFile');
+      this.UploadFile = this.listPermissionScreen3.includes('UploadHSDT');
+      this.DownLoadFile = this.listPermissionScreen3.includes('DownloadFile');
+
+
+
       this.childrenOfTypeDocument = this.dataOfChildComponent ? this.dataOfChildComponent.children : [];
       this.isTypeChildDoc = (this.childrenOfTypeDocument.length) ? true : false;
     }, err => {

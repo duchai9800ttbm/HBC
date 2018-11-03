@@ -20,10 +20,37 @@
                             </button>
 
                             <div class="" ngbDropdownMenu>
-                                <ng-container *ngFor="let item of listTemplateHSDT; let k = index;">
-                                    <div class="dropdown-divider" *ngIf="k !== 0"></div>
-                                    <div class="fileUpload dropdown-item" (click)="downloadTemplate(item.key)">
-                                        <a>{{item.value}}</a>
+                                <div class="fileUpload dropdown-item" (click)="downloadTemplate(HuongDanLapHSDT)">
+                                    <a>Hướng dẫn lập hồ sơ dự thầu</a>
+                                </div>
+                                <ng-container *ngIf="BangTomTatDKTemplate">
+                                    <div class="dropdown-divider"></div>
+                                    <div class="fileUpload dropdown-item" (click)="downloadTemplate(BangTomTatDKDT)">
+                                        <a>Bảng tóm tắt điều kiện dự thầu</a>
+                                    </div>
+                                </ng-container>
+                                <ng-container *ngIf="YeuCauBaoGiaVatTuTemplate">
+                                    <div class="dropdown-divider"></div>
+                                    <div class="fileUpload dropdown-item" (click)="downloadTemplate(BangDanhSachCungUngThauPhu)">
+                                        <a>Bảng danh sách nhà cung ứng và thầu phụ mời chào giá cho gói thầu</a>
+                                    </div>
+                                </ng-container>
+                                <ng-container *ngIf="BaoCaoThamQuanCongTrinhTemplate">
+                                    <div class="dropdown-divider"></div>
+                                    <div class="fileUpload dropdown-item" (click)="downloadTemplate(BaoCaoThamQuanCongTrinh)">
+                                        <a>Báo cáo tham quan công trình</a>
+                                    </div>
+                                </ng-container>
+                                <ng-container *ngIf="BangTinhChiPhiChungTemplate">
+                                    <div class="dropdown-divider"></div>
+                                    <div class="fileUpload dropdown-item" (click)="downloadTemplate(BangTinhChiPhuChungVaCongTac)">
+                                        <a>Bảng tính chi phí chung và công tác tạm phụ vụ thi công</a>
+                                    </div>
+                                </ng-container>
+                                <ng-container *ngIf="BangCauHoiLamRoTemplate">
+                                    <div class="dropdown-divider"></div>
+                                    <div class="fileUpload dropdown-item" (click)="downloadTemplate(BangLamRoHSMT)">
+                                        <a>Bảng làm rõ hồ sơ mời thầu</a>
                                     </div>
                                 </ng-container>
                             </div>
@@ -33,11 +60,14 @@
                                 Tải xuống tài liệu
                             </button>
                         </div>
-                        <div class="ml-1" *ngIf="!package?.isClosedHSDT">
-                            <button class="btn btn-primary" (click)="chotHSDT($event)">
-                                Chốt HSDT
-                            </button>
-                        </div>
+                        <ng-container *ngIf="ChotHSDT">
+                            <div class="ml-1" *ngIf="!package?.isClosedHSDT">
+                                <button class="btn btn-primary" (click)="chotHSDT($event)">
+                                    Chốt HSDT
+                                </button>
+                            </div>
+                        </ng-container>
+
 
                         <!-- <div class="ml-1" *ngIf="package?.isClosedHSDT">
                             <button class="btn btn-secondary cursor-notallowed" disabled>

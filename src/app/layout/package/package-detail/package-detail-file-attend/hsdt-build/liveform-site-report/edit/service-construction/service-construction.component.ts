@@ -87,6 +87,9 @@ export class ServiceConstructionComponent implements OnInit, AfterViewInit {
       heThongDienKhacList: null
     });
     this.serviceConstructionForm.valueChanges.subscribe(data => this.mappingToLiveFormData(data));
+    if (this.isViewMode) {
+      this.serviceConstructionForm.disable();
+    }
 
   }
   ngAfterViewInit() {

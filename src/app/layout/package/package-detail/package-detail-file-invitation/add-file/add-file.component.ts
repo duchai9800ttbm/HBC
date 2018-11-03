@@ -104,6 +104,7 @@ export class AddFileComponent implements OnInit, OnDestroy {
             this.XoaFile = this.listPermissionScreen.includes('XoaFile');
             this.DownloadFile = this.listPermissionScreen.includes('DownloadFile');
             this.UploadHSMT = this.listPermissionScreen.includes('UploadHSMT');
+            console.log(this.listPermissionScreen, this.UploadHSMT);
         });
         this.packageService.getInforPackageID(this.packageId).subscribe(result => {
             this.packageData = result;

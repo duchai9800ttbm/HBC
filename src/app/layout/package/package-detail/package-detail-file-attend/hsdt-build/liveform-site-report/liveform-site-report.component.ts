@@ -106,7 +106,9 @@ export class LiveformSiteReportComponent implements OnInit, OnDestroy {
     this.getChangeHistory(0, 10);
   }
   ngOnDestroy() {
-    this.subscription.unsubscribe();
+    if (this.subscription) {
+      this.subscription.unsubscribe();
+    }
   }
   refresh() {
     this.siteSurveyReportService.tenderSiteSurveyingReport(this.bidOpportunityId).subscribe(res => {
@@ -166,6 +168,7 @@ export class LiveformSiteReportComponent implements OnInit, OnDestroy {
       'Bạn có chắc chắn muốn xóa báo cáo này?',
       () => {
         this.siteSurveyReportService.deleteSiteSurveyingReport(this.bidOpportunityId).subscribe(res => {
+          this.hoSoDuThauService.detectUploadFile(true);
           this.alertService.success('Xóa báo cáo công trình thành công!');
           this.spinner.hide();
           this.refresh();

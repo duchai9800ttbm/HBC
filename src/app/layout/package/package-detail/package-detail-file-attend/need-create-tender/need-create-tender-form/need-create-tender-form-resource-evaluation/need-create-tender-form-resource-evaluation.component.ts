@@ -22,9 +22,14 @@ export class NeedCreateTenderFormResourceEvaluationComponent implements OnInit {
 
   ngOnInit() {
     this.routerAction = this.packageService.routerAction;
-    this.packageService.routerAction$.subscribe(router => this.routerAction = router);
-    this.createForm();
-    this.resourceEvaluationForm.valueChanges.subscribe(data => this.mappingToLiveFormData(data));
+    this.packageService.routerAction$.subscribe(router => {
+      this.routerAction = router;
+      this.createForm();
+      if (this.routerAction === 'view') {
+        this.resourceEvaluationForm.disable();
+      }
+      this.resourceEvaluationForm.valueChanges.subscribe(data => this.mappingToLiveFormData(data));
+    });
   }
 
   createForm() {

@@ -140,6 +140,7 @@ export class EditComponent implements OnInit, OnDestroy {
         .subscribe(() => {
           this.showPopupConfirm = false;
           this.spinner.hide();
+          this.hoSoDuThauService.detectUploadFile(true);
           this.router.navigate([`/package/detail/${this.currentBidOpportunityId}/attend/build/liveformsite`]);
           const message = (this.isCreate) ? 'Tạo mới' : 'Cập nhật';
           this.alertService.success(`${message} Báo cáo khảo sát công trường thành công.`);
@@ -277,6 +278,8 @@ export class EditComponent implements OnInit, OnDestroy {
     elem.style.display = 'unset';
     elemm.style.visibility = 'unset';
     elemm.style.position = 'static';
-    this.subscription.unsubscribe();
+    if (this.subscription) {
+      this.subscription.unsubscribe();
+    }
   }
 }

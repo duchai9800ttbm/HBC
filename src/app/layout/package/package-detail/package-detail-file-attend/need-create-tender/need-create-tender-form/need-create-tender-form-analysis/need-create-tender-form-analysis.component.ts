@@ -27,10 +27,11 @@ export class NeedCreateTenderFormAnalysisComponent implements OnInit {
     this.packageService.routerAction$.subscribe(router => {
       this.routerAction = router;
       this.createForm();
+      if (this.routerAction === 'view') {
+        this.analysisForm.disable();
+      }
       this.analysisForm.valueChanges.subscribe(data => this.mappingToLiveFormData(data));
     });
-    this.createForm();
-    this.analysisForm.valueChanges.subscribe(data => this.mappingToLiveFormData(data));
   }
 
   createForm() {
