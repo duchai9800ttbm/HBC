@@ -553,6 +553,7 @@ export class PackageListComponent implements OnInit, AfterViewChecked {
     getDataEvaluation() {
         this.packageService.getEvaluationValue().subscribe(data => {
             this.dataEvaluation = data;
+            console.log(this.dataEvaluation);
         });
     }
 }

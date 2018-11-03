@@ -1,7 +1,9 @@
 :host() {
     //  overflow:hidden;
 }
-
+.zui-wrapper__fix{
+    height: calc(100vh - 315px);
+}
 .mark-status {
     padding: 4px;
     border-radius: 5px;
@@ -18,6 +20,16 @@
     a:hover {
         color: #478993;
     }
+}
+
+.control__filter--maxheight {
+    height: 100%;
+    padding-bottom: 0.4rem;
+}
+
+.control__slider--margin {
+    margin-top: .5rem;
+    margin-bottom: .5rem;
 }
 
 .custor-filter-bar {
