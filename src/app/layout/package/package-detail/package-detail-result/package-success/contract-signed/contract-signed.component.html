@@ -171,7 +171,7 @@
                             </div>
                         </th>
 
-                        <th class="w-10">
+                        <th class="w-15">
                             <div class="d-flex justify-content-center">
                                 <div class="center-parent">
                                     <div>Ngày upload</div>
@@ -186,7 +186,7 @@
                                 </div>
                             </div>
                         </th>
-                        <th class="w-15">
+                        <th class="w-10">
                             <div class="d-flex justify-content-center">
                                 <div class="center-parent">
                                     <div>Ngày ký kết hợp đồng</div>
@@ -239,29 +239,30 @@
                                 </div>
                             </div>
                         </td>
-                        <td class="documentName">{{item.name}}</td>
-                        <td class="text-center">{{item.version}}</td>
-                        <td class="description">{{item.desc}} </td>
-                        <td class="text-center employeeName">{{item.uploadByEmployee?.employeeName}}</td>
-                        <td class="text-center">{{item.uploadDate*1000 | date:'dd/MM/yyyy HH:mm':'+0000'}}</td>
-                        <td class="text-center">{{item.contractDate*1000 | date:'dd/MM/yyyy':'+0000'}}</td>
-                        <td class="text-center">{{item.interviewTime}}</td>
+                        <td class="documentName" [title]="item.name">{{item.name}}</td>
+                        <td class="text-center" [title]="item.version">{{item.version}}</td>
+                        <td class="description" [title]="item.desc">{{item.desc}} </td>
+                        <td class="text-center employeeName" [title]="item.uploadByEmployee?.employeeName">{{item.uploadByEmployee?.employeeName}}</td>
+                        <td class="text-center" [title]="item.uploadDate*1000 | date:'dd/MM/yyyy HH:mm':'+0000'">{{item.uploadDate*1000 | date:'dd/MM/yyyy HH:mm':'+0000'}}</td>
+                        <td class="text-center" [title]="item.contractDate*1000 | date:'dd/MM/yyyy':'+0000'">{{item.contractDate*1000 | date:'dd/MM/yyyy':'+0000'}}</td>
+                        <td class="text-center" [title]="item.interviewTime">{{item.interviewTime}}</td>
                         <td class="text-center">
                             <div class="d-flex justify-content-around">
-                                <ng-container *ngIf="TaiXuongHD">
-                                    <div id="mr">
-                                        <a title="Tải file" (click)="downloadFileItem(item.id)">
-                                            <i class="fa fa-download color-item-down" aria-hidden="true"></i>
-                                        </a>
-                                    </div>
-                                </ng-container>
-                                <ng-container *ngIf="XoaHD">
-                                    <div id="mr">
-                                        <a title="Xóa file" (click)="deleteFileItem(item.id)">
-                                            <i class="fa fa-trash-o" aria-hidden="true"></i>
-                                        </a>
-                                    </div>
-                                </ng-container>
+                                <div id="mr">
+                                    <a title="Tải file" (click)="downloadFileItem(item.id)">
+                                        <i class="fa fa-download color-item-down" aria-hidden="true"></i>
+                                    </a>
+                                </div>
+                                <!-- <div *ngIf="items.documents[0].fileUrl">
+                                    <a title="Mở link" [href]="items.documents[0].fileUrl" target="_blank">
+                                        <i class="fa fa-external-link color-item-down" aria-hidden="true"></i>
+                                    </a>
+                                </div> -->
+                                <div id="mr">
+                                    <a title="Xóa file" (click)="deleteFileItem(item.id)">
+                                        <i class="fa fa-trash-o" aria-hidden="true"></i>
+                                    </a>
+                                </div>
                                 <div id="mr">
                                     <a title="In">
                                         <i class="fa fa-print color-item-print" aria-hidden="true"></i>

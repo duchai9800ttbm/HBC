@@ -27,7 +27,7 @@
               Xóa
             </button>
           </ng-container>
-          <ng-container *ngIf="UploadBBCuocHop">
+          <ng-container>
             <button class="btn btn-primary ml-1" (click)="modalUp('report')">
               Upload&nbsp;biên bản cuộc họp
             </button>
@@ -232,14 +232,19 @@
               <td>{{item.meetingTime*1000 | date:'dd/MM/yyyy'}}</td>
               <td class="text-center">
                 <div class="d-flex justify-content-around">
-                  <ng-container *ngIf="TaiXuongBBCuocHop">
-                    <div id="mr">
+                  <ng-container>
+                    <div id="mr" *ngIf="!item.fileUrl">
                       <a title="Tải file" (click)="downloadMeetingReportOrFile('report', item.id)">
                         <i class="fa fa-download color-item-down" aria-hidden="true"></i>
                       </a>
                     </div>
+                    <div *ngIf="item.fileUrl">
+                      <a title="Mở link" [href]="item.fileUrl" target="_blank">
+                        <i class="fa fa-external-link color-item-down" aria-hidden="true"></i>
+                      </a>
+                    </div>
                   </ng-container>
-                  <ng-container *ngIf="XoaBBCuocHop">
+                  <ng-container>
                     <div id="mr">
                       <a title="Xóa file" (click)="deleteMeetingReportOrFile('report', item.id)">
                         <i class="fa fa-trash-o" aria-hidden="true"></i>
@@ -284,7 +289,7 @@
             Xóa
           </button>
         </ng-container>
-        <ng-container *ngIf="UploadFilePresentation">
+        <ng-container>
           <button class="btn btn-primary ml-1" (click)="modalUp('file')">
             Upload file presentation
           </button>
@@ -463,20 +468,21 @@
               <td class="text-center tdup-name">{{ item.interviewTimes }}</td>
               <td class="text-center" style="width: 12%;">
                 <div class="d-flex justify-content-around">
-                  <ng-container *ngIf="TaiXuongFilePresentation">
-                    <div id="mr">
-                      <a title="Tải file" (click)="downloadMeetingReportOrFile('file', item.id)">
-                        <i class="fa fa-download color-item-down" aria-hidden="true"></i>
-                      </a>
-                    </div>
-                  </ng-container>
-                  <ng-container *ngIf="XoaFilePresentation">
-                    <div id="mr">
-                      <a title="Xóa file" (click)="deleteMeetingReportOrFile('file', item.id)">
-                        <i class="fa fa-trash-o" aria-hidden="true"></i>
-                      </a>
-                    </div>
-                  </ng-container>
+                  <div id="mr" *ngIf="!item.fileUrl">
+                    <a title="Tải file" (click)="downloadMeetingReportOrFile('file', item.id)">
+                      <i class="fa fa-download color-item-down" aria-hidden="true"></i>
+                    </a>
+                  </div>
+                  <div *ngIf="item.fileUrl">
+                    <a title="Mở link" [href]="item.fileUrl" target="_blank">
+                      <i class="fa fa-external-link color-item-down" aria-hidden="true"></i>
+                    </a>
+                  </div>
+                  <div id="mr">
+                    <a title="Xóa file" (click)="deleteMeetingReportOrFile('file', item.id)">
+                      <i class="fa fa-trash-o" aria-hidden="true"></i>
+                    </a>
+                  </div>
                   <div>
                     <a title="In">
                       <i class="fa fa-print color-item-print" aria-hidden="true"></i>

@@ -34,31 +34,32 @@
               <div> Phân công ({{assign?.count}})</div>
             </div>
           </div> -->
-
-
-          <div *ngIf="XemMailThongBaoTrungThau" class="action d-flex align-content-between" [routerLinkActive]="['router-link-active-2']" [routerLink]="['/package/email', packageId ,'win']">
-            <div class="center-parent mg">
-              <div> Thông báo trúng thầu ({{win?.count}})</div>
-            </div>
-          </div>
           <div *ngIf="XemEmailPhanHoi" class="action d-flex align-content-between" [routerLinkActive]="['router-link-active-2']" [routerLink]="['/package/email', packageId ,'miss']">
             <div class="center-parent mg">
               <div> Phản hồi đến phòng hợp đồng ({{miss?.count}})</div>
             </div>
           </div>
-          <div *ngIf="XemMailChuyenGiao" class="action d-flex align-content-between" [routerLinkActive]="['router-link-active-2']" [routerLink]="['/package/email', packageId ,'transfer']">
+          <div *ngIf="XemMailThongBaoTrungThau" class="action d-flex align-content-between" [routerLinkActive]="['router-link-active-2']"
+            [routerLink]="['/package/email', packageId ,'win']">
+            <div class="center-parent mg">
+              <div> Thông báo trúng thầu ({{win?.count}})</div>
+            </div>
+          </div>
+          <div *ngIf="XemMailChuyenGiao" class="action d-flex align-content-between" [routerLinkActive]="['router-link-active-2']"
+            [routerLink]="['/package/email', packageId ,'transfer']">
             <div class="center-parent mg">
               <div> Chuyển giao tài liệu ({{transfer?.count}})</div>
             </div>
           </div>
-          <div *ngIf="XemDanhSachEmailDaGui" class="action d-flex align-content-between" [routerLinkActive]="['router-link-active-2']" [routerLink]="['/package/email', packageId , 'kick-off']">
+          <div *ngIf="XemDanhSachEmailDaGui" class="action d-flex align-content-between" [routerLinkActive]="['router-link-active-2']"
+            [routerLink]="['/package/email', packageId , 'kick-off']">
             <div class="center-parent mg">
               <div> Kick-off ({{kickOff?.count}})
               </div>
             </div>
           </div>
 
-         
+
           <div class="action d-flex align-content-between" [routerLinkActive]="['router-link-active-2']" [routerLink]="['/package/email', packageId, 'important']">
             <div class="center-parent mg w-100">
               <div class="d-flex justify-content-between w-100">

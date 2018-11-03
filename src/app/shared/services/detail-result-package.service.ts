@@ -708,6 +708,10 @@ export class DetailResultPackageService {
     formData.append('BidOpportunityId', `${BidOpportunityId}`);
     formData.append('DocumentName', `${uploadResultFormValue.documentName}`);
     formData.append('InterviewTimes', `${uploadResultFormValue.interviewTimes}`);
+    formData.append(
+      'MeetingnTime',
+      uploadResultFormValue.meetingTime ? DateTimeConvertHelper.fromDtObjectToTimestamp(uploadResultFormValue.meetingTime).toString() : ''
+    );
     formData.append('Version', `${uploadResultFormValue.version}`);
     if (uploadResultFormValue.documentDesc && uploadResultFormValue.documentDesc !== '') {
       formData.append('DocumentDesc', uploadResultFormValue.documentDesc);

@@ -204,8 +204,12 @@
                                             <tr>
                                                 <td class="w-15 bg-light text-right label no-boder">Loại khách hàng</td>
                                                 <td class="w-35 no-boder">
-                                                    <input class="w-75 form-control" appEnterPreventDefault tabindex="8" disabled placeholder="" type="text" formControlName="customerNewOldType"
-                                                        [value]="packageForm.get('customerNewOldType').value | translate">
+                                                    <!-- <input class="w-75 form-control" appEnterPreventDefault tabindex="8" disabled placeholder="" type="text" formControlName="customerNewOldType"
+                                                        [value]="packageForm.get('customerNewOldType').value | translate"> -->
+                                                        <div class="w-75 form-control form-customer-type">
+                                                                <span>{{packageForm.get('customerNewOldType').value | translate}}</span>
+                                                        </div>
+                                                    
                                                 </td>
                                                 <td class="w-15 bg-light text-right label no-boder">Đánh giá dự án</td>
                                                 <td class="w-35 no-boder">

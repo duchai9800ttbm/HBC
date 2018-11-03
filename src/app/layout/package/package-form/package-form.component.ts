@@ -229,6 +229,7 @@ export class PackageFormComponent implements OnInit {
     }
 
     customerSelectedChange(e) {
+        console.log('e', e);
         this.packageForm.get('customerNewOldType').patchValue(e.customerNewOldType);
     }
     changeConsultant(e) {

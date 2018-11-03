@@ -22,6 +22,9 @@ export class UploadKickOffComponent implements OnInit {
   file;
   formErrors = {
     documentName: '',
+    version: '',
+    interviewTimes: '',
+    meetingTime: '',
   };
   isSubmitted: boolean;
   invalidMessages: string[];
@@ -40,11 +43,11 @@ export class UploadKickOffComponent implements OnInit {
   createForm() {
     this.uploadMeetingKickOff = this.fb.group({
       documentName: ['', CustomValidator.required],
-      version: [this.version],
+      version: [(this.version).toString(), CustomValidator.required],
       uploadedBy: [],
       receivedDate: [],
-      meetingTime: [],
-      interviewTimes: [this.interviewTimes],
+      meetingTime: [, CustomValidator.requiredDate],
+      interviewTimes: [this.interviewTimes.toString(), CustomValidator.required],
       documentDesc: [],
       link: [],
     });
