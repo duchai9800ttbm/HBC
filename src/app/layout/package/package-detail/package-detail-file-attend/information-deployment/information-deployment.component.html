@@ -218,7 +218,7 @@
                 <ng-select class="w-100" [items]="listEmailSearchCc" addTagText="Thêm email:" clearAllText="Xóa tất cả" [addTag]="true" [hideSelected]="true"
                     multiple="true" bindLabel="employeeName" [searchFn]="customSearchFn" [(ngModel)]="emailModel.cc">
                     <ng-template ng-option-tmp let-item="item" let-index="index" let-search="searchTerm">
-                        <table>
+                        <table class="table-email--box-shadow">
                             <tr>{{item.employeeName}}</tr>
                             <tr>{{item.employeeEmail}}</tr>
                         </table>
@@ -231,7 +231,7 @@
                 <ng-select class="w-100" [items]="listEmailSearchBcc" addTagText="Thêm email:" clearAllText="Xóa tất cả" [addTag]="true"
                     [hideSelected]="true" multiple="true" bindLabel="employeeName" [searchFn]="customSearchFn" [(ngModel)]="emailModel.bcc">
                     <ng-template ng-option-tmp let-item="item" let-index="index" let-search="searchTerm">
-                        <table>
+                        <table class="table-email--box-shadow">
                             <tr>{{item.employeeName}}</tr>
                             <tr>{{item.employeeEmail}}</tr>
                         </table>

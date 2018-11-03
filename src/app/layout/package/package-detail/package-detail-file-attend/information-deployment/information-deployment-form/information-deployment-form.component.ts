@@ -426,8 +426,10 @@ export class InformationDeploymentFormComponent implements OnInit, OnDestroy {
     }
 
     checkQueryDeadline(): boolean {
+        console.log('this.planForm.get.value', this.planForm.get('queryDeadline').value, this.packageInfo.submissionDate);
         if (this.packageInfo && this.packageInfo.submissionDate && this.planForm.get('queryDeadline').value) {
-            if (this.planForm.get('queryDeadline').value > this.packageInfo.submissionDate) {
+            if (DateTimeConvertHelper.fromDtObjectToTimestamp(this.planForm.get('queryDeadline').value)
+                > this.packageInfo.submissionDate) {
                 return false;
             } else {
                 return true;
