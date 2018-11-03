@@ -58,7 +58,7 @@ export class SettingReasonRejectFormComponent implements OnInit {
       }, err => {
         const error = err.json();
         if (error.errorCode === 'BusinessException') {
-          this.alertService.error(`"${reasonName}" này đã tồn tại`);
+          this.alertService.error(`Lý do hủy thầu này đã tồn tại`);
         } else {
           this.alertService.error('Đã xảy ra lỗi ! Vui lòng thử lại sau.');
         }

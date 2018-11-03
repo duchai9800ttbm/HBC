@@ -200,10 +200,7 @@ export class UploadFileHsdtComponent implements OnInit {
   }
   deleteImage(image) {
     if (image.guid) {
-      this.hoSoDuThauService.deleteImageService(image.guid).subscribe(res => {
-      }, err => {
-        this.alertService.error('Xin vui lòng thử lại!');
-      });
+      this.hoSoDuThauService.deleteImageService(image.guid).subscribe();
     }
     this.imageUrls.splice(this.imageUrls.indexOf(image), 1);
   }

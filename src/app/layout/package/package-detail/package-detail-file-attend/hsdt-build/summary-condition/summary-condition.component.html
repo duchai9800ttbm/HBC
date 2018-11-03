@@ -52,7 +52,7 @@
                                 <a *ngIf="!isClosedHSDT" class=" text-success ml-3" [routerLink]="['./form/edit']">
                                     <i class="fa fa-pencil cursor-pointer" aria-hidden="true"> </i>
                                 </a>
-                                <a class=" text-dark ml-3" (click)="delete()">
+                                <a *ngIf="!isClosedHSDT" class=" text-dark ml-3" (click)="delete()">
                                     <i class="fa fa-trash-o" aria-hidden="true"></i>
                                 </a>
                                 <a class=" text-dark cursor-pointer ml-3"  title="In" (click)="print()">

@@ -13,7 +13,6 @@ import { Router } from '../../../../../node_modules/@angular/router';
 import { ExcelService } from '../../../shared/services/excel.service';
 import { TranslateService } from '../../../../../node_modules/@ngx-translate/core';
 import { DownloadTemplateService } from '../../../shared/services/download-template.service';
-import { NgxSpinnerService } from '../../../../../node_modules/ngx-spinner';
 import { BehaviorSubject } from '../../../../../node_modules/rxjs';
 import * as moment from 'moment';
 import { routerTransition } from '../../../router.animations';
@@ -28,6 +27,7 @@ import { LayoutService } from '../../../shared/services/layout.service';
 import { NgbDropdownConfig } from '@ng-bootstrap/ng-bootstrap';
 import { PackageListItem } from '../../../shared/models/package/package-list-item';
 import { AdministeredPackageList } from '../../../shared/constants/administered-package';
+import { EvaluationModel } from '../../../shared/models/package/evaluation.model';
 @Component({
     selector: 'app-package-list',
     templateUrl: './package-list.component.html',
@@ -88,30 +88,7 @@ export class PackageListComponent implements OnInit, AfterViewChecked {
         behaviour: 'drag',
         connect: true,
         start: [0, 1000000000000],
-        keyboard: false,  // same as [keyboard]="true"
-        // pips: {
-        //     mode: 'count',
-        //     density: 100,
-        //     values: 2,
-        //     stepped: true,
-        //     format: {
-        //         to: value => {
-        //             if (value === 0) {
-        //                 return '0 đồng';
-        //             }
-        //             if (value === 10000000000) {
-        //                 return '10 tỷ đồng';
-        //             }
-        //             // return String(parseFloat(parseFloat(String(value)).toFixed(2))
-        //             //     .toLocaleString('it-IT', { style: 'currency', currency: 'VND' }));
-        //         },
-        //         from: value => {
-        //             return '10 tỷ';
-        //             // return String(parseFloat(parseFloat(String(value)).toFixed(2))
-        //             //     .toLocaleString('it-IT', { style: 'currency', currency: 'VND' }));
-        //         }
-        //     },
-        // }
+        keyboard: false,
     };
     tenDuAn = false;
     maDuAn = false;
@@ -158,6 +135,7 @@ export class PackageListComponent implements OnInit, AfterViewChecked {
     userProfile: UserModel;
     administeredPackageList = AdministeredPackageList;
     closeMyDrop = true;
+    dataEvaluation: EvaluationModel[];
     constructor(
         private activityService: ActivityService,
         private alertService: AlertService,
@@ -168,7 +146,6 @@ export class PackageListComponent implements OnInit, AfterViewChecked {
         private translateService: TranslateService,
         private downloadTemplate: DownloadTemplateService,
         private fb: FormBuilder,
-        private spinner: NgxSpinnerService,
         private packageService: PackageService,
         private userService: UserService,
         private sessionService: SessionService,
@@ -203,13 +180,13 @@ export class PackageListComponent implements OnInit, AfterViewChecked {
     }
     ngOnInit() {
         this.dataService.getMaxopporunityamount().subscribe(response => {
-            console.log(response);
             this.maxValue = response;
             this.someRange = [0, this.maxValue];
         });
         this.filterModel.opportunityClassify = '';
         this.filterModel.stage = '';
         this.filterModel.chairEmployeeId = '';
+        this.filterModel.evaluation = '';
         this.dtOptions = DATATABLE_CONFIG;
         this.filterModel.minCost = 0;
         this.filterModel.maxCost = 1000000000000;
@@ -237,45 +214,13 @@ export class PackageListComponent implements OnInit, AfterViewChecked {
                 }
             }
         }, 300);
-        this.spinner.show();
         this.loading = true;
-        // this.packageService
-        //     .instantSearchWithFilter(this.searchTerm$, this.filterModel, 0, 10)
-        //     .subscribe(result => {
-        //         this.rerender(result);
-        //         this.spinner.hide();
-        //     }, err => {
-        //         this.spinner.hide();
-        //     });
-        // this.filter(false);
-        // this.layoutService.watchLayoutSubject().subscribe(data => {
-        //     if (data) {
-        //         this.isToggle = true;
-        //     } else {
-        //         this.isToggle = false;
-        //     }
-        // });
         this.searchTerm$.debounceTime(600)
             .distinctUntilChanged()
             .subscribe(term => {
                 this.filter(false);
-                // return Observable.create(x => x.next(''));
             });
-        // this.dtOptions = {
-        //     scrollX:        true,
-        //     fixedColumns:   {
-        //         leftColumns: 1,
-        //         rightColumns: 1
-        //     }
-        // };
-        // this.dtOptions['fixedColumns'] = {
-        //     leftColumns: 1,
-        //     rightColumns: 1
-        // };
-        // this.dtOptions['scrollX'] = true;
-        // this.dtOptions['scrollCollapse'] = true;
-
-
+        this.getDataEvaluation();
     }
     ngAfterViewChecked() {
 
@@ -391,7 +336,6 @@ export class PackageListComponent implements OnInit, AfterViewChecked {
     }
 
     filter(clear: boolean = false) {
-        this.spinner.show();
         this.loading = true;
         this.packageService
             .filterList(
@@ -402,9 +346,8 @@ export class PackageListComponent implements OnInit, AfterViewChecked {
             )
             .subscribe(result => {
                 this.rerender(result);
-                this.spinner.hide();
                 this.loading = false;
-            }, err => this.spinner.hide());
+            });
     }
 
     clearFilter() {
@@ -412,6 +355,7 @@ export class PackageListComponent implements OnInit, AfterViewChecked {
         this.filterModel.opportunityClassify = '';
         this.filterModel.stage = '';
         this.filterModel.chairEmployeeId = '';
+        this.filterModel.evaluation = '';
         this.filterModel.minCost = 0;
         this.filterModel.maxCost = 1000000000000;
         this.someRange = [0, this.maxValue];
@@ -441,8 +385,6 @@ export class PackageListComponent implements OnInit, AfterViewChecked {
     }
 
     refresh(displayAlert: boolean = false): void {
-        // this.filterModel.sorting = '';
-        this.spinner.show();
         this.loading = true;
         this.packageService
             .filterList(
@@ -486,14 +428,8 @@ export class PackageListComponent implements OnInit, AfterViewChecked {
     rerender(pagedResult: any) {
         this.checkboxSeclectAll = false;
         this.pagedResult = pagedResult;
-        // if (!(this.pagedResult.items && this.pagedResult.items.length > 1)
-        //     || document.getElementsByClassName('dataTables_empty')[0]) {
-        //     document.getElementsByClassName('dataTables_empty')[0].remove();
-        // }
         setTimeout(() => {
             this.dtTrigger.next();
-            // const table = document.getElementById('tableId') as HTMLTableElement;
-            // table.style.width = 'auto';
             const table = this.tablePin.nativeElement as HTMLElement;
             const scrollBar = this.fakeScrollBar.nativeElement as HTMLElement;
             scrollBar.style.width = table.offsetWidth + 'px';
@@ -519,14 +455,12 @@ export class PackageListComponent implements OnInit, AfterViewChecked {
 
 
     resetDefaultState() {
-        this.spinner.show();
         this.packageService.getListFieldsDefault()
             .subscribe(data => {
                 this.listField = data;
                 this.listFieldTemp = JSON.parse(JSON.stringify(data));
                 this.sum = [...this.listField].filter(x => x.hidden === true).length;
                 this.apply(this.myDrop);
-                this.spinner.hide();
                 this.dtTrigger.next();
             });
     }
@@ -548,19 +482,9 @@ export class PackageListComponent implements OnInit, AfterViewChecked {
             this.tenGoithau = this.listFieldNomarlized.includes('ARBidOpportunityName');
             this.dtTrigger.next();
         }
-        // if (true) {
-        //     this.packageService.getListFields(this.getUserId).subscribe(data => {
-        //         this.listField = data;
-        //         this.listFieldNomarlized = [...this.listField].filter(x => x.hidden === true).map(x => x.fieldName);
-        //         this.sum = [...this.listField].filter(x => x.hidden === true).length;
-        //         this.tenGoithau = this.listFieldNomarlized.includes('ARBidOpportunityName');
-        //         this.dtTrigger.next();
-        //     });
-        // }
     }
 
     apply(myDrop) {
-        this.spinner.show();
         this.closeMyDrop = false;
         this.packageService.updateFieldConfigs(this.listField, this.getUserId)
             .subscribe(result => {
@@ -568,7 +492,6 @@ export class PackageListComponent implements OnInit, AfterViewChecked {
                 this.refresh();
                 this.refreshPopupConfig();
                 myDrop.close();
-                this.spinner.hide();
                 this.dtTrigger.next();
             }, err => {
                 this.alertService.error('Cập nhật cấu hình thất bại, xin vui lòng thử lại!');
@@ -576,7 +499,6 @@ export class PackageListComponent implements OnInit, AfterViewChecked {
 
                 this.refreshPopupConfig();
                 myDrop.close();
-                this.spinner.hide();
 
             });
     }
@@ -627,5 +549,10 @@ export class PackageListComponent implements OnInit, AfterViewChecked {
             return `http://demo.bys.vn/hbc/crm/#/contact/detail/${id}/overview`;
         }
         return null;
+    }
+    getDataEvaluation() {
+        this.packageService.getEvaluationValue().subscribe(data => {
+            this.dataEvaluation = data;
+        });
     }
 }

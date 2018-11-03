@@ -55,7 +55,7 @@ export class SettingPositionFormComponent implements OnInit {
       }, err => {
         const error = err.json();
         if (error.errorCode === 'BusinessException') {
-          this.alertService.error(`"${levelName}" này đã tồn tại`);
+          this.alertService.error(`Vị trí/Chức vụ này đã tồn tại`);
         } else {
           this.alertService.error('Đã xảy ra lỗi ! Vui lòng thử lại sau.');
         }

@@ -57,7 +57,7 @@ export class SettingConstructionCategoryFormComponent implements OnInit {
       }, err => {
         const error = err.json();
         if (error.errorCode === 'BusinessException') {
-          this.alertService.error(`"${constructionCategoryName}" này đã tồn tại`);
+          this.alertService.error(`Hạng mục thi công công trình này đã tồn tại`);
         } else {
           this.alertService.error('Đã xảy ra lỗi ! Vui lòng thử lại sau.');
         }

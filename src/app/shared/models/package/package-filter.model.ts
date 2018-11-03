@@ -3,6 +3,7 @@ export class PackageFilter {
     opportunityClassify: string;
     stage: string;
     chairEmployeeId: string;
+    evaluation: string;
     minCost: number;
     maxCost: number;
     sorting: string;
