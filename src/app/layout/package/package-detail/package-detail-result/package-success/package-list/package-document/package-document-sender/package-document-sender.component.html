@@ -256,7 +256,7 @@
                                     </ng-container>
                                 </ng-container>
                             </ng-container>
-                            <ng-container *ngIf="!itemchildDocuments.childDocuments">
+                            <ng-container *ngIf="!itemchildDocuments.childDocuments || (itemchildDocuments.childDocuments.length === 0)">
                                 <ng-container *ngFor="let documents of itemchildDocuments.documents; let j = index">
                                     <tr>
                                         <td class="stt w5 bg-default wstt">
@@ -620,7 +620,7 @@
                                                 </td>
                                                 <td class="select-filter text-center w10">
                                                     <div class="edit-number">
-                                                        <input [(ngModel)]="items.documents[0].useDays" autofocus (blur)=formatToNumber(items.documents[0]) appInputDate min="0"
+                                                        <input [(ngModel)]="items.documents[0].useDays" (blur)=formatToNumber(items.documents[0]) appInputDate min="0"
                                                             class="form-control number-date--pad" placeholder="Number" [ngClass]="{'w80' : isManageTransfer==true}">
                                                         <i class="fa fa-pencil edit-number--posotion" (click)="showEdit(nameit, i, j, k)"></i>
                                                     </div>
@@ -685,7 +685,7 @@
                                             </td> -->
                                             <td class="select-filter text-center w10">
                                                 <div class="edit-number">
-                                                    <input [(ngModel)]="documents.useDays" autofocus (blur)=formatToNumber($event.target.value) appInputDate min="0" class="form-control number-date--pad"
+                                                    <input [(ngModel)]="documents.useDays" autofocus (blur)=formatToNumber(documents) appInputDate min="0" class="form-control number-date--pad"
                                                         placeholder="Number" [ngClass]="{'w80' : isManageTransfer==true}">
                                                     <i class="fa fa-pencil edit-number--posotion" (click)="showEdit(nameit, i, j, k)"></i>
                                                 </div>
@@ -773,7 +773,7 @@
                                                 </td> -->
                                                 <td class="select-filter text-center w10">
                                                     <div class="edit-number">
-                                                        <input [(ngModel)]="items.documents[0].useDays" autofocus (blur)=formatToNumber($event.target.value) appInputDate min="0"
+                                                        <input [(ngModel)]="items.documents[0].useDays" autofocus (blur)=formatToNumber(items.documents[0]) appInputDate min="0"
                                                             class="form-control number-date--pad" placeholder="Number" [ngClass]="{'w80' : isManageTransfer==true}">
                                                         <i class="fa fa-pencil edit-number--posotion" (click)="showEditSHDT(nameit, i, j, k)"></i>
                                                     </div>
@@ -851,7 +851,7 @@
                                             </td> -->
                                             <td class="select-filter text-center w10">
                                                 <div class="edit-number">
-                                                    <input [(ngModel)]="documents.useDays" autofocus (blur)=formatToNumber($event.target.value) appInputDate min="0" class="form-control number-date--pad"
+                                                    <input [(ngModel)]="documents.useDays" autofocus (blur)=formatToNumber(documents) appInputDate min="0" class="form-control number-date--pad"
                                                         placeholder="Number" [ngClass]="{'w80' : isManageTransfer==true}">
                                                     <i class="fa fa-pencil edit-number--posotion" (click)="showEditSHDT(nameit, i, j, k)"></i>
                                                 </div>

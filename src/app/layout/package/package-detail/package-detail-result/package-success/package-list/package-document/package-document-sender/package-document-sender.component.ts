@@ -139,7 +139,6 @@ export class PackageDocumentSenderComponent implements OnInit {
           }
         }
       });
-      console.log('this.docHSMTList', this.docHSMTList);
       this.docHSMTList.forEach((itemPra, indexPra) => {
         if (itemPra.childDocuments && itemPra.childDocuments.length !== 0) {
           itemPra.childDocuments.forEach((item, index) =>
@@ -151,6 +150,7 @@ export class PackageDocumentSenderComponent implements OnInit {
           });
         }
       });
+      console.log('this.docHSMTList', this.docHSMTList);
       this.docHSDTList.forEach((itemPra, indexPra) => {
         if (itemPra.childDocuments && itemPra.childDocuments.length !== 0) {
           itemPra.childDocuments.forEach((item, index) => itemPra.childDocuments[index].documentType = JSON.stringify(item.documentType));
@@ -195,6 +195,7 @@ export class PackageDocumentSenderComponent implements OnInit {
           });
         }
       });
+      console.log('this.docHSMTHadTransfer', this.docHSMTHadTransfer);
       this.docHSDTHadTransfer.forEach((itemPra, indexPra) => {
         if (itemPra.childDocuments && itemPra.childDocuments.length !== 0) {
           itemPra.childDocuments.forEach((item, index) =>
@@ -300,7 +301,7 @@ export class PackageDocumentSenderComponent implements OnInit {
             });
           });
         }
-        if (!itemchildDocuments.childDocuments) {
+        if (!itemchildDocuments.childDocuments || itemchildDocuments.childDocuments.length === 0) {
           itemchildDocuments.documents.forEach(documents => {
             documents.transferName = this.defaulttransferNameHSMT;
           });
@@ -314,13 +315,13 @@ export class PackageDocumentSenderComponent implements OnInit {
         if (itemchildDocuments.childDocuments && itemchildDocuments.childDocuments.length !== 0) {
           itemchildDocuments.childDocuments.forEach(itemChild => {
             itemChild.items.forEach(items => {
-              items.documents[0].dateUse = this.defaultdateUseHSMT;
+              items.documents[0].dateUse = (+this.defaultdateUseHSMT).toString();
             });
           });
         }
-        if (!itemchildDocuments.childDocuments) {
+        if (!itemchildDocuments.childDocuments || itemchildDocuments.childDocuments.length === 0) {
           itemchildDocuments.documents.forEach(documents => {
-            documents.dateUse = this.defaultdateUseHSMT;
+            documents.dateUse = (+this.defaultdateUseHSMT).toString();
           });
         }
       });
@@ -344,7 +345,7 @@ export class PackageDocumentSenderComponent implements OnInit {
   }
   onSelectAll(value: boolean) {
     this.docHSMTList.forEach(itemHSMT => {
-      if (itemHSMT.childDocuments) {
+      if (itemHSMT.childDocuments && itemHSMT.childDocuments.length !== 0) {
         itemHSMT.childDocuments.forEach(itemChild => {
           itemChild.items.forEach(itemChildChild => {
             itemChildChild.documents[0].checkboxSelected = value;
@@ -359,7 +360,7 @@ export class PackageDocumentSenderComponent implements OnInit {
       }
     });
     this.docHSDTList.forEach(itemHSDT => {
-      if (itemHSDT.childDocuments) {
+      if (itemHSDT.childDocuments && itemHSDT.childDocuments.length !== 0) {
         itemHSDT.childDocuments.forEach(itemChild => {
           itemChild.items.forEach(itemChildChild => {
             itemChildChild.documents[0].checkboxSelected = value;
@@ -384,7 +385,7 @@ export class PackageDocumentSenderComponent implements OnInit {
             });
           });
         }
-        if (!itemchildDocuments.childDocuments) {
+        if (!itemchildDocuments.childDocuments || itemchildDocuments.childDocuments.length === 0) {
           (itemchildDocuments.documents || []).forEach(documents => {
             documents.transferName = this.defaulttransferNameHSDT;
           });
@@ -398,13 +399,13 @@ export class PackageDocumentSenderComponent implements OnInit {
         if (itemchildDocuments.childDocuments && itemchildDocuments.childDocuments.length !== 0) {
           (itemchildDocuments.childDocuments || []).forEach(itemChild => {
             (itemChild.items || []).forEach(items => {
-              items.documents[0].dateUse = this.defaultdateUseHSDT;
+              items.documents[0].dateUse = (+this.defaultdateUseHSDT).toString();
             });
           });
         }
-        if (!itemchildDocuments.childDocuments) {
+        if (!itemchildDocuments.childDocuments || itemchildDocuments.childDocuments.length === 0) {
           (itemchildDocuments.documents || []).forEach(documents => {
-            documents.dateUse = this.defaultdateUseHSDT;
+            documents.dateUse = (+this.defaultdateUseHSDT).toString();
           });
         }
       });
@@ -421,7 +422,7 @@ export class PackageDocumentSenderComponent implements OnInit {
 
     const itemDocChooseTranfer = [];
     this.docHSMTList.forEach(itemHSMT => {
-      if (itemHSMT.childDocuments) {
+      if (itemHSMT.childDocuments && itemHSMT.childDocuments.length !== 0) {
         itemHSMT.childDocuments.forEach(itemChild => {
           itemChild.items.forEach(itemChildChild => {
             if (itemChildChild.documents[0].checkboxSelected === true) {
@@ -436,14 +437,25 @@ export class PackageDocumentSenderComponent implements OnInit {
       }
     });
     this.docHSDTList.forEach(itemHSDT => {
-      if (itemHSDT.documents && itemHSDT.documents.length !== 0) {
-        itemHSDT.documents.forEach(itemDocument => {
-          if (itemDocument.checkboxSelected === true) {
-            itemDocChooseTranfer.push(itemDocument);
-          }
+      if (itemHSDT.childDocuments && itemHSDT.childDocuments.length !== 0) {
+        itemHSDT.childDocuments.forEach(itemChild => {
+          itemChild.items.forEach(itemChildChild => {
+            if (itemChildChild.documents[0].checkboxSelected === true) {
+              itemDocChooseTranfer.push(itemChildChild.documents[0]);
+            }
+          });
         });
+      } else {
+        if (itemHSDT.documents && itemHSDT.documents.length !== 0) {
+          itemHSDT.documents.forEach(itemDocument => {
+            if (itemDocument.checkboxSelected === true) {
+              itemDocChooseTranfer.push(itemDocument);
+            }
+          });
+        }
       }
     });
+    console.log('itemDocChooseTranfer', itemDocChooseTranfer);
     if (this.checkDepartmentAndDateUse(itemDocChooseTranfer)) {
       if (itemDocChooseTranfer && itemDocChooseTranfer.length !== 0) {
         this.confirmationService.confirm(
@@ -535,7 +547,7 @@ export class PackageDocumentSenderComponent implements OnInit {
   renderIndexHSMTTransfer(i, j, k) {
     let dem = 0;
     for (let indexPar = 0; indexPar < i + 1; indexPar++) {
-      if (this.docHSMTList[indexPar].childDocuments) {
+      if (this.docHSMTList[indexPar].childDocuments && this.docHSMTList[indexPar].childDocuments.length !== 0) {
         if (indexPar < i) {
           for (let indexChild = 0; indexChild < this.docHSMTList[indexPar].childDocuments.length; indexChild++) {
             dem = dem + this.docHSMTList[indexPar].childDocuments[indexChild].items.length;
@@ -564,7 +576,7 @@ export class PackageDocumentSenderComponent implements OnInit {
   renderIndexHSDTTransfer(i, j, k) {
     let dem = 0;
     for (let indexPar = 0; indexPar < i + 1; indexPar++) {
-      if (this.docHSDTList[indexPar].childDocuments) {
+      if (this.docHSDTList[indexPar].childDocuments && this.docHSDTList[indexPar].childDocuments.length !== 0) {
         if (indexPar < i) {
           for (let indexChild = 0; indexChild < this.docHSDTList[indexPar].childDocuments.length; indexChild++) {
             dem = dem + this.docHSDTList[indexPar].childDocuments[indexChild].items.length;
@@ -607,7 +619,7 @@ export class PackageDocumentSenderComponent implements OnInit {
   renderIndexHSMTHadTransfer(i, j, k) {
     let dem = 0;
     for (let indexPar = 0; indexPar < i + 1; indexPar++) {
-      if (this.docHSMTHadTransfer[indexPar].childDocuments) {
+      if (this.docHSMTHadTransfer[indexPar].childDocuments && this.docHSMTHadTransfer[indexPar].childDocuments.length !== 0) {
         if (indexPar < i) {
           for (let indexChild = 0; indexChild < this.docHSMTHadTransfer[indexPar].childDocuments.length; indexChild++) {
             dem = dem + this.docHSMTHadTransfer[indexPar].childDocuments[indexChild].items.length;
@@ -636,7 +648,7 @@ export class PackageDocumentSenderComponent implements OnInit {
   renderIndexHSDTHadTransfer(i, j, k) {
     let dem = 0;
     for (let indexPar = 0; indexPar < i + 1; indexPar++) {
-      if (this.docHSDTHadTransfer[indexPar].childDocuments) {
+      if (this.docHSDTHadTransfer[indexPar].childDocuments && this.docHSDTHadTransfer[indexPar].childDocuments.length !== 0) {
         if (indexPar < i) {
           for (let indexChild = 0; indexChild < this.docHSDTHadTransfer[indexPar].childDocuments.length; indexChild++) {
             dem = dem + this.docHSDTHadTransfer[indexPar].childDocuments[indexChild].items.length;
@@ -666,7 +678,7 @@ export class PackageDocumentSenderComponent implements OnInit {
   onSelectAllHadTransfer(value: boolean) {
     if (this.docHSMTHadTransfer && this.docHSMTHadTransfer.length !== 0) {
       this.docHSMTHadTransfer.forEach(itemHSMT => {
-        if (itemHSMT.childDocuments) {
+        if (itemHSMT.childDocuments && itemHSMT.childDocuments.length !== 0) {
           itemHSMT.childDocuments.forEach(itemChild => {
             itemChild.items.forEach(itemChildChild => {
               itemChildChild.documents[0].checkboxSelected = value;
@@ -679,7 +691,7 @@ export class PackageDocumentSenderComponent implements OnInit {
     }
     if (this.docHSDTHadTransfer && this.docHSDTHadTransfer.length !== 0) {
       this.docHSDTHadTransfer.forEach(itemHSDT => {
-        if (itemHSDT.childDocuments) {
+        if (itemHSDT.childDocuments && itemHSDT.childDocuments.length !== 0) {
           itemHSDT.childDocuments.forEach(itemChild => {
             itemChild.items.forEach(itemChildChild => {
               itemChildChild.documents[0].checkboxSelected = value;
@@ -748,8 +760,13 @@ export class PackageDocumentSenderComponent implements OnInit {
       }
     }
   }
-  formatToNumber(itemdoc) {
-    console.log('Goi API cập nhật ngày sử dụng!');
+  formatToNumber(item) {
+    console.log('item-formatToNumber', item);
+    this.detailResultPackageService.updateUsedays(item.transferDocId, item.useDays).subscribe( response => {
+      this.alertService.success('Thay đổi ngày sử dụng tài liệu đã chuyển giao thành công!');
+    }, err => {
+      this.alertService.error('Thay đổi ngày sử dụng tài liệu đã chuyển giao không thành công!');
+    });
     this.currentEdit = 0;
   }
   showEdit(e, i, j, k) {

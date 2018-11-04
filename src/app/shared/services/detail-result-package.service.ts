@@ -287,10 +287,19 @@ export class DetailResultPackageService {
         return {
           documentId: item.id,
           documentType: item.type,
+          documentName: item.name,
           departmentIds: departmentIds,
           useDate: item.dateUse ? Number(item.dateUse) : 0
         };
       }),
+    };
+    return this.apiService.post(url, request);
+  }
+  // Thay đổi ngày sử dụng của tài liệu đã chuyển giao
+  updateUsedays(bidTransferDocIds, useDate) {
+    const url = `bidtransferdoc/changeusedatetrasferdocs/${useDate}`;
+    const request = {
+      ids: [bidTransferDocIds]
     };
     return this.apiService.post(url, request);
   }
@@ -402,6 +411,7 @@ export class DetailResultPackageService {
           documents: (itemTransferDocument.documents && itemTransferDocument.documents.length !== 0 && itemTransferDocument.documents[0] !== null) ?
             itemTransferDocument.documents.map(itemdocument => {
               return {
+                transferDocId: itemdocument.transferDocId,
                 departments: (itemdocument.departments && itemdocument.departments.length !== 0 && itemdocument.departments[0] !== null) ?
                   itemdocument.departments.map(itemDepartments => {
                     return {
@@ -428,6 +438,7 @@ export class DetailResultPackageService {
               documents: (itemChildDocuments.documents && itemChildDocuments.documents.length !== 0) ?
                 itemChildDocuments.documents.map(itemDocuments => {
                   return {
+                    transferDocId: itemDocuments.transferDocId,
                     departments: (itemDocuments.departments && itemDocuments.departments.length !== 0) ?
                       itemDocuments.departments.map(itemDepartments => {
                         return {

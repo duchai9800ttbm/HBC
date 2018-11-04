@@ -11,6 +11,7 @@ export class HadTransferList {
             displayText: string;
         };
         documents: {
+            transferDocId: number;
             departments: {
                 key: string;
                 value: string;
@@ -30,6 +31,7 @@ export class HadTransferList {
                 displayText: string;
             };
             documents: {
+                transferDocId: number;
                 departments: {
                     key: string;
                     value: string;

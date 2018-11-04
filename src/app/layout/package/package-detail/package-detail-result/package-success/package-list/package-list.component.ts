@@ -179,9 +179,13 @@ export class PackageListComponent implements OnInit, OnDestroy {
     // tslint:disable-next-line:max-line-length
     this.packageService.getInforPackageID(this.currentPackageId).subscribe(result => {
       this.inforPackage = result;
-      console.log('this.inforPackage', this.inforPackage);
-      // tslint:disable-next-line:max-line-length
-      this.emailModel.content = `<p style="text-align: center;"><span style="font-size:16px;"><strong>THƯ CẢM ƠN TH&Ocirc;NG B&Aacute;O KẾT QUẢ TR&Uacute;NG THẦU</strong></span></p>
+      this.defaultContentEmail();
+    });
+  }
+
+  defaultContentEmail() {
+    // tslint:disable-next-line:max-line-length
+    this.emailModel.content = `<p style="text-align: center;"><span style="font-size:16px;"><strong>THƯ CẢM ƠN TH&Ocirc;NG B&Aacute;O KẾT QUẢ TR&Uacute;NG THẦU</strong></span></p>
 
     <p>Dự án: ${(this.inforPackage && this.inforPackage.projectName) ? this.inforPackage.projectName : ''}</p>
     
@@ -220,8 +224,6 @@ export class PackageListComponent implements OnInit, OnDestroy {
     <p style="text-align: right;">Truởng nh&oacute;m dự thầu,&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;</p>
     
     <p>&nbsp;</p>`;
-    });
-
   }
   ngOnDestroy() {
     if (this.subscription) {
@@ -471,6 +473,7 @@ export class PackageListComponent implements OnInit, OnDestroy {
           this.detailResultPackageService.sendFeedbackToContractRoom(this.emailModel, this.file).subscribe(result => {
             this.packageService.changeStatusPackageValue(this.checkStatusPackage.DaPhanHoiDenPhongHopDong.text);
             this.emailModel = new SendEmailModel();
+            this.defaultContentEmail();
             this.file = [];
             this.alertService.success('Gửi phản hồi đến phòng hợp đồng thành công!');
             this.modalRef.hide();

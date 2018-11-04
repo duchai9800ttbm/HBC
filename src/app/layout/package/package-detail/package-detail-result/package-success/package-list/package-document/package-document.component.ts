@@ -84,6 +84,7 @@ export class PackageDocumentComponent implements OnInit, OnDestroy {
         }
       }
       this.ChuyenGiaoTaiLieu = this.listPermissionScreen.includes('ChuyenGiaoTaiLieu');
+      console.log('this.ChuyenGiaoTaiLieu', this.ChuyenGiaoTaiLieu);
     });
   }
 
