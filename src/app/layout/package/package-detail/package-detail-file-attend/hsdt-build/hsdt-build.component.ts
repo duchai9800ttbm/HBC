@@ -141,21 +141,17 @@ export class HsdtBuildComponent implements OnInit, AfterViewChecked, OnDestroy {
                     this.listPerCauHoiLamRo = [];
                 }
                 if (screen) {
-                    this.listPerTomTatDK = screen.permissions
-                        .filter(t => t.tenderDocumentTypeId === this.documentTypeId.BangTomTatDK).map(z => z.value);
+         
                     this.listPerYeuCauBaoGiaVatTu = screen.permissions
                         .filter(t => t.tenderDocumentTypeId === this.documentTypeId.YeuCauBaoGiaVatTu).map(z => z.value);
-                    this.listPerBaoCaoThamQuanCongTrinh = screen.permissions
-                        .filter(t => t.tenderDocumentTypeId === this.documentTypeId.BaoCaoThamQuanCongTrinh).map(z => z.value);
+                    
                     this.listPerBangTinhChiPhiChung = screen.permissions
                         .filter(t => t.tenderDocumentTypeId === this.documentTypeId.BangTinhChiPhiChung).map(z => z.value);
                     this.listPerCauHoiLamRo = screen.permissions
                         .filter(t => t.tenderDocumentTypeId === this.documentTypeId.BangCauHoiLamRo).map(z => z.value);
                 }
             }
-            this.BangTomTatDKTemplate = this.listPerTomTatDK.includes('TaiTemplate');
             this.YeuCauBaoGiaVatTuTemplate = this.listPerYeuCauBaoGiaVatTu.includes('TaiTemplate');
-            this.BaoCaoThamQuanCongTrinhTemplate = this.listPerBaoCaoThamQuanCongTrinh.includes('TaiTemplate');
             this.BangTinhChiPhiChungTemplate = this.listPerBangTinhChiPhiChung.includes('TaiTemplate');
             this.BangCauHoiLamRoTemplate = this.listPerCauHoiLamRo.includes('TaiTemplate');
 
@@ -172,8 +168,14 @@ export class HsdtBuildComponent implements OnInit, AfterViewChecked, OnDestroy {
                 }
                 if (screen2) {
                     this.listPermissionScreen2 = screen2.permissions.map(z => z.value);
+                    this.listPerTomTatDK = screen2.permissions
+                    .filter(t => t.tenderDocumentTypeId === this.documentTypeId.BangTomTatDK).map(z => z.value);
+                    this.listPerBaoCaoThamQuanCongTrinh = screen2.permissions
+                        .filter(t => t.tenderDocumentTypeId === this.documentTypeId.BaoCaoThamQuanCongTrinh).map(z => z.value);
                 }
             }
+            this.BangTomTatDKTemplate = this.listPerTomTatDK.includes('TaiTemplate');
+            this.BaoCaoThamQuanCongTrinhTemplate = this.listPerBaoCaoThamQuanCongTrinh.includes('TaiTemplate');
             this.ChotHSDT = this.listPermissionScreen2.includes('ChotHSDT');
         });
 

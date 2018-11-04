@@ -14,6 +14,7 @@ import { PermissionService } from '../../../shared/services/permission.service';
 import { IntervalObservable } from '../../../../../node_modules/rxjs/observable/IntervalObservable';
 import { Subscription } from '../../../../../node_modules/rxjs';
 import { AdminPermissions } from '../../../shared/data-admin/admin.permission';
+import { BGDPermissions } from '../../../shared/data-admin/bgd.permission';
 
 @Component({
   selector: 'app-package-detail',
@@ -92,12 +93,58 @@ export class PackageDetailComponent implements OnInit, OnDestroy {
           this.subInterval.unsubscribe();
         }
         this.subFirst = this.permissionService.getListPermission(this.packageId).subscribe(listPermission => {
-          this.permissionService.set(listPermission);
+          let permissions = [...listPermission];
+          if (data && data.department && data.department.text === 'BAN TỔNG GIÁM ĐỐC') {
+            const bgdPermission = JSON.parse(JSON.stringify(BGDPermissions));
+            const userPermission = [...listPermission];
+            for (const userPer of userPermission) {
+              for (const bgdPer of bgdPermission) {
+                if (userPer.bidOpportunityStage === bgdPer.bidOpportunityStage) {
+                  for (const user of userPer.userPermissionDetails) {
+                    for (const bgd of bgdPer.userPermissionDetails) {
+                      if (user.permissionGroup.value === bgd.permissionGroup.value) {
+                        bgd.permissions = [...bgd.permissions, ...user.permissions];
+                      }
+                    }
+                  }
+                }
+              }
+            }
+            console.log('ban tong giam doc');
+            permissions = [...bgdPermission];
+          }
+
+          this.permissionService.set(permissions);
           this.subFirst.unsubscribe();
         });
         this.subInterval = IntervalObservable.create(1 * 10 * 1000).subscribe(_ => {
           this.sub = this.permissionService.getListPermission(this.packageId).subscribe(listPermission => {
-            this.permissionService.set(listPermission);
+            let permissions = [...listPermission];
+            if (data && data.department && data.department.text === 'BAN TỔNG GIÁM ĐỐC') {
+              const bgdPermission = JSON.parse(JSON.stringify(BGDPermissions));
+              const userPermission = [...listPermission];
+              for (const userPer of userPermission) {
+                for (const bgdPer of bgdPermission) {
+                  if (userPer.bidOpportunityStage === bgdPer.bidOpportunityStage) {
+
+                    for (const user of userPer.userPermissionDetails) {
+                      for (const bgd of bgdPer.userPermissionDetails) {
+                        if (user.permissionGroup.value === bgd.permissionGroup.value) {
+                          bgd.permissions = [...bgd.permissions, ...user.permissions];
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+              permissions = [...bgdPermission];
+              console.log(permissions);
+              console.log(BGDPermissions);
+              console.log('ban tong giam doc');
+
+            }
+
+            this.permissionService.set(permissions);
             that.sub.unsubscribe();
           });
         });
