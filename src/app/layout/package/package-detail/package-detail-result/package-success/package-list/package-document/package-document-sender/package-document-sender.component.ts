@@ -24,6 +24,7 @@ import { HadTransferList } from '../../../../../../../../shared/models/result-at
 import { ManageNeedTranferList } from '../../../../../../../../shared/models/result-attend/manage-need-transfer-list.model';
 import { PackageService } from '../../../../../../../../shared/services/package.service';
 import { CheckStatusPackage } from '../../../../../../../../shared/constants/check-status-package';
+import { DocumentTypeAll } from '../../../../../../../../shared/models/package/document-type-all';
 
 @Component({
   selector: 'app-package-document-sender',
@@ -88,6 +89,8 @@ export class PackageDocumentSenderComponent implements OnInit {
   checkStatusPackage = CheckStatusPackage;
   isShowEdit = false;
   currentEdit = 0;
+  documentTypeAll: DocumentTypeAll[];
+  documentTypeAllControl = [];
   constructor(
     private packageSuccessService: PackageSuccessService,
     private modalService: BsModalService,
@@ -118,11 +121,26 @@ export class PackageDocumentSenderComponent implements OnInit {
     this.dataService.getListDepartmentsFromBranches().subscribe(response => {
       this.departments = response;
     });
-    this.filterModel.documentType = '';
+    this.filterModel.documentType = null;
     this.filterModel.documentTypeId = null;
     this.filterModel.interviewTimes = null;
     this.getListNeedTransferDocs(false);
     this.getHadTransferredList(false);
+    this.getListFilter();
+  }
+
+  getListFilter() {
+    this.detailResultPackageService.documentTypeHsdtAndHsmt().subscribe(response => {
+      this.documentTypeAll = response;
+      (this.documentTypeAll || []).forEach(item => {
+        item.detail.forEach(itemChild => {
+          itemChild['bidOpportunityStage'] = item.bidOpportunityStage.id;
+        });
+      });
+      (this.documentTypeAll || []).forEach(item => {
+        this.documentTypeAllControl = this.documentTypeAllControl.concat(item.detail);
+      });
+    });
   }
 
   getListNeedTransferDocs(alert: boolean) {
@@ -150,7 +168,6 @@ export class PackageDocumentSenderComponent implements OnInit {
           });
         }
       });
-      console.log('this.docHSMTList', this.docHSMTList);
       this.docHSDTList.forEach((itemPra, indexPra) => {
         if (itemPra.childDocuments && itemPra.childDocuments.length !== 0) {
           itemPra.childDocuments.forEach((item, index) => itemPra.childDocuments[index].documentType = JSON.stringify(item.documentType));
@@ -161,7 +178,6 @@ export class PackageDocumentSenderComponent implements OnInit {
           });
         }
       });
-      console.log('this.docHSDTList-this.docHSDTList', this.docHSDTList);
       if (alert) {
         this.alertService.success('Dữ liệu được cập nhật mới nhât!');
       }
@@ -195,7 +211,6 @@ export class PackageDocumentSenderComponent implements OnInit {
           });
         }
       });
-      console.log('this.docHSMTHadTransfer', this.docHSMTHadTransfer);
       this.docHSDTHadTransfer.forEach((itemPra, indexPra) => {
         if (itemPra.childDocuments && itemPra.childDocuments.length !== 0) {
           itemPra.childDocuments.forEach((item, index) =>
@@ -575,28 +590,30 @@ export class PackageDocumentSenderComponent implements OnInit {
   }
   renderIndexHSDTTransfer(i, j, k) {
     let dem = 0;
-    for (let indexPar = 0; indexPar < i + 1; indexPar++) {
-      if (this.docHSDTList[indexPar].childDocuments && this.docHSDTList[indexPar].childDocuments.length !== 0) {
-        if (indexPar < i) {
-          for (let indexChild = 0; indexChild < this.docHSDTList[indexPar].childDocuments.length; indexChild++) {
-            dem = dem + this.docHSDTList[indexPar].childDocuments[indexChild].items.length;
-          }
-        } else {
-          for (let indexChild = 0; indexChild < j + 1; indexChild++) {
-            if (indexChild < j) {
+    if (this.docHSDTList && this.docHSDTList.length !== 0) {
+      for (let indexPar = 0; indexPar < i + 1; indexPar++) {
+        if (this.docHSDTList[indexPar].childDocuments && this.docHSDTList[indexPar].childDocuments.length !== 0) {
+          if (indexPar < i) {
+            for (let indexChild = 0; indexChild < this.docHSDTList[indexPar].childDocuments.length; indexChild++) {
               dem = dem + this.docHSDTList[indexPar].childDocuments[indexChild].items.length;
-            } else {
-              for (let indexChildChild = 0; indexChildChild < k + 1; indexChildChild++) {
-                dem++;
+            }
+          } else {
+            for (let indexChild = 0; indexChild < j + 1; indexChild++) {
+              if (indexChild < j) {
+                dem = dem + this.docHSDTList[indexPar].childDocuments[indexChild].items.length;
+              } else {
+                for (let indexChildChild = 0; indexChildChild < k + 1; indexChildChild++) {
+                  dem++;
+                }
               }
             }
           }
-        }
-      } else {
-        if (indexPar < i) {
-          dem = dem + (this.docHSDTList[indexPar].documents || []).length;
         } else {
-          dem = dem + j + 1;
+          if (indexPar < i) {
+            dem = dem + (this.docHSDTList[indexPar].documents || []).length;
+          } else {
+            dem = dem + j + 1;
+          }
         }
       }
     }
@@ -618,28 +635,30 @@ export class PackageDocumentSenderComponent implements OnInit {
   }
   renderIndexHSMTHadTransfer(i, j, k) {
     let dem = 0;
-    for (let indexPar = 0; indexPar < i + 1; indexPar++) {
-      if (this.docHSMTHadTransfer[indexPar].childDocuments && this.docHSMTHadTransfer[indexPar].childDocuments.length !== 0) {
-        if (indexPar < i) {
-          for (let indexChild = 0; indexChild < this.docHSMTHadTransfer[indexPar].childDocuments.length; indexChild++) {
-            dem = dem + this.docHSMTHadTransfer[indexPar].childDocuments[indexChild].items.length;
-          }
-        } else {
-          for (let indexChild = 0; indexChild < j + 1; indexChild++) {
-            if (indexChild < j) {
+    if (this.docHSMTHadTransfer && this.docHSMTHadTransfer.length !== 0) {
+      for (let indexPar = 0; indexPar < i + 1; indexPar++) {
+        if (this.docHSMTHadTransfer[indexPar].childDocuments && this.docHSMTHadTransfer[indexPar].childDocuments.length !== 0) {
+          if (indexPar < i) {
+            for (let indexChild = 0; indexChild < this.docHSMTHadTransfer[indexPar].childDocuments.length; indexChild++) {
               dem = dem + this.docHSMTHadTransfer[indexPar].childDocuments[indexChild].items.length;
-            } else {
-              for (let indexChildChild = 0; indexChildChild < k + 1; indexChildChild++) {
-                dem++;
+            }
+          } else {
+            for (let indexChild = 0; indexChild < j + 1; indexChild++) {
+              if (indexChild < j) {
+                dem = dem + this.docHSMTHadTransfer[indexPar].childDocuments[indexChild].items.length;
+              } else {
+                for (let indexChildChild = 0; indexChildChild < k + 1; indexChildChild++) {
+                  dem++;
+                }
               }
             }
           }
-        }
-      } else {
-        if (indexPar < i) {
-          dem = dem + this.docHSMTHadTransfer[indexPar].documents.length;
         } else {
-          dem = dem + j + 1;
+          if (indexPar < i) {
+            dem = dem + this.docHSMTHadTransfer[indexPar].documents.length;
+          } else {
+            dem = dem + j + 1;
+          }
         }
       }
     }
@@ -762,7 +781,7 @@ export class PackageDocumentSenderComponent implements OnInit {
   }
   formatToNumber(item) {
     console.log('item-formatToNumber', item);
-    this.detailResultPackageService.updateUsedays(item.transferDocId, item.useDays).subscribe( response => {
+    this.detailResultPackageService.updateUsedays(item.transferDocId, item.useDays).subscribe(response => {
       this.alertService.success('Thay đổi ngày sử dụng tài liệu đã chuyển giao thành công!');
     }, err => {
       this.alertService.error('Thay đổi ngày sử dụng tài liệu đã chuyển giao không thành công!');
@@ -770,6 +789,7 @@ export class PackageDocumentSenderComponent implements OnInit {
     this.currentEdit = 0;
   }
   showEdit(e, i, j, k) {
+    console.log('showEdit-showEdit', e, i, j, k);
     const table = e as HTMLElement;
     const index = this.renderIndexHSMTHadTransfer(i, j, k) * 2;
     this.currentEdit = index;

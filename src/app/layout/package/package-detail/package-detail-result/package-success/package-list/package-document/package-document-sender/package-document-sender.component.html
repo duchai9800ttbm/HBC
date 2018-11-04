@@ -39,10 +39,9 @@
             <div class="form-group ml-sm-2 p-2">
                 <label for="" class="form-label">Loại tài liệu</label>
                 <span class="custom-dropdown mx-sm-2">
-                    <select class="form-control">
-                        <option value="">Tất cả</option>
-                        <!-- <option value="Official">Chính thức</option>
-                        <option value="Draft">Bản nháp</option> -->
+                    <select class="form-control" [(ngModel)]="filterModel.documentType">
+                        <option [ngValue]="null">Tất cả</option>
+                            <option *ngFor="let item of documentTypeAllControl" [ngValue]="item">{{item.name }}</option>
                     </select>
                 </span>
             </div>
@@ -620,7 +619,7 @@
                                                 </td>
                                                 <td class="select-filter text-center w10">
                                                     <div class="edit-number">
-                                                        <input [(ngModel)]="items.documents[0].useDays" (blur)=formatToNumber(items.documents[0]) appInputDate min="0"
+                                                        <input [(ngModel)]="items.documents[0].useDays" (change)=formatToNumber(items.documents[0]) appInputDate min="0"
                                                             class="form-control number-date--pad" placeholder="Number" [ngClass]="{'w80' : isManageTransfer==true}">
                                                         <i class="fa fa-pencil edit-number--posotion" (click)="showEdit(nameit, i, j, k)"></i>
                                                     </div>
@@ -685,7 +684,7 @@
                                             </td> -->
                                             <td class="select-filter text-center w10">
                                                 <div class="edit-number">
-                                                    <input [(ngModel)]="documents.useDays" autofocus (blur)=formatToNumber(documents) appInputDate min="0" class="form-control number-date--pad"
+                                                    <input [(ngModel)]="documents.useDays" autofocus (change)=formatToNumber(documents) appInputDate min="0" class="form-control number-date--pad"
                                                         placeholder="Number" [ngClass]="{'w80' : isManageTransfer==true}">
                                                     <i class="fa fa-pencil edit-number--posotion" (click)="showEdit(nameit, i, j, k)"></i>
                                                 </div>
@@ -773,7 +772,7 @@
                                                 </td> -->
                                                 <td class="select-filter text-center w10">
                                                     <div class="edit-number">
-                                                        <input [(ngModel)]="items.documents[0].useDays" autofocus (blur)=formatToNumber(items.documents[0]) appInputDate min="0"
+                                                        <input [(ngModel)]="items.documents[0].useDays" autofocus (change)=formatToNumber(items.documents[0]) appInputDate min="0"
                                                             class="form-control number-date--pad" placeholder="Number" [ngClass]="{'w80' : isManageTransfer==true}">
                                                         <i class="fa fa-pencil edit-number--posotion" (click)="showEditSHDT(nameit, i, j, k)"></i>
                                                     </div>
@@ -851,7 +850,7 @@
                                             </td> -->
                                             <td class="select-filter text-center w10">
                                                 <div class="edit-number">
-                                                    <input [(ngModel)]="documents.useDays" autofocus (blur)=formatToNumber(documents) appInputDate min="0" class="form-control number-date--pad"
+                                                    <input [(ngModel)]="documents.useDays" autofocus (change)=formatToNumber(documents) appInputDate min="0" class="form-control number-date--pad"
                                                         placeholder="Number" [ngClass]="{'w80' : isManageTransfer==true}">
                                                     <i class="fa fa-pencil edit-number--posotion" (click)="showEditSHDT(nameit, i, j, k)"></i>
                                                 </div>

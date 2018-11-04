@@ -21,6 +21,8 @@ import { DictionaryItemHightLight } from '../../../../../../../../shared/models'
 import { HoSoDuThauService } from '../../../../../../../../shared/services/ho-so-du-thau.service';
 import { CheckStatusPackage } from '../../../../../../../../shared/constants/check-status-package';
 import { Router } from '../../../../../../../../../../node_modules/@angular/router';
+import { DocumentTypeAll } from '../../../../../../../../shared/models/package/document-type-all';
+import { StatusDocTranfered } from '../../../../../../../../shared/models/result-attend/status-doc-tranfered.model';
 
 @Component({
   selector: 'app-package-document-receiver',
@@ -64,6 +66,9 @@ export class PackageDocumentReceiverComponent implements OnInit {
   documentTypeList;
   statusList;
   checkStatusPackage = CheckStatusPackage;
+  documentTypeAll: DocumentTypeAll[];
+  documentTypeAllControl = [];
+  statusDocList: StatusDocTranfered[];
   constructor(
     private packageSuccessService: PackageSuccessService,
     private modalService: BsModalService,
@@ -80,13 +85,11 @@ export class PackageDocumentReceiverComponent implements OnInit {
 
   ngOnInit() {
     this.currentPackageId = +PackageDetailComponent.packageId;
-    this.getListHSMTDocType();
-    this.getListHSDTDocType();
     this.packageService.statusPackageValue$.subscribe(status => {
       this.statusPackage = status;
     });
-    this.filter.documentType = '';
-    this.filter.documentTypeId = null;
+    this.getListFilter();
+    this.filter.documentType = null;
     this.filter.status = '';
     this.userInfo = this.sessionService.userInfo;
     this.isDataHsmt = true;
@@ -103,6 +106,23 @@ export class PackageDocumentReceiverComponent implements OnInit {
       .subscribe(keySearch => {
         this.filterFuc(false);
       });
+  }
+
+  getListFilter() {
+    this.detailResultPackageService.documentTypeHsdtAndHsmt().subscribe(response => {
+      this.documentTypeAll = response;
+      (this.documentTypeAll || []).forEach(item => {
+        item.detail.forEach(itemChild => {
+          itemChild['bidOpportunityStage'] = item.bidOpportunityStage.id;
+        });
+      });
+      (this.documentTypeAll || []).forEach(item => {
+        this.documentTypeAllControl = this.documentTypeAllControl.concat(item.detail);
+      });
+    });
+    this.detailResultPackageService.getListStatusDoc().subscribe(response => {
+      this.statusDocList = response;
+    });
   }
 
   // Danh sách tài liệu HSMT
@@ -158,6 +178,7 @@ export class PackageDocumentReceiverComponent implements OnInit {
   }
 
   filterFuc(alertShow: boolean) {
+    console.log('this.filter', this.filter.documentType);
     this.detailResultPackageService.filterTransferDocDetailsList(
       this.currentPackageId,
       this.searchTerm$.value,
@@ -209,7 +230,10 @@ export class PackageDocumentReceiverComponent implements OnInit {
 
   }
   clearFilterFuc() {
-    this.filter.documentType = '';
+    this.filter.documentType = null;
+    // this.filter.documentType.documentType = '';
+    // this.filter.documentType.bidOpportunityStage = '';
+    // this.filter.documentType.documentTypeId = null;
     this.filter.status = '';
     this.filterFuc(false);
   }
@@ -282,7 +306,7 @@ export class PackageDocumentReceiverComponent implements OnInit {
     let dem = 0;
     if (this.docHSMTListTranferred && this.docHSMTListTranferred.length !== 0) {
       for (let indexPar = 0; indexPar < i; indexPar++) {
-        dem = dem + this.docHSMTListTranferred[indexPar].items.length;
+        dem = this.docHSMTListTranferred[indexPar].items ? dem + this.docHSMTListTranferred[indexPar].items.length : dem;
       }
       dem = dem + j + 1;
     }
@@ -292,7 +316,7 @@ export class PackageDocumentReceiverComponent implements OnInit {
     let dem = 0;
     if (this.docHSDTListTranferred && this.docHSDTListTranferred.length !== 0) {
       for (let indexPar = 0; indexPar < i; indexPar++) {
-        dem = dem + this.docHSMTListTranferred[indexPar].items.length;
+        dem = this.docHSDTListTranferred[indexPar].items ? dem + this.docHSDTListTranferred[indexPar].items.length : dem;
       }
       dem = dem + j + 1;
     }

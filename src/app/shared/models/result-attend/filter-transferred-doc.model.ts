@@ -1,5 +1,8 @@
 export class FilterTransferredDoc {
-    documentType: string;
-    documentTypeId: number;
+    documentType: {
+        type: string;
+        bidOpportunityStage: string;
+        id: number;
+    };
     status: string;
 }

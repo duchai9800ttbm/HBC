@@ -18,6 +18,8 @@ import { ManageNeedTranferList } from '../models/result-attend/manage-need-trans
 import { HadTransferList } from '../models/result-attend/had-transfer-list.model';
 import { FilterTransferredDoc } from '../models/result-attend/filter-transferred-doc.model';
 import { TransferredDoc } from '../models/result-attend/transferred-doc.model';
+import { DocumentTypeAll } from '../models/package/document-type-all';
+import { StatusDocTranfered } from '../models/result-attend/status-doc-tranfered.model';
 @Injectable()
 export class DetailResultPackageService {
   listFileResult: Subject<any> = new Subject();
@@ -474,14 +476,20 @@ export class DetailResultPackageService {
   // to filter paramter cho danh sách tài liệu được chuyển giao
   toFilterTranferDocDetails(filter: FilterTransferredDoc): URLSearchParams {
     const urlFilterParams = new URLSearchParams();
-    urlFilterParams.append(
-      'documentType',
-      filter.documentType ? filter.documentType.toString() : ''
-    );
-    urlFilterParams.append(
-      'documentTypeId',
-      filter.documentTypeId ? filter.documentTypeId.toString() : ''
-    );
+    if (filter.documentType) {
+      urlFilterParams.append(
+        'documentType',
+        filter.documentType.type ? filter.documentType.type.toString() : ''
+      );
+      urlFilterParams.append(
+        'documentTypeId',
+        filter.documentType.id ? filter.documentType.id.toString() : ''
+      );
+      urlFilterParams.append(
+        'bidOpportunityStage',
+        filter.documentType.bidOpportunityStage ? filter.documentType.bidOpportunityStage.toString() : ''
+      );
+    }
     urlFilterParams.append(
       'status',
       filter.status ? filter.status.toString() : ''
@@ -547,6 +555,48 @@ export class DetailResultPackageService {
       const result = response.result;
       console.log('filterTransferDocDetailsList', result);
       return (result || []).map(this.toTransferredDoc);
+    });
+  }
+  // Map model danh sách tài liệu HSDT + HSMT
+  toDocumentType(result: any): DocumentTypeAll {
+    console.log('toDocumentType', result);
+    return {
+      bidOpportunityStage: result.bidOpportunityStage ? {
+        id: result.bidOpportunityStage.key,
+        text: result.bidOpportunityStage.value,
+        displayText: result.bidOpportunityStage.displayText,
+      } : null,
+      detail: result.detail ? (result.detail || []).map(itemDetail => {
+        return {
+          id: itemDetail.id,
+          name: itemDetail.name,
+          type: itemDetail.type,
+        };
+      }) : null,
+    };
+  }
+  // Danh sách tài liệu HSDT + HSMT
+  documentTypeHsdtAndHsmt(): Observable<DocumentTypeAll[]> {
+    const url = `data/documenttypehsdtandhsmt`;
+    return this.apiService.get(url).map(response => {
+      const result = response.result;
+      return (result || []).map(items => {
+        return this.toDocumentType(items);
+      });
+    });
+  }
+  // Danh sách trạng thái tài liệu người nhận
+  getListStatusDoc(): Observable<StatusDocTranfered[]> {
+    const url = `data/bidtransferdocdetailstatus`;
+    return this.apiService.get(url).map(response => {
+      const result = response.result;
+      return (result || []).map(items => {
+        return {
+          id: items.key,
+          text: items.value,
+          displayText: items.displayText,
+        };
+      });
     });
   }
   // =============================

@@ -39,9 +39,8 @@
                     <label for="" class="form-label">Loại tài liệu</label>
                     <span class="custom-dropdown mx-sm-2">
                         <select class="form-control" [(ngModel)]="filter.documentType">
-                            <option value="">Tất cả</option>
-                            <option value="Official">Chính thức</option>
-                            <option value="Draft">Bản nháp</option>
+                            <option [ngValue]="null">Tất cả</option>
+                            <option *ngFor="let item of documentTypeAllControl" [ngValue]="item">{{item.name }}</option>
                         </select>
                     </span>
                 </div>
@@ -49,9 +48,8 @@
                     <label for="" class="form-label">Trạng thái</label>
                     <span class="custom-dropdown mx-sm-2">
                         <select class="form-control" [(ngModel)]="filter.status">
-                            <option value="">--Lựa chọn--</option>
-                            <option value="Official">Đang sử dụng</option>
-                            <option value="Draft">Quá hạn sử dụng</option>
+                            <option [ngValue]="''">--Lựa chọn--</option>
+                            <option *ngFor="let item of statusDocList" [ngValue]="item.id">{{item.text}}</option>
                         </select>
                     </span>
                 </div>
@@ -226,9 +224,8 @@
                                         </td>
                                         <td class="select-filter w10">{{ documents.status?.value }}</td>
                                         <td class="text-center" [ngClass]="{'w6' : isManageTransfer==true, 'w10' : isManageTransfer==false}">
-
                                             <div class="d-flex justify-content-around">
-                                                <ng-container *ngIf="!documents.document.isLiveForm">
+                                                <ng-container *ngIf="documents.document && !documents.document.isLiveForm">
                                                     <div id="mr" *ngIf="!documents.document.filerUrl">
                                                         <a title="Tải file" (click)="downloadFileItem(documents.document.id)">
                                                             <i class="fa fa-download color-item-down" aria-hidden="true"></i>
@@ -240,7 +237,7 @@
                                                         </a>
                                                     </div>
                                                 </ng-container>
-                                                <ng-container *ngIf="documents.document.isLiveForm">
+                                                <ng-container *ngIf="documents.document && documents.document.isLiveForm">
                                                     <div id="mr">
                                                         <a title="Xem chi tiết" (click)="viewDetailLiveForm(documents.document.type)">
                                                             <i class="fa fa-eye text-warning" aria-hidden="true"></i>
