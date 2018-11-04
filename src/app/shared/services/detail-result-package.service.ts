@@ -684,7 +684,7 @@ export class DetailResultPackageService {
   // =============================
   // Bước 3, Họp kick-off
   // Gửi thư thông báo họp kick-off
-  notiMeetingKickOff(data: SendEmailModel, file: File[]) {
+  notiMeetingKickOff(data: SendEmailModel, file: File[], isAgain: boolean) {
     const url = `bidopportunity/kqdt/guithuthongbaohopkickoff`;
     const dataObj = new FormData();
     dataObj.append('BidOpportunityId', data.bidOpportunityId + '');
@@ -696,6 +696,7 @@ export class DetailResultPackageService {
       dataObj.append('AttachmentFiles', item);
     });
     dataObj.append('Content', data.content);
+    dataObj.append('IsAgain', isAgain.toString());
     return this.apiService.postFile(url, dataObj);
   }
   // Tải lên biên bản cuộc họp

@@ -16,7 +16,7 @@
         <img src="assets/images/kickOffMetting.png" alt="">
         <h5>Bạn chưa thông báo họp kick-off dự án?</h5>
         <div class="confirm-button">
-          <button class="btn btn-primary" id="success" (click)="modalNoti(notiKickOff)">Thông báo họp kick-off</button>
+          <button class="btn btn-primary" id="success" (click)="modalNoti(notiKickOff, false)">Thông báo họp kick-off</button>
         </div>
       </ng-container>
     </div>
@@ -36,7 +36,7 @@
       </div>
       <div>
         <div class="btn-toolbar mt-2 mb-2">
-          <button class="btn btn-primary ml-1" (click)="modalNoti(notiKickOff)">
+          <button class="btn btn-primary ml-1" (click)="modalNoti(notiKickOff, true)">
             Gửi lại email thông báo kick-off
           </button>
           <button class="btn btn-primary ml-1" (click)="refresh(true)">
@@ -284,11 +284,14 @@
           </tr>
         </thead>
         <tbody>
-          <tr *ngFor="let data of listData; let i = index">
-            <td class="select-filter text-center">{{ i+1}}</td>
-            <td class="select-filter text-center">{{ data.username}}</td>
-            <td class="select-filter text-center color-default">{{ data.email}}</td>
-          </tr>
+          <ng-container *ngFor="let data of listEmailSended; let i = index">
+              <tr *ngFor="let item of data.to; let j = index">
+                  <td class="select-filter text-center">{{ i+1}}</td>
+                  <td class="select-filter text-center">{{ item.username}}</td>
+                  <td class="select-filter text-center color-default">{{ item.email}}</td>
+                </tr>
+          </ng-container>
+          
         </tbody>
       </table>
     </div>

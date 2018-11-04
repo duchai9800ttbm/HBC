@@ -18,6 +18,7 @@ import { PackageService } from '../../../../../../shared/services/package.servic
 import { CheckStatusPackage } from '../../../../../../shared/constants/check-status-package';
 import { PermissionModel } from '../../../../../../shared/models/permission/Permission.model';
 import { PermissionService } from '../../../../../../shared/services/permission.service';
+import { EmailFilter, EmailItemModel } from '../../../../../../shared/models/email/email-item.model';
 
 @Component({
   selector: 'app-meeting-kickoff',
@@ -82,7 +83,8 @@ export class MeetingKickoffComponent implements OnInit, OnDestroy {
   maxVersionFileList = 0;
   maxInterviewTimesFileList = 0;
   subscription: Subscription;
-
+  listEmailSended: EmailItemModel[];
+  isAgain: boolean;
   constructor(
     private modalService: BsModalService,
     private router: Router,
@@ -110,7 +112,6 @@ export class MeetingKickoffComponent implements OnInit, OnDestroy {
       link: ['']
     });
     this.currentPackageId = +PackageDetailComponent.packageId;
-
     this.subscription = this.permissionService.get().subscribe(data => {
       this.listPermission = data;
       const hsdt = this.listPermission.length &&
@@ -141,9 +142,8 @@ export class MeetingKickoffComponent implements OnInit, OnDestroy {
     const status$ = this.packageService.statusPackageValue$.subscribe(status => {
           this.statusPackage = status;
     });
-
     this.subscription.add(status$);
-
+    this.listEmailSendedFuc();
     this.textMetting = 'Đã nhận tài liệu';
     this.textTitleSendMail = 'Gửi thư thông báo họp kich-off dự án';
     this.doNotiMeeting = false;
@@ -176,6 +176,17 @@ export class MeetingKickoffComponent implements OnInit, OnDestroy {
     }
   }
 
+  listEmailSendedFuc() {
+    const filterModel = new EmailFilter();
+    filterModel.category = 'Kick-off';
+    this.loading = true;
+    this.emailService.searchWithFilter(this.currentPackageId, '', filterModel, 0, 100)
+      .subscribe(result => {
+        this.listEmailSended = result.items;
+        console.log('this.listEmailSended', this.listEmailSended);
+      }, err => {});
+  }
+
   endAPIFuction(event) {
     this.loading = event;
   }
@@ -194,7 +205,8 @@ export class MeetingKickoffComponent implements OnInit, OnDestroy {
   sendBcc() {
     this.isSendBcc = !this.isSendBcc;
   }
-  modalNoti(template: TemplateRef<any>) {
+  modalNoti(template: TemplateRef<any>, isAgain: boolean) {
+    this.isAgain = isAgain;
     this.modalRef = this.modalService.show(
       template,
       Object.assign({}, { class: 'gray modal-lg-max' })
@@ -258,7 +270,7 @@ export class MeetingKickoffComponent implements OnInit, OnDestroy {
     if (this.emailModel && this.emailModel.to) {
       this.emailModel.bidOpportunityId = this.currentPackageId;
       this.spinner.show();
-      this.detailResultPackageService.notiMeetingKickOff(this.emailModel, this.file).subscribe(result => {
+      this.detailResultPackageService.notiMeetingKickOff(this.emailModel, this.file, this.isAgain).subscribe(result => {
         this.packageService.changeStatusPackageValue(this.checkStatusPackage.DaThongBaoHopKickOff.text);
         this.emailModel = new SendEmailModel();
         this.file = [];
