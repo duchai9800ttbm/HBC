@@ -35,6 +35,7 @@ export class TransferredDoc {
                 largeSizeUrl
             };
             employeeEmail: string;
-        }
+        };
+        isFirstTransfer: boolean;
     } [];
 }

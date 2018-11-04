@@ -538,6 +538,7 @@ export class DetailResultPackageService {
               } : null,
               employeeEmail: itemBidTransferDocDetails.sendEmployee.employeeEmail,
             } : null,
+            isFirstTransfer: itemBidTransferDocDetails.isFirstTransfer,
           };
         }) : null,
     };
@@ -556,6 +557,11 @@ export class DetailResultPackageService {
       console.log('filterTransferDocDetailsList', result);
       return (result || []).map(this.toTransferredDoc);
     });
+  }
+  // Yêu cầu gửi lại tài liệu
+  requesstToRessubmit(bidTransferDocDetailId: number) {
+    const url = `bidtransferdocdetail/${bidTransferDocDetailId}/requesttoresubmitdoc`;
+    return this.apiService.get(url);
   }
   // Map model danh sách tài liệu HSDT + HSMT
   toDocumentType(result: any): DocumentTypeAll {

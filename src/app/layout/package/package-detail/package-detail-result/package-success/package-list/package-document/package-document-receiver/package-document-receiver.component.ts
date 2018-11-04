@@ -271,8 +271,11 @@ export class PackageDocumentReceiverComponent implements OnInit {
           this.alertService.success('Xác nhận nhận tài liệu thành công!');
           this.bntConfirm = true;
           this.packageService.setActiveKickoff(this.bntConfirm);
-          this.textmovedata = this.bntConfirm ? 'Đã nhận tài liệu được chuyển giao' : 'Chưa nhận tài liệu được chuyển giao';
-        });
+          // this.textmovedata = this.bntConfirm ? 'Đã nhận tài liệu được chuyển giao' : 'Chưa nhận tài liệu được chuyển giao';
+        },
+          err => {
+            this.alertService.error('Xác nhận nhận tài liệu không thành công!');
+          });
       }
     );
   }
@@ -321,5 +324,24 @@ export class PackageDocumentReceiverComponent implements OnInit {
       dem = dem + j + 1;
     }
     return dem;
+  }
+
+  // Yêu cầu gửi lại tài liệu
+  requestToResubmit(bidTransferDocDetailId: number) {
+    this.detailResultPackageService.requesstToRessubmit(bidTransferDocDetailId).subscribe(respone => {
+      this.alertService.success('Yêu cầu gửi lại tài liệu thành công!');
+    },
+      err => {
+        this.alertService.error('Yêu cầu gửi lại tài liệu không thành công!');
+      });
+  }
+  // Xác nhận đã nhận
+  comfirmReceived(bidTransferDocDetailIds: number) {
+    this.detailResultPackageService.confirmReceiveDocs([bidTransferDocDetailIds]).subscribe(response => {
+      this.alertService.success('Xác nhận nhận tài liệu thành công!');
+    },
+      err => {
+        this.alertService.error('Xác nhận nhận tài liệu không thành công!');
+      });
   }
 }

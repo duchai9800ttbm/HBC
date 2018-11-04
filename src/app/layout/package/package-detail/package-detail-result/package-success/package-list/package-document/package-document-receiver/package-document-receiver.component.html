@@ -160,18 +160,38 @@
                                         </td>
                                         <td class="select-filter w10" [title]="documents.status?.value">{{ documents.status?.value }}</td>
                                         <td class="text-center" [ngClass]="{'w6' : isManageTransfer==true, 'w10' : isManageTransfer==false}">
-                                            <div class="d-flex justify-content-around">
-                                                <div id="mr" *ngIf="!documents.document.filerUrl">
-                                                    <a title="Tải file" (click)="downloadFileItem(documents.document.id)">
-                                                        <i class="fa fa-download color-item-down" aria-hidden="true"></i>
-                                                    </a>
+                                            <ng-container *ngIf="documents.status && documents.status.key === 'DuocSuDung'">
+                                                <div class="d-flex justify-content-around">
+                                                    <ng-container *ngIf="!documents.isFirstTransfer">
+                                                        <div id="mr">
+                                                            <a title="Xác nhận đã nhận" (click)="comfirmReceived(documents.id)">
+                                                                <i class="fa fa-check-square-o" aria-hidden="true"></i>
+                                                            </a>
+                                                        </div>
+                                                    </ng-container>
+                                                    <ng-container *ngIf="documents.isFirstTransfer">
+                                                        <div id="mr" *ngIf="!documents.document.filerUrl">
+                                                            <a title="Tải file" (click)="downloadFileItem(documents.document.id)">
+                                                                <i class="fa fa-download color-item-down" aria-hidden="true"></i>
+                                                            </a>
+                                                        </div>
+                                                        <div *ngIf="documents.document.filerUrl">
+                                                            <a title="Mở link" [href]="documents.document.filerUrl" target="_blank">
+                                                                <i class="fa fa-external-link color-item-down" aria-hidden="true"></i>
+                                                            </a>
+                                                        </div>
+                                                    </ng-container>
                                                 </div>
-                                                <div *ngIf="documents.document.filerUrl">
-                                                    <a title="Mở link" [href]="documents.document.filerUrl" target="_blank">
-                                                        <i class="fa fa-external-link color-item-down" aria-hidden="true"></i>
-                                                    </a>
+                                            </ng-container>
+                                            <ng-container *ngIf="documents.status && documents.status.key === 'QuaHanSuDung'">
+                                                <div class="d-flex justify-content-around">
+                                                    <div id="mr">
+                                                        <a title="Yêu cầu gửi lại" (click)="requestToResubmit(documents.id)">
+                                                            <i class="fa fa-refresh" aria-hidden="true"></i>
+                                                        </a>
+                                                    </div>
                                                 </div>
-                                            </div>
+                                            </ng-container>
                                         </td>
                                     </tr>
                                 </ng-container>
@@ -225,28 +245,46 @@
                                         <td class="select-filter w10">{{ documents.status?.value }}</td>
                                         <td class="text-center" [ngClass]="{'w6' : isManageTransfer==true, 'w10' : isManageTransfer==false}">
                                             <div class="d-flex justify-content-around">
-                                                <ng-container *ngIf="documents.document && !documents.document.isLiveForm">
-                                                    <div id="mr" *ngIf="!documents.document.filerUrl">
-                                                        <a title="Tải file" (click)="downloadFileItem(documents.document.id)">
-                                                            <i class="fa fa-download color-item-down" aria-hidden="true"></i>
-                                                        </a>
-                                                    </div>
-                                                    <div id="mr" *ngIf="documents.document.filerUrl">
-                                                        <a title="Mở link" [href]="documents.document.filerUrl" target="_blank">
-                                                            <i class="fa fa-external-link color-item-down" aria-hidden="true"></i>
-                                                        </a>
-                                                    </div>
+                                                <ng-container *ngIf="documents.status && documents.status.key === 'DuocSuDung'">
+                                                    <ng-container *ngIf="!documents.isFirstTransfer">
+                                                        <div id="mr">
+                                                            <a title="Xác nhận đã nhận" (click)="comfirmReceived(documents.id)">
+                                                                <i class="fa fa-check-square-o" aria-hidden="true"></i>
+                                                            </a>
+                                                        </div>
+                                                    </ng-container>
+                                                    <ng-container *ngIf="documents.document && !documents.document.isLiveForm">
+                                                        <div id="mr" *ngIf="!documents.document.filerUrl">
+                                                            <a title="Tải file" (click)="downloadFileItem(documents.document.id)">
+                                                                <i class="fa fa-download color-item-down" aria-hidden="true"></i>
+                                                            </a>
+                                                        </div>
+                                                        <div id="mr" *ngIf="documents.document.filerUrl">
+                                                            <a title="Mở link" [href]="documents.document.filerUrl" target="_blank">
+                                                                <i class="fa fa-external-link color-item-down" aria-hidden="true"></i>
+                                                            </a>
+                                                        </div>
+                                                    </ng-container>
+                                                    <ng-container *ngIf="documents.document && documents.document.isLiveForm">
+                                                        <div id="mr">
+                                                            <a title="Xem chi tiết" (click)="viewDetailLiveForm(documents.document.type)">
+                                                                <i class="fa fa-eye text-warning" aria-hidden="true"></i>
+                                                            </a>
+                                                        </div>
+                                                        <div>
+                                                            <a title="In">
+                                                                <i class="fa fa-print color-item-print" aria-hidden="true"></i>
+                                                            </a>
+                                                        </div>
+                                                    </ng-container>
                                                 </ng-container>
-                                                <ng-container *ngIf="documents.document && documents.document.isLiveForm">
-                                                    <div id="mr">
-                                                        <a title="Xem chi tiết" (click)="viewDetailLiveForm(documents.document.type)">
-                                                            <i class="fa fa-eye text-warning" aria-hidden="true"></i>
-                                                        </a>
-                                                    </div>
-                                                    <div>
-                                                        <a title="In">
-                                                            <i class="fa fa-print color-item-print" aria-hidden="true"></i>
-                                                        </a>
+                                                <ng-container *ngIf="documents.status && documents.status.key === 'QuaHanSuDung'">
+                                                    <div class="d-flex justify-content-around">
+                                                        <div id="mr">
+                                                            <a title="Yêu cầu gửi lại" (click)="requestToResubmit(documents.id)">
+                                                                <i class="fa fa-refresh" aria-hidden="true"></i>
+                                                            </a>
+                                                        </div>
                                                     </div>
                                                 </ng-container>
                                             </div>
