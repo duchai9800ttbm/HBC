@@ -376,16 +376,16 @@ export class PackageDocumentSenderComponent implements OnInit {
   }
   defaulttransferNameHSDTFuc() {
     if (this.docHSDTList && this.docHSDTList.length !== 0) {
-      this.docHSDTList.forEach(itemchildDocuments => {
+      (this.docHSDTList || []).forEach(itemchildDocuments => {
         if (itemchildDocuments.childDocuments && itemchildDocuments.childDocuments.length !== 0) {
-          itemchildDocuments.childDocuments.forEach(itemChild => {
-            itemChild.items.forEach(items => {
+          (itemchildDocuments.childDocuments || []).forEach(itemChild => {
+            (itemChild.items || []).forEach(items => {
               items.documents[0].transferName = this.defaulttransferNameHSDT;
             });
           });
         }
         if (!itemchildDocuments.childDocuments) {
-          itemchildDocuments.documents.forEach(documents => {
+          (itemchildDocuments.documents || []).forEach(documents => {
             documents.transferName = this.defaulttransferNameHSDT;
           });
         }
@@ -394,16 +394,16 @@ export class PackageDocumentSenderComponent implements OnInit {
   }
   defaultdateUseHSDTFuc() {
     if (this.docHSDTList && this.docHSDTList.length !== 0) {
-      this.docHSDTList.forEach(itemchildDocuments => {
+      (this.docHSDTList || []).forEach(itemchildDocuments => {
         if (itemchildDocuments.childDocuments && itemchildDocuments.childDocuments.length !== 0) {
-          itemchildDocuments.childDocuments.forEach(itemChild => {
-            itemChild.items.forEach(items => {
+          (itemchildDocuments.childDocuments || []).forEach(itemChild => {
+            (itemChild.items || []).forEach(items => {
               items.documents[0].dateUse = this.defaultdateUseHSDT;
             });
           });
         }
         if (!itemchildDocuments.childDocuments) {
-          itemchildDocuments.documents.forEach(documents => {
+          (itemchildDocuments.documents || []).forEach(documents => {
             documents.dateUse = this.defaultdateUseHSDT;
           });
         }

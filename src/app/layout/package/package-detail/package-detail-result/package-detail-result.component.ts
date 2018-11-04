@@ -40,7 +40,6 @@ export class PackageDetailResultComponent implements OnInit {
                 case (this.checkStatusPackage.DaThongBaoCacBenLienQuan.id):
                 case (this.checkStatusPackage.DaChuyenGiaoTaiLieu.id):
                 case (this.checkStatusPackage.ChuaNhanTaiLieu.id):
-                case (this.checkStatusPackage.DaNhanTaiLieu.id):
                 case (this.checkStatusPackage.ChuaChuyenGiaoTaiLieu.id): {
                     this.router.navigate([`/package/detail/${this.packageId}/result/package-success/package-list`]);
                     break;
@@ -49,7 +48,8 @@ export class PackageDetailResultComponent implements OnInit {
                     this.router.navigate([`/package/detail/${this.packageId}/result/package-success/contract-signed`]);
                     break;
                 }
-                case (this.checkStatusPackage.DaThongBaoHopKickOff.id): {
+                case (this.checkStatusPackage.DaThongBaoHopKickOff.id):
+                case (this.checkStatusPackage.DaNhanTaiLieu.id): {
                     this.router.navigate([`/package/detail/${this.packageId}/result/package-success/meeting-kickoff`]);
                     break;
                 }

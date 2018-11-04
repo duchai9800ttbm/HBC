@@ -149,7 +149,7 @@ export class DetailResultPackageService {
     return this.apiService.postFile(url, dataObj);
   }
   // Gửi thư thông báo cho các bên liên quan
-  sendFeedbackToStakeholders(data: SendEmailModel, file: File[]) {
+  sendFeedbackToStakeholders(data: SendEmailModel, file: File[], isAgain: boolean) {
     const url = `bidopportunity/kqdt/sendmailtostakeholders`;
     const dataObj = new FormData();
     dataObj.append('BidOpportunityId', data.bidOpportunityId + '');
@@ -161,6 +161,7 @@ export class DetailResultPackageService {
       dataObj.append('AttachmentFiles', item);
     });
     dataObj.append('Content', data.content);
+    dataObj.append('IsAgain', isAgain.toString());
     return this.apiService.postFile(url, dataObj);
   }
   // Chuyển giao tài liệu

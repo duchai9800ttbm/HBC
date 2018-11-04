@@ -91,6 +91,7 @@ export class PackageListComponent implements OnInit, OnDestroy {
   XemMailChuyenGiao = false;
   subscription: Subscription;
   checkStatusPackage = CheckStatusPackage;
+  isAgain = false;
   constructor(
     private modalService: BsModalService,
     private router: Router,
@@ -223,8 +224,9 @@ export class PackageListComponent implements OnInit, OnDestroy {
       this.subscription.unsubscribe();
     }
   }
-  openModalNotification(template: TemplateRef<any>, actionSendEmail: string) {
+  openModalNotification(template: TemplateRef<any>, actionSendEmail: string, isAgain: boolean) {
     this.actionSendEmail = actionSendEmail;
+    this.isAgain = isAgain;
     this.modalRef = this.modalService.show(
       template,
       Object.assign({}, { class: 'gray modal-lg-max' })
@@ -478,16 +480,16 @@ export class PackageListComponent implements OnInit, OnDestroy {
           break;
         }
         case ('Stakeholders'): {
-          this.detailResultPackageService.sendFeedbackToStakeholders(this.emailModel, this.file).subscribe(result => {
+          this.detailResultPackageService.sendFeedbackToStakeholders(this.emailModel, this.file, this.isAgain).subscribe(result => {
             this.packageService.changeStatusPackageValue(this.checkStatusPackage.DaThongBaoCacBenLienQuan.text);
             this.emailModel = new SendEmailModel();
             this.file = [];
-            this.alertService.success('Gửi phản hồi đến phòng hợp đồng thành công!');
+            this.alertService.success('Gửi thông báo cho các bên liên quan thành công!');
             this.modalRef.hide();
             this.spinner.hide();
           },
             err => {
-              this.alertService.error('Đã xảy ra lỗi. Gửi phản hồi đến phòng hợp đồng không thành công!');
+              this.alertService.error('Đã xảy ra lỗi. Gửi thông báo cho các bên liên quan không thành công!');
               this.modalRef.hide();
               this.spinner.hide();
             });

@@ -80,7 +80,8 @@ export class WinPackageNoticeListComponent implements OnInit, OnDestroy {
       }, 300);
     });
 
-    this.filterModel.category = 'AnnouncePassBidOpportunity';
+    // this.filterModel.category = 'AnnouncePassBidOpportunity';
+    this.filterModel.category = 'AnnounceStakeholders';
     this.loading = true;
     this.emailService.instantSearchWithFilter(this.packageId, this.searchTerm$, this.filterModel, 0, 5)
       .subscribe(result => {

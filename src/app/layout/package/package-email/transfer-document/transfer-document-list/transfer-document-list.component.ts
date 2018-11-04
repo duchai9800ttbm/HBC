@@ -70,7 +70,8 @@ export class TransferDocumentListComponent implements OnInit, OnDestroy {
       }, 300);
     });
 
-    this.filterModel.category = 'RejectOpportunity';
+    // this.filterModel.category = 'RejectOpportunity';
+    this.filterModel.category = 'TransferDocuments';
     this.loading = true;
     this.emailService.instantSearchWithFilter(this.packageId, this.searchTerm$, this.filterModel, 0, 5)
       .subscribe(result => {

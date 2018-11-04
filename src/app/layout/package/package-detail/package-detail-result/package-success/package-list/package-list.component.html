@@ -12,7 +12,7 @@
         <div>
             <div class="mt-2 mb-2">
                 <ng-container *ngIf="ThongBaoDenPhongHopDong">
-                    <button class="btn btn-primary ml-1" (click)="openModalNotification(notification, 'ContractRoom')">
+                    <button class="btn btn-primary ml-1" (click)="openModalNotification(notification, 'ContractRoom', false)">
                         Thông báo cho phòng hợp đồng
                     </button>
                 </ng-container>
@@ -56,7 +56,7 @@
         <div>
             <div class="mt-2 mb-2">
                 <ng-container *ngIf="ThongBaoStakeholders">
-                    <button class="btn btn-primary ml-1" (click)="openModalNotification(notification, 'Stakeholders')">
+                    <button class="btn btn-primary ml-1" (click)="openModalNotification(notification, 'Stakeholders', false)">
                         Thông báo cho các bên liên quan
                     </button>
                 </ng-container>
@@ -89,7 +89,7 @@
         <div>
             <div class="mt-2 mb-2">
                 <ng-container *ngIf="ThongBaoDenPhongHopDong">
-                    <button class="btn btn-primary ml-1" (click)="openModalNotification(notification, 'Stakeholders')">
+                    <button class="btn btn-primary ml-1" (click)="openModalNotification(notification, 'Stakeholders', true)">
                         Thông báo lại cho các bên liên quan
                     </button>
                 </ng-container>

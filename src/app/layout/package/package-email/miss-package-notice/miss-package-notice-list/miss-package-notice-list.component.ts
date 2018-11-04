@@ -75,7 +75,8 @@ export class MissPackageNoticeListComponent implements OnInit, OnDestroy {
         }
       }, 300);
     });
-    this.filterModel.category = 'AnnounceFailBidOpportunity';
+    // this.filterModel.category = 'AnnounceFailBidOpportunity';
+    this.filterModel.category = 'FeedbackToContractRoom';
     this.loading = true;
     this.emailService.instantSearchWithFilter(this.packageId, this.searchTerm$, this.filterModel, 0, 5)
       .subscribe(result => {
