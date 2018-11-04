@@ -41,7 +41,7 @@
                 <span class="custom-dropdown mx-sm-2">
                     <select class="form-control" [(ngModel)]="filterModel.documentType">
                         <option [ngValue]="null">Tất cả</option>
-                            <option *ngFor="let item of documentTypeAllControl" [ngValue]="item">{{item.name }}</option>
+                        <option *ngFor="let item of documentTypeAllControl" [ngValue]="item">{{item.name }}</option>
                     </select>
                 </span>
             </div>
@@ -49,9 +49,8 @@
                 <label for="" class="form-label">Chuyển giao cho</label>
                 <span class="custom-dropdown mx-sm-2">
                     <select class="form-control">
-                        <option value="">--Lựa chọn--</option>
-                        <!-- <option value="Official">Đang sử dụng</option>
-                        <option value="Draft">Quá hạn sử dụng</option> -->
+                        <option [ngValue]="">--Lựa chọn--</option>
+                        <option *ngFor="let item of transferDepartmentList" [ngValue]="item">{{item.value }}</option>
                     </select>
                 </span>
             </div>
@@ -59,9 +58,8 @@
                 <label for="" class="form-label">Số ngày sử dụng</label>
                 <span class="custom-dropdown mx-sm-2">
                     <select class="form-control">
-                        <option value="">--Lựa chọn--</option>
-                        <!-- <option value="Official">Đang sử dụng</option>
-                        <option value="Draft">Quá hạn sử dụng</option> -->
+                        <option [ngValue]="">--Lựa chọn--</option>
+                        <option *ngFor="let item of useDaysList">{{item}}</option>
                     </select>
                 </span>
             </div>
@@ -69,9 +67,8 @@
                 <label for="" class="form-label">Lần phỏng vấn</label>
                 <span class="custom-dropdown mx-sm-2">
                     <select class="form-control">
-                        <option value="">--Lựa chọn--</option>
-                        <!-- <option value="Official">Đang sử dụng</option>
-                        <option value="Draft">Quá hạn sử dụng</option> -->
+                        <option [ngValue]="">--Lựa chọn--</option>
+                        <option *ngFor="let item of interviewTimesList">{{item}}</option>
                     </select>
                 </span>
             </div>
@@ -613,14 +610,14 @@
                                                 <td class="select-filter td-input w10 td--overflow">
                                                     <div *ngIf="items.documents[0].departments && items.documents[0].departments.length !== 0">
                                                         <div *ngFor="let itemDepartments of items.documents[0].departments" [title]="itemDepartments.displayText">
-                                                            {{itemDepartments.displayText}}
+                                                            {{itemDepartments.value}}
                                                         </div>
                                                     </div>
                                                 </td>
                                                 <td class="select-filter text-center w10">
                                                     <div class="edit-number">
-                                                        <input [(ngModel)]="items.documents[0].useDays" (change)=formatToNumber(items.documents[0]) appInputDate min="0"
-                                                            class="form-control number-date--pad" placeholder="Number" [ngClass]="{'w80' : isManageTransfer==true}">
+                                                        <input [(ngModel)]="items.documents[0].useDays" (change)=formatToNumber(items.documents[0]) appInputDate min="0" class="form-control number-date--pad"
+                                                            placeholder="Number" [ngClass]="{'w80' : isManageTransfer==true}">
                                                         <i class="fa fa-pencil edit-number--posotion" (click)="showEdit(nameit, i, j, k)"></i>
                                                     </div>
                                                 </td>
@@ -673,7 +670,7 @@
                                             <td class="select-filter td-input w10 td--overflow">
                                                 <div *ngIf="documents.departments && documents.departments.length !== 0">
                                                     <div *ngFor="let itemDepartments of documents.departments" [title]="itemDepartments.displayText">
-                                                        {{itemDepartments.displayText}}
+                                                        {{itemDepartments.value}}
                                                     </div>
                                                 </div>
                                             </td>
@@ -761,7 +758,7 @@
                                                 <td class="select-filter td-input w10 td--overflow">
                                                     <div *ngIf="items.documents[0].departments && items.documents[0].departments.length !== 0">
                                                         <div *ngFor="let itemDepartments of items.documents[0].departments" [title]="itemDepartments.displayText">
-                                                            {{itemDepartments.displayText}}
+                                                            {{itemDepartments.value}}
                                                         </div>
                                                     </div>
                                                 </td>
@@ -839,7 +836,7 @@
                                             <td class="select-filter td-input w10 td--overflow">
                                                 <div *ngIf="documents.departments && documents.departments.length !== 0">
                                                     <div *ngFor="let itemDepartments of documents.departments" [title]="itemDepartments.displayText">
-                                                        {{itemDepartments.displayText}}
+                                                        {{itemDepartments.value}}
                                                     </div>
                                                 </div>
                                             </td>

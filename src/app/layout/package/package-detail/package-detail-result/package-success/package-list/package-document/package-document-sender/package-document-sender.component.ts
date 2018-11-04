@@ -91,6 +91,9 @@ export class PackageDocumentSenderComponent implements OnInit {
   currentEdit = 0;
   documentTypeAll: DocumentTypeAll[];
   documentTypeAllControl = [];
+  transferDepartmentList = [];
+  useDaysList = [];
+  interviewTimesList = [];
   constructor(
     private packageSuccessService: PackageSuccessService,
     private modalService: BsModalService,
@@ -126,10 +129,10 @@ export class PackageDocumentSenderComponent implements OnInit {
     this.filterModel.interviewTimes = null;
     this.getListNeedTransferDocs(false);
     this.getHadTransferredList(false);
-    this.getListFilter();
+    this.getTypeDocListFilter();
   }
 
-  getListFilter() {
+  getTypeDocListFilter() {
     this.detailResultPackageService.documentTypeHsdtAndHsmt().subscribe(response => {
       this.documentTypeAll = response;
       (this.documentTypeAll || []).forEach(item => {
@@ -140,6 +143,52 @@ export class PackageDocumentSenderComponent implements OnInit {
       (this.documentTypeAll || []).forEach(item => {
         this.documentTypeAllControl = this.documentTypeAllControl.concat(item.detail);
       });
+    });
+  }
+
+  getListFilter() {
+    this.transferDepartmentList = [];
+    this.useDaysList = [];
+    this.interviewTimesList = [];
+    this.detailResultPackageService.getHadTransferredList(this.currentPackageId).subscribe(response => {
+      response.forEach(item => {
+        item.transferDocument.forEach(itemPra => {
+          if (itemPra.childDocuments && itemPra.childDocuments.length !== 0) {
+            (itemPra.childDocuments || []).forEach(itemChild => {
+              (itemChild.documents || []).forEach(itemChildDoc => {
+                (itemChildDoc.departments || []).forEach((itemDepartment) => {
+                  this.transferDepartmentList.push(itemDepartment);
+                });
+                this.useDaysList.push(itemChildDoc.useDays);
+                this.interviewTimesList.push(itemChildDoc.interviewTime);
+              });
+            });
+          } else if (itemPra.documents && itemPra.documents.length !== 0) {
+            (itemPra.documents || []).forEach(itemDoc => {
+              (itemDoc.departments || []).forEach((itemDepartment) => {
+                this.transferDepartmentList.push(itemDepartment);
+              });
+              this.useDaysList.push(itemDoc.useDays);
+              this.interviewTimesList.push(itemDoc.interviewTime);
+            });
+          }
+        });
+      });
+      if (this.transferDepartmentList) {
+        this.transferDepartmentList = groupBy(this.transferDepartmentList, [{ field: 'key' }]);
+        const transferDepartmentListTemp = [];
+        this.transferDepartmentList.forEach(item => {
+          transferDepartmentListTemp.push(item.items[0]);
+        });
+        this.transferDepartmentList = transferDepartmentListTemp;
+      }
+      this.transferDepartmentList = this.transferDepartmentList.sort((a, b) => a - b);
+      this.transferDepartmentList = this.transferDepartmentList.filter((el, i, a) => i === a.indexOf(el));
+      this.useDaysList = this.useDaysList.sort((a, b) => a - b);
+      this.useDaysList = this.useDaysList.filter((el, i, a) => i === a.indexOf(el));
+      this.interviewTimesList = this.interviewTimesList.sort((a, b) => a - b);
+      this.interviewTimesList = this.interviewTimesList.filter((el, i, a) => i === a.indexOf(el));
+      console.log('this.LISTFILTER-222', this.transferDepartmentList, this.useDaysList, this.interviewTimesList);
     });
   }
 
@@ -186,6 +235,7 @@ export class PackageDocumentSenderComponent implements OnInit {
     });
   }
   getHadTransferredList(alert: boolean) {
+    this.getListFilter();
     this.detailResultPackageService.getHadTransferredList(this.currentPackageId).subscribe(response => {
       this.hadTransferList = response;
       response.forEach(item => {
