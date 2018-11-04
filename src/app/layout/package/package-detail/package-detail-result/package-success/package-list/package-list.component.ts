@@ -92,6 +92,7 @@ export class PackageListComponent implements OnInit, OnDestroy {
   subscription: Subscription;
   checkStatusPackage = CheckStatusPackage;
   isAgain = false;
+  inforPackage;
   constructor(
     private modalService: BsModalService,
     private router: Router,
@@ -158,9 +159,6 @@ export class PackageListComponent implements OnInit, OnDestroy {
       this.listEmailSearchCc = response;
       this.listEmailSearchBcc = response;
     });
-    // this.packageService.getInforPackageID(this.currentPackageId).subscribe(result => {
-    //   this.statusPackage = result.stageStatus.id;
-    // });
     this.refesh(false);
     this.detailResultPackageService.watchListFileResult().subscribe(response => {
       this.refesh(false);
@@ -179,15 +177,19 @@ export class PackageListComponent implements OnInit, OnDestroy {
     this.isSendBcc = false;
     this.textTrungThau = 'Trúng thầu';
     // tslint:disable-next-line:max-line-length
-    this.emailModel.content = `<p style="text-align: center;"><span style="font-size:16px;"><strong>THƯ CẢM ƠN TH&Ocirc;NG B&Aacute;O KẾT QUẢ TR&Uacute;NG THẦU</strong></span></p>
+    this.packageService.getInforPackageID(this.currentPackageId).subscribe(result => {
+      this.inforPackage = result;
+      console.log('this.inforPackage', this.inforPackage);
+      // tslint:disable-next-line:max-line-length
+      this.emailModel.content = `<p style="text-align: center;"><span style="font-size:16px;"><strong>THƯ CẢM ƠN TH&Ocirc;NG B&Aacute;O KẾT QUẢ TR&Uacute;NG THẦU</strong></span></p>
 
-    <p>Dự &aacute;n: &lt;tenduan&gt;</p>
+    <p>Dự án: ${(this.inforPackage && this.inforPackage.projectName) ? this.inforPackage.projectName : ''}</p>
     
-    <p>G&oacute;i thầu: &lt;tengoithau&gt;</p>
+    <p>Gói thầu: ${(this.inforPackage && this.inforPackage.opportunityName) ? this.inforPackage.opportunityName : ''}</p>
     
-    <p>Địa điểm: &lt;diadiem&gt;</p>
+    <p>Địa điểm: ${(this.inforPackage && this.inforPackage.place) ? this.inforPackage.place : ''}</p>
     
-    <p>K&iacute;nh gửi: <strong>Qu&yacute; &lt;tenkhachhang&gt;</strong></p>
+    <p>K&iacute;nh gửi: <strong>Quý ${(this.inforPackage && this.inforPackage.customer && this.inforPackage.customer.text) ? this.inforPackage.customer.text : ''}</strong></p>
     
     <p>Truớc ti&ecirc;n, Ph&ograve;ng Dự thầu C&ocirc;ng ty CP XD &amp; Kinh Doanh Địa Ốc Ho&agrave; B&igrave;nh cảm ơn Qu&yacute; c&ocirc;ng ty đ&atilde; hợp t&aacute;c với ch&uacute;ng t&ocirc;i trong suốt qu&aacute; tr&igrave;nh đấu thầu. Trong thời gian qua, Ph&ograve;ng Dự thầu nhận được sự hỗ trợ v&agrave; hợp t&aacute;c tốt từ Qu&yacute; c&ocirc;ng ty l&agrave; điều ch&uacute;ng t&ocirc;i lu&ocirc;n lu&ocirc;n đ&aacute;nh gi&aacute; cao v&agrave; ghi nhận.</p>
     
@@ -218,6 +220,8 @@ export class PackageListComponent implements OnInit, OnDestroy {
     <p style="text-align: right;">Truởng nh&oacute;m dự thầu,&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;</p>
     
     <p>&nbsp;</p>`;
+    });
+
   }
   ngOnDestroy() {
     if (this.subscription) {
