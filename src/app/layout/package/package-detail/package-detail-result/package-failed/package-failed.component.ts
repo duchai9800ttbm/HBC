@@ -13,6 +13,7 @@ import { DocumentResultList } from '../../../../../shared/models/result-attend/d
 import { DetailResultPackageService } from '../../../../../shared/services/detail-result-package.service';
 import { UploadResultFileAttendComponent } from '../package-success/package-list/upload-result-file-attend/upload-result-file-attend.component';
 import { DialogService } from '../../../../../../../node_modules/@progress/kendo-angular-dialog';
+import { ViewDetailComponent } from '../view-detail/view-detail.component';
 
 @Component({
   selector: 'app-package-failed',
@@ -52,6 +53,7 @@ export class PackageFailedComponent implements OnInit, OnDestroy {
   statusSort;
   dialogUploadResultAttend;
   subscription: Subscription;
+  dialogViewDetail;
   constructor(
     private modalService: BsModalService,
     private router: Router,
@@ -312,6 +314,21 @@ export class PackageFailedComponent implements OnInit, OnDestroy {
             this.alertService.error('Xóa tài liệu không thành công!');
           });
       });
+  }
+
+  viewDetail(item) {
+    this.dialogViewDetail = this.dialogService.open({
+      content: ViewDetailComponent,
+      width: 650,
+      minWidth: 250
+    });
+    const instance = this.dialogViewDetail.content.instance;
+    instance.callBack = () => this.closePopuupDialogViewDetail();
+    instance.content = item;
+  }
+
+  closePopuupDialogViewDetail() {
+    this.dialogViewDetail.close();
   }
 }
 

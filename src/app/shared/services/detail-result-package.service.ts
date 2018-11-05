@@ -21,6 +21,7 @@ import { TransferredDoc } from '../models/result-attend/transferred-doc.model';
 import { DocumentTypeAll } from '../models/package/document-type-all';
 import { StatusDocTranfered } from '../models/result-attend/status-doc-tranfered.model';
 import { NeedTransferDocFilter } from '../models/result-attend/need-transfer-doc-filter.model';
+import { DocmentParent } from '../models/result-attend/docment-parent.model';
 @Injectable()
 export class DetailResultPackageService {
   listFileResult: Subject<any> = new Subject();
@@ -62,6 +63,7 @@ export class DetailResultPackageService {
       uploadDate: result.uploadDate,
       interviewTimes: result.interviewTimes,
       fileGuid: result.fileGuid,
+      linkUrl: result.linkUrl,
     };
   }
   // Danh sách tài liệu kết quả dự thầu
@@ -474,7 +476,7 @@ export class DetailResultPackageService {
       urlFilterParams.append('documentType', filter.documentType.type ? filter.documentType.type.toString() : '');
       // tslint:disable-next-line:max-line-length
       urlFilterParams.append('bidOpportunityStage', filter.documentType.bidOpportunityStage ? filter.documentType.bidOpportunityStage.toString() : '');
-      urlFilterParams.append('documentTypeId', filter.documentType.id ?  filter.documentType.id.toString() : '');
+      urlFilterParams.append('documentTypeId', filter.documentType.id ? filter.documentType.id.toString() : '');
     }
     if (filter.useDate) {
       urlFilterParams.append('useDate', filter.useDate.toString());
@@ -501,6 +503,33 @@ export class DetailResultPackageService {
           this.toHadTransferedList
         );
       });
+  }
+  // Map to model danh sách tài liệu HSDT + HSMT cha
+  toDocumentParent(result: any): DocmentParent {
+    return {
+      bidOpportunityStage: result.bidOpportunityStage ? {
+        id: result.bidOpportunityStage.key,
+        text: result.bidOpportunityStage.value,
+        displayText: result.bidOpportunityStage.displayText,
+      } : null,
+      detail: result.detail ? (result.detail || []).map(item => {
+        return {
+          id: item.id,
+          name: item.name,
+          type: item.type,
+        };
+      }) : null,
+    };
+  }
+  // Danh sách loại tài liệu HSDT + HSMT cha
+  getDocumentParentList(): Observable<DocmentParent[]> {
+    const url = `data/parentdocumenttypehsdtandhsmt`;
+    return this.apiService.get(url).map(response => {
+      const result = response.result;
+      return result.map(item => {
+        return this.toDocumentParent(item);
+      });
+    });
   }
   // to filter paramter cho danh sách tài liệu được chuyển giao
   toFilterTranferDocDetails(filter: FilterTransferredDoc): URLSearchParams {
@@ -585,6 +614,16 @@ export class DetailResultPackageService {
       const result = response.result;
       console.log('filterTransferDocDetailsList', result);
       return (result || []).map(this.toTransferredDoc);
+    });
+  }
+  // Danh sách loại tài liệu HSDT + HSMT con
+  getDocumentChild(): Observable<DocmentParent[]> {
+    const url = `data/childdocumenttypehsdtandhsmt`;
+    return this.apiService.get(url).map(response => {
+      const result = response.result;
+      return result.map(item => {
+        return this.toDocumentParent(item);
+      });
     });
   }
   // Yêu cầu gửi lại tài liệu

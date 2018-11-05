@@ -26,6 +26,7 @@ import { PackageService } from '../../../../../../../../shared/services/package.
 import { CheckStatusPackage } from '../../../../../../../../shared/constants/check-status-package';
 import { DocumentTypeAll } from '../../../../../../../../shared/models/package/document-type-all';
 import { NeedTransferDocFilter } from '../../../../../../../../shared/models/result-attend/need-transfer-doc-filter.model';
+import { DocmentParent } from '../../../../../../../../shared/models/result-attend/docment-parent.model';
 
 @Component({
   selector: 'app-package-document-sender',
@@ -91,7 +92,7 @@ export class PackageDocumentSenderComponent implements OnInit {
   checkStatusPackage = CheckStatusPackage;
   isShowEdit = false;
   currentEdit = 0;
-  documentTypeAll: DocumentTypeAll[];
+  documentTypeAll: DocmentParent[];
   documentTypeAllControl = [];
   transferDepartmentList = [];
   useDaysList = [];
@@ -127,6 +128,7 @@ export class PackageDocumentSenderComponent implements OnInit {
     this.dataService.getListDepartmentsFromBranches().subscribe(response => {
       this.departments = response;
     });
+
     this.filterModel.documentType = null;
     this.filterModel.documentTypeId = null;
     this.filterModel.interviewTimes = null;
@@ -138,18 +140,32 @@ export class PackageDocumentSenderComponent implements OnInit {
     this.getListNeedTransferDocs(false);
     this.searchTerm$.debounceTime(600)
       .distinctUntilChanged()
-      .subscribe( value => {
+      .subscribe(value => {
         this.searchTerm = '';
         this.getHadTransferredList(false);
       });
     this.getTypeDocListFilter();
   }
 
+  // getTypeDocListFilter() {
+  //   this.detailResultPackageService.documentTypeHsdtAndHsmt().subscribe(response => {
+  //     this.documentTypeAll = response;
+  //     (this.documentTypeAll || []).forEach(item => {
+  //       item.detail.forEach(itemChild => {
+  //         itemChild['bidOpportunityStage'] = item.bidOpportunityStage.id;
+  //       });
+  //     });
+  //     (this.documentTypeAll || []).forEach(item => {
+  //       this.documentTypeAllControl = this.documentTypeAllControl.concat(item.detail);
+  //     });
+  //   });
+  // }
+
   getTypeDocListFilter() {
-    this.detailResultPackageService.documentTypeHsdtAndHsmt().subscribe(response => {
+    this.detailResultPackageService.getDocumentParentList().subscribe(response => {
       this.documentTypeAll = response;
       (this.documentTypeAll || []).forEach(item => {
-        item.detail.forEach(itemChild => {
+        (item.detail || []).forEach(itemChild => {
           itemChild['bidOpportunityStage'] = item.bidOpportunityStage.id;
         });
       });
@@ -160,9 +176,9 @@ export class PackageDocumentSenderComponent implements OnInit {
   }
 
   getListFilter() {
-    this.transferDepartmentList = [];
-    this.useDaysList = [];
-    this.interviewTimesList = [];
+    // this.transferDepartmentList = [];
+    // this.useDaysList = [];
+    // this.interviewTimesList = [];
     const filterNew = new NeedTransferDocFilter();
     this.detailResultPackageService.getHadTransferredList(this.currentPackageId, '', filterNew).subscribe(response => {
       response.forEach(item => {
@@ -249,6 +265,7 @@ export class PackageDocumentSenderComponent implements OnInit {
     });
   }
   getHadTransferredList(alert: boolean) {
+    console.log('this.this.LISTFILTER-222', )
     this.getListFilter();
     // tslint:disable-next-line:max-line-length
     this.detailResultPackageService.getHadTransferredList(this.currentPackageId, this.searchTerm, this.filterModelHad).subscribe(response => {

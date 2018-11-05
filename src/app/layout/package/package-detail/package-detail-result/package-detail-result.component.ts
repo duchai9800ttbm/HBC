@@ -31,10 +31,10 @@ export class PackageDetailResultComponent implements OnInit {
             this.packageService.statusPackageValue2 = this.checkStatusPackage[result.stageStatus.id];
             this.packageService.changeStatusPackageValue(result.stageStatus.id);
             switch (this.checkStatusPackage[result.stageStatus.id].id) {
-                case (this.checkStatusPackage.ChoKetQuaDuThau.id): {
-                    //
-                    break;
-                }
+                // case (this.checkStatusPackage.ChoKetQuaDuThau.id): {
+                //     //
+                //     break;
+                // }
                 case (this.checkStatusPackage.TrungThau.id):
                 case (this.checkStatusPackage.DaPhanHoiDenPhongHopDong.id):
                 case (this.checkStatusPackage.DaThongBaoCacBenLienQuan.id):

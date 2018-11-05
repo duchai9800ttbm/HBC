@@ -23,6 +23,7 @@ import { CheckStatusPackage } from '../../../../../../../../shared/constants/che
 import { Router } from '../../../../../../../../../../node_modules/@angular/router';
 import { DocumentTypeAll } from '../../../../../../../../shared/models/package/document-type-all';
 import { StatusDocTranfered } from '../../../../../../../../shared/models/result-attend/status-doc-tranfered.model';
+import { DocmentParent } from '../../../../../../../../shared/models/result-attend/docment-parent.model';
 
 @Component({
   selector: 'app-package-document-receiver',
@@ -66,7 +67,7 @@ export class PackageDocumentReceiverComponent implements OnInit {
   documentTypeList;
   statusList;
   checkStatusPackage = CheckStatusPackage;
-  documentTypeAll: DocumentTypeAll[];
+  documentTypeAll: DocmentParent[];
   documentTypeAllControl = [];
   statusDocList: StatusDocTranfered[];
   sendEmployee;
@@ -89,7 +90,7 @@ export class PackageDocumentReceiverComponent implements OnInit {
     this.packageService.statusPackageValue$.subscribe(status => {
       this.statusPackage = status;
     });
-    this.getListFilter();
+
     this.filter.documentType = null;
     this.filter.status = '';
     this.userInfo = this.sessionService.userInfo;
@@ -107,13 +108,32 @@ export class PackageDocumentReceiverComponent implements OnInit {
       .subscribe(keySearch => {
         this.filterFuc(false);
       });
+      this.getListFilter();
   }
 
+  // getListFilter() {
+  //   this.detailResultPackageService.documentTypeHsdtAndHsmt().subscribe(response => {
+  //     this.documentTypeAll = response;
+  //     (this.documentTypeAll || []).forEach(item => {
+  //       item.detail.forEach(itemChild => {
+  //         itemChild['bidOpportunityStage'] = item.bidOpportunityStage.id;
+  //       });
+  //     });
+  //     (this.documentTypeAll || []).forEach(item => {
+  //       this.documentTypeAllControl = this.documentTypeAllControl.concat(item.detail);
+  //     });
+  //   });
+  //   this.detailResultPackageService.getListStatusDoc().subscribe(response => {
+  //     this.statusDocList = response;
+  //   });
+  // }
+
   getListFilter() {
-    this.detailResultPackageService.documentTypeHsdtAndHsmt().subscribe(response => {
+    this.documentTypeAllControl = [];
+    this.detailResultPackageService.getDocumentChild().subscribe(response => {
       this.documentTypeAll = response;
       (this.documentTypeAll || []).forEach(item => {
-        item.detail.forEach(itemChild => {
+        (item.detail || []).forEach(itemChild => {
           itemChild['bidOpportunityStage'] = item.bidOpportunityStage.id;
         });
       });
@@ -157,6 +177,7 @@ export class PackageDocumentReceiverComponent implements OnInit {
   }
   refesh() {
     this.filterFuc(true);
+    this.getListFilter();
   }
 
   filterList() {
@@ -180,6 +201,7 @@ export class PackageDocumentReceiverComponent implements OnInit {
 
   filterFuc(alertShow: boolean) {
     console.log('this.filter', this.filter.documentType);
+    
     this.detailResultPackageService.filterTransferDocDetailsList(
       this.currentPackageId,
       this.searchTerm$.value,
@@ -187,7 +209,7 @@ export class PackageDocumentReceiverComponent implements OnInit {
     ).subscribe(response => {
       this.transferredDocList = response;
       for (let i = 0; i < response.length; i++) {
-        for (let j = 0; j < (response[i].bidTransferDocDetails || []).length; j ++) {
+        for (let j = 0; j < (response[i].bidTransferDocDetails || []).length; j++) {
           if (response[i].bidTransferDocDetails[j].sendEmployee) {
             this.sendEmployee = response[i].bidTransferDocDetails[j].sendEmployee.employeeName;
             break;

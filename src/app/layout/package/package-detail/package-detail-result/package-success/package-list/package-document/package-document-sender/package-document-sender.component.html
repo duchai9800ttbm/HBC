@@ -50,7 +50,7 @@
                 <span class="custom-dropdown mx-sm-2">
                     <select class="form-control" [(ngModel)]="filterModelHad.departmentId">
                         <option [ngValue]="null">--Lựa chọn--</option>
-                        <option *ngFor="let item of transferDepartmentList" [ngValue]="item">{{item.value }}</option>
+                        <option *ngFor="let item of transferDepartmentList" [ngValue]="item.key">{{item.value }}</option>
                     </select>
                 </span>
             </div>

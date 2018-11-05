@@ -17,4 +17,5 @@ export class DocumentResultList {
     uploadDate: number;
     interviewTimes: number;
     fileGuid: string;
+    linkUrl: string;
 }

@@ -238,7 +238,7 @@
                             </div>
                         </td>
 
-                        <td class="docName" [title]="item.name">
+                        <td class="docName" [title]="item.name" (click)="viewDetail(item)">
                             <a href="javascript:;"> {{ item.name }}
                             </a>
                         </td>
@@ -250,9 +250,14 @@
                         <td class="text-center">
                             <div class="d-flex justify-content-around">
                                 <ng-container *ngIf="TaiXuongKQDT">
-                                    <div id="mr">
+                                    <div id="mr" *ngIf="!item.linkUrl">
                                         <a title="Tải file" (click)="downloadFileItem(item.id)">
                                             <i class="fa fa-download color-item-down" aria-hidden="true"></i>
+                                        </a>
+                                    </div>
+                                    <div id="mr" *ngIf="item.linkUrl">
+                                        <a title="Mở link" [href]="item.linkUrl" target="_blank">
+                                            <i class="fa fa-external-link color-item-down" aria-hidden="true"></i>
                                         </a>
                                     </div>
                                 </ng-container>
