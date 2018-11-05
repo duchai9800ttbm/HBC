@@ -484,7 +484,6 @@ export class PackageDocumentSenderComponent implements OnInit {
     this.isDataHsdt = !this.isDataHsdt;
   }
   transferofdocuments() {
-
     const itemDocChooseTranfer = [];
     this.docHSMTList.forEach(itemHSMT => {
       if (itemHSMT.childDocuments && itemHSMT.childDocuments.length !== 0) {
@@ -528,9 +527,10 @@ export class PackageDocumentSenderComponent implements OnInit {
           () => {
             this.detailResultPackageService.tranferDocs(this.currentPackageId, itemDocChooseTranfer).subscribe(response => {
               this.packageService.changeStatusPackageValue(this.checkStatusPackage.DaChuyenGiaoTaiLieu.text);
-              this.detailResultPackageService.getHadTransferredList(this.currentPackageId).subscribe(responseHadTransferList => {
-                this.hadTransferList = responseHadTransferList;
-              });
+              // this.detailResultPackageService.getHadTransferredList(this.currentPackageId).subscribe(responseHadTransferList => {
+              //   this.hadTransferList = responseHadTransferList;
+              // });
+              this.getHadTransferredList(false);
               // this.textmovedata = this.isManageTransfer ? 'Đã chuyển giao tài liệu' : 'Chưa chuyển giao tài liệu';
               this.alertService.success('Chuyển giao tài liệu thành công!');
             },
