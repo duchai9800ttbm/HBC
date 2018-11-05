@@ -1,4 +1,4 @@
-import { Component, OnInit, OnChanges, OnDestroy, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { DATATABLE_CONFIG, DATATABLE_CONFIG2 } from '../../../../../../shared/configs';
 // tslint:disable-next-line:import-blacklist
 import { Subject, BehaviorSubject, Subscription } from 'rxjs';
@@ -7,7 +7,6 @@ import { PackageDetailComponent } from '../../../package-detail.component';
 import { HoSoDuThauService } from '../../../../../../shared/services/ho-so-du-thau.service';
 import { DialogService } from '@progress/kendo-angular-dialog';
 import { AlertService, ConfirmationService, UserService } from '../../../../../../shared/services';
-import { NgxSpinnerService } from 'ngx-spinner';
 import { PagedResult } from '../../../../../../shared/models';
 import { DanhSachBoHsdtItem } from '../../../../../../shared/models/ho-so-du-thau/danh-sach-bo-hsdt-item.model';
 import { HsdtFilterModel } from '../../../../../../shared/models/ho-so-du-thau/hsdt-filter.model';
@@ -80,7 +79,6 @@ export class UploadFormComponent implements OnInit, OnDestroy {
     private hoSoDuThauService: HoSoDuThauService,
     private dialogService: DialogService,
     private alertService: AlertService,
-    private spinner: NgxSpinnerService,
     private confirmationService: ConfirmationService,
     private userService: UserService,
     private permissionService: PermissionService
@@ -144,14 +142,15 @@ export class UploadFormComponent implements OnInit, OnDestroy {
 
     });
 
-    this.subscription.add(permission$);
     const statusPackage$ = this.hoSoDuThauService.watchStatusPackage().subscribe(status => {
       this.isClosedHSDT = status;
     });
+    this.subscription.add(permission$);
     this.subscription.add(statusPackage$);
   }
   ngOnDestroy() {
     if (this.subscription) {
+      console.log(`chay unsub`);
       this.subscription.unsubscribe();
     }
   }
@@ -185,9 +184,9 @@ export class UploadFormComponent implements OnInit, OnDestroy {
   closePopuup() {
     this.dialog.close();
     this.hoSoDuThauService.detectUploadFile(true);
-    this.getDataDocumentOfType(false, false);
+    this.getDataDocumentOfType(false);
   }
-  getDataDocumentOfType(alert = false, spiner = true) {
+  getDataDocumentOfType(alert = false) {
     this.hoSoDuThauService
       .danhSachBoHoSoDuThauInstantSearch(this.packageId, this.searchTerm$, this.filterModel, 0, 1000)
       .subscribe(responseResultDocument => {
@@ -319,7 +318,7 @@ export class UploadFormComponent implements OnInit, OnDestroy {
     }
   }
   refresh() {
-    this.getDataDocumentOfType(true, true);
+    this.getDataDocumentOfType(true);
   }
   filter() {
     this.hoSoDuThauService
@@ -345,12 +344,12 @@ export class UploadFormComponent implements OnInit, OnDestroy {
     this.filterModel.uploadedEmployeeId = '';
     this.filterModel.createdDate = null;
     this.filterModel.interViewTimes = '';
-    this.getDataDocumentOfType(false, false);
+    this.getDataDocumentOfType(false);
   }
   changeStatus(id, status) {
     if (status === 'Draft') {
       this.hoSoDuThauService.updateStatus(id, 'Official').subscribe(res => {
-        this.getDataDocumentOfType(false, false);
+        this.getDataDocumentOfType(false);
         this.dtTrigger.next();
         this.hoSoDuThauService.detectCondition(true);
       }, err => {
@@ -360,7 +359,7 @@ export class UploadFormComponent implements OnInit, OnDestroy {
     }
     if (status === 'Official') {
       this.hoSoDuThauService.updateStatus(id, 'Draft').subscribe(res => {
-        this.getDataDocumentOfType(false, false);
+        this.getDataDocumentOfType(false);
         this.dtTrigger.next();
         this.hoSoDuThauService.detectCondition(true);
       }, err => {

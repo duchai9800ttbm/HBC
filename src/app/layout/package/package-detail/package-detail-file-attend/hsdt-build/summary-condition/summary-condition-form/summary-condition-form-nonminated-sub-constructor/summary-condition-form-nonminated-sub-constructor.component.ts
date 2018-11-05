@@ -69,7 +69,7 @@ export class SummaryConditionFormNonminatedSubConstructorComponent implements On
         this.nhaThauPhu.push({
           tenGoiCongViec: '',
           ghiChuThem: '',
-          thanhTien: 0
+          thanhTien: null
         });
       }
       this.createForm();
@@ -81,7 +81,7 @@ export class SummaryConditionFormNonminatedSubConstructorComponent implements On
     const formItem = this.fb.group({
       tenGoiCongViec: { value: data ? data.name : '', disabled: this.isModeView },
       ghiChuThem: { value: data ? data.desc : '', disabled: this.isModeView },
-      thanhTien: { value: data ? data.totalCost : 0, disabled: this.isModeView }
+      thanhTien: { value: data ? data.totalCost : null, disabled: this.isModeView }
     });
     formArray.push(formItem);
   }

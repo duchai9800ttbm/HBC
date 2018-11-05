@@ -66,9 +66,12 @@ export class EditComponent implements OnInit, OnDestroy {
   ) { }
 
   ngOnInit() {
+    this.subscription = this.hoSoDuThauService.watchStatusPackage().subscribe(status => {
+      this.isClosedHSDT = status;
+    });
     this.currentBidOpportunityId = +PackageDetailComponent.packageId;
-    this.getInfoTenderPreparationPlanning();
-    this.getAllUser();
+    const getInfoTenderPrepare$ = this.getInfoTenderPreparationPlanning();
+    const getAllUser$ = this.getAllUser();
     this.isCreate = LiveformSiteReportComponent.formModel.isCreate;
     this.isDraft = LiveformSiteReportComponent.formModel.isDraft;
     // Check Action Mode
@@ -76,21 +79,24 @@ export class EditComponent implements OnInit, OnDestroy {
     this.isEditMode = LiveformSiteReportComponent.actionMode === 'editMode';
     this.isViewMode = LiveformSiteReportComponent.actionMode === 'viewMode';
     // End Check Action Mode
+    let getListDepartments$ = null;
     if (!this.isViewMode) {
-      this.siteSurveyReportService.getListDepartmentsFromBranches().subscribe(res => {
+      getListDepartments$ = this.siteSurveyReportService.getListDepartmentsFromBranches().subscribe(res => {
         this.listDepartments = [...res];
       });
     }
-    this.packageService.getInforPackageID(this.currentBidOpportunityId).subscribe(result => {
+    const getInforPackageID$ = this.packageService.getInforPackageID(this.currentBidOpportunityId).subscribe(result => {
       this.packageData = result;
     }, err => {
       this.alertService.error('Tải thông tin gói thầu không thành công.');
     });
 
-    this.subscription = this.hoSoDuThauService.watchStatusPackage().subscribe(status => {
-      this.isClosedHSDT = status;
-    });
-    this.loadData();
+    const loadData$ = this.loadData();
+    this.subscription.add(getInfoTenderPrepare$);
+    this.subscription.add(getAllUser$);
+    this.subscription.add(getInforPackageID$);
+    this.subscription.add(getListDepartments$);
+    this.subscription.add(loadData$);
   }
   loadData() {
     const phongBan = LiveformSiteReportComponent.formModel.phongBan;

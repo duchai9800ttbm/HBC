@@ -247,9 +247,9 @@
                                                 <td class="w-15 bg-light text-right label no-boder">Đơn vị tư vấn</td>
                                                 <td class="w-100 no-boder d-flex">
                                                     <span class="w-75 autocomplete-wrapper-2 ui-fluid">
-                                                        <p-autoComplete appEnterPreventDefault formControlName="consultantUnitCustomerId" [suggestions]="customersSearchResults"
+                                                        <p-autoComplete appEnterPreventDefault formControlName="consultantUnitCustomerId" [suggestions]="consultantSearchResults"
                                                             [forceSelection]="true" [delay]="'400'" [emptyMessage]="'Không có dữ liệu'"
-                                                            placeholder="---Chọn---" [immutable]="true" (completeMethod)="searchCustomers($event.query)"
+                                                            placeholder="---Chọn---" [immutable]="true" (completeMethod)="searchConsultants($event.query)"
                                                             field="text" dataKey="id" [multiple]="false" [tabindex]="'10'" (onSelect)="changeConsultant($event)">
                                                         </p-autoComplete>
                                                         <span class="input-group-addon">
@@ -262,15 +262,7 @@
                                                 </td>
 
                                             </tr>
-                                            <!-- <tr>
-                    <td class="w-15 bg-light text-right label no-boder">Đơn vị tư vấn</td>
-                    <td class="w-35 no-boder">
-                      <input class="w-75 form-control" tabindex="1" placeholder="" type="text" formControlName="consultantUnit">
-                    </td>
-                    <td class="w-15 bg-light text-right label no-boder"></td>
-                    <td class="w-35 no-boder">
-                    </td>
-                  </tr> -->
+                                            
                                             <tr>
                                                 <td class="w-15 bg-light text-right label no-boder">Địa chỉ ĐVTV</td>
                                                 <td class="w-35 no-boder">

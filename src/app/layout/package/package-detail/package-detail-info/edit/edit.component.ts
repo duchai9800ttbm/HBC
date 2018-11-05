@@ -30,6 +30,7 @@ import CustomValidator from '../../../../../shared/helpers/custom-validator.help
 import { EvaluationModel } from '../../../../../shared/models/package/evaluation.model';
 import { moment } from '../../../../../../../node_modules/ngx-bootstrap/chronos/test/chain';
 import { GroupChaired } from '../../../../../shared/models/package/group-chaired.model';
+import { CustomerConsultant } from '../../../../../shared/models/package/customer-consultant';
 @Component({
     selector: 'app-edit',
     templateUrl: './edit.component.html',
@@ -66,7 +67,8 @@ export class EditComponent implements OnInit {
     contactsSearchResults: DictionaryItem[];
     editPackage: any;
     assignSearchResults: DictionaryItem[];
-    customersSearchResults: any[];
+    customersSearchResults: CustomerConsultant[];
+    consultantSearchResults: CustomerConsultant[];
     userListItem: GroupChaired[];
     dataEvaluation: EvaluationModel[];
 
@@ -221,6 +223,13 @@ export class EditComponent implements OnInit {
                 this.customersSearchResults = result;
             });
     }
+    searchConsultants(query) {
+        this.packageService.getListConsultant(query)
+            .subscribe(result => {
+                this.consultantSearchResults = result;
+            }, err => this.alertService.error('Đã có lỗi. Xin vui lòng thử lại.'));
+    }
+
     customerSelectedChange(e) {
         this.packageForm.get('customerNewOldType').patchValue(e.customerNewOldType);
     }
