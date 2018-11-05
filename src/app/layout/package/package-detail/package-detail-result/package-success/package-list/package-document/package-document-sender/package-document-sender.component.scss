@@ -19,8 +19,34 @@
       margin-left: 0.3rem !important;
     }
 }
+
+@media only screen and (max-width: 2920x) {
+    table.zui-table {
+        th,
+        td {
+            max-width: 80px !important;
+        }
+    }
+}
+
+@media only screen and (max-width: 1920x) {
+    table.zui-table {
+        th,
+        td {
+            max-width: 80px !important;
+        }
+    }
+}
+
+table.zui-table {
+    th,
+    td {
+        max-width: 110px !important;
+    }
+}
+
 @media only screen and (max-width: 1366px) {
-    table.dataTable {
+    table.zui-table {
         th,
         td {
             max-width: 80px;
@@ -34,7 +60,7 @@
     font-size: 120%;
 }
 @media only screen and (max-width: 1270px) {
-    table.dataTable {
+    table.zui-table {
         th,
         td {
             max-width: 80px;
@@ -83,7 +109,7 @@
 .w-rom {
     //  width: 165px!important;
 }
-// table.dataTable thead .th {
+// table.zui-table thead .th {
 //     // padding: 8px 0px !important;
 // }
 .form-control:focus {
@@ -167,7 +193,7 @@ input.icon {
 input.form-control.icon {
     border: 1px solid #00a0e3;
 }
-table.dataTable th {
+table.zui-table th {
     border-bottom: 1px solid #dddddd !important;
     background-color: #ffff!important;
     border: 1px solid #dddddd;
@@ -223,7 +249,7 @@ table.dataTable th {
     }
   } 
   @media only screen and (max-width: 1200px) {
-    table.dataTable {
+    table.zui-table {
         th,
         td {
             max-width: 75px;
@@ -294,7 +320,7 @@ table.dataTable th {
 .icon-pointer{
     cursor: pointer;
 }
-table.dataTable th {
+table.zui-table th {
     background-color: #f68e56 !important;
     border: 1px solid #dddddd;
 }
