@@ -16,6 +16,7 @@ import { NotificationContractComponent } from './package-success/package-list/no
 import { UploadContractSigningComponent } from './package-success/contract-signed/upload-contract-signing/upload-contract-signing.component';
 import { UploadResultAttendComponent } from './wait-result/upload-result-attend/upload-result-attend.component';
 import { UploadKickOffComponent } from './package-success/meeting-kickoff/upload-kick-off/upload-kick-off.component';
+import { ViewDetailComponent } from './view-detail/view-detail.component';
 @NgModule({
   imports: [
     CommonModule,
@@ -33,14 +34,16 @@ import { UploadKickOffComponent } from './package-success/meeting-kickoff/upload
       NotificationContractComponent,
       UploadContractSigningComponent,
       UploadResultAttendComponent,
-      UploadKickOffComponent
+      UploadKickOffComponent,
+      ViewDetailComponent
   ],
   entryComponents: [
     UploadResultFileAttendComponent,
     NotificationContractComponent,
     UploadContractSigningComponent,
     UploadResultAttendComponent,
-    UploadKickOffComponent
+    UploadKickOffComponent,
+    ViewDetailComponent
   ],
   providers: [
     DetailResultPackageService

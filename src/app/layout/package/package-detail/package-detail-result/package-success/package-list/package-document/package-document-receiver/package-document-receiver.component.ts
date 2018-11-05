@@ -266,16 +266,20 @@ export class PackageDocumentReceiverComponent implements OnInit {
     this.confirmationService.confirm(
       'Bạn có muốn xác nhận nhận tài liệu?',
       () => {
-        this.detailResultPackageService.confirmReceiveDocs(idsArray).subscribe(response => {
-          this.packageService.changeStatusPackageValue(this.checkStatusPackage.DaNhanTaiLieu.text);
-          this.alertService.success('Xác nhận nhận tài liệu thành công!');
-          this.bntConfirm = true;
-          this.packageService.setActiveKickoff(this.bntConfirm);
-          // this.textmovedata = this.bntConfirm ? 'Đã nhận tài liệu được chuyển giao' : 'Chưa nhận tài liệu được chuyển giao';
-        },
-          err => {
-            this.alertService.error('Xác nhận nhận tài liệu không thành công!');
-          });
+        if (idsArray.length !== 0) {
+          this.detailResultPackageService.confirmReceiveDocs(idsArray).subscribe(response => {
+            this.packageService.changeStatusPackageValue(this.checkStatusPackage.DaNhanTaiLieu.text);
+            this.alertService.success('Xác nhận nhận tài liệu thành công!');
+            this.bntConfirm = true;
+            this.packageService.setActiveKickoff(this.bntConfirm);
+            // this.textmovedata = this.bntConfirm ? 'Đã nhận tài liệu được chuyển giao' : 'Chưa nhận tài liệu được chuyển giao';
+          },
+            err => {
+              this.alertService.error('Xác nhận nhận tài liệu không thành công!');
+            });
+        } else {
+          this.alertService.error('Bạn không có tài liệu nào để xác nhận!');
+        }
       }
     );
   }

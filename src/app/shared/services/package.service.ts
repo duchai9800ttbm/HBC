@@ -23,6 +23,7 @@ import { ProposedTenderParticipationHistory } from '../models/api-response/packa
 import { StakeHolder } from '../models/ho-so-du-thau/stack-holder.model';
 import { CheckStatusPackage } from '../constants/check-status-package';
 import { GroupChaired } from '../models/package/group-chaired.model';
+import { CustomerConsultant } from '../models/package/customer-consultant';
 
 @Injectable()
 export class PackageService {
@@ -800,9 +801,9 @@ export class PackageService {
             .share();
     }
 
-    //
-    getListCustomer(searchTerm: string): Observable<any> {
-        const url = `customer/search/0/10/?searchTerm=${searchTerm}`;
+    // Danh sách Khách hàng
+    getListCustomer(searchTerm: string): Observable<CustomerConsultant[]> {
+        const url = `customer/bidcustomers/0/1000/?searchTerm=${searchTerm}`;
         return this.apiService
             .get(url)
             .map(response => {
@@ -817,6 +818,23 @@ export class PackageService {
                 });
             })
             .share();
+    }
+    // Danh sách DVTV
+    getListConsultant(searchTerm: string): Observable<CustomerConsultant[]> {
+        const url = `customer/consultantunits/0/1000/?searchTerm=${searchTerm}`;
+        return this.apiService
+            .get(url)
+            .map(response => {
+                return response.result.items.map(x => {
+                    return {
+                        id: x.customerId,
+                        text: x.customerName,
+                        customerNewOldType: x.customerNewOldType,
+                        customerPhone: x.customerPhone,
+                        customerAddress: x.customerAddress
+                    };
+                });
+            }).share();
     }
 
     //

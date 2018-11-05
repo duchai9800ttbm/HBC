@@ -190,7 +190,7 @@ export class PackageFailedComponent implements OnInit, OnDestroy {
 
   render(listFileResult: any) {
     this.listFileResult = listFileResult;
-    this.dtTrigger.next();
+    // this.dtTrigger.next();
   }
   sortField(fieldSort: string, statusSort: string) {
     this.currentFieldSort = fieldSort;
@@ -297,7 +297,7 @@ export class PackageFailedComponent implements OnInit, OnDestroy {
     this.detailResultPackageService.downloadFileResult(tenderResultDocumentId).subscribe(response => {
     },
       err => {
-        this.alertService.error('Tải tài liệu không thành công');
+        this.alertService.error('Tài liệu kết quả dự thầu này không có file đính kèm.');
       });
   }
   deleteFileItem(tenderResultDocumentId: number) {

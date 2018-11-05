@@ -907,7 +907,7 @@
         </div>
         <div class="modal-body">
             <div class="bot-table">
-                <table class="table-selection stripe row-border hover cell-border dataTable">
+                <table class="table-selection stripe hover cell-border dataTable">
                     <thead>
                         <tr>
                             <th class="bg-default">
@@ -983,12 +983,12 @@
                                                 </div>
                                             </div>
                                         </td>
-                                        <td class="select-filter">
-                                            <div class="text-truncate" *ngIf="j === 0 && k === 0">
+                                        <td class="select-filter" [class.merger-table]="!(j === 0 && k === 0)">
+                                            <div class="text-truncate" *ngIf="j === 0 && k === 0" >
                                                 {{ itemsTranferListByDepart.document?.name}}
                                             </div>
                                         </td>
-                                        <td class="select-filter">
+                                        <td class="select-filter" [class.merger-table]="!(k === 0)">
                                             <div class="text-truncate" *ngIf="k === 0">
                                                 {{ itemsTranferListByDepart.department?.value}}
                                             </div>

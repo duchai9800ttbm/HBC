@@ -110,7 +110,7 @@
                             </label>
                         </div>
                         <input [ngClass]="{'d-none': !isShowInputBox}" formControlName="thoiGianHoanThanhTheoNhaThauCount"
-                            type="number" appInputNumberNegativeDecimal class="form-control">
+                            appInputNumberNegativeDecimal [decimal]="true" class="form-control">
                     </div>
                     <div class="col-md-6"></div>
                 </div>

@@ -93,6 +93,7 @@ export class DetailResultPackageService {
     } else {
       formData.append('Url', uploadResultFormValue.link);
     }
+    formData.append('Version', uploadResultFormValue.version);
     return this.apiService.postFile(url, formData)
       .map(response => response)
       .share();

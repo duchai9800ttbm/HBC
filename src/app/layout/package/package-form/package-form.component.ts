@@ -31,6 +31,7 @@ import { UserFormComponent } from './user-form/user-form.component';
 import { EvaluationModel } from '../../../shared/models/package/evaluation.model';
 import { moment } from '../../../../../node_modules/ngx-bootstrap/chronos/test/chain';
 import { GroupChaired } from '../../../shared/models/package/group-chaired.model';
+import { CustomerConsultant } from '../../../shared/models/package/customer-consultant';
 @Component({
     selector: 'app-package-form',
     templateUrl: './package-form.component.html',
@@ -64,7 +65,8 @@ export class PackageFormComponent implements OnInit {
     datePickerConfig = DATETIME_PICKER_CONFIG;
     showPopupAdd = false;
     showPopupAddUser = false;
-    customersSearchResults: any[];
+    customersSearchResults: CustomerConsultant[];
+    consultantSearchResults: CustomerConsultant[];
     contactsSearchResults: DictionaryItem[];
     assignSearchResults: DictionaryItem[];
     userListItem: GroupChaired[];
@@ -88,7 +90,7 @@ export class PackageFormComponent implements OnInit {
         // this.userService.getAllUser('').subscribe(data => {
         //     this.userListItem = data;
         // });
-        this.packageService.getListGroupChaired(0, 100, '').subscribe( data => this.userListItem = data.items);
+        this.packageService.getListGroupChaired(0, 100, '').subscribe(data => this.userListItem = data.items);
         this.listZone = this.dataService.getListRegionTypes();
         this.listQuarterOfYear = this.dataService.getListQuatersOfYear();
         this.listCustomerType = this.dataService.getListOpportunityClassifies();
@@ -227,11 +229,16 @@ export class PackageFormComponent implements OnInit {
         this.packageService.getListCustomer(query)
             .subscribe(result => {
                 this.customersSearchResults = result;
-            });
+            }, err => this.alertService.error('Đã có lỗi. Xin vui lòng thử lại.'));
+    }
+    searchConsultants(query) {
+        this.packageService.getListConsultant(query)
+            .subscribe(result => {
+                this.consultantSearchResults = result;
+            }, err => this.alertService.error('Đã có lỗi. Xin vui lòng thử lại.'));
     }
 
     customerSelectedChange(e) {
-        console.log('e', e);
         this.packageForm.get('customerNewOldType').patchValue(e.customerNewOldType);
     }
     changeConsultant(e) {
