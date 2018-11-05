@@ -237,3 +237,15 @@ table, thead, tbody, tfoot {
 :host /deep/ .k-disabled, .k-state-disabled, .k-widget:disabled, .k-widget[disabled]{
     opacity: 1;
 }
+.kendo-ganttChart {
+    margin-top: 3.5rem;
+    .w-80 {
+        width: 80%;
+    }
+    .w-20 {
+        width: 20%;
+    }
+}
+.display-ganttChart{
+    display: none;
+}
