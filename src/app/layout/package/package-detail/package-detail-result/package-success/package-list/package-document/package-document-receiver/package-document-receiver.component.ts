@@ -69,6 +69,7 @@ export class PackageDocumentReceiverComponent implements OnInit {
   documentTypeAll: DocumentTypeAll[];
   documentTypeAllControl = [];
   statusDocList: StatusDocTranfered[];
+  sendEmployee;
   constructor(
     private packageSuccessService: PackageSuccessService,
     private modalService: BsModalService,
@@ -185,6 +186,14 @@ export class PackageDocumentReceiverComponent implements OnInit {
       this.filter
     ).subscribe(response => {
       this.transferredDocList = response;
+      for (let i = 0; i < response.length; i++) {
+        for (let j = 0; j < (response[i].bidTransferDocDetails || []).length; j ++) {
+          if (response[i].bidTransferDocDetails[j].sendEmployee) {
+            this.sendEmployee = response[i].bidTransferDocDetails[j].sendEmployee.employeeName;
+            break;
+          }
+        }
+      }
       response.forEach(item => {
         switch (item.bidDocumentState.key) {
           case 'HSMT': {
