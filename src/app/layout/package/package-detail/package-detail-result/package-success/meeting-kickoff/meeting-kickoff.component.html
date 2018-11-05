@@ -287,7 +287,7 @@
           <ng-container *ngFor="let data of listEmailSended; let i = index">
               <tr *ngFor="let item of data.to; let j = index">
                   <td class="select-filter text-center">{{ i+1}}</td>
-                  <td class="select-filter text-center">{{ item.username}}</td>
+                  <td class="select-filter text-center">{{ (item.receiveEmployee && item.receiveEmployee.employeeName) ? item.receiveEmployee.employeeName : ''}}</td>
                   <td class="select-filter text-center color-default">{{ item.email}}</td>
                 </tr>
           </ng-container>

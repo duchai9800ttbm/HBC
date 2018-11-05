@@ -20,12 +20,14 @@ import { FilterTransferredDoc } from '../models/result-attend/filter-transferred
 import { TransferredDoc } from '../models/result-attend/transferred-doc.model';
 import { DocumentTypeAll } from '../models/package/document-type-all';
 import { StatusDocTranfered } from '../models/result-attend/status-doc-tranfered.model';
+import { NeedTransferDocFilter } from '../models/result-attend/need-transfer-doc-filter.model';
 @Injectable()
 export class DetailResultPackageService {
   listFileResult: Subject<any> = new Subject();
   listContractSigning: Subject<any> = new Subject();
   listReportMeeting: Subject<any> = new Subject();
   listFilePresentationMeeting: Subject<any> = new Subject();
+  instantSearchService: any;
   constructor(
     private apiService: ApiService,
   ) { }
@@ -464,15 +466,41 @@ export class DetailResultPackageService {
       }) : null,
     };
   }
+  // Create pramaster danh sách tài liệu đã chuyển giao
+  createPramaster(filter: NeedTransferDocFilter): URLSearchParams {
+    console.log('filterfilterfilterfilterfilter', filter);
+    const urlFilterParams = new URLSearchParams();
+    if (filter.documentType) {
+      urlFilterParams.append('documentType', filter.documentType.type ? filter.documentType.type.toString() : '');
+      // tslint:disable-next-line:max-line-length
+      urlFilterParams.append('bidOpportunityStage', filter.documentType.bidOpportunityStage ? filter.documentType.bidOpportunityStage.toString() : '');
+      urlFilterParams.append('documentTypeId', filter.documentType.id ?  filter.documentType.id.toString() : '');
+    }
+    if (filter.useDate) {
+      urlFilterParams.append('useDate', filter.useDate.toString());
+    }
+    if (filter.interviewTimes) {
+      urlFilterParams.append('interviewTimes', filter.interviewTimes.toString());
+    }
+    if (filter.departmentId) {
+      urlFilterParams.append('departmentId', filter.departmentId.toString());
+    }
+    return urlFilterParams;
+  }
   // Danh sách tài liệu đã chuyển giao
-  getHadTransferredList(bidOpportunityId): Observable<HadTransferList[]> {
-    const url = `tenderresultdocument/bidOpportunity/${bidOpportunityId}/transferdocs`;
-    return this.apiService.get(url).map(reponse => {
-      const result = reponse.result;
-      return (result || []).map(
-        this.toHadTransferedList
-      );
-    });
+  getHadTransferredList(
+    bidOpportunityId,
+    terms: string,
+    filter: NeedTransferDocFilter,
+  ): Observable<HadTransferList[]> {
+    const url = `tenderresultdocument/bidOpportunity/${bidOpportunityId}/transferdocs?searchTerm=${terms}`;
+    return this.apiService.get(url, this.createPramaster(filter))
+      .map(reponse => {
+        const result = reponse.result;
+        return (result || []).map(
+          this.toHadTransferedList
+        );
+      });
   }
   // to filter paramter cho danh sách tài liệu được chuyển giao
   toFilterTranferDocDetails(filter: FilterTransferredDoc): URLSearchParams {

@@ -25,6 +25,7 @@ import { ManageNeedTranferList } from '../../../../../../../../shared/models/res
 import { PackageService } from '../../../../../../../../shared/services/package.service';
 import { CheckStatusPackage } from '../../../../../../../../shared/constants/check-status-package';
 import { DocumentTypeAll } from '../../../../../../../../shared/models/package/document-type-all';
+import { NeedTransferDocFilter } from '../../../../../../../../shared/models/result-attend/need-transfer-doc-filter.model';
 
 @Component({
   selector: 'app-package-document-sender',
@@ -54,6 +55,7 @@ export class PackageDocumentSenderComponent implements OnInit {
   searchTerm$ = new BehaviorSubject<string>('');
   currentPackageId;
   filterModel = new FilterNeedTransferDoc();
+  filterModelHad = new NeedTransferDocFilter();
   isNgOnInit: boolean;
   needTransferDocsList: NeedTranferDocList[];
   departments: DepartmentsFormBranches[];
@@ -94,6 +96,7 @@ export class PackageDocumentSenderComponent implements OnInit {
   transferDepartmentList = [];
   useDaysList = [];
   interviewTimesList = [];
+  searchTerm = '';
   constructor(
     private packageSuccessService: PackageSuccessService,
     private modalService: BsModalService,
@@ -127,8 +130,18 @@ export class PackageDocumentSenderComponent implements OnInit {
     this.filterModel.documentType = null;
     this.filterModel.documentTypeId = null;
     this.filterModel.interviewTimes = null;
+    // Đã chuyển giao
+    this.filterModelHad.documentType = null;
+    this.filterModelHad.departmentId = null;
+    this.filterModelHad.interviewTimes = null;
+    this.filterModelHad.useDate = null;
     this.getListNeedTransferDocs(false);
-    this.getHadTransferredList(false);
+    this.searchTerm$.debounceTime(600)
+      .distinctUntilChanged()
+      .subscribe( value => {
+        this.searchTerm = '';
+        this.getHadTransferredList(false);
+      });
     this.getTypeDocListFilter();
   }
 
@@ -150,7 +163,8 @@ export class PackageDocumentSenderComponent implements OnInit {
     this.transferDepartmentList = [];
     this.useDaysList = [];
     this.interviewTimesList = [];
-    this.detailResultPackageService.getHadTransferredList(this.currentPackageId).subscribe(response => {
+    const filterNew = new NeedTransferDocFilter();
+    this.detailResultPackageService.getHadTransferredList(this.currentPackageId, '', filterNew).subscribe(response => {
       response.forEach(item => {
         item.transferDocument.forEach(itemPra => {
           if (itemPra.childDocuments && itemPra.childDocuments.length !== 0) {
@@ -236,7 +250,8 @@ export class PackageDocumentSenderComponent implements OnInit {
   }
   getHadTransferredList(alert: boolean) {
     this.getListFilter();
-    this.detailResultPackageService.getHadTransferredList(this.currentPackageId).subscribe(response => {
+    // tslint:disable-next-line:max-line-length
+    this.detailResultPackageService.getHadTransferredList(this.currentPackageId, this.searchTerm, this.filterModelHad).subscribe(response => {
       this.hadTransferList = response;
       response.forEach(item => {
         switch (item.bidOpportunityStage.key) {
@@ -250,24 +265,24 @@ export class PackageDocumentSenderComponent implements OnInit {
           }
         }
       });
-      this.docHSMTHadTransfer.forEach((itemPra, indexPra) => {
+      (this.docHSMTHadTransfer || []).forEach((itemPra, indexPra) => {
         if (itemPra.childDocuments && itemPra.childDocuments.length !== 0) {
-          itemPra.childDocuments.forEach((item, index) =>
+          (itemPra.childDocuments || []).forEach((item, index) =>
             itemPra.childDocuments[index].documentType = JSON.stringify(item.documentType));
           this.docHSMTHadTransfer[indexPra].childDocuments = groupBy(itemPra.childDocuments,
             [{ field: 'documentType' }]);
-          this.docHSMTHadTransfer[indexPra].childDocuments.forEach((item, indexChirl) => {
+          (this.docHSMTHadTransfer[indexPra].childDocuments || []).forEach((item, indexChirl) => {
             this.docHSMTHadTransfer[indexPra].childDocuments[indexChirl].value = JSON.parse(item.value);
           });
         }
       });
-      this.docHSDTHadTransfer.forEach((itemPra, indexPra) => {
+      (this.docHSDTHadTransfer || []).forEach((itemPra, indexPra) => {
         if (itemPra.childDocuments && itemPra.childDocuments.length !== 0) {
-          itemPra.childDocuments.forEach((item, index) =>
+          (itemPra.childDocuments || []).forEach((item, index) =>
             itemPra.childDocuments[index].documentType = JSON.stringify(item.documentType));
           this.docHSDTHadTransfer[indexPra].childDocuments = groupBy(itemPra.childDocuments,
             [{ field: 'documentType' }]);
-          this.docHSDTHadTransfer[indexPra].childDocuments.forEach((item, indexChirl) => {
+          (this.docHSDTHadTransfer[indexPra].childDocuments || []).forEach((item, indexChirl) => {
             this.docHSDTHadTransfer[indexPra].childDocuments[indexChirl].value = JSON.parse(item.value);
           });
         }
@@ -278,6 +293,13 @@ export class PackageDocumentSenderComponent implements OnInit {
     }, err => {
       this.alertService.error('Đã xảy ra lỗi!');
     });
+  }
+  clearFilterHad() {
+    this.filterModelHad.documentType = null;
+    this.filterModelHad.departmentId = null;
+    this.filterModelHad.interviewTimes = null;
+    this.filterModelHad.useDate = null;
+    this.getHadTransferredList(false);
   }
   // Form HSMT
   createFormHSMTTranferDoc() {
@@ -531,6 +553,7 @@ export class PackageDocumentSenderComponent implements OnInit {
               //   this.hadTransferList = responseHadTransferList;
               // });
               this.getHadTransferredList(false);
+              this.filterModelHad = new NeedTransferDocFilter();
               // this.textmovedata = this.isManageTransfer ? 'Đã chuyển giao tài liệu' : 'Chưa chuyển giao tài liệu';
               this.alertService.success('Chuyển giao tài liệu thành công!');
             },

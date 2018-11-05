@@ -42,7 +42,15 @@ export class EmailService {
         employeeBankAccount: result.senderEmployee.employeeBankAccount
       },
       from: result.from,
-      to: result.to,
+      to: result.to ? (result.to || []).map(itemTo => {
+        return {
+          email: itemTo.email,
+          receiveEmployee: itemTo.receiveEmployee ? {
+            employeeName: itemTo.receiveEmployee.employeeName,
+          } : null,
+          isSuccess: itemTo.isSuccess,
+        };
+      }) : null,
       subject: result.subject,
       sentDate: result.sentDate,
       content: result.content,

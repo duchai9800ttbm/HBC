@@ -39,7 +39,7 @@
             <div class="form-group ml-sm-2 p-2">
                 <label for="" class="form-label">Loại tài liệu</label>
                 <span class="custom-dropdown mx-sm-2">
-                    <select class="form-control" [(ngModel)]="filterModel.documentType">
+                    <select class="form-control" [(ngModel)]="filterModelHad.documentType">
                         <option [ngValue]="null">Tất cả</option>
                         <option *ngFor="let item of documentTypeAllControl" [ngValue]="item">{{item.name }}</option>
                     </select>
@@ -48,7 +48,7 @@
             <div class="form-group ml-sm-2 p-2">
                 <label for="" class="form-label">Chuyển giao cho</label>
                 <span class="custom-dropdown mx-sm-2">
-                    <select class="form-control">
+                    <select class="form-control" [(ngModel)]="filterModelHad.departmentId">
                         <option [ngValue]="">--Lựa chọn--</option>
                         <option *ngFor="let item of transferDepartmentList" [ngValue]="item">{{item.value }}</option>
                     </select>
@@ -57,7 +57,7 @@
             <div class="form-group ml-sm-2 p-2">
                 <label for="" class="form-label">Số ngày sử dụng</label>
                 <span class="custom-dropdown mx-sm-2">
-                    <select class="form-control">
+                    <select class="form-control" [(ngModel)]="filterModelHad.useDate">
                         <option [ngValue]="">--Lựa chọn--</option>
                         <option *ngFor="let item of useDaysList">{{item}}</option>
                     </select>
@@ -66,7 +66,7 @@
             <div class="form-group ml-sm-2 p-2">
                 <label for="" class="form-label">Lần phỏng vấn</label>
                 <span class="custom-dropdown mx-sm-2">
-                    <select class="form-control">
+                    <select class="form-control" [(ngModel)]="filterModelHad.interviewTimes">
                         <option [ngValue]="">--Lựa chọn--</option>
                         <option *ngFor="let item of interviewTimesList">{{item}}</option>
                     </select>
@@ -74,11 +74,11 @@
             </div>
 
             <div class="form-group p-2 ml-auto">
-                <button type="submit" class="btn btn-primary ml-sm-2" (click)="filterFuc(false)">
+                <button type="submit" class="btn btn-primary ml-sm-2" (click)="getHadTransferredList(false)">
                     <i class="fa fa-filter" aria-hidden="true"></i>
                     <span class="filter-pd">Lọc </span>
                 </button>
-                <button class="btn btn-secondary ml-sm-2" (click)="clearFilterFuc()">
+                <button class="btn btn-secondary ml-sm-2" (click)="clearFilterHad()">
                     <i class="fa fa-times"></i>
                     <span class="filter-pd">Xóa lọc </span>
                 </button>
