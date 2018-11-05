@@ -1,10 +1,10 @@
 :host /deep/ {
 
-    .k-gantt-create,
-    .k-gantt-treelist,
-    .k-splitbar-draggable-horizontal {
-        display: none;
-    }
+    // .k-gantt-create,
+    // .k-gantt-treelist,
+    // .k-splitbar-draggable-horizontal {
+    //     display: none;
+    // }
 
     .b-datepicker-no-border {
         .k-picker-wrap {
@@ -28,9 +28,9 @@
             color: black;
         }
     }
-    .k-gantt-rows, .k-gantt-columns, .k-gantt-tasks {
+    .k-gantt-rows, .k-gantt-columns, .k-gantt-tasks, table[role=treegrid] {
         tr {
-            height: 89px;
+            height: 50px;
         }
     }
     .b-k-alt {
@@ -116,9 +116,9 @@
 }
 
 table, thead, tbody, tfoot {
-    font-size: 0.8rem;
+    // font-size: 0.8rem;
     td {
-        padding: 0 .8rem;
+        // padding: 0 .8rem;
         // height: 77px;
     }
 }
@@ -128,17 +128,17 @@ table, thead, tbody, tfoot {
     color: white;
 }
 
-.tbl-data-gantt {
-    thead {
-        tr {
-            height: 121px;
-        }
-    }
-    td {
-        padding: 0 .8rem;
-        height: 89px;
-    }
-}
+// .tbl-data-gantt {
+//     thead {
+//         tr {
+//             height: 121px;
+//         }
+//     }
+//     td {
+//         padding: 0 .8rem;
+//         height: 89px;
+//     }
+// }
 
 .mw-12 {
     min-width: 12rem;

@@ -220,11 +220,18 @@ export class InformationDeploymentFormComponent implements OnInit, OnDestroy {
                         { type: 'week' },
                         'month'
                     ],
-                    height: 3250,
+                    tooltip: {
+                        visible: true,
+                        template: `<div style="display: flex; flex-direction: column;"><div>#= task.title # </div>
+                        <div>#= kendo.format('{0:dd/MM/yyyy HH:mm}', task.start) #</div>
+                        <div>#= kendo.format('{0:dd/MM/yyyy HH:mm}', task.end) #</div>`
+                    },
+                    // height: 3250,
                     // 2832
-                    listWidth: 0,
+                    // listWidth: 0,
                     showWorkHours: false,
                     showWorkDays: false,
+                    editable: false,
                     snap: false
                 }).data('kendoGantt');
                 this.updateGantt();
