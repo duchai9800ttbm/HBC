@@ -21,6 +21,7 @@ import { BidStatus } from '../../../../../../shared/constants/bid-status';
 import { CheckStatusPackage } from '../../../../../../shared/constants/check-status-package';
 import { PermissionModel } from '../../../../../../shared/models/permission/Permission.model';
 import { PermissionService } from '../../../../../../shared/services/permission.service';
+import { ViewDetailComponent } from '../../view-detail/view-detail.component';
 @Component({
   selector: 'app-package-list',
   templateUrl: './package-list.component.html',
@@ -93,6 +94,7 @@ export class PackageListComponent implements OnInit, OnDestroy {
   checkStatusPackage = CheckStatusPackage;
   isAgain = false;
   inforPackage;
+  dialogViewDetail;
   constructor(
     private modalService: BsModalService,
     private router: Router,
@@ -179,7 +181,7 @@ export class PackageListComponent implements OnInit, OnDestroy {
     // tslint:disable-next-line:max-line-length
     this.packageService.getInforPackageID(this.currentPackageId).subscribe(result => {
       this.inforPackage = result;
-      this.defaultContentEmail();
+      // this.defaultContentEmail();
     });
   }
 
@@ -232,6 +234,16 @@ export class PackageListComponent implements OnInit, OnDestroy {
   }
   openModalNotification(template: TemplateRef<any>, actionSendEmail: string, isAgain: boolean) {
     this.actionSendEmail = actionSendEmail;
+    this.emailModel = new SendEmailModel();
+    switch (actionSendEmail) {
+      case 'ContractRoom': {
+        break;
+      }
+      case 'Stakeholders': {
+        this.defaultContentEmail();
+        break;
+      }
+    };
     this.isAgain = isAgain;
     this.modalRef = this.modalService.show(
       template,
@@ -358,7 +370,7 @@ export class PackageListComponent implements OnInit, OnDestroy {
     this.detailResultPackageService.downloadFileResult(tenderResultDocumentId).subscribe(response => {
     },
       err => {
-        this.alertService.error('Tải tài liệu không thành công');
+        this.alertService.error('Tài liệu kết quả dự thầu này không có file đính kèm.');
       });
   }
   render(listFileResult: any) {
@@ -472,8 +484,8 @@ export class PackageListComponent implements OnInit, OnDestroy {
         case ('ContractRoom'): {
           this.detailResultPackageService.sendFeedbackToContractRoom(this.emailModel, this.file).subscribe(result => {
             this.packageService.changeStatusPackageValue(this.checkStatusPackage.DaPhanHoiDenPhongHopDong.text);
-            this.emailModel = new SendEmailModel();
-            this.defaultContentEmail();
+
+            // this.defaultContentEmail();
             this.file = [];
             this.alertService.success('Gửi phản hồi đến phòng hợp đồng thành công!');
             this.modalRef.hide();
@@ -518,5 +530,16 @@ export class PackageListComponent implements OnInit, OnDestroy {
             this.alertService.error('Xóa tài liệu không thành công!');
           });
       });
+  }
+
+  viewDetail(item) {
+    this.dialogViewDetail = this.dialogService.open({
+      content: ViewDetailComponent,
+      width: 650,
+      minWidth: 250
+    });
+    const instance = this.dialogViewDetail.content.instance;
+    instance.callBack = () => this.closePopuup();
+    instance.content = item;
   }
 }

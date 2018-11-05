@@ -1,5 +1,5 @@
 <div class="table-small">
-    <div class=" title-list-package d-flex flex-wrap align-items-center status-filter" *ngIf="statusPackage.id === checkStatusPackage.TrungThau.id">
+    <div class=" title-list-package d-flex flex-wrap align-items-center status-filter" *ngIf="(statusPackage.id === checkStatusPackage.TrungThau.id) || (statusPackage.id === checkStatusPackage.ChoKetQuaDuThau.id)">
         <div class="mr-auto d-flex align-items-end list-package mt-2 mb-2">
             <div class="d-flex justify-content-start">
                 <div class="rule mr-2">
@@ -238,7 +238,10 @@
                             </div>
                         </td>
 
-                        <td class="docName" [title]="item.name">{{ item.name }}</td>
+                        <td class="docName" [title]="item.name">
+                            <a href="javascript:;"> {{ item.name }}
+                            </a>
+                        </td>
                         <td class="text-center" [title]="item.version">{{ item.version }}</td>
                         <td class="doc" [title]="item.desc">{{ item.desc }}</td>
                         <td class="select-filter text-center" [title]="item.uploadBy?.employeeName">{{ item.uploadBy?.employeeName }}</td>
