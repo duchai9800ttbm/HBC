@@ -66,6 +66,7 @@ export class InformationDeploymentFormComponent implements OnInit, OnDestroy {
     GuiPCTD = false;
     TaiTemplatePCTD = false;
     BatDauLapHSDT = false;
+    isShowGantt = false;
     constructor(
         private spinner: NgxSpinnerService,
         private packageService: PackageService,
@@ -576,4 +577,43 @@ export class InformationDeploymentFormComponent implements OnInit, OnDestroy {
     //         }
     //     });
     // }
+
+    showGantt() {
+        this.isShowGantt = true;
+        setTimeout(() => {
+            this.updateGantt();
+        }, 500);
+    }
+
+    updateGarttIsShow() {
+        setTimeout(() => {
+            if (this.ganttChart) {
+                kendo.jQuery(this.ganttChart.nativeElement).kendoGantt({
+                    views: [
+                        { type: 'day', selected: true },
+                        { type: 'week' },
+                        'month'
+                    ],
+                    tooltip: {
+                        visible: true,
+                        template: `<div style="display: flex; flex-direction: column;"><div>#= task.title # </div>
+                        <div>#= kendo.format('{0:dd/MM/yyyy HH:mm}', task.start) #</div>
+                        <div>#= kendo.format('{0:dd/MM/yyyy HH:mm}', task.end) #</div>`
+                    },
+                    // height: 3250,
+                    // 2832
+                    // listWidth: 0,
+                    showWorkHours: false,
+                    showWorkDays: false,
+                    editable: false,
+                    snap: false
+                }).data('kendoGantt');
+                this.updateGantt();
+                this.planForm.valueChanges.subscribe(_ => {
+                    this.updateGantt();
+                    // this.enableCheckbox();
+                });
+            }
+        }, 500);
+    }
 }
