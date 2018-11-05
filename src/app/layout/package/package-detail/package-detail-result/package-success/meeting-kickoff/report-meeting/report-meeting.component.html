@@ -19,9 +19,9 @@
           <button class="btn btn-primary ml-1" (click)="downloadTemplate()">
             Tải Template
           </button>
-          <button class="btn btn-primary ml-1">
+          <!-- <button class="btn btn-primary ml-1">
             Tải xuống tài liệu
-          </button>
+          </button> -->
           <ng-container *ngIf="XoaBBCuocHop">
             <button class="btn btn-primary ml-1" (click)="deleteButMeetingReportOrFile('report')">
               Xóa
@@ -280,9 +280,9 @@
           Tải Template
         </button>
         <ng-container *ngIf="TaiXuongFilePresentation">
-          <button class="btn btn-primary ml-1">
+          <!-- <button class="btn btn-primary ml-1">
             Tải xuống tài liệu
-          </button>
+          </button> -->
         </ng-container>
         <ng-container *ngIf="XoaFilePresentation">
           <button class="btn btn-primary ml-1" (click)="deleteButMeetingReportOrFile('file')">

@@ -66,9 +66,9 @@
                 <input type="text" class="form-control icon" placeholder="&#xf002; Tên tài liệu" (keyup)="searchTerm$.next($event.target.value)">
             </div>
             <ng-container *ngIf="TaiXuongHD">
-                <button class="btn btn-primary ml-1">
+                <!-- <button class="btn btn-primary ml-1">
                     Tải xuống tài liệu
-                </button>
+                </button> -->
             </ng-container>
             <ng-container *ngIf="XoaHD">
                 <button class="btn btn-primary ml-1" (click)="deleteContractSign()">
