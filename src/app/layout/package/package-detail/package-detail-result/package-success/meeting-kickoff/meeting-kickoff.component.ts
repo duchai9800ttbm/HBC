@@ -187,6 +187,17 @@ export class MeetingKickoffComponent implements OnInit, OnDestroy {
       }, err => {});
   }
 
+  renderIndex(i, j) {
+    console.log('iiiiiiii', i, j);
+    let dem = 0;
+    for ( let m = 0; m < this.listEmailSended.length; m ++) {
+      if (m < i) {
+        dem = dem + this.listEmailSended[m].to.length;
+      }
+    }
+    return dem + j + 1;
+  }
+
   endAPIFuction(event) {
     this.loading = event;
   }
