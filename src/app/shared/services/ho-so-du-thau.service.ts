@@ -38,6 +38,13 @@ export class HoSoDuThauService {
   static statusHSDT = new BehaviorSubject<boolean>(false);
   static checkConditionApproval = new BehaviorSubject<boolean>(false);
 
+  private static checkDecimalNumber(input: any): any {
+    if ((String(input).charAt(String(input).length - 1) === '.') || ( String(input).match(/[a-z]+$/gi) )) {
+      return Number(String(input).match(/[0-9]+/gi));
+    }
+    return input;
+  }
+
   private static toHistoryLiveForm(result: any): HistoryLiveForm {
     return {
       employee: {
@@ -474,7 +481,7 @@ export class HoSoDuThauService {
       },
       mainItemOfTenderSubmission: obj.hoSoDangLuuY && {
         attentiveDocuments: obj.hoSoDangLuuY.taiLieuLuuY,
-        quantity: obj.hoSoDangLuuY.soLuong,
+        quantity: HoSoDuThauService.checkDecimalNumber(obj.hoSoDangLuuY.soLuong),
         languages: obj.hoSoDangLuuY.ngonNgu
       },
       requestDocument: obj.dienGiaiYeuCauHoSo && {
@@ -516,7 +523,7 @@ export class HoSoDuThauService {
         hsmtContractCondition: obj.dienGiaiDieuKienHopDong.dieuKienTheoHSMT && {
           executiveGuaranteePercent:
             (obj.dienGiaiDieuKienHopDong.dieuKienTheoHSMT.baoLanhThucHien) ?
-              +obj.dienGiaiDieuKienHopDong.dieuKienTheoHSMT.baoLanhThucHien.phanTram : 0,
+              HoSoDuThauService.checkDecimalNumber(obj.dienGiaiDieuKienHopDong.dieuKienTheoHSMT.baoLanhThucHien.phanTram) : 0,
 
           executiveGuaranteeEfficiency:
             (obj.dienGiaiDieuKienHopDong.dieuKienTheoHSMT.baoLanhThucHien) ?
@@ -524,7 +531,7 @@ export class HoSoDuThauService {
 
           advanceGuaranteePercent:
             (obj.dienGiaiDieuKienHopDong.dieuKienTheoHSMT.baoLanhTamUng) ?
-              +obj.dienGiaiDieuKienHopDong.dieuKienTheoHSMT.baoLanhTamUng.phanTram : 0,
+              HoSoDuThauService.checkDecimalNumber(obj.dienGiaiDieuKienHopDong.dieuKienTheoHSMT.baoLanhTamUng.phanTram) : 0,
 
           advanceGuaranteeEfficiency:
             (obj.dienGiaiDieuKienHopDong.dieuKienTheoHSMT.baoLanhTamUng) ?
@@ -536,7 +543,7 @@ export class HoSoDuThauService {
 
           paymentTime:
             (obj.dienGiaiDieuKienHopDong.dieuKienTheoHSMT.thanhToan) ?
-              obj.dienGiaiDieuKienHopDong.dieuKienTheoHSMT.thanhToan.thoiGianThanhToan : '',
+              HoSoDuThauService.checkDecimalNumber(obj.dienGiaiDieuKienHopDong.dieuKienTheoHSMT.thanhToan.thoiGianThanhToan) : null,
 
           paymentMaterialOnSite:
             (obj.dienGiaiDieuKienHopDong.dieuKienTheoHSMT.thanhToan) ?
@@ -544,18 +551,18 @@ export class HoSoDuThauService {
 
           retainedPercent:
             (obj.dienGiaiDieuKienHopDong.dieuKienTheoHSMT.tienGiuLai) ?
-              +obj.dienGiaiDieuKienHopDong.dieuKienTheoHSMT.tienGiuLai.phanTram : 0,
+              HoSoDuThauService.checkDecimalNumber(obj.dienGiaiDieuKienHopDong.dieuKienTheoHSMT.tienGiuLai.phanTram) : 0,
 
           retainedLimit:
             obj.dienGiaiDieuKienHopDong.dieuKienTheoHSMT.tienGiuLai ?
-              obj.dienGiaiDieuKienHopDong.dieuKienTheoHSMT.tienGiuLai.gioiHanTienGiuLai : 0,
+              HoSoDuThauService.checkDecimalNumber(obj.dienGiaiDieuKienHopDong.dieuKienTheoHSMT.tienGiuLai.gioiHanTienGiuLai) : 0,
 
           retainedPayment:
             (obj.dienGiaiDieuKienHopDong.dieuKienTheoHSMT.tienGiuLai) ?
               obj.dienGiaiDieuKienHopDong.dieuKienTheoHSMT.tienGiuLai.thanhToanTienGui : '',
           punishhOverduePercent:
             (obj.dienGiaiDieuKienHopDong.dieuKienTheoHSMT.phatTreTienDo) ?
-              +obj.dienGiaiDieuKienHopDong.dieuKienTheoHSMT.phatTreTienDo.phanTram : 0,
+              HoSoDuThauService.checkDecimalNumber(obj.dienGiaiDieuKienHopDong.dieuKienTheoHSMT.phatTreTienDo.phanTram) : 0,
           punishhOverdueLimit:
             (obj.dienGiaiDieuKienHopDong.dieuKienTheoHSMT.phatTreTienDo) ?
               obj.dienGiaiDieuKienHopDong.dieuKienTheoHSMT.phatTreTienDo.gioiHanPhatTienDo : '',
@@ -571,13 +578,13 @@ export class HoSoDuThauService {
         hbcContractCondition: obj.dienGiaiDieuKienHopDong.dieuKienTheoHBC && {
           executiveGuaranteePercent:
             (obj.dienGiaiDieuKienHopDong.dieuKienTheoHBC.baoLanhThucHien) ?
-              +obj.dienGiaiDieuKienHopDong.dieuKienTheoHBC.baoLanhThucHien.phanTram : 0,
+              HoSoDuThauService.checkDecimalNumber(obj.dienGiaiDieuKienHopDong.dieuKienTheoHBC.baoLanhThucHien.phanTram) : 0,
           executiveGuaranteeEfficiency:
             (obj.dienGiaiDieuKienHopDong.dieuKienTheoHBC.baoLanhThucHien) ?
               obj.dienGiaiDieuKienHopDong.dieuKienTheoHBC.baoLanhThucHien.hieuLuc : '',
           advanceGuaranteePercent:
             (obj.dienGiaiDieuKienHopDong.dieuKienTheoHBC.baoLanhTamUng) ?
-              +obj.dienGiaiDieuKienHopDong.dieuKienTheoHBC.baoLanhTamUng.phanTram : 0,
+              HoSoDuThauService.checkDecimalNumber(obj.dienGiaiDieuKienHopDong.dieuKienTheoHBC.baoLanhTamUng.phanTram) : 0,
           advanceGuaranteeEfficiency:
             (obj.dienGiaiDieuKienHopDong.dieuKienTheoHBC.baoLanhTamUng) ?
               obj.dienGiaiDieuKienHopDong.dieuKienTheoHBC.baoLanhTamUng.hieuLuc : '',
@@ -586,23 +593,23 @@ export class HoSoDuThauService {
               obj.dienGiaiDieuKienHopDong.dieuKienTheoHBC.thanhToan.loaiThanhToan : '',
           paymentTime:
             (obj.dienGiaiDieuKienHopDong.dieuKienTheoHBC.thanhToan) ?
-              obj.dienGiaiDieuKienHopDong.dieuKienTheoHBC.thanhToan.thoiGianThanhToan : '',
+              HoSoDuThauService.checkDecimalNumber(obj.dienGiaiDieuKienHopDong.dieuKienTheoHBC.thanhToan.thoiGianThanhToan)
+              : null,
           paymentMaterialOnSite:
             (obj.dienGiaiDieuKienHopDong.dieuKienTheoHBC.thanhToan) ?
               obj.dienGiaiDieuKienHopDong.dieuKienTheoHBC.thanhToan.thanhToanKhiTapKet : '',
           retainedPercent:
             (obj.dienGiaiDieuKienHopDong.dieuKienTheoHBC.tienGiuLai) ?
-              +obj.dienGiaiDieuKienHopDong.dieuKienTheoHBC.tienGiuLai.phanTram : 0,
+              HoSoDuThauService.checkDecimalNumber(obj.dienGiaiDieuKienHopDong.dieuKienTheoHBC.tienGiuLai.phanTram) : 0,
           retainedLimit:
             obj.dienGiaiDieuKienHopDong.dieuKienTheoHBC.tienGiuLai ?
-              (obj.dienGiaiDieuKienHopDong.dieuKienTheoHBC.tienGiuLai.gioiHanTienGiuLai ?
-                obj.dienGiaiDieuKienHopDong.dieuKienTheoHBC.tienGiuLai.gioiHanTienGiuLai : 0) : 0,
+              HoSoDuThauService.checkDecimalNumber(obj.dienGiaiDieuKienHopDong.dieuKienTheoHBC.tienGiuLai.gioiHanTienGiuLai) : 0,
           retainedPayment:
             (obj.dienGiaiDieuKienHopDong.dieuKienTheoHBC.tienGiuLai) ?
               obj.dienGiaiDieuKienHopDong.dieuKienTheoHBC.tienGiuLai.thanhToanTienGui : '',
           punishhOverduePercent:
             (obj.dienGiaiDieuKienHopDong.dieuKienTheoHBC.phatTreTienDo) ?
-              +obj.dienGiaiDieuKienHopDong.dieuKienTheoHBC.phatTreTienDo.phanTram : 0,
+              HoSoDuThauService.checkDecimalNumber(obj.dienGiaiDieuKienHopDong.dieuKienTheoHBC.phatTreTienDo.phanTram) : 0,
           punishhOverdueLimit:
             (obj.dienGiaiDieuKienHopDong.dieuKienTheoHBC.phatTreTienDo) ?
               obj.dienGiaiDieuKienHopDong.dieuKienTheoHBC.phatTreTienDo.gioiHanPhatTienDo : '',
@@ -620,7 +627,7 @@ export class HoSoDuThauService {
       tenderCondition: obj.dienGiaiDieuKienHSMT && {
         hbcTenderCondition: obj.dienGiaiDieuKienHSMT.theoHBC && {
           tenderGuaranteeValue: (obj.dienGiaiDieuKienHSMT.theoHBC.baoLanhDuThau) ?
-            obj.dienGiaiDieuKienHSMT.theoHBC.baoLanhDuThau.giaTri : 0,
+            HoSoDuThauService.checkDecimalNumber(obj.dienGiaiDieuKienHSMT.theoHBC.baoLanhDuThau.giaTri) : 0,
           tenderGuaranteeEfficiency:
             (obj.dienGiaiDieuKienHSMT.theoHBC.baoLanhDuThau) ?
               obj.dienGiaiDieuKienHSMT.theoHBC.baoLanhDuThau.hieuLuc : '',
@@ -644,7 +651,7 @@ export class HoSoDuThauService {
         },
         hsmtTenderCondition: obj.dienGiaiDieuKienHSMT.theoHSMT && {
           tenderGuaranteeValue: (obj.dienGiaiDieuKienHSMT.theoHSMT.baoLanhDuThau) ?
-            obj.dienGiaiDieuKienHSMT.theoHSMT.baoLanhDuThau.giaTri : '',
+            HoSoDuThauService.checkDecimalNumber(obj.dienGiaiDieuKienHSMT.theoHSMT.baoLanhDuThau.giaTri) : '',
           tenderGuaranteeEfficiency:
             (obj.dienGiaiDieuKienHSMT.theoHSMT.baoLanhDuThau) ?
               obj.dienGiaiDieuKienHSMT.theoHSMT.baoLanhDuThau.hieuLuc : '',
@@ -656,7 +663,8 @@ export class HoSoDuThauService {
           isProgressCompletionDate: (obj.dienGiaiDieuKienHSMT.theoHSMT.tienDo) ?
             obj.dienGiaiDieuKienHSMT.theoHSMT.tienDo.thoiGianHoanThanhTheoNhaThau : false,
           progressCompletionContractorDate: (obj.dienGiaiDieuKienHSMT.theoHSMT.tienDo) ?
-            obj.dienGiaiDieuKienHSMT.theoHSMT.tienDo.thoiGianHoanThanhTheoNhaThauCount : '',
+            HoSoDuThauService.checkDecimalNumber(obj.dienGiaiDieuKienHSMT.theoHSMT.tienDo.thoiGianHoanThanhTheoNhaThauCount)
+            : null,
           taxTypes: (obj.dienGiaiDieuKienHSMT.theoHSMT.cacLoaiThue) ?
             (obj.dienGiaiDieuKienHSMT.theoHSMT.cacLoaiThue || []).map(x => ({
               key: '',

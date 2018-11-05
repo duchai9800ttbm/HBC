@@ -37,9 +37,6 @@ export class SummaryConditionComponent implements OnInit, OnDestroy {
   pagedResultChangeHistoryList: PagedResult<HistoryLiveForm> = new PagedResult<HistoryLiveForm>();
   isClosedHSDT: boolean;
   subscription: Subscription;
-
-
-  
   listPermission: Array<PermissionModel>;
   listPermissionScreen2 = [];
   documentTypeId = DocumentTypeId;

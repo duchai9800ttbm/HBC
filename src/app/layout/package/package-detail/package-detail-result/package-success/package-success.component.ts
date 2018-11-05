@@ -49,15 +49,16 @@ export class PackageSuccessComponent implements OnInit {
         this.showArrow = false;
         this.arrow = true;
         this.arrowSuccess = true;
-      } else if ((this.statusPackage.id > this.checkStatusPackage.DaPhanHoiDenPhongHopDong.id)
-        || (this.statusPackage.id === this.checkStatusPackage.DaPhanHoiDenPhongHopDong.id)) {
-        this.isActive = true;
-        this.arrow = true;
-        this.arrowSuccess = false;
-        this.showArrow = false;
-        this.arrowKickOff = false;
-        this.kickOffActive = true;
       }
+      // else if ((this.statusPackage.id > this.checkStatusPackage.DaPhanHoiDenPhongHopDong.id)
+      //   || (this.statusPackage.id === this.checkStatusPackage.DaPhanHoiDenPhongHopDong.id)) {
+      //   this.isActive = true;
+      //   this.arrow = true;
+      //   this.arrowSuccess = false;
+      //   this.showArrow = false;
+      //   this.arrowKickOff = false;
+      //   this.kickOffActive = true;
+      // }
     });
   }
 

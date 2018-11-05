@@ -42,16 +42,13 @@ export class SummaryConditionFormComponent implements OnInit, OnDestroy {
     this.scrollTopService.isScrollTop = false;
     this.packageId = +PackageDetailComponent.packageId;
     this.packageService.setSummaryConditionForm(true);
-
-    this.packageService.getInforPackageID(this.packageId).subscribe(result => {
-      this.package = result;
-    }, err => {
-    });
     this.subscription = this.hoSoDuThauService.watchStatusPackage().subscribe(status => {
       this.isClosedHSDT = status;
     });
-
-    this.activatedRoute.params.subscribe(data => {
+    const getInFoPackage$ = this.packageService.getInforPackageID(this.packageId).subscribe(result => {
+      this.package = result;
+    });
+    const activate$ = this.activatedRoute.params.subscribe(data => {
       switch (data.action) {
         case 'create': {
           this.isModeView = false;
@@ -77,7 +74,7 @@ export class SummaryConditionFormComponent implements OnInit, OnDestroy {
       }
     });
 
-    this.hoSoDuThauService.getInfoTenderConditionalSummary(this.packageId).subscribe(data => {
+    const getInfoTender$ = this.hoSoDuThauService.getInfoTenderConditionalSummary(this.packageId).subscribe(data => {
       if (data) {
         this.hoSoDuThauService.emitDataAll(data);
         this.isDraft = data.isDraftVersion;
@@ -89,6 +86,9 @@ export class SummaryConditionFormComponent implements OnInit, OnDestroy {
         this.hoSoDuThauService.emitDataAll(obj);
       }
     });
+    this.subscription.add(getInFoPackage$);
+    this.subscription.add(activate$);
+    this.subscription.add(getInfoTender$);
   }
 
   ngOnDestroy(): void {

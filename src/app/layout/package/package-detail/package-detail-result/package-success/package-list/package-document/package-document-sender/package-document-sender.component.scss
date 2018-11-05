@@ -314,3 +314,7 @@ table.dataTable th {
 :host /deep/ .ng-select.ng-select-multiple .ng-select-container .ng-value-container .ng-value{
     white-space: initial;
 }
+.merger-table{
+    border-top: none !important;
+    border-bottom: none !important;
+}

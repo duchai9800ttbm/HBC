@@ -524,7 +524,7 @@ export class PackageDocumentSenderComponent implements OnInit {
     if (this.checkDepartmentAndDateUse(itemDocChooseTranfer)) {
       if (itemDocChooseTranfer && itemDocChooseTranfer.length !== 0) {
         this.confirmationService.confirm(
-          'Bạn có muốn chuyên giao tài liệu?',
+          'Bạn có muốn chuyển giao tài liệu?',
           () => {
             this.detailResultPackageService.tranferDocs(this.currentPackageId, itemDocChooseTranfer).subscribe(response => {
               this.packageService.changeStatusPackageValue(this.checkStatusPackage.DaChuyenGiaoTaiLieu.text);

@@ -209,9 +209,12 @@
                 </tbody>
             </table>
         </div>
-        <div class="row">
-            <div class="col-md-9 pr-0">
-                <table class="table table-bordered tbl-data-gantt">
+        <div class="mt-3 text-right">
+            <button class="btn btn-primary">Xem Gantt Chart</button>
+        </div>
+        <div class="row mt-3">
+            <div class="col-md-12">
+                <table class="table table-bordered tbl-data-gantt" #tableDataGantt>
                     <thead class="tbl-header-bg-color">
                         <tr>
                             <th class="text-center align-middle">STT</th>
@@ -257,9 +260,6 @@
                                      || (data.get('whoIsInChargeIds').value && data.get('whoIsInChargeIds').value.length !==0 && data.get('startDate').value && data.get('finishDate').value) ?
                                      null : ''" (click)="routerAction === 'view' ? checkFinishTenderPlanItem(data.get('itemId').value) : null"
                                         class="custom-control-input input-checkbox" formControlName="isFinish">
-                                    <!-- [attr.disabled]="(this.checkStatusPackage[this.packageInfo.stageStatus.id].id >= checkStatusPackage.DaThongBaoTrienKhai.id && 
-                                        this.checkStatusPackage[this.packageInfo.stageStatus.id].id <= checkStatusPackage.DaPhongVan.id) ? false : null" -->
-                                    <!-- [attr.disabled]="true" -->
                                     <span class="custom-control-indicator"></span>
                                 </label>
                             </td>
@@ -278,9 +278,9 @@
                     </tbody>
                 </table>
             </div>
-            <div class="col-md-3 pl-0">
+            <!-- <div class="col-md-3 pl-0">
                 <div #ganttChart></div>
-            </div>
+            </div> -->
         </div>
     </div>
     <kendo-dialog [width]="550" *ngIf="isShowChanges">
@@ -305,6 +305,9 @@
                 <button class="btn b-btn btn-primary" (click)="saveChangesLiveForm()">OK</button>
             </div>
         </div>
+    </kendo-dialog>
+    <kendo-dialog [width]="tableDataGantt.offsetWidth">
+        <div #ganttChart></div>
     </kendo-dialog>
 </form>
 <ngx-spinner bdColor="rgba(51, 51, 51, 0.7)" size="default" color="#fff" type="ball-scale"></ngx-spinner>

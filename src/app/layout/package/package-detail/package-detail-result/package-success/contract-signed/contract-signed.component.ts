@@ -121,9 +121,9 @@ export class ContractSignedComponent implements OnInit, OnDestroy {
       this.isSignedContractAPI = response.isSignedContract;
       this.isShow = true;
     });
-    // this.detailResultPackageService.watchListContractSigning().subscribe( value => {
-    //   this.isSignedContractAPI = value;
-    // });
+    this.detailResultPackageService.watchListContractSigning().subscribe(value => {
+      this.isSignedContractAPI = true;
+    });
     this.filterModel.uploadedDate = null;
     this.filterModel.uploadedByEmployeeId = null;
     this.filterModel.contractDate = null;
