@@ -164,7 +164,7 @@ a {
     background-color: #ffff !important;
 }
 
-table.dataTable th {
+table.zui-table th {
     border-bottom: 1px solid #dddddd !important;
     background-color: #ffff !important;
     border: 1px solid #dddddd;
@@ -503,7 +503,7 @@ button:focus {
     outline: #fff !important;
 }
 
-table.dataTable th {
+table.zui-table th {
     border-bottom: 1px solid #dddddd !important;
     background-color: #ffff !important;
     border: 1px solid #dddddd;
@@ -630,18 +630,18 @@ table.dataTable th {
     cursor: pointer;
 }
 
-table.dataTable {
+table.zui-table {
 
     tr:nth-child(odd) {background-color: #fafbfc;}
 
     overflow-x: scroll;
     th:first-child,td:first-child {
         width: 80px!important;
-        max-width: 90px;
+        // max-width: 90px;
     }
     th:not([type="check"]),
     td:not([type="check"]) {
-        min-width: 80px;
+        // min-width: 80px;
         max-width: 90px;
     }
 }
@@ -751,7 +751,7 @@ table.dataTable {
 }
 
 @media only screen and (max-width: 1201px) {
-    table.dataTable {
+    table.zui-table {
         zoom: 0.8;
         tr:nth-child(odd) {background-color: #fafbfc;}
     
@@ -789,7 +789,7 @@ table.dataTable {
 }
 
 @media only screen and (max-width: 1300px) {
-    table.dataTable {
+    table.zui-table {
         zoom: 0.9;
         tr:nth-child(odd) {background-color: #fafbfc;}
     
@@ -804,7 +804,7 @@ table.dataTable {
         }
         th:not([type="check"]),
         td:not([type="check"]) {
-            min-width: 80px;
+            // min-width: 80px;
             max-width: 100px;
         }
     }
@@ -860,7 +860,7 @@ table.dataTable {
     grid-template-columns: 230px 255px 255px auto
 }
 
-:host /deep/ .dataTables_empty {
+:host /deep/ .zui-tables_empty {
     display: none !important;
 }
 .set-width-status{

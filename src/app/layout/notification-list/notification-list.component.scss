@@ -1,98 +1,4 @@
-// .wrapper ul {
-//     margin: 0;
-//     margin-top: 20px;
-//     list-style: none;
-//     position: relative;
-//     padding-left: 124px;
 
-//     font-size: 13px;
-//   }
-//   .wrapper ul:before {
-//     content: "";
-//     width: 1px;
-//     height: 140%;
-//     position: absolute;
-//     border-left: 2px dashed #00a0e3;
-//   }
-
-//   .wrapper ul:last-child {
-//     &::before{
-//       height: 0;
-//     }
-//   }
-
-//   .wrapper ul li:hover{
-//         background-color: #f8f9fa;
-//   }
-//   .wrapper ul li {
-//     position: relative;
-//     margin-left: 30px;
-//    // background-color: rgba(50, 181, 203, 0.1);
-//     padding: 14px;
-//     border-radius: 6px;
-//     width: 100%;
-//     box-shadow: 0 0 4px rgba(0, 0, 0, 0.12), 0 2px 2px rgba(0, 0, 0, 0.08);
-//   }
-//   .wrapper ul li:not(:first-child) {
-//     margin-top: 60px;
-//   }
-//   .wrapper ul li > span {
-//     width: 2px;
-//     height: 100%;
-//     background: #00a0e3;
-//     left: -30px;
-//     top: 0;
-//     position: absolute;
-//   }
-//   .wrapper ul li > span:before, .wrapper ul li > span:after {
-//     content: "";
-//     width: 8px;
-//     height: 8px;
-//     border-radius: 50%;
-//     border: 2px solid #00a0e3;
-//     position: absolute;
-//     background: #00a0e3;
-//     left: -3px;
-//     top: 0;
-//   }
-//   .wrapper ul li span:after {
-//     top: 93%;
-//   }
-//   .wrapper ul li > div {
-//     margin-left: 10px;
-//   }
-//   .wrapper div .title, .wrapper div .type {
-//     //font-weight: 600;
-//     //font-size: 12px;
-//   }
-//   .wrapper div .info {
-//     //font-weight: bold;
-//   }
-//   .wrapper div > div {
-//     margin-top: 5px;
-//   }
-//   .wrapper span.number {
-//     height: 100%;
-//   }
-//   .wrapper span.number span {
-//     position: absolute;
-//     font-size: 98%;
-//     left: -120px;
-//     // font-weight: bold;
-//   }
-//   .wrapper span.number span:first-child {
-//     top: -5px;
-//   }
-//   .wrapper span.number span:last-child {
-//     top: 87%;
-//   }
-// .wrapper{
-//   width: 100%;
-// }
-  
-// .unread{
-//   background-color: #dfeaea94;
-// }
 
 
 .title-detail {
@@ -121,7 +27,7 @@
   // border: 1px solid #dadada;
   padding: 20px 0px 35px 0px;
   // border-top: none;
-  background-color: white;
+  // background-color: white;
   margin-left: 1.3rem;
   margin-right: 1.3rem
 }
@@ -195,4 +101,16 @@ a {
   width: 30px;
   height: 30px;
   border-radius: 50%;
+}
+.infinite-scroll {
+  padding: 8px;
+  /* width: auto; */
+  // margin: auto;
+  // max-width: 200px;
+  border-radius: 4px;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  color: #607d8b!important;
+  background-color: #b0bec5!important;
 }

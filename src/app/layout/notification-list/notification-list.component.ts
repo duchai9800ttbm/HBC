@@ -7,6 +7,7 @@ import { routerTransition } from '../../router.animations';
 import { NotificationService } from '../../shared/services/notification.service';
 import { NotificationStatus } from '../../shared/constants/notification-status';
 import { AlertService, ConfirmationService } from '../../shared/services';
+import { debounceTime } from 'rxjs/operators';
 
 @Component({
   selector: 'app-notification-list',
@@ -16,6 +17,7 @@ import { AlertService, ConfirmationService } from '../../shared/services';
   providers: [NotificationService],
 })
 export class NotificationListComponent implements OnInit {
+  loading =false;
   notificationCount$: Observable<number>;
   notificationItems$: Observable<NotificationItem[]>;
   notificationItems: NotificationItem[];
@@ -30,16 +32,36 @@ export class NotificationListComponent implements OnInit {
     private confirmationService: ConfirmationService,
   ) { }
 
+
   ngOnInit() {
-    this.notificationService.watchNotificationAmontSubject().subscribe(value => {
-      this.getListNotification();
-    });
+    // this.notificationService.watchNotificationAmontSubject().subscribe(value => {
+    //   this.getListNotification();
+    // });
+
     this.getListNotification();
   }
+  onLoadMore() {
+    this.loading = true;
+    this.notificationService.getListNotifications(+this.pagedResult.currentPage + 1, +this.pagedResult.pageSize)
+    .pipe(debounceTime(1000))
+      .subscribe(pagedResult => {
+        this.showButton = (pagedResult.items.length > 0) && (+pagedResult.currentPage + 1 < pagedResult.pageCount);
+        this.pagedResult = pagedResult;
+        this.notificationList = this.notificationList.concat(pagedResult.items);
+        this.loading = false;
+      }, err => {
+        this.loading = false;
+      });
+  }
+
+  
 
   getListNotification() {
-    this.notificationService.getListNotification().subscribe(response => {
-      this.notificationList = response;
+    this.loading = true;
+    this.notificationService.getListNotifications(0, 10).subscribe(response => {
+      this.pagedResult = response;
+      this.notificationList = response.items;
+      this.loading = false;
     });
   }
 
@@ -48,6 +70,7 @@ export class NotificationListComponent implements OnInit {
       .readNotification(item.id)
       .subscribe(result => {
         this.notificationService.change();
+        item.notificationState.id = "Read";
       },
         err => {
           this.alertService.error('Đã xảy ra lỗi!');
@@ -62,6 +85,7 @@ export class NotificationListComponent implements OnInit {
           .deleteOneNotification(item.id)
           .subscribe(result => {
             this.notificationService.change();
+            this.notificationList = this.notificationList.filter(x=>x.id != item.id);
             this.alertService.success('Đã xóa thông báo thành công!');
           },
             err => {
@@ -99,10 +123,12 @@ export class NotificationListComponent implements OnInit {
         break;
       }
     }
+
     this.notificationService
       .readNotification(item.id)
       .subscribe(result => {
         this.notificationService.change();
+        item.notificationState.id = "Read";
       },
         err => {
           this.alertService.error('Đã xảy ra lỗi!');
@@ -125,6 +151,7 @@ export class NotificationListComponent implements OnInit {
       () => {
         this.notificationService.deleteAllNotification().subscribe(response => {
           this.notificationService.change();
+          this.notificationList = [];
         },
           err => {
             this.alertService.error('Đã xảy ra lỗi!');

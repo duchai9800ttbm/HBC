@@ -35,39 +35,6 @@ export class HeaderNotificationComponent implements OnInit {
   }
   @HostListener('document:click', ['$event'])
   public documentClick(event: any): void {
-    // this.cancel(this.myDrop);
-
-    // console.log('div-big', this.containsDropTool(event.target) );
-    // console.log('div', this.containsDropTooldiv(event.target));
-    // console.log('thognbao', this.containsDropToolThongBao(event.target));
-    // console.log('thognbao', this.containsDropToolThongBao2222(event.target));
-    // if (!this.containsDropTool(event.target)) {
-    //   this.getListNotification();
-    // }
-    // if ( this.containsDropTooldiv(event.target)
-    //   || ( !this.containsDropTooldiv(event.target) &&  this.containsDropToolThongBao(event.target) )
-    //   ||  (!this.containsDropTooldiv(event.target) && !this.containsDropToolThongBao(event.target)
-    //   && this.containsDropToolThongBao2222(event.target)) ) {
-    //     this.isShow = !this.isShow;
-    //     // this.DropToolThongBao.colse();
-    //   } else {
-    //     this.isShow = false;
-    //   }
-
-    // if (this.containsDropTooldiv(event.target)) {
-    //   this.isShow = !this.isShow;
-    // } else {
-    //   if (!this.containsDropTooldiv(event.target) && this.containsDropToolThongBao(event.target)) {
-    //     this.isShow = !this.isShow;
-    //   } else {
-    //     if ((!this.containsDropTooldiv(event.target) && !this.containsDropToolThongBao(event.target)
-    //       && this.containsDropToolThongBao2222(event.target))) {
-    //       this.isShow = !this.isShow;
-    //     } else {
-    //       this.isShow = false;
-    //     }
-    //   }
-    // }
 
     if (this.containsDropToolThongBao2222(event.target) || this.containsDropTool(event.target)) {
       this.isShow = false;
@@ -81,6 +48,8 @@ export class HeaderNotificationComponent implements OnInit {
       this.getListNotification();
     });
     this.getListNotification();
+
+    this.notificationService.count().subscribe(x => this.amountNotificationNotRead = x);
   }
 
   containsDropToolThongBao2222(target: any): boolean {
@@ -92,18 +61,7 @@ export class HeaderNotificationComponent implements OnInit {
     }
 
   }
-  // containsDropToolThongBao(target: any): boolean {
-  //   if (this.DropToolThongBao) {
-  //     return this.DropToolThongBao.nativeElement.contains(target) ||
-  //       (this.DropToolThongBao ? this.DropToolThongBao.nativeElement.contains(target) : false);
-  //   } else {
-  //     return false;
-  //   }
-  // }
-  // containsDropTooldiv(target: any): boolean {
-  //   return this.DropTooldiv.nativeElement.contains(target) ||
-  //     (this.DropTooldiv ? this.DropTooldiv.nativeElement.contains(target) : false);
-  // }
+
   containsDropTool(target: any): boolean {
     if (this.DropTool2) {
       return this.DropTool2.nativeElement.contains(target) ||
@@ -153,32 +111,12 @@ export class HeaderNotificationComponent implements OnInit {
         });
   }
 
-
-  // gotoDetailPage(item: NotificationItem) {
-  //   const moduleUrl = item.moduleName === 'Event'
-  //     ? 'activity/event'
-  //     : item.moduleName === 'Work'
-  //       ? 'activity/task'
-  //       : item.moduleName.toLowerCase();
-
-  //   const detailUrl = `${moduleUrl}/detail`;
-
-  //   this.router.navigate([detailUrl, item.moduleItemId]);
-  // }
-
   getListNotification() {
-    this.notificationService.getListNotification().subscribe(response => {
-      this.notificationList = response;
-      // this.notificationList.forEach( item => {
-      //   this.amountNotificationNotRead = item
-      // });
-      this.amountNotificationNotRead = 0;
-      this.notificationList.forEach(item => {
-        if (item.notificationState.id === 'UnRead') {
-          this.amountNotificationNotRead = this.amountNotificationNotRead + 1;
-        }
-      });
+    this.notificationService.getListNotifications(0,10).subscribe(response => {
+      this.notificationList = response.items;
     });
+
+    this.notificationService.count().subscribe(x => this.amountNotificationNotRead = x);
   }
 
   readAllNotification() {

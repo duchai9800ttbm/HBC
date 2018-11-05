@@ -23,19 +23,7 @@
           <div class="mr-auto w-100">
             <div>
               <div class="w-100 d-flex toolbar" [class.bot-when-have-data]="notificationList && notificationList.length !== 0" *ngIf="notificationList && notificationList.length !== 0">
-                <!-- <div class="btn-group" dropdown>
-                  <a dropdownToggle (click)="false">
-                    <i class="fa fa-ellipsis-v fa-ellipsis" aria-hidden="true"></i>
-                  </a>
-                  <ul id="dropdown-basic" *dropdownMenu class="dropdown-menu ul-chirld--index min-width-none" role="menu" aria-labelledby="button-basic">
-                    <li role="menuitem">
-                      <a class="dropdown-item ul-chirld-of-chirl--pad" (click)="readAllNotification()">Đánh dấu tất cả là đã đọc</a>
-                    </li>
-                    <li role="menuitem">
-                      <a class="dropdown-item ul-chirld-of-chirl--pad" (click)="deleteAllNotification()">Xóa tất cả thông báo</a>
-                    </li>
-                  </ul>
-                </div> -->
+               
                 <span class="toolbar-list-notification--color pr-2" (click)="readAllNotification()">Đánh dấu tất cả là đã đọc</span>
                 <span class="center-parent pr-2">
                   <i class="fa fa-circle dot--color" aria-hidden="true"></i>
@@ -128,14 +116,14 @@
                   </p>
                 </a>
 
-                <div style="padding: 0.25rem 0rem 0.25rem 1rem; min-width: 10rem; color: #019cff; font-weight: bold;">
-                  <span *ngIf="item.notificationState.id === 'UnRead'" style="cursor: pointer" (click)="tickReaded(item)">Đánh dấu đã đọc</span> 
+                <div class="mr-3">
+                  <span title="Đánh dấu đã đọc" *ngIf="item.notificationState.id === 'UnRead'" style="cursor: pointer" (click)="tickReaded(item)"><i class="fa fa-check" aria-hidden="true"></i></span> 
                 </div>
-                <div style="padding: 0.25rem 1.5rem 0.25rem 0rem;color: #ff1717; font-weight: bold; cursor: pointer" (click)="deleteOneNotification(item)">Xóa</div>
+                <div class="mr-4" title="Xóa thông báo" (click)="deleteOneNotification(item)"><i class="fa fa-ban" aria-hidden="true"></i></div>
               </div>
             </div>
 
-            <div *ngIf="notificationList && notificationList.length === 0">
+            <div *ngIf="notificationList && notificationList.length === 0 && !loading">
               <div class="notification-item">
                   <a class="dropdown-item py-2 center-parent">
                       <div>
@@ -146,7 +134,16 @@
               </div>
           </div>
           </div>
+         
         </div>
+        <div class="position-relative">
+          <div class="infinite-scroll text-center mt-2 mb-4" *ngIf="showButton && !loading" (click)="onLoadMore()">
+              <span >Xem thêm</span>
+          </div>
+          <ngx-loading [show]="loading"></ngx-loading>
       </div>
+      </div>
+
+      
     </div>
   </div>

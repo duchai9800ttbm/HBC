@@ -2,7 +2,7 @@
     <div #DropTooldiv class="nav-item dropdown notification" dropdown [autoClose]="isShow" container="body">
         <a id="button-nested" dropdownToggle class="dropdown-no-icon nav-link text-white mr-3 drop-menu" aria-controls="dropdown-nested">
             <img class="class-image image-bell--width d-inline-block" src="assets\images\ic-bell.png" alt="">
-            <span class="badge badge-danger main-badge" *ngIf="amountNotificationNotRead && amountNotificationNotRead !== 0">{{amountNotificationNotRead}}</span>
+            <span class="badge badge-danger main-badge" *ngIf="amountNotificationNotRead && amountNotificationNotRead !== 0">{{amountNotificationNotRead > 99? '99+': amountNotificationNotRead }}</span>
             <b class="caret"></b>
             <span class="sr-only">(current)</span>
         </a>

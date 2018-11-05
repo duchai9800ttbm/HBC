@@ -15,7 +15,10 @@
 }
 .zui-table tbody td {
     color: #333;
+    // white-space: nowrap;
+    overflow: hidden;
     white-space: nowrap;
+    text-overflow: ellipsis;
 }
 .zui-wrapper {
     border: 1px solid #ededee;
