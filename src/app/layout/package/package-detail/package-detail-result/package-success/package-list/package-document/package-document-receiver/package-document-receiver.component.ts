@@ -108,6 +108,7 @@ export class PackageDocumentReceiverComponent implements OnInit {
       .subscribe(keySearch => {
         this.filterFuc(false);
       });
+      this.getListFilter();
   }
 
   // getListFilter() {
@@ -128,6 +129,7 @@ export class PackageDocumentReceiverComponent implements OnInit {
   // }
 
   getListFilter() {
+    this.documentTypeAllControl = [];
     this.detailResultPackageService.getDocumentChild().subscribe(response => {
       this.documentTypeAll = response;
       (this.documentTypeAll || []).forEach(item => {
@@ -175,6 +177,7 @@ export class PackageDocumentReceiverComponent implements OnInit {
   }
   refesh() {
     this.filterFuc(true);
+    this.getListFilter();
   }
 
   filterList() {
@@ -198,7 +201,7 @@ export class PackageDocumentReceiverComponent implements OnInit {
 
   filterFuc(alertShow: boolean) {
     console.log('this.filter', this.filter.documentType);
-    this.getListFilter();
+    
     this.detailResultPackageService.filterTransferDocDetailsList(
       this.currentPackageId,
       this.searchTerm$.value,

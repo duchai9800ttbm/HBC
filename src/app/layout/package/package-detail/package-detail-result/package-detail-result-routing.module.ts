@@ -9,7 +9,7 @@ const routes: Routes = [
         path: '',
         component: PackageDetailResultComponent,
         children: [
-            { path: '', redirectTo: 'wait-result' },
+            // { path: '', redirectTo: 'wait-result' },
             { path: 'wait-result', component: WaitResultComponent },
             { path: 'package-failed', component: PackageFailedComponent },
             { path: 'package-success', loadChildren: './package-success/package-success.module#PackageSuccessModule' },

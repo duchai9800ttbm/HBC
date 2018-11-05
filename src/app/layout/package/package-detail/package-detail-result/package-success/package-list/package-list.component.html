@@ -238,7 +238,7 @@
                             </div>
                         </td>
 
-                        <td class="docName" [title]="item.name">
+                        <td class="docName" [title]="item.name" (click)="viewDetail(item)">
                             <a href="javascript:;"> {{ item.name }}
                             </a>
                         </td>

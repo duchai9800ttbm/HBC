@@ -121,9 +121,9 @@ export class ContractSignedComponent implements OnInit, OnDestroy {
       this.isSignedContractAPI = response.isSignedContract;
       this.isShow = true;
     });
-    this.detailResultPackageService.watchListContractSigning().subscribe(value => {
-      this.isSignedContractAPI = true;
-    });
+    // this.detailResultPackageService.watchListContractSigning().subscribe(value => {
+    //   this.isSignedContractAPI = true;
+    // });
     this.filterModel.uploadedDate = null;
     this.filterModel.uploadedByEmployeeId = null;
     this.filterModel.contractDate = null;
@@ -150,7 +150,7 @@ export class ContractSignedComponent implements OnInit, OnDestroy {
     this.filterList();
     const detail$ = this.detailResultPackageService.watchListContractSigning().subscribe(value => {
       this.isShow = true;
-      this.isSignedContractAPI = value;
+      this.isSignedContractAPI = true;
       this.filter(false);
       this.filterList();
     });
@@ -178,7 +178,7 @@ export class ContractSignedComponent implements OnInit, OnDestroy {
   }
 
   refresh() {
-    this.filter(false);
+    this.filter(true);
     this.filterList();
   }
 
@@ -212,7 +212,8 @@ export class ContractSignedComponent implements OnInit, OnDestroy {
       )
       .subscribe(result => {
         this.render(result);
-        if (displayAlert && this.isNgOnInit) {
+        // && this.isNgOnInit
+        if (displayAlert) {
           this.alertService.success('Dữ liệu đã được cập nhật mới nhất!');
         }
         this.spinner.hide();
