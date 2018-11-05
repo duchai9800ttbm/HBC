@@ -56,6 +56,7 @@ export class PackageDetailComponent implements OnInit, OnDestroy {
   isEditBidOpportunity;
   isViewBidOpportunityDetail;
   isToggle = false;
+  isPermision = false;
   ngOnInit() {
     this.activetedRoute.params.subscribe(result => {
       this.packageId = +result.id;
@@ -75,8 +76,12 @@ export class PackageDetailComponent implements OnInit, OnDestroy {
 
     const that = this;
     this.subUser = this.permissionService.getUser().subscribe(data => {
+      if (data && (data.userGroup && data.userGroup.text === 'Admin') ||
+        (data.department && data.userGroup.text === 'Chủ trì') ||
+        ((data.department && data.department.text === 'PHÒNG DỰ THẦU') && (data.level && data.level.text === 'Trưởng phòng'))) {
+        this.isPermision = true;
+      }
       if (data && data.userGroup && data.userGroup.text === 'Admin') {
-        console.log('admin đang login');
         const arrayPermission = AdminPermissions;
         this.permissionService.set(arrayPermission);
         if (this.subInterval) {
@@ -110,7 +115,6 @@ export class PackageDetailComponent implements OnInit, OnDestroy {
                 }
               }
             }
-            console.log('ban tong giam doc');
             permissions = [...bgdPermission];
           }
 
@@ -138,12 +142,7 @@ export class PackageDetailComponent implements OnInit, OnDestroy {
                 }
               }
               permissions = [...bgdPermission];
-              console.log(permissions);
-              console.log(BGDPermissions);
-              console.log('ban tong giam doc');
-
             }
-
             this.permissionService.set(permissions);
             that.sub.unsubscribe();
           });

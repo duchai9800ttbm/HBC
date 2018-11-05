@@ -16,7 +16,9 @@
           </div>
           <div class="set-min-width-image">
             <span class="gr-icon">
-              <img class="mr-3 pointer" src="assets\images\ic_permission_set.png" [routerLink]="['/package/permission', packageId]">
+              <ng-container *ngIf="isPermision">
+                  <img class="mr-3 pointer" src="assets\images\ic_permission_set.png" [routerLink]="['/package/permission', packageId]">
+              </ng-container>
               <img class="pointer" src="assets\images\ic_email_manage.png" (click)="routerEmail()">
               <!-- [routerLink]="['/package/email', packageId]" -->
             </span>
