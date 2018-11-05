@@ -25,11 +25,12 @@ export class PackagePermissionComponent implements OnInit {
       this.packageId = result.id;
       PackagePermissionComponent.packageId = this.packageId;
       this.permissionService.getUser().subscribe(data => {
-        if (data && (data.userGroup && data.userGroup.text === 'Admin') ||
-          (data.department && data.userGroup.text === 'Chủ trì') ||
-          ((data.department && data.department.text === 'PHÒNG DỰ THẦU') && (data.level && data.level.text === 'Trưởng phòng'))) {
-          this.isPermision = true;
-        }
+        if ((data && data.userGroup && data.userGroup.text === 'Admin') ||
+        (data && data.department && data.userGroup.text === 'Chủ trì') ||
+        ((data && data.department && data.department.text === 'PHÒNG DỰ THẦU')
+          && (data && data.level && data.level.text === 'Trưởng phòng'))) {
+        this.isPermision = true;
+      }
         if (!this.isPermision) {
           setTimeout(() => {
             this.router.navigate(['not-found']);
