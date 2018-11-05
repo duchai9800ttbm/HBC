@@ -113,6 +113,7 @@ export class PackageDetailComponent implements OnInit, OnDestroy {
                       }
                     }
                   }
+                  
                 }
               }
             }
