@@ -116,7 +116,7 @@ export class NotificationService {
     NotificationService.notificationAmont.next();
   }
 
-  watchNotificationAmontSubject(): Observable<boolean> {
+  watchNotificationAmontSubject(): Observable<number> {
     return NotificationService.notificationAmont;
   }
 }
