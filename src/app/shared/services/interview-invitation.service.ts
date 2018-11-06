@@ -542,4 +542,14 @@ export class InterviewInvitationService {
     const url = `bidopportunity/hsdt/${bidOpportunityId}/dongphongvan`;
     return this.apiService.post(url);
   }
+
+
+  // Thay đổi điều hướng
+  changeNoDirection(keyup) {
+    InterviewInvitationService.keySearchInterviewInvitation.next(keyup);
+  }
+  // Xem điều hướng
+  watchNoDirection() {
+    return InterviewInvitationService.keySearchInterviewInvitation;
+  }
 }

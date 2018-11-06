@@ -760,12 +760,12 @@ export class PackageDocumentSenderComponent implements OnInit {
       if (this.docHSDTHadTransfer[indexPar].childDocuments && this.docHSDTHadTransfer[indexPar].childDocuments.length !== 0) {
         if (indexPar < i) {
           for (let indexChild = 0; indexChild < this.docHSDTHadTransfer[indexPar].childDocuments.length; indexChild++) {
-            dem = dem + this.docHSDTHadTransfer[indexPar].childDocuments[indexChild].items.length;
+            dem = dem + (this.docHSDTHadTransfer[indexPar].childDocuments[indexChild].items || []).length;
           }
         } else {
           for (let indexChild = 0; indexChild < j + 1; indexChild++) {
             if (indexChild < j) {
-              dem = dem + this.docHSDTHadTransfer[indexPar].childDocuments[indexChild].items.length;
+              dem = dem + (this.docHSDTHadTransfer[indexPar].childDocuments[indexChild].items || []).length;
             } else {
               for (let indexChildChild = 0; indexChildChild < k + 1; indexChildChild++) {
                 dem++;
@@ -775,7 +775,7 @@ export class PackageDocumentSenderComponent implements OnInit {
         }
       } else {
         if (indexPar < i) {
-          dem = dem + this.docHSDTHadTransfer[indexPar].documents.length;
+          dem = dem + (this.docHSDTHadTransfer[indexPar].documents || []).length;
         } else {
           dem = dem + j + 1;
         }
