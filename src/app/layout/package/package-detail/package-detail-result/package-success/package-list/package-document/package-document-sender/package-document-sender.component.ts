@@ -28,6 +28,8 @@ import { DocumentTypeAll } from '../../../../../../../../shared/models/package/d
 import { NeedTransferDocFilter } from '../../../../../../../../shared/models/result-attend/need-transfer-doc-filter.model';
 import { DocmentParent } from '../../../../../../../../shared/models/result-attend/docment-parent.model';
 import { InterviewInvitationService } from '../../../../../../../../shared/services/interview-invitation.service';
+import { DialogService } from '../../../../../../../../../../node_modules/@progress/kendo-angular-dialog';
+import { FormInComponent } from '../../../../../../../../shared/components/form-in/form-in.component';
 
 @Component({
   selector: 'app-package-document-sender',
@@ -99,6 +101,7 @@ export class PackageDocumentSenderComponent implements OnInit {
   useDaysList = [];
   interviewTimesList = [];
   searchTerm = '';
+  dialogPrintLiveForm;
   constructor(
     private packageSuccessService: PackageSuccessService,
     private modalService: BsModalService,
@@ -114,7 +117,8 @@ export class PackageDocumentSenderComponent implements OnInit {
     private documentService: DocumentService,
     private hoSoDuThauService: HoSoDuThauService,
     private packageService: PackageService,
-    private interviewInvitationService: InterviewInvitationService
+    private interviewInvitationService: InterviewInvitationService,
+    private dialogService: DialogService
   ) { }
 
   ngOnInit() {
@@ -909,5 +913,51 @@ export class PackageDocumentSenderComponent implements OnInit {
     const index = (dem + this.renderIndexHSDTHadTransfer(i, j, k)) * 2;
     const item = table.getElementsByTagName('input');
     item[index].focus();
+  }
+
+  // In liveform
+  inLiveForm(typeLiveForm) {
+    switch (typeLiveForm) {
+      case 'TenderPriceApproval': {
+        this.dialogPrintLiveForm = this.dialogService.open({
+          title: 'FORM IN',
+          content: FormInComponent,
+          width: window.screen.availWidth * 0.8,
+          minWidth: 250,
+          height: window.screen.availHeight * 0.7
+        });
+        const instance = this.dialogPrintLiveForm.content.instance;
+        instance.type = 'LiveFormTrinhDuyetGia';
+        instance.packageId = this.currentPackageId;
+        break;
+      }
+      case 'SiteSurveyingReport': {
+        this.dialogPrintLiveForm = this.dialogService.open({
+          title: 'FORM IN',
+          content: FormInComponent,
+          width: window.screen.availWidth * 0.8,
+          minWidth: 250,
+          height: window.screen.availHeight * 0.7
+        });
+        const instance = this.dialogPrintLiveForm.content.instance;
+        instance.type = 'LiveFormThamQuanBaoCaoCongTruong';
+        instance.packageId = this.currentPackageId;
+        break;
+      }
+      case 'TenderConditionalSummary': {
+        this.dialogPrintLiveForm = this.dialogService.open({
+          title: 'FORM IN',
+          content: FormInComponent,
+          width: window.screen.availWidth * 0.8,
+          minWidth: 250,
+          height: window.screen.availHeight * 0.7
+        });
+        const instance = this.dialogPrintLiveForm.content.instance;
+        instance.type = 'LiveFormTomTatDieuKienDuThau';
+        instance.packageId = this.currentPackageId;
+        break;
+      }
+      default: break;
+    }
   }
 }

@@ -268,15 +268,15 @@
                                                     </ng-container>
                                                     <ng-container *ngIf="documents.document && documents.document.isLiveForm">
                                                         <div id="mr">
-                                                            <a title="Xem chi tiết" (click)="viewDetailLiveForm(documents.document.type)">
+                                                            <a title="Xem chi tiết" (click)="viewDetailLiveForm(documents?.document?.type)">
                                                                 <i class="fa fa-eye text-warning" aria-hidden="true"></i>
                                                             </a>
                                                         </div>
-                                                        <!-- <div>
-                                                            <a title="In">
+                                                        <div>
+                                                            <a title="In" (click)="inLiveForm(documents?.document?.type)">
                                                                 <i class="fa fa-print color-item-print" aria-hidden="true"></i>
                                                             </a>
-                                                        </div> -->
+                                                        </div>
                                                     </ng-container>
                                                 </ng-container>
                                                 <ng-container *ngIf="documents.status && documents.status.key === 'QuaHanSuDung'">

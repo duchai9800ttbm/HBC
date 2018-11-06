@@ -24,6 +24,8 @@ import { Router } from '../../../../../../../../../../node_modules/@angular/rout
 import { DocumentTypeAll } from '../../../../../../../../shared/models/package/document-type-all';
 import { StatusDocTranfered } from '../../../../../../../../shared/models/result-attend/status-doc-tranfered.model';
 import { DocmentParent } from '../../../../../../../../shared/models/result-attend/docment-parent.model';
+import { DialogService } from '../../../../../../../../../../node_modules/@progress/kendo-angular-dialog';
+import { FormInComponent } from '../../../../../../../../shared/components/form-in/form-in.component';
 
 @Component({
   selector: 'app-package-document-receiver',
@@ -71,6 +73,7 @@ export class PackageDocumentReceiverComponent implements OnInit {
   documentTypeAllControl = [];
   statusDocList: StatusDocTranfered[];
   sendEmployee;
+  dialogPrintLiveForm;
   constructor(
     private packageSuccessService: PackageSuccessService,
     private modalService: BsModalService,
@@ -82,7 +85,8 @@ export class PackageDocumentReceiverComponent implements OnInit {
     private dataService: DataService,
     private documentService: DocumentService,
     private hoSoDuThauService: HoSoDuThauService,
-    private router: Router
+    private router: Router,
+    private dialogService: DialogService
   ) { }
 
   ngOnInit() {
@@ -378,5 +382,51 @@ export class PackageDocumentReceiverComponent implements OnInit {
       err => {
         this.alertService.error('Xác nhận nhận tài liệu không thành công!');
       });
+  }
+
+  // In liveform
+  inLiveForm(typeLiveForm) {
+    switch (typeLiveForm) {
+      case 'TenderPriceApproval': {
+        this.dialogPrintLiveForm = this.dialogService.open({
+          title: 'FORM IN',
+          content: FormInComponent,
+          width: window.screen.availWidth * 0.8,
+          minWidth: 250,
+          height: window.screen.availHeight * 0.7
+        });
+        const instance = this.dialogPrintLiveForm.content.instance;
+        instance.type = 'LiveFormTrinhDuyetGia';
+        instance.packageId = this.currentPackageId;
+        break;
+      }
+      case 'SiteSurveyingReport': {
+        this.dialogPrintLiveForm = this.dialogService.open({
+          title: 'FORM IN',
+          content: FormInComponent,
+          width: window.screen.availWidth * 0.8,
+          minWidth: 250,
+          height: window.screen.availHeight * 0.7
+        });
+        const instance = this.dialogPrintLiveForm.content.instance;
+        instance.type = 'LiveFormThamQuanBaoCaoCongTruong';
+        instance.packageId = this.currentPackageId;
+        break;
+      }
+      case 'TenderConditionalSummary': {
+        this.dialogPrintLiveForm = this.dialogService.open({
+          title: 'FORM IN',
+          content: FormInComponent,
+          width: window.screen.availWidth * 0.8,
+          minWidth: 250,
+          height: window.screen.availHeight * 0.7
+        });
+        const instance = this.dialogPrintLiveForm.content.instance;
+        instance.type = 'LiveFormTomTatDieuKienDuThau';
+        instance.packageId = this.currentPackageId;
+        break;
+      }
+      default: break;
+    }
   }
 }

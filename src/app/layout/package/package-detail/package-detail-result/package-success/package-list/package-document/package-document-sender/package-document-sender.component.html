@@ -398,15 +398,15 @@
                                                     </ng-container>
                                                     <ng-container *ngIf="items.documents[0].isLiveForm">
                                                         <div id="mr" title="Xem chi tiết">
-                                                            <a title="Xem chi tiết" (click)="viewDetailLiveForm(items.documents[0].type)">
+                                                            <a title="Xem chi tiết" (click)="viewDetailLiveForm(items.documents[0]?.type)">
                                                                 <i class="fa fa-eye text-warning" aria-hidden="true"></i>
                                                             </a>
                                                         </div>
-                                                        <!-- <div>
-                                                            <a title="In">
+                                                        <div>
+                                                            <a title="In" (click)="inLiveForm(items.documents[0]?.type)">
                                                                 <i class="fa fa-print color-item-print" aria-hidden="true"></i>
                                                             </a>
-                                                        </div> -->
+                                                        </div>
                                                     </ng-container>
                                                 </div>
                                             </td>
@@ -468,15 +468,15 @@
                                                 </ng-container>
                                                 <ng-container *ngIf="documents.isLiveForm">
                                                     <div id="mr">
-                                                        <a title="Xem chi tiết" (click)="viewDetailLiveForm(documents.type)">
+                                                        <a title="Xem chi tiết" (click)="viewDetailLiveForm(documents?.type)">
                                                             <i class="fa fa-eye text-warning" aria-hidden="true"></i>
                                                         </a>
                                                     </div>
-                                                    <!-- <div>
-                                                        <a title="In" >
+                                                    <div>
+                                                        <a title="In" (click)="inLiveForm(documents?.type)">
                                                             <i class="fa fa-print color-item-print" aria-hidden="true"></i>
                                                         </a>
-                                                    </div> -->
+                                                    </div>
                                                 </ng-container>
                                             </div>
                                         </td>
@@ -791,15 +791,15 @@
                                                         </ng-container>
                                                         <ng-container *ngIf="items.documents[0].isLiveForm">
                                                             <div id="mr">
-                                                                <a title="Xem chi tiết" (click)="viewDetailLiveForm(items.documents[0].type)">
+                                                                <a title="Xem chi tiết" (click)="viewDetailLiveForm(items.documents[0]?.type)">
                                                                     <i class="fa fa-eye text-warning" aria-hidden="true"></i>
                                                                 </a>
                                                             </div>
-                                                            <!-- <div>
-                                                                <a title="In">
+                                                            <div>
+                                                                <a title="In" (click)="inLiveForm(items.documents[0]?.type)">
                                                                     <i class="fa fa-print color-item-print" aria-hidden="true"></i>
                                                                 </a>
-                                                            </div> -->
+                                                            </div>
                                                         </ng-container>
                                                     </div>
                                                 </td>
@@ -869,15 +869,15 @@
                                                     </ng-container>
                                                     <ng-container *ngIf="documents.isLiveForm">
                                                         <div id="mr">
-                                                            <a title="Xem chi tiết" (click)="viewDetailLiveForm(documents.type)">
+                                                            <a title="Xem chi tiết" (click)="viewDetailLiveForm(documents?.type)">
                                                                 <i class="fa fa-eye text-warning" aria-hidden="true"></i>
                                                             </a>
                                                         </div>
-                                                        <!-- <div>
-                                                            <a title="In">
+                                                        <div>
+                                                            <a title="In" (click)="inLiveForm(documents?.type)">
                                                                 <i class="fa fa-print color-item-print" aria-hidden="true"></i>
                                                             </a>
-                                                        </div> -->
+                                                        </div>
                                                     </ng-container>
                                                 </div>
                                             </td>
