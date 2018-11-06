@@ -326,15 +326,15 @@ export class PackageDocumentReceiverComponent implements OnInit {
   viewDetailLiveForm(typeLiveForm) {
     switch (typeLiveForm) {
       case 'TenderConditionalSummary': {
-        this.router.navigate([`/package/detail/${this.currentPackageId}/attend/build/summary`]);
+        this.router.navigate([`/package/detail/${this.currentPackageId}/attend/build/summary`], { queryParams: { direction: false } });
         break;
       }
       case 'SiteSurveyingReport': {
-        this.router.navigate([`/package/detail/${this.currentPackageId}/attend/build/liveformsite`]);
+        this.router.navigate([`/package/detail/${this.currentPackageId}/attend/build/liveformsite`], { queryParams: { direction: false } });
         break;
       }
       case 'TenderPriceApproval': {
-        this.router.navigate([`/package/detail/${this.currentPackageId}/attend/price-review/detail`]);
+        this.router.navigate([`/package/detail/${this.currentPackageId}/attend/price-review/detail`], { queryParams: { direction: false } });
         break;
       }
     }
