@@ -253,6 +253,22 @@ export class PackageDocumentSenderComponent implements OnInit {
           });
         }
       });
+      if (this.docHSMTList) {
+        (this.docHSMTList || []).forEach(itemchildDocuments => {
+          if (itemchildDocuments.childDocuments && itemchildDocuments.childDocuments.length !== 0) {
+            (itemchildDocuments.childDocuments || []).forEach(itemChild => {
+              (itemChild.items || []).forEach(items => {
+                items.documents[0].dateUse = items.documents[0].dateUse.toString() + ' ngày';
+              });
+            });
+          } else if (!itemchildDocuments.childDocuments || (itemchildDocuments.childDocuments.length === 0)) {
+            (itemchildDocuments.documents || []).forEach(documents => {
+              documents.dateUse = documents.dateUse.toString() + ' ngày';
+            });
+          }
+        });
+      }
+
       this.docHSDTList.forEach((itemPra, indexPra) => {
         if (itemPra.childDocuments && itemPra.childDocuments.length !== 0) {
           itemPra.childDocuments.forEach((item, index) => itemPra.childDocuments[index].documentType = JSON.stringify(item.documentType));
@@ -263,6 +279,21 @@ export class PackageDocumentSenderComponent implements OnInit {
           });
         }
       });
+      if (this.docHSDTList) {
+        (this.docHSDTList || []).forEach(itemchildDocuments => {
+          if (itemchildDocuments.childDocuments && itemchildDocuments.childDocuments.length !== 0) {
+            (itemchildDocuments.childDocuments || []).forEach(itemChild => {
+              (itemChild.items || []).forEach(items => {
+                items.documents[0].dateUse = items.documents[0].dateUse.toString() + ' ngày';
+              });
+            });
+          } else if (!itemchildDocuments.childDocuments || (itemchildDocuments.childDocuments.length === 0)) {
+            (itemchildDocuments.documents || []).forEach(documents => {
+              documents.dateUse = documents.dateUse.toString() + ' ngày';
+            });
+          }
+        });
+      }
       if (alert) {
         this.alertService.success('Dữ liệu được cập nhật mới nhât!');
       }
@@ -271,7 +302,6 @@ export class PackageDocumentSenderComponent implements OnInit {
     });
   }
   getHadTransferredList(alert: boolean) {
-    console.log('this.this.LISTFILTER-222', )
     this.getListFilter();
     // tslint:disable-next-line:max-line-length
     this.detailResultPackageService.getHadTransferredList(this.currentPackageId, this.searchTerm, this.filterModelHad).subscribe(response => {
@@ -299,6 +329,21 @@ export class PackageDocumentSenderComponent implements OnInit {
           });
         }
       });
+      if (this.docHSMTHadTransfer) {
+        (this.docHSMTHadTransfer || []).forEach(itemchildDocuments => {
+          if (itemchildDocuments.childDocuments && itemchildDocuments.childDocuments.length !== 0) {
+            (itemchildDocuments.childDocuments || []).forEach(itemChild => {
+              (itemChild.items || []).forEach(items => {
+                items.documents[0].useDays = items.documents[0].useDays.toString() + ' ngày';
+              });
+            });
+          } else if (!itemchildDocuments.childDocuments || (itemchildDocuments.childDocuments.length === 0)) {
+            (itemchildDocuments.documents || []).forEach(documents => {
+              documents.useDays = documents.useDays.toString() + ' ngày';
+            });
+          }
+        });
+      }
       (this.docHSDTHadTransfer || []).forEach((itemPra, indexPra) => {
         if (itemPra.childDocuments && itemPra.childDocuments.length !== 0) {
           (itemPra.childDocuments || []).forEach((item, index) =>
@@ -310,6 +355,21 @@ export class PackageDocumentSenderComponent implements OnInit {
           });
         }
       });
+      if (this.docHSDTHadTransfer) {
+        (this.docHSDTHadTransfer || []).forEach(itemchildDocuments => {
+          if (itemchildDocuments.childDocuments && itemchildDocuments.childDocuments.length !== 0) {
+            (itemchildDocuments.childDocuments || []).forEach(itemChild => {
+              (itemChild.items || []).forEach(items => {
+                items.documents[0].useDays = items.documents[0].useDays.toString() + ' ngày';
+              });
+            });
+          } else if (!itemchildDocuments.childDocuments || itemchildDocuments.childDocuments.length === 0) {
+            (itemchildDocuments.documents || []).forEach(documents => {
+              documents.useDays = documents.useDays.toString() + ' ngày';
+            });
+          }
+        });
+      }
       if (alert) {
         this.alertService.success('Dữ liệu được cập nhật mới nhât!');
       }
@@ -431,7 +491,7 @@ export class PackageDocumentSenderComponent implements OnInit {
         }
         if (!itemchildDocuments.childDocuments || itemchildDocuments.childDocuments.length === 0) {
           itemchildDocuments.documents.forEach(documents => {
-            documents.dateUse = (+this.defaultdateUseHSMT).toString()  + ' ngày';
+            documents.dateUse = (+this.defaultdateUseHSMT).toString() + ' ngày';
           });
         }
       });
