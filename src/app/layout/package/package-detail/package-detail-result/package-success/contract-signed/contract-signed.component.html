@@ -273,26 +273,26 @@
                         <td class="text-center" [title]="item.interviewTime">{{item.interviewTime}}</td>
                         <td class="text-center">
                             <div class="d-flex justify-content-around">
-                                <div id="mr">
+                                <div id="mr" *ngIf="!item.fileUrl">
                                     <a title="Tải file" (click)="downloadFileItem(item.id)">
                                         <i class="fa fa-download color-item-down" aria-hidden="true"></i>
                                     </a>
                                 </div>
-                                <!-- <div *ngIf="items.documents[0].fileUrl">
-                                    <a title="Mở link" [href]="items.documents[0].fileUrl" target="_blank">
+                                <div *ngIf="item.fileUrl">
+                                    <a title="Mở link" [href]="item.fileUrl" target="_blank">
                                         <i class="fa fa-external-link color-item-down" aria-hidden="true"></i>
                                     </a>
-                                </div> -->
+                                </div>
                                 <div id="mr">
                                     <a title="Xóa file" (click)="deleteFileItem(item.id)">
                                         <i class="fa fa-trash-o" aria-hidden="true"></i>
                                     </a>
                                 </div>
-                                <div id="mr">
+                                <!-- <div id="mr">
                                     <a title="In">
                                         <i class="fa fa-print color-item-print" aria-hidden="true"></i>
                                     </a>
-                                </div>
+                                </div> -->
                             </div>
                         </td>
                     </tr>

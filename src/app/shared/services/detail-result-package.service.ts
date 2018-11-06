@@ -755,6 +755,7 @@ export class DetailResultPackageService {
       uploadDate: resutl.uploadDate,
       contractDate: resutl.contractDate,
       interviewTime: resutl.interviewTime,
+      fileUrl: resutl.fileUrl,
     };
   }
   // Filter danh sách hợp đồng ký kết

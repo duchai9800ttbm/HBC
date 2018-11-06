@@ -24,12 +24,11 @@ export class InterviewInvitationService {
   // End
   static refeshEndInterviewInvitation = new BehaviorSubject<boolean>(false);
   static endInterviewList = new Subject<any>();
-  //
+  // No điều hướng
+  static nodirection = new BehaviorSubject<boolean>(false);
   currentStatusInterview: Subject<number> = new Subject<number>();
   interviewNotification;
   maxInterViewTimes;
-  // No điều hướng
-  nodirection;
   // map theo model danh sách biên bản phỏng vấn
   private static toInterviewInvitationReportList(result: any): InterviewInvitationReportList {
     return {
@@ -545,11 +544,13 @@ export class InterviewInvitationService {
 
 
   // Thay đổi điều hướng
-  changeNoDirection(keyup) {
-    InterviewInvitationService.keySearchInterviewInvitation.next(keyup);
+  changeNoDirection(value) {
+    console.log('changeNoDirection', value);
+    InterviewInvitationService.nodirection.next(value);
   }
   // Xem điều hướng
   watchNoDirection() {
-    return InterviewInvitationService.keySearchInterviewInvitation;
+    console.log('InterviewInvitationService.nodirection', InterviewInvitationService.nodirection);
+    return InterviewInvitationService.nodirection;
   }
 }

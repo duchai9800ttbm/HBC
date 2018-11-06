@@ -27,12 +27,13 @@ import { CheckStatusPackage } from '../../../../../../../../shared/constants/che
 import { DocumentTypeAll } from '../../../../../../../../shared/models/package/document-type-all';
 import { NeedTransferDocFilter } from '../../../../../../../../shared/models/result-attend/need-transfer-doc-filter.model';
 import { DocmentParent } from '../../../../../../../../shared/models/result-attend/docment-parent.model';
+import { InterviewInvitationService } from '../../../../../../../../shared/services/interview-invitation.service';
 
 @Component({
   selector: 'app-package-document-sender',
   templateUrl: './package-document-sender.component.html',
   styleUrls: ['./package-document-sender.component.scss'],
-  providers: [HoSoDuThauService]
+  providers: [HoSoDuThauService, InterviewInvitationService]
 })
 export class PackageDocumentSenderComponent implements OnInit {
   @Input() statusPackage;
@@ -112,7 +113,8 @@ export class PackageDocumentSenderComponent implements OnInit {
     private emailService: EmailService,
     private documentService: DocumentService,
     private hoSoDuThauService: HoSoDuThauService,
-    private packageService: PackageService
+    private packageService: PackageService,
+    private interviewInvitationService: InterviewInvitationService
   ) { }
 
   ngOnInit() {
@@ -854,6 +856,8 @@ export class PackageDocumentSenderComponent implements OnInit {
   }
   // Router live form
   viewDetailLiveForm(typeLiveForm) {
+    console.log('CHange');
+    this.interviewInvitationService.changeNoDirection(true);
     switch (typeLiveForm) {
       case 'TenderConditionalSummary': {
         this.router.navigate([`/package/detail/${this.currentPackageId}/attend/build/summary`]);
