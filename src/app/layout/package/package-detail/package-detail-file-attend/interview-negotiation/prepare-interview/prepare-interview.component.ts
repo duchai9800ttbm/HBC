@@ -8,6 +8,8 @@ import { ApprovedDossiersList } from '../../../../../../shared/models/interview-
 import { NgxSpinnerService } from '../../../../../../../../node_modules/ngx-spinner';
 import { AlertService } from '../../../../../../shared/services';
 import { NgbDropdownConfig } from '../../../../../../../../node_modules/@ng-bootstrap/ng-bootstrap';
+import { DialogService } from '@progress/kendo-angular-dialog';
+import { FormInComponent } from '../../../../../../shared/components/form-in/form-in.component';
 
 @Component({
   selector: 'app-prepare-interview',
@@ -22,6 +24,7 @@ export class PrepareInterviewComponent implements OnInit {
     private interviewInvitationService: InterviewInvitationService,
     private spinner: NgxSpinnerService,
     private alertService: AlertService,
+    private dialogService: DialogService
   ) { }
   packageId: number;
   dtOptions: any = DATATABLE_CONFIG;
@@ -31,6 +34,7 @@ export class PrepareInterviewComponent implements OnInit {
   indexTable = 0;
   isNgOnInit = false;
   loading = false;
+  dialog;
   ngOnInit() {
     this.packageId = +PackageDetailComponent.packageId;
     this.interviewInvitationService.watchRefeshPrepareInterview().subscribe(value => {
@@ -119,6 +123,7 @@ export class PrepareInterviewComponent implements OnInit {
 
 
   viewDetailLiveForm(type: string) {
+    console.log(type);
     switch (type) {
       // Bản tóm tắt điều kiện dự thầu
       case 'TenderConditionalSummary': {
@@ -147,4 +152,49 @@ export class PrepareInterviewComponent implements OnInit {
       });
   }
 
+  inLiveForm(typeLiveForm) {
+    console.log(typeLiveForm);
+    switch (typeLiveForm) {
+      case 'Trình Duyệt Giá': {
+        this.dialog = this.dialogService.open({
+          title: 'FORM IN',
+          content: FormInComponent,
+          width: window.screen.availWidth * 0.8,
+          minWidth: 250,
+          height: window.screen.availHeight * 0.7
+        });
+        const instance = this.dialog.content.instance;
+        instance.type = 'LiveFormTrinhDuyetGia';
+        instance.packageId = this.packageId;
+        break;
+      }
+      case 'Báo cáo tham quan công trình': {
+        this.dialog = this.dialogService.open({
+          title: 'FORM IN',
+          content: FormInComponent,
+          width: window.screen.availWidth * 0.8,
+          minWidth: 250,
+          height: window.screen.availHeight * 0.7
+        });
+        const instance = this.dialog.content.instance;
+        instance.type = 'LiveFormThamQuanBaoCaoCongTruong';
+        instance.packageId = this.packageId;
+        break;
+      }
+      case 'Bảng tóm tắt ĐKDT': {
+        this.dialog = this.dialogService.open({
+          title: 'FORM IN',
+          content: FormInComponent,
+          width: window.screen.availWidth * 0.8,
+          minWidth: 250,
+          height: window.screen.availHeight * 0.7
+        });
+        const instance = this.dialog.content.instance;
+        instance.type = 'LiveFormTomTatDieuKienDuThau';
+        instance.packageId = this.packageId;
+        break;
+      }
+      default: break;
+    }
+  }
 }
