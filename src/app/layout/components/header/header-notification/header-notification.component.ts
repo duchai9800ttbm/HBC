@@ -51,6 +51,8 @@ export class HeaderNotificationComponent implements OnInit {
     this.getListNotification();
 
     this.notificationService.count().subscribe(x => this.amountNotificationNotRead = x);
+
+    getInterval();
   }
 
   getInterval() {
