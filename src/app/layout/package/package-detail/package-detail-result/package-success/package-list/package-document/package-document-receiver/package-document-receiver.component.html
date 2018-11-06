@@ -41,7 +41,7 @@
                     <span class="custom-dropdown mx-sm-2">
                         <select class="form-control" [(ngModel)]="filter.documentType">
                             <option [ngValue]="null">Tất cả</option>
-                            <option *ngFor="let item of documentTypeAllControl" [ngValue]="item">{{item.name }}</option>
+                            <option *ngFor="let item of documentTypeAllControl" [ngValue]="item">{{item.name | translate}}</option>
                         </select>
                     </span>
                 </div>
