@@ -14,7 +14,7 @@ import * as FileSaver from 'file-saver';
 import { ApprovedDossiersList } from '../models/interview-invitation/approved-dossiers-list.model';
 @Injectable()
 export class InterviewInvitationService {
-  // Create
+    // Create
   static interviewInvitationList = new Subject<any>();
   static keySearchInterviewInvitation = new BehaviorSubject<string>('');
   static keySearchNew = new Subject<string>();
@@ -28,6 +28,8 @@ export class InterviewInvitationService {
   currentStatusInterview: Subject<number> = new Subject<number>();
   interviewNotification;
   maxInterViewTimes;
+  // No điều hướng
+  nodirection;
   // map theo model danh sách biên bản phỏng vấn
   private static toInterviewInvitationReportList(result: any): InterviewInvitationReportList {
     return {

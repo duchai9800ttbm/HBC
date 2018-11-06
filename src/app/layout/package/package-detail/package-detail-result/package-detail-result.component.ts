@@ -35,6 +35,7 @@ export class PackageDetailResultComponent implements OnInit {
                 //     //
                 //     break;
                 // }
+                case (this.checkStatusPackage.ChoKetQuaDuThau.id):
                 case (this.checkStatusPackage.TrungThau.id):
                 case (this.checkStatusPackage.DaPhanHoiDenPhongHopDong.id):
                 case (this.checkStatusPackage.DaThongBaoCacBenLienQuan.id):
