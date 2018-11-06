@@ -469,5 +469,16 @@
     "TaxTypes": "Các loại thuế",
     "Level": "Vị trí, chức vụ",
     "NewCustomers": "Khách hàng mới",
-    "DecisionOfBoardOfGeneralDirector": "Quyết định của ban giám đốc"
+    "DecisionOfBoardOfGeneralDirector": "Quyết định của ban giám đốc",
+    "CacLoaiHoSoMoiThau": "DOC - Các loại hồ sơ mời thầu",
+    "TenderQueryReply": "TQR - Bản trả lời câu hỏi từ Consultant/Client",
+    "TenderClarification": "TCQ - Bản câu hỏi làm rõ từ Consultant/Client",
+    "TenderAddendum": "TA - Phụ lục bổ sung Hồ sơ mời thầu",
+    "SiteSurveyInvitation": "SSI - Thư mời khảo sát thực tế công trường / nhà mẫu",
+    "InterviewInvitation": "II - Thư mời phỏng vấn thầu",
+    "PostTenderAddendum": "PTA - Hồ sơ bổ sung sau khi nộp thầu",
+    "ReplyForSubmissionExtention": "EOT - Thư trả lời xin gia hạn nộp thầu",
+    "MinutesOfMeeting": "MOM - Biên bản họp",
+    "RequestForInformation": "RFI - Consultant/Client yêu cầu cung cấp thông tin",
+    "Others": "OTHERS - Khác"
 }
