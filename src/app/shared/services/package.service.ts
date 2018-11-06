@@ -436,6 +436,7 @@ export class PackageService {
                 projectName: result.projectName,
                 isSubmittedHSDT: result.isSubmittedHSDT,
                 isClosedHSDT: result.isClosedHSDT,
+                isChotHoSo: result.isChotHoSo,
                 interviewInvitation: result.interviewInvitation ? {
                     interviewTimes: result.interviewInvitation.interviewTimes.toString(),
                 } : null,

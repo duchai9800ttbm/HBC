@@ -205,7 +205,7 @@
                                         </div>
                                     </ng-container>
                                     <ng-container *ngIf="SuaTDG">
-                                        <div style="cursor: pointer;" title="Sửa" routerLink="../edit">
+                                        <div *ngIf="!package?.isChotHoSo" style="cursor: pointer;" title="Sửa" routerLink="../edit">
                                             <a>
                                                 <i class="fa fa-pencil cursor-pointer icon-edit" aria-hidden="true">
                                                 </i>
@@ -213,7 +213,7 @@
                                         </div>
                                     </ng-container>
                                     <ng-container *ngIf="XoaTDG">
-                                        <div style="cursor: pointer;" title="Xóa" (click)="delete()">
+                                        <div *ngIf="!package?.isChotHoSo" style="cursor: pointer;" title="Xóa" (click)="delete()">
                                             <a class="text-success">
                                                 <i class="fa fa-trash-o cursor-pointer icon-delete" aria-hidden="true"></i>
                                             </a>
