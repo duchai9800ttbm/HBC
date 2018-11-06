@@ -21,7 +21,14 @@ export class EmailItemModel {
         employeeBankAccount: string
     };
     from: string;
-    to: string;
+    to: {
+        email: string;
+        receiveEmployee: {
+            employeeName: string;
+        }
+        isSuccess: boolean;
+
+    } [];
     subject: string;
     sentDate: number;
     content: string;

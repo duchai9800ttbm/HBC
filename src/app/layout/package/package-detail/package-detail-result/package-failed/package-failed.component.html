@@ -169,7 +169,10 @@
               </div>
             </td>
 
-            <td class="docName" [title]="item.name">{{ item.name }}</td>
+            <td class="docName" [title]="item.name" (click)="viewDetail(item)">
+              <a href="javascript:;"> {{ item.name }}
+              </a>
+            </td>
             <td class="text-center" [title]="item.version">{{ item.version }}</td>
             <td class="doc" [title]="item.desc">{{ item.desc }}</td>
             <td class="select-filter text-center" [title]="item.uploadBy?.employeeName">{{ item.uploadBy?.employeeName }}</td>
@@ -177,22 +180,26 @@
             <td class="select-filter text-center">{{ item.interviewTimes }}</td>
             <td class="text-center">
               <div class="d-flex justify-content-around">
-                <div id="mr">
+                <div id="mr" *ngIf="!item.linkUrl">
                   <a title="Tải file" (click)="downloadFileItem(item.id)">
                     <i class="fa fa-download color-item-down" aria-hidden="true"></i>
                   </a>
                 </div>
-                <!-- *ngIf="!showBtnNotification" -->
+                <div id="mr" *ngIf="item.linkUrl">
+                    <a title="Mở link" [href]="item.linkUrl" target="_blank">
+                        <i class="fa fa-external-link color-item-down" aria-hidden="true"></i>
+                    </a>
+                </div>
                 <div id="mr">
                   <a title="Xóa file" (click)="deleteFileItem(item.id)">
                     <i class="fa fa-trash-o" aria-hidden="true"></i>
                   </a>
                 </div>
-                <div>
+                <!-- <div>
                   <a title="In">
                     <i class="fa fa-print color-item-print" aria-hidden="true"></i>
                   </a>
-                </div>
+                </div> -->
               </div>
             </td>
           </tr>

@@ -183,10 +183,10 @@ export class PackageEmailComponent implements OnInit, OnDestroy {
           if (e.category && e.category.key === 'AnnounceInterview') {
             this.interview = e;
           }
-          if (e.category && e.category.key === 'AnnouncePassBidOpportunity') {
+          if (e.category && e.category.key === 'AnnounceStakeholders') {
             this.win = e;
           }
-          if (e.category && e.category.key === 'AnnounceFailBidOpportunity') {
+          if (e.category && e.category.key === 'FeedbackToContractRoom') {
             this.miss = e;
           }
           if (e.category && e.category.key === 'Kick-off') {
@@ -219,10 +219,10 @@ export class PackageEmailComponent implements OnInit, OnDestroy {
         if (e.category && e.category.key === 'AnnounceInterview') {
           this.interview = e;
         }
-        if (e.category && e.category.key === 'AnnouncePassBidOpportunity') {
+        if (e.category && e.category.key === 'AnnounceStakeholders') {
           this.win = e;
         }
-        if (e.category && e.category.key === 'AnnounceFailBidOpportunity') {
+        if (e.category && e.category.key === 'FeedbackToContractRoom') {
           this.miss = e;
         }
         if (e.category && e.category.key === 'Kick-off') {

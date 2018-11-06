@@ -29,6 +29,7 @@ declare let kendo: any;
 export class InformationDeploymentFormComponent implements OnInit, OnDestroy {
     @ViewChild('ganttChart')
     ganttChart: ElementRef;
+    gantt;
     bidOpportunityId;
     packageInfo: PackageInfoModel;
     dtOptions: any = DATATABLE_CONFIG;
@@ -221,6 +222,9 @@ export class InformationDeploymentFormComponent implements OnInit, OnDestroy {
                         { type: 'week' },
                         'month'
                     ],
+                    columns: [
+                        { field: 'title', title: 'Công việc', width: 60 },
+                    ],
                     tooltip: {
                         visible: true,
                         template: `<div style="display: flex; flex-direction: column;"><div>#= task.title # </div>
@@ -284,8 +288,8 @@ export class InformationDeploymentFormComponent implements OnInit, OnDestroy {
                 };
             })
         });
-        const gantt = kendo.jQuery(this.ganttChart.nativeElement).data('kendoGantt');
-        gantt.setDataSource(dataSource);
+        this.gantt = kendo.jQuery(this.ganttChart.nativeElement).data('kendoGantt');
+        this.gantt.setDataSource(dataSource);
     }
 
     createTaskItemFG(data: TenderPreparationPlanItem): FormGroup {
@@ -582,6 +586,7 @@ export class InformationDeploymentFormComponent implements OnInit, OnDestroy {
         this.isShowGantt = true;
         setTimeout(() => {
             this.updateGantt();
+            window.dispatchEvent(new Event('resize'));
         }, 500);
     }
 

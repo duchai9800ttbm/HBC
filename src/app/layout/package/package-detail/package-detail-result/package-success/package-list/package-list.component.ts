@@ -539,7 +539,11 @@ export class PackageListComponent implements OnInit, OnDestroy {
       minWidth: 250
     });
     const instance = this.dialogViewDetail.content.instance;
-    instance.callBack = () => this.closePopuup();
+    instance.callBack = () => this.closePopuupDialogViewDetail();
     instance.content = item;
+  }
+
+  closePopuupDialogViewDetail() {
+    this.dialogViewDetail.close();
   }
 }
