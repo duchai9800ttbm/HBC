@@ -23,13 +23,17 @@ export class NeedCreateTenderFormAnalysisComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.routerAction = this.packageService.routerAction;
+    // this.routerAction = this.packageService.routerAction;
+    const that = this;
     this.packageService.routerAction$.subscribe(router => {
       this.routerAction = router;
-      this.createForm();
-      if (this.routerAction === 'view') {
+      if (this.analysisForm && this.routerAction === 'view') {
         this.analysisForm.disable();
       }
+      if (this.analysisForm && (this.routerAction === 'edit' || this.routerAction === 'create')) {
+        this.analysisForm.enable();
+      }
+      this.createForm();
       this.analysisForm.valueChanges.subscribe(data => this.mappingToLiveFormData(data));
     });
   }
@@ -44,6 +48,12 @@ export class NeedCreateTenderFormAnalysisComponent implements OnInit {
         projectRealizable: value && value.employerAnalysis ? value && value.employerAnalysis.projectRealizable : ''
       })
     });
+    if (this.analysisForm && this.routerAction === 'view') {
+      this.analysisForm.disable();
+    }
+    if (this.analysisForm && (this.routerAction === 'edit' || this.routerAction === 'create')) {
+      this.analysisForm.enable();
+    }
   }
 
   mappingToLiveFormData(data) {
