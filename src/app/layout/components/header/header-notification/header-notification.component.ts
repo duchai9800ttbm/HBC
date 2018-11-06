@@ -52,7 +52,7 @@ export class HeaderNotificationComponent implements OnInit {
 
     this.notificationService.count().subscribe(x => this.amountNotificationNotRead = x);
 
-    getInterval();
+    this.getInterval();
   }
 
   getInterval() {
