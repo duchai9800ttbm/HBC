@@ -60,6 +60,7 @@ export class InterviewNegotiationComponent implements OnInit, OnDestroy {
   UploadBBPV = false;
   DongPV = false;
   HieuChinhHSDT = false;
+  nodirection = false;
   constructor(
     private dialogService: DialogService,
     private packageService: PackageService,
@@ -75,11 +76,15 @@ export class InterviewNegotiationComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
+    this.subscription = this.interviewInvitationService.watchNoDirection().subscribe( value => {
+      console.log('this.nodirection', this.nodirection);
+      this.nodirection = value;
+    });
     this.statusInInterviewList = [this.bidStatus.DaNopHSDT, this.bidStatus.DaNhanLoiMoi,
     this.bidStatus.ChuanBiPhongVan, this.bidStatus.DaChotCongTacChuanBiPhongVan, this.bidStatus.DaPhongVan];
     this.stattusCurrentList = ['create', 'prepare', 'end'];
     this.packageId = +PackageDetailComponent.packageId;
-    this.subscription = this.permissionService.get().subscribe(data => {
+    const permisstion = this.permissionService.get().subscribe(data => {
       this.listPermission = data;
       const hsdt = this.listPermission.length &&
         this.listPermission.filter(x => x.bidOpportunityStage === 'HSDT')[0];
@@ -114,6 +119,7 @@ export class InterviewNegotiationComponent implements OnInit, OnDestroy {
       this.DongPV = this.listPermissionScreen.includes('DongPV');
       this.HieuChinhHSDT = this.listPermissionScreen2.includes('HieuChinhHSDT');
     });
+    this.subscription.add(permisstion);
     this.checkStatusPackageFuc();
     const status$ = this.statusObservableHsdtService.statusPackageService.subscribe(value => {
       this.checkStatusPackageFuc();
@@ -132,23 +138,26 @@ export class InterviewNegotiationComponent implements OnInit, OnDestroy {
     if (this.subscription) {
       this.subscription.unsubscribe();
     }
+    // this.interviewInvitationService.changeNoDirection(false);
   }
 
   directionalRouter() {
     this.packageService.getInforPackageID(this.packageId).subscribe(result => {
-      switch (result.stageStatus.id) {
-        case (this.bidStatus.DaNopHSDT || this.bidStatus.DaNhanLoiMoi): {
-          this.router.navigate([`/package/detail/${this.packageId}/attend/interview-negotiation/create`]);
-          break;
-        }
-        case this.bidStatus.ChuanBiPhongVan: {
-          this.router.navigate([`/package/detail/${this.packageId}/attend/interview-negotiation/prepare`]);
-          break;
-        }
-        case this.bidStatus.DaChotCongTacChuanBiPhongVan:
-        case this.bidStatus.DaPhongVan: {
-          this.router.navigate([`/package/detail/${this.packageId}/attend/interview-negotiation/end`]);
-          break;
+      if (!this.nodirection) {
+        switch (result.stageStatus.id) {
+          case (this.bidStatus.DaNopHSDT || this.bidStatus.DaNhanLoiMoi): {
+            this.router.navigate([`/package/detail/${this.packageId}/attend/interview-negotiation/create`]);
+            break;
+          }
+          case this.bidStatus.ChuanBiPhongVan: {
+            this.router.navigate([`/package/detail/${this.packageId}/attend/interview-negotiation/prepare`]);
+            break;
+          }
+          case this.bidStatus.DaChotCongTacChuanBiPhongVan:
+          case this.bidStatus.DaPhongVan: {
+            this.router.navigate([`/package/detail/${this.packageId}/attend/interview-negotiation/end`]);
+            break;
+          }
         }
       }
     });

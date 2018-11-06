@@ -230,6 +230,7 @@ export class ContractSignedComponent implements OnInit, OnDestroy {
   }
 
   render(pagedResult: any) {
+    console.log('pagedResult', pagedResult);
     this.pagedResult = pagedResult;
     // tslint:disable-next-line:max-line-length
     this.maxVersion = (pagedResult.items && pagedResult.items.length !== 0) ? Math.max.apply(Math, pagedResult.items.map(item => item.version)) : 0;

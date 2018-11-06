@@ -17,4 +17,5 @@ export class ContractSigningList {
     uploadDate: number;
     contractDate: number;
     interviewTime: number;
+    fileUrl: string;
 }
