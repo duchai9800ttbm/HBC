@@ -145,6 +145,10 @@ export class PriceReviewFormComponent implements OnChanges, OnInit, AfterViewIni
           && (this.package.stageStatus.id !== 'CanDieuChinhTrinhDuyetGia')) {
           this.priceReviewForm.controls['isApprovedByBoardOfDirector'].disable();
         } else {
+          if ((this.userModel && this.userModel.userGroup
+            && this.userModel.userGroup.text === 'Admin')) {
+            this.priceReviewForm.controls['isApprovedByBoardOfDirector'].enable();
+          }
           if ((this.userModel && this.userModel.department
             && this.userModel.department.text === 'BAN TỔNG GIÁM ĐỐC')) {
             this.priceReviewForm.controls['isApprovedByBoardOfDirector'].enable();
@@ -803,6 +807,10 @@ export class PriceReviewFormComponent implements OnChanges, OnInit, AfterViewIni
         && (this.package.stageStatus.id !== 'CanDieuChinhTrinhDuyetGia')) {
         this.priceReviewForm.controls['isApprovedByBoardOfDirector'].disable();
       } else {
+        if ((this.userModel && this.userModel.userGroup
+          && this.userModel.userGroup.text === 'Admin')) {
+          this.priceReviewForm.controls['isApprovedByBoardOfDirector'].enable();
+        }
         if ((this.userModel && this.userModel.department
           && this.userModel.department.text === 'BAN TỔNG GIÁM ĐỐC')) {
           this.priceReviewForm.controls['isApprovedByBoardOfDirector'].enable();

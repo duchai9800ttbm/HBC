@@ -41,8 +41,8 @@
                     <button type="button" class="btn btn-primary ml-1" *ngIf="package?.stageStatus?.id === 'CanDieuChinhTrinhDuyetGia'"
                         (click)="guiDuyet()">Gửi lại trình duyệt giá</button>
                 </ng-container>
-                <button type="button" class="btn btn-primary ml-1" *ngIf="package?.stageStatus?.id === 'DaNopHSDT' || package?.stageStatus?.id === 'ChotHoSo'"
-                    (click)="downloadAll()">Tải xuống tài liệu</button>
+                <!-- <button type="button" class="btn btn-primary ml-1" *ngIf="package?.stageStatus?.id === 'DaNopHSDT' || package?.stageStatus?.id === 'ChotHoSo'"
+                    (click)="downloadAll()">Tải xuống tài liệu</button> -->
                 <ng-container *ngIf="TaiTemplateTDG">
                     <button type="button" class="btn btn-primary ml-1" (click)="taiTemplate()">Tải Template
                     </button>
