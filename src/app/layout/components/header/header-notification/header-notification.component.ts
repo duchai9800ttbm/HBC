@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewChild, ElementRef, HostListener } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 import { NotificationItem, PagedResult } from '../../../../shared/models/index';
-import { UserNotificationService, AlertService, ConfirmationService } from '../../../../shared/services/index';
+import { UserNotificationService, AlertService, ConfirmationService, SessionService } from '../../../../shared/services/index';
 import { Router } from '@angular/router';
 import { NotificationService } from '../../../../shared/services/notification.service';
 import { NotificationStatus } from '../../../../shared/constants/notification-status';
@@ -27,6 +27,7 @@ export class HeaderNotificationComponent implements OnInit {
   constructor(
     private router: Router,
     private notificationService: NotificationService,
+    private sessionService: SessionService,
     private alertService: AlertService,
     private confirmationService: ConfirmationService,
     config: NgbDropdownConfig,
@@ -51,6 +52,19 @@ export class HeaderNotificationComponent implements OnInit {
 
     this.notificationService.count().subscribe(x => this.amountNotificationNotRead = x);
   }
+
+  getInterval() {
+    var self = this;
+
+    setInterval(function () {
+
+        if (!self.sessionService.currentUser) {
+            return;
+        }
+        this.notificationService.count().subscribe(x => this.amountNotificationNotRead = x);
+    }, 1 * 60 * 1000);
+}
+
 
   containsDropToolThongBao2222(target: any): boolean {
     if (this.DropToolThongBao222222) {
