@@ -54,7 +54,12 @@ export class PackageDetailFileAttendComponent implements OnInit, OnDestroy {
     });
     if (this.isNgOnInit) {
       this.checkStatusPackageFuc();
-      this.redirectByStatus(); // Điều hướng
+      // this.redirectByStatus(); // Điều hướng
+      this.activeRouter.queryParams.subscribe( value => {
+        if (value && value.direction === 'true') {
+          this.redirectByStatus(); // Điều hướng
+        }
+      });
       this.isNgOnInit = false;
     }
     this.isComponentDetail = true;

@@ -167,6 +167,9 @@ export class PackageDetailComponent implements OnInit, OnDestroy {
     this.packageService.statusPackage$.subscribe(value => {
       this.getInforPackage();
     });
+    this.activetedRoute.params.subscribe( value => {
+      console.log('value-params', value, value.direction);
+    });
   }
 
   ngOnDestroy(): void {
@@ -230,4 +233,8 @@ export class PackageDetailComponent implements OnInit, OnDestroy {
   //     this.router.navigate([`/package/detail/${this.packageId}/result`]);
   //   }
   // }
+
+  clickRouterParams() {
+    this.router.navigate([`/package/detail/${this.packageId}/attend`], { queryParams: { direction: true } });
+  }
 }

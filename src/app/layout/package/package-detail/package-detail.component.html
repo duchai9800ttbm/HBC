@@ -35,7 +35,8 @@
       <div class="action set-width" [routerLinkActive]="['router-link-active']" [routerLink]="['/package/detail', packageId ,'invitation']">
         HỒ SƠ MỜI THẦU
       </div>
-      <div class="action set-width" [routerLinkActive]="['router-link-active']" [routerLink]="['/package/detail', packageId ,'attend']">
+      <!-- [routerLink]="['/package/detail', packageId ,'attend']" -->
+      <div class="action set-width" [routerLinkActive]="['router-link-active']" (click)="clickRouterParams()">
         DỰ THẦU
       </div>
       <ng-container *ngIf="(statusPackage?.id >= checkStatusPackage.ChoKetQuaDuThau?.id)">
