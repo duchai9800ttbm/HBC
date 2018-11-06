@@ -63,7 +63,7 @@ export class HeaderNotificationComponent implements OnInit {
         if (!self.sessionService.currentUser) {
             return;
         }
-        this.notificationService.count().subscribe(x => this.amountNotificationNotRead = x);
+        self.notificationService.count().subscribe(x => self.amountNotificationNotRead = x);
     }, 1 * 60 * 1000);
 }
 
