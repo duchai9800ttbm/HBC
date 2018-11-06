@@ -421,13 +421,13 @@ export class PackageDocumentSenderComponent implements OnInit {
         if (itemchildDocuments.childDocuments && itemchildDocuments.childDocuments.length !== 0) {
           itemchildDocuments.childDocuments.forEach(itemChild => {
             itemChild.items.forEach(items => {
-              items.documents[0].dateUse = (+this.defaultdateUseHSMT).toString();
+              items.documents[0].dateUse = (+this.defaultdateUseHSMT).toString() + ' ngày';
             });
           });
         }
         if (!itemchildDocuments.childDocuments || itemchildDocuments.childDocuments.length === 0) {
           itemchildDocuments.documents.forEach(documents => {
-            documents.dateUse = (+this.defaultdateUseHSMT).toString();
+            documents.dateUse = (+this.defaultdateUseHSMT).toString()  + ' ngày';
           });
         }
       });
@@ -505,13 +505,13 @@ export class PackageDocumentSenderComponent implements OnInit {
         if (itemchildDocuments.childDocuments && itemchildDocuments.childDocuments.length !== 0) {
           (itemchildDocuments.childDocuments || []).forEach(itemChild => {
             (itemChild.items || []).forEach(items => {
-              items.documents[0].dateUse = (+this.defaultdateUseHSDT).toString();
+              items.documents[0].dateUse = (+this.defaultdateUseHSDT).toString() + '  ngày';
             });
           });
         }
         if (!itemchildDocuments.childDocuments || itemchildDocuments.childDocuments.length === 0) {
           (itemchildDocuments.documents || []).forEach(documents => {
-            documents.dateUse = (+this.defaultdateUseHSDT).toString();
+            documents.dateUse = (+this.defaultdateUseHSDT).toString() + ' ngày';
           });
         }
       });
