@@ -13,7 +13,9 @@ import { ListDocumentTypeIdGroup } from '../../../../../../shared/models/ho-so-d
   styleUrls: ['./upload-file-hsdt.component.scss']
 })
 export class UploadFileHsdtComponent implements OnInit {
+  @ViewChild('autofocus') autofocus;
   @ViewChild('uploadImage') uploadImageAction;
+  @ViewChild('uploadImageButton') uploadImageButton;
   @Input() nameFile: string;
   @Input() idFile: number;
   @Input() bidOpportunityId: number;
@@ -54,10 +56,12 @@ export class UploadFileHsdtComponent implements OnInit {
       description: ''
     });
     this.uploadForm.get('type').patchValue(this.idFile);
-    // this.uploadForm.get('version').patchValue(this.setversion);
     this.getVersionValue(this.uploadForm.get('type').value);
     this.uploadForm.valueChanges.subscribe(data => {
       this.onFormValueChanged(data);
+    });
+    setTimeout(() => {
+      this.autofocus.nativeElement.focus();
     });
   }
   valueTypeDocChange(event) {
@@ -184,7 +188,14 @@ export class UploadFileHsdtComponent implements OnInit {
       this.displayName = '';
     }
   }
-  uploadImageF(event) {
+  onFocus() {
+    this.uploadImageButton.nativeElement.addEventListener('keyup', e => {
+      if (e.keyCode === 13) {
+        return this.uploadImageAction.nativeElement.click();
+      }
+    });
+  }
+  uploadImage(event) {
     const file = event.target.files;
     this.hoSoDuThauService.uploadImageService(file[0]).subscribe(res => {
       this.imageUrls.push(res);

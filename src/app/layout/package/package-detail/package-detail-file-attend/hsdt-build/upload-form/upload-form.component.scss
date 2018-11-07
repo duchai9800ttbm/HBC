@@ -25,12 +25,10 @@
 
 .small-column {
     width: 9%;
-    // min-width: 125px;
 }
 
 .large-column {
     width: 15%;
-    // min-width: 250px;
 }
 
 .search-table-outer {
@@ -275,4 +273,12 @@ tr {
 
 .set-width-text-type {
     width: calc(100% - 25px);
+}
+
+.table-layout--fixed {
+    table-layout: fixed
+}
+
+.table-layout--minwidth {
+    min-width: 1050px;
 }

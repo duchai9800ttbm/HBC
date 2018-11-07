@@ -2,7 +2,7 @@
     <div class="row">
         <div class="col-md-4">Tên tài liệu</div>
         <div class="col-md-8">
-            <input tabindex="1" #autofocus class="form-control" formControlName="tenTaiLieu">
+            <input type="text" tabindex="1" #autofocus class="form-control" formControlName="tenTaiLieu">
         </div>
     </div>
     <div class="row mt-3">
@@ -26,7 +26,7 @@
                     </div>
                 </div>
             </ng-container>
-            <div class="perspective-image" [ngClass]="{'d-none': isModeView}" (click)="uploadPhoiCanh.click()" tabindex="3">
+            <div class="perspective-image" [ngClass]="{'d-none': isModeView}" #uploadPhoiCanhButton (focus)="onFocus('uploadPhoiCanhButton')" (click)="uploadPhoiCanh.click()" tabindex="3">
                 <i class="fa fa-plus" aria-hidden="true"></i>
                 <p>Image</p>
             </div>
@@ -44,7 +44,7 @@
                     </div>
                 </div>
             </ng-container>
-            <div class="perspective-image" [ngClass]="{'d-none': isModeView}" (click)="uploadMasterplan.click()"
+            <div class="perspective-image" [ngClass]="{'d-none': isModeView}" #uploadMasterplanButton (focus)="onFocus('uploadMasterplanButton')" (click)="uploadMasterplan.click()"
                 tabindex="4">
                 <i class="fa fa-plus" aria-hidden="true"></i>
                 <p>Image</p>

@@ -14,12 +14,12 @@
             <div>
                 <div class="btn-toolbar mt-2 mb-2">
                     <div class="d-flex">
-                        <div class="btn-group ml-1" ngbDropdown>
+                        <div class="btn-group ml-1" ngbDropdown placement="bottom-right">
                             <button type="button" class="btn btn-primary" ngbDropdownToggle data-toggle="dropdown">
                                 Tải template
                             </button>
 
-                            <div class="" ngbDropdownMenu>
+                            <div ngbDropdownMenu>
                                 <div class="fileUpload dropdown-item" (click)="downloadTemplate('HuongDanLapHSDT')">
                                     <a>Hướng dẫn lập hồ sơ dự thầu</a>
                                 </div>
@@ -55,11 +55,6 @@
                                 </ng-container>
                             </div>
                         </div>
-                        <!-- <div class="ml-1">
-                            <button class="btn btn-primary">
-                                Tải xuống tài liệu
-                            </button>
-                        </div> -->
                         <ng-container *ngIf="ChotHSDT">
                             <div class="ml-1" *ngIf="!package?.isClosedHSDT">
                                 <button class="btn btn-primary" (click)="chotHSDT($event)">
@@ -67,13 +62,6 @@
                                 </button>
                             </div>
                         </ng-container>
-
-
-                        <!-- <div class="ml-1" *ngIf="package?.isClosedHSDT">
-                            <button class="btn btn-secondary cursor-notallowed" disabled>
-                                Đã chốt HSDT
-                            </button>
-                        </div> -->
 
                         <div class="ml-1">
                             <button (click)="refresh()" class="btn btn-primary">
