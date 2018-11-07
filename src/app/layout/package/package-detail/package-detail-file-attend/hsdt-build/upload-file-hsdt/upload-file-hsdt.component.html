@@ -25,7 +25,7 @@
                             <tr>
                                 <td class="w-30 label no-boder bold-title">Đường dẫn link</td>
                                 <td class="w-70 no-boder">
-                                    <input class="w-100" autofocus tabindex="1" [class.disable-input]="displayName" class="form-control"
+                                    <input class="w-100" #autofocus tabindex="1" [class.disable-input]="displayName" class="form-control"
                                         formControlName="linkFile" type="text">
                                 </td>
                             </tr>
@@ -54,14 +54,14 @@
                                 <td class="no-boder">
 
                                     <div class="image-demo-img">
-                                        <input type="file" accept="image/*" #uploadImage (change)="uploadImageF($event)">
+                                        <input type="file" accept="image/*" #uploadImage (change)="uploadImage($event)">
                                         <div class="display-img" *ngFor="let url of imageUrls" (click)="viewFullScreenImage(structureImageUrls)">
                                             <img [src]="url.largeSizeUrl">
                                             <div class="icon-delete-image" [ngClass]="{'d-none': viewMode}" (click)="deleteImage(url)">
                                                 <i class="fa fa-times delete-icon" aria-hidden="true"></i>
                                             </div>
                                         </div>
-                                        <div class="perspective-image" [ngClass]="{'d-none': viewMode}" (click)="uploadImage.click()" tabindex="3">
+                                        <div class="perspective-image" [ngClass]="{'d-none': viewMode}" #uploadImageButton (focus)="onFocus()" (click)="uploadImage.click()" tabindex="3">
                                             <i class="fa fa-plus" aria-hidden="true"></i>
                                             <p>Image</p>
                                         </div>

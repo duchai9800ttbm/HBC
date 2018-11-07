@@ -15,28 +15,30 @@
         </div>
     </div>
 
-    <div class="mt-4" *ngIf="summaryCondition">
-        <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="table-selection stripe row-border hover cell-border dataTable">
+    <div class="mt-4 table-responsive" *ngIf="summaryCondition">
+        <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="row-border cell-border dataTable table-layout--fixed table-layout--minwidth">
             <thead>
                 <tr>
 
-                    <th>Tên tài liệu</th>
+                    <th class="w-20">Tên tài liệu</th>
                     <th>Lần phỏng vấn</th>
                     <th>Tình trạng</th>
                     <th>Người tạo</th>
                     <th>Ngày tạo</th>
-                    <th class="text-center">Thao tác</th>
+                    <th class="w-20 text-center">Thao tác</th>
                 </tr>
             </thead>
             <tbody>
                 <tr>
                     <ng-container *ngIf="XemLiveForm">
-                        <td [title]="summaryCondition?.documentName">
-                            <a class="link-effect" [routerLink]="['./form/detail']">{{summaryCondition?.documentName}}</a>
+                        <td class="table-data__title--maxwidth" [title]="summaryCondition?.documentName">
+                            <a class="link-effect" [routerLink]="['./form/detail']">
+                                {{summaryCondition?.documentName}}
+                            </a>
                         </td>
                     </ng-container>
                     <ng-container *ngIf="!XemLiveForm">
-                        <td [title]="summaryCondition?.documentName">
+                        <td class="table-data__title--maxwidth" [title]="summaryCondition?.documentName">
                             {{summaryCondition?.documentName}}
                         </td>
                     </ng-container>
@@ -88,7 +90,6 @@
 
 
 </div>
-<!-- <ngx-spinner bdColor="rgba(51, 51, 51, 0.7)" size = "default" color="#fff" type="ball-scale"></ngx-spinner> -->
 
 
 <div class="mt-5  p-3" *ngIf="historyList && historyList.length !== 0">
@@ -96,20 +97,18 @@
         <h5 class="text-uppercase mb-3">Lịch sử cập nhật</h5>
     </div>
     <div class="table-responsive">
-        <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger2" class="table-selection stripe row-border hover cell-border dataTable">
+        <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger2" class="row-border cell-border dataTable table-layout--fixed table-layout--minwidth">
             <thead>
                 <tr>
-                    <!-- <th class="text-center w-5">STT</th> -->
                     <th class="w-10">Lần cập nhật</th>
-                    <th class="w-10">Người cập nhật</th>
-                    <th class="w-15">Ngày cập nhật</th>
+                    <th>Người cập nhật</th>
+                    <th>Ngày cập nhật</th>
                     <th class="w-25">Nội dung cập nhật</th>
-                    <th class="w-40">Chi tiết cập nhật</th>
+                    <th class="w-30">Chi tiết cập nhật</th>
                 </tr>
             </thead>
             <tbody>
                 <tr *ngFor="let itemByChangedTimes of historyList; let i = index">
-                    <!-- <td class="text-center">{{i + 1}}</td> -->
                     <td class="text-center">
                         {{ indexItemHistoryChange - i }}
                     </td>

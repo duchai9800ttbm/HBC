@@ -1,4 +1,4 @@
-import { Component, OnInit, AfterViewInit, Input, Output, EventEmitter, OnChanges, OnDestroy } from '@angular/core';
+import { Component, OnInit, AfterViewInit, Input, Output, EventEmitter, OnChanges, OnDestroy, ViewChild } from '@angular/core';
 import { TenderPriceApproval, TenderPriceApprovalShort } from '../../../../../../shared/models/price-review/price-review.model';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import DateTimeConvertHelper from '../../../../../../shared/helpers/datetime-convert-helper';
@@ -888,7 +888,6 @@ export class PriceReviewFormComponent implements OnChanges, OnInit, AfterViewIni
 
   refresh() {
     this.refreshData.emit(true);
-    // return this.alertService.success('Dữ liệu đã được cập nhật mới nhất');
   }
 
 

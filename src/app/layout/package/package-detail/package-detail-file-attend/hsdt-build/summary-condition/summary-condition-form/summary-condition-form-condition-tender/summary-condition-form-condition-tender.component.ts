@@ -5,6 +5,8 @@ import DateTimeConvertHelper from '../../../../../../../../shared/helpers/dateti
 import { DienGiaiDieuKienHSMT } from '../../../../../../../../shared/models/ho-so-du-thau/dien-giai-yeu-cau';
 import { HoSoDuThauService } from '../../../../../../../../shared/services/ho-so-du-thau.service';
 import { DictionaryItemText } from '../../../../../../../../shared/models';
+import { PackageDetailComponent } from '../../../../../package-detail.component';
+import { PackageService } from '../../../../../../../../shared/services/package.service';
 
 @Component({
     selector: 'app-summary-condition-form-condition-tender',
@@ -18,7 +20,8 @@ export class SummaryConditionFormConditionTenderComponent implements OnInit {
     isShowInputBox = false;
     constructor(
         private fb: FormBuilder,
-        private hoSoDuThauService: HoSoDuThauService
+        private hoSoDuThauService: HoSoDuThauService,
+        private packageService: PackageService
     ) { }
 
     get cacLoaiThueHSMTFA(): FormArray {
@@ -120,6 +123,17 @@ export class SummaryConditionFormConditionTenderComponent implements OnInit {
                 }
             })
         });
+
+        if (this.dieuKienHSMTForm.get('ngayKhoiCong') && !this.dieuKienHSMTForm.get('ngayKhoiCong').value) {
+            this.packageService.getProposedTenderParticipateReport(PackageDetailComponent.packageId).subscribe(data => {
+                const ngayKhoiCongValue = data.contractCondition ? data.contractCondition.commencementDate : null;
+                if (ngayKhoiCongValue) {
+                    this.dieuKienHSMTForm.get('ngayKhoiCong').patchValue(
+                        DateTimeConvertHelper.fromTimestampToDtObject(ngayKhoiCongValue * 1000)
+                    );
+                }
+            });
+        }
 
         (this.dienGiaiDieuKienHSMT.theoHSMT.cacLoaiThue || []).forEach(x => {
             const control = (this.dieuKienHSMTForm.controls.theoHSMT as FormGroup).controls.cacLoaiThue as FormArray;

@@ -1,4 +1,4 @@
-import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter, Input, ViewChild } from '@angular/core';
 import { ActivityService } from '../../../../../../shared/services/activity.service';
 import { AlertService } from '../../../../../../shared/services/alert.service';
 import { FormGroup, FormBuilder, Validators } from '../../../../../../../../node_modules/@angular/forms';
@@ -18,6 +18,7 @@ import ValidationHelper from '../../../../../../shared/helpers/validation.helper
 })
 export class UploadFileComponent implements OnInit {
   uploadForm: FormGroup;
+  @ViewChild('autofocus') autofocus;
   @Output() closed = new EventEmitter<boolean>();
   @Input() typeFile;
   @Input() packageId;
@@ -54,13 +55,13 @@ export class UploadFileComponent implements OnInit {
 
   ngOnInit() {
     this.createForm();
-    // this.documentService.read(this.packageId, this.typeFile.id).subscribe(response => {
-    //   this.uploadForm.get('version').patchValue(response.length + 1);
-    // });
     this.documentService.bidDocumentType().subscribe(data => {
       this.listTypeFile = data;
       this.uploadForm.get('type').patchValue(this.typeFile);
       this.getVersionValue(this.typeFile);
+    });
+    setTimeout(() => {
+      this.autofocus.nativeElement.focus();
     });
   }
   valueTypeDocChange(event) {
@@ -112,7 +113,7 @@ export class UploadFileComponent implements OnInit {
   }
   deleteFileUpload() {
     this.uploadForm.get('link').enable();
-    if (this.uploadForm.get('editName') && this.file && (this.uploadForm.get('editName').value === this.file.name) ) {
+    if (this.uploadForm.get('editName') && this.file && (this.uploadForm.get('editName').value === this.file.name)) {
       this.file = null;
       this.uploadForm.get('nameFile').patchValue('');
       this.uploadForm.get('editName').patchValue('');

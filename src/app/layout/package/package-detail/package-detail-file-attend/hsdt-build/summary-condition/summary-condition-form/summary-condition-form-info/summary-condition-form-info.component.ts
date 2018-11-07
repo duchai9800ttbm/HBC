@@ -15,7 +15,9 @@ import { PackageDetailComponent } from '../../../../../package-detail.component'
 export class SummaryConditionFormInfoComponent implements OnInit, AfterViewInit {
   @ViewChild('autofocus') autofocus;
   @ViewChild('uploadMasterplan') uploadMasterplan;
+  @ViewChild('uploadMasterplanButton') uploadMasterplanButton;
   @ViewChild('uploadPhoiCanh') uploadPhoiCanh;
+  @ViewChild('uploadPhoiCanhButton') uploadPhoiCanhButton;
   thongTinDuAnForm: FormGroup;
   hinhAnhPhoiCanhUrls = [];
   banVeMasterPlanUrls = [];
@@ -100,6 +102,27 @@ export class SummaryConditionFormInfoComponent implements OnInit, AfterViewInit 
       }
       this.createForm();
     });
+  }
+
+  onFocus(check) {
+    switch (check) {
+      case 'uploadPhoiCanhButton': {
+        this.uploadPhoiCanhButton.nativeElement.addEventListener('keyup', e => {
+          if (e.keyCode === 13) {
+            this.uploadPhoiCanh.nativeElement.click();
+          }
+        });
+        break;
+      }
+      case 'uploadMasterplanButton': {
+        this.uploadMasterplanButton.nativeElement.addEventListener('keyup', e => {
+          if (e.keyCode === 13) {
+            this.uploadMasterplan.nativeElement.click();
+          }
+        });
+        break;
+      }
+    }
   }
 
 
