@@ -184,6 +184,8 @@ export class TenderPriceApproval {
     };
     updatedDesc: string;
     createdDate: number;
+    isSendApproval: boolean;
+    sendApprovalTime: number;
 }
 
 

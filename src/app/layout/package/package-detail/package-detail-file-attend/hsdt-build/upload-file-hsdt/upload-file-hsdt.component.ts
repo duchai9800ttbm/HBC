@@ -15,7 +15,6 @@ import { ListDocumentTypeIdGroup } from '../../../../../../shared/models/ho-so-d
 export class UploadFileHsdtComponent implements OnInit {
   @ViewChild('autofocus') autofocus;
   @ViewChild('uploadImage') uploadImageAction;
-  @ViewChild('uploadImageButton') uploadImageButton;
   @Input() nameFile: string;
   @Input() idFile: number;
   @Input() bidOpportunityId: number;
@@ -188,14 +187,14 @@ export class UploadFileHsdtComponent implements OnInit {
       this.displayName = '';
     }
   }
-  onFocus() {
-    this.uploadImageButton.nativeElement.addEventListener('keyup', e => {
+  onFocus(event) {
+    event.target.addEventListener('keyup', e => {
       if (e.keyCode === 13) {
-        return this.uploadImageAction.nativeElement.click();
+        event.target.click();
       }
     });
   }
-  uploadImage(event) {
+  uploadImageF(event) {
     const file = event.target.files;
     this.hoSoDuThauService.uploadImageService(file[0]).subscribe(res => {
       this.imageUrls.push(res);

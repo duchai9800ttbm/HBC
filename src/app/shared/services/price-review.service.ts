@@ -609,11 +609,9 @@ export class PriceReviewService {
         }
       },
       updatedDesc: '',
-      createdDate: model.createdDate
-      // chờ Nghĩa map lại
-      // interviewTimes: null,
-      // createdEmployeeId: null,
-      // updatedEmployeeId: null
+      createdDate: model.createdDate,
+      isSendApproval: model.isSendApproval,
+      sendApprovalTime: model.sendApprovalTime
     };
   }
 

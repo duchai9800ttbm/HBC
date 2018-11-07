@@ -60,6 +60,7 @@ export class PriceReviewFormComponent implements OnChanges, OnInit, AfterViewIni
   DuyetTDGTPDuThau = false;
   GuiDuyet = false;
   DuyetTDGBGD = false;
+  isApprovalSent = false;
   @Input() model: TenderPriceApproval;
   @Input() type: string;
   @Output() refreshData = new EventEmitter<boolean>();
@@ -828,12 +829,12 @@ export class PriceReviewFormComponent implements OnChanges, OnInit, AfterViewIni
 
     }
     if (this.priceReviewForm.value) {
-      const value = this.model.approvalDate;
-      if (!value) {
-        this.packageService.getProposedTenderParticipateReport(this.packageId).subscribe(data => {
-          const valueApprovalDate = data.tenderDirectorProposal.expectedDate;
-          this.priceReviewForm.get('approvalDate').patchValue(DateTimeConvertHelper.fromTimestampToDtObject(valueApprovalDate * 1000));
-        });
+      const tempApprovalTimes = (this.model.sendApprovalTime) ? this.model.sendApprovalTime : null;
+      if (!this.priceReviewForm.get('approvalDate').value) {
+        this.priceReviewForm.get('approvalDate').patchValue(
+          DateTimeConvertHelper.fromTimestampToDtObject(
+            tempApprovalTimes * 1000)
+        );
       }
       this.checkDuyet();
     }

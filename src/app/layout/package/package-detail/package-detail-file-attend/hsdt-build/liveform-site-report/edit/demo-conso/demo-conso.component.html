@@ -20,7 +20,7 @@
                                     </div>
                                 </div>
                             </ng-container>
-                            <div tabindex="2" class="perspective-image cursor-pointer" [ngClass]="{'d-none': isViewMode}" (click)="uploadDemobilisation.click()">
+                            <div tabindex="2" class="perspective-image cursor-pointer" (focus)="onFocus($event)" [ngClass]="{'d-none': isViewMode}" (click)="uploadDemobilisation.click()">
                                 <i class="fa fa-plus" aria-hidden="true"></i>
                                 <p>Image</p>
                             </div>
@@ -48,7 +48,7 @@
                                 </div>
                             </div>
                         </ng-container>
-                        <div tabindex="4" class="perspective-image cursor-pointer" [ngClass]="{'d-none': isViewMode}" (click)="uploadConsolidation.click()">
+                        <div tabindex="4" class="perspective-image cursor-pointer" (focus)="onFocus($event)" [ngClass]="{'d-none': isViewMode}" (click)="uploadConsolidation.click()">
                             <i class="fa fa-plus" aria-hidden="true"></i>
                             <p>Image</p>
                         </div>
@@ -75,7 +75,7 @@
                                 </div>
                             </div>
                         </ng-container>
-                        <div tabindex="6" class="perspective-image cursor-pointer" [ngClass]="{'d-none': isViewMode}" (click)="uploaAdjacent.click()">
+                        <div tabindex="6" class="perspective-image cursor-pointer" (focus)="onFocus($event)" [ngClass]="{'d-none': isViewMode}" (click)="uploaAdjacent.click()">
                             <i class="fa fa-plus" aria-hidden="true"></i>
                             <p>Image</p>
                         </div>

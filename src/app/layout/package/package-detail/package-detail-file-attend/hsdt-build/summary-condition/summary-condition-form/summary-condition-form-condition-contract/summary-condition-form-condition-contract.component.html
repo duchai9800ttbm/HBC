@@ -422,13 +422,13 @@
                     <div class="col-md-4">
                         <div formGroupName="dieuKienTheoHSMT">
                             <input formControlName="thoiGianBaoHanh" type="number" class="form-control pr-5">
-                            <span class="unit-value text-uppercase">{{ unitTimeguarantee.displayText }}</span>
+                            <span *ngIf="unitTimeguarantee" class="unit-value text-uppercase">{{ unitTimeguarantee.displayText }}</span>
                         </div>
                     </div>
                     <div class="col-md-4">
                         <div formGroupName="dieuKienTheoHBC">
                             <input formControlName="thoiGianBaoHanh" type="number" class="form-control pr-5">
-                            <span class="unit-value text-uppercase">{{ unitTimeguarantee.displayText }}</span>
+                            <span *ngIf="unitTimeguarantee" class="unit-value text-uppercase">{{ unitTimeguarantee.displayText }}</span>
                         </div>
                     </div>
                 </div>

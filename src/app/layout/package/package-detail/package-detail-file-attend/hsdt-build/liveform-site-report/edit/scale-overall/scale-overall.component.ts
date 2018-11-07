@@ -318,4 +318,12 @@ export class ScaleOverallComponent implements OnInit, AfterViewInit {
   closeView() {
     this.showPopupViewImage = false;
   }
+  onFocus(e) {
+    const input = e.target.parentNode.firstElementChild;
+    e.target.addEventListener('keyup', elem => {
+      if (elem.keyCode === 13) {
+        input.click();
+      }
+    });
+  }
 }

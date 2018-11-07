@@ -8,8 +8,8 @@
                 </h3>
             </div>
         </div>
-        <div class="position-absolute x-button">
-            <img (click)="closePopup()" width="15" height="15" class="cursor-pointer not-outline" src="assets\images\close.png" tabindex="10">
+        <div class="position-absolute x-button" tabindex="10" (focus)="onFocus($event)">
+            <img (click)="closePopup()" width="15" height="15" class="cursor-pointer not-outline" src="assets\images\close.png" />
         </div>
     </div>
     <hr>
@@ -25,19 +25,19 @@
                             <tr>
                                 <td class="w-30 label no-boder bold-title">Đường dẫn link</td>
                                 <td class="w-70 no-boder">
-                                    <input class="w-100" #autofocus tabindex="1" [class.disable-input]="displayName" class="form-control"
-                                        formControlName="linkFile" type="text">
+                                    <input class="w-100" #autofocus tabindex="1" [class.disable-input]="displayName"
+                                        class="form-control" formControlName="linkFile" type="text">
                                 </td>
                             </tr>
                             <tr>
                                 <td class="w-30 label no-boder bold-title">Hoặc</td>
                                 <td class="no-boder d-flex justify-content-between">
                                     <div class="fileUpload">
-                                        <button class="btn btn-primary" [disabled]="lockField" tabindex="2"
+                                        <button class="btn btn-primary" [disabled]="lockField"
                                             [class.pointer-default]="lockField">
                                             <i class="fa fa-cloud-upload" aria-hidden="true"></i>&nbsp;&nbsp;
                                             Chọn File</button>
-                                        <input type="file" class="upload" [class.pointer-default]="lockField"
+                                        <input type="file" class="upload" [class.pointer-default]="lockField" tabindex="2"
                                             [disabled]="lockField" (change)="uploadFile($event)" />
                                     </div>
                                     <div style="width: calc(100% - 120px);" class="d-flex justify-content-between">
@@ -54,14 +54,15 @@
                                 <td class="no-boder">
 
                                     <div class="image-demo-img">
-                                        <input type="file" accept="image/*" #uploadImage (change)="uploadImage($event)">
+                                        <input type="file" accept="image/*" #uploadImage (change)="uploadImageF($event)">
                                         <div class="display-img" *ngFor="let url of imageUrls" (click)="viewFullScreenImage(structureImageUrls)">
                                             <img [src]="url.largeSizeUrl">
                                             <div class="icon-delete-image" [ngClass]="{'d-none': viewMode}" (click)="deleteImage(url)">
                                                 <i class="fa fa-times delete-icon" aria-hidden="true"></i>
                                             </div>
                                         </div>
-                                        <div class="perspective-image" [ngClass]="{'d-none': viewMode}" #uploadImageButton (focus)="onFocus()" (click)="uploadImage.click()" tabindex="3">
+                                        <div class="perspective-image" [ngClass]="{'d-none': viewMode}" (focus)="onFocus($event)"
+                                            (click)="uploadImage.click()" tabindex="3">
                                             <i class="fa fa-plus" aria-hidden="true"></i>
                                             <p>Image</p>
                                         </div>
@@ -73,8 +74,9 @@
                             <tr *ngIf="listTypeChildren.length">
                                 <td class="w-30 label no-boder bold-title">Loại HSDT</td>
                                 <td class="no-boder d-flex">
-                                    <kendo-dropdownlist class="w-100" formControlName="type" [textField]="'name'" tabindex="4"
-                                        [valueField]="'id'" [data]="listTypeChildren" [valuePrimitive]="true" (valueChange)="valueTypeDocChange($event)">
+                                    <kendo-dropdownlist class="w-100" formControlName="type" [textField]="'name'"
+                                        tabindex="4" [valueField]="'id'" [data]="listTypeChildren" [valuePrimitive]="true"
+                                        (valueChange)="valueTypeDocChange($event)">
                                     </kendo-dropdownlist>
                                 </td>
                             </tr>
@@ -83,8 +85,8 @@
                             <tr>
                                 <td class="w-30 label no-boder bold-title required">Tên</td>
                                 <td class="w-70 no-boder">
-                                    <input class="w-100 text-truncate" kendoTextBox type="text" formControlName="editName" tabindex="4"
-                                        [class.is-invalid]="formErrors.editName">
+                                    <input class="w-100 text-truncate" kendoTextBox type="text" formControlName="editName"
+                                        tabindex="4" [class.is-invalid]="formErrors.editName">
                                     <div class="invalid-feedback" *ngIf="formErrors.editName">
                                         {{formErrors.editName}}
                                     </div>
@@ -107,8 +109,8 @@
                             <tr>
                                 <td class="w-30 label no-boder bold-title">Mô tả/Nội dung cập nhật</td>
                                 <td class="w-70 no-boder">
-                                    <textarea kendoTextArea cols="3" rows="3" class="w-100 form-control no-resize-textarea" tabindex="7"
-                                        formControlName="description"></textarea>
+                                    <textarea kendoTextArea cols="3" rows="3" class="w-100 form-control no-resize-textarea"
+                                        tabindex="7" formControlName="description"></textarea>
                                 </td>
                             </tr>
                         </tbody>
@@ -117,9 +119,11 @@
 
             </div>
             <div class="action-bar alignment-but center-parent">
-                <button type="submit" class="btn btn-primary ml-1 cus-but-cs" (click)="submitUpload()" tabindex="8">Upload
+                <button type="submit" class="btn btn-primary ml-1 cus-but-cs" (focus)="onFocus($event)" (click)="submitUpload()"
+                    tabindex="8">Upload
                 </button>
-                <button class="btn btn-secondary ml-1 cus-but-cs" (click)="closePopup()" tabindex="9">Hủy
+                <button class="btn btn-secondary ml-1 cus-but-cs" (focus)="onFocus($event)" (click)="closePopup()"
+                    tabindex="9">Hủy
                 </button>
             </div>
         </div>

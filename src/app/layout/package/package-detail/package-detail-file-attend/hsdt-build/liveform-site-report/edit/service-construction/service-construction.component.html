@@ -24,7 +24,7 @@
                                     </div>
                                 </div>
                             </ng-container>
-                            <div tabindex="2" class="perspective-image cursor-pointer" [ngClass]="{'d-none': isViewMode}" (click)="uploadSupplySystem.click()">
+                            <div tabindex="2" class="perspective-image cursor-pointer" (focus)="onFocus($event)" [ngClass]="{'d-none': isViewMode}" (click)="uploadSupplySystem.click()">
                                 <i class="fa fa-plus" aria-hidden="true"></i>
                                 <p>Image</p>
                             </div>
@@ -48,7 +48,7 @@
                                     </div>
                                 </div>
                             </ng-container>
-                            <div tabindex="4" class="perspective-image cursor-pointer" [ngClass]="{'d-none': isViewMode}" (click)="uploadSupplyPoint.click()">
+                            <div tabindex="4" class="perspective-image cursor-pointer"  (focus)="onFocus($event)" [ngClass]="{'d-none': isViewMode}" (click)="uploadSupplyPoint.click()">
                                 <i class="fa fa-plus" aria-hidden="true"></i>
                                 <p>Image</p>
                             </div>
@@ -78,7 +78,7 @@
                                     </div>
                                 </div>
                             </ng-container>
-                            <div tabindex="6" class="perspective-image cursor-pointer" [ngClass]="{'d-none': isViewMode}" (click)="uploadDrainageSystem.click()">
+                            <div tabindex="6" class="perspective-image cursor-pointer" (focus)="onFocus($event)" [ngClass]="{'d-none': isViewMode}" (click)="uploadDrainageSystem.click()">
                                 <i class="fa fa-plus" aria-hidden="true"></i>
                                 <p>Image</p>
                             </div>
@@ -102,7 +102,7 @@
                                     </div>
                                 </div>
                             </ng-container>
-                            <div tabindex="8" class="perspective-image cursor-pointer" [ngClass]="{'d-none': isViewMode}" (click)="uploadDrainagePoint.click()">
+                            <div tabindex="8" class="perspective-image cursor-pointer" (focus)="onFocus($event)" [ngClass]="{'d-none': isViewMode}" (click)="uploadDrainagePoint.click()">
                                 <i class="fa fa-plus" aria-hidden="true"></i>
                                 <p>Image</p>
                             </div>
@@ -131,7 +131,7 @@
                                     </div>
                                 </div>
                             </ng-container>
-                            <div tabindex="10" class="perspective-image cursor-pointer" [ngClass]="{'d-none': isViewMode}" (click)="uploadPowerStation.click()">
+                            <div tabindex="10" class="perspective-image cursor-pointer"  (focus)="onFocus($event)" [ngClass]="{'d-none': isViewMode}" (click)="uploadPowerStation.click()">
                                 <i class="fa fa-plus" aria-hidden="true"></i>
                                 <p>Image</p>
                             </div>
@@ -157,7 +157,7 @@
                                     </div>
                                 </div>
                             </ng-container>
-                            <div tabindex="12" class="perspective-image cursor-pointer" [ngClass]="{'d-none': isViewMode}" (click)="uploadMediumVoltageSystem.click()">
+                            <div tabindex="12" class="perspective-image cursor-pointer" (focus)="onFocus($event)" [ngClass]="{'d-none': isViewMode}" (click)="uploadMediumVoltageSystem.click()">
                                 <i class="fa fa-plus" aria-hidden="true"></i>
                                 <p>Image</p>
                             </div>
@@ -181,7 +181,7 @@
                                     </div>
                                 </div>
                             </ng-container>
-                            <div tabindex="14" class="perspective-image cursor-pointer" [ngClass]="{'d-none': isViewMode}" (click)="uploadPowerOther.click()">
+                            <div tabindex="14" class="perspective-image cursor-pointer" (focus)="onFocus($event)" [ngClass]="{'d-none': isViewMode}" (click)="uploadPowerOther.click()">
                                 <i class="fa fa-plus" aria-hidden="true"></i>
                                 <p>Image</p>
                             </div>

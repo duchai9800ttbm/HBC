@@ -12,9 +12,8 @@
                 </div>
                 <div style="width: 20%;" class="d-flex justify-content-end">
                     <div>
-                        <div>
-                            <img (click)="close()" width="15" height="15" class="cursor-pointer not-outline"
-                                src="assets\images\close.png">
+                        <div tabindex="10" (click)="close()" (focus)="onFocus($event)">
+                            <img width="15" height="15" class="cursor-pointer not-outline" src="assets\images\close.png" />
                         </div>
                     </div>
                 </div>
@@ -101,9 +100,11 @@
 
                     </div>
                     <div class="action-bar alignment-but center-parent">
-                        <button type="submit" class="btn btn-primary ml-1 cus-but-cs" (click)="submitForm()">Upload
+                        <button tabindex="8" type="submit" class="btn btn-primary ml-1 cus-but-cs" (click)="submitForm()" (focus)="onFocus($event)">
+                            Upload
                         </button>
-                        <button class="btn btn-secondary ml-1 cus-but-cs" (click)="close()">Hủy
+                        <button tabindex="9" class="btn btn-secondary ml-1 cus-but-cs" (click)="close()" (focus)="onFocus($event)">
+                            Hủy
                         </button>
                     </div>
                 </div>

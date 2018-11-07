@@ -186,5 +186,12 @@ export class UploadFileComponent implements OnInit {
       }
     }
   }
+  onFocus(e) {
+    e.target.addEventListener('keyup', elem => {
+      if (elem.keyCode === 13) {
+        e.target.click();
+      }
+    });
+  }
 
 }

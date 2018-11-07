@@ -18,7 +18,7 @@
                 </div>
             </div>
         </ng-container>
-        <div tabindex="3" class="perspective-image cursor-pointer" [ngClass]="{'d-none': isViewMode}" (click)="uploadContent.click()">
+        <div tabindex="3" class="perspective-image cursor-pointer" (focus)="onFocus($event)" [ngClass]="{'d-none': isViewMode}" (click)="uploadContent.click()">
             <i class="fa fa-plus" aria-hidden="true"></i>
             <p>Image</p>
         </div>

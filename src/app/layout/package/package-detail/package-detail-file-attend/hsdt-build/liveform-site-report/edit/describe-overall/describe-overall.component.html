@@ -19,7 +19,7 @@
                                 </div>
                             </div>
                         </ng-container>
-                        <div tabindex="2" class="perspective-image cursor-pointer" [ngClass]="{'d-none': isViewMode}" (click)="uploadTopography.click()">
+                        <div tabindex="2" class="perspective-image cursor-pointer" (focus)="onFocus($event)" [ngClass]="{'d-none': isViewMode}" (click)="uploadTopography.click()">
                             <i class="fa fa-plus" aria-hidden="true"></i>
                             <p>Image</p>
                         </div>
@@ -47,7 +47,7 @@
                         </div>
                     </ng-container>
 
-                    <div tabindex="4" class="perspective-image cursor-pointer" [ngClass]="{'d-none': isViewMode}" (click)="uploadExistingBuild.click()">
+                    <div tabindex="4" class="perspective-image cursor-pointer" (focus)="onFocus($event)" [ngClass]="{'d-none': isViewMode}" (click)="uploadExistingBuild.click()">
                         <i class="fa fa-plus" aria-hidden="true"></i>
                         <p>Image</p>
                     </div>
@@ -75,7 +75,7 @@
                     </div>
                 </ng-container>
 
-                <div tabindex="6" class="perspective-image cursor-pointer" [ngClass]="{'d-none': isViewMode}" (click)="uploadStacale.click()">
+                <div tabindex="6" class="perspective-image cursor-pointer" (focus)="onFocus($event)" [ngClass]="{'d-none': isViewMode}" (click)="uploadStacale.click()">
                     <i class="fa fa-plus" aria-hidden="true"></i>
                     <p>Image</p>
                 </div>
