@@ -168,7 +168,6 @@ export class PackageDetailComponent implements OnInit, OnDestroy {
       this.getInforPackage();
     });
     this.activetedRoute.params.subscribe( value => {
-      console.log('value-params', value, value.direction);
     });
   }
 

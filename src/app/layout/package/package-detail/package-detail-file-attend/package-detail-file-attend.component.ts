@@ -77,7 +77,6 @@ export class PackageDetailFileAttendComponent implements OnInit, OnDestroy {
         if (this.urlChirld.find(item => item === this.currentUrl)) {
           this.packageService.getInforPackageID(this.packageId).subscribe(result => {
             this.statusPackage = this.checkStatusPackage[result.stageStatus.id];
-            // console.log('statusPackage111', this.statusPackage, this.currentUrl);
             // if (this.statusPackage.id === this.checkStatusPackage.DangLapHSDT.id) {
             //   this.router.navigate([`/package/detail/${this.packageId}/attend/build/summary`]);
             // }
@@ -94,7 +93,6 @@ export class PackageDetailFileAttendComponent implements OnInit, OnDestroy {
               if (this.urlChirld.find(item => item === this.currentUrl)) {
                 this.packageService.getInforPackageID(this.packageId).subscribe(result => {
                   this.statusPackage = this.checkStatusPackage[result.stageStatus.id];
-                  // console.log('statusPackage222', this.statusPackage, this.currentUrl);
                 });
               }
             });

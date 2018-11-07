@@ -129,7 +129,6 @@ export class DeployNoticeListComponent implements OnInit, OnDestroy {
   rerender(pagedResult: any) {
     this.checkboxSeclectAll = false;
     this.pagedResult = pagedResult;
-    console.log('this.pagedResult', this.pagedResult);
     this.checkButtonUpDown();
 
   }

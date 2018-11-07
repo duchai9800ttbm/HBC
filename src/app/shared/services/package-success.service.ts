@@ -211,7 +211,6 @@ export class PackageSuccessService {
                 url += `huythau/${reasonId}`;
                 break;
         }
-        console.log(url);
         return this.apiService.post(url).map(response => response.result);
     }
 }

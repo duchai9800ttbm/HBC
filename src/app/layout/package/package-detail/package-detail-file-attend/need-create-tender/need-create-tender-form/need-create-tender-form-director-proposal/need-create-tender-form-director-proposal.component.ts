@@ -40,7 +40,6 @@ export class NeedCreateTenderFormDirectorProposalComponent implements OnInit {
     createForm() {
         const formData = NeedCreateTenderFormComponent.formModel ?
             NeedCreateTenderFormComponent.formModel.tenderDirectorProposal : null;
-        console.log('formData', formData);
         this.directorProposalForm = this.fb.group({
             isAgreedParticipating: NeedCreateTenderFormComponent.formModel ?
                 NeedCreateTenderFormComponent.formModel.isAgreedParticipating : true,

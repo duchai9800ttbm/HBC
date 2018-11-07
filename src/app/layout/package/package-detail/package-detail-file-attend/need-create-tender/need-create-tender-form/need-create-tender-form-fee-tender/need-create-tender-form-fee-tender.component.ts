@@ -56,7 +56,6 @@ export class NeedCreateTenderFormFeeTenderComponent implements OnInit {
 
   mappingToLiveFormData(data) {
     NeedCreateTenderFormComponent.formModel.feeOfTenderInvitationDocument = data;
-    console.log('data-mappingToLiveFormData', data);
     if (NeedCreateTenderFormComponent.formModel.feeOfTenderInvitationDocument.feeOfTenderInvitationDocument == null) {
       NeedCreateTenderFormComponent.formModel.feeOfTenderInvitationDocument.feeOfTenderInvitationDocument = 0;
     }

@@ -130,7 +130,6 @@ export class PriceReviewSummaryComponent implements OnInit, OnDestroy {
 
     this.packageService.getInforPackageID(this.packageId).subscribe(result => {
       this.package = result;
-      console.log(this.package.stageStatus.id);
       this.isLoading = false;
     }, err => {
     });
@@ -348,7 +347,6 @@ export class PriceReviewSummaryComponent implements OnInit, OnDestroy {
         that.refresh(false);
         that.alertService.success('Chốt hồ sơ thành công!');
       }, err => {
-        console.log(err);
         if (err.json().errorCode === 'BusinessException') {
           that.alertService.error(`${err.json().errorMessage}`);
         } else {

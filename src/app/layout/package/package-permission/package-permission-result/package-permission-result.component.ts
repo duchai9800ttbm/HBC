@@ -118,7 +118,6 @@ export class PackagePermissionResultComponent implements OnInit {
     onSubmit() {
         this.spinner.show();
         const formValue = this.packagePermissionReviewForm.value;
-        console.log('formValue: ', formValue);
         const result = [];
         this.listFormData.forEach(pData => {
             pData.bidPermissions.forEach(permission => {

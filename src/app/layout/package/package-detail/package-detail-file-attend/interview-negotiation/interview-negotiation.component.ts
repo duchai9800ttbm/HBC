@@ -77,7 +77,6 @@ export class InterviewNegotiationComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.subscription = this.interviewInvitationService.watchNoDirection().subscribe( value => {
-      console.log('this.nodirection', this.nodirection);
       this.nodirection = value;
     });
     this.statusInInterviewList = [this.bidStatus.DaNopHSDT, this.bidStatus.DaNhanLoiMoi,

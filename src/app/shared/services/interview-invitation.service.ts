@@ -545,12 +545,10 @@ export class InterviewInvitationService {
 
   // Thay đổi điều hướng
   changeNoDirection(value) {
-    console.log('changeNoDirection', value);
     InterviewInvitationService.nodirection.next(value);
   }
   // Xem điều hướng
   watchNoDirection() {
-    console.log('InterviewInvitationService.nodirection', InterviewInvitationService.nodirection);
     return InterviewInvitationService.nodirection;
   }
 }

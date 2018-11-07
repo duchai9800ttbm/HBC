@@ -183,12 +183,10 @@ export class MeetingKickoffComponent implements OnInit, OnDestroy {
     this.emailService.searchWithFilter(this.currentPackageId, '', filterModel, 0, 100)
       .subscribe(result => {
         this.listEmailSended = result.items;
-        console.log('this.listEmailSended', this.listEmailSended);
       }, err => {});
   }
 
   renderIndex(i, j) {
-    console.log('iiiiiiii', i, j);
     let dem = 0;
     for ( let m = 0; m < this.listEmailSended.length; m ++) {
       if (m < i) {
@@ -207,8 +205,6 @@ export class MeetingKickoffComponent implements OnInit, OnDestroy {
     this.maxInterviewTimesReport = event.maxInterviewTimesReport;
     this.maxVersionFileList = event.maxVersionFileList;
     this.maxInterviewTimesFileList = event.maxInterviewTimesFileList;
-    console.log('this.maxVersionReport', this.maxVersionReport, this.maxInterviewTimesReport,
-      this.maxVersionFileList, this.maxInterviewTimesFileList);
   }
   sendCc() {
     this.isSendCc = !this.isSendCc;

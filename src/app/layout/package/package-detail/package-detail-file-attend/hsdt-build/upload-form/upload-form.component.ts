@@ -150,7 +150,6 @@ export class UploadFormComponent implements OnInit, OnDestroy {
   }
   ngOnDestroy() {
     if (this.subscription) {
-      console.log(`chay unsub`);
       this.subscription.unsubscribe();
     }
   }

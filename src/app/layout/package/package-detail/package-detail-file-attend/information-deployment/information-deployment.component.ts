@@ -150,7 +150,6 @@ export class InformationDeploymentComponent implements OnInit, OnDestroy {
       this.listPermission = data;
       const hsdt = this.listPermission.length &&
         this.listPermission.filter(x => x.bidOpportunityStage === 'HSDT')[0];
-      console.log(this.listPermission);
       if (!hsdt) {
         this.listPermissionScreen = [];
       }
@@ -164,7 +163,6 @@ export class InformationDeploymentComponent implements OnInit, OnDestroy {
           this.listPermissionScreen = screen.permissions.map(z => z.value);
         }
       }
-      console.log(this.listPermissionScreen);
       this.ThongBaoTrienKhai = this.listPermissionScreen.includes('ThongBaoTrienKhai');
       this.XemEmail = this.listPermissionScreen.includes('XemEmail');
       this.TaoMoiBangPCTD = this.listPermissionScreen.includes('TaoMoiBangPCTD');

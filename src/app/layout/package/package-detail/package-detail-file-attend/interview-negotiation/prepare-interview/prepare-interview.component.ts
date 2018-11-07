@@ -123,7 +123,6 @@ export class PrepareInterviewComponent implements OnInit {
 
 
   viewDetailLiveForm(type: string) {
-    console.log(type);
     switch (type) {
       // Bản tóm tắt điều kiện dự thầu
       case 'TenderConditionalSummary': {
@@ -153,7 +152,6 @@ export class PrepareInterviewComponent implements OnInit {
   }
 
   inLiveForm(typeLiveForm) {
-    console.log(typeLiveForm);
     switch (typeLiveForm) {
       case 'Trình Duyệt Giá': {
         this.dialog = this.dialogService.open({

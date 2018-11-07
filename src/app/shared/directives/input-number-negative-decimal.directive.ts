@@ -59,7 +59,6 @@ export class InputNumberNegativeDecimalDirective implements OnInit {
             ? this.DECIMAL_SEPARATOR + (fraction + PADDING).substring(0, fractionSize)
             : '';
         integer = integer.replace(/\B(?=(\d{3})+(?!\d))/g, this.THOUSANDS_SEPARATOR);
-        console.log('integer', integer, fraction);
         return integer + fraction;
     }
 

@@ -22,7 +22,6 @@ export class PrintEmailComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    console.log(this.email);
   }
   printToCart(printSectionId: string) {
       let popupWinindow;

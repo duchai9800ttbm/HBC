@@ -328,7 +328,6 @@ export class UserFormComponent implements OnInit {
     createGroupUser() {
         this.showPopupAddGroupUser = true;
         this.hidePopup = true;
-        console.log(this.hidePopup);
     }
 
     closePopupGroupUser(agreed: boolean) {

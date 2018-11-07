@@ -61,7 +61,6 @@ export class ManageUserComponent implements OnInit {
     if ( this.groupUserService.getSearchTerm() ) {
       this.searchTerm$ = this.groupUserService.getSearchTerm();
     }
-    console.log('this.SearchTerm', this.searchTerm$.value);
     this.loading  = true;
     this.groupUserService
       .searchKeyWord(this.searchTerm$, 0, 10)

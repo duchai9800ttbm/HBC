@@ -75,7 +75,6 @@ export class NeedCreateTenderFormComponent implements OnInit, OnDestroy {
             this.listPermission = data;
             const hsdt = this.listPermission.length &&
                 this.listPermission.filter(x => x.bidOpportunityStage === 'HSDT')[0];
-            console.log(this.listPermission);
             if (!hsdt) {
                 this.listPermissionScreen = [];
             }

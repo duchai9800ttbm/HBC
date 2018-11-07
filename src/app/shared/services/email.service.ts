@@ -219,7 +219,6 @@ export class EmailService {
 
   // gửi thư thông báo phỏng vấn
   sendEmailInterview(data: SendEmailModel, file: File[], bidInterviewInvitationId: number) {
-    console.log('data-phỏng vấn', data, file, bidInterviewInvitationId);
     const url = `bidopportunity/hsdt/sendmailtostakeholders/${bidInterviewInvitationId}`;
     const dataObj = new FormData();
     dataObj.append('BidOpportunityId', data.bidOpportunityId + '');

@@ -61,14 +61,12 @@ export class PackageEmailComponent implements OnInit, OnDestroy {
   ) { }
 
   ngOnInit() {
-    console.log('this.router-before', this.packageService.routerBeforeEmail);
     this.activetedRoute.params.subscribe(result => {
       this.packageId = +result.id;
       PackageEmailComponent.packageId = this.packageId;
       const that = this;
       this.subUser = this.permissionService.getUser().subscribe(data => {
         if (data && data.userGroup && data.userGroup.text === 'Admin') {
-          console.log('admin đang login');
           const arrayPermission = AdminPermissions;
           this.permissionService.set(arrayPermission);
           if (this.subInterval) {

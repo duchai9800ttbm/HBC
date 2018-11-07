@@ -90,7 +90,6 @@ export class PackagePermissionBidComponent implements OnInit {
                 });
                 this.listFormData = data;
 
-                console.log('asdasd', this.listFormData);
                 this.createForms(data);
                 setTimeout(() => {
                     this.dtTrigger.next();
@@ -122,7 +121,6 @@ export class PackagePermissionBidComponent implements OnInit {
             }
 
         });
-        console.log(this.packagePermissionReviewForm.value);
     }
 
     addFormControl(formData): FormGroup {

@@ -475,11 +475,9 @@ export class PackageListComponent implements OnInit, OnDestroy {
     this.file.splice(index, 1);
   }
   SendInformation() {
-    // console.log(this.emailModel.content)
     if (this.emailModel && this.emailModel.to) {
       this.emailModel.bidOpportunityId = this.currentPackageId;
       this.spinner.show();
-      console.log('this.actionSendEmail', this.actionSendEmail);
       switch (this.actionSendEmail) {
         case ('ContractRoom'): {
           this.detailResultPackageService.sendFeedbackToContractRoom(this.emailModel, this.file).subscribe(result => {

@@ -107,7 +107,6 @@ export class FullFileComponent implements OnInit, OnDestroy {
         });
         this.packageService.getInforPackageID(this.packageId).subscribe(result => {
             this.packageData = result;
-            console.log(this.packageData);
             switch (this.packageData.hsmtStatus.id) {
                 case 'CanBoSungHSMT': {
                     this.router.navigate([`/package/detail/${this.packageId}/invitation/add-file`]);

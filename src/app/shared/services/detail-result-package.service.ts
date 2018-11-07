@@ -470,7 +470,6 @@ export class DetailResultPackageService {
   }
   // Create pramaster danh sách tài liệu đã chuyển giao
   createPramaster(filter: NeedTransferDocFilter): URLSearchParams {
-    console.log('filterfilterfilterfilterfilter', filter);
     const urlFilterParams = new URLSearchParams();
     if (filter.documentType) {
       urlFilterParams.append('documentType', filter.documentType.type ? filter.documentType.type.toString() : '');
@@ -612,7 +611,6 @@ export class DetailResultPackageService {
     urlParams.append('searchTerm', searchTerm);
     return this.apiService.get(filterUrl, urlParams).map(response => {
       const result = response.result;
-      console.log('filterTransferDocDetailsList', result);
       return (result || []).map(this.toTransferredDoc);
     });
   }
@@ -633,7 +631,6 @@ export class DetailResultPackageService {
   }
   // Map model danh sách tài liệu HSDT + HSMT
   toDocumentType(result: any): DocumentTypeAll {
-    console.log('toDocumentType', result);
     return {
       bidOpportunityStage: result.bidOpportunityStage ? {
         id: result.bidOpportunityStage.key,
@@ -962,7 +959,6 @@ export class DetailResultPackageService {
     urlParams.append('searchTerm', searchTerm);
     return this.apiService.get(filterUrl, urlParams).map(response => {
       const result = response.result;
-      console.log('response-getBidMeetingFileList', response, result);
       return {
         currentPage: result.pageIndex,
         pageSize: result.pageSize,

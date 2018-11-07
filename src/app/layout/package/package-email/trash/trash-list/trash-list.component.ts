@@ -132,7 +132,6 @@ export class TrashListComponent implements OnInit {
   }
 
   checkButtonUpDown() {
-    console.log(this.pagedResult);
     this.isShowButtonUp = +this.pagedResult.pageCount > (+this.pagedResult.currentPage + 1);
     this.isShowButtonDown = +this.pagedResult.currentPage > 0;
     this.isShowEmpty = !(this.pagedResult.total > 0);

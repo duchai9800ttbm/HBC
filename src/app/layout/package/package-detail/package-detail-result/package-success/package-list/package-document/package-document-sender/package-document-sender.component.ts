@@ -224,7 +224,6 @@ export class PackageDocumentSenderComponent implements OnInit {
       this.useDaysList = this.useDaysList.filter((el, i, a) => i === a.indexOf(el));
       this.interviewTimesList = this.interviewTimesList.sort((a, b) => a - b);
       this.interviewTimesList = this.interviewTimesList.filter((el, i, a) => i === a.indexOf(el));
-      console.log('this.LISTFILTER-222', this.transferDepartmentList, this.useDaysList, this.interviewTimesList);
     });
   }
 
@@ -624,7 +623,6 @@ export class PackageDocumentSenderComponent implements OnInit {
         }
       }
     });
-    console.log('itemDocChooseTranfer', itemDocChooseTranfer);
     if (this.checkDepartmentAndDateUse(itemDocChooseTranfer)) {
       if (itemDocChooseTranfer && itemDocChooseTranfer.length !== 0) {
         this.confirmationService.confirm(
@@ -676,7 +674,6 @@ export class PackageDocumentSenderComponent implements OnInit {
       this.manageNeedTranferList.forEach(itemDocumentType => {
         itemDocumentType.items = groupBy(itemDocumentType.items, [{ field: 'itemDepartStr' }]);
       });
-      console.log('this.manageNeedTranferList', this.manageNeedTranferList);
     });
     this.modalRef = this.modalService.show(
       template,
@@ -920,7 +917,6 @@ export class PackageDocumentSenderComponent implements OnInit {
   }
   // Router live form
   viewDetailLiveForm(typeLiveForm) {
-    console.log('CHange');
     this.interviewInvitationService.changeNoDirection(true);
     switch (typeLiveForm) {
       case 'TenderConditionalSummary': {
@@ -938,7 +934,6 @@ export class PackageDocumentSenderComponent implements OnInit {
     }
   }
   formatToNumber(item) {
-    console.log('item-formatToNumber', item);
     this.detailResultPackageService.updateUsedays(item.transferDocId, item.useDays).subscribe(response => {
       this.alertService.success('Thay đổi ngày sử dụng tài liệu đã chuyển giao thành công!');
     }, err => {
@@ -947,7 +942,6 @@ export class PackageDocumentSenderComponent implements OnInit {
     this.currentEdit = 0;
   }
   showEdit(e, i, j, k) {
-    console.log('showEdit-showEdit', e, i, j, k);
     const table = e as HTMLElement;
     const index = this.renderIndexHSMTHadTransfer(i, j, k) * 2;
     this.currentEdit = index;

@@ -97,7 +97,6 @@ export class NotificationListComponent implements OnInit {
   read(item: NotificationItem) {
     switch (item.notificationType) {
       case NotificationStatus.GuiDuyetDeNghiDuThau: {
-        console.log('GuiDuyetDeNghiDuThau');
         this.router.navigate([`/package/detail/${item.bidOpportunityId}/attend/create-request`]);
         break;
       }
@@ -106,7 +105,6 @@ export class NotificationListComponent implements OnInit {
         break;
       }
       case NotificationStatus.GuiPhanCongTienDo: {
-        console.log('GuiPhanCongTienDo', item.bidOpportunityId);
         this.router.navigate([`/package/detail/${item.bidOpportunityId}/attend/infomation-deployment`]);
         break;
       }

@@ -49,7 +49,6 @@ export class PackagePermissionReviewComponent implements OnInit {
             this.listBidGroupUser = data;
         });
         this.packageService.getBidPermissionGroupByStage(this.packageId, SETTING_BID_STAGE.Hsmt).subscribe(data => {
-            console.log(data);
             data.forEach(e => {
                 const listItem = {
                     type: e.bidPermissionGroupName,
@@ -86,7 +85,6 @@ export class PackagePermissionReviewComponent implements OnInit {
                 this.addFormArrayItem(e, {});
             }
         });
-        console.log(this.packagePermissionReviewForm.value);
     }
 
     addFormControl(formData): FormGroup {

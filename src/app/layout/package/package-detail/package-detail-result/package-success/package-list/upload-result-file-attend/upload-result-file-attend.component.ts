@@ -55,7 +55,6 @@ export class UploadResultFileAttendComponent implements OnInit {
 
   validateForm() {
     this.invalidMessages = ValidationHelper.getInvalidMessages(this.uploadResultForm, this.formErrors);
-    console.log('this.uploadResultForm', this.uploadResultForm.get('receivedDate'), this.uploadResultForm.get('receivedDate').valid);
     return this.invalidMessages.length === 0;
   }
 

@@ -106,7 +106,6 @@ export class SidebarComponent implements OnInit {
         var self = this;
 
         setInterval(function () {
-            console.log('getting activities');
 
             if (!self.sessionService.currentUser) {
                 return;

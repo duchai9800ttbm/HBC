@@ -154,7 +154,6 @@ export class PackageDocumentReceiverComponent implements OnInit {
   getListHSMTDocType() {
     this.documentService.bidDocumentMajortypes(this.currentPackageId).subscribe(data => {
       this.majorTypeListItem = data;
-      console.log('getListHSMTDocType', this.majorTypeListItem);
     });
   }
 
@@ -162,7 +161,6 @@ export class PackageDocumentReceiverComponent implements OnInit {
   getListHSDTDocType() {
     this.hoSoDuThauService.getDanhSachLoaiTaiLieu(this.currentPackageId).subscribe(res => {
       this.danhSachLoaiTaiLieu = res;
-      console.log('getListHSDTDocType', this.danhSachLoaiTaiLieu);
     });
   }
 
@@ -197,15 +195,12 @@ export class PackageDocumentReceiverComponent implements OnInit {
         this.documentTypeList = this.documentTypeList.sort((a, b) => a - b);
         this.documentTypeList = this.documentTypeList.filter((el, i, a) => i === a.indexOf(el));
       });
-      console.log(this.documentTypeList);
     },
       err => {
       });
   }
 
   filterFuc(alertShow: boolean) {
-    console.log('this.filter', this.filter.documentType);
-    
     this.detailResultPackageService.filterTransferDocDetailsList(
       this.currentPackageId,
       this.searchTerm$.value,
@@ -233,7 +228,6 @@ export class PackageDocumentReceiverComponent implements OnInit {
         }
       });
 
-      console.log('filterFuc', this.docHSMTListTranferred, this.docHSDTListTranferred);
       // Hồ sơ mời thầu
       if (this.docHSMTListTranferred && this.docHSMTListTranferred.length !== 0) {
         this.docHSMTListTranferred.forEach((itemPra, indexPra) => {
@@ -248,7 +242,6 @@ export class PackageDocumentReceiverComponent implements OnInit {
         });
         this.docHSDTListTranferred = groupBy(this.docHSDTListTranferred, [{ field: 'documentTypeStr' }]);
       }
-      console.log('this.transferredDocList-3', this.docHSMTListTranferred, this.docHSDTListTranferred);
       if (alertShow) {
         this.alertService.success('Dữ liệu đã được cập nhật mới nhất!');
       }

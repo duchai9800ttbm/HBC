@@ -17,12 +17,9 @@ export class RowHoverDirective {
   }
 
   private highlight(copy: boolean) {
-    // console.log('hl');
     const row = this.el.nativeElement as HTMLElement;
     const tdFirst = row.firstElementChild as HTMLElement;
     const tdLast = row.lastElementChild as HTMLElement;
-    // console.log(tdFirst);
-    // console.log(tdLast);
     if (copy) {
       this.oldStyle = tdFirst.style.backgroundColor;
     }

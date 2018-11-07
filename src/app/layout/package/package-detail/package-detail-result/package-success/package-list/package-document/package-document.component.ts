@@ -48,7 +48,6 @@ export class PackageDocumentComponent implements OnInit, OnDestroy {
       //   '',
       //   this.newfilter
       // ).subscribe(response => {
-      //   console.log('QUYHEEFFFF', response);
       //   this.checkUser = response.some(itemResponse => {
       //     if (itemResponse.bidTransferDocDetails && itemResponse.bidTransferDocDetails.length !== 0) {
       //       return itemResponse.bidTransferDocDetails.some(itemDoc => {
@@ -62,7 +61,6 @@ export class PackageDocumentComponent implements OnInit, OnDestroy {
       //       return false;
       //     }
       //   });
-      //   console.log('this.statusPackage-Q-check', this.statusPackage, this.checkUser);
       // });
     });
 
@@ -84,7 +82,6 @@ export class PackageDocumentComponent implements OnInit, OnDestroy {
         }
       }
       this.ChuyenGiaoTaiLieu = this.listPermissionScreen.includes('ChuyenGiaoTaiLieu');
-      console.log('this.ChuyenGiaoTaiLieu', this.ChuyenGiaoTaiLieu);
     });
   }
 

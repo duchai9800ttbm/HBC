@@ -72,7 +72,6 @@ export class PriceReviewFormComponent implements OnChanges, OnInit, AfterViewIni
       this.listPermission = data;
       const hsdt = this.listPermission.length &&
         this.listPermission.filter(x => x.bidOpportunityStage === 'HSDT')[0];
-      console.log(this.listPermission);
       if (!hsdt) {
         this.listPermissionScreen = [];
       }

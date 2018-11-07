@@ -189,7 +189,6 @@ export class WaitResultComponent implements OnInit, OnDestroy {
     submitForm(template: TemplateRef<any>) {
         this.isSubmitted = true;
         const valid = this.validateForm();
-        console.log('valid', valid);
         if (this.validateForm()) {
             this.spinner.show();
             let typeBid = null;
@@ -209,7 +208,6 @@ export class WaitResultComponent implements OnInit, OnDestroy {
                 this.getAPIWinOrRLoseOrReject(typeBid);
             }, err => {
                 this.packageService.getInforPackageID(this.currentPackageId).subscribe(result => {
-                    console.log('result-Infor', result.stageStatus.id, this.checkStatusPackage.KetQuaDuThau.text);
                     if (result.stageStatus) {
                         if (result.stageStatus.id === this.checkStatusPackage.KetQuaDuThau.text) {
                             this.getAPIWinOrRLoseOrReject(typeBid);

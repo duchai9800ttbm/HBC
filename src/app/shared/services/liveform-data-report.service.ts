@@ -37,7 +37,6 @@ export class LiveformDataReportService {
   // public saveData(obj: any) {
   //   this.storeData.scaleOverallModel = obj;
   //   this.dataStringSource.next(this.scaleOverallModel);
-  //   console.log(obj);
   // }
 
   public saveData(obj: ScaleOverall) {

@@ -230,7 +230,6 @@ export class ContractSignedComponent implements OnInit, OnDestroy {
   }
 
   render(pagedResult: any) {
-    console.log('pagedResult', pagedResult);
     this.pagedResult = pagedResult;
     // tslint:disable-next-line:max-line-length
     this.maxVersion = (pagedResult.items && pagedResult.items.length !== 0) ? Math.max.apply(Math, pagedResult.items.map(item => item.version)) : 0;
@@ -345,7 +344,6 @@ export class ContractSignedComponent implements OnInit, OnDestroy {
         this.confirmationService.confirm(
           'Bạn có chắc chắn muốn xóa tài liệu được chọn?',
           () => {
-            console.log('listItemCheckbox', listItemCheckbox);
             this.detailResultPackageService.deleteMultiContractSigning(listItemCheckbox).subscribe(response => {
               this.filter(false);
               this.alertService.success('Xóa tài liệu thành công!');

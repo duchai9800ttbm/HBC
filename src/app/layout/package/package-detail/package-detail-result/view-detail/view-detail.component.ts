@@ -16,7 +16,6 @@ export class ViewDetailComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    console.log('item', this.content);
   }
 
   close() {

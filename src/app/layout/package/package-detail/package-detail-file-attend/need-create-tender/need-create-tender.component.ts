@@ -82,7 +82,6 @@ export class NeedCreateTenderComponent implements OnInit, OnDestroy {
       this.listPermission = data;
       const hsdt = this.listPermission.length &&
         this.listPermission.filter(x => x.bidOpportunityStage === 'HSDT')[0];
-      console.log(this.listPermission);
       if (!hsdt) {
         this.listPermissionScreen = [];
       }
@@ -133,10 +132,8 @@ export class NeedCreateTenderComponent implements OnInit, OnDestroy {
             groupBy(itemByChangedTimes.liveFormChangeds, [{ field: 'liveFormStep' }]);
         });
       });
-      console.log('this.historyList-after', this.historyList);
       this.indexItemHistoryChange = Number(this.pagedResultChangeHistoryList.total)
         - Number(this.pagedResultChangeHistoryList.pageSize) * Number(this.pagedResultChangeHistoryList.currentPage);
-      console.log('this.indexItemHistoryChange', this.indexItemHistoryChange);
       setTimeout(() => {
         this.dtTrigger2.next();
       });
@@ -177,7 +174,6 @@ export class NeedCreateTenderComponent implements OnInit, OnDestroy {
     this.packageService
       .getInforPackageID(this.bidOpportunityId)
       .subscribe(data => {
-        console.log('goi lan 1');
         this.packageInfo = data;
         this.spinner.hide();
       });

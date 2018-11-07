@@ -963,13 +963,11 @@ export class PackageService {
 
     updateStakeHolders(bidOpportunityId: number, data): Observable<any> {
         const url = `bidopportunity/${bidOpportunityId}/changebidstakeholdersgroupmembers`;
-        console.log('data', data);
         return this.apiService.post(url, data).map(response => response.result);
     }
 
     updateBidGroupMembers(bidId: number, data): Observable<any> {
         const url = `bidopportunity/${bidId}/changebidusergroupmembers`;
-        console.log('data', data);
         return this.apiService.post(url, data).map(response => response.result);
     }
 
@@ -1026,7 +1024,6 @@ export class PackageService {
     }
     // tạo mới or update phiếu đề nghị dự thầu
     createOrUpdateProposedTenderParticipateReport(data): Observable<any> {
-        console.log('updaate phiếu đề nghị');
         const url = `proposedtenderparticipatinngreport/createorupdate`;
         return this.apiService.post(url, data).map(response => response.result);
     }
@@ -1107,7 +1104,6 @@ export class PackageService {
     // tạo mới/ sửa LiveForm phân công tiến độ
     createOrUpdateTenderPreparationPlanning(data: any): Observable<any> {
         const url = `tenderpreparationplanningassignment/createorupdate`;
-        console.log('data-createOrUpdateTen-derPreparationPlanning', data);
         data.queryDeadline = DateTimeConvertHelper.fromDtObjectToTimestamp(data.queryDeadline);
         data.tasks.forEach(element => {
             element.startDate = DateTimeConvertHelper.fromDtObjectToTimestamp(element.startDate);
@@ -1124,7 +1120,6 @@ export class PackageService {
     // Xác nhận phân công tiến độ
     comfirmTenderPreparationPlanning(data: any): Observable<any> {
         const url = `tenderpreparationplanningassignment/createorupdate`;
-        console.log('task-comfirmTenderPreparationPlanning', data);
         data.tasks.forEach(element => {
             let a = (element.whoIsInCharges && element.whoIsInCharges.length !== 0) ?
                 element.whoIsInCharges.map(item => item.employeeId) : [];

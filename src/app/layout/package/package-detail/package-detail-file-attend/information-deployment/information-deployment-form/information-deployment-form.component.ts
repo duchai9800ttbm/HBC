@@ -92,7 +92,6 @@ export class InformationDeploymentFormComponent implements OnInit, OnDestroy {
             this.listPermission = data;
             const hsdt = this.listPermission.length &&
                 this.listPermission.filter(x => x.bidOpportunityStage === 'HSDT')[0];
-            console.log(this.listPermission);
             if (!hsdt) {
                 this.listPermissionScreen = [];
             }
@@ -138,7 +137,6 @@ export class InformationDeploymentFormComponent implements OnInit, OnDestroy {
                     DateTimeConvertHelper.fromTimestampToDtObject(
                         this.packageInfo.submissionDate * 1000
                     );
-                console.log('this.submissionDate', this.submissionDate);
                 this.checkAndCreateForm();
                 this.spinner.hide();
             });
@@ -161,7 +159,6 @@ export class InformationDeploymentFormComponent implements OnInit, OnDestroy {
     // disableForm() {
     //     this.planForm.controls.forEach( item => {
     //         if ( item === FormArray) {
-    //             console.log('a', a);
     //         }
     //     })
     // }
@@ -249,7 +246,6 @@ export class InformationDeploymentFormComponent implements OnInit, OnDestroy {
     }
 
     // valueChangeNg() {
-    //     console.log('this.valueChange', this.planForm);
     // }
 
     getEmailUser(userId: number): string {
@@ -296,7 +292,6 @@ export class InformationDeploymentFormComponent implements OnInit, OnDestroy {
         const isFinishDisabled =
             (this.checkStatusPackage[this.packageInfo.stageStatus.id].id > this.checkStatusPackage.ThamGiaDuThau.id &&
                 this.checkStatusPackage[this.packageInfo.stageStatus.id].id < this.checkStatusPackage.ChoKetQuaDuThau.id);
-        console.log('isFinishDisabled', isFinishDisabled);
         return this.fb.group({
             itemId: data.itemId,
             itemNo: data.itemNo,
@@ -577,7 +572,6 @@ export class InformationDeploymentFormComponent implements OnInit, OnDestroy {
     // enableCheckbox() {
     //     this.tasksFA.value.every(item => {
     //         if (item.whoIsInChargeId && item.startDate && item.finishDate) {
-    //             console.log(item.isFinish);
     //         }
     //     });
     // }
