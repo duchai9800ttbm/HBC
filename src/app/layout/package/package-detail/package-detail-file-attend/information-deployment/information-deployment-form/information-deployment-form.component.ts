@@ -147,12 +147,23 @@ export class InformationDeploymentFormComponent implements OnInit, OnDestroy {
             this.packageService
                 .getDefaultTenderPreparationPlanning()
                 .subscribe(data => {
+                    console.log('create');
                     this.createForm(data, true);
                 }
                 );
         } else {
             this.packageService.getTenderPreparationPlanning(this.bidOpportunityId).subscribe(data => {
-                this.createForm(data);
+                console.log('detail');
+                if (data) {
+                    this.createForm(data);
+                } else {
+                    this.packageService
+                        .getDefaultTenderPreparationPlanning()
+                        .subscribe(dataDefault => {
+                            console.log('create2');
+                            this.createForm(dataDefault, true);
+                        });
+                }
             });
         }
     }
