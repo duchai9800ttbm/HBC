@@ -2,7 +2,6 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { PackageService } from '../../../../../../../shared/services/package.service';
 import { TenderConditionSummaryRequest } from '../../../../../../../shared/models/api-request/package/tender-condition-summary-request';
 import { PackageDetailComponent } from '../../../../package-detail.component';
-import { NgxSpinnerService } from 'ngx-spinner';
 import { AlertService } from '../../../../../../../shared/services';
 import { HoSoDuThauService } from '../../../../../../../shared/services/ho-so-du-thau.service';
 import { Router, ActivatedRoute } from '../../../../../../../../../node_modules/@angular/router';
@@ -31,7 +30,6 @@ export class SummaryConditionFormComponent implements OnInit, OnDestroy {
   constructor(
     private packageService: PackageService,
     private hoSoDuThauService: HoSoDuThauService,
-    private spinner: NgxSpinnerService,
     private alertService: AlertService,
     private router: Router,
     private activatedRoute: ActivatedRoute,
@@ -86,9 +84,15 @@ export class SummaryConditionFormComponent implements OnInit, OnDestroy {
         this.hoSoDuThauService.emitDataAll(obj);
       }
     });
+    const getDNDTInfo$ = this.packageService.getProposedTenderParticipateReport(this.packageId).subscribe(data => {
+      if (data) {
+        this.hoSoDuThauService.emitDataProposedTender(data);
+      }
+    });
     this.subscription.add(getInFoPackage$);
     this.subscription.add(activate$);
     this.subscription.add(getInfoTender$);
+    this.subscription.add(getDNDTInfo$);
   }
 
   ngOnDestroy(): void {

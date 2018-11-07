@@ -7,6 +7,8 @@ import { HoSoDuThauService } from '../../../../../../../../shared/services/ho-so
 import { DictionaryItemText } from '../../../../../../../../shared/models';
 import { PackageDetailComponent } from '../../../../../package-detail.component';
 import { PackageService } from '../../../../../../../../shared/services/package.service';
+import { ProposeTenderParticipateRequest } from '../../../../../../../../shared/models/api-request/package/propose-tender-participate-request';
+import { Currency } from '../../../../../../../../shared/models/currency';
 
 @Component({
     selector: 'app-summary-condition-form-condition-tender',
@@ -18,6 +20,8 @@ export class SummaryConditionFormConditionTenderComponent implements OnInit {
     dienGiaiDieuKienHSMT = new DienGiaiDieuKienHSMT();
     isModeView = false;
     isShowInputBox = false;
+    dataPTPReport: ProposeTenderParticipateRequest;
+    unitGiatri: Currency;
     constructor(
         private fb: FormBuilder,
         private hoSoDuThauService: HoSoDuThauService,
@@ -28,6 +32,7 @@ export class SummaryConditionFormConditionTenderComponent implements OnInit {
         return (this.dieuKienHSMTForm.get('theoHSMT') as FormGroup).controls.cacLoaiThue as FormArray;
     }
     ngOnInit() {
+        this.dataPTPReport = this.hoSoDuThauService.getDataProposedTender();
         this.hoSoDuThauService.watchLiveformState().subscribe(data => {
             this.isModeView = data.isModeView;
         });
@@ -148,6 +153,15 @@ export class SummaryConditionFormConditionTenderComponent implements OnInit {
                 thue: { value: x, disabled: this.isModeView },
             }));
         });
+        // Begin: Set default value
+        if (this.dieuKienHSMTForm && this.dataPTPReport) {
+            this.unitGiatri = this.dataPTPReport.contractCondition && this.dataPTPReport.contractCondition.tenderSecurityCurrency;
+            const giaTriHSMT = this.dataPTPReport.contractCondition && this.dataPTPReport.contractCondition.tenderSecurity;
+            if (giaTriHSMT) {
+                this.dieuKienHSMTForm.get('theoHSMT').get('giaTri').patchValue(giaTriHSMT);
+            }
+        }
+        // End: Set default value
 
         this.dieuKienHSMTForm.valueChanges.subscribe(data => {
             let obj = new DienGiaiDieuKienHSMT();

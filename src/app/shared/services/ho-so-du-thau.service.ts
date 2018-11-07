@@ -26,6 +26,7 @@ import DateTimeConvertHelper from '../helpers/datetime-convert-helper';
 import { StakeHolder } from '../models/ho-so-du-thau/stack-holder.model';
 import { StateLiveFormSummaryCondition } from '../models/ho-so-du-thau/stateLiveFormSummaryCondition';
 import { HistoryLiveForm } from '../models/ho-so-du-thau/history-liveform.model';
+import { ProposeTenderParticipateRequest } from '../models/api-request/package/propose-tender-participate-request';
 
 @Injectable()
 export class HoSoDuThauService {
@@ -37,9 +38,11 @@ export class HoSoDuThauService {
   static idTenderDocumentTypesData;
   static statusHSDT = new BehaviorSubject<boolean>(false);
   static checkConditionApproval = new BehaviorSubject<boolean>(false);
+  // Data ProposedTenderParticipateReport
+  static getDataPTPReport: ProposeTenderParticipateRequest;
 
   private static checkDecimalNumber(input: any): any {
-    if ((String(input).charAt(String(input).length - 1) === '.') || ( String(input).match(/[a-z]+$/gi) )) {
+    if ((String(input).charAt(String(input).length - 1) === '.') || (String(input).match(/[a-z]+$/gi))) {
       return Number(String(input).match(/[0-9]+/gi));
     }
     return input;
@@ -425,6 +428,14 @@ export class HoSoDuThauService {
   }
   emitFormCacBenLienQuan(isChangeForm: boolean) {
     HoSoDuThauService.tempDataLiveFormDKDT.value.isChangeFormCacBenLienQuan = isChangeForm;
+  }
+  // Link dữ liệu với FORM ĐNDT
+  emitDataProposedTender(data: ProposeTenderParticipateRequest) {
+    HoSoDuThauService.getDataPTPReport = data;
+  }
+  getDataProposedTender() {
+    if (!HoSoDuThauService.getDataPTPReport) { return null; }
+    return HoSoDuThauService.getDataPTPReport;
   }
   // gọi API create or update liveform tóm tắt đkdt
   createOrUpdateLiveFormTomTat(): Observable<any> {

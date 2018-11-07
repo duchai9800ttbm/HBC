@@ -234,7 +234,7 @@
                                                 </div>
                                             </div>
                                         </td>
-                                        <td [hidden]="currentMajorTypeId != 1" valign="baseline" [attr.rowspan]="bidDocumentGroup.items.length" *ngIf="k == 0" class="td-group">
+                                        <td [hidden]="currentMajorTypeId != 1" valign="baseline" [attr.rowspan]="bidDocumentGroup.items.length" *ngIf="k == 0" class="td-group table-td__title--maxwidth table-td__title--minwidth">
                                             <div class="d-flex  document-type center-parent">
                                                 <div style="width: calc(100% - 25px);"> {{ item.documentType }}</div>
                                                 <div style="width: 25px;" (click)="uploadFileItem(item.documentType)" style="cursor: pointer" title="Upload tài liệu">
@@ -246,8 +246,8 @@
                                         <td *ngIf="k != 0" style="display: none">
 
                                         </td>
-                                        <td [title]="item.documentName" (click)="viewDetail(item)">
-                                            <a href="javascript:;"> {{ item.documentName }}
+                                        <td class="table-td__title--maxwidth" [title]="item.documentName" (click)="viewDetail(item)">
+                                            <a href="javascript:;" class="text-truncate"> {{ item.documentName }}
                                             </a>
                                         </td>
                                         <td class="text-center">{{ item.version }}</td>

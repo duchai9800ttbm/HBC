@@ -7,6 +7,7 @@ import { SummaryConditionFormComponent } from '../summary-condition-form.compone
 import { PackageService } from '../../../../../../../../shared/services/package.service';
 import { PackageDetailComponent } from '../../../../../package-detail.component';
 import { ProposeTenderParticipateRequest } from '../../../../../../../../shared/models/api-request/package/propose-tender-participate-request';
+import { Currency } from '../../../../../../../../shared/models/currency';
 
 @Component({
     selector: 'app-summary-condition-form-condition-contract',
@@ -19,7 +20,10 @@ export class SummaryConditionFormConditionContractComponent implements OnInit {
     isModeView = false;
     packageId;
     listPayment = ['Theo tháng (Monthly Payment)', 'Theo giai đoạn (Milestone)'];
-    proposeTenderParticipateRequestModel = new ProposeTenderParticipateRequest();
+    // Thông tin Đề nghị dự thầu
+    dataPTPReport: ProposeTenderParticipateRequest;
+    unitTimeguarantee: Currency;
+
     get baoHiemMayMocHSMTFA(): FormArray {
         const dieuKienHSMT = this.conditionContractForm.get('dieuKienTheoHSMT') as FormGroup;
         const baoHiem = dieuKienHSMT.get('baoHiem') as FormGroup;
@@ -40,7 +44,7 @@ export class SummaryConditionFormConditionContractComponent implements OnInit {
 
     ngOnInit() {
         this.packageId = PackageDetailComponent.packageId;
-
+        this.dataPTPReport = this.hoSoDuThauService.getDataProposedTender();
         this.hoSoDuThauService.watchLiveformState().subscribe(data => {
             this.isModeView = data.isModeView;
         });
@@ -457,19 +461,33 @@ export class SummaryConditionFormConditionContractComponent implements OnInit {
                 }
             }));
         });
-
-        if (this.conditionContractForm.value) {
-            this.packageService.getProposedTenderParticipateReport(this.packageId)
-                .subscribe(data => {
-                    this.proposeTenderParticipateRequestModel = data;
-                    const monthlyPaymentOrMilestone = this.proposeTenderParticipateRequestModel.contractCondition.monthlyPaymentOrMilestone
-                        && this.proposeTenderParticipateRequestModel.contractCondition.monthlyPaymentOrMilestone.value;
-                    if (monthlyPaymentOrMilestone) {
-                        this.conditionContractForm.get('dieuKienTheoHSMT').get('thanhToan')
-                            .get('loaiThanhToan').patchValue(monthlyPaymentOrMilestone);
-                    }
-                });
+        // Begin: Set default value
+        if (this.conditionContractForm.value && this.dataPTPReport) {
+            const phanTramBaoLanhTamUngHSMT = this.dataPTPReport.contractCondition && this.dataPTPReport.contractCondition.advancePayment;
+            if (phanTramBaoLanhTamUngHSMT) {
+                this.conditionContractForm
+                    .get('dieuKienTheoHSMT').get('baoLanhTamUng').get('phanTram').patchValue(phanTramBaoLanhTamUngHSMT);
+            }
+            const loaiThanhToanHSMT = this.dataPTPReport.contractCondition &&
+                this.dataPTPReport.contractCondition.monthlyPaymentOrMilestone;
+            if (loaiThanhToanHSMT) {
+                this.conditionContractForm
+                    .get('dieuKienTheoHSMT').get('thanhToan').get('loaiThanhToan').patchValue(loaiThanhToanHSMT.value);
+            }
+            const phanTramPhatTreTienDoHSMT = this.dataPTPReport.contractCondition &&
+                this.dataPTPReport.contractCondition.delayDamagesForTheWorks;
+            if (phanTramPhatTreTienDoHSMT) {
+                this.conditionContractForm
+                    .get('dieuKienTheoHSMT').get('phatTreTienDo').get('phanTram').patchValue(phanTramPhatTreTienDoHSMT);
+            }
+            this.unitTimeguarantee = this.dataPTPReport.contractCondition &&
+                this.dataPTPReport.contractCondition.warrantyPeriodUnit;
+            const descLoaiHopDong = this.dataPTPReport.contractCondition && this.dataPTPReport.contractCondition.typeOfContract;
+            if (descLoaiHopDong) {
+                this.conditionContractForm.get('loaiHopDong').get('desc').patchValue(descLoaiHopDong);
+            }
         }
+        // End: Set default value
 
 
         this.conditionContractForm.valueChanges.subscribe(data => {
