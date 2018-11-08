@@ -353,3 +353,23 @@ table.zui-table th {
 .text-warning{
     cursor: pointer;
 }
+.manage-table--status{
+    text-align: center;
+    color: white;
+    padding: 0.1rem 0.1rem;
+    border: 1px solid transparent;
+    border-radius: 0.25rem;
+    font-size: 0.85rem;   
+}
+.daNhan{
+    background-color: #20C98C;
+}
+.chuaNhan{
+    background-color: #FD7822;
+}
+.yeuCauGuiLai{
+    background-color: #4D92DF;
+}
+.quaHanNhanTaiLieu{
+    background-color: #FC0D23;
+}

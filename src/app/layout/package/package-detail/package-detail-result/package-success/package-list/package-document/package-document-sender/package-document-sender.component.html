@@ -852,7 +852,7 @@
                                                 <div class="edit-number">
                                                     <input [(ngModel)]="documents.useDays" autofocus (change)=formatToNumber(documents) appInputDate min="0" class="form-control number-date--pad"
                                                         placeholder="Number" [ngClass]="{'w80' : isManageTransfer==true}">
-                                                    <i class="fa fa-pencil edit-number--posotion" ></i>
+                                                    <i class="fa fa-pencil edit-number--posotion"></i>
                                                     <!-- (click)="showEditSHDT(nameit, i, j, k)" -->
                                                 </div>
                                             </td>
@@ -988,7 +988,7 @@
                                             </div>
                                         </td>
                                         <td class="select-filter" [class.merger-table]="!(j === 0 && k === 0)">
-                                            <div class="text-truncate" *ngIf="j === 0 && k === 0" >
+                                            <div class="text-truncate" *ngIf="j === 0 && k === 0">
                                                 {{ itemsTranferListByDepart.document?.name}}
                                             </div>
                                         </td>
@@ -998,7 +998,14 @@
                                             </div>
                                         </td>
                                         <td class="select-filter">{{ itemsTranferListByDepart.receivedEmployee?.employeeName}}</td>
-                                        <td class="select-filter">{{ itemsTranferListByDepart.receiveStatus?.value}}</td>
+                                        <td class="select-filter">
+                                            <div *ngIf="itemsTranferListByDepart.receiveStatus?.key === 'ChuaNhan'" class="manage-table--status" [class.daNhan]="itemsTranferListByDepart.receiveStatus?.key === 'DaNhan'"
+                                                [class.chuaNhan]="itemsTranferListByDepart.receiveStatus?.key === 'ChuaNhan'"
+                                                [class.yeuCauGuiLai]="itemsTranferListByDepart.receiveStatus?.key === 'YeuCauGuiLai'"
+                                                [class.quaHanNhanTaiLieu]="itemsTranferListByDepart.receiveStatus?.key === 'QuaHanNhanTaiLieu'">
+                                                {{ itemsTranferListByDepart.receiveStatus?.value}}
+                                            </div>
+                                        </td>
                                         <td class="select-filter text-center">
                                             <div *ngIf="itemsTranferListByDepart.receiveStatus?.key === 'YeuCauGuiLai'" class="col-md-4 offset-md-4 center-parent cursor-pointer"
                                                 (click)="requestToreSubmitDoc(itemsTranferListByDepart.id)">
