@@ -43,8 +43,8 @@
             <!-- End tab 2  -->
 
             <!-- Start tab 3 -->
-            <ng-container *ngIf="statusPackage?.id >= checkStatusPackage.DaNhanTaiLieu.id">
-                <li *ngIf="!kickOffActive" class="triangle3" [routerLinkActive]="['active']" (click)="onClickKickOff();" [ngClass]="{ 'active' : statusPackage?.id >= checkStatusPackage.DaNhanTaiLieu.id }"
+            <ng-container *ngIf="statusPackage?.id >= checkStatusPackage.DaPhanHoiDenPhongHopDong.id">
+                <li *ngIf="!kickOffActive" class="triangle3" [routerLinkActive]="['active']" (click)="onClickKickOff();" [ngClass]="{ 'active' : statusPackage?.id >= checkStatusPackage.DaPhanHoiDenPhongHopDong.id }"
                     [routerLink]="['../package-success/meeting-kickoff']">
                     <div style="width: 100%" class="center-parent">
                         <div [ngClass]="{'': arrowKickOff == false,'arrow-down':arrowKickOff==true}"></div>
@@ -59,13 +59,13 @@
                 </li>
             </ng-container>
 
-            <ng-container *ngIf="!(statusPackage?.id >= checkStatusPackage.DaNhanTaiLieu.id)">
-                <li *ngIf="!kickOffActive" class="triangle3" [routerLinkActive]="['active']" [ngClass]="{ 'active' : statusPackage?.id >= checkStatusPackage.DaNhanTaiLieu.id }">
+            <ng-container *ngIf="!(statusPackage?.id >= checkStatusPackage.DaPhanHoiDenPhongHopDong.id)">
+                <li *ngIf="!kickOffActive" class="triangle3" [routerLinkActive]="['active']" [ngClass]="{ 'active' : statusPackage?.id >= checkStatusPackage.DaPhanHoiDenPhongHopDong.id }">
                     <div style="width: 100%" class="center-parent">
                         <div [ngClass]="{'': arrowKickOff == false,'arrow-down':arrowKickOff==true}"></div>
                     </div>
                 </li>
-                <li *ngIf="kickOffActive" class="triangle3" [routerLinkActive]="['active']" [ngClass]="{ 'active' : statusPackage?.id >= checkStatusPackage.DaNhanTaiLieu.id }">
+                <li *ngIf="kickOffActive" class="triangle3" [routerLinkActive]="['active']" [ngClass]="{ 'active' : statusPackage?.id >= checkStatusPackage.DaPhanHoiDenPhongHopDong.id }">
                         <!-- [ngClass]="{ 'active' : kickOff === true }" -->
                     <div style="width: 100%" class="center-parent">
                         <div></div>

@@ -609,7 +609,7 @@
                                                 <td [ngClass]="{'w12' : isManageTransfer==true, 'w15' : isManageTransfer==false}" [title]="items.documents[0].name">{{ items.documents[0].name }}</td>
                                                 <td class="select-filter td-input w10 td--overflow">
                                                     <div *ngIf="items.documents[0].departments && items.documents[0].departments.length !== 0">
-                                                        <div *ngFor="let itemDepartments of items.documents[0].departments" [title]="itemDepartments.value">
+                                                        <div class="text-truncate" *ngFor="let itemDepartments of items.documents[0].departments" [title]="itemDepartments.value">
                                                             {{itemDepartments.value}}
                                                         </div>
                                                     </div>
@@ -670,7 +670,7 @@
                                             <td [ngClass]="{'w12' : isManageTransfer==true, 'w15' : isManageTransfer==false}" [title]="documents.name">{{ documents.name }}</td>
                                             <td class="select-filter td-input w10 td--overflow">
                                                 <div *ngIf="documents.departments && documents.departments.length !== 0">
-                                                    <div *ngFor="let itemDepartments of documents.departments" [title]="itemDepartments.displayText">
+                                                    <div class="text-truncate" *ngFor="let itemDepartments of documents.departments" [title]="itemDepartments.displayText">
                                                         {{itemDepartments.value}}
                                                     </div>
                                                 </div>
@@ -759,7 +759,7 @@
                                                 <td [ngClass]="{'w12' : isManageTransfer==true, 'w15' : isManageTransfer==false}" [title]="items.documents[0].name">{{ items.documents[0].name }}</td>
                                                 <td class="select-filter td-input w10 td--overflow">
                                                     <div *ngIf="items.documents[0].departments && items.documents[0].departments.length !== 0">
-                                                        <div *ngFor="let itemDepartments of items.documents[0].departments" [title]="itemDepartments.displayText">
+                                                        <div class="text-truncate" *ngFor="let itemDepartments of items.documents[0].departments" [title]="itemDepartments.displayText">
                                                             {{itemDepartments.value}}
                                                         </div>
                                                     </div>
@@ -838,7 +838,7 @@
                                             <td [ngClass]="{'w12' : isManageTransfer==true, 'w15' : isManageTransfer==false}" [title]="documents.name">{{ documents.name }}</td>
                                             <td class="select-filter td-input w10 td--overflow">
                                                 <div *ngIf="documents.departments && documents.departments.length !== 0">
-                                                    <div *ngFor="let itemDepartments of documents.departments" [title]="itemDepartments.displayText">
+                                                    <div class="text-truncate" *ngFor="let itemDepartments of documents.departments" [title]="itemDepartments.displayText">
                                                         {{itemDepartments.value}}
                                                     </div>
                                                 </div>
