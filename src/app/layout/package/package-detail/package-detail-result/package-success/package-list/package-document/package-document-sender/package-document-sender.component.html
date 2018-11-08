@@ -615,7 +615,7 @@
                                                     </div>
                                                 </td>
                                                 <td class="select-filter text-center w10">
-                                                    <div class="edit-number">
+                                                    <div class="edit-number" *ngIf="items.documents[0].departments && items.documents[0].departments.length !== 0">
                                                         <input [(ngModel)]="items.documents[0].useDays" (change)=formatToNumber(items.documents[0]) appInputDate min="0" class="form-control number-date--pad"
                                                             placeholder="Number" [ngClass]="{'w80' : isManageTransfer==true}">
                                                         <i class="fa fa-pencil edit-number--posotion"></i>
