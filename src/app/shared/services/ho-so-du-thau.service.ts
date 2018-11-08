@@ -701,7 +701,7 @@ export class HoSoDuThauService {
   }
 
   // Thông tin bảng tóm tắt ĐKDT
-  getInfoTenderConditionalSummary(bidOpportunityId: number): Observable<any> {
+  getInfoTenderConditionalSummary(bidOpportunityId: number): Observable<DuLieuLiveFormDKDT> {
     const url = `bidopportunity/${bidOpportunityId}/tenderconditionalsummary`;
     return this.apiService.get(url).map(res => {
       if (!res.result) {

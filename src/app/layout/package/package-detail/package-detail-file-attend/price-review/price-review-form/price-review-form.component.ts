@@ -14,6 +14,8 @@ import { Subscription } from '../../../../../../../../node_modules/rxjs/Subscrip
 import { PermissionModel } from '../../../../../../shared/models/permission/Permission.model';
 import { PermissionService } from '../../../../../../shared/services/permission.service';
 import { UserModel } from '../../../../../../shared/models/user/user.model';
+import { HoSoDuThauService } from '../../../../../../shared/services/ho-so-du-thau.service';
+import { DuLieuLiveFormDKDT } from '../../../../../../shared/models/ho-so-du-thau/tom-tat-dkdt.model';
 
 @Component({
   selector: 'app-price-review-form',
@@ -23,6 +25,8 @@ import { UserModel } from '../../../../../../shared/models/user/user.model';
 export class PriceReviewFormComponent implements OnChanges, OnInit, AfterViewInit, OnDestroy {
   priceReviewForm: FormGroup;
   package = new PackageInfoModel();
+  summary = new DuLieuLiveFormDKDT();
+  tenderProposed = {};
   priceReview: TenderPriceApprovalShort;
   bidStatus = BidStatus;
 
@@ -34,7 +38,8 @@ export class PriceReviewFormComponent implements OnChanges, OnInit, AfterViewIni
     private confirmService: ConfirmationService,
     private alertService: AlertService,
     private router: Router,
-    private permissionService: PermissionService
+    private permissionService: PermissionService,
+    private hoSoDuThauService: HoSoDuThauService
   ) { }
   isModeView;
   isModeCreate;
@@ -104,7 +109,7 @@ export class PriceReviewFormComponent implements OnChanges, OnInit, AfterViewIni
 
     this.subscription.add(sub);
     this.getAllCustomer();
-    this.getInfoPackge();
+    this.getDataDefaultMapping();
     this.createForm();
   }
 
@@ -134,42 +139,90 @@ export class PriceReviewFormComponent implements OnChanges, OnInit, AfterViewIni
     this.isModeEdit = this.type === 'edit';
   }
 
-  getInfoPackge() {
-    this.spinner.show();
-    this.packageService.getInforPackageID(this.packageId).subscribe(result => {
-      this.package = result;
-      if (this.package.stageStatus && this.priceReviewForm.value) {
-        if ((this.package.stageStatus.id !== 'DangLapHSDT')
-          && (this.package.stageStatus.id !== 'CanLapTrinhDuyetGia')
-          && (this.package.stageStatus.id !== 'DaGuiDuyetTrinhDuyetGia')
-          && (this.package.stageStatus.id !== 'CanDieuChinhTrinhDuyetGia')) {
-          this.priceReviewForm.controls['isApprovedByBoardOfDirector'].disable();
-        } else {
-          if ((this.userModel && this.userModel.userGroup
-            && this.userModel.userGroup.text === 'Admin')) {
-            this.priceReviewForm.controls['isApprovedByBoardOfDirector'].enable();
-          }
-          if ((this.userModel && this.userModel.department
-            && this.userModel.department.text === 'BAN TỔNG GIÁM ĐỐC')) {
-            this.priceReviewForm.controls['isApprovedByBoardOfDirector'].enable();
-          }
-          if (this.DuyetTDGTPDuThau || (this.userModel && this.userModel.department
-            && this.userModel.department.text === 'PHÒNG DỰ THẦU'
-            && this.userModel.level && this.userModel.level.text === 'Trưởng phòng')) {
-            this.priceReviewForm.controls['isApprovedByTenderManager'].enable();
-          }
-          if (this.DuyetTDGTPDuThau || (this.userModel && this.userModel.department
-            && this.userModel.department.text === 'PHÒNG DỰ THẦU'
-            && this.userModel.level && this.userModel.level.text === 'Trưởng nhóm')) {
-            this.priceReviewForm.controls['isApprovedByTenderLeader'].enable();
+  // getInfoPackge() {
+  //   this.spinner.show();
+  //   this.packageService.getInforPackageID(this.packageId).subscribe(result => {
+  //     this.package = result;
+  //     if (this.package.stageStatus && this.priceReviewForm.value) {
+  //       if ((this.package.stageStatus.id !== 'DangLapHSDT')
+  //         && (this.package.stageStatus.id !== 'CanLapTrinhDuyetGia')
+  //         && (this.package.stageStatus.id !== 'DaGuiDuyetTrinhDuyetGia')
+  //         && (this.package.stageStatus.id !== 'CanDieuChinhTrinhDuyetGia')) {
+  //         this.priceReviewForm.controls['isApprovedByBoardOfDirector'].disable();
+  //       } else {
+  //         if ((this.userModel && this.userModel.userGroup
+  //           && this.userModel.userGroup.text === 'Admin')) {
+  //           this.priceReviewForm.controls['isApprovedByBoardOfDirector'].enable();
+  //         }
+  //         if ((this.userModel && this.userModel.department
+  //           && this.userModel.department.text === 'BAN TỔNG GIÁM ĐỐC')) {
+  //           this.priceReviewForm.controls['isApprovedByBoardOfDirector'].enable();
+  //         }
+  //         if (this.DuyetTDGTPDuThau || (this.userModel && this.userModel.department
+  //           && this.userModel.department.text === 'PHÒNG DỰ THẦU'
+  //           && this.userModel.level && this.userModel.level.text === 'Trưởng phòng')) {
+  //           this.priceReviewForm.controls['isApprovedByTenderManager'].enable();
+  //         }
+  //         if (this.DuyetTDGTPDuThau || (this.userModel && this.userModel.department
+  //           && this.userModel.department.text === 'PHÒNG DỰ THẦU'
+  //           && this.userModel.level && this.userModel.level.text === 'Trưởng nhóm')) {
+  //           this.priceReviewForm.controls['isApprovedByTenderLeader'].enable();
+  //         }
+  //       }
+  //     }
+  //     this.spinner.hide();
+  //   }, err => {
+  //     this.spinner.hide();
+  //   });
+  // }
+
+  getDataDefaultMapping() {
+    this.packageService.getInforPackageID(this.packageId)
+      .switchMap(goiThau => {
+        this.package = goiThau;
+        console.log(this.package);
+        if (this.package.stageStatus && this.priceReviewForm.value) {
+          if ((this.package.stageStatus.id !== 'DangLapHSDT')
+            && (this.package.stageStatus.id !== 'CanLapTrinhDuyetGia')
+            && (this.package.stageStatus.id !== 'DaGuiDuyetTrinhDuyetGia')
+            && (this.package.stageStatus.id !== 'CanDieuChinhTrinhDuyetGia')) {
+            this.priceReviewForm.controls['isApprovedByBoardOfDirector'].disable();
+          } else {
+            if ((this.userModel && this.userModel.userGroup
+              && this.userModel.userGroup.text === 'Admin')) {
+              this.priceReviewForm.controls['isApprovedByBoardOfDirector'].enable();
+            }
+            if ((this.userModel && this.userModel.department
+              && this.userModel.department.text === 'BAN TỔNG GIÁM ĐỐC')) {
+              this.priceReviewForm.controls['isApprovedByBoardOfDirector'].enable();
+            }
+            if (this.DuyetTDGTPDuThau || (this.userModel && this.userModel.department
+              && this.userModel.department.text === 'PHÒNG DỰ THẦU'
+              && this.userModel.level && this.userModel.level.text === 'Trưởng phòng')) {
+              this.priceReviewForm.controls['isApprovedByTenderManager'].enable();
+            }
+            if (this.DuyetTDGTPDuThau || (this.userModel && this.userModel.department
+              && this.userModel.department.text === 'PHÒNG DỰ THẦU'
+              && this.userModel.level && this.userModel.level.text === 'Trưởng nhóm')) {
+              this.priceReviewForm.controls['isApprovedByTenderLeader'].enable();
+            }
           }
         }
-      }
-      this.spinner.hide();
-    }, err => {
-      this.spinner.hide();
-    });
+        return this.hoSoDuThauService.getInfoTenderConditionalSummary(this.packageId);
+      })
+      .switchMap(tomTat => {
+        this.summary = tomTat;
+        console.log(this.summary);
+        return this.packageService.getProposedTenderParticipateReport(this.packageId);
+      })
+      .subscribe(phieuDeNghi => {
+        this.tenderProposed = phieuDeNghi;
+
+
+      });
   }
+
+
   createForm() {
     this.priceReviewForm = this.fb.group({
       // Thông tin dự án
@@ -1027,7 +1080,7 @@ export class PriceReviewFormComponent implements OnChanges, OnInit, AfterViewIni
     }
     this.confirmService.confirm('Bạn có chắc muốn gửi duyệt trình duyệt giá?', () => {
       this.priceReviewService.guiDuyetTrinhDuyetGia(this.packageId).subscribe(data => {
-        that.getInfoPackge();
+        that.getDataDefaultMapping();
         that.alertService.success('Gửi duyệt trình duyệt giá thành công!');
       }, err => {
         that.alertService.error('Gửi duyệt trình duyệt giá thất bại, vui lòng thử lại sau!');
