@@ -225,14 +225,16 @@ export class InformationDeploymentFormComponent implements OnInit, OnDestroy {
         setTimeout(() => {
             if (this.ganttChart && this.planForm) {
                 kendo.jQuery(this.ganttChart.nativeElement).kendoGantt({
+                  //  toolbar: ['pdf'],
+                    timezone: '',
                     views: [
-                        { type: 'day', selected: true },
-                        { type: 'week' },
+                        { type: 'day', },
+                        { type: 'week', selected: true },
                         'month'
                     ],
                     columns: [
-                        { field: 'title', title: 'Công việc', width: 60 },
-                        { field: 'employeeName', title: 'Phân công', width: 60 },
+                        { field: 'title', title: 'Công việc', width: 200 },
+                        { field: 'employeeName', title: 'Phân công', width: 200 },
 
                     ],
                     tooltip: {
@@ -246,9 +248,12 @@ export class InformationDeploymentFormComponent implements OnInit, OnDestroy {
                     // 2832
                     // listWidth: 0,
                     showWorkHours: false,
-                    showWorkDays: false,
+                    showWorkDays: true,
+                    workWeekStart: 1,
+                    workWeekEnd: 7,
                     editable: false,
-                    snap: false
+                    snap: false,
+                    height: window.screen.availHeight * 0.7
                 }).data('kendoGantt');
                 this.updateGantt();
                 this.planForm.valueChanges.subscribe(_ => {
@@ -590,7 +595,7 @@ export class InformationDeploymentFormComponent implements OnInit, OnDestroy {
                         <div>#= kendo.format('{0:dd/MM/yyyy HH:mm}', task.start) #</div>
                         <div>#= kendo.format('{0:dd/MM/yyyy HH:mm}', task.end) #</div>`
                     },
-                
+
                     // height: 3250,
                     // 2832
                     // listWidth: 0,
