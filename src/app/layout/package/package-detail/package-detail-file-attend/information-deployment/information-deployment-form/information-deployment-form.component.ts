@@ -147,24 +147,22 @@ export class InformationDeploymentFormComponent implements OnInit, OnDestroy {
             this.packageService
                 .getDefaultTenderPreparationPlanning()
                 .subscribe(data => {
-                    console.log('create');
                     this.createForm(data, true);
                 }
                 );
         } else {
-            this.packageService.getTenderPreparationPlanning(this.bidOpportunityId).subscribe(data => {
-                console.log('detail');
-                if (data) {
-                    this.createForm(data);
-                } else {
-                    this.packageService
-                        .getDefaultTenderPreparationPlanning()
-                        .subscribe(dataDefault => {
-                            console.log('create2');
-                            this.createForm(dataDefault, true);
-                        });
-                }
-            });
+            this.packageService
+                .getTenderPreparationPlanning(this.bidOpportunityId).subscribe(data => {
+                    if (data) {
+                        this.createForm(data);
+                    } else {
+                        this.packageService
+                            .getDefaultTenderPreparationPlanning()
+                            .subscribe(dataDefault => {
+                                this.createForm(dataDefault, true);
+                            });
+                    }
+                });
         }
     }
     // disableForm() {
@@ -177,7 +175,7 @@ export class InformationDeploymentFormComponent implements OnInit, OnDestroy {
     createForm(planModel: TenderPreparationPlanningRequest, isCreate?) {
         this.tenderPlan = planModel;
         const taskArr = [];
-        this.controlDisableForm = this.routerAction === 'view' ? true : false;
+        console.log(planModel);
         planModel.tasks.forEach(i => taskArr.push(this.createTaskItemFG(i)));
         this.planForm = this.fb.group({
             id: planModel.id,
@@ -215,6 +213,8 @@ export class InformationDeploymentFormComponent implements OnInit, OnDestroy {
             },
             tasks: this.fb.array(taskArr)
         });
+        this.controlDisableForm = this.routerAction === 'view' ? true : false;
+
         this.tasksFA.controls.forEach((item, index) => {
             this.calculateTotalTime(index);
         });
@@ -223,7 +223,7 @@ export class InformationDeploymentFormComponent implements OnInit, OnDestroy {
         this.changeDirector(this.planForm.get('technicalDepartmentEmployeeId').value, 2);
         this.changeDirector(this.planForm.get('bimDepartmentEmployeeId').value, 3);
         setTimeout(() => {
-            if (this.ganttChart) {
+            if (this.ganttChart && this.planForm) {
                 kendo.jQuery(this.ganttChart.nativeElement).kendoGantt({
                     views: [
                         { type: 'day', selected: true },
@@ -232,6 +232,8 @@ export class InformationDeploymentFormComponent implements OnInit, OnDestroy {
                     ],
                     columns: [
                         { field: 'title', title: 'Công việc', width: 60 },
+                        { field: 'employeeName', title: 'Phân công', width: 60 },
+
                     ],
                     tooltip: {
                         visible: true,
@@ -239,6 +241,7 @@ export class InformationDeploymentFormComponent implements OnInit, OnDestroy {
                         <div>#= kendo.format('{0:dd/MM/yyyy HH:mm}', task.start) #</div>
                         <div>#= kendo.format('{0:dd/MM/yyyy HH:mm}', task.end) #</div>`
                     },
+                    // taskTemplate: `<div style="display: flex; flex-direction: column;"><div>#= data.employeeName # #= data.title #  </div>`,
                     // height: 3250,
                     // 2832
                     // listWidth: 0,
@@ -253,7 +256,7 @@ export class InformationDeploymentFormComponent implements OnInit, OnDestroy {
                     // this.enableCheckbox();
                 });
             }
-        }, 500);
+        }, 800);
     }
 
     // valueChangeNg() {
@@ -291,10 +294,12 @@ export class InformationDeploymentFormComponent implements OnInit, OnDestroy {
                     // parentId: i.itemId,
                     title: i.itemName,
                     start: i.startDate,
-                    end: i.finishDate
+                    end: i.finishDate,
+                    employeeName: i.employeeName ? i.employeeName : ''
                 };
             })
         });
+        console.log('abcd');
         this.gantt = kendo.jQuery(this.ganttChart.nativeElement).data('kendoGantt');
         this.gantt.setDataSource(dataSource);
     }
@@ -311,6 +316,7 @@ export class InformationDeploymentFormComponent implements OnInit, OnDestroy {
                 value: data.itemDesc,
                 disabled: this.controlDisableForm,
             },
+            employeeName: data.whoIsInCharge && data.whoIsInCharge.employeeName,
             whoIsInChargeId: {
                 value: data.whoIsInChargeId === 0 ? null : data.whoIsInChargeId,
                 disabled: this.controlDisableForm,
@@ -377,19 +383,6 @@ export class InformationDeploymentFormComponent implements OnInit, OnDestroy {
     }
 
     checkPlanItems(data: TenderPreparationPlanItem[]): boolean {
-        // let i = 1;
-        // let result = true;
-        // data.forEach(e => {
-        //     if (!(e.whoIsInChargeId && e.startDate && e.finishDate)) {
-        //         this.alertService.error('Bạn chưa chọn thời gian bắt đầu và thời gian kết thúc cho công việc số ' + i);
-        //         result = false;
-        //     } else {
-        //         i++;
-        //     }
-        // });
-        // if (data.find(i => i.whoIsInChargeId && i.startDate && i.finishDate)) {
-
-        // }
         if (data.some(i => i.whoIsInChargeId != null || i.whoIsInChargeId !== 0 ||
             i.whoIsInChargeIds != null || i.whoIsInChargeIds.length !== 0)) {
             return true;
@@ -506,14 +499,7 @@ export class InformationDeploymentFormComponent implements OnInit, OnDestroy {
         this.saveTenderPlan(false);
     }
 
-    // getItemDuration(start: Date, end: Date): string {
-    //     if (start && end) {
-    //         // tslint:disable-next-line:max-line-length
-    //         return Math.abs(DateTimeConvertHelper.fromDtObjectToSecon(start) - DateTimeConvertHelper.fromDtObjectToSecon(end)) / (60 * 60 * 24) + '';
-    //     } else {
-    //         return '';
-    //     }
-    // }
+
 
     calculateTotalTime(index) {
         const end = DateTimeConvertHelper.fromDtObjectToSecon((this.tasksFA.controls[index]).get('finishDate').value);
@@ -580,12 +566,6 @@ export class InformationDeploymentFormComponent implements OnInit, OnDestroy {
         this.getPackageInfo();
     }
 
-    // enableCheckbox() {
-    //     this.tasksFA.value.every(item => {
-    //         if (item.whoIsInChargeId && item.startDate && item.finishDate) {
-    //         }
-    //     });
-    // }
 
     showGantt() {
         this.isShowGantt = true;
@@ -610,6 +590,7 @@ export class InformationDeploymentFormComponent implements OnInit, OnDestroy {
                         <div>#= kendo.format('{0:dd/MM/yyyy HH:mm}', task.start) #</div>
                         <div>#= kendo.format('{0:dd/MM/yyyy HH:mm}', task.end) #</div>`
                     },
+                
                     // height: 3250,
                     // 2832
                     // listWidth: 0,
