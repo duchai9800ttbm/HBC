@@ -257,12 +257,16 @@ export class PackageDocumentSenderComponent implements OnInit {
           if (itemchildDocuments.childDocuments && itemchildDocuments.childDocuments.length !== 0) {
             (itemchildDocuments.childDocuments || []).forEach(itemChild => {
               (itemChild.items || []).forEach(items => {
-                items.documents[0].dateUse = items.documents[0].dateUse.toString() + ' ngày';
+                if (items.documents[0].dateUse) {
+                  items.documents[0].dateUse = items.documents[0].dateUse.toString() + ' ngày';
+                }
               });
             });
           } else if (!itemchildDocuments.childDocuments || (itemchildDocuments.childDocuments.length === 0)) {
             (itemchildDocuments.documents || []).forEach(documents => {
-              documents.dateUse = documents.dateUse.toString() + ' ngày';
+              if (documents.dateUse) {
+                documents.dateUse = documents.dateUse.toString() + ' ngày';
+              }
             });
           }
         });
@@ -283,12 +287,16 @@ export class PackageDocumentSenderComponent implements OnInit {
           if (itemchildDocuments.childDocuments && itemchildDocuments.childDocuments.length !== 0) {
             (itemchildDocuments.childDocuments || []).forEach(itemChild => {
               (itemChild.items || []).forEach(items => {
-                items.documents[0].dateUse = items.documents[0].dateUse.toString() + ' ngày';
+                if (items.documents[0].dateUse) {
+                  items.documents[0].dateUse = items.documents[0].dateUse.toString() + ' ngày';
+                }
               });
             });
           } else if (!itemchildDocuments.childDocuments || (itemchildDocuments.childDocuments.length === 0)) {
             (itemchildDocuments.documents || []).forEach(documents => {
-              documents.dateUse = documents.dateUse.toString() + ' ngày';
+              if (documents.dateUse) {
+                documents.dateUse = documents.dateUse.toString() + ' ngày';
+              }
             });
           }
         });
@@ -333,12 +341,16 @@ export class PackageDocumentSenderComponent implements OnInit {
           if (itemchildDocuments.childDocuments && itemchildDocuments.childDocuments.length !== 0) {
             (itemchildDocuments.childDocuments || []).forEach(itemChild => {
               (itemChild.items || []).forEach(items => {
-                items.documents[0].useDays = items.documents[0].useDays.toString() + ' ngày';
+                if (items.documents[0].useDays) {
+                  items.documents[0].useDays = items.documents[0].useDays.toString() + ' ngày';
+                }
               });
             });
           } else if (!itemchildDocuments.childDocuments || (itemchildDocuments.childDocuments.length === 0)) {
             (itemchildDocuments.documents || []).forEach(documents => {
-              documents.useDays = documents.useDays.toString() + ' ngày';
+              if (documents.useDays) {
+                documents.useDays = documents.useDays.toString() + ' ngày';
+              }
             });
           }
         });
@@ -359,12 +371,16 @@ export class PackageDocumentSenderComponent implements OnInit {
           if (itemchildDocuments.childDocuments && itemchildDocuments.childDocuments.length !== 0) {
             (itemchildDocuments.childDocuments || []).forEach(itemChild => {
               (itemChild.items || []).forEach(items => {
-                items.documents[0].useDays = items.documents[0].useDays.toString() + ' ngày';
+                if (items.documents[0].useDays) {
+                  items.documents[0].useDays = items.documents[0].useDays.toString() + ' ngày';
+                }
               });
             });
           } else if (!itemchildDocuments.childDocuments || itemchildDocuments.childDocuments.length === 0) {
             (itemchildDocuments.documents || []).forEach(documents => {
-              documents.useDays = documents.useDays.toString() + ' ngày';
+              if (documents.useDays) {
+                documents.useDays = documents.useDays.toString() + ' ngày';
+              }
             });
           }
         });
@@ -484,13 +500,17 @@ export class PackageDocumentSenderComponent implements OnInit {
         if (itemchildDocuments.childDocuments && itemchildDocuments.childDocuments.length !== 0) {
           itemchildDocuments.childDocuments.forEach(itemChild => {
             itemChild.items.forEach(items => {
-              items.documents[0].dateUse = (+this.defaultdateUseHSMT).toString() + ' ngày';
+              if (items.documents[0].dateUse) {
+                items.documents[0].dateUse = (+this.defaultdateUseHSMT).toString() + ' ngày';
+              }
             });
           });
         }
         if (!itemchildDocuments.childDocuments || itemchildDocuments.childDocuments.length === 0) {
           itemchildDocuments.documents.forEach(documents => {
-            documents.dateUse = (+this.defaultdateUseHSMT).toString() + ' ngày';
+            if (documents.dateUse) {
+              documents.dateUse = (+this.defaultdateUseHSMT).toString() + ' ngày';
+            }
           });
         }
       });
@@ -568,13 +588,17 @@ export class PackageDocumentSenderComponent implements OnInit {
         if (itemchildDocuments.childDocuments && itemchildDocuments.childDocuments.length !== 0) {
           (itemchildDocuments.childDocuments || []).forEach(itemChild => {
             (itemChild.items || []).forEach(items => {
-              items.documents[0].dateUse = (+this.defaultdateUseHSDT).toString() + '  ngày';
+              if (items.documents[0].dateUse) {
+                items.documents[0].dateUse = (+this.defaultdateUseHSDT).toString() + '  ngày';
+              }
             });
           });
         }
         if (!itemchildDocuments.childDocuments || itemchildDocuments.childDocuments.length === 0) {
           (itemchildDocuments.documents || []).forEach(documents => {
-            documents.dateUse = (+this.defaultdateUseHSDT).toString() + ' ngày';
+            if (documents.dateUse) {
+              documents.dateUse = (+this.defaultdateUseHSDT).toString() + ' ngày';
+            }
           });
         }
       });
@@ -623,6 +647,13 @@ export class PackageDocumentSenderComponent implements OnInit {
         }
       }
     });
+
+    // (itemDocChooseTranfer || []).forEach(item => {
+    //   if (item.dateUse && item.dateUse.indexOf(' ngày') !== -1) {
+    //     item.dateUse = item.dateUse.replace(' ngày', '');
+    //   }
+    // });
+
     if (this.checkDepartmentAndDateUse(itemDocChooseTranfer)) {
       if (itemDocChooseTranfer && itemDocChooseTranfer.length !== 0) {
         this.confirmationService.confirm(
@@ -718,12 +749,12 @@ export class PackageDocumentSenderComponent implements OnInit {
       if (this.docHSMTList[indexPar].childDocuments && this.docHSMTList[indexPar].childDocuments.length !== 0) {
         if (indexPar < i) {
           for (let indexChild = 0; indexChild < this.docHSMTList[indexPar].childDocuments.length; indexChild++) {
-            dem = dem + this.docHSMTList[indexPar].childDocuments[indexChild].items.length;
+            dem = dem + (this.docHSMTList[indexPar].childDocuments[indexChild].items || []).length;
           }
         } else {
           for (let indexChild = 0; indexChild < j + 1; indexChild++) {
             if (indexChild < j) {
-              dem = dem + this.docHSMTList[indexPar].childDocuments[indexChild].items.length;
+              dem = dem + (this.docHSMTList[indexPar].childDocuments[indexChild].items || []).length;
             } else {
               for (let indexChildChild = 0; indexChildChild < k + 1; indexChildChild++) {
                 dem++;
@@ -748,12 +779,12 @@ export class PackageDocumentSenderComponent implements OnInit {
         if (this.docHSDTList[indexPar].childDocuments && this.docHSDTList[indexPar].childDocuments.length !== 0) {
           if (indexPar < i) {
             for (let indexChild = 0; indexChild < this.docHSDTList[indexPar].childDocuments.length; indexChild++) {
-              dem = dem + this.docHSDTList[indexPar].childDocuments[indexChild].items.length;
+              dem = dem + (this.docHSDTList[indexPar].childDocuments[indexChild].items || []).length;
             }
           } else {
             for (let indexChild = 0; indexChild < j + 1; indexChild++) {
               if (indexChild < j) {
-                dem = dem + this.docHSDTList[indexPar].childDocuments[indexChild].items.length;
+                dem = dem + (this.docHSDTList[indexPar].childDocuments[indexChild].items || []).length;
               } else {
                 for (let indexChildChild = 0; indexChildChild < k + 1; indexChildChild++) {
                   dem++;
@@ -793,12 +824,12 @@ export class PackageDocumentSenderComponent implements OnInit {
         if (this.docHSMTHadTransfer[indexPar].childDocuments && this.docHSMTHadTransfer[indexPar].childDocuments.length !== 0) {
           if (indexPar < i) {
             for (let indexChild = 0; indexChild < this.docHSMTHadTransfer[indexPar].childDocuments.length; indexChild++) {
-              dem = dem + this.docHSMTHadTransfer[indexPar].childDocuments[indexChild].items.length;
+              dem = dem + (this.docHSMTHadTransfer[indexPar].childDocuments[indexChild].items || []).length;
             }
           } else {
             for (let indexChild = 0; indexChild < j + 1; indexChild++) {
               if (indexChild < j) {
-                dem = dem + this.docHSMTHadTransfer[indexPar].childDocuments[indexChild].items.length;
+                dem = dem + (this.docHSMTHadTransfer[indexPar].childDocuments[indexChild].items || []).length;
               } else {
                 for (let indexChildChild = 0; indexChildChild < k + 1; indexChildChild++) {
                   dem++;
@@ -892,13 +923,13 @@ export class PackageDocumentSenderComponent implements OnInit {
     for (let indexPar = 0; indexPar < this.manageNeedTranferList.length; indexPar++) {
       if (indexPar < i) {
         for (let indexChild = 0; indexChild < this.manageNeedTranferList[indexPar].items.length; indexChild++) {
-          dem = dem + this.manageNeedTranferList[indexPar].items[indexChild].items.length;
+          dem = dem + (this.manageNeedTranferList[indexPar].items[indexChild].items || []).length;
         }
       }
       if (indexPar === i) {
         for (let indexChild = 0; indexChild < this.manageNeedTranferList[indexPar].items.length; indexChild++) {
           if (indexChild < j) {
-            dem = dem + this.manageNeedTranferList[indexPar].items[indexChild].items.length;
+            dem = dem + (this.manageNeedTranferList[indexPar].items[indexChild].items || []).length;
           }
           if (indexChild === j) {
             return dem = dem + k + 1;

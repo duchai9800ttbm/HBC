@@ -618,7 +618,8 @@
                                                     <div class="edit-number">
                                                         <input [(ngModel)]="items.documents[0].useDays" (change)=formatToNumber(items.documents[0]) appInputDate min="0" class="form-control number-date--pad"
                                                             placeholder="Number" [ngClass]="{'w80' : isManageTransfer==true}">
-                                                        <i class="fa fa-pencil edit-number--posotion" (click)="showEdit(nameit, i, j, k)"></i>
+                                                        <i class="fa fa-pencil edit-number--posotion"></i>
+                                                        <!-- (click)="showEdit(nameit, i, j, k)" -->
                                                     </div>
                                                 </td>
                                                 <td class="select-filter text-center w10"></td>
@@ -683,7 +684,8 @@
                                                 <div class="edit-number">
                                                     <input [(ngModel)]="documents.useDays" autofocus (change)=formatToNumber(documents) appInputDate min="0" class="form-control number-date--pad"
                                                         placeholder="Number" [ngClass]="{'w80' : isManageTransfer==true}">
-                                                    <i class="fa fa-pencil edit-number--posotion" (click)="showEdit(nameit, i, j, k)"></i>
+                                                    <i class="fa fa-pencil edit-number--posotion"></i>
+                                                    <!-- (click)="showEdit(nameit, i, j, k)" -->
                                                 </div>
                                             </td>
                                             <td class="select-filter text-center w10"></td>
@@ -771,7 +773,8 @@
                                                     <div class="edit-number">
                                                         <input [(ngModel)]="items.documents[0].useDays" autofocus (change)=formatToNumber(items.documents[0]) appInputDate min="0"
                                                             class="form-control number-date--pad" placeholder="Number" [ngClass]="{'w80' : isManageTransfer==true}">
-                                                        <i class="fa fa-pencil edit-number--posotion" (click)="showEditSHDT(nameit, i, j, k)"></i>
+                                                        <i class="fa fa-pencil edit-number--posotion"></i>
+                                                        <!-- (click)="showEditSHDT(nameit, i, j, k)" -->
                                                     </div>
                                                 </td>
                                                 <td class="select-filter text-center w10">{{ items.documents[0].interviewTime }}</td>
@@ -849,7 +852,8 @@
                                                 <div class="edit-number">
                                                     <input [(ngModel)]="documents.useDays" autofocus (change)=formatToNumber(documents) appInputDate min="0" class="form-control number-date--pad"
                                                         placeholder="Number" [ngClass]="{'w80' : isManageTransfer==true}">
-                                                    <i class="fa fa-pencil edit-number--posotion" (click)="showEditSHDT(nameit, i, j, k)"></i>
+                                                    <i class="fa fa-pencil edit-number--posotion" ></i>
+                                                    <!-- (click)="showEditSHDT(nameit, i, j, k)" -->
                                                 </div>
                                             </td>
                                             <td class="select-filter text-center w10">{{ documents.interviewTime }}</td>

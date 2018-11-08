@@ -285,6 +285,9 @@ export class DetailResultPackageService {
     const request = {
       bidOpportunityId: bidOpportunityId,
       transferDocuments: docChoose.map(item => {
+        if (item.dateUse && item.dateUse.indexOf(' ngày') !== -1) {
+          item.dateUse = item.dateUse.replace(' ngày', '');
+        }
         const departmentIds = [];
         if (item.transferName) {
           item.transferName.forEach(itemTranfer => {
