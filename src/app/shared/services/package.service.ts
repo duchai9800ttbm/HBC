@@ -1113,6 +1113,7 @@ export class PackageService {
             element.whoIsInChargeIds = {
                 ids: a,
             };
+            element.duration = (+element.totalTime);
         });
         return this.apiService.post(url, data).map(response => response.result);
     }
@@ -1126,6 +1127,7 @@ export class PackageService {
             element.whoIsInChargeIds = {
                 ids: a,
             };
+            element.duration = (+element.totalTime);
         });
         return this.apiService.post(url, data).map(response => response.result);
     }

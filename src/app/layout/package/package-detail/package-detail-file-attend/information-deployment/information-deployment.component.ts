@@ -29,6 +29,7 @@ import { FormInComponent } from '../../../../../shared/components/form-in/form-i
 import { slideToLeft } from '../../../../../router.animations';
 import { PermissionService } from '../../../../../shared/services/permission.service';
 import { PermissionModel } from '../../../../../shared/models/permission/Permission.model';
+import { ScheduleAssignments } from '../../../../../shared/constants/schedule-assignments';
 @Component({
   selector: 'app-information-deployment',
   templateUrl: './information-deployment.component.html',
@@ -70,6 +71,7 @@ export class InformationDeploymentComponent implements OnInit, OnDestroy {
   dtTrigger2: Subject<any> = new Subject();
   dtOptions2: any = DATATABLE_CONFIG;
   datePickerConfig = DATETIME_PICKER_CONFIG;
+  scheduleAssignments = ScheduleAssignments;
   public skip = 0;
   pageSize = 5;
   checkboxSeclectAll: boolean;
@@ -541,6 +543,23 @@ export class InformationDeploymentComponent implements OnInit, OnDestroy {
       });
       this.indexItemHistoryChange = Number(this.pagedResultChangeHistoryList.total)
         - Number(this.pagedResultChangeHistoryList.pageSize) * Number(this.pagedResultChangeHistoryList.currentPage);
+      (this.historyList || []).forEach(itemPar => {
+      (itemPar.items || []).forEach(itemChild => {
+      (itemChild.liveFormChangeds || []).forEach(itemChildChild => {
+      (itemChildChild.items || []).forEach(itemValue => {
+        if (itemValue.liveFormSubject === 'AssigmentTask') {
+          if (itemValue.newValue) {
+            itemValue.newValue = JSON.parse(itemValue.newValue);
+          }
+          if (itemValue.oldValue) {
+            itemValue.oldValue = JSON.parse(itemValue.oldValue);
+          }
+        }
+      });
+      });
+      });
+      });
+      console.log('getChangeHistory', this.historyList);
       setTimeout(() => {
         // this.dtTrigger2.next();
         this.loading = false;
