@@ -8,6 +8,7 @@ export class TenderPreparationPlanItem {
     whoIsInChargeId: number;
     whoIsInCharges: UserItemModel[];
     whoIsInChargeIds ?: UserItemModel[];
+    whoIsInCharge: UserItemModel;
     startDate: number;
     finishDate: number;
     duration: number;
