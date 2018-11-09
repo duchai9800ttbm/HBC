@@ -217,25 +217,111 @@ export class PriceReviewFormComponent implements OnChanges, OnInit, AfterViewIni
       })
       .subscribe(phieuDeNghi => {
         this.tenderProposed = phieuDeNghi;
-        console.log(this.tenderProposed);
+
         const tamUngYCPercent = this.tenderProposed
           && this.tenderProposed.contractCondition
           && this.tenderProposed.contractCondition.advancePayment;
+        const thoiGianBHMonth = this.tenderProposed
+          && this.tenderProposed.contractCondition
+          && this.tenderProposed.contractCondition.warrantyPeriod;
+        const thoiGianBHMonthDonVi = this.tenderProposed
+          && this.tenderProposed.contractCondition
+          && this.tenderProposed.contractCondition.warrantyPeriodUnit
+          && this.tenderProposed.contractCondition.warrantyPeriodUnit.value;
         const tienGiuLaiYCPercent = this.tenderProposed
           && this.tenderProposed.contractCondition
           && this.tenderProposed.contractCondition.retentionMoney;
         const phatTienDoYCPercent = this.tenderProposed
           && this.tenderProposed.contractCondition
           && this.tenderProposed.contractCondition.delayDamagesForTheWorks;
-        if (tamUngYCPercent) {
-          this.priceReviewForm.get('tamUngYCPercent').patchValue(tamUngYCPercent);
+        const infoGfa = this.package && this.package.floorArea;
+        const tienDoThiCongYC = this.tenderProposed && this.tenderProposed
+          && this.tenderProposed.contractCondition
+          && this.tenderProposed.contractCondition.timeForCompletion;
+        const tienDoThiCongCYDonVi = this.tenderProposed && this.tenderProposed
+          && this.tenderProposed.contractCondition
+          && this.tenderProposed.contractCondition.timeForCompletionUnit
+          && this.tenderProposed.contractCondition.timeForCompletionUnit.value;
+        const thoiGianDX = this.summary && this.summary.dienGiaiDieuKienHopDong
+          && this.summary.dienGiaiDieuKienHopDong.dieuKienTheoHBC
+          && this.summary.dienGiaiDieuKienHopDong.dieuKienTheoHBC.thanhToan
+          && this.summary.dienGiaiDieuKienHopDong.dieuKienTheoHBC.thanhToan.thoiGianThanhToan;
+        const tienGiuLaiDXPercent = this.summary && this.summary.dienGiaiDieuKienHopDong
+          && this.summary.dienGiaiDieuKienHopDong.dieuKienTheoHBC
+          && this.summary.dienGiaiDieuKienHopDong.dieuKienTheoHBC.tienGiuLai
+          && this.summary.dienGiaiDieuKienHopDong.dieuKienTheoHBC.tienGiuLai.phanTram;
+        const tienGiuLaiDXKhauTru = this.summary && this.summary.dienGiaiDieuKienHopDong
+          && this.summary.dienGiaiDieuKienHopDong.dieuKienTheoHBC
+          && this.summary.dienGiaiDieuKienHopDong.dieuKienTheoHBC.tienGiuLai
+          && this.summary.dienGiaiDieuKienHopDong.dieuKienTheoHBC.tienGiuLai.gioiHanTienGiuLai;
+        const phatTienDoDXPercent = this.summary && this.summary.dienGiaiDieuKienHopDong
+          && this.summary.dienGiaiDieuKienHopDong.dieuKienTheoHBC
+          && this.summary.dienGiaiDieuKienHopDong.dieuKienTheoHBC.phatTreTienDo
+          && this.summary.dienGiaiDieuKienHopDong.dieuKienTheoHBC.phatTreTienDo.phanTram;
+        const phatTienDoDXMax = this.summary && this.summary.dienGiaiDieuKienHopDong
+          && this.summary.dienGiaiDieuKienHopDong.dieuKienTheoHBC
+          && this.summary.dienGiaiDieuKienHopDong.dieuKienTheoHBC.phatTreTienDo
+          && this.summary.dienGiaiDieuKienHopDong.dieuKienTheoHBC.phatTreTienDo.gioiHanPhatTienDo;
+        const thoiGianYC = this.summary && this.summary.dienGiaiDieuKienHopDong
+          && this.summary.dienGiaiDieuKienHopDong.dieuKienTheoHSMT
+          && this.summary.dienGiaiDieuKienHopDong.dieuKienTheoHSMT.thanhToan
+          && this.summary.dienGiaiDieuKienHopDong.dieuKienTheoHSMT.thanhToan.thoiGianThanhToan;
+        const tienGiuLaiYCKhauTru = this.summary && this.summary.dienGiaiDieuKienHopDong
+          && this.summary.dienGiaiDieuKienHopDong.dieuKienTheoHSMT
+          && this.summary.dienGiaiDieuKienHopDong.dieuKienTheoHSMT.tienGiuLai
+          && this.summary.dienGiaiDieuKienHopDong.dieuKienTheoHSMT.tienGiuLai.gioiHanTienGiuLai;
+        const phatTienDoYCMax = this.summary && this.summary.dienGiaiDieuKienHopDong
+          && this.summary.dienGiaiDieuKienHopDong.dieuKienTheoHSMT
+          && this.summary.dienGiaiDieuKienHopDong.dieuKienTheoHSMT.phatTreTienDo
+          && this.summary.dienGiaiDieuKienHopDong.dieuKienTheoHSMT.phatTreTienDo.gioiHanPhatTienDo;
+
+        if (this.priceReviewForm) {
+          if (tamUngYCPercent) {
+            this.priceReviewForm.get('tamUngYCPercent').patchValue(tamUngYCPercent);
+            console.log(this.priceReviewForm.value);
+
+          }
+          if (tienGiuLaiYCPercent) {
+            this.priceReviewForm.get('tienGiuLaiYCPercent').patchValue(tienGiuLaiYCPercent);
+          }
+          if (phatTienDoYCPercent) {
+            this.priceReviewForm.get('phatTienDoYCPercent').patchValue(phatTienDoYCPercent);
+          }
+          if (infoGfa) {
+            this.priceReviewForm.get('infoGfa').patchValue(infoGfa);
+          }
+          if (tienDoThiCongYC && tienDoThiCongCYDonVi) {
+            this.priceReviewForm.get('tienDoThiCongYC').patchValue(`${tienDoThiCongYC} ${tienDoThiCongCYDonVi}`);
+          }
+          if (thoiGianBHMonth && thoiGianBHMonthDonVi) {
+            this.priceReviewForm.get('thoiGianBHMonth').patchValue(`${thoiGianBHMonth} ${thoiGianBHMonthDonVi}`);
+          }
+          if (thoiGianDX) {
+            this.priceReviewForm.get('thoiGianDX').patchValue(thoiGianDX);
+          }
+          if (tienGiuLaiDXPercent) {
+            this.priceReviewForm.get('tienGiuLaiDXPercent').patchValue(tienGiuLaiDXPercent);
+          }
+          if (tienGiuLaiDXKhauTru) {
+            this.priceReviewForm.get('tienGiuLaiDXKhauTru').patchValue(tienGiuLaiDXKhauTru);
+          }
+          if (phatTienDoDXPercent) {
+            this.priceReviewForm.get('phatTienDoDXPercent').patchValue(phatTienDoDXPercent);
+          }
+          if (phatTienDoDXMax) {
+            this.priceReviewForm.get('phatTienDoDXMax').patchValue(phatTienDoDXMax);
+          }
+          if (thoiGianYC) {
+            this.priceReviewForm.get('thoiGianYC').patchValue(thoiGianYC);
+          }
+          if (tienGiuLaiYCKhauTru) {
+            this.priceReviewForm.get('tienGiuLaiYCKhauTru').patchValue(tienGiuLaiYCKhauTru);
+          }
+          if (phatTienDoYCMax) {
+            this.priceReviewForm.get('phatTienDoYCMax').patchValue(phatTienDoYCMax);
+          }
         }
-        if (tienGiuLaiYCPercent) {
-          this.priceReviewForm.get('tienGiuLaiYCPercent').patchValue(tienGiuLaiYCPercent);
-        }
-        if (phatTienDoYCPercent) {
-          this.priceReviewForm.get('phatTienDoYCPercent').patchValue(phatTienDoYCPercent);
-        }
+
 
       });
   }
@@ -250,10 +336,11 @@ export class PriceReviewFormComponent implements OnChanges, OnInit, AfterViewIni
         disabled: this.isModeView
       },
       createdDate: (this.model.createdDate) ? this.model.createdDate : 0,
-      infoGfa: {
-        value: this.model.projectInformation && this.model.projectInformation.gfa,
-        disabled: this.isModeView
-      },
+      // infoGfa: {
+      //   value: this.model.projectInformation && this.model.projectInformation.gfa,
+      //   disabled: true
+      // },
+      infoGfa: this.model.projectInformation && this.model.projectInformation.gfa,
       phanMongCheck: {
         value: this.model.projectInformation
           && this.model.projectInformation.foudationPart
@@ -375,12 +462,9 @@ export class PriceReviewFormComponent implements OnChanges, OnInit, AfterViewIni
         disabled: this.isModeView
       },
       // Kỹ thuật
-      tienDoThiCongYC: {
-        value: this.model.technique
-          && this.model.technique.constructionProgress
-          && this.model.technique.constructionProgress.folowTenderDocumentRequirement,
-        disabled: this.isModeView
-      },
+      tienDoThiCongYC: this.model.technique
+        && this.model.technique.constructionProgress
+        && this.model.technique.constructionProgress.folowTenderDocumentRequirement,
 
       tienDoThiCongDX: {
         value: this.model.technique
@@ -483,20 +567,14 @@ export class PriceReviewFormComponent implements OnChanges, OnInit, AfterViewIni
           && this.model.contractCondition.advanceMoney.note,
         disabled: this.isModeView
       },
-
-
-
-      thoiGianYC: {
-        value: this.model.contractCondition
-          && this.model.contractCondition.paymentTime
-          && this.model.contractCondition.paymentTime.tenderDocumentRequirementDay,
-        disabled: this.isModeView
-      },
+      thoiGianYC: this.model.contractCondition
+        && this.model.contractCondition.paymentTime
+        && this.model.contractCondition.paymentTime.tenderDocumentRequirementDay,
       thoiGianDX: {
         value: this.model.contractCondition
           && this.model.contractCondition.paymentTime
           && this.model.contractCondition.paymentTime.suggestionDay,
-        disabled: this.isModeView
+        disabled: true
       },
       thoiGianCY: {
         value: this.model.contractCondition
@@ -504,33 +582,18 @@ export class PriceReviewFormComponent implements OnChanges, OnInit, AfterViewIni
           && this.model.contractCondition.paymentTime.note,
         disabled: this.isModeView
       },
-
-
-
-      tienGiuLaiYCPercent: {
-        value: this.model.contractCondition
-          && this.model.contractCondition.retainedMoney
-          && this.model.contractCondition.retainedMoney.tenderDocumentRequirementPercent,
-        disabled: true
-      },
-      tienGiuLaiYCKhauTru: {
-        value: this.model.contractCondition
-          && this.model.contractCondition.retainedMoney
-          && this.model.contractCondition.retainedMoney.tenderDocumentRequirementMaxPercent,
-        disabled: this.isModeView
-      },
-      tienGiuLaiDXPercent: {
-        value: this.model.contractCondition
-          && this.model.contractCondition.retainedMoney
-          && this.model.contractCondition.retainedMoney.requirementPercent,
-        disabled: this.isModeView
-      },
-      tienGiuLaiDXKhauTru: {
-        value: this.model.contractCondition
-          && this.model.contractCondition.retainedMoney
-          && this.model.contractCondition.retainedMoney.requirementMaxPercent,
-        disabled: this.isModeView
-      },
+      tienGiuLaiYCPercent: this.model.contractCondition
+        && this.model.contractCondition.retainedMoney
+        && this.model.contractCondition.retainedMoney.tenderDocumentRequirementPercent,
+      tienGiuLaiYCKhauTru: this.model.contractCondition
+        && this.model.contractCondition.retainedMoney
+        && this.model.contractCondition.retainedMoney.tenderDocumentRequirementMaxPercent,
+      tienGiuLaiDXPercent: this.model.contractCondition
+        && this.model.contractCondition.retainedMoney
+        && this.model.contractCondition.retainedMoney.requirementPercent,
+      tienGiuLaiDXKhauTru: this.model.contractCondition
+        && this.model.contractCondition.retainedMoney
+        && this.model.contractCondition.retainedMoney.requirementMaxPercent,
       tienGiuLaiCY: {
         value: this.model.contractCondition
           && this.model.contractCondition.retainedMoney
@@ -538,30 +601,18 @@ export class PriceReviewFormComponent implements OnChanges, OnInit, AfterViewIni
         disabled: this.isModeView
       },
 
-      phatTienDoYCPercent: {
-        value: this.model.contractCondition
-          && this.model.contractCondition.punishDelay
-          && this.model.contractCondition.punishDelay.tenderDocumentRequirementPercent,
-        disabled: true
-      },
-      phatTienDoYCMax: {
-        value: this.model.contractCondition
-          && this.model.contractCondition.punishDelay
-          && this.model.contractCondition.punishDelay.tenderDocumentRequirementMax,
-        disabled: this.isModeView
-      },
-      phatTienDoDXPercent: {
-        value: this.model.contractCondition
-          && this.model.contractCondition.punishDelay
-          && this.model.contractCondition.punishDelay.suggestionPercent,
-        disabled: this.isModeView
-      },
-      phatTienDoDXMax: {
-        value: this.model.contractCondition
-          && this.model.contractCondition.punishDelay
-          && this.model.contractCondition.punishDelay.suggestionMax,
-        disabled: this.isModeView
-      },
+      phatTienDoYCPercent: this.model.contractCondition
+        && this.model.contractCondition.punishDelay
+        && this.model.contractCondition.punishDelay.tenderDocumentRequirementPercent,
+      phatTienDoYCMax: this.model.contractCondition
+        && this.model.contractCondition.punishDelay
+        && this.model.contractCondition.punishDelay.tenderDocumentRequirementMax,
+      phatTienDoDXPercent: this.model.contractCondition
+        && this.model.contractCondition.punishDelay
+        && this.model.contractCondition.punishDelay.suggestionPercent,
+      phatTienDoDXMax: this.model.contractCondition
+        && this.model.contractCondition.punishDelay
+        && this.model.contractCondition.punishDelay.suggestionMax,
       phatTienDoCY: {
         value: this.model.contractCondition
           && this.model.contractCondition.punishDelay
@@ -588,12 +639,9 @@ export class PriceReviewFormComponent implements OnChanges, OnInit, AfterViewIni
           && this.model.contractCondition.constructionWarrantyTime.bond,
         disabled: this.isModeView
       },
-      thoiGianBHMonth: {
-        value: this.model.contractCondition
-          && this.model.contractCondition.constructionWarrantyTime
-          && this.model.contractCondition.constructionWarrantyTime.month,
-        disabled: this.isModeView
-      },
+      thoiGianBHMonth: this.model.contractCondition
+        && this.model.contractCondition.constructionWarrantyTime
+        && this.model.contractCondition.constructionWarrantyTime.month,
       thoiGianBHCY: {
         value: this.model.contractCondition
           && this.model.contractCondition.constructionWarrantyTime
@@ -871,6 +919,113 @@ export class PriceReviewFormComponent implements OnChanges, OnInit, AfterViewIni
       updatedDesc: ''
     });
 
+    const tamUngYCPercent = this.tenderProposed
+      && this.tenderProposed.contractCondition
+      && this.tenderProposed.contractCondition.advancePayment;
+    const thoiGianBHMonth = this.tenderProposed
+      && this.tenderProposed.contractCondition
+      && this.tenderProposed.contractCondition.warrantyPeriod;
+    const thoiGianBHMonthDonVi = this.tenderProposed
+      && this.tenderProposed.contractCondition
+      && this.tenderProposed.contractCondition.warrantyPeriodUnit
+      && this.tenderProposed.contractCondition.warrantyPeriodUnit.value;
+
+    const tienGiuLaiYCPercent = this.tenderProposed
+      && this.tenderProposed.contractCondition
+      && this.tenderProposed.contractCondition.retentionMoney;
+    const phatTienDoYCPercent = this.tenderProposed
+      && this.tenderProposed.contractCondition
+      && this.tenderProposed.contractCondition.delayDamagesForTheWorks;
+
+    const infoGfa = this.package && this.package.floorArea;
+    const tienDoThiCongYC = this.tenderProposed && this.tenderProposed
+      && this.tenderProposed.contractCondition
+      && this.tenderProposed.contractCondition.timeForCompletion;
+    const tienDoThiCongCYDonVi = this.tenderProposed && this.tenderProposed
+      && this.tenderProposed.contractCondition
+      && this.tenderProposed.contractCondition.timeForCompletionUnit
+      && this.tenderProposed.contractCondition.timeForCompletionUnit.value;
+    const thoiGianDX = this.summary && this.summary.dienGiaiDieuKienHopDong
+      && this.summary.dienGiaiDieuKienHopDong.dieuKienTheoHBC
+      && this.summary.dienGiaiDieuKienHopDong.dieuKienTheoHBC.thanhToan
+      && this.summary.dienGiaiDieuKienHopDong.dieuKienTheoHBC.thanhToan.thoiGianThanhToan;
+    const tienGiuLaiDXPercent = this.summary && this.summary.dienGiaiDieuKienHopDong
+      && this.summary.dienGiaiDieuKienHopDong.dieuKienTheoHBC
+      && this.summary.dienGiaiDieuKienHopDong.dieuKienTheoHBC.tienGiuLai
+      && this.summary.dienGiaiDieuKienHopDong.dieuKienTheoHBC.tienGiuLai.phanTram;
+    const tienGiuLaiDXKhauTru = this.summary && this.summary.dienGiaiDieuKienHopDong
+      && this.summary.dienGiaiDieuKienHopDong.dieuKienTheoHBC
+      && this.summary.dienGiaiDieuKienHopDong.dieuKienTheoHBC.tienGiuLai
+      && this.summary.dienGiaiDieuKienHopDong.dieuKienTheoHBC.tienGiuLai.gioiHanTienGiuLai;
+    const phatTienDoDXPercent = this.summary && this.summary.dienGiaiDieuKienHopDong
+      && this.summary.dienGiaiDieuKienHopDong.dieuKienTheoHBC
+      && this.summary.dienGiaiDieuKienHopDong.dieuKienTheoHBC.phatTreTienDo
+      && this.summary.dienGiaiDieuKienHopDong.dieuKienTheoHBC.phatTreTienDo.phanTram;
+    const phatTienDoDXMax = this.summary && this.summary.dienGiaiDieuKienHopDong
+      && this.summary.dienGiaiDieuKienHopDong.dieuKienTheoHBC
+      && this.summary.dienGiaiDieuKienHopDong.dieuKienTheoHBC.phatTreTienDo
+      && this.summary.dienGiaiDieuKienHopDong.dieuKienTheoHBC.phatTreTienDo.gioiHanPhatTienDo;
+
+
+
+    const thoiGianYC = this.summary && this.summary.dienGiaiDieuKienHopDong
+      && this.summary.dienGiaiDieuKienHopDong.dieuKienTheoHSMT
+      && this.summary.dienGiaiDieuKienHopDong.dieuKienTheoHSMT.thanhToan
+      && this.summary.dienGiaiDieuKienHopDong.dieuKienTheoHSMT.thanhToan.thoiGianThanhToan;
+    const tienGiuLaiYCKhauTru = this.summary && this.summary.dienGiaiDieuKienHopDong
+      && this.summary.dienGiaiDieuKienHopDong.dieuKienTheoHSMT
+      && this.summary.dienGiaiDieuKienHopDong.dieuKienTheoHSMT.tienGiuLai
+      && this.summary.dienGiaiDieuKienHopDong.dieuKienTheoHSMT.tienGiuLai.gioiHanTienGiuLai;
+    const phatTienDoYCMax = this.summary && this.summary.dienGiaiDieuKienHopDong
+      && this.summary.dienGiaiDieuKienHopDong.dieuKienTheoHSMT
+      && this.summary.dienGiaiDieuKienHopDong.dieuKienTheoHSMT.phatTreTienDo
+      && this.summary.dienGiaiDieuKienHopDong.dieuKienTheoHSMT.phatTreTienDo.gioiHanPhatTienDo;
+
+    if (this.priceReviewForm) {
+      if (tamUngYCPercent) {
+        this.priceReviewForm.get('tamUngYCPercent').patchValue(tamUngYCPercent);
+      }
+      if (tienGiuLaiYCPercent) {
+        this.priceReviewForm.get('tienGiuLaiYCPercent').patchValue(tienGiuLaiYCPercent);
+      }
+      if (phatTienDoYCPercent) {
+        this.priceReviewForm.get('phatTienDoYCPercent').patchValue(phatTienDoYCPercent);
+      }
+      if (infoGfa) {
+        this.priceReviewForm.get('infoGfa').patchValue(infoGfa);
+      }
+      if (tienDoThiCongYC && tienDoThiCongCYDonVi) {
+        this.priceReviewForm.get('tienDoThiCongYC').patchValue(`${tienDoThiCongYC} ${tienDoThiCongCYDonVi}`);
+      }
+      if (thoiGianBHMonth && thoiGianBHMonthDonVi) {
+        this.priceReviewForm.get('thoiGianBHMonth').patchValue(`${thoiGianBHMonth} ${thoiGianBHMonthDonVi}`);
+      }
+      if (thoiGianDX) {
+        this.priceReviewForm.get('thoiGianDX').patchValue(thoiGianDX);
+      }
+      if (tienGiuLaiDXPercent) {
+        this.priceReviewForm.get('tienGiuLaiDXPercent').patchValue(tienGiuLaiDXPercent);
+      }
+      if (tienGiuLaiDXKhauTru) {
+        this.priceReviewForm.get('tienGiuLaiDXKhauTru').patchValue(tienGiuLaiDXKhauTru);
+      }
+      if (phatTienDoDXPercent) {
+        this.priceReviewForm.get('phatTienDoDXPercent').patchValue(phatTienDoDXPercent);
+      }
+      if (phatTienDoDXMax) {
+        this.priceReviewForm.get('phatTienDoDXMax').patchValue(phatTienDoDXMax);
+      }
+      if (thoiGianYC) {
+        this.priceReviewForm.get('thoiGianYC').patchValue(thoiGianYC);
+      }
+      if (tienGiuLaiYCKhauTru) {
+        this.priceReviewForm.get('tienGiuLaiYCKhauTru').patchValue(tienGiuLaiYCKhauTru);
+      }
+      if (phatTienDoYCMax) {
+        this.priceReviewForm.get('phatTienDoYCMax').patchValue(phatTienDoYCMax);
+      }
+    }
+
     if (this.package.stageStatus && this.priceReviewForm.value) {
       if ((this.package.stageStatus.id !== 'DangLapHSDT')
         && (this.package.stageStatus.id !== 'CanLapTrinhDuyetGia')
@@ -947,6 +1102,8 @@ export class PriceReviewFormComponent implements OnChanges, OnInit, AfterViewIni
       this.showPopupConfirm = false;
     } else {
       this.priceReviewForm.get('updatedDesc').patchValue(check);
+      console.log(this.priceReviewForm.get('infoGfa'));
+      console.log(this.priceReviewForm.value);
       this.priceReviewService.createOrEdit(this.priceReviewForm.value, this.packageId).subscribe(() => {
         this.router.navigate([`/package/detail/${this.packageId}/attend/price-review`]);
         const message = (this.isModeCreate) ? 'Tạo' : 'Cập nhật';

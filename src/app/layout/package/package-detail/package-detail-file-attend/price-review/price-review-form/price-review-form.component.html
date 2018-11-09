@@ -20,8 +20,8 @@
                     </ng-container>
                     <button *ngIf="isModeCreate || isModeEdit" class="btn btn-secondary ml-1" routerLink="../summary">Hủy</button>
                     <button *ngIf="isModeCreate || isModeEdit" class="btn btn-primary ml-1" (click)="submit(false)">Lưu</button>
-                    <button *ngIf="(isModeCreate || (isModeEdit && model.isDraftVersion)) && !package.isSubmittedHSDT"
-                        class="btn btn-primary ml-1" (click)="submit(true)">
+                    <button *ngIf="(isModeCreate || (isModeEdit && model.isDraftVersion)) && !package.isSubmittedHSDT" class="btn btn-primary ml-1"
+                        (click)="submit(true)">
                         Lưu bản nháp
                     </button>
 
@@ -40,8 +40,7 @@
                             <strong>Công trình (Project):</strong>&nbsp;&nbsp;&nbsp;&nbsp; {{package?.projectName}}
                         </div>
                         <div class="col-md-4">
-                            <strong>Prepared by:</strong>&nbsp;&nbsp;&nbsp;&nbsp;
-                            {{model?.createdEmployee?.employeeName}}
+                            <strong>Prepared by:</strong>&nbsp;&nbsp;&nbsp;&nbsp; {{model?.createdEmployee?.employeeName}}
                         </div>
                     </div>
 
@@ -50,16 +49,14 @@
                             <strong>Địa điểm (Location):</strong>&nbsp;&nbsp;&nbsp;&nbsp; {{package?.place}}
                         </div>
                         <div class="col-md-4">
-                            <strong>Date:</strong>&nbsp;&nbsp;&nbsp;
-                            {{ (priceReviewForm.get('createdDate').value == 0) ? '' :
-                            (priceReviewForm.get('createdDate').value)*1000 | date:'dd/MM/yyyy HH:mm': '+0000' }}
+                            <strong>Date:</strong>&nbsp;&nbsp;&nbsp; {{ (priceReviewForm.get('createdDate').value == 0) ? '' : (priceReviewForm.get('createdDate').value)*1000
+                            | date:'dd/MM/yyyy HH:mm': '+0000' }}
                         </div>
                     </div>
 
                     <div class="row no-gutters row-item">
                         <div class="col-md-8">
-                            <strong>Gói thầu (Package):</strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                            {{package?.opportunityName}}
+                            <strong>Gói thầu (Package):</strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; {{package?.opportunityName}}
                         </div>
                         <div class="col-md-4">
                         </div>
@@ -163,8 +160,7 @@
                                         <div class="two-col-1 center-parent">
                                             <div>
                                                 <label class="childcheck">
-                                                    <input type="radio" [value]=true name="phanMongCheck"
-                                                        formControlName="phanMongCheck">
+                                                    <input type="radio" [value]=true name="phanMongCheck" formControlName="phanMongCheck">
                                                     <span class="checkmark"></span>
                                                 </label>
                                             </div>
@@ -172,8 +168,7 @@
                                         <div class="two-col-2 center-parent">
                                             <div>
                                                 <label class="childcheck">
-                                                    <input type="radio" [value]=false name="phanMongCheck"
-                                                        formControlName="phanMongCheck">
+                                                    <input type="radio" [value]=false name="phanMongCheck" formControlName="phanMongCheck">
                                                     <span class="checkmark"></span>
                                                 </label>
                                             </div>
@@ -197,8 +192,7 @@
                                         <div class="two-col-1 center-parent">
                                             <div>
                                                 <label class="childcheck">
-                                                    <input type="radio" [value]=true name="phanHamCheck"
-                                                        formControlName="phanHamCheck">
+                                                    <input type="radio" [value]=true name="phanHamCheck" formControlName="phanHamCheck">
                                                     <span class="checkmark"></span>
                                                 </label>
                                             </div>
@@ -206,8 +200,7 @@
                                         <div class="two-col-2 center-parent">
                                             <div>
                                                 <label class="childcheck">
-                                                    <input type="radio" [value]=false name="phanHamCheck"
-                                                        formControlName="phanHamCheck">
+                                                    <input type="radio" [value]=false name="phanHamCheck" formControlName="phanHamCheck">
                                                     <span class="checkmark"></span>
                                                 </label>
                                             </div>
@@ -239,8 +232,7 @@
                                         <div class="two-col-2 center-parent">
                                             <div>
                                                 <label class="childcheck">
-                                                    <input type="radio" [value]=false name="ketCauCheck"
-                                                        formControlName="ketCauCheck">
+                                                    <input type="radio" [value]=false name="ketCauCheck" formControlName="ketCauCheck">
                                                     <span class="checkmark"></span>
                                                 </label>
                                             </div>
@@ -264,8 +256,7 @@
                                         <div class="two-col-1 center-parent">
                                             <div>
                                                 <label class="childcheck">
-                                                    <input type="radio" [value]=true name="hoanThienCheck"
-                                                        formControlName="hoanThienCheck">
+                                                    <input type="radio" [value]=true name="hoanThienCheck" formControlName="hoanThienCheck">
                                                     <span class="checkmark"></span>
                                                 </label>
                                             </div>
@@ -273,8 +264,7 @@
                                         <div class="two-col-2 center-parent">
                                             <div>
                                                 <label class="childcheck">
-                                                    <input type="radio" [value]=false name="hoanThienCheck"
-                                                        formControlName="hoanThienCheck">
+                                                    <input type="radio" [value]=false name="hoanThienCheck" formControlName="hoanThienCheck">
                                                     <span class="checkmark"></span>
                                                 </label>
                                             </div>
@@ -298,8 +288,7 @@
                                         <div class="two-col-1 center-parent">
                                             <div>
                                                 <label class="childcheck">
-                                                    <input type="radio" [value]=true name="congViecKhacCheck"
-                                                        formControlName="congViecKhacCheck">
+                                                    <input type="radio" [value]=true name="congViecKhacCheck" formControlName="congViecKhacCheck">
                                                     <span class="checkmark"></span>
                                                 </label>
                                             </div>
@@ -307,8 +296,7 @@
                                         <div class="two-col-2 center-parent">
                                             <div>
                                                 <label class="childcheck">
-                                                    <input type="radio" [value]=false name="congViecKhacCheck"
-                                                        formControlName="congViecKhacCheck">
+                                                    <input type="radio" [value]=false name="congViecKhacCheck" formControlName="congViecKhacCheck">
                                                     <span class="checkmark"></span>
                                                 </label>
                                             </div>
@@ -332,8 +320,7 @@
                                         <div class="two-col-1 center-parent">
                                             <div>
                                                 <label class="childcheck">
-                                                    <input type="radio" [value]=true name="phanThanCheck"
-                                                        formControlName="phanThanCheck">
+                                                    <input type="radio" [value]=true name="phanThanCheck" formControlName="phanThanCheck">
                                                     <span class="checkmark"></span>
                                                 </label>
                                             </div>
@@ -341,8 +328,7 @@
                                         <div class="two-col-2 center-parent">
                                             <div>
                                                 <label class="childcheck">
-                                                    <input type="radio" [value]=false name="phanThanCheck"
-                                                        formControlName="phanThanCheck">
+                                                    <input type="radio" [value]=false name="phanThanCheck" formControlName="phanThanCheck">
                                                     <span class="checkmark"></span>
                                                 </label>
                                             </div>
@@ -366,8 +352,7 @@
                                         <div class="two-col-1 center-parent">
                                             <div>
                                                 <label class="childcheck">
-                                                    <input type="radio" [value]=true name="phanThanKetCauCheck"
-                                                        formControlName="phanThanKetCauCheck">
+                                                    <input type="radio" [value]=true name="phanThanKetCauCheck" formControlName="phanThanKetCauCheck">
                                                     <span class="checkmark"></span>
                                                 </label>
                                             </div>
@@ -375,8 +360,7 @@
                                         <div class="two-col-2 center-parent">
                                             <div>
                                                 <label class="childcheck">
-                                                    <input type="radio" [value]=false name="phanThanKetCauCheck"
-                                                        formControlName="phanThanKetCauCheck">
+                                                    <input type="radio" [value]=false name="phanThanKetCauCheck" formControlName="phanThanKetCauCheck">
                                                     <span class="checkmark"></span>
                                                 </label>
                                             </div>
@@ -400,8 +384,7 @@
                                         <div class="two-col-1 center-parent">
                                             <div>
                                                 <label class="childcheck">
-                                                    <input type="radio" [value]=true name="phanThanHoanThienCheck"
-                                                        formControlName="phanThanHoanThienCheck">
+                                                    <input type="radio" [value]=true name="phanThanHoanThienCheck" formControlName="phanThanHoanThienCheck">
                                                     <span class="checkmark"></span>
                                                 </label>
                                             </div>
@@ -409,8 +392,7 @@
                                         <div class="two-col-2 center-parent">
                                             <div>
                                                 <label class="childcheck">
-                                                    <input type="radio" [value]=false name="phanThanHoanThienCheck"
-                                                        formControlName="phanThanHoanThienCheck">
+                                                    <input type="radio" [value]=false name="phanThanHoanThienCheck" formControlName="phanThanHoanThienCheck">
                                                     <span class="checkmark"></span>
                                                 </label>
                                             </div>
@@ -434,8 +416,7 @@
                                         <div class="two-col-1 center-parent">
                                             <div>
                                                 <label class="childcheck">
-                                                    <input type="radio" [value]=true name="phanThancongViecKhacCheck"
-                                                        formControlName="phanThancongViecKhacCheck">
+                                                    <input type="radio" [value]=true name="phanThancongViecKhacCheck" formControlName="phanThancongViecKhacCheck">
                                                     <span class="checkmark"></span>
                                                 </label>
                                             </div>
@@ -443,8 +424,7 @@
                                         <div class="two-col-2 center-parent">
                                             <div>
                                                 <label class="childcheck">
-                                                    <input type="radio" [value]=false name="phanThancongViecKhacCheck"
-                                                        formControlName="phanThancongViecKhacCheck">
+                                                    <input type="radio" [value]=false name="phanThancongViecKhacCheck" formControlName="phanThancongViecKhacCheck">
                                                     <span class="checkmark"></span>
                                                 </label>
                                             </div>
@@ -459,8 +439,8 @@
 
                         </div>
                         <div class="gfa">
-                            <input appInputArea formControlName="infoGfa">
-
+                            <!-- <input appInputArea formControlName="infoGfa"> -->
+                            {{priceReviewForm.get('infoGfa').value | numberArea}}
                         </div>
                     </div>
 
@@ -504,7 +484,8 @@
                         <div class="two d-flex align-items-center">
                             <div class="required-2 d-flex align-items-center">
                                 <div class="w-100">
-                                    <textarea name="" id="" formControlName="tienDoThiCongYC"></textarea>
+                                    {{priceReviewForm.get('tienDoThiCongYC').value}}
+                                    <!-- <textarea name="" id="" formControlName="tienDoThiCongYC"></textarea> -->
                                 </div>
                             </div>
                             <div class="request d-flex align-items-center">
@@ -715,8 +696,8 @@
                                     </div>
                                     <div class="item item-below d-flex center-parent">
                                         <div class="w-100">
-                                            <input formControlName="thoiGianYC" appInputNumber>
-
+                                            <!-- <input formControlName="thoiGianYC" appInputNumber> -->
+                                            {{priceReviewForm.get('thoiGianYC').value}}
                                         </div>
 
                                     </div>
@@ -727,8 +708,8 @@
                                     </div>
                                     <div class="item item-below d-flex center-parent">
                                         <div class="w-100">
-                                            <input formControlName="thoiGianDX">
-
+                                            <!-- <input formControlName="thoiGianDX"> -->
+                                            {{priceReviewForm.get('thoiGianDX').value}}
                                         </div>
 
                                     </div>
@@ -765,12 +746,12 @@
                                 </div>
                                 <div class="below d-flex">
                                     <div class="column-1 d-flex align-items-center">
-                                        <input formControlName="tienGiuLaiYCPercent">
-
+                                        <!-- <input formControlName="tienGiuLaiYCPercent"> -->
+                                        {{priceReviewForm.get('tienGiuLaiYCPercent').value}}
                                     </div>
                                     <div class="column-2 d-flex align-items-center">
-                                        <input formControlName="tienGiuLaiYCKhauTru">
-
+                                        <!-- <input formControlName="tienGiuLaiYCKhauTru"> -->
+                                        {{priceReviewForm.get('tienGiuLaiYCKhauTru').value}}
                                     </div>
                                 </div>
                             </div>
@@ -787,12 +768,12 @@
                                 </div>
                                 <div class="below d-flex">
                                     <div class="column-1 d-flex align-items-center">
-                                        <input formControlName="tienGiuLaiDXPercent">
-
+                                        <!-- <input formControlName="tienGiuLaiDXPercent"> -->
+                                        {{priceReviewForm.get('tienGiuLaiDXPercent').value}}
                                     </div>
                                     <div class="column-2 d-flex align-items-center">
-                                        <input formControlName="tienGiuLaiDXKhauTru">
-
+                                        <!-- <input formControlName="tienGiuLaiDXKhauTru"> -->
+                                        {{priceReviewForm.get('tienGiuLaiDXKhauTru').value}}
                                     </div>
                                 </div>
                             </div>
@@ -831,12 +812,12 @@
                                 </div>
                                 <div class="below d-flex">
                                     <div class="column-1 d-flex align-items-center">
-                                        <input formControlName="phatTienDoYCPercent">
-
+                                        <!-- <input formControlName="phatTienDoYCPercent"> -->
+                                        {{priceReviewForm.get('phatTienDoYCPercent').value}}
                                     </div>
                                     <div class="column-2 d-flex align-items-center">
-                                        <input formControlName="phatTienDoYCMax">
-
+                                        <!-- <input formControlName="phatTienDoYCMax"> -->
+                                        {{priceReviewForm.get('phatTienDoYCMax').value}}
                                     </div>
                                 </div>
                             </div>
@@ -855,12 +836,11 @@
                                 </div>
                                 <div class="below d-flex">
                                     <div class="column-1 d-flex align-items-center">
-                                        <input formControlName="phatTienDoDXPercent">
-
+                                        <!-- <input formControlName="phatTienDoDXPercent"> -->
+                                        {{priceReviewForm.get('phatTienDoDXPercent').value}}
                                     </div>
                                     <div class="column-2 d-flex align-items-center">
-                                        <input formControlName="phatTienDoDXMax">
-
+                                        {{priceReviewForm.get('phatTienDoDXMax').value}}
                                     </div>
                                 </div>
                             </div>
@@ -918,7 +898,7 @@
 
                                     </div>
                                     <div class="column-2 d-flex align-items-center">
-                                        <div class="ml-1 mr-1">T.g bh (tháng)
+                                        <div class="ml-1 mr-1">T.g bh
                                         </div>
 
                                     </div>
@@ -929,8 +909,8 @@
 
                                     </div>
                                     <div class="column-2 d-flex align-items-center">
-                                        <input formControlName="thoiGianBHMonth">
-
+                                        <!-- <input formControlName="thoiGianBHMonth"> -->
+                                        {{priceReviewForm.get('thoiGianBHMonth').value}}
                                     </div>
                                 </div>
                             </div>
@@ -1013,28 +993,24 @@
                         <div class="two d-flex">
                             <div class="item-1 d-flex align-items-center">
                                 <div>
-                                    <input formControlName="giaVonBaseAmount" appInputMoneyNoplaceholder
-                                        appEnterPreventDefault>
+                                    <input formControlName="giaVonBaseAmount" appInputMoneyNoplaceholder appEnterPreventDefault>
                                 </div>
                             </div>
                             <div class="item-2 d-flex align-items-center">
                                 <div>
-                                    <input formControlName="giaVonBaseGfa" appInputAreaNoplaceholder
-                                        appEnterPreventDefault>
+                                    <input formControlName="giaVonBaseGfa" appInputAreaNoplaceholder appEnterPreventDefault>
                                 </div>
                             </div>
 
                             <div class="item-3 d-flex align-items-center">
                                 <div>
-                                    <input formControlName="giaVonAlterAmount" appInputMoneyNoplaceholder
-                                        appEnterPreventDefault>
+                                    <input formControlName="giaVonAlterAmount" appInputMoneyNoplaceholder appEnterPreventDefault>
                                 </div>
 
                             </div>
                             <div class="item-4 d-flex align-items-center">
                                 <div>
-                                    <input formControlName="giaVonAlterGfa" appInputAreaNoplaceholder
-                                        appEnterPreventDefault>
+                                    <input formControlName="giaVonAlterGfa" appInputAreaNoplaceholder appEnterPreventDefault>
                                 </div>
                             </div>
 
@@ -1064,8 +1040,7 @@
                             </div>
                             <div class="item-2 d-flex align-items-center">
                                 <div>
-                                    <input formControlName="chiPhiBaseGfa" appInputAreaNoplaceholder
-                                        (input)="getValueField()">
+                                    <input formControlName="chiPhiBaseGfa" appInputAreaNoplaceholder (input)="getValueField()">
                                 </div>
                             </div>
 
@@ -1077,8 +1052,7 @@
                             </div>
                             <div class="item-4 d-flex align-items-center">
                                 <div>
-                                    <input formControlName="chiPhiAlterGfa"
-                                        appInputAreaNoplaceholder>
+                                    <input formControlName="chiPhiAlterGfa" appInputAreaNoplaceholder>
                                 </div>
                             </div>
 
@@ -1108,8 +1082,7 @@
                             </div>
                             <div class="item-2 d-flex align-items-center">
                                 <div>
-                                    <input formControlName="giaTriBaseGfa" appInputAreaNoplaceholder
-                                        (input)="getValueField()">
+                                    <input formControlName="giaTriBaseGfa" appInputAreaNoplaceholder (input)="getValueField()">
                                 </div>
                             </div>
 
@@ -1121,8 +1094,7 @@
                             </div>
                             <div class="item-4 d-flex align-items-center">
                                 <div>
-                                    <input style="white-space: nowrap;" formControlName="giaTriAlterGfa"
-                                        appInputAreaNoplaceholder>
+                                    <input style="white-space: nowrap;" formControlName="giaTriAlterGfa" appInputAreaNoplaceholder>
                                 </div>
                             </div>
 
@@ -1152,8 +1124,7 @@
                             </div>
                             <div class="item-2 d-flex align-items-center">
                                 <div *ngIf="valuePcps">
-                                    <input formControlName="giaTriPCBaseGfa"
-                                        appInputAreaNoplaceholder>
+                                    <input formControlName="giaTriPCBaseGfa" appInputAreaNoplaceholder>
                                 </div>
 
                                 <div *ngIf="!valuePcps" class="center-parent w-100">
@@ -1170,8 +1141,7 @@
                             </div>
                             <div class="item-4 d-flex align-items-center">
                                 <div>
-                                    <input formControlName="giaTriPCAlterGfa"
-                                        appInputAreaNoplaceholder>
+                                    <input formControlName="giaTriPCAlterGfa" appInputAreaNoplaceholder>
                                 </div>
                             </div>
 
@@ -1193,8 +1163,7 @@
                             </div>
                             <div class="item-2 d-flex align-items-center">
                                 <div>
-                                    <input formControlName="totalGiaVonGfa"
-                                        appInputAreaNoplaceholder>
+                                    <input formControlName="totalGiaVonGfa" appInputAreaNoplaceholder>
                                 </div>
                             </div>
 
@@ -1236,8 +1205,7 @@
                             </div>
                             <div class="w-50 d-flex align-items-center">
                                 <div class="w-100">
-                                    <input formControlName="chiPhiLoiNhuanAlterAmountGfa"
-                                        appInputAreaNoplaceholder>
+                                    <input formControlName="chiPhiLoiNhuanAlterAmountGfa" appInputAreaNoplaceholder>
                                 </div>
                             </div>
 
@@ -1260,8 +1228,7 @@
                             </div>
                             <div class="item-2 d-flex align-items-center">
                                 <div>
-                                    <input formControlName="giaDiNopThauGfa"
-                                        appInputAreaNoplaceholder>
+                                    <input formControlName="giaDiNopThauGfa" appInputAreaNoplaceholder>
                                 </div>
                             </div>
 
@@ -1273,8 +1240,7 @@
                             </div>
                             <div class="item-4 d-flex align-items-center">
                                 <div>
-                                    <input formControlName="giaDiNopThauAlterGfa"
-                                        appInputAreaNoplaceholder>
+                                    <input formControlName="giaDiNopThauAlterGfa" appInputAreaNoplaceholder>
                                 </div>
                             </div>
 
@@ -1376,8 +1342,7 @@
                                 <div class="ml-3 d-flex align-items-center item-1">
                                     <div>
                                         <label class="childcheck">
-                                            <input type="radio" (click)="truongNhomDuyet()" [value]=true name="isApprovedByTenderLeader"
-                                                formControlName="isApprovedByTenderLeader">
+                                            <input type="radio" (click)="truongNhomDuyet()" [value]=true name="isApprovedByTenderLeader" formControlName="isApprovedByTenderLeader">
                                             <span class="checkmark"></span>
                                         </label>
 
@@ -1391,8 +1356,7 @@
                                 <div class="ml-3 d-flex align-items-center item-1 mg-left">
                                     <div>
                                         <label class="childcheck">
-                                            <input type="radio" (click)="truongNhomKhongDuyet()" [value]=false name="isApprovedByTenderLeader"
-                                                formControlName="isApprovedByTenderLeader">
+                                            <input type="radio" (click)="truongNhomKhongDuyet()" [value]=false name="isApprovedByTenderLeader" formControlName="isApprovedByTenderLeader">
                                             <span class="checkmark"></span>
                                         </label>
 
@@ -1415,8 +1379,7 @@
                                 <div class="ml-3 d-flex align-items-center item-1">
                                     <div>
                                         <label class="childcheck">
-                                            <input type="radio" (click)="truongPhongDuyet()" [value]=true name="isApprovedByTenderManager"
-                                                formControlName="isApprovedByTenderManager">
+                                            <input type="radio" (click)="truongPhongDuyet()" [value]=true name="isApprovedByTenderManager" formControlName="isApprovedByTenderManager">
                                             <span class="checkmark"></span>
                                         </label>
 
@@ -1430,8 +1393,7 @@
                                 <div class="ml-3 d-flex align-items-center item-1 mg-left">
                                     <div>
                                         <label class="childcheck">
-                                            <input type="radio" (click)="truongPhongKhongDuyet()" [value]=false name="isApprovedByTenderManager"
-                                                formControlName="isApprovedByTenderManager">
+                                            <input type="radio" (click)="truongPhongKhongDuyet()" [value]=false name="isApprovedByTenderManager" formControlName="isApprovedByTenderManager">
                                             <span class="checkmark"></span>
                                         </label>
 
@@ -1454,8 +1416,7 @@
                                 <div class="ml-3 d-flex align-items-center item-1">
                                     <div>
                                         <label class="childcheck">
-                                            <input type="radio" (click)="giamDocDuyet()" [value]=true name="isApprovedByBoardOfDirector"
-                                                formControlName="isApprovedByBoardOfDirector">
+                                            <input type="radio" (click)="giamDocDuyet()" [value]=true name="isApprovedByBoardOfDirector" formControlName="isApprovedByBoardOfDirector">
                                             <span class="checkmark"></span>
                                         </label>
 
@@ -1469,8 +1430,7 @@
                                 <div class="ml-3 d-flex align-items-center item-1 mg-left">
                                     <div>
                                         <label class="childcheck">
-                                            <input formControlName="isApprovedByBoardOfDirector" type="radio" (click)="giamDocKhongDuyet()"
-                                                [value]=false name="isApprovedByBoardOfDirector">
+                                            <input formControlName="isApprovedByBoardOfDirector" type="radio" (click)="giamDocKhongDuyet()" [value]=false name="isApprovedByBoardOfDirector">
                                             <span class="checkmark"></span>
                                         </label>
 
