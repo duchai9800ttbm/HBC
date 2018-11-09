@@ -196,7 +196,9 @@ export class PackageDocumentSenderComponent implements OnInit {
                   this.transferDepartmentList.push(itemDepartment);
                 });
                 this.useDaysList.push(itemChildDoc.useDays);
-                this.interviewTimesList.push(itemChildDoc.interviewTime);
+                if (itemChildDoc.interviewTime && itemChildDoc.interviewTime !== 0) {
+                  this.interviewTimesList.push(itemChildDoc.interviewTime);
+                }
               });
             });
           } else if (itemPra.documents && itemPra.documents.length !== 0) {
@@ -205,7 +207,9 @@ export class PackageDocumentSenderComponent implements OnInit {
                 this.transferDepartmentList.push(itemDepartment);
               });
               this.useDaysList.push(itemDoc.useDays);
-              this.interviewTimesList.push(itemDoc.interviewTime);
+              if (itemDoc.interviewTime) {
+                this.interviewTimesList.push(itemDoc.interviewTime);
+              }
             });
           }
         });
