@@ -1,19 +1,19 @@
-import { Component, OnInit, ViewChild, AfterViewInit } from '@angular/core';
+import { Component, OnInit, ViewChild, AfterViewInit, OnDestroy } from '@angular/core';
 import { ServiceConstruction } from '../../../../../../../../shared/models/site-survey-report/service-construction.model';
 import { FormGroup, FormBuilder } from '@angular/forms';
 import { EditComponent } from '../edit.component';
-import { LiveformSiteReportComponent } from '../../liveform-site-report.component';
 import { Router } from '@angular/router';
 import { PackageDetailComponent } from '../../../../../package-detail.component';
 import { AlertService } from '../../../../../../../../shared/services';
 import { SiteSurveyReportService } from '../../../../../../../../shared/services/site-survey-report.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-service-construction',
   templateUrl: './service-construction.component.html',
   styleUrls: ['./service-construction.component.scss']
 })
-export class ServiceConstructionComponent implements OnInit, AfterViewInit {
+export class ServiceConstructionComponent implements OnInit, AfterViewInit, OnDestroy {
   @ViewChild('uploadSupplySystem') uploadSupplySystem;
   @ViewChild('uploadSupplyPoint') uploadSupplyPoint;
   @ViewChild('uploadDrainageSystem') uploadDrainageSystem;
@@ -37,6 +37,7 @@ export class ServiceConstructionComponent implements OnInit, AfterViewInit {
   showPopupViewImage = false;
   currentBidOpportunityId: number;
   serviceConstructionModel = new ServiceConstruction();
+  subscription: Subscription;
   constructor(
     private siteSurveyReportService: SiteSurveyReportService,
     private alertService: AlertService,
@@ -49,7 +50,37 @@ export class ServiceConstructionComponent implements OnInit, AfterViewInit {
   ngOnInit() {
     this.currentBidOpportunityId = +PackageDetailComponent.packageId;
     this.checkFlag();
-    this.initData();
+    const loadingData$ = this.siteSurveyReportService.watchingSignalLoad().subscribe(signal => {
+      this.checkFlag();
+      this.initData();
+      this.createForm();
+      loadingData$.unsubscribe();
+    });
+    this.subscription = this.siteSurveyReportService.watchingSignalEdit().subscribe(signal => {
+      this.isViewMode = !signal;
+      if (this.isViewMode && this.serviceConstructionForm) {
+        this.serviceConstructionForm.disable();
+      }
+      if (!this.isViewMode && this.serviceConstructionForm) {
+        this.serviceConstructionForm.enable();
+      }
+      this.checkFlag();
+      this.initData();
+      this.createForm();
+      this.checkFlag();
+    });
+  }
+  ngOnDestroy() {
+    if (this.subscription) {
+      this.subscription.unsubscribe();
+    }
+  }
+  ngAfterViewInit() {
+    if (!this.isViewMode) {
+      this.autofocus.nativeElement.focus();
+    }
+  }
+  createForm() {
     this.serviceConstructionForm = this.fb.group({
       heThongNuocHienHuuDesc: [
         this.serviceConstructionModel.heThongNuocHeThongHienHuu
@@ -86,22 +117,19 @@ export class ServiceConstructionComponent implements OnInit, AfterViewInit {
       ],
       heThongDienKhacList: null
     });
-    this.serviceConstructionForm.valueChanges.subscribe(data => this.mappingToLiveFormData(data));
-    if (this.isViewMode) {
+    if (this.isViewMode && this.serviceConstructionForm) {
       this.serviceConstructionForm.disable();
     }
-
-  }
-  ngAfterViewInit() {
-    if (!this.isViewMode) {
-      this.autofocus.nativeElement.focus();
+    if (!this.isViewMode && this.serviceConstructionForm) {
+      this.serviceConstructionForm.enable();
     }
+    this.serviceConstructionForm.valueChanges.subscribe(data => this.mappingToLiveFormData(data));
   }
   checkFlag() {
-    this.isViewMode = LiveformSiteReportComponent.actionMode === 'viewMode';
+    this.isViewMode = EditComponent.actionMode === 'info';
   }
   initData() {
-    const obj = LiveformSiteReportComponent.formModel.serviceConstruction;
+    const obj = EditComponent.liveformData.serviceConstruction;
     if (obj) {
       this.serviceConstructionModel.heThongNuocHeThongHienHuu = obj.heThongNuocHeThongHienHuu && {
         description: obj.heThongNuocHeThongHienHuu.description,
@@ -149,32 +177,32 @@ export class ServiceConstructionComponent implements OnInit, AfterViewInit {
   }
 
   mappingToLiveFormData(data) {
-    LiveformSiteReportComponent.formModel.serviceConstruction = new ServiceConstruction;
-    LiveformSiteReportComponent.formModel.serviceConstruction.heThongNuocHeThongHienHuu = {
+    EditComponent.liveformData.serviceConstruction = new ServiceConstruction;
+    EditComponent.liveformData.serviceConstruction.heThongNuocHeThongHienHuu = {
       description: data.heThongNuocHienHuuDesc,
       images: this.supplySystemImageUrls
     };
-    LiveformSiteReportComponent.formModel.serviceConstruction.heThongNuocDiemDauNoi = {
+    EditComponent.liveformData.serviceConstruction.heThongNuocDiemDauNoi = {
       description: data.heThongNuocDiemDauNoi,
       images: this.supplyPointImageUrls
     };
-    LiveformSiteReportComponent.formModel.serviceConstruction.heThongNuocThoatHeThongHienHuu = {
+    EditComponent.liveformData.serviceConstruction.heThongNuocThoatHeThongHienHuu = {
       description: data.heThongNuocThoatHienHuuDesc,
       images: this.drainageSystemImageUrls
     };
-    LiveformSiteReportComponent.formModel.serviceConstruction.heThongNuocThoatDiemDauNoi = {
+    EditComponent.liveformData.serviceConstruction.heThongNuocThoatDiemDauNoi = {
       description: data.heThongNuocThoatDiemDauNoiDesc,
       images: this.drainagePointImageUrls
     };
-    LiveformSiteReportComponent.formModel.serviceConstruction.heThongDienTramHaThe = {
+    EditComponent.liveformData.serviceConstruction.heThongDienTramHaThe = {
       description: data.tramHaTheDesc,
       images: this.powerStationImageUrls
     };
-    LiveformSiteReportComponent.formModel.serviceConstruction.heThongDienDuongDayTrungThe = {
+    EditComponent.liveformData.serviceConstruction.heThongDienDuongDayTrungThe = {
       description: data.duongDayTrungTheDesc,
       images: this.mediumVoltageSystemImageUrls
     };
-    LiveformSiteReportComponent.formModel.serviceConstruction.heThongDienThongTinKhac = {
+    EditComponent.liveformData.serviceConstruction.heThongDienThongTinKhac = {
       description: data.heThongDienKhacDesc,
       images: this.powerOtherImageUrls
     };

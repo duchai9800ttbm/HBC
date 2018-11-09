@@ -20,7 +20,7 @@ const routes: Routes = [
                 loadChildren: './liveform-site-report/liveform-site-report.module#LiveformSiteReportModule'
             },
             {
-                path: 'uploadform',
+                path: 'uploadform/:id',
                 component: UploadFormComponent
             }
         ]

@@ -5,7 +5,7 @@
             </div>
             <div class="center-parent  mr-4" style="font-size: 18px; text-transform: uppercase">
                 <div>
-                    <a style="cursor: pointer;" [routerLink]="['../../liveformsite']">
+                    <a style="cursor: pointer;" [routerLink]="['../../../liveformsite']">
                         <img class="pointer not-outline mb-1" height="12" width="12" src="assets\images\nghia.png">
                     </a>
                     báo cáo khảo sát công trường (site survey report)
@@ -71,20 +71,20 @@
             <!-- --- -->
             <div class="d-flex flex-column pl-4 pr-4">
                 <div class="row mb-2">
-                    <div class="col-lg-4"><strong>Công trình (Project):</strong></div>
-                    <div class="col-lg-8">{{ packageData.projectName }}</div>
+                    <div class="title--min-width ml-3"><strong>Công trình (Project):</strong></div>
+                    <div class="ml-3">{{ packageData.projectName }}</div>
                 </div>
                 <div class="row mb-2">
-                    <div class="col-lg-4"><strong>Gói thầu (Package):</strong></div>
-                    <div class="col-lg-8">{{ packageData.opportunityName }}</div>
+                    <div class="title--min-width ml-3"><strong>Gói thầu (Package):</strong></div>
+                    <div class="ml-3">{{ packageData.opportunityName }}</div>
                 </div>
                 <div class="row mb-2">
-                    <div class="col-lg-4"><strong>Địa điểm (Location):</strong></div>
-                    <div class="col-lg-8">{{ packageData.place }}</div>
+                    <div class="title--min-width ml-3"><strong>Địa điểm (Location):</strong></div>
+                    <div class="ml-3">{{ packageData.place }}</div>
                 </div>
                 <div class="row mb-2">
-                    <div class="col-lg-4"><strong>Ban CHCT/Phòng ban:</strong></div>
-                    <div class="col-lg-8">
+                    <div class="title--min-width ml-3"><strong>Ban CHCT/Phòng ban:</strong></div>
+                    <div class="ml-3">
                         <ng-container *ngIf="!isViewMode">
                             <select class="custom-select-option" [(ngModel)]="departmentNo">
                                 <option *ngFor="let item of listDepartments" [value]="item.departmentNo">
@@ -96,8 +96,8 @@
                     </div>
                 </div>
                 <div class="row mb-2">
-                    <div class="col-lg-4"><strong>Người khảo sát/liên hệ:</strong></div>
-                    <div class="col-lg-8">
+                    <div class="title--min-width ml-3"><strong>Người khảo sát/liên hệ:</strong></div>
+                    <div class="ml-3">
                         <ng-container *ngIf="!isViewMode">
                             <select class="custom-select-option option-set-width" [(ngModel)]="customerId">
                                 <option value="">---Chọn---</option>
@@ -110,8 +110,8 @@
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col-lg-4"><strong>Ngày khảo sát (Date):</strong></div>
-                    <div class="col-lg-8">{{ (ngayKhaoSat != 0) ? ((ngayKhaoSat)*1000 | date:'dd/MM/yyyy') : '' }}</div>
+                    <div class="title--min-width ml-3"><strong>Ngày khảo sát (Date):</strong></div>
+                    <div class="ml-3">{{ (ngayKhaoSat != 0) ? ((ngayKhaoSat)*1000 | date:'dd/MM/yyyy') : '' }}</div>
                 </div>
             </div>
             <!-- --- -->

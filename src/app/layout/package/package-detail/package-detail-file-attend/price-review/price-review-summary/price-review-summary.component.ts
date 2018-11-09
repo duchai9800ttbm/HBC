@@ -156,7 +156,7 @@ export class PriceReviewSummaryComponent implements OnInit, OnDestroy {
         break;
       }
       case 'Báo cáo tham quan công trình': {
-        this.router.navigate([`package/detail/${this.packageId}/attend/build/liveformsite/info`]);
+        this.router.navigate([`package/detail/${this.packageId}/attend/build/liveformsite/form/info`]);
         break;
       }
       case 'Bảng tóm tắt ĐKDT': {

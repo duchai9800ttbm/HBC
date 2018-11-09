@@ -4,7 +4,7 @@ export class ScaleOverall {
     tenTaiLieu: string;
     lanPhongVan: number;
     loaiCongTrinh: ConstructionItem[];
-    trangthaiCongTrinh: ConstructionItem[];
+    trangthaiCongTrinh: StatusContruction[];
     quyMoDuAn: {
         dienTichCongTruong: number;
         tongDienTichXayDung: number;
@@ -17,6 +17,12 @@ export class ScaleOverall {
 }
 
 export class ConstructionItem {
+    id: number | string;
+    text: string;
+    value: string;
+    checked: boolean;
+}
+export class StatusContruction {
     text: string;
     value: string;
     checked: boolean;
