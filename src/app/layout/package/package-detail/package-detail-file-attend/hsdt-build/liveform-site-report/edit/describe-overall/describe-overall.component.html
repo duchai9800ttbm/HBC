@@ -12,7 +12,7 @@
                     <div class="image-demo-img">
                         <input type="file" accept="image/*" multiple #uploadTopography (change)="uploadTopographyImage($event)">
                         <ng-container *ngFor="let url of topographyImageUrls; index as k">
-                            <div class="display-img" (click)="viewFullScreenImage(topographyImageUrls, k)">
+                            <div class="display-img" [ngClass]="{'border-none': isViewMode}" (click)="viewFullScreenImage(topographyImageUrls, k)">
                                 <img [src]="url.largeSizeUrl">
                                 <div class="icon-delete-image" [ngClass]="{'d-none': isViewMode}" (click)="deleteTopographyImage(url)">
                                     <i class="fa fa-times delete-icon" aria-hidden="true"></i>
@@ -39,7 +39,7 @@
                 <div class="image-demo-img">
                     <input type="file" accept="image/*" multiple #uploadExistingBuild (change)="uploadExistingBuildImage($event)">
                     <ng-container *ngFor="let url of existingBuildImageUrls; index as k">
-                        <div class="display-img" (click)="viewFullScreenImage(existingBuildImageUrls, k)">
+                        <div class="display-img" [ngClass]="{'border-none': isViewMode}" (click)="viewFullScreenImage(existingBuildImageUrls, k)">
                             <img [src]="url.largeSizeUrl">
                             <div class="icon-delete-image" [ngClass]="{'d-none': isViewMode}" (click)="deleteExistingBuildImage(url)">
                                 <i class="fa fa-times delete-icon" aria-hidden="true"></i>
@@ -67,7 +67,7 @@
             <div class="image-demo-img">
                 <input type="file" accept="image/*" multiple #uploadStacale (change)="uploadStacaleImage($event)">
                 <ng-container *ngFor="let url of stacaleImageUrls; index as k">
-                    <div class="display-img" (click)="viewFullScreenImage(stacaleImageUrls, k)">
+                    <div class="display-img" [ngClass]="{'border-none': isViewMode}" (click)="viewFullScreenImage(stacaleImageUrls, k)">
                         <img [src]="url.largeSizeUrl">
                         <div class="icon-delete-image" [ngClass]="{'d-none': isViewMode}" (click)="deleteStacaleImage(url)">
                             <i class="fa fa-times delete-icon" aria-hidden="true"></i>
@@ -82,10 +82,20 @@
             </div>
         </div>
     </div>
-
-
-
 </form>
+
+<div class="container">
+        <div class="row justify-content-center">
+            <button type="button" class="btn btn-default w-5rem mr-2" [routerLink]="['../scale']">
+                <i class="fa fa-chevron-left" aria-hidden="true"></i>
+                Trở về
+            </button>
+            <button tabindex="7" type="button" class="btn btn-primary w-5rem ml-2" [routerLink]="['../traffic']">
+                Tiếp
+                <i class="fa fa-chevron-right" aria-hidden="true"></i>
+            </button>
+        </div>
+    </div>
 
 <app-image-carousel class="d-flex justify-content-center align-items-center" *ngIf="showPopupViewImage"
     [(imageUrlArray)]="imageUrlArray" [(indexOfImage)]="indexOfImage" (closed)="closeView()"></app-image-carousel>

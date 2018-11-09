@@ -15,6 +15,7 @@ export class SubjectItemComponent implements OnInit {
   @Output() addContentItem = new EventEmitter<boolean>();
   @Output() deleteContent = new EventEmitter<number>();
   @Output() deleteSubjectEmit = new EventEmitter<boolean>();
+  @Output() listImages = new EventEmitter<any>();
 
   isViewMode = false;
   currentBidOpportunityId: number;
@@ -59,5 +60,8 @@ export class SubjectItemComponent implements OnInit {
   }
   deleteSubject() {
     this.deleteSubjectEmit.emit(true);
+  }
+  viewFullScreenImage(obj: any) {
+    this.listImages.emit(obj);
   }
 }

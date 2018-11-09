@@ -119,15 +119,5 @@
         <router-outlet (activate)="disableSideMenu($event)"></router-outlet>
     </div>
 </div>
-<div class="button-change-view d-flex flex-row flex-wrap justify-content-center">
-    <button [disabled]="stepName == 'ScaleOverallComponent'" [class.cursor-notalowed]="stepName == 'ScaleOverallComponent'"
-        type="button" class="next-pre-button btn btn-default ml-1 mr-2" (click)="preStep()">
-        <i class="fa fa-chevron-left" aria-hidden="true"></i> Trở về
-    </button>
-    <button [disabled]="stepName == 'UsefulInfoComponent'" [class.cursor-notalowed]="stepName == 'UsefulInfoComponent'"
-        type="button" class="next-pre-button btn btn-primary ml-1 mr-2" (click)="nextStep()">
-        Tiếp <i class="fa fa-chevron-right" aria-hidden="true"></i>
-    </button>
-</div>
 <app-update-confirm-popup *ngIf="showPopupConfirm" (closed)="submitLiveForm($event)"></app-update-confirm-popup>
 <ngx-spinner bdColor="rgba(51, 51, 51, 0.7)" size="default" color="#fff" type="ball-scale"></ngx-spinner>

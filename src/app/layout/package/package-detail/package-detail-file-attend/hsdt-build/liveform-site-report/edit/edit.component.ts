@@ -1,10 +1,8 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { DATETIME_PICKER_CONFIG } from '../../../../../../../shared/configs/datepicker.config';
 // tslint:disable-next-line:import-blacklist
 import { Subject, Subscription, Observable } from 'rxjs';
 import { Router, ActivatedRoute } from '@angular/router';
-import { AlertService, DataService } from '../../../../../../../shared/services';
-import { LiveformSiteReportComponent } from '../liveform-site-report.component';
+import { AlertService } from '../../../../../../../shared/services';
 import { PackageDetailComponent } from '../../../../package-detail.component';
 import { PackageService } from '../../../../../../../shared/services/package.service';
 import { PackageInfoModel } from '../../../../../../../shared/models/package/package-info.model';
@@ -28,16 +26,6 @@ export class EditComponent implements OnInit, OnDestroy {
   showAfterLogin: any;
   isData;
   showPopupConfirm = false;
-  datePickerConfig = DATETIME_PICKER_CONFIG;
-  stepNameList = [
-    'ScaleOverallComponent',
-    'DescribeOverallComponent',
-    'TrafficComponent',
-    'DemoConsoComponent',
-    'ServiceConstructionComponent',
-    'SoilConditionComponent',
-    'UsefulInfoComponent'
-  ];
   stepName: string;
   bidOpportunityId: number;
   packageData = new PackageInfoModel();
@@ -307,162 +295,6 @@ export class EditComponent implements OnInit, OnDestroy {
     elem.style.display = 'none';
     elemm.style.visibility = 'hidden';
     elemm.style.position = 'absolute';
-  }
-  nextStep() {
-    const index = this.stepNameList.indexOf(this.stepName);
-    const mode = EditComponent.actionMode;
-    switch (index) {
-      case 0: {
-        const step = `describe`;
-        const parameter = `/package/detail/${this.bidOpportunityId}/attend/build/liveformsite/form/${mode}/${step}`;
-        this.router.navigate([parameter]);
-        if (this.isViewMode) {
-          this.siteSurveyReportService.detectSignalEdit(false);
-        }
-        if (!this.isViewMode) {
-          this.siteSurveyReportService.detectSignalEdit(true);
-        }
-        break;
-      }
-      case 1: {
-        const step = `traffic`;
-        const parameter = `/package/detail/${this.bidOpportunityId}/attend/build/liveformsite/form/${mode}/${step}`;
-        this.router.navigate([parameter]);
-        if (this.isViewMode) {
-          this.siteSurveyReportService.detectSignalEdit(false);
-        }
-        if (!this.isViewMode) {
-          this.siteSurveyReportService.detectSignalEdit(true);
-        }
-        break;
-      }
-      case 2: {
-        const step = `demo-conso`;
-        const parameter = `/package/detail/${this.bidOpportunityId}/attend/build/liveformsite/form/${mode}/${step}`;
-        this.router.navigate([parameter]);
-        if (this.isViewMode) {
-          this.siteSurveyReportService.detectSignalEdit(false);
-        }
-        if (!this.isViewMode) {
-          this.siteSurveyReportService.detectSignalEdit(true);
-        }
-        break;
-      }
-      case 3: {
-        const step = `service-construction`;
-        const parameter = `/package/detail/${this.bidOpportunityId}/attend/build/liveformsite/form/${mode}/${step}`;
-        this.router.navigate([parameter]);
-        if (this.isViewMode) {
-          this.siteSurveyReportService.detectSignalEdit(false);
-        }
-        if (!this.isViewMode) {
-          this.siteSurveyReportService.detectSignalEdit(true);
-        }
-        break;
-      }
-      case 4: {
-        const step = `soil`;
-        const parameter = `/package/detail/${this.bidOpportunityId}/attend/build/liveformsite/form/${mode}/${step}`;
-        this.router.navigate([parameter]);
-        if (this.isViewMode) {
-          this.siteSurveyReportService.detectSignalEdit(false);
-        }
-        if (!this.isViewMode) {
-          this.siteSurveyReportService.detectSignalEdit(true);
-        }
-        break;
-      }
-      case 5: {
-        const step = `moreinfo`;
-        const parameter = `/package/detail/${this.bidOpportunityId}/attend/build/liveformsite/form/${mode}/${step}`;
-        this.router.navigate([parameter]);
-        if (this.isViewMode) {
-          this.siteSurveyReportService.detectSignalEdit(false);
-        }
-        if (!this.isViewMode) {
-          this.siteSurveyReportService.detectSignalEdit(true);
-        }
-        break;
-      }
-    }
-  }
-  preStep() {
-    const mode = EditComponent.actionMode;
-    const index = this.stepNameList.indexOf(this.stepName);
-    switch (index) {
-      case 2: {
-        const step = `describe`;
-        const parameter = `/package/detail/${this.bidOpportunityId}/attend/build/liveformsite/form/${mode}/${step}`;
-        this.router.navigate([parameter]);
-        if (this.isViewMode) {
-          this.siteSurveyReportService.detectSignalEdit(false);
-        }
-        if (!this.isViewMode) {
-          this.siteSurveyReportService.detectSignalEdit(true);
-        }
-        break;
-      }
-      case 3: {
-        const step = `traffic`;
-        const parameter = `/package/detail/${this.bidOpportunityId}/attend/build/liveformsite/form/${mode}/${step}`;
-        this.router.navigate([parameter]);
-        if (this.isViewMode) {
-          this.siteSurveyReportService.detectSignalEdit(false);
-        }
-        if (!this.isViewMode) {
-          this.siteSurveyReportService.detectSignalEdit(true);
-        }
-        break;
-      }
-      case 4: {
-        const step = `demo-conso`;
-        const parameter = `/package/detail/${this.bidOpportunityId}/attend/build/liveformsite/form/${mode}/${step}`;
-        this.router.navigate([parameter]);
-        if (this.isViewMode) {
-          this.siteSurveyReportService.detectSignalEdit(false);
-        }
-        if (!this.isViewMode) {
-          this.siteSurveyReportService.detectSignalEdit(true);
-        }
-        break;
-      }
-      case 5: {
-        const step = `service-construction`;
-        const parameter = `/package/detail/${this.bidOpportunityId}/attend/build/liveformsite/form/${mode}/${step}`;
-        this.router.navigate([parameter]);
-        if (this.isViewMode) {
-          this.siteSurveyReportService.detectSignalEdit(false);
-        }
-        if (!this.isViewMode) {
-          this.siteSurveyReportService.detectSignalEdit(true);
-        }
-        break;
-      }
-      case 6: {
-        const step = `soil`;
-        const parameter = `/package/detail/${this.bidOpportunityId}/attend/build/liveformsite/form/${mode}/${step}`;
-        this.router.navigate([parameter]);
-        if (this.isViewMode) {
-          this.siteSurveyReportService.detectSignalEdit(false);
-        }
-        if (!this.isViewMode) {
-          this.siteSurveyReportService.detectSignalEdit(true);
-        }
-        break;
-      }
-      case 1: {
-        const step = `scale`;
-        const parameter = `/package/detail/${this.bidOpportunityId}/attend/build/liveformsite/form/${mode}/${step}`;
-        this.router.navigate([parameter]);
-        if (this.isViewMode) {
-          this.siteSurveyReportService.detectSignalEdit(false);
-        }
-        if (!this.isViewMode) {
-          this.siteSurveyReportService.detectSignalEdit(true);
-        }
-        break;
-      }
-    }
   }
   ngOnDestroy() {
     const elem = document.getElementById('toggle-menu');

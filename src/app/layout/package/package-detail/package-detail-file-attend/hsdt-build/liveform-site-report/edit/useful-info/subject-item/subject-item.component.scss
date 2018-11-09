@@ -190,13 +190,15 @@ label {
 .view-mode-control {
     pointer-events: none;
 }
-.icon-delete{
+
+.icon-delete {
     position: relative;
     color: #BEBEBE;
     font-size: 30px;
     left: 30px;
     top: 6px;
 }
+
 // Set Font-Size
 .big-title {
     font-size: 0.85rem;
@@ -209,6 +211,7 @@ label {
 input[type=text] {
     font-size: 13px;
 }
+
 // Set FontStyle Italic & Color - Input Text
 input[type=text]::placeholder {
     color: #cccccc;

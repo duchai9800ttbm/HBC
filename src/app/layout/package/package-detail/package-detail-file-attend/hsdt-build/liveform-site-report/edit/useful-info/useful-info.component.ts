@@ -1,4 +1,4 @@
-  import { Component, OnInit, ViewChild, AfterViewInit } from '@angular/core';
+import { Component, OnInit, ViewChild, AfterViewInit } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { UsefulInfo, ContentItem } from '../../../../../../../../shared/models/site-survey-report/useful-info.model';
 import { EditComponent } from '../edit.component';
@@ -19,6 +19,9 @@ export class UsefulInfoComponent implements OnInit, AfterViewInit {
   currentBidOpportunityId: number;
   usefulInfoData = new Array<UsefulInfo>();
   isViewMode = false;
+  imageUrlArray = [];
+  indexOfImage;
+  showPopupViewImage = false;
   constructor(
     private router: Router
   ) { }
@@ -75,5 +78,13 @@ export class UsefulInfoComponent implements OnInit, AfterViewInit {
     model.title = obj.title;
     model.content = obj.content;
     EditComponent.liveformData.usefulInfo = [...this.usefulInfoData];
+  }
+  viewFullScreenImage(obj: any) {
+    this.showPopupViewImage = true;
+    this.imageUrlArray = [...obj.images];
+    this.indexOfImage = obj.index;
+  }
+  closeView() {
+    this.showPopupViewImage = false;
   }
 }

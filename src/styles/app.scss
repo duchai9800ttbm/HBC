@@ -942,8 +942,9 @@ select.form-control:not([size]):not([multiple]) {
     height: 8px;
     width: 10px;
 }
+
 ::-webkit-scrollbar-thumb {
-    background: #c1c1c1; 
+    background: #c1c1c1;
 }
 
 
@@ -963,3 +964,14 @@ router-oulet {
     font-size: 1rem;
 }
 
+.border-none {
+    border: none !important;
+}
+
+.cursor-notalowed {
+    cursor: not-allowed;
+}
+
+.w-5rem {
+    width: 5rem;
+}
