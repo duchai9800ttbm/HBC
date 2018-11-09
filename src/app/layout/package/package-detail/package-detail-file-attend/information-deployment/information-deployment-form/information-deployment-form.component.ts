@@ -225,13 +225,12 @@ export class InformationDeploymentFormComponent implements OnInit, OnDestroy {
         setTimeout(() => {
             if (this.ganttChart && this.planForm) {
                 kendo.jQuery(this.ganttChart.nativeElement).kendoGantt({
-                  //  toolbar: ['pdf'],
-                    timezone: '',
+                    //  toolbar: ['pdf'],
                     views: [
                         { type: 'day', },
                         { type: 'week', selected: true },
-                        { type: 'month', slotSize: 250},
-                      //  { type: 'year', slotSize: 150}
+                        { type: 'month', slotSize: 250 },
+                        //  { type: 'year', slotSize: 150}
 
                     ],
                     columns: [
@@ -248,13 +247,13 @@ export class InformationDeploymentFormComponent implements OnInit, OnDestroy {
                     // taskTemplate: `<div style="display: flex; flex-direction: column;"><div>#= data.employeeName # #= data.title #  </div>`,
                     // height: 3250,
                     // 2832
-                    listWidth: 400,
-                    showWorkHours: false,
-                  //  showWorkDays: true,
-                    workWeekStart: 1,
-                  //  workWeekEnd: 7,
+                    // listWidth: 400,
+                    // showWorkHours: false,
+                    // showWorkDays: true,
+                    // workWeekStart: 1,
+                    // workWeekEnd: 7,
                     editable: false,
-                    snap: false,
+                    // snap: false,
                     height: window.screen.availHeight * 0.7
                 }).data('kendoGantt');
                 this.updateGantt();
