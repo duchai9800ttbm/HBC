@@ -1,19 +1,18 @@
-import { Component, OnInit, ViewChild, AfterViewInit } from '@angular/core';
+import { Component, OnInit, ViewChild, AfterViewInit, OnDestroy } from '@angular/core';
 import { DemoConso } from '../../../../../../../../shared/models/site-survey-report/demo-conso.model';
 import { FormGroup, FormBuilder } from '@angular/forms';
 import { EditComponent } from '../edit.component';
-import { LiveformSiteReportComponent } from '../../liveform-site-report.component';
 import { PackageDetailComponent } from '../../../../../package-detail.component';
-import { Router } from '@angular/router';
 import { AlertService } from '../../../../../../../../shared/services';
 import { SiteSurveyReportService } from '../../../../../../../../shared/services/site-survey-report.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-demo-conso',
   templateUrl: './demo-conso.component.html',
   styleUrls: ['./demo-conso.component.scss']
 })
-export class DemoConsoComponent implements OnInit, AfterViewInit {
+export class DemoConsoComponent implements OnInit, AfterViewInit, OnDestroy {
   @ViewChild('uploadDemobilisation') uploadDemobilisation;
   @ViewChild('uploadConsolidation') uploadConsolidation;
   @ViewChild('uploaAdjacent') uploaAdjacent;
@@ -30,17 +29,47 @@ export class DemoConsoComponent implements OnInit, AfterViewInit {
   showPopupViewImage = false;
   currentBidOpportunityId: number;
   demoConsoModel = new DemoConso();
+  subscription: Subscription;
   constructor(
     private siteSurveyReportService: SiteSurveyReportService,
     private alertService: AlertService,
-    private router: Router,
     private fb: FormBuilder
   ) { }
 
   ngOnInit() {
     this.currentBidOpportunityId = +PackageDetailComponent.packageId;
     this.checkFlag();
-    this.initData();
+    const loadingData$ = this.siteSurveyReportService.watchingSignalLoad().subscribe(signal => {
+      this.checkFlag();
+      this.initData();
+      this.createForm();
+      loadingData$.unsubscribe();
+    });
+    this.subscription = this.siteSurveyReportService.watchingSignalEdit().subscribe(signal => {
+      this.isViewMode = !signal;
+      if (this.isViewMode && this.demoConsoForm) {
+        this.demoConsoForm.disable();
+      }
+      if (!this.isViewMode && this.demoConsoForm) {
+        this.demoConsoForm.enable();
+      }
+      this.checkFlag();
+      this.initData();
+      this.createForm();
+      this.checkFlag();
+    });
+  }
+  ngOnDestroy() {
+    if (this.subscription) {
+      this.subscription.unsubscribe();
+    }
+  }
+  ngAfterViewInit() {
+    if (!this.isViewMode) {
+      this.autofocus.nativeElement.focus();
+    }
+  }
+  createForm() {
     this.demoConsoForm = this.fb.group({
       phaVoKetCauDesc: [this.demoConsoModel.phaVoKetCau && this.demoConsoModel.phaVoKetCau.description],
       phaVoKetCauList: [null],
@@ -49,22 +78,20 @@ export class DemoConsoComponent implements OnInit, AfterViewInit {
       dieuKienHinhAnhDesc: [this.demoConsoModel.dieuKien && this.demoConsoModel.dieuKien.description],
       dieuKienHinhAnhList: [null]
     });
-    if (this.isViewMode) {
+    if (this.isViewMode && this.demoConsoForm) {
       this.demoConsoForm.disable();
+    }
+    if (!this.isViewMode && this.demoConsoForm) {
+      this.demoConsoForm.enable();
     }
     this.demoConsoForm.valueChanges.subscribe(data => this.mappingToLiveFormData(data));
   }
-  ngAfterViewInit() {
-    if (!this.isViewMode) {
-      this.autofocus.nativeElement.focus();
-    }
-  }
   checkFlag() {
-    this.isViewMode = LiveformSiteReportComponent.actionMode === 'viewMode';
+    this.isViewMode = EditComponent.actionMode === 'info';
   }
 
   initData() {
-    const obj = LiveformSiteReportComponent.formModel.demoConso;
+    const obj = EditComponent.liveformData.demoConso;
     if (obj) {
       this.demoConsoModel.phaVoKetCau = obj.phaVoKetCau && {
         description: obj.phaVoKetCau.description,
@@ -84,18 +111,17 @@ export class DemoConsoComponent implements OnInit, AfterViewInit {
     }
   }
 
-
   mappingToLiveFormData(data) {
-    LiveformSiteReportComponent.formModel.demoConso = new DemoConso;
-    LiveformSiteReportComponent.formModel.demoConso.phaVoKetCau = {
+    EditComponent.liveformData.demoConso = new DemoConso;
+    EditComponent.liveformData.demoConso.phaVoKetCau = {
       description: data.phaVoKetCauDesc,
       images: this.demobilisationImageUrls
     };
-    LiveformSiteReportComponent.formModel.demoConso.giaCoKetCau = {
+    EditComponent.liveformData.demoConso.giaCoKetCau = {
       description: data.giaCoKetCauDesc,
       images: this.consolidationImageUrls
     };
-    LiveformSiteReportComponent.formModel.demoConso.dieuKien = {
+    EditComponent.liveformData.demoConso.dieuKien = {
       description: data.dieuKienHinhAnhDesc,
       images: this.adjacentImageUrls
     };

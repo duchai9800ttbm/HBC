@@ -305,6 +305,9 @@ input[type=text] {
 .cursor-notalowed {
     cursor: not-allowed;
 }
+.title--min-width{
+    min-width: 170px;
+}
 
 @media only screen and (max-width: 1200px) {
     .responsive-container {

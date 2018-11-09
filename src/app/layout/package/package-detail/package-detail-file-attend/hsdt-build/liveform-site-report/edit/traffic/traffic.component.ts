@@ -1,19 +1,19 @@
-import { Component, OnInit, ViewChild, AfterViewInit } from '@angular/core';
+import { Component, OnInit, ViewChild, AfterViewInit, OnDestroy } from '@angular/core';
 import { Traffic } from '../../../../../../../../shared/models/site-survey-report/traffic.model';
 import { EditComponent } from '../edit.component';
 import { FormBuilder, FormGroup } from '@angular/forms';
-import { LiveformSiteReportComponent } from '../../liveform-site-report.component';
 import { Router } from '@angular/router';
 import { PackageDetailComponent } from '../../../../../package-detail.component';
 import { AlertService } from '../../../../../../../../shared/services';
 import { SiteSurveyReportService } from '../../../../../../../../shared/services/site-survey-report.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-traffic',
   templateUrl: './traffic.component.html',
   styleUrls: ['./traffic.component.scss']
 })
-export class TrafficComponent implements OnInit, AfterViewInit {
+export class TrafficComponent implements OnInit, AfterViewInit, OnDestroy {
   @ViewChild('uploaDisadvantage') uploaDisadvantage;
   @ViewChild('uploaAdvantage') uploaAdvantage;
   @ViewChild('uploadDirection') uploadDirection;
@@ -36,6 +36,7 @@ export class TrafficComponent implements OnInit, AfterViewInit {
   showPopupViewImage = false;
   currentBidOpportunityId: number;
   trafficModel = new Traffic();
+  subscription: Subscription;
   constructor(
     private siteSurveyReportService: SiteSurveyReportService,
     private alertService: AlertService,
@@ -46,7 +47,37 @@ export class TrafficComponent implements OnInit, AfterViewInit {
   ngOnInit() {
     this.currentBidOpportunityId = +PackageDetailComponent.packageId;
     this.checkFlag();
-    this.initData();
+    const loadingData$ = this.siteSurveyReportService.watchingSignalLoad().subscribe(signal => {
+      this.checkFlag();
+      this.initData();
+      this.createForm();
+      loadingData$.unsubscribe();
+    });
+    this.subscription = this.siteSurveyReportService.watchingSignalEdit().subscribe(signal => {
+      this.isViewMode = !signal;
+      if (this.isViewMode && this.trafficForm) {
+        this.trafficForm.disable();
+      }
+      if (!this.isViewMode && this.trafficForm) {
+        this.trafficForm.enable();
+      }
+      this.checkFlag();
+      this.initData();
+      this.createForm();
+      this.checkFlag();
+    });
+  }
+  ngOnDestroy() {
+    if (this.subscription) {
+      this.subscription.unsubscribe();
+    }
+  }
+  ngAfterViewInit() {
+    if (!this.isViewMode) {
+      this.autofocus.nativeElement.focus();
+    }
+  }
+  createForm() {
     this.trafficForm = this.fb.group({
       chiTietDiaHinhKhoKhanDesc: [this.trafficModel.chiTietDiaHinhKhoKhan && this.trafficModel.chiTietDiaHinhKhoKhan.description],
       chiTietDiaHinhKhoKhanList: [null],
@@ -64,22 +95,19 @@ export class TrafficComponent implements OnInit, AfterViewInit {
         && this.trafficModel.loiVaoCongTrinhYeuCauHangRao.description],
       yeuCauHangRaoList: null
     });
-    this.trafficForm.valueChanges.subscribe(data => this.mappingToLiveFormData(data));
-    if (this.isViewMode) {
+    if (this.isViewMode && this.trafficForm) {
       this.trafficForm.disable();
     }
-
-  }
-  ngAfterViewInit() {
-    if (!this.isViewMode) {
-      this.autofocus.nativeElement.focus();
+    if (!this.isViewMode && this.trafficForm) {
+      this.trafficForm.enable();
     }
+    this.trafficForm.valueChanges.subscribe(data => this.mappingToLiveFormData(data));
   }
   checkFlag() {
-    this.isViewMode = LiveformSiteReportComponent.actionMode === 'viewMode';
+    this.isViewMode = EditComponent.actionMode === 'info';
   }
   initData() {
-    const obj = LiveformSiteReportComponent.formModel.traffic;
+    const obj = EditComponent.liveformData.traffic;
     if (obj) {
       this.trafficModel.chiTietDiaHinhKhoKhan = obj.chiTietDiaHinhKhoKhan && {
         description: obj.chiTietDiaHinhKhoKhan.description,
@@ -115,28 +143,28 @@ export class TrafficComponent implements OnInit, AfterViewInit {
   }
 
   mappingToLiveFormData(data) {
-    LiveformSiteReportComponent.formModel.traffic = new Traffic;
-    LiveformSiteReportComponent.formModel.traffic.chiTietDiaHinhKhoKhan = {
+    EditComponent.liveformData.traffic = new Traffic;
+    EditComponent.liveformData.traffic.chiTietDiaHinhKhoKhan = {
       description: data.chiTietDiaHinhKhoKhanDesc,
       images: this.disadvantageImageUrls
     };
-    LiveformSiteReportComponent.formModel.traffic.chiTietDiaHinhThuanLoi = {
+    EditComponent.liveformData.traffic.chiTietDiaHinhThuanLoi = {
       description: data.chiTietDiaHinhKhoKhanDesc,
       images: this.advantageImageUrls
     };
-    LiveformSiteReportComponent.formModel.traffic.loiVaoCongTrinhHuongVao = {
+    EditComponent.liveformData.traffic.loiVaoCongTrinhHuongVao = {
       description: data.huongVaoCongTruongDesc,
       images: this.directionImageUrls
     };
-    LiveformSiteReportComponent.formModel.traffic.loiVaoCongTrinhDuongHienCo = {
+    EditComponent.liveformData.traffic.loiVaoCongTrinhDuongHienCo = {
       description: data.duongHienCoTrenCongTruongDesc,
       images: this.existingImageUrls
     };
-    LiveformSiteReportComponent.formModel.traffic.loiVaoCongTrinhYeuCauDuongTam = {
+    EditComponent.liveformData.traffic.loiVaoCongTrinhYeuCauDuongTam = {
       description: data.yeuCauDuongTamDesc,
       images: this.roadImageUrls
     };
-    LiveformSiteReportComponent.formModel.traffic.loiVaoCongTrinhYeuCauHangRao = {
+    EditComponent.liveformData.traffic.loiVaoCongTrinhYeuCauHangRao = {
       description: data.yeuCauHangRaoDesc,
       images: this.fenceImageUrls
     };

@@ -1,5 +1,5 @@
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
-import { LiveformSiteReportComponent } from '../../liveform-site-report.component';
+import { EditComponent } from '../edit.component';
 
 @Component({
   selector: 'app-update-confirm-popup',
@@ -24,6 +24,6 @@ export class UpdateConfirmPopupComponent implements OnInit {
     this.closed.emit(true);
   }
   mappingToLiveFormData() {
-    LiveformSiteReportComponent.formModel.updateDescription = this.descriptionUpdate;
+    EditComponent.liveformData.updateDescription = this.descriptionUpdate;
   }
 }

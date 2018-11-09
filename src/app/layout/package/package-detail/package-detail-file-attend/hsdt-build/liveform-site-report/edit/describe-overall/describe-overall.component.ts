@@ -1,19 +1,19 @@
-import { Component, OnInit, ViewChild, AfterViewInit } from '@angular/core';
+import { Component, OnInit, ViewChild, AfterViewInit, OnDestroy } from '@angular/core';
 import { DescribeOverall } from '../../../../../../../../shared/models/site-survey-report/describe-overall.model';
 import { FormGroup, FormBuilder } from '@angular/forms';
 import { EditComponent } from '../edit.component';
-import { LiveformSiteReportComponent } from '../../liveform-site-report.component';
 import { PackageDetailComponent } from '../../../../../package-detail.component';
 import { Router } from '@angular/router';
 import { AlertService } from '../../../../../../../../shared/services';
 import { SiteSurveyReportService } from '../../../../../../../../shared/services/site-survey-report.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-describe-overall',
   templateUrl: './describe-overall.component.html',
   styleUrls: ['./describe-overall.component.scss']
 })
-export class DescribeOverallComponent implements OnInit, AfterViewInit {
+export class DescribeOverallComponent implements OnInit, AfterViewInit, OnDestroy {
   @ViewChild('uploadTopography') uploadTopography;
   @ViewChild('uploadExistingBuild') uploadExistingBuild;
   @ViewChild('uploadStacale') uploadStacale;
@@ -30,6 +30,7 @@ export class DescribeOverallComponent implements OnInit, AfterViewInit {
   showPopupViewImage = false;
   currentBidOpportunityId: number;
   describeModel = new DescribeOverall();
+  subscription: Subscription;
   constructor(
     private siteSurveyReportService: SiteSurveyReportService,
     private alertService: AlertService,
@@ -40,7 +41,37 @@ export class DescribeOverallComponent implements OnInit, AfterViewInit {
   ngOnInit() {
     this.currentBidOpportunityId = +PackageDetailComponent.packageId;
     this.checkFlag();
-    this.initData();
+    const loadingData$ = this.siteSurveyReportService.watchingSignalLoad().subscribe(signal => {
+      this.checkFlag();
+      this.initData();
+      this.createForm();
+      loadingData$.unsubscribe();
+    });
+    this.subscription = this.siteSurveyReportService.watchingSignalEdit().subscribe(signal => {
+      this.isViewMode = !signal;
+      if (this.isViewMode && this.describeForm) {
+        this.describeForm.disable();
+      }
+      if (!this.isViewMode && this.describeForm) {
+        this.describeForm.enable();
+      }
+      this.checkFlag();
+      this.initData();
+      this.createForm();
+      this.checkFlag();
+    });
+  }
+  ngOnDestroy() {
+    if (this.subscription) {
+      this.subscription.unsubscribe();
+    }
+  }
+  ngAfterViewInit() {
+    if (!this.isViewMode) {
+      this.autofocus.nativeElement.focus();
+    }
+  }
+  createForm() {
     this.describeForm = this.fb.group({
       chiTietDiaHinhDesc: [this.describeModel.chiTietDiaHinh && this.describeModel.chiTietDiaHinh.description],
       chiTietDiaHinhList: [null],
@@ -49,22 +80,20 @@ export class DescribeOverallComponent implements OnInit, AfterViewInit {
       yeuCauChuongNgaiDesc: [this.describeModel.yeuCauChuongNgai && this.describeModel.yeuCauChuongNgai.description],
       yeuCauChuongNgaiList: [null],
     });
-    if (this.isViewMode) {
+    if (this.isViewMode && this.describeForm) {
       this.describeForm.disable();
+    }
+    if (!this.isViewMode && this.describeForm) {
+      this.describeForm.enable();
     }
     this.describeForm.valueChanges.subscribe(data => this.mappingToLiveFormData(data));
   }
-  ngAfterViewInit() {
-    if (!this.isViewMode) {
-      this.autofocus.nativeElement.focus();
-    }
-  }
   checkFlag() {
-    this.isViewMode = LiveformSiteReportComponent.actionMode === 'viewMode';
+    this.isViewMode = EditComponent.actionMode === 'info';
   }
 
   initData() {
-    const obj = LiveformSiteReportComponent.formModel.describeOverall;
+    const obj = EditComponent.liveformData.describeOverall;
     if (obj) {
       this.describeModel.chiTietDiaHinh = obj.chiTietDiaHinh && {
         description: obj.chiTietDiaHinh.description,
@@ -85,16 +114,16 @@ export class DescribeOverallComponent implements OnInit, AfterViewInit {
   }
 
   mappingToLiveFormData(data) {
-    LiveformSiteReportComponent.formModel.describeOverall = new DescribeOverall;
-    LiveformSiteReportComponent.formModel.describeOverall.chiTietDiaHinh = {
+    EditComponent.liveformData.describeOverall = new DescribeOverall;
+    EditComponent.liveformData.describeOverall.chiTietDiaHinh = {
       description: data.chiTietDiaHinhDesc,
       images: this.topographyImageUrls
     };
-    LiveformSiteReportComponent.formModel.describeOverall.kienTrucHienHuu = {
+    EditComponent.liveformData.describeOverall.kienTrucHienHuu = {
       description: data.kienTrucHienHuuDesc,
       images: this.existingBuildImageUrls
     };
-    LiveformSiteReportComponent.formModel.describeOverall.yeuCauChuongNgai = {
+    EditComponent.liveformData.describeOverall.yeuCauChuongNgai = {
       description: data.yeuCauChuongNgaiDesc,
       images: this.stacaleImageUrls
     };

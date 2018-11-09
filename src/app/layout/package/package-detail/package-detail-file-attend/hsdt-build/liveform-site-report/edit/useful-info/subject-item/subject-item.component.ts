@@ -1,8 +1,8 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { UsefulInfo, ContentItem } from '../../../../../../../../../shared/models/site-survey-report/useful-info.model';
 import { PackageDetailComponent } from '../../../../../../package-detail.component';
-import { LiveformSiteReportComponent } from '../../../liveform-site-report.component';
 import { Router } from '@angular/router';
+import { EditComponent } from '../../edit.component';
 
 @Component({
   selector: 'app-subject-item',
@@ -34,7 +34,7 @@ export class SubjectItemComponent implements OnInit {
     this.checkFlag();
   }
   checkFlag() {
-    this.isViewMode = LiveformSiteReportComponent.actionMode === 'viewMode';
+    this.isViewMode = EditComponent.actionMode === 'info';
   }
 
   addContent() {

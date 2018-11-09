@@ -2,9 +2,8 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { DATETIME_PICKER_CONFIG } from '../../../../../../../shared/configs/datepicker.config';
 // tslint:disable-next-line:import-blacklist
 import { Subject, Subscription, Observable } from 'rxjs';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { AlertService, DataService } from '../../../../../../../shared/services';
-import { NgxSpinnerService } from 'ngx-spinner';
 import { LiveformSiteReportComponent } from '../liveform-site-report.component';
 import { PackageDetailComponent } from '../../../../package-detail.component';
 import { PackageService } from '../../../../../../../shared/services/package.service';
@@ -13,6 +12,8 @@ import { SiteSurveyReportService } from '../../../../../../../shared/services/si
 import { HoSoDuThauService } from '../../../../../../../shared/services/ho-so-du-thau.service';
 import { CustomerModel } from '../../../../../../../shared/models/site-survey-report/customer-list';
 import { DepartmentsFormBranches } from '../../../../../../../shared/models/user/departments-from-branches';
+import { SiteSurveyReport } from '../../../../../../../shared/models/site-survey-report/site-survey-report';
+import { ScaleOverall, ConstructionItem } from '../../../../../../../shared/models/site-survey-report/scale-overall.model';
 
 @Component({
   selector: 'app-edit',
@@ -20,6 +21,8 @@ import { DepartmentsFormBranches } from '../../../../../../../shared/models/user
   styleUrls: ['./edit.component.scss']
 })
 export class EditComponent implements OnInit, OnDestroy {
+  static liveformData: SiteSurveyReport = new SiteSurveyReport();
+  static actionMode: string;
   dtTrigger: Subject<any> = new Subject();
   showBeforeLogin: any = true;
   showAfterLogin: any;
@@ -35,8 +38,8 @@ export class EditComponent implements OnInit, OnDestroy {
     'SoilConditionComponent',
     'UsefulInfoComponent'
   ];
-  stepName;
-  currentBidOpportunityId: number;
+  stepName: string;
+  bidOpportunityId: number;
   packageData = new PackageInfoModel();
   customerId;
   customerName;
@@ -55,82 +58,195 @@ export class EditComponent implements OnInit, OnDestroy {
   // End Set ActionMode
   subscription: Subscription;
   isClosedHSDT: boolean;
+  dataDNDT;
   constructor(
     private siteSurveyReportService: SiteSurveyReportService,
     private packageService: PackageService,
     private router: Router,
     private alertService: AlertService,
-    private spinner: NgxSpinnerService,
     private hoSoDuThauService: HoSoDuThauService,
-    private dataService: DataService
+    private activatedRoute: ActivatedRoute
   ) { }
 
   ngOnInit() {
+    // Check Action Mode
+    const activate$ = this.activatedRoute.params.subscribe(data => {
+      switch (data.action) {
+        case 'create': {
+          this.isCreate = true;
+          this.isCreateMode = true;
+          EditComponent.actionMode = 'create';
+          break;
+        }
+        case 'edit': {
+          this.isEditMode = true;
+          EditComponent.actionMode = 'edit';
+          break;
+        }
+        case 'info': {
+          this.isViewMode = true;
+          EditComponent.actionMode = 'info';
+          break;
+        }
+      }
+    });
+    // End Check Action Mode
     this.subscription = this.hoSoDuThauService.watchStatusPackage().subscribe(status => {
       this.isClosedHSDT = status;
     });
-    this.currentBidOpportunityId = +PackageDetailComponent.packageId;
+    this.bidOpportunityId = +PackageDetailComponent.packageId;
     const getInfoTenderPrepare$ = this.getInfoTenderPreparationPlanning();
     const getAllUser$ = this.getAllUser();
-    this.isCreate = LiveformSiteReportComponent.formModel.isCreate;
-    this.isDraft = LiveformSiteReportComponent.formModel.isDraft;
-    // Check Action Mode
-    this.isCreateMode = LiveformSiteReportComponent.actionMode === 'createMode';
-    this.isEditMode = LiveformSiteReportComponent.actionMode === 'editMode';
-    this.isViewMode = LiveformSiteReportComponent.actionMode === 'viewMode';
-    // End Check Action Mode
-    let getListDepartments$ = null;
-    if (!this.isViewMode) {
-      getListDepartments$ = this.siteSurveyReportService.getListDepartmentsFromBranches().subscribe(res => {
-        this.listDepartments = [...res];
-      });
-    }
-    const getInforPackageID$ = this.packageService.getInforPackageID(this.currentBidOpportunityId).subscribe(result => {
+    const getListDepartments$ = this.getDepartment();
+    const getInforPackageID$ = this.packageService.getInforPackageID(this.bidOpportunityId).subscribe(result => {
       this.packageData = result;
-    }, err => {
-      this.alertService.error('Tải thông tin gói thầu không thành công.');
-    });
-
+    }, err => this.alertService.error('Tải thông tin gói thầu không thành công.'));
     const loadData$ = this.loadData();
+
     this.subscription.add(getInfoTenderPrepare$);
     this.subscription.add(getAllUser$);
     this.subscription.add(getInforPackageID$);
     this.subscription.add(getListDepartments$);
     this.subscription.add(loadData$);
+    this.subscription.add(activate$);
   }
   loadData() {
-    const phongBan = LiveformSiteReportComponent.formModel.phongBan;
-    this.departmentNo = (phongBan) ? phongBan.key : 'PDUTHAU';  // Default PDT
-    this.departmentName = (phongBan) ? phongBan.text : '';
-    const nguoiKhaoSat = LiveformSiteReportComponent.formModel.nguoiKhaoSat;
-    this.customerId = (nguoiKhaoSat) ? nguoiKhaoSat.id : '';
-    this.customerName = (nguoiKhaoSat) ? nguoiKhaoSat.text : '';
+    const dataPackageInfo = this.siteSurveyReportService.getPackageData();
+    const getDataReport$ = this.packageService.getProposedTenderParticipateReport(this.bidOpportunityId)
+      .switchMap(dataDNDT => {
+        this.dataDNDT = dataDNDT;
+        return this.siteSurveyReportService.tenderSiteSurveyingReport(this.bidOpportunityId);
+      })
+      .subscribe(res => {
+        if (!res) {
+          EditComponent.liveformData = new SiteSurveyReport();
+          EditComponent.liveformData.isCreate = true;
+          EditComponent.liveformData.isDraft = true;
+          EditComponent.liveformData.bidOpportunityId = this.bidOpportunityId;
+          EditComponent.liveformData.scaleOverall = new ScaleOverall();
+          EditComponent.liveformData.scaleOverall.loaiCongTrinh = new Array<ConstructionItem>();
+          EditComponent.liveformData.scaleOverall.trangthaiCongTrinh = [
+            {
+              text: 'Mới (New)',
+              value: '',
+              checked: false
+            },
+            {
+              text: 'Thay đổi & bổ sung (Alteration & Additional)',
+              value: '',
+              checked: false
+            },
+            {
+              text: 'Khác (Other)',
+              value: '',
+              checked: false
+            },
+            {
+              text: 'Nâng cấp, cải tiến (Renovation)',
+              value: '',
+              checked: false
+            }, {
+              text: 'Tháo dỡ & cải tiến (Demolishment & Renovation)',
+              value: '',
+              checked: false
+            }
+          ];
+          EditComponent.liveformData.scaleOverall.quyMoDuAn = {
+            dienTichCongTruong: null,
+            tongDienTichXayDung: null,
+            soTang: '',
+            tienDo: null,
+          };
+          EditComponent.liveformData.scaleOverall.quyMoDuAn.tongDienTichXayDung = dataPackageInfo && dataPackageInfo.floorArea;
+          EditComponent.liveformData.scaleOverall.quyMoDuAn.tienDo = this.dataDNDT.contractCondition.timeForCompletion;
+          if (EditComponent.liveformData && !EditComponent.liveformData.scaleOverall.loaiCongTrinh.length && dataPackageInfo) {
+            const siteSurvey$ = this.siteSurveyReportService.getListConstructionType().subscribe(ress => {
+              const constructionTypes = ress;
+              const foundItem = constructionTypes.find(item => item.id == dataPackageInfo.projectType.id);
+              foundItem.checked = true;
+              constructionTypes[constructionTypes
+                .indexOf(constructionTypes.find(item => item.id == dataPackageInfo.projectType.id))] = foundItem;
+              EditComponent.liveformData.scaleOverall.loaiCongTrinh = constructionTypes;
+              if (EditComponent.liveformData) {
+                const phongBan = EditComponent.liveformData.phongBan;
+                this.departmentNo = (phongBan) ? phongBan.key : 'PDUTHAU';  // Default PDT
+                this.departmentName = (phongBan) ? phongBan.text : '';
+                const nguoiKhaoSat = EditComponent.liveformData.nguoiKhaoSat;
+                this.customerId = (nguoiKhaoSat) ? nguoiKhaoSat.id : '';
+                this.customerName = (nguoiKhaoSat) ? nguoiKhaoSat.text : '';
+              }
+              this.isDraft = EditComponent.liveformData.isDraft;
+              this.siteSurveyReportService.detectSignalLoad(true);
+              siteSurvey$.unsubscribe();
+            }, err => this.alertService.error('Đã xảy ra lỗi, danh sách loại công trình cập nhật không thành công'));
+          }
+        } else {
+          EditComponent.liveformData = res;
+          if (EditComponent.liveformData && !EditComponent.liveformData.scaleOverall.loaiCongTrinh.length && dataPackageInfo) {
+            const siteSurvey$ = this.siteSurveyReportService.getListConstructionType().subscribe(ress => {
+              const constructionTypes = ress;
+              const foundItem = constructionTypes.find(item => item.id == dataPackageInfo.projectType.id);
+              foundItem.checked = true;
+              constructionTypes[constructionTypes
+                .indexOf(constructionTypes.find(item => item.id == dataPackageInfo.projectType.id))] = foundItem;
+              EditComponent.liveformData.scaleOverall.loaiCongTrinh = constructionTypes;
+              if (EditComponent.liveformData) {
+                const phongBan = EditComponent.liveformData.phongBan;
+                this.departmentNo = (phongBan) ? phongBan.key : 'PDUTHAU';  // Default PDT
+                this.departmentName = (phongBan) ? phongBan.text : '';
+                const nguoiKhaoSat = EditComponent.liveformData.nguoiKhaoSat;
+                this.customerId = (nguoiKhaoSat) ? nguoiKhaoSat.id : '';
+                this.customerName = (nguoiKhaoSat) ? nguoiKhaoSat.text : '';
+              }
+              this.isDraft = EditComponent.liveformData.isDraft;
+              this.siteSurveyReportService.detectSignalLoad(true);
+              siteSurvey$.unsubscribe();
+            }, err => this.alertService.error('Đã xảy ra lỗi, danh sách loại công trình cập nhật không thành công'));
+          }
+
+          if (!(EditComponent.liveformData && !EditComponent.liveformData.scaleOverall.loaiCongTrinh.length && dataPackageInfo)) {
+            if (EditComponent.liveformData) {
+              const phongBan = EditComponent.liveformData.phongBan;
+              this.departmentNo = (phongBan) ? phongBan.key : 'PDUTHAU';  // Default PDT
+              this.departmentName = (phongBan) ? phongBan.text : '';
+              const nguoiKhaoSat = EditComponent.liveformData.nguoiKhaoSat;
+              this.customerId = (nguoiKhaoSat) ? nguoiKhaoSat.id : '';
+              this.customerName = (nguoiKhaoSat) ? nguoiKhaoSat.text : '';
+              this.isDraft = EditComponent.liveformData.isDraft;
+            }
+            this.siteSurveyReportService.detectSignalLoad(true);
+          }
+        }
+      });
+    this.subscription.add(getDataReport$);
+
+  }
+  getDepartment() {
+    this.siteSurveyReportService.getListDepartmentsFromBranches().subscribe(res => {
+      this.listDepartments = [...res];
+    });
   }
   getAllUser() {
     this.siteSurveyReportService.getAllUser('').subscribe(data => {
       this.listCustomerContact = data;
-    }, err => {
-      this.alertService.error('Tải thông tin người dùng không thành công.');
-    });
+    }, err => this.alertService.error('Tải thông tin người dùng không thành công.'));
   }
   getInfoTenderPreparationPlanning() {
-    this.packageService.getTenderPreparationPlanning(this.currentBidOpportunityId).subscribe(data => {
+    this.packageService.getTenderPreparationPlanning(this.bidOpportunityId).subscribe(data => {
       const tempDataTasks = data.tasks;
       this.ngayKhaoSat = tempDataTasks.find(item => item.itemId == 6).finishDate;
-    }, err => {
-      this.alertService.error('Lấy thông tin Phân công tiến độ không thành công.');
-    });
+    }, err => this.alertService.error('Lấy thông tin Phân công tiến độ không thành công.'));
   }
   submitLiveForm(event) {
-    LiveformSiteReportComponent.actionMode = 'viewMode';
+    EditComponent.actionMode = 'viewMode';
     this.isViewMode = true;
     this.departmentId = this.listDepartments.find(item => item.departmentNo === this.departmentNo).id;
-    LiveformSiteReportComponent.formModel.phongBan = {
+    EditComponent.liveformData.phongBan = {
       id: this.departmentId,
       key: this.departmentNo,
       text: ''
     };
-    LiveformSiteReportComponent.formModel.nguoiKhaoSat = {
+    EditComponent.liveformData.nguoiKhaoSat = {
       id: this.customerId,
       text: ''
     };
@@ -138,26 +254,23 @@ export class EditComponent implements OnInit, OnDestroy {
     if (!event) {
       this.showPopupConfirm = false;
     } else {
-      const objData = LiveformSiteReportComponent.formModel;
+      const objData = EditComponent.liveformData;
       this.showPopupConfirm = false;
-      this.spinner.show();
       this.siteSurveyReportService
         .createOrUpdateSiteSurveyingReport(objData)
         .subscribe(() => {
           this.showPopupConfirm = false;
-          this.spinner.hide();
           this.hoSoDuThauService.detectUploadFile(true);
-          this.router.navigate([`/package/detail/${this.currentBidOpportunityId}/attend/build/liveformsite`]);
+          this.router.navigate([`/package/detail/${this.bidOpportunityId}/attend/build/liveformsite`]);
           const message = (this.isCreate) ? 'Tạo mới' : 'Cập nhật';
           this.alertService.success(`${message} Báo cáo khảo sát công trường thành công.`);
-          if (!LiveformSiteReportComponent.formModel.isDraft) {
+          if (!EditComponent.liveformData.isDraft) {
             this.hoSoDuThauService.detectCondition(true);
           }
         }, err => {
           this.showPopupConfirm = false;
-          this.spinner.hide();
           const message = (this.isCreate) ? 'Tạo mới' : 'Cập nhật';
-          LiveformSiteReportComponent.actionMode = (this.isCreate) ? 'createMode' : 'editMode';
+          EditComponent.actionMode = (this.isCreate) ? 'create' : 'edit';
           this.isViewMode = false;
           this.alertService.error(`Đã xảy ra lỗi. ${message} Báo cáo khảo sát công trường không thành công.`);
         });
@@ -165,27 +278,26 @@ export class EditComponent implements OnInit, OnDestroy {
   }
 
   refresh(): void {
-    this.spinner.show();
     this.dtTrigger.next();
-    this.spinner.hide();
     this.alertService.success('Dữ liệu đã được cập nhật mới nhất!');
   }
 
   updateliveform(check: boolean) {
-    const statusPrevious = LiveformSiteReportComponent.formModel.isDraft;
-    LiveformSiteReportComponent.formModel.isDraft = check;
+    const statusPrevious = EditComponent.liveformData.isDraft;
+    EditComponent.liveformData.isDraft = check;
     if (this.isCreate || check || statusPrevious) { return this.submitLiveForm(true); }
     return this.showPopupConfirm = true;
   }
   cancelCreateUpdate() {
-    this.router.navigate([`/package/detail/${this.currentBidOpportunityId}/attend/build/liveformsite`]);
+    this.router.navigate([`/package/detail/${this.bidOpportunityId}/attend/build/liveformsite`]);
   }
   editLiveform() {
-    LiveformSiteReportComponent.actionMode = 'editMode';
+    EditComponent.actionMode = 'edit';
     this.isEditMode = true;
     this.isCreateMode = false;
     this.isViewMode = false;
-    this.router.navigate([`/package/detail/${this.currentBidOpportunityId}/attend/build/liveformsite/edit`]);
+    this.router.navigate([`/package/detail/${this.bidOpportunityId}/attend/build/liveformsite/form/edit`]);
+    this.siteSurveyReportService.detectSignalEdit(true);
   }
 
   disableSideMenu(event) {
@@ -198,82 +310,156 @@ export class EditComponent implements OnInit, OnDestroy {
   }
   nextStep() {
     const index = this.stepNameList.indexOf(this.stepName);
+    const mode = EditComponent.actionMode;
     switch (index) {
       case 0: {
         const step = `describe`;
-        const parameter = `/package/detail/${this.currentBidOpportunityId}/attend/build/liveformsite/edit/${step}`;
+        const parameter = `/package/detail/${this.bidOpportunityId}/attend/build/liveformsite/form/${mode}/${step}`;
         this.router.navigate([parameter]);
+        if (this.isViewMode) {
+          this.siteSurveyReportService.detectSignalEdit(false);
+        }
+        if (!this.isViewMode) {
+          this.siteSurveyReportService.detectSignalEdit(true);
+        }
         break;
       }
       case 1: {
         const step = `traffic`;
-        const parameter = `/package/detail/${this.currentBidOpportunityId}/attend/build/liveformsite/edit/${step}`;
+        const parameter = `/package/detail/${this.bidOpportunityId}/attend/build/liveformsite/form/${mode}/${step}`;
         this.router.navigate([parameter]);
+        if (this.isViewMode) {
+          this.siteSurveyReportService.detectSignalEdit(false);
+        }
+        if (!this.isViewMode) {
+          this.siteSurveyReportService.detectSignalEdit(true);
+        }
         break;
       }
       case 2: {
         const step = `demo-conso`;
-        const parameter = `/package/detail/${this.currentBidOpportunityId}/attend/build/liveformsite/edit/${step}`;
+        const parameter = `/package/detail/${this.bidOpportunityId}/attend/build/liveformsite/form/${mode}/${step}`;
         this.router.navigate([parameter]);
+        if (this.isViewMode) {
+          this.siteSurveyReportService.detectSignalEdit(false);
+        }
+        if (!this.isViewMode) {
+          this.siteSurveyReportService.detectSignalEdit(true);
+        }
         break;
       }
       case 3: {
         const step = `service-construction`;
-        const parameter = `/package/detail/${this.currentBidOpportunityId}/attend/build/liveformsite/edit/${step}`;
+        const parameter = `/package/detail/${this.bidOpportunityId}/attend/build/liveformsite/form/${mode}/${step}`;
         this.router.navigate([parameter]);
+        if (this.isViewMode) {
+          this.siteSurveyReportService.detectSignalEdit(false);
+        }
+        if (!this.isViewMode) {
+          this.siteSurveyReportService.detectSignalEdit(true);
+        }
         break;
       }
       case 4: {
         const step = `soil`;
-        const parameter = `/package/detail/${this.currentBidOpportunityId}/attend/build/liveformsite/edit/${step}`;
+        const parameter = `/package/detail/${this.bidOpportunityId}/attend/build/liveformsite/form/${mode}/${step}`;
         this.router.navigate([parameter]);
+        if (this.isViewMode) {
+          this.siteSurveyReportService.detectSignalEdit(false);
+        }
+        if (!this.isViewMode) {
+          this.siteSurveyReportService.detectSignalEdit(true);
+        }
         break;
       }
       case 5: {
         const step = `moreinfo`;
-        const parameter = `/package/detail/${this.currentBidOpportunityId}/attend/build/liveformsite/edit/${step}`;
+        const parameter = `/package/detail/${this.bidOpportunityId}/attend/build/liveformsite/form/${mode}/${step}`;
         this.router.navigate([parameter]);
+        if (this.isViewMode) {
+          this.siteSurveyReportService.detectSignalEdit(false);
+        }
+        if (!this.isViewMode) {
+          this.siteSurveyReportService.detectSignalEdit(true);
+        }
         break;
       }
     }
   }
   preStep() {
+    const mode = EditComponent.actionMode;
     const index = this.stepNameList.indexOf(this.stepName);
     switch (index) {
       case 2: {
         const step = `describe`;
-        const parameter = `/package/detail/${this.currentBidOpportunityId}/attend/build/liveformsite/edit/${step}`;
+        const parameter = `/package/detail/${this.bidOpportunityId}/attend/build/liveformsite/form/${mode}/${step}`;
         this.router.navigate([parameter]);
+        if (this.isViewMode) {
+          this.siteSurveyReportService.detectSignalEdit(false);
+        }
+        if (!this.isViewMode) {
+          this.siteSurveyReportService.detectSignalEdit(true);
+        }
         break;
       }
       case 3: {
         const step = `traffic`;
-        const parameter = `/package/detail/${this.currentBidOpportunityId}/attend/build/liveformsite/edit/${step}`;
+        const parameter = `/package/detail/${this.bidOpportunityId}/attend/build/liveformsite/form/${mode}/${step}`;
         this.router.navigate([parameter]);
+        if (this.isViewMode) {
+          this.siteSurveyReportService.detectSignalEdit(false);
+        }
+        if (!this.isViewMode) {
+          this.siteSurveyReportService.detectSignalEdit(true);
+        }
         break;
       }
       case 4: {
         const step = `demo-conso`;
-        const parameter = `/package/detail/${this.currentBidOpportunityId}/attend/build/liveformsite/edit/${step}`;
+        const parameter = `/package/detail/${this.bidOpportunityId}/attend/build/liveformsite/form/${mode}/${step}`;
         this.router.navigate([parameter]);
+        if (this.isViewMode) {
+          this.siteSurveyReportService.detectSignalEdit(false);
+        }
+        if (!this.isViewMode) {
+          this.siteSurveyReportService.detectSignalEdit(true);
+        }
         break;
       }
       case 5: {
         const step = `service-construction`;
-        const parameter = `/package/detail/${this.currentBidOpportunityId}/attend/build/liveformsite/edit/${step}`;
+        const parameter = `/package/detail/${this.bidOpportunityId}/attend/build/liveformsite/form/${mode}/${step}`;
         this.router.navigate([parameter]);
+        if (this.isViewMode) {
+          this.siteSurveyReportService.detectSignalEdit(false);
+        }
+        if (!this.isViewMode) {
+          this.siteSurveyReportService.detectSignalEdit(true);
+        }
         break;
       }
       case 6: {
         const step = `soil`;
-        const parameter = `/package/detail/${this.currentBidOpportunityId}/attend/build/liveformsite/edit/${step}`;
+        const parameter = `/package/detail/${this.bidOpportunityId}/attend/build/liveformsite/form/${mode}/${step}`;
         this.router.navigate([parameter]);
+        if (this.isViewMode) {
+          this.siteSurveyReportService.detectSignalEdit(false);
+        }
+        if (!this.isViewMode) {
+          this.siteSurveyReportService.detectSignalEdit(true);
+        }
         break;
       }
       case 1: {
         const step = `scale`;
-        const parameter = `/package/detail/${this.currentBidOpportunityId}/attend/build/liveformsite/edit/${step}`;
+        const parameter = `/package/detail/${this.bidOpportunityId}/attend/build/liveformsite/form/${mode}/${step}`;
         this.router.navigate([parameter]);
+        if (this.isViewMode) {
+          this.siteSurveyReportService.detectSignalEdit(false);
+        }
+        if (!this.isViewMode) {
+          this.siteSurveyReportService.detectSignalEdit(true);
+        }
         break;
       }
     }

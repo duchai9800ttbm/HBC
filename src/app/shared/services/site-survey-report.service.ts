@@ -8,9 +8,14 @@ import { ScaleOverall, ConstructionItem } from '../models/site-survey-report/sca
 import { AlertService } from './alert.service';
 import { HistoryLiveForm } from '../models/ho-so-du-thau/history-liveform.model';
 import { CustomerModel } from '../models/site-survey-report/customer-list';
+import { PackageInfoModel } from '../models/package/package-info.model';
+import { Subject, BehaviorSubject } from 'rxjs';
 
 @Injectable()
 export class SiteSurveyReportService {
+  static dataPackage: PackageInfoModel;
+  static signalLoading: Subject<boolean> = new Subject();
+  static signalEdit = new BehaviorSubject<boolean>(false);
   private static toHistoryLiveForm(result: any): HistoryLiveForm {
     return {
       employee: {
@@ -36,12 +41,34 @@ export class SiteSurveyReportService {
   }
 
   constructor(
-    private alertService: AlertService,
     private apiService: ApiService,
     private sessionService: SessionService
   ) { }
   get employeeId() {
     return this.sessionService.currentUser.employeeId;
+  }
+  // BEGIN: Check Refresh
+  watchingSignalLoad() {
+    return SiteSurveyReportService.signalLoading;
+  }
+  detectSignalLoad(signal) {
+    SiteSurveyReportService.signalLoading.next(signal);
+  }
+  watchingSignalEdit() {
+    return SiteSurveyReportService.signalEdit;
+  }
+  detectSignalEdit(signal) {
+    SiteSurveyReportService.signalEdit.next(signal);
+  }
+  // END: Check Refresh
+
+  // Save Package
+  detectPackageData(data: PackageInfoModel) {
+    SiteSurveyReportService.dataPackage = data;
+  }
+  // Get PackageData
+  getPackageData(): PackageInfoModel {
+    return SiteSurveyReportService.dataPackage;
   }
   // Get danh sách liên hệ
   getListCustomerContact(page: number, pageSize: number) {
@@ -79,10 +106,11 @@ export class SiteSurveyReportService {
       .map(response => response.result).share();
   }
   // Danh sách loại công trình
-  getListConstructionType() {
+  getListConstructionType(): Observable<ConstructionItem[]> {
     const url = `bidconstructiontype/filter/0/1000`;
     return this.apiService.get(url).map(res => {
       const result = res.result.items.map(x => ({
+        id: x.id,
         text: x.constructionTypeName,
         value: x.constructionTypeNameEng,
         checked: false

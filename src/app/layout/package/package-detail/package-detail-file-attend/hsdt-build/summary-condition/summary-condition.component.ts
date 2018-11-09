@@ -89,7 +89,13 @@ export class SummaryConditionComponent implements OnInit, OnDestroy {
       this.InLiveForm = this.listPermissionScreen2.includes('InLiveForm');
       this.TaiTemplate = this.listPermissionScreen2.includes('TaiTemplate');
     });
+    const getDNDTInfo$ = this.packageService.getProposedTenderParticipateReport(this.packageId).subscribe(data => {
+      if (data) {
+        this.hoSoDuThauService.emitDataProposedTender(data);
+      }
+    });
     this.subscription.add(permission$);
+    this.subscription.add(getDNDTInfo$);
     this.hoSoDuThauService.getInfoTenderConditionalSummary(this.packageId)
       .subscribe(data => {
         this.summaryCondition = data;
