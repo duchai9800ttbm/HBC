@@ -57,11 +57,11 @@
                                         <input type="file" accept="image/*" #uploadImage (change)="uploadImageF($event)">
                                         <div class="display-img" *ngFor="let url of imageUrls" (click)="viewFullScreenImage(structureImageUrls)">
                                             <img [src]="url.largeSizeUrl">
-                                            <div class="icon-delete-image" [ngClass]="{'d-none': viewMode}" (click)="deleteImage(url)">
+                                            <div class="icon-delete-image" (click)="deleteImage(url)">
                                                 <i class="fa fa-times delete-icon" aria-hidden="true"></i>
                                             </div>
                                         </div>
-                                        <div class="perspective-image" [ngClass]="{'d-none': viewMode}" (focus)="onFocus($event)"
+                                        <div class="perspective-image" (focus)="onFocus($event)"
                                             (click)="uploadImage.click()" tabindex="3">
                                             <i class="fa fa-plus" aria-hidden="true"></i>
                                             <p>Image</p>

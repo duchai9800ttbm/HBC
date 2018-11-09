@@ -1,14 +1,15 @@
 <div class="modal-header no-boder-bottom">
     <div class="pull-left ">
         <div class="text-title icon-arrow">
-            <img width="15" height="15" class="img-back pointer" src="assets\images\nghia.png" (click)="ClosePopup()" />
+            <img width="15" height="15" class="img-back pointer" src="assets\images\nghia.png" (click)="closePopup()" />
             <h4 class="modal-title text-dark d-inline text-send-noti"> Gửi thư thông báo triển khai</h4>
         </div>
     </div>
 
     <div class="pull-right">
         <button type="button" class="btn btn-cancel mr-2" aria-label="Close" (click)="closePopup()">Hủy</button>
-        <button type="button" *ngIf="!showBtnNotification" class="btn btn-send" aria-label="Close" (click)="SendInformation()">Gửi</button>
+        <!-- (click)="SendInformation()" -->
+        <button type="button" class="btn btn-send" aria-label="Close" >Gửi</button>
     </div>
 </div>
 <div class="modal-body">
@@ -70,7 +71,7 @@
             aria-label="Tiede" aria-describedby="basic-addon1">
     </div>
     <div class="body-ckeditor">
-        <ckeditor [(ngModel)]="emailModel.content" [config]="ckeConfig" #ckeditor debounce="500" (paster)="onPaste($event)">
+        <ckeditor [(ngModel)]="emailModel.content" [config]="ckeConfig" #ckeditor debounce="500">
             <ckbutton [name]="'saveButton'" [command]="'saveCmd'" [icon]="'save.png'" [label]="'Save Document'"
                 [toolbar]="'clipboard,1'">
             </ckbutton>
