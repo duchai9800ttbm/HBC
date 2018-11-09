@@ -17,7 +17,7 @@
                             <input type="file" accept="image/*" multiple #uploadFooting (change)="uploadFootingImage($event)">
 
                             <ng-container *ngFor="let url of footingImageUrls; index as k">
-                                <div class="display-img" (click)="viewFullScreenImage(footingImageUrls, k)">
+                                <div class="display-img" [ngClass]="{'border-none': isViewMode}" (click)="viewFullScreenImage(footingImageUrls, k)">
                                     <img [src]="url.largeSizeUrl">
                                     <div class="icon-delete-image" [ngClass]="{'d-none': isViewMode}" (click)="deleteFootingImage(url)">
                                         <i class="fa fa-times delete-icon" aria-hidden="true"></i>
@@ -55,7 +55,7 @@
                             <input type="file" accept="image/*" multiple #uploadInvestigation (change)="uploadInvestigationImage($event)">
 
                             <ng-container *ngFor="let url of investigationImageUrls; index as k">
-                                <div class="display-img" (click)="viewFullScreenImage(investigationImageUrls, k)">
+                                <div class="display-img" [ngClass]="{'border-none': isViewMode}" (click)="viewFullScreenImage(investigationImageUrls, k)">
                                     <img [src]="url.largeSizeUrl">
                                     <div class="icon-delete-image" [ngClass]="{'d-none': isViewMode}" (click)="deleteInvestigationImage(url)">
                                         <i class="fa fa-times delete-icon" aria-hidden="true"></i>
@@ -73,6 +73,19 @@
         </div>
     </div>
 </form>
+
+<div class="container">
+        <div class="row justify-content-center">
+            <button type="button" class="btn btn-default w-5rem mr-2" [routerLink]="['../service-construction']">
+                <i class="fa fa-chevron-left" aria-hidden="true"></i>
+                Trở về
+            </button>
+            <button tabindex="5" type="button" class="btn btn-primary w-5rem ml-2" [routerLink]="['../moreinfo']">
+                Tiếp
+                <i class="fa fa-chevron-right" aria-hidden="true"></i>
+            </button>
+        </div>
+    </div>
 
 <app-image-carousel class="d-flex justify-content-center align-items-center" *ngIf="showPopupViewImage"
     [(imageUrlArray)]="imageUrlArray" [(indexOfImage)]="indexOfImage" (closed)="closeView()"></app-image-carousel>

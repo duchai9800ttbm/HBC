@@ -1,4 +1,4 @@
-import { Component, OnInit, Output, Input, EventEmitter, ViewChild, AfterViewInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, Output, Input, EventEmitter, ViewChild, OnDestroy } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { ContentItem } from '../../../../../../../../../../shared/models/site-survey-report/useful-info.model';
 import { PackageDetailComponent } from '../../../../../../../package-detail.component';
@@ -12,18 +12,14 @@ import { Subscription } from 'rxjs';
   templateUrl: './content-item.component.html',
   styleUrls: ['./content-item.component.scss']
 })
-export class ContentItemComponent implements OnInit, AfterViewInit, OnDestroy {
+export class ContentItemComponent implements OnInit, OnDestroy {
   @ViewChild('uploadContent') uploadContent;
-  @ViewChild('autofocus') autofocus;
   @Input() contentItemModel: ContentItem;
   @Output() valueChange = new EventEmitter<ContentItem>();
   @Output() deleteContent = new EventEmitter<boolean>();
+  @Output() listImages = new EventEmitter<any>();
   contentItemForm: FormGroup;
   contentItemImageList = [];
-  deleteImageList = [];
-  imageUrlArray = [];
-  indexOfImage;
-  showPopupViewImage = false;
   currentBidOpportunityId: number;
   isViewMode = false;
   subscription: Subscription;
@@ -53,20 +49,12 @@ export class ContentItemComponent implements OnInit, AfterViewInit, OnDestroy {
       this.checkFlag();
       this.createForm();
       this.checkFlag();
-      setTimeout(() => {
-        this.autofocus.nativeElement.focus();
-      });
     });
   }
   ngOnDestroy() {
     if (this.subscription) {
       this.subscription.unsubscribe();
     }
-  }
-  ngAfterViewInit() {
-    // if (!this.isViewMode) {
-    //   this.autofocus.nativeElement.focus();
-    // }
   }
   checkFlag() {
     this.isViewMode = EditComponent.actionMode === 'info';
@@ -130,13 +118,13 @@ export class ContentItemComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   viewFullScreenImage(listImage, indexImage?) {
-    this.showPopupViewImage = true;
-    this.imageUrlArray = [...listImage];
-    this.indexOfImage = indexImage;
+    const obj = {
+      images: listImage,
+      index: indexImage
+    };
+    this.listImages.emit(obj);
   }
-  closeView() {
-    this.showPopupViewImage = false;
-  }
+
   onFocus(e) {
     const input = e.target.parentNode.firstElementChild;
     e.target.addEventListener('keyup', elem => {

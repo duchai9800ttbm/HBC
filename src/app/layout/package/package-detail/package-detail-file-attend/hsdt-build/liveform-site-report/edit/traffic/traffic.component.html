@@ -18,7 +18,7 @@
                             <input type="file" accept="image/*" multiple #uploaDisadvantage (change)="uploaDisadvantageImage($event)">
 
                             <ng-container *ngFor="let url of disadvantageImageUrls; index as k">
-                                <div class="display-img" (click)="viewFullScreenImage(disadvantageImageUrls, k)">
+                                <div class="display-img" [ngClass]="{'border-none': isViewMode}" (click)="viewFullScreenImage(disadvantageImageUrls, k)">
                                     <img [src]="url.largeSizeUrl">
                                     <div class="icon-delete-image" [ngClass]="{'d-none': isViewMode}" (click)="deleteDisadvantageImage(url)">
                                         <i class="fa fa-times delete-icon" aria-hidden="true"></i>
@@ -42,10 +42,10 @@
                                 [ngClass]="{'view-mode-control': isViewMode}">
                         </div>
                         <div class="image-demo-img">
-                            <input type="file" #uploaAdvantage multiple (change)="uploaAdvantageImage($event)">
+                            <input type="file" accept="image/*" #uploaAdvantage multiple (change)="uploaAdvantageImage($event)">
 
                             <ng-container *ngFor="let url of advantageImageUrls; index as k">
-                                <div class="display-img" (click)="viewFullScreenImage(advantageImageUrls, k)">
+                                <div class="display-img" [ngClass]="{'border-none': isViewMode}" (click)="viewFullScreenImage(advantageImageUrls, k)">
                                     <img [src]="url.largeSizeUrl">
                                     <div class="icon-delete-image" [ngClass]="{'d-none': isViewMode}" (click)="deleteAdvantageImage(url)">
                                         <i class="fa fa-times delete-icon" aria-hidden="true"></i>
@@ -78,7 +78,7 @@
                     <input type="file" accept="image/*" multiple #uploadDirection (change)="uploadDirectionImage($event)">
 
                     <ng-container *ngFor="let url of directionImageUrls; index as k">
-                        <div class="display-img" (click)="viewFullScreenImage(directionImageUrls, k)">
+                        <div class="display-img" [ngClass]="{'border-none': isViewMode}" (click)="viewFullScreenImage(directionImageUrls, k)">
                             <img [src]="url.largeSizeUrl">
                             <div class="icon-delete-image" [ngClass]="{'d-none': isViewMode}" (click)="deleteDirectionImage(url)">
                                 <i class="fa fa-times delete-icon" aria-hidden="true"></i>
@@ -104,7 +104,7 @@
                     <input type="file" accept="image/*" multiple #uploadExisting (change)="uploadExistingImage($event)">
 
                     <ng-container *ngFor="let url of existingImageUrls; index as k">
-                        <div class="display-img" (click)="viewFullScreenImage(existingImageUrls, k)">
+                        <div class="display-img" [ngClass]="{'border-none': isViewMode}" (click)="viewFullScreenImage(existingImageUrls, k)">
                             <img [src]="url.largeSizeUrl">
                             <div class="icon-delete-image" [ngClass]="{'d-none': isViewMode}" (click)="deleteExistingImage(url)">
                                 <i class="fa fa-times delete-icon" aria-hidden="true"></i>
@@ -130,7 +130,7 @@
                     <input type="file" accept="image/*" multiple #uploadRoad (change)="uploadRoadImage($event)">
 
                     <ng-container *ngFor="let url of roadImageUrls; index as k">
-                        <div class="display-img" (click)="viewFullScreenImage(roadImageUrls, k)">
+                        <div class="display-img" [ngClass]="{'border-none': isViewMode}" (click)="viewFullScreenImage(roadImageUrls, k)">
                             <img [src]="url.largeSizeUrl">
                             <div class="icon-delete-image" [ngClass]="{'d-none': isViewMode}" (click)="deleteRoadImage(url)">
                                 <i class="fa fa-times delete-icon" aria-hidden="true"></i>
@@ -155,7 +155,7 @@
                     <input type="file" accept="image/*" multiple #uploadFence (change)="uploadFenceImage($event)">
 
                     <ng-container *ngFor="let url of fenceImageUrls; index as k">
-                        <div class="display-img" (click)="viewFullScreenImage(fenceImageUrls, k)">
+                        <div class="display-img" [ngClass]="{'border-none': isViewMode}" (click)="viewFullScreenImage(fenceImageUrls, k)">
                             <img [src]="url.largeSizeUrl">
                             <div class="icon-delete-image" [ngClass]="{'d-none': isViewMode}" (click)="deleteFenceImage(url)">
                                 <i class="fa fa-times delete-icon" aria-hidden="true"></i>
@@ -171,6 +171,19 @@
         </div>
     </div>
 </form>
+
+<div class="container">
+        <div class="row justify-content-center">
+            <button type="button" class="btn btn-default w-5rem mr-2" [routerLink]="['../describe']">
+                <i class="fa fa-chevron-left" aria-hidden="true"></i>
+                Trở về
+            </button>
+            <button tabindex="13" type="button" class="btn btn-primary w-5rem ml-2" [routerLink]="['../demo-conso']">
+                Tiếp
+                <i class="fa fa-chevron-right" aria-hidden="true"></i>
+            </button>
+        </div>
+    </div>
 
 <app-image-carousel class="d-flex justify-content-center align-items-center" *ngIf="showPopupViewImage"
     [(imageUrlArray)]="imageUrlArray" [(indexOfImage)]="indexOfImage" (closed)="closeView()"></app-image-carousel>

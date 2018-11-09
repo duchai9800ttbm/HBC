@@ -15,7 +15,7 @@
                         </div>
                         <app-subject-item [usefulInfo]="subject" (watchingChild)="endPointValue($event, i)"
                             (addContentItem)="addContent(i)" (deleteContent)="deleteContent($event, i)"
-                            (deleteSubjectEmit)="deleteSubject(i)"></app-subject-item>
+                            (deleteSubjectEmit)="deleteSubject(i)" (listImages)="viewFullScreenImage($event)"></app-subject-item>
                     </ng-container>
                 </ng-container>
                 <div class="main-detail" [ngClass]="{'d-none': isViewMode}">
@@ -25,3 +25,17 @@
         </div>
     </div>
 </div>
+<div class="container">
+    <div class="row justify-content-center">
+        <button tabindex="1" type="button" class="btn btn-default w-5rem mr-2" [routerLink]="['../soil']">
+            <i class="fa fa-chevron-left" aria-hidden="true"></i>
+            Trở về
+        </button>
+        <button type="button" class="btn btn-primary w-5rem ml-2 cursor-notalowed">
+            Tiếp
+            <i class="fa fa-chevron-right" aria-hidden="true"></i>
+        </button>
+    </div>
+</div>
+
+<app-image-carousel class="d-flex justify-content-center align-items-center" *ngIf="showPopupViewImage" [(imageUrlArray)]="imageUrlArray" [(indexOfImage)]="indexOfImage" (closed)="closeView()"></app-image-carousel>

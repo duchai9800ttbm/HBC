@@ -65,22 +65,24 @@
                         <div class="label-project-scale row">
                             <label for="" class="col-lg-5">Diện tích công trường/ Site area (m2)</label>
                             <div class="col-lg-7">
-                                <input type="text" class="no-boder cus-input text-right align-placeholder" appInputArea [ngClass]="{'view-mode-control': isViewMode}"
-                                    formControlName="dienTichCongTruong" tabindex="6">
+                                <input type="text" class="no-boder cus-input text-right align-placeholder" appInputArea
+                                    [ngClass]="{'view-mode-control': isViewMode}" formControlName="dienTichCongTruong"
+                                    tabindex="6">
                             </div>
                         </div>
                         <div class="label-project-scale row">
                             <label for="" class="col-lg-5">Tổng diện tích xây dựng/ Gross floor area (m2)</label>
                             <div class="col-lg-7">
-                                <input type="text" class="no-boder cus-input text-right align-placeholder" appInputArea [ngClass]="{'view-mode-control': isViewMode}"
-                                    formControlName="tongDienTichXayDung" tabindex="7">
+                                <input type="text" class="no-boder cus-input text-right align-placeholder" appInputArea
+                                    [ngClass]="{'view-mode-control': isViewMode}" formControlName="tongDienTichXayDung"
+                                    tabindex="7">
                             </div>
                         </div>
                         <div class="label-project-scale row">
                             <label for="" class="col-lg-5">Số tầng/ Total number of floor</label>
                             <div class="col-lg-7">
-                                <input type="text" class="no-boder cus-input text-right align-placeholder" placeholder="Nhập text" [ngClass]="{'view-mode-control': isViewMode}"
-                                    formControlName="soTang" tabindex="8">
+                                <input type="text" class="no-boder cus-input text-right align-placeholder" placeholder="Nhập text"
+                                    [ngClass]="{'view-mode-control': isViewMode}" formControlName="soTang" tabindex="8">
                             </div>
                         </div>
                         <div class="label-project-scale row">
@@ -102,15 +104,15 @@
                         <div class="image-demo-img">
                             <input type="file" accept="image/*" multiple #uploadPerspective (change)="uploadPerspectiveImage($event)">
                             <ng-container *ngFor="let url of perspectiveImageUrls; index as k">
-                                <div class="display-img" (click)="viewFullScreenImage(perspectiveImageUrls, k)">
+                                <div class="display-img" [ngClass]="{'border-none': isViewMode}" (click)="viewFullScreenImage(perspectiveImageUrls, k)">
                                     <img [src]="url.largeSizeUrl">
                                     <div class="icon-delete-image" [ngClass]="{'d-none': isViewMode}" (click)="deletePerspectiveImage(url)">
                                         <i class="fa fa-times delete-icon" aria-hidden="true"></i>
                                     </div>
                                 </div>
                             </ng-container>
-                            <div class="perspective-image cursor-pointer" (focus)="onFocus($event)" [ngClass]="{'d-none': isViewMode}" (click)="uploadPerspective.click()"
-                                tabindex="11">
+                            <div class="perspective-image cursor-pointer" (focus)="onFocus($event)" [ngClass]="{'d-none': isViewMode}"
+                                (click)="uploadPerspective.click()" tabindex="11">
                                 <i class="fa fa-plus" aria-hidden="true"></i>
                                 <p>Image</p>
                             </div>
@@ -131,15 +133,15 @@
                         <div class="image-demo-img">
                             <input type="file" accept="image/*" multiple #uploadStructure (change)="uploadStructureImage($event)">
                             <ng-container *ngFor="let url of structureImageUrls; index as k">
-                                <div class="display-img" (click)="viewFullScreenImage(structureImageUrls, k)">
+                                <div class="display-img" [ngClass]="{'border-none': isViewMode}" (click)="viewFullScreenImage(structureImageUrls, k)">
                                     <img [src]="url.largeSizeUrl">
                                     <div class="icon-delete-image" [ngClass]="{'d-none': isViewMode}" (click)="deleteStructureImage(url)">
                                         <i class="fa fa-times delete-icon" aria-hidden="true"></i>
                                     </div>
                                 </div>
                             </ng-container>
-                            <div class="perspective-image cursor-pointer" (focus)="onFocus($event)" [ngClass]="{'d-none': isViewMode}" (click)="uploadStructure.click()"
-                                tabindex="13">
+                            <div class="perspective-image cursor-pointer" (focus)="onFocus($event)" [ngClass]="{'d-none': isViewMode}"
+                                (click)="uploadStructure.click()" tabindex="13">
                                 <i class="fa fa-plus" aria-hidden="true"></i>
                                 <p>Image</p>
                             </div>
@@ -157,15 +159,15 @@
                     <div class="image-demo-img">
                         <input type="file" accept="image/*" multiple #uploadRequirements (change)="uploadRequirementsImage($event)">
                         <ng-container *ngFor="let url of requirementsImageUrls; index as k">
-                            <div class="display-img" (click)="viewFullScreenImage(requirementsImageUrls, k)">
+                            <div class="display-img" [ngClass]="{'border-none': isViewMode}" (click)="viewFullScreenImage(requirementsImageUrls, k)">
                                 <img [src]="url.largeSizeUrl">
                                 <div class="icon-delete-image" [ngClass]="{'d-none': isViewMode}" (click)="deleteRequirementsImage(url)">
                                     <i class="fa fa-times delete-icon" aria-hidden="true"></i>
                                 </div>
                             </div>
                         </ng-container>
-                        <div class="perspective-image cursor-pointer" (focus)="onFocus($event)" [ngClass]="{'d-none': isViewMode}" (click)="uploadRequirements.click()"
-                            tabindex="15">
+                        <div class="perspective-image cursor-pointer" (focus)="onFocus($event)" [ngClass]="{'d-none': isViewMode}"
+                            (click)="uploadRequirements.click()" tabindex="15">
                             <i class="fa fa-plus" aria-hidden="true"></i>
                             <p>Image</p>
                         </div>
@@ -175,6 +177,19 @@
         </div>
     </div>
 </form>
+
+<div class="container">
+    <div class="row justify-content-center">
+        <button type="button" class="btn btn-default w-5rem mr-2 cursor-notalowed">
+            <i class="fa fa-chevron-left" aria-hidden="true"></i>
+            Trở về
+        </button>
+        <button tabindex="16" type="button" class="btn btn-primary w-5rem ml-2" [routerLink]="['../describe']">
+            Tiếp
+            <i class="fa fa-chevron-right" aria-hidden="true"></i>
+        </button>
+    </div>
+</div>
 
 <app-image-carousel class="d-flex justify-content-center align-items-center" *ngIf="showPopupViewImage"
     [(imageUrlArray)]="imageUrlArray" [(indexOfImage)]="indexOfImage" (closed)="closeView()"></app-image-carousel>

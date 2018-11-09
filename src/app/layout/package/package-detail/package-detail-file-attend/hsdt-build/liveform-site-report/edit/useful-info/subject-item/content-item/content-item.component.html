@@ -1,28 +1,26 @@
 <form [formGroup]="contentItemForm" class="fix-position-form">
     <div class="img-demo-des">
         <label class="invisible"> </label>
-        <input tabindex="1" #autofocus type="text" placeholder="Tên nội dung" class="input-name-content" [ngClass]="{'view-mode-text': isViewMode}" formControlName="tenNoidung">
+        <input type="text" placeholder="Tên nội dung" class="input-name-content" [ngClass]="{'view-mode-text': isViewMode}" formControlName="tenNoidung">
         <i (click)="deleteContentItem()" [ngClass]="{'d-none': isViewMode}" class="fa fa-times-circle remove-content-button" aria-hidden="true"></i>
     </div>
     <div class="img-demo-des">
         <label class="invisible">Nội dung</label>
-        <textarea tabindex="2" class="desc-content" placeholder="Chi tiết nội dung" [ngClass]="{'view-mode-text': isViewMode}" cols="20" rows="5" formControlName="chiTietNoiDung"></textarea>
+        <textarea class="desc-content" placeholder="Chi tiết nội dung" [ngClass]="{'view-mode-text': isViewMode}" cols="20" rows="5" formControlName="chiTietNoiDung"></textarea>
     </div>
     <div class="image-demo-img">
         <input type="file" accept="image/*" multiple #uploadContent (change)="uploadContentImage($event)">
         <ng-container *ngFor="let url of contentItemImageList; index as k">
-            <div class="display-img" (click)="viewFullScreenImage(contentItemImageList, k)">
+            <div class="display-img" [ngClass]="{'border-none': isViewMode}" (click)="viewFullScreenImage(contentItemImageList, k)">
                 <img [src]="url.largeSizeUrl">
                 <div class="icon-delete-image" [ngClass]="{'d-none': isViewMode}" (click)="deleteContentImage(url)">
                     <i class="fa fa-times delete-icon" aria-hidden="true"></i>
                 </div>
             </div>
         </ng-container>
-        <div tabindex="3" class="perspective-image cursor-pointer" (focus)="onFocus($event)" [ngClass]="{'d-none': isViewMode}" (click)="uploadContent.click()">
+        <div class="perspective-image cursor-pointer" (focus)="onFocus($event)" [ngClass]="{'d-none': isViewMode}" (click)="uploadContent.click()">
             <i class="fa fa-plus" aria-hidden="true"></i>
             <p>Image</p>
         </div>
     </div>
 </form>
-
-<app-image-carousel class="d-flex justify-content-center align-items-center" *ngIf="showPopupViewImage" [(imageUrlArray)]="imageUrlArray" [(indexOfImage)]="indexOfImage" (closed)="closeView()"></app-image-carousel>

@@ -1,18 +1,13 @@
 <div class="list-detail">
     <div class="img-demo-des">
         <label class="label-hide"></label>
-
         <!-- --- -->
         <h6 *ngIf="isViewMode" class="mb-1 mt-2 font-weight-bold w-30 d-inline-block">
             {{ usefulInfo.title }}
         </h6>
         <!-- --- -->
-        <span tabindex="1" [ngClass]="{'d-none': isViewMode}" class="custom-dropdown w-30">
-            <select class="form-control" [(ngModel)]="usefulInfo.title" (change)="selectedChange()">
-                <option value="">---Chọn---</option>
-                <option [value]="subject" *ngFor="let subject of subjectList">{{ subject }}</option>
-            </select>
-        </span>
+        <input type="text" placeholder="Tên chủ đề" class="w-30" [(ngModel)]="usefulInfo.title" [ngClass]="{'d-none': isViewMode}"
+            (change)="selectedChange()" [ngClass]="{'view-mode-text': isViewMode}">
         <i (click)="deleteSubject()" [ngClass]="{'d-none': isViewMode}" class="fa fa-times-circle icon-delete"
             aria-hidden="true"></i>
     </div>
@@ -29,7 +24,10 @@
 
             </div>
 
-            <app-content-item [contentItemModel]="content" (valueChange)="trackingChange($event, i)" (deleteContent)="deleteContentItem(i)"></app-content-item>
+            <app-content-item
+            [contentItemModel]="content" (valueChange)="trackingChange($event, i)" (deleteContent)="deleteContentItem(i)"
+            (listImages)="viewFullScreenImage($event)">
+            </app-content-item>
 
         </ng-container>
     </div>
