@@ -534,12 +534,9 @@ export class PriceReviewFormComponent implements OnChanges, OnInit, AfterViewIni
 
       // Điều kiện hợp đồng
 
-      tamUngYCPercent: {
-        value: this.model.contractCondition
-          && this.model.contractCondition.advanceMoney
-          && this.model.contractCondition.advanceMoney.tenderDocumentRequirementPercent,
-        disabled: true
-      },
+      tamUngYCPercent: this.model.contractCondition
+        && this.model.contractCondition.advanceMoney
+        && this.model.contractCondition.advanceMoney.tenderDocumentRequirementPercent,
 
       tamUngYCKhauTru: {
         value: this.model.contractCondition
@@ -570,12 +567,9 @@ export class PriceReviewFormComponent implements OnChanges, OnInit, AfterViewIni
       thoiGianYC: this.model.contractCondition
         && this.model.contractCondition.paymentTime
         && this.model.contractCondition.paymentTime.tenderDocumentRequirementDay,
-      thoiGianDX: {
-        value: this.model.contractCondition
-          && this.model.contractCondition.paymentTime
-          && this.model.contractCondition.paymentTime.suggestionDay,
-        disabled: true
-      },
+      thoiGianDX: this.model.contractCondition
+        && this.model.contractCondition.paymentTime
+        && this.model.contractCondition.paymentTime.suggestionDay,
       thoiGianCY: {
         value: this.model.contractCondition
           && this.model.contractCondition.paymentTime
