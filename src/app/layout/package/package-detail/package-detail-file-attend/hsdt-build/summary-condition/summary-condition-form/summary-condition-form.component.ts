@@ -47,6 +47,7 @@ export class SummaryConditionFormComponent implements OnInit, OnDestroy {
       this.package = result;
     });
     const activate$ = this.activatedRoute.params.subscribe(data => {
+      console.log(data);
       switch (data.action) {
         case 'create': {
           this.isModeView = false;
@@ -84,15 +85,9 @@ export class SummaryConditionFormComponent implements OnInit, OnDestroy {
         this.hoSoDuThauService.emitDataAll(obj);
       }
     });
-    const getDNDTInfo$ = this.packageService.getProposedTenderParticipateReport(this.packageId).subscribe(data => {
-      if (data) {
-        this.hoSoDuThauService.emitDataProposedTender(data);
-      }
-    });
     this.subscription.add(getInFoPackage$);
     this.subscription.add(activate$);
     this.subscription.add(getInfoTender$);
-    this.subscription.add(getDNDTInfo$);
   }
 
   ngOnDestroy(): void {

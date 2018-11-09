@@ -1,18 +1,18 @@
-import { Component, OnInit, Output, Input, EventEmitter, ViewChild, AfterViewInit } from '@angular/core';
-
+import { Component, OnInit, Output, Input, EventEmitter, ViewChild, AfterViewInit, OnDestroy } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { ContentItem } from '../../../../../../../../../../shared/models/site-survey-report/useful-info.model';
-import { LiveformSiteReportComponent } from '../../../../liveform-site-report.component';
 import { PackageDetailComponent } from '../../../../../../../package-detail.component';
 import { AlertService } from '../../../../../../../../../../shared/services';
 import { SiteSurveyReportService } from '../../../../../../../../../../shared/services/site-survey-report.service';
+import { EditComponent } from '../../../edit.component';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-content-item',
   templateUrl: './content-item.component.html',
   styleUrls: ['./content-item.component.scss']
 })
-export class ContentItemComponent implements OnInit, AfterViewInit {
+export class ContentItemComponent implements OnInit, AfterViewInit, OnDestroy {
   @ViewChild('uploadContent') uploadContent;
   @ViewChild('autofocus') autofocus;
   @Input() contentItemModel: ContentItem;
@@ -26,6 +26,7 @@ export class ContentItemComponent implements OnInit, AfterViewInit {
   showPopupViewImage = false;
   currentBidOpportunityId: number;
   isViewMode = false;
+  subscription: Subscription;
 
   constructor(
     private siteSurveyReportService: SiteSurveyReportService,
@@ -36,16 +37,39 @@ export class ContentItemComponent implements OnInit, AfterViewInit {
   ngOnInit() {
     this.currentBidOpportunityId = +PackageDetailComponent.packageId;
     this.checkFlag();
-    this.createForm();
-    this.contentItemForm.valueChanges.subscribe(data => this.mappingData(data));
+    const loadingData$ = this.siteSurveyReportService.watchingSignalLoad().subscribe(signal => {
+      this.checkFlag();
+      this.createForm();
+      loadingData$.unsubscribe();
+    });
+    this.subscription = this.siteSurveyReportService.watchingSignalEdit().subscribe(signal => {
+      this.isViewMode = !signal;
+      if (this.isViewMode && this.contentItemForm) {
+        this.contentItemForm.disable();
+      }
+      if (!this.isViewMode && this.contentItemForm) {
+        this.contentItemForm.enable();
+      }
+      this.checkFlag();
+      this.createForm();
+      this.checkFlag();
+      setTimeout(() => {
+        this.autofocus.nativeElement.focus();
+      });
+    });
   }
-  ngAfterViewInit() {
-    if (!this.isViewMode) {
-      this.autofocus.nativeElement.focus();
+  ngOnDestroy() {
+    if (this.subscription) {
+      this.subscription.unsubscribe();
     }
   }
+  ngAfterViewInit() {
+    // if (!this.isViewMode) {
+    //   this.autofocus.nativeElement.focus();
+    // }
+  }
   checkFlag() {
-    this.isViewMode = LiveformSiteReportComponent.actionMode === 'viewMode';
+    this.isViewMode = EditComponent.actionMode === 'info';
   }
 
   createForm() {
@@ -55,9 +79,13 @@ export class ContentItemComponent implements OnInit, AfterViewInit {
       chiTietNoiDungList: [this.contentItemModel.imageUrls]
     });
     this.contentItemImageList = this.contentItemModel.imageUrls;
-    if (this.isViewMode) {
+    if (this.isViewMode && this.contentItemForm) {
       this.contentItemForm.disable();
     }
+    if (!this.isViewMode && this.contentItemForm) {
+      this.contentItemForm.enable();
+    }
+    this.contentItemForm.valueChanges.subscribe(data => this.mappingData(data));
   }
 
   mappingData(data) {

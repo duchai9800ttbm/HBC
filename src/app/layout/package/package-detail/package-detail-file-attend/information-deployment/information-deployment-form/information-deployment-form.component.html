@@ -106,11 +106,15 @@
                     <div class="">
                         <strong>Chủ đầu tư (Employer):</strong>
                     </div>
-                    <div class=""></div>
+                    <div *ngIf="investor && investor.length !== 0">
+                        <span *ngFor="let item of investor; let i = index">
+                            <strong>{{item.customerName}}</strong>
+                            <span *ngIf="i !== (investor.length - 1)"> ,</span>
+                        </span>
+                    </div>
                 </div>
                 <div class="col-md-6">
                     <div class="col-md-4">
-                        <strong></strong>
                     </div>
                     <div class="col-md-8"></div>
                 </div>

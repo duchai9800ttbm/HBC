@@ -1,9 +1,7 @@
-import { Component, OnInit, ViewChild, AfterViewInit } from '@angular/core';
-import { AlertService, ConfirmationService } from '../../../../../../../../shared/services';
-import { FormGroup, FormBuilder, FormArray } from '@angular/forms';
+  import { Component, OnInit, ViewChild, AfterViewInit } from '@angular/core';
+import { FormGroup } from '@angular/forms';
 import { UsefulInfo, ContentItem } from '../../../../../../../../shared/models/site-survey-report/useful-info.model';
 import { EditComponent } from '../edit.component';
-import { LiveformSiteReportComponent } from '../../liveform-site-report.component';
 import { Router } from '@angular/router';
 import { PackageDetailComponent } from '../../../../../package-detail.component';
 
@@ -37,7 +35,7 @@ export class UsefulInfoComponent implements OnInit, AfterViewInit {
   }
 
   checkFlag() {
-    this.isViewMode = LiveformSiteReportComponent.actionMode === 'viewMode';
+    this.isViewMode = EditComponent.actionMode === 'info';
   }
   addSubject() {
     const obj = new UsefulInfo();
@@ -65,7 +63,7 @@ export class UsefulInfoComponent implements OnInit, AfterViewInit {
   }
 
   initData() {
-    const obj = [...LiveformSiteReportComponent.formModel.usefulInfo];
+    const obj = [...EditComponent.liveformData.usefulInfo];
     if (obj) {
       this.usefulInfoData = obj;
     } else {
@@ -76,6 +74,6 @@ export class UsefulInfoComponent implements OnInit, AfterViewInit {
     const model = this.usefulInfoData[index];
     model.title = obj.title;
     model.content = obj.content;
-    LiveformSiteReportComponent.formModel.usefulInfo = [...this.usefulInfoData];
+    EditComponent.liveformData.usefulInfo = [...this.usefulInfoData];
   }
 }

@@ -2,6 +2,7 @@ import {
   Component,
   OnInit,
   ViewChild,
+  OnDestroy,
   AfterViewInit
 } from '@angular/core';
 import {
@@ -13,17 +14,18 @@ import {
   FormArray,
   FormControl
 } from '@angular/forms';
-import { LiveformSiteReportComponent } from '../../liveform-site-report.component';
 import { PackageDetailComponent } from '../../../../../package-detail.component';
 import { AlertService } from '../../../../../../../../shared/services';
 import { SiteSurveyReportService } from '../../../../../../../../shared/services/site-survey-report.service';
 import { BsModalRef } from 'ngx-bootstrap/modal';
+import { EditComponent } from '../edit.component';
+import { Subscription } from 'rxjs';
 @Component({
   selector: 'app-scale-overall',
   templateUrl: './scale-overall.component.html',
   styleUrls: ['./scale-overall.component.scss']
 })
-export class ScaleOverallComponent implements OnInit, AfterViewInit {
+export class ScaleOverallComponent implements OnInit, AfterViewInit, OnDestroy {
   @ViewChild('uploadPerspective') uploadPerspective;
   @ViewChild('uploadStructure') uploadStructure;
   @ViewChild('uploadRequirements') uploadRequirements;
@@ -50,14 +52,14 @@ export class ScaleOverallComponent implements OnInit, AfterViewInit {
   showPopupViewImage = false;
   currentBidOpportunityId: number;
   scaleModel = new ScaleOverall();
+  subscription: Subscription;
+  get loaiCongTrinhListFA(): FormArray {
+    return this.loaiCongTrinhForm.get('loaiCongTrinhList') as FormArray;
+  }
 
-  // get loaiCongTrinhListFA(): FormArray {
-  //   return this.loaiCongTrinhForm.get('loaiCongTrinhList') as FormArray;
-  // }
-
-  // get trangthaiCongTrinhListFA(): FormArray {
-  //   return this.trangThaiCongTrinhForm.get('trangthaiCongTrinhList') as FormArray;
-  // }
+  get trangthaiCongTrinhListFA(): FormArray {
+    return this.trangThaiCongTrinhForm.get('trangthaiCongTrinhList') as FormArray;
+  }
   constructor(
     private siteSurveyReportService: SiteSurveyReportService,
     private alertService: AlertService,
@@ -68,12 +70,29 @@ export class ScaleOverallComponent implements OnInit, AfterViewInit {
   ngOnInit() {
     this.currentBidOpportunityId = +PackageDetailComponent.packageId;
     this.checkFlag();
-    this.initData();
-    this.createForm();
+    const loadingData$ = this.siteSurveyReportService.watchingSignalLoad().subscribe(signal => {
+      this.checkFlag();
+      this.initData();
+      this.createForm();
+      loadingData$.unsubscribe();
+    });
+    this.subscription = this.siteSurveyReportService.watchingSignalEdit().subscribe(signal => {
+      this.isViewMode = !signal;
+      if (this.scaleOverallForm && this.isViewMode) {
+        this.scaleOverallForm.disable();
+      }
+      if (this.scaleOverallForm && !this.isViewMode) {
+        this.scaleOverallForm.enable();
+      }
+      this.checkFlag();
+      this.initData();
+      this.createForm();
+      this.checkFlag();
+    });
   }
-  ngAfterViewInit() {
-    if (!this.isViewMode) {
-      this.autofocus.nativeElement.focus();
+  ngOnDestroy() {
+    if (this.subscription) {
+      this.subscription.unsubscribe();
     }
   }
   createForm() {
@@ -101,49 +120,31 @@ export class ScaleOverallComponent implements OnInit, AfterViewInit {
     this.trangThaiCongTrinhForm = this.fb.group({
       trangthaiCongTrinhList: new FormArray(controls)
     });
-    if (this.isViewMode) {
+    if (this.scaleOverallForm && this.isViewMode) {
       this.scaleOverallForm.disable();
+    }
+    if (this.scaleOverallForm && !this.isViewMode) {
+      this.scaleOverallForm.enable();
     }
     this.scaleOverallForm.valueChanges.subscribe(data => this.mappingToLiveFormData(data));
   }
 
   checkFlag() {
-    this.isViewMode = LiveformSiteReportComponent.actionMode === 'viewMode';
+    this.isViewMode = EditComponent.actionMode === 'info';
+  }
+  ngAfterViewInit() {
+    if (!this.isViewMode && this.scaleOverallForm) {
+      this.autofocus.nativeElement.focus();
+    }
   }
 
   initData() {
-    const obj = LiveformSiteReportComponent.formModel.scaleOverall;
+    const obj = EditComponent.liveformData.scaleOverall;
     if (obj) {
       this.scaleModel.tenTaiLieu = obj.tenTaiLieu ? obj.tenTaiLieu : '';
       this.scaleModel.lanPhongVan = obj.lanPhongVan ? obj.lanPhongVan : null;
       this.loaiCongTrinhList = obj.loaiCongTrinh;
-      this.trangthaiCongTrinhList = (obj.trangthaiCongTrinh.length) ? obj.trangthaiCongTrinh : [
-        {
-          text: 'Mới (New)',
-          value: '',
-          checked: false
-        },
-        {
-          text: 'Thay đổi & bổ sung (Alteration & Additional)',
-          value: '',
-          checked: false
-        },
-        {
-          text: 'Khác (Other)',
-          value: '',
-          checked: false
-        },
-        {
-          text: 'Nâng cấp, cải tiến (Renovation)',
-          value: '',
-          checked: false
-        },
-        {
-          text: 'Tháo dỡ & cải tiến (Demolishment & Renovation)',
-          value: '',
-          checked: false
-        }
-      ];
+      this.trangthaiCongTrinhList = obj.trangthaiCongTrinh;
       this.scaleModel.quyMoDuAn = obj.quyMoDuAn && {
         dienTichCongTruong: obj.quyMoDuAn.dienTichCongTruong,
         tongDienTichXayDung: obj.quyMoDuAn.tongDienTichXayDung,
@@ -178,26 +179,26 @@ export class ScaleOverallComponent implements OnInit, AfterViewInit {
   }
 
   mappingToLiveFormData(data) {
-    LiveformSiteReportComponent.formModel.scaleOverall = new ScaleOverall;
-    LiveformSiteReportComponent.formModel.scaleOverall.tenTaiLieu = data.tenTaiLieu;
-    LiveformSiteReportComponent.formModel.scaleOverall.lanPhongVan = data.lanPhongVan;
-    LiveformSiteReportComponent.formModel.scaleOverall.loaiCongTrinh = this.loaiCongTrinhList;
-    LiveformSiteReportComponent.formModel.scaleOverall.trangthaiCongTrinh = this.trangthaiCongTrinhList;
-    LiveformSiteReportComponent.formModel.scaleOverall.quyMoDuAn = {
+    EditComponent.liveformData.scaleOverall = new ScaleOverall;
+    EditComponent.liveformData.scaleOverall.tenTaiLieu = data.tenTaiLieu;
+    EditComponent.liveformData.scaleOverall.lanPhongVan = data.lanPhongVan;
+    EditComponent.liveformData.scaleOverall.loaiCongTrinh = this.loaiCongTrinhList;
+    EditComponent.liveformData.scaleOverall.trangthaiCongTrinh = this.trangthaiCongTrinhList;
+    EditComponent.liveformData.scaleOverall.quyMoDuAn = {
       dienTichCongTruong: data.dienTichCongTruong,
       tongDienTichXayDung: data.tongDienTichXayDung,
       soTang: data.soTang,
       tienDo: data.tienDo
     };
-    LiveformSiteReportComponent.formModel.scaleOverall.hinhAnhPhoiCanh = {
+    EditComponent.liveformData.scaleOverall.hinhAnhPhoiCanh = {
       description: data.hinhAnhPhoiCanhDesc,
       images: this.perspectiveImageUrls
     };
-    LiveformSiteReportComponent.formModel.scaleOverall.thongTinVeKetCau = {
+    EditComponent.liveformData.scaleOverall.thongTinVeKetCau = {
       description: data.thongTinVeKetCauDesc,
       images: this.structureImageUrls
     };
-    LiveformSiteReportComponent.formModel.scaleOverall.nhungYeuCauDacBiet = {
+    EditComponent.liveformData.scaleOverall.nhungYeuCauDacBiet = {
       description: data.nhungYeuCauDacBietDesc,
       images: this.requirementsImageUrls
     };

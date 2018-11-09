@@ -1,26 +1,22 @@
 
-import { Component, OnInit, ChangeDetectorRef, OnDestroy, AfterViewChecked } from '@angular/core';
-import { DialogService } from '../../../../../../../node_modules/@progress/kendo-angular-dialog';
-import { UploadFileHsdtComponent } from './upload-file-hsdt/upload-file-hsdt.component';
+import { Component, OnInit, ChangeDetectorRef, OnDestroy, AfterViewChecked, AfterViewInit } from '@angular/core';
 import { PackageService } from '../../../../../shared/services/package.service';
-import { Route } from '@angular/compiler/src/core';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { PackageDetailComponent } from '../../package-detail.component';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { AlertService, ConfirmationService } from '../../../../../shared/services';
 // tslint:disable-next-line:import-blacklist
-import { Subject, Subscription } from 'rxjs';
+import { Subject, Subscription, Observable } from 'rxjs';
 import { HoSoDuThauService } from '../../../../../shared/services/ho-so-du-thau.service';
 import { PagedResult } from '../../../../../shared/models';
 import { DATATABLE_CONFIG2 } from '../../../../../shared/configs';
-import { GroupUserService } from '../../../../../shared/services/group-user.service';
 import { ListUserItem } from '../../../../../shared/models/user/user-list-item.model';
 import { PackageInfoModel } from '../../../../../shared/models/package/package-info.model';
 import { BidStatus } from '../../../../../shared/constants/bid-status';
 import { slideToLeft } from '../../../../../router.animations';
 import { PermissionService } from '../../../../../shared/services/permission.service';
 import { SiteSurveyReportService } from '../../../../../shared/services/site-survey-report.service';
-import { PermissionModel } from '../../../../../shared/models/permission/Permission.model';
+import { PermissionModel } from '../../../../../shared/models/permission/permission.model';
 import { DocumentTypeId } from '../../../../../shared/constants/document-type-id';
 @Component({
     selector: 'app-hsdt-build',
@@ -46,6 +42,7 @@ export class HsdtBuildComponent implements OnInit, AfterViewChecked, OnDestroy {
     subscription: Subscription;
     package = new PackageInfoModel();
     bidStatus = BidStatus;
+    currentURL;
 
     listTemplateHSDT = [
         {
@@ -112,13 +109,13 @@ export class HsdtBuildComponent implements OnInit, AfterViewChecked, OnDestroy {
         private router: Router,
         private spinner: NgxSpinnerService,
         private confirmationService: ConfirmationService,
-        private permissionService: PermissionService
+        private permissionService: PermissionService,
+        private activatedRoute: ActivatedRoute
     ) { }
 
     ngOnInit() {
+        this.checkUrl();
         this.packageId = +PackageDetailComponent.packageId;
-
-
         this.subscription = this.permissionService.get().subscribe(data => {
             this.listPermission = data;
             const hsdt = this.listPermission.length &&
@@ -141,10 +138,8 @@ export class HsdtBuildComponent implements OnInit, AfterViewChecked, OnDestroy {
                     this.listPerCauHoiLamRo = [];
                 }
                 if (screen) {
-         
                     this.listPerYeuCauBaoGiaVatTu = screen.permissions
                         .filter(t => t.tenderDocumentTypeId === this.documentTypeId.YeuCauBaoGiaVatTu).map(z => z.value);
-                    
                     this.listPerBangTinhChiPhiChung = screen.permissions
                         .filter(t => t.tenderDocumentTypeId === this.documentTypeId.BangTinhChiPhiChung).map(z => z.value);
                     this.listPerCauHoiLamRo = screen.permissions
@@ -169,7 +164,7 @@ export class HsdtBuildComponent implements OnInit, AfterViewChecked, OnDestroy {
                 if (screen2) {
                     this.listPermissionScreen2 = screen2.permissions.map(z => z.value);
                     this.listPerTomTatDK = screen2.permissions
-                    .filter(t => t.tenderDocumentTypeId === this.documentTypeId.BangTomTatDK).map(z => z.value);
+                        .filter(t => t.tenderDocumentTypeId === this.documentTypeId.BangTomTatDK).map(z => z.value);
                     this.listPerBaoCaoThamQuanCongTrinh = screen2.permissions
                         .filter(t => t.tenderDocumentTypeId === this.documentTypeId.BaoCaoThamQuanCongTrinh).map(z => z.value);
                 }
@@ -180,7 +175,7 @@ export class HsdtBuildComponent implements OnInit, AfterViewChecked, OnDestroy {
         });
 
         const changingUpload$ = this.hoSoDuThauService.watchChangingUpload().subscribe(signal => {
-            this.getDanhSachLoaiHoSo(false);
+            this.getDanhSachLoaiHoSo();
         });
         this.subscription.add(changingUpload$);
         const conditionApproval$ = this.hoSoDuThauService.watchCondition().subscribe(signal => {
@@ -190,6 +185,8 @@ export class HsdtBuildComponent implements OnInit, AfterViewChecked, OnDestroy {
         this.packageService.getInforPackageID(this.packageId).subscribe(result => {
             this.package = result;
             this.hoSoDuThauService.detectStatusPackage(this.package.isChotHoSo);
+            // Pass Data to LiveForm
+            this.siteSurveyReportService.detectPackageData(result);
         }, err => {
         });
     }
@@ -245,14 +242,10 @@ export class HsdtBuildComponent implements OnInit, AfterViewChecked, OnDestroy {
         });
     }
 
-    getDanhSachLoaiHoSo(spinner: boolean) {
+    getDanhSachLoaiHoSo() {
         this.packageId = +PackageDetailComponent.packageId;
         this.hoSoDuThauService.getDanhSachLoaiTaiLieu(this.packageId).subscribe(res => {
             this.danhSachLoaiTaiLieu = res;
-            if (spinner) {
-                this.spinner.hide();
-                this.alertService.success('Dữ liệu đã được cập nhật mới nhất!');
-            }
         }, err => {
             this.alertService.error('Tải thông tin Loại tài liệu không thành công.');
         });
@@ -271,21 +264,17 @@ export class HsdtBuildComponent implements OnInit, AfterViewChecked, OnDestroy {
 
 
     refresh(): void {
-        this.spinner.show();
         this.packageId = +PackageDetailComponent.packageId;
         this.subscription = this.hoSoDuThauService.watchChangingUpload().subscribe(signal => {
-            this.spinner.hide();
-            this.getDanhSachLoaiHoSo(true);
+            this.getDanhSachLoaiHoSo();
         });
         this.dtTrigger.next();
     }
 
     refresh2(): void {
-        this.spinner.show();
         this.packageId = +PackageDetailComponent.packageId;
         this.subscription = this.hoSoDuThauService.watchChangingUpload().subscribe(signal => {
-            this.spinner.hide();
-            this.getDanhSachLoaiHoSo(false);
+            this.getDanhSachLoaiHoSo();
         });
         this.dtTrigger.next();
     }
@@ -310,7 +299,7 @@ export class HsdtBuildComponent implements OnInit, AfterViewChecked, OnDestroy {
             .getFileNoSearch(this.packageId)
             .subscribe(responseResultDocument => {
                 const checkDocUpload = responseResultDocument.items;
-                this.checkDocFile = checkDocUpload.some(item => item.status == "Official");
+                this.checkDocFile = checkDocUpload.some(item => item.status == 'Official');
             });
         this.hoSoDuThauService.getInfoTenderConditionalSummary(this.packageId).subscribe(result => {
             this.checkTenderSummary = (result) ? result.isDraftVersion : true;
@@ -361,7 +350,18 @@ export class HsdtBuildComponent implements OnInit, AfterViewChecked, OnDestroy {
         } else {
             this.hoSoDuThauService.detectChangingRouter(id);
             this.hoSoDuThauService.transporterData(id);
-            this.router.navigate([`/package/detail/${this.packageId}/attend/build/uploadform`]);
+            this.router.navigate([`/package/detail/${this.packageId}/attend/build/uploadform`, id]);
+        }
+    }
+    checkUrl() {
+        const res = window.location.href.split('/');
+        if (res[res.length - 1] === 'summary') {
+            return this.isHighlight = 0;
+        }
+        if (res[res.length - 1] === 'liveformsite') {
+            return this.isHighlight = 2;
+        } else {
+            return this.isHighlight = +res[res.length - 1];
         }
     }
 }

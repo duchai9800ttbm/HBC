@@ -92,8 +92,8 @@
                         <input type="file" class="upload" (change)="fileChange($event)" />
                     </div>
                     <div style="width: calc(100% - 120px);" class="d-flex justify-content-between">
-                        <div>
-                            <span class="text-truncate">{{this.createFormNewInvitation.get('attachedFiles')?.value}}</span>
+                        <div class="text-truncate" [title]="this.createFormNewInvitation.get('attachedFiles')?.value">
+                            <span>{{this.createFormNewInvitation.get('attachedFiles')?.value}}</span>
                         </div>
                         <div *ngIf="file">
                             <button (click)="deleteFileUpload()" class="btn btn-secondary">X</button>

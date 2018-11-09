@@ -1,6 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { SendEmailModel } from '../../../../../../../shared/models/send-email-model';
 import { EmailService } from '../../../../../../../shared/services/email.service';
+import { SearchEmailModel } from '../../../../../../../shared/models/search-email.model';
 
 @Component({
   selector: 'app-notification-contract',
@@ -58,5 +59,9 @@ export class NotificationContractComponent implements OnInit {
       }
       event.target.value = null;
     }
+  }
+  customSearchFn(term: string, item: SearchEmailModel) {
+    term = term.toLocaleLowerCase();
+    return item.employeeName.toLocaleLowerCase().indexOf(term) > -1 || item.employeeEmail.toLocaleLowerCase().indexOf(term) > -1;
   }
 }

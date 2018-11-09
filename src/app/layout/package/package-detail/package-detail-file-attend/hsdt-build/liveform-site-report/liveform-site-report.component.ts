@@ -15,9 +15,11 @@ import { DialogService } from '../../../../../../../../node_modules/@progress/ke
 import { FormInComponent } from '../../../../../../shared/components/form-in/form-in.component';
 import { Subscription } from 'rxjs';
 import { HoSoDuThauService } from '../../../../../../shared/services/ho-so-du-thau.service';
-import { PermissionModel } from '../../../../../../shared/models/permission/Permission.model';
+import { PermissionModel } from '../../../../../../shared/models/permission/permission.model';
 import { PermissionService } from '../../../../../../shared/services/permission.service';
 import { DocumentTypeId } from '../../../../../../shared/constants/document-type-id';
+import { PackageService } from '../../../../../../shared/services/package.service';
+import { EditComponent } from './edit/edit.component';
 
 @Component({
   selector: 'app-liveform-site-report',
@@ -26,7 +28,6 @@ import { DocumentTypeId } from '../../../../../../shared/constants/document-type
 })
 export class LiveformSiteReportComponent implements OnInit, OnDestroy {
   static formModel: SiteSurveyReport = new SiteSurveyReport();
-  static actionMode: string;
   bidOpportunityId: number;
   page: number;
   pageSize: number;
@@ -42,6 +43,7 @@ export class LiveformSiteReportComponent implements OnInit, OnDestroy {
   indexItemHistoryChange: number;
   isClosedHSDT: boolean;
   subscription: Subscription;
+  dataDNDT;
 
   listPermission: Array<PermissionModel>;
   listPermissionScreen2 = [];
@@ -56,6 +58,7 @@ export class LiveformSiteReportComponent implements OnInit, OnDestroy {
   TaiTemplate = false;
 
   constructor(
+    private packageService: PackageService,
     private hoSoDuThauService: HoSoDuThauService,
     private siteSurveyReportService: SiteSurveyReportService,
     private alertService: AlertService,
@@ -96,59 +99,11 @@ export class LiveformSiteReportComponent implements OnInit, OnDestroy {
       this.InLiveForm = this.listPermissionScreen2.includes('InLiveForm');
       this.TaiTemplate = this.listPermissionScreen2.includes('TaiTemplate');
     });
-    this.subscription.add(permission$);
-    const tender$ = this.siteSurveyReportService.tenderSiteSurveyingReport(this.bidOpportunityId).subscribe(res => {
-      if (!res) {
-        LiveformSiteReportComponent.formModel = new SiteSurveyReport();
-        LiveformSiteReportComponent.formModel.isCreate = true;
-        LiveformSiteReportComponent.formModel.bidOpportunityId = this.bidOpportunityId;
-        LiveformSiteReportComponent.formModel.scaleOverall = new ScaleOverall();
-        LiveformSiteReportComponent.formModel.scaleOverall.loaiCongTrinh = new Array;
-        LiveformSiteReportComponent.formModel.scaleOverall.trangthaiCongTrinh = [
-          {
-            text: 'Mới (New)',
-            value: '',
-            checked: false
-          },
-          {
-            text: 'Thay đổi & bổ sung (Alteration & Additional)',
-            value: '',
-            checked: false
-          },
-          {
-            text: 'Khác (Other)',
-            value: '',
-            checked: false
-          },
-          {
-            text: 'Nâng cấp, cải tiến (Renovation)',
-            value: '',
-            checked: false
-          }, {
-            text: 'Tháo dỡ & cải tiến (Demolishment & Renovation)',
-            value: '',
-            checked: false
-          }
-        ];
-      } else {
-        LiveformSiteReportComponent.formModel = res;
-      }
-      if (!LiveformSiteReportComponent.formModel.scaleOverall.loaiCongTrinh.length) {
-        const siteSurvey$ = this.siteSurveyReportService.getListConstructionType().subscribe(ress => {
-          LiveformSiteReportComponent.formModel.scaleOverall.loaiCongTrinh = ress;
-          siteSurvey$.unsubscribe();
-        }, err => {
-          this.spinner.hide();
-          this.alertService.error('Đã xảy ra lỗi, danh sách loại công trình cập nhật không thành công');
-        });
-      }
-      this.isData = (LiveformSiteReportComponent.formModel.id) ? true : false;
-      this.documentData = res;
-    }, err => {
-      this.spinner.hide();
-      this.alertService.error('Đã xảy ra lỗi, cập nhật dữ liệu lifeform không thành công');
+    const getDataReport$ = this.siteSurveyReportService.tenderSiteSurveyingReport(this.bidOpportunityId).subscribe(res => {
+      this.documentData = res ? res : null;
     });
-    this.subscription.add(tender$);
+    this.subscription.add(permission$);
+    this.subscription.add(getDataReport$);
     this.getChangeHistory(0, 10);
   }
   ngOnDestroy() {
@@ -158,57 +113,11 @@ export class LiveformSiteReportComponent implements OnInit, OnDestroy {
   }
   refresh() {
     const tenderRefresh$ = this.siteSurveyReportService.tenderSiteSurveyingReport(this.bidOpportunityId).subscribe(res => {
-      if (!res) {
-        LiveformSiteReportComponent.formModel = new SiteSurveyReport();
-        LiveformSiteReportComponent.formModel.isCreate = true;
-        LiveformSiteReportComponent.formModel.bidOpportunityId = this.bidOpportunityId;
-        LiveformSiteReportComponent.formModel.scaleOverall = new ScaleOverall();
-        LiveformSiteReportComponent.formModel.scaleOverall.loaiCongTrinh = new Array;
-        LiveformSiteReportComponent.formModel.scaleOverall.trangthaiCongTrinh = [
-          {
-            text: 'Mới (New)',
-            value: '',
-            checked: false
-          },
-          {
-            text: 'Thay đổi & bổ sung (Alteration & Additional)',
-            value: '',
-            checked: false
-          },
-          {
-            text: 'Khác (Other)',
-            value: '',
-            checked: false
-          },
-          {
-            text: 'Nâng cấp, cải tiến (Renovation)',
-            value: '',
-            checked: false
-          }, {
-            text: 'Tháo dỡ & cải tiến (Demolishment & Renovation)',
-            value: '',
-            checked: false
-          }
-        ];
-      } else {
-        LiveformSiteReportComponent.formModel = res;
-      }
-      if (!LiveformSiteReportComponent.formModel.scaleOverall.loaiCongTrinh.length) {
-        const siteSurvey$ = this.siteSurveyReportService.getListConstructionType().subscribe(ress => {
-          LiveformSiteReportComponent.formModel.scaleOverall.loaiCongTrinh = ress;
-          siteSurvey$.unsubscribe();
-        }, err => {
-          this.spinner.hide();
-          this.alertService.error('Đã xảy ra lỗi, danh sách loại công trình cập nhật không thành công');
-        });
-      }
-      this.isData = (LiveformSiteReportComponent.formModel.id) ? true : false;
-      this.documentData = res;
+      this.documentData = res ? res : null;
       tenderRefresh$.unsubscribe();
     }, err => {
       tenderRefresh$.unsubscribe();
-      this.spinner.hide();
-      this.alertService.error('Đã xảy ra lỗi, cập nhật dữ liệu lifeform không thành công');
+      this.alertService.error('Đã xảy ra lỗi, cập nhật dữ liệu Lifeform không thành công');
     });
   }
 
@@ -252,7 +161,7 @@ export class LiveformSiteReportComponent implements OnInit, OnDestroy {
   }
 
   onActivate(actionMode: string) {
-    LiveformSiteReportComponent.actionMode = actionMode;
+    EditComponent.actionMode = actionMode;
   }
 
   print() {

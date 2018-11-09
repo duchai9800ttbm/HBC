@@ -214,6 +214,7 @@ export class DetailResultPackageService {
                 name: itemParDocuments.name,
                 interviewTime: itemParDocuments.interviewTime,
                 isLiveForm: itemParDocuments.isLiveForm,
+                filerUrl: itemParDocuments.filerUrl,
               })) : null,
           childDocuments: itemNeedTransferDocument.childDocuments ? itemNeedTransferDocument.childDocuments.map(itemChildDocuments => {
             return {
@@ -229,6 +230,7 @@ export class DetailResultPackageService {
                   name: item.name,
                   interviewTime: item.interviewTime,
                   isLiveForm: item.isLiveForm,
+                  filerUrl: item.filerUrl,
                 })
               ) : null
             };
@@ -436,6 +438,7 @@ export class DetailResultPackageService {
                 name: itemdocument.name,
                 interviewTime: itemdocument.interviewTime,
                 isLiveForm: itemdocument.isLiveForm,
+                filerUrl: itemdocument.filerUrl
               };
             }) : null,
           childDocuments: itemTransferDocument.childDocuments ? itemTransferDocument.childDocuments.map(itemChildDocuments => {
@@ -463,6 +466,7 @@ export class DetailResultPackageService {
                     name: itemDocuments.name,
                     interviewTime: itemDocuments.interviewTime,
                     isLiveForm: itemDocuments.isLiveForm,
+                    filerUrl: itemDocuments.filerUrl
                   };
                 }) : null
             };
@@ -579,6 +583,7 @@ export class DetailResultPackageService {
               name: itemBidTransferDocDetails.document.name,
               interviewTime: itemBidTransferDocDetails.document.interviewTime,
               isLiveForm: itemBidTransferDocDetails.document.isLiveForm,
+              filerUrl: itemBidTransferDocDetails.document.filerUrl,
             } : null,
             sendDate: itemBidTransferDocDetails.sendDate,
             useTo: itemBidTransferDocDetails.useTo,

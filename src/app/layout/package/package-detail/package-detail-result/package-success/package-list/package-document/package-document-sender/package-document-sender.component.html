@@ -22,7 +22,7 @@
                 <!-- <button class="btn btn-primary ml-1" (click)="downloadTemplate()">
                     Tải Template
                 </button> -->
-                <button class="btn btn-primary ml-1" (click)="refesh(true)">
+                <button class="btn btn-primary ml-1" (click)="refesh()">
                     <i class="fa fa-refresh" aria-hidden="true"></i>
                 </button>
             </div>
@@ -467,7 +467,7 @@
                                                         </a>
                                                     </div>
                                                     <div *ngIf="documents.fileUrl">
-                                                        <a title="Mở link" [href]="item.fileUrl" target="_blank">
+                                                        <a title="Mở link" [href]="documents.fileUrl" target="_blank">
                                                             <i class="fa fa-external-link color-item-down" aria-hidden="true"></i>
                                                         </a>
                                                     </div>
@@ -791,7 +791,7 @@
                                                                 </a>
                                                             </div>
                                                             <div *ngIf="items.documents[0].filerUrl">
-                                                                <a title="Mở link" [href]="item.fileUrl" target="_blank">
+                                                                <a title="Mở link" [href]="items.documents[0].filerUrl" target="_blank">
                                                                     <i class="fa fa-external-link color-item-down" aria-hidden="true"></i>
                                                                 </a>
                                                             </div>

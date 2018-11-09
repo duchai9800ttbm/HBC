@@ -132,7 +132,7 @@
             <h5 class="text-uppercase mb-3">Lịch sử cập nhật</h5>
         </div>
 
-        <table class="table-layout--fixed">
+        <table class="table-layout--fixed w-100">
             <thead>
                 <tr>
                     <th class="w-10">Lần cập nhật</th>
@@ -157,6 +157,13 @@
                             <div *ngIf="changedTime.liveFormChangeds && changedTime.liveFormChangeds.length !== 0">
                                 <div *ngFor="let liveFormSubject of changedTime.liveFormChangeds">
                                     <div *ngFor="let liveFormBySubjectItem of liveFormSubject.items">
+                                        <span *ngIf="liveFormBySubjectItem.liveFormSubject === 'SignedByApprovalPerson'">
+                                            Người duyệt:
+                                            <strong>Chưa ký
+                                            </strong> thành
+                                            <strong>Đã ký
+                                            </strong>
+                                        </span>
                                         <span *ngIf="liveFormBySubjectItem.liveFormSubject === 'KeyPersonnel'">
                                             <div *ngIf="liveFormBySubjectItem.liveFormTitle === 'SignedByPreparedPerson'">
                                                 Người tạo:
@@ -297,7 +304,7 @@
                                                 </span>
                                             </div>
                                             <div *ngIf="liveFormBySubjectItem.oldValue.Duration !== liveFormBySubjectItem.newValue.Duration">
-                                                Mô tả: từ
+                                                Tổng thời gian: từ
                                                 <span>
                                                     <strong>{{liveFormBySubjectItem.oldValue.Duration ? liveFormBySubjectItem.oldValue.Duration
                                                         : 'không có'}}</strong>

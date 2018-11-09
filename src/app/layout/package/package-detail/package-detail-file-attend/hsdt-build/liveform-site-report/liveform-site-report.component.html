@@ -8,7 +8,7 @@
             <div class="mt-3">Hiện chưa có bản báo cáo khảo sát công trường nào</div>
             <div class="mt-3 d-flex justify-content-center">
                 <ng-container *ngIf="TaoMoiLiveForm">
-                    <button class="btn btn-primary" [routerLink]="['./create']" (click)="onActivate('createMode')">
+                    <button class="btn btn-primary" [routerLink]="['./form/create']" (click)="onActivate('create')">
                         Tạo mới báo cáo khảo sát công trường
                     </button>
                 </ng-container>
@@ -33,8 +33,8 @@
                 <tr>
                     <ng-container *ngIf="XemLiveForm">
                         <td [title]="documentData.tenTaiLieu">
-                            <a class="link-effect" (click)="onActivate('viewMode')" [routerLink]="['./info']">{{
-                                documentData.tenTaiLieu }}</a>
+                            <a class="link-effect" (click)="onActivate('info')" [routerLink]="['./form/info']">
+                                {{ documentData.tenTaiLieu }}</a>
                         </td>
                     </ng-container>
                     <ng-container *ngIf="!XemLiveForm">
@@ -43,7 +43,7 @@
                         </td>
                     </ng-container>
 
-                    <td>{{ documentData.lanPhongVan }}</td>
+                    <td>{{ documentData.lanPhongVan ? documentData.lanPhongVan : '' }}</td>
                     <td [title]="(documentData.isDraft) ? 'Bản nháp' : 'Chính thức'">
                         {{ (documentData.isDraft) ? 'Bản nháp' : 'Chính thức' }}
                     </td>
@@ -57,13 +57,13 @@
                         <div class="d-flex justify-content-center">
                             <div>
                                 <ng-container *ngIf="XemLiveForm">
-                                    <a title="Xem file" (click)="onActivate('viewMode')" [routerLink]="['./info']">
+                                    <a title="Xem file" (click)="onActivate('info')" [routerLink]="['./form/info']">
                                         <i class="fa fa-eye text-warning" aria-hidden="true"></i>
                                     </a>
                                 </ng-container>
                                 <ng-container *ngIf="SuaLiveForm">
-                                    <a *ngIf="!isClosedHSDT" title="Edit file" class=" text-success ml-3" (click)="onActivate('editMode')"
-                                        [routerLink]="['./edit']">
+                                    <a *ngIf="!isClosedHSDT" title="Edit file" class=" text-success ml-3" (click)="onActivate('edit')"
+                                        [routerLink]="['./form/edit']">
                                         <i class="fa fa-pencil cursor-pointer" aria-hidden="true"> </i>
                                     </a>
                                 </ng-container>

@@ -17,6 +17,7 @@ export class TransferredDoc {
             name: string;
             interviewTime: number;
             isLiveForm: boolean;
+            filerUrl: string;
         };
         sendDate: number;
         useTo: number;

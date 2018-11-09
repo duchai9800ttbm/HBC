@@ -194,5 +194,8 @@ export class InterviewNoticeComponent implements OnInit {
   closePopup() {
     this.callBack();
   }
-
+  customSearchFn(term: string, item: SearchEmailModel) {
+    term = term.toLocaleLowerCase();
+    return item.employeeName.toLocaleLowerCase().indexOf(term) > -1 || item.employeeEmail.toLocaleLowerCase().indexOf(term) > -1;
+  }
 }

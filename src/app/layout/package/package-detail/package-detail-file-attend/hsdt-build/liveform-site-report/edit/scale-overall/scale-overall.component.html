@@ -1,4 +1,4 @@
-<form [formGroup]="scaleOverallForm" class="detail-info">
+<form [formGroup]="scaleOverallForm" *ngIf="scaleOverallForm" class="detail-info">
     <div id="step0" class="step-info">
         <div id="info-docs">
             <div class="label-info label-info-name">
@@ -21,7 +21,7 @@
                     <form [formGroup]="loaiCongTrinhForm">
                         <div class="single-row">
                             <div class="child childcheck pr-3" [ngClass]="{'view-mode-control': isViewMode}"
-                                formArrayName="loaiCongTrinhList" *ngFor="let item of loaiCongTrinhForm?.controls.loaiCongTrinhList?.controls; let i = index">
+                                formArrayName="loaiCongTrinhList" *ngFor="let item of loaiCongTrinhListFA.controls; let i = index">
                                 <label>
                                     <input [formControlName]="i" type="checkbox" [checked]="loaiCongTrinhList[i].checked"
                                         (change)="loaiCongTrinhList[i].checked = !loaiCongTrinhList[i].checked; loaiCongTrinhChange($event)"
@@ -39,7 +39,7 @@
                     <form [formGroup]="trangThaiCongTrinhForm">
                         <div class="single-row reponsive-checkbox">
                             <div class="child childcheck reponsive-checkbox-child pr-3" formArrayName="trangthaiCongTrinhList"
-                                [ngClass]="{'view-mode-control': isViewMode}" *ngFor="let item of trangThaiCongTrinhForm?.controls.trangthaiCongTrinhList?.controls; let i = index">
+                                [ngClass]="{'view-mode-control': isViewMode}" *ngFor="let item of trangthaiCongTrinhListFA.controls; let i = index">
                                 <label>
                                     <input [formControlName]="i" type="checkbox" [checked]="trangthaiCongTrinhList[i].checked"
                                         (change)="trangthaiCongTrinhList[i].checked = !trangthaiCongTrinhList[i].checked; trangThaiCongTrinhChange($event)"
