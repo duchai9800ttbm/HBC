@@ -16,6 +16,7 @@ export class NeedTranferDocList {
             name: string;
             interviewTime: number;
             isLiveForm: boolean;
+            filerUrl: string;
         };
         childDocuments: {
             documentType: {
@@ -29,6 +30,7 @@ export class NeedTranferDocList {
                 name: string;
                 interviewTime: number;
                 isLiveForm: boolean;
+                filerUrl: string;
             }
         } [];
     } [];

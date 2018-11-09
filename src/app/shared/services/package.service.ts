@@ -955,6 +955,12 @@ export class PackageService {
         return this.apiService.get(url).map(response => response.result);
     }
 
+    // Danh sách user của các nhóm trong PHÂN CÔNG NGƯỜI ĐẢM NHẬN CHO TỪNG VỊ TRÍ TRONG GÓI THẦU
+    getGroupmembers(bidOpportunityId: number): Observable<StakeHolder[]> {
+        const url = `bidopportunity/${bidOpportunityId}/bidusergroupmembers`;
+        return this.apiService.get(url).map(response => response.result);
+    }
+
     // Danh sách user của các nhóm trong "các bên liên quan"
     getStakeHolders(bidOpportunityId: number): Observable<StakeHolder[]> {
         const url = `bidopportunity/${bidOpportunityId}/bidusergroupmembersofstakeholders`;

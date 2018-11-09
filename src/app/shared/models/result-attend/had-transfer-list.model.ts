@@ -22,7 +22,8 @@ export class HadTransferList {
             id: string;
             name: string;
             interviewTime: number;
-            isLiveForm: boolean
+            isLiveForm: boolean;
+            filerUrl: string;
         }[];
         childDocuments: {
             documentType: {
@@ -43,6 +44,7 @@ export class HadTransferList {
                 name: string;
                 interviewTime: number;
                 isLiveForm: boolean;
+                filerUrl: string;
             }[];
         }[];
     } [];

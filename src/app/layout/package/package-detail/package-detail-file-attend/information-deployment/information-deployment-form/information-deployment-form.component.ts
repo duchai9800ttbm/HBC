@@ -19,6 +19,7 @@ import { BidStatus } from '../../../../../../shared/constants/bid-status';
 import { CheckStatusPackage } from '../../../../../../shared/constants/check-status-package';
 import { PermissionService } from '../../../../../../shared/services/permission.service';
 import { PermissionModel } from '../../../../../../shared/models/permission/Permission.model';
+import { StakeHolder } from '../../../../../../shared/models/ho-so-du-thau/stack-holder.model';
 declare let kendo: any;
 
 @Component({
@@ -68,6 +69,7 @@ export class InformationDeploymentFormComponent implements OnInit, OnDestroy {
     TaiTemplatePCTD = false;
     BatDauLapHSDT = false;
     isShowGantt = false;
+    investor;
     constructor(
         private spinner: NgxSpinnerService,
         private packageService: PackageService,
@@ -129,17 +131,33 @@ export class InformationDeploymentFormComponent implements OnInit, OnDestroy {
 
     getPackageInfo() {
         this.spinner.show();
-        this.packageService
+        const getPackageInfo = this.packageService
             .getInforPackageID(this.bidOpportunityId)
-            .subscribe(data => {
+            .switchMap(data => {
                 this.packageInfo = data;
                 this.submissionDate =
                     DateTimeConvertHelper.fromTimestampToDtObject(
                         this.packageInfo.submissionDate * 1000
                     );
+                return this.packageService.getStakeHolders(this.bidOpportunityId);
+            })
+            .switchMap(stakeHolders => {
+                (stakeHolders || []).some(item => {
+                    if (item.groupName = 'ChuDauTu') {
+                        this.investor = item.customers;
+                        return true;
+                    } else {
+                        return false;
+                    }
+                });
+                return this.packageService.getGroupmembers(+this.bidOpportunityId)
+            })
+            .subscribe(groupmembers => {
                 this.checkAndCreateForm();
                 this.spinner.hide();
+                console.log('response-groupMenber', groupmembers);
             });
+        this.subscription.add(getPackageInfo);
     }
 
     checkAndCreateForm() {
@@ -225,7 +243,7 @@ export class InformationDeploymentFormComponent implements OnInit, OnDestroy {
         setTimeout(() => {
             if (this.ganttChart && this.planForm) {
                 kendo.jQuery(this.ganttChart.nativeElement).kendoGantt({
-                  //  toolbar: ['pdf'],
+                    //  toolbar: ['pdf'],
                     timezone: '',
                     views: [
                         { type: 'day', },
