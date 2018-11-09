@@ -233,7 +233,6 @@
 
                                             </td>
                                             <td class="select-filter text-center w10"></td>
-                                            <!-- {{ items.documents[0].interviewTime }} -->
                                             <td class="text-center" [ngClass]="{'w6' : isManageTransfer==true, 'w10' : isManageTransfer==false}">
                                                 <div class="d-flex justify-content-around">
                                                     <div *ngIf="!items.documents[0].fileUrl" id="mr">
@@ -290,7 +289,6 @@
                                             </div>
                                         </td>
                                         <td class="select-filter text-center w10"></td>
-                                        <!-- {{ documents.interviewTime }} -->
                                         <td class="text-center" [ngClass]="{'w6' : isManageTransfer==true, 'w10' : isManageTransfer==false}">
                                             <div class="d-flex justify-content-around">
                                                 <div *ngIf="!documents.fileUrl" id="mr">
@@ -381,7 +379,11 @@
                                                 </div>
 
                                             </td>
-                                            <td class="select-filter text-center w10">{{ items.documents[0].interviewTime }}</td>
+                                            <td class="select-filter text-center w10">
+                                                <div *ngIf="items.documents[0].interviewTime && items.documents[0].interviewTime !== 0">
+                                                    {{ items.documents[0].interviewTime }}
+                                                </div>
+                                            </td>
                                             <td class="text-center" [ngClass]="{'w6' : isManageTransfer==true, 'w10' : isManageTransfer==false}">
                                                 <div class="d-flex justify-content-around">
                                                     <ng-container *ngIf="!items.documents[0].isLiveForm">
@@ -451,7 +453,11 @@
                                                 <i class="fa fa-pencil edit-number--posotion"></i>
                                             </div>
                                         </td>
-                                        <td class="select-filter text-center w10">{{ documents.interviewTime }}</td>
+                                        <td class="select-filter text-center w10">
+                                            <div *ngIf="documents.interviewTime && documents.interviewTime !== 0">
+                                                {{ documents.interviewTime }}
+                                            </div>
+                                        </td>
                                         <td class="text-center" [ngClass]="{'w6' : isManageTransfer==true, 'w10' : isManageTransfer==false}">
                                             <div class="d-flex justify-content-around">
                                                 <ng-container *ngIf="!documents.isLiveForm">
@@ -681,7 +687,7 @@
                                                 </div>
                                             </td> -->
                                             <td class="select-filter text-center w10">
-                                                <div class="edit-number">
+                                                <div class="edit-number" *ngIf="documents.departments && documents.departments.length !== 0">
                                                     <input [(ngModel)]="documents.useDays" autofocus (change)=formatToNumber(documents) appInputDate min="0" class="form-control number-date--pad"
                                                         placeholder="Number" [ngClass]="{'w80' : isManageTransfer==true}">
                                                     <i class="fa fa-pencil edit-number--posotion"></i>
@@ -764,20 +770,18 @@
                                                         </div>
                                                     </div>
                                                 </td>
-                                                <!-- <td class="select-filter text-center w10">
-                                                    <div class="edit-number">
-                                                        {{items.documents[0].useDays ? items.documents[0].useDays + ' ngày' : ''}}
-                                                    </div>
-                                                </td> -->
                                                 <td class="select-filter text-center w10">
-                                                    <div class="edit-number">
+                                                    <div class="edit-number" *ngIf="items.documents[0].departments && items.documents[0].departments.length !== 0">
                                                         <input [(ngModel)]="items.documents[0].useDays" autofocus (change)=formatToNumber(items.documents[0]) appInputDate min="0"
                                                             class="form-control number-date--pad" placeholder="Number" [ngClass]="{'w80' : isManageTransfer==true}">
                                                         <i class="fa fa-pencil edit-number--posotion"></i>
-                                                        <!-- (click)="showEditSHDT(nameit, i, j, k)" -->
                                                     </div>
                                                 </td>
-                                                <td class="select-filter text-center w10">{{ items.documents[0].interviewTime }}</td>
+                                                <td class="select-filter text-center w10">
+                                                    <div *ngIf="items.documents[0].interviewTime && items.documents[0].interviewTime !== 0">
+                                                        {{ items.documents[0].interviewTime }}
+                                                    </div>
+                                                </td>
                                                 <td class="text-center" [ngClass]="{'w6' : isManageTransfer==true, 'w10' : isManageTransfer==false}">
                                                     <div class="d-flex justify-content-around">
                                                         <ng-container *ngIf="!items.documents[0].isLiveForm">
@@ -849,14 +853,18 @@
                                                 </div>
                                             </td> -->
                                             <td class="select-filter text-center w10">
-                                                <div class="edit-number">
+                                                <div class="edit-number" *ngIf="documents.departments && documents.departments.length !== 0">
                                                     <input [(ngModel)]="documents.useDays" autofocus (change)=formatToNumber(documents) appInputDate min="0" class="form-control number-date--pad"
                                                         placeholder="Number" [ngClass]="{'w80' : isManageTransfer==true}">
                                                     <i class="fa fa-pencil edit-number--posotion"></i>
                                                     <!-- (click)="showEditSHDT(nameit, i, j, k)" -->
                                                 </div>
                                             </td>
-                                            <td class="select-filter text-center w10">{{ documents.interviewTime }}</td>
+                                            <td class="select-filter text-center w10">
+                                                <div *ngIf="documents.interviewTime && documents.interviewTime !== 0">
+                                                    {{ documents.interviewTime }}
+                                                </div>
+                                            </td>
                                             <td class="text-center" [ngClass]="{'w6' : isManageTransfer==true, 'w10' : isManageTransfer==false}">
                                                 <div class="d-flex justify-content-around">
                                                     <ng-container *ngIf="!documents.isLiveForm">
