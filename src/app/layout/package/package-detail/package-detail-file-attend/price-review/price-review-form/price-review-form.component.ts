@@ -1,4 +1,4 @@
-import { Component, OnInit, AfterViewInit, Input, Output, EventEmitter, OnChanges, OnDestroy, ViewChild } from '@angular/core';
+import { Component, OnInit, AfterViewInit, Input, Output, EventEmitter, OnChanges, OnDestroy } from '@angular/core';
 import { TenderPriceApproval, TenderPriceApprovalShort } from '../../../../../../shared/models/price-review/price-review.model';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import DateTimeConvertHelper from '../../../../../../shared/helpers/datetime-convert-helper';
@@ -26,7 +26,7 @@ export class PriceReviewFormComponent implements OnChanges, OnInit, AfterViewIni
   priceReviewForm: FormGroup;
   package = new PackageInfoModel();
   summary = new DuLieuLiveFormDKDT();
-  tenderProposed = {};
+  tenderProposed: any;
   priceReview: TenderPriceApprovalShort;
   bidStatus = BidStatus;
 
@@ -213,11 +213,29 @@ export class PriceReviewFormComponent implements OnChanges, OnInit, AfterViewIni
       .switchMap(tomTat => {
         this.summary = tomTat;
         console.log(this.summary);
-        return this.packageService.getProposedTenderParticipateReport(this.packageId);
+        return this.packageService.getProposedTenderParticipateReport(836);
       })
       .subscribe(phieuDeNghi => {
         this.tenderProposed = phieuDeNghi;
-
+        console.log(this.tenderProposed);
+        const tamUngYCPercent = this.tenderProposed
+          && this.tenderProposed.contractCondition
+          && this.tenderProposed.contractCondition.advancePayment;
+        const tienGiuLaiYCPercent = this.tenderProposed
+          && this.tenderProposed.contractCondition
+          && this.tenderProposed.contractCondition.retentionMoney;
+        const phatTienDoYCPercent = this.tenderProposed
+          && this.tenderProposed.contractCondition
+          && this.tenderProposed.contractCondition.delayDamagesForTheWorks;
+        if (tamUngYCPercent) {
+          this.priceReviewForm.get('tamUngYCPercent').patchValue(tamUngYCPercent);
+        }
+        if (tienGiuLaiYCPercent) {
+          this.priceReviewForm.get('tienGiuLaiYCPercent').patchValue(tienGiuLaiYCPercent);
+        }
+        if (phatTienDoYCPercent) {
+          this.priceReviewForm.get('phatTienDoYCPercent').patchValue(phatTienDoYCPercent);
+        }
 
       });
   }
@@ -436,7 +454,7 @@ export class PriceReviewFormComponent implements OnChanges, OnInit, AfterViewIni
         value: this.model.contractCondition
           && this.model.contractCondition.advanceMoney
           && this.model.contractCondition.advanceMoney.tenderDocumentRequirementPercent,
-        disabled: this.isModeView
+        disabled: true
       },
 
       tamUngYCKhauTru: {
@@ -493,7 +511,7 @@ export class PriceReviewFormComponent implements OnChanges, OnInit, AfterViewIni
         value: this.model.contractCondition
           && this.model.contractCondition.retainedMoney
           && this.model.contractCondition.retainedMoney.tenderDocumentRequirementPercent,
-        disabled: this.isModeView
+        disabled: true
       },
       tienGiuLaiYCKhauTru: {
         value: this.model.contractCondition
@@ -524,7 +542,7 @@ export class PriceReviewFormComponent implements OnChanges, OnInit, AfterViewIni
         value: this.model.contractCondition
           && this.model.contractCondition.punishDelay
           && this.model.contractCondition.punishDelay.tenderDocumentRequirementPercent,
-        disabled: this.isModeView
+        disabled: true
       },
       phatTienDoYCMax: {
         value: this.model.contractCondition
