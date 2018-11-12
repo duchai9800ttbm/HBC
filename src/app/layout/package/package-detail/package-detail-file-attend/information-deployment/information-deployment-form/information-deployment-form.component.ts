@@ -387,7 +387,6 @@ export class InformationDeploymentFormComponent implements OnInit, OnDestroy {
         console.log('tạo mới', isCreate);
         this.tenderPlan = planModel;
         const taskArr = [];
-        this.controlDisableForm = this.routerAction === 'view' ? true : false;
         planModel.tasks.forEach((i, index) => taskArr.push(this.createTaskItemFG(i, index, isCreate)));
         this.planForm = this.fb.group({
             id: planModel.id,
@@ -425,6 +424,8 @@ export class InformationDeploymentFormComponent implements OnInit, OnDestroy {
             },
             tasks: this.fb.array(taskArr)
         });
+
+        this.controlDisableForm = this.routerAction === 'view' ? true : false;
 
         this.tasksFA.controls.forEach((item, index) => {
             this.calculateTotalTime(index);
@@ -468,7 +469,7 @@ export class InformationDeploymentFormComponent implements OnInit, OnDestroy {
                     // workWeekStart: 1,
                     // workWeekEnd: 7,
                     editable: false,
-                    snap: true,
+                     snap: false,
                     // workDayStart: new Date('01/01/1970'),
                     //  height: window.screen.availHeight * 0.7
                 }).data('kendoGantt');
@@ -481,8 +482,6 @@ export class InformationDeploymentFormComponent implements OnInit, OnDestroy {
         }, 800);
     }
 
-    // valueChangeNg() {
-    // }
 
     getEmailUser(userId: number): string {
         // tslint:disable-next-line:triple-equals
@@ -518,7 +517,7 @@ export class InformationDeploymentFormComponent implements OnInit, OnDestroy {
                     title: i.itemName,
                     start: i.startDate,
                     end: i.finishDate,
-                    employeeName: i.employeeName ? i.employeeName : ''
+                    employeeName: i.employeeName
                 };
             })
         });
@@ -710,7 +709,6 @@ export class InformationDeploymentFormComponent implements OnInit, OnDestroy {
         whoIsInChargeIds.forEach(item => {
             item.employeeName = item.userName;
         });
-        console.log('whoIsInChargeIds-whoIsInChargeIds', whoIsInChargeIds);
         const isFinishDisabled =
             (this.checkStatusPackage[this.packageInfo.stageStatus.id].id > this.checkStatusPackage.ThamGiaDuThau.id &&
                 this.checkStatusPackage[this.packageInfo.stageStatus.id].id < this.checkStatusPackage.ChoKetQuaDuThau.id);
@@ -722,24 +720,15 @@ export class InformationDeploymentFormComponent implements OnInit, OnDestroy {
                 value: data.itemDesc,
                 disabled: this.controlDisableForm,
             },
-            employeeName: data.whoIsInCharge && data.whoIsInCharge.employeeName,
+            employeeName: (whoIsInChargeIds || []).map(x => `${x.firstName} ${x.lastName}`).join(', '),
             whoIsInChargeId: {
                 value: null,
                 disabled: this.controlDisableForm,
             },
-            // {
-            //     value: data.whoIsInChargeId === 0 ? null : data.whoIsInChargeId,
-            //     disabled: this.controlDisableForm,
-            // },
             whoIsInChargeIds: {
                 value: whoIsInChargeIds,
                 disabled: this.controlDisableForm,
             },
-            // isCreate ? whoIsInChargeIds : ((data.whoIsInCharges && data.whoIsInCharges.length !== 0) ? data.whoIsInCharges : [])
-            // {
-            //     value: (data.whoIsInCharges && data.whoIsInCharges.length !== 0) ? data.whoIsInCharges : [],
-            //     disabled: this.controlDisableForm,
-            // },
             startDate: {
                 value: data.startDate
                     ? DateTimeConvertHelper.fromTimestampToDtObject(
@@ -768,12 +757,7 @@ export class InformationDeploymentFormComponent implements OnInit, OnDestroy {
     getFormData(): TenderPreparationPlanningRequest {
         const formData = Object.assign({}, this.planForm.value);
         formData.tasks.forEach(element => {
-            // element.startDate = DateTimeConvertHelper.fromDtObjectToSecon(element.startDate);
-            // element.finishDate = DateTimeConvertHelper.fromDtObjectToSecon(element.finishDate);
             element.whoIsInChargeId = Number(element.whoIsInChargeId);
-            // if (element.startDate && element.finishDate) {
-            //     element.duration = Math.abs(element.startDate - element.finishDate) / (60 * 60 * 24);
-            // }
         });
         return formData as TenderPreparationPlanningRequest;
     }
@@ -886,7 +870,6 @@ export class InformationDeploymentFormComponent implements OnInit, OnDestroy {
         } else {
             data.createdEmployeeId = this.sessionService.currentUser.employeeId;
         }
-        // data.updatedDesc = this.updatedDetail;
         this.spinner.show();
         data.tasks.forEach(item => {
             item.itemName = '';
@@ -974,13 +957,6 @@ export class InformationDeploymentFormComponent implements OnInit, OnDestroy {
                     });
             }
         }
-        // else {
-        //     if (!this.planForm.get('isSignedByPreparedPerson').value) {
-        //         this.alertService.error('Chưa được ký bởi người lập');
-        //     } else {
-        //         this.planForm.get('isSignedByApprovalPerson').patchValue(true);
-        //     }
-        // }
     }
 
     refesh() {
@@ -1012,10 +988,6 @@ export class InformationDeploymentFormComponent implements OnInit, OnDestroy {
                         <div>#= kendo.format('{0:dd/MM/yyyy HH:mm}', task.start) #</div>
                         <div>#= kendo.format('{0:dd/MM/yyyy HH:mm}', task.end) #</div>`
                     },
-
-                    // height: 3250,
-                    // 2832
-                    // listWidth: 0,
                     showWorkHours: false,
                     showWorkDays: false,
                     editable: false,
