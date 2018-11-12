@@ -183,7 +183,7 @@ export class ServiceConstructionComponent implements OnInit, AfterViewInit, OnDe
       images: this.supplySystemImageUrls
     };
     EditComponent.liveformData.serviceConstruction.heThongNuocDiemDauNoi = {
-      description: data.heThongNuocDiemDauNoi,
+      description: data.heThongNuocDiemDauNoiDesc,
       images: this.supplyPointImageUrls
     };
     EditComponent.liveformData.serviceConstruction.heThongNuocThoatHeThongHienHuu = {
