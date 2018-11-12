@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, EventEmitter, Output } from '@angular/core';
 import { PackageService } from '../../../../../shared/services/package.service';
 import { PackagePermissionComponent } from '../../package-permission.component';
 import { StakeHolder, CustomerStakeHolder } from '../../../../../shared/models/ho-so-du-thau/stack-holder.model';
@@ -16,6 +16,7 @@ import { slideToTop } from '../../../../../router.animations';
   animations: [slideToTop()]
 })
 export class UserBidGroupStakeHolderComponent implements OnInit {
+  @Output() loadingStake: EventEmitter<any> = new EventEmitter();
   packageId: number;
   listStackHolders: StakeHolder[];
   stakeHolderForm: FormGroup;
@@ -55,7 +56,8 @@ export class UserBidGroupStakeHolderComponent implements OnInit {
           item.customers.push(obj);
         }
       });
-
+      console.log('loadData-loadingStake');
+      this.loadingStake.emit(false);
     });
   }
 

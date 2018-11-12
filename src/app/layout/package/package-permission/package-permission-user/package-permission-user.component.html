@@ -32,6 +32,9 @@
         <app-user-bid-group-member-form [listUser]="listUser" [type]="'bidusergroupmembersofstakeholders'"></app-user-bid-group-member-form>
     </div>
 </div> -->
-<app-user-bid-group-member-form [listUser]="listUser" [type]="'bidusergroupmembers'"></app-user-bid-group-member-form>
-<!-- <app-user-bid-group-member-form [listUser]="listUser" [type]="'bidusergroupmembersofstakeholders'"></app-user-bid-group-member-form> -->
-<app-user-bid-group-stake-holder></app-user-bid-group-stake-holder>
+<div [class.display-none]="loading">
+    <app-user-bid-group-member-form (loadingMenber)="loadingMenber($event)" [listUser]="listUser" [type]="'bidusergroupmembers'"></app-user-bid-group-member-form>
+    <!-- <app-user-bid-group-member-form [listUser]="listUser" [type]="'bidusergroupmembersofstakeholders'"></app-user-bid-group-member-form> -->
+    <app-user-bid-group-stake-holder (loadingStake)="loadingStake($event)"></app-user-bid-group-stake-holder>
+</div>
+<ngx-loading [show]="loading"></ngx-loading>

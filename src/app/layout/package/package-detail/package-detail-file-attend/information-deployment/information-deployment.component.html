@@ -95,12 +95,12 @@
                                     </ng-container>
                                     <ng-container *ngIf="XoaBangPCTD">
                                         <a class=" text-dark ml-3" [class.disabled]="packageInfo?.stageStatus.id == bidStatus.DaGuiPhanCongTienDo" (click)="packageInfo?.stageStatus.id == bidStatus.DaGuiPhanCongTienDo ? null : deleteTenderPlan()">
-                                            <i class="fa fa-trash-o" aria-hidden="true"></i>
+                                            <i class="fa fa-trash-o cursor-pointer" aria-hidden="true"></i>
                                         </a>
                                     </ng-container>
                                     <ng-container *ngIf="InBangPCTD">
                                         <a class="ml-3" (click)="print()">
-                                            <i class="fa fa-print icon-print" aria-hidden="true"></i>
+                                            <i class="fa fa-print icon-print cursor-pointer" aria-hidden="true"></i>
                                         </a>
                                     </ng-container>
                                 </div>

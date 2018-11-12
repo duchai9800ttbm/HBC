@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, Output } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { FormGroup, FormBuilder, FormArray } from '@angular/forms';
 import { DictionaryItem } from '../../../../../shared/models';
 import { BidUserGroupMemberResponsive } from '../../../../../shared/models/api-response/setting/bid-user-group-member-responsive';
@@ -23,6 +23,7 @@ import { slideToTop } from '../../../../../router.animations';
 })
 export class UserBidGroupMemberFormComponent implements OnInit {
     packagePermissionBidUserGroupForm: FormGroup;
+    @Output() loadingMenber: EventEmitter<any> = new EventEmitter();
     @Input()
     listUser: UserItemModel[];
     @Input()
@@ -50,6 +51,8 @@ export class UserBidGroupMemberFormComponent implements OnInit {
                 this.listBidUserGroupMember = data;
                 this.createForm(data);
                 this.spinner.hide();
+                console.log('loadData-getBidGroupMembers');
+                this.loadingMenber.emit(false);
             });
     }
 

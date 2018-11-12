@@ -23,15 +23,33 @@ export class PackagePermissionUserComponent implements OnInit {
     listUser: UserItemModel[];
     listBidUserGroupMember: BidUserGroupMemberResponsive[];
     packageId: number;
+    loading = false;
+    loadingMenberPro = true;
+    loadingStakePro = true;
     constructor(
         private fb: FormBuilder,
         private userService: UserService,
         private dataService: DataService,
         private packageService: PackageService
-    ) {}
+    ) { }
 
     ngOnInit() {
+        this.loading = true;
         this.packageId = PackagePermissionComponent.packageId;
         this.userService.getAllUser('').subscribe(data => this.listUser = data);
+    }
+
+    loadingMenber(e) {
+        this.loadingMenberPro = e;
+        if (!this.loadingMenberPro && !this.loadingStakePro) {
+            this.loading = false;
+        }
+    }
+
+    loadingStake(e) {
+        this.loadingStakePro = e;
+        if (!this.loadingMenberPro && !this.loadingStakePro) {
+            this.loading = false;
+        }
     }
 }
