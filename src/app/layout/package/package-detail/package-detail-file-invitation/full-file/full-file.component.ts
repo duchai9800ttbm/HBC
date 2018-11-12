@@ -192,6 +192,7 @@ export class FullFileComponent implements OnInit, OnDestroy {
 
     viewDetail(item) {
         this.currentItem = item;
+        console.log('abcd');
         this.showPopupDetail = true;
     }
 
