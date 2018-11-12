@@ -33,14 +33,14 @@ export class PackagePermissionReviewComponent implements OnInit {
     }[] = [];
     listFormData: BidPermissionGroupResponsive[];
     listBidGroupUser: BidGroupUserResponsive[];
-
+    checkAllHSMT = true;
     constructor(
         private fb: FormBuilder,
         private packageService: PackageService,
         private dataService: DataService,
         private alertService: AlertService,
         private spinner: NgxSpinnerService
-    ) {}
+    ) { }
 
     ngOnInit() {
         this.spinner.show();
@@ -85,6 +85,7 @@ export class PackagePermissionReviewComponent implements OnInit {
                 this.addFormArrayItem(e, {});
             }
         });
+        console.log(this.packagePermissionReviewForm.get('HSMT').get('permission').value);
     }
 
     addFormControl(formData): FormGroup {
@@ -105,6 +106,12 @@ export class PackagePermissionReviewComponent implements OnInit {
                     p.bidPermissionName,
                     this.addFormArrayUserItem(p, user));
         });
+
+        formArrayItem.
+            addControl('all',
+                this.fb.control(Object.values(formArrayItem.value).filter(x => x === true).length
+                    === Object.values(formArrayItem.value).length - 1));
+
         formArrayControl.push(formArrayItem);
     }
 
@@ -117,7 +124,7 @@ export class PackagePermissionReviewComponent implements OnInit {
         const formArrayControl = this.packagePermissionReviewForm.get(formData.bidPermissionGroupName).get('permission') as FormArray;
         formArrayControl.removeAt(idx);
         setTimeout(() => {
-          this.dtTrigger.next();
+            this.dtTrigger.next();
         });
     }
 
@@ -133,11 +140,11 @@ export class PackagePermissionReviewComponent implements OnInit {
                 };
                 formValue[pData.bidPermissionGroupName]['permission'].forEach(user => {
                     if (user[permission.bidPermissionName] && user['userName']) {
-                        item.userGroupIdentitys.push({bidUserGroupId: user['userName']});
+                        item.userGroupIdentitys.push({ bidUserGroupId: user['userName'] });
                     }
                 });
                 // if (item.userGroupIdentitys.length > 0) {
-                    result.push(item);
+                result.push(item);
                 // }
             });
         });

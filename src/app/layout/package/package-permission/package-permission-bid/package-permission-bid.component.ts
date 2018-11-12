@@ -143,6 +143,12 @@ export class PackagePermissionBidComponent implements OnInit {
                 this.addFormArrayUserItem(p, user)
             );
         });
+
+        formArrayItem.
+            addControl('all',
+                this.fb.control(Object.values(formArrayItem.value).filter(x => x === true).length
+                    === Object.values(formArrayItem.value).length - 1));
+
         formArrayControl.push(formArrayItem);
     }
 
@@ -183,6 +189,11 @@ export class PackagePermissionBidComponent implements OnInit {
         const formArrayItem = this.fb.group({});
         formArrayItem.addControl('userName', this.fb.control(user.userGroupId));
         formArrayItem.addControl('documentTypes', this.fb.array(arrayItem));
+
+        // formArrayItem.
+        // addControl('all',
+        //     this.fb.control(Object.values(formArrayItem.value).filter(x => x === true).length
+        //         === Object.values(formArrayItem.value).length - 1));
         formArrayControl.push(formArrayItem);
     }
 
@@ -196,6 +207,13 @@ export class PackagePermissionBidComponent implements OnInit {
                 this.addFormArrayBidDocumentItem(p, user, document)
             );
         });
+
+        formArrayItem.
+            addControl('all',
+                this.fb.control(Object.values(formArrayItem.value).filter(x => x === true).length
+                    === Object.values(formArrayItem.value).length - 2));
+
+
         return formArrayItem;
     }
 
@@ -363,5 +381,11 @@ export class PackagePermissionBidComponent implements OnInit {
                 childGroupControl.get(fControl).patchValue(checked);
             }
         }
+    }
+
+    checkOption(id, index) {
+        // console.log(this.packagePermissionReviewForm.get('PhieuDeNghiDuThau').get('permission'));
+        // console.log(id, index);
+        return true;
     }
 }
