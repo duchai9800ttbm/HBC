@@ -9,7 +9,7 @@ import { GridDataResult, } from '@progress/kendo-angular-grid';
 import { SortDescriptor } from '@progress/kendo-data-query';
 import { Router } from '@angular/router';
 import { DATATABLE_CONFIG } from '../../../../../shared/configs';
-import { BehaviorSubject, Subject, Subscription } from '../../../../../../../node_modules/rxjs';
+import { BehaviorSubject, Subject, Subscription, Observable } from '../../../../../../../node_modules/rxjs';
 import { ConfirmationService, AlertService } from '../../../../../shared/services';
 import { SendEmailModel } from '../../../../../shared/models/send-email-model';
 import { EmailService } from '../../../../../shared/services/email.service';
@@ -148,37 +148,42 @@ export class InformationDeploymentComponent implements OnInit, OnDestroy {
     this.bidOpportunityId = PackageDetailComponent.packageId;
     this.loading = true;
 
-    this.subscription = this.permissionService.get().subscribe(data => {
-      this.listPermission = data;
-      const hsdt = this.listPermission.length &&
-        this.listPermission.filter(x => x.bidOpportunityStage === 'HSDT')[0];
-      if (!hsdt) {
-        this.listPermissionScreen = [];
-      }
-      if (hsdt) {
-        const screen = hsdt.userPermissionDetails.length
-          && hsdt.userPermissionDetails.filter(y => y.permissionGroup.value === 'TrienKhaiVaPhanCongTienDo')[0];
-        if (!screen) {
+    this.subscription = this.permissionService.get().concatMap(response => response.length > 0 ? Observable.of(response) :
+      Observable.throw('Error Permission')).retry(1).subscribe(data => {
+        console.log('check phan quyen');
+        if (this.listPermission === []) {
+
+        }
+        this.listPermission = data;
+        console.log(this.listPermission);
+        const hsdt = this.listPermission.length &&
+          this.listPermission.filter(x => x.bidOpportunityStage === 'HSDT')[0];
+        if (!hsdt) {
           this.listPermissionScreen = [];
         }
-        if (screen) {
-          this.listPermissionScreen = screen.permissions.map(z => z.value);
+        if (hsdt) {
+          const screen = hsdt.userPermissionDetails.length
+            && hsdt.userPermissionDetails.filter(y => y.permissionGroup.value === 'TrienKhaiVaPhanCongTienDo')[0];
+          if (!screen) {
+            this.listPermissionScreen = [];
+          }
+          if (screen) {
+            this.listPermissionScreen = screen.permissions.map(z => z.value);
+          }
         }
-      }
-      this.ThongBaoTrienKhai = this.listPermissionScreen.includes('ThongBaoTrienKhai');
-      this.XemEmail = this.listPermissionScreen.includes('XemEmail');
-      this.TaoMoiBangPCTD = this.listPermissionScreen.includes('TaoMoiBangPCTD');
-      this.XemBangPCTD = this.listPermissionScreen.includes('XemBangPCTD');
-      this.SuaBangPCTD = this.listPermissionScreen.includes('SuaBangPCTD');
-      this.XoaBangPCTD = this.listPermissionScreen.includes('XoaBangPCTD');
-      this.InBangPCTD = this.listPermissionScreen.includes('InBangPCTD');
-      this.XacNhanKyPrepared = this.listPermissionScreen.includes('XacNhanKyPrepared');
-      this.XacNhanKyApproved = this.listPermissionScreen.includes('XacNhanKyApproved');
-      this.GuiPCTD = this.listPermissionScreen.includes('GuiPCTD');
-      this.TaiTemplatePCTD = this.listPermissionScreen.includes('TaiTemplatePCTD');
-      this.BatDauLapHSDT = this.listPermissionScreen.includes('BatDauLapHSDT');
-
-    });
+        this.ThongBaoTrienKhai = this.listPermissionScreen.includes('ThongBaoTrienKhai');
+        this.XemEmail = this.listPermissionScreen.includes('XemEmail');
+        this.TaoMoiBangPCTD = this.listPermissionScreen.includes('TaoMoiBangPCTD');
+        this.XemBangPCTD = this.listPermissionScreen.includes('XemBangPCTD');
+        this.SuaBangPCTD = this.listPermissionScreen.includes('SuaBangPCTD');
+        this.XoaBangPCTD = this.listPermissionScreen.includes('XoaBangPCTD');
+        this.InBangPCTD = this.listPermissionScreen.includes('InBangPCTD');
+        this.XacNhanKyPrepared = this.listPermissionScreen.includes('XacNhanKyPrepared');
+        this.XacNhanKyApproved = this.listPermissionScreen.includes('XacNhanKyApproved');
+        this.GuiPCTD = this.listPermissionScreen.includes('GuiPCTD');
+        this.TaiTemplatePCTD = this.listPermissionScreen.includes('TaiTemplatePCTD');
+        this.BatDauLapHSDT = this.listPermissionScreen.includes('BatDauLapHSDT');
+      });
     this.emailService.searchbymail('').subscribe(response => {
 
       this.listEmailSearchTo = response;
