@@ -1043,7 +1043,7 @@ export class PackageService {
     // get chi tiết phiếu đề nghị dự thầu
     getProposedTenderParticipateReport(bidOpportunityId: number): Observable<any> {
         const url = `${bidOpportunityId}/bidopportunity/proposedtenderparticipatinngreport`;
-        return this.apiService.get(url).map(response => 
+        return this.apiService.get(url).map(response =>
             {
                 console.log('response-getProposedTenderParticipateReport', response);
                 return response.result;

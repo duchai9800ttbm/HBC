@@ -69,6 +69,7 @@ export class NeedCreateTenderFormComponent implements OnInit, OnDestroy {
     ) { }
 
     ngOnInit() {
+        console.log('dataa-con-form', NeedCreateTenderFormComponent.formModel);
         this.bidOpportunityId = PackageDetailComponent.packageId;
         this.scrollTopService.isScrollTop = false;
         this.routerAction = this.packageService.routerAction;
@@ -117,24 +118,21 @@ export class NeedCreateTenderFormComponent implements OnInit, OnDestroy {
                     this.setDataDefault();
                     this.startUp();
                 } else {
-                    if (!NeedCreateTenderFormComponent.formModel) {
+                    // if (!NeedCreateTenderFormComponent.formModel) {
                         this.packageService.getProposedTenderParticipateReport(this.bidOpportunityId).subscribe(data => {
-                            console.log('data-EDIT', data);
                             if (data) {
-                                console.log('have-data');
                                 NeedCreateTenderFormComponent.formModel = data;
                                 this.packageService.changeDataProposals();
                             } else {
-                                console.log('no-have-data');
                                 this.setDataDefault();
                                 this.packageService.changeDataProposals();
                             }
                             this.startUp();
                         }, err => {
                         });
-                    } else {
-                        this.startUp();
-                    }
+                    // } else {
+                    //     this.startUp();
+                    // }
                 }
             }
         );
@@ -213,15 +211,15 @@ export class NeedCreateTenderFormComponent implements OnInit, OnDestroy {
                 )
                 : new Date();
         this.bidOpportunityId = PackageDetailComponent.packageId;
-        if (!NeedCreateTenderFormComponent.formModel) {
-            this.router.navigate([
-                `package/detail/${
-                PackageDetailComponent.packageId
-                }/attend/create-request`
-            ]);
-        } else {
+        // if (!NeedCreateTenderFormComponent.formModel) {
+        //     this.router.navigate([
+        //         `package/detail/${
+        //         PackageDetailComponent.packageId
+        //         }/attend/create-request`
+        //     ]);
+        // } else {
             this.getPackageInfo();
-        }
+        // }
     }
 
     refresh() {
@@ -321,11 +319,10 @@ export class NeedCreateTenderFormComponent implements OnInit, OnDestroy {
 
     cancel() {
         console.log('this.cancel', this.dataModelCopy, NeedCreateTenderFormComponent.formModel);
-        // NeedCreateTenderFormComponent.formModel = Object.assign(
-        //     {}, this.dataModelCopy
-        //     // JSON.parse(JSON.stringify(this.dataModelCopy))
-        // );
-        NeedCreateTenderFormComponent.formModel = JSON.parse(JSON.stringify(this.dataModelCopy));
+        NeedCreateTenderFormComponent.formModel = Object.assign(
+            {}, this.dataModelCopy
+        );
+        // NeedCreateTenderFormComponent.formModel = JSON.parse(JSON.stringify(this.dataModelCopy));
         console.log('Clear', this.dataModelCopy, NeedCreateTenderFormComponent.formModel);
         this.packageService.setRouterAction('view');
         this.router.navigate([

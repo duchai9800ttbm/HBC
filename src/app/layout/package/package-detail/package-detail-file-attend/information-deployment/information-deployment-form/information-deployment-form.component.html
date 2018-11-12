@@ -81,8 +81,8 @@
                 </div>
                 <div class="col-md-3 pl-0">
                     <ng-container *ngIf="XacNhanKyPrepared">
-                        <button class="btn btn-primary btn-sign position-absolute" *ngIf="!planForm.get('isSignedByPreparedPerson').value" [disabled]="routerAction === 'view'"
-                            [class.not-allow]="routerAction === 'view'" (click)="clickSignPrepare()">Xác nhận ký</button>
+                        <button class="btn btn-primary btn-sign position-absolute" *ngIf="!planForm.get('isSignedByPreparedPerson').value" [disabled]="routerAction === 'view' || planForm.get('isDraftVersion').value"
+                            [class.not-allow]="routerAction === 'view' || planForm.get('isDraftVersion').value" (click)="clickSignPrepare()">Xác nhận ký</button>
                     </ng-container>
 
                     <button class="btn btn-primary btn-sign position-absolute" *ngIf="planForm.get('isSignedByPreparedPerson').value">

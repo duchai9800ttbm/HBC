@@ -161,7 +161,7 @@ export class NeedCreateTenderComponent implements OnInit, OnDestroy {
           this.dtTrigger.next();
         });
       } else {
-        NeedCreateTenderFormComponent.formModel = new ProposeTenderParticipateRequest();
+        // NeedCreateTenderFormComponent.formModel = new ProposeTenderParticipateRequest();
       }
       this.spinner.hide();
     }, err => {
@@ -180,6 +180,7 @@ export class NeedCreateTenderComponent implements OnInit, OnDestroy {
   }
 
   changeAction(data: string) {
+    console.log('chanegAciton-button', NeedCreateTenderFormComponent.formModel);
     this.packageService.setRouterAction(data);
   }
 
