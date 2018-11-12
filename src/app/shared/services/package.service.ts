@@ -27,6 +27,10 @@ import { CustomerConsultant } from '../models/package/customer-consultant';
 
 @Injectable()
 export class PackageService {
+    // subcire data phiếu đề nghị dự thầu
+    private dataProposals = new Subject<any>();
+    public dataProposals$ = this.dataProposals.asObservable();
+
     private statusPackage = new Subject<boolean>();
     public statusPackage$ = this.statusPackage.asObservable();
     private statusPackageValue = new BehaviorSubject<any>({
@@ -220,7 +224,10 @@ export class PackageService {
         private instantSearchService: InstantSearchService,
         private apiService: ApiService
     ) { }
-
+    // Change data proposals
+    changeDataProposals() {
+        this.dataProposals.next();
+    }
     // Get Evaluation List
     getEvaluationValue() {
         const url = `data/evaluation`;
@@ -1036,7 +1043,11 @@ export class PackageService {
     // get chi tiết phiếu đề nghị dự thầu
     getProposedTenderParticipateReport(bidOpportunityId: number): Observable<any> {
         const url = `${bidOpportunityId}/bidopportunity/proposedtenderparticipatinngreport`;
-        return this.apiService.get(url).map(response => response.result);
+        return this.apiService.get(url).map(response => 
+            {
+                console.log('response-getProposedTenderParticipateReport', response);
+                return response.result;
+            });
     }
     // xóa phiếu đề nghị dự thầu
     deleteProposedTenderParticipateReport(bidOpportunityId: number): Observable<any> {
