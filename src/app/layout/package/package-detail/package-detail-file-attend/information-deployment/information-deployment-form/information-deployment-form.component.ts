@@ -20,6 +20,7 @@ import { CheckStatusPackage } from '../../../../../../shared/constants/check-sta
 import { PermissionService } from '../../../../../../shared/services/permission.service';
 import { PermissionModel } from '../../../../../../shared/models/permission/Permission.model';
 import { StakeHolder } from '../../../../../../shared/models/ho-so-du-thau/stack-holder.model';
+import { forkJoin } from '../../../../../../../../node_modules/rxjs/observable/forkJoin';
 declare let kendo: any;
 
 @Component({
@@ -70,6 +71,32 @@ export class InformationDeploymentFormComponent implements OnInit, OnDestroy {
     BatDauLapHSDT = false;
     isShowGantt = false;
     investor;
+    isFormCreate;
+    groupmembersList;
+    distributorOfDocHSMT;
+    suggestionsToParticipate;
+    clarificationQuestion;
+    surveyOrganization;
+    checkVolumeHSMT;
+    checkVolumeBPTC;
+    clarifyQuestion;
+    filterProfiles;
+    requestQuote;
+    constructionQuotes;
+    filterAndSendRequest;
+    generalCostCalculation;
+    selectSubcontractor;
+    entryPriceEstimates;
+    siteLayout;
+    basementBPTC;
+    monitoring;
+    formworkReinforcementConcrete;
+    otherTechnicalRecords;
+    calibrationCheckFinish;
+    preparationLegalDoc;
+    photoHungryPack;
+    checkAndSaveConditions;
+    askClarificationQuestions;
     constructor(
         private spinner: NgxSpinnerService,
         private packageService: PackageService,
@@ -123,78 +150,230 @@ export class InformationDeploymentFormComponent implements OnInit, OnDestroy {
         this.userService.getAllUser('').subscribe(data => {
             this.userList = data;
         });
-        this.getPackageInfo();
+        this.checkAndCreateForm();
     }
     ngOnDestroy() {
         this.subscription.unsubscribe();
     }
 
-    getPackageInfo() {
-        this.spinner.show();
-        const getPackageInfo = this.packageService
-            .getInforPackageID(this.bidOpportunityId)
-            .switchMap(data => {
-                this.packageInfo = data;
+    // getPackageInfo() {
+    //     this.spinner.show();
+    //     const getPackageInfo = this.packageService
+    //         .getInforPackageID(this.bidOpportunityId)
+    //         .switchMap(data => {
+    //             this.packageInfo = data;
+    //             this.submissionDate =
+    //                 DateTimeConvertHelper.fromTimestampToDtObject(
+    //                     this.packageInfo.submissionDate * 1000
+    //                 );
+    //             return this.packageService.getStakeHolders(this.bidOpportunityId);
+    //         })
+    //         .switchMap(stakeHolders => {
+    //             (stakeHolders || []).some(item => {
+    //                 if (item.groupName = 'ChuDauTu') {
+    //                     this.investor = item.customers;
+    //                     return true;
+    //                 } else {
+    //                     return false;
+    //                 }
+    //             });
+    //             return this.packageService.getGroupmembers(+this.bidOpportunityId);
+    //         })
+    //         .subscribe(groupmembers => {
+    //             this.checkAndCreateForm();
+    //             this.spinner.hide();
+    //             console.log('response-groupMenber', groupmembers);
+    //         });
+    //     this.subscription.add(getPackageInfo);
+    // }
+
+    // checkAndCreateForm() {
+    //     if (this.routerAction === 'create') {
+    //         this.packageService
+    //             .getDefaultTenderPreparationPlanning()
+    //             .subscribe(data => {
+    //                 this.createForm(data, true);
+    //             }
+    //             );
+    //     } else {
+    //         this.packageService
+    //             .getTenderPreparationPlanning(this.bidOpportunityId).subscribe(data => {
+    //                 if (data) {
+    //                     this.createForm(data);
+    //                 } else {
+    //                     this.packageService
+    //                         .getDefaultTenderPreparationPlanning()
+    //                         .subscribe(dataDefault => {
+    //                             this.createForm(dataDefault, true);
+    //                         });
+    //                 }
+    //             });
+    //     }
+    // }
+
+    checkAndCreateForm() {
+        if (this.routerAction === 'create') {
+            this.isFormCreate = true;
+            forkJoin(
+                this.packageService.getDefaultTenderPreparationPlanning(),
+                this.packageService.getInforPackageID(this.bidOpportunityId),
+                this.packageService.getStakeHolders(this.bidOpportunityId),
+                this.packageService.getGroupmembers(+this.bidOpportunityId)
+            )
+                .subscribe(([res1, res2, res3, res4]) => {
+                    // res 2
+                    this.packageInfo = res2;
+                    this.submissionDate =
+                        DateTimeConvertHelper.fromTimestampToDtObject(
+                            this.packageInfo.submissionDate * 1000
+                        );
+                    // res 3
+                    (res3 || []).some(item => {
+                        if (item.groupName = 'ChuDauTu') {
+                            this.investor = item.customers;
+                            return true;
+                        } else {
+                            return false;
+                        }
+                    });
+                    // res4
+                    this.groupmembersList = res4;
+                    console.log('this.groupmembersList', this.groupmembersList);
+                    this.mappingLiveForm(this.groupmembersList);
+                    // res 1
+                    this.createForm(res1, true);
+                });
+        } else {
+            this.packageService.getInforPackageID(this.bidOpportunityId).switchMap(getInforPackage => {
+                this.packageInfo = getInforPackage;
                 this.submissionDate =
                     DateTimeConvertHelper.fromTimestampToDtObject(
                         this.packageInfo.submissionDate * 1000
                     );
-                return this.packageService.getStakeHolders(this.bidOpportunityId);
+                return this.packageService
+                    .getTenderPreparationPlanning(this.bidOpportunityId);
             })
-            .switchMap(stakeHolders => {
-                (stakeHolders || []).some(item => {
-                    if (item.groupName = 'ChuDauTu') {
-                        this.investor = item.customers;
-                        return true;
-                    } else {
-                        return false;
-                    }
-                });
-                return this.packageService.getGroupmembers(+this.bidOpportunityId)
-            })
-            .subscribe(groupmembers => {
-                this.checkAndCreateForm();
-                this.spinner.hide();
-                console.log('response-groupMenber', groupmembers);
-            });
-        this.subscription.add(getPackageInfo);
-    }
-
-    checkAndCreateForm() {
-        if (this.routerAction === 'create') {
-            this.packageService
-                .getDefaultTenderPreparationPlanning()
                 .subscribe(data => {
-                    this.createForm(data, true);
-                }
-                );
-        } else {
-            this.packageService
-                .getTenderPreparationPlanning(this.bidOpportunityId).subscribe(data => {
                     if (data) {
+                        this.isFormCreate = false;
                         this.createForm(data);
                     } else {
-                        this.packageService
-                            .getDefaultTenderPreparationPlanning()
-                            .subscribe(dataDefault => {
-                                this.createForm(dataDefault, true);
+                        this.isFormCreate = true;
+                        forkJoin(
+                            this.packageService.getDefaultTenderPreparationPlanning(),
+                            this.packageService.getStakeHolders(this.bidOpportunityId),
+                            this.packageService.getGroupmembers(+this.bidOpportunityId)
+                        )
+                            .subscribe(([res1, res2, res3]) => {
+                                // res 2
+                                (res2 || []).some(item => {
+                                    if (item.groupName = 'ChuDauTu') {
+                                        this.investor = item.customers;
+                                        return true;
+                                    } else {
+                                        return false;
+                                    }
+                                });
+                                // res3
+                                this.groupmembersList = res3;
+                                this.mappingLiveForm(this.groupmembersList);
+                                // res 1
+                                this.createForm(res1, true);
                             });
                     }
                 });
         }
     }
-    // disableForm() {
-    //     this.planForm.controls.forEach( item => {
-    //         if ( item === FormArray) {
-    //         }
-    //     })
-    // }
+
+    mappingLiveForm(groupmembersList) {
+        groupmembersList.forEach((item, index) => {
+            switch (item.groupName) {
+                case 'ChuTriDuAn': {
+                    // Đề xuất tham gia dự thầu
+                    this.suggestionsToParticipate = item.users;
+                    // Câu hỏi làm rõ HSMT
+                    this.clarificationQuestion = item.users;
+                    // Lựa chọn giá thầu phụ/ NCC
+                    this.selectSubcontractor = item.users;
+                    // Nhập giá dự toán + tích hợp lợi nhuận, check BoQ + trình duyệt giá
+                    this.entryPriceEstimates = item.users;
+                    break;
+                }
+                case 'NguoiPhanPhoiHoSo': {
+                    // Phân phối HSMT và cập nhật cho các bộ phận liên quan
+                    this.distributorOfDocHSMT = item.users;
+                    break;
+                }
+                case 'ChuTriKhoiLuong': {
+                    // Tính và kiểm tra khối lượng theo HSMT
+                    this.checkVolumeHSMT = item.users;
+                    break;
+                }
+                case 'ChuyenVienGoiGia': {
+                    // Lọc hồ sơ, gửi yêu cầu báo giá cho thầu phụ/ NCC, làm rõ báo giá
+                    this.filterProfiles = item.users;
+                    break;
+                }
+                case 'ChuTriMEP': {
+                    // Lọc hồ sơ, gửi yêu cầu báo giá cho thầu phụ/ NCC, làm rõ báo giá, lựa chọn giá TP/ NCC
+                    this.filterAndSendRequest = item.users;
+                    break;
+                }
+                case 'ChuNhiemGoiPrelims': {
+                    // Tính toán chi phí chung
+                    this.generalCostCalculation = item.users;
+                    break;
+                }
+                case 'ChuNhiemPhanKyThuat': {
+                    // Mặt bằng bố trí công trình
+                    this.siteLayout = item.users;
+                    break;
+                }
+                case 'ChuNhiemToHoSo': {
+                    // Chuẩn bị các hồ sơ pháp lý theo yêu cầu HSMT
+                    this.preparationLegalDoc = item.users;
+                    break;
+                }
+                case 'ChuNhiemPhapLy': {
+                    // Kiểm tra và lưu ý các điều kiện hợp đồng, tài chính đặc biệt để P.DT dự trù giá
+                    this.checkAndSaveConditions = item.users;
+                    break;
+                }
+            }
+            this.surveyOrganization = [];
+            // tslint:disable-next-line:max-line-length
+            // Tổ chức đi khảo sát hiện trạng dự án
+            this.surveyOrganization = ((this.surveyOrganization.concat(this.suggestionsToParticipate)).concat(this.generalCostCalculation)).concat(this.otherTechnicalRecords);
+            // Tính và kiểm tra khối lượng BPTC
+            this.checkVolumeBPTC = this.checkVolumeHSMT;
+            // Làm rõ các thắc mắc trong quá trình tính toán khối lượng
+            this.clarifyQuestion = this.checkVolumeHSMT;
+            // Yêu cầu báo giá/phản hồi thông tin báo giá - quan trắc, trắc đạc, hạ mực nước ngầm công trình
+            this.requestQuote = this.filterProfiles;
+            // Báo giá biện pháp thi công
+            this.constructionQuotes = this.filterProfiles;
+            // BPTC tầng hầm
+            this.basementBPTC = this.siteLayout;
+            // Quan trắc
+            this.monitoring = this.siteLayout;
+            // BPTC cốp pha, cốt thép, bê tông
+            this.formworkReinforcementConcrete = this.siteLayout;
+            // Hồ sơ kỹ thuật khác
+            this.otherTechnicalRecords = this.siteLayout;
+            // Hiệu chỉnh, kiểm tra, hoàn thiện BPTC, chuyển giao BPTC cho tổ hồ sơ pháp lý
+            this.calibrationCheckFinish = this.siteLayout;
+            // Photo, đóng gói hồ sơ nộp thầu
+            this.photoHungryPack = this.preparationLegalDoc;
+            // Đặt câu hỏi làm rõ các điều khoản hợp đồng
+            this.askClarificationQuestions = this.checkAndSaveConditions;
+        });
+    }
 
     createForm(planModel: TenderPreparationPlanningRequest, isCreate?) {
+        console.log('tạo mới', isCreate);
         this.tenderPlan = planModel;
         const taskArr = [];
-        console.log(planModel);
-        planModel.tasks.forEach(i => taskArr.push(this.createTaskItemFG(i)));
+        planModel.tasks.forEach((i, index) => taskArr.push(this.createTaskItemFG(i, index, isCreate)));
         this.planForm = this.fb.group({
             id: planModel.id,
             isDraftVersion: isCreate ? true : planModel.isDraftVersion,
@@ -293,6 +472,7 @@ export class InformationDeploymentFormComponent implements OnInit, OnDestroy {
     }
 
     changeDirector(userId, personnelType) {
+        console.log('Value', this.tasksFA.controls[2].get('whoIsInChargeIds').value );
         if (userId) {
             if (personnelType === 0) {
                 this.mailPersonnel[0] = this.getEmailUser(userId);
@@ -323,12 +503,191 @@ export class InformationDeploymentFormComponent implements OnInit, OnDestroy {
                 };
             })
         });
-        console.log('abcd');
         this.gantt = kendo.jQuery(this.ganttChart.nativeElement).data('kendoGantt');
         this.gantt.setDataSource(dataSource);
     }
 
-    createTaskItemFG(data: TenderPreparationPlanItem): FormGroup {
+    createTaskItemFG(data: TenderPreparationPlanItem, indexForm: number, isCreate: boolean): FormGroup {
+        let whoIsInChargeIds = [];
+        if (isCreate) {
+            switch (indexForm) {
+                case 0: {
+                    break;
+                }
+                case 1: {
+                    if (this.distributorOfDocHSMT) {
+                        whoIsInChargeIds = this.distributorOfDocHSMT;
+                    }
+                    break;
+                }
+                case 2: {
+                    if (this.suggestionsToParticipate) {
+                        whoIsInChargeIds = this.suggestionsToParticipate;
+                    }
+                    break;
+                }
+                case 3: {
+                    if (this.clarificationQuestion) {
+                        whoIsInChargeIds = this.clarificationQuestion;
+                    }
+                    break;
+                }
+                case 4: {
+                    break;
+                }
+                case 5: {
+                    if (this.surveyOrganization) {
+                        whoIsInChargeIds = this.surveyOrganization;
+                    }
+                    break;
+                }
+                case 6: {
+                    break;
+                }
+                case 7: {
+                    if (this.checkVolumeHSMT) {
+                        whoIsInChargeIds = this.checkVolumeHSMT;
+                    }
+                    break;
+                }
+                case 8: {
+                    if (this.checkVolumeBPTC) {
+                        whoIsInChargeIds = this.checkVolumeBPTC;
+                    }
+                    break;
+                }
+                case 9: {
+                    if (this.clarifyQuestion) {
+                        whoIsInChargeIds = this.clarifyQuestion;
+                    }
+                    break;
+                }
+                case 10: {
+                    break;
+                }
+                case 11: {
+                    if (this.filterProfiles) {
+                        whoIsInChargeIds = this.filterProfiles;
+                    }
+                    break;
+                }
+                case 12: {
+                    if (this.requestQuote) {
+                        whoIsInChargeIds = this.requestQuote;
+                    }
+                    break;
+                }
+                case 13: {
+                    if (this.constructionQuotes) {
+                        whoIsInChargeIds = this.constructionQuotes;
+                    }
+                    break;
+                }
+                case 14: {
+                    break;
+                }
+                case 15: {
+                    if (this.filterAndSendRequest) {
+                        whoIsInChargeIds = this.filterAndSendRequest;
+                    }
+                    break;
+                }
+                case 16: {
+                    break;
+                }
+                case 17: {
+                    if (this.generalCostCalculation) {
+                        whoIsInChargeIds = this.generalCostCalculation;
+                    }
+                    break;
+                }
+                case 18: {
+                    break;
+                }
+                case 19: {
+                    if (this.selectSubcontractor) {
+                        whoIsInChargeIds = this.selectSubcontractor;
+                    }
+                    break;
+                }
+                case 20: {
+                    if (this.entryPriceEstimates) {
+                        whoIsInChargeIds = this.entryPriceEstimates;
+                    }
+                    break;
+                }
+                case 21: {
+                    break;
+                }
+                case 22: {
+                    if (this.siteLayout) {
+                        whoIsInChargeIds = this.siteLayout;
+                    }
+                    break;
+                }
+                case 23: {
+                    if (this.basementBPTC) {
+                        whoIsInChargeIds = this.basementBPTC;
+                    }
+                    break;
+                }
+                case 24: {
+                    if (this.monitoring) {
+                        whoIsInChargeIds = this.monitoring;
+                    }
+                    break;
+                }
+                case 25: {
+                    if (this.formworkReinforcementConcrete) {
+                        whoIsInChargeIds = this.formworkReinforcementConcrete;
+                    }
+                    break;
+                }
+                case 26: {
+                    if (this.otherTechnicalRecords) {
+                        whoIsInChargeIds = this.otherTechnicalRecords;
+                    }
+                    break;
+                }
+                case 27: {
+                    if (this.calibrationCheckFinish) {
+                        whoIsInChargeIds = this.calibrationCheckFinish;
+                    }
+                    break;
+                }
+                case 28: {
+                    break;
+                }
+                case 29: {
+                    if (this.preparationLegalDoc) {
+                        whoIsInChargeIds = this.preparationLegalDoc;
+                    }
+                    break;
+                }
+                case 30: {
+                    if (this.photoHungryPack) {
+                        whoIsInChargeIds = this.photoHungryPack;
+                    }
+                    break;
+                }
+                case 31: {
+                    break;
+                }
+                case 32: {
+                    if (this.checkAndSaveConditions) {
+                        whoIsInChargeIds = this.checkAndSaveConditions;
+                    }
+                    break;
+                }
+                case 33: {
+                    if (this.askClarificationQuestions) {
+                        whoIsInChargeIds = this.askClarificationQuestions;
+                    }
+                    break;
+                }
+            }
+        }
+        console.log('whoIsInChargeIds', whoIsInChargeIds, isCreate, data.whoIsInCharges);
         const isFinishDisabled =
             (this.checkStatusPackage[this.packageInfo.stageStatus.id].id > this.checkStatusPackage.ThamGiaDuThau.id &&
                 this.checkStatusPackage[this.packageInfo.stageStatus.id].id < this.checkStatusPackage.ChoKetQuaDuThau.id);
@@ -342,13 +701,21 @@ export class InformationDeploymentFormComponent implements OnInit, OnDestroy {
             },
             employeeName: data.whoIsInCharge && data.whoIsInCharge.employeeName,
             whoIsInChargeId: {
-                value: data.whoIsInChargeId === 0 ? null : data.whoIsInChargeId,
+                value: null,
                 disabled: this.controlDisableForm,
             },
+            // {
+            //     value: data.whoIsInChargeId === 0 ? null : data.whoIsInChargeId,
+            //     disabled: this.controlDisableForm,
+            // },
             whoIsInChargeIds: {
-                value: (data.whoIsInCharges && data.whoIsInCharges.length !== 0) ? data.whoIsInCharges : [],
+                value: isCreate ? whoIsInChargeIds : ((data.whoIsInCharges && data.whoIsInCharges.length !== 0) ? data.whoIsInCharges : []),
                 disabled: this.controlDisableForm,
             },
+            // {
+            //     value: (data.whoIsInCharges && data.whoIsInCharges.length !== 0) ? data.whoIsInCharges : [],
+            //     disabled: this.controlDisableForm,
+            // },
             startDate: {
                 value: data.startDate
                     ? DateTimeConvertHelper.fromTimestampToDtObject(
@@ -530,7 +897,7 @@ export class InformationDeploymentFormComponent implements OnInit, OnDestroy {
         const start = DateTimeConvertHelper.fromDtObjectToSecon((this.tasksFA.controls[index]).get('startDate').value);
         if (start && end) {
             this.tasksFA.controls[index].get('totalTime').patchValue(
-                Math.floor((end - start) / (60 * 60 * 24))
+                Math.floor((end - start) / (60 * 60 * 24)) + 1
             );
         } else {
             this.tasksFA.controls[index].get('totalTime').patchValue('');
@@ -587,7 +954,7 @@ export class InformationDeploymentFormComponent implements OnInit, OnDestroy {
 
     refesh() {
         this.packageService.getTenderPreparationPlanning(this.bidOpportunityId).subscribe(data => this.createForm(data));
-        this.getPackageInfo();
+        this.checkAndCreateForm();
     }
 
 
@@ -631,4 +998,5 @@ export class InformationDeploymentFormComponent implements OnInit, OnDestroy {
             }
         }, 500);
     }
+
 }

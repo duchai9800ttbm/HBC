@@ -5,7 +5,9 @@
 
 export const environment = {
   production: false,
-  // api_endpoint: 'http://115.79.35.119:7878/vinmus-crm/',
-  api_endpoint: 'http://115.79.35.119:9004/api/hbc/',
+  // pro
+  api_endpoint: 'http://124.158.13.136:7001/api/hbc/',
+  // thường
+  // api_endpoint: 'http://115.79.35.119:9004/api/hbc/',
   api_worldfone: 'https://apps.worldfone.vn/externalcrm/'
 };

@@ -588,13 +588,13 @@ export class PackageDocumentSenderComponent implements OnInit {
         if (itemchildDocuments.childDocuments && itemchildDocuments.childDocuments.length !== 0) {
           (itemchildDocuments.childDocuments || []).forEach(itemChild => {
             (itemChild.items || []).forEach(items => {
-                items.documents[0].dateUse = (+this.defaultdateUseHSDT).toString() + '  ngày';
+              items.documents[0].dateUse = (+this.defaultdateUseHSDT).toString() + '  ngày';
             });
           });
         }
         if (!itemchildDocuments.childDocuments || itemchildDocuments.childDocuments.length === 0) {
           (itemchildDocuments.documents || []).forEach(documents => {
-              documents.dateUse = (+this.defaultdateUseHSDT).toString() + ' ngày';
+            documents.dateUse = (+this.defaultdateUseHSDT).toString() + ' ngày';
           });
         }
       });
@@ -935,10 +935,10 @@ export class PackageDocumentSenderComponent implements OnInit {
   }
   requestToreSubmitDoc(bidTransferDocDetailId: number) {
     this.detailResultPackageService.resubmitDoc(bidTransferDocDetailId).subscribe(response => {
-      this.alertService.success('Yêu cầu gửi lại tài liệu thành công!');
+      this.alertService.success('Gửi lại tài liệu thành công!');
     },
       err => {
-        this.alertService.error('Yêu cầu gửi lại tài liệu không thành công!');
+        this.alertService.error('Gửi lại tài liệu không thành công!');
       });
   }
   // Router live form
