@@ -17,16 +17,20 @@ export class NeedCreateTenderFormAnalysisComponent implements OnInit {
   routerAction;
   constructor(
     private fb: FormBuilder,
-    private route: ActivatedRoute,
+    private activatedRoute: ActivatedRoute,
     private packageService: PackageService,
     private router: Router,
   ) { }
 
   ngOnInit() {
-    // this.routerAction = this.packageService.routerAction;
+    // this.packageService.routerAction$
+    this.activatedRoute.params.subscribe(router => {
+      console.log('params-params-analys', router, router.action);
+    });
     const that = this;
     this.packageService.routerAction$.subscribe(router => {
       this.routerAction = router;
+      console.log('this.routerAction', this.routerAction);
       if (this.analysisForm && this.routerAction === 'view') {
         this.analysisForm.disable();
       }

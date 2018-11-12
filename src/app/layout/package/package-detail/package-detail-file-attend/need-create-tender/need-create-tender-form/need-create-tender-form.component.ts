@@ -64,7 +64,8 @@ export class NeedCreateTenderFormComponent implements OnInit, OnDestroy {
         private sessionService: SessionService,
         private scrollTopService: ScrollToTopService,
         private confirmService: ConfirmationService,
-        private permissionService: PermissionService
+        private permissionService: PermissionService,
+        private activatedRoute: ActivatedRoute
     ) { }
 
     ngOnInit() {
@@ -101,11 +102,19 @@ export class NeedCreateTenderFormComponent implements OnInit, OnDestroy {
                 this.router.navigate(['not-found']);
             }
         });
-        this.packageService.routerAction$.subscribe(
+        this.activatedRoute.params.subscribe(router => {
+            console.log('params-params', router.action);
+            this.packageService.setRouterAction(router.action);
+        });
+        // this.packageService.routerAction$.subscribe(
+        //     router => {
+        //         this.routerAction = router;
+        this.activatedRoute.params.subscribe(
             router => {
-                this.routerAction = router;
+                this.routerAction = router.action;
                 if (this.routerAction === 'create') {
                     // ======================
+                    NeedCreateTenderFormComponent.formModel = new ProposeTenderParticipateRequest();
                     // EstimatedBudgetPackage
                     NeedCreateTenderFormComponent.formModel.estimatedBudgetOfPakage = new EstimatedBudgetPackage();
                     NeedCreateTenderFormComponent.formModel.estimatedBudgetOfPakage.draftBudgetOfPackageCurrency = new Currency();
@@ -408,5 +417,5 @@ export class NeedCreateTenderFormComponent implements OnInit, OnDestroy {
         }
     }
 
-    
+
 }
