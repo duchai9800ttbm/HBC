@@ -420,16 +420,26 @@ export class InformationDeploymentFormComponent implements OnInit, OnDestroy {
         this.changeDirector(this.planForm.get('technicalDepartmentEmployeeId').value, 2);
         this.changeDirector(this.planForm.get('bimDepartmentEmployeeId').value, 3);
         setTimeout(() => {
+            //  const a = this.planForm.value.tasks.max(x => x.startDate);
+            console.log(this.planForm.value.tasks.filter(x => x.startDate > 0));
+            const array = this.planForm.value.tasks.filter(x => x.startDate > 0).map(y => y.startDate);
+            let minDate;
+            if (array && array.length) {
+                minDate = new Date(Math.min.apply(null, array));
+            }
             if (this.ganttChart && this.planForm) {
                 kendo.jQuery(this.ganttChart.nativeElement).kendoGantt({
                     //  toolbar: ['pdf'],
                     views: [
-                        { type: 'day', },
+                        { type: 'day' },
                         { type: 'week', selected: true },
                         { type: 'month', slotSize: 250 },
                         //  { type: 'year', slotSize: 150}
 
                     ],
+                    range: {
+                        start: minDate
+                    },
                     columns: [
                         { field: 'title', title: 'Công việc', width: 200 },
                         { field: 'employeeName', title: 'Phân công', width: 200 },
@@ -451,6 +461,7 @@ export class InformationDeploymentFormComponent implements OnInit, OnDestroy {
                     // workWeekEnd: 7,
                     editable: false,
                     // snap: false,
+                    // workDayStart: new Date('01/01/1970'),
                     height: window.screen.availHeight * 0.7
                 }).data('kendoGantt');
                 this.updateGantt();
@@ -472,7 +483,7 @@ export class InformationDeploymentFormComponent implements OnInit, OnDestroy {
     }
 
     changeDirector(userId, personnelType) {
-        console.log('Value', this.tasksFA.controls[2].get('whoIsInChargeIds').value );
+        console.log('Value', this.tasksFA.controls[2].get('whoIsInChargeIds').value);
         if (userId) {
             if (personnelType === 0) {
                 this.mailPersonnel[0] = this.getEmailUser(userId);
@@ -687,7 +698,7 @@ export class InformationDeploymentFormComponent implements OnInit, OnDestroy {
                 }
             }
         }
-        whoIsInChargeIds.forEach( item => {
+        whoIsInChargeIds.forEach(item => {
             item.employeeName = item.userName;
         });
         console.log('whoIsInChargeIds', whoIsInChargeIds, isCreate, data.whoIsInCharges);
