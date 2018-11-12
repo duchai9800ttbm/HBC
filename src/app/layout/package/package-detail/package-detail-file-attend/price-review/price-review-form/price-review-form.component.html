@@ -1013,28 +1013,28 @@
                         <div class="two d-flex">
                             <div class="item-1 d-flex align-items-center">
                                 <div>
-                                    <input formControlName="giaVonBaseAmount" appInputMoneyNoplaceholder
-                                        appEnterPreventDefault>
+                                    <!-- <input formControlName="giaVonBaseAmount" appInputMoneyNoplaceholder
+                                        appEnterPreventDefault> -->
                                 </div>
                             </div>
                             <div class="item-2 d-flex align-items-center">
                                 <div>
-                                    <input formControlName="giaVonBaseGfa" appInputAreaNoplaceholder
-                                        appEnterPreventDefault>
+                                    <!-- <input formControlName="giaVonBaseGfa" appInputAreaNoplaceholder
+                                        appEnterPreventDefault> -->
                                 </div>
                             </div>
 
                             <div class="item-3 d-flex align-items-center">
                                 <div>
-                                    <input formControlName="giaVonAlterAmount" appInputMoneyNoplaceholder
-                                        appEnterPreventDefault>
+                                    <!-- <input formControlName="giaVonAlterAmount" appInputMoneyNoplaceholder
+                                        appEnterPreventDefault> -->
                                 </div>
 
                             </div>
                             <div class="item-4 d-flex align-items-center">
                                 <div>
-                                    <input formControlName="giaVonAlterGfa" appInputAreaNoplaceholder
-                                        appEnterPreventDefault>
+                                    <!-- <input formControlName="giaVonAlterGfa" appInputAreaNoplaceholder
+                                        appEnterPreventDefault> -->
                                 </div>
                             </div>
 
@@ -1183,7 +1183,9 @@
                         <div class="two d-flex">
                             <div class="item-1 d-flex align-items-center">
                                 <div>
-                                    <input readonly formControlName="totalGiaVonAmount" appInputMoneyNoplaceholder>
+                                    <!-- <input readonly formControlName="totalGiaVonAmount" appInputMoneyNoplaceholder> -->
+                                    {{priceReviewForm.get('totalGiaVonAmount').value | vnCurrency}}
+
                                 </div>
                             </div>
                             <div class="item-2 d-flex align-items-center">
@@ -1194,7 +1196,8 @@
 
                             <div class="item-3 d-flex align-items-center">
                                 <div>
-                                    <input formControlName="totalAlterAmount" appInputMoneyNoplaceholder>
+                                    <!-- <input formControlName="totalAlterAmount" appInputMoneyNoplaceholder> -->
+                                    {{priceReviewForm.get('totalAlterAmount').value | vnCurrency}}
                                 </div>
 
                             </div>

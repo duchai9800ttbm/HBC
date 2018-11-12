@@ -212,8 +212,7 @@ export class PriceReviewFormComponent implements OnChanges, OnInit, AfterViewIni
       })
       .switchMap(tomTat => {
         this.summary = tomTat;
-        console.log(this.summary);
-        return this.packageService.getProposedTenderParticipateReport(836);
+        return this.packageService.getProposedTenderParticipateReport(this.packageId);
       })
       .subscribe(phieuDeNghi => {
         this.tenderProposed = phieuDeNghi;
@@ -278,8 +277,6 @@ export class PriceReviewFormComponent implements OnChanges, OnInit, AfterViewIni
         if (this.priceReviewForm) {
           if (tamUngYCPercent) {
             this.priceReviewForm.get('tamUngYCPercent').patchValue(tamUngYCPercent);
-            console.log(this.priceReviewForm.value);
-
           }
           if (tienGiuLaiYCPercent) {
             this.priceReviewForm.get('tienGiuLaiYCPercent').patchValue(tienGiuLaiYCPercent);
@@ -1096,8 +1093,6 @@ export class PriceReviewFormComponent implements OnChanges, OnInit, AfterViewIni
       this.showPopupConfirm = false;
     } else {
       this.priceReviewForm.get('updatedDesc').patchValue(check);
-      console.log(this.priceReviewForm.get('infoGfa'));
-      console.log(this.priceReviewForm.value);
       this.priceReviewService.createOrEdit(this.priceReviewForm.value, this.packageId).subscribe(() => {
         this.router.navigate([`/package/detail/${this.packageId}/attend/price-review`]);
         const message = (this.isModeCreate) ? 'Tạo' : 'Cập nhật';

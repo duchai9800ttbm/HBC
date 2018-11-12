@@ -292,8 +292,12 @@
                 </tbody>
             </table>
 
-
-             <div [formGroupName]="'LapHoSoDuThauFile'" class="mt-4 table-striped-fake">
+            <div class="d-flex flex-row-reverse mt-1 mb-1">
+                <div>
+                    <i> *Triển khai và phân công tiên độ: Trưởng phòng thông báo triển khai</i>
+                </div>
+            </div>
+            <div [formGroupName]="'LapHoSoDuThauFile'" class="mt-4 table-striped-fake">
                 <div class="table-fake header">
                     <div class="text-center">Lập HSDT (upload file)</div>
                     <div class="text-center">Loại tài liệu</div>
@@ -304,9 +308,11 @@
                     <div class="text-center" appSameWidth="col4">Tải template</div>
                 </div>
                 <div [formArrayName]="'permission'">
-                    <div *ngFor="let item of packagePermissionReviewForm.get('LapHoSoDuThauFile').get('permission').controls; let i = index;" [formGroupName]="i">
+                    <div *ngFor="let item of packagePermissionReviewForm.get('LapHoSoDuThauFile').get('permission').controls; let i = index;"
+                        [formGroupName]="i">
                         <div formArrayName="documentTypes" [class.odd]="i % 2 == 0">
-                            <div class="table-fake content" *ngFor="let itemBid of item.get('documentTypes').controls; let j = index;" [formGroupName]="j">
+                            <div class="table-fake content" *ngFor="let itemBid of item.get('documentTypes').controls; let j = index;"
+                                [formGroupName]="j">
                                 <div>
                                     <div class="grid-container-3" *ngIf="j == 0">
                                         <div class="btn-icon btn-icon-plus" (click)="addFormArrayBidItem(listFormData[2], {})">
@@ -376,10 +382,10 @@
 
                     </div>
                 </div>
-            </div> 
+            </div>
 
 
-             <div [formGroupName]="'LapHoSoDuThauLiveForm'" class="mt-4 table-striped-fake">
+            <div [formGroupName]="'LapHoSoDuThauLiveForm'" class="mt-4 table-striped-fake">
                 <div class="table-fake header">
                     <div class="text-center">Lập HSDT (Liveform)</div>
                     <div class="text-center">Loại tài liệu</div>
@@ -394,9 +400,11 @@
 
                 </div>
                 <div [formArrayName]="'permission'">
-                    <div *ngFor="let item of packagePermissionReviewForm.get('LapHoSoDuThauLiveForm').get('permission').controls; let i = index;" [formGroupName]="i">
+                    <div *ngFor="let item of packagePermissionReviewForm.get('LapHoSoDuThauLiveForm').get('permission').controls; let i = index;"
+                        [formGroupName]="i">
                         <div formArrayName="documentTypes" [class.odd]="i % 2 == 0">
-                            <div class="table-fake content" *ngFor="let itemBid of item.get('documentTypes').controls; let j = index;" [formGroupName]="j">
+                            <div class="table-fake content" *ngFor="let itemBid of item.get('documentTypes').controls; let j = index;"
+                                [formGroupName]="j">
                                 <div>
                                     <div class="grid-container-3" *ngIf="j == 0">
                                         <div class="btn-icon btn-icon-plus" (click)="addFormArrayBidItem(listFormData[6], {})">
@@ -484,9 +492,9 @@
 
                     </div>
                 </div>
-            </div> 
+            </div>
 
-             <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="table-selection stripe hover mt-4">
+            <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="table-selection stripe hover mt-4">
                 <thead>
                     <tr style="width: 100%">
                         <th style="width: 280px !important">
@@ -527,8 +535,8 @@
                 </thead>
                 <tbody [formGroupName]="'TrinhDuyetGia'">
                     <ng-container [formArrayName]="'permission'">
-                        <tr *ngFor="let item of packagePermissionReviewForm.get('TrinhDuyetGia').get('permission').controls; let i = index;" [formGroupName]="i"
-                            [class.odd]="i % 2 == 0">
+                        <tr *ngFor="let item of packagePermissionReviewForm.get('TrinhDuyetGia').get('permission').controls; let i = index;"
+                            [formGroupName]="i" [class.odd]="i % 2 == 0">
                             <td>
                                 <div class="grid-container-3">
                                     <div class="btn-icon btn-icon-plus" (click)="addFormArrayItem(listFormData[3], {})">
@@ -619,8 +627,8 @@
                 </tbody>
             </table>
 
-          
-             <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="table-selection stripe hover mt-4">
+
+            <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="table-selection stripe hover mt-4">
                 <thead>
                     <tr style="width: 100%">
                         <th style="width: 280px !important">
@@ -640,8 +648,8 @@
                 </thead>
                 <tbody [formGroupName]="'ChotVaNopHSDT'">
                     <ng-container [formArrayName]="'permission'">
-                        <tr *ngFor="let item of packagePermissionReviewForm.get('ChotVaNopHSDT').get('permission').controls; let i = index;" [formGroupName]="i"
-                            [class.odd]="i % 2 == 0">
+                        <tr *ngFor="let item of packagePermissionReviewForm.get('ChotVaNopHSDT').get('permission').controls; let i = index;"
+                            [formGroupName]="i" [class.odd]="i % 2 == 0">
                             <td>
                                 <div class="grid-container-3">
                                     <div class="btn-icon btn-icon-plus" (click)="addFormArrayItem(listFormData[4], {})">
@@ -689,7 +697,7 @@
                 </tbody>
             </table>
 
-             <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="table-selection stripe hover mt-4">
+            <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="table-selection stripe hover mt-4">
                 <thead>
                     <tr style="width: 100%">
                         <th style="width: 280px !important">
