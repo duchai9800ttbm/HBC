@@ -138,7 +138,7 @@
                         <td>
                             <span class="custom-dropdown w-100 b-dropdown-no-border">
                                 <select class="form-control" (change)="changeDirector($event.target.value, 0)" formControlName="projectDirectorEmployeeId"
-                                [class.default-cusor]="routerAction === 'view'">
+                                    [class.default-cusor]="routerAction === 'view'">
                                     <option [ngValue]="null">--Chọn--</option>
                                     <option *ngFor="let user of userList" [value]="user.employeeId">{{user.employeeName}}</option>
                                 </select>
@@ -158,7 +158,7 @@
                         <td>
                             <span class="custom-dropdown w-100 b-dropdown-no-border">
                                 <select class="form-control" (change)="changeDirector($event.target.value, 1)" formControlName="tenderDepartmentEmployeeId"
-                                [class.default-cusor]="routerAction === 'view'">
+                                    [class.default-cusor]="routerAction === 'view'">
                                     <option [ngValue]="null">--Chọn--</option>
                                     <option *ngFor="let user of userList" [value]="user.employeeId">{{user.employeeName}}</option>
                                 </select>
@@ -178,7 +178,7 @@
                         <td>
                             <span class="custom-dropdown w-100 b-dropdown-no-border">
                                 <select class="form-control" (change)="changeDirector($event.target.value, 2)" formControlName="technicalDepartmentEmployeeId"
-                                [class.default-cusor]="routerAction === 'view'">
+                                    [class.default-cusor]="routerAction === 'view'">
                                     <option [ngValue]="null">--Chọn--</option>
                                     <option *ngFor="let user of userList" [value]="user.employeeId">{{user.employeeName}}</option>
                                 </select>
@@ -199,7 +199,7 @@
                         <td>
                             <span class="custom-dropdown w-100 b-dropdown-no-border">
                                 <select class="form-control" (change)="changeDirector($event.target.value, 3)" formControlName="bimDepartmentEmployeeId"
-                                [class.default-cusor]="routerAction === 'view'">
+                                    [class.default-cusor]="routerAction === 'view'">
                                     <option [ngValue]="null">--Chọn--</option>
                                     <option *ngFor="let user of userList" [value]="user.employeeId">{{user.employeeName}}</option>
                                 </select>
@@ -247,15 +247,15 @@
                                     <span *ngIf="!data.get('itemDesc').value" class="fake-placeholder">Nhập text</span>
                                 </ng-container>
                             </td>
-                            
+
                             <td>
-                                    <!-- *ngIf="data.get('itemId').value !== 1 && data.get('itemId').value !== 5 && data.get('itemId').value !== 7 && data.get('itemId').value !== 8
+                                <!-- *ngIf="data.get('itemId').value !== 1 && data.get('itemId').value !== 5 && data.get('itemId').value !== 7 && data.get('itemId').value !== 8
                                     && data.get('itemId').value !== 12 && data.get('itemId').value !== 16 && data.get('itemId').value !== 18 && data.get('itemId').value !== 20 && data.get('itemId').value !== 23
                                     && data.get('itemId').value !== 30 && data.get('itemId').value !== 33" -->
-                                <ng-container >
+                                <ng-container>
                                     <div *ngIf="data.get('whoIsInChargeIds').value && data.get('whoIsInChargeIds').value.length !== 0">
                                         <span *ngFor="let item of data.get('whoIsInChargeIds').value; let i = index">
-                                            {{item.employeeName}}
+                                            {{item.lastName}} {{item.firstName}}
                                             <span *ngIf="i !== (data.get('whoIsInChargeIds').value.length - 1)"> ,</span>
                                             <span></span>
                                         </span>

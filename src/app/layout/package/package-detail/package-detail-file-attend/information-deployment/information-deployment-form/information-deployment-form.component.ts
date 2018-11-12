@@ -14,13 +14,14 @@ import { UserService, AlertService, SessionService, ConfirmationService } from '
 import { UserItemModel } from '../../../../../../shared/models/user/user-item.model';
 import { TenderPreparationPlanningRequest } from '../../../../../../shared/models/api-request/package/tender-preparation-planning-request';
 import * as moment from 'moment';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { BidStatus } from '../../../../../../shared/constants/bid-status';
 import { CheckStatusPackage } from '../../../../../../shared/constants/check-status-package';
 import { PermissionService } from '../../../../../../shared/services/permission.service';
 import { PermissionModel } from '../../../../../../shared/models/permission/Permission.model';
 import { StakeHolder } from '../../../../../../shared/models/ho-so-du-thau/stack-holder.model';
 import { forkJoin } from '../../../../../../../../node_modules/rxjs/observable/forkJoin';
+import { EmployeeModel } from '../../../../../../shared/models/employee/employee-model';
 declare let kendo: any;
 
 @Component({
@@ -107,12 +108,16 @@ export class InformationDeploymentFormComponent implements OnInit, OnDestroy {
         private alertService: AlertService,
         private sessionService: SessionService,
         private confirmationService: ConfirmationService,
-        private permissionService: PermissionService
+        private permissionService: PermissionService,
+        private activatedRoute: ActivatedRoute,
     ) { }
 
     ngOnInit() {
         setTimeout(() => {
             this.dtTrigger.next();
+        });
+        this.activatedRoute.params.subscribe(router => {
+            this.packageService.setRouterAction(router.action);
         });
         this.routerAction = this.packageService.routerAction;
         this.bidOpportunityId = PackageDetailComponent.packageId;
@@ -259,7 +264,11 @@ export class InformationDeploymentFormComponent implements OnInit, OnDestroy {
                 .subscribe(data => {
                     if (data) {
                         this.isFormCreate = false;
-                        this.createForm(data);
+                        this.packageService.getGroupmembers(+this.bidOpportunityId).subscribe(res3 => {
+                            this.groupmembersList = res3;
+                            this.mappingLiveForm(this.groupmembersList);
+                            this.createForm(data);
+                        });
                         this.loading = false;
                     } else {
                         this.isFormCreate = true;
@@ -461,7 +470,7 @@ export class InformationDeploymentFormComponent implements OnInit, OnDestroy {
                     editable: false,
                     snap: true,
                     // workDayStart: new Date('01/01/1970'),
-                  //  height: window.screen.availHeight * 0.7
+                    //  height: window.screen.availHeight * 0.7
                 }).data('kendoGantt');
                 this.updateGantt();
                 this.planForm.valueChanges.subscribe(_ => {
@@ -519,192 +528,189 @@ export class InformationDeploymentFormComponent implements OnInit, OnDestroy {
 
     createTaskItemFG(data: TenderPreparationPlanItem, indexForm: number, isCreate: boolean): FormGroup {
         let whoIsInChargeIds = [];
-        if (isCreate) {
-            if (isCreate) {
-                switch (indexForm) {
-                    case 0: {
-                        break;
-                    }
-                    case 1: {
-                        if (this.distributorOfDocHSMT) {
-                            whoIsInChargeIds = this.distributorOfDocHSMT;
-                        }
-                        break;
-                    }
-                    case 2: {
-                        if (this.suggestionsToParticipate) {
-                            whoIsInChargeIds = this.suggestionsToParticipate;
-                        }
-                        break;
-                    }
-                    case 3: {
-                        if (this.clarificationQuestion) {
-                            whoIsInChargeIds = this.clarificationQuestion;
-                        }
-                        break;
-                    }
-                    case 4: {
-                        break;
-                    }
-                    case 5: {
-                        if (this.surveyOrganization) {
-                            whoIsInChargeIds = this.surveyOrganization;
-                        }
-                        break;
-                    }
-                    case 6: {
-                        break;
-                    }
-                    case 7: {
-                        break;
-                    }
-                    case 8: {
-                        if (this.checkVolumeHSMT) {
-                            whoIsInChargeIds = this.checkVolumeHSMT;
-                        }
-                        break;
-                    }
-                    case 9: {
-                        if (this.checkVolumeBPTC) {
-                            whoIsInChargeIds = this.checkVolumeBPTC;
-                        }
-                        break;
-                    }
-                    case 10: {
-                        if (this.clarifyQuestion) {
-                            whoIsInChargeIds = this.clarifyQuestion;
-                        }
-                        break;
-                    }
-                    case 11: {
-                        break;
-                    }
-                    case 12: {
-                        if (this.filterProfiles) {
-                            whoIsInChargeIds = this.filterProfiles;
-                        }
-                        break;
-                    }
-                    case 13: {
-                        if (this.requestQuote) {
-                            whoIsInChargeIds = this.requestQuote;
-                        }
-                        break;
-                    }
-                    case 14: {
-                        if (this.constructionQuotes) {
-                            whoIsInChargeIds = this.constructionQuotes;
-                        }
-                        break;
-                    }
-                    case 15: {
-                        break;
-                    }
-                    case 16: {
-                        if (this.filterAndSendRequest) {
-                            whoIsInChargeIds = this.filterAndSendRequest;
-                        }
-                        break;
-                    }
-                    case 17: {
-                        break;
-                    }
-                    case 18: {
-                        if (this.generalCostCalculation) {
-                            whoIsInChargeIds = this.generalCostCalculation;
-                        }
-                        break;
-                    }
-                    case 19: {
-                        break;
-                    }
-                    case 20: {
-                        if (this.selectSubcontractor) {
-                            whoIsInChargeIds = this.selectSubcontractor;
-                        }
-                        break;
-                    }
-                    case 21: {
-                        if (this.entryPriceEstimates) {
-                            whoIsInChargeIds = this.entryPriceEstimates;
-                        }
-                        break;
-                    }
-                    case 22: {
-                        break;
-                    }
-                    case 23: {
-                        if (this.siteLayout) {
-                            whoIsInChargeIds = this.siteLayout;
-                        }
-                        break;
-                    }
-                    case 24: {
-                        if (this.basementBPTC) {
-                            whoIsInChargeIds = this.basementBPTC;
-                        }
-                        break;
-                    }
-                    case 25: {
-                        if (this.monitoring) {
-                            whoIsInChargeIds = this.monitoring;
-                        }
-                        break;
-                    }
-                    case 26: {
-                        if (this.formworkReinforcementConcrete) {
-                            whoIsInChargeIds = this.formworkReinforcementConcrete;
-                        }
-                        break;
-                    }
-                    case 27: {
-                        if (this.otherTechnicalRecords) {
-                            whoIsInChargeIds = this.otherTechnicalRecords;
-                        }
-                        break;
-                    }
-                    case 28: {
-                        if (this.calibrationCheckFinish) {
-                            whoIsInChargeIds = this.calibrationCheckFinish;
-                        }
-                        break;
-                    }
-                    case 29: {
-                        break;
-                    }
-                    case 30: {
-                        if (this.preparationLegalDoc) {
-                            whoIsInChargeIds = this.preparationLegalDoc;
-                        }
-                        break;
-                    }
-                    case 31: {
-                        if (this.photoHungryPack) {
-                            whoIsInChargeIds = this.photoHungryPack;
-                        }
-                        break;
-                    }
-                    case 32: {
-                        break;
-                    }
-                    case 33: {
-                        if (this.checkAndSaveConditions) {
-                            whoIsInChargeIds = this.checkAndSaveConditions;
-                        }
-                        break;
-                    }
-                    case 34: {
-                        if (this.askClarificationQuestions) {
-                            whoIsInChargeIds = this.askClarificationQuestions;
-                        }
-                        break;
-                    }
+        switch (indexForm) {
+            case 0: {
+                break;
+            }
+            case 1: {
+                if (this.distributorOfDocHSMT) {
+                    whoIsInChargeIds = this.distributorOfDocHSMT;
                 }
+                break;
+            }
+            case 2: {
+                if (this.suggestionsToParticipate) {
+                    whoIsInChargeIds = this.suggestionsToParticipate;
+                }
+                break;
+            }
+            case 3: {
+                if (this.clarificationQuestion) {
+                    whoIsInChargeIds = this.clarificationQuestion;
+                }
+                break;
+            }
+            case 4: {
+                break;
+            }
+            case 5: {
+                if (this.surveyOrganization) {
+                    whoIsInChargeIds = this.surveyOrganization;
+                }
+                break;
+            }
+            case 6: {
+                break;
+            }
+            case 7: {
+                break;
+            }
+            case 8: {
+                if (this.checkVolumeHSMT) {
+                    whoIsInChargeIds = this.checkVolumeHSMT;
+                }
+                break;
+            }
+            case 9: {
+                if (this.checkVolumeBPTC) {
+                    whoIsInChargeIds = this.checkVolumeBPTC;
+                }
+                break;
+            }
+            case 10: {
+                if (this.clarifyQuestion) {
+                    whoIsInChargeIds = this.clarifyQuestion;
+                }
+                break;
+            }
+            case 11: {
+                break;
+            }
+            case 12: {
+                if (this.filterProfiles) {
+                    whoIsInChargeIds = this.filterProfiles;
+                }
+                break;
+            }
+            case 13: {
+                if (this.requestQuote) {
+                    whoIsInChargeIds = this.requestQuote;
+                }
+                break;
+            }
+            case 14: {
+                if (this.constructionQuotes) {
+                    whoIsInChargeIds = this.constructionQuotes;
+                }
+                break;
+            }
+            case 15: {
+                break;
+            }
+            case 16: {
+                if (this.filterAndSendRequest) {
+                    whoIsInChargeIds = this.filterAndSendRequest;
+                }
+                break;
+            }
+            case 17: {
+                break;
+            }
+            case 18: {
+                if (this.generalCostCalculation) {
+                    whoIsInChargeIds = this.generalCostCalculation;
+                }
+                break;
+            }
+            case 19: {
+                break;
+            }
+            case 20: {
+                if (this.selectSubcontractor) {
+                    whoIsInChargeIds = this.selectSubcontractor;
+                }
+                break;
+            }
+            case 21: {
+                if (this.entryPriceEstimates) {
+                    whoIsInChargeIds = this.entryPriceEstimates;
+                }
+                break;
+            }
+            case 22: {
+                break;
+            }
+            case 23: {
+                if (this.siteLayout) {
+                    whoIsInChargeIds = this.siteLayout;
+                }
+                break;
+            }
+            case 24: {
+                if (this.basementBPTC) {
+                    whoIsInChargeIds = this.basementBPTC;
+                }
+                break;
+            }
+            case 25: {
+                if (this.monitoring) {
+                    whoIsInChargeIds = this.monitoring;
+                }
+                break;
+            }
+            case 26: {
+                if (this.formworkReinforcementConcrete) {
+                    whoIsInChargeIds = this.formworkReinforcementConcrete;
+                }
+                break;
+            }
+            case 27: {
+                if (this.otherTechnicalRecords) {
+                    whoIsInChargeIds = this.otherTechnicalRecords;
+                }
+                break;
+            }
+            case 28: {
+                if (this.calibrationCheckFinish) {
+                    whoIsInChargeIds = this.calibrationCheckFinish;
+                }
+                break;
+            }
+            case 29: {
+                break;
+            }
+            case 30: {
+                if (this.preparationLegalDoc) {
+                    whoIsInChargeIds = this.preparationLegalDoc;
+                }
+                break;
+            }
+            case 31: {
+                if (this.photoHungryPack) {
+                    whoIsInChargeIds = this.photoHungryPack;
+                }
+                break;
+            }
+            case 32: {
+                break;
+            }
+            case 33: {
+                if (this.checkAndSaveConditions) {
+                    whoIsInChargeIds = this.checkAndSaveConditions;
+                }
+                break;
+            }
+            case 34: {
+                if (this.askClarificationQuestions) {
+                    whoIsInChargeIds = this.askClarificationQuestions;
+                }
+                break;
             }
         }
         whoIsInChargeIds.forEach(item => {
             item.employeeName = item.userName;
         });
+        console.log('whoIsInChargeIds-whoIsInChargeIds', whoIsInChargeIds);
         const isFinishDisabled =
             (this.checkStatusPackage[this.packageInfo.stageStatus.id].id > this.checkStatusPackage.ThamGiaDuThau.id &&
                 this.checkStatusPackage[this.packageInfo.stageStatus.id].id < this.checkStatusPackage.ChoKetQuaDuThau.id);
@@ -726,9 +732,10 @@ export class InformationDeploymentFormComponent implements OnInit, OnDestroy {
             //     disabled: this.controlDisableForm,
             // },
             whoIsInChargeIds: {
-                value: isCreate ? whoIsInChargeIds : ((data.whoIsInCharges && data.whoIsInCharges.length !== 0) ? data.whoIsInCharges : []),
+                value: whoIsInChargeIds,
                 disabled: this.controlDisableForm,
             },
+            // isCreate ? whoIsInChargeIds : ((data.whoIsInCharges && data.whoIsInCharges.length !== 0) ? data.whoIsInCharges : [])
             // {
             //     value: (data.whoIsInCharges && data.whoIsInCharges.length !== 0) ? data.whoIsInCharges : [],
             //     disabled: this.controlDisableForm,
@@ -958,15 +965,22 @@ export class InformationDeploymentFormComponent implements OnInit, OnDestroy {
                 this.alertService.error('Chưa được ký bởi người lập');
             } else {
                 this.packageService.signApprovedPreparationPlanning(this.bidOpportunityId)
-                    .subscribe(data => this.planForm.get('isSignedByApprovalPerson').patchValue(true));
-            }
-        } else {
-            if (!this.planForm.get('isSignedByPreparedPerson').value) {
-                this.alertService.error('Chưa được ký bởi người lập');
-            } else {
-                this.planForm.get('isSignedByApprovalPerson').patchValue(true);
+                    .subscribe(data => {
+                        this.planForm.get('isSignedByApprovalPerson').patchValue(true);
+                        this.tenderPlan.approvedEmployee = new EmployeeModel();
+                        this.tenderPlan.approvedEmployee.employeeName = this.sessionService.currentUserInfo.firstName
+                            + this.sessionService.currentUserInfo.lastName;
+                        this.tenderPlan.approvedDate = DateTimeConvertHelper.fromDtObjectToTimestamp(new Date());
+                    });
             }
         }
+        // else {
+        //     if (!this.planForm.get('isSignedByPreparedPerson').value) {
+        //         this.alertService.error('Chưa được ký bởi người lập');
+        //     } else {
+        //         this.planForm.get('isSignedByApprovalPerson').patchValue(true);
+        //     }
+        // }
     }
 
     refesh() {
