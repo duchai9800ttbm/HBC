@@ -63,7 +63,8 @@
                     <div class="col-md-4">
                         <div formGroupName="dieuKienTheoHSMT">
                             <div formGroupName="baoLanhThucHien">
-                                <input formControlName="phanTram" appInputNumberNegativeDecimal [decimal]="true" class="form-control">
+                                <!-- <input formControlName="phanTram" appInputNumberNegativeDecimal [decimal]="true" class="form-control"> -->
+                                {{ conditionContractForm.get('dieuKienTheoHSMT').get('baoLanhThucHien').get('phanTram').value }}
                             </div>
 
                         </div>
@@ -421,13 +422,13 @@
                     </div>
                     <div class="col-md-4">
                         <div formGroupName="dieuKienTheoHSMT">
-                            <input formControlName="thoiGianBaoHanh" type="number" class="form-control pr-5">
+                            <input appInputNumberNegativeDecimal [decimal]="true" formControlName="thoiGianBaoHanh" class="form-control pr-5">
                             <span *ngIf="unitTimeguarantee" class="unit-value text-uppercase">{{ unitTimeguarantee.displayText }}</span>
                         </div>
                     </div>
                     <div class="col-md-4">
                         <div formGroupName="dieuKienTheoHBC">
-                            <input formControlName="thoiGianBaoHanh" type="number" class="form-control pr-5">
+                            <input appInputNumberNegativeDecimal [decimal]="true" formControlName="thoiGianBaoHanh" class="form-control pr-5">
                             <span *ngIf="unitTimeguarantee" class="unit-value text-uppercase">{{ unitTimeguarantee.displayText }}</span>
                         </div>
                     </div>
