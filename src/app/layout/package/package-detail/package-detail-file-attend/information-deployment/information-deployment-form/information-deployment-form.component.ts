@@ -687,6 +687,9 @@ export class InformationDeploymentFormComponent implements OnInit, OnDestroy {
                 }
             }
         }
+        whoIsInChargeIds.forEach( item => {
+            item.employeeName = item.userName;
+        });
         console.log('whoIsInChargeIds', whoIsInChargeIds, isCreate, data.whoIsInCharges);
         const isFinishDisabled =
             (this.checkStatusPackage[this.packageInfo.stageStatus.id].id > this.checkStatusPackage.ThamGiaDuThau.id &&

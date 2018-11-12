@@ -243,7 +243,129 @@
                                     <span *ngIf="!data.get('itemDesc').value" class="fake-placeholder">Nhập text</span>
                                 </ng-container>
                             </td>
-                            <!-- <td *ngIf="data.get('itemId').value === 1">
+                            
+                            <td>
+                                <ng-container *ngIf="data.get('itemId').value !== 1 && data.get('itemId').value !== 5 && data.get('itemId').value !== 7 && data.get('itemId').value !== 8
+                                && data.get('itemId').value !== 12 && data.get('itemId').value !== 16 && data.get('itemId').value !== 18 && data.get('itemId').value !== 20 && data.get('itemId').value !== 23
+                                && data.get('itemId').value !== 30 && data.get('itemId').value !== 33">
+                                    <div *ngIf="data.get('whoIsInChargeIds').value && data.get('whoIsInChargeIds').value.length !== 0">
+                                        <span *ngFor="let item of data.get('whoIsInChargeIds').value; let i = index">
+                                            {{item.employeeName}}
+                                            <span *ngIf="i !== (data.get('whoIsInChargeIds').value.length - 1)"> ,</span>
+                                        </span>
+                                    </div>
+                                </ng-container>
+                            </td>
+                            <td class="text-center">
+                                <ng-container *ngIf="data.get('itemId').value !== 1 && data.get('itemId').value !== 5 && data.get('itemId').value !== 7 && data.get('itemId').value !== 8
+                                && data.get('itemId').value !== 12 && data.get('itemId').value !== 16 && data.get('itemId').value !== 18 && data.get('itemId').value !== 20 && data.get('itemId').value !== 23
+                                && data.get('itemId').value !== 30 && data.get('itemId').value !== 33">
+                                    <label class="custom-control custom-checkbox z-ontop">
+                                        <input type="checkbox" [attr.disabled]="(data.get('whoIsInChargeId').value && data.get('whoIsInChargeId').value !==0 && data.get('startDate').value && data.get('finishDate').value)
+                                                                         || (data.get('whoIsInChargeIds').value && data.get('whoIsInChargeIds').value.length !==0 && data.get('startDate').value && data.get('finishDate').value) ?
+                                                                         null : ''" (click)="routerAction === 'view' ? checkFinishTenderPlanItem(data.get('itemId').value) : null"
+                                            class="custom-control-input input-checkbox" formControlName="isFinish">
+                                        <span class="custom-control-indicator"></span>
+                                    </label>
+                                </ng-container>
+                            </td>
+                            <td class="pl-0">
+                                <ng-container *ngIf="data.get('itemId').value !== 1 && data.get('itemId').value !== 5 && data.get('itemId').value !== 7 && data.get('itemId').value !== 8
+                                && data.get('itemId').value !== 12 && data.get('itemId').value !== 16 && data.get('itemId').value !== 18 && data.get('itemId').value !== 20 && data.get('itemId').value !== 23
+                                && data.get('itemId').value !== 30 && data.get('itemId').value !== 33">
+                                    <kendo-datepicker (valueChange)="calculateTotalTime(i)" [max]="data.get('finishDate').value" formControlName="startDate"
+                                        class="form-control b-datepicker-no-border b-datepicker-ic"></kendo-datepicker>
+                                </ng-container>
+                            </td>
+
+                            <td class="pl-0">
+                                <ng-container *ngIf="data.get('itemId').value !== 1 && data.get('itemId').value !== 5 && data.get('itemId').value !== 7 && data.get('itemId').value !== 8
+                                && data.get('itemId').value !== 12 && data.get('itemId').value !== 16 && data.get('itemId').value !== 18 && data.get('itemId').value !== 20 && data.get('itemId').value !== 23
+                                && data.get('itemId').value !== 30 && data.get('itemId').value !== 33">
+                                    <kendo-datepicker (valueChange)="calculateTotalTime(i)" [min]="data.get('startDate').value" formControlName="finishDate"
+                                        class="form-control b-datepicker-no-border b-datepicker-ic"></kendo-datepicker>
+                                </ng-container>
+                            </td>
+
+                            <td class="text-center">
+                                <ng-container *ngIf="data.get('itemId').value !== 1 && data.get('itemId').value !== 5 && data.get('itemId').value !== 7 && data.get('itemId').value !== 8
+                                && data.get('itemId').value !== 12 && data.get('itemId').value !== 16 && data.get('itemId').value !== 18 && data.get('itemId').value !== 20 && data.get('itemId').value !== 23
+                                && data.get('itemId').value !== 30 && data.get('itemId').value !== 33">
+                                    {{data.get('totalTime') ? data.get('totalTime').value : ''}}
+                                </ng-container>
+
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <!-- <div class="col-md-3 pl-0">
+                <div #ganttChart></div>
+            </div> -->
+        </div>
+    </div>
+    <kendo-dialog [width]="550" *ngIf="isShowChanges">
+        <div>
+            <div class="dialog-header mt-2">
+                <h3 class="text-center text-uppercase color-black">Cập nhật liveform</h3>
+                <span class="ic-close pointer" (click)="closeShowChanges()">
+                    <img src="assets/images/ic-close.svg">
+                </span>
+            </div>
+            <div class="text-center">
+                Bạn đã cập nhật những gì trong lần sửa này?
+            </div>
+            <div class="dialog-body">
+                <div class="w-100 mt-4">
+                    <div class="pr-1 pl-1">
+                        <textarea formControlName="updatedDesc" class="form-control" rows="3"></textarea>
+                    </div>
+                </div>
+            </div>
+            <div class="mt-4 text-center mb-2">
+                <button class="btn b-btn btn-primary" (click)="saveChangesLiveForm()">OK</button>
+            </div>
+        </div>
+    </kendo-dialog>
+    <kendo-dialog [width]="tableDataGantt.offsetWidth" class="kendo-ganttChart" [class.display-ganttChart]="!isShowGantt">
+        <div>
+            <div class="title-detail center-parent mb-1">
+                <div style="width: 80%;">
+                </div>
+                <div style="width: 20%;" class="d-flex justify-content-end">
+                    <div>
+                        <div>
+                            <img (click)="isShowGantt = false" width="15" height="15" class="cursor-pointer not-outline" src="assets\images\close.png">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div #ganttChart></div>
+        </div>
+    </kendo-dialog>
+</form>
+<ngx-spinner bdColor="rgba(51, 51, 51, 0.7)" size="default" color="#fff" type="ball-scale"></ngx-spinner>
+<!-- <td class="pl-0" *ngIf="data.get('itemId').value !== 6">
+        <span class="custom-dropdown w-100 b-dropdown-no-border">
+            <select class="form-control" formControlName="whoIsInChargeId" [class.default-cusor]="routerAction === 'view'">
+                <option [ngValue]="null">--Chọn--</option>
+                <option *ngFor="let user of userList" [value]="user.employeeId">{{user.employeeName}}</option>
+            </select>
+        </span>
+    </td>
+    <td *ngIf="data.get('itemId').value === 6">
+        <ng-select class="w-100" [items]="userList" placeholder="--Chọn--" typeToSearchText="Nhập tên" clearAllText="Xóa tất cả"
+            [hideSelected]="true" multiple="true" bindLabel="employeeName" formControlName="whoIsInChargeIds"
+            style="outline: none" [class.default-cusor]="routerAction === 'view'">
+            <ng-template ng-option-tmp let-item="item" let-index="index" let-search="searchTerm">
+                <table>
+                    <tr>{{item.employeeName}}</tr>
+                </table>
+            </ng-template>
+        </ng-select>
+</td> -->
+
+<!-- <td *ngIf="data.get('itemId').value === 1">
                             </td>
                             <td *ngIf="data.get('itemId').value === 2">
                                 <div *ngIf="distributorOfDocHSMT && distributorOfDocHSMT.length !== 0">
@@ -457,123 +579,3 @@
                                     </span>
                                 </div>
                             </td> -->
-                            <td>
-                                <ng-container *ngIf="data.get('itemId').value !== 1 && data.get('itemId').value !== 5 && data.get('itemId').value !== 7 && data.get('itemId').value !== 8
-                                && data.get('itemId').value !== 12 && data.get('itemId').value !== 16 && data.get('itemId').value !== 18 && data.get('itemId').value !== 20 && data.get('itemId').value !== 23
-                                && data.get('itemId').value !== 30 && data.get('itemId').value !== 33">
-                                    <div *ngIf="data.get('whoIsInChargeIds').value && data.get('whoIsInChargeIds').value.length !== 0">
-                                        <span *ngFor="let item of data.get('whoIsInChargeIds').value; let i = index">
-                                            {{item.userName}}
-                                            <span *ngIf="i !== (data.get('whoIsInChargeIds').value.length - 1)"> ,</span>
-                                        </span>
-                                    </div>
-                                </ng-container>
-                            </td>
-                            <td class="text-center">
-                                <ng-container *ngIf="data.get('itemId').value !== 1 && data.get('itemId').value !== 5 && data.get('itemId').value !== 7 && data.get('itemId').value !== 8
-                                && data.get('itemId').value !== 12 && data.get('itemId').value !== 16 && data.get('itemId').value !== 18 && data.get('itemId').value !== 20 && data.get('itemId').value !== 23
-                                && data.get('itemId').value !== 30 && data.get('itemId').value !== 33">
-                                    <label class="custom-control custom-checkbox z-ontop">
-                                        <input type="checkbox" [attr.disabled]="(data.get('whoIsInChargeId').value && data.get('whoIsInChargeId').value !==0 && data.get('startDate').value && data.get('finishDate').value)
-                                                                         || (data.get('whoIsInChargeIds').value && data.get('whoIsInChargeIds').value.length !==0 && data.get('startDate').value && data.get('finishDate').value) ?
-                                                                         null : ''" (click)="routerAction === 'view' ? checkFinishTenderPlanItem(data.get('itemId').value) : null"
-                                            class="custom-control-input input-checkbox" formControlName="isFinish">
-                                        <span class="custom-control-indicator"></span>
-                                    </label>
-                                </ng-container>
-                            </td>
-                            <td class="pl-0">
-                                <ng-container *ngIf="data.get('itemId').value !== 1 && data.get('itemId').value !== 5 && data.get('itemId').value !== 7 && data.get('itemId').value !== 8
-                                && data.get('itemId').value !== 12 && data.get('itemId').value !== 16 && data.get('itemId').value !== 18 && data.get('itemId').value !== 20 && data.get('itemId').value !== 23
-                                && data.get('itemId').value !== 30 && data.get('itemId').value !== 33">
-                                    <kendo-datepicker (valueChange)="calculateTotalTime(i)" [max]="data.get('finishDate').value" formControlName="startDate"
-                                        class="form-control b-datepicker-no-border b-datepicker-ic"></kendo-datepicker>
-                                </ng-container>
-                            </td>
-
-                            <td class="pl-0">
-                                <ng-container *ngIf="data.get('itemId').value !== 1 && data.get('itemId').value !== 5 && data.get('itemId').value !== 7 && data.get('itemId').value !== 8
-                                && data.get('itemId').value !== 12 && data.get('itemId').value !== 16 && data.get('itemId').value !== 18 && data.get('itemId').value !== 20 && data.get('itemId').value !== 23
-                                && data.get('itemId').value !== 30 && data.get('itemId').value !== 33">
-                                    <kendo-datepicker (valueChange)="calculateTotalTime(i)" [min]="data.get('startDate').value" formControlName="finishDate"
-                                        class="form-control b-datepicker-no-border b-datepicker-ic"></kendo-datepicker>
-                                </ng-container>
-                            </td>
-
-                            <td class="text-center">
-                                <ng-container *ngIf="data.get('itemId').value !== 1 && data.get('itemId').value !== 5 && data.get('itemId').value !== 7 && data.get('itemId').value !== 8
-                                && data.get('itemId').value !== 12 && data.get('itemId').value !== 16 && data.get('itemId').value !== 18 && data.get('itemId').value !== 20 && data.get('itemId').value !== 23
-                                && data.get('itemId').value !== 30 && data.get('itemId').value !== 33">
-                                    {{data.get('totalTime') ? data.get('totalTime').value : ''}}
-                                </ng-container>
-
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-            <!-- <div class="col-md-3 pl-0">
-                <div #ganttChart></div>
-            </div> -->
-        </div>
-    </div>
-    <kendo-dialog [width]="550" *ngIf="isShowChanges">
-        <div>
-            <div class="dialog-header mt-2">
-                <h3 class="text-center text-uppercase color-black">Cập nhật liveform</h3>
-                <span class="ic-close pointer" (click)="closeShowChanges()">
-                    <img src="assets/images/ic-close.svg">
-                </span>
-            </div>
-            <div class="text-center">
-                Bạn đã cập nhật những gì trong lần sửa này?
-            </div>
-            <div class="dialog-body">
-                <div class="w-100 mt-4">
-                    <div class="pr-1 pl-1">
-                        <textarea formControlName="updatedDesc" class="form-control" rows="3"></textarea>
-                    </div>
-                </div>
-            </div>
-            <div class="mt-4 text-center mb-2">
-                <button class="btn b-btn btn-primary" (click)="saveChangesLiveForm()">OK</button>
-            </div>
-        </div>
-    </kendo-dialog>
-    <kendo-dialog [width]="tableDataGantt.offsetWidth" class="kendo-ganttChart" [class.display-ganttChart]="!isShowGantt">
-        <div>
-            <div class="title-detail center-parent mb-1">
-                <div style="width: 80%;">
-                </div>
-                <div style="width: 20%;" class="d-flex justify-content-end">
-                    <div>
-                        <div>
-                            <img (click)="isShowGantt = false" width="15" height="15" class="cursor-pointer not-outline" src="assets\images\close.png">
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div #ganttChart></div>
-        </div>
-    </kendo-dialog>
-</form>
-<ngx-spinner bdColor="rgba(51, 51, 51, 0.7)" size="default" color="#fff" type="ball-scale"></ngx-spinner>
-<!-- <td class="pl-0" *ngIf="data.get('itemId').value !== 6">
-        <span class="custom-dropdown w-100 b-dropdown-no-border">
-            <select class="form-control" formControlName="whoIsInChargeId" [class.default-cusor]="routerAction === 'view'">
-                <option [ngValue]="null">--Chọn--</option>
-                <option *ngFor="let user of userList" [value]="user.employeeId">{{user.employeeName}}</option>
-            </select>
-        </span>
-    </td>
-    <td *ngIf="data.get('itemId').value === 6">
-        <ng-select class="w-100" [items]="userList" placeholder="--Chọn--" typeToSearchText="Nhập tên" clearAllText="Xóa tất cả"
-            [hideSelected]="true" multiple="true" bindLabel="employeeName" formControlName="whoIsInChargeIds"
-            style="outline: none" [class.default-cusor]="routerAction === 'view'">
-            <ng-template ng-option-tmp let-item="item" let-index="index" let-search="searchTerm">
-                <table>
-                    <tr>{{item.employeeName}}</tr>
-                </table>
-            </ng-template>
-        </ng-select>
-</td> -->
