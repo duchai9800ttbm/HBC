@@ -31,7 +31,7 @@ import { Subscription } from '../../../../../../../../node_modules/rxjs';
     styleUrls: ['./need-create-tender-form.component.scss']
 })
 export class NeedCreateTenderFormComponent implements OnInit, OnDestroy {
-    static formModel: ProposeTenderParticipateRequest;
+    static formModel: ProposeTenderParticipateRequest = new ProposeTenderParticipateRequest();
     bidOpportunityId;
     packageInfo: PackageInfoModel;
     routerAction: string;

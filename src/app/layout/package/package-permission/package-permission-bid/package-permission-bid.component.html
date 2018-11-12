@@ -38,7 +38,9 @@
                             <div class="text-center">In ĐNDT</div>
                         </th>
                         <th>
-                            <div class="text-center">Xác nhận ký (Giám đốc DT)</div>
+                            <div class="text-center">Xác nhận ký</div>
+                            <div class="text-center">(GDDT)</div>
+
                         </th>
                         <th>
                             <div class="text-center">Gửi duyệt DNDT</div>
@@ -67,7 +69,11 @@
                                         <span style="margin-left: 12px" class="custom-dropdown w-100">
                                             <select class="form-control" formControlName="userName">
                                                 <option [ngValue]="null">--Chọn--</option>
-                                                <option *ngFor="let user of listBidGroupUser" [value]="user.id">{{user.desc}}</option>
+                                                <ng-container *ngFor="let user of listBidGroupUser">
+                                                    <ng-container *ngIf="checkOption(user.id, index)">
+                                                        <option [value]="user.id">{{user.desc}}</option>
+                                                    </ng-container>
+                                                </ng-container>
                                             </select>
                                         </span>
                                     </div>
@@ -75,7 +81,7 @@
                             </td>
                             <td class="text-center">
                                 <label class="custom-control custom-checkbox">
-                                    <input type="checkbox" class="custom-control-input" (click)="checkAll($event.target.checked, 'PhieuDeNghiDuThau', i)">
+                                    <input type="checkbox" formControlName="all" class="custom-control-input" (click)="checkAll($event.target.checked, 'PhieuDeNghiDuThau', i)">
                                     <span class="custom-control-indicator"></span>
                                 </label>
                             </td>
@@ -171,10 +177,10 @@
                             <div class="text-center">In Bảng PCTĐ</div>
                         </th>
                         <th>
-                            <div class="text-center">Xác nhận ký(Prepared by)</div>
+                            <div class="text-center">Xác nhận ký (Prepared by)</div>
                         </th>
                         <th>
-                            <div class="text-center">Xác nhận ký(Approved by)</div>
+                            <div class="text-center">Xác nhận ký (Approved by)</div>
                         </th>
                         <th>
                             <div class="text-center">Gửi PCTĐ</div>
@@ -211,7 +217,7 @@
                             </td>
                             <td class="text-center">
                                 <label class="custom-control custom-checkbox">
-                                    <input type="checkbox" class="custom-control-input" (click)="checkAll($event.target.checked, 'TrienKhaiVaPhanCongTienDo', i)">
+                                    <input type="checkbox" formControlName="all" class="custom-control-input" (click)="checkAll($event.target.checked, 'TrienKhaiVaPhanCongTienDo', i)">
                                     <span class="custom-control-indicator"></span>
                                 </label>
                             </td>
@@ -349,7 +355,8 @@
                                 </div>
                                 <div class="text-center">
                                     <label class="custom-control custom-checkbox">
-                                        <input type="checkbox" class="custom-control-input" (click)="checkAllBidItem($event.target.checked, i, j)">
+                                        <input type="checkbox" formControlName="all" class="custom-control-input"
+                                            (click)="checkAllBidItem($event.target.checked, i, j)">
                                         <span class="custom-control-indicator"></span>
                                     </label>
                                 </div>
@@ -390,11 +397,40 @@
                     <div class="text-center">Lập HSDT (Liveform)</div>
                     <div class="text-center">Loại tài liệu</div>
                     <div></div>
-                    <div class="text-center xuong-dong" appSameWidth="col1">Tạo mới liveform</div>
-                    <div class="text-center xuong-dong" appSameWidth="col2">Xem liveform</div>
-                    <div class="text-center xuong-dong" appSameWidth="col3">Sửa liveform</div>
-                    <div class="text-center xuong-dong" appSameWidth="col4">Xóa liveform</div>
-                    <div class="text-center xuong-dong">In liveform</div>
+                    <div class="text-center xuong-dong">
+                        <div>Tạo mới </div>
+                        <div>liveform</div>
+                    </div>
+                    <div class="text-center xuong-dong">
+                        <div>
+                            Xem
+                        </div>
+                        <div>
+                            liveform
+                        </div>
+                    </div>
+                    <div class="text-center xuong-dong">
+                        <div>
+                            Sửa
+                        </div>
+                        <div>
+                            liveform
+                        </div>
+                    </div>
+                    <div class="text-center xuong-dong">
+                        <div>
+                            Xóa
+                        </div>
+                        <div>
+                            liveform
+                        </div>
+                    </div>
+                    <div class="text-center xuong-dong">
+                        <div>
+                            In
+                        </div>
+                        <div>liveform</div>
+                    </div>
                     <div class="text-center xuong-dong">Tải template</div>
                     <div class="text-center xuong-dong">Chốt HSDT</div>
 
@@ -517,13 +553,13 @@
                             <div class="text-center">In TDG</div>
                         </th>
                         <th>
-                            <div class="text-center">Duyệt TDG (TN Dự thầu)</div>
+                            <div class="text-center">Duyệt TDG (TNDT)</div>
                         </th>
                         <th>
                             <div class="text-center">Tải template TDG</div>
                         </th>
                         <th>
-                            <div class="text-center">Duyệt TDG (TP. Dự thầu)</div>
+                            <div class="text-center">Duyệt TDG (TP.DT)</div>
                         </th>
                         <th>
                             <div class="text-center">Gửi duyệt/Gửi duyệt lại TDG</div>
@@ -557,7 +593,7 @@
                             </td>
                             <td class="text-center">
                                 <label class="custom-control custom-checkbox">
-                                    <input type="checkbox" class="custom-control-input" (click)="checkAll($event.target.checked, 'TrinhDuyetGia', i)">
+                                    <input formControlName="all" type="checkbox" class="custom-control-input" (click)="checkAll($event.target.checked, 'TrinhDuyetGia', i)">
                                     <span class="custom-control-indicator"></span>
                                 </label>
                             </td>
@@ -616,12 +652,6 @@
                                     <span class="custom-control-indicator"></span>
                                 </label>
                             </td>
-                            <!-- <td class="text-center">
-                                <label class="custom-control custom-checkbox">
-                                    <input type="checkbox" class="custom-control-input" formControlName="DuyetTDGBGD">
-                                    <span class="custom-control-indicator"></span>
-                                </label>
-                            </td> -->
                         </tr>
                     </ng-container>
                 </tbody>
@@ -670,7 +700,7 @@
                             </td>
                             <td class="text-center">
                                 <label class="custom-control custom-checkbox">
-                                    <input type="checkbox" class="custom-control-input" (click)="checkAll($event.target.checked, 'ChotVaNopHSDT', i)">
+                                    <input formControlName="all" type="checkbox" class="custom-control-input" (click)="checkAll($event.target.checked, 'ChotVaNopHSDT', i)">
                                     <span class="custom-control-indicator"></span>
                                 </label>
                             </td>
@@ -701,17 +731,17 @@
                 <thead>
                     <tr style="width: 100%">
                         <th style="width: 280px !important">
-                            <div class="text-center">Quản lý phỏng vấn thương thảo</div>
+                            <div class="text-center">Quản lý phỏng vấn/thương thảo</div>
                         </th>
                         <th></th>
                         <th>
-                            <div class="text-center">Tạo lời mời phỏng vấn</div>
+                            <div class="text-center">Tạo lời mời PV</div>
                         </th>
                         <th>
-                            <div class="text-center">Cập nhật lời mời phỏng vấn</div>
+                            <div class="text-center">Cập nhật lời mời PV</div>
                         </th>
                         <th>
-                            <div class="text-center">Thông báo phỏng vấn</div>
+                            <div class="text-center">Thông báo PV</div>
                         </th>
                         <th>
                             <div class="text-center">Xem email thông báo PV</div>
@@ -723,7 +753,7 @@
                             <div class="text-center">Upload BBPV</div>
                         </th>
                         <th>
-                            <div class="text-center">Đóng phỏng vấn</div>
+                            <div class="text-center">Đóng PV</div>
                         </th>
                     </tr>
                 </thead>
@@ -751,7 +781,7 @@
                             </td>
                             <td class="text-center">
                                 <label class="custom-control custom-checkbox">
-                                    <input type="checkbox" class="custom-control-input" (click)="checkAll($event.target.checked, 'QuanLyPhongVanThuongThao', i)">
+                                    <input formControlName="all" type="checkbox" class="custom-control-input" (click)="checkAll($event.target.checked, 'QuanLyPhongVanThuongThao', i)">
                                     <span class="custom-control-indicator"></span>
                                 </label>
                             </td>
