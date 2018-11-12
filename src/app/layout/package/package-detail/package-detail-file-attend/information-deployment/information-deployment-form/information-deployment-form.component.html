@@ -1,4 +1,4 @@
-<form [formGroup]="planForm" *ngIf="planForm" class="position-relative">
+<form [formGroup]="planForm" *ngIf="planForm && !loading" class="position-relative">
     <div class="title-list-package d-flex flex-wrap align-items-center status-filter">
         <div class="mr-auto d-flex align-items-end list-package mt-2 mb-2">
             <div class="d-flex justify-content-start h-40">
@@ -350,7 +350,8 @@
         </div>
     </kendo-dialog>
 </form>
-<ngx-spinner bdColor="rgba(51, 51, 51, 0.7)" size="default" color="#fff" type="ball-scale"></ngx-spinner>
+<ngx-loading [show]="loading"></ngx-loading>
+<!-- <ngx-spinner bdColor="rgba(51, 51, 51, 0.7)" size="default" color="#fff" type="ball-scale"></ngx-spinner> -->
 <!-- <td class="pl-0" *ngIf="data.get('itemId').value !== 6">
         <span class="custom-dropdown w-100 b-dropdown-no-border">
             <select class="form-control" formControlName="whoIsInChargeId" [class.default-cusor]="routerAction === 'view'">

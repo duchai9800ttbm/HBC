@@ -97,6 +97,7 @@ export class InformationDeploymentFormComponent implements OnInit, OnDestroy {
     photoHungryPack;
     checkAndSaveConditions;
     askClarificationQuestions;
+    loading = false;
     constructor(
         private spinner: NgxSpinnerService,
         private packageService: PackageService,
@@ -212,6 +213,7 @@ export class InformationDeploymentFormComponent implements OnInit, OnDestroy {
     // }
 
     checkAndCreateForm() {
+        this.loading = true;
         if (this.routerAction === 'create') {
             this.isFormCreate = true;
             forkJoin(
@@ -242,6 +244,7 @@ export class InformationDeploymentFormComponent implements OnInit, OnDestroy {
                     this.mappingLiveForm(this.groupmembersList);
                     // res 1
                     this.createForm(res1, true);
+                    this.loading = false;
                 });
         } else {
             this.packageService.getInforPackageID(this.bidOpportunityId).switchMap(getInforPackage => {
@@ -257,6 +260,7 @@ export class InformationDeploymentFormComponent implements OnInit, OnDestroy {
                     if (data) {
                         this.isFormCreate = false;
                         this.createForm(data);
+                        this.loading = false;
                     } else {
                         this.isFormCreate = true;
                         forkJoin(
@@ -279,6 +283,7 @@ export class InformationDeploymentFormComponent implements OnInit, OnDestroy {
                                 this.mappingLiveForm(this.groupmembersList);
                                 // res 1
                                 this.createForm(res1, true);
+                                this.loading = false;
                             });
                     }
                 });
