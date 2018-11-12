@@ -236,47 +236,64 @@
                             <td class="text-center">{{data.get('itemNo').value}}</td>
                             <td>{{data.get('itemName').value}}</td>
                             <td class="p-0 position-relative">
-                                <textarea class="form-control b-textarea h-100" formControlName="itemDesc"></textarea>
-                                <span *ngIf="!data.get('itemDesc').value" class="fake-placeholder">Nhập text</span>
+                                <ng-container *ngIf="data.get('itemId').value !== 1 && data.get('itemId').value !== 5 && data.get('itemId').value !== 7 && data.get('itemId').value !== 8
+                                && data.get('itemId').value !== 12 && data.get('itemId').value !== 16 && data.get('itemId').value !== 18 && data.get('itemId').value !== 20 && data.get('itemId').value !== 23
+                                && data.get('itemId').value !== 30 && data.get('itemId').value !== 33">
+                                    <textarea class="form-control b-textarea h-100" formControlName="itemDesc"></textarea>
+                                    <span *ngIf="!data.get('itemDesc').value" class="fake-placeholder">Nhập text</span>
+                                </ng-container>
                             </td>
-                            <td class="pl-0" *ngIf="data.get('itemId').value !== 6">
-                                <span class="custom-dropdown w-100 b-dropdown-no-border">
-                                    <select class="form-control" formControlName="whoIsInChargeId" [class.default-cusor]="routerAction === 'view'">
-                                        <option [ngValue]="null">--Chọn--</option>
-                                        <option *ngFor="let user of userList" [value]="user.employeeId">{{user.employeeName}}</option>
-                                    </select>
-                                </span>
-                            </td>
-                            <td *ngIf="data.get('itemId').value === 6">
-                                <ng-select class="w-100" [items]="userList" placeholder="--Chọn--" typeToSearchText="Nhập tên" clearAllText="Xóa tất cả"
-                                    [hideSelected]="true" multiple="true" bindLabel="employeeName" formControlName="whoIsInChargeIds"
-                                    style="outline: none" [class.default-cusor]="routerAction === 'view'">
-                                    <ng-template ng-option-tmp let-item="item" let-index="index" let-search="searchTerm">
-                                        <table>
-                                            <tr>{{item.employeeName}}</tr>
-                                        </table>
-                                    </ng-template>
-                                </ng-select>
+                            
+                            <td>
+                                <ng-container *ngIf="data.get('itemId').value !== 1 && data.get('itemId').value !== 5 && data.get('itemId').value !== 7 && data.get('itemId').value !== 8
+                                && data.get('itemId').value !== 12 && data.get('itemId').value !== 16 && data.get('itemId').value !== 18 && data.get('itemId').value !== 20 && data.get('itemId').value !== 23
+                                && data.get('itemId').value !== 30 && data.get('itemId').value !== 33">
+                                    <div *ngIf="data.get('whoIsInChargeIds').value && data.get('whoIsInChargeIds').value.length !== 0">
+                                        <span *ngFor="let item of data.get('whoIsInChargeIds').value; let i = index">
+                                            {{item.employeeName}}
+                                            <span *ngIf="i !== (data.get('whoIsInChargeIds').value.length - 1)"> ,</span>
+                                        </span>
+                                    </div>
+                                </ng-container>
                             </td>
                             <td class="text-center">
-                                <label class="custom-control custom-checkbox z-ontop">
-                                    <input type="checkbox" [attr.disabled]="(data.get('whoIsInChargeId').value && data.get('whoIsInChargeId').value !==0 && data.get('startDate').value && data.get('finishDate').value)
-                                     || (data.get('whoIsInChargeIds').value && data.get('whoIsInChargeIds').value.length !==0 && data.get('startDate').value && data.get('finishDate').value) ?
-                                     null : ''" (click)="routerAction === 'view' ? checkFinishTenderPlanItem(data.get('itemId').value) : null"
-                                        class="custom-control-input input-checkbox" formControlName="isFinish">
-                                    <span class="custom-control-indicator"></span>
-                                </label>
+                                <ng-container *ngIf="data.get('itemId').value !== 1 && data.get('itemId').value !== 5 && data.get('itemId').value !== 7 && data.get('itemId').value !== 8
+                                && data.get('itemId').value !== 12 && data.get('itemId').value !== 16 && data.get('itemId').value !== 18 && data.get('itemId').value !== 20 && data.get('itemId').value !== 23
+                                && data.get('itemId').value !== 30 && data.get('itemId').value !== 33">
+                                    <label class="custom-control custom-checkbox z-ontop">
+                                        <input type="checkbox" [attr.disabled]="(data.get('whoIsInChargeId').value && data.get('whoIsInChargeId').value !==0 && data.get('startDate').value && data.get('finishDate').value)
+                                                                         || (data.get('whoIsInChargeIds').value && data.get('whoIsInChargeIds').value.length !==0 && data.get('startDate').value && data.get('finishDate').value) ?
+                                                                         null : ''" (click)="routerAction === 'view' ? checkFinishTenderPlanItem(data.get('itemId').value) : null"
+                                            class="custom-control-input input-checkbox" formControlName="isFinish">
+                                        <span class="custom-control-indicator"></span>
+                                    </label>
+                                </ng-container>
                             </td>
                             <td class="pl-0">
-                                <kendo-datepicker (valueChange)="calculateTotalTime(i)" [max]="data.get('finishDate').value" formControlName="startDate"
-                                    class="form-control b-datepicker-no-border b-datepicker-ic"></kendo-datepicker>
+                                <ng-container *ngIf="data.get('itemId').value !== 1 && data.get('itemId').value !== 5 && data.get('itemId').value !== 7 && data.get('itemId').value !== 8
+                                && data.get('itemId').value !== 12 && data.get('itemId').value !== 16 && data.get('itemId').value !== 18 && data.get('itemId').value !== 20 && data.get('itemId').value !== 23
+                                && data.get('itemId').value !== 30 && data.get('itemId').value !== 33">
+                                    <kendo-datepicker (valueChange)="calculateTotalTime(i)" [max]="data.get('finishDate').value" formControlName="startDate"
+                                        class="form-control b-datepicker-no-border b-datepicker-ic"></kendo-datepicker>
+                                </ng-container>
                             </td>
+
                             <td class="pl-0">
-                                <kendo-datepicker (valueChange)="calculateTotalTime(i)" [min]="data.get('startDate').value" formControlName="finishDate"
-                                    class="form-control b-datepicker-no-border b-datepicker-ic"></kendo-datepicker>
+                                <ng-container *ngIf="data.get('itemId').value !== 1 && data.get('itemId').value !== 5 && data.get('itemId').value !== 7 && data.get('itemId').value !== 8
+                                && data.get('itemId').value !== 12 && data.get('itemId').value !== 16 && data.get('itemId').value !== 18 && data.get('itemId').value !== 20 && data.get('itemId').value !== 23
+                                && data.get('itemId').value !== 30 && data.get('itemId').value !== 33">
+                                    <kendo-datepicker (valueChange)="calculateTotalTime(i)" [min]="data.get('startDate').value" formControlName="finishDate"
+                                        class="form-control b-datepicker-no-border b-datepicker-ic"></kendo-datepicker>
+                                </ng-container>
                             </td>
+
                             <td class="text-center">
-                                {{data.get('totalTime') ? data.get('totalTime').value : ''}}
+                                <ng-container *ngIf="data.get('itemId').value !== 1 && data.get('itemId').value !== 5 && data.get('itemId').value !== 7 && data.get('itemId').value !== 8
+                                && data.get('itemId').value !== 12 && data.get('itemId').value !== 16 && data.get('itemId').value !== 18 && data.get('itemId').value !== 20 && data.get('itemId').value !== 23
+                                && data.get('itemId').value !== 30 && data.get('itemId').value !== 33">
+                                    {{data.get('totalTime') ? data.get('totalTime').value : ''}}
+                                </ng-container>
+
                             </td>
                         </tr>
                     </tbody>
@@ -328,3 +345,237 @@
     </kendo-dialog>
 </form>
 <ngx-spinner bdColor="rgba(51, 51, 51, 0.7)" size="default" color="#fff" type="ball-scale"></ngx-spinner>
+<!-- <td class="pl-0" *ngIf="data.get('itemId').value !== 6">
+        <span class="custom-dropdown w-100 b-dropdown-no-border">
+            <select class="form-control" formControlName="whoIsInChargeId" [class.default-cusor]="routerAction === 'view'">
+                <option [ngValue]="null">--Chọn--</option>
+                <option *ngFor="let user of userList" [value]="user.employeeId">{{user.employeeName}}</option>
+            </select>
+        </span>
+    </td>
+    <td *ngIf="data.get('itemId').value === 6">
+        <ng-select class="w-100" [items]="userList" placeholder="--Chọn--" typeToSearchText="Nhập tên" clearAllText="Xóa tất cả"
+            [hideSelected]="true" multiple="true" bindLabel="employeeName" formControlName="whoIsInChargeIds"
+            style="outline: none" [class.default-cusor]="routerAction === 'view'">
+            <ng-template ng-option-tmp let-item="item" let-index="index" let-search="searchTerm">
+                <table>
+                    <tr>{{item.employeeName}}</tr>
+                </table>
+            </ng-template>
+        </ng-select>
+</td> -->
+
+<!-- <td *ngIf="data.get('itemId').value === 1">
+                            </td>
+                            <td *ngIf="data.get('itemId').value === 2">
+                                <div *ngIf="distributorOfDocHSMT && distributorOfDocHSMT.length !== 0">
+                                    <span *ngFor="let item of distributorOfDocHSMT; let i = index">
+                                        {{item.userName}}
+                                        <span *ngIf="i !== (distributorOfDocHSMT.length - 1)"> ,</span>
+                                    </span>
+                                </div>
+                            </td>
+                            <td *ngIf="data.get('itemId').value === 3">
+                                <div *ngIf="suggestionsToParticipate && suggestionsToParticipate.length !== 0">
+                                    <span *ngFor="let item of suggestionsToParticipate; let i = index">
+                                        {{item.userName}}
+                                        <span *ngIf="i !== (suggestionsToParticipate.length - 1)"> ,</span>
+                                    </span>
+                                </div>
+                            </td>
+                            <td *ngIf="data.get('itemId').value === 4">
+                                <div *ngIf="clarificationQuestion && clarificationQuestion.length !== 0">
+                                    <span *ngFor="let item of clarificationQuestion; let i = index">
+                                        {{item.userName}}
+                                        <span *ngIf="i !== (clarificationQuestion.length - 1)"> ,</span>
+                                    </span>
+                                </div>
+                            </td>
+                            <td *ngIf="data.get('itemId').value === 5">
+                            </td>
+                            <td *ngIf="data.get('itemId').value === 6">
+                                <div *ngIf="surveyOrganization && surveyOrganization.length !== 0">
+                                    <span *ngFor="let item of surveyOrganization; let i = index">
+                                        {{item.userName}}
+                                        <span *ngIf="i !== (surveyOrganization.length - 1)"> ,</span>
+                                    </span>
+                                </div>
+                            </td>
+                            <td *ngIf="data.get('itemId').value === 7">
+                            </td>
+                            <td *ngIf="data.get('itemId').value === 8">
+                            </td>
+                            <td *ngIf="data.get('itemId').value === 9">
+                                <div *ngIf="checkVolumeHSMT && checkVolumeHSMT.length !== 0">
+                                    <span *ngFor="let item of checkVolumeHSMT; let i = index">
+                                        {{item.userName}}
+                                        <span *ngIf="i !== (checkVolumeHSMT.length - 1)"> ,</span>
+                                    </span>
+                                </div>
+                            </td>
+                            <td *ngIf="data.get('itemId').value === 10">
+                                <div *ngIf="checkVolumeBPTC && checkVolumeBPTC.length !== 0">
+                                    <span *ngFor="let item of checkVolumeBPTC; let i = index">
+                                        {{item.userName}}
+                                        <span *ngIf="i !== (checkVolumeBPTC.length - 1)"> ,</span>
+                                    </span>
+                                </div>
+                            </td>
+                            <td *ngIf="data.get('itemId').value === 11">
+                                <div *ngIf="clarifyQuestion && clarifyQuestion.length !== 0">
+                                    <span *ngFor="let item of clarifyQuestion; let i = index">
+                                        {{item.userName}}
+                                        <span *ngIf="i !== (clarifyQuestion.length - 1)"> ,</span>
+                                    </span>
+                                </div>
+                            </td>
+                            <td *ngIf="data.get('itemId').value === 12">
+                            </td>
+                            <td *ngIf="data.get('itemId').value === 13">
+                                <div *ngIf="filterProfiles && filterProfiles.length !== 0">
+                                    <span *ngFor="let item of filterProfiles; let i = index">
+                                        {{item.userName}}
+                                        <span *ngIf="i !== (filterProfiles.length - 1)"> ,</span>
+                                    </span>
+                                </div>
+                            </td>
+                            <td *ngIf="data.get('itemId').value === 14">
+                                <div *ngIf="requestQuote && requestQuote.length !== 0">
+                                    <span *ngFor="let item of requestQuote; let i = index">
+                                        {{item.userName}}
+                                        <span *ngIf="i !== (requestQuote.length - 1)"> ,</span>
+                                    </span>
+                                </div>
+                            </td>
+                            <td *ngIf="data.get('itemId').value === 15">
+                                <div *ngIf="constructionQuotes && constructionQuotes.length !== 0">
+                                    <span *ngFor="let item of constructionQuotes; let i = index">
+                                        {{item.userName}}
+                                        <span *ngIf="i !== (constructionQuotes.length - 1)"> ,</span>
+                                    </span>
+                                </div>
+                            </td>
+                            <td *ngIf="data.get('itemId').value === 16">
+                            </td>
+                            <td *ngIf="data.get('itemId').value === 17">
+                                <div *ngIf="selectSubcontractor && selectSubcontractor.length !== 0">
+                                    <span *ngFor="let item of selectSubcontractor; let i = index">
+                                        {{item.userName}}
+                                        <span *ngIf="i !== (selectSubcontractor.length - 1)"> ,</span>
+                                    </span>
+                                </div>
+                            </td>
+                            <td *ngIf="data.get('itemId').value === 18">
+                            </td>
+                            <td *ngIf="data.get('itemId').value === 19">
+                                <div *ngIf="generalCostCalculation && generalCostCalculation.length !== 0">
+                                    <span *ngFor="let item of generalCostCalculation; let i = index">
+                                        {{item.userName}}
+                                        <span *ngIf="i !== (generalCostCalculation.length - 1)"> ,</span>
+                                    </span>
+                                </div>
+                            </td>
+                            <td *ngIf="data.get('itemId').value === 20">
+                            </td>
+                            <td *ngIf="data.get('itemId').value === 21">
+                                <div *ngIf="selectSubcontractor && selectSubcontractor.length !== 0">
+                                    <span *ngFor="let item of selectSubcontractor; let i = index">
+                                        {{item.userName}}
+                                        <span *ngIf="i !== (selectSubcontractor.length - 1)"> ,</span>
+                                    </span>
+                                </div>
+                            </td>
+                            <td *ngIf="data.get('itemId').value === 22">
+                                <div *ngIf="entryPriceEstimates && entryPriceEstimates.length !== 0">
+                                    <span *ngFor="let item of entryPriceEstimates; let i = index">
+                                        {{item.userName}}
+                                        <span *ngIf="i !== (entryPriceEstimates.length - 1)"> ,</span>
+                                    </span>
+                                </div>
+                            </td>
+                            <td *ngIf="data.get('itemId').value === 23">
+                            </td>
+                            <td *ngIf="data.get('itemId').value === 24">
+                                <div *ngIf="siteLayout && siteLayout.length !== 0">
+                                    <span *ngFor="let item of siteLayout; let i = index">
+                                        {{item.userName}}
+                                        <span *ngIf="i !== (siteLayout.length - 1)"> ,</span>
+                                    </span>
+                                </div>
+                            </td>
+                            <td *ngIf="data.get('itemId').value === 25">
+                                <div *ngIf="basementBPTC && basementBPTC.length !== 0">
+                                    <span *ngFor="let item of basementBPTC; let i = index">
+                                        {{item.userName}}
+                                        <span *ngIf="i !== (basementBPTC.length - 1)"> ,</span>
+                                    </span>
+                                </div>
+                            </td>
+                            <td *ngIf="data.get('itemId').value === 26">
+                                <div *ngIf="monitoring && monitoring.length !== 0">
+                                    <span *ngFor="let item of monitoring; let i = index">
+                                        {{item.userName}}
+                                        <span *ngIf="i !== (monitoring.length - 1)"> ,</span>
+                                    </span>
+                                </div>
+                            </td>
+                            <td *ngIf="data.get('itemId').value === 27">
+                                <div *ngIf="formworkReinforcementConcrete && formworkReinforcementConcrete.length !== 0">
+                                    <span *ngFor="let item of formworkReinforcementConcrete; let i = index">
+                                        {{item.userName}}
+                                        <span *ngIf="i !== (formworkReinforcementConcrete.length - 1)"> ,</span>
+                                    </span>
+                                </div>
+                            </td>
+                            <td *ngIf="data.get('itemId').value === 28">
+                                <div *ngIf="otherTechnicalRecords && otherTechnicalRecords.length !== 0">
+                                    <span *ngFor="let item of otherTechnicalRecords; let i = index">
+                                        {{item.userName}}
+                                        <span *ngIf="i !== (otherTechnicalRecords.length - 1)"> ,</span>
+                                    </span>
+                                </div>
+                            </td>
+                            <td *ngIf="data.get('itemId').value === 29">
+                                <div *ngIf="calibrationCheckFinish && calibrationCheckFinish.length !== 0">
+                                    <span *ngFor="let item of calibrationCheckFinish; let i = index">
+                                        {{item.userName}}
+                                        <span *ngIf="i !== (calibrationCheckFinish.length - 1)"> ,</span>
+                                    </span>
+                                </div>
+                            </td>
+                            <td *ngIf="data.get('itemId').value === 30">
+                            </td>
+                            <td *ngIf="data.get('itemId').value === 31">
+                                <div *ngIf="preparationLegalDoc && preparationLegalDoc.length !== 0">
+                                    <span *ngFor="let item of preparationLegalDoc; let i = index">
+                                        {{item.userName}}
+                                        <span *ngIf="i !== (preparationLegalDoc.length - 1)"> ,</span>
+                                    </span>
+                                </div>
+                            </td>
+                            <td *ngIf="data.get('itemId').value === 32">
+                                <div *ngIf="photoHungryPack && photoHungryPack.length !== 0">
+                                    <span *ngFor="let item of photoHungryPack; let i = index">
+                                        {{item.userName}}
+                                        <span *ngIf="i !== (photoHungryPack.length - 1)"> ,</span>
+                                    </span>
+                                </div>
+                            </td>
+                            <td *ngIf="data.get('itemId').value === 33">
+                            </td>
+                            <td *ngIf="data.get('itemId').value === 34">
+                                <div *ngIf="checkAndSaveConditions && checkAndSaveConditions.length !== 0">
+                                    <span *ngFor="let item of checkAndSaveConditions; let i = index">
+                                        {{item.userName}}
+                                        <span *ngIf="i !== (checkAndSaveConditions.length - 1)"> ,</span>
+                                    </span>
+                                </div>
+                            </td>
+                            <td *ngIf="data.get('itemId').value === 35">
+                                <div *ngIf="askClarificationQuestions && askClarificationQuestions.length !== 0">
+                                    <span *ngFor="let item of askClarificationQuestions; let i = index">
+                                        {{item.userName}}
+                                        <span *ngIf="i !== (askClarificationQuestions.length - 1)"> ,</span>
+                                    </span>
+                                </div>
+                            </td> -->
