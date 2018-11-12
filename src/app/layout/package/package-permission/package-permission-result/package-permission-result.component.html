@@ -61,8 +61,11 @@
                             [class.odd]="i % 2 == 0">
                             <td>
                                 <div class="grid-container-3">
-                                    <div class="btn-icon btn-icon-plus" (click)="addFormArrayItem(listFormData[0], {})">
+                                    <div class="btn-icon btn-icon-plus" *ngIf="packagePermissionReviewForm.get('KetQuaDuThau').get('permission').value.length < this.listBidGroupUser.length" (click)="addFormArrayItem(listFormData[0], {})">
                                         <i class="fa fa-plus" style="margin-top: 2px" aria-hidden="true"></i>
+                                    </div>
+                                    <div *ngIf="!(packagePermissionReviewForm.get('KetQuaDuThau').get('permission').value.length < this.listBidGroupUser.length)">
+
                                     </div>
                                     <div class="btn-icon btn-icon-minus" [class.invisible]="i == 0" (click)="removeFormItem(listFormData[0], i)">
                                         <i class="fa fa-minus" style="margin-top: 2px" aria-hidden="true" *ngIf="i != 0"></i>
@@ -79,7 +82,7 @@
                             </td>
                             <td class="text-center">
                                 <label class="custom-control custom-checkbox">
-                                    <input type="checkbox" class="custom-control-input" (click)="checkAll($event.target.checked, 'KetQuaDuThau', i)">
+                                    <input type="checkbox" formControlName="all" class="custom-control-input" (click)="checkAll($event.target.checked, 'KetQuaDuThau', i)">
                                     <span class="custom-control-indicator"></span>
                                 </label>
                             </td>
@@ -178,8 +181,11 @@
                             [class.odd]="i % 2 == 0">
                             <td>
                                 <div class="grid-container-3">
-                                    <div class="btn-icon btn-icon-plus" (click)="addFormArrayItem(listFormData[1], {})">
+                                    <div class="btn-icon btn-icon-plus" *ngIf="packagePermissionReviewForm.get('HopDongKiKet').get('permission').value.length < this.listBidGroupUser.length"  (click)="addFormArrayItem(listFormData[1], {})">
                                         <i class="fa fa-plus" style="margin-top: 2px" aria-hidden="true"></i>
+                                    </div>
+                                    <div *ngIf="!(packagePermissionReviewForm.get('HopDongKiKet').get('permission').value.length < this.listBidGroupUser.length)">
+
                                     </div>
                                     <div class="btn-icon btn-icon-minus" [class.invisible]="i == 0" (click)="removeFormItem(listFormData[1], i)">
                                         <i class="fa fa-minus" style="margin-top: 2px" aria-hidden="true" *ngIf="i != 0"></i>
@@ -196,7 +202,7 @@
                             </td>
                             <td class="text-center">
                                 <label class="custom-control custom-checkbox">
-                                    <input type="checkbox" class="custom-control-input" (click)="checkAll($event.target.checked, 'HopDongKiKet', i)">
+                                    <input type="checkbox" formControlName="all" class="custom-control-input" (click)="checkAll($event.target.checked, 'HopDongKiKet', i)">
                                     <span class="custom-control-indicator"></span>
                                 </label>
                             </td>
@@ -264,8 +270,11 @@
                             [class.odd]="i % 2 == 0">
                             <td>
                                 <div class="grid-container-3">
-                                    <div class="btn-icon btn-icon-plus" (click)="addFormArrayItem(listFormData[2], {})">
+                                    <div class="btn-icon btn-icon-plus" *ngIf="packagePermissionReviewForm.get('HopKickOff').get('permission').value.length < this.listBidGroupUser.length" (click)="addFormArrayItem(listFormData[2], {})">
                                         <i class="fa fa-plus" style="margin-top: 2px" aria-hidden="true"></i>
+                                    </div>
+                                    <div *ngIf="!(packagePermissionReviewForm.get('HopKickOff').get('permission').value.length < this.listBidGroupUser.length)">
+
                                     </div>
                                     <div class="btn-icon btn-icon-minus" [class.invisible]="i == 0" (click)="removeFormItem(listFormData[2], i)">
                                         <i class="fa fa-minus" style="margin-top: 2px" aria-hidden="true" *ngIf="i != 0"></i>
@@ -282,7 +291,7 @@
                             </td>
                             <td class="text-center">
                                 <label class="custom-control custom-checkbox">
-                                    <input type="checkbox" class="custom-control-input" (click)="checkAll($event.target.checked, 'HopKickOff', i)">
+                                    <input type="checkbox" formControlName="all" class="custom-control-input" (click)="checkAll($event.target.checked, 'HopKickOff', i)">
                                     <span class="custom-control-indicator"></span>
                                 </label>
                             </td>

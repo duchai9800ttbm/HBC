@@ -45,9 +45,9 @@
                         <th>
                             <div class="text-center">Gửi duyệt DNDT</div>
                         </th>
-                        <th>
+                        <!-- <th>
                             <div class="text-center">Chấp thuận/Không chấp thuận ĐNDT (BGĐ)</div>
-                        </th>
+                        </th> -->
                         <th>
                             <div class="text-center">Tải template ĐNDT</div>
                         </th>
@@ -59,9 +59,13 @@
                             [formGroupName]="i" [class.odd]="i % 2 == 0">
                             <td>
                                 <div class="grid-container-3">
-                                    <div class="btn-icon btn-icon-plus" (click)="addFormArrayItem(listFormData[0], {})">
-                                        <i class="fa fa-plus" style="margin-top: 2px" aria-hidden="true"></i>
+                                    <div>
+                                        <div class="btn-icon btn-icon-plus" *ngIf="packagePermissionReviewForm.get('PhieuDeNghiDuThau').get('permission').value.length < this.listBidGroupUser.length"
+                                            (click)="addFormArrayItem(listFormData[0], {})">
+                                            <i class="fa fa-plus" style="margin-top: 2px" aria-hidden="true"></i>
+                                        </div>
                                     </div>
+
                                     <div class="btn-icon btn-icon-minus" [class.invisible]="i == 0" (click)="removeFormItem(listFormData[0], i)">
                                         <i class="fa fa-minus" style="margin-top: 2px" aria-hidden="true" *ngIf="i != 0"></i>
                                     </div>
@@ -127,12 +131,12 @@
                                     <span class="custom-control-indicator"></span>
                                 </label>
                             </td>
-                            <td class="text-center">
+                            <!-- <td class="text-center">
                                 <label class="custom-control custom-checkbox">
                                     <input type="checkbox" class="custom-control-input" formControlName="ChapThuanKhongChapThuan">
                                     <span class="custom-control-indicator"></span>
                                 </label>
-                            </td>
+                            </td> -->
                             <td class="text-center">
                                 <label class="custom-control custom-checkbox">
                                     <input type="checkbox" class="custom-control-input" formControlName="TaiTemplate">
@@ -199,9 +203,13 @@
                             [formGroupName]="i" [class.odd]="i % 2 == 0">
                             <td>
                                 <div class="grid-container-3">
-                                    <div class="btn-icon btn-icon-plus" (click)="addFormArrayItem(listFormData[1], {})">
-                                        <i class="fa fa-plus" style="margin-top: 2px" aria-hidden="true"></i>
+                                    <div>
+                                        <div class="btn-icon btn-icon-plus" *ngIf="packagePermissionReviewForm.get('TrienKhaiVaPhanCongTienDo').get('permission').value.length < this.listBidGroupUser.length"
+                                            (click)="addFormArrayItem(listFormData[1], {})">
+                                            <i class="fa fa-plus" style="margin-top: 2px" aria-hidden="true"></i>
+                                        </div>
                                     </div>
+
                                     <div class="btn-icon btn-icon-minus" [class.invisible]="i == 0" (click)="removeFormItem(listFormData[1], i)">
                                         <i class="fa fa-minus" style="margin-top: 2px" aria-hidden="true" *ngIf="i != 0"></i>
                                     </div>
@@ -321,9 +329,13 @@
                                 [formGroupName]="j">
                                 <div>
                                     <div class="grid-container-3" *ngIf="j == 0">
-                                        <div class="btn-icon btn-icon-plus" (click)="addFormArrayBidItem(listFormData[2], {})">
-                                            <i class="fa fa-plus" style="margin-top: 2px" aria-hidden="true"></i>
+                                        <div>
+                                            <div class="btn-icon btn-icon-plus" *ngIf="packagePermissionReviewForm.get('LapHoSoDuThauFile').get('permission').value.length < this.listBidGroupUser.length"
+                                                (click)="addFormArrayBidItem(listFormData[2], {})">
+                                                <i class="fa fa-plus" style="margin-top: 2px" aria-hidden="true"></i>
+                                            </div>
                                         </div>
+
                                         <div class="btn-icon btn-icon-minus" [class.invisible]="i == 0" (click)="removeFormItem(listFormData[2], i)">
                                             <i class="fa fa-minus" style="margin-top: 2px" aria-hidden="true" *ngIf="i != 0"></i>
                                         </div>
@@ -346,9 +358,13 @@
                                             </select>
                                         </span>
                                     </div>
-                                    <div class="btn-icon btn-icon-plus" (click)="addFormArrayDocumentTypeItem(listFormData[2], i)">
-                                        <i class="fa fa-plus" style="margin-top: 2px" aria-hidden="true"></i>
+                                    <div>
+                                        <div class="btn-icon btn-icon-plus" *ngIf="item.get('documentTypes').value.length < this.listDocumentType.length"
+                                            (click)="addFormArrayDocumentTypeItem(listFormData[2], i)">
+                                            <i class="fa fa-plus" style="margin-top: 2px" aria-hidden="true"></i>
+                                        </div>
                                     </div>
+
                                     <div class="btn-icon btn-icon-minus" [class.invisible]="j == 0" (click)="removeFormBidItem(listFormData[2], i, j)">
                                         <i class="fa fa-minus" style="margin-top: 2px" aria-hidden="true" *ngIf="j != 0"></i>
                                     </div>
@@ -443,9 +459,13 @@
                                 [formGroupName]="j">
                                 <div>
                                     <div class="grid-container-3" *ngIf="j == 0">
-                                        <div class="btn-icon btn-icon-plus" (click)="addFormArrayBidItem(listFormData[6], {})">
-                                            <i class="fa fa-plus" style="margin-top: 2px" aria-hidden="true"></i>
+                                        <div>
+                                            <div class="btn-icon btn-icon-plus" *ngIf="packagePermissionReviewForm.get('LapHoSoDuThauLiveForm').get('permission').value.length < this.listBidGroupUser.length"
+                                                (click)="addFormArrayBidItem(listFormData[6], {})">
+                                                <i class="fa fa-plus" style="margin-top: 2px" aria-hidden="true"></i>
+                                            </div>
                                         </div>
+
                                         <div class="btn-icon btn-icon-minus" [class.invisible]="i == 0" (click)="removeFormItem(listFormData[6], i)">
                                             <i class="fa fa-minus" style="margin-top: 2px" aria-hidden="true" *ngIf="i != 0"></i>
                                         </div>
@@ -468,8 +488,11 @@
                                             </select>
                                         </span>
                                     </div>
-                                    <div class="btn-icon btn-icon-plus" (click)="addFormArrayDocumentTypeItem(listFormData[6], i)">
-                                        <i class="fa fa-plus" style="margin-top: 2px" aria-hidden="true"></i>
+                                    <div>
+                                        <div class="btn-icon btn-icon-plus" *ngIf=" item.get('documentTypes').value.length < this.listLiveformType.length"
+                                            (click)="addFormArrayDocumentTypeItem(listFormData[6], i)">
+                                            <i class="fa fa-plus" style="margin-top: 2px" aria-hidden="true"></i>
+                                        </div>
                                     </div>
                                     <div class="btn-icon btn-icon-minus" [class.invisible]="j == 0" (click)="removeFormBidItem(listFormData[6], i, j)">
                                         <i class="fa fa-minus" style="margin-top: 2px" aria-hidden="true" *ngIf="j != 0"></i>
@@ -575,9 +598,13 @@
                             [formGroupName]="i" [class.odd]="i % 2 == 0">
                             <td>
                                 <div class="grid-container-3">
-                                    <div class="btn-icon btn-icon-plus" (click)="addFormArrayItem(listFormData[3], {})">
-                                        <i class="fa fa-plus" style="margin-top: 2px" aria-hidden="true"></i>
+                                    <div>
+                                        <div class="btn-icon btn-icon-plus" *ngIf="packagePermissionReviewForm.get('TrinhDuyetGia').get('permission').value.length < this.listBidGroupUser.length"
+                                            (click)="addFormArrayItem(listFormData[3], {})">
+                                            <i class="fa fa-plus" style="margin-top: 2px" aria-hidden="true"></i>
+                                        </div>
                                     </div>
+
                                     <div class="btn-icon btn-icon-minus" [class.invisible]="i == 0" (click)="removeFormItem(listFormData[3], i)">
                                         <i class="fa fa-minus" style="margin-top: 2px" aria-hidden="true" *ngIf="i != 0"></i>
                                     </div>
@@ -682,9 +709,13 @@
                             [formGroupName]="i" [class.odd]="i % 2 == 0">
                             <td>
                                 <div class="grid-container-3">
-                                    <div class="btn-icon btn-icon-plus" (click)="addFormArrayItem(listFormData[4], {})">
-                                        <i class="fa fa-plus" style="margin-top: 2px" aria-hidden="true"></i>
+                                    <div>
+                                        <div class="btn-icon btn-icon-plus" *ngIf="packagePermissionReviewForm.get('ChotVaNopHSDT').get('permission').value.length < this.listBidGroupUser.length"
+                                            (click)="addFormArrayItem(listFormData[4], {})">
+                                            <i class="fa fa-plus" style="margin-top: 2px" aria-hidden="true"></i>
+                                        </div>
                                     </div>
+
                                     <div class="btn-icon btn-icon-minus" [class.invisible]="i == 0" (click)="removeFormItem(listFormData[4], i)">
                                         <i class="fa fa-minus" style="margin-top: 2px" aria-hidden="true" *ngIf="i != 0"></i>
                                     </div>
@@ -763,9 +794,13 @@
                             [formGroupName]="i" [class.odd]="i % 2 == 0">
                             <td>
                                 <div class="grid-container-3">
-                                    <div class="btn-icon btn-icon-plus" (click)="addFormArrayItem(listFormData[5], {})">
-                                        <i class="fa fa-plus" style="margin-top: 2px" aria-hidden="true"></i>
+                                    <div>
+                                        <div class="btn-icon btn-icon-plus" *ngIf="packagePermissionReviewForm.get('QuanLyPhongVanThuongThao').get('permission').value.length < this.listBidGroupUser.length"
+                                            (click)="addFormArrayItem(listFormData[5], {})">
+                                            <i class="fa fa-plus" style="margin-top: 2px" aria-hidden="true"></i>
+                                        </div>
                                     </div>
+
                                     <div class="btn-icon btn-icon-minus" [class.invisible]="i == 0" (click)="removeFormItem(listFormData[5], i)">
                                         <i class="fa fa-minus" style="margin-top: 2px" aria-hidden="true" *ngIf="i != 0"></i>
                                     </div>

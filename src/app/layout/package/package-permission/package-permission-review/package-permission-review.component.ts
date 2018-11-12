@@ -85,7 +85,6 @@ export class PackagePermissionReviewComponent implements OnInit {
                 this.addFormArrayItem(e, {});
             }
         });
-        console.log(this.packagePermissionReviewForm.get('HSMT').get('permission').value);
     }
 
     addFormControl(formData): FormGroup {
@@ -98,21 +97,24 @@ export class PackagePermissionReviewComponent implements OnInit {
 
     addFormArrayItem(formData, user) {
         const formArrayControl = this.packagePermissionReviewForm.get(formData.bidPermissionGroupName).get('permission') as FormArray;
-        const formArrayItem = this.fb.group({});
-        formArrayItem.addControl('userName', this.fb.control(user.userGroupId));
-        formData.bidPermissions.forEach(p => {
-            formArrayItem
-                .addControl(
-                    p.bidPermissionName,
-                    this.addFormArrayUserItem(p, user));
-        });
+        if (formArrayControl.value.length < this.listBidGroupUser.length) {
+            const formArrayItem = this.fb.group({});
+            formArrayItem.addControl('userName', this.fb.control(user.userGroupId));
+            formData.bidPermissions.forEach(p => {
+                formArrayItem
+                    .addControl(
+                        p.bidPermissionName,
+                        this.addFormArrayUserItem(p, user));
+            });
 
-        formArrayItem.
-            addControl('all',
-                this.fb.control(Object.values(formArrayItem.value).filter(x => x === true).length
-                    === Object.values(formArrayItem.value).length - 1));
+            formArrayItem.
+                addControl('all',
+                    this.fb.control(Object.values(formArrayItem.value).filter(x => x === true).length
+                        === Object.values(formArrayItem.value).length - 1));
 
-        formArrayControl.push(formArrayItem);
+            formArrayControl.push(formArrayItem);
+        }
+
     }
 
     addFormArrayUserItem(formData, user): FormControl {
