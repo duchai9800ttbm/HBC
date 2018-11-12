@@ -97,6 +97,7 @@ export class InformationDeploymentFormComponent implements OnInit, OnDestroy {
     photoHungryPack;
     checkAndSaveConditions;
     askClarificationQuestions;
+    loading = false;
     constructor(
         private spinner: NgxSpinnerService,
         private packageService: PackageService,
@@ -212,6 +213,7 @@ export class InformationDeploymentFormComponent implements OnInit, OnDestroy {
     // }
 
     checkAndCreateForm() {
+        this.loading = true;
         if (this.routerAction === 'create') {
             this.isFormCreate = true;
             forkJoin(
@@ -242,6 +244,7 @@ export class InformationDeploymentFormComponent implements OnInit, OnDestroy {
                     this.mappingLiveForm(this.groupmembersList);
                     // res 1
                     this.createForm(res1, true);
+                    this.loading = false;
                 });
         } else {
             this.packageService.getInforPackageID(this.bidOpportunityId).switchMap(getInforPackage => {
@@ -257,6 +260,7 @@ export class InformationDeploymentFormComponent implements OnInit, OnDestroy {
                     if (data) {
                         this.isFormCreate = false;
                         this.createForm(data);
+                        this.loading = false;
                     } else {
                         this.isFormCreate = true;
                         forkJoin(
@@ -279,6 +283,7 @@ export class InformationDeploymentFormComponent implements OnInit, OnDestroy {
                                 this.mappingLiveForm(this.groupmembersList);
                                 // res 1
                                 this.createForm(res1, true);
+                                this.loading = false;
                             });
                     }
                 });
@@ -373,6 +378,7 @@ export class InformationDeploymentFormComponent implements OnInit, OnDestroy {
         console.log('tạo mới', isCreate);
         this.tenderPlan = planModel;
         const taskArr = [];
+        this.controlDisableForm = this.routerAction === 'view' ? true : false;
         planModel.tasks.forEach((i, index) => taskArr.push(this.createTaskItemFG(i, index, isCreate)));
         this.planForm = this.fb.group({
             id: planModel.id,
@@ -410,7 +416,6 @@ export class InformationDeploymentFormComponent implements OnInit, OnDestroy {
             },
             tasks: this.fb.array(taskArr)
         });
-        this.controlDisableForm = this.routerAction === 'view' ? true : false;
 
         this.tasksFA.controls.forEach((item, index) => {
             this.calculateTotalTime(index);
@@ -521,187 +526,191 @@ export class InformationDeploymentFormComponent implements OnInit, OnDestroy {
     createTaskItemFG(data: TenderPreparationPlanItem, indexForm: number, isCreate: boolean): FormGroup {
         let whoIsInChargeIds = [];
         if (isCreate) {
-            switch (indexForm) {
-                case 0: {
-                    break;
-                }
-                case 1: {
-                    if (this.distributorOfDocHSMT) {
-                        whoIsInChargeIds = this.distributorOfDocHSMT;
+            if (isCreate) {
+                switch (indexForm) {
+                    case 0: {
+                        break;
                     }
-                    break;
-                }
-                case 2: {
-                    if (this.suggestionsToParticipate) {
-                        whoIsInChargeIds = this.suggestionsToParticipate;
+                    case 1: {
+                        if (this.distributorOfDocHSMT) {
+                            whoIsInChargeIds = this.distributorOfDocHSMT;
+                        }
+                        break;
                     }
-                    break;
-                }
-                case 3: {
-                    if (this.clarificationQuestion) {
-                        whoIsInChargeIds = this.clarificationQuestion;
+                    case 2: {
+                        if (this.suggestionsToParticipate) {
+                            whoIsInChargeIds = this.suggestionsToParticipate;
+                        }
+                        break;
                     }
-                    break;
-                }
-                case 4: {
-                    break;
-                }
-                case 5: {
-                    if (this.surveyOrganization) {
-                        whoIsInChargeIds = this.surveyOrganization;
+                    case 3: {
+                        if (this.clarificationQuestion) {
+                            whoIsInChargeIds = this.clarificationQuestion;
+                        }
+                        break;
                     }
-                    break;
-                }
-                case 6: {
-                    break;
-                }
-                case 7: {
-                    if (this.checkVolumeHSMT) {
-                        whoIsInChargeIds = this.checkVolumeHSMT;
+                    case 4: {
+                        break;
                     }
-                    break;
-                }
-                case 8: {
-                    if (this.checkVolumeBPTC) {
-                        whoIsInChargeIds = this.checkVolumeBPTC;
+                    case 5: {
+                        if (this.surveyOrganization) {
+                            whoIsInChargeIds = this.surveyOrganization;
+                        }
+                        break;
                     }
-                    break;
-                }
-                case 9: {
-                    if (this.clarifyQuestion) {
-                        whoIsInChargeIds = this.clarifyQuestion;
+                    case 6: {
+                        break;
                     }
-                    break;
-                }
-                case 10: {
-                    break;
-                }
-                case 11: {
-                    if (this.filterProfiles) {
-                        whoIsInChargeIds = this.filterProfiles;
+                    case 7: {
+                        break;
                     }
-                    break;
-                }
-                case 12: {
-                    if (this.requestQuote) {
-                        whoIsInChargeIds = this.requestQuote;
+                    case 8: {
+                        if (this.checkVolumeHSMT) {
+                            whoIsInChargeIds = this.checkVolumeHSMT;
+                        }
+                        break;
                     }
-                    break;
-                }
-                case 13: {
-                    if (this.constructionQuotes) {
-                        whoIsInChargeIds = this.constructionQuotes;
+                    case 9: {
+                        if (this.checkVolumeBPTC) {
+                            whoIsInChargeIds = this.checkVolumeBPTC;
+                        }
+                        break;
                     }
-                    break;
-                }
-                case 14: {
-                    break;
-                }
-                case 15: {
-                    if (this.filterAndSendRequest) {
-                        whoIsInChargeIds = this.filterAndSendRequest;
+                    case 10: {
+                        if (this.clarifyQuestion) {
+                            whoIsInChargeIds = this.clarifyQuestion;
+                        }
+                        break;
                     }
-                    break;
-                }
-                case 16: {
-                    break;
-                }
-                case 17: {
-                    if (this.generalCostCalculation) {
-                        whoIsInChargeIds = this.generalCostCalculation;
+                    case 11: {
+                        break;
                     }
-                    break;
-                }
-                case 18: {
-                    break;
-                }
-                case 19: {
-                    if (this.selectSubcontractor) {
-                        whoIsInChargeIds = this.selectSubcontractor;
+                    case 12: {
+                        if (this.filterProfiles) {
+                            whoIsInChargeIds = this.filterProfiles;
+                        }
+                        break;
                     }
-                    break;
-                }
-                case 20: {
-                    if (this.entryPriceEstimates) {
-                        whoIsInChargeIds = this.entryPriceEstimates;
+                    case 13: {
+                        if (this.requestQuote) {
+                            whoIsInChargeIds = this.requestQuote;
+                        }
+                        break;
                     }
-                    break;
-                }
-                case 21: {
-                    break;
-                }
-                case 22: {
-                    if (this.siteLayout) {
-                        whoIsInChargeIds = this.siteLayout;
+                    case 14: {
+                        if (this.constructionQuotes) {
+                            whoIsInChargeIds = this.constructionQuotes;
+                        }
+                        break;
                     }
-                    break;
-                }
-                case 23: {
-                    if (this.basementBPTC) {
-                        whoIsInChargeIds = this.basementBPTC;
+                    case 15: {
+                        break;
                     }
-                    break;
-                }
-                case 24: {
-                    if (this.monitoring) {
-                        whoIsInChargeIds = this.monitoring;
+                    case 16: {
+                        if (this.filterAndSendRequest) {
+                            whoIsInChargeIds = this.filterAndSendRequest;
+                        }
+                        break;
                     }
-                    break;
-                }
-                case 25: {
-                    if (this.formworkReinforcementConcrete) {
-                        whoIsInChargeIds = this.formworkReinforcementConcrete;
+                    case 17: {
+                        break;
                     }
-                    break;
-                }
-                case 26: {
-                    if (this.otherTechnicalRecords) {
-                        whoIsInChargeIds = this.otherTechnicalRecords;
+                    case 18: {
+                        if (this.generalCostCalculation) {
+                            whoIsInChargeIds = this.generalCostCalculation;
+                        }
+                        break;
                     }
-                    break;
-                }
-                case 27: {
-                    if (this.calibrationCheckFinish) {
-                        whoIsInChargeIds = this.calibrationCheckFinish;
+                    case 19: {
+                        break;
                     }
-                    break;
-                }
-                case 28: {
-                    break;
-                }
-                case 29: {
-                    if (this.preparationLegalDoc) {
-                        whoIsInChargeIds = this.preparationLegalDoc;
+                    case 20: {
+                        if (this.selectSubcontractor) {
+                            whoIsInChargeIds = this.selectSubcontractor;
+                        }
+                        break;
                     }
-                    break;
-                }
-                case 30: {
-                    if (this.photoHungryPack) {
-                        whoIsInChargeIds = this.photoHungryPack;
+                    case 21: {
+                        if (this.entryPriceEstimates) {
+                            whoIsInChargeIds = this.entryPriceEstimates;
+                        }
+                        break;
                     }
-                    break;
-                }
-                case 31: {
-                    break;
-                }
-                case 32: {
-                    if (this.checkAndSaveConditions) {
-                        whoIsInChargeIds = this.checkAndSaveConditions;
+                    case 22: {
+                        break;
                     }
-                    break;
-                }
-                case 33: {
-                    if (this.askClarificationQuestions) {
-                        whoIsInChargeIds = this.askClarificationQuestions;
+                    case 23: {
+                        if (this.siteLayout) {
+                            whoIsInChargeIds = this.siteLayout;
+                        }
+                        break;
                     }
-                    break;
+                    case 24: {
+                        if (this.basementBPTC) {
+                            whoIsInChargeIds = this.basementBPTC;
+                        }
+                        break;
+                    }
+                    case 25: {
+                        if (this.monitoring) {
+                            whoIsInChargeIds = this.monitoring;
+                        }
+                        break;
+                    }
+                    case 26: {
+                        if (this.formworkReinforcementConcrete) {
+                            whoIsInChargeIds = this.formworkReinforcementConcrete;
+                        }
+                        break;
+                    }
+                    case 27: {
+                        if (this.otherTechnicalRecords) {
+                            whoIsInChargeIds = this.otherTechnicalRecords;
+                        }
+                        break;
+                    }
+                    case 28: {
+                        if (this.calibrationCheckFinish) {
+                            whoIsInChargeIds = this.calibrationCheckFinish;
+                        }
+                        break;
+                    }
+                    case 29: {
+                        break;
+                    }
+                    case 30: {
+                        if (this.preparationLegalDoc) {
+                            whoIsInChargeIds = this.preparationLegalDoc;
+                        }
+                        break;
+                    }
+                    case 31: {
+                        if (this.photoHungryPack) {
+                            whoIsInChargeIds = this.photoHungryPack;
+                        }
+                        break;
+                    }
+                    case 32: {
+                        break;
+                    }
+                    case 33: {
+                        if (this.checkAndSaveConditions) {
+                            whoIsInChargeIds = this.checkAndSaveConditions;
+                        }
+                        break;
+                    }
+                    case 34: {
+                        if (this.askClarificationQuestions) {
+                            whoIsInChargeIds = this.askClarificationQuestions;
+                        }
+                        break;
+                    }
                 }
             }
         }
         whoIsInChargeIds.forEach(item => {
             item.employeeName = item.userName;
         });
-        console.log('whoIsInChargeIds', whoIsInChargeIds, isCreate, data.whoIsInCharges);
         const isFinishDisabled =
             (this.checkStatusPackage[this.packageInfo.stageStatus.id].id > this.checkStatusPackage.ThamGiaDuThau.id &&
                 this.checkStatusPackage[this.packageInfo.stageStatus.id].id < this.checkStatusPackage.ChoKetQuaDuThau.id);

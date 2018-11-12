@@ -1,4 +1,4 @@
-<form [formGroup]="planForm" *ngIf="planForm" class="position-relative">
+<form [formGroup]="planForm" *ngIf="planForm && !loading" class="position-relative">
     <div class="title-list-package d-flex flex-wrap align-items-center status-filter">
         <div class="mr-auto d-flex align-items-end list-package mt-2 mb-2">
             <div class="d-flex justify-content-start h-40">
@@ -137,7 +137,8 @@
                         <td>Project Director</td>
                         <td>
                             <span class="custom-dropdown w-100 b-dropdown-no-border">
-                                <select class="form-control" (change)="changeDirector($event.target.value, 0)" formControlName="projectDirectorEmployeeId">
+                                <select class="form-control" (change)="changeDirector($event.target.value, 0)" formControlName="projectDirectorEmployeeId"
+                                [class.default-cusor]="routerAction === 'view'">
                                     <option [ngValue]="null">--Chọn--</option>
                                     <option *ngFor="let user of userList" [value]="user.employeeId">{{user.employeeName}}</option>
                                 </select>
@@ -156,7 +157,8 @@
                         <td>Tender Dept</td>
                         <td>
                             <span class="custom-dropdown w-100 b-dropdown-no-border">
-                                <select class="form-control" (change)="changeDirector($event.target.value, 1)" formControlName="tenderDepartmentEmployeeId">
+                                <select class="form-control" (change)="changeDirector($event.target.value, 1)" formControlName="tenderDepartmentEmployeeId"
+                                [class.default-cusor]="routerAction === 'view'">
                                     <option [ngValue]="null">--Chọn--</option>
                                     <option *ngFor="let user of userList" [value]="user.employeeId">{{user.employeeName}}</option>
                                 </select>
@@ -175,7 +177,8 @@
                         <td>Technical Dept</td>
                         <td>
                             <span class="custom-dropdown w-100 b-dropdown-no-border">
-                                <select class="form-control" (change)="changeDirector($event.target.value, 2)" formControlName="technicalDepartmentEmployeeId">
+                                <select class="form-control" (change)="changeDirector($event.target.value, 2)" formControlName="technicalDepartmentEmployeeId"
+                                [class.default-cusor]="routerAction === 'view'">
                                     <option [ngValue]="null">--Chọn--</option>
                                     <option *ngFor="let user of userList" [value]="user.employeeId">{{user.employeeName}}</option>
                                 </select>
@@ -195,7 +198,8 @@
                         <td>BIM Dept</td>
                         <td>
                             <span class="custom-dropdown w-100 b-dropdown-no-border">
-                                <select class="form-control" (change)="changeDirector($event.target.value, 3)" formControlName="bimDepartmentEmployeeId">
+                                <select class="form-control" (change)="changeDirector($event.target.value, 3)" formControlName="bimDepartmentEmployeeId"
+                                [class.default-cusor]="routerAction === 'view'">
                                     <option [ngValue]="null">--Chọn--</option>
                                     <option *ngFor="let user of userList" [value]="user.employeeId">{{user.employeeName}}</option>
                                 </select>
@@ -245,13 +249,15 @@
                             </td>
                             
                             <td>
-                                <ng-container *ngIf="data.get('itemId').value !== 1 && data.get('itemId').value !== 5 && data.get('itemId').value !== 7 && data.get('itemId').value !== 8
-                                && data.get('itemId').value !== 12 && data.get('itemId').value !== 16 && data.get('itemId').value !== 18 && data.get('itemId').value !== 20 && data.get('itemId').value !== 23
-                                && data.get('itemId').value !== 30 && data.get('itemId').value !== 33">
+                                    <!-- *ngIf="data.get('itemId').value !== 1 && data.get('itemId').value !== 5 && data.get('itemId').value !== 7 && data.get('itemId').value !== 8
+                                    && data.get('itemId').value !== 12 && data.get('itemId').value !== 16 && data.get('itemId').value !== 18 && data.get('itemId').value !== 20 && data.get('itemId').value !== 23
+                                    && data.get('itemId').value !== 30 && data.get('itemId').value !== 33" -->
+                                <ng-container >
                                     <div *ngIf="data.get('whoIsInChargeIds').value && data.get('whoIsInChargeIds').value.length !== 0">
                                         <span *ngFor="let item of data.get('whoIsInChargeIds').value; let i = index">
                                             {{item.employeeName}}
                                             <span *ngIf="i !== (data.get('whoIsInChargeIds').value.length - 1)"> ,</span>
+                                            <span></span>
                                         </span>
                                     </div>
                                 </ng-container>
@@ -344,7 +350,8 @@
         </div>
     </kendo-dialog>
 </form>
-<ngx-spinner bdColor="rgba(51, 51, 51, 0.7)" size="default" color="#fff" type="ball-scale"></ngx-spinner>
+<ngx-loading [show]="loading"></ngx-loading>
+<!-- <ngx-spinner bdColor="rgba(51, 51, 51, 0.7)" size="default" color="#fff" type="ball-scale"></ngx-spinner> -->
 <!-- <td class="pl-0" *ngIf="data.get('itemId').value !== 6">
         <span class="custom-dropdown w-100 b-dropdown-no-border">
             <select class="form-control" formControlName="whoIsInChargeId" [class.default-cusor]="routerAction === 'view'">
