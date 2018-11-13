@@ -83,6 +83,7 @@ export class PackageInfoModel {
     description: string;
     isSubmittedHSDT: boolean;
     isClosedHSDT: boolean;
+    isSendMailKickOff: boolean;
     isChotHoSo: boolean;
     interviewInvitation: {
         interviewTimes: string;

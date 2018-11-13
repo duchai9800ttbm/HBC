@@ -100,7 +100,6 @@ export class ReportMeetingComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.currentPackageId = +PackageDetailComponent.packageId;
-
     this.subscription = this.permissionService.get().subscribe(data => {
       this.listPermission = data;
       const hsdt = this.listPermission.length &&

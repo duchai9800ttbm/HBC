@@ -1,5 +1,5 @@
 <div *ngIf="isData === false">
-  <div class="outer" id="outer" *ngIf="(statusPackage.id >= checkStatusPackage.DaPhanHoiDenPhongHopDong.id) && (statusPackage.id < checkStatusPackage.DaThongBaoHopKickOff.id)">
+  <div class="outer" id="outer" *ngIf="(statusPackage.id >= checkStatusPackage.DaPhanHoiDenPhongHopDong.id) && !isSendMailKickOff">
     <div class=" title-list-package d-flex flex-wrap align-items-center status-filter">
       <div class="mr-auto d-flex align-items-end list-package mt-2 mb-2">
         <div class="d-flex justify-content-start" style="height: 35px;">
@@ -23,7 +23,7 @@
     </div>
   </div>
 
-  <div class="outer" id="outer" *ngIf="statusPackage.id >= checkStatusPackage.DaThongBaoHopKickOff.id">
+  <div class="outer" id="outer" *ngIf="(statusPackage.id >= checkStatusPackage.DaPhanHoiDenPhongHopDong.id) && isSendMailKickOff">
     <div class=" title-list-package d-flex flex-wrap align-items-center status-filter">
       <div class="mr-auto d-flex align-items-end list-package mt-2 mb-2">
         <div class="d-flex justify-content-start" style="height: 35px;">
@@ -40,9 +40,9 @@
           <button class="btn btn-primary ml-1" (click)="modalNoti(notiKickOff, true)">
             Gửi lại email thông báo kick-off
           </button>
-          <button class="btn btn-primary ml-1" (click)="refresh(true)">
+          <!-- <button class="btn btn-primary ml-1" (click)="refresh(true)">
             <i class="fa fa-refresh" aria-hidden="true"></i>
-          </button>
+          </button> -->
         </div>
       </div>
     </div>
@@ -286,13 +286,13 @@
         </thead>
         <tbody>
           <ng-container *ngFor="let data of listEmailSended; let i = index">
-              <tr *ngFor="let item of data.to; let j = index">
-                  <td class="select-filter text-center">{{ renderIndex(i,j)}}</td>
-                  <td class="select-filter text-center">{{ (item.receiveEmployee && item.receiveEmployee.employeeName) ? item.receiveEmployee.employeeName : ''}}</td>
-                  <td class="select-filter text-center color-default">{{ item.email}}</td>
-                </tr>
+            <tr *ngFor="let item of data.to; let j = index">
+              <td class="select-filter text-center">{{ renderIndex(i,j)}}</td>
+              <td class="select-filter text-center">{{ (item.receiveEmployee && item.receiveEmployee.employeeName) ? item.receiveEmployee.employeeName : ''}}</td>
+              <td class="select-filter text-center color-default">{{ item.email}}</td>
+            </tr>
           </ng-container>
-          
+
         </tbody>
       </table>
     </div>
