@@ -164,7 +164,7 @@ export class SiteSurveyReportService {
       isDraftVersion: obj.isDraft,
       departmentId: (obj.phongBan) ? +obj.phongBan.id : 0,
       departmentNo: (obj.phongBan) ? obj.phongBan.key : '',
-      surveyEmployeeId: (obj.nguoiKhaoSat) ? obj.nguoiKhaoSat.id : 0,
+      surveyEmployeeId: (obj.nguoiKhaoSat && obj.nguoiKhaoSat.id ) ? obj.nguoiKhaoSat.id : null,
       documentName: (obj.scaleOverall) ? obj.scaleOverall.tenTaiLieu : '',
       projectStatistic: obj.scaleOverall && {
         projectStatistic: {

@@ -127,5 +127,8 @@ export class SummaryConditionFormScopeWorkComponent implements OnInit {
     formArray.removeAt(idx);
   }
 
+  routerLink(e) {
+    console.log('evenet-click', e);
+  }
 
 }

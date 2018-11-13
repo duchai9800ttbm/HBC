@@ -1,5 +1,5 @@
 <div *ngIf="isData === false">
-  <div class="outer" id="outer" *ngIf="statusPackage.id === checkStatusPackage.DaPhanHoiDenPhongHopDong.id">
+  <div class="outer" id="outer" *ngIf="(statusPackage.id >= checkStatusPackage.DaPhanHoiDenPhongHopDong.id) && (statusPackage.id < checkStatusPackage.DaThongBaoHopKickOff.id)">
     <div class=" title-list-package d-flex flex-wrap align-items-center status-filter">
       <div class="mr-auto d-flex align-items-end list-package mt-2 mb-2">
         <div class="d-flex justify-content-start" style="height: 35px;">

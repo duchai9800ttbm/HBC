@@ -15,7 +15,7 @@
                         <i class="fa fa-plus-square-o ml-3 pointer" aria-hidden="true" (click)="addFormArrayControl('scopeInclude')" *ngIf="(i + 1) === scopeIncludeFA.length && !isModeView"></i>
                     </div>
                     <div class="col-md-8">
-                        <input class="form-control" formControlName="congTac" placeholder="Công tác {{i + 1}}">
+                        <input class="form-control" appEnterPreventDefault formControlName="congTac" placeholder="Công tác {{i + 1}}">
                     </div>
                     <div class="col-md-1 pl-0" *ngIf="i !== 0 && !isModeView">
                         <i (click)="removeFormArrayControl('scopeInclude', i)" class="fa fa-times-circle pointer times-color" aria-hidden="true"></i>
@@ -43,7 +43,7 @@
                         <i class="fa fa-plus-square-o ml-3 pointer" aria-hidden="true" (click)="addFormArrayControl('scopeNotInclude')" *ngIf="(i + 1) === scopeNotIncludeFA.length && !isModeView"></i>
                     </div>
                     <div class="col-md-8">
-                        <input class="form-control" formControlName="congTac" placeholder="Công tác {{i + 1}}">
+                        <input class="form-control" appEnterPreventDefault formControlName="congTac" placeholder="Công tác {{i + 1}}">
                     </div>
                     <div class="col-md-1 pl-0" *ngIf="i !== 0 && !isModeView">
                         <i (click)="removeFormArrayControl('scopeNotInclude', i)" class="fa fa-times-circle pointer times-color" aria-hidden="true"></i>
@@ -62,7 +62,7 @@
                 <i class="fa font-size-3 mr-3 fa-angle-left" aria-hidden="true"></i>
                 Trở về
             </button>
-            <button class="btn btn-primary ml-1" routerLink="../nonminate">
+            <button class="btn btn-primary ml-1" (keyup)="routerLink($event.target.value)" routerLink="../nonminate">
                 Tiếp
                 <i class="fa font-size-3 ml-3 fa-angle-right" aria-hidden="true"></i>
             </button>
