@@ -4,6 +4,8 @@ import { SummaryConditionFormComponent } from '../summary-condition-form.compone
 import DateTimeConvertHelper from '../../../../../../../../shared/helpers/datetime-convert-helper';
 import { DienGiaiYeuCauLamRo } from '../../../../../../../../shared/models/ho-so-du-thau/dien-giai-yeu-cau';
 import { HoSoDuThauService } from '../../../../../../../../shared/services/ho-so-du-thau.service';
+import { PackageDetailComponent } from '../../../../../package-detail.component';
+import { Router } from '../../../../../../../../../../node_modules/@angular/router';
 
 @Component({
   selector: 'app-summary-condition-form-tender-clarfication',
@@ -15,12 +17,15 @@ export class SummaryConditionFormTenderClarficationComponent implements OnInit {
   yeuCauLamRoForm: FormGroup;
   yeuCauLamRo = new DienGiaiYeuCauLamRo();
   isModeView = false;
+  bidOpportunityId: number;
   constructor(
     private fb: FormBuilder,
     private hoSoDuThauService: HoSoDuThauService,
+    private router: Router,
   ) { }
 
   ngOnInit() {
+    this.bidOpportunityId = PackageDetailComponent.packageId;
     this.hoSoDuThauService.watchLiveformState().subscribe(data => {
       this.isModeView = data.isModeView;
     });
@@ -171,4 +176,9 @@ export class SummaryConditionFormTenderClarficationComponent implements OnInit {
     });
   }
 
+  routerLink(e, link) {
+    if (e.code === 'Enter') {
+      this.router.navigate([`/package/detail/${this.bidOpportunityId}/attend/build/summary/form/create/${link}`]);
+    }
+  }
 }

@@ -8,6 +8,7 @@ import { PackageService } from '../../../../../../../../shared/services/package.
 import { PackageDetailComponent } from '../../../../../package-detail.component';
 import { ProposeTenderParticipateRequest } from '../../../../../../../../shared/models/api-request/package/propose-tender-participate-request';
 import { Currency } from '../../../../../../../../shared/models/currency';
+import { Router } from '../../../../../../../../../../node_modules/@angular/router';
 
 @Component({
     selector: 'app-summary-condition-form-condition-contract',
@@ -39,7 +40,8 @@ export class SummaryConditionFormConditionContractComponent implements OnInit {
     constructor(
         private fb: FormBuilder,
         private hoSoDuThauService: HoSoDuThauService,
-        private packageService: PackageService
+        private packageService: PackageService,
+        private router: Router
     ) { }
 
     ngOnInit() {
@@ -620,5 +622,10 @@ export class SummaryConditionFormConditionContractComponent implements OnInit {
         formArrayHBC.removeAt(idx);
     }
 
+    routerLink(e, link) {
+        if (e.code === 'Enter') {
+          this.router.navigate([`/package/detail/${this.packageId}/attend/build/summary/form/create/${link}`]);
+        }
+      }
 
 }

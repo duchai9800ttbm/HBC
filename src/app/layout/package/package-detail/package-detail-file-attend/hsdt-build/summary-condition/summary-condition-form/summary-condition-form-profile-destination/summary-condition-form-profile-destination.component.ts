@@ -8,6 +8,7 @@ import { DienGiaiYeuCauHoSo } from '../../../../../../../../shared/models/ho-so-
 import { AlertService } from '../../../../../../../../shared/services';
 import { PackageService } from '../../../../../../../../shared/services/package.service';
 import { PackageDetailComponent } from '../../../../../package-detail.component';
+import { Router } from '../../../../../../../../../../node_modules/@angular/router';
 
 @Component({
   selector: 'app-summary-condition-form-profile-destination',
@@ -24,7 +25,8 @@ export class SummaryConditionFormProfileDestinationComponent implements OnInit {
     private fb: FormBuilder,
     private hoSoDuThauService: HoSoDuThauService,
     private packageService: PackageService,
-    private alertService: AlertService
+    private alertService: AlertService,
+    private router: Router,
   ) { }
 
   ngOnInit() {
@@ -84,5 +86,11 @@ export class SummaryConditionFormProfileDestinationComponent implements OnInit {
       obj.hanNop = DateTimeConvertHelper.fromDtObjectToTimestamp(data.hanNop);
       this.hoSoDuThauService.emitDataStepDestination(obj);
     });
+  }
+
+  routerLink(e, link) {
+    if (e.code === 'Enter') {
+      this.router.navigate([`/package/detail/${this.packageId}/attend/build/summary/form/create/${link}`]);
+    }
   }
 }

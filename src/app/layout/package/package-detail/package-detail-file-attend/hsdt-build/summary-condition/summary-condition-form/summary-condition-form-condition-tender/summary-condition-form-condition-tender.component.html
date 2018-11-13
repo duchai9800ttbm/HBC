@@ -20,7 +20,7 @@
                         <span *ngIf="unitGiatri" class="unit-value text-uppercase">{{ unitGiatri.value }}</span>
                     </div>
                     <div class="col-md-6" formGroupName="theoHBC">
-                        <input tabindex="1" formControlName="giaTri" appInputNumberNegativeDecimal [decimal]="true" class="form-control pr-5">
+                        <input appEnterPreventDefault appAutoFocus tabindex="1" formControlName="giaTri" appInputNumberNegativeDecimal [decimal]="true" class="form-control pr-5">
                         <span *ngIf="unitGiatri" class="unit-value text-uppercase">{{ unitGiatri.value }}</span>
                     </div>
                 </div>
@@ -31,11 +31,11 @@
             <div class="col-md-8">
                 <div class="row">
                     <div class="col-md-6" formGroupName="theoHSMT">
-                        <input tabindex="2" formControlName="hieuLuc" class="form-control">
+                        <input appEnterPreventDefault tabindex="2" formControlName="hieuLuc" class="form-control">
 
                     </div>
                     <div class="col-md-6" formGroupName="theoHBC">
-                        <input tabindex="3" formControlName="hieuLuc" class="form-control">
+                        <input appEnterPreventDefault tabindex="3" formControlName="hieuLuc" class="form-control">
 
                     </div>
                 </div>
@@ -49,11 +49,11 @@
             <div class="col-md-8">
                 <div class="row">
                     <div class="col-md-6" formGroupName="theoHSMT">
-                        <input tabindex="4" formControlName="hieuLucHoSo" class="form-control">
+                        <input appEnterPreventDefault tabindex="4" formControlName="hieuLucHoSo" class="form-control">
 
                     </div>
                     <div class="col-md-6" formGroupName="theoHBC">
-                        <input tabindex="5" formControlName="hieuLucHoSo" class="form-control">
+                        <input appEnterPreventDefault tabindex="5" formControlName="hieuLucHoSo" class="form-control">
 
                     </div>
                 </div>
@@ -82,7 +82,7 @@
 
                     </div>
                     <div class="col-md-6" formGroupName="theoHBC">
-                        <input tabindex="6" formControlName="thoiGianHoanThanh" appInputNumberNegativeDecimal [decimal]="true" class="form-control">
+                        <input appEnterPreventDefault tabindex="6" formControlName="thoiGianHoanThanh" appInputNumberNegativeDecimal [decimal]="true" class="form-control">
 
                     </div>
                 </div>
@@ -96,17 +96,17 @@
                     <div class="col-md-6" formGroupName="theoHSMT">
                         <div [ngClass]="{'event-none': isModeView}">
                             <label class="mr-3" for="yes">
-                                <input tabindex="7" (click)="chooseRadio('yes')" [checked]="isShowInputBox" class="mr-2" name="thoiGianHoanThanhTheoNhaThau"
+                                <input appEnterPreventDefault tabindex="7" (click)="chooseRadio('yes')" [checked]="isShowInputBox" class="mr-2" name="thoiGianHoanThanhTheoNhaThau"
                                     type="radio" id="yes">
                                 Có
                             </label>
                             <label class="mr-3" for="no">
-                                <input tabindex="8" (click)="chooseRadio('no')" [checked]="!isShowInputBox" class="mr-2" name="thoiGianHoanThanhTheoNhaThau"
+                                <input appEnterPreventDefault tabindex="8" (click)="chooseRadio('no')" [checked]="!isShowInputBox" class="mr-2" name="thoiGianHoanThanhTheoNhaThau"
                                     type="radio" id="no">
                                 Không
                             </label>
                         </div>
-                        <input tabindex="9" [ngClass]="{'d-none': !isShowInputBox}" formControlName="thoiGianHoanThanhTheoNhaThauCount"
+                        <input appEnterPreventDefault tabindex="9" [ngClass]="{'d-none': !isShowInputBox}" formControlName="thoiGianHoanThanhTheoNhaThauCount"
                             appInputNumberNegativeDecimal [decimal]="true" class="form-control">
                     </div>
                     <div class="col-md-6"></div>
@@ -132,7 +132,7 @@
                                 [formGroupName]="i">
                                 <div class="row mb-2">
                                     <div class="col-md-12">
-                                        <input tabindex="10 + i" formControlName="thue" class="form-control">
+                                        <input appEnterPreventDefault tabindex="10 + i" formControlName="thue" class="form-control">
 
                                     </div>
                                     <div class="set-position-button " (click)="removeFormArrayControl('cacLoaiThue', i)">
@@ -170,7 +170,7 @@
                 <div class="row">
                     <div class="col-md-6" formGroupName="theoHSMT">
                         <span class="custom-dropdown w-100">
-                            <select [tabindex]="10 + cacLoaiThueHSMTFA.controls.length + 1" class="form-control" formControlName="donViTienTe">
+                            <select appEnterPreventDefault [tabindex]="10 + cacLoaiThueHSMTFA.controls.length + 1" class="form-control" formControlName="donViTienTe">
                                 <option [ngValue]="null">--Chọn--</option>
                                 <option [value]="'VNĐ'">VNĐ</option>
                                 <option [value]="'USD'">USD</option>
@@ -191,11 +191,11 @@
             </div>
         </div>
         <div class="text-center mt-4">
-            <button [tabindex]="10 + cacLoaiThueHSMTFA.controls.length + 3" class="btn border" routerLink="../condition-contract">
+            <button [tabindex]="10 + cacLoaiThueHSMTFA.controls.length + 3" class="btn border" (keyup)="routerLink($event, 'condition-contract')" routerLink="../condition-contract">
                 <i class="fa font-size-3 mr-3 fa-angle-left" aria-hidden="true"></i>
                 Trở về
             </button>
-            <button [tabindex]="10 + cacLoaiThueHSMTFA.controls.length + 2" class="btn btn-primary ml-1" routerLink="../special-requirement">
+            <button [tabindex]="10 + cacLoaiThueHSMTFA.controls.length + 2" class="btn btn-primary ml-1" (keyup)="routerLink($event, 'special-requirement')" routerLink="../special-requirement">
                 Tiếp
                 <i class="fa font-size-3 ml-3 fa-angle-right" aria-hidden="true"></i>
             </button>

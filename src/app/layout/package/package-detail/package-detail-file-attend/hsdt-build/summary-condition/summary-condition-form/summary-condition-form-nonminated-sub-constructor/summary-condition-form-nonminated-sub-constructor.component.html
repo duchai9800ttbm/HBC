@@ -7,7 +7,7 @@
                     <div class="col-md-3 text-nowrap">{{i + 1}}.<span class="ml-3">Gói công việc {{i + 1}}</span><i class="fa fa-plus-square-o ml-3 pointer"
                             aria-hidden="true" (click)="addFormArrayControl('packageWork')" *ngIf="(i + 1) === packageWorkFA.length && !isModeView"></i></div>
                     <div class="col-md-8">
-                        <input [tabindex]="i*3 + 1" class="form-control" formControlName="tenGoiCongViec" placeholder="Tên gói công việc {{i + 1}}">
+                        <input appEnterPreventDefault [appAutoFocus]="i === 0" [tabindex]="i*3 + 1" class="form-control" formControlName="tenGoiCongViec" placeholder="Tên gói công việc {{i + 1}}">
                     </div>
                     <div class="col-md-1 pl-0" *ngIf="i !== 0 && !isModeView"><i (click)="removeFormArrayControl('packageWork', i)" class="fa fa-times-circle pointer" style="color: #c0c0c0; font-size: 1.2rem" aria-hidden="true"></i></div>
                 </div>
@@ -31,11 +31,11 @@
             </div>
         </div>
         <div class="text-center mt-4">
-                <button [tabindex]="packageWorkFA.controls.length * 3 + 2" class="btn border" routerLink="../scope">
+                <button [tabindex]="packageWorkFA.controls.length * 3 + 2" class="btn border" (keyup)="routerLink($event, 'scope')" routerLink="../scope">
                     <i class="fa font-size-3 mr-3 fa-angle-left" aria-hidden="true"></i>
                     Trở về
                 </button>
-                <button [tabindex]="packageWorkFA.controls.length * 3 + 1" class="btn btn-primary ml-1" routerLink="../main-material">
+                <button [tabindex]="packageWorkFA.controls.length * 3 + 1" class="btn btn-primary ml-1" (keyup)="routerLink($event, 'main-material')" routerLink="../main-material">
                     Tiếp
                     <i class="fa font-size-3 ml-3 fa-angle-right" aria-hidden="true"></i>
                 </button>

@@ -15,7 +15,7 @@
                         <i class="fa fa-plus-square-o ml-3 pointer" aria-hidden="true" (click)="addFormArrayControl('scopeInclude')" *ngIf="(i + 1) === scopeIncludeFA.length && !isModeView"></i>
                     </div>
                     <div class="col-md-8">
-                        <input [tabindex]="i * 2 + 1" class="form-control" appEnterPreventDefault formControlName="congTac" placeholder="Công tác {{i + 1}}">
+                        <input [appAutoFocus]="i === 0" [tabindex]="i * 2 + 1" class="form-control" appEnterPreventDefault formControlName="congTac" placeholder="Công tác {{i + 1}}">
                     </div>
                     <div class="col-md-1 pl-0" *ngIf="i !== 0 && !isModeView">
                         <i (click)="removeFormArrayControl('scopeInclude', i)" class="fa fa-times-circle pointer times-color" aria-hidden="true"></i>
@@ -60,13 +60,13 @@
         <div class="text-center mt-4">
                 <!-- routerLink="../stackholder" -->
                 <!-- (keyup)="routerLink($event, 'stackholder')" -->
-            <button [tabindex]="scopeIncludeFA.controls.length * 2 + scopeNotIncludeFA.controls.length * 2 + 2" class="btn border" routerLink="../stackholder">
+            <button [tabindex]="scopeIncludeFA.controls.length * 2 + scopeNotIncludeFA.controls.length * 2 + 2" class="btn border" (keyup)="routerLink($event, 'stackholder')" routerLink="../stackholder">
                 <i class="fa font-size-3 mr-3 fa-angle-left" aria-hidden="true"></i>
                 Trở về
             </button>
             <!--  -->
             <!-- (keyup)="routerLink($event, 'nonminate')" -->
-            <button [tabindex]="scopeIncludeFA.controls.length * 2 + scopeNotIncludeFA.controls.length * 2 + 1" class="btn btn-primary ml-1" routerLink="../nonminate">
+            <button [tabindex]="scopeIncludeFA.controls.length * 2 + scopeNotIncludeFA.controls.length * 2 + 1" class="btn btn-primary ml-1" (keyup)="routerLink($event, 'nonminate')" routerLink="../nonminate">
                 Tiếp
                 <i class="fa font-size-3 ml-3 fa-angle-right" aria-hidden="true"></i>
             </button>

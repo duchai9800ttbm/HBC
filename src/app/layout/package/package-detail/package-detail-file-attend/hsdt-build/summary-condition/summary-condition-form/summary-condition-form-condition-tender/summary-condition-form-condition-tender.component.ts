@@ -9,6 +9,7 @@ import { PackageDetailComponent } from '../../../../../package-detail.component'
 import { PackageService } from '../../../../../../../../shared/services/package.service';
 import { ProposeTenderParticipateRequest } from '../../../../../../../../shared/models/api-request/package/propose-tender-participate-request';
 import { Currency } from '../../../../../../../../shared/models/currency';
+import { Router } from '../../../../../../../../../../node_modules/@angular/router';
 
 @Component({
     selector: 'app-summary-condition-form-condition-tender',
@@ -23,16 +24,19 @@ export class SummaryConditionFormConditionTenderComponent implements OnInit {
     dataPTPReport: ProposeTenderParticipateRequest;
     unitGiatri: Currency;
     unitTime: Currency;
+    bidOpportunityId: number;
     constructor(
         private fb: FormBuilder,
         private hoSoDuThauService: HoSoDuThauService,
-        private packageService: PackageService
+        private packageService: PackageService,
+        private router: Router,
     ) { }
 
     get cacLoaiThueHSMTFA(): FormArray {
         return (this.dieuKienHSMTForm.get('theoHSMT') as FormGroup).controls.cacLoaiThue as FormArray;
     }
     ngOnInit() {
+        this.bidOpportunityId = PackageDetailComponent.packageId;
         this.dataPTPReport = this.hoSoDuThauService.getDataProposedTender();
         this.hoSoDuThauService.watchLiveformState().subscribe(data => {
             this.isModeView = data.isModeView;
@@ -312,4 +316,10 @@ export class SummaryConditionFormConditionTenderComponent implements OnInit {
             this.isShowInputBox = this.dieuKienHSMTForm.get('theoHSMT').get('thoiGianHoanThanhTheoNhaThau').value;
         }
     }
+
+    routerLink(e, link) {
+        if (e.code === 'Enter') {
+          this.router.navigate([`/package/detail/${this.bidOpportunityId}/attend/build/summary/form/create/${link}`]);
+        }
+      }
 }

@@ -5,6 +5,8 @@ import { TenderNonminatedSubContractor } from '../../../../../../../../shared/mo
 import { WorkPackage } from '../../../../../../../../shared/models/package/work-package';
 import { DanhSachNhaThau } from '../../../../../../../../shared/models/ho-so-du-thau/danh-sach-nha-thau';
 import { HoSoDuThauService } from '../../../../../../../../shared/services/ho-so-du-thau.service';
+import { Router } from '../../../../../../../../../../node_modules/@angular/router';
+import { PackageDetailComponent } from '../../../../../package-detail.component';
 
 @Component({
   selector: 'app-summary-condition-form-nonminated-sub-constructor',
@@ -16,15 +18,18 @@ export class SummaryConditionFormNonminatedSubConstructorComponent implements On
   nonminateForm: FormGroup;
   nhaThauPhu = new Array<DanhSachNhaThau>();
   isModeView = false;
+  bidOpportunityId: number;
   get packageWorkFA(): FormArray {
     return this.nonminateForm.get('packageWork') as FormArray;
   }
   constructor(
     private fb: FormBuilder,
-    private hoSoDuThauService: HoSoDuThauService
+    private hoSoDuThauService: HoSoDuThauService,
+    private router: Router,
   ) { }
 
   ngOnInit() {
+    this.bidOpportunityId = PackageDetailComponent.packageId;
     this.hoSoDuThauService.watchLiveformState().subscribe(data => {
       this.isModeView = data.isModeView;
     });
@@ -91,4 +96,9 @@ export class SummaryConditionFormNonminatedSubConstructorComponent implements On
     formArray.removeAt(idx);
   }
 
+  routerLink(e, link) {
+    if (e.code === 'Enter') {
+      this.router.navigate([`/package/detail/${this.bidOpportunityId}/attend/build/summary/form/create/${link}`]);
+    }
+  }
 }

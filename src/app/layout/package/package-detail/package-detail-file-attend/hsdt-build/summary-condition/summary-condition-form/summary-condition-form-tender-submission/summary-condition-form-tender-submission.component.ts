@@ -3,6 +3,8 @@ import { FormGroup, FormBuilder, FormArray } from '@angular/forms';
 import { HoSoDangLuuY } from '../../../../../../../../shared/models/ho-so-du-thau/danh-sach-vat-tu';
 import { HoSoDuThauService } from '../../../../../../../../shared/services/ho-so-du-thau.service';
 import { DictionaryItemText } from '../../../../../../../../shared/models';
+import { PackageDetailComponent } from '../../../../../package-detail.component';
+import { Router } from '../../../../../../../../../../node_modules/@angular/router';
 
 @Component({
   selector: 'app-summary-condition-form-tender-submission',
@@ -14,9 +16,11 @@ export class SummaryConditionFormTenderSubmissionComponent implements OnInit {
   hoSoDangLuuY = new HoSoDangLuuY();
   hoSoDangLuuYForm: FormGroup;
   isModeView = false;
+  bidOpportunityId: number;
   constructor(
     private hoSoDuThauService: HoSoDuThauService,
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private router: Router,
   ) { }
 
 
@@ -24,6 +28,7 @@ export class SummaryConditionFormTenderSubmissionComponent implements OnInit {
     return this.hoSoDangLuuYForm.get('taiLieuLuuY') as FormArray;
   }
   ngOnInit() {
+    this.bidOpportunityId = PackageDetailComponent.packageId;
     this.hoSoDuThauService.watchLiveformState().subscribe(data => {
       this.isModeView = data.isModeView;
     });
@@ -92,5 +97,10 @@ export class SummaryConditionFormTenderSubmissionComponent implements OnInit {
     formArray.removeAt(idx);
   }
 
+  routerLink(e, link) {
+    if (e.code === 'Enter') {
+      this.router.navigate([`/package/detail/${this.bidOpportunityId}/attend/build/summary/form/create/${link}`]);
+    }
+  }
 
 }
