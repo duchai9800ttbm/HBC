@@ -996,6 +996,18 @@
     }
 }
 
+input.customer__input {
+    width: 35%;
+    color: #fff;
+    background-color: transparent;
+    border: 1px solid #fff;
+    border-radius: 5px;
+
+    &--view {
+        border: none;
+    }
+}
+
 input {
     background-color: #ffffff;
     border: none;
