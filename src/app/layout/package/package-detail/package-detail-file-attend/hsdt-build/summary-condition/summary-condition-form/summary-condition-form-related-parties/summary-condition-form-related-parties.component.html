@@ -14,7 +14,6 @@
                         <div class="w-3 ml-3">
                             <span class="form-control form-control-customer">
                                 <textarea disabled="true" class="form-control b-textarea h-100"></textarea>
-
                             </span>
                         </div>
 
@@ -32,7 +31,7 @@
                                 <div>Ghi chú</div>
                             </div>
                             <span class="form-control form-control-custom w-80">
-                                <textarea #autofocusone tabindex="1" disabled="true" class="form-control b-textarea h-100"></textarea>
+                                <textarea #autofocusone disabled="true" class="form-control b-textarea h-100"></textarea>
                             </span>
                         </div>
                     </div>
@@ -42,14 +41,14 @@
                         <div class="w-3 ml-3">
                             <span class="form-control form-control-customer"> {{customer?.customerName}} </span>
                         </div>
-
                         <div class="w-3 ml-3 d-flex flex-row">
                             <div class="label-contact w-20 text-center center-parent">
                                 <div>Liên hệ</div>
                             </div>
                             <span class="form-control form-control-custom w-80">
                                 <span *ngFor="let contact of customer.contacts; index as k">
-                                    {{contact.name}}<span *ngIf="customer.contacts.length > 1">, </span>
+                                    {{contact.name}}
+                                    <span *ngIf="customer.contacts.length > 1">, </span>
                                 </span>
                             </span>
                         </div>
@@ -58,7 +57,8 @@
                                 <div>Ghi chú</div>
                             </div>
                             <span class="form-control form-control-custom w-80">
-                                <textarea id="ghichu{{k}}" tabindex="k+2" [disabled]="isModeView" class="form-control b-textarea h-100" (input)="noteChange($event)" [(ngModel)]="customer.note"></textarea>
+                                <textarea id="ghichu{{k}}" [autofocus]="returnIndex(i,k) === 1" [tabindex]="returnIndex(i,k)" [disabled]="isModeView" class="form-control b-textarea h-100"
+                                    (input)="noteChange($event)" [(ngModel)]="customer.note"></textarea>
                             </span>
                         </div>
                     </div>
@@ -71,11 +71,11 @@
 
     </div>
     <div class="text-center mt-4">
-        <button class="btn border" routerLink="../info">
+        <button [tabindex]="maxIndex() + 2" class="btn border" routerLink="../info">
             <i class="fa font-size-3 mr-3 fa-angle-left" aria-hidden="true"></i>
             Trở về
         </button>
-        <button tabindex="1" class="btn btn-primary ml-1" routerLink="../scope">
+        <button [tabindex]="maxIndex() + 1" class="btn btn-primary ml-1" routerLink="../scope">
             Tiếp
             <i class="fa font-size-3 ml-3 fa-angle-right" aria-hidden="true"></i>
         </button>

@@ -85,6 +85,7 @@ export class MeetingKickoffComponent implements OnInit, OnDestroy {
   subscription: Subscription;
   listEmailSended: EmailItemModel[];
   isAgain: boolean;
+  isSendMailKickOff = false;
   constructor(
     private modalService: BsModalService,
     private router: Router,
@@ -139,11 +140,11 @@ export class MeetingKickoffComponent implements OnInit, OnDestroy {
       this.XoaFilePresentation = this.listPermissionScreen.includes('XoaFilePresentation');
     });
 
-    const status$ = this.packageService.statusPackageValue$.subscribe(status => {
-          this.statusPackage = status;
+    this.packageService.getInforPackageID(this.currentPackageId).subscribe(result => {
+      this.statusPackage = this.checkStatusPackage[result.stageStatus.id];
+      this.isSendMailKickOff = result.isSendMailKickOff;
     });
-    this.subscription.add(status$);
-    this.listEmailSendedFuc();
+
     this.textMetting = 'Đã nhận tài liệu';
     this.textTitleSendMail = 'Gửi thư thông báo họp kich-off dự án';
     this.doNotiMeeting = false;
@@ -163,11 +164,13 @@ export class MeetingKickoffComponent implements OnInit, OnDestroy {
       forcePasteAsPlainText: false,
     };
 
+
     this.emailService.searchbymail('').subscribe(response => {
       this.listEmailSearchTo = response;
       this.listEmailSearchCc = response;
       this.listEmailSearchBcc = response;
     });
+
   }
 
   ngOnDestroy() {
@@ -176,19 +179,19 @@ export class MeetingKickoffComponent implements OnInit, OnDestroy {
     }
   }
 
-  listEmailSendedFuc() {
-    const filterModel = new EmailFilter();
-    filterModel.category = 'Kick-off';
-    this.loading = true;
-    this.emailService.searchWithFilter(this.currentPackageId, '', filterModel, 0, 100)
-      .subscribe(result => {
-        this.listEmailSended = result.items;
-      }, err => {});
-  }
+  // listEmailSendedFuc() {
+  //   const filterModel = new EmailFilter();
+  //   filterModel.category = 'Kick-off';
+  //   this.loading = true;
+  //   this.emailService.searchWithFilter(this.currentPackageId, '', filterModel, 0, 100)
+  //     .subscribe(result => {
+  //       this.listEmailSended = result.items;
+  //     }, err => { });
+  // }
 
   renderIndex(i, j) {
     let dem = 0;
-    for ( let m = 0; m < this.listEmailSended.length; m ++) {
+    for (let m = 0; m < this.listEmailSended.length; m++) {
       if (m < i) {
         dem = dem + this.listEmailSended[m].to.length;
       }
@@ -258,7 +261,14 @@ export class MeetingKickoffComponent implements OnInit, OnDestroy {
   }
 
   modelViewListData(template: TemplateRef<any>) {
-    this.modalViewData = this.modalService.show(template);
+    const filterModel = new EmailFilter();
+    filterModel.category = 'Kick-off';
+    this.loading = true;
+    this.emailService.searchWithFilter(this.currentPackageId, '', filterModel, 0, 100)
+      .subscribe(result => {
+        this.listEmailSended = result.items;
+        this.modalViewData = this.modalService.show(template);
+      }, err => { });
   }
   // Gửi thư thông báo kick-off
   uploadfile(event) {
@@ -278,7 +288,8 @@ export class MeetingKickoffComponent implements OnInit, OnDestroy {
       this.emailModel.bidOpportunityId = this.currentPackageId;
       this.spinner.show();
       this.detailResultPackageService.notiMeetingKickOff(this.emailModel, this.file, this.isAgain).subscribe(result => {
-        this.packageService.changeStatusPackageValue(this.checkStatusPackage.DaThongBaoHopKickOff.text);
+        // this.packageService.changeStatusPackageValue(this.checkStatusPackage.DaThongBaoHopKickOff.text);
+        this.isSendMailKickOff = true;
         this.emailModel = new SendEmailModel();
         this.file = [];
         this.alertService.success('Gửi thư thông báo họp kick-off dự án thành công!');

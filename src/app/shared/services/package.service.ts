@@ -443,6 +443,7 @@ export class PackageService {
                 projectName: result.projectName,
                 isSubmittedHSDT: result.isSubmittedHSDT,
                 isClosedHSDT: result.isClosedHSDT,
+                isSendMailKickOff:  result.isSendMailKickOff,
                 isChotHoSo: result.isChotHoSo,
                 interviewInvitation: result.interviewInvitation ? {
                     interviewTimes: result.interviewInvitation.interviewTimes.toString(),
@@ -513,7 +514,7 @@ export class PackageService {
                 progress: result.progress,
                 acceptanceReason: result.acceptanceReason,
                 unacceptanceReason: result.unacceptanceReason,
-                cancelReason: result.cancelReason,
+                cancelReason: result.cancelReasonName,
                 evaluation: result.evaluation && {
                     id: result.evaluation.key,
                     text: result.evaluation.value

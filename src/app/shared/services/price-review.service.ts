@@ -235,7 +235,7 @@ export class PriceReviewService {
     modelRequest.isDraftVersion = formValue.isDraftVersion ? formValue.isDraftVersion : false;
     modelRequest.approvalDate = +(DateTimeConvertHelper.fromDtObjectToTimestamp(formValue.approvalDate));
     modelRequest.approvalTimes = formValue.approvalTimes;
-    modelRequest.otherCompanyCustomerId = formValue.otherCompanyCustomerId;
+    modelRequest.otherCompany = formValue.otherCompany;
     modelRequest.interviewTimes = formValue.interviewTimes;
     modelRequest.documentName = formValue.documentName;
     modelRequest.projectInformation = {
@@ -449,7 +449,7 @@ export class PriceReviewService {
       approvalDate: model.approvalDate,
       approvalTimes: model.approvalTimes,
       interviewTimes: model.interviewTimes,
-      otherCompanyCustomerId: (model.otherCompanyCustomer) ? model.otherCompanyCustomer.customerId : '',
+      otherCompany: model.otherCompany,
       isApprovedByTenderLeader: model.isApprovedByTenderLeader,
       isApprovedByTenderManager: model.isApprovedByTenderManager,
       isApprovedByBoardOfDirector: model.isApprovedByBoardOfDirector,

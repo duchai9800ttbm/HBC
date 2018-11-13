@@ -7,6 +7,8 @@ import { HoSoDuThauService } from '../../../../../../../../shared/services/ho-so
 import { PhamViCongViec } from '../../../../../../../../shared/models/ho-so-du-thau/pham-vi-cong-viec';
 import { ThongTinDoiTac } from '../../../../../../../../shared/models/ho-so-du-thau/thong-tin-doi-tac';
 import { PhamViCongViecItem } from '../../../../../../../../shared/models/ho-so-du-thau/pham-vi-cong-viec-item';
+import { PackageDetailComponent } from '../../../../../package-detail.component';
+import { Router } from '../../../../../../../../../../node_modules/@angular/router';
 
 @Component({
   selector: 'app-summary-condition-form-scope-work',
@@ -17,6 +19,7 @@ export class SummaryConditionFormScopeWorkComponent implements OnInit {
   dataStepScope = new PhamViCongViec();
   scopeWorkForm: FormGroup;
   isModeView = false;
+  bidOpportunityId: number;
   get scopeIncludeFA(): FormArray {
     return this.scopeWorkForm.get('scopeInclude') as FormArray;
   }
@@ -27,10 +30,12 @@ export class SummaryConditionFormScopeWorkComponent implements OnInit {
 
   constructor(
     private hoSoDuThauService: HoSoDuThauService,
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private router: Router,
   ) { }
 
   ngOnInit() {
+    this.bidOpportunityId = PackageDetailComponent.packageId;
     this.hoSoDuThauService.watchLiveformState().subscribe(data => {
       this.isModeView = data.isModeView;
     });
@@ -127,8 +132,10 @@ export class SummaryConditionFormScopeWorkComponent implements OnInit {
     formArray.removeAt(idx);
   }
 
-  routerLink(e) {
-    console.log('evenet-click', e);
+  routerLink(e, link) {
+    if (e.code === 'Enter') {
+      this.router.navigate([`/package/detail/${this.bidOpportunityId}/attend/build/summary/form/create/${link}`]);
+    }
   }
 
 }

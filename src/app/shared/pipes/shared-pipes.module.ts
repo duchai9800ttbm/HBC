@@ -11,6 +11,7 @@ import { SafePipe } from './safe.pipe';
 import { VnCurrencyPipeNoPlaceholder } from './vn-currency-pipe-noplaceholder.module';
 import { NumberAreaPipeNoplaceholder } from './number-area-noplaceholer.pipe';
 import { SortAlphabet } from './array-sorting-alphabet.pipe';
+import { TruncateDecimal } from './truncate-decimal';
 
 @NgModule({
         imports: [
@@ -27,7 +28,8 @@ import { SortAlphabet } from './array-sorting-alphabet.pipe';
                 NumberAreaPipe,
                 NumberAreaPipeNoplaceholder,
                 SafeUrlPipe,
-                SafePipe
+                SafePipe,
+                TruncateDecimal
         ],
         exports: [
                 VnCurrencyPipe,
@@ -40,7 +42,8 @@ import { SortAlphabet } from './array-sorting-alphabet.pipe';
                 NumberAreaPipe,
                 NumberAreaPipeNoplaceholder,
                 SafeUrlPipe,
-                SafePipe
+                SafePipe,
+                TruncateDecimal
         ],
 })
 export class SharedPipesModule { }

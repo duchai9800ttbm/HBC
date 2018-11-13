@@ -15,7 +15,7 @@
                         <i class="fa fa-plus-square-o ml-3 pointer" aria-hidden="true" (click)="addFormArrayControl('scopeInclude')" *ngIf="(i + 1) === scopeIncludeFA.length && !isModeView"></i>
                     </div>
                     <div class="col-md-8">
-                        <input class="form-control" appEnterPreventDefault formControlName="congTac" placeholder="Công tác {{i + 1}}">
+                        <input tabindex="1" class="form-control" appEnterPreventDefault formControlName="congTac" placeholder="Công tác {{i + 1}}">
                     </div>
                     <div class="col-md-1 pl-0" *ngIf="i !== 0 && !isModeView">
                         <i (click)="removeFormArrayControl('scopeInclude', i)" class="fa fa-times-circle pointer times-color" aria-hidden="true"></i>
@@ -24,7 +24,7 @@
                 <div class="row mt-3">
                     <div class="col-md-3"></div>
                     <div class="col-md-8">
-                        <textarea formControlName="dienGiaiCongTac" placeholder="Diễn giải công tác {{i + 1}}" class="form-control"></textarea>
+                        <textarea tabindex="2" formControlName="dienGiaiCongTac" placeholder="Diễn giải công tác {{i + 1}}" class="form-control"></textarea>
                     </div>
                 </div>
             </div>
@@ -43,7 +43,7 @@
                         <i class="fa fa-plus-square-o ml-3 pointer" aria-hidden="true" (click)="addFormArrayControl('scopeNotInclude')" *ngIf="(i + 1) === scopeNotIncludeFA.length && !isModeView"></i>
                     </div>
                     <div class="col-md-8">
-                        <input class="form-control" appEnterPreventDefault formControlName="congTac" placeholder="Công tác {{i + 1}}">
+                        <input tabindex="3" class="form-control" appEnterPreventDefault formControlName="congTac" placeholder="Công tác {{i + 1}}">
                     </div>
                     <div class="col-md-1 pl-0" *ngIf="i !== 0 && !isModeView">
                         <i (click)="removeFormArrayControl('scopeNotInclude', i)" class="fa fa-times-circle pointer times-color" aria-hidden="true"></i>
@@ -52,17 +52,19 @@
                 <div class="row mt-3">
                     <div class="col-md-3"></div>
                     <div class="col-md-8">
-                        <textarea formControlName="dienGiaiCongTac" placeholder="Diễn giải công tác {{i + 1}}" class="form-control"></textarea>
+                        <textarea tabindex="4" formControlName="dienGiaiCongTac" placeholder="Diễn giải công tác {{i + 1}}" class="form-control"></textarea>
                     </div>
                 </div>
             </div>
         </div>
         <div class="text-center mt-4">
-            <button class="btn border" routerLink="../stackholder">
+                <!-- routerLink="../stackholder" -->
+            <button tabindex="4" class="btn border" (keyup)="routerLink($event, 'stackholder')">
                 <i class="fa font-size-3 mr-3 fa-angle-left" aria-hidden="true"></i>
                 Trở về
             </button>
-            <button class="btn btn-primary ml-1" (keyup)="routerLink($event.target.value)" routerLink="../nonminate">
+            <!-- routerLink="../nonminate" -->
+            <button tabindex="5" class="btn btn-primary ml-1" (keyup)="routerLink($event, 'nonminate')">
                 Tiếp
                 <i class="fa font-size-3 ml-3 fa-angle-right" aria-hidden="true"></i>
             </button>

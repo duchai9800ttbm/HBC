@@ -15,8 +15,8 @@
                 <button *ngIf="(statusPackage.id === checkStatusPackage.DaThongBaoCacBenLienQuan.id)" class="btn btn-primary ml-1" (click)="transferofdocuments()">
                     Chuyển giao tài liệu
                 </button>
-                <button *ngIf="(statusPackage.id === checkStatusPackage.DaChuyenGiaoTaiLieu.id) || (statusPackage.id === checkStatusPackage.ChuaNhanTaiLieu.id)"
-                    class="btn btn-primary ml-1" (click)="manageTransferDocument(ViewListData)">
+                <button *ngIf="(statusPackage.id === checkStatusPackage.DaChuyenGiaoTaiLieu.id) || (statusPackage.id === checkStatusPackage.ChuaNhanTaiLieu.id)
+                || (statusPackage.id === checkStatusPackage.DaNhanTaiLieu.id)" class="btn btn-primary ml-1" (click)="manageTransferDocument(ViewListData)">
                     Quản lý chuyển giao tài liệu
                 </button>
                 <!-- <button class="btn btn-primary ml-1" (click)="downloadTemplate()">
@@ -1007,8 +1007,8 @@
                                         </td>
                                         <td class="select-filter">{{ itemsTranferListByDepart.receivedEmployee?.employeeName}}</td>
                                         <td class="select-filter">
-                                            <div *ngIf="itemsTranferListByDepart.receiveStatus?.key === 'ChuaNhan'" class="manage-table--status" [class.daNhan]="itemsTranferListByDepart.receiveStatus?.key === 'DaNhan'"
-                                                [class.chuaNhan]="itemsTranferListByDepart.receiveStatus?.key === 'ChuaNhan'"
+                                            <!-- *ngIf="itemsTranferListByDepart.receiveStatus?.key === 'ChuaNhan'" -->
+                                            <div class="manage-table--status" [class.daNhan]="itemsTranferListByDepart.receiveStatus?.key === 'DaNhan'" [class.chuaNhan]="itemsTranferListByDepart.receiveStatus?.key === 'ChuaNhan'"
                                                 [class.yeuCauGuiLai]="itemsTranferListByDepart.receiveStatus?.key === 'YeuCauGuiLai'"
                                                 [class.quaHanNhanTaiLieu]="itemsTranferListByDepart.receiveStatus?.key === 'QuaHanNhanTaiLieu'">
                                                 {{ itemsTranferListByDepart.receiveStatus?.value}}
