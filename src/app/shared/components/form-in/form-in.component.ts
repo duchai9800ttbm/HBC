@@ -77,7 +77,9 @@ export class FormInComponent implements OnInit {
     popupWindow.document.open();
     popupWindow.document.write(`${this.htmlContent}`);
     popupWindow.print();
-    popupWindow.document.close();
+    setTimeout(() => {
+      popupWindow.document.close();
+    }, 400);
 
   }
 
