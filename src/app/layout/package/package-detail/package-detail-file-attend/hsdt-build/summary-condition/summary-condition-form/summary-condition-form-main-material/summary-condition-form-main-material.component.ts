@@ -6,6 +6,8 @@ import { TenderMaterialToSupplier } from '../../../../../../../../shared/models/
 import { DictionaryItemText } from '../../../../../../../../shared/models';
 import { HoSoDuThauService } from '../../../../../../../../shared/services/ho-so-du-thau.service';
 import { DanhSachVatTu } from '../../../../../../../../shared/models/ho-so-du-thau/danh-sach-vat-tu';
+import { Router } from '../../../../../../../../../../node_modules/@angular/router';
+import { PackageDetailComponent } from '../../../../../package-detail.component';
 
 @Component({
   selector: 'app-summary-condition-form-main-material',
@@ -17,15 +19,18 @@ export class SummaryConditionFormMainMaterialComponent implements OnInit {
   mainMaterialForm: FormGroup;
   mainMaterial = new Array<DanhSachVatTu>();
   isModeView = false;
+  bidOpportunityId: number;
   get materialsFA(): FormArray {
     return this.mainMaterialForm.get('materials') as FormArray;
   }
   constructor(
     private fb: FormBuilder,
-    private hoSoDuThauService: HoSoDuThauService
+    private hoSoDuThauService: HoSoDuThauService,
+    private router: Router,
   ) { }
 
   ngOnInit() {
+    this.bidOpportunityId = PackageDetailComponent.packageId;
     this.hoSoDuThauService.watchLiveformState().subscribe(data => {
       this.isModeView = data.isModeView;
     });
@@ -89,4 +94,9 @@ export class SummaryConditionFormMainMaterialComponent implements OnInit {
     formArray.removeAt(idx);
   }
 
+  routerLink(e, link) {
+    if (e.code === 'Enter') {
+      this.router.navigate([`/package/detail/${this.bidOpportunityId}/attend/build/summary/form/create/${link}`]);
+    }
+  }
 }

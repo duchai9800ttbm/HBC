@@ -5,27 +5,27 @@
         <div class="row mt-3">
             <div class="col-md-3">1. Nơi nộp</div>
             <div class="col-md-8">
-                <input tabindex="1" formControlName="noiNop" class="form-control">
+                <input appEnterPreventDefault appAutoFocus tabindex="1" formControlName="noiNop" class="form-control">
             </div>
         </div>
         <div class="row mt-3">
             <div class="col-md-3">2. Người nhận</div>
             <div class="col-md-8">
-                <input tabindex="2" formControlName="nguoiNhan" class="form-control">
+                <input appEnterPreventDefault tabindex="2" formControlName="nguoiNhan" class="form-control">
             </div>
         </div>
         <div class="row mt-3">
             <div class="col-md-3">3. Hạn chót nộp hồ sơ</div>
             <div class="col-md-8">
-                <kendo-datepicker tabindex="3" formControlName="hanNop" class="form-control pointer-none"></kendo-datepicker>
+                <kendo-datepicker appEnterPreventDefault tabindex="3" formControlName="hanNop" class="form-control pointer-none"></kendo-datepicker>
             </div>
         </div>
         <div class="text-center mt-4">
-            <button tabindex="5" class="btn border" routerLink="../tender-submission">
+            <button tabindex="5" class="btn border" (keyup)="routerLink($event, 'tender-submission')" routerLink="../tender-submission">
                 <i class="fa font-size-3 mr-3 fa-angle-left" aria-hidden="true"></i>
                 Trở về
             </button>
-            <button tabindex="4" class="btn btn-primary ml-1" routerLink="../tender-clarify">
+            <button tabindex="4" class="btn btn-primary ml-1" (keyup)="routerLink($event, 'tender-clarify')" routerLink="../tender-clarify">
                 Tiếp
                 <i class="fa font-size-3 ml-3 fa-angle-right" aria-hidden="true"></i>
             </button>

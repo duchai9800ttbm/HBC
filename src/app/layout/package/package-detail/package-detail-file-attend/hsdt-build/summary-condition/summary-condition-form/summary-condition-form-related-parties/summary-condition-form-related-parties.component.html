@@ -57,7 +57,7 @@
                                 <div>Ghi chú</div>
                             </div>
                             <span class="form-control form-control-custom w-80">
-                                <textarea id="ghichu{{k}}" [autofocus]="returnIndex(i,k) === 1" [tabindex]="returnIndex(i,k)" [disabled]="isModeView" class="form-control b-textarea h-100"
+                                <textarea id="ghichu{{k}}" [appAutoFocus]="returnIndex(i,k) === 1" [tabindex]="returnIndex(i,k)" [disabled]="isModeView" class="form-control b-textarea h-100"
                                     (input)="noteChange($event)" [(ngModel)]="customer.note"></textarea>
                             </span>
                         </div>
@@ -75,7 +75,7 @@
             <i class="fa font-size-3 mr-3 fa-angle-left" aria-hidden="true"></i>
             Trở về
         </button>
-        <button [tabindex]="maxIndex() + 1" class="btn btn-primary ml-1" routerLink="../scope">
+        <button [appAutoFocus]="!stakeHolderList || stakeHolderList.length === 0" [tabindex]="maxIndex() + 1" class="btn btn-primary ml-1" routerLink="../scope">
             Tiếp
             <i class="fa font-size-3 ml-3 fa-angle-right" aria-hidden="true"></i>
         </button>

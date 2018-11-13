@@ -12,8 +12,8 @@ import { PackageDetailComponent } from '../../../../../package-detail.component'
   templateUrl: './summary-condition-form-info.component.html',
   styleUrls: ['./summary-condition-form-info.component.scss']
 })
-export class SummaryConditionFormInfoComponent implements OnInit, AfterViewInit {
-  @ViewChild('autofocus') autofocus;
+export class SummaryConditionFormInfoComponent implements OnInit {
+  // @ViewChild('autofocus') autofocus;
   @ViewChild('uploadMasterplan') uploadMasterplan;
   @ViewChild('uploadMasterplanButton') uploadMasterplanButton;
   @ViewChild('uploadPhoiCanh') uploadPhoiCanh;
@@ -47,9 +47,9 @@ export class SummaryConditionFormInfoComponent implements OnInit, AfterViewInit 
     });
     this.loadData();
   }
-  ngAfterViewInit() {
-    this.autofocus.nativeElement.focus();
-  }
+  // ngAfterViewInit() {
+  //   this.autofocus.nativeElement.focus();
+  // }
 
   createForm() {
     this.thongTinDuAnForm = this.fb.group({

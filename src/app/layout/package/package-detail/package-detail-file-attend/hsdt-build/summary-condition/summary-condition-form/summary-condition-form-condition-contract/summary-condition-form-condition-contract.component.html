@@ -10,7 +10,7 @@
                     </div>
                     <div class="col-md-8">
                         <span class="custom-dropdown w-100">
-                            <select tabindex="1" class="form-control" formControlName="name">
+                            <select appAutoFocus tabindex="1" class="form-control" formControlName="name">
                                 <option [ngValue]="null">--Chọn--</option>
                                 <option [value]="'MainContract'">Tổng thầu (Main Contract)</option>
                                 <option [value]="'SubContract'">Thầu phụ (Sub-Contract)</option>
@@ -71,7 +71,7 @@
                     <div class="col-md-4">
                         <div formGroupName="dieuKienTheoHBC">
                             <div formGroupName="baoLanhThucHien">
-                                <input tabindex="2" formControlName="phanTram" appInputNumberNegativeDecimal [decimal]="true" class="form-control">
+                                <input appEnterPreventDefault tabindex="2" formControlName="phanTram" appInputNumberNegativeDecimal [decimal]="true" class="form-control">
                             </div>
                         </div>
                     </div>
@@ -87,7 +87,7 @@
                     <div class="col-md-4">
                         <div formGroupName="dieuKienTheoHSMT">
                             <div formGroupName="baoLanhThucHien">
-                                <input tabindex="3" formControlName="hieuLuc" class="form-control">
+                                <input appEnterPreventDefault tabindex="3" formControlName="hieuLuc" class="form-control">
                             </div>
 
                         </div>
@@ -95,7 +95,7 @@
                     <div class="col-md-4">
                         <div formGroupName="dieuKienTheoHBC">
                             <div formGroupName="baoLanhThucHien">
-                                <input tabindex="4" formControlName="hieuLuc" class="form-control">
+                                <input appEnterPreventDefault tabindex="4" formControlName="hieuLuc" class="form-control">
                             </div>
 
                         </div>
@@ -132,7 +132,7 @@
                     <div class="col-md-4">
                         <div formGroupName="dieuKienTheoHBC">
                             <div formGroupName="baoLanhTamUng">
-                                <input tabindex="5" formControlName="phanTram" appInputNumberNegativeDecimal [decimal]="true" class="form-control">
+                                <input appEnterPreventDefault tabindex="5" formControlName="phanTram" appInputNumberNegativeDecimal [decimal]="true" class="form-control">
                             </div>
                         </div>
                     </div>
@@ -148,7 +148,7 @@
                     <div class="col-md-4">
                         <div formGroupName="dieuKienTheoHSMT">
                             <div formGroupName="baoLanhTamUng">
-                                <input tabindex="6" formControlName="hieuLuc" class="form-control">
+                                <input  appEnterPreventDefault tabindex="6" formControlName="hieuLuc" class="form-control">
                             </div>
 
                         </div>
@@ -156,7 +156,7 @@
                     <div class="col-md-4">
                         <div formGroupName="dieuKienTheoHBC">
                             <div formGroupName="baoLanhTamUng">
-                                <input tabindex="7" formControlName="hieuLuc" class="form-control">
+                                <input appEnterPreventDefault tabindex="7" formControlName="hieuLuc" class="form-control">
                             </div>
 
                         </div>
@@ -192,7 +192,7 @@
                         <div formGroupName="dieuKienTheoHBC">
                             <div formGroupName="thanhToan">
                                 <span class="custom-dropdown w-100">
-                                    <select tabindex="8" class="form-control" formControlName="loaiThanhToan">
+                                    <select appEnterPreventDefault tabindex="8" class="form-control" formControlName="loaiThanhToan">
                                         <option value="">--Chọn--</option>
                                         <option *ngFor="let payment of listPayment" [value]="payment">{{payment}}</option>
                                     </select>
@@ -215,7 +215,7 @@
                     <div class="col-md-4">
                         <div formGroupName="dieuKienTheoHSMT">
                             <div formGroupName="thanhToan">
-                                <input tabindex="9" formControlName="thoiGianThanhToan" min="0" appInputNumberNegativeDecimal class="form-control">
+                                <input appEnterPreventDefault tabindex="9" formControlName="thoiGianThanhToan" min="0" appInputNumberNegativeDecimal class="form-control">
                             </div>
 
                         </div>
@@ -223,7 +223,7 @@
                     <div class="col-md-4">
                         <div formGroupName="dieuKienTheoHBC">
                             <div formGroupName="thanhToan">
-                                <input tabindex="10" formControlName="thoiGianThanhToan" min="0" appInputNumberNegativeDecimal class="form-control">
+                                <input appEnterPreventDefault  tabindex="10" formControlName="thoiGianThanhToan" min="0" appInputNumberNegativeDecimal class="form-control">
                             </div>
                         </div>
                     </div>
@@ -239,7 +239,7 @@
                     <div class="col-md-4">
                         <div formGroupName="dieuKienTheoHSMT">
                             <div formGroupName="thanhToan">
-                                <input tabindex="11" formControlName="thanhToanKhiTapKet" class="form-control">
+                                <input appEnterPreventDefault tabindex="11" formControlName="thanhToanKhiTapKet" class="form-control">
                             </div>
 
                         </div>
@@ -247,7 +247,7 @@
                     <div class="col-md-4">
                         <div formGroupName="dieuKienTheoHBC">
                             <div formGroupName="thanhToan">
-                                <input tabindex="12" formControlName="thanhToanKhiTapKet" class="form-control">
+                                <input appEnterPreventDefault tabindex="12" formControlName="thanhToanKhiTapKet" class="form-control">
                             </div>
 
                         </div>
@@ -283,7 +283,7 @@
                     <div class="col-md-4">
                         <div formGroupName="dieuKienTheoHBC">
                             <div formGroupName="tienGiuLai">
-                                <input tabindex="13" formControlName="phanTram" appInputNumberNegativeDecimal [decimal]="true" class="form-control">
+                                <input appEnterPreventDefault tabindex="13" formControlName="phanTram" appInputNumberNegativeDecimal [decimal]="true" class="form-control">
                             </div>
                         </div>
                     </div>
@@ -301,7 +301,7 @@
                     <div class="col-md-4">
                         <div formGroupName="dieuKienTheoHSMT">
                             <div formGroupName="tienGiuLai">
-                                <input tabindex="14" formControlName="gioiHanTienGiuLai" appInputNumberNegativeDecimal [decimal]="true"
+                                <input appEnterPreventDefault tabindex="14" formControlName="gioiHanTienGiuLai" appInputNumberNegativeDecimal [decimal]="true"
                                     class="form-control">
                             </div>
 
@@ -310,7 +310,7 @@
                     <div class="col-md-4">
                         <div formGroupName="dieuKienTheoHBC">
                             <div formGroupName="tienGiuLai">
-                                <input tabindex="15" formControlName="gioiHanTienGiuLai" appInputNumberNegativeDecimal [decimal]="true"
+                                <input appEnterPreventDefault tabindex="15" formControlName="gioiHanTienGiuLai" appInputNumberNegativeDecimal [decimal]="true"
                                     class="form-control">
                             </div>
 
@@ -328,7 +328,7 @@
                     <div class="col-md-4">
                         <div formGroupName="dieuKienTheoHSMT">
                             <div formGroupName="tienGiuLai">
-                                <input tabindex="16" formControlName="thanhToanTienGui" class="form-control">
+                                <input appEnterPreventDefault tabindex="16" formControlName="thanhToanTienGui" class="form-control">
                             </div>
 
                         </div>
@@ -336,7 +336,7 @@
                     <div class="col-md-4">
                         <div formGroupName="dieuKienTheoHBC">
                             <div formGroupName="tienGiuLai">
-                                <input tabindex="17" formControlName="thanhToanTienGui" class="form-control">
+                                <input appEnterPreventDefault tabindex="17" formControlName="thanhToanTienGui" class="form-control">
                             </div>
 
                         </div>
@@ -373,7 +373,7 @@
                     <div class="col-md-4">
                         <div formGroupName="dieuKienTheoHBC">
                             <div formGroupName="phatTreTienDo">
-                                <input tabindex="18" formControlName="phanTram" appInputNumberNegativeDecimal [decimal]="true" class="form-control">
+                                <input appEnterPreventDefault tabindex="18" formControlName="phanTram" appInputNumberNegativeDecimal [decimal]="true" class="form-control">
                             </div>
                         </div>
                     </div>
@@ -390,7 +390,7 @@
                     <div class="col-md-4">
                         <div formGroupName="dieuKienTheoHSMT">
                             <div formGroupName="phatTreTienDo">
-                                <input tabindex="19" formControlName="gioiHanPhatTienDo" appInputNumberNegativeDecimal [decimal]="true"
+                                <input appEnterPreventDefault tabindex="19" formControlName="gioiHanPhatTienDo" appInputNumberNegativeDecimal [decimal]="true"
                                     class="form-control">
                             </div>
 
@@ -399,7 +399,7 @@
                     <div class="col-md-4">
                         <div formGroupName="dieuKienTheoHBC">
                             <div formGroupName="phatTreTienDo">
-                                <input tabindex="20" formControlName="gioiHanPhatTienDo" appInputNumberNegativeDecimal [decimal]="true"
+                                <input appEnterPreventDefault tabindex="20" formControlName="gioiHanPhatTienDo" appInputNumberNegativeDecimal [decimal]="true"
                                     class="form-control">
                             </div>
                         </div>
@@ -425,13 +425,13 @@
                     </div>
                     <div class="col-md-4">
                         <div formGroupName="dieuKienTheoHSMT">
-                            <input tabindex="20" appInputNumberNegativeDecimal [decimal]="true" formControlName="thoiGianBaoHanh" class="form-control pr-5">
+                            <input appEnterPreventDefault tabindex="20" appInputNumberNegativeDecimal [decimal]="true" formControlName="thoiGianBaoHanh" class="form-control pr-5">
                             <span *ngIf="unitTimeguarantee" class="unit-value text-uppercase">{{ unitTimeguarantee.displayText }}</span>
                         </div>
                     </div>
                     <div class="col-md-4">
                         <div formGroupName="dieuKienTheoHBC">
-                            <input tabindex="21" appInputNumberNegativeDecimal [decimal]="true" formControlName="thoiGianBaoHanh" class="form-control pr-5">
+                            <input appEnterPreventDefault tabindex="21" appInputNumberNegativeDecimal [decimal]="true" formControlName="thoiGianBaoHanh" class="form-control pr-5">
                             <span *ngIf="unitTimeguarantee" class="unit-value text-uppercase">{{ unitTimeguarantee.displayText }}</span>
                         </div>
                     </div>
@@ -461,7 +461,7 @@
                                 <ng-container formArrayName="baoHiemMayMoc">
                                     <ng-container *ngFor="let fControl of baoHiemMayMocHSMTFA.controls; let i = index"
                                         [formGroupName]="i">
-                                        <input [tabindex]="22 + i * 2" formControlName="baoHiemItem" class="form-control mb-2">
+                                        <input appEnterPreventDefault [tabindex]="22 + i * 2" formControlName="baoHiemItem" class="form-control mb-2">
                                     </ng-container>
                                 </ng-container>
                             </div>
@@ -476,7 +476,7 @@
                                         [formGroupName]="i">
                                         <div class="d-flex flex-row">
                                             <div class="w-76">
-                                                <input [tabindex]="22 + i * 2 + 1" formControlName="baoHiemItem" class="form-control mb-2">
+                                                <input appEnterPreventDefault [tabindex]="22 + i * 2 + 1" formControlName="baoHiemItem" class="form-control mb-2">
                                             </div>
                                             <div class="col-md-2 center-parent">
                                                 <div class="w-24 mb-2">
@@ -504,7 +504,7 @@
                     <div class="col-md-4">
                         <div formGroupName="dieuKienTheoHSMT">
                             <div formGroupName="baoHiem">
-                                <input [tabindex]="22 + baoHiemMayMocHBCFA.controls.length * 2 + 1" formControlName="baoHiemConNguoi" class="form-control">
+                                <input appEnterPreventDefault [tabindex]="22 + baoHiemMayMocHBCFA.controls.length * 2 + 1" formControlName="baoHiemConNguoi" class="form-control">
 
                             </div>
 
@@ -513,7 +513,7 @@
                     <div class="col-md-4">
                         <div formGroupName="dieuKienTheoHBC">
                             <div formGroupName="baoHiem">
-                                <input [tabindex]="22 + baoHiemMayMocHBCFA.controls.length * 2 + 2" formControlName="baoHiemConNguoi" class="form-control">
+                                <input appEnterPreventDefault [tabindex]="22 + baoHiemMayMocHBCFA.controls.length * 2 + 2" formControlName="baoHiemConNguoi" class="form-control">
 
                             </div>
                         </div>
@@ -532,7 +532,7 @@
                 <div class="col-md-4">
                     <div formGroupName="dieuKienTheoHSMT">
                         <div formGroupName="baoHiem">
-                            <input [tabindex]="22 + baoHiemMayMocHBCFA.controls.length * 2 + 3" formControlName="baoHiemCongTrinh" class="form-control">
+                            <input appEnterPreventDefault [tabindex]="22 + baoHiemMayMocHBCFA.controls.length * 2 + 3" formControlName="baoHiemCongTrinh" class="form-control">
 
                         </div>
 
@@ -541,7 +541,7 @@
                 <div class="col-md-4">
                     <div formGroupName="dieuKienTheoHBC">
                         <div formGroupName="baoHiem">
-                            <input [tabindex]="22 + baoHiemMayMocHBCFA.controls.length * 2 + 4" formControlName="baoHiemCongTrinh" class="form-control">
+                            <input appEnterPreventDefault [tabindex]="22 + baoHiemMayMocHBCFA.controls.length * 2 + 4" formControlName="baoHiemCongTrinh" class="form-control">
 
                         </div>
                     </div>
@@ -565,11 +565,11 @@
     </div>
 
     <div class="text-center mt-4">
-        <button [tabindex]="22 + baoHiemMayMocHBCFA.controls.length * 2 + 6" class="btn border" routerLink="../tender-clarify">
+        <button [tabindex]="22 + baoHiemMayMocHBCFA.controls.length * 2 + 6" class="btn border" (keyup)="routerLink($event, 'tender-clarify')" routerLink="../tender-clarify">
             <i class="fa font-size-3 mr-3 fa-angle-left" aria-hidden="true"></i>
             Trở về
         </button>
-        <button [tabindex]="22 + baoHiemMayMocHBCFA.controls.length * 2 + 5" class="btn btn-primary ml-1" routerLink="../condition-tender">
+        <button [tabindex]="22 + baoHiemMayMocHBCFA.controls.length * 2 + 5" class="btn btn-primary ml-1" (keyup)="routerLink($event, 'condition-tender')" routerLink="../condition-tender">
             Tiếp
             <i class="fa font-size-3 ml-3 fa-angle-right" aria-hidden="true"></i>
         </button>
