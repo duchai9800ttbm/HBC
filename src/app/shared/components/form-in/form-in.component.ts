@@ -3,6 +3,8 @@ import { DialogRef } from '../../../../../node_modules/@progress/kendo-angular-d
 import { ConfirmationService, AlertService } from '../../services';
 import { Router } from '../../../../../node_modules/@angular/router';
 import { PrintingDocumentService } from '../../services/printing-document.service';
+import { Subject } from 'rxjs';
+import { timer } from 'rxjs/observable/timer';
 
 @Component({
   selector: 'app-form-in',
@@ -14,6 +16,8 @@ export class FormInComponent implements OnInit {
   @Input() type: string;
   @Input() packageId: number;
   htmlContent: string;
+  click$ = new Subject();
+  isOpen = false;
   constructor(
     private dialogRef: DialogRef,
     private confirmationService: ConfirmationService,
@@ -24,6 +28,9 @@ export class FormInComponent implements OnInit {
 
   ngOnInit() {
     this.renderHtml();
+    this.click$
+      .debounce(() => timer(1000))
+      .subscribe(() => this.print());
   }
 
   renderHtml() {
@@ -71,16 +78,18 @@ export class FormInComponent implements OnInit {
   }
 
   print() {
-    const popupWindow = window
-      .open('', '_blank', `width=600,height=700,headers=no,footers=no,scrollbars=no,menubar=no,toolbar=no,
-      location=no,status=no,titlebar=no`);
-    popupWindow.document.open();
-    popupWindow.document.write(`${this.htmlContent}`);
-    popupWindow.print();
-    setTimeout(() => {
-      popupWindow.document.close();
-    }, 400);
-
+    if (!this.isOpen) {
+      this.isOpen = true;
+      const popupWindow = window
+        .open('', '_blank', `width=600,height=700,headers=no,footers=no,scrollbars=no,menubar=no,toolbar=no,
+        location=no,status=no,titlebar=no`);
+      popupWindow.document.open();
+      popupWindow.document.write(`${this.htmlContent}`);
+      popupWindow.print();
+      setTimeout(() => {
+        popupWindow.document.close();
+      }, 400);
+    }
   }
 
 }
