@@ -215,7 +215,7 @@ export class InterviewNegotiationComponent implements OnInit, OnDestroy {
       const instance = this.dialog.content.instance;
       instance.callBack = () => this.closePopuup();
     } else {
-      this.alertService.error('Chưa chọn lần phỏng vấn!');
+      this.alertService.error('Bạn chưa chọn lời mời phỏng vấn nào');
     }
   }
 

@@ -87,7 +87,7 @@
         </div>
         <div>
             <div class="btn-toolbar">
-                <ng-container *ngIf="UploadBBPV">
+                <ng-container *ngIf="UploadBBPV && statusPackage?.id === checkStatusPackage.DaPhongVan.id">
                     <button class="btn btn-primary ml-1" (click)="uploadReportInterview()">
                         Upload biên bản
                     </button>
@@ -120,8 +120,7 @@
         <div class="set-width-menu-left d-flex menu--width">
             <div class="nav flex-column nav-pills cus-menu" id="v-pills-tab" role="tablist" aria-orientation="vertical">
                 <div [routerLink]="statusPackage?.id >= checkStatusPackage.DaNopHSDT.id ? ['./create'] : []" class="nav-link active d-flex cus-menu-children px-2"
-                    id="v-pills-home-tab" data-toggle="pill" role="tab" aria-controls="v-pills-home" aria-selected="true"
-                    [class.back]="(statusPackage?.id >= checkStatusPackage.DaNopHSDT.id) && (urlCurrent !== 'create')"
+                    id="v-pills-home-tab" data-toggle="pill" role="tab" aria-controls="v-pills-home" aria-selected="true" [class.back]="(statusPackage?.id >= checkStatusPackage.DaNopHSDT.id) && (urlCurrent !== 'create')"
                     [class.active]="urlCurrent === 'create'">
                     <div class="center-parent number">1</div>
                     <div class="word">Tender Clarification Meeting (TCM)</div>
@@ -129,10 +128,9 @@
                 <div class="center-parent div-menu" [class.div-menu-active]="statusPackage?.id >= checkStatusPackage.ChuanBiPhongVan.id">
                     <div class="border-top"></div>
                 </div>
-                <div [routerLink]="statusPackage?.id >= checkStatusPackage.ChuanBiPhongVan.id ? ['./prepare'] : []"
-                    class="nav-link d-flex cus-menu-children px-2" id="v-pills-profile-tab" data-toggle="pill" role="tab"
-                    aria-controls="v-pills-profile" aria-selected="false" [class.no-active]="statusPackage?.id < checkStatusPackage.ChuanBiPhongVan.id"
-                    [class.back]="(statusPackage?.id >= checkStatusPackage.ChuanBiPhongVan.id) && (urlCurrent !== 'prepare')"
+                <div [routerLink]="statusPackage?.id >= checkStatusPackage.ChuanBiPhongVan.id ? ['./prepare'] : []" class="nav-link d-flex cus-menu-children px-2"
+                    id="v-pills-profile-tab" data-toggle="pill" role="tab" aria-controls="v-pills-profile" aria-selected="false"
+                    [class.no-active]="statusPackage?.id < checkStatusPackage.ChuanBiPhongVan.id" [class.back]="(statusPackage?.id >= checkStatusPackage.ChuanBiPhongVan.id) && (urlCurrent !== 'prepare')"
                     [class.active]="urlCurrent === 'prepare'">
                     <div class="center-parent number">2</div>
                     <div class="word">
@@ -142,10 +140,9 @@
                 <div class="center-parent div-menu" [class.div-menu-active]="statusPackage?.id >= checkStatusPackage.DaChotCongTacChuanBiPhongVan.id">
                     <div class="border-top"></div>
                 </div>
-                <div [routerLink]="statusPackage?.id >= checkStatusPackage.DaChotCongTacChuanBiPhongVan.id ? ['./end'] : []"
-                    class="nav-link d-flex cus-menu-children px-2" id="v-pills-messages-tab" data-toggle="pill" role="tab"
-                    aria-controls="v-pills-messages" aria-selected="false" [class.no-active]="statusPackage?.id < checkStatusPackage.DaChotCongTacChuanBiPhongVan.id"
-                    [class.back]="(statusPackage?.id >= checkStatusPackage.DaChotCongTacChuanBiPhongVan.id) && (urlCurrent !== 'end')"
+                <div [routerLink]="statusPackage?.id >= checkStatusPackage.DaChotCongTacChuanBiPhongVan.id ? ['./end'] : []" class="nav-link d-flex cus-menu-children px-2"
+                    id="v-pills-messages-tab" data-toggle="pill" role="tab" aria-controls="v-pills-messages" aria-selected="false"
+                    [class.no-active]="statusPackage?.id < checkStatusPackage.DaChotCongTacChuanBiPhongVan.id" [class.back]="(statusPackage?.id >= checkStatusPackage.DaChotCongTacChuanBiPhongVan.id) && (urlCurrent !== 'end')"
                     [class.active]="urlCurrent === 'end'">
                     <div class="center-parent number">3</div>
                     <div class="word">Biên bản phỏng vấn thầu</div>

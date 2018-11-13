@@ -1130,7 +1130,7 @@ export class PackageService {
             element.whoIsInChargeIds = {
                 ids: a,
             };
-            element.duration = (+element.totalTime);
+            element.duration = (element.totalTime && element.totalTime !== 0) ? (+element.totalTime) :  null;
         });
         return this.apiService.post(url, data).map(response => response.result);
     }
@@ -1144,7 +1144,7 @@ export class PackageService {
             element.whoIsInChargeIds = {
                 ids: a,
             };
-            element.duration = (+element.totalTime);
+            element.duration = (element.totalTime && element.totalTime !== 0) ? (+element.totalTime) :  null;
         });
         return this.apiService.post(url, data).map(response => response.result);
     }
