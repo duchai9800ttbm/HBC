@@ -16,12 +16,12 @@
             <div class="col-md-8">
                 <div class="row">
                     <div class="col-md-6" formGroupName="theoHSMT">
-                        <input formControlName="giaTri" appInputNumberNegativeDecimal [decimal]="true" class="form-control pr-5">
-                        <span *ngIf="unitGiatri" class="unit-value text-uppercase">{{ unitGiatri.displayText }}</span>
+                        <input formControlName="giaTri" appInputNumberNegativeDecimal [decimal]="true" class="form-control pr-5 pointer-none">
+                        <span *ngIf="unitGiatri" class="unit-value text-uppercase">{{ unitGiatri.value }}</span>
                     </div>
                     <div class="col-md-6" formGroupName="theoHBC">
                         <input formControlName="giaTri" appInputNumberNegativeDecimal [decimal]="true" class="form-control pr-5">
-                        <span *ngIf="unitGiatri" class="unit-value text-uppercase">{{ unitGiatri.displayText }}</span>
+                        <span *ngIf="unitGiatri" class="unit-value text-uppercase">{{ unitGiatri.value }}</span>
                     </div>
                 </div>
             </div>
@@ -67,13 +67,8 @@
             <div class="col-md-8">
                 <div class="row">
                     <div class="col-md-6" formGroupName="theoHSMT">
-                        <kendo-datepicker placeholder="TBC" formControlName="ngayKhoiCong" class="form-control"></kendo-datepicker>
-
+                        <kendo-datepicker placeholder="TBC" formControlName="ngayKhoiCong" class="form-control pointer-none"></kendo-datepicker>
                     </div>
-                    <!-- <div class="col-md-6"  formGroupName="theoHBC">
-                        <kendo-datepicker formControlName="ngayKhoiCong" class="form-control"></kendo-datepicker>
-
-                    </div> -->
                 </div>
             </div>
         </div>
@@ -82,7 +77,8 @@
             <div class="col-md-8">
                 <div class="row">
                     <div class="col-md-6" formGroupName="theoHSMT">
-                        <input formControlName="thoiGianHoanThanh" appInputNumberNegativeDecimal [decimal]="true" class="form-control">
+                        <input formControlName="thoiGianHoanThanh" appInputNumberNegativeDecimal [decimal]="true" class="form-control pointer-none pr-5">
+                        <span *ngIf="unitTime" class="unit-value text-uppercase">{{ unitTime.value }}</span>
 
                     </div>
                     <div class="col-md-6" formGroupName="theoHBC">

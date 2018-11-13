@@ -102,9 +102,9 @@ export class ScaleOverallComponent implements OnInit, AfterViewInit, OnDestroy {
       loaiCongTrinhList: [],
       trangthaiCongTrinhList: [],
       dienTichCongTruong: [this.scaleModel.quyMoDuAn && this.scaleModel.quyMoDuAn.dienTichCongTruong],
-      tongDienTichXayDung: [this.scaleModel.quyMoDuAn && this.scaleModel.quyMoDuAn.tongDienTichXayDung],
+      tongDienTichXayDung: this.scaleModel.quyMoDuAn && this.scaleModel.quyMoDuAn.tongDienTichXayDung,
       soTang: [this.scaleModel.quyMoDuAn && this.scaleModel.quyMoDuAn.soTang],
-      tienDo: [this.scaleModel.quyMoDuAn && this.scaleModel.quyMoDuAn.tienDo],
+      tienDo: this.scaleModel.quyMoDuAn && this.scaleModel.quyMoDuAn.tienDo,
       hinhAnhPhoiCanhDesc: [this.scaleModel.hinhAnhPhoiCanh && this.scaleModel.hinhAnhPhoiCanh.description],
       hinhAnhPhoiCanhList: [null],
       thongTinVeKetCauDesc: [this.scaleModel.thongTinVeKetCau && this.scaleModel.thongTinVeKetCau.description],
@@ -149,7 +149,8 @@ export class ScaleOverallComponent implements OnInit, AfterViewInit, OnDestroy {
         dienTichCongTruong: obj.quyMoDuAn.dienTichCongTruong,
         tongDienTichXayDung: obj.quyMoDuAn.tongDienTichXayDung,
         soTang: obj.quyMoDuAn.soTang,
-        tienDo: obj.quyMoDuAn.tienDo
+        tienDo: obj.quyMoDuAn.tienDo,
+        donViTienDo: obj.quyMoDuAn.donViTienDo
       };
       this.scaleModel.hinhAnhPhoiCanh = obj.hinhAnhPhoiCanh && {
         description: obj.hinhAnhPhoiCanh.description,
@@ -188,7 +189,8 @@ export class ScaleOverallComponent implements OnInit, AfterViewInit, OnDestroy {
       dienTichCongTruong: data.dienTichCongTruong,
       tongDienTichXayDung: data.tongDienTichXayDung,
       soTang: data.soTang,
-      tienDo: data.tienDo
+      tienDo: data.tienDo,
+      donViTienDo: null
     };
     EditComponent.liveformData.scaleOverall.hinhAnhPhoiCanh = {
       description: data.hinhAnhPhoiCanhDesc,

@@ -1,4 +1,5 @@
 import { Image } from './image';
+import { Currency } from '../currency';
 
 export class ScaleOverall {
     tenTaiLieu: string;
@@ -10,6 +11,7 @@ export class ScaleOverall {
         tongDienTichXayDung: number;
         soTang: string;
         tienDo: number;
+        donViTienDo: Currency;
     };
     hinhAnhPhoiCanh: Image;
     thongTinVeKetCau: Image;

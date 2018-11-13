@@ -1326,40 +1326,43 @@
                         </div>
                     </div>
 
-                    <ng-container *ngIf="isModeView && model.isSendApproval">
-                        <div class="d-flex row-last-header">
 
-                        </div>
-                        <div class="d-flex align-items-center row-last-item">
-                            <div class="one d-flex align-items-center">
-                                <div class="ml-1 mr-1 font-weight-bold">Ngày trình duyệt</div>
-                            </div>
-                            <div class="two d-flex align-items-center">
-                                <div class="w-100 p-1">
-                                    <kendo-datepicker class="w-100" formControlName="approvalDate"></kendo-datepicker>
+                    <div class="d-flex row-last-header">
 
-                                </div>
-
-                            </div>
-                            <div class="three d-flex align-items-center">
-                                <div class="ml-1 mr-1 font-weight-bold">Lần duyệt</div>
-
-                            </div>
-
-                            <div class="four d-flex align-items-center">
-                                <div class="center-parent w-100">
-                                    <div class="w-100">
-                                        <input formControlName="approvalTimes">
-
+                    </div>
+                    <ng-container *ngIf="isModeEdit">
+                            <div class="d-flex align-items-center row-last-item">
+                                    <div class="one d-flex align-items-center">
+                                        <div class="ml-1 mr-1 font-weight-bold">Ngày trình duyệt</div>
                                     </div>
+                                    <div class="two d-flex align-items-center">
+                                        <div class="w-100 p-1">
+                                            <kendo-datepicker class="w-100" formControlName="approvalDate"></kendo-datepicker>
+            
+                                        </div>
+            
+                                    </div>
+                                    <div class="three d-flex align-items-center">
+                                        <div class="ml-1 mr-1 font-weight-bold">Lần duyệt</div>
+            
+                                    </div>
+            
+                                    <div class="four d-flex align-items-center">
+                                        <div class="center-parent w-100">
+                                            <div class="w-100">
+                                                <input formControlName="approvalTimes">
+            
+                                            </div>
+                                        </div>
+            
+                                    </div>
+            
                                 </div>
-
-                            </div>
-
-                        </div>
+                    </ng-container>
+                
 
 
-
+                    <ng-container *ngIf="isModeView && model.isSendApproval">
                         <div class="d-flex row-last-item-2">
                             <div class="first font-weight-bold d-flex align-items-center">
                                 <div class="ml-1 mr-1">

@@ -18,7 +18,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { BidStatus } from '../../../../../../shared/constants/bid-status';
 import { CheckStatusPackage } from '../../../../../../shared/constants/check-status-package';
 import { PermissionService } from '../../../../../../shared/services/permission.service';
-import { PermissionModel } from '../../../../../../shared/models/permission/Permission.model';
+import { PermissionModel } from '../../../../../../shared/models/permission/permission.model';
 import { StakeHolder } from '../../../../../../shared/models/ho-so-du-thau/stack-holder.model';
 import { forkJoin } from '../../../../../../../../node_modules/rxjs/observable/forkJoin';
 import { EmployeeModel } from '../../../../../../shared/models/employee/employee-model';

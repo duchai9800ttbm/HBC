@@ -22,8 +22,10 @@
             <div class="w-100  mr-auto">
                 <div>
                     <div class="body cus-header" id="info-main">
-                        <div class="w-100 center-parent" class="alert alert-danger" role="alert">
-                            <span></span>
+                        <div *ngIf="!((uploadMeetingKickOff.get('link').value &&  uploadMeetingKickOff.get('link').value !== '') || file) && isSubmitted" class="w-100 center-parent" class="alert alert-danger" role="alert">
+                            <div class="">
+                                Bạn phải nhập đường dẫn link hoặc đính kèm file
+                            </div>
                         </div>
                         <table class="w-100 table">
 
@@ -31,7 +33,8 @@
                                 <tr>
                                     <td class="w-30 label no-boder bold-title">Đường dẫn link</td>
                                     <td class="w-70 no-boder">
-                                        <input class="w-100" [attr.disabled]="file ? '' : null" class="form-control" tabindex="1" type="text" formControlName="link">
+                                        <input class="w-100" [attr.disabled]="file ? '' : null" class="form-control"
+                                            tabindex="1" type="text" formControlName="link">
                                     </td>
                                 </tr>
                                 <tr>
@@ -39,10 +42,11 @@
                                     <td class="no-boder d-flex justify-content-between">
                                         <div class="fileUpload">
                                             <button class="btn btn-primary" [disabled]="uploadMeetingKickOff.get('link').value">
-                                                <i class="fa fa-cloud-upload" aria-hidden="true"></i>&nbsp;&nbsp; Chọn File
+                                                <i class="fa fa-cloud-upload" aria-hidden="true"></i>&nbsp;&nbsp; Chọn
+                                                File
                                             </button>
-                                            <input type="file" class="upload" tabindex="2" (change)="fileChange($event)" [disabled]="uploadMeetingKickOff.get('link').value"
-                                            />
+                                            <input type="file" class="upload" tabindex="2" (change)="fileChange($event)"
+                                                [disabled]="uploadMeetingKickOff.get('link').value" />
                                         </div>
                                         <div class="d-flex justify-content-between name-file--width">
                                             <div>
@@ -54,18 +58,19 @@
                                         </div>
                                     </td>
                                 </tr>
-                                <tr *ngIf="!((uploadMeetingKickOff.get('link').value &&  uploadMeetingKickOff.get('link').value !== '') || file) && isSubmitted">
+                                <!-- <tr *ngIf="!((uploadMeetingKickOff.get('link').value &&  uploadMeetingKickOff.get('link').value !== '') || file) && isSubmitted">
                                     <td class="w-30 no-boder"></td>
                                     <td class="w-70 no-boder">
                                         <div class="invalid-feedback">
                                             Bạn phải nhập đường dẫn link hoặc đính kèm file
                                         </div>
                                     </td>
-                                </tr>
+                                </tr> -->
                                 <tr>
                                     <td class="w-30 label no-boder bold-title required">Tên</td>
                                     <td class="w-70 no-boder">
-                                        <input class="w-100" kendoTextBox tabindex="4" type="text" formControlName="documentName" [class.is-invalid]="formErrors.documentName">
+                                        <input class="w-100" kendoTextBox tabindex="4" type="text" formControlName="documentName"
+                                            [class.is-invalid]="formErrors.documentName">
                                         <div class="invalid-feedback" *ngIf="formErrors.documentName">
                                             {{formErrors.documentName}}
                                         </div>
@@ -74,7 +79,8 @@
                                 <tr>
                                     <td class="w-30 label no-boder bold-title required">Phiên bản</td>
                                     <td class="w-70 no-boder">
-                                        <input appInputNumberInteger class="w-100" kendoTextBox tabindex="5" type="text" formControlName="version" [class.is-invalid]="formErrors.version">
+                                        <input appInputNumberInteger class="w-100" kendoTextBox tabindex="5" type="text"
+                                            formControlName="version" [class.is-invalid]="formErrors.version">
                                         <div class="invalid-feedback" *ngIf="formErrors.version">
                                             {{formErrors.version}}
                                         </div>
@@ -83,7 +89,8 @@
                                 <tr>
                                     <td class="w-30 label no-boder bold-title required">Lần phỏng vấn</td>
                                     <td class="no-boder">
-                                        <input appInputNumberInteger class="w-100" kendoTextBox tabindex="6" type="text" formControlName="interviewTimes" [class.is-invalid]="formErrors.interviewTimes">
+                                        <input appInputNumberInteger class="w-100" kendoTextBox tabindex="6" type="text"
+                                            formControlName="interviewTimes" [class.is-invalid]="formErrors.interviewTimes">
                                         <div class="invalid-feedback" *ngIf="formErrors.interviewTimes">
                                             {{formErrors.interviewTimes}}
                                         </div>
@@ -92,7 +99,8 @@
                                 <tr *ngIf="action === 'report'">
                                     <td class="w-30 label no-boder bold-title required">Thời gian họp</td>
                                     <td class="no-boder">
-                                        <kendo-datepicker class="w-100" tabindex="7" formControlName="meetingTime" [class.is-invalid]="formErrors.meetingTime"></kendo-datepicker>
+                                        <kendo-datepicker class="w-100" tabindex="7" formControlName="meetingTime"
+                                            [class.is-invalid]="formErrors.meetingTime"></kendo-datepicker>
                                         <div class="invalid-feedback" *ngIf="formErrors.meetingTime">
                                             {{formErrors.meetingTime}}
                                         </div>
@@ -101,7 +109,8 @@
                                 <tr>
                                     <td class="w-30 label no-boder bold-title">Mô tả/Nội dung cập nhật</td>
                                     <td class="w-70 no-boder">
-                                        <textarea kendoTextArea tabindex="8" cols="3" rows="3" class="w-100 form-control no-resize-textarea" formControlName="documentDesc"></textarea>
+                                        <textarea kendoTextArea tabindex="8" cols="3" rows="3" class="w-100 form-control no-resize-textarea"
+                                            formControlName="documentDesc"></textarea>
                                     </td>
                                 </tr>
                             </tbody>
@@ -119,4 +128,4 @@
         </div>
     </form>
 </div>
-<ngx-spinner bdColor="rgba(51, 51, 51, 0.7)" size = "default" color="#fff" type="ball-scale"></ngx-spinner>
+<ngx-spinner bdColor="rgba(51, 51, 51, 0.7)" size="default" color="#fff" type="ball-scale"></ngx-spinner>

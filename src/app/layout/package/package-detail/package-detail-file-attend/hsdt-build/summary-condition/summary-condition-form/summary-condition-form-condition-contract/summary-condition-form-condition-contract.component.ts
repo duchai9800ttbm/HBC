@@ -463,6 +463,16 @@ export class SummaryConditionFormConditionContractComponent implements OnInit {
         });
         // Begin: Set default value
         if (this.conditionContractForm.value && this.dataPTPReport) {
+            const descLoaiHopDong = this.dataPTPReport.contractCondition && this.dataPTPReport.contractCondition.typeOfContract;
+            if (descLoaiHopDong) {
+                this.conditionContractForm.get('loaiHopDong').get('desc').patchValue(descLoaiHopDong);
+            }
+            const phanTramBaoLanhThucHienHSMT = this.dataPTPReport.contractCondition &&
+                this.dataPTPReport.contractCondition.performanceSecurity;
+            if (phanTramBaoLanhThucHienHSMT) {
+                this.conditionContractForm
+                    .get('dieuKienTheoHSMT').get('baoLanhThucHien').get('phanTram').patchValue(phanTramBaoLanhThucHienHSMT);
+            }
             const phanTramBaoLanhTamUngHSMT = this.dataPTPReport.contractCondition && this.dataPTPReport.contractCondition.advancePayment;
             if (phanTramBaoLanhTamUngHSMT) {
                 this.conditionContractForm
@@ -474,17 +484,19 @@ export class SummaryConditionFormConditionContractComponent implements OnInit {
                 this.conditionContractForm
                     .get('dieuKienTheoHSMT').get('thanhToan').get('loaiThanhToan').patchValue(loaiThanhToanHSMT.value);
             }
+            const phanTramTienGiuLaiHSMT = this.dataPTPReport.contractCondition && this.dataPTPReport.contractCondition.retentionMoney;
+            if (phanTramTienGiuLaiHSMT) {
+                this.conditionContractForm
+                    .get('dieuKienTheoHSMT').get('tienGiuLai').get('phanTram').patchValue(phanTramTienGiuLaiHSMT);
+            }
+
+            this.unitTimeguarantee = this.dataPTPReport.contractCondition &&
+                this.dataPTPReport.contractCondition.warrantyPeriodUnit;
             const phanTramPhatTreTienDoHSMT = this.dataPTPReport.contractCondition &&
                 this.dataPTPReport.contractCondition.delayDamagesForTheWorks;
             if (phanTramPhatTreTienDoHSMT) {
                 this.conditionContractForm
                     .get('dieuKienTheoHSMT').get('phatTreTienDo').get('phanTram').patchValue(phanTramPhatTreTienDoHSMT);
-            }
-            this.unitTimeguarantee = this.dataPTPReport.contractCondition &&
-                this.dataPTPReport.contractCondition.warrantyPeriodUnit;
-            const descLoaiHopDong = this.dataPTPReport.contractCondition && this.dataPTPReport.contractCondition.typeOfContract;
-            if (descLoaiHopDong) {
-                this.conditionContractForm.get('loaiHopDong').get('desc').patchValue(descLoaiHopDong);
             }
         }
         // End: Set default value

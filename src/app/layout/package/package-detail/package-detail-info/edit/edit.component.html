@@ -291,7 +291,7 @@
                                             <span [owlDateTimeTrigger]="dtProjectEstimatedStartDate" class="input-group-addon">
                                                 <i class="fa fa-calendar"></i>
                                             </span> -->
-                                            <kendo-datepicker (valueChange)="calculatedTotalTime()" [max]="packageForm.get('projectEstimatedEndDate').value" appEnterPreventDefault
+                                            <kendo-datepicker [max]="packageForm.get('projectEstimatedEndDate').value" appEnterPreventDefault
                                                 class="w-100" tabindex="30" formControlName="projectEstimatedStartDate"></kendo-datepicker>
                                         </div>
                                     </td>
@@ -327,7 +327,7 @@
                                             <span [owlDateTimeTrigger]="dtProjectEstimatedEndDate" class="input-group-addon">
                                                 <i class="fa fa-calendar"></i>
                                             </span> -->
-                                            <kendo-datepicker (valueChange)="calculatedTotalTime()" [min]="packageForm.get('projectEstimatedStartDate').value" appEnterPreventDefault
+                                            <kendo-datepicker [min]="packageForm.get('projectEstimatedStartDate').value" appEnterPreventDefault
                                                 class="w-100" tabindex="31" formControlName="projectEstimatedEndDate"></kendo-datepicker>
                                         </div>
                                     </td>

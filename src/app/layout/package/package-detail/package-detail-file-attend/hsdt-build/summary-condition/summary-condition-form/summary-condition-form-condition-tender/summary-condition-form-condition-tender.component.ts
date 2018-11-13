@@ -22,6 +22,7 @@ export class SummaryConditionFormConditionTenderComponent implements OnInit {
     isShowInputBox = false;
     dataPTPReport: ProposeTenderParticipateRequest;
     unitGiatri: Currency;
+    unitTime: Currency;
     constructor(
         private fb: FormBuilder,
         private hoSoDuThauService: HoSoDuThauService,
@@ -129,17 +130,6 @@ export class SummaryConditionFormConditionTenderComponent implements OnInit {
             })
         });
 
-        if (this.dieuKienHSMTForm.get('ngayKhoiCong') && !this.dieuKienHSMTForm.get('ngayKhoiCong').value) {
-            this.packageService.getProposedTenderParticipateReport(PackageDetailComponent.packageId).subscribe(data => {
-                const ngayKhoiCongValue = data.contractCondition ? data.contractCondition.commencementDate : null;
-                if (ngayKhoiCongValue) {
-                    this.dieuKienHSMTForm.get('ngayKhoiCong').patchValue(
-                        DateTimeConvertHelper.fromTimestampToDtObject(ngayKhoiCongValue * 1000)
-                    );
-                }
-            });
-        }
-
         (this.dienGiaiDieuKienHSMT.theoHSMT.cacLoaiThue || []).forEach(x => {
             const control = (this.dieuKienHSMTForm.controls.theoHSMT as FormGroup).controls.cacLoaiThue as FormArray;
             control.push(this.fb.group({
@@ -160,6 +150,18 @@ export class SummaryConditionFormConditionTenderComponent implements OnInit {
             if (giaTriHSMT) {
                 this.dieuKienHSMTForm.get('theoHSMT').get('giaTri').patchValue(giaTriHSMT);
             }
+            const tienDoHSMT = this.dataPTPReport.contractCondition && this.dataPTPReport.contractCondition.commencementDate;
+            if (tienDoHSMT) {
+                this.dieuKienHSMTForm.get('theoHSMT').get('ngayKhoiCong').patchValue(
+                    DateTimeConvertHelper.fromTimestampToDtObject(tienDoHSMT * 1000)
+                );
+            }
+            this.unitTime = this.dataPTPReport.contractCondition && this.dataPTPReport.contractCondition.timeForCompletionUnit;
+            const tienDoHoanThanhHSMT = this.dataPTPReport.contractCondition && this.dataPTPReport.contractCondition.timeForCompletion;
+            if (tienDoHoanThanhHSMT) {
+                this.dieuKienHSMTForm.get('theoHSMT').get('thoiGianHoanThanh').patchValue(tienDoHoanThanhHSMT);
+            }
+
         }
         // End: Set default value
 
