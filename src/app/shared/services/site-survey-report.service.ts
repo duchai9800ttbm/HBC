@@ -164,7 +164,7 @@ export class SiteSurveyReportService {
       isDraftVersion: obj.isDraft,
       departmentId: (obj.phongBan) ? +obj.phongBan.id : 0,
       departmentNo: (obj.phongBan) ? obj.phongBan.key : '',
-      surveyEmployeeId: (obj.nguoiKhaoSat && obj.nguoiKhaoSat.id ) ? obj.nguoiKhaoSat.id : null,
+      surveyEmployeeId: (obj.nguoiKhaoSat && obj.nguoiKhaoSat.id) ? obj.nguoiKhaoSat.id : null,
       documentName: (obj.scaleOverall) ? obj.scaleOverall.tenTaiLieu : '',
       projectStatistic: obj.scaleOverall && {
         projectStatistic: {
@@ -621,20 +621,20 @@ export class SiteSurveyReportService {
           }))
         }
       };
-      dataFormated.soilCondition = model.reportExistingSoilCondition && {
-        nenMongHienCo: model.reportExistingSoilCondition.existingFooting && {
-          description: (model.reportExistingSoilCondition.existingFooting.desc !== 'null') ?
-            model.reportExistingSoilCondition.existingFooting.desc : '',
-          images: (model.reportExistingSoilCondition.existingFooting.imageUrls || []).map(x => ({
+      dataFormated.soilCondition = model.existingSoilCondition && {
+        nenMongHienCo: model.existingSoilCondition.existingFooting && {
+          description: (model.existingSoilCondition.existingFooting.desc !== 'null') ?
+            model.existingSoilCondition.existingFooting.desc : '',
+          images: (model.existingSoilCondition.existingFooting.imageUrls || []).map(x => ({
             id: x.guid,
             thumbSizeUrl: x.thumbSizeUrl,
             largeSizeUrl: x.largeSizeUrl
           }))
         },
-        thongTinCongTrinhGanDo: model.reportExistingSoilCondition.soilInvestigation && {
-          description: (model.reportExistingSoilCondition.soilInvestigation.desc !== 'null') ?
-            model.reportExistingSoilCondition.soilInvestigation.desc : '',
-          images: (model.reportExistingSoilCondition.soilInvestigation.imageUrls || []).map(x => ({
+        thongTinCongTrinhGanDo: model.existingSoilCondition.soilInvestigation && {
+          description: (model.existingSoilCondition.soilInvestigation.desc !== 'null') ?
+            model.existingSoilCondition.soilInvestigation.desc : '',
+          images: (model.existingSoilCondition.soilInvestigation.imageUrls || []).map(x => ({
             id: x.guid,
             thumbSizeUrl: x.thumbSizeUrl,
             largeSizeUrl: x.largeSizeUrl
@@ -672,7 +672,6 @@ export class SiteSurveyReportService {
     const url = `bidopportunity/${bidOpportunityId}/tendersitesurveyingreport/changedhistory/${page}/${pageSize}`;
     return this.apiService.get(url).map(res => {
       const response = res.result;
-      console.log(response);
       return {
         currentPage: response.pageIndex,
         pageSize: response.pageSize,
