@@ -139,48 +139,10 @@ export class PriceReviewFormComponent implements OnChanges, OnInit, AfterViewIni
     this.isModeEdit = this.type === 'edit';
   }
 
-  // getInfoPackge() {
-  //   this.spinner.show();
-  //   this.packageService.getInforPackageID(this.packageId).subscribe(result => {
-  //     this.package = result;
-  //     if (this.package.stageStatus && this.priceReviewForm.value) {
-  //       if ((this.package.stageStatus.id !== 'DangLapHSDT')
-  //         && (this.package.stageStatus.id !== 'CanLapTrinhDuyetGia')
-  //         && (this.package.stageStatus.id !== 'DaGuiDuyetTrinhDuyetGia')
-  //         && (this.package.stageStatus.id !== 'CanDieuChinhTrinhDuyetGia')) {
-  //         this.priceReviewForm.controls['isApprovedByBoardOfDirector'].disable();
-  //       } else {
-  //         if ((this.userModel && this.userModel.userGroup
-  //           && this.userModel.userGroup.text === 'Admin')) {
-  //           this.priceReviewForm.controls['isApprovedByBoardOfDirector'].enable();
-  //         }
-  //         if ((this.userModel && this.userModel.department
-  //           && this.userModel.department.text === 'BAN TỔNG GIÁM ĐỐC')) {
-  //           this.priceReviewForm.controls['isApprovedByBoardOfDirector'].enable();
-  //         }
-  //         if (this.DuyetTDGTPDuThau || (this.userModel && this.userModel.department
-  //           && this.userModel.department.text === 'PHÒNG DỰ THẦU'
-  //           && this.userModel.level && this.userModel.level.text === 'Trưởng phòng')) {
-  //           this.priceReviewForm.controls['isApprovedByTenderManager'].enable();
-  //         }
-  //         if (this.DuyetTDGTPDuThau || (this.userModel && this.userModel.department
-  //           && this.userModel.department.text === 'PHÒNG DỰ THẦU'
-  //           && this.userModel.level && this.userModel.level.text === 'Trưởng nhóm')) {
-  //           this.priceReviewForm.controls['isApprovedByTenderLeader'].enable();
-  //         }
-  //       }
-  //     }
-  //     this.spinner.hide();
-  //   }, err => {
-  //     this.spinner.hide();
-  //   });
-  // }
-
   getDataDefaultMapping() {
     this.packageService.getInforPackageID(this.packageId)
       .switchMap(goiThau => {
         this.package = goiThau;
-        console.log(this.package);
         if (this.package.stageStatus && this.priceReviewForm.value) {
           if ((this.package.stageStatus.id !== 'DangLapHSDT')
             && (this.package.stageStatus.id !== 'CanLapTrinhDuyetGia')
@@ -328,15 +290,11 @@ export class PriceReviewFormComponent implements OnChanges, OnInit, AfterViewIni
     this.priceReviewForm = this.fb.group({
       // Thông tin dự án
       id: this.model.id,
-      otherCompanyCustomerId: {
-        value: (this.model.otherCompanyCustomerId) ? this.model.otherCompanyCustomerId : '',
+      otherCompany: {
+        value: (this.model.otherCompany) ? this.model.otherCompany : '',
         disabled: this.isModeView
       },
       createdDate: (this.model.createdDate) ? this.model.createdDate : 0,
-      // infoGfa: {
-      //   value: this.model.projectInformation && this.model.projectInformation.gfa,
-      //   disabled: true
-      // },
       infoGfa: this.model.projectInformation && this.model.projectInformation.gfa,
       phanMongCheck: {
         value: this.model.projectInformation
@@ -893,7 +851,7 @@ export class PriceReviewFormComponent implements OnChanges, OnInit, AfterViewIni
         disabled: true
       },
       interviewTimes: {
-        value: this.model.interviewTimes,
+        value: (this.model.interviewTimes !== 0) ? this.model.interviewTimes : 1,
         disabled: this.isModeView
       },
       isApprovedByTenderLeader: { value: this.model.isApprovedByTenderLeader, disabled: true },
@@ -1072,8 +1030,9 @@ export class PriceReviewFormComponent implements OnChanges, OnInit, AfterViewIni
         this.alertService.error(`Đã có lỗi xảy ra. ${message} Trình duyệt giá không thành công!`);
       });
     } else {
+      const previousStatus = this.priceReviewForm.get('isDraftVersion').value;
       this.priceReviewForm.get('isDraftVersion').patchValue(false);
-      if (this.isModeCreate) {
+      if (this.isModeCreate || previousStatus) {
         this.priceReviewForm.get('updatedDesc').patchValue('');
         this.priceReviewService.createOrEdit(this.priceReviewForm.value, this.packageId).subscribe(() => {
           this.router.navigate([`/package/detail/${this.packageId}/attend/price-review`]);
@@ -1206,6 +1165,8 @@ export class PriceReviewFormComponent implements OnChanges, OnInit, AfterViewIni
 
     const totalValue = +chiPhiBaseAmount + +giaTriBaseAmount + +giaTriPCBaseAmount;
     this.priceReviewForm.get('totalGiaVonAmount').patchValue(+(totalValue));
+    const totaGiaVonGfaValue = totalValue / +(this.priceReviewForm.get('infoGfa').value);
+    this.priceReviewForm.get('totalGiaVonGfa').patchValue(+(totaGiaVonGfaValue));
   }
   countTotalAlter(event) {
     const chiPhiAlterAmount = (this.priceReviewForm.get('chiPhiAlterAmount').value) ?
@@ -1217,24 +1178,46 @@ export class PriceReviewFormComponent implements OnChanges, OnInit, AfterViewIni
     const giaTriPCAlterAmount = (this.priceReviewForm.get('giaTriPCAlterAmount').value) ?
       this.priceReviewForm.get('giaTriPCAlterAmount').value : 0;
 
-    const totalValue = +chiPhiAlterAmount + +giaTriAlterAmount + +giaTriPCAlterAmount;
-    this.priceReviewForm.get('totalAlterAmount').patchValue(+(totalValue));
+    const totalAlterAmountValue = +chiPhiAlterAmount + +giaTriAlterAmount + +giaTriPCAlterAmount;
+    this.priceReviewForm.get('totalAlterAmount').patchValue(+(totalAlterAmountValue));
   }
   // GFA
   getValueField() {
     const chiPhiBaseGfa = this.priceReviewForm.get('chiPhiBaseGfa').value;
     const giaTriBaseGfa = this.priceReviewForm.get('giaTriBaseGfa').value;
     const chiPhiLoiNhuanAmountGfa = this.priceReviewForm.get('chiPhiLoiNhuanAmountGfa').value;
-
-    if (chiPhiBaseGfa && giaTriBaseGfa) {
-      this.priceReviewForm.get('giaTriPCBaseGfa').patchValue((+giaTriBaseGfa) / (+chiPhiBaseGfa));
-      this.valuePcps = true;
-    } else { this.valuePcps = false; }
+    this.priceReviewForm.get('giaTriPCBaseGfa').patchValue(
+      (+giaTriBaseGfa) / (+chiPhiBaseGfa)
+    );
+    this.valuePcps = true;
     if (chiPhiBaseGfa && chiPhiLoiNhuanAmountGfa) {
       this.priceReviewForm.get('tyleGfa').patchValue((+chiPhiLoiNhuanAmountGfa) / (+chiPhiBaseGfa));
       this.valueOnP = true;
     } else { this.valueOnP = false; }
   }
+  // Count Value
+  countTotalGiaNopThau() {
+    const gfaChiPhiChung = (this.priceReviewForm.get('chiPhiBaseGfa').value) ?
+      this.priceReviewForm.get('chiPhiBaseGfa').value : 0;
+    const chiPhiLoiNhuanOnp = (this.priceReviewForm.get('chiPhiLoiNhuanAmountGfa').value) ?
+      this.priceReviewForm.get('chiPhiLoiNhuanAmountGfa').value : 0;
+    this.priceReviewForm.get('giaDiNopThauAmount').patchValue(+gfaChiPhiChung + +chiPhiLoiNhuanOnp);
+    //
+    this.countRateOnP();
+  }
+  countRateOnP() {
+    const chiPhiLoiNhuanOnp = (this.priceReviewForm.get('chiPhiLoiNhuanAmountGfa').value) ?
+      this.priceReviewForm.get('chiPhiLoiNhuanAmountGfa').value : 0;
+    const totalGiaDiNOpThau = (this.priceReviewForm.get('giaDiNopThauAmount').value) ?
+      this.priceReviewForm.get('giaDiNopThauAmount').value : 0;
+    this.priceReviewForm.get('tyleAmount').patchValue(
+      chiPhiLoiNhuanOnp / totalGiaDiNOpThau
+    );
+  }
+
+
+
+
   // Gủi duyệt
   guiDuyet() {
     const that = this;

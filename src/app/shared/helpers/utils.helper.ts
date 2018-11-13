@@ -20,4 +20,8 @@ export default class Utils {
         result.append('searchTerm', searchStr);
         return result;
     }
+    static precisionRound(number, precision) {
+        const factor = Math.pow(10, precision);
+        return Math.round(number * factor) / factor;
+    }
 }

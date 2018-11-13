@@ -67,15 +67,8 @@
                     <div class="row no-gutters row-item">
                         <div class="col-md-12">
                             <strong>Thông tin về công ty khác tham gia thầu:</strong>&nbsp;&nbsp;&nbsp;&nbsp;
-
-                            <select class="custom-select-option option-set-width" formControlName="otherCompanyCustomerId">
-                                <option value="">---Chọn---</option>
-                                <option *ngFor="let item of listCustomer" [value]="item.customerId">
-                                    {{ item.customerName }}
-                                </option>
-                            </select>
-
-
+                            <input [class.customer__input--view]="isModeView" type="text" class="customer__input p-2"
+                                formControlName="otherCompany">
                         </div>
                     </div>
                 </div>
@@ -458,8 +451,7 @@
                             </div>
 
                         </div>
-                        <div class="gfa">
-                            <!-- <input appInputArea formControlName="infoGfa"> -->
+                        <div class="gfa pl-1">
                             {{priceReviewForm.get('infoGfa').value | numberArea}}
                         </div>
                     </div>
@@ -503,9 +495,8 @@
                         </div>
                         <div class="two d-flex align-items-center">
                             <div class="required-2 d-flex align-items-center">
-                                <div class="w-100">
-                                    {{priceReviewForm.get('tienDoThiCongYC').value}}
-                                    <!-- <textarea name="" id="" formControlName="tienDoThiCongYC"></textarea> -->
+                                <div class="w-100 pl-1">
+                                    {{ priceReviewForm.get('tienDoThiCongYC').value }}
                                 </div>
                             </div>
                             <div class="request d-flex align-items-center">
@@ -658,8 +649,7 @@
                                     </div>
                                 </div>
                                 <div class="below d-flex">
-                                    <div class="column-1 d-flex align-items-center">
-                                        <!-- <input formControlName="tamUngYCPercent" appInputNumber> -->
+                                    <div class="column-1 d-flex align-items-center pl-1">
                                         {{priceReviewForm.get('tamUngYCPercent').value }}
                                     </div>
                                     <div class="column-2 d-flex align-items-center">
@@ -715,7 +705,7 @@
                                         <div class="ml-1 mr-1">Thời gian (Ngày)</div>
                                     </div>
                                     <div class="item item-below d-flex center-parent">
-                                        <div class="w-100">
+                                        <div class="w-100 pl-1">
                                             <!-- <input formControlName="thoiGianYC" appInputNumber> -->
                                             {{priceReviewForm.get('thoiGianYC').value}}
                                         </div>
@@ -727,7 +717,7 @@
                                         <div class="ml-1 mr-1">Thời gian (Ngày)</div>
                                     </div>
                                     <div class="item item-below d-flex center-parent">
-                                        <div class="w-100">
+                                        <div class="w-100 pl-1">
                                             <!-- <input formControlName="thoiGianDX"> -->
                                             {{priceReviewForm.get('thoiGianDX').value}}
                                         </div>
@@ -765,11 +755,11 @@
                                     </div>
                                 </div>
                                 <div class="below d-flex">
-                                    <div class="column-1 d-flex align-items-center">
+                                    <div class="column-1 d-flex align-items-center pl-1">
                                         <!-- <input formControlName="tienGiuLaiYCPercent"> -->
                                         {{priceReviewForm.get('tienGiuLaiYCPercent').value}}
                                     </div>
-                                    <div class="column-2 d-flex align-items-center">
+                                    <div class="column-2 d-flex align-items-center pl-1">
                                         <!-- <input formControlName="tienGiuLaiYCKhauTru"> -->
                                         {{priceReviewForm.get('tienGiuLaiYCKhauTru').value}}
                                     </div>
@@ -787,11 +777,11 @@
                                     </div>
                                 </div>
                                 <div class="below d-flex">
-                                    <div class="column-1 d-flex align-items-center">
+                                    <div class="column-1 d-flex align-items-center pl-1">
                                         <!-- <input formControlName="tienGiuLaiDXPercent"> -->
                                         {{priceReviewForm.get('tienGiuLaiDXPercent').value}}
                                     </div>
-                                    <div class="column-2 d-flex align-items-center">
+                                    <div class="column-2 d-flex align-items-center pl-1">
                                         <!-- <input formControlName="tienGiuLaiDXKhauTru"> -->
                                         {{priceReviewForm.get('tienGiuLaiDXKhauTru').value}}
                                     </div>
@@ -831,11 +821,11 @@
                                     </div>
                                 </div>
                                 <div class="below d-flex">
-                                    <div class="column-1 d-flex align-items-center">
+                                    <div class="column-1 d-flex align-items-center pl-1">
                                         <!-- <input formControlName="phatTienDoYCPercent"> -->
                                         {{priceReviewForm.get('phatTienDoYCPercent').value}}
                                     </div>
-                                    <div class="column-2 d-flex align-items-center">
+                                    <div class="column-2 d-flex align-items-center pl-1">
                                         <!-- <input formControlName="phatTienDoYCMax"> -->
                                         {{priceReviewForm.get('phatTienDoYCMax').value}}
                                     </div>
@@ -855,11 +845,11 @@
                                     </div>
                                 </div>
                                 <div class="below d-flex">
-                                    <div class="column-1 d-flex align-items-center">
+                                    <div class="column-1 d-flex align-items-center pl-1">
                                         <!-- <input formControlName="phatTienDoDXPercent"> -->
                                         {{priceReviewForm.get('phatTienDoDXPercent').value}}
                                     </div>
-                                    <div class="column-2 d-flex align-items-center">
+                                    <div class="column-2 d-flex align-items-center pl-1">
                                         {{priceReviewForm.get('phatTienDoDXMax').value}}
                                     </div>
                                 </div>
@@ -928,7 +918,7 @@
                                         <input formControlName="thoiGianBHDXBond">
 
                                     </div>
-                                    <div class="column-2 d-flex align-items-center">
+                                    <div class="column-2 d-flex align-items-center pl-1">
                                         <!-- <input formControlName="thoiGianBHMonth"> -->
                                         {{priceReviewForm.get('thoiGianBHMonth').value}}
                                     </div>
@@ -1064,7 +1054,7 @@
                             </div>
                             <div class="item-2 d-flex align-items-center">
                                 <div>
-                                    <input formControlName="chiPhiBaseGfa" appInputAreaNoplaceholder (input)="getValueField()">
+                                    <input formControlName="chiPhiBaseGfa" appInputAreaNoplaceholder (input)="countTotalGiaNopThau(); getValueField()">
                                 </div>
                             </div>
 
@@ -1148,13 +1138,14 @@
                                 </div>
                             </div>
                             <div class="item-2 d-flex align-items-center">
-                                <div *ngIf="valuePcps">
-                                    <input formControlName="giaTriPCBaseGfa" appInputAreaNoplaceholder>
+                                <div class="pl-1">
+                                        {{ priceReviewForm.get('giaTriPCBaseGfa').value | truncateDecimal }}
+                                    <!-- <input formControlName="giaTriPCBaseGfa" appInputAreaNoplaceholder> -->
                                 </div>
 
-                                <div *ngIf="!valuePcps" class="center-parent w-100">
+                                <!-- <div *ngIf="!valuePcps" class="center-parent w-100">
                                     <div>/</div>
-                                </div>
+                                </div> -->
 
                             </div>
 
@@ -1182,22 +1173,19 @@
                         </div>
                         <div class="two d-flex">
                             <div class="item-1 d-flex align-items-center">
-                                <div>
-                                    <!-- <input readonly formControlName="totalGiaVonAmount" appInputMoneyNoplaceholder> -->
-                                    {{priceReviewForm.get('totalGiaVonAmount').value | vnCurrency}}
-
+                                <div class="pl-1">
+                                    {{priceReviewForm.get('totalGiaVonAmount').value | truncateDecimal}}
                                 </div>
                             </div>
                             <div class="item-2 d-flex align-items-center">
-                                <div>
-                                    <input formControlName="totalGiaVonGfa" appInputAreaNoplaceholder>
+                                <div class="pl-1">
+                                    {{ priceReviewForm.get('totalGiaVonGfa').value | truncateDecimal }}
                                 </div>
                             </div>
 
                             <div class="item-3 d-flex align-items-center">
-                                <div>
-                                    <!-- <input formControlName="totalAlterAmount" appInputMoneyNoplaceholder> -->
-                                    {{priceReviewForm.get('totalAlterAmount').value | vnCurrency}}
+                                <div class="pl-1">
+                                    {{priceReviewForm.get('totalAlterAmount').value | truncateDecimal}}
                                 </div>
 
                             </div>
@@ -1228,7 +1216,7 @@
                         <div class="two d-flex">
                             <div class="border-right w-50 d-flex align-items-center">
                                 <div class="w-100">
-                                    <input formControlName="chiPhiLoiNhuanAmountGfa" appInputMoneyNoplaceholder (input)="getValueField()">
+                                    <input formControlName="chiPhiLoiNhuanAmountGfa" appInputMoneyNoplaceholder (input)="countTotalGiaNopThau()">
                                 </div>
                             </div>
                             <div class="w-50 d-flex align-items-center">
@@ -1250,13 +1238,14 @@
                         </div>
                         <div class="two d-flex">
                             <div class="item-1 d-flex align-items-center">
-                                <div>
-                                    <input formControlName="giaDiNopThauAmount" appInputMoneyNoplaceholder>
+                                <div class="pl-1">
+                                    {{ priceReviewForm.get('giaDiNopThauAmount').value | truncateDecimal }}
+                                    <!-- <input formControlName="giaDiNopThauAmount" appInputMoneyNoplaceholder> -->
                                 </div>
                             </div>
                             <div class="item-2 d-flex align-items-center">
-                                <div>
-                                    <input formControlName="giaDiNopThauGfa" appInputAreaNoplaceholder>
+                                <div class="center-parent w-100">
+                                    <div>/</div>
                                 </div>
                             </div>
 
@@ -1293,16 +1282,17 @@
                         </div>
                         <div class="two d-flex">
                             <div class="item-1 d-flex align-items-center">
-                                <div>
-                                    <input formControlName="tyleAmount" appInputMoneyNoplaceholder>
+                                <div class="pl-1">
+                                    {{ priceReviewForm.get('tyleAmount').value | truncateDecimal }}
+                                    <!-- <input formControlName="tyleAmount" appInputMoneyNoplaceholder> -->
                                 </div>
                             </div>
                             <div class="item-2 d-flex align-items-center">
-                                <div *ngIf="valueOnP">
+                                <!-- <div *ngIf="valueOnP">
                                     <input formControlName="tyleGfa" appInputAreaNoplaceholder>
-                                </div>
+                                </div> -->
 
-                                <div *ngIf="!valueOnP" class="center-parent w-100">
+                                <div class="center-parent w-100">
                                     <div>/</div>
                                 </div>
                             </div>
@@ -1331,35 +1321,35 @@
 
                     </div>
                     <ng-container *ngIf="isModeEdit">
-                            <div class="d-flex align-items-center row-last-item">
-                                    <div class="one d-flex align-items-center">
-                                        <div class="ml-1 mr-1 font-weight-bold">Ngày trình duyệt</div>
-                                    </div>
-                                    <div class="two d-flex align-items-center">
-                                        <div class="w-100 p-1">
-                                            <kendo-datepicker class="w-100" formControlName="approvalDate"></kendo-datepicker>
-            
-                                        </div>
-            
-                                    </div>
-                                    <div class="three d-flex align-items-center">
-                                        <div class="ml-1 mr-1 font-weight-bold">Lần duyệt</div>
-            
-                                    </div>
-            
-                                    <div class="four d-flex align-items-center">
-                                        <div class="center-parent w-100">
-                                            <div class="w-100">
-                                                <input formControlName="approvalTimes">
-            
-                                            </div>
-                                        </div>
-            
-                                    </div>
-            
+                        <div class="d-flex align-items-center row-last-item">
+                            <div class="one d-flex align-items-center">
+                                <div class="ml-1 mr-1 font-weight-bold">Ngày trình duyệt</div>
+                            </div>
+                            <div class="two d-flex align-items-center">
+                                <div class="w-100 p-1">
+                                    <kendo-datepicker class="w-100" formControlName="approvalDate"></kendo-datepicker>
+
                                 </div>
+
+                            </div>
+                            <div class="three d-flex align-items-center">
+                                <div class="ml-1 mr-1 font-weight-bold">Lần duyệt</div>
+
+                            </div>
+
+                            <div class="four d-flex align-items-center">
+                                <div class="center-parent w-100">
+                                    <div class="w-100">
+                                        <input formControlName="approvalTimes">
+
+                                    </div>
+                                </div>
+
+                            </div>
+
+                        </div>
                     </ng-container>
-                
+
 
 
                     <ng-container *ngIf="isModeView && model.isSendApproval">

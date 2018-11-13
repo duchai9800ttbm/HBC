@@ -78,9 +78,6 @@ export class PackageDetailFileAttendComponent implements OnInit, OnDestroy {
         if (this.urlChirld.find(item => item === this.currentUrl)) {
           this.packageService.getInforPackageID(this.packageId).subscribe(result => {
             this.statusPackage = this.checkStatusPackage[result.stageStatus.id];
-            // if (this.statusPackage.id === this.checkStatusPackage.DangLapHSDT.id) {
-            //   this.router.navigate([`/package/detail/${this.packageId}/attend/build/summary`]);
-            // }
           });
         }
       });

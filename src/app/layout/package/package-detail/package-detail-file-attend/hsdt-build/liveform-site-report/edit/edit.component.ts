@@ -114,6 +114,7 @@ export class EditComponent implements OnInit, OnDestroy {
           EditComponent.liveformData.isDraft = true;
           EditComponent.liveformData.bidOpportunityId = this.bidOpportunityId;
           EditComponent.liveformData.scaleOverall = new ScaleOverall();
+          EditComponent.liveformData.scaleOverall.lanPhongVan = 1;
           EditComponent.liveformData.scaleOverall.loaiCongTrinh = new Array<ConstructionItem>();
           EditComponent.liveformData.scaleOverall.trangthaiCongTrinh = [
             {

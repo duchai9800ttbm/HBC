@@ -22,7 +22,7 @@ export class TenderPriceApproval {
     approvalDate: number;
     approvalTimes: number;
     interviewTimes: number;
-    otherCompanyCustomerId: number;
+    otherCompany: string;
     isApprovedByTenderLeader: boolean;
     isApprovedByTenderManager: boolean;
     isApprovedByBoardOfDirector: boolean;

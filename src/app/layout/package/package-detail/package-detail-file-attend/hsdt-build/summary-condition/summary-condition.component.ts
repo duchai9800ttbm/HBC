@@ -61,6 +61,7 @@ export class SummaryConditionComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.subscription = this.hoSoDuThauService.watchStatusPackage().subscribe(status => {
       this.isClosedHSDT = status;
+      console.log(this.isClosedHSDT);
     });
     this.packageId = PackageDetailComponent.packageId;
     const permission$ = this.permissionService.get().subscribe(data => {

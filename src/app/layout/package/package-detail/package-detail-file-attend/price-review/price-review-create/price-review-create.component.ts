@@ -14,6 +14,7 @@ export class PriceReviewCreateComponent implements OnInit {
 
   ngOnInit() {
     this.model = new TenderPriceApproval();
+    this.model.interviewTimes = 1;
   }
 
 }

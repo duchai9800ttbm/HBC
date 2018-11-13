@@ -242,7 +242,7 @@
         </div>
 
 
-        <ng-container *ngIf="priceReview && !(package?.stageStatus?.id !== 'DangLapHSDT' && package?.stageStatus?.id !== 'CanLapTrinhDuyetGia' && package?.stageStatus?.id !== 'DaGuiDuyetTrinhDuyetGia' && package?.stageStatus?.id !== 'DaDuyetTrinhDuyetGia' && package?.stageStatus?.id !== 'CanDieuChinhTrinhDuyetGia')">
+        <ng-container *ngIf="!(package?.stageStatus?.id !== 'DangLapHSDT' && package?.stageStatus?.id !== 'CanLapTrinhDuyetGia' && package?.stageStatus?.id !== 'DaGuiDuyetTrinhDuyetGia' && package?.stageStatus?.id !== 'DaDuyetTrinhDuyetGia' && package?.stageStatus?.id !== 'CanDieuChinhTrinhDuyetGia')">
             <div class="content mt-5" *ngIf="historyList && historyList.length !== 0">
                 <div class="d-flex justify-content-between">
                     <h5 class="text-uppercase mb-3">Lịch sử cập nhật</h5>
@@ -284,28 +284,76 @@
                                                                           itemByLiveFormStep.liveFormTitle === 'TotalCostOfSubmission' ||
                                                                           itemByLiveFormStep.liveFormTitle === 'GFA' ||
                                                                           itemByLiveFormStep.liveFormTitle === 'CostOfCapitalValue')">
-                                                                <span>{{itemByLiveFormStep.liveFormTitle | translate}}:</span>&nbsp;
-                                                                từ
-                                                                <span class="font-weight-bold">{{itemByLiveFormStep.oldValue
-                                                                    ? itemByLiveFormStep.oldValue :
-                                                                    'không có'}}
-                                                                </span>
-                                                                thành
-                                                                <span class="font-weight-bold">
-                                                                    {{itemByLiveFormStep.newValue ?
-                                                                    itemByLiveFormStep.newValue : 'không có'}}
-                                                                </span>
+
+                                                                    <ng-container *ngIf="(itemByLiveFormStep.oldValue == 'True' || itemByLiveFormStep.oldValue == 'False') && (itemByLiveFormStep.newValue == 'True' || itemByLiveFormStep.newValue == 'False')">
+                                                                        <span *ngIf="itemByLiveFormStep.oldValue == 'False' && itemByLiveFormStep.newValue == 'True'">
+                                                                            *Đã chọn: {{
+                                                                            itemByLiveFormStep.liveFormTitle |
+                                                                            translate }}
+                                                                        </span>
+                                                                        <span *ngIf="itemByLiveFormStep.oldValue == 'True' && itemByLiveFormStep.newValue == 'False'">
+                                                                            *Đã bỏ chọn: {{
+                                                                            itemByLiveFormStep.liveFormTitle |
+                                                                            translate }}
+                                                                        </span>
+                                                                    </ng-container>
+                                                                    <ng-container *ngIf="!((itemByLiveFormStep.oldValue == 'True' || itemByLiveFormStep.oldValue == 'False') && (itemByLiveFormStep.newValue == 'True' || itemByLiveFormStep.newValue == 'False'))">
+                                                                        <span>*{{itemByLiveFormStep.liveFormTitle |
+                                                                            translate}}:</span>&nbsp;
+                                                                        từ
+                                                                        <span class="font-weight-bold" *ngIf="itemByLiveFormStep.liveFormTitle == 'OAndPPercentOfTotalCost'">
+                                                                            {{ itemByLiveFormStep.oldValue
+                                                                            ? (itemByLiveFormStep.oldValue |
+                                                                            truncateDecimal )
+                                                                            :
+                                                                            'không có'}}
+                                                                        </span>
+
+                                                                        <span class="font-weight-bold" *ngIf="!(itemByLiveFormStep.liveFormTitle == 'OAndPPercentOfTotalCost')">
+                                                                            {{itemByLiveFormStep.oldValue
+                                                                            ? itemByLiveFormStep.oldValue :
+                                                                            'không có'}}
+                                                                        </span>
+
+
+
+                                                                        thành
+                                                                        <span class="font-weight-bold" *ngIf="!(itemByLiveFormStep.liveFormTitle == 'OAndPPercentOfTotalCost')">
+                                                                            {{itemByLiveFormStep.newValue ?
+                                                                            itemByLiveFormStep.newValue : 'không có'}}
+                                                                        </span>
+
+                                                                        <span class="font-weight-bold" *ngIf="itemByLiveFormStep.liveFormTitle == 'OAndPPercentOfTotalCost'">
+                                                                            {{itemByLiveFormStep.newValue ?
+                                                                            (itemByLiveFormStep.newValue |
+                                                                            truncateDecimal
+                                                                            ) :
+                                                                            'không có'}}
+                                                                        </span>
+                                                                    </ng-container>
+
+
                                                             </div>
 
                                                             <div *ngIf="itemByLiveFormStep.liveFormTitle === 'GFA'">
-                                                                <span>{{itemByLiveFormStep.liveFormTitle | translate}}:</span>&nbsp;
-                                                                từ
-                                                                <span class="font-weight-bold">{{itemByLiveFormStep.oldValue
-                                                                    | numberArea}}</span>
-                                                                thành
-                                                                <span class="font-weight-bold">
-                                                                    {{itemByLiveFormStep.newValue | numberArea}}
-                                                                </span>
+                                                                    <span>*{{itemByLiveFormStep.liveFormTitle |
+                                                                        translate}}:</span>&nbsp;
+                                                                    từ
+                                                                    <span class="font-weight-bold" *ngIf="!(itemByLiveFormStep.liveFormTitle == 'OAndPPercentOfTotalCost')">
+                                                                        {{itemByLiveFormStep.oldValue | numberArea}}
+                                                                    </span>
+
+                                                                    <span class="font-weight-bold" *ngIf="itemByLiveFormStep.liveFormTitle == 'OAndPPercentOfTotalCost'">
+                                                                        {{itemByLiveFormStep.oldValue |
+                                                                        truncateDecimal}}
+                                                                    </span>
+                                                                    thành
+                                                                    <span class="font-weight-bold" *ngIf="!(itemByLiveFormStep.liveFormTitle == 'OAndPPercentOfTotalCost')">
+                                                                        {{itemByLiveFormStep.newValue | numberArea}}
+                                                                    </span>
+                                                                    <span class="font-weight-bold" *ngIf="itemByLiveFormStep.liveFormTitle == 'OAndPPercentOfTotalCost'">
+                                                                        {{itemByLiveFormStep.newValue | numberArea}}
+                                                                    </span>
                                                             </div>
 
 
@@ -316,14 +364,22 @@
                                                                         itemByLiveFormStep.liveFormTitle === 'TotalCostOfCapitalProfitCost' ||
                                                                         itemByLiveFormStep.liveFormTitle === 'TotalCostOfSubmission' ||
                                                                         itemByLiveFormStep.liveFormTitle === 'CostOfCapitalValue'">
-                                                                <span>{{itemByLiveFormStep.liveFormTitle | translate}}:</span>&nbsp;
-                                                                từ
-                                                                <span class="font-weight-bold">{{itemByLiveFormStep.oldValue
-                                                                    | vnCurrency}}</span>
-                                                                thành
-                                                                <span class="font-weight-bold">
-                                                                    {{itemByLiveFormStep.newValue | vnCurrency}}
-                                                                </span>
+                                                                    <span>*{{itemByLiveFormStep.liveFormTitle |
+                                                                        translate}}:</span>&nbsp;
+                                                                    từ
+                                                                    <span class="font-weight-bold" *ngIf="itemByLiveFormStep.liveFormTitle == 'OAndPPercentOfTotalCost'">
+                                                                        {{itemByLiveFormStep.oldValue |
+                                                                        truncateDecimal}}</span>
+                                                                    <span class="font-weight-bold" *ngIf="!(itemByLiveFormStep.liveFormTitle == 'OAndPPercentOfTotalCost')">
+                                                                        {{itemByLiveFormStep.oldValue | vnCurrency}}</span>
+                                                                    thành
+                                                                    <span class="font-weight-bold" *ngIf="itemByLiveFormStep.liveFormTitle == 'OAndPPercentOfTotalCost'">
+                                                                        {{itemByLiveFormStep.newValue |
+                                                                        truncateDecimal}}
+                                                                    </span>
+                                                                    <span class="font-weight-bold" *ngIf="!(itemByLiveFormStep.liveFormTitle == 'OAndPPercentOfTotalCost')">
+                                                                        {{itemByLiveFormStep.newValue | vnCurrency}}
+                                                                    </span>
                                                             </div>
 
                                                         </div>
