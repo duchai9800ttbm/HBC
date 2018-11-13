@@ -285,6 +285,7 @@
                                                                           itemByLiveFormStep.liveFormTitle === 'GFA' ||
                                                                           itemByLiveFormStep.liveFormTitle === 'CostOfCapitalValue')">
 
+                                                                <ng-container *ngIf="(itemByLiveFormStep.oldValue || itemByLiveFormStep.newValue) && !(itemByLiveFormStep.oldValue === '0' && itemByLiveFormStep.newValue === '0')">
                                                                     <ng-container *ngIf="(itemByLiveFormStep.oldValue == 'True' || itemByLiveFormStep.oldValue == 'False') && (itemByLiveFormStep.newValue == 'True' || itemByLiveFormStep.newValue == 'False')">
                                                                         <span *ngIf="itemByLiveFormStep.oldValue == 'False' && itemByLiveFormStep.newValue == 'True'">
                                                                             *Đã chọn: {{
@@ -331,11 +332,13 @@
                                                                             'không có'}}
                                                                         </span>
                                                                     </ng-container>
-
+                                                                </ng-container>
+                                                                <!-- --- -->
 
                                                             </div>
 
                                                             <div *ngIf="itemByLiveFormStep.liveFormTitle === 'GFA'">
+                                                                <ng-container *ngIf="(itemByLiveFormStep.oldValue || itemByLiveFormStep.newValue) && !(itemByLiveFormStep.oldValue === '0' && itemByLiveFormStep.newValue === '0')">
                                                                     <span>*{{itemByLiveFormStep.liveFormTitle |
                                                                         translate}}:</span>&nbsp;
                                                                     từ
@@ -354,6 +357,7 @@
                                                                     <span class="font-weight-bold" *ngIf="itemByLiveFormStep.liveFormTitle == 'OAndPPercentOfTotalCost'">
                                                                         {{itemByLiveFormStep.newValue | numberArea}}
                                                                     </span>
+                                                                </ng-container>
                                                             </div>
 
 
@@ -364,6 +368,7 @@
                                                                         itemByLiveFormStep.liveFormTitle === 'TotalCostOfCapitalProfitCost' ||
                                                                         itemByLiveFormStep.liveFormTitle === 'TotalCostOfSubmission' ||
                                                                         itemByLiveFormStep.liveFormTitle === 'CostOfCapitalValue'">
+                                                                <ng-container *ngIf="(itemByLiveFormStep.oldValue || itemByLiveFormStep.newValue) && !(itemByLiveFormStep.oldValue === '0' && itemByLiveFormStep.newValue === '0')">
                                                                     <span>*{{itemByLiveFormStep.liveFormTitle |
                                                                         translate}}:</span>&nbsp;
                                                                     từ
@@ -380,6 +385,7 @@
                                                                     <span class="font-weight-bold" *ngIf="!(itemByLiveFormStep.liveFormTitle == 'OAndPPercentOfTotalCost')">
                                                                         {{itemByLiveFormStep.newValue | vnCurrency}}
                                                                     </span>
+                                                                </ng-container>
                                                             </div>
 
                                                         </div>

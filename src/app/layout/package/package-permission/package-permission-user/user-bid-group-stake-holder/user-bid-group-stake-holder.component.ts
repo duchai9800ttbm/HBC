@@ -8,6 +8,7 @@ import { UserItemModel } from '../../../../../shared/models/user/user-item.model
 import { DictionaryItem } from '../../../../../shared/models';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { slideToTop } from '../../../../../router.animations';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-user-bid-group-stake-holder',
@@ -29,7 +30,8 @@ export class UserBidGroupStakeHolderComponent implements OnInit {
     private userService: UserService,
     private fb: FormBuilder,
     private alertService: AlertService,
-    private spinner: NgxSpinnerService
+    private spinner: NgxSpinnerService,
+    private router: Router
   ) { }
 
   ngOnInit() {
@@ -113,5 +115,8 @@ export class UserBidGroupStakeHolderComponent implements OnInit {
     });
 
   }
+  routeToPackageInfo() {
+    return this.router.navigate([`/package/detail/${this.packageId}/`]);
+}
 
 }

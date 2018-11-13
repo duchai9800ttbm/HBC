@@ -16,6 +16,7 @@ import { BidGroupUserResponsive } from '../../../../shared/models/api-response/u
 import { BidPermissionGroupResponsive } from '../../../../shared/models/api-response/setting/bid-permission-group-responsive';
 import { BidPermissionResponsive } from '../../../../shared/models/api-response/setting/bid-permission-responsive';
 import { NgxSpinnerService } from 'ngx-spinner';
+import { Router } from '@angular/router';
 
 @Component({
     selector: 'app-package-permission-review',
@@ -39,7 +40,8 @@ export class PackagePermissionReviewComponent implements OnInit {
         private packageService: PackageService,
         private dataService: DataService,
         private alertService: AlertService,
-        private spinner: NgxSpinnerService
+        private spinner: NgxSpinnerService,
+        private router: Router
     ) { }
 
     ngOnInit() {
@@ -168,5 +170,8 @@ export class PackagePermissionReviewComponent implements OnInit {
                 formItemControl.get(fControl).patchValue(checked);
             }
         }
+    }
+    routeToPackageInfo() {
+        return this.router.navigate([`/package/detail/${this.packageId}/`]);
     }
 }

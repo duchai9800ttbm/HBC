@@ -10,6 +10,7 @@ import { SETTING_BID_STAGE } from '../../../../shared/configs/common.config';
 import { BidGroupUserResponsive } from '../../../../shared/models/api-response/user/group-user/bid-group-user-responsive';
 import { BidPermissionGroupResponsive } from '../../../../shared/models/api-response/setting/bid-permission-group-responsive';
 import { BidPermissionUserGroupResponsive } from '../../../../shared/models/api-response/user/group-user/bid-permission-user-group-responsive';
+import { Router } from '@angular/router';
 
 @Component({
     selector: 'app-package-permission-result',
@@ -33,7 +34,8 @@ export class PackagePermissionResultComponent implements OnInit {
         private packageService: PackageService,
         private dataService: DataService,
         private alertService: AlertService,
-        private spinner: NgxSpinnerService
+        private spinner: NgxSpinnerService,
+        private router: Router
     ) { }
 
     ngOnInit() {
@@ -158,5 +160,8 @@ export class PackagePermissionResultComponent implements OnInit {
                 formItemControl.get(fControl).patchValue(checked);
             }
         }
+    }
+    routeToPackageInfo() {
+        return this.router.navigate([`/package/detail/${this.packageId}/`]);
     }
 }

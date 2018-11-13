@@ -1,4 +1,4 @@
-import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Subject } from 'rxjs';
 import { DATATABLE_CONFIG } from '../../../../shared/configs';
 import { FormGroup, FormBuilder, FormArray, FormControl } from '@angular/forms';
@@ -11,6 +11,7 @@ import { BidPermissionGroupResponsive } from '../../../../shared/models/api-resp
 import { PackagePermissionComponent } from '../package-permission.component';
 import { SETTING_BID_STAGE } from '../../../../shared/configs/common.config';
 import { DictionaryItem } from '../../../../shared/models';
+import { Router } from '@angular/router';
 
 @Component({
     selector: 'app-package-permission-bid',
@@ -38,7 +39,7 @@ export class PackagePermissionBidComponent implements OnInit {
         private dataService: DataService,
         private alertService: AlertService,
         private spinner: NgxSpinnerService,
-        private cdr: ChangeDetectorRef
+        private router: Router
     ) { }
 
     ngOnInit() {
@@ -387,5 +388,8 @@ export class PackagePermissionBidComponent implements OnInit {
         // console.log(this.packagePermissionReviewForm.get('PhieuDeNghiDuThau').get('permission'));
         // console.log(id, index);
         return true;
+    }
+    routeToPackageInfo() {
+        return this.router.navigate([`/package/detail/${this.packageId}/`]);
     }
 }
