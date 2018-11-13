@@ -135,7 +135,7 @@ export class NeedCreateTenderComponent implements OnInit, OnDestroy {
       this.indexItemHistoryChange = Number(this.pagedResultChangeHistoryList.total)
         - Number(this.pagedResultChangeHistoryList.pageSize) * Number(this.pagedResultChangeHistoryList.currentPage);
       setTimeout(() => {
-        this.dtTrigger2.next();
+        // this.dtTrigger2.next();
       });
       this.spinner.hide();
     },
@@ -158,7 +158,7 @@ export class NeedCreateTenderComponent implements OnInit, OnDestroy {
         // tslint:disable-next-line:max-line-length
         this.dateApproveBid = this.proposedTender && this.proposedTender.tenderDirectorProposal && this.proposedTender.tenderDirectorProposal.expectedDate ? DateTimeConvertHelper.fromTimestampToDtObject(this.proposedTender.tenderDirectorProposal.expectedDate * 1000) : new Date();
         setTimeout(() => {
-          this.dtTrigger.next();
+          // this.dtTrigger.next();
         });
       } else {
         // NeedCreateTenderFormComponent.formModel = new ProposeTenderParticipateRequest();

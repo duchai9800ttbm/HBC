@@ -22,6 +22,7 @@ import DateTimeConvertHelper from '../../../../../../shared/helpers/datetime-con
 import { NgbDropdownConfig } from '../../../../../../../../node_modules/@ng-bootstrap/ng-bootstrap';
 import { PermissionModel } from '../../../../../../shared/models/permission/Permission.model';
 import { PermissionService } from '../../../../../../shared/services/permission.service';
+import { CheckStatusPackage } from '../../../../../../shared/constants/check-status-package';
 @Component({
   selector: 'app-create-interview',
   templateUrl: './create-interview.component.html',
@@ -62,6 +63,7 @@ export class CreateInterviewComponent implements OnInit, OnDestroy {
   UploadBBPV = false;
   DongPV = false;
   HieuChinhHSDT = false;
+  checkStatusPackage = CheckStatusPackage;
   constructor(
     private dialogService: DialogService,
     private interviewInvitationService: InterviewInvitationService,

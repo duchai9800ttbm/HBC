@@ -81,5 +81,27 @@ export class SummaryConditionFormRelatedPartiesComponent implements OnInit {
     this.hoSoDuThauService.emitDataStepRelate(this.stakeHolderList);
   }
 
+  returnIndex(i, k) {
+    let dem = 0;
+    for (let m = 0; m < this.stakeHolderList.length; m++) {
+      if (m < i) {
+        dem = dem + this.stakeHolderList[m].customers.length;
+      }
+    }
+    return dem + k + 1;
+  }
+
+  maxIndex() {
+    let dem = 0;
+    if (this.stakeHolderList) {
+      for (let m = 0; m < this.stakeHolderList.length; m++) {
+       for (let n = 0; n < this.stakeHolderList[m].customers.length; n++ ) {
+         dem = dem + 1;
+       }
+      }
+    }
+    return dem;
+  }
+
 
 }
