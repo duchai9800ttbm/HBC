@@ -187,11 +187,17 @@ export class UploadFileComponent implements OnInit {
     }
   }
   onFocus(e) {
-    e.target.addEventListener('keyup', elem => {
-      if (elem.keyCode === 13) {
-        e.target.click();
-      }
-    });
+    // console.log(e);
+    // e.preventDefault();
+    // e.target.addEventListener('keyup', elem => {
+    //    if (elem.keyCode === 13) {
+    //      e.target.click();
+    //    }
+
+    // const keyups = Observable.fromEvent(this.autofocus.nativeElement, 'keyup');
+    // keyups.subscribe(data => console.log(data));
+
+
   }
 
 }
