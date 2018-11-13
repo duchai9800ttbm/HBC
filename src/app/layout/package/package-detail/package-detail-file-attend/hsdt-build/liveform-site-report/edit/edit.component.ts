@@ -104,7 +104,6 @@ export class EditComponent implements OnInit, OnDestroy {
     const getDataReport$ = this.packageService.getProposedTenderParticipateReport(this.bidOpportunityId)
       .switchMap(dataDNDT => {
         this.dataDNDT = dataDNDT;
-        console.log(this.dataDNDT);
         return this.siteSurveyReportService.tenderSiteSurveyingReport(this.bidOpportunityId);
       })
       .subscribe(res => {

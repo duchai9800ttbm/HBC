@@ -1141,9 +1141,9 @@ export class PriceReviewFormComponent implements OnChanges, OnInit, AfterViewIni
 
   checkDuyet() {
 
-    // if (this.isModeView) {
-    //   this.priceReviewForm.controls['approvalDate'].disable();
-    // }
+    if (this.isModeView) {
+      this.priceReviewForm.controls['approvalDate'].disable();
+    }
 
   }
   getAllCustomer() {

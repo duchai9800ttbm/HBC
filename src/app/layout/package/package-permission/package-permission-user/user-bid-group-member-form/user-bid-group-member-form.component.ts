@@ -14,6 +14,7 @@ import { PackagePermissionComponent } from '../../package-permission.component';
 import { SETTING_BID_USER } from '../../../../../shared/configs/common.config';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { slideToTop } from '../../../../../router.animations';
+import { Router } from '@angular/router';
 
 @Component({
     selector: 'app-user-bid-group-member-form',
@@ -36,6 +37,7 @@ export class UserBidGroupMemberFormComponent implements OnInit {
         private dataService: DataService,
         private packageService: PackageService,
         private alertService: AlertService,
+        private router: Router,
         private spinner: NgxSpinnerService
     ) { }
 
@@ -177,5 +179,8 @@ export class UserBidGroupMemberFormComponent implements OnInit {
             .get(name)
             .get('users') as FormArray;
         attachedArray.removeAt(idx);
+    }
+    routeToPackageInfo() {
+        return this.router.navigate([`/package/detail/${this.packageId}/`]);
     }
 }
