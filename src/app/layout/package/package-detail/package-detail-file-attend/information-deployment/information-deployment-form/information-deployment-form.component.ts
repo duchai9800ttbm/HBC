@@ -425,7 +425,13 @@ export class InformationDeploymentFormComponent implements OnInit, OnDestroy {
             tasks: this.fb.array(taskArr)
         });
 
-        this.controlDisableForm = this.routerAction === 'view' ? true : false;
+        if (this.routerAction === 'view') {
+            this.controlDisableForm = true;
+            this.planForm.disable();
+        } else {
+            this.controlDisableForm = false;
+            this.planForm.enable();
+        }
 
         this.tasksFA.controls.forEach((item, index) => {
             this.calculateTotalTime(index);
@@ -469,7 +475,7 @@ export class InformationDeploymentFormComponent implements OnInit, OnDestroy {
                     // workWeekStart: 1,
                     // workWeekEnd: 7,
                     editable: false,
-                     snap: false,
+                    snap: false,
                     // workDayStart: new Date('01/01/1970'),
                     //  height: window.screen.availHeight * 0.7
                 }).data('kendoGantt');
