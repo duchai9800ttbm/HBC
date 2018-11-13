@@ -168,13 +168,6 @@ export class PackageFormComponent implements OnInit {
         }
     }
 
-    calculatedTotalTime() {
-        if (this.packageForm.get('projectEstimatedEndDate').value && this.packageForm.get('projectEstimatedStartDate').value) {
-            this.packageForm.get('totalTime').patchValue(((this.packageForm.get('projectEstimatedEndDate').value
-                - this.packageForm.get('projectEstimatedStartDate').value) / (24 * 3600 * 1000)).toString() + ' ngày');
-        }
-    }
-
     validateForm() {
         this.invalidMessages = ValidationHelper.getInvalidMessages(
             this.packageForm,

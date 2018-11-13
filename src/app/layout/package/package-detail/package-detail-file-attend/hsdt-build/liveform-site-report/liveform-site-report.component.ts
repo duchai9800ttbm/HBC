@@ -150,14 +150,11 @@ export class LiveformSiteReportComponent implements OnInit, OnDestroy {
             groupBy(itemByChangedTimes.liveFormChangeds, [{ field: 'liveFormStep' }]);
         });
       });
+      console.log(this.updateInfoList);
       setTimeout(() => {
         this.dtTrigger2.next();
       });
-      this.spinner.hide();
-    },
-      err => {
-        this.spinner.hide();
-      });
+    });
   }
 
   onActivate(actionMode: string) {

@@ -4,6 +4,8 @@ import { UsefulInfo, ContentItem } from '../../../../../../../../shared/models/s
 import { EditComponent } from '../edit.component';
 import { Router } from '@angular/router';
 import { PackageDetailComponent } from '../../../../../package-detail.component';
+import { SiteSurveyReportService } from '../../../../../../../../shared/services/site-survey-report.service';
+import { Subscription } from 'rxjs';
 
 
 @Component({
@@ -22,14 +24,25 @@ export class UsefulInfoComponent implements OnInit, AfterViewInit {
   imageUrlArray = [];
   indexOfImage;
   showPopupViewImage = false;
+  subscription: Subscription;
   constructor(
+    private siteSurveyReportService: SiteSurveyReportService,
     private router: Router
   ) { }
 
   ngOnInit() {
     this.currentBidOpportunityId = +PackageDetailComponent.packageId;
     this.checkFlag();
-    this.initData();
+    const loadingData$ = this.siteSurveyReportService.watchingSignalLoad().subscribe(signal => {
+      this.checkFlag();
+      this.initData();
+      loadingData$.unsubscribe();
+    });
+    this.subscription = this.siteSurveyReportService.watchingSignalEdit().subscribe(signal => {
+      this.isViewMode = !signal;
+      this.initData();
+      this.checkFlag();
+    });
   }
   ngAfterViewInit() {
     if (this.usefulInfoData.length === 0 && !this.isViewMode) {

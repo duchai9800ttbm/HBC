@@ -12,6 +12,7 @@ import { CustomerModel } from '../../../../../../../shared/models/site-survey-re
 import { DepartmentsFormBranches } from '../../../../../../../shared/models/user/departments-from-branches';
 import { SiteSurveyReport } from '../../../../../../../shared/models/site-survey-report/site-survey-report';
 import { ScaleOverall, ConstructionItem } from '../../../../../../../shared/models/site-survey-report/scale-overall.model';
+import { UsefulInfo, ContentItem } from '../../../../../../../shared/models/site-survey-report/useful-info.model';
 
 @Component({
   selector: 'app-edit',
@@ -103,6 +104,7 @@ export class EditComponent implements OnInit, OnDestroy {
     const getDataReport$ = this.packageService.getProposedTenderParticipateReport(this.bidOpportunityId)
       .switchMap(dataDNDT => {
         this.dataDNDT = dataDNDT;
+        console.log(this.dataDNDT);
         return this.siteSurveyReportService.tenderSiteSurveyingReport(this.bidOpportunityId);
       })
       .subscribe(res => {
@@ -144,9 +146,12 @@ export class EditComponent implements OnInit, OnDestroy {
             tongDienTichXayDung: null,
             soTang: '',
             tienDo: null,
+            donViTienDo: null
           };
           EditComponent.liveformData.scaleOverall.quyMoDuAn.tongDienTichXayDung = dataPackageInfo && dataPackageInfo.floorArea;
           EditComponent.liveformData.scaleOverall.quyMoDuAn.tienDo = this.dataDNDT.contractCondition.timeForCompletion;
+          EditComponent.liveformData.scaleOverall.quyMoDuAn.donViTienDo = this.dataDNDT.contractCondition.timeForCompletionUnit;
+          EditComponent.liveformData.usefulInfo = new Array<UsefulInfo>();
           if (EditComponent.liveformData && !EditComponent.liveformData.scaleOverall.loaiCongTrinh.length && dataPackageInfo) {
             const siteSurvey$ = this.siteSurveyReportService.getListConstructionType().subscribe(ress => {
               const constructionTypes = ress;
@@ -170,7 +175,9 @@ export class EditComponent implements OnInit, OnDestroy {
           }
         } else {
           EditComponent.liveformData = res;
-          if (EditComponent.liveformData && !EditComponent.liveformData.scaleOverall.loaiCongTrinh.length && dataPackageInfo) {
+          if (EditComponent.liveformData && dataPackageInfo) {
+            EditComponent.liveformData.scaleOverall.quyMoDuAn.tongDienTichXayDung = dataPackageInfo && dataPackageInfo.floorArea;
+            EditComponent.liveformData.scaleOverall.quyMoDuAn.tienDo = this.dataDNDT.contractCondition.timeForCompletion;
             const siteSurvey$ = this.siteSurveyReportService.getListConstructionType().subscribe(ress => {
               const constructionTypes = ress;
               const foundItem = constructionTypes.find(item => item.id == dataPackageInfo.projectType.id);
@@ -192,7 +199,7 @@ export class EditComponent implements OnInit, OnDestroy {
             }, err => this.alertService.error('Đã xảy ra lỗi, danh sách loại công trình cập nhật không thành công'));
           }
 
-          if (!(EditComponent.liveformData && !EditComponent.liveformData.scaleOverall.loaiCongTrinh.length && dataPackageInfo)) {
+          if (!(EditComponent.liveformData && dataPackageInfo)) {
             if (EditComponent.liveformData) {
               const phongBan = EditComponent.liveformData.phongBan;
               this.departmentNo = (phongBan) ? phongBan.key : 'PDUTHAU';  // Default PDT
@@ -226,8 +233,6 @@ export class EditComponent implements OnInit, OnDestroy {
     }, err => this.alertService.error('Lấy thông tin Phân công tiến độ không thành công.'));
   }
   submitLiveForm(event) {
-    EditComponent.actionMode = 'viewMode';
-    this.isViewMode = true;
     this.departmentId = this.listDepartments.find(item => item.departmentNo === this.departmentNo).id;
     EditComponent.liveformData.phongBan = {
       id: this.departmentId,
@@ -241,7 +246,10 @@ export class EditComponent implements OnInit, OnDestroy {
     this.showPopupConfirm = false;
     if (!event) {
       this.showPopupConfirm = false;
+      this.isViewMode = false;
     } else {
+      EditComponent.actionMode = 'viewMode';
+      this.isViewMode = true;
       const objData = EditComponent.liveformData;
       this.showPopupConfirm = false;
       this.siteSurveyReportService

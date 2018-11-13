@@ -73,8 +73,8 @@
                         <div class="label-project-scale row">
                             <label for="" class="col-lg-5">Tổng diện tích xây dựng/ Gross floor area (m2)</label>
                             <div class="col-lg-7">
-                                <input type="text" class="no-boder cus-input text-right align-placeholder" appInputArea
-                                    [ngClass]="{'view-mode-control': isViewMode}" formControlName="tongDienTichXayDung"
+                                <input type="text" class="no-boder cus-input text-right align-placeholder view-mode-control"
+                                    value="{{ scaleOverallForm?.get('tongDienTichXayDung').value }} m2"
                                     tabindex="7">
                             </div>
                         </div>
@@ -88,9 +88,8 @@
                         <div class="label-project-scale row">
                             <label for="" class="col-lg-5">Tiến độ dự kiến/ Construction period (ngày)</label>
                             <div class="col-lg-7">
-                                <input type="number" class="no-boder cus-input text-right align-placeholder"
-                                    placeholder="Nhập số ngày" [ngClass]="{'view-mode-control': isViewMode}"
-                                    appInputNumberInteger formControlName="tienDo" tabindex="9">
+                                <input type="text" class="no-boder cus-input text-right align-placeholder view-mode-control" value="{{ scaleOverallForm?.get('tienDo').value }} {{ scaleModel?.quyMoDuAn?.donViTienDo?.value }}"
+                                    tabindex="9">
                             </div>
                         </div>
                     </div>

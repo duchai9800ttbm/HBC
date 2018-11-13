@@ -302,7 +302,7 @@ export class SiteSurveyReportService {
         }))
       })) : []
       ,
-      updatedDescription: obj.updateDescription
+      updatedDesc: obj.updateDescription
     };
     return this.apiService
       .post(url, infoReport)
@@ -407,7 +407,8 @@ export class SiteSurveyReportService {
           dienTichCongTruong: model.projectStatistic.projectStatistic.projectScale.siteArea,
           tongDienTichXayDung: model.projectStatistic.projectStatistic.projectScale.grossFloorArea,
           soTang: model.projectStatistic.projectStatistic.projectScale.totalNumberOfFloor,
-          tienDo: model.projectStatistic.projectStatistic.projectScale.constructionPeriod
+          tienDo: null,
+          donViTienDo: null
         },
         hinhAnhPhoiCanh: model.projectStatistic.perspectiveImageOfProject && {
           description: (model.projectStatistic.perspectiveImageOfProject.desc !== 'null') ?
@@ -642,7 +643,7 @@ export class SiteSurveyReportService {
       };
       dataFormated.usefulInfo = (model.usefulInFormations || []).map(x => ({
         title: x.title,
-        content: x.content.map(i => ({
+        content: x.content && x.content.map(i => ({
           name: (i.name !== 'null') ? i.name : '',
           detail: (i.detail !== 'null') ? i.detail : '',
           imageUrls: i.imageUrls.map(e => ({
@@ -671,6 +672,7 @@ export class SiteSurveyReportService {
     const url = `bidopportunity/${bidOpportunityId}/tendersitesurveyingreport/changedhistory/${page}/${pageSize}`;
     return this.apiService.get(url).map(res => {
       const response = res.result;
+      console.log(response);
       return {
         currentPage: response.pageIndex,
         pageSize: response.pageSize,

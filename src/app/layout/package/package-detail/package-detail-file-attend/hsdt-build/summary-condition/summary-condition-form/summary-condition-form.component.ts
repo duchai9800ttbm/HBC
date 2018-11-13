@@ -100,9 +100,10 @@ export class SummaryConditionFormComponent implements OnInit, OnDestroy {
   }
 
   onSubmit(check: boolean) {
+    const previousStatus = HoSoDuThauService.tempDataLiveFormDKDT.value.isDraftVersion;
     HoSoDuThauService.tempDataLiveFormDKDT.value.bidOpportunityId = this.packageId;
     HoSoDuThauService.tempDataLiveFormDKDT.value.isDraftVersion = check;
-    if (check || this.isCreate) {
+    if (check || this.isCreate || previousStatus) {
       this.submitLiveForm(true);
     } else {
       this.showPopupConfirm = true;

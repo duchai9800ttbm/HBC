@@ -14,7 +14,7 @@ import { UploadFileHsdtComponent } from '../upload-file-hsdt/upload-file-hsdt.co
 import { ListDocumentTypeIdGroup } from '../../../../../../shared/models/ho-so-du-thau/list-document-type.model';
 import { UserItemModel } from '../../../../../../shared/models/user/user-item.model';
 import { PermissionService } from '../../../../../../shared/services/permission.service';
-import { PermissionModel } from '../../../../../../shared/models/permission/Permission.model';
+import { PermissionModel } from '../../../../../../shared/models/permission/permission.model';
 import { DocumentTypeId } from '../../../../../../shared/constants/document-type-id';
 
 @Component({

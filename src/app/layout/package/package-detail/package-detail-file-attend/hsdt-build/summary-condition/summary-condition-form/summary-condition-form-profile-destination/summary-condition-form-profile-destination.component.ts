@@ -72,16 +72,12 @@ export class SummaryConditionFormProfileDestinationComponent implements OnInit {
         disabled: this.isModeView
       }
     });
-    if (!this.dienGiaiYeuCauHoSo.hanNop) {
-      this.packageService.getInforPackageID(this.packageId).subscribe(result => {
-        const closingTime = result.submissionDate;
-        if (closingTime) {
-          this.yeuCauHoSoForm.get('hanNop').patchValue(DateTimeConvertHelper.fromTimestampToDtObject(closingTime * 1000));
-        }
-      }, err => {
-        this.alertService.error('Tải thông tin gói thầu thất bại.');
-      });
-    }
+    this.packageService.getInforPackageID(this.packageId).subscribe(result => {
+      const closingTime = result.submissionDate;
+      if (closingTime) {
+        this.yeuCauHoSoForm.get('hanNop').patchValue(DateTimeConvertHelper.fromTimestampToDtObject(closingTime * 1000));
+      }
+    });
     this.yeuCauHoSoForm.valueChanges.subscribe(data => {
       let obj = new DienGiaiYeuCauHoSo();
       obj = data;
