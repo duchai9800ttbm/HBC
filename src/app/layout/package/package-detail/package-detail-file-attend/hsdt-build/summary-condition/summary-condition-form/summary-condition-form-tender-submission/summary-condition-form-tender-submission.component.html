@@ -15,7 +15,7 @@
                 <div class="row no-gutters mb-2" *ngFor="let fControl of taiLieuLuuYFA.controls; let i = index"
                     [formGroupName]="i">
                     <div class="col-md-11">
-                        <input class="form-control" formControlName="taiLieu">
+                        <input [tabindex]="i + 1" class="form-control" formControlName="taiLieu">
                     </div>
                     <div class="col-md-1 d-flex center-parent">
                         <div>
@@ -32,7 +32,7 @@
             <div class="col-md-8">
                 <div class="row no-gutters">
                     <div class="col-md-11">
-                        <input class="form-control" type="text" appInputNumberNegativeDecimal formControlName="soLuong">
+                        <input [tabindex]="taiLieuLuuYFA.controls.length + 1" class="form-control" type="text" appInputNumberNegativeDecimal formControlName="soLuong">
                     </div>
                     <div class="col-md-1">
                     </div>
@@ -46,7 +46,7 @@
                 <div class="row no-gutters">
                     <div class="col-md-11">
                         <span class="custom-dropdown w-100">
-                            <select class="form-control" formControlName="ngonNgu">
+                            <select [tabindex]="taiLieuLuuYFA.controls.length + 2" class="form-control" formControlName="ngonNgu">
                                 <option value="">---Chọn---</option>
                                 <option [value]="'Tiếng Việt'">Tiếng Việt</option>
                                 <option [value]="'Tiếng Anh'">Tiếng Anh</option>
@@ -59,11 +59,11 @@
         </div>
 
         <div class="text-center mt-4">
-            <button class="btn border" routerLink="../main-material">
+            <button [tabindex]="taiLieuLuuYFA.controls.length + 4" class="btn border" routerLink="../main-material">
                 <i class="fa font-size-3 mr-3 fa-angle-left" aria-hidden="true"></i>
                 Trở về
             </button>
-            <button class="btn btn-primary ml-1" routerLink="../profile-destination">
+            <button  [tabindex]="taiLieuLuuYFA.controls.length + 3" class="btn btn-primary ml-1" routerLink="../profile-destination">
                 Tiếp
                 <i class="fa font-size-3 ml-3 fa-angle-right" aria-hidden="true"></i>
             </button>
