@@ -70,10 +70,10 @@ export class NeedCreateTenderFormContractConditionComponent implements OnInit {
       insurance: formValue ? formValue.insurance : '',
       advancePayment: formValue ? formValue.advancePayment : 0,
       monthlyPaymentOrMilestone: this.fb.group({
-        key: formValue && formValue.monthlyPaymentOrMilestone ? formValue.monthlyPaymentOrMilestone.key : '',
+        key: formValue && formValue.monthlyPaymentOrMilestone ? formValue.monthlyPaymentOrMilestone.key : null,
         value: formValue && formValue.monthlyPaymentOrMilestone ? formValue.monthlyPaymentOrMilestone.value : null,
         // tslint:disable-next-line:max-line-length
-        displayText: formValue && formValue.monthlyPaymentOrMilestone ? formValue.monthlyPaymentOrMilestone.displayText : ''
+        displayText: formValue && formValue.monthlyPaymentOrMilestone ? formValue.monthlyPaymentOrMilestone.displayText : null
       }),
       retentionMoney: formValue ? formValue.retentionMoney : 0,
       specialCondition: formValue ? formValue.specialCondition : ''
@@ -83,7 +83,7 @@ export class NeedCreateTenderFormContractConditionComponent implements OnInit {
   mappingToLiveFormData(data) {
     NeedCreateTenderFormComponent.formModel.contractCondition = data;
     // tslint:disable-next-line:max-line-length
-    NeedCreateTenderFormComponent.formModel.contractCondition.commencementDate = data.commencementDate ? DateTimeConvertHelper.fromDtObjectToSecon(data.commencementDate) : 0;
+    NeedCreateTenderFormComponent.formModel.contractCondition.commencementDate = data.commencementDate ? DateTimeConvertHelper.fromDtObjectToSecon(data.commencementDate) : null;
   }
 
   routerLink(event, link) {

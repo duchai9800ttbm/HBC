@@ -182,6 +182,10 @@ export class NeedCreateTenderFormComponent implements OnInit, OnDestroy {
         NeedCreateTenderFormComponent.formModel.contractCondition.performanceSecurity = 0;
         NeedCreateTenderFormComponent.formModel.contractCondition.delayDamagesForTheWorks = 0;
         NeedCreateTenderFormComponent.formModel.contractCondition.advancePayment = 0;
+        NeedCreateTenderFormComponent.formModel.contractCondition.monthlyPaymentOrMilestone = new Currency();
+        NeedCreateTenderFormComponent.formModel.contractCondition.monthlyPaymentOrMilestone.key = null;
+        NeedCreateTenderFormComponent.formModel.contractCondition.monthlyPaymentOrMilestone.value = null;
+        NeedCreateTenderFormComponent.formModel.contractCondition.monthlyPaymentOrMilestone.displayText = null;
         NeedCreateTenderFormComponent.formModel.contractCondition.retentionMoney = 0;
         // =====================
         // TenderDirectorProposal
