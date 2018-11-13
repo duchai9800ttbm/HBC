@@ -94,13 +94,13 @@
                                                 <td [title]="itemchirld.document && itemchirld.document.name ? itemchirld.document.name : ''">{{itemchirld.document?.name}}</td>
                                                 <td class="text-center">{{itemchirld.document?.interviewTime}}</td>
                                                 <td class="text-center">
-                                                    <div *ngIf="!itemchirld.isLiveForm && !itemchirld.filerUrl" title="Tải file"
+                                                    <div *ngIf="!itemchirld.isLiveForm && !itemchirld?.document?.filerUrl" title="Tải file"
                                                         (click)="dowloadDocument(itemchirld.document.id)">
                                                         <a>
                                                             <i class="fa fa-download color-item-down" aria-hidden="true"></i>
                                                         </a>
                                                     </div>
-                                                    <div *ngIf="!itemchirld.isLiveForm && itemchirld.filerUrl" title="Mở link">
+                                                    <div *ngIf="!itemchirld.isLiveForm && itemchirld?.document?.filerUrl" title="Mở link">
                                                         <a [href]="itemchirld.document.filerUrl" target="_blank">
                                                             <i class="fa fa-external-link color-item-down" aria-hidden="true"></i>
                                                         </a>

@@ -205,7 +205,8 @@
                                         </div>
                                     </ng-container>
                                     <ng-container *ngIf="SuaTDG">
-                                        <div *ngIf="!package?.isChotHoSo" style="cursor: pointer;" title="Sửa" routerLink="../edit">
+                                        <div *ngIf="!package?.isChotHoSo" style="cursor: pointer;" title="Sửa"
+                                            routerLink="../edit">
                                             <a>
                                                 <i class="fa fa-pencil cursor-pointer icon-edit" aria-hidden="true">
                                                 </i>
@@ -425,15 +426,22 @@
                                                     </a>
                                                 </div>
                                                 <div style="cursor: pointer;" title="download" *ngIf="!items?.isLiveForm">
-                                                    <a (click)="downloadHSDTChinhThuc(item.document?.id)">
+                                                    <a *ngIf="!item?.document?.filerUrl" (click)="downloadHSDTChinhThuc(item.document?.id)">
                                                         <i class="fa fa-download cursor-pointer icon-view" aria-hidden="true"></i>
                                                     </a>
+                                                    <ng-container *ngIf="item?.document?.filerUrl">
+                                                        <a [href]="item?.filerUrl" target="_blank">
+                                                            <i class="fa fa-external-link color-item-down" aria-hidden="true"></i>
+                                                        </a>
+                                                    </ng-container>
+
                                                 </div>
-                                                <div style="cursor: pointer;" title="In" *ngIf="items?.isLiveForm">
+
+                                                <!-- <div style="cursor: pointer;" title="In" *ngIf="items?.isLiveForm">
                                                     <a class="text-success" (click)="print()">
                                                         <i class="fa fa-print cursor-pointer icon-print" aria-hidden="true"></i>
                                                     </a>
-                                                </div>
+                                                </div> -->
                                             </div>
                                         </td>
                                     </tr>
