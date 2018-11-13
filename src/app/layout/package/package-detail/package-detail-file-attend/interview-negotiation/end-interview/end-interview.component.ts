@@ -19,7 +19,7 @@ import { StatusObservableHsdtService } from '../../../../../../shared/services/s
 import { CheckStatusPackage } from '../../../../../../shared/constants/check-status-package';
 import { ViewDetailReportComponent } from './view-detail-report/view-detail-report.component';
 import { NgbDropdownConfig } from '../../../../../../../../node_modules/@ng-bootstrap/ng-bootstrap';
-import { PermissionModel } from '../../../../../../shared/models/permission/Permission.model';
+import { PermissionModel } from '../../../../../../shared/models/permission/permission.model';
 import { PermissionService } from '../../../../../../shared/services/permission.service';
 @Component({
   selector: 'app-end-interview',
