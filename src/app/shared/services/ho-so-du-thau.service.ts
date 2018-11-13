@@ -37,6 +37,8 @@ export class HoSoDuThauService {
   static stateLiveFormSummaryCondition = new BehaviorSubject<StateLiveFormSummaryCondition>(new StateLiveFormSummaryCondition());
   static idTenderDocumentTypesData;
   static statusHSDT = new BehaviorSubject<boolean>(false);
+  static isCloseHSDT = new BehaviorSubject<boolean>(false);
+
   static checkConditionApproval = new BehaviorSubject<boolean>(false);
   // Data ProposedTenderParticipateReport
   static getDataPTPReport: ProposeTenderParticipateRequest;
@@ -126,8 +128,14 @@ export class HoSoDuThauService {
   watchStatusPackage() {
     return HoSoDuThauService.statusHSDT;
   }
+  watchCloseHSDT() {
+    return HoSoDuThauService.isCloseHSDT;
+  }
   detectStatusPackage(status) {
     HoSoDuThauService.statusHSDT.next(status);
+  }
+  detectIsCloseHSDT(status) {
+    HoSoDuThauService.isCloseHSDT.next(status);
   }
   // --END: Check Status Package HSDT
 
