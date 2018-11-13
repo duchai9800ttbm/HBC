@@ -50,7 +50,7 @@ export class UploadFormComponent implements OnInit, OnDestroy {
   currentItem = {};
   showPopupViewImage = false;
   imageUrlArray = [];
-  isClosedHSDT: boolean;
+  isChotHoSo: boolean;
 
   listPermission: Array<PermissionModel>;
 
@@ -143,7 +143,7 @@ export class UploadFormComponent implements OnInit, OnDestroy {
     });
 
     const statusPackage$ = this.hoSoDuThauService.watchStatusPackage().subscribe(status => {
-      this.isClosedHSDT = status;
+      this.isChotHoSo = status;
     });
     this.subscription.add(permission$);
     this.subscription.add(statusPackage$);
@@ -155,13 +155,13 @@ export class UploadFormComponent implements OnInit, OnDestroy {
   }
 
   showError() {
-    if (this.isClosedHSDT) {
+    if (this.isChotHoSo) {
       return this.alertService.error('Bạn không thể upload file khi đã chốt hồ sơ');
     }
     return null;
   }
   showDialogUploadFile(i) {
-    if (this.isClosedHSDT) {
+    if (this.isChotHoSo) {
       return this.alertService.error('Bạn không thể upload file khi đã chốt hồ sơ');
     }
     this.dialog = this.dialogService.open({

@@ -320,7 +320,7 @@ export class HsdtBuildComponent implements OnInit, AfterViewChecked, OnDestroy {
                         this.spinner.hide();
                         this.packageService.getInforPackageID(this.packageId).subscribe(result => {
                             this.package = result;
-                            this.hoSoDuThauService.detectStatusPackage(this.package.isClosedHSDT);
+                            this.hoSoDuThauService.detectStatusPackage(this.package.isChotHoSo);
                         }, err => {
                         });
                         this.refresh2();

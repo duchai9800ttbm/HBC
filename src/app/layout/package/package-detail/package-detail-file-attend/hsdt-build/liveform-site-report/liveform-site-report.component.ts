@@ -41,7 +41,7 @@ export class LiveformSiteReportComponent implements OnInit, OnDestroy {
   dtTrigger2: Subject<any> = new Subject();
   dialog;
   indexItemHistoryChange: number;
-  isClosedHSDT: boolean;
+  isChotHoSo: boolean;
   subscription: Subscription;
   dataDNDT;
 
@@ -70,7 +70,7 @@ export class LiveformSiteReportComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.subscription = this.hoSoDuThauService.watchStatusPackage().subscribe(status => {
-      this.isClosedHSDT = status;
+      this.isChotHoSo = status;
     });
     this.bidOpportunityId = +PackageDetailComponent.packageId;
     const permission$ = this.permissionService.get().subscribe(data => {

@@ -1122,6 +1122,7 @@ export class PriceReviewFormComponent implements OnChanges, OnInit, AfterViewIni
       this.spinner.show();
       this.priceReviewService.giamDocDuyet(this.packageId).subscribe(() => {
         this.checkDuyet();
+        this.alertService.success('Duyệt trình duyệt giá thành công!');
         this.spinner.hide();
       }, err => {
         this.spinner.hide();
@@ -1133,8 +1134,11 @@ export class PriceReviewFormComponent implements OnChanges, OnInit, AfterViewIni
     this.spinner.show();
     this.priceReviewService.giamDocKhongDuyet(this.packageId).subscribe(() => {
       this.checkDuyet();
+      this.router.navigate([`package/detail/${this.packageId}/attend/price-review/summary`]);
+      this.alertService.success('Không duyệt trình duyệt giá thành công!');
       this.spinner.hide();
     }, err => {
+      this.alertService.error('Không duyệt trình duyệt giá thất bại!');
       this.spinner.hide();
     });
   }

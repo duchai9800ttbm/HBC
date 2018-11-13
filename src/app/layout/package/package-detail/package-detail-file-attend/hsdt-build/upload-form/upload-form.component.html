@@ -13,7 +13,7 @@
                 <input type="text" class="form-control icon" placeholder="&#xf002; Tên tài liệu" (keyup)="searchTerm$.next($event.target.value)">
             </div>
             <div class="responsive-header-control d-flex">
-                <ng-container *ngIf="!isClosedHSDT">
+                <ng-container *ngIf="!isChotHoSo">
                     <ng-container *ngIf="XoaFile">
                         <button class="btn btn-primary ml-1" (click)="multiDelete()">
                             Xóa
@@ -21,17 +21,17 @@
                     </ng-container>
 
                     <ng-container *ngIf="UploadFile">
-                        <button *ngIf="!isTypeChildDoc" class="btn btn-primary ml-1" [ngClass]="{'btn-secondary': isClosedHSDT}"
+                        <button *ngIf="!isTypeChildDoc" class="btn btn-primary ml-1" [ngClass]="{'btn-secondary': isChotHoSo}"
                             (click)="showDialogUploadFile()">
                             Thêm mới HSDT
                         </button>
 
                         <div *ngIf="isTypeChildDoc" class="btn-group ml-1" ngbDropdown placement="bottom-right">
-                            <button type="button" class="btn btn-primary" (click)="showError()" [ngClass]="{'btn-secondary': isClosedHSDT}"
+                            <button type="button" class="btn btn-primary" (click)="showError()" [ngClass]="{'btn-secondary': isChotHoSo}"
                                 ngbDropdownToggle data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 Thêm mới HSDT
                             </button>
-                            <div [ngClass]="{'d-none': isClosedHSDT}" class="dropdown-menu" ngbDropdownMenu>
+                            <div [ngClass]="{'d-none': isChotHoSo}" class="dropdown-menu" ngbDropdownMenu>
                                 <ng-container *ngFor="let children of childrenOfTypeDocument; index as i">
                                     <div class="dropdown-item" (click)="showDialogUploadFile(children.item.id)">
                                         <a>{{ children.item?.name }}</a>
@@ -289,7 +289,7 @@
                                     </div>
 
                                     <ng-container *ngIf="XoaFile">
-                                        <div *ngIf="!isClosedHSDT" class="pointer-link" (click)="deleteDocument(hoso.id)"
+                                        <div *ngIf="!isChotHoSo" class="pointer-link" (click)="deleteDocument(hoso.id)"
                                             title="Xóa">
                                             <a>
                                                 <i class="fa fa-trash-o" aria-hidden="true"></i>

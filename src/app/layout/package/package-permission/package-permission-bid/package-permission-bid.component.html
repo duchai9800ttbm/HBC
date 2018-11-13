@@ -312,7 +312,7 @@
                 </div>
             </div>
             <div [formGroupName]="'LapHoSoDuThauFile'" class="mt-4 table-striped-fake">
-                <div class="table-fake header">
+                <div class="table-fake-2 header">
                     <div class="text-center">Lập HSDT (upload file)</div>
                     <div class="text-center">Loại tài liệu</div>
                     <div></div>
@@ -325,7 +325,7 @@
                     <div *ngFor="let item of packagePermissionReviewForm.get('LapHoSoDuThauFile').get('permission').controls; let i = index;"
                         [formGroupName]="i">
                         <div formArrayName="documentTypes" [class.odd]="i % 2 == 0">
-                            <div class="table-fake content" *ngFor="let itemBid of item.get('documentTypes').controls; let j = index;"
+                            <div class="table-fake-2 content" *ngFor="let itemBid of item.get('documentTypes').controls; let j = index;"
                                 [formGroupName]="j">
                                 <div>
                                     <div class="grid-container-3" *ngIf="j == 0">
@@ -541,9 +541,12 @@
                                     </label>
                                 </div>
                                 <div class="text-center">
-                                    <label class="custom-control custom-checkbox" *ngIf="j == 0">
-                                        <input type="checkbox" class="custom-control-input" formControlName="ChotHSDT">
-                                        <span class="custom-control-indicator"></span>
+                                    <label class="custom-control custom-checkbox">
+                                        <ng-container *ngIf="j == 0">
+                                            <input type="checkbox" class="custom-control-input" formControlName="ChotHSDT">
+                                            <span class="custom-control-indicator"></span>
+                                        </ng-container>
+
                                     </label>
                                 </div>
                             </div>

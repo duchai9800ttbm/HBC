@@ -35,7 +35,7 @@ export class SummaryConditionComponent implements OnInit, OnDestroy {
   dialog;
   indexItemHistoryChange: number;
   pagedResultChangeHistoryList: PagedResult<HistoryLiveForm> = new PagedResult<HistoryLiveForm>();
-  isClosedHSDT: boolean;
+  isChotHoSo: boolean;
   subscription: Subscription;
   listPermission: Array<PermissionModel>;
   listPermissionScreen2 = [];
@@ -60,7 +60,7 @@ export class SummaryConditionComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.subscription = this.hoSoDuThauService.watchStatusPackage().subscribe(status => {
-      this.isClosedHSDT = status;
+      this.isChotHoSo = status;
     });
     this.packageId = PackageDetailComponent.packageId;
     const permission$ = this.permissionService.get().subscribe(data => {

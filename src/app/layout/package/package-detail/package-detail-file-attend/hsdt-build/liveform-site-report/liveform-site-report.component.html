@@ -62,13 +62,13 @@
                                     </a>
                                 </ng-container>
                                 <ng-container *ngIf="SuaLiveForm">
-                                    <a *ngIf="!isClosedHSDT" title="Edit file" class=" text-success ml-3" (click)="onActivate('edit')"
+                                    <a *ngIf="!isChotHoSo" title="Edit file" class=" text-success ml-3" (click)="onActivate('edit')"
                                         [routerLink]="['./form/edit']">
                                         <i class="fa fa-pencil cursor-pointer" aria-hidden="true"> </i>
                                     </a>
                                 </ng-container>
                                 <ng-container *ngIf="XoaLiveForm">
-                                    <a *ngIf="!isClosedHSDT" class=" text-dark ml-3" (click)="deleteDoc()">
+                                    <a *ngIf="!isChotHoSo" class=" text-dark ml-3" (click)="deleteDoc()">
                                         <i class="fa fa-trash-o" aria-hidden="true"></i>
                                     </a>
                                 </ng-container>

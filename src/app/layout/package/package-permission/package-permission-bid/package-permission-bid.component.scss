@@ -82,6 +82,25 @@
     
 }
 
+.table-fake-2 {
+    display: grid;
+    grid-template-columns: 280px 280px 34px auto auto auto auto;
+    &.header {
+        border-bottom: 1px solid #f68e56 !important;
+        background-color: #f68e56;
+        color: #ffff;
+        font-weight: bold;
+        font-size: 0.875rem;
+        line-height: 1.5;
+        padding: 6px 8px;
+    }
+    &.content {
+        height: 44.08px;
+        padding: 6px 8px;
+    }
+    
+}
+
 .table-striped-fake {
     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
     .odd {

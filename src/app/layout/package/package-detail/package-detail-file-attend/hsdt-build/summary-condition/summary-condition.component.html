@@ -6,7 +6,7 @@
             <div class="mt-3">Hiện chưa có bảng tóm tắt điều kiện dự thầu nào</div>
             <div class="mt-3 d-flex justify-content-center">
                 <ng-container *ngIf="TaoMoiLiveForm">
-                    <button class="btn btn-primary" routerLink="./form/create">
+                    <button *ngIf="!isChotHoSo" class="btn btn-primary" routerLink="./form/create">
                         Tạo mới bảng tóm tắt điều kiện dự thầu
                     </button>
                 </ng-container>
@@ -63,12 +63,12 @@
                                     </a>
                                 </ng-container>
                                 <ng-container *ngIf="SuaLiveForm">
-                                    <a *ngIf="!isClosedHSDT" class=" text-success ml-3" [routerLink]="['./form/edit']">
+                                    <a *ngIf="!isChotHoSo" class=" text-success ml-3" [routerLink]="['./form/edit']">
                                         <i class="fa fa-pencil cursor-pointer" aria-hidden="true"> </i>
                                     </a>
                                 </ng-container>
                                 <ng-container *ngIf="XoaLiveForm">
-                                    <a *ngIf="!isClosedHSDT" class=" text-dark ml-3" (click)="delete()">
+                                    <a *ngIf="!isChotHoSo" class=" text-dark ml-3" (click)="delete()">
                                         <i class="fa fa-trash-o" aria-hidden="true"></i>
                                     </a>
                                 </ng-container>

@@ -12,7 +12,7 @@
                     <i class="fa fa-refresh" aria-hidden="true"></i>
                 </button>
                 <ng-container *ngIf="!package?.isChotHoSo">
-                    <button *ngIf="isModeView" class="btn btn-primary" routerLink="../edit">Chỉnh sửa</button>
+                    <button *ngIf="isModeView && !package?.isChotHoSo" class="btn btn-primary" routerLink="../edit">Chỉnh sửa</button>
                     <ng-container *ngIf="isModeView">
                         <button type="button" class="btn btn-primary mr-1" (click)="guiDuyet()" *ngIf="model?.isDraftVersion === false && (package?.stageStatus?.id === 'CanLapTrinhDuyetGia' || package?.stageStatus?.id === bidStatus.DangLapHSDT)">
                             Gửi duyệt trình duyệt giá
