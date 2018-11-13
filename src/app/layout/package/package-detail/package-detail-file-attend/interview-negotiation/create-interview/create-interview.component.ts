@@ -20,7 +20,7 @@ import { BidStatus } from '../../../../../../shared/constants/bid-status';
 import { groupBy } from '../../../../../../../../node_modules/@progress/kendo-data-query';
 import DateTimeConvertHelper from '../../../../../../shared/helpers/datetime-convert-helper';
 import { NgbDropdownConfig } from '../../../../../../../../node_modules/@ng-bootstrap/ng-bootstrap';
-import { PermissionModel } from '../../../../../../shared/models/permission/Permission.model';
+import { PermissionModel } from '../../../../../../shared/models/permission/permission.model';
 import { PermissionService } from '../../../../../../shared/services/permission.service';
 import { CheckStatusPackage } from '../../../../../../shared/constants/check-status-package';
 @Component({

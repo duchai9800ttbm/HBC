@@ -851,7 +851,7 @@ export class PriceReviewFormComponent implements OnChanges, OnInit, AfterViewIni
         disabled: true
       },
       interviewTimes: {
-        value: this.model.interviewTimes,
+        value: (this.model.interviewTimes !== 0) ? this.model.interviewTimes : 1,
         disabled: this.isModeView
       },
       isApprovedByTenderLeader: { value: this.model.isApprovedByTenderLeader, disabled: true },
@@ -1030,8 +1030,9 @@ export class PriceReviewFormComponent implements OnChanges, OnInit, AfterViewIni
         this.alertService.error(`Đã có lỗi xảy ra. ${message} Trình duyệt giá không thành công!`);
       });
     } else {
+      const previousStatus = this.priceReviewForm.get('isDraftVersion').value;
       this.priceReviewForm.get('isDraftVersion').patchValue(false);
-      if (this.isModeCreate) {
+      if (this.isModeCreate || previousStatus) {
         this.priceReviewForm.get('updatedDesc').patchValue('');
         this.priceReviewService.createOrEdit(this.priceReviewForm.value, this.packageId).subscribe(() => {
           this.router.navigate([`/package/detail/${this.packageId}/attend/price-review`]);
@@ -1185,11 +1186,10 @@ export class PriceReviewFormComponent implements OnChanges, OnInit, AfterViewIni
     const chiPhiBaseGfa = this.priceReviewForm.get('chiPhiBaseGfa').value;
     const giaTriBaseGfa = this.priceReviewForm.get('giaTriBaseGfa').value;
     const chiPhiLoiNhuanAmountGfa = this.priceReviewForm.get('chiPhiLoiNhuanAmountGfa').value;
-
-    if (chiPhiBaseGfa && giaTriBaseGfa) {
-      this.priceReviewForm.get('giaTriPCBaseGfa').patchValue((+giaTriBaseGfa) / (+chiPhiBaseGfa));
-      this.valuePcps = true;
-    } else { this.valuePcps = false; }
+    this.priceReviewForm.get('giaTriPCBaseGfa').patchValue(
+      (+giaTriBaseGfa) / (+chiPhiBaseGfa)
+    );
+    this.valuePcps = true;
     if (chiPhiBaseGfa && chiPhiLoiNhuanAmountGfa) {
       this.priceReviewForm.get('tyleGfa').patchValue((+chiPhiLoiNhuanAmountGfa) / (+chiPhiBaseGfa));
       this.valueOnP = true;

@@ -1054,7 +1054,7 @@
                             </div>
                             <div class="item-2 d-flex align-items-center">
                                 <div>
-                                    <input formControlName="chiPhiBaseGfa" appInputAreaNoplaceholder (input)="countTotalGiaNopThau()">
+                                    <input formControlName="chiPhiBaseGfa" appInputAreaNoplaceholder (input)="countTotalGiaNopThau(); getValueField()">
                                 </div>
                             </div>
 
@@ -1138,13 +1138,14 @@
                                 </div>
                             </div>
                             <div class="item-2 d-flex align-items-center">
-                                <div *ngIf="valuePcps">
-                                    <input formControlName="giaTriPCBaseGfa" appInputAreaNoplaceholder>
+                                <div class="pl-1">
+                                        {{ priceReviewForm.get('giaTriPCBaseGfa').value | truncateDecimal }}
+                                    <!-- <input formControlName="giaTriPCBaseGfa" appInputAreaNoplaceholder> -->
                                 </div>
 
-                                <div *ngIf="!valuePcps" class="center-parent w-100">
+                                <!-- <div *ngIf="!valuePcps" class="center-parent w-100">
                                     <div>/</div>
-                                </div>
+                                </div> -->
 
                             </div>
 
