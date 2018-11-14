@@ -493,7 +493,7 @@ export class InformationDeploymentComponent implements OnInit, OnDestroy {
       } else if (!this.tenderPlan.isSignedByApprovalPerson) {
         this.packageService.setRouterAction('view');
         this.confirmService.missAction('Bảng phân công tiến độ chưa được xác nhận ký tại Người tạo và người duyệt',
-          `/package/detail/${this.bidOpportunityId}/attend/infomation-deployment/edit`);
+          `/package/detail/${this.bidOpportunityId}/attend/infomation-deployment/view`);
       }
     }
   }

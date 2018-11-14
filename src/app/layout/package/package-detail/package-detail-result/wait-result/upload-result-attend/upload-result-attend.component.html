@@ -21,7 +21,11 @@
             <div class="w-100  mr-auto">
                 <div>
                     <div class="body cus-header" id="info-main">
-                        <div class="w-100 center-parent" class="alert alert-danger" role="alert">
+                        <div *ngIf="!((uploadResultForm.get('link').value &&  uploadResultForm.get('link').value !== '') || file) && isSubmitted"
+                            class="w-100 center-parent" class="alert alert-danger" role="alert">
+                            <div class="invalid-feedback">
+                                Bạn phải nhập đường dẫn link hoặc đính kèm file
+                            </div>
                         </div>
                         <table class="w-100 table">
 
@@ -52,14 +56,14 @@
                                         </div>
                                     </td>
                                 </tr>
-                                <tr *ngIf="!((uploadResultForm.get('link').value &&  uploadResultForm.get('link').value !== '') || file) && isSubmitted">
+                                <!-- <tr *ngIf="!((uploadResultForm.get('link').value &&  uploadResultForm.get('link').value !== '') || file) && isSubmitted">
                                     <td class="w-30 no-boder"></td>
                                     <td class="w-70 no-boder">
                                         <div class="invalid-feedback">
                                             Bạn phải nhập đường dẫn link hoặc đính kèm file
                                         </div>
                                     </td>
-                                </tr>
+                                </tr> -->
                                 <tr>
                                     <td class="w-30 label no-boder bold-title required">Tên</td>
                                     <td class="w-70 no-boder">
