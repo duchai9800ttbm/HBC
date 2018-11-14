@@ -35,7 +35,7 @@
                             <label>Phòng ban: {{item.get('department').value}}</label>
                         </div>
                         <div class="form-btn-group">
-                            <div class="btn-icon btn-icon-plus" (click)="addFormItem(fControl.groupName)">
+                            <div class="btn-icon btn-icon-plus" (click)="addFormItem(fControl.groupName)" *ngIf="!(fControl.groupName === 'ChuTriDuAn')">
                                 <i class="fa fa-plus" style="margin-top: 2px" aria-hidden="true"></i>
                             </div>
                             <div class="btn-icon btn-icon-minus" (click)="removeFormItem(fControl.groupName, i)" *ngIf="i != 0">
