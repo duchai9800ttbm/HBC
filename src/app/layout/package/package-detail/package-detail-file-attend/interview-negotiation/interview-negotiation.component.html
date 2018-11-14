@@ -10,7 +10,8 @@
         </div>
         <div>
             <div class="btn-toolbar">
-                <button class="btn btn-primary ml-1" (click)="refeshSubmittedHSDT()">
+                <!-- (click)="refeshSubmittedHSDT()"" -->
+                <button class="btn btn-primary ml-1" (click)="refeshAll()">
                     <i class="fa fa-refresh" aria-hidden="true"></i>
                 </button>
             </div>
@@ -38,8 +39,8 @@
                     </button>
                 </ng-container>
 
-
-                <button class="btn btn-primary ml-1" (click)="refreshCreateInterview()">
+                <!-- (click)="refreshCreateInterview()" -->
+                <button class="btn btn-primary ml-1" (click)="refeshAll()">
                     <i class="fa fa-refresh" aria-hidden="true"></i>
                 </button>
             </div>
@@ -61,8 +62,8 @@
                         Chốt công tác chuẩn bị phỏng vấn
                     </button>
                 </ng-container>
-
-                <button class="btn btn-primary ml-1" (click)="refreshPrepareInterview()">
+                <!-- (click)="refreshPrepareInterview()" -->
+                <button class="btn btn-primary ml-1" (click)="refeshAll()">
                     <i class="fa fa-refresh" aria-hidden="true"></i>
                 </button>
             </div>
@@ -74,6 +75,13 @@
             </div>
             <div class="center-parent  mr-4 title-status--size">
                 <div> Đã chốt công tác chuẩn bị phỏng vấn</div>
+            </div>
+        </div>
+        <div>
+            <div class="btn-toolbar">
+                <button class="btn btn-primary ml-1" (click)="refeshAll()">
+                    <i class="fa fa-refresh" aria-hidden="true"></i>
+                </button>
             </div>
         </div>
     </div>
@@ -108,8 +116,8 @@
                         Đóng phỏng vấn
                     </button>
                 </ng-container>
-
-                <button class="btn btn-primary ml-1" (click)="refreshEndInterview()">
+                <!-- (click)="refreshEndInterview()" -->
+                <button class="btn btn-primary ml-1" (click)="refeshAll()">
                     <i class="fa fa-refresh" aria-hidden="true"></i>
                 </button>
             </div>

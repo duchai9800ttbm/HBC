@@ -76,7 +76,7 @@ export class InterviewNegotiationComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    this.subscription = this.interviewInvitationService.watchNoDirection().subscribe( value => {
+    this.subscription = this.interviewInvitationService.watchNoDirection().subscribe(value => {
       this.nodirection = value;
     });
     this.statusInInterviewList = [this.bidStatus.DaNopHSDT, this.bidStatus.DaNhanLoiMoi,
@@ -181,7 +181,6 @@ export class InterviewNegotiationComponent implements OnInit, OnDestroy {
   // =========================
   // Đã nộp HSDT
   refeshSubmittedHSDT() {
-    // this.directionalRouter();
     this.checkStatusPackageFuc();
     this.refreshCreateInterview();
   }
@@ -298,5 +297,30 @@ export class InterviewNegotiationComponent implements OnInit, OnDestroy {
       err => {
         this.alertService.error('Đóng phỏng vấn không thành công!');
       });
+  }
+
+  refeshAll() {
+    switch (this.urlCurrent) {
+      case 'create': {
+        if (this.statusPackage && (this.statusPackage.id === this.checkStatusPackage.DaNopHSDT.id)) {
+          console.log('0');
+          this.refeshSubmittedHSDT();
+        } else {
+          this.refreshCreateInterview();
+          console.log('1');
+        }
+        break;
+      }
+      case 'prepare': {
+        this.refreshPrepareInterview();
+        console.log('2');
+        break;
+      }
+      case 'end': {
+        this.refreshEndInterview();
+        console.log('3');
+        break;
+      }
+    }
   }
 }
