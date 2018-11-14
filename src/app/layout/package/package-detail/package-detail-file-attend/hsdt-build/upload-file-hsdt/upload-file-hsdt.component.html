@@ -100,10 +100,13 @@
                                 </td>
                             </tr>
                             <tr>
-                                <td class="w-30 label no-boder bold-title">Lần phỏng vấn</td>
+                                <td class="w-30 label no-boder bold-title required">Lần phỏng vấn</td>
                                 <td class="w-70 no-boder">
                                     <input appInputNumberInteger class="w-100" kendoTextBox type="number" tabindex="6"
-                                        formControlName="interViewTimes">
+                                        formControlName="interViewTimes" [class.is-invalid]="formErrors.interViewTimes">
+                                        <div class="invalid-feedback" *ngIf="formErrors.interViewTimes">
+                                            {{formErrors.interViewTimes}}
+                                        </div>
                                 </td>
                             </tr>
                             <tr>

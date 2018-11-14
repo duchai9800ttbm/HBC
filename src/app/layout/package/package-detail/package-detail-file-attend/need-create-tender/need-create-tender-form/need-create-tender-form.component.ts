@@ -56,6 +56,11 @@ export class NeedCreateTenderFormComponent implements OnInit, OnDestroy {
     ChapThuanKhongChapThuan = false;
     TaiTemplate = false;
     subscription: Subscription;
+
+    static checkDecimalPositiveNumber(input: any): any {
+        const regex = /^[^0-9]+|[^0-9]+$/gi;
+        return Number(String(input).replace(regex, ''));
+    }
     constructor(
         private packageService: PackageService,
         private alertService: AlertService,
@@ -119,17 +124,17 @@ export class NeedCreateTenderFormComponent implements OnInit, OnDestroy {
                     this.startUp();
                 } else {
                     // if (!NeedCreateTenderFormComponent.formModel) {
-                        this.packageService.getProposedTenderParticipateReport(this.bidOpportunityId).subscribe(data => {
-                            if (data) {
-                                NeedCreateTenderFormComponent.formModel = data;
-                                this.packageService.changeDataProposals();
-                            } else {
-                                this.setDataDefault();
-                                this.packageService.changeDataProposals();
-                            }
-                            this.startUp();
-                        }, err => {
-                        });
+                    this.packageService.getProposedTenderParticipateReport(this.bidOpportunityId).subscribe(data => {
+                        if (data) {
+                            NeedCreateTenderFormComponent.formModel = data;
+                            this.packageService.changeDataProposals();
+                        } else {
+                            this.setDataDefault();
+                            this.packageService.changeDataProposals();
+                        }
+                        this.startUp();
+                    }, err => {
+                    });
                     // } else {
                     //     this.startUp();
                     // }
@@ -222,7 +227,7 @@ export class NeedCreateTenderFormComponent implements OnInit, OnDestroy {
         //         }/attend/create-request`
         //     ]);
         // } else {
-            this.getPackageInfo();
+        this.getPackageInfo();
         // }
     }
 
@@ -446,6 +451,4 @@ export class NeedCreateTenderFormComponent implements OnInit, OnDestroy {
             this.saveChangesLiveForm();
         }
     }
-
-
 }
