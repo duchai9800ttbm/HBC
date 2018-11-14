@@ -11,7 +11,7 @@ import { HoSoDuThauService } from '../../../../../../../shared/services/ho-so-du
 import { CustomerModel } from '../../../../../../../shared/models/site-survey-report/customer-list';
 import { DepartmentsFormBranches } from '../../../../../../../shared/models/user/departments-from-branches';
 import { SiteSurveyReport } from '../../../../../../../shared/models/site-survey-report/site-survey-report';
-import { ScaleOverall, ConstructionItem } from '../../../../../../../shared/models/site-survey-report/scale-overall.model';
+import { ScaleOverall, ConstructionModel } from '../../../../../../../shared/models/site-survey-report/scale-overall.model';
 import { UsefulInfo, ContentItem } from '../../../../../../../shared/models/site-survey-report/useful-info.model';
 
 @Component({
@@ -114,7 +114,7 @@ export class EditComponent implements OnInit, OnDestroy {
           EditComponent.liveformData.bidOpportunityId = this.bidOpportunityId;
           EditComponent.liveformData.scaleOverall = new ScaleOverall();
           EditComponent.liveformData.scaleOverall.lanPhongVan = 1;
-          EditComponent.liveformData.scaleOverall.loaiCongTrinh = new Array<ConstructionItem>();
+          EditComponent.liveformData.scaleOverall.loaiCongTrinh = new Array<ConstructionModel>();
           EditComponent.liveformData.scaleOverall.trangthaiCongTrinh = [
             {
               text: 'Mới (New)',
@@ -152,14 +152,18 @@ export class EditComponent implements OnInit, OnDestroy {
           EditComponent.liveformData.scaleOverall.quyMoDuAn.tienDo = this.dataDNDT.contractCondition.timeForCompletion;
           EditComponent.liveformData.scaleOverall.quyMoDuAn.donViTienDo = this.dataDNDT.contractCondition.timeForCompletionUnit;
           EditComponent.liveformData.usefulInfo = new Array<UsefulInfo>();
-          if (EditComponent.liveformData && !EditComponent.liveformData.scaleOverall.loaiCongTrinh.length && dataPackageInfo) {
+          if (EditComponent.liveformData && dataPackageInfo) {
             const siteSurvey$ = this.siteSurveyReportService.getListConstructionType().subscribe(ress => {
               const constructionTypes = ress;
               const foundItem = constructionTypes.find(item => item.id == dataPackageInfo.projectType.id);
               foundItem.checked = true;
               constructionTypes[constructionTypes
                 .indexOf(constructionTypes.find(item => item.id == dataPackageInfo.projectType.id))] = foundItem;
-              EditComponent.liveformData.scaleOverall.loaiCongTrinh = constructionTypes;
+              EditComponent.liveformData.scaleOverall.loaiCongTrinh = constructionTypes.map(x => ({
+                text: x.text,
+                value: x.value,
+                checked: x.checked
+              }));
               if (EditComponent.liveformData) {
                 const phongBan = EditComponent.liveformData.phongBan;
                 this.departmentNo = (phongBan) ? phongBan.key : 'PDUTHAU';  // Default PDT
@@ -178,13 +182,18 @@ export class EditComponent implements OnInit, OnDestroy {
           if (EditComponent.liveformData && dataPackageInfo) {
             EditComponent.liveformData.scaleOverall.quyMoDuAn.tongDienTichXayDung = dataPackageInfo && dataPackageInfo.floorArea;
             EditComponent.liveformData.scaleOverall.quyMoDuAn.tienDo = this.dataDNDT.contractCondition.timeForCompletion;
+            EditComponent.liveformData.scaleOverall.quyMoDuAn.donViTienDo = this.dataDNDT.contractCondition.timeForCompletionUnit;
             const siteSurvey$ = this.siteSurveyReportService.getListConstructionType().subscribe(ress => {
               const constructionTypes = ress;
               const foundItem = constructionTypes.find(item => item.id == dataPackageInfo.projectType.id);
               foundItem.checked = true;
               constructionTypes[constructionTypes
                 .indexOf(constructionTypes.find(item => item.id == dataPackageInfo.projectType.id))] = foundItem;
-              EditComponent.liveformData.scaleOverall.loaiCongTrinh = constructionTypes;
+              EditComponent.liveformData.scaleOverall.loaiCongTrinh = constructionTypes.map(x => ({
+                text: x.text,
+                value: x.value,
+                checked: x.checked
+              }));
               if (EditComponent.liveformData) {
                 const phongBan = EditComponent.liveformData.phongBan;
                 this.departmentNo = (phongBan) ? phongBan.key : 'PDUTHAU';  // Default PDT
@@ -195,6 +204,7 @@ export class EditComponent implements OnInit, OnDestroy {
               }
               this.isDraft = EditComponent.liveformData.isDraft;
               this.siteSurveyReportService.detectSignalLoad(true);
+              console.log(EditComponent.liveformData.scaleOverall.loaiCongTrinh);
               siteSurvey$.unsubscribe();
             }, err => this.alertService.error('Đã xảy ra lỗi, danh sách loại công trình cập nhật không thành công'));
           }

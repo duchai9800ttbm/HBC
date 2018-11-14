@@ -45,7 +45,7 @@ export class NeedCreateTenderFormFeeTenderComponent implements OnInit {
         // tslint:disable-next-line:max-line-length
         displayText: formValue && formValue.feeOfTenderInvitationDocumentCurrency ? formValue.feeOfTenderInvitationDocumentCurrency.displayText : 'VNĐ'
       }),
-      tenderDocumentDeposit: formValue ? formValue.tenderDocumentDeposit : 0,
+      tenderDocumentDeposit: formValue ? NeedCreateTenderFormComponent.checkDecimalPositiveNumber(formValue.tenderDocumentDeposit) : 0,
       tenderDocumentDepositCurrency: this.fb.group({
         key: formValue && formValue.tenderDocumentDepositCurrency ? formValue.tenderDocumentDepositCurrency.key : 'VNĐ',
         value: formValue && formValue.tenderDocumentDepositCurrency ? formValue.tenderDocumentDepositCurrency.value : 'VNĐ',

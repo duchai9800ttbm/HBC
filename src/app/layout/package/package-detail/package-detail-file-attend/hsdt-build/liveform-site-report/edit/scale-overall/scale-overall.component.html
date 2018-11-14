@@ -65,17 +65,22 @@
                         <div class="label-project-scale row">
                             <label for="" class="col-lg-5">Diện tích công trường/ Site area (m2)</label>
                             <div class="col-lg-7">
-                                <input type="text" class="no-boder cus-input text-right align-placeholder" appInputArea
-                                    [ngClass]="{'view-mode-control': isViewMode}" formControlName="dienTichCongTruong"
+                                <input *ngIf="!isViewMode" class="form-view no-boder cus-input text-right align-placeholder" appInputAreaNoplaceholder appEnterPreventDefault
+                                    formControlName="dienTichCongTruong"
                                     tabindex="6">
+                                    <div class="form-view w-80 form-view-bg" *ngIf="isViewMode">
+                                            {{ scaleOverallForm?.get('dienTichCongTruong').value | numberAreaNoplaceholder }}
+                                        </div>
+
                             </div>
                         </div>
                         <div class="label-project-scale row">
                             <label for="" class="col-lg-5">Tổng diện tích xây dựng/ Gross floor area (m2)</label>
                             <div class="col-lg-7">
-                                <input type="text" class="no-boder cus-input text-right align-placeholder view-mode-control"
-                                    value="{{ scaleOverallForm?.get('tongDienTichXayDung').value }} m2"
-                                    tabindex="7">
+                                <div class="form-view w-80" [class.form-view-bg]="isViewMode">
+                                    {{ scaleOverallForm?.get('tongDienTichXayDung').value | numberAreaNoplaceholder }}
+                                </div>
+                                
                             </div>
                         </div>
                         <div class="label-project-scale row">
@@ -88,8 +93,9 @@
                         <div class="label-project-scale row">
                             <label for="" class="col-lg-5">Tiến độ dự kiến/ Construction period (ngày)</label>
                             <div class="col-lg-7">
-                                <input type="text" class="no-boder cus-input text-right align-placeholder view-mode-control" value="{{ scaleOverallForm?.get('tienDo').value }} {{ scaleModel?.quyMoDuAn?.donViTienDo?.value }}"
-                                    tabindex="9">
+                                    <div class="form-view w-80" [class.form-view-bg]="isViewMode">
+                                            {{ scaleOverallForm?.get('tienDo').value }} {{ scaleModel?.quyMoDuAn?.donViTienDo?.value }}
+                                        </div>
                             </div>
                         </div>
                     </div>

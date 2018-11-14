@@ -38,7 +38,7 @@ export class NeedCreateTenderFormEstimatedBudgetComponent implements OnInit {
   createForm() {
     const formValue = NeedCreateTenderFormComponent.formModel.estimatedBudgetOfPakage;
     this.estimatedBudgetForm = this.fb.group({
-      draftBudgetOfPackage: formValue ? formValue.draftBudgetOfPackage : 0,
+      draftBudgetOfPackage: formValue ? NeedCreateTenderFormComponent.checkDecimalPositiveNumber(formValue.draftBudgetOfPackage) : 0,
       draftBudgetOfPackageCurrency: this.fb.group({
         key: formValue && formValue.draftBudgetOfPackageCurrency ? formValue.draftBudgetOfPackageCurrency.key : this.listCurrency[0],
         value: formValue && formValue.draftBudgetOfPackageCurrency ? formValue.draftBudgetOfPackageCurrency.value : this.listCurrency[0],

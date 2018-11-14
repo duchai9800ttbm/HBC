@@ -652,7 +652,7 @@ export class HoSoDuThauService {
           progressStartDate: (obj.dienGiaiDieuKienHSMT.theoHBC.tienDo) ?
             obj.dienGiaiDieuKienHSMT.theoHBC.tienDo.ngayKhoiCong : '',
           progressComletionDate: (obj.dienGiaiDieuKienHSMT.theoHBC.tienDo) ?
-            obj.dienGiaiDieuKienHSMT.theoHBC.tienDo.thoiGianHoanThanh : '',
+            HoSoDuThauService.checkDecimalPositiveNumber(obj.dienGiaiDieuKienHSMT.theoHBC.tienDo.thoiGianHoanThanh) : '',
 
           taxTypes: (obj.dienGiaiDieuKienHSMT.theoHBC.cacLoaiThue) ?
             (obj.dienGiaiDieuKienHSMT.theoHBC.cacLoaiThue || []).map(x => ({
@@ -676,7 +676,7 @@ export class HoSoDuThauService {
           progressStartDate: (obj.dienGiaiDieuKienHSMT.theoHSMT.tienDo) ?
             obj.dienGiaiDieuKienHSMT.theoHSMT.tienDo.ngayKhoiCong : '',
           progressComletionDate: (obj.dienGiaiDieuKienHSMT.theoHSMT.tienDo) ?
-            obj.dienGiaiDieuKienHSMT.theoHSMT.tienDo.thoiGianHoanThanh : '',
+            HoSoDuThauService.checkDecimalPositiveNumber(obj.dienGiaiDieuKienHSMT.theoHSMT.tienDo.thoiGianHoanThanh) : '',
           isProgressCompletionDate: (obj.dienGiaiDieuKienHSMT.theoHSMT.tienDo) ?
             obj.dienGiaiDieuKienHSMT.theoHSMT.tienDo.thoiGianHoanThanhTheoNhaThau : false,
           progressCompletionContractorDate: (obj.dienGiaiDieuKienHSMT.theoHSMT.tienDo) ?

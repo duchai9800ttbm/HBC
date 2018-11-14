@@ -4,8 +4,8 @@ import { Currency } from '../currency';
 export class ScaleOverall {
     tenTaiLieu: string;
     lanPhongVan: number;
-    loaiCongTrinh: ConstructionItem[];
-    trangthaiCongTrinh: StatusContruction[];
+    loaiCongTrinh: ConstructionModel[];
+    trangthaiCongTrinh: ConstructionModel[];
     quyMoDuAn: {
         dienTichCongTruong: number;
         tongDienTichXayDung: number;
@@ -24,7 +24,7 @@ export class ConstructionItem {
     value: string;
     checked: boolean;
 }
-export class StatusContruction {
+export class ConstructionModel {
     text: string;
     value: string;
     checked: boolean;

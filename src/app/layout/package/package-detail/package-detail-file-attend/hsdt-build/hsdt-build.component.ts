@@ -311,6 +311,7 @@ export class HsdtBuildComponent implements OnInit, AfterViewChecked, OnDestroy {
     // End check
 
     chotHSDT(event) {
+        this.checkConditionApproval();
         if (this.checkDocFile || !this.checkTenderSummary || !this.checkSiteSurvey) {
             this.confirmationService.confirm(
                 `Bạn có chắc chắn muốn chốt Hồ sơ dự thầu?`,

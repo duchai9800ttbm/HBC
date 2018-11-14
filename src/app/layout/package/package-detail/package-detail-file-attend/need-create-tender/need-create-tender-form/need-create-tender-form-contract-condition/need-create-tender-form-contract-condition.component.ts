@@ -43,7 +43,7 @@ export class NeedCreateTenderFormContractConditionComponent implements OnInit {
       NeedCreateTenderFormComponent.formModel.contractCondition : null;
     this.contractConditionForm = this.fb.group({
       typeOfContract: formValue ? formValue.typeOfContract : '',
-      timeForCompletion: formValue ? formValue.timeForCompletion : 0,
+      timeForCompletion: formValue ? NeedCreateTenderFormComponent.checkDecimalPositiveNumber(formValue.timeForCompletion) : 0,
       timeForCompletionUnit: this.fb.group({
         key: formValue && formValue.timeForCompletionUnit ? formValue.timeForCompletionUnit.key : this.listTime[0],
         value: formValue && formValue.timeForCompletionUnit ? formValue.timeForCompletionUnit.value : this.listTime[0],
@@ -51,31 +51,31 @@ export class NeedCreateTenderFormContractConditionComponent implements OnInit {
         displayText: formValue && formValue.timeForCompletionUnit ? formValue.timeForCompletionUnit.displayText : this.listTime[0]
       }),
       commencementDate: formValue ? DateTimeConvertHelper.fromTimestampToDtObject(formValue.commencementDate * 1000) : null,
-      warrantyPeriod: formValue ? formValue.warrantyPeriod : 0,
+      warrantyPeriod: formValue ? NeedCreateTenderFormComponent.checkDecimalPositiveNumber(formValue.warrantyPeriod) : 0,
       warrantyPeriodUnit: this.fb.group({
         key: formValue && formValue.warrantyPeriodUnit ? formValue.warrantyPeriodUnit.key : this.listTime[0],
         value: formValue && formValue.warrantyPeriodUnit ? formValue.warrantyPeriodUnit.value : this.listTime[0],
         // tslint:disable-next-line:max-line-length
         displayText: formValue && formValue.warrantyPeriodUnit ? formValue.warrantyPeriodUnit.displayText : this.listTime[0]
       }),
-      tenderSecurity: formValue ? formValue.tenderSecurity : 0,
+      tenderSecurity: formValue ? NeedCreateTenderFormComponent.checkDecimalPositiveNumber(formValue.tenderSecurity) : 0,
       tenderSecurityCurrency: this.fb.group({
         key: formValue && formValue.tenderSecurityCurrency ? formValue.tenderSecurityCurrency.key : this.listCurrency[0],
         value: formValue && formValue.tenderSecurityCurrency ? formValue.tenderSecurityCurrency.value : this.listCurrency[0],
         // tslint:disable-next-line:max-line-length
         displayText: formValue && formValue.tenderSecurityCurrency ? formValue.tenderSecurityCurrency.displayText : this.listCurrency[0]
       }),
-      performanceSecurity: formValue ? formValue.performanceSecurity : 0,
-      delayDamagesForTheWorks: formValue ? formValue.delayDamagesForTheWorks : 0,
+      performanceSecurity: formValue ? NeedCreateTenderFormComponent.checkDecimalPositiveNumber(formValue.performanceSecurity) : 0,
+      delayDamagesForTheWorks: formValue ? NeedCreateTenderFormComponent.checkDecimalPositiveNumber(formValue.delayDamagesForTheWorks) : 0,
       insurance: formValue ? formValue.insurance : '',
-      advancePayment: formValue ? formValue.advancePayment : 0,
+      advancePayment: formValue ? NeedCreateTenderFormComponent.checkDecimalPositiveNumber(formValue.advancePayment) : 0,
       monthlyPaymentOrMilestone: this.fb.group({
         key: formValue && formValue.monthlyPaymentOrMilestone ? formValue.monthlyPaymentOrMilestone.key : null,
         value: formValue && formValue.monthlyPaymentOrMilestone ? formValue.monthlyPaymentOrMilestone.value : null,
         // tslint:disable-next-line:max-line-length
         displayText: formValue && formValue.monthlyPaymentOrMilestone ? formValue.monthlyPaymentOrMilestone.displayText : null
       }),
-      retentionMoney: formValue ? formValue.retentionMoney : 0,
+      retentionMoney: formValue ? NeedCreateTenderFormComponent.checkDecimalPositiveNumber(formValue.retentionMoney) : 0,
       specialCondition: formValue ? formValue.specialCondition : ''
     });
   }
