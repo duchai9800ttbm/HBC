@@ -345,22 +345,18 @@ export class UploadFormComponent implements OnInit, OnDestroy {
     this.filterModel.interViewTimes = '';
     this.getDataDocumentOfType(false);
   }
-  changeStatus(id, status) {
-    if (status === 'Draft') {
-      this.hoSoDuThauService.updateStatus(id, 'Official').subscribe(res => {
-        this.getDataDocumentOfType(false);
-        this.dtTrigger.next();
-        this.hoSoDuThauService.detectCondition(true);
+  changeStatus(hoso) {
+    if (hoso.status === 'Draft') {
+      this.hoSoDuThauService.updateStatus(hoso.id, 'Official').subscribe(res => {
+        hoso.status = 'Official';
       }, err => {
         this.dtTrigger.next();
         this.alertService.error('Đã có lỗi. Dữ liệu chưa được cập nhật!');
       });
     }
-    if (status === 'Official') {
-      this.hoSoDuThauService.updateStatus(id, 'Draft').subscribe(res => {
-        this.getDataDocumentOfType(false);
-        this.dtTrigger.next();
-        this.hoSoDuThauService.detectCondition(true);
+    if (hoso.status === 'Official') {
+      this.hoSoDuThauService.updateStatus(hoso.id, 'Draft').subscribe(res => {
+        hoso.status = 'Draft';
       }, err => {
         this.dtTrigger.next();
         this.alertService.error('Đã có lỗi. Dữ liệu chưa được cập nhật!');

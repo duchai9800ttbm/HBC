@@ -25,7 +25,8 @@ export class UploadResultAttendComponent implements OnInit {
   file;
   formErrors = {
     documentName: '',
-    receivedDate: ''
+    receivedDate: '',
+    interviewTimes: ''
   };
   isSubmitted: boolean;
   invalidMessages: string[];
@@ -49,7 +50,7 @@ export class UploadResultAttendComponent implements OnInit {
       version: [this.version],
       uploadedBy: [],
       receivedDate: [new Date(), CustomValidator.requiredDate],
-      interviewTimes: [this.interviewTimes],
+      interviewTimes: [this.interviewTimes, CustomValidator.requiredDate],
       documentDesc: [],
       link: [],
     });

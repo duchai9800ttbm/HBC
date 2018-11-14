@@ -52,6 +52,7 @@ export class EndInterviewComponent implements OnInit, OnDestroy {
   statusSort;
   checkStatusPackage = CheckStatusPackage;
   interviewOfPackage = '';
+  versionOfPackage = '';
   loading = false;
   subscription: Subscription;
 
@@ -128,6 +129,7 @@ export class EndInterviewComponent implements OnInit, OnDestroy {
     this.interviewInvitationService.instantSearchWithFilterReport(
       this.currentPackageId, this.searchTerm$, this.filterModel, 0, 1000).subscribe(result => {
         this.render(result);
+        console.log(result);
         this.spinner.hide();
         this.peopleUploadList = this.userService.getAllUser('');
       },
@@ -156,6 +158,7 @@ export class EndInterviewComponent implements OnInit, OnDestroy {
 
   getStatusPackage() {
     this.packageService.getInforPackageID(this.currentPackageId).subscribe(result => {
+      console.log(result);
       this.statusPackage = this.checkStatusPackage[result.stageStatus.id];
       this.interviewOfPackage = result.interviewInvitation ? result.interviewInvitation.interviewTimes : null;
     });

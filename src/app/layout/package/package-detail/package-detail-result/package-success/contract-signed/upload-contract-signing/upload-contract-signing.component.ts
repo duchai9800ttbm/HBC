@@ -12,14 +12,15 @@ import { AlertService } from '../../../../../../../shared/services';
   styleUrls: ['./upload-contract-signing.component.scss']
 })
 export class UploadContractSigningComponent implements OnInit {
-  @Input()callBack: Function;
-  @Input()version;
-  @Input()interviewTimes;
+  @Input() callBack: Function;
+  @Input() version;
+  @Input() interviewTimes;
   currentPackageId;
   uploadContractForm: FormGroup;
   invalidMessages: string[];
   formErrors = {
     documentName: '',
+    interviewTimes: ''
   };
   isSubmitted = false;
   file;
@@ -40,7 +41,7 @@ export class UploadContractSigningComponent implements OnInit {
       version: [this.version],
       uploadedBy: [],
       receivedDate: [],
-      interviewTimes: [this.interviewTimes],
+      interviewTimes: [this.interviewTimes, CustomValidator.required],
       documentDesc: [],
       link: [],
     });

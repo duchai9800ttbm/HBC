@@ -25,6 +25,7 @@ export class UploadFileHsdtComponent implements OnInit {
   invalidMessages: string[];
   formErrors = {
     editName: '',
+    interViewTimes: ''
   };
   listTypeChildren = [];
   errorMess;
@@ -51,11 +52,11 @@ export class UploadFileHsdtComponent implements OnInit {
       type: '',
       editName: ['', Validators.required],
       version: '',
-      interViewTimes: '',
+      interViewTimes: ['', Validators.required],
       description: ''
     });
     this.uploadForm.get('type').patchValue(this.idFile);
-    this.getVersionValue(this.uploadForm.get('type').value);
+    this.setDefaultValue(this.uploadForm.get('type').value);
     this.uploadForm.valueChanges.subscribe(data => {
       this.onFormValueChanged(data);
     });
@@ -64,7 +65,7 @@ export class UploadFileHsdtComponent implements OnInit {
     });
   }
   valueTypeDocChange(event) {
-    this.getVersionValue(this.uploadForm.get('type').value);
+    this.setDefaultValue(this.uploadForm.get('type').value);
   }
   onFormValueChanged(data?: any) {
     this.lockField = this.uploadForm.get('linkFile').value ? true : false;
@@ -86,17 +87,21 @@ export class UploadFileHsdtComponent implements OnInit {
     );
     return this.invalidMessages.length === 0;
   }
-  // Get Version Value
-  getVersionValue(typeDocId) {
+  // Get Max Value - Version & InterviewTimes
+  setDefaultValue(typeDocId) {
     this.hoSoDuThauService.getFileNoSearch(this.bidOpportunityId).subscribe(responseResultDocument => {
       this.listDocumentShow = this.groupDocumentType(
         responseResultDocument.items.filter(item => item.tenderDocumentType.id == typeDocId)
       );
+      console.log(this.listDocumentShow);
       if (!this.listDocumentShow[0]) {
         this.uploadForm.get('version').patchValue(1);
+        this.uploadForm.get('interViewTimes').patchValue(1);
       } else {
         const maxVersion = Math.max.apply(Math, this.listDocumentShow[0].items.map(item => item.version));
         this.uploadForm.get('version').patchValue(maxVersion + 1);
+        const maxInterViewTimes = Math.max.apply(Math, this.listDocumentShow[0].items.map(item => item.interViewTimes));
+        this.uploadForm.get('interViewTimes').patchValue(maxInterViewTimes + 1);
       }
     }, err => {
       this.alertService.error('Lấy thông tin Phiên bản thất bại. Xin vui lòng thử lại!');

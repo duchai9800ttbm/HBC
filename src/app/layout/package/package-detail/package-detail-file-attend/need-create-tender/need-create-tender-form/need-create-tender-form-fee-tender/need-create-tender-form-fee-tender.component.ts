@@ -37,7 +37,8 @@ export class NeedCreateTenderFormFeeTenderComponent implements OnInit {
   createForm() {
     const formValue = NeedCreateTenderFormComponent.formModel.feeOfTenderInvitationDocument;
     this.feeTenderForm = this.fb.group({
-      feeOfTenderInvitationDocument: formValue ? formValue.feeOfTenderInvitationDocument : null,
+      feeOfTenderInvitationDocument: formValue ?
+        NeedCreateTenderFormComponent.checkDecimalPositiveNumber(formValue.feeOfTenderInvitationDocument) : null,
       feeOfTenderInvitationDocumentCurrency: this.fb.group({
         key: formValue && formValue.feeOfTenderInvitationDocumentCurrency ? formValue.feeOfTenderInvitationDocumentCurrency.key : 'VNĐ',
         value: formValue && formValue.feeOfTenderInvitationDocumentCurrency ? formValue.feeOfTenderInvitationDocumentCurrency.value : 'VNĐ',

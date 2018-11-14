@@ -258,7 +258,7 @@
                                     <div class="text-truncate text-right" title="{{ hoso.status | translate }}">
                                         {{ hoso.status | translate }}
                                     </div>
-                                    <div (click)="changeStatus(hoso.id, hoso.status)">
+                                    <div (click)="changeStatus(hoso)">
                                         <i class="fa fa-check-square color-item-down pointer-link" aria-hidden="true"
                                             *ngIf="hoso.status === 'Official'"></i>
                                         <i class="fa fa-check-square color-item-test pointer-link" aria-hidden="true"

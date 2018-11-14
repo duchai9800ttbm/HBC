@@ -16,6 +16,7 @@ export class ReportEndInterviewComponent implements OnInit {
   @Input() callBack: Function;
   @Input() reloadData: Function;
   @Input() interviewOfPackage;
+  @Input() versionOfPackage;
   createFormReport: FormGroup;
   interviewInvitationReport = new InterviewInvitationReport();
   file: File;
@@ -35,6 +36,7 @@ export class ReportEndInterviewComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+    console.log(this.interviewOfPackage);
     this.currentPackageId = +PackageDetailComponent.packageId;
     this.createForm();
   }
@@ -42,7 +44,7 @@ export class ReportEndInterviewComponent implements OnInit {
   createForm() {
     this.createFormReport = this.fb.group({
       documentName: [this.interviewInvitationReport.documentName, CustomValidator.required],
-      version: [this.interviewInvitationReport.version, CustomValidator.required],
+      version: [this.versionOfPackage, CustomValidator.required],
       uploadedBy: [this.interviewInvitationReport.uploadedBy],
       createdDate: [this.interviewInvitationReport.uploadedBy],
       interviewTimes: [this.interviewOfPackage, CustomValidator.required],
