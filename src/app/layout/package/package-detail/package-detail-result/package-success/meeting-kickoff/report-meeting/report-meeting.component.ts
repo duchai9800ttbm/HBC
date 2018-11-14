@@ -735,10 +735,39 @@ export class ReportMeetingComponent implements OnInit, OnDestroy {
   }
 
   // Tải template
-  downloadTemplate() {
-    this.detailResultPackageService.meetingReportTemplate().subscribe(response => { },
-      err => {
-        this.alertService.error('Đã có lỗi xảy ra!');
-      });
+  // downloadTemplate() {
+  //   this.detailResultPackageService.meetingReportTemplate().subscribe(response => { },
+  //     err => {
+  //       this.alertService.error('Đã có lỗi xảy ra!');
+  //     });
+  // }
+
+  downloadTemplate(type) {
+    switch (type) {
+      case 'LostBid': {
+        this.detailResultPackageService.downloadTemplateLostBid().subscribe(response => {
+        },
+          err => {
+            this.alertService.error('Tải về template không thành công.');
+          });
+        break;
+      }
+      case 'WinBid': {
+        this.detailResultPackageService.downloadTemplateWinBid().subscribe(response => {
+        },
+          err => {
+            this.alertService.error('Tải về template không thành công.');
+          });
+        break;
+      }
+      case 'LessonLearn': {
+        this.detailResultPackageService.downloadTemplateLessonLearn().subscribe(response => {
+        },
+          err => {
+            this.alertService.error('Tải về template không thành công.');
+          });
+        break;
+      }
+    }
   }
 }

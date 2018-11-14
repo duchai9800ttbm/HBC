@@ -113,6 +113,39 @@ export class DetailResultPackageService {
       );
     });
   }
+  // Tải template Thông báo kết quả trật thầu
+  downloadTemplateLostBid() {
+    const url = `template/tenderlose/download`;
+    return this.apiService.getFile(url).map(response => {
+      return FileSaver.saveAs(
+        new Blob([response.file], {
+          type: `${response.file.type}`,
+        }), response.fileName
+      );
+    });
+  }
+  // Tải template Thông báo kết quả trúng thầu
+  downloadTemplateWinBid() {
+    const url = `template/tenderwin/download`;
+    return this.apiService.getFile(url).map(response => {
+      return FileSaver.saveAs(
+        new Blob([response.file], {
+          type: `${response.file.type}`,
+        }), response.fileName
+      );
+    });
+  }
+  // Tải Báo cáo đánh giá rút kinh nghiệm
+  downloadTemplateLessonLearn() {
+    const url = `template/tenderlesson/download`;
+    return this.apiService.getFile(url).map(response => {
+      return FileSaver.saveAs(
+        new Blob([response.file], {
+          type: `${response.file.type}`,
+        }), response.fileName
+      );
+    });
+  }
   // Xóa 1 tài liệu kết quả dự thầu
   deleteFileResult(idFile: number) {
     const url = `tenderresultdocument/delete`;

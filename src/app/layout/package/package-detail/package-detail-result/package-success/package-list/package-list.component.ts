@@ -318,13 +318,7 @@ export class PackageListComponent implements OnInit, OnDestroy {
         this.alertService.error('Đã xảy ra lỗi 1!');
       });
   }
-  downloadTemplate() {
-    this.detailResultPackageService.downloadTemplateResult().subscribe(response => {
-    },
-      err => {
-        this.alertService.error('Đã xảy ra lỗi 2!');
-      });
-  }
+
   deleteFileResult() {
     const listItemCheckbox = [];
     this.listFileResult.forEach(x => {
@@ -544,4 +538,41 @@ export class PackageListComponent implements OnInit, OnDestroy {
   closePopuupDialogViewDetail() {
     this.dialogViewDetail.close();
   }
+
+  downloadTemplate(type) {
+    switch (type) {
+      case 'LostBid': {
+        this.detailResultPackageService.downloadTemplateLostBid().subscribe(response => {
+        },
+          err => {
+            this.alertService.error('Tải về template không thành công.');
+          });
+        break;
+      }
+      case 'WinBid': {
+        this.detailResultPackageService.downloadTemplateWinBid().subscribe(response => {
+        },
+          err => {
+            this.alertService.error('Tải về template không thành công.');
+          });
+        break;
+      }
+      case 'LessonLearn': {
+        this.detailResultPackageService.downloadTemplateLessonLearn().subscribe(response => {
+        },
+          err => {
+            this.alertService.error('Tải về template không thành công.');
+          });
+        break;
+      }
+    }
+  }
+
+  // downloadTemplate() {
+  // this.detailResultPackageService.downloadTemplateResult().subscribe(response => {
+  // },
+  //   err => {
+  //     this.alertService.error('Đã xảy ra lỗi 2!');
+  //   });
+  // }
 }

@@ -596,3 +596,9 @@ select.form-control:not([size]):not([multiple]) {
 .d-none {
     padding: 0 !important;
 }
+
+:host /deep/ {
+    .custom-control {
+        padding-left: 1.5rem;
+    }
+}

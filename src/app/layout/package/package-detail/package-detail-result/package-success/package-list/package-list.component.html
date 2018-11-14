@@ -17,9 +17,22 @@
                     </button>
                 </ng-container>
                 <ng-container *ngIf="TaiTemplate">
-                    <button class="btn btn-primary ml-1" (click)="downloadTemplate()">
-                        Tải Template
-                    </button>
+                    <div class="btn-group ml-1" ngbDropdown placement="bottom-right">
+                        <button type="button" class="btn btn-primary" ngbDropdownToggle data-toggle="dropdown">
+                            Tải template
+                        </button>
+                        <div ngbDropdownMenu style="top: 33px;">
+                            <div class="fileUpload dropdown-item" (click)="downloadTemplate('LostBid')">
+                                <a>Thông báo kết quả trật thầu</a>
+                            </div>
+                            <div class="fileUpload dropdown-item" (click)="downloadTemplate('WinBid')">
+                                <a>Thông báo kết quả trúng thầu</a>
+                            </div>
+                            <div class="fileUpload dropdown-item" (click)="downloadTemplate('LessonLearn')">
+                                <a>Báo cáo đánh giá rút kinh nghiệm</a>
+                            </div>
+                        </div>
+                    </div>
                 </ng-container>
                 <ng-container *ngIf="TaiXuongKQDT">
                     <!-- <button class="btn btn-primary ml-1">
@@ -61,9 +74,22 @@
                     </button>
                 </ng-container>
                 <ng-container *ngIf="TaiTemplate">
-                    <button class="btn btn-primary ml-1" (click)="downloadTemplate()">
-                        Tải Template
-                    </button>
+                    <div class="btn-group ml-1" ngbDropdown placement="bottom-right">
+                        <button type="button" class="btn btn-primary" ngbDropdownToggle data-toggle="dropdown">
+                            Tải template
+                        </button>
+                        <div ngbDropdownMenu style="top: 33px;">
+                            <div class="fileUpload dropdown-item" (click)="downloadTemplate('LostBid')">
+                                <a>Thông báo kết quả trật thầu</a>
+                            </div>
+                            <div class="fileUpload dropdown-item" (click)="downloadTemplate('WinBid')">
+                                <a>Thông báo kết quả trúng thầu</a>
+                            </div>
+                            <div class="fileUpload dropdown-item" (click)="downloadTemplate('LessonLearn')">
+                                <a>Báo cáo đánh giá rút kinh nghiệm</a>
+                            </div>
+                        </div>
+                    </div>
                 </ng-container>
                 <ng-container *ngIf="TaiXuongKQDT">
                     <!-- <button class="btn btn-primary ml-1">
@@ -95,9 +121,22 @@
                 </ng-container>
 
                 <ng-container *ngIf="TaiTemplate">
-                    <button class="btn btn-primary ml-1" (click)="downloadTemplate()">
-                        Tải Template
-                    </button>
+                    <div class="btn-group ml-1" ngbDropdown placement="bottom-right">
+                        <button type="button" class="btn btn-primary" ngbDropdownToggle data-toggle="dropdown">
+                            Tải template
+                        </button>
+                        <div ngbDropdownMenu style="top: 33px;">
+                            <div class="fileUpload dropdown-item" (click)="downloadTemplate('LostBid')">
+                                <a>Thông báo kết quả trật thầu</a>
+                            </div>
+                            <div class="fileUpload dropdown-item" (click)="downloadTemplate('WinBid')">
+                                <a>Thông báo kết quả trúng thầu</a>
+                            </div>
+                            <div class="fileUpload dropdown-item" (click)="downloadTemplate('LessonLearn')">
+                                <a>Báo cáo đánh giá rút kinh nghiệm</a>
+                            </div>
+                        </div>
+                    </div>
                 </ng-container>
                 <button class="btn btn-primary ml-1" (click)="refesh(true)">
                     <i class="fa fa-refresh" aria-hidden="true"></i>

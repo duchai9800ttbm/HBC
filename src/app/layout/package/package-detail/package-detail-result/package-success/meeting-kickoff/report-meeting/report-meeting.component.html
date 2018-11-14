@@ -16,9 +16,25 @@
             <span class="input-group-addon">Tìm kiếm theo</span>
             <input type="text" class="form-control icon" placeholder="&#xf002; Tên tài liệu" (keyup)="searchTermMeetingReport$.next($event.target.value)">
           </div>
-          <button class="btn btn-primary ml-1" (click)="downloadTemplate()">
-            Tải Template
-          </button>
+          <!-- <button class="btn btn-primary ml-1" (click)="downloadTemplate()">
+            Tải template
+          </button> -->
+          <div class="btn-group ml-1" ngbDropdown placement="bottom-right">
+            <button type="button" class="btn btn-primary" ngbDropdownToggle data-toggle="dropdown">
+                Tải template
+            </button>
+            <div ngbDropdownMenu style="top: 33px;">
+                <div class="fileUpload dropdown-item" (click)="downloadTemplate('LostBid')">
+                    <a>Thông báo kết quả trật thầu</a>
+                </div>
+                <div class="fileUpload dropdown-item" (click)="downloadTemplate('WinBid')">
+                    <a>Thông báo kết quả trúng thầu</a>
+                </div>
+                <div class="fileUpload dropdown-item" (click)="downloadTemplate('LessonLearn')">
+                    <a>Báo cáo đánh giá rút kinh nghiệm</a>
+                </div>
+            </div>
+        </div>
           <!-- <button class="btn btn-primary ml-1">
             Tải xuống tài liệu
           </button> -->
@@ -276,9 +292,25 @@
           <span class="input-group-addon">Tìm kiếm theo</span>
           <input type="text" class="form-control icon" placeholder="&#xf002; Tên tài liệu" (keyup)="searchTermFile$.next($event.target.value)">
         </div>
-        <button class="btn btn-primary ml-1" (click)="downloadTemplate()">
-          Tải Template
-        </button>
+        <!-- <button class="btn btn-primary ml-1" (click)="downloadTemplate()">
+          Tải template
+        </button> -->
+        <div class="btn-group ml-1" ngbDropdown placement="bottom-right">
+          <button type="button" class="btn btn-primary" ngbDropdownToggle data-toggle="dropdown">
+              Tải template
+          </button>
+          <div ngbDropdownMenu style="top: 33px;">
+              <div class="fileUpload dropdown-item" (click)="downloadTemplate('LostBid')">
+                  <a>Thông báo kết quả trật thầu</a>
+              </div>
+              <div class="fileUpload dropdown-item" (click)="downloadTemplate('WinBid')">
+                  <a>Thông báo kết quả trúng thầu</a>
+              </div>
+              <div class="fileUpload dropdown-item" (click)="downloadTemplate('LessonLearn')">
+                  <a>Báo cáo đánh giá rút kinh nghiệm</a>
+              </div>
+          </div>
+      </div>
         <ng-container *ngIf="TaiXuongFilePresentation">
           <!-- <button class="btn btn-primary ml-1">
             Tải xuống tài liệu

@@ -464,4 +464,33 @@ export class ContractSignedComponent implements OnInit, OnDestroy {
       }
     }
   }
+
+  downloadTemplate(type) {
+    switch (type) {
+      case 'LostBid': {
+        this.detailResultPackageService.downloadTemplateLostBid().subscribe(response => {
+        },
+          err => {
+            this.alertService.error('Tải về template không thành công.');
+          });
+        break;
+      }
+      case 'WinBid': {
+        this.detailResultPackageService.downloadTemplateWinBid().subscribe(response => {
+        },
+          err => {
+            this.alertService.error('Tải về template không thành công.');
+          });
+        break;
+      }
+      case 'LessonLearn': {
+        this.detailResultPackageService.downloadTemplateLessonLearn().subscribe(response => {
+        },
+          err => {
+            this.alertService.error('Tải về template không thành công.');
+          });
+        break;
+      }
+    }
+  }
 }
