@@ -15,15 +15,25 @@
     </div>
     <div>
       <div class="btn-toolbar mt-2 mb-2">
-        <button class="btn btn-primary ml-1" (click)="downloadTemplate()">
+        <!-- <button class="btn btn-primary ml-1" (click)="downloadTemplate()">
           Tải Template
-        </button>
-        <!-- <button class="btn btn-primary ml-1">
-          Tải xuống tài liệu
         </button> -->
-        <!-- <button class="btn btn-primary ml-1">
-          In
-        </button> -->
+        <div class="btn-group ml-1" ngbDropdown placement="bottom-right">
+          <button type="button" class="btn btn-primary" ngbDropdownToggle data-toggle="dropdown">
+            Tải template
+          </button>
+          <div ngbDropdownMenu style="top: 33px;">
+            <div class="fileUpload dropdown-item" (click)="downloadTemplate('LostBid')">
+              <a>Thông báo kết quả trật thầu</a>
+            </div>
+            <div class="fileUpload dropdown-item" (click)="downloadTemplate('WinBid')">
+              <a>Thông báo kết quả trúng thầu</a>
+            </div>
+            <div class="fileUpload dropdown-item" (click)="downloadTemplate('LessonLearn')">
+              <a>Báo cáo đánh giá rút kinh nghiệm</a>
+            </div>
+          </div>
+        </div>
         <button class="btn btn-primary ml-1" (click)="deleteFileResult()">
           Xóa
         </button>
@@ -186,9 +196,9 @@
                   </a>
                 </div>
                 <div id="mr" *ngIf="item.linkUrl">
-                    <a title="Mở link" [href]="item.linkUrl" target="_blank">
-                        <i class="fa fa-external-link color-item-down" aria-hidden="true"></i>
-                    </a>
+                  <a title="Mở link" [href]="item.linkUrl" target="_blank">
+                    <i class="fa fa-external-link color-item-down" aria-hidden="true"></i>
+                  </a>
                 </div>
                 <div id="mr">
                   <a title="Xóa file" (click)="deleteFileItem(item.id)">

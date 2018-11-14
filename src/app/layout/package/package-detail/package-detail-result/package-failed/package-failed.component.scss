@@ -18,9 +18,9 @@
 .cursor-pointer {
     cursor: pointer;
 }
-.show {
-    padding-top: 15px
-}
+// .show {
+//     padding-top: 15px
+// }
 .pd-row {
     padding: 0px 0px 0px 24px;
 }
@@ -402,4 +402,15 @@
 table.dataTable th {
     background-color: #f68e56 !important;
     border: 1px solid #dddddd;
+}
+.btn:focus,
+.btn.focus {
+    outline: 0;
+    box-shadow: 0 0 0 0.1rem rgba(0, 160, 227, 0.25) !important;
+}
+.dropdown-toggle::after{
+    display: none;
+}
+.dropdown.show .dropdown-menu{
+    cursor: pointer;
 }
