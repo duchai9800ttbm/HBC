@@ -230,7 +230,7 @@
                           alt="">
                       </a>
                     </div>
-                    <ng-container *ngIf="CapNhatLMPV && (statusPackage?.id <= checkStatusPackage.DaPhongVan.id)">
+                    <ng-container *ngIf="CapNhatLMPV && statusPackage && (checkStatusPackage[statusPackage].id <= checkStatusPackage.DaPhongVan.id)">
                         <div>
                             <a title="Chỉnh sửa">
                               <i class="fa fa-pencil color-item-down" aria-hidden="true" (click)="EditInvitation(item)"></i>

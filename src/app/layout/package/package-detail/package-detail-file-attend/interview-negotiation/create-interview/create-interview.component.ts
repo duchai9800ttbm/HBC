@@ -161,6 +161,7 @@ export class CreateInterviewComponent implements OnInit, OnDestroy {
     if (this.subscription) {
       this.subscription.unsubscribe();
     }
+    this.interviewInvitationService.chooseInterviewNotification(null);
   }
 
   getSatusPackage() {

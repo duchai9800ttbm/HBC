@@ -70,12 +70,13 @@ export class ScaleOverallComponent implements OnInit, AfterViewInit, OnDestroy {
   ngOnInit() {
     this.currentBidOpportunityId = +PackageDetailComponent.packageId;
     this.checkFlag();
-    const loadingData$ = this.siteSurveyReportService.watchingSignalLoad().subscribe(signal => {
-      this.checkFlag();
-      this.initData();
-      this.createForm();
-      loadingData$.unsubscribe();
-    });
+    // const loadingData$ = this.siteSurveyReportService.watchingSignalLoad().subscribe(signal => {
+    //   this.checkFlag();
+    //   this.initData();
+    //   console.log('create-Form-subcribe');
+    //   this.createForm();
+    //   loadingData$.unsubscribe();
+    // });
     this.subscription = this.siteSurveyReportService.watchingSignalEdit().subscribe(signal => {
       this.isViewMode = !signal;
       if (this.scaleOverallForm && this.isViewMode) {
@@ -87,6 +88,7 @@ export class ScaleOverallComponent implements OnInit, AfterViewInit, OnDestroy {
       this.checkFlag();
       this.initData();
       this.createForm();
+      console.log('create-Form-ngOInit');
       this.checkFlag();
     });
   }
