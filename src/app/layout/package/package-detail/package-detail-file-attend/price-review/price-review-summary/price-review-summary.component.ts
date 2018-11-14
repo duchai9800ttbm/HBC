@@ -214,17 +214,22 @@ export class PriceReviewSummaryComponent implements OnInit, OnDestroy {
 
   getChangeHistory(page: number | string, pageSize: number | string) {
     this.priceReviewService.changedHistoryPriceReview(this.packageId, page, pageSize).subscribe(respone => {
-      this.historyList = respone.items;
       this.pagedResultChangeHistoryList = respone;
-      this.indexItemHistoryChange = +respone.total - +respone.pageSize * +respone.currentPage;
       this.historyList = groupBy(this.pagedResultChangeHistoryList.items, [{ field: 'changedTime' }]);
+      this.pagedResultChangeHistoryList.total = this.historyList.length;
+      this.historyList = (this.historyList || []).slice(
+        +this.pagedResultChangeHistoryList.pageSize * +this.pagedResultChangeHistoryList.currentPage,
+        +this.pagedResultChangeHistoryList.pageSize * (+this.pagedResultChangeHistoryList.currentPage + 1)
+      );
+      this.pagedResultChangeHistoryList.items = this.historyList;
+      this.pagedResultChangeHistoryList.pageCount = Math.ceil(+this.historyList.length / +this.pagedResultChangeHistoryList.pageSize);
+      this.indexItemHistoryChange = +respone.total - +respone.pageSize * +respone.currentPage;
       this.historyList.forEach((itemList, indexList) => {
         itemList.items.forEach((itemByChangedTimes, indexChangedTimes) => {
           this.historyList[indexList].items[indexChangedTimes].liveFormChangeds =
             groupBy(itemByChangedTimes.liveFormChangeds, [{ field: 'liveFormStep' }]);
         });
       });
-      console.log(this.historyList);
       setTimeout(() => {
         this.dtTrigger2.next();
       });

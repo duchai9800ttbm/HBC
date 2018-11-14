@@ -140,19 +140,26 @@ export class LiveformSiteReportComponent implements OnInit, OnDestroy {
   getChangeHistory(page: number | string, pageSize: number | string) {
     this.spinner.show();
     this.siteSurveyReportService.changedHistoryTenderSiteReport(this.bidOpportunityId, page, pageSize).subscribe(respone => {
-      this.updateInfoList = respone.items;
+      console.log(' this.pagedResultChangeHistoryList',  this.pagedResultChangeHistoryList);
       this.pagedResultChangeHistoryList = respone;
-      this.indexItemHistoryChange = +respone.total - +respone.pageSize * +respone.currentPage;
       this.updateInfoList = groupBy(this.pagedResultChangeHistoryList.items, [{ field: 'changedTime' }]);
+      this.pagedResultChangeHistoryList.total = this.updateInfoList.length;
+      this.updateInfoList = (this.updateInfoList || []).slice(
+        +this.pagedResultChangeHistoryList.pageSize * +this.pagedResultChangeHistoryList.currentPage,
+        +this.pagedResultChangeHistoryList.pageSize * (+this.pagedResultChangeHistoryList.currentPage + 1)
+      );
+      this.pagedResultChangeHistoryList.items = this.updateInfoList;
+      this.pagedResultChangeHistoryList.pageCount = Math.ceil(+this.updateInfoList.length / +this.pagedResultChangeHistoryList.pageSize);
+      this.indexItemHistoryChange = +respone.total - +respone.pageSize * +respone.currentPage;
       this.updateInfoList.forEach((itemList, indexList) => {
         itemList.items.forEach((itemByChangedTimes, indexChangedTimes) => {
           this.updateInfoList[indexList].items[indexChangedTimes].liveFormChangeds =
             groupBy(itemByChangedTimes.liveFormChangeds, [{ field: 'liveFormStep' }]);
         });
       });
-      setTimeout(() => {
-        this.dtTrigger2.next();
-      });
+      // setTimeout(() => {
+      //   this.dtTrigger2.next();
+      // });
     });
   }
 

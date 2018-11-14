@@ -97,7 +97,8 @@
         <h5 class="text-uppercase mb-3">Lịch sử cập nhật</h5>
     </div>
     <div class="table-responsive">
-        <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger2" class="row-border cell-border dataTable table-layout--fixed table-layout--minwidth">
+        <!-- datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger2" -->
+        <table class="row-border cell-border dataTable table-layout--fixed table-layout--minwidth">
             <thead>
                 <tr>
                     <th class="w-10">Lần cập nhật</th>
@@ -130,8 +131,7 @@
                                         itemByLiveFormStep.liveFormTitle !== 'ProgressCompletionContractorDate' &&
                                         itemByLiveFormStep.liveFormTitle !== 'IsProgressCompletionDate' &&
                                         (itemByLiveFormStep.oldValue || itemByLiveFormStep.newValue)
-                                        "
-                                            class="d-flex" title="* {{
+                                        " class="d-flex" title="* {{
                                                     itemByLiveFormStep.liveFormTitle ?
                                                     (itemByLiveFormStep.liveFormTitle | translate) :
                                                     ( itemByLiveFormStep.liveFormSubject ? 
@@ -150,28 +150,20 @@
                                             <div class="detail-changed pl-1">từ
                                                 <!-- --- -->
                                                 <span class="font-weight-bold" *ngIf="itemByLiveFormStep.liveFormTitle == 'ClosingTime'">
-                                                    {{(itemByLiveFormStep.oldValue != 0) ?
-                                                    ((itemByLiveFormStep.oldValue)*1000 | date:'dd/MM/yyyy')
-                                                    : 'không có'}}
+                                                    {{(itemByLiveFormStep.oldValue != 0) ? ((itemByLiveFormStep.oldValue)*1000 | date:'dd/MM/yyyy') : 'không có'}}
                                                 </span>
                                                 <!-- --- -->
                                                 <span class="font-weight-bold" *ngIf="itemByLiveFormStep.liveFormTitle != 'ClosingTime'">
-                                                    {{itemByLiveFormStep.oldValue ? (itemByLiveFormStep.oldValue |
-                                                    translate) :
-                                                    'không có'}}
+                                                    {{itemByLiveFormStep.oldValue ? (itemByLiveFormStep.oldValue | translate) : 'không có'}}
                                                 </span>
                                                 thành
                                                 <!-- --- -->
                                                 <span class="font-weight-bold" *ngIf="itemByLiveFormStep.liveFormTitle == 'ClosingTime'">
-                                                    {{(itemByLiveFormStep.newValue != 0) ?
-                                                    ((itemByLiveFormStep.newValue)*1000 | date:'dd/MM/yyyy')
-                                                    : 'không có'}}
+                                                    {{(itemByLiveFormStep.newValue != 0) ? ((itemByLiveFormStep.newValue)*1000 | date:'dd/MM/yyyy') : 'không có'}}
                                                 </span>
                                                 <!-- --- -->
                                                 <span class="font-weight-bold" *ngIf="itemByLiveFormStep.liveFormTitle != 'ClosingTime'">
-                                                    {{itemByLiveFormStep.newValue ? (itemByLiveFormStep.newValue |
-                                                    translate) :
-                                                    'không có'}}
+                                                    {{itemByLiveFormStep.newValue ? (itemByLiveFormStep.newValue | translate) : 'không có'}}
                                                 </span>
                                             </div>
 

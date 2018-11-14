@@ -669,12 +669,14 @@ export class SiteSurveyReportService {
     bidOpportunityId: number,
     page: number | string,
     pageSize: number | string): Observable<PagedResult<HistoryLiveForm>> {
-    const url = `bidopportunity/${bidOpportunityId}/tendersitesurveyingreport/changedhistory/${page}/${pageSize}`;
+    const url = `bidopportunity/${bidOpportunityId}/tendersitesurveyingreport/changedhistory/0/1000`;
     return this.apiService.get(url).map(res => {
       const response = res.result;
       return {
-        currentPage: response.pageIndex,
-        pageSize: response.pageSize,
+        // currentPage: response.pageIndex,
+        // pageSize: response.pageSize,
+        currentPage: page,
+        pageSize: pageSize,
         pageCount: response.totalPages,
         total: response.totalCount,
         items: (response.items || []).map(SiteSurveyReportService.toHistoryLiveForm)

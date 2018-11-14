@@ -123,25 +123,27 @@ export class NeedCreateTenderComponent implements OnInit, OnDestroy {
   getChangeHistory(page: number | string, pageSize: number | string) {
     this.spinner.show();
     this.packageService.getChangeHistoryListProposedTender(this.bidOpportunityId, page, pageSize).subscribe(respone => {
-      this.historyList = respone.items;
       this.pagedResultChangeHistoryList = respone;
       this.historyList = groupBy(this.pagedResultChangeHistoryList.items, [{ field: 'changedTime' }]);
+      this.pagedResultChangeHistoryList.total = this.historyList.length;
+      this.historyList = (this.historyList || []).slice(
+        +this.pagedResultChangeHistoryList.pageSize * +this.pagedResultChangeHistoryList.currentPage,
+        +this.pagedResultChangeHistoryList.pageSize * (+this.pagedResultChangeHistoryList.currentPage + 1)
+      );
+      this.pagedResultChangeHistoryList.items = this.historyList;
       this.historyList.forEach((itemList, indexList) => {
         itemList.items.forEach((itemByChangedTimes, indexChangedTimes) => {
           this.historyList[indexList].items[indexChangedTimes].liveFormChangeds =
             groupBy(itemByChangedTimes.liveFormChangeds, [{ field: 'liveFormStep' }]);
         });
       });
+      this.pagedResultChangeHistoryList.pageCount = Math.ceil(+this.historyList.length / +this.pagedResultChangeHistoryList.pageSize);
       this.indexItemHistoryChange = Number(this.pagedResultChangeHistoryList.total)
         - Number(this.pagedResultChangeHistoryList.pageSize) * Number(this.pagedResultChangeHistoryList.currentPage);
-      setTimeout(() => {
-        // this.dtTrigger2.next();
-      });
       this.spinner.hide();
     },
       err => {
         this.spinner.hide();
-        // this.alertService.error('Lấy danh sách lịch sử thay đổi phiếu đề nghị dự thầu thất bại!');
       });
   }
 

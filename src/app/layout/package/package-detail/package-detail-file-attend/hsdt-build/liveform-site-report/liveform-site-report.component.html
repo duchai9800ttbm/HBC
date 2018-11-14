@@ -62,8 +62,7 @@
                                     </a>
                                 </ng-container>
                                 <ng-container *ngIf="SuaLiveForm">
-                                    <a *ngIf="!isChotHoSo" title="Edit file" class=" text-success ml-3" (click)="onActivate('edit')"
-                                        [routerLink]="['./form/edit']">
+                                    <a *ngIf="!isChotHoSo" title="Edit file" class=" text-success ml-3" (click)="onActivate('edit')" [routerLink]="['./form/edit']">
                                         <i class="fa fa-pencil cursor-pointer" aria-hidden="true"> </i>
                                     </a>
                                 </ng-container>
@@ -92,7 +91,8 @@
     </div>
 
     <div class="table-responsive">
-        <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger2" class="row-border cell-border dataTable table-layout--fixed table-layout--minwidth">
+        <!-- datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger2" -->
+        <table class="row-border cell-border dataTable table-layout--fixed table-layout--minwidth">
             <thead>
                 <tr>
                     <th class="w-10">Lần cập nhật</th>
@@ -107,8 +107,7 @@
                     <td>
                         {{ indexItemHistoryChange - i }}
                     </td>
-                    <td [title]="updateInfo.items[0].employee?.employeeName">{{
-                        updateInfo.items[0].employee?.employeeName }}</td>
+                    <td [title]="updateInfo.items[0].employee?.employeeName">{{ updateInfo.items[0].employee?.employeeName }}</td>
                     <td>{{ (updateInfo.items[0].changedTime)*1000 | date:'dd/MM/yyyy , HH:mm':'+0000' }}</td>
                     <td>
                         <div class="text-truncate whitespace-normal" [title]="updateInfo.items[0].updateDesc">
@@ -123,33 +122,24 @@
 
                                     <div *ngFor="let itemByLiveFormStep of itemByLiveFormChanged.items">
 
-                                        <div *ngIf="itemByLiveFormStep.oldValue || itemByLiveFormStep.newValue"
-                                        class="d-flex" title="* {{
+                                        <div *ngIf="itemByLiveFormStep.oldValue || itemByLiveFormStep.newValue" class="d-flex" title="* {{
                                             itemByLiveFormStep.liveFormTitle ?
                                             (itemByLiveFormStep.liveFormTitle | translate) :
                                             ( itemByLiveFormStep.liveFormSubject ? 
                                                 (itemByLiveFormStep.liveFormSubject | translate) :
                                                     (itemByLiveFormStep.liveFormStep | translate)
                                             )
-                                        }}">*
-                                            {{
-                                            itemByLiveFormStep.liveFormTitle ?
-                                            (itemByLiveFormStep.liveFormTitle | translate) :
-                                            ( itemByLiveFormStep.liveFormSubject ?
-                                            (itemByLiveFormStep.liveFormSubject | translate) :
-                                            (itemByLiveFormStep.liveFormStep | translate)
-                                            )
-                                            }}:
+                                        }}">* {{ itemByLiveFormStep.liveFormTitle ? (itemByLiveFormStep.liveFormTitle | translate)
+                                            : ( itemByLiveFormStep.liveFormSubject ? (itemByLiveFormStep.liveFormSubject
+                                            | translate) : (itemByLiveFormStep.liveFormStep | translate) ) }}:
 
                                             <div class="pl-1">từ
                                                 <span class="font-weight-bold">
-                                                    {{itemByLiveFormStep.oldValue ? itemByLiveFormStep.oldValue :
-                                                    'không có'}}
+                                                    {{itemByLiveFormStep.oldValue ? itemByLiveFormStep.oldValue : 'không có'}}
                                                 </span>
                                                 thành
                                                 <span class="font-weight-bold">
-                                                    {{itemByLiveFormStep.newValue ? itemByLiveFormStep.newValue :
-                                                    'không có'}}
+                                                    {{itemByLiveFormStep.newValue ? itemByLiveFormStep.newValue : 'không có'}}
                                                 </span>
                                             </div>
 

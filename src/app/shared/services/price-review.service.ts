@@ -125,12 +125,14 @@ export class PriceReviewService {
 
   changedHistoryPriceReview(bidOpportunityId: number, page: string | number, pageSize: number | string)
     : Observable<PagedResult<PriceReviewItemChangedHistory>> {
-    const url = `bidopportunity/${bidOpportunityId}/tenderpriceapproval/changedhistory/${page}/${pageSize}`;
+    const url = `bidopportunity/${bidOpportunityId}/tenderpriceapproval/changedhistory/0/1000`;
     return this.apiService.get(url).map(res => {
       const response = res.result;
       return {
-        currentPage: response.pageIndex,
-        pageSize: response.pageSize,
+        // currentPage: response.pageIndex,
+        // pageSize: response.pageSize,
+        currentPage: page,
+        pageSize: pageSize,
         pageCount: response.totalPages,
         total: response.totalCount,
         items: (response.items || []).map(

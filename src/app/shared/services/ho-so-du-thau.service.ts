@@ -993,12 +993,14 @@ export class HoSoDuThauService {
     bidOpportunityId: number,
     page: number | string,
     pageSize: number | string): Observable<PagedResult<HistoryLiveForm>> {
-    const url = `bidopportunity/${bidOpportunityId}/tenderconditionalsummary/changedhistory/${page}/${pageSize}`;
+    const url = `bidopportunity/${bidOpportunityId}/tenderconditionalsummary/changedhistory/0/1000`;
     return this.apiService.get(url).map(response => {
       const result = response.result;
       return {
-        currentPage: result.pageIndex,
-        pageSize: result.pageSize,
+        // currentPage: result.pageIndex,
+        // pageSize: result.pageSize,
+        currentPage: page,
+        pageSize: pageSize,
         pageCount: result.totalPages,
         total: result.totalCount,
         items: (result.items || []).map(

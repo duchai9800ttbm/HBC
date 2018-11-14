@@ -1060,12 +1060,14 @@ export class PackageService {
         bidOpportunityId: number,
         page: number | string,
         pageSize: number | string): Observable<PagedResult<ProposedTenderParticipationHistory[]>> {
-        const url = `bidopportunity/${bidOpportunityId}/proposedtenderparticipatinngreport/changedhistory/${page}/${pageSize}`;
+        const url = `bidopportunity/${bidOpportunityId}/proposedtenderparticipatinngreport/changedhistory/0/1000`;
         return this.apiService.get(url).map(response => {
             const result = response.result;
             return {
-                currentPage: result.pageIndex,
-                pageSize: result.pageSize,
+                // currentPage: result.pageIndex,
+                currentPage: page,
+                // pageSize: result.pageSize,
+                pageSize: pageSize,
                 pageCount: result.totalPages,
                 total: result.totalCount,
                 items: (result.items || []).map(
