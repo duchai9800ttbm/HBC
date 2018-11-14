@@ -2,7 +2,7 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { PackageDetailComponent } from '../package-detail.component';
 import { PackageService } from '../../../../shared/services/package.service';
 import { PackageInfoModel } from '../../../../shared/models/package/package-info.model';
-import { Router, ActivatedRoute, NavigationEnd } from '../../../../../../node_modules/@angular/router';
+import { Router, ActivatedRoute, NavigationEnd, NavigationStart } from '../../../../../../node_modules/@angular/router';
 import { StatusObservableHsdtService } from '../../../../shared/services/status-observable-hsdt.service';
 import { BidStatus } from '../../../../shared/constants/bid-status';
 import { Subscription } from '../../../../../../node_modules/rxjs';
@@ -43,7 +43,6 @@ export class PackageDetailFileAttendComponent implements OnInit, OnDestroy {
     private activeRouter: ActivatedRoute,
     private statusObservableHsdtService: StatusObservableHsdtService,
   ) {
-
   }
   ngOnInit() {
     this.packageId = +PackageDetailComponent.packageId;
@@ -54,10 +53,9 @@ export class PackageDetailFileAttendComponent implements OnInit, OnDestroy {
     });
     if (this.isNgOnInit) {
       this.checkStatusPackageFuc();
-      // this.redirectByStatus(); // Điều hướng
-      this.activeRouter.queryParams.subscribe( value => {
+      this.activeRouter.queryParams.subscribe(value => {
         console.log('valuevalue-', value);
-        if (value && !value.direction) {
+        if (value && !value.direction && this.packageService.directionalTabAttend) {
           this.redirectByStatus(); // Điều hướng
         }
       });
@@ -69,6 +67,7 @@ export class PackageDetailFileAttendComponent implements OnInit, OnDestroy {
   ngOnDestroy() {
     this.subscription.unsubscribe();
     this.isComponentDetail = false;
+    this.packageService.noDirectionalTabAttendFuc();
   }
 
   checkStatusPackageFuc() {
@@ -85,7 +84,7 @@ export class PackageDetailFileAttendComponent implements OnInit, OnDestroy {
     this.subscription = this.router.events.subscribe((val) => {
       if (this.isComponentDetail) {
         if ((val instanceof NavigationEnd) === true) {
-           if (this.activeRouter.firstChild) {
+          if (this.activeRouter.firstChild) {
             this.activeRouter.firstChild.url.subscribe(url => {
               this.currentUrl = url[0].path;
               if (this.urlChirld.find(item => item === this.currentUrl)) {

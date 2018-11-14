@@ -237,4 +237,8 @@ export class PackageDetailComponent implements OnInit, OnDestroy {
   clickRouterParams() {
     this.router.navigate([`/package/detail/${this.packageId}/attend`], { queryParams: { direction: true } });
   }
+
+  directionalTabAttendFuc() {
+    this.packageService.directionalTabAttendFuc();
+  }
 }

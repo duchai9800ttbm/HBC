@@ -27,6 +27,8 @@ import { CustomerConsultant } from '../models/package/customer-consultant';
 
 @Injectable()
 export class PackageService {
+    // active tab dự thầu
+    public directionalTabAttend = false;
     // subcire data phiếu đề nghị dự thầu
     private dataProposals = new Subject<any>();
     public dataProposals$ = this.dataProposals.asObservable();
@@ -1247,5 +1249,13 @@ export class PackageService {
                 )
             };
         });
+    }
+
+    directionalTabAttendFuc() {
+        this.directionalTabAttend = true;
+    }
+
+    noDirectionalTabAttendFuc() {
+        this.directionalTabAttend = false;
     }
 }

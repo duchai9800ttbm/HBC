@@ -74,7 +74,6 @@ export class NeedCreateTenderFormComponent implements OnInit, OnDestroy {
     ) { }
 
     ngOnInit() {
-        console.log('dataa-con-form', NeedCreateTenderFormComponent.formModel);
         this.bidOpportunityId = PackageDetailComponent.packageId;
         this.scrollTopService.isScrollTop = false;
         this.routerAction = this.packageService.routerAction;
@@ -105,18 +104,20 @@ export class NeedCreateTenderFormComponent implements OnInit, OnDestroy {
             this.GuiDuyetDNDT = this.listPermissionScreen.includes('GuiDuyetDNDT');
             this.ChapThuanKhongChapThuan = this.listPermissionScreen.includes('ChapThuanKhongChapThuan');
             this.TaiTemplate = this.listPermissionScreen.includes('TaiTemplate');
-            if (!this.XemDNDT) {
-                this.router.navigate(['not-found']);
-            }
+            setTimeout(() => {
+                if (!this.XemDNDT) {
+                    this.router.navigate(['not-found']);
+                }
+            }, 4000);
         });
-        this.activatedRoute.params.subscribe(router => {
-            console.log('params-params', router.action);
+        const routerAction = this.activatedRoute.params.subscribe(router => {
             this.packageService.setRouterAction(router.action);
         });
+        this.subscription.add(routerAction);
         // this.packageService.routerAction$.subscribe(
         //     router => {
         //         this.routerAction = router;
-        this.activatedRoute.params.subscribe(
+        const activatedRoute = this.activatedRoute.params.subscribe(
             router => {
                 this.routerAction = router.action;
                 if (this.routerAction === 'create') {
@@ -141,6 +142,8 @@ export class NeedCreateTenderFormComponent implements OnInit, OnDestroy {
                 }
             }
         );
+
+        this.subscription.add(activatedRoute);
     }
 
     setDataDefault() {
