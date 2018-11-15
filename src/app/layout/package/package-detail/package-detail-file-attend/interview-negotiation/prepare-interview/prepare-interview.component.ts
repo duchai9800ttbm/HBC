@@ -35,6 +35,8 @@ export class PrepareInterviewComponent implements OnInit {
   isNgOnInit = false;
   loading = false;
   dialog;
+  dialogPopupFormIn;
+  isShowPopupFormIn = false;
   ngOnInit() {
     this.packageId = +PackageDetailComponent.packageId;
     this.interviewInvitationService.watchRefeshPrepareInterview().subscribe(value => {
@@ -180,19 +182,47 @@ export class PrepareInterviewComponent implements OnInit {
         break;
       }
       case 'Bảng tóm tắt ĐKDT': {
-        this.dialog = this.dialogService.open({
-          title: 'FORM IN',
-          content: FormInComponent,
-          width: window.screen.availWidth * 0.8,
-          minWidth: 250,
-          height: window.screen.availHeight * 0.7
-        });
-        const instance = this.dialog.content.instance;
-        instance.type = 'LiveFormTomTatDieuKienDuThau';
-        instance.packageId = this.packageId;
+        // this.dialog = this.dialogService.open({
+        //   title: 'FORM IN',
+        //   content: FormInComponent,
+        //   width: window.screen.availWidth * 0.8,
+        //   minWidth: 250,
+        //   height: window.screen.availHeight * 0.7
+        // });
+        // const instance = this.dialog.content.instance;
+        // instance.type = 'LiveFormTomTatDieuKienDuThau';
+        // instance.packageId = this.packageId;
+        this.openPopupFormIn();
         break;
       }
       default: break;
     }
+  }
+
+  closePopupFormIn(state: any) {
+    this.isShowPopupFormIn = false;
+    if (state === 'HSMT' || state === 'HBC') {
+      this.printTTDKDT(state);
+    }
+  }
+
+  openPopupFormIn() {
+    this.isShowPopupFormIn = true;
+  }
+
+  printTTDKDT(type) {
+    this.dialogPopupFormIn = this.dialogService.open({
+      title: 'FORM IN',
+      content: FormInComponent,
+      width: window.screen.availWidth * 0.8,
+      minWidth: 250,
+      height: window.screen.availHeight * 0.7
+    });
+    const instance = this.dialogPopupFormIn.content.instance;
+    instance.type = 'LiveFormTomTatDieuKienDuThau';
+    if (type) {
+      instance.typeChild = type;
+    }
+    instance.packageId = this.packageId;
   }
 }

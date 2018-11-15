@@ -74,6 +74,8 @@ export class PackageDocumentReceiverComponent implements OnInit {
   statusDocList: StatusDocTranfered[];
   sendEmployee;
   dialogPrintLiveForm;
+  dialogPopupFormIn;
+  isShowPopupFormIn = false;
   constructor(
     private packageSuccessService: PackageSuccessService,
     private modalService: BsModalService,
@@ -407,19 +409,47 @@ export class PackageDocumentReceiverComponent implements OnInit {
         break;
       }
       case 'TenderConditionalSummary': {
-        this.dialogPrintLiveForm = this.dialogService.open({
-          title: 'FORM IN',
-          content: FormInComponent,
-          width: window.screen.availWidth * 0.8,
-          minWidth: 250,
-          height: window.screen.availHeight * 0.7
-        });
-        const instance = this.dialogPrintLiveForm.content.instance;
-        instance.type = 'LiveFormTomTatDieuKienDuThau';
-        instance.packageId = this.currentPackageId;
+        // this.dialogPrintLiveForm = this.dialogService.open({
+        //   title: 'FORM IN',
+        //   content: FormInComponent,
+        //   width: window.screen.availWidth * 0.8,
+        //   minWidth: 250,
+        //   height: window.screen.availHeight * 0.7
+        // });
+        // const instance = this.dialogPrintLiveForm.content.instance;
+        // instance.type = 'LiveFormTomTatDieuKienDuThau';
+        // instance.packageId = this.currentPackageId;
+        this.openPopupFormIn();
         break;
       }
       default: break;
     }
+  }
+
+  closePopupFormIn(state: any) {
+    this.isShowPopupFormIn = false;
+    if (state === 'HSMT' || state === 'HBC') {
+      this.printTTDKDT(state);
+    }
+  }
+
+  openPopupFormIn() {
+    this.isShowPopupFormIn = true;
+  }
+
+  printTTDKDT(type) {
+    this.dialogPopupFormIn = this.dialogService.open({
+      title: 'FORM IN',
+      content: FormInComponent,
+      width: window.screen.availWidth * 0.8,
+      minWidth: 250,
+      height: window.screen.availHeight * 0.7
+    });
+    const instance = this.dialogPopupFormIn.content.instance;
+    instance.type = 'LiveFormTomTatDieuKienDuThau';
+    if (type) {
+      instance.typeChild = type;
+    }
+    instance.packageId = this.currentPackageId;
   }
 }
