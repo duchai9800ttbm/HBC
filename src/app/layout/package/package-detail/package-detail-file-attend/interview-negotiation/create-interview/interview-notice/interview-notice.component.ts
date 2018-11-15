@@ -14,6 +14,7 @@ import { InterviewInvitationService } from '../../../../../../../shared/services
 import DateTimeConvertHelper from '../../../../../../../shared/helpers/datetime-convert-helper';
 import { StatusObservableHsdtService } from '../../../../../../../shared/services/status-observable-hsdt.service';
 import { Router } from '../../../../../../../../../node_modules/@angular/router';
+import CustomValidator from '../../../../../../../shared/helpers/custom-validator.helper';
 @Component({
   selector: 'app-interview-notice',
   templateUrl: './interview-notice.component.html',
@@ -175,32 +176,48 @@ export class InterviewNoticeComponent implements OnInit {
       this.spinner.show();
       // this.maxBidInterviewInvitationId
       this.interviewChoose.forEach((element, index) => {
-          this.arrayBidInterviewInvitationId.push(element.id);
-        });
-        this.emailService.sendEmailInterview(this.emailModel, this.file, this.arrayBidInterviewInvitationId).subscribe(result => {
-          this.closePopup();
-          this.statusObservableHsdtService.change();
-          this.router.navigate([`/package/detail/${this.packageId}/attend/interview-negotiation/prepare`]);
-          this.alertService.success('Gửi thông báo phỏng vấn đến các bên liên quan thành công!');
+        this.arrayBidInterviewInvitationId.push(element.id);
+      });
+      this.emailService.sendEmailInterview(this.emailModel, this.file, this.arrayBidInterviewInvitationId).subscribe(result => {
+        this.closePopup();
+        this.statusObservableHsdtService.change();
+        this.router.navigate([`/package/detail/${this.packageId}/attend/interview-negotiation/prepare`]);
+        this.alertService.success('Gửi thông báo phỏng vấn đến các bên liên quan thành công!');
+        this.spinner.hide();
+      },
+        err => {
+          if (err.json().errorCode === 'BusinessException') {
+            this.alertService.error('Đã xảy ra lỗi. Trạng thái gói thầu không hợp lệ!');
+          } else {
+            this.alertService.error('Đã xảy ra lỗi. Gửi thông báo phỏng vấn đến các bên liên quan không thành công!');
+          }
           this.spinner.hide();
-        },
-          err => {
-            if (err.json().errorCode === 'BusinessException') {
-              this.alertService.error('Đã xảy ra lỗi. Trạng thái gói thầu không hợp lệ!');
-            } else {
-              this.alertService.error('Đã xảy ra lỗi. Gửi thông báo phỏng vấn đến các bên liên quan không thành công!');
-            }
-            this.spinner.hide();
-          });
-      }
+        });
+    }
   }
 
 
-    closePopup() {
-      this.callBack();
-    }
-    customSearchFn(term: string, item: SearchEmailModel) {
-      term = term.toLocaleLowerCase();
-      return item.employeeName.toLocaleLowerCase().indexOf(term) > -1 || item.employeeEmail.toLocaleLowerCase().indexOf(term) > -1;
-    }
+  closePopup() {
+    this.callBack();
   }
+  customSearchFn(term: string, item: SearchEmailModel) {
+    term = term.toLocaleLowerCase();
+    return item.employeeName.toLocaleLowerCase().indexOf(term) > -1 || item.employeeEmail.toLocaleLowerCase().indexOf(term) > -1;
+  }
+
+  validateEmailTo(e) {
+    this.emailModel.to = this.emailModel.to
+      .filter(x => x.employeeId || (!x.employeeId && CustomValidator.validateEmail(x.employeeName)));
+  }
+
+  validateEmailCc(e) {
+    this.emailModel.cc = this.emailModel.cc
+      .filter(x => x.employeeId || (!x.employeeId && CustomValidator.validateEmail(x.employeeName)));
+  }
+
+  validateEmailBcc(e) {
+    this.emailModel.bcc = this.emailModel.bcc
+      .filter(x => x.employeeId || (!x.employeeId && CustomValidator.validateEmail(x.employeeName)));
+  }
+
+}

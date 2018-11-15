@@ -78,8 +78,7 @@ export class NeedCreateTenderComponent implements OnInit, OnDestroy {
     this.getChangeHistory(0, 10);
     this.getPackageInfo();
     // phân quyền
-    this.subscription = this.permissionService.get().concatMap(response => response.length > 0 ? Observable.of(response) :
-    Observable.throw('Error Permission')).retry(1).subscribe(data => {
+    this.subscription = this.permissionService.get().delay(400).subscribe(data => {
       this.listPermission = data;
       const hsdt = this.listPermission.length &&
         this.listPermission.filter(x => x.bidOpportunityStage === 'HSDT')[0];
