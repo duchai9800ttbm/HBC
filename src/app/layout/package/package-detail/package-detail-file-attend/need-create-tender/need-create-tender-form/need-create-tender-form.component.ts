@@ -77,8 +77,33 @@ export class NeedCreateTenderFormComponent implements OnInit, OnDestroy {
         this.bidOpportunityId = PackageDetailComponent.packageId;
         this.scrollTopService.isScrollTop = false;
         this.routerAction = this.packageService.routerAction;
+
+        if (this.routerAction === 'create') {
+            this.setDataDefault();
+            this.startUp();
+        } else {
+            // if (!NeedCreateTenderFormComponent.formModel) {
+            this.packageService.getProposedTenderParticipateReport(this.bidOpportunityId).subscribe(data => {
+                if (data) {
+                    NeedCreateTenderFormComponent.formModel = data;
+                    this.packageService.changeDataProposals();
+                } else {
+                    this.setDataDefault();
+                    this.packageService.changeDataProposals();
+                }
+                this.startUp();
+            }, err => {
+            });
+            // } else {
+            //     this.startUp();
+            // }
+        }
+        this.subscription = this.activatedRoute.params.subscribe(router => {
+            this.packageService.setRouterAction(router.action);
+        });
+
         // phân quyền
-        this.subscription = this.permissionService.get().concatMap(response => response.length > 0 ? Observable.of(response) :
+        const permission = this.permissionService.get().concatMap(response => response.length > 0 ? Observable.of(response) :
             Observable.throw('Error Permission')).retry(1).subscribe(data => {
                 this.listPermission = data;
                 const hsdt = this.listPermission.length &&
@@ -108,41 +133,21 @@ export class NeedCreateTenderFormComponent implements OnInit, OnDestroy {
                 if (!this.XemDNDT) {
                     this.router.navigate(['not-found']);
                 }
+                console.log('F55555');
             });
-        const routerAction = this.activatedRoute.params.subscribe(router => {
-            this.packageService.setRouterAction(router.action);
-        });
-        this.subscription.add(routerAction);
+        this.subscription.add(permission);
         // this.packageService.routerAction$.subscribe(
         //     router => {
         //         this.routerAction = router;
-        const activatedRoute = this.activatedRoute.params.subscribe(
-            router => {
-                this.routerAction = router.action;
-                if (this.routerAction === 'create') {
-                    this.setDataDefault();
-                    this.startUp();
-                } else {
-                    // if (!NeedCreateTenderFormComponent.formModel) {
-                    this.packageService.getProposedTenderParticipateReport(this.bidOpportunityId).subscribe(data => {
-                        if (data) {
-                            NeedCreateTenderFormComponent.formModel = data;
-                            this.packageService.changeDataProposals();
-                        } else {
-                            this.setDataDefault();
-                            this.packageService.changeDataProposals();
-                        }
-                        this.startUp();
-                    }, err => {
-                    });
-                    // } else {
-                    //     this.startUp();
-                    // }
-                }
-            }
-        );
+        // const activatedRoute = this.activatedRoute.params.subscribe(
+        //     router => {
+        // console.log('activatedRoute-activatedRoute', activatedRoute);
+        // this.routerAction = router.action;
 
-        this.subscription.add(activatedRoute);
+        // }
+        // );
+
+        // this.subscription.add(activatedRoute);
     }
 
     setDataDefault() {
@@ -414,6 +419,8 @@ export class NeedCreateTenderFormComponent implements OnInit, OnDestroy {
         if (this.subscription) {
             this.subscription.unsubscribe();
         }
+        NeedCreateTenderFormComponent.formModel = null;
+        console.log('ngOnDestroy-Need-create');
     }
 
     saveDrafts() {

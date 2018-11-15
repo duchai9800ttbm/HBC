@@ -40,12 +40,13 @@ export class NeedCreateTenderFormAnalysisComponent implements OnInit {
       this.createForm();
       this.analysisForm.valueChanges.subscribe(data => this.mappingToLiveFormData(data));
     });
-    // this.packageService.dataProposals$.subscribe(value => {
-    //   this.createForm();
-    // });
+    this.packageService.dataProposals$.subscribe(value => {
+      this.createForm();
+    });
   }
 
   createForm() {
+    console.log('create-analysis', NeedCreateTenderFormComponent.formModel);
     const value = NeedCreateTenderFormComponent.formModel;
     this.analysisForm = this.fb.group({
       documentName: value && value.documentName ? value.documentName : '',

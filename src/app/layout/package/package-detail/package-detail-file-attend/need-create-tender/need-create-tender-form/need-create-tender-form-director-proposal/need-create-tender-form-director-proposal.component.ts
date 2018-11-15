@@ -35,6 +35,9 @@ export class NeedCreateTenderFormDirectorProposalComponent implements OnInit {
             }
             this.directorProposalForm.valueChanges.subscribe(data => this.mappingToLiveFormData(data));
         });
+        this.packageService.dataProposals$.subscribe(value => {
+            this.createForm();
+        });
     }
 
     createForm() {
