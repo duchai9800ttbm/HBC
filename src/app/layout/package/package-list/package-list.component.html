@@ -159,12 +159,12 @@
                 <table id="tableId" class="zui-table table table-striped table-hover" #tablePin>
                     <thead>
                         <tr style="height: 45px">
-                            <th class="text-center zui-sticky-col" type="check" style="width: 40px; max-width: 40px !important; height: 45px;">
+                            <!-- <th class="text-center zui-sticky-col" type="check" style="width: 40px; max-width: 40px !important; height: 45px;">
                                 <label class="custom-control custom-checkbox">
                                     <input type="checkbox" class="custom-control-input input-checkbox" [(ngModel)]="checkboxSeclectAll" (change)="onSelectAll($event.target.checked)">
                                     <span class="custom-control-indicator"></span>
                                 </label>
-                            </th>
+                            </th> -->
                             <th [class.d-none]="!maDuAn" (click)="orderByField('BidOpportunityNo')">
                                 <div class="d-flex justify-content-start">
                                     <div style="margin-right: 10px" textEllipsis>Mã dự án</div>
@@ -647,13 +647,13 @@
                     </thead>
                     <tbody *ngIf="listPackage">
                         <tr *ngFor="let item of pagedResult.items; let i = index" class="table-pin-col--height" appRowHover>
-                            <td class="text-center zui-sticky-col" type="check" [class.odd]="i % 2 == 0">
+                            <!-- <td class="text-center zui-sticky-col" type="check" [class.odd]="i % 2 == 0">
                                 <label class="custom-control custom-checkbox">
                                     <input type="checkbox" class="custom-control-input input-checkbox" [(ngModel)]="item.checkboxSelected">
                                     <span class="custom-control-indicator"></span>
                                 </label>
 
-                            </td>
+                            </td> -->
                             <td [class.d-none]="!maDuAn">
                                 <div class="text-truncate" [title]="item.projectName">
                                     {{ item.projectNo }}

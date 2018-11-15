@@ -24,4 +24,6 @@ export default class Utils {
         const factor = Math.pow(10, precision);
         return Math.round(number * factor) / factor;
     }
+
+   
 }

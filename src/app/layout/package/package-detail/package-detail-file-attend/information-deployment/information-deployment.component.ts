@@ -30,6 +30,10 @@ import { slideToLeft } from '../../../../../router.animations';
 import { PermissionService } from '../../../../../shared/services/permission.service';
 import { PermissionModel } from '../../../../../shared/models/permission/permission.model';
 import { ScheduleAssignments } from '../../../../../shared/constants/schedule-assignments';
+import { UploadResultFileAttendComponent } from '../../package-detail-result/package-success/package-list/upload-result-file-attend/upload-result-file-attend.component';
+import CustomValidator from '../../../../../shared/helpers/custom-validator.helper';
+
+
 @Component({
   selector: 'app-information-deployment',
   templateUrl: './information-deployment.component.html',
@@ -148,42 +152,41 @@ export class InformationDeploymentComponent implements OnInit, OnDestroy {
     this.bidOpportunityId = PackageDetailComponent.packageId;
     this.loading = true;
 
-    this.subscription = this.permissionService.get().concatMap(response => response.length > 0 ? Observable.of(response) :
-      Observable.throw('Error Permission')).retry(1).subscribe(data => {
-        console.log('check phan quyen');
-        if (this.listPermission === []) {
+    this.subscription = this.permissionService.get().delay(400).subscribe(data => {
+      console.log('check phan quyen');
+      if (this.listPermission === []) {
 
-        }
-        this.listPermission = data;
-        console.log(this.listPermission);
-        const hsdt = this.listPermission.length &&
-          this.listPermission.filter(x => x.bidOpportunityStage === 'HSDT')[0];
-        if (!hsdt) {
+      }
+      this.listPermission = data;
+      console.log(this.listPermission);
+      const hsdt = this.listPermission.length &&
+        this.listPermission.filter(x => x.bidOpportunityStage === 'HSDT')[0];
+      if (!hsdt) {
+        this.listPermissionScreen = [];
+      }
+      if (hsdt) {
+        const screen = hsdt.userPermissionDetails.length
+          && hsdt.userPermissionDetails.filter(y => y.permissionGroup.value === 'TrienKhaiVaPhanCongTienDo')[0];
+        if (!screen) {
           this.listPermissionScreen = [];
         }
-        if (hsdt) {
-          const screen = hsdt.userPermissionDetails.length
-            && hsdt.userPermissionDetails.filter(y => y.permissionGroup.value === 'TrienKhaiVaPhanCongTienDo')[0];
-          if (!screen) {
-            this.listPermissionScreen = [];
-          }
-          if (screen) {
-            this.listPermissionScreen = screen.permissions.map(z => z.value);
-          }
+        if (screen) {
+          this.listPermissionScreen = screen.permissions.map(z => z.value);
         }
-        this.ThongBaoTrienKhai = this.listPermissionScreen.includes('ThongBaoTrienKhai');
-        this.XemEmail = this.listPermissionScreen.includes('XemEmail');
-        this.TaoMoiBangPCTD = this.listPermissionScreen.includes('TaoMoiBangPCTD');
-        this.XemBangPCTD = this.listPermissionScreen.includes('XemBangPCTD');
-        this.SuaBangPCTD = this.listPermissionScreen.includes('SuaBangPCTD');
-        this.XoaBangPCTD = this.listPermissionScreen.includes('XoaBangPCTD');
-        this.InBangPCTD = this.listPermissionScreen.includes('InBangPCTD');
-        this.XacNhanKyPrepared = this.listPermissionScreen.includes('XacNhanKyPrepared');
-        this.XacNhanKyApproved = this.listPermissionScreen.includes('XacNhanKyApproved');
-        this.GuiPCTD = this.listPermissionScreen.includes('GuiPCTD');
-        this.TaiTemplatePCTD = this.listPermissionScreen.includes('TaiTemplatePCTD');
-        this.BatDauLapHSDT = this.listPermissionScreen.includes('BatDauLapHSDT');
-      });
+      }
+      this.ThongBaoTrienKhai = this.listPermissionScreen.includes('ThongBaoTrienKhai');
+      this.XemEmail = this.listPermissionScreen.includes('XemEmail');
+      this.TaoMoiBangPCTD = this.listPermissionScreen.includes('TaoMoiBangPCTD');
+      this.XemBangPCTD = this.listPermissionScreen.includes('XemBangPCTD');
+      this.SuaBangPCTD = this.listPermissionScreen.includes('SuaBangPCTD');
+      this.XoaBangPCTD = this.listPermissionScreen.includes('XoaBangPCTD');
+      this.InBangPCTD = this.listPermissionScreen.includes('InBangPCTD');
+      this.XacNhanKyPrepared = this.listPermissionScreen.includes('XacNhanKyPrepared');
+      this.XacNhanKyApproved = this.listPermissionScreen.includes('XacNhanKyApproved');
+      this.GuiPCTD = this.listPermissionScreen.includes('GuiPCTD');
+      this.TaiTemplatePCTD = this.listPermissionScreen.includes('TaiTemplatePCTD');
+      this.BatDauLapHSDT = this.listPermissionScreen.includes('BatDauLapHSDT');
+    });
     this.emailService.searchbymail('').subscribe(response => {
 
       this.listEmailSearchTo = response;
@@ -587,7 +590,23 @@ export class InformationDeploymentComponent implements OnInit, OnDestroy {
     instance.packageId = this.packageId;
   }
 
+  validateEmailTo(e) {
+    this.emailModel.to = this.emailModel.to
+      .filter(x => x.employeeId || (!x.employeeId && CustomValidator.validateEmail(x.employeeName)));
+  }
+
+  validateEmailCc(e) {
+    this.emailModel.cc = this.emailModel.cc
+      .filter(x => x.employeeId || (!x.employeeId && CustomValidator.validateEmail(x.employeeName)));
+  }
+
+  validateEmailBcc(e) {
+    this.emailModel.bcc = this.emailModel.bcc
+      .filter(x => x.employeeId || (!x.employeeId && CustomValidator.validateEmail(x.employeeName)));
+  }
+
 }
+
 
 const listUsers = [
   {

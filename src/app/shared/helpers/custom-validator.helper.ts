@@ -45,7 +45,7 @@ export default class CustomValidator {
     }
 
     static totalValue(control: AbstractControl): ValidationErrors | null {
-        return ((control.value === '' || control.value === null) || (control.value > 0 )) ? null : {
+        return ((control.value === '' || control.value === null) || (control.value > 0)) ? null : {
             totalValue: {
                 valid: false
             }
@@ -119,5 +119,7 @@ export default class CustomValidator {
             };
     }
 
-
+    static validateEmail(email) {
+        return /^[_a-z0-9]+(\.[_a-z0-9]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,4})$/.test(email);
+    }
 }

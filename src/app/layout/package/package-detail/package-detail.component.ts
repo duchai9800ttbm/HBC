@@ -23,14 +23,19 @@ import { BGDPermissions } from '../../../shared/data-admin/bgd.permission';
   // animations: [routerTransition()]
 
 })
+
+
 export class PackageDetailComponent implements OnInit, OnDestroy {
+
   static packageId;
+
   checkStatusPackage = CheckStatusPackage;
   statusPackage = {
     text: '',
     stage: '',
     id: 0,
   };
+ 
   constructor(
     private router: Router,
     private activetedRoute: ActivatedRoute,
@@ -114,7 +119,7 @@ export class PackageDetailComponent implements OnInit, OnDestroy {
                       }
                     }
                   }
-                  
+
                 }
               }
             }
@@ -168,7 +173,7 @@ export class PackageDetailComponent implements OnInit, OnDestroy {
     this.packageService.statusPackage$.subscribe(value => {
       this.getInforPackage();
     });
-    this.activetedRoute.params.subscribe( value => {
+    this.activetedRoute.params.subscribe(value => {
     });
   }
 

@@ -25,9 +25,7 @@ export class InputThousandSeparateDirective implements OnInit {
     private ngControl: NgControl,
     private thousandSeparate: ThousandSeparate,
   ) {
-    // this.renderer.setElementAttribute(this.el.nativeElement, 'maxlength', PHONE_NUMBER_MAX_LENGHT);
     this.renderer.setElementAttribute(this.el.nativeElement, 'onkeypress', 'return event.charCode >= 48 && event.charCode <= 57');
-    // this.renderer.setElementAttribute(this.el.nativeElement, 'type', 'number');
     this.renderer.setElementAttribute(this.el.nativeElement, 'maxlength', '13');
   }
 

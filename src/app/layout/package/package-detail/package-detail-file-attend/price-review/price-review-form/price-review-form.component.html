@@ -12,7 +12,8 @@
                     <i class="fa fa-refresh" aria-hidden="true"></i>
                 </button>
                 <ng-container *ngIf="!package?.isChotHoSo">
-                    <button *ngIf="isModeView && !package?.isChotHoSo" class="btn btn-primary" routerLink="../edit">Chỉnh sửa</button>
+                    <button *ngIf="isModeView && !package?.isChotHoSo" class="btn btn-primary" routerLink="../edit">Chỉnh
+                        sửa</button>
                     <ng-container *ngIf="isModeView">
                         <button type="button" class="btn btn-primary mr-1" (click)="guiDuyet()" *ngIf="model?.isDraftVersion === false && (package?.stageStatus?.id === 'CanLapTrinhDuyetGia' || package?.stageStatus?.id === bidStatus.DangLapHSDT)">
                             Gửi duyệt trình duyệt giá
@@ -95,7 +96,7 @@
                             </div>
                             <div class="value d-flex align-items-center">
                                 <div class="font-weight-bold  d-flex align-items-center pr-2 pl-2">
-                                    <input formControlName="interviewTimes" appInputNumber>
+                                    <input appInputNumberInteger min="0" formControlName="interviewTimes">
                                 </div>
                             </div>
                         </div>
@@ -653,7 +654,8 @@
                                         {{priceReviewForm.get('tamUngYCPercent').value }}
                                     </div>
                                     <div class="column-2 d-flex align-items-center">
-                                        <input formControlName="tamUngYCKhauTru" appInputNumber>
+                                        <input formControlName="tamUngYCKhauTru" appInputNumberNegativeDecimal
+                                            [decimal]="true">
 
                                     </div>
                                 </div>
@@ -671,11 +673,13 @@
                                 </div>
                                 <div class="below d-flex">
                                     <div class="column-1 d-flex align-items-center">
-                                        <input formControlName="tamUngDXPercent" appInputNumber>
+                                        <input formControlName="tamUngDXPercent" appInputNumberNegativeDecimal
+                                            [decimal]="true">
 
                                     </div>
                                     <div class="column-2 d-flex align-items-center">
-                                        <input formControlName="tamUngDXKhauTru" appInputNumber>
+                                        <input formControlName="tamUngDXKhauTru" appInputNumberNegativeDecimal
+                                            [decimal]="true">
 
                                     </div>
                                 </div>
@@ -891,7 +895,8 @@
                                 </div>
                                 <div class="below d-flex">
                                     <div class="column-1 d-flex align-items-center">
-                                        <input formControlName="thoiGianBHYCPercent">
+                                        <input formControlName="thoiGianBHYCPercent" appInputNumberNegativeDecimal
+                                            [decimal]="true">
 
                                     </div>
                                     <div class="column-2 d-flex align-items-center">
@@ -1049,24 +1054,28 @@
                         <div class="two d-flex">
                             <div class="item-1 d-flex align-items-center">
                                 <div>
-                                    <input formControlName="chiPhiBaseAmount" appInputMoneyNoplaceholder (input)="countTotalBase($event)">
+                                    <input formControlName="chiPhiBaseAmount" appInputNumberNegativeDecimal [decimal]="true"
+                                        (input)="countTotalBase($event)">
                                 </div>
                             </div>
                             <div class="item-2 d-flex align-items-center">
                                 <div>
-                                    <input formControlName="chiPhiBaseGfa" appInputAreaNoplaceholder (input)="countTotalGiaNopThau(); getValueField()">
+                                    <input formControlName="chiPhiBaseGfa" appInputNumberNegativeDecimal [decimal]="true"
+                                        (input)="countTotalGiaNopThauBase()">
                                 </div>
                             </div>
 
                             <div class="item-3 d-flex align-items-center">
                                 <div>
-                                    <input formControlName="chiPhiAlterAmount" appInputMoneyNoplaceholder (input)="countTotalAlter($event)">
+                                    <input formControlName="chiPhiAlterAmount" appInputNumberNegativeDecimal [decimal]="true"
+                                        (input)="countTotalAlter($event)">
                                 </div>
 
                             </div>
                             <div class="item-4 d-flex align-items-center">
                                 <div>
-                                    <input formControlName="chiPhiAlterGfa" appInputAreaNoplaceholder>
+                                    <input formControlName="chiPhiAlterGfa" appInputNumberNegativeDecimal [decimal]="true"
+                                        (input)="countTotalGiaNopThauAlter()">
                                 </div>
                             </div>
 
@@ -1091,25 +1100,27 @@
                         <div class="two d-flex">
                             <div class="item-1 d-flex align-items-center">
                                 <div>
-                                    <input formControlName="giaTriBaseAmount" appInputMoneyNoplaceholder (input)="countTotalBase($event)">
+                                    <input formControlName="giaTriBaseAmount" appInputNumberNegativeDecimal [decimal]="true"
+                                        (input)="countTotalBase($event)">
                                 </div>
                             </div>
                             <div class="item-2 d-flex align-items-center">
                                 <div>
-                                    <input formControlName="giaTriBaseGfa" appInputAreaNoplaceholder (input)="getValueField()">
+                                    <input formControlName="giaTriBaseGfa" appInputNumberNegativeDecimal [decimal]="true">
                                 </div>
                             </div>
 
                             <div class="item-3 d-flex align-items-center">
                                 <div>
-                                    <input formControlName="giaTriAlterAmount" appInputMoneyNoplaceholder (input)="countTotalAlter($event)">
+                                    <input formControlName="giaTriAlterAmount" appInputNumberNegativeDecimal [decimal]="true"
+                                        (input)="countTotalAlter($event)">
                                 </div>
 
                             </div>
                             <div class="item-4 d-flex align-items-center">
                                 <div>
                                     <input style="white-space: nowrap;" formControlName="giaTriAlterGfa"
-                                        appInputAreaNoplaceholder>
+                                        appInputNumberNegativeDecimal [decimal]="true">
                                 </div>
                             </div>
 
@@ -1134,12 +1145,13 @@
                         <div class="two d-flex">
                             <div class="item-1 d-flex align-items-center">
                                 <div>
-                                    <input formControlName="giaTriPCBaseAmount" appInputMoneyNoplaceholder (input)="countTotalBase($event)">
+                                    <input formControlName="giaTriPCBaseAmount" appInputNumberNegativeDecimal [decimal]="true"
+                                        (input)="countTotalBase($event)">
                                 </div>
                             </div>
                             <div class="item-2 d-flex align-items-center">
                                 <div class="pl-1">
-                                        {{ priceReviewForm.get('giaTriPCBaseGfa').value | truncateDecimal }}
+                                    {{ priceReviewForm.get('giaTriPCBaseGfa').value | truncateDecimal }}
                                     <!-- <input formControlName="giaTriPCBaseGfa" appInputAreaNoplaceholder> -->
                                 </div>
 
@@ -1151,13 +1163,14 @@
 
                             <div class="item-3 d-flex align-items-center">
                                 <div>
-                                    <input formControlName="giaTriPCAlterAmount" appInputMoneyNoplaceholder (input)="countTotalAlter($event)">
+                                    <input formControlName="giaTriPCAlterAmount" appInputNumberNegativeDecimal
+                                        [decimal]="true" (input)="countTotalAlter($event)">
                                 </div>
 
                             </div>
                             <div class="item-4 d-flex align-items-center">
                                 <div>
-                                    <input formControlName="giaTriPCAlterGfa" appInputAreaNoplaceholder>
+                                    <input formControlName="giaTriPCAlterGfa" appInputNumberNegativeDecimal [decimal]="true">
                                 </div>
                             </div>
 
@@ -1190,8 +1203,9 @@
 
                             </div>
                             <div class="item-4 d-flex align-items-center">
-                                <div>
-                                    <input formControlName="totalAlterGfa" appInputAreaNoplaceholder>
+                                <div class="pl-1">
+                                    {{priceReviewForm.get('totalAlterGfa').value | truncateDecimal}}
+                                    <!-- <input formControlName="totalAlterGfa" appInputNumberNegativeDecimal [decimal]="true"> -->
                                 </div>
                             </div>
 
@@ -1216,12 +1230,14 @@
                         <div class="two d-flex">
                             <div class="border-right w-50 d-flex align-items-center">
                                 <div class="w-100">
-                                    <input formControlName="chiPhiLoiNhuanAmountGfa" appInputMoneyNoplaceholder (input)="countTotalGiaNopThau()">
+                                    <input formControlName="chiPhiLoiNhuanAmountGfa" appInputNumberNegativeDecimal
+                                        [decimal]="true" (input)="countTotalGiaNopThauBase()">
                                 </div>
                             </div>
                             <div class="w-50 d-flex align-items-center">
                                 <div class="w-100">
-                                    <input formControlName="chiPhiLoiNhuanAlterAmountGfa" appInputAreaNoplaceholder>
+                                    <input formControlName="chiPhiLoiNhuanAlterAmountGfa" appInputNumberNegativeDecimal
+                                        [decimal]="true" (input)="countTotalGiaNopThauAlter()">
                                 </div>
                             </div>
 
@@ -1250,15 +1266,19 @@
                             </div>
 
                             <div class="item-3 d-flex align-items-center">
-                                <div>
-                                    <input formControlName="giaDiNopThauAlterAmount" appInputMoneyNoplaceholder>
+                                <div class="pl-1">
+                                    {{ priceReviewForm.get('giaDiNopThauAlterAmount').value | truncateDecimal }}
+                                    <!-- <input formControlName="giaDiNopThauAlterAmount" appInputNumberNegativeDecimal
+                                        [decimal]="true"> -->
                                 </div>
 
                             </div>
                             <div class="item-4 d-flex align-items-center">
-                                <div>
-                                    <input formControlName="giaDiNopThauAlterGfa" appInputAreaNoplaceholder>
+                                <div class="center-parent w-100">
+                                    <div>/</div>
                                 </div>
+                                <!-- <input formControlName="giaDiNopThauAlterGfa" appInputNumberNegativeDecimal
+                                        [decimal]="true"> -->
                             </div>
 
                         </div>
@@ -1298,8 +1318,9 @@
                             </div>
 
                             <div class="item-3 d-flex align-items-center">
-                                <div>
-                                    <input formControlName="tyleAlter" appInputMoneyNoplaceholder>
+                                <div class="pl-1">
+                                        {{ priceReviewForm.get('tyleAlter').value | truncateDecimal }}
+                                    <!-- <input formControlName="tyleAlter" appInputNumberNegativeDecimal [decimal]="true"> -->
                                 </div>
 
                             </div>
@@ -1320,7 +1341,7 @@
                     <div class="d-flex row-last-header">
 
                     </div>
-                    <ng-container *ngIf="isModeEdit || isModeView">
+                    <ng-container *ngIf="(isModeEdit || isModeView) && isShowSendApprovalTime">
                         <div class="d-flex align-items-center row-last-item">
                             <div class="one d-flex align-items-center">
                                 <div class="ml-1 mr-1 font-weight-bold">Ngày trình duyệt</div>
