@@ -65,14 +65,18 @@ export class PriceReviewFormComponent implements OnChanges, OnInit, AfterViewIni
   DuyetTDGTPDuThau = false;
   GuiDuyet = false;
   DuyetTDGBGD = false;
-  isApprovalSent = false;
+  isShowSendApprovalTime: boolean;
   @Input() model: TenderPriceApproval;
   @Input() type: string;
   @Output() refreshData = new EventEmitter<boolean>();
-
+  static checkDecimalPositiveNumber(input: any): any {
+    const regex = /^[^0-9]+|[^0-9]+$/gi;
+    return Number(String(input).replace(regex, ''));
+  }
   ngOnInit() {
     this.getModeScreen();
     this.packageId = PackageDetailComponent.packageId;
+    this.isShowSendApprovalTime = (this.model.sendApprovalTime) ? true : false;
     // Phân quyền
     this.subscription = this.permissionService.get().subscribe(data => {
       this.listPermission = data;
@@ -496,21 +500,22 @@ export class PriceReviewFormComponent implements OnChanges, OnInit, AfterViewIni
       tamUngYCKhauTru: {
         value: this.model.contractCondition
           && this.model.contractCondition.advanceMoney
-          && this.model.contractCondition.advanceMoney.tenderDocumentRequirementDiscountPercent,
+          && PriceReviewFormComponent.checkDecimalPositiveNumber(this.model.contractCondition
+            .advanceMoney.tenderDocumentRequirementDiscountPercent),
         disabled: this.isModeView
       },
 
       tamUngDXPercent: {
         value: this.model.contractCondition
           && this.model.contractCondition.advanceMoney
-          && this.model.contractCondition.advanceMoney.suggestionPercent,
+          && PriceReviewFormComponent.checkDecimalPositiveNumber(this.model.contractCondition.advanceMoney.suggestionPercent),
         disabled: this.isModeView
       },
 
       tamUngDXKhauTru: {
         value: this.model.contractCondition
           && this.model.contractCondition.advanceMoney
-          && this.model.contractCondition.advanceMoney.suggestionDiscountPercent,
+          && PriceReviewFormComponent.checkDecimalPositiveNumber(this.model.contractCondition.advanceMoney.suggestionDiscountPercent),
         disabled: this.isModeView
       },
       tamUngCY: {
@@ -573,7 +578,7 @@ export class PriceReviewFormComponent implements OnChanges, OnInit, AfterViewIni
       thoiGianBHYCPercent: {
         value: this.model.contractCondition
           && this.model.contractCondition.constructionWarrantyTime
-          && this.model.contractCondition.constructionWarrantyTime.percent,
+          && PriceReviewFormComponent.checkDecimalPositiveNumber(this.model.contractCondition.constructionWarrantyTime.percent),
         disabled: this.isModeView
       },
       thoiGianBHYCAmount: {
@@ -644,25 +649,27 @@ export class PriceReviewFormComponent implements OnChanges, OnInit, AfterViewIni
       chiPhiBaseAmount: {
         value: this.model.tentativeTenderPrice
           && this.model.tentativeTenderPrice.costOfCapitalGeneralCost
-          && this.model.tentativeTenderPrice.costOfCapitalGeneralCost.baseTenderAmount,
+          && PriceReviewFormComponent.checkDecimalPositiveNumber(this.model.tentativeTenderPrice.costOfCapitalGeneralCost.baseTenderAmount),
         disabled: this.isModeView
       },
       chiPhiBaseGfa: {
         value: this.model.tentativeTenderPrice
           && this.model.tentativeTenderPrice.costOfCapitalGeneralCost
-          && this.model.tentativeTenderPrice.costOfCapitalGeneralCost.baseTenderGFA,
+          && PriceReviewFormComponent.checkDecimalPositiveNumber(this.model.tentativeTenderPrice.costOfCapitalGeneralCost.baseTenderGFA),
         disabled: this.isModeView
       },
       chiPhiAlterAmount: {
         value: this.model.tentativeTenderPrice
           && this.model.tentativeTenderPrice.costOfCapitalGeneralCost
-          && this.model.tentativeTenderPrice.costOfCapitalGeneralCost.alternativeTenderAmount,
+          && PriceReviewFormComponent.checkDecimalPositiveNumber(this.model.tentativeTenderPrice
+            .costOfCapitalGeneralCost.alternativeTenderAmount),
         disabled: this.isModeView
       },
       chiPhiAlterGfa: {
         value: this.model.tentativeTenderPrice
           && this.model.tentativeTenderPrice.costOfCapitalGeneralCost
-          && this.model.tentativeTenderPrice.costOfCapitalGeneralCost.alternativeTenderGFA,
+          && PriceReviewFormComponent.checkDecimalPositiveNumber(this.model.tentativeTenderPrice
+            .costOfCapitalGeneralCost.alternativeTenderGFA),
         disabled: this.isModeView
       },
       chiPhiAlterNote: {
@@ -674,25 +681,26 @@ export class PriceReviewFormComponent implements OnChanges, OnInit, AfterViewIni
       giaTriBaseAmount: {
         value: this.model.tentativeTenderPrice
           && this.model.tentativeTenderPrice.costOfCapitalValue
-          && this.model.tentativeTenderPrice.costOfCapitalValue.baseTenderAmount,
+          && PriceReviewFormComponent.checkDecimalPositiveNumber(this.model.tentativeTenderPrice.costOfCapitalValue.baseTenderAmount),
         disabled: this.isModeView
       },
       giaTriBaseGfa: {
         value: this.model.tentativeTenderPrice
           && this.model.tentativeTenderPrice.costOfCapitalValue
-          && this.model.tentativeTenderPrice.costOfCapitalValue.baseTenderGFA,
+          && PriceReviewFormComponent.checkDecimalPositiveNumber(this.model.tentativeTenderPrice.costOfCapitalValue.baseTenderGFA),
         disabled: this.isModeView
       },
       giaTriAlterAmount: {
         value: this.model.tentativeTenderPrice
           && this.model.tentativeTenderPrice.costOfCapitalValue
-          && this.model.tentativeTenderPrice.costOfCapitalValue.alternativeTenderAmount,
+          && PriceReviewFormComponent.checkDecimalPositiveNumber(this.model.tentativeTenderPrice
+            .costOfCapitalValue.alternativeTenderAmount),
         disabled: this.isModeView
       },
       giaTriAlterGfa: {
         value: this.model.tentativeTenderPrice
           && this.model.tentativeTenderPrice.costOfCapitalValue
-          && this.model.tentativeTenderPrice.costOfCapitalValue.alternativeTenderGFA,
+          && PriceReviewFormComponent.checkDecimalPositiveNumber(this.model.tentativeTenderPrice.costOfCapitalValue.alternativeTenderGFA),
         disabled: this.isModeView
       },
       giaTriNote: {
@@ -705,25 +713,27 @@ export class PriceReviewFormComponent implements OnChanges, OnInit, AfterViewIni
       giaTriPCBaseAmount: {
         value: this.model.tentativeTenderPrice
           && this.model.tentativeTenderPrice.costOfCapitalPCPSValue
-          && this.model.tentativeTenderPrice.costOfCapitalPCPSValue.baseTenderAmount,
+          && PriceReviewFormComponent.checkDecimalPositiveNumber(this.model.tentativeTenderPrice.costOfCapitalPCPSValue.baseTenderAmount),
         disabled: this.isModeView
       },
       giaTriPCBaseGfa: {
         value: this.model.tentativeTenderPrice
           && this.model.tentativeTenderPrice.costOfCapitalPCPSValue
           && this.model.tentativeTenderPrice.costOfCapitalPCPSValue.baseTenderGFA,
-        disabled: true
+        disabled: this.isModeView
       },
       giaTriPCAlterAmount: {
         value: this.model.tentativeTenderPrice
           && this.model.tentativeTenderPrice.costOfCapitalPCPSValue
-          && this.model.tentativeTenderPrice.costOfCapitalPCPSValue.alternativeTenderAmount,
+          && PriceReviewFormComponent.checkDecimalPositiveNumber(this.model.tentativeTenderPrice
+            .costOfCapitalPCPSValue.alternativeTenderAmount),
         disabled: this.isModeView
       },
       giaTriPCAlterGfa: {
         value: this.model.tentativeTenderPrice
           && this.model.tentativeTenderPrice.costOfCapitalPCPSValue
-          && this.model.tentativeTenderPrice.costOfCapitalPCPSValue.alternativeTenderGFA,
+          && PriceReviewFormComponent.checkDecimalPositiveNumber(this.model.tentativeTenderPrice
+            .costOfCapitalPCPSValue.alternativeTenderGFA),
         disabled: this.isModeView
       },
       giaTriPCNote: {
@@ -737,7 +747,7 @@ export class PriceReviewFormComponent implements OnChanges, OnInit, AfterViewIni
         value: this.model.tentativeTenderPrice
           && this.model.tentativeTenderPrice.totalCostOfCapital
           && this.model.tentativeTenderPrice.totalCostOfCapital.baseTenderAmount,
-        disabled: true
+        disabled: this.isModeView
       },
       totalGiaVonGfa: {
         value: this.model.tentativeTenderPrice
@@ -749,12 +759,12 @@ export class PriceReviewFormComponent implements OnChanges, OnInit, AfterViewIni
         value: this.model.tentativeTenderPrice
           && this.model.tentativeTenderPrice.totalCostOfCapital
           && this.model.tentativeTenderPrice.totalCostOfCapital.alternativeTenderAmount,
-        disabled: true
+        disabled: this.isModeView
       },
       totalAlterGfa: {
         value: this.model.tentativeTenderPrice
           && this.model.tentativeTenderPrice.totalCostOfCapital
-          && this.model.tentativeTenderPrice.totalCostOfCapital.alternativeTenderGFA,
+          && PriceReviewFormComponent.checkDecimalPositiveNumber(this.model.tentativeTenderPrice.totalCostOfCapital.alternativeTenderGFA),
         disabled: this.isModeView
       },
 
@@ -768,13 +778,15 @@ export class PriceReviewFormComponent implements OnChanges, OnInit, AfterViewIni
       chiPhiLoiNhuanAmountGfa: {
         value: this.model.tentativeTenderPrice
           && this.model.tentativeTenderPrice.totalCostOfCapitalProfitCost
-          && this.model.tentativeTenderPrice.totalCostOfCapitalProfitCost.baseTenderProfitCost,
+          && PriceReviewFormComponent.checkDecimalPositiveNumber(this.model.tentativeTenderPrice
+            .totalCostOfCapitalProfitCost.baseTenderProfitCost),
         disabled: this.isModeView
       },
       chiPhiLoiNhuanAlterAmountGfa: {
         value: this.model.tentativeTenderPrice
           && this.model.tentativeTenderPrice.totalCostOfCapitalProfitCost
-          && this.model.tentativeTenderPrice.totalCostOfCapitalProfitCost.alternativeProfitCost,
+          && PriceReviewFormComponent.checkDecimalPositiveNumber(this.model.tentativeTenderPrice
+            .totalCostOfCapitalProfitCost.alternativeProfitCost),
         disabled: this.isModeView
       },
       chiPhiLoiNhuanNote: {
@@ -783,8 +795,6 @@ export class PriceReviewFormComponent implements OnChanges, OnInit, AfterViewIni
           && this.model.tentativeTenderPrice.totalCostOfCapitalProfitCost.note,
         disabled: this.isModeView
       },
-
-      // TODO: Mapping
       giaDiNopThauAmount: {
         value: this.model.tentativeTenderPrice
           && this.model.tentativeTenderPrice.totalCostOfSubmission
@@ -800,13 +810,15 @@ export class PriceReviewFormComponent implements OnChanges, OnInit, AfterViewIni
       giaDiNopThauAlterAmount: {
         value: this.model.tentativeTenderPrice
           && this.model.tentativeTenderPrice.totalCostOfSubmission
-          && this.model.tentativeTenderPrice.totalCostOfSubmission.alternativeTenderAmount,
+          && PriceReviewFormComponent.checkDecimalPositiveNumber(this.model.tentativeTenderPrice
+            .totalCostOfSubmission.alternativeTenderAmount),
         disabled: this.isModeView
       },
       giaDiNopThauAlterGfa: {
         value: this.model.tentativeTenderPrice
           && this.model.tentativeTenderPrice.totalCostOfSubmission
-          && this.model.tentativeTenderPrice.totalCostOfSubmission.alternativeTenderGFA,
+          && PriceReviewFormComponent.checkDecimalPositiveNumber(this.model.tentativeTenderPrice
+            .totalCostOfSubmission.alternativeTenderGFA),
         disabled: this.isModeView
       },
       giaDiNopThauNote: {
@@ -815,8 +827,6 @@ export class PriceReviewFormComponent implements OnChanges, OnInit, AfterViewIni
           && this.model.tentativeTenderPrice.totalCostOfSubmission.note,
         disabled: this.isModeView
       },
-
-      // TODO: mapping under
       tyleAmount: {
         value: this.model.tentativeTenderPrice
           && this.model.tentativeTenderPrice.oAndPPercentOfTotalCost
@@ -832,7 +842,8 @@ export class PriceReviewFormComponent implements OnChanges, OnInit, AfterViewIni
       tyleAlter: {
         value: this.model.tentativeTenderPrice
           && this.model.tentativeTenderPrice.oAndPPercentOfTotalCost
-          && this.model.tentativeTenderPrice.oAndPPercentOfTotalCost.alternativeTenderAmount,
+          && PriceReviewFormComponent.checkDecimalPositiveNumber(this.model.tentativeTenderPrice
+            .oAndPPercentOfTotalCost.alternativeTenderAmount),
         disabled: this.isModeView
       },
       tyLeNote: {
@@ -841,14 +852,12 @@ export class PriceReviewFormComponent implements OnChanges, OnInit, AfterViewIni
           && this.model.tentativeTenderPrice.oAndPPercentOfTotalCost.note,
         disabled: this.isModeView
       },
-
-      // TODO: mapping phần trên
       approvalDate:
         DateTimeConvertHelper.fromTimestampToDtObject(
           this.model.approvalDate * 1000),
       approvalTimes: {
         value: this.model.approvalTimes,
-        disabled: true
+        disabled: this.isModeView
       },
       interviewTimes: {
         value: (this.model.interviewTimes !== 0) ? this.model.interviewTimes : 1,
@@ -1147,7 +1156,7 @@ export class PriceReviewFormComponent implements OnChanges, OnInit, AfterViewIni
     });
   }
 
-  // Count Total Gía vốn
+  // TODO: Count Total Gía vốn
   countTotalBase(event) {
     const chiPhiBaseAmount = (this.priceReviewForm.get('chiPhiBaseAmount').value) ?
       this.priceReviewForm.get('chiPhiBaseAmount').value : 0;
@@ -1160,8 +1169,10 @@ export class PriceReviewFormComponent implements OnChanges, OnInit, AfterViewIni
 
     const totalValue = +chiPhiBaseAmount + +giaTriBaseAmount + +giaTriPCBaseAmount;
     this.priceReviewForm.get('totalGiaVonAmount').patchValue(+(totalValue));
-    const totaGiaVonGfaValue = totalValue / +(this.priceReviewForm.get('infoGfa').value);
-    this.priceReviewForm.get('totalGiaVonGfa').patchValue(+(totaGiaVonGfaValue));
+    const totaGiaVonBaseValue = totalValue / +(this.priceReviewForm.get('infoGfa').value);
+    if (totaGiaVonBaseValue >= 0.01) {
+      this.priceReviewForm.get('totalGiaVonGfa').patchValue(+(totaGiaVonBaseValue));
+    }
   }
   countTotalAlter(event) {
     const chiPhiAlterAmount = (this.priceReviewForm.get('chiPhiAlterAmount').value) ?
@@ -1175,31 +1186,52 @@ export class PriceReviewFormComponent implements OnChanges, OnInit, AfterViewIni
 
     const totalAlterAmountValue = +chiPhiAlterAmount + +giaTriAlterAmount + +giaTriPCAlterAmount;
     this.priceReviewForm.get('totalAlterAmount').patchValue(+(totalAlterAmountValue));
+    const totalGiaVonAlterValue = totalAlterAmountValue / +(this.priceReviewForm.get('infoGfa').value);
+    if (totalGiaVonAlterValue >= 0.01) {
+      this.priceReviewForm.get('totalAlterGfa').patchValue(+(totalGiaVonAlterValue));
+    }
   }
-  // GFA
-  getValueField() {
-    const chiPhiBaseGfa = this.priceReviewForm.get('chiPhiBaseGfa').value;
-    const giaTriBaseGfa = this.priceReviewForm.get('giaTriBaseGfa').value;
-    const chiPhiLoiNhuanAmountGfa = this.priceReviewForm.get('chiPhiLoiNhuanAmountGfa').value;
-    this.priceReviewForm.get('giaTriPCBaseGfa').patchValue(
-      (+giaTriBaseGfa) / (+chiPhiBaseGfa)
-    );
-    this.valuePcps = true;
-    if (chiPhiBaseGfa && chiPhiLoiNhuanAmountGfa) {
-      this.priceReviewForm.get('tyleGfa').patchValue((+chiPhiLoiNhuanAmountGfa) / (+chiPhiBaseGfa));
-      this.valueOnP = true;
-    } else { this.valueOnP = false; }
-  }
+
   // Count Value
-  countTotalGiaNopThau() {
-    const gfaChiPhiChung = (this.priceReviewForm.get('chiPhiBaseGfa').value) ?
+  countTotalGiaNopThauBase() {
+    const gfaBaseChiPhiChung = (this.priceReviewForm.get('chiPhiBaseGfa').value) ?
       this.priceReviewForm.get('chiPhiBaseGfa').value : 0;
-    const chiPhiLoiNhuanOnp = (this.priceReviewForm.get('chiPhiLoiNhuanAmountGfa').value) ?
+    const chiPhiLoiNhuanOnpBase = (this.priceReviewForm.get('chiPhiLoiNhuanAmountGfa').value) ?
       this.priceReviewForm.get('chiPhiLoiNhuanAmountGfa').value : 0;
-    this.priceReviewForm.get('giaDiNopThauAmount').patchValue(+gfaChiPhiChung + +chiPhiLoiNhuanOnp);
-    //
-    this.countRateOnP();
+    this.priceReviewForm.get('giaDiNopThauAmount').patchValue(+gfaBaseChiPhiChung + +chiPhiLoiNhuanOnpBase);
+    this.countRateOnPBase();
   }
+  countTotalGiaNopThauAlter() {
+    const gfaAlterChiPhiChung = (this.priceReviewForm.get('chiPhiAlterGfa').value) ?
+      this.priceReviewForm.get('chiPhiAlterGfa').value : 0;
+    const chiPhiLoiNhuanOnpAlter = (this.priceReviewForm.get('chiPhiLoiNhuanAlterAmountGfa').value) ?
+      this.priceReviewForm.get('chiPhiLoiNhuanAlterAmountGfa').value : 0;
+    this.priceReviewForm.get('giaDiNopThauAlterAmount').patchValue(+gfaAlterChiPhiChung + +chiPhiLoiNhuanOnpAlter);
+    this.countRateOnPAlter();
+  }
+
+  countRateOnPBase() {
+    const chiPhiOnPBaseValue = this.priceReviewForm.get('chiPhiLoiNhuanAmountGfa').value;
+    const totalGiaNopThauBaseValue = this.priceReviewForm.get('giaDiNopThauAmount').value;
+    const result = chiPhiOnPBaseValue / totalGiaNopThauBaseValue;
+    if (result >= 0.01) {
+      this.priceReviewForm.get('tyleAmount').patchValue(result);
+    }
+  }
+  countRateOnPAlter() {
+    const chiPhiOnPAlterValue = this.priceReviewForm.get('chiPhiLoiNhuanAlterAmountGfa').value;
+    const totalGiaNopThauAlterValue = this.priceReviewForm.get('giaDiNopThauAlterAmount').value;
+    const result = chiPhiOnPAlterValue / totalGiaNopThauAlterValue;
+    if (result >= 0.01) {
+      this.priceReviewForm.get('tyleAlter').patchValue(result);
+    }
+  }
+
+
+
+
+
+
   countRateOnP() {
     const chiPhiLoiNhuanOnp = (this.priceReviewForm.get('chiPhiLoiNhuanAmountGfa').value) ?
       this.priceReviewForm.get('chiPhiLoiNhuanAmountGfa').value : 0;
@@ -1212,7 +1244,9 @@ export class PriceReviewFormComponent implements OnChanges, OnInit, AfterViewIni
 
   // Gủi duyệt
   guiDuyet() {
-    if (this.model.isApprovedByTenderLeader == null || this.model.isApprovedByTenderManager == null) {
+    const dieuKienGuiDuyet = (this.priceReviewForm.get('isApprovedByTenderLeader').value !== null ||
+      this.priceReviewForm.get('isApprovedByTenderManager').value !== null);
+    if ((this.model.isApprovedByTenderLeader == null || this.model.isApprovedByTenderManager == null) && !dieuKienGuiDuyet) {
       this.confirmService.missAction(`Trình duyệt giá này chưa được xem xét bởi TN. Dự thầu và TP.Dự thầu`, null);
     } else {
       const that = this;
@@ -1223,6 +1257,7 @@ export class PriceReviewFormComponent implements OnChanges, OnInit, AfterViewIni
       this.confirmService.confirm('Bạn có chắc muốn gửi duyệt trình duyệt giá?', () => {
         this.priceReviewService.guiDuyetTrinhDuyetGia(this.packageId).subscribe(data => {
           that.getDataDefaultMapping();
+          this.isShowSendApprovalTime = true;
           that.alertService.success('Gửi duyệt trình duyệt giá thành công!');
         }, err => {
           that.alertService.error('Gửi duyệt trình duyệt giá thất bại, vui lòng thử lại sau!');

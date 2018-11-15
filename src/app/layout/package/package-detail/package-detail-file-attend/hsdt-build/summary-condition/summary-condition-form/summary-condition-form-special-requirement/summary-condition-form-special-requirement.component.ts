@@ -138,15 +138,15 @@ export class SummaryConditionFormSpecialRequirementComponent implements OnInit, 
     const formArray = this.specialRequirementForm.get(name) as FormArray;
     const formItem = this.fb.group({
       requirementName: {
-        value: data ? data.requirementName : '',
+        value: data ? data.requirementName : null,
         disabled: this.isModeView
       },
       requirementDesc: {
-        value: data ? data.requirementDesc : '',
+        value: data ? data.requirementDesc : null,
         disabled: this.isModeView
       },
       requirementLink: {
-        value: data ? data.requirementLink : '',
+        value: data ? data.requirementLink : null,
         disabled: this.isModeView
       }
     });
