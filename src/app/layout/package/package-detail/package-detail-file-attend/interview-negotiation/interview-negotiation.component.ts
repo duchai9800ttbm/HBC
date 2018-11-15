@@ -138,6 +138,7 @@ export class InterviewNegotiationComponent implements OnInit, OnDestroy {
       this.subscription.unsubscribe();
     }
     // this.interviewInvitationService.changeNoDirection(false);
+    this.interviewInvitationService.removeMaxVersion();
   }
 
   directionalRouter() {
@@ -263,7 +264,9 @@ export class InterviewNegotiationComponent implements OnInit, OnDestroy {
     });
     const instance = this.dialogEndInterview.content.instance;
     instance.interviewOfPackage = this.interviewOfPackage;
+    instance.versionOfPackage = this.interviewInvitationService.maxVersionReport;
     instance.callBack = () => this.closePopuupEndInterview();
+    // instance.
   }
 
   closePopuupEndInterview() {

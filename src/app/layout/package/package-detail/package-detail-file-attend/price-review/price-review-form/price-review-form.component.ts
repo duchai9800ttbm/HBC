@@ -1071,75 +1071,66 @@ export class PriceReviewFormComponent implements OnChanges, OnInit, AfterViewIni
   truongNhomKhongDuyet() {
     const isApprovedByTenderLeader = this.priceReviewForm.get('isApprovedByTenderLeader').value;
     if (isApprovedByTenderLeader) {
-      this.spinner.show();
       this.priceReviewService.truongNhomKhongDuyet(this.packageId).subscribe(() => {
-        this.spinner.hide();
-      }, err => {
-        this.spinner.hide();
-      });
+      }, err => this.alertService.error('Đã có lỗi xảy ra. Xin vui lòng thử lại.'));
     }
   }
 
   truongNhomDuyet() {
     const isApprovedByTenderLeader = this.priceReviewForm.get('isApprovedByTenderLeader').value;
     if (!isApprovedByTenderLeader) {
-      this.spinner.show();
       this.priceReviewService.truongNhomDuyet(this.packageId).subscribe(() => {
-        this.spinner.hide();
-      }, err => {
-        this.spinner.hide();
-      });
+      }, err => this.alertService.error('Đã có lỗi xảy ra. Xin vui lòng thử lại.'));
     }
   }
 
   truongPhongDuyet() {
     const isApprovedByTenderManager = this.priceReviewForm.get('isApprovedByTenderManager').value;
     if (!isApprovedByTenderManager) {
-      this.spinner.show();
       this.priceReviewService.truongPhongDuyet(this.packageId).subscribe(() => {
-        this.spinner.hide();
-      }, err => {
-        this.spinner.hide();
-      });
+      }, err => this.alertService.error('Đã có lỗi xảy ra. Xin vui lòng thử lại.'));
     }
   }
 
   truongPhongKhongDuyet() {
     const isApprovedByTenderManager = this.priceReviewForm.get('isApprovedByTenderManager').value;
     if (isApprovedByTenderManager) {
-      this.spinner.show();
       this.priceReviewService.truongPhongKhongDuyet(this.packageId).subscribe(() => {
-        this.spinner.hide();
-      }, err => {
-        this.spinner.hide();
-      });
+      }, err => this.alertService.error('Đã có lỗi xảy ra. Xin vui lòng thử lại.'));
     }
   }
 
   giamDocDuyet() {
     const isApprovedByBoardOfDirector = this.priceReviewForm.get('isApprovedByBoardOfDirector').value;
     if (!isApprovedByBoardOfDirector) {
-      this.spinner.show();
       this.priceReviewService.giamDocDuyet(this.packageId).subscribe(() => {
         this.checkDuyet();
         this.alertService.success('Duyệt trình duyệt giá thành công!');
-        this.spinner.hide();
       }, err => {
-        this.spinner.hide();
+        this.priceReviewForm.get('isApprovedByBoardOfDirector').patchValue(null);
+        const error = err.json();
+        if (error.errorCode === 'BusinessException') {
+          this.alertService.error(`${error.errorMessage}`);
+        } else {
+          this.alertService.error(`Đã có lỗi xảy ra. Xin vui lòng thử lại.`);
+        }
       });
     }
   }
 
   giamDocKhongDuyet() {
-    this.spinner.show();
     this.priceReviewService.giamDocKhongDuyet(this.packageId).subscribe(() => {
       this.checkDuyet();
       this.router.navigate([`package/detail/${this.packageId}/attend/price-review/summary`]);
       this.alertService.success('Không duyệt trình duyệt giá thành công!');
-      this.spinner.hide();
     }, err => {
-      this.alertService.error('Không duyệt trình duyệt giá thất bại!');
-      this.spinner.hide();
+      this.priceReviewForm.get('isApprovedByBoardOfDirector').patchValue(null);
+      const error = err.json();
+      if (error.errorCode === 'BusinessException') {
+        this.alertService.error(`${error.errorMessage}`);
+      } else {
+        this.alertService.error(`Đã có lỗi xảy ra. Xin vui lòng thử lại.`);
+      }
     });
   }
 
@@ -1219,23 +1210,24 @@ export class PriceReviewFormComponent implements OnChanges, OnInit, AfterViewIni
     );
   }
 
-
-
-
   // Gủi duyệt
   guiDuyet() {
-    const that = this;
-    if (this.model.isDraftVersion) {
-      this.alertService.error('Chưa đủ bản chính thức!');
-      return null;
-    }
-    this.confirmService.confirm('Bạn có chắc muốn gửi duyệt trình duyệt giá?', () => {
-      this.priceReviewService.guiDuyetTrinhDuyetGia(this.packageId).subscribe(data => {
-        that.getDataDefaultMapping();
-        that.alertService.success('Gửi duyệt trình duyệt giá thành công!');
-      }, err => {
-        that.alertService.error('Gửi duyệt trình duyệt giá thất bại, vui lòng thử lại sau!');
+    if (this.model.isApprovedByTenderLeader == null || this.model.isApprovedByTenderManager == null) {
+      this.confirmService.missAction(`Trình duyệt giá này chưa được xem xét bởi TN. Dự thầu và TP.Dự thầu`, null);
+    } else {
+      const that = this;
+      if (this.model.isDraftVersion) {
+        this.alertService.error('Chưa đủ bản chính thức!');
+        return null;
+      }
+      this.confirmService.confirm('Bạn có chắc muốn gửi duyệt trình duyệt giá?', () => {
+        this.priceReviewService.guiDuyetTrinhDuyetGia(this.packageId).subscribe(data => {
+          that.getDataDefaultMapping();
+          that.alertService.success('Gửi duyệt trình duyệt giá thành công!');
+        }, err => {
+          that.alertService.error('Gửi duyệt trình duyệt giá thất bại, vui lòng thử lại sau!');
+        });
       });
-    });
+    }
   }
 }

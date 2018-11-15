@@ -68,6 +68,7 @@ export class EndInterviewComponent implements OnInit, OnDestroy {
   UploadBBPV = false;
   DongPV = false;
   HieuChinhHSDT = false;
+  versionOfPackageReport;
   constructor(
     private dialogService: DialogService,
     private spinner: NgxSpinnerService,
@@ -182,8 +183,16 @@ export class EndInterviewComponent implements OnInit, OnDestroy {
       .subscribe(result => {
         this.getInterviewTimeList(result);
         this.getUploadedEmployeeList(result);
+        this.getMaxVersion(result);
         this.spinner.hide();
       }, err => this.spinner.hide());
+  }
+
+  getMaxVersion(result) {
+    this.versionOfPackageReport = result.items ? result.items.map(item => item.version) : [];
+    this.versionOfPackageReport = this.versionOfPackageReport.sort((a, b) => b - a);
+    console.log('this.versionOfPackageReport', this.versionOfPackageReport);
+    this.interviewInvitationService.saveMaxVersionReport(this.versionOfPackageReport[0]);
   }
 
   getInterviewTimeList(result) {
@@ -214,6 +223,7 @@ export class EndInterviewComponent implements OnInit, OnDestroy {
     instance.callBack = () => this.closePopuup();
     instance.reloadData = () => this.reloadData();
     instance.interviewOfPackage = this.interviewOfPackage;
+    instance.versionOfPackage = 1;
   }
 
   closePopuup() {

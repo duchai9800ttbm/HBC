@@ -16,8 +16,8 @@ import { AutoFocusDirective } from './auto-focus.directive';
 import { InputNumberNegativeDecimalDirective } from './input-number-negative-decimal.directive';
 import { RowHoverDirective } from './row-hover.directive';
 import { InputDateDirective } from './input-date.directive';
-import { InputMoneyNoplaceholderDirective } from './input-money-noplaceholder.directive';
-import { VnCurrencyPipeNoPlaceholder } from '../pipes/vn-currency-pipe-noplaceholder.module';
+import { InputThousandSeparateDirective } from './input-thousand-separate.directive';
+import { ThousandSeparate } from '../pipes/thoudand-separate.module';
 import { NumberAreaPipeNoplaceholder } from '../pipes/number-area-noplaceholer.pipe';
 import { InputAreaNoplaceholderDirective } from './input-area-noplaceholder.directive';
 
@@ -40,7 +40,7 @@ import { InputAreaNoplaceholderDirective } from './input-area-noplaceholder.dire
         InputNumberNegativeDecimalDirective,
         RowHoverDirective,
         InputDateDirective,
-        InputMoneyNoplaceholderDirective,
+        InputThousandSeparateDirective,
         InputAreaNoplaceholderDirective
     ],
     exports: [
@@ -58,13 +58,13 @@ import { InputAreaNoplaceholderDirective } from './input-area-noplaceholder.dire
         InputNumberNegativeDecimalDirective,
         RowHoverDirective,
         InputDateDirective,
-        InputMoneyNoplaceholderDirective,
+        InputThousandSeparateDirective,
         InputAreaNoplaceholderDirective
     ],
     providers: [
         VnCurrencyPipe,
         NumberAreaPipe,
-        VnCurrencyPipeNoPlaceholder,
+        ThousandSeparate,
         NumberAreaPipeNoplaceholder
     ]
 })

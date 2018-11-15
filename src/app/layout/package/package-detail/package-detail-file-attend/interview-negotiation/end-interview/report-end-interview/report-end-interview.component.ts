@@ -44,7 +44,7 @@ export class ReportEndInterviewComponent implements OnInit {
   createForm() {
     this.createFormReport = this.fb.group({
       documentName: [this.interviewInvitationReport.documentName, CustomValidator.required],
-      version: [this.versionOfPackage, CustomValidator.required],
+      version: [this.versionOfPackage, CustomValidator.requiredDate],
       uploadedBy: [this.interviewInvitationReport.uploadedBy],
       createdDate: [this.interviewInvitationReport.uploadedBy],
       interviewTimes: [this.interviewOfPackage, CustomValidator.required],
