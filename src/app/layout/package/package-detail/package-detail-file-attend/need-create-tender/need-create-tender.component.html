@@ -98,12 +98,12 @@
                                 </ng-container>
                                 <ng-container *ngIf="XoaDNDT">
                                     <a *ngIf="packageInfo?.stageStatus.id == bidStatus.CanLapDeNghiDuThau" title="Xóa" class=" text-dark ml-3" (click)="deleteProposedTenderParticipateReport()">
-                                        <i class="fa fa-trash-o" aria-hidden="true"></i>
+                                        <i class="fa fa-trash-o cursor-pointer" aria-hidden="true"></i>
                                     </a>
                                 </ng-container>
                                 <ng-container *ngIf="InDNDT">
                                     <a class="ml-3" (click)="printForm()">
-                                        <i class="fa fa-print ic-print-color" aria-hidden="true"></i>
+                                        <i class="fa fa-print ic-print-color cursor-pointer" aria-hidden="true"></i>
                                     </a>
                                 </ng-container>
                             </div>

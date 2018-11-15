@@ -7,11 +7,11 @@
       <div class="col-md-12 center-parent message-create-interview py-3">VUI LÒNG TẠO LỜI MỜI PHỎNG VẤN</div>
       <div class="col-md-12 center-parent">
         <ng-container *ngIf="TaoMoiLMPV">
-            <button class="btn btn-primary ml-1" (click)="createInvitation()">
-                Tạo lời mời phỏng vấn
-              </button>
+          <button class="btn btn-primary ml-1" (click)="createInvitation()">
+            Tạo lời mời phỏng vấn
+          </button>
         </ng-container>
-        
+
       </div>
     </div>
     <div class="set-width-content pt-2" *ngIf="(currentStatusInterview > 0 || statusPackage === bidStatus.DaNhanLoiMoi) && statusPackage !== bidStatus.DaNopHSDT">
@@ -215,12 +215,14 @@
                   </div>
                 </td>
                 <td>
-                  <div *ngIf="item.remainningDay > 0" class="text-center" title="Còn {{item.remainningDay}} ngày đến thời gian phỏng vấn">
-                    Còn {{item.remainningDay}} ngày đến thời gian phỏng vấn
-                  </div>
-                  <div *ngIf="item.remainningDay < 0">
-                    Quá hạn thời gian phỏng vấn {{ item.expiredDate ? item.expiredDate : '' }} ngày
-                  </div>
+                  <ng-container *ngIf="!(item.status.key === 'DaPhongVan')">
+                    <div *ngIf="item.remainningDay > 0" class="text-center" title="Còn {{item.remainningDay}} ngày đến thời gian phỏng vấn">
+                      Còn {{item.remainningDay}} ngày đến thời gian phỏng vấn
+                    </div>
+                    <div *ngIf="item.remainningDay < 0">
+                      Quá hạn thời gian phỏng vấn {{ item.expiredDate ? item.expiredDate : '' }} ngày
+                    </div>
+                  </ng-container>
                 </td>
                 <td class="text-center">
                   <div class="d-flex justify-content-around">
@@ -231,17 +233,17 @@
                       </a>
                     </div>
                     <ng-container *ngIf="CapNhatLMPV && statusPackage && (checkStatusPackage[statusPackage].id <= checkStatusPackage.DaPhongVan.id)">
-                        <div>
-                            <a title="Chỉnh sửa">
-                              <i class="fa fa-pencil color-item-down" aria-hidden="true" (click)="EditInvitation(item)"></i>
-                            </a>
-                          </div>
+                      <div>
+                        <a title="Chỉnh sửa">
+                          <i class="fa fa-pencil color-item-down" aria-hidden="true" (click)="EditInvitation(item)"></i>
+                        </a>
+                      </div>
                     </ng-container>
-                    
+
                   </div>
                 </td>
               </tr>
-            
+
             </tbody>
           </table>
           <div *ngIf="!loading && (!pagedResult.items || pagedResult.items.length === 0)" class="center-parent">Không có dữ liệu</div>
