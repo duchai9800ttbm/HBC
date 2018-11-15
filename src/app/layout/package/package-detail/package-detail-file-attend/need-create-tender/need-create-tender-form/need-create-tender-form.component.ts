@@ -77,29 +77,29 @@ export class NeedCreateTenderFormComponent implements OnInit, OnDestroy {
         this.bidOpportunityId = PackageDetailComponent.packageId;
         this.scrollTopService.isScrollTop = false;
         this.routerAction = this.packageService.routerAction;
-        this.packageService.routerAction$.subscribe(router => {
-            this.routerAction = router;
-            if (this.routerAction === 'create') {
-                this.setDataDefault();
-                this.startUp();
-            } else {
-                // if (!NeedCreateTenderFormComponent.formModel) {
-                this.packageService.getProposedTenderParticipateReport(this.bidOpportunityId).subscribe(data => {
-                    if (data) {
-                        NeedCreateTenderFormComponent.formModel = data;
-                        this.packageService.changeDataProposals();
-                    } else {
-                        this.setDataDefault();
-                        this.packageService.changeDataProposals();
-                    }
-                    this.startUp();
-                }, err => {
-                });
-            }
-        });
 
+        if (this.routerAction === 'create') {
+            this.setDataDefault();
+            this.startUp();
+        } else {
+            // if (!NeedCreateTenderFormComponent.formModel) {
+            this.packageService.getProposedTenderParticipateReport(this.bidOpportunityId).subscribe(data => {
+                if (data) {
+                    NeedCreateTenderFormComponent.formModel = data;
+                    this.packageService.changeDataProposals();
+                } else {
+                    this.setDataDefault();
+                    this.packageService.changeDataProposals();
+                }
+                this.startUp();
+            }, err => {
+            });
+        }
         this.subscription = this.activatedRoute.params.subscribe(router => {
             this.packageService.setRouterAction(router.action);
+        });
+        this.packageService.routerAction$.subscribe(router => {
+            this.routerAction = router;
         });
 
         // phân quyền
