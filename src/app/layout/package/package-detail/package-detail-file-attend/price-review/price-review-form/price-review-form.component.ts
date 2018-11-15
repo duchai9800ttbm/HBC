@@ -719,7 +719,7 @@ export class PriceReviewFormComponent implements OnChanges, OnInit, AfterViewIni
       giaTriPCBaseGfa: {
         value: this.model.tentativeTenderPrice
           && this.model.tentativeTenderPrice.costOfCapitalPCPSValue
-          && this.model.tentativeTenderPrice.costOfCapitalPCPSValue.baseTenderGFA,
+          && PriceReviewFormComponent.checkDecimalPositiveNumber(this.model.tentativeTenderPrice.costOfCapitalPCPSValue.baseTenderGFA),
         disabled: this.isModeView
       },
       giaTriPCAlterAmount: {
