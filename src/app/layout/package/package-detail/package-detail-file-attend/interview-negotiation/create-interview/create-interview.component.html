@@ -170,7 +170,7 @@
                   <div style="width: 40%;">
                     <div class="center-parent">
                       <label class="custom-control custom-checkbox">
-                        <input type="checkbox" class="custom-control-input" [(ngModel)]="item.checkboxSelected" (click)="saveChooseInterviewService(item.id)">
+                        <input *ngIf="!(item.status.key === 'DaPhongVan')" type="checkbox" class="custom-control-input" [(ngModel)]="item.checkboxSelected" (click)="saveChooseInterviewService(item.id)">
                         <!-- [(ngModel)]="item.checkboxSelected" -->
                         <span class="custom-control-indicator"></span>
                       </label>

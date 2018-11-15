@@ -1,4 +1,4 @@
-<div class="boder-table mt-3" [@routerTransition] >
+<div class="boder-table mt-3" [@routerTransition]>
     <div class="">
         <div class="media-header" style="text-align: right; padding-right: 1rem; margin-top: -0.75rem;">
             <span class="action-bar alignment-but">
@@ -25,7 +25,7 @@
                         <div class="grid-container-2">
                             <label>Họ tên</label>
                             <span class="custom-dropdown">
-                                <select class="form-control" formControlName="name" (change)="getDepartmentName(fControl.groupName, i, $event.target.value)">
+                                <select [attr.disabled]="fControl.groupName === 'ChuTriDuAn' ? '' : null" class="form-control" formControlName="name" (change)="getDepartmentName(fControl.groupName, i, $event.target.value)">
                                     <option [ngValue]="null">---Chọn---</option>
                                     <option *ngFor="let item of listUser" [value]="item.id">{{item.employeeName }}</option>
                                 </select>
