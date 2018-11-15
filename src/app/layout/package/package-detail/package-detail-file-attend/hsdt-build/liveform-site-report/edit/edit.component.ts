@@ -189,11 +189,11 @@ export class EditComponent implements OnInit, OnDestroy {
               foundItem.checked = true;
               constructionTypes[constructionTypes
                 .indexOf(constructionTypes.find(item => item.id == dataPackageInfo.projectType.id))] = foundItem;
-              EditComponent.liveformData.scaleOverall.loaiCongTrinh = constructionTypes.map(x => ({
-                text: x.text,
-                value: x.value,
-                checked: x.checked
-              }));
+              // EditComponent.liveformData.scaleOverall.loaiCongTrinh = constructionTypes.map(x => ({
+              //   text: x.text,
+              //   value: x.value,
+              //   checked: x.checked
+              // }));
               if (EditComponent.liveformData) {
                 const phongBan = EditComponent.liveformData.phongBan;
                 this.departmentNo = (phongBan) ? phongBan.key : 'PDUTHAU';  // Default PDT
@@ -204,7 +204,6 @@ export class EditComponent implements OnInit, OnDestroy {
               }
               this.isDraft = EditComponent.liveformData.isDraft;
               this.siteSurveyReportService.detectSignalLoad(true);
-              console.log(EditComponent.liveformData.scaleOverall.loaiCongTrinh);
               siteSurvey$.unsubscribe();
             }, err => this.alertService.error('Đã xảy ra lỗi, danh sách loại công trình cập nhật không thành công'));
           }

@@ -183,4 +183,7 @@
     <app-pagination [(pagedResult)]="pagedResultChangeHistoryList" (pagedResultChange)="pagedResultChangeHistory($event)"></app-pagination>
 </div>
 
-<app-popup-confirm-type-form-in *ngIf="isShowPopupFormIn" (closed)="closePopup($event)"></app-popup-confirm-type-form-in>
+
+<app-popup-comfirm-form-in-dkdt *ngIf="isShowPopupFormIn" (closed)="closePopup($event)">
+
+</app-popup-comfirm-form-in-dkdt>

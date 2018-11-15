@@ -67,6 +67,7 @@ export class PriceReviewSummaryComponent implements OnInit, OnDestroy {
   NopHSDT = false;
   HieuChinhHSDT = false;
   isLoading = true;
+  isShowPopupFormIn = false;
   constructor(
     private priceReviewService: PriceReviewService,
     private alertService: AlertService,
@@ -163,6 +164,33 @@ export class PriceReviewSummaryComponent implements OnInit, OnDestroy {
     }
   }
 
+  closePopupFormIn(state: any) {
+    this.isShowPopupFormIn = false;
+    if (state === 'HSMT' || state === 'HBC') {
+      this.printTTDKDT(state);
+    }
+  }
+
+  openPopupFormIn() {
+    this.isShowPopupFormIn = true;
+  }
+
+  printTTDKDT(type) {
+    this.dialog = this.dialogService.open({
+      title: 'FORM IN',
+      content: FormInComponent,
+      width: window.screen.availWidth * 0.8,
+      minWidth: 250,
+      height: window.screen.availHeight * 0.7
+    });
+    const instance = this.dialog.content.instance;
+    instance.type = 'LiveFormTomTatDieuKienDuThau';
+    if (type) {
+      instance.typeChild = type;
+    }
+    instance.packageId = this.packageId;
+  }
+
   inLiveForm(typeLiveForm) {
     switch (typeLiveForm) {
       case 'Trình Duyệt Giá': {
@@ -192,16 +220,17 @@ export class PriceReviewSummaryComponent implements OnInit, OnDestroy {
         break;
       }
       case 'Bảng tóm tắt ĐKDT': {
-        this.dialog = this.dialogService.open({
-          title: 'FORM IN',
-          content: FormInComponent,
-          width: window.screen.availWidth * 0.8,
-          minWidth: 250,
-          height: window.screen.availHeight * 0.7
-        });
-        const instance = this.dialog.content.instance;
-        instance.type = 'LiveFormTomTatDieuKienDuThau';
-        instance.packageId = this.packageId;
+        // this.dialog = this.dialogService.open({
+        //   title: 'FORM IN',
+        //   content: FormInComponent,
+        //   width: window.screen.availWidth * 0.8,
+        //   minWidth: 250,
+        //   height: window.screen.availHeight * 0.7
+        // });
+        // const instance = this.dialog.content.instance;
+        // instance.type = 'LiveFormTomTatDieuKienDuThau';
+        // instance.packageId = this.packageId;
+        this.openPopupFormIn();
         break;
       }
       default: break;
@@ -304,20 +333,24 @@ export class PriceReviewSummaryComponent implements OnInit, OnDestroy {
   }
 
   guiDuyet() {
-    const that = this;
-    if (this.priceReview.isDraftVersion) {
-      this.alertService.error('Chưa đủ bản chính thức!');
-      return null;
-    }
-    this.confirmService.confirm('Bạn có chắc muốn gửi duyệt trình duyệt giá?', () => {
-      this.priceReviewService.guiDuyetTrinhDuyetGia(this.packageId).subscribe(data => {
-        that.refresh(false);
-        that.alertService.success('Gửi duyệt trình duyệt giá thành công!');
-      }, err => {
-        that.alertService.error('Gửi duyệt trình duyệt giá thất bại, vui lòng thử lại sau!');
+    if (this.priceReview.isApprovedByTenderLeader == null || this.priceReview.isApprovedByTenderManager == null) {
+      this.confirmService.missAction(`Trình duyệt giá này chưa được xem xét bởi TN. Dự thầu và TP.Dự thầu`,
+        `/package/detail/${this.packageId}/attend/price-review/detail`);
+    } else {
+      const that = this;
+      if (this.priceReview.isDraftVersion) {
+        this.alertService.error('Chưa đủ bản chính thức!');
+        return null;
+      }
+      this.confirmService.confirm('Bạn có chắc muốn gửi duyệt trình duyệt giá?', () => {
+        this.priceReviewService.guiDuyetTrinhDuyetGia(this.packageId).subscribe(data => {
+          that.refresh(false);
+          that.alertService.success('Gửi duyệt trình duyệt giá thành công!');
+        }, err => {
+          that.alertService.error('Gửi duyệt trình duyệt giá thất bại, vui lòng thử lại sau!');
+        });
       });
-    });
-
+    }
   }
 
   guiDuyetLai() {

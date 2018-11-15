@@ -197,6 +197,8 @@ export class TenderPriceApprovalShort {
     interviewTimes: number;
     isDraftVersion: boolean;
     approvalTimes: number;
+    isApprovedByTenderManager: boolean;
+    isApprovedByTenderLeader: boolean;
     createdEmployee: {
         employeeId: number,
         employeeNo: string,
