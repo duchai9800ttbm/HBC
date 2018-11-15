@@ -94,12 +94,12 @@ export class NeedCreateTenderFormComponent implements OnInit, OnDestroy {
                 this.startUp();
             }, err => {
             });
-            // } else {
-            //     this.startUp();
-            // }
         }
         this.subscription = this.activatedRoute.params.subscribe(router => {
             this.packageService.setRouterAction(router.action);
+        });
+        this.packageService.routerAction$.subscribe(router => {
+            this.routerAction = router;
         });
 
         // phân quyền
