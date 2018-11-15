@@ -38,7 +38,7 @@ export class NeedCreateTenderFormDecisionBoardComponent implements OnInit {
     ngOnInit() {
         this.getPackageInfo();
         this.isDirector = (this.sessionService.currentUserInfo && this.sessionService.currentUserInfo.department
-            && this.sessionService.currentUserInfo.department.id === '42');
+            && this.sessionService.currentUserInfo.department.text === 'BAN TỔNG GIÁM ĐỐC');
         this.routerAction = this.packageService.routerAction;
         this.packageService.routerAction$.subscribe(router => {
             this.routerAction = router;
