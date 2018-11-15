@@ -32,6 +32,7 @@ export class NeedCreateTenderFormResourceEvaluationComponent implements OnInit {
     });
     this.packageService.dataProposals$.subscribe(value => {
       this.createForm();
+      this.resourceEvaluationForm.valueChanges.subscribe(data => this.mappingToLiveFormData(data));
     });
   }
 

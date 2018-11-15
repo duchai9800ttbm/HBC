@@ -431,6 +431,7 @@ export class PackageListComponent implements OnInit, AfterViewChecked {
     rerender(pagedResult: any) {
         this.checkboxSeclectAll = false;
         this.pagedResult = pagedResult;
+        console.log('this.paggeRessult', this.pagedResult);
         setTimeout(() => {
             this.dtTrigger.next();
             const table = this.tablePin.nativeElement as HTMLElement;

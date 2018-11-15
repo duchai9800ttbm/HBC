@@ -34,6 +34,7 @@ export class NeedCreateTenderFormFeeTenderComponent implements OnInit {
     });
     this.packageService.dataProposals$.subscribe(value => {
       this.createForm();
+      this.feeTenderForm.valueChanges.subscribe(data => this.mappingToLiveFormData(data));
     });
   }
 

@@ -116,4 +116,5 @@ export class PackageListItem {
     totalTime: string;
     description: string;
     checkboxSelected?: boolean;
+    isSendMailKickOff: boolean;
 }

@@ -37,6 +37,7 @@ export class NeedCreateTenderFormDirectorProposalComponent implements OnInit {
         });
         this.packageService.dataProposals$.subscribe(value => {
             this.createForm();
+            this.directorProposalForm.valueChanges.subscribe(data => this.mappingToLiveFormData(data));
         });
     }
 
@@ -71,6 +72,7 @@ export class NeedCreateTenderFormDirectorProposalComponent implements OnInit {
     }
 
     mappingToLiveFormData(data) {
+        console.log('mappingToLiveFormData- mappingToLiveFormData');
         NeedCreateTenderFormComponent.formModel.tenderDirectorProposal = data;
         NeedCreateTenderFormComponent.formModel.isAgreedParticipating =
             data.isAgreedParticipating;

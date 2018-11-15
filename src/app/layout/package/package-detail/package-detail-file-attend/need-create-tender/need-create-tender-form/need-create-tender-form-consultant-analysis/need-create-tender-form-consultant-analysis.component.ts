@@ -32,6 +32,7 @@ export class NeedCreateTenderFormConsultantAnalysisComponent implements OnInit {
     });
     this.packageService.dataProposals$.subscribe(value => {
       this.createForm();
+      this.consultantAnalysForm.valueChanges.subscribe(data => this.mappingToLiveFormData(data));
     });
   }
 

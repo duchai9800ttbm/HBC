@@ -9,8 +9,7 @@
             </div>
             <div class="btn-group ml-1" ngbDropdown #DropTool="ngbDropdown">
                 <div #DropTool2>
-                    <button type="button" class="btn btn-primary" ngbDropdownToggle data-toggle="dropdown"
-                        aria-haspopup="true" aria-expanded="false">
+                    <button type="button" class="btn btn-primary" ngbDropdownToggle data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         Công cụ &nbsp;&nbsp;
                     </button>
                     <div class="dropdown-menu" ngbDropdownMenu>
@@ -74,12 +73,11 @@
                         <label for="" class="form-label">Tổng giá trị</label>
                     </div>
                     <div style="width: 280px; margin-left: 10px; margin-right: 15px; zoom: 0.8;padding: 5px; ">
-                        <nouislider [config]="someKeyboardConfig" [step]="1000" [min]="0" [max]="maxValue"
-                            (ngModelChange)="changeValueRange($event)" [(ngModel)]="someRange" class="control__slider--margin"></nouislider>
+                        <nouislider [config]="someKeyboardConfig" [step]="1000" [min]="0" [max]="maxValue" (ngModelChange)="changeValueRange($event)"
+                            [(ngModel)]="someRange" class="control__slider--margin"></nouislider>
                         <div class="d-flex justify-content-between range text-truncate">
                             <div class="min">{{ someRange[0] | vnCurrency }}</div>
-                            <div class="max" style="z-index: 6; left: -20px; float: left; clear: both;">{{ someRange[1]
-                                | vnCurrency}}</div>
+                            <div class="max" style="z-index: 6; left: -20px; float: left; clear: both;">{{ someRange[1] | vnCurrency}}</div>
                         </div>
 
                     </div>
@@ -95,8 +93,8 @@
                     </div>
                 </div>
             </div>
-            <div class="filter-bar center-parent" style="width: 80px; margin-left: 10px; text-align: center"
-                ngbDropdown #myDrop="ngbDropdown" placement="bottom-right">
+            <div class="filter-bar center-parent" style="width: 80px; margin-left: 10px; text-align: center" ngbDropdown #myDrop="ngbDropdown"
+                placement="bottom-right">
                 <div #myDrop2>
                     <div style="cursor: pointer; padding-left: 10px; padding-right: 10px;" class="d-flex justify-content-around center-parent h-100"
                         ngbDropdownToggle>
@@ -122,8 +120,7 @@
                                     <div class="form-check-inline" *ngFor="let item of listField">
                                         <div class="d-flex">
                                             <div style="margin-top: 2px;">
-                                                <input type="checkbox" (change)="inputChange()" [(ngModel)]="item.hidden"
-                                                    style="cursor: pointer;">
+                                                <input type="checkbox" (change)="inputChange()" [(ngModel)]="item.hidden" style="cursor: pointer;">
                                             </div>
                                             <div class="cus-pointer" (click)="inputChange2(item.id)">
                                                 &nbsp;{{item.fieldCaption}}</div>
@@ -139,8 +136,7 @@
                                     <div class="mr-auto">
                                         <div class="center-parent w-100 h-100">
                                             <div>
-                                                <span style="cursor: pointer; color: #00a0e3" (click)="resetDefaultState()">Trở
-                                                    về mặc định</span>
+                                                <span style="cursor: pointer; color: #00a0e3" (click)="resetDefaultState()">Trở về mặc định</span>
                                             </div>
                                         </div>
                                     </div>
@@ -165,8 +161,7 @@
                         <tr style="height: 45px">
                             <th class="text-center zui-sticky-col" type="check" style="width: 40px; max-width: 40px !important; height: 45px;">
                                 <label class="custom-control custom-checkbox">
-                                    <input type="checkbox" class="custom-control-input input-checkbox" [(ngModel)]="checkboxSeclectAll"
-                                        (change)="onSelectAll($event.target.checked)">
+                                    <input type="checkbox" class="custom-control-input input-checkbox" [(ngModel)]="checkboxSeclectAll" (change)="onSelectAll($event.target.checked)">
                                     <span class="custom-control-indicator"></span>
                                 </label>
                             </th>
@@ -178,10 +173,8 @@
                                             <!-- <i class="fa fa-caret-down" style="color: #ffff;"></i> -->
                                             <i *ngIf="filterModel.sorting == '' || (filterModel.sorting != 'BidOpportunityNoAsc' && filterModel.sorting != 'BidOpportunityNoDesc')"
                                                 class="fa fa-sort" style="color: #ffff;"></i>
-                                            <i *ngIf="filterModel.sorting == 'BidOpportunityNoAsc'" class="fa fa-caret-down"
-                                                style="color: #ffff;"></i>
-                                            <i *ngIf="filterModel.sorting == 'BidOpportunityNoDesc'" class="fa fa-caret-up"
-                                                style="color: #ffff;"></i>
+                                            <i *ngIf="filterModel.sorting == 'BidOpportunityNoAsc'" class="fa fa-caret-down" style="color: #ffff;"></i>
+                                            <i *ngIf="filterModel.sorting == 'BidOpportunityNoDesc'" class="fa fa-caret-up" style="color: #ffff;"></i>
                                         </div>
                                     </div>
                                 </div>
@@ -193,10 +186,8 @@
                                         <div>
                                             <i *ngIf="filterModel.sorting == '' || (filterModel.sorting != 'ProjectNameAsc' && filterModel.sorting != 'ProjectNameDesc')"
                                                 class="fa fa-sort" style="color: #ffff;"></i>
-                                            <i *ngIf="filterModel.sorting == 'ProjectNameAsc'" class="fa fa-caret-down"
-                                                style="color: #ffff;"></i>
-                                            <i *ngIf="filterModel.sorting == 'ProjectNameDesc'" class="fa fa-caret-up"
-                                                style="color: #ffff;"></i>
+                                            <i *ngIf="filterModel.sorting == 'ProjectNameAsc'" class="fa fa-caret-down" style="color: #ffff;"></i>
+                                            <i *ngIf="filterModel.sorting == 'ProjectNameDesc'" class="fa fa-caret-up" style="color: #ffff;"></i>
                                         </div>
                                     </div>
                                 </div>
@@ -208,10 +199,8 @@
                                         <div>
                                             <i *ngIf="filterModel.sorting == '' || (filterModel.sorting != 'OpportunityNameAsc' && filterModel.sorting != 'OpportunityNameDesc')"
                                                 class="fa fa-sort" style="color: #ffff;"></i>
-                                            <i *ngIf="filterModel.sorting == 'OpportunityNameAsc'" class="fa fa-caret-down"
-                                                style="color: #ffff;"></i>
-                                            <i *ngIf="filterModel.sorting == 'OpportunityNameDesc'" class="fa fa-caret-up"
-                                                style="color: #ffff;"></i>
+                                            <i *ngIf="filterModel.sorting == 'OpportunityNameAsc'" class="fa fa-caret-down" style="color: #ffff;"></i>
+                                            <i *ngIf="filterModel.sorting == 'OpportunityNameDesc'" class="fa fa-caret-up" style="color: #ffff;"></i>
                                         </div>
                                     </div>
                                 </div>
@@ -224,10 +213,8 @@
                                             <!-- <i class="fa fa-caret-down" style="color: #ffff;"></i> -->
                                             <i *ngIf="filterModel.sorting == '' || (filterModel.sorting != 'CustomerNameAsc' && filterModel.sorting != 'CustomerNameDesc')"
                                                 class="fa fa-sort" style="color: #ffff;"></i>
-                                            <i *ngIf="filterModel.sorting == 'CustomerNameAsc'" class="fa fa-caret-down"
-                                                style="color: #ffff;"></i>
-                                            <i *ngIf="filterModel.sorting == 'CustomerNameDesc'" class="fa fa-caret-up"
-                                                style="color: #ffff;"></i>
+                                            <i *ngIf="filterModel.sorting == 'CustomerNameAsc'" class="fa fa-caret-down" style="color: #ffff;"></i>
+                                            <i *ngIf="filterModel.sorting == 'CustomerNameDesc'" class="fa fa-caret-up" style="color: #ffff;"></i>
                                         </div>
                                     </div>
                                 </div>
@@ -240,10 +227,8 @@
                                             <!-- <i class="fa fa-caret-down" style="color: #ffff;"></i> -->
                                             <i *ngIf="filterModel.sorting == '' || (filterModel.sorting != 'CustomerContactNameAsc' && filterModel.sorting != 'CustomerContactNameDesc')"
                                                 class="fa fa-sort" style="color: #ffff;"></i>
-                                            <i *ngIf="filterModel.sorting == 'CustomerContactNameAsc'" class="fa fa-caret-down"
-                                                style="color: #ffff;"></i>
-                                            <i *ngIf="filterModel.sorting == 'CustomerContactNameDesc'" class="fa fa-caret-up"
-                                                style="color: #ffff;"></i>
+                                            <i *ngIf="filterModel.sorting == 'CustomerContactNameAsc'" class="fa fa-caret-down" style="color: #ffff;"></i>
+                                            <i *ngIf="filterModel.sorting == 'CustomerContactNameDesc'" class="fa fa-caret-up" style="color: #ffff;"></i>
                                         </div>
                                     </div>
                                 </div>
@@ -253,12 +238,10 @@
                                     <div style="margin-right: 10px" textEllipsis>Vai trò</div>
                                     <div class="center-parent">
                                         <div>
-                                            <i *ngIf="filterModel.sorting == '' || (filterModel.sorting != 'HbcRoleAsc' && filterModel.sorting != 'HbcRoleDesc')"
-                                                class="fa fa-sort" style="color: #ffff;"></i>
-                                            <i *ngIf="filterModel.sorting == 'HbcRoleAsc'" class="fa fa-caret-down"
+                                            <i *ngIf="filterModel.sorting == '' || (filterModel.sorting != 'HbcRoleAsc' && filterModel.sorting != 'HbcRoleDesc')" class="fa fa-sort"
                                                 style="color: #ffff;"></i>
-                                            <i *ngIf="filterModel.sorting == 'HbcRoleDesc'" class="fa fa-caret-up"
-                                                style="color: #ffff;"></i>
+                                            <i *ngIf="filterModel.sorting == 'HbcRoleAsc'" class="fa fa-caret-down" style="color: #ffff;"></i>
+                                            <i *ngIf="filterModel.sorting == 'HbcRoleDesc'" class="fa fa-caret-up" style="color: #ffff;"></i>
                                         </div>
                                     </div>
                                 </div>
@@ -270,10 +253,8 @@
                                         <div>
                                             <i *ngIf="filterModel.sorting == '' || (filterModel.sorting != 'ChairEmployeeNameAsc' && filterModel.sorting != 'ChairEmployeeNameDesc')"
                                                 class="fa fa-sort" style="color: #ffff;"></i>
-                                            <i *ngIf="filterModel.sorting == 'ChairEmployeeNameAsc'" class="fa fa-caret-down"
-                                                style="color: #ffff;"></i>
-                                            <i *ngIf="filterModel.sorting == 'ChairEmployeeNameDesc'" class="fa fa-caret-up"
-                                                style="color: #ffff;"></i>
+                                            <i *ngIf="filterModel.sorting == 'ChairEmployeeNameAsc'" class="fa fa-caret-down" style="color: #ffff;"></i>
+                                            <i *ngIf="filterModel.sorting == 'ChairEmployeeNameDesc'" class="fa fa-caret-up" style="color: #ffff;"></i>
                                         </div>
                                     </div>
                                 </div>
@@ -286,10 +267,8 @@
                                             <!-- <i class="fa fa-caret-down" style="color: #ffff;"></i> -->
                                             <i *ngIf="filterModel.sorting == '' || (filterModel.sorting != 'CustomerTypeAsc' && filterModel.sorting != 'CustomerTypeDesc')"
                                                 class="fa fa-sort" style="color: #ffff;"></i>
-                                            <i *ngIf="filterModel.sorting == 'CustomerTypeAsc'" class="fa fa-caret-down"
-                                                style="color: #ffff;"></i>
-                                            <i *ngIf="filterModel.sorting == 'CustomerTypeDesc'" class="fa fa-caret-up"
-                                                style="color: #ffff;"></i>
+                                            <i *ngIf="filterModel.sorting == 'CustomerTypeAsc'" class="fa fa-caret-down" style="color: #ffff;"></i>
+                                            <i *ngIf="filterModel.sorting == 'CustomerTypeDesc'" class="fa fa-caret-up" style="color: #ffff;"></i>
                                         </div>
                                     </div>
                                 </div>
@@ -302,10 +281,8 @@
                                             <!-- <i class="fa fa-caret-down" style="color: #ffff;"></i> -->
                                             <i *ngIf="filterModel.sorting == '' || (filterModel.sorting != 'ConstructionTypeAsc' && filterModel.sorting != 'ConstructionTypeDesc')"
                                                 class="fa fa-sort" style="color: #ffff;"></i>
-                                            <i *ngIf="filterModel.sorting == 'ConstructionTypeAsc'" class="fa fa-caret-down"
-                                                style="color: #ffff;"></i>
-                                            <i *ngIf="filterModel.sorting == 'ConstructionTypeDesc'" class="fa fa-caret-up"
-                                                style="color: #ffff;"></i>
+                                            <i *ngIf="filterModel.sorting == 'ConstructionTypeAsc'" class="fa fa-caret-down" style="color: #ffff;"></i>
+                                            <i *ngIf="filterModel.sorting == 'ConstructionTypeDesc'" class="fa fa-caret-up" style="color: #ffff;"></i>
                                         </div>
                                     </div>
                                 </div>
@@ -322,10 +299,9 @@
                                     <div class="center-parent">
                                         <div>
                                             <!-- <i class="fa fa-caret-down" style="color: #ffff;"></i> -->
-                                            <i *ngIf="filterModel.sorting == '' || (filterModel.sorting != 'AmountAsc' && filterModel.sorting != 'AmountDesc')"
-                                                class="fa fa-sort" style="color: #ffff;"></i>
-                                            <i *ngIf="filterModel.sorting == 'AmountAsc'" class="fa fa-caret-down"
+                                            <i *ngIf="filterModel.sorting == '' || (filterModel.sorting != 'AmountAsc' && filterModel.sorting != 'AmountDesc')" class="fa fa-sort"
                                                 style="color: #ffff;"></i>
+                                            <i *ngIf="filterModel.sorting == 'AmountAsc'" class="fa fa-caret-down" style="color: #ffff;"></i>
                                             <i *ngIf="filterModel.sorting == 'AmountDesc'" class="fa fa-caret-up" style="color: #ffff;"></i>
                                         </div>
                                     </div>
@@ -339,23 +315,20 @@
                                             <!-- <i class="fa fa-caret-down" style="color: #ffff;"></i> -->
                                             <i *ngIf="filterModel.sorting == '' || (filterModel.sorting != 'MagnitudeAsc' && filterModel.sorting != 'MagnitudeDesc')"
                                                 class="fa fa-sort" style="color: #ffff;"></i>
-                                            <i *ngIf="filterModel.sorting == 'MagnitudeAsc'" class="fa fa-caret-down"
-                                                style="color: #ffff;"></i>
-                                            <i *ngIf="filterModel.sorting == 'MagnitudeDesc'" class="fa fa-caret-up"
-                                                style="color: #ffff;"></i>
+                                            <i *ngIf="filterModel.sorting == 'MagnitudeAsc'" class="fa fa-caret-down" style="color: #ffff;"></i>
+                                            <i *ngIf="filterModel.sorting == 'MagnitudeDesc'" class="fa fa-caret-up" style="color: #ffff;"></i>
                                         </div>
                                     </div>
                                 </div>
                             </th>
-                            <th [class.d-none]="!giaiDoan" class="text-center HSMT" (click)="orderByField('Stage')"
-                                [title]="'Giai đoạn'">
+                            <th [class.d-none]="!giaiDoan" class="text-center HSMT" (click)="orderByField('Stage')" [title]="'Giai đoạn'">
                                 <div class="d-flex justify-content-center">
                                     <div style="margin-right: 10px" textEllipsis>Giai đoạn</div>
                                     <div class="center-parent">
                                         <div>
                                             <!-- <i class="fa fa-caret-down" style="color: #ffff;"></i> -->
-                                            <i *ngIf="filterModel.sorting == '' || (filterModel.sorting != 'StageAsc' && filterModel.sorting != 'StageDesc')"
-                                                class="fa fa-sort" style="color: #ffff;"></i>
+                                            <i *ngIf="filterModel.sorting == '' || (filterModel.sorting != 'StageAsc' && filterModel.sorting != 'StageDesc')" class="fa fa-sort"
+                                                style="color: #ffff;"></i>
                                             <i *ngIf="filterModel.sorting == 'StageAsc'" class="fa fa-caret-down" style="color: #ffff;"></i>
                                             <i *ngIf="filterModel.sorting == 'StageDesc'" class="fa fa-caret-up" style="color: #ffff;"></i>
                                         </div>
@@ -368,12 +341,10 @@
                                     <div class="center-parent">
                                         <div>
                                             <!-- <i class="fa fa-caret-down" style="color: #ffff;"></i> -->
-                                            <i *ngIf="filterModel.sorting == '' || (filterModel.sorting != 'LocationAsc' && filterModel.sorting != 'LocationDesc')"
-                                                class="fa fa-sort" style="color: #ffff;"></i>
-                                            <i *ngIf="filterModel.sorting == 'LocationAsc'" class="fa fa-caret-down"
+                                            <i *ngIf="filterModel.sorting == '' || (filterModel.sorting != 'LocationAsc' && filterModel.sorting != 'LocationDesc')" class="fa fa-sort"
                                                 style="color: #ffff;"></i>
-                                            <i *ngIf="filterModel.sorting == 'LocationDesc'" class="fa fa-caret-up"
-                                                style="color: #ffff;"></i>
+                                            <i *ngIf="filterModel.sorting == 'LocationAsc'" class="fa fa-caret-down" style="color: #ffff;"></i>
+                                            <i *ngIf="filterModel.sorting == 'LocationDesc'" class="fa fa-caret-up" style="color: #ffff;"></i>
                                         </div>
                                     </div>
                                 </div>
@@ -394,12 +365,10 @@
                                     <div class="center-parent">
                                         <div>
                                             <!-- <i class="fa fa-caret-down" style="color: #ffff;"></i> -->
-                                            <i *ngIf="filterModel.sorting == '' || (filterModel.sorting != 'ProgressAsc' && filterModel.sorting != 'ProgressDesc')"
-                                                class="fa fa-sort" style="color: #ffff;"></i>
-                                            <i *ngIf="filterModel.sorting == 'ProgressAsc'" class="fa fa-caret-down"
+                                            <i *ngIf="filterModel.sorting == '' || (filterModel.sorting != 'ProgressAsc' && filterModel.sorting != 'ProgressDesc')" class="fa fa-sort"
                                                 style="color: #ffff;"></i>
-                                            <i *ngIf="filterModel.sorting == 'ProgressDesc'" class="fa fa-caret-up"
-                                                style="color: #ffff;"></i>
+                                            <i *ngIf="filterModel.sorting == 'ProgressAsc'" class="fa fa-caret-down" style="color: #ffff;"></i>
+                                            <i *ngIf="filterModel.sorting == 'ProgressDesc'" class="fa fa-caret-up" style="color: #ffff;"></i>
                                         </div>
                                     </div>
                                 </div>
@@ -412,10 +381,8 @@
                                             <!-- <i class="fa fa-caret-down" style="color: #ffff;"></i> -->
                                             <i *ngIf="filterModel.sorting == '' || (filterModel.sorting != 'DocumentLinkAsc' && filterModel.sorting != 'DocumentLinkDesc')"
                                                 class="fa fa-sort" style="color: #ffff;"></i>
-                                            <i *ngIf="filterModel.sorting == 'DocumentLinkAsc'" class="fa fa-caret-down"
-                                                style="color: #ffff;"></i>
-                                            <i *ngIf="filterModel.sorting == 'DocumentLinkDesc'" class="fa fa-caret-up"
-                                                style="color: #ffff;"></i>
+                                            <i *ngIf="filterModel.sorting == 'DocumentLinkAsc'" class="fa fa-caret-down" style="color: #ffff;"></i>
+                                            <i *ngIf="filterModel.sorting == 'DocumentLinkDesc'" class="fa fa-caret-up" style="color: #ffff;"></i>
                                         </div>
                                     </div>
                                 </div>
@@ -428,10 +395,8 @@
                                             <!-- <i class="fa fa-caret-down" style="color: #ffff;"></i> -->
                                             <i *ngIf="filterModel.sorting == '' || (filterModel.sorting != 'ActualTotalTimeAsc' && filterModel.sorting != 'ActualTotalTimeDesc')"
                                                 class="fa fa-sort" style="color: #ffff;"></i>
-                                            <i *ngIf="filterModel.sorting == 'ActualTotalTimeAsc'" class="fa fa-caret-down"
-                                                style="color: #ffff;"></i>
-                                            <i *ngIf="filterModel.sorting == 'ActualTotalTimeDesc'" class="fa fa-caret-up"
-                                                style="color: #ffff;"></i>
+                                            <i *ngIf="filterModel.sorting == 'ActualTotalTimeAsc'" class="fa fa-caret-down" style="color: #ffff;"></i>
+                                            <i *ngIf="filterModel.sorting == 'ActualTotalTimeDesc'" class="fa fa-caret-up" style="color: #ffff;"></i>
                                         </div>
                                     </div>
                                 </div>
@@ -442,12 +407,10 @@
                                     <div class="center-parent">
                                         <div>
                                             <!-- <i class="fa fa-caret-down" style="color: #ffff;"></i> -->
-                                            <i *ngIf="filterModel.sorting == '' || (filterModel.sorting != 'QuarterAsc' && filterModel.sorting != 'QuarterDesc')"
-                                                class="fa fa-sort" style="color: #ffff;"></i>
-                                            <i *ngIf="filterModel.sorting == 'QuarterAsc'" class="fa fa-caret-down"
+                                            <i *ngIf="filterModel.sorting == '' || (filterModel.sorting != 'QuarterAsc' && filterModel.sorting != 'QuarterDesc')" class="fa fa-sort"
                                                 style="color: #ffff;"></i>
-                                            <i *ngIf="filterModel.sorting == 'QuarterDesc'" class="fa fa-caret-up"
-                                                style="color: #ffff;"></i>
+                                            <i *ngIf="filterModel.sorting == 'QuarterAsc'" class="fa fa-caret-down" style="color: #ffff;"></i>
+                                            <i *ngIf="filterModel.sorting == 'QuarterDesc'" class="fa fa-caret-up" style="color: #ffff;"></i>
                                         </div>
                                     </div>
                                 </div>
@@ -460,10 +423,8 @@
                                             <!-- <i class="fa fa-caret-down" style="color: #ffff;"></i> -->
                                             <i *ngIf="filterModel.sorting == '' || (filterModel.sorting != 'ConsultantUnitAsc' && filterModel.sorting != 'ConsultantUnitDesc')"
                                                 class="fa fa-sort" style="color: #ffff;"></i>
-                                            <i *ngIf="filterModel.sorting == 'ConsultantUnitAsc'" class="fa fa-caret-down"
-                                                style="color: #ffff;"></i>
-                                            <i *ngIf="filterModel.sorting == 'ConsultantUnitDesc'" class="fa fa-caret-up"
-                                                style="color: #ffff;"></i>
+                                            <i *ngIf="filterModel.sorting == 'ConsultantUnitAsc'" class="fa fa-caret-down" style="color: #ffff;"></i>
+                                            <i *ngIf="filterModel.sorting == 'ConsultantUnitDesc'" class="fa fa-caret-up" style="color: #ffff;"></i>
                                         </div>
                                     </div>
                                 </div>
@@ -476,10 +437,8 @@
                                             <!-- <i class="fa fa-caret-down" style="color: #ffff;"></i> -->
                                             <i *ngIf="filterModel.sorting == '' || (filterModel.sorting != 'ConsultantAddressAsc' && filterModel.sorting != 'ConsultantAddressDesc')"
                                                 class="fa fa-sort" style="color: #ffff;"></i>
-                                            <i *ngIf="filterModel.sorting == 'ConsultantAddressAsc'" class="fa fa-caret-down"
-                                                style="color: #ffff;"></i>
-                                            <i *ngIf="filterModel.sorting == 'ConsultantAddressDesc'" class="fa fa-caret-up"
-                                                style="color: #ffff;"></i>
+                                            <i *ngIf="filterModel.sorting == 'ConsultantAddressAsc'" class="fa fa-caret-down" style="color: #ffff;"></i>
+                                            <i *ngIf="filterModel.sorting == 'ConsultantAddressDesc'" class="fa fa-caret-up" style="color: #ffff;"></i>
                                         </div>
                                     </div>
                                 </div>
@@ -492,10 +451,8 @@
                                             <!-- <i class="fa fa-caret-down" style="color: #ffff;"></i> -->
                                             <i *ngIf="filterModel.sorting == '' || (filterModel.sorting != 'ConsultantPhoneAsc' && filterModel.sorting != 'ConsultantPhoneDesc')"
                                                 class="fa fa-sort" style="color: #ffff;"></i>
-                                            <i *ngIf="filterModel.sorting == 'ConsultantPhoneAsc'" class="fa fa-caret-down"
-                                                style="color: #ffff;"></i>
-                                            <i *ngIf="filterModel.sorting == 'ConsultantPhoneDesc'" class="fa fa-caret-up"
-                                                style="color: #ffff;"></i>
+                                            <i *ngIf="filterModel.sorting == 'ConsultantPhoneAsc'" class="fa fa-caret-down" style="color: #ffff;"></i>
+                                            <i *ngIf="filterModel.sorting == 'ConsultantPhoneDesc'" class="fa fa-caret-up" style="color: #ffff;"></i>
                                         </div>
                                     </div>
                                 </div>
@@ -508,10 +465,8 @@
                                             <!-- <i class="fa fa-caret-down" style="color: #ffff;"></i> -->
                                             <i *ngIf="filterModel.sorting == '' || (filterModel.sorting != 'FloorAreaAsc' && filterModel.sorting != 'FloorAreaDesc')"
                                                 class="fa fa-sort" style="color: #ffff;"></i>
-                                            <i *ngIf="filterModel.sorting == 'FloorAreaAsc'" class="fa fa-caret-down"
-                                                style="color: #ffff;"></i>
-                                            <i *ngIf="filterModel.sorting == 'FloorAreaDesc'" class="fa fa-caret-up"
-                                                style="color: #ffff;"></i>
+                                            <i *ngIf="filterModel.sorting == 'FloorAreaAsc'" class="fa fa-caret-down" style="color: #ffff;"></i>
+                                            <i *ngIf="filterModel.sorting == 'FloorAreaDesc'" class="fa fa-caret-up" style="color: #ffff;"></i>
                                         </div>
                                     </div>
                                 </div>
@@ -524,10 +479,8 @@
                                             <!-- <i class="fa fa-caret-down" style="color: #ffff;"></i> -->
                                             <i *ngIf="filterModel.sorting == '' || (filterModel.sorting != 'AcceptanceReasonAsc' && filterModel.sorting != 'AcceptanceReasonDesc')"
                                                 class="fa fa-sort" style="color: #ffff;"></i>
-                                            <i *ngIf="filterModel.sorting == 'AcceptanceReasonAsc'" class="fa fa-caret-down"
-                                                style="color: #ffff;"></i>
-                                            <i *ngIf="filterModel.sorting == 'AcceptanceReasonDesc'" class="fa fa-caret-up"
-                                                style="color: #ffff;"></i>
+                                            <i *ngIf="filterModel.sorting == 'AcceptanceReasonAsc'" class="fa fa-caret-down" style="color: #ffff;"></i>
+                                            <i *ngIf="filterModel.sorting == 'AcceptanceReasonDesc'" class="fa fa-caret-up" style="color: #ffff;"></i>
                                         </div>
                                     </div>
                                 </div>
@@ -540,10 +493,8 @@
                                             <!-- <i class="fa fa-caret-down" style="color: #ffff;"></i> -->
                                             <i *ngIf="filterModel.sorting == '' || (filterModel.sorting != 'UnacceptanceReasonAsc' && filterModel.sorting != 'UnacceptanceReasonDesc')"
                                                 class="fa fa-sort" style="color: #ffff;"></i>
-                                            <i *ngIf="filterModel.sorting == 'UnacceptanceReasonAsc'" class="fa fa-caret-down"
-                                                style="color: #ffff;"></i>
-                                            <i *ngIf="filterModel.sorting == 'UnacceptanceReasonDesc'" class="fa fa-caret-up"
-                                                style="color: #ffff;"></i>
+                                            <i *ngIf="filterModel.sorting == 'UnacceptanceReasonAsc'" class="fa fa-caret-down" style="color: #ffff;"></i>
+                                            <i *ngIf="filterModel.sorting == 'UnacceptanceReasonDesc'" class="fa fa-caret-up" style="color: #ffff;"></i>
                                         </div>
                                     </div>
                                 </div>
@@ -556,10 +507,8 @@
                                             <!-- <i class="fa fa-caret-down" style="color: #ffff;"></i> -->
                                             <i *ngIf="filterModel.sorting == '' || (filterModel.sorting != 'CancelReasonAsc' && filterModel.sorting != 'CancelReasonDesc')"
                                                 class="fa fa-sort" style="color: #ffff;"></i>
-                                            <i *ngIf="filterModel.sorting == 'CancelReasonAsc'" class="fa fa-caret-down"
-                                                style="color: #ffff;"></i>
-                                            <i *ngIf="filterModel.sorting == 'CancelReasonDesc'" class="fa fa-caret-up"
-                                                style="color: #ffff;"></i>
+                                            <i *ngIf="filterModel.sorting == 'CancelReasonAsc'" class="fa fa-caret-down" style="color: #ffff;"></i>
+                                            <i *ngIf="filterModel.sorting == 'CancelReasonDesc'" class="fa fa-caret-up" style="color: #ffff;"></i>
                                         </div>
                                     </div>
                                 </div>
@@ -572,10 +521,8 @@
                                             <!-- <i class="fa fa-caret-down" style="color: #ffff;"></i> -->
                                             <i *ngIf="filterModel.sorting == '' || (filterModel.sorting != 'StartTrackingDateAsc' && filterModel.sorting != 'StartTrackingDateDesc')"
                                                 class="fa fa-sort" style="color: #ffff;"></i>
-                                            <i *ngIf="filterModel.sorting == 'StartTrackingDateAsc'" class="fa fa-caret-down"
-                                                style="color: #ffff;"></i>
-                                            <i *ngIf="filterModel.sorting == 'StartTrackingDateDesc'" class="fa fa-caret-up"
-                                                style="color: #ffff;"></i>
+                                            <i *ngIf="filterModel.sorting == 'StartTrackingDateAsc'" class="fa fa-caret-down" style="color: #ffff;"></i>
+                                            <i *ngIf="filterModel.sorting == 'StartTrackingDateDesc'" class="fa fa-caret-up" style="color: #ffff;"></i>
                                         </div>
                                     </div>
                                 </div>
@@ -588,10 +535,8 @@
                                             <!-- <i class="fa fa-caret-down" style="color: #ffff;"></i> -->
                                             <i *ngIf="filterModel.sorting == '' || (filterModel.sorting != 'EstimatedResultDateAsc' && filterModel.sorting != 'EstimatedResultDateDesc')"
                                                 class="fa fa-sort" style="color: #ffff;"></i>
-                                            <i *ngIf="filterModel.sorting == 'EstimatedResultDateAsc'" class="fa fa-caret-down"
-                                                style="color: #ffff;"></i>
-                                            <i *ngIf="filterModel.sorting == 'EstimatedResultDateDesc'" class="fa fa-caret-up"
-                                                style="color: #ffff;"></i>
+                                            <i *ngIf="filterModel.sorting == 'EstimatedResultDateAsc'" class="fa fa-caret-down" style="color: #ffff;"></i>
+                                            <i *ngIf="filterModel.sorting == 'EstimatedResultDateDesc'" class="fa fa-caret-up" style="color: #ffff;"></i>
                                         </div>
                                     </div>
                                 </div>
@@ -604,10 +549,8 @@
                                             <!-- <i class="fa fa-caret-down" style="color: #ffff;"></i> -->
                                             <i *ngIf="filterModel.sorting == '' || (filterModel.sorting != 'BidSubmissionDateAsc' && filterModel.sorting != 'BidSubmissionDateDesc')"
                                                 class="fa fa-sort" style="color: #ffff;"></i>
-                                            <i *ngIf="filterModel.sorting == 'BidSubmissionDateAsc'" class="fa fa-caret-down"
-                                                style="color: #ffff;"></i>
-                                            <i *ngIf="filterModel.sorting == 'BidSubmissionDateDesc'" class="fa fa-caret-up"
-                                                style="color: #ffff;"></i>
+                                            <i *ngIf="filterModel.sorting == 'BidSubmissionDateAsc'" class="fa fa-caret-down" style="color: #ffff;"></i>
+                                            <i *ngIf="filterModel.sorting == 'BidSubmissionDateDesc'" class="fa fa-caret-up" style="color: #ffff;"></i>
                                         </div>
                                     </div>
                                 </div>
@@ -620,10 +563,8 @@
                                             <!-- <i class="fa fa-caret-down" style="color: #ffff;"></i> -->
                                             <i *ngIf="filterModel.sorting == '' || (filterModel.sorting != 'EstimatedProjectStartDateAsc' && filterModel.sorting != 'EstimatedProjectStartDateDesc')"
                                                 class="fa fa-sort" style="color: #ffff;"></i>
-                                            <i *ngIf="filterModel.sorting == 'EstimatedProjectStartDateAsc'" class="fa fa-caret-down"
-                                                style="color: #ffff;"></i>
-                                            <i *ngIf="filterModel.sorting == 'EstimatedProjectStartDateDesc'" class="fa fa-caret-up"
-                                                style="color: #ffff;"></i>
+                                            <i *ngIf="filterModel.sorting == 'EstimatedProjectStartDateAsc'" class="fa fa-caret-down" style="color: #ffff;"></i>
+                                            <i *ngIf="filterModel.sorting == 'EstimatedProjectStartDateDesc'" class="fa fa-caret-up" style="color: #ffff;"></i>
                                         </div>
                                     </div>
                                 </div>
@@ -636,10 +577,8 @@
                                             <!-- <i class="fa fa-caret-down" style="color: #ffff;"></i> -->
                                             <i *ngIf="filterModel.sorting == '' || (filterModel.sorting != 'EstimatedProjectEndDateAsc' && filterModel.sorting != 'EstimatedProjectEndDateDesc')"
                                                 class="fa fa-sort" style="color: #ffff;"></i>
-                                            <i *ngIf="filterModel.sorting == 'EstimatedProjectEndDateAsc'" class="fa fa-caret-down"
-                                                style="color: #ffff;"></i>
-                                            <i *ngIf="filterModel.sorting == 'EstimatedProjectEndDateDesc'" class="fa fa-caret-up"
-                                                style="color: #ffff;"></i>
+                                            <i *ngIf="filterModel.sorting == 'EstimatedProjectEndDateAsc'" class="fa fa-caret-down" style="color: #ffff;"></i>
+                                            <i *ngIf="filterModel.sorting == 'EstimatedProjectEndDateDesc'" class="fa fa-caret-up" style="color: #ffff;"></i>
                                         </div>
                                     </div>
                                 </div>
@@ -652,10 +591,8 @@
                                             <!-- <i class="fa fa-caret-down" style="color: #ffff;"></i> -->
                                             <i *ngIf="filterModel.sorting == '' || (filterModel.sorting != 'ConstructionCategoryAsc' && filterModel.sorting != 'EConstructionCategoryDesc')"
                                                 class="fa fa-sort" style="color: #ffff;"></i>
-                                            <i *ngIf="filterModel.sorting == 'ConstructionCategoryAsc'" class="fa fa-caret-down"
-                                                style="color: #ffff;"></i>
-                                            <i *ngIf="filterModel.sorting == 'EConstructionCategoryDesc'" class="fa fa-caret-up"
-                                                style="color: #ffff;"></i>
+                                            <i *ngIf="filterModel.sorting == 'ConstructionCategoryAsc'" class="fa fa-caret-down" style="color: #ffff;"></i>
+                                            <i *ngIf="filterModel.sorting == 'EConstructionCategoryDesc'" class="fa fa-caret-up" style="color: #ffff;"></i>
                                         </div>
                                     </div>
                                 </div>
@@ -666,8 +603,8 @@
                                     <div class="center-parent">
                                         <div>
                                             <!-- <i class="fa fa-caret-down" style="color: #ffff;"></i> -->
-                                            <i *ngIf="filterModel.sorting == '' || (filterModel.sorting != 'PlaceAsc' && filterModel.sorting != 'PlaceDesc')"
-                                                class="fa fa-sort" style="color: #ffff;"></i>
+                                            <i *ngIf="filterModel.sorting == '' || (filterModel.sorting != 'PlaceAsc' && filterModel.sorting != 'PlaceDesc')" class="fa fa-sort"
+                                                style="color: #ffff;"></i>
                                             <i *ngIf="filterModel.sorting == 'PlaceAsc'" class="fa fa-caret-down" style="color: #ffff;"></i>
                                             <i *ngIf="filterModel.sorting == 'PlaceDesc'" class="fa fa-caret-up" style="color: #ffff;"></i>
                                         </div>
@@ -682,10 +619,8 @@
                                             <!-- <i class="fa fa-caret-down" style="color: #ffff;"></i> -->
                                             <i *ngIf="filterModel.sorting == '' || (filterModel.sorting != 'DescriptionAsc' && filterModel.sorting != 'DescriptionDesc')"
                                                 class="fa fa-sort" style="color: #ffff;"></i>
-                                            <i *ngIf="filterModel.sorting == 'DescriptionAsc'" class="fa fa-caret-down"
-                                                style="color: #ffff;"></i>
-                                            <i *ngIf="filterModel.sorting == 'DescriptionDesc'" class="fa fa-caret-up"
-                                                style="color: #ffff;"></i>
+                                            <i *ngIf="filterModel.sorting == 'DescriptionAsc'" class="fa fa-caret-down" style="color: #ffff;"></i>
+                                            <i *ngIf="filterModel.sorting == 'DescriptionDesc'" class="fa fa-caret-up" style="color: #ffff;"></i>
                                         </div>
                                     </div>
                                 </div>
@@ -698,23 +633,20 @@
                                             <!-- <i class="fa fa-caret-down" style="color: #ffff;"></i> -->
                                             <i *ngIf="filterModel.sorting == '' || (filterModel.sorting != 'EvaluationAsc' && filterModel.sorting != 'EvaluationDesc')"
                                                 class="fa fa-sort" style="color: #ffff;"></i>
-                                            <i *ngIf="filterModel.sorting == 'EvaluationAsc'" class="fa fa-caret-down"
-                                                style="color: #ffff;"></i>
-                                            <i *ngIf="filterModel.sorting == 'EvaluationDesc'" class="fa fa-caret-up"
-                                                style="color: #ffff;"></i>
+                                            <i *ngIf="filterModel.sorting == 'EvaluationAsc'" class="fa fa-caret-down" style="color: #ffff;"></i>
+                                            <i *ngIf="filterModel.sorting == 'EvaluationDesc'" class="fa fa-caret-up" style="color: #ffff;"></i>
                                         </div>
                                     </div>
                                 </div>
                             </th>
-                            <th type="check" style="max-width: 100px!important; width: 100px!important; padding: 12px 0 !important; height: 45px;"
-                                class="table-action text-center -right zui-sticky-col-right" type="check-action">
+                            <th type="check" style="max-width: 100px!important; width: 100px!important; padding: 12px 0 !important; height: 45px;" class="table-action text-center -right zui-sticky-col-right"
+                                type="check-action">
                                 Thao tác
                             </th>
                         </tr>
                     </thead>
                     <tbody *ngIf="listPackage">
-                        <tr *ngFor="let item of pagedResult.items; let i = index" class="table-pin-col--height"
-                            appRowHover>
+                        <tr *ngFor="let item of pagedResult.items; let i = index" class="table-pin-col--height" appRowHover>
                             <td class="text-center zui-sticky-col" type="check" [class.odd]="i % 2 == 0">
                                 <label class="custom-control custom-checkbox">
                                     <input type="checkbox" class="custom-control-input input-checkbox" [(ngModel)]="item.checkboxSelected">
@@ -738,115 +670,97 @@
                                 </a>
                             </td>
                             <td [class.d-none]="!tenKhachHang" class="text-truncate" [title]="(item.customer?.customerName)?item.customer?.customerName:'' ">
-                                <a [href]="redirectToCRM('tenKhachHang', item.customer?.customerId)" target="_blank">{{
-                                    item.customer?.customerName }}</a>
+                                <a [href]="redirectToCRM('tenKhachHang', item.customer?.customerId)" target="_blank">{{ item.customer?.customerName }}</a>
                             </td>
                             <td [class.d-none]="!lienHe" class="text-truncate" [title]="(item.customerContact?.name)?item.customerContact?.name:''">
-                                <a [href]="redirectToCRM('lienHe', item.customerContact?.id)" target="_blank">{{
-                                    item.customerContact?.name }}</a>
+                                <a [href]="redirectToCRM('lienHe', item.customerContact?.id)" target="_blank">{{ item.customerContact?.name }}</a>
 
                             </td>
-                            <td [class.d-none]="!vaiTro" class="text-truncate" [title]="(item.hbcRole?.name)?item.hbcRole?.name:''">{{
-                                item.hbcRole?.name }}</td>
-                            <td [class.d-none]="!chuTri" class="text-truncate" [title]="(item.chairEmployee?.employeeName)?item.chairEmployee?.employeeName:''">{{
-                                item.chairEmployee?.employeeName }}</td>
+                            <td [class.d-none]="!vaiTro" class="text-truncate" [title]="(item.hbcRole?.name)?item.hbcRole?.name:''">{{ item.hbcRole?.name }}</td>
+                            <td [class.d-none]="!chuTri" class="text-truncate" [title]="(item.chairEmployee?.employeeName)?item.chairEmployee?.employeeName:''">{{ item.chairEmployee?.employeeName }}</td>
                             <td [class.d-none]="!loaiKhachHang" class="text-truncate" [title]="(item.customer?.customerNewOldType)? (item.customer?.customerNewOldType | translate):''">
                                 <span *ngIf="item && item.customer">
                                     {{ item.customer?.customerNewOldType | translate }}
                                 </span>
                             </td>
-                            <td [class.d-none]="!loaiCongTrinh" class="text-truncate" [title]="(item.projectType?.value)?item.projectType?.value:''">{{
-                                item.projectType?.value }}</td>
+                            <td [class.d-none]="!loaiCongTrinh" class="text-truncate" [title]="(item.projectType?.value)?item.projectType?.value:''">{{ item.projectType?.value }}</td>
 
-                            <td [class.d-none]="!tongGiaTri" class="text-truncate text-right" [title]="(item.amount)?item.amount:''">{{
-                                item.amount | vnCurrency }}</td>
-                            <td [class.d-none]="!quyMo" class="color" [title]="(item.magnitude)?item.magnitude:''">{{item.magnitude
-                                }}</td>
+                            <td [class.d-none]="!tongGiaTri" class="text-truncate text-right" [title]="(item.amount)?item.amount:''">{{ item.amount | vnCurrency }}</td>
+                            <td [class.d-none]="!quyMo" class="color" [title]="(item.magnitude)?item.magnitude:''">{{item.magnitude }}
+                            </td>
                             <td [class.d-none]="!giaiDoan" class="" style="text-align: center;">
-                                <div class="d-flex flex-column p-2">
-                                    <div class="center-parent" [class.type-HSMT]="item.stage?.key == 'HSMT'"
-                                        [class.type-HSDT]="item.stage?.key == 'HSDT'" [class.type-KQDT]="item.stage?.key == 'KQDT'">
+                                <ng-container class="d-flex flex-column p-2" *ngIf="!item?.isSendMailKickOff">
+                                    <div class="center-parent" [class.type-HSMT]="item.stage?.key == 'HSMT'" [class.type-HSDT]="item.stage?.key == 'HSDT'" [class.type-KQDT]="item.stage?.key == 'KQDT'">
                                         <div>{{item.stage?.value }}</div>
                                     </div>
-                                    <div class="center-parent" [class.type-HSMT-child]="item.stage?.key == 'HSMT'"
-                                        [class.type-HSDT-child]="item.stage?.key == 'HSDT'" [class.type-KQDT-child]="item.stage?.key == 'KQDT'">
+                                    <div class="center-parent" [class.type-HSMT-child]="item.stage?.key == 'HSMT'" [class.type-HSDT-child]="item.stage?.key == 'HSDT'"
+                                        [class.type-KQDT-child]="item.stage?.key == 'KQDT'">
                                         <div class="text-truncate">{{item.stageStatus?.value }}</div>
                                     </div>
-                                </div>
+                                </ng-container>
+                                <ng-container class="d-flex flex-column p-2" *ngIf="item?.isSendMailKickOff">
+                                    <div class="center-parent" [class.type-HSMT]="item.stage?.key == 'HSMT'" [class.type-HSDT]="item.stage?.key == 'HSDT'" [class.type-KQDT]="item.stage?.key == 'KQDT'">
+                                        <div>Kết quả dự thầu</div>
+                                    </div>
+                                    <div class="center-parent" [class.type-HSMT-child]="item.stage?.key == 'HSMT'" [class.type-HSDT-child]="item.stage?.key == 'HSDT'"
+                                        [class.type-KQDT-child]="item.stage?.key == 'KQDT'">
+                                        <div class="text-truncate">Đã thông báo họp Kick-off</div>
+                                    </div>
+                                </ng-container>
                             </td>
                             <td [class.d-none]="!khuVuc" class="text-truncate" [title]="(item.location?.value)?item.location?.value:''">{{item.location?.value}}</td>
                             <!-- <td [class.d-none]="!congViec" class="text-truncate">{{ item.job }}</td> -->
-                            <td [class.d-none]="!tienDoThucHien" class="text-truncate text-right" [title]="(item.progress)?item.progress:''">{{
-                                item.progress }} %</td>
+                            <td [class.d-none]="!tienDoThucHien" class="text-truncate text-right" [title]="(item.progress)?item.progress:''">{{ item.progress }} %</td>
                             <td [class.d-none]="!linkTaiLieu" class="text-truncate cus-pointer ellipsis" [title]="(item.documentLink)?item.documentLink:''">
                                 <!-- (click)="openLinkDocument(item.documentLink)" -->
                                 <!-- <a title="link tài liệu">{{ item.documentLink }}</a> -->
                                 <a target="_blank" [href]="item.documentLink | safeUrl">{{ item.documentLink }}</a>
                             </td>
-                            <td [class.d-none]="!tongThoiGian" class="text-truncate" [title]="(item.totalTime)?item.totalTime:''">{{
-                                item.totalTime }}</td>
-                            <td [class.d-none]="!quy" class="text-truncate" [title]="(item.quarter?.name)?item.quarter?.name:''">{{
-                                item.quarter?.name }}</td>
+                            <td [class.d-none]="!tongThoiGian" class="text-truncate" [title]="(item.totalTime)?item.totalTime:''">{{ item.totalTime }}</td>
+                            <td [class.d-none]="!quy" class="text-truncate" [title]="(item.quarter?.name)?item.quarter?.name:''">{{ item.quarter?.name }}</td>
                             <td [class.d-none]="!donViTuVan" class="text-truncate" [title]="(item.consultantUnitCustomer?.customerName)?item.consultantUnitCustomer?.customerName:''">
-                                <a [href]="redirectToCRM('donViTuVan',item.consultantUnitCustomer?.customerId)" target="_blank">{{
-                                    item.consultantUnitCustomer?.customerName }}</a>
+                                <a [href]="redirectToCRM('donViTuVan',item.consultantUnitCustomer?.customerId)" target="_blank">{{ item.consultantUnitCustomer?.customerName }}</a>
 
                             </td>
-                            <td [class.d-none]="!diaChiDVTV" class="text-truncate" [title]="(item.consultantAddress)?item.consultantAddress:''">{{
-                                item.consultantAddress }}</td>
-                            <td [class.d-none]="!soDienThoaiDVTV" class="text-truncate" [title]="(item.consultantPhone)?item.consultantPhone:''">{{
-                                item.consultantPhone }}</td>
-                            <td [class.d-none]="!dientichsan" class="text-truncate text-right" [title]="(item.floorArea)?item.floorArea:''">{{
-                                item.floorArea | numberArea}}</td>
+                            <td [class.d-none]="!diaChiDVTV" class="text-truncate" [title]="(item.consultantAddress)?item.consultantAddress:''">{{ item.consultantAddress }}</td>
+                            <td [class.d-none]="!soDienThoaiDVTV" class="text-truncate" [title]="(item.consultantPhone)?item.consultantPhone:''">{{ item.consultantPhone }}</td>
+                            <td [class.d-none]="!dientichsan" class="text-truncate text-right" [title]="(item.floorArea)?item.floorArea:''">{{ item.floorArea | numberArea}}</td>
 
 
-                            <td [class.d-none]="!lyDoTrungThau" class="text-truncate" [title]="(item.acceptanceReason)?item.acceptanceReason:''">{{
-                                item.acceptanceReason }}</td>
-                            <td [class.d-none]="!lyDoTratThau" class="text-truncate" [title]="(item.unacceptanceReason)?item.unacceptanceReason:''">{{
-                                item.unacceptanceReason }}</td>
-                            <td [class.d-none]="!lydohuythau" class="text-truncate" [title]="(item.cancelReason)?item.cancelReason:''">{{
-                                item.cancelReason }}</td>
+                            <td [class.d-none]="!lyDoTrungThau" class="text-truncate" [title]="(item.acceptanceReason)?item.acceptanceReason:''">{{ item.acceptanceReason }}</td>
+                            <td [class.d-none]="!lyDoTratThau" class="text-truncate" [title]="(item.unacceptanceReason)?item.unacceptanceReason:''">{{ item.unacceptanceReason }}</td>
+                            <td [class.d-none]="!lydohuythau" class="text-truncate" [title]="(item.cancelReason)?item.cancelReason:''">{{ item.cancelReason }}</td>
                             <td [class.d-none]="!ngayBatDau" class="text-truncate">
-                                <span *ngIf="item.startTrackingDate">{{ item.startTrackingDate*1000 | date:'dd/MM/yyyy'
-                                    }}</span>
+                                <span *ngIf="item.startTrackingDate">{{ item.startTrackingDate*1000 | date:'dd/MM/yyyy' }}
+                                </span>
                             </td>
                             <td [class.d-none]="!ngayDuKienKetQuaThau" class="text-truncate">
-                                <span *ngIf="item.resultEstimatedDate">{{ item.resultEstimatedDate*1000 |
-                                    date:'dd/MM/yyyy' }}</span>
+                                <span *ngIf="item.resultEstimatedDate">{{ item.resultEstimatedDate*1000 | date:'dd/MM/yyyy' }}</span>
                             </td>
                             <td [class.d-none]="!ngayNhanHoSoMoiThau" class="text-truncate">
                                 <span *ngIf="item.submissionDate">{{ item.submissionDate*1000 | date:'dd/MM/yyyy' }}</span>
                             </td>
                             <td [class.d-none]="!ngayKhoiCongDuAn" class="text-truncate">
-                                <span *ngIf="item.projectEstimatedStartDate">{{ item.projectEstimatedStartDate*1000
-                                    |date:'dd/MM/yyyy' }}</span>
+                                <span *ngIf="item.projectEstimatedStartDate">{{ item.projectEstimatedStartDate*1000 |date:'dd/MM/yyyy' }}</span>
                             </td>
                             <td [class.d-none]="!ngayKetThucDuAn" class="text-truncate">
-                                <span *ngIf=" item.projectEstimatedEndDate">{{ item.projectEstimatedEndDate*1000 |
-                                    date:'dd/MM/yyyy' }}</span>
+                                <span *ngIf=" item.projectEstimatedEndDate">{{ item.projectEstimatedEndDate*1000 | date:'dd/MM/yyyy' }}</span>
                             </td>
-                            <td [class.d-none]="!hangMucCongTrinh" class="text-truncate" [title]="(item.mainBuildingCategory?.value)?item.mainBuildingCategory?.value:''">{{
-                                item.mainBuildingCategory?.value }}</td>
-                            <td [class.d-none]="!diaDiem" class="text-truncate" [title]="(item.place)?item.place:''">{{
-                                item.place }}</td>
-                            <td [class.d-none]="!moTa" class="text-truncate" [title]="(item.description)?item.description:''">{{
-                                item.description }}</td>
-                            <td [class.d-none]="!danhGiaDuAn" class="text-truncate" [title]="(item.evaluation)?item.evaluation:''">{{
-                                item.evaluation?.value }}</td>
-                            <td style="max-width: 100px!important;" class="-right zui-sticky-col-right" type="check"
-                                [class.odd]="i % 2 == 0">
+                            <td [class.d-none]="!hangMucCongTrinh" class="text-truncate" [title]="(item.mainBuildingCategory?.value)?item.mainBuildingCategory?.value:''">{{ item.mainBuildingCategory?.value }}</td>
+                            <td [class.d-none]="!diaDiem" class="text-truncate" [title]="(item.place)?item.place:''">{{ item.place }}</td>
+                            <td [class.d-none]="!moTa" class="text-truncate" [title]="(item.description)?item.description:''">{{ item.description }}</td>
+                            <td [class.d-none]="!danhGiaDuAn" class="text-truncate" [title]="(item.evaluation)?item.evaluation:''">{{ item.evaluation?.value }}</td>
+                            <td style="max-width: 100px!important;" class="-right zui-sticky-col-right" type="check" [class.odd]="i % 2 == 0">
                                 <div class="d-flex justify-content-center align-items-center h-100">
                                     <div>
                                         <a *ngIf="isViewBidOpportunityDetail" [routerLink]="['/package/detail',item.bidOpportunityId]">
                                             <i class="fa fa-eye text-warning" aria-hidden="true"></i>
                                         </a>
-                                        <a *ngIf="isEditBidOpportunity" [routerLink]="['/package/detail',item.bidOpportunityId,'edit']"
-                                            class=" text-success ml-3">
+                                        <a *ngIf="isEditBidOpportunity" [routerLink]="['/package/detail',item.bidOpportunityId,'edit']" class=" text-success ml-3">
                                             <i class="fa fa-pencil cursor-pointer" aria-hidden="true"> </i>
                                         </a>
                                         <a *ngIf="isDeleteBidOpportunity" class=" text-dark ml-3">
-                                            <i (click)="delete(item.bidOpportunityId)" class="fa fa-trash-o"
-                                                aria-hidden="true"></i>
+                                            <i (click)="delete(item.bidOpportunityId)" class="fa fa-trash-o" aria-hidden="true"></i>
                                         </a>
                                     </div>
                                 </div>
@@ -855,8 +769,7 @@
 
                     </tbody>
                 </table>
-                <div class="center-parent" *ngIf="!loading && (!pagedResult.items || pagedResult.items.length === 0)">Không
-                    có dữ liệu</div>
+                <div class="center-parent" *ngIf="!loading && (!pagedResult.items || pagedResult.items.length === 0)">Không có dữ liệu</div>
                 <ngx-loading [show]="loading"></ngx-loading>
             </div>
         </div>

@@ -2,8 +2,7 @@
     <div class="d-flex">
         <div class="  mr-auto" style="width: calc(100% - 100px);">
             <div class="card-collapse">
-                <div class="header" (click)="isCollapsedMain = !isCollapsedMain" [attr.aria-expanded]="!isCollapsedMain"
-                    aria-controls="info-main">
+                <div class="header" (click)="isCollapsedMain = !isCollapsedMain" [attr.aria-expanded]="!isCollapsedMain" aria-controls="info-main">
                     <i *ngIf="!isCollapsedMain" class="fa fa-caret-down mr-3"></i>
                     <i *ngIf="isCollapsedMain" class="fa fa-caret-right mr-3"></i>
                     Thông tin chi tiết
@@ -63,8 +62,7 @@
                                 <td class="w-15 bg-light text-right label no-boder field-name">Link tài liệu</td>
                                 <td class="w-35 no-boder">
                                     <!-- <div class="w-75 form-control">{{package.documentLink}}</div> -->
-                                    <a class="w-75 form-control color-link color-link" target="_blank" [href]="package.documentLink">{{
-                                        package.documentLink }}</a>
+                                    <a class="w-75 form-control color-link color-link" target="_blank" [href]="package.documentLink">{{ package.documentLink }}</a>
                                 </td>
                             </tr>
                             <tr>
@@ -89,9 +87,13 @@
                                 <td class="w-15 bg-light text-right label no-boder field-name">Giai đoạn</td>
                                 <td class="w-35 no-boder" style="text-align: center;">
                                     <div class="w-75 d-flex flex-column" style="align-items: flex-start;">
-                                        <div style="width: 100%;">
+                                        <div style="width: 100%;" *ngIf="package?.isSendMailKickOff">
                                             <div class="status-package" [ngClass]="{'status-hsmt--background': package.stage?.text === 'Hồ sơ mời thầu', 'status-dt--background': package.stage?.text === 'Dự thầu', 'status-kqdt--background': package.stage?.text === 'Kết quả dự thầu'}">{{package.stage?.text}}</div>
                                             <div class="status-package" [ngClass]="{'phase-hsmt--background': package.stage?.text === 'Hồ sơ mời thầu', 'phase-dt--background': package.stage?.text === 'Dự thầu', 'phase-kqdt--background': package.stage?.text === 'Kết quả dự thầu'}">{{package.stageStatus?.text}}</div>
+                                        </div>
+                                        <div style="width: 100%;" *ngIf="!package?.isSendMailKickOff">
+                                            <div class="status-package" [ngClass]="{'status-hsmt--background': package.stage?.text === 'Hồ sơ mời thầu', 'status-dt--background': package.stage?.text === 'Dự thầu', 'status-kqdt--background': package.stage?.text === 'Kết quả dự thầu'}">Kết quả dự thầu</div>
+                                            <div class="status-package" [ngClass]="{'phase-hsmt--background': package.stage?.text === 'Hồ sơ mời thầu', 'phase-dt--background': package.stage?.text === 'Dự thầu', 'phase-kqdt--background': package.stage?.text === 'Kết quả dự thầu'}">Đã chuyển giao tài liệu</div>
                                         </div>
                                     </div>
                                 </td>
@@ -127,8 +129,7 @@
                                 <td class="w-15 bg-light text-right label no-boder field-name">Đơn vị tư vấn</td>
                                 <td class="w-35 no-boder">
                                     <div class="w-75 form-control">
-                                        <a [href]="redirectToCRM('donViTuVan', package.consultantUnitCustomer?.id)"
-                                            target="_blank">
+                                        <a [href]="redirectToCRM('donViTuVan', package.consultantUnitCustomer?.id)" target="_blank">
                                             {{package.consultantUnitCustomer?.text}}
                                         </a>
                                     </div>
@@ -149,8 +150,7 @@
                                 </td>
                             </tr>
                             <tr>
-                                <td class="w-15 bg-light text-right label no-boder field-name" style="border-top: none;border-right: none;">Số
-                                    điện thoại ĐVTV</td>
+                                <td class="w-15 bg-light text-right label no-boder field-name" style="border-top: none;border-right: none;">Số điện thoại ĐVTV</td>
                                 <td class="w-35 no-boder" style="border-top: none;border-right: none;border-left: none;">
                                     <div class="w-75 form-control">{{package.consultantPhone}}</div>
                                 </td>
@@ -160,61 +160,52 @@
                                 </td>
                             </tr>
                             <tr>
-                                <td class="w-15 bg-light text-right label field-name" style="padding-bottom: 20px!important; border-top: none;border-right: none;">Diện
-                                    tích sàn (m2)</td>
+                                <td class="w-15 bg-light text-right label field-name" style="padding-bottom: 20px!important; border-top: none;border-right: none;">Diện tích sàn (m2)</td>
                                 <td class="w-35" style="padding-bottom: 20px!important; border-top: none;border-right: none;">
                                     <div class="w-75 form-control text-right">
                                         {{package.floorArea | numberArea}} &nbsp;
                                     </div>
                                 </td>
-                                <td class="w-15 bg-light text-right label field-name" style="padding-bottom: 20px!important; border-top: none;border-right: none;border-left: none;">Đánh
-                                    giá dự án</td>
+                                <td class="w-15 bg-light text-right label field-name" style="padding-bottom: 20px!important; border-top: none;border-right: none;border-left: none;">Đánh giá dự án</td>
                                 <td class="w-35" style="padding-bottom: 20px!important; border-top: none;border-right: none;border-left: none;">
                                     <div class="w-75 form-control">{{package.evaluation?.text}}</div>
                                 </td>
                             </tr>
                             <tr>
-                                <td class="w-15 bg-light text-right label no-boder field-name" style="padding-top: 20px!important;">Ngày
-                                    bắt đầu</td>
+                                <td class="w-15 bg-light text-right label no-boder field-name" style="padding-top: 20px!important;">Ngày bắt đầu</td>
                                 <td class="w-35 no-boder" style="padding-top: 20px!important;">
                                     <div class="w-75 form-control">
-                                        <span *ngIf="package.startTrackingDate">{{(package.startTrackingDate)*1000 |
-                                            date:'dd/MM/yyyy'}}</span>
+                                        <span *ngIf="package.startTrackingDate">{{(package.startTrackingDate)*1000 | date:'dd/MM/yyyy'}}
+                                        </span>
                                     </div>
                                 </td>
-                                <td class="w-15 bg-light text-right label no-boder field-name" style="padding-top: 20px!important;">Ngày
-                                    khởi công dự án</td>
+                                <td class="w-15 bg-light text-right label no-boder field-name" style="padding-top: 20px!important;">Ngày khởi công dự án</td>
                                 <td class="w-35 no-boder" style="padding-top: 20px!important;">
                                     <div class="w-75 form-control">
-                                        <span *ngIf="package.projectEstimatedStartDate">{{(package.projectEstimatedStartDate)*1000
-                                            | date:'dd/MM/yyyy'}}</span>
+                                        <span *ngIf="package.projectEstimatedStartDate">{{(package.projectEstimatedStartDate)*1000 | date:'dd/MM/yyyy'}}</span>
                                     </div>
                                 </td>
                             </tr>
                             <tr>
-                                <td class="w-15 bg-light text-right label required no-boder field-name">Ngày nộp hồ sơ
-                                    mời thầu</td>
+                                <td class="w-15 bg-light text-right label required no-boder field-name">Ngày nộp hồ sơ mời thầu</td>
                                 <td class="w-35 no-boder">
                                     <div class="w-75 form-control">
-                                        <span *ngIf="package.submissionDate">{{(package.submissionDate)*1000 |
-                                            date:'dd/MM/yyyy'}}</span>
+                                        <span *ngIf="package.submissionDate">{{(package.submissionDate)*1000 | date:'dd/MM/yyyy'}}
+                                        </span>
                                     </div>
                                 </td>
                                 <td class="w-15 bg-light text-right label no-boder field-name">Ngày kết thúc dự án</td>
                                 <td class="w-35 no-boder">
                                     <div class="w-75 form-control">
-                                        <span *ngIf="package.projectEstimatedEndDate">{{(package.projectEstimatedEndDate)*1000
-                                            | date:'dd/MM/yyyy'}}</span>
+                                        <span *ngIf="package.projectEstimatedEndDate">{{(package.projectEstimatedEndDate)*1000 | date:'dd/MM/yyyy'}}</span>
                                     </div>
                                 </td>
                             </tr>
                             <tr>
-                                <td class="w-15 bg-light text-right label required no-boder field-name">Ngày dự kiến
-                                    kết quả thầu</td>
+                                <td class="w-15 bg-light text-right label required no-boder field-name">Ngày dự kiến kết quả thầu</td>
                                 <td class="w-35 no-boder">
                                     <div class="w-75 form-control">
-                                        <span *ngIf="package.resultEstimatedDate">{{(package.resultEstimatedDate)*1000
-                                            | date:'dd/MM/yyyy'}}</span>
+                                        <span *ngIf="package.resultEstimatedDate">{{(package.resultEstimatedDate)*1000 | date:'dd/MM/yyyy'}}</span>
                                     </div>
                                 </td>
                                 <td class="w-15 bg-light text-right label no-boder field-name">Tổng thời gian</td>
@@ -227,8 +218,7 @@
                 </div>
             </div>
             <div class="mr-auto card-collapse">
-                <div class="header" (click)="isCollapsedDesc = !isCollapsedDesc" [attr.aria-expanded]="!isCollapsedDesc"
-                    aria-controls="info-desc">
+                <div class="header" (click)="isCollapsedDesc = !isCollapsedDesc" [attr.aria-expanded]="!isCollapsedDesc" aria-controls="info-desc">
                     <i *ngIf="!isCollapsedDesc" class="fa fa-caret-down mr-3"></i>
                     <i *ngIf="isCollapsedDesc" class="fa fa-caret-right mr-3"></i>
                     Mô tả chi tiết
@@ -250,8 +240,7 @@
         <div class="" style="width: auto; margin-right: 20px;  margin-left: 20px">
             <div class="media-header">
                 <span class="action-bar alignment-but">
-                    <button type="submit" class="btn btn-primary" [routerLink]="['/package/detail',currentPackageId,'info','edit']">Chỉnh
-                        sửa &nbsp;
+                    <button type="submit" class="btn btn-primary" [routerLink]="['/package/detail',currentPackageId,'info','edit']">Chỉnh sửa &nbsp;
                     </button>
                 </span>
             </div>

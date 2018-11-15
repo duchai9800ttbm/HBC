@@ -193,7 +193,8 @@ export class PackageService {
             projectEstimatedStartDate: result.projectEstimatedStartDate,
             projectEstimatedEndDate: result.projectEstimatedEndDate,
             totalTime: result.totalTime,
-            description: result.description
+            description: result.description,
+            isSendMailKickOff: result.isSendMailKickOff
         };
     }
 

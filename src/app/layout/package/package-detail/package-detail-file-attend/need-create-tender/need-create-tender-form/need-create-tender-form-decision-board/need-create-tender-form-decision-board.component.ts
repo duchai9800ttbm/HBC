@@ -50,6 +50,7 @@ export class NeedCreateTenderFormDecisionBoardComponent implements OnInit {
         });
         this.packageService.dataProposals$.subscribe(value => {
             this.createForm();
+            this.decisionBoardForm.valueChanges.subscribe(data => this.mappingToLiveFormData(data));
         });
     }
 

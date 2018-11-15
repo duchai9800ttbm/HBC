@@ -34,10 +34,10 @@ export class NeedCreateTenderFormContractConditionComponent implements OnInit {
       if (this.routerAction === 'view') {
         this.contractConditionForm.disable();
       }
-      this.contractConditionForm.valueChanges.subscribe(data => this.mappingToLiveFormData(data));
     });
     this.packageService.dataProposals$.subscribe(value => {
       this.createForm();
+      this.contractConditionForm.valueChanges.subscribe(data => this.mappingToLiveFormData(data));
     });
   }
 
