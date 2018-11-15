@@ -77,7 +77,6 @@ export class NeedCreateTenderFormComponent implements OnInit, OnDestroy {
         this.bidOpportunityId = PackageDetailComponent.packageId;
         this.scrollTopService.isScrollTop = false;
         this.routerAction = this.packageService.routerAction;
-
         if (this.routerAction === 'create') {
             this.setDataDefault();
             this.startUp();

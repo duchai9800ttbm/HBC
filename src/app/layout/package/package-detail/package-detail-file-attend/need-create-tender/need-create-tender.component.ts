@@ -164,7 +164,8 @@ export class NeedCreateTenderComponent implements OnInit, OnDestroy {
           // this.dtTrigger.next();
         });
       } else {
-        // NeedCreateTenderFormComponent.formModel = new ProposeTenderParticipateRequest();
+        // new ProposeTenderParticipateRequest()
+        NeedCreateTenderFormComponent.formModel = null;
       }
       this.spinner.hide();
     }, err => {
