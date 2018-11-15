@@ -2,8 +2,8 @@ import { Pipe, PipeTransform } from '@angular/core';
 
 const PADDING = '000000';
 
-@Pipe({ name: 'vnCurrencyNoPlaceholder' })
-export class VnCurrencyPipeNoPlaceholder implements PipeTransform {
+@Pipe({ name: 'thousandSeparate' })
+export class ThousandSeparate implements PipeTransform {
 
   private DECIMAL_SEPARATOR: string;
   private THOUSANDS_SEPARATOR: string;
@@ -16,9 +16,8 @@ export class VnCurrencyPipeNoPlaceholder implements PipeTransform {
     this.CURRENCY_UNIT = ' đ';
   }
 
-  transform(value: number | string, fractionSize: number = 0, placeholder?: boolean): string {
-    if (!value && !placeholder) { return ''; }
-    if (!value) { return '0' + this.CURRENCY_UNIT; }
+  transform(value: number | string, fractionSize: number = 0): string {
+    if (!value) { return ''; }
     if (isNaN(+value)) { return value.toString(); }
 
     let [integer, fraction = ''] = (+value).toString()
@@ -31,13 +30,13 @@ export class VnCurrencyPipeNoPlaceholder implements PipeTransform {
     integer = integer.replace(/\B(?=(\d{3})+(?!\d))/g, this.THOUSANDS_SEPARATOR);
 
 
-    return integer + fraction + (integer && this.CURRENCY_UNIT);
+    return integer + fraction;
   }
 
   parse(value: string, fractionSize: number = 0): number {
     if (!isNaN(+value)) { return +value; }
 
-    let integer = (value || '').replace(this.CURRENCY_UNIT, '');
+    let integer = (value || '').replace('', '');
 
     integer = integer.split(this.THOUSANDS_SEPARATOR).join('');
 

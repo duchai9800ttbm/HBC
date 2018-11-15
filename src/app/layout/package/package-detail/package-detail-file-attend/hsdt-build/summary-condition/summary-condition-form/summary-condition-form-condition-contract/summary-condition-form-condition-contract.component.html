@@ -11,8 +11,8 @@
                     <div class="col-md-8">
                         <span class="custom-dropdown w-100">
                             <select appAutoFocus tabindex="1" class="form-control" formControlName="name">
-                                <option [ngValue]="null">--Chọn--</option>
-                                <option [value]="'MainContract'">Tổng thầu (Main Contract)</option>
+                                <option [ngValue]="''">--Chọn--</option>
+                                <option [value]="'MainContract'">Thầu chính (Main Contract)</option>
                                 <option [value]="'SubContract'">Thầu phụ (Sub-Contract)</option>
                             </select>
                         </span>
@@ -87,7 +87,7 @@
                     <div class="col-md-4">
                         <div formGroupName="dieuKienTheoHSMT">
                             <div formGroupName="baoLanhThucHien">
-                                <input appEnterPreventDefault tabindex="3" formControlName="hieuLuc" class="form-control">
+                                <input  tabindex="3" formControlName="hieuLuc" class="form-control">
                             </div>
 
                         </div>
@@ -95,7 +95,7 @@
                     <div class="col-md-4">
                         <div formGroupName="dieuKienTheoHBC">
                             <div formGroupName="baoLanhThucHien">
-                                <input appEnterPreventDefault tabindex="4" formControlName="hieuLuc" class="form-control">
+                                <input  tabindex="4" formControlName="hieuLuc" class="form-control">
                             </div>
 
                         </div>
@@ -328,7 +328,7 @@
                     <div class="col-md-4">
                         <div formGroupName="dieuKienTheoHSMT">
                             <div formGroupName="tienGiuLai">
-                                <input appEnterPreventDefault tabindex="16" formControlName="thanhToanTienGui" class="form-control">
+                                <input tabindex="16" formControlName="thanhToanTienGui" class="form-control">
                             </div>
 
                         </div>
@@ -336,7 +336,7 @@
                     <div class="col-md-4">
                         <div formGroupName="dieuKienTheoHBC">
                             <div formGroupName="tienGiuLai">
-                                <input appEnterPreventDefault tabindex="17" formControlName="thanhToanTienGui" class="form-control">
+                                <input tabindex="17" formControlName="thanhToanTienGui" class="form-control">
                             </div>
 
                         </div>

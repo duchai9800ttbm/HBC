@@ -7,10 +7,10 @@ import {
   ElementRef
 } from '@angular/core';
 import { NgControl } from '@angular/forms';
-import { VnCurrencyPipeNoPlaceholder } from '../pipes/vn-currency-pipe-noplaceholder.module';
+import { ThousandSeparate } from '../pipes/thoudand-separate.module';
 
 @Directive({
-  selector: '[appInputMoneyNoplaceholder]',
+  selector: '[appInputThousandSeparate]',
   // tslint:disable-next-line:use-host-property-decorator
   host: {
     '(blur)': 'formatInputValue($event.target.value)',
@@ -18,12 +18,12 @@ import { VnCurrencyPipeNoPlaceholder } from '../pipes/vn-currency-pipe-noplaceho
     // '(load)': 'formatInputValue($event.target.value)',
   }
 })
-export class InputMoneyNoplaceholderDirective implements OnInit {
+export class InputThousandSeparateDirective implements OnInit {
   constructor(
     private el: ElementRef,
     private renderer: Renderer,
     private ngControl: NgControl,
-    private vnCurrencyPipeNoPlaceholder: VnCurrencyPipeNoPlaceholder,
+    private thousandSeparate: ThousandSeparate,
   ) {
     // this.renderer.setElementAttribute(this.el.nativeElement, 'maxlength', PHONE_NUMBER_MAX_LENGHT);
     this.renderer.setElementAttribute(this.el.nativeElement, 'onkeypress', 'return event.charCode >= 48 && event.charCode <= 57');
@@ -33,14 +33,14 @@ export class InputMoneyNoplaceholderDirective implements OnInit {
 
 
   ngOnInit() {
-    this.ngControl.valueAccessor.writeValue(this.vnCurrencyPipeNoPlaceholder.transform(this.ngControl.value));
+    this.ngControl.valueAccessor.writeValue(this.thousandSeparate.transform(this.ngControl.value));
   }
 
   formatInputValue(value) {
-    this.ngControl.valueAccessor.writeValue(this.vnCurrencyPipeNoPlaceholder.transform(value));
+    this.ngControl.valueAccessor.writeValue(this.thousandSeparate.transform(value));
   }
 
   formatToNumber(value) {
-    this.ngControl.valueAccessor.writeValue(this.vnCurrencyPipeNoPlaceholder.parse(value));
+    this.ngControl.valueAccessor.writeValue(this.thousandSeparate.parse(value));
   }
 }

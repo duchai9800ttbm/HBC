@@ -8,7 +8,7 @@ import { VnNumberPipe } from './vn-number-pipe.module';
 import { NumberAreaPipe } from './number-area.pipe';
 import { SafeUrlPipe } from './safe-url.pipe';
 import { SafePipe } from './safe.pipe';
-import { VnCurrencyPipeNoPlaceholder } from './vn-currency-pipe-noplaceholder.module';
+import { ThousandSeparate } from './thoudand-separate.module';
 import { NumberAreaPipeNoplaceholder } from './number-area-noplaceholer.pipe';
 import { SortAlphabet } from './array-sorting-alphabet.pipe';
 import { TruncateDecimal } from './truncate-decimal';
@@ -19,7 +19,7 @@ import { TruncateDecimal } from './truncate-decimal';
         ],
         declarations: [
                 VnCurrencyPipe,
-                VnCurrencyPipeNoPlaceholder,
+                ThousandSeparate,
                 FromNowPipe,
                 SortAlphabet,
                 TimesPipe,
@@ -33,7 +33,7 @@ import { TruncateDecimal } from './truncate-decimal';
         ],
         exports: [
                 VnCurrencyPipe,
-                VnCurrencyPipeNoPlaceholder,
+                ThousandSeparate,
                 FromNowPipe,
                 SortAlphabet,
                 TimesPipe,

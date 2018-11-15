@@ -836,7 +836,7 @@ export class HoSoDuThauService {
             phanTram: (model.contractCondition.hsmtContractCondition.advanceGuaranteePercent) ?
               model.contractCondition.hsmtContractCondition.advanceGuaranteePercent : 0,
             hieuLuc: (model.contractCondition.hsmtContractCondition.advanceGuaranteeEfficiency) ?
-              model.contractCondition.hsmtContractCondition.advanceGuaranteeEfficiency : 0
+              model.contractCondition.hsmtContractCondition.advanceGuaranteeEfficiency : ''
           },
           thanhToan: model.contractCondition.hsmtContractCondition && {
             loaiThanhToan: model.contractCondition.hsmtContractCondition.paymentType,
@@ -851,7 +851,7 @@ export class HoSoDuThauService {
               (model.contractCondition.hsmtContractCondition.retainedLimit ?
                 model.contractCondition.hsmtContractCondition.retainedLimit : 0) : 0,
             thanhToanTienGui: (model.contractCondition.hsmtContractCondition.retainedPayment) ?
-              model.contractCondition.hsmtContractCondition.retainedPayment : 0
+              model.contractCondition.hsmtContractCondition.retainedPayment : null
           },
           phatTreTienDo: model.contractCondition.hsmtContractCondition && {
             phanTram: (model.contractCondition.hsmtContractCondition.punishhOverduePercent) ?
@@ -877,7 +877,7 @@ export class HoSoDuThauService {
           baoLanhTamUng: model.contractCondition.hbcContractCondition && {
             phanTram: model.contractCondition.hbcContractCondition.advanceGuaranteePercent,
             hieuLuc: (model.contractCondition.hbcContractCondition.advanceGuaranteeEfficiency) ?
-              model.contractCondition.hbcContractCondition.advanceGuaranteeEfficiency : 0
+              model.contractCondition.hbcContractCondition.advanceGuaranteeEfficiency : ''
           },
           thanhToan: model.contractCondition.hbcContractCondition && {
             loaiThanhToan: model.contractCondition.hbcContractCondition.paymentType,
