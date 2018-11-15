@@ -29,7 +29,7 @@ import { PackageListItem } from '../../../shared/models/package/package-list-ite
 import { AdministeredPackageList } from '../../../shared/constants/administered-package';
 import { EvaluationModel } from '../../../shared/models/package/evaluation.model';
 import { GroupChaired } from '../../../shared/models/package/group-chaired.model';
-import { environment } from '../../../../environments/environment.prod';
+import { environment } from '../../../../environments/environment';
 @Component({
     selector: 'app-package-list',
     templateUrl: './package-list.component.html',
