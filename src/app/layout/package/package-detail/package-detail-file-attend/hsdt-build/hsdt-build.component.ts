@@ -18,6 +18,7 @@ import { PermissionService } from '../../../../../shared/services/permission.ser
 import { SiteSurveyReportService } from '../../../../../shared/services/site-survey-report.service';
 import { PermissionModel } from '../../../../../shared/models/permission/permission.model';
 import { DocumentTypeId } from '../../../../../shared/constants/document-type-id';
+import { forkJoin } from 'rxjs/observable/forkJoin';
 @Component({
     selector: 'app-hsdt-build',
     templateUrl: './hsdt-build.component.html',
@@ -311,29 +312,39 @@ export class HsdtBuildComponent implements OnInit, AfterViewChecked, OnDestroy {
     // End check
 
     chotHSDT(event) {
-        this.checkConditionApproval();
-        if (this.checkDocFile || !this.checkTenderSummary || !this.checkSiteSurvey) {
-            this.confirmationService.confirm(
-                `Bạn có chắc chắn muốn chốt Hồ sơ dự thầu?`,
-                () => {
-                    this.hoSoDuThauService.chotHoSoDuThau(this.packageId).subscribe(res => {
-                        this.alertService.success(`Đã chốt Hồ sơ dự thầu thành công!`);
-                        this.spinner.hide();
-                        this.packageService.getInforPackageID(this.packageId).subscribe(result => {
-                            this.package = result;
-                            this.hoSoDuThauService.detectStatusPackage(this.package.isChotHoSo);
-                        }, err => {
-                        });
-                        this.refresh2();
-                    }, err => {
-                        this.alertService.error(`Đã có lỗi. Chốt Hồ sơ dự thầu không thành công.`);
-                    });
-                }
-            );
-        } else {
-            this.alertService.error('Bạn chưa có tài liệu dự thầu chính thức nào.');
-        }
+        forkJoin(
+            this.hoSoDuThauService.getFileNoSearch(this.packageId),
+            this.hoSoDuThauService.getInfoTenderConditionalSummary(this.packageId),
+            this.siteSurveyReportService.tenderSiteSurveyingReport(this.packageId)
+        ).subscribe(([responseResultDocument, tenderConditional, siteSurveying]) => {
+            const checkDocUpload = responseResultDocument.items;
+            this.checkDocFile = checkDocUpload.some(item => item.status == 'Official');
+            this.checkTenderSummary = (tenderConditional) ? tenderConditional.isDraftVersion : true;
+            this.checkSiteSurvey = (siteSurveying) ? siteSurveying.isDraft : true;
 
+            if (this.checkDocFile || !this.checkTenderSummary || !this.checkSiteSurvey) {
+                this.confirmationService.confirm(
+                    `Bạn có chắc chắn muốn chốt Hồ sơ dự thầu?`,
+                    () => {
+                        this.hoSoDuThauService.chotHoSoDuThau(this.packageId).subscribe(res => {
+                            this.alertService.success(`Đã chốt Hồ sơ dự thầu thành công!`);
+                            this.spinner.hide();
+                            this.packageService.getInforPackageID(this.packageId).subscribe(result => {
+                                this.package = result;
+                                this.hoSoDuThauService.detectStatusPackage(this.package.isChotHoSo);
+                            }, err => {
+                            });
+                            this.refresh2();
+                        }, err => {
+                            this.alertService.error(`Đã có lỗi. Chốt Hồ sơ dự thầu không thành công.`);
+                        });
+                    }
+                );
+            } else {
+                this.alertService.error('Bạn chưa có tài liệu dự thầu chính thức nào.');
+            }
+        }
+        );
     }
     emitData(id, checkliveform) {
         if (id !== 21) {

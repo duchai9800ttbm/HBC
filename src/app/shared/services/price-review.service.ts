@@ -417,6 +417,8 @@ export class PriceReviewService {
       interviewTimes: model.interviewTimes,
       isDraftVersion: model.isDraftVersion,
       approvalTimes: model.approvalTimes,
+      isApprovedByTenderLeader: model.isApprovedByTenderLeader,
+      isApprovedByTenderManager: model.isApprovedByTenderManager,
       createdEmployee: model.createdEmployee && {
         employeeId: model.createdEmployee.employeeId,
         employeeNo: model.createdEmployee.employeeNo,
