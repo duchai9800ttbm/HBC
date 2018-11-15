@@ -13,6 +13,7 @@ import { DepartmentsFormBranches } from '../../../../../../../shared/models/user
 import { SiteSurveyReport } from '../../../../../../../shared/models/site-survey-report/site-survey-report';
 import { ScaleOverall, ConstructionModel } from '../../../../../../../shared/models/site-survey-report/scale-overall.model';
 import { UsefulInfo, ContentItem } from '../../../../../../../shared/models/site-survey-report/useful-info.model';
+import { ScrollToTopService } from '../../../../../../../shared/services/scroll-to-top.service';
 
 @Component({
   selector: 'app-edit',
@@ -54,10 +55,13 @@ export class EditComponent implements OnInit, OnDestroy {
     private router: Router,
     private alertService: AlertService,
     private hoSoDuThauService: HoSoDuThauService,
-    private activatedRoute: ActivatedRoute
+    private activatedRoute: ActivatedRoute,
+    private scrollTopService: ScrollToTopService
   ) { }
 
   ngOnInit() {
+    this.scrollTopService.isScrollTop = false;
+
     // Check Action Mode
     const activate$ = this.activatedRoute.params.subscribe(data => {
       switch (data.action) {

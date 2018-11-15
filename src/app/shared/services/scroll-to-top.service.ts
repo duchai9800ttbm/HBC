@@ -18,12 +18,12 @@ export class ScrollToTopService {
     ) { }
 
   listen(): this {
-    this._routerListener = this.router.events.subscribe((event: Event) => {
-      if (event instanceof NavigationEnd && this.isScrollTop) {
-        window.scrollTo(0, 0);
-      }
-    });
-    return this;
+    // this._routerListener = this.router.events.subscribe((event: Event) => {
+    //   if (event instanceof NavigationEnd && this.isScrollTop) {
+    //     window.scrollTo(0, 0);
+    //   }
+    // });
+    // return this;
   }
 
   unlisten(): this {
