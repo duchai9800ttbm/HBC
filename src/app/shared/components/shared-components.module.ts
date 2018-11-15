@@ -28,6 +28,7 @@ import { ImageCarouselComponent } from './image-carousel/image-carousel.componen
 import { MissActionComponent } from './miss-action/miss-action.component';
 import { FormInComponent } from './form-in/form-in.component';
 import { InfiniteScroll } from './infinite-scroll/infinite-scroll';
+import { PopupComfirmFormInDkdtComponent } from './popup-comfirm-form-in-dkdt/popup-comfirm-form-in-dkdt.component';
 @NgModule({
     imports: [
         PDFExportModule,
@@ -61,6 +62,7 @@ import { InfiniteScroll } from './infinite-scroll/infinite-scroll';
         ImageCarouselComponent,
         MissActionComponent,
         FormInComponent,
+        PopupComfirmFormInDkdtComponent,
         InfiniteScroll,
     ],
     exports: [
@@ -81,6 +83,7 @@ import { InfiniteScroll } from './infinite-scroll/infinite-scroll';
         MissActionComponent,
         FormInComponent,
         InfiniteScroll,
+        PopupComfirmFormInDkdtComponent
     ],
     entryComponents: [
         ConfirmationPopupComponent,
