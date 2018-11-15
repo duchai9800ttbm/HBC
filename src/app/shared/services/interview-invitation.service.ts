@@ -29,6 +29,8 @@ export class InterviewInvitationService {
   currentStatusInterview: Subject<number> = new Subject<number>();
   interviewNotification;
   maxInterViewTimes;
+  // End Interview
+  public maxVersionReport = 1;
   // map theo model danh sách biên bản phỏng vấn
   private static toInterviewInvitationReportList(result: any): InterviewInvitationReportList {
     return {
@@ -550,5 +552,14 @@ export class InterviewInvitationService {
   // Xem điều hướng
   watchNoDirection() {
     return InterviewInvitationService.nodirection;
+  }
+
+  // Save maxVersionReport
+  saveMaxVersionReport(maxVersionReport: number) {
+    this.maxVersionReport = maxVersionReport + 1;
+  }
+
+  removeMaxVersion() {
+    this.maxVersionReport = 1;
   }
 }
