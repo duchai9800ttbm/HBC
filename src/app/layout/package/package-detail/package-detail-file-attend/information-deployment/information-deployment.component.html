@@ -351,7 +351,7 @@
             <div class="input-group mb-3">
                 <span class="input-group-addon">To:</span>
                 <ng-select class="w-100" [items]="listEmailSearchTo" typeToSearchText="Nhập email" addTagText="Thêm email:" clearAllText="Xóa tất cả"
-                    [addTag]="true" [hideSelected]="true" multiple="true" bindLabel="employeeName" [searchFn]="customSearchFn"
+                    [addTag]="true" (change)="validateEmailTo($event)"  [hideSelected]="true" multiple="true" bindLabel="employeeName" [searchFn]="customSearchFn"
                     [(ngModel)]="emailModel.to">
                     <ng-template ng-option-tmp let-item="item" let-index="index" let-search="searchTerm">
                         <table class="table-email--box-shadow">
@@ -365,7 +365,7 @@
             <div class="input-group mb-3" *ngIf="isSendCc">
                 <span class="input-group-addon" id="basic-addon1">Cc:</span>
                 <ng-select class="w-100" [items]="listEmailSearchCc" addTagText="Thêm email:" clearAllText="Xóa tất cả" [addTag]="true" [hideSelected]="true"
-                    multiple="true" bindLabel="employeeName" [searchFn]="customSearchFn" [(ngModel)]="emailModel.cc">
+                    multiple="true" bindLabel="employeeName"  (change)="validateEmailCc($event)" [searchFn]="customSearchFn" [(ngModel)]="emailModel.cc">
                     <ng-template ng-option-tmp let-item="item" let-index="index" let-search="searchTerm">
                         <table class="table-email--box-shadow">
                             <tr>{{item.employeeName}}</tr>
@@ -378,7 +378,7 @@
             <div class="input-group mb-3" *ngIf="isSendBcc">
                 <span class="input-group-addon" id="basic-addon1">Bcc:</span>
                 <ng-select class="w-100" [items]="listEmailSearchBcc" addTagText="Thêm email:" clearAllText="Xóa tất cả" [addTag]="true"
-                    [hideSelected]="true" multiple="true" bindLabel="employeeName" [searchFn]="customSearchFn" [(ngModel)]="emailModel.bcc">
+                    [hideSelected]="true" (change)="validateEmailBcc($event)" multiple="true" bindLabel="employeeName" [searchFn]="customSearchFn" [(ngModel)]="emailModel.bcc">
                     <ng-template ng-option-tmp let-item="item" let-index="index" let-search="searchTerm">
                         <table class="table-email--box-shadow">
                             <tr>{{item.employeeName}}</tr>
@@ -436,6 +436,10 @@
             </div>
         </div>
     </ng-template>
+
+
+
+
     <!-- Model Upload file -->
     <ng-template #Upload>
         <form [formGroup]="formUpload" (ngSubmit)="onSubmit()">
