@@ -19,6 +19,7 @@ import { CheckStatusPackage } from '../../../../../../shared/constants/check-sta
 import { PermissionModel } from '../../../../../../shared/models/permission/Permission.model';
 import { PermissionService } from '../../../../../../shared/services/permission.service';
 import { EmailFilter, EmailItemModel } from '../../../../../../shared/models/email/email-item.model';
+import CustomValidator from '../../../../../../shared/helpers/custom-validator.helper';
 
 @Component({
   selector: 'app-meeting-kickoff',
@@ -328,6 +329,21 @@ export class MeetingKickoffComponent implements OnInit, OnDestroy {
   }
   closePopuup() {
     this.dialogUploadMettingKickOff.close();
+  }
+
+  validateEmailTo(e) {
+    this.emailModel.to = this.emailModel.to
+      .filter(x => x.employeeId || (!x.employeeId && CustomValidator.validateEmail(x.employeeName)));
+  }
+
+  validateEmailCc(e) {
+    this.emailModel.cc = this.emailModel.cc
+      .filter(x => x.employeeId || (!x.employeeId && CustomValidator.validateEmail(x.employeeName)));
+  }
+
+  validateEmailBcc(e) {
+    this.emailModel.bcc = this.emailModel.bcc
+      .filter(x => x.employeeId || (!x.employeeId && CustomValidator.validateEmail(x.employeeName)));
   }
 
 
