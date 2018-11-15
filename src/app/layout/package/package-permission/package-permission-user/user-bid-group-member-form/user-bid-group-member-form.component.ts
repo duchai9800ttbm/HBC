@@ -66,6 +66,9 @@ export class UserBidGroupMemberFormComponent implements OnInit {
         const department = user.department;
         if (department) {
             formGroup.get('department').patchValue(this.listUser.find(i => i.id == value).department.value);
+        } else{
+            formGroup.get('department').patchValue(null);
+
         }
     }
 

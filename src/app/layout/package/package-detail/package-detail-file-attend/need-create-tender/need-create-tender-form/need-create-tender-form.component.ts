@@ -419,7 +419,6 @@ export class NeedCreateTenderFormComponent implements OnInit, OnDestroy {
             this.subscription.unsubscribe();
         }
         NeedCreateTenderFormComponent.formModel = null;
-        console.log('ngOnDestroy-Need-create');
     }
 
     saveDrafts() {
