@@ -73,7 +73,7 @@
                                     </a>
                                 </ng-container>
                                 <ng-container *ngIf="InLiveForm">
-                                    <a class=" text-dark cursor-pointer ml-3" title="In" (click)="print()">
+                                    <a class=" text-dark cursor-pointer ml-3" title="In" (click)="openPopup()">
                                         <i class="fa fa-print cursor-pointer icon-print" aria-hidden="true"></i>
                                     </a>
                                 </ng-container>
@@ -182,3 +182,5 @@
 
     <app-pagination [(pagedResult)]="pagedResultChangeHistoryList" (pagedResultChange)="pagedResultChangeHistory($event)"></app-pagination>
 </div>
+
+<app-popup-confirm-type-form-in *ngIf="isShowPopupFormIn" (closed)="closePopup($event)"></app-popup-confirm-type-form-in>

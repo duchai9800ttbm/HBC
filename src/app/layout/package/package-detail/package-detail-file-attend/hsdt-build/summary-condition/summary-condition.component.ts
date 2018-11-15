@@ -18,6 +18,7 @@ import { FormInComponent } from '../../../../../../shared/components/form-in/for
 import { PermissionService } from '../../../../../../shared/services/permission.service';
 import { PermissionModel } from '../../../../../../shared/models/permission/permission.model';
 import { DocumentTypeId } from '../../../../../../shared/constants/document-type-id';
+import { TypeFormInTomTatDK } from './components/popup-confirm-type-form-in/popup-confirm-type-form-in.component';
 
 @Component({
   selector: 'app-summary-condition',
@@ -48,6 +49,8 @@ export class SummaryConditionComponent implements OnInit, OnDestroy {
   XoaLiveForm = false;
   InLiveForm = false;
   TaiTemplate = false;
+
+  isShowPopupFormIn = false;
   constructor(
     private hoSoDuThauService: HoSoDuThauService,
     private packageService: PackageService,
@@ -123,6 +126,17 @@ export class SummaryConditionComponent implements OnInit, OnDestroy {
       });
   }
 
+  closePopup(state: any) {
+    this.isShowPopupFormIn = false;
+    if (state === 'HSMT' || state === 'HBC') {
+      this.print(state);
+    }
+  }
+
+  openPopup() {
+    this.isShowPopupFormIn = true;
+  }
+
   delete() {
     const that = this;
     this.confirmService.confirm('Bạn có chắc muốn xóa liveform tóm tắt điều kiện dự thầu?', () => {
@@ -165,7 +179,7 @@ export class SummaryConditionComponent implements OnInit, OnDestroy {
     this.getChangeHistory(this.pagedResultChangeHistoryList.currentPage, this.pagedResultChangeHistoryList.pageSize);
   }
 
-  print() {
+  print(type) {
     this.dialog = this.dialogService.open({
       title: 'FORM IN',
       content: FormInComponent,
@@ -175,6 +189,9 @@ export class SummaryConditionComponent implements OnInit, OnDestroy {
     });
     const instance = this.dialog.content.instance;
     instance.type = 'LiveFormTomTatDieuKienDuThau';
+    if (type) {
+      instance.typeChild = type;
+    }
     instance.packageId = this.packageId;
   }
 }

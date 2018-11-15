@@ -22,8 +22,8 @@ export class PrintingDocumentService {
   }
 
   // Form-in phiếu tóm tắt đề nghị dự thầu
-  printTenderCondition(bidOpportunityId: number) {
-    const url = `bidopportunity/${bidOpportunityId}/tenderconditionsummaryreport/printing`;
+  printTenderCondition(bidOpportunityId: number, typeChild?: string) {
+    const url = `bidopportunity/${bidOpportunityId}/tenderconditionsummaryreport/printing?selectType=${typeChild}`;
     return this.apiService.getHTML(url).map(response => response._body);
   }
 

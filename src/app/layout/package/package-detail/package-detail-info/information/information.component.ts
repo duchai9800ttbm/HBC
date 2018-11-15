@@ -10,6 +10,7 @@ import { Subject } from '../../../../../../../node_modules/rxjs';
 import { DATATABLE_CONFIG } from '../../../../../shared/configs';
 import { PackageInfoModel } from '../../../../../shared/models/package/package-info.model';
 import { DomSanitizer } from '@angular/platform-browser';
+import { environment } from '../../../../../../environments/environment';
 
 @Component({
   selector: 'app-package-detail-info',
@@ -21,6 +22,8 @@ export class InformationComponent implements OnInit {
   package = new PackageInfoModel();
   dtTrigger: Subject<any> = new Subject();
   dtOptions: any = DATATABLE_CONFIG;
+  crm_site_domain = environment.crm_site_domain;
+
   constructor(
     private activatedRoute: ActivatedRoute,
     private packageService: PackageService,
@@ -40,13 +43,13 @@ export class InformationComponent implements OnInit {
   }
   redirectToCRM(detail: string, id: number) {
     if (detail === 'tenKhachHang' || detail === 'donViTuVan') {
-      return `http://demo.bys.vn/hbc/crm/#/customer/detail/${id}/overview`;
+        return `${this.crm_site_domain}#/customer/detail/${id}/overview`;
     }
     if (detail === 'lienHe') {
-      return `http://demo.bys.vn/hbc/crm/#/contact/detail/${id}/overview`;
+        return `${this.crm_site_domain}#/contact/detail/${id}/overview`;
     }
     return null;
-  }
+}
 
   // rerender(result: any) {
   //   this.packageData = result.items;

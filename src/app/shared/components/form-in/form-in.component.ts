@@ -14,6 +14,7 @@ import { timer } from 'rxjs/observable/timer';
 export class FormInComponent implements OnInit {
 
   @Input() type: string;
+  @Input() typeChild: string;
   @Input() packageId: number;
   htmlContent: string;
   click$ = new Subject();
@@ -50,7 +51,7 @@ export class FormInComponent implements OnInit {
         break;
       }
       case 'LiveFormTomTatDieuKienDuThau': {
-        this.printingDocumentService.printTenderCondition(this.packageId)
+          this.printingDocumentService.printTenderCondition(this.packageId, this.typeChild)
           .subscribe(data => {
             this.htmlContent = data;
           });

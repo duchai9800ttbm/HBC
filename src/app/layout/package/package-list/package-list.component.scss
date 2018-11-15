@@ -602,3 +602,23 @@ select.form-control:not([size]):not([multiple]) {
         padding-left: 1.5rem;
     }
 }
+
+.zui-table {
+    .zui-sticky-col {
+        border-left: solid 1px #DDEFEF;
+        border-right: solid 1px #DDEFEF;
+        right: 0;
+
+        position: absolute;
+        top: auto;
+        width: 40px;
+    }
+    .zui-sticky-col-right {
+        border-left: solid 1px #DDEFEF;
+        border-right: solid 1px #DDEFEF;
+        right: 0;
+        position: absolute;
+        top: auto;
+        width: 120px;
+    }
+}
