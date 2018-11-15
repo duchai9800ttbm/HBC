@@ -10,6 +10,7 @@ import { SummaryConditionEditComponent } from './summary-condition-edit/summary-
 import { SummaryConditionDetailComponent } from './summary-condition-detail/summary-condition-detail.component';
 import { SummaryConditionOverviewComponent } from './summary-condition-overview/summary-condition-overview.component';
 import { HoSoDuThauService } from '../../../../../../shared/services/ho-so-du-thau.service';
+import { PopupConfirmTypeFormInComponent } from './components/popup-confirm-type-form-in/popup-confirm-type-form-in.component';
 
 @NgModule({
   imports: [
@@ -22,7 +23,8 @@ import { HoSoDuThauService } from '../../../../../../shared/services/ho-so-du-th
     SummaryConditionCreateComponent,
     SummaryConditionEditComponent,
     SummaryConditionDetailComponent,
-    SummaryConditionOverviewComponent
+    SummaryConditionOverviewComponent,
+    PopupConfirmTypeFormInComponent
   ],
   providers: [
     HoSoDuThauService

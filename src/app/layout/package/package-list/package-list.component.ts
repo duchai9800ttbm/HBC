@@ -29,6 +29,7 @@ import { PackageListItem } from '../../../shared/models/package/package-list-ite
 import { AdministeredPackageList } from '../../../shared/constants/administered-package';
 import { EvaluationModel } from '../../../shared/models/package/evaluation.model';
 import { GroupChaired } from '../../../shared/models/package/group-chaired.model';
+import { environment } from '../../../../environments/environment';
 @Component({
     selector: 'app-package-list',
     templateUrl: './package-list.component.html',
@@ -72,6 +73,7 @@ export class PackageListComponent implements OnInit, AfterViewChecked {
     listField: FieldModel[];
     listFieldTemp;
     listFieldNomarlized = [];
+    crm_site_domain = environment.crm_site_domain;
     sum;
     isManageBidOpportunitys;
     isViewBidOpportunitys;
@@ -544,10 +546,10 @@ export class PackageListComponent implements OnInit, AfterViewChecked {
     }
     redirectToCRM(detail: string, id: number) {
         if (detail === 'tenKhachHang' || detail === 'donViTuVan') {
-            return `http://demo.bys.vn/hbc/crm/#/customer/detail/${id}/overview`;
+            return `${this.crm_site_domain}#/customer/detail/${id}/overview`;
         }
         if (detail === 'lienHe') {
-            return `http://demo.bys.vn/hbc/crm/#/contact/detail/${id}/overview`;
+            return `${this.crm_site_domain}#/contact/detail/${id}/overview`;
         }
         return null;
     }
