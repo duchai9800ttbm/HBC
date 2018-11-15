@@ -18,6 +18,8 @@ import { PermissionService } from '../../../../../shared/services/permission.ser
 import { SiteSurveyReportService } from '../../../../../shared/services/site-survey-report.service';
 import { PermissionModel } from '../../../../../shared/models/permission/permission.model';
 import { DocumentTypeId } from '../../../../../shared/constants/document-type-id';
+import { ScrollToTopService } from '../../../../../shared/services/scroll-to-top.service';
+
 import { forkJoin } from 'rxjs/observable/forkJoin';
 @Component({
     selector: 'app-hsdt-build',
@@ -111,11 +113,14 @@ export class HsdtBuildComponent implements OnInit, AfterViewChecked, OnDestroy {
         private spinner: NgxSpinnerService,
         private confirmationService: ConfirmationService,
         private permissionService: PermissionService,
-        private activatedRoute: ActivatedRoute
+        private activatedRoute: ActivatedRoute,
+        private scrollTopService: ScrollToTopService
     ) { }
 
     ngOnInit() {
         this.checkUrl();
+        this.scrollTopService.isScrollTop = false;
+
         this.packageId = +PackageDetailComponent.packageId;
         this.subscription = this.permissionService.get().subscribe(data => {
             this.listPermission = data;

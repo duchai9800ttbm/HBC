@@ -16,6 +16,7 @@ import { UserItemModel } from '../../../../../../shared/models/user/user-item.mo
 import { PermissionService } from '../../../../../../shared/services/permission.service';
 import { PermissionModel } from '../../../../../../shared/models/permission/permission.model';
 import { DocumentTypeId } from '../../../../../../shared/constants/document-type-id';
+import { ScrollToTopService } from '../../../../../../shared/services/scroll-to-top.service';
 
 @Component({
   selector: 'app-upload-form',
@@ -81,10 +82,13 @@ export class UploadFormComponent implements OnInit, OnDestroy {
     private alertService: AlertService,
     private confirmationService: ConfirmationService,
     private userService: UserService,
-    private permissionService: PermissionService
+    private permissionService: PermissionService,
+    private scrollTopService: ScrollToTopService
   ) { }
 
   ngOnInit() {
+    this.scrollTopService.isScrollTop = false;
+
     this.subscription = this.hoSoDuThauService.watchChangingRouter().subscribe(data => {
       this.getDanhSachUser();
       this.getDanhSachLoaiHoSo();

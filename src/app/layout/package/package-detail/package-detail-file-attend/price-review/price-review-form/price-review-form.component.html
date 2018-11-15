@@ -452,7 +452,7 @@
 
                         </div>
                         <div class="gfa pl-1">
-                            {{priceReviewForm.get('infoGfa').value | numberArea}}
+                            {{priceReviewForm.get('infoGfa').value | thousandSeparate}}
                         </div>
                     </div>
 
@@ -1352,7 +1352,7 @@
 
 
 
-                    <ng-container *ngIf="isModeView && model.isSendApproval">
+                    <ng-container *ngIf="isModeView && !model.isDraftVersion">
                         <div class="d-flex row-last-item-2">
                             <div class="first font-weight-bold d-flex align-items-center">
                                 <div class="ml-1 mr-1">
