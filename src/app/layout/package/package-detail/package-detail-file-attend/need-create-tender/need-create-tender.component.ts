@@ -6,7 +6,7 @@ import { PackageService } from '../../../../../shared/services/package.service';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { AlertService, ConfirmationService } from '../../../../../shared/services';
 import { DATATABLE_CONFIG } from '../../../../../shared/configs';
-import { Subject, Subscription } from 'rxjs';
+import { Subject, Subscription, Observable } from 'rxjs';
 import DateTimeConvertHelper from '../../../../../shared/helpers/datetime-convert-helper';
 import { PackageInfoModel } from '../../../../../shared/models/package/package-info.model';
 import { BidStatus } from '../../../../../shared/constants/bid-status';
@@ -78,7 +78,8 @@ export class NeedCreateTenderComponent implements OnInit, OnDestroy {
     this.getChangeHistory(0, 10);
     this.getPackageInfo();
     // phân quyền
-    this.subscription = this.permissionService.get().subscribe(data => {
+    this.subscription = this.permissionService.get().concatMap(response => response.length > 0 ? Observable.of(response) :
+    Observable.throw('Error Permission')).retry(1).subscribe(data => {
       this.listPermission = data;
       const hsdt = this.listPermission.length &&
         this.listPermission.filter(x => x.bidOpportunityStage === 'HSDT')[0];

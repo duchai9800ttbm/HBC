@@ -23,7 +23,7 @@ import { TenderDirectorProposal } from '../../../../../../shared/models/package/
 import { DecisionBoardGeneralDirector } from '../../../../../../shared/models/package/decision-board-general-director';
 import { PermissionService } from '../../../../../../shared/services/permission.service';
 import { PermissionModel } from '../../../../../../shared/models/permission/Permission.model';
-import { Subscription } from '../../../../../../../../node_modules/rxjs';
+import { Subscription, Observable } from '../../../../../../../../node_modules/rxjs';
 
 @Component({
     selector: 'app-need-create-tender-form',
@@ -78,38 +78,37 @@ export class NeedCreateTenderFormComponent implements OnInit, OnDestroy {
         this.scrollTopService.isScrollTop = false;
         this.routerAction = this.packageService.routerAction;
         // phân quyền
-        this.subscription = this.permissionService.get().subscribe(data => {
-            this.listPermission = data;
-            const hsdt = this.listPermission.length &&
-                this.listPermission.filter(x => x.bidOpportunityStage === 'HSDT')[0];
-            if (!hsdt) {
-                this.listPermissionScreen = [];
-            }
-            if (hsdt) {
-                const screen = hsdt.userPermissionDetails.length
-                    && hsdt.userPermissionDetails.filter(y => y.permissionGroup.value === 'PhieuDeNghiDuThau')[0];
-                if (!screen) {
+        this.subscription = this.permissionService.get().concatMap(response => response.length > 0 ? Observable.of(response) :
+            Observable.throw('Error Permission')).retry(1).subscribe(data => {
+                this.listPermission = data;
+                const hsdt = this.listPermission.length &&
+                    this.listPermission.filter(x => x.bidOpportunityStage === 'HSDT')[0];
+                if (!hsdt) {
                     this.listPermissionScreen = [];
                 }
-                if (screen) {
-                    this.listPermissionScreen = screen.permissions.map(z => z.value);
+                if (hsdt) {
+                    const screen = hsdt.userPermissionDetails.length
+                        && hsdt.userPermissionDetails.filter(y => y.permissionGroup.value === 'PhieuDeNghiDuThau')[0];
+                    if (!screen) {
+                        this.listPermissionScreen = [];
+                    }
+                    if (screen) {
+                        this.listPermissionScreen = screen.permissions.map(z => z.value);
+                    }
                 }
-            }
-            this.TaoMoiDNDT = this.listPermissionScreen.includes('TaoMoiDNDT');
-            this.XemDNDT = this.listPermissionScreen.includes('XemDNDT');
-            this.SuaDNDT = this.listPermissionScreen.includes('SuaDNDT');
-            this.XoaDNDT = this.listPermissionScreen.includes('XoaDNDT');
-            this.InDNDT = this.listPermissionScreen.includes('InDNDT');
-            this.XacNhanKy = this.listPermissionScreen.includes('XacNhanKy');
-            this.GuiDuyetDNDT = this.listPermissionScreen.includes('GuiDuyetDNDT');
-            this.ChapThuanKhongChapThuan = this.listPermissionScreen.includes('ChapThuanKhongChapThuan');
-            this.TaiTemplate = this.listPermissionScreen.includes('TaiTemplate');
-            setTimeout(() => {
+                this.TaoMoiDNDT = this.listPermissionScreen.includes('TaoMoiDNDT');
+                this.XemDNDT = this.listPermissionScreen.includes('XemDNDT');
+                this.SuaDNDT = this.listPermissionScreen.includes('SuaDNDT');
+                this.XoaDNDT = this.listPermissionScreen.includes('XoaDNDT');
+                this.InDNDT = this.listPermissionScreen.includes('InDNDT');
+                this.XacNhanKy = this.listPermissionScreen.includes('XacNhanKy');
+                this.GuiDuyetDNDT = this.listPermissionScreen.includes('GuiDuyetDNDT');
+                this.ChapThuanKhongChapThuan = this.listPermissionScreen.includes('ChapThuanKhongChapThuan');
+                this.TaiTemplate = this.listPermissionScreen.includes('TaiTemplate');
                 if (!this.XemDNDT) {
                     this.router.navigate(['not-found']);
                 }
-            }, 4000);
-        });
+            });
         const routerAction = this.activatedRoute.params.subscribe(router => {
             this.packageService.setRouterAction(router.action);
         });

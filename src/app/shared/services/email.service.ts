@@ -218,9 +218,13 @@ export class EmailService {
   }
 
   // gửi thư thông báo phỏng vấn
-  sendEmailInterview(data: SendEmailModel, file: File[], bidInterviewInvitationId: number) {
-    const url = `bidopportunity/hsdt/sendmailtostakeholders/${bidInterviewInvitationId}`;
+  sendEmailInterview(data: SendEmailModel, file: File[], arrayBidInterviewInvitationId: number[]) {
+    const url = `bidopportunity/hsdt/sendmailtostakeholders`;
     const dataObj = new FormData();
+    console.log('arrayBidInterviewInvitationId', arrayBidInterviewInvitationId);
+    arrayBidInterviewInvitationId.forEach((item, index) => {
+      dataObj.append('InterviewInvitationIds[' + index + ']', item.toString());
+    });
     dataObj.append('BidOpportunityId', data.bidOpportunityId + '');
     dataObj.append('Subject', data.subject);
     data.recipientEmails.forEach((item, index) => {

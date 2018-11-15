@@ -37,6 +37,7 @@ export class InterviewNoticeComponent implements OnInit {
   packageInfo;
   interviewChoose;
   maxBidInterviewInvitationId = 1;
+  arrayBidInterviewInvitationId = [];
   constructor(
     private emailService: EmailService,
     private spinner: NgxSpinnerService,
@@ -89,11 +90,11 @@ export class InterviewNoticeComponent implements OnInit {
     });
     if (this.interviewInvitationService.getChooseInterviewNotification()) {
       this.interviewChoose = this.interviewInvitationService.getChooseInterviewNotification();
-      // this.maxBidInterviewInvitationId = Math.max.apply(Math, this.interviewChoose.map(item => item.interviewTimes));
-      const sortInterviewTimes = this.interviewChoose.sort((a, b) => b.interviewTimes - a.interviewTimes);
-      this.maxBidInterviewInvitationId = sortInterviewTimes[0].id;
+      // Bỏ max Interview
+      // const sortInterviewTimes = this.interviewChoose.sort((a, b) => b.interviewTimes - a.interviewTimes);
+      // this.maxBidInterviewInvitationId = sortInterviewTimes[0].id;
       this.emailModel.content = `<br>`;
-      this.interviewChoose = this.interviewChoose.sort( (a, b) => a.interviewTimes - b.interviewTimes);
+      this.interviewChoose = this.interviewChoose.sort((a, b) => a.interviewTimes - b.interviewTimes);
       this.interviewChoose.forEach((element, index) => {
         this.interviewInvitationService.LoadFileCreateInterview(element.id).subscribe(response => {
           this.file.push(response);
@@ -172,30 +173,34 @@ export class InterviewNoticeComponent implements OnInit {
     if (this.emailModel && this.emailModel.to) {
       this.emailModel.bidOpportunityId = this.packageId;
       this.spinner.show();
-      this.emailService.sendEmailInterview(this.emailModel, this.file, this.maxBidInterviewInvitationId).subscribe(result => {
-        this.closePopup();
-        this.statusObservableHsdtService.change();
-        this.router.navigate([`/package/detail/${this.packageId}/attend/interview-negotiation/prepare`]);
-        this.alertService.success('Gửi thông báo phỏng vấn đến các bên liên quan thành công!');
-        this.spinner.hide();
-      },
-        err => {
-          if (err.json().errorCode === 'BusinessException') {
-            this.alertService.error('Đã xảy ra lỗi. Trạng thái gói thầu không hợp lệ!');
-          } else {
-            this.alertService.error('Đã xảy ra lỗi. Gửi thông báo phỏng vấn đến các bên liên quan không thành công!');
-          }
-          this.spinner.hide();
+      // this.maxBidInterviewInvitationId
+      this.interviewChoose.forEach((element, index) => {
+          this.arrayBidInterviewInvitationId.push(element.id);
         });
+        this.emailService.sendEmailInterview(this.emailModel, this.file, this.arrayBidInterviewInvitationId).subscribe(result => {
+          this.closePopup();
+          this.statusObservableHsdtService.change();
+          this.router.navigate([`/package/detail/${this.packageId}/attend/interview-negotiation/prepare`]);
+          this.alertService.success('Gửi thông báo phỏng vấn đến các bên liên quan thành công!');
+          this.spinner.hide();
+        },
+          err => {
+            if (err.json().errorCode === 'BusinessException') {
+              this.alertService.error('Đã xảy ra lỗi. Trạng thái gói thầu không hợp lệ!');
+            } else {
+              this.alertService.error('Đã xảy ra lỗi. Gửi thông báo phỏng vấn đến các bên liên quan không thành công!');
+            }
+            this.spinner.hide();
+          });
+      }
+  }
+
+
+    closePopup() {
+      this.callBack();
+    }
+    customSearchFn(term: string, item: SearchEmailModel) {
+      term = term.toLocaleLowerCase();
+      return item.employeeName.toLocaleLowerCase().indexOf(term) > -1 || item.employeeEmail.toLocaleLowerCase().indexOf(term) > -1;
     }
   }
-
-
-  closePopup() {
-    this.callBack();
-  }
-  customSearchFn(term: string, item: SearchEmailModel) {
-    term = term.toLocaleLowerCase();
-    return item.employeeName.toLocaleLowerCase().indexOf(term) > -1 || item.employeeEmail.toLocaleLowerCase().indexOf(term) > -1;
-  }
-}
