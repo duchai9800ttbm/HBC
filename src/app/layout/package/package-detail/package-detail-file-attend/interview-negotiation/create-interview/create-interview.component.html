@@ -170,7 +170,8 @@
                   <div style="width: 40%;">
                     <div class="center-parent">
                       <label class="custom-control custom-checkbox">
-                        <input *ngIf="!(item.status.key === 'DaPhongVan')" type="checkbox" class="custom-control-input" [(ngModel)]="item.checkboxSelected" (click)="saveChooseInterviewService(item.id)">
+                        <input *ngIf="!(item.status.key === 'DaPhongVan')" type="checkbox" class="custom-control-input" [(ngModel)]="item.checkboxSelected"
+                          (click)="saveChooseInterviewService(item.id)">
                         <!-- [(ngModel)]="item.checkboxSelected" -->
                         <span class="custom-control-indicator"></span>
                       </label>
@@ -216,12 +217,22 @@
                 </td>
                 <td>
                   <ng-container *ngIf="!(item.status.key === 'DaPhongVan')">
-                    <div *ngIf="item.remainningDay > 0" class="text-center" title="Còn {{item.remainningDay}} ngày đến thời gian phỏng vấn">
-                      Còn {{item.remainningDay}} ngày đến thời gian phỏng vấn
-                    </div>
-                    <div *ngIf="item.remainningDay < 0">
-                      Quá hạn thời gian phỏng vấn {{ item.expiredDate ? item.expiredDate : '' }} ngày
-                    </div>
+                    <ng-container *ngIf="item.status.key === 'ChuaPhongVan'">
+                      <div *ngIf="item.remainningDay > 0" class="text-center" title="Còn {{item.remainningDay}} ngày đến thời gian phỏng vấn">
+                        Còn {{item.remainningDay}} ngày đến thời gian phỏng vấn
+                      </div>
+                      <div *ngIf="item.remainningDay === 0" class="text-center" title="Còn {{item.remainningDay}} ngày đến thời gian phỏng vấn">
+                        Còn 1 ngày đến thời gian phỏng vấn
+                      </div>
+                    </ng-container>
+                    <ng-container *ngIf="item.status.key === 'QuaHanPhongVan'">
+                      <div *ngIf="item.remainningDay < 0">
+                        Quá hạn thời gian phỏng vấn {{ item.expiredDate ? item.expiredDate : '' }} ngày
+                      </div>
+                      <div *ngIf="item.remainningDay === 0">
+                        Quá hạn thời gian phỏng vấn 1 ngày
+                      </div>
+                    </ng-container>
                   </ng-container>
                 </td>
                 <td class="text-center">
