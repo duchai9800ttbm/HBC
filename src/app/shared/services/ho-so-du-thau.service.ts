@@ -916,7 +916,8 @@ export class HoSoDuThauService {
           hieuLucHoSo: model.tenderCondition.hbcTenderCondition.tenderEfficiency,
           tienDo: model.tenderCondition.hbcTenderCondition && {
             ngayKhoiCong: model.tenderCondition.hbcTenderCondition.progressStartDate,
-            thoiGianHoanThanh: HoSoDuThauService.removeString(model.tenderCondition.hbcTenderCondition.progressComletionDate),
+            thoiGianHoanThanh: (model.tenderCondition.hbcTenderCondition.progressComletionDate) ?
+              HoSoDuThauService.removeString(model.tenderCondition.hbcTenderCondition.progressComletionDate) : '',
             thoiGianHoanThanhTheoNhaThau: null,
             thoiGianHoanThanhTheoNhaThauCount: null
           },
@@ -933,10 +934,11 @@ export class HoSoDuThauService {
           hieuLucHoSo: model.tenderCondition.hsmtTenderCondition.tenderEfficiency,
           tienDo: model.tenderCondition.hsmtTenderCondition && {
             ngayKhoiCong: model.tenderCondition.hsmtTenderCondition.progressStartDate,
-            thoiGianHoanThanh: HoSoDuThauService.removeString(model.tenderCondition.hsmtTenderCondition.progressComletionDate),
+            thoiGianHoanThanh: (model.tenderCondition.hsmtTenderCondition.progressComletionDate) ?
+              HoSoDuThauService.removeString(model.tenderCondition.hsmtTenderCondition.progressComletionDate) : '',
             thoiGianHoanThanhTheoNhaThau: model.tenderCondition.hsmtTenderCondition.isProgressCompletionDate,
-            thoiGianHoanThanhTheoNhaThauCount:
-              HoSoDuThauService.removeString(model.tenderCondition.hsmtTenderCondition.progressCompletionContractorDate)
+            thoiGianHoanThanhTheoNhaThauCount: (model.tenderCondition.hsmtTenderCondition.progressCompletionContractorDate) ?
+              HoSoDuThauService.removeString(model.tenderCondition.hsmtTenderCondition.progressCompletionContractorDate) : ''
           },
           cacLoaiThue: (model.tenderCondition.hsmtTenderCondition.taxTypes || []).map(x => x.displayText),
           donViTienTe: model.tenderCondition.hsmtTenderCondition.currency && model.tenderCondition.hsmtTenderCondition.currency.displayText
