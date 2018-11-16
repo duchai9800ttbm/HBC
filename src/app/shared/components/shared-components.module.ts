@@ -12,7 +12,6 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { TranslateModule } from '@ngx-translate/core';
 import { NgbDropdownModule, NgbAlertModule, NgbModalModule, NgbCollapseModule } from '@ng-bootstrap/ng-bootstrap';
 import { ConfirmationPopupCallAwayComponent } from './confirmation-popup-call-away/confirmation-popup-call-away.component';
-import { FengShuisInforComponent } from './feng-shuis-infor/feng-shuis-infor.component';
 import { PoupRejectPackageComponent } from './poup-reject-package/poup-reject-package.component';
 import { PopupCreateAssignerComponent } from './popup-create-assigner/popup-create-assigner.component';
 import { PopupCreateChairComponent } from './popup-create-chair/popup-create-chair.component';
@@ -53,7 +52,6 @@ import { PopupComfirmFormInDkdtComponent } from './popup-comfirm-form-in-dkdt/po
         FooterCopyrightComponent,
         ConvertProspect2Component,
         ConfirmationPopupCallAwayComponent,
-        FengShuisInforComponent,
         PoupRejectPackageComponent,
         PopupCreateAssignerComponent,
         PopupCreateChairComponent,
@@ -89,7 +87,6 @@ import { PopupComfirmFormInDkdtComponent } from './popup-comfirm-form-in-dkdt/po
         ConfirmationPopupComponent,
         ConvertProspect2Component,
         ConfirmationPopupCallAwayComponent,
-        FengShuisInforComponent,
         PoupRejectPackageComponent,
         PopupCreateAssignerComponent,
         PopupCreateChairComponent,

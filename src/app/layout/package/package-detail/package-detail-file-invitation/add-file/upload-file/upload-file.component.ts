@@ -1,12 +1,9 @@
 import { Component, OnInit, Output, EventEmitter, Input, ViewChild } from '@angular/core';
-import { ActivityService } from '../../../../../../shared/services/activity.service';
 import { AlertService } from '../../../../../../shared/services/alert.service';
 import { FormGroup, FormBuilder, Validators } from '../../../../../../../../node_modules/@angular/forms';
 import { DocumentService } from '../../../../../../shared/services/document.service';
-import { DocumentReviewService } from '../../../../../../shared/services/document-review.service';
 import { DATETIME_PICKER_CONFIG } from '../../../../../../shared/configs/datepicker.config';
 import { FileInfo, SelectEvent } from '@progress/kendo-angular-upload';
-import { Observable } from 'rxjs';
 import { DictionaryItem } from '../../../../../../shared/models';
 import { NgxSpinnerService } from 'ngx-spinner';
 import ValidationHelper from '../../../../../../shared/helpers/validation.helper';

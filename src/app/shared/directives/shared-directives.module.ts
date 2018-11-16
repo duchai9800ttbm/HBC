@@ -3,7 +3,6 @@ import { CommonModule } from '@angular/common';
 import { InputNumberDirective } from './input-number.directive';
 import { InputMoneyDirective } from './input-money.directive';
 import { VnCurrencyPipe } from '../pipes/vn-currency-pipe.module';
-import { PhoneNumberCallableDirective } from './phone-number-callable.directive';
 import { SameWidthDirective } from './same-width.directive';
 import { InputAreaDirective } from './input-area.directive';
 import { NumberAreaPipe } from '../pipes/number-area.pipe';
@@ -28,7 +27,6 @@ import { InputAreaNoplaceholderDirective } from './input-area-noplaceholder.dire
     declarations: [
         InputNumberDirective,
         InputMoneyDirective,
-        PhoneNumberCallableDirective,
         SameWidthDirective,
         InputAreaDirective,
         SquareBoxDirective,
@@ -46,7 +44,6 @@ import { InputAreaNoplaceholderDirective } from './input-area-noplaceholder.dire
     exports: [
         InputNumberDirective,
         InputMoneyDirective,
-        PhoneNumberCallableDirective,
         SameWidthDirective,
         InputAreaDirective,
         SquareBoxDirective,

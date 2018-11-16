@@ -1,17 +1,11 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { AppComponent } from './app.component';
 import { AuthGuard } from './shared/services';
 
 const routes: Routes = [
     { path: '', loadChildren: './layout/layout.module#LayoutModule', canActivate: [AuthGuard] },
-    //  { path: '', loadChildren: './layout/layout.module#LayoutModule' },
     { path: 'login', loadChildren: './login/login.module#LoginModule' },
-    //  { path: 'forgot-password', loadChildren: './forgot-password/forgot-password.module#ForgotPasswordModule' },
-    { path: 'branch', loadChildren: './branch-selection/branch-selection.module#BranchSelectionModule' },
     { path: 'signup', loadChildren: './signup/signup.module#SignupModule' },
-    { path: 'error', loadChildren: './server-error/server-error.module#ServerErrorModule' },
-    { path: 'access-denied', loadChildren: './access-denied/access-denied.module#AccessDeniedModule' },
     { path: 'no-permission', loadChildren: './no-permission/no-permission.module#NoPermissionModule' },
     { path: 'not-found', loadChildren: './not-found/not-found.module#NotFoundModule' },
     { path: '**', redirectTo: 'not-found' },

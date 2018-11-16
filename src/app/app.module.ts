@@ -26,8 +26,6 @@ import { MessageService } from '../../node_modules/@progress/kendo-angular-l10n'
 import { MyMessageService } from './my-message.service';
 import localeFrCa from '@angular/common/locales/vi';
 import localeFrCaExtra from '@angular/common/locales/extra/vi';
-import { WindowService } from '@progress/kendo-angular-dialog';
-import { FengShuisInforService } from './shared/services/feng-shuis-infor.service';
 import { PackageService } from './shared/services/package.service';
 import { DocumentService } from './shared/services/document.service';
 import { ScrollToTopService } from './shared/services/scroll-to-top.service';
@@ -90,8 +88,6 @@ registerLocaleData(localeFrCa, localeFrCaExtra);
         ApiService,
         DataService,
         UserService,
-        WindowService,
-        FengShuisInforService,
         PackageService,
         DocumentService,
         ScrollToTopService,

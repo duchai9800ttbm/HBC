@@ -3,7 +3,6 @@ import { FilterPipe } from '../../../../node_modules/ngx-filter-pipe';
 import * as moment from 'moment';
 import DateTimeConvertHelper from '../helpers/datetime-convert-helper';
 import { Observable, BehaviorSubject } from '../../../../node_modules/rxjs';
-import { ActivityFilter } from '../models/activity/activity-filter.model';
 import { PackageListItem } from '../models/package/package-list-item';
 import { PackageFilter } from '../models/package/package-filter.model';
 import { URLSearchParams } from '@angular/http';
