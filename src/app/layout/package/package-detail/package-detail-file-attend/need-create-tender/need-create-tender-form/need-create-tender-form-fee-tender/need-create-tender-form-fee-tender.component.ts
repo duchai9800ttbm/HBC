@@ -30,11 +30,17 @@ export class NeedCreateTenderFormFeeTenderComponent implements OnInit {
       if (this.routerAction === 'view') {
         this.feeTenderForm.disable();
       }
-      this.feeTenderForm.valueChanges.subscribe(data => this.mappingToLiveFormData(data));
+      this.feeTenderForm.valueChanges.subscribe(data => {
+        console.log('mapping-data-1');
+        this.mappingToLiveFormData(data);
+      });
     });
     this.packageService.dataProposals$.subscribe(value => {
       this.createForm();
-      this.feeTenderForm.valueChanges.subscribe(data => this.mappingToLiveFormData(data));
+      this.feeTenderForm.valueChanges.subscribe(data => {
+        this.mappingToLiveFormData(data);
+        console.log('mapping-data-2');
+      });
     });
   }
 
@@ -46,7 +52,7 @@ export class NeedCreateTenderFormFeeTenderComponent implements OnInit {
           NeedCreateTenderFormComponent.checkDecimalPositiveNumber(formValue.feeOfTenderInvitationDocument) : null,
         feeOfTenderInvitationDocumentCurrency: this.fb.group({
           key: formValue && formValue.feeOfTenderInvitationDocumentCurrency ? formValue.feeOfTenderInvitationDocumentCurrency.key : 'VNĐ',
-           // tslint:disable-next-line:max-line-length
+          // tslint:disable-next-line:max-line-length
           value: formValue && formValue.feeOfTenderInvitationDocumentCurrency ? formValue.feeOfTenderInvitationDocumentCurrency.value : 'VNĐ',
           // tslint:disable-next-line:max-line-length
           displayText: formValue && formValue.feeOfTenderInvitationDocumentCurrency ? formValue.feeOfTenderInvitationDocumentCurrency.displayText : 'VNĐ'
@@ -63,6 +69,7 @@ export class NeedCreateTenderFormFeeTenderComponent implements OnInit {
   }
 
   mappingToLiveFormData(data) {
+    console.log('data-mapping', data);
     NeedCreateTenderFormComponent.formModel.feeOfTenderInvitationDocument = data;
     if (NeedCreateTenderFormComponent.formModel.feeOfTenderInvitationDocument.feeOfTenderInvitationDocument == null) {
       NeedCreateTenderFormComponent.formModel.feeOfTenderInvitationDocument.feeOfTenderInvitationDocument = 0;
