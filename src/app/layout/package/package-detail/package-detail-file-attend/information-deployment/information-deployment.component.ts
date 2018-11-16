@@ -153,12 +153,10 @@ export class InformationDeploymentComponent implements OnInit, OnDestroy {
     this.loading = true;
 
     this.subscription = this.permissionService.get().delay(400).subscribe(data => {
-      console.log('check phan quyen');
       if (this.listPermission === []) {
 
       }
       this.listPermission = data;
-      console.log(this.listPermission);
       const hsdt = this.listPermission.length &&
         this.listPermission.filter(x => x.bidOpportunityStage === 'HSDT')[0];
       if (!hsdt) {
