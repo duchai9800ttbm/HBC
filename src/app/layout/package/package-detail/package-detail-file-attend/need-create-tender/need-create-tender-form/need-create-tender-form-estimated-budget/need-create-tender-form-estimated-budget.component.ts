@@ -40,7 +40,8 @@ export class NeedCreateTenderFormEstimatedBudgetComponent implements OnInit {
   }
 
   createForm() {
-    const formValue = NeedCreateTenderFormComponent.formModel.estimatedBudgetOfPakage;
+    if (NeedCreateTenderFormComponent.formModel) {
+      const formValue = NeedCreateTenderFormComponent.formModel.estimatedBudgetOfPakage;
     this.estimatedBudgetForm = this.fb.group({
       draftBudgetOfPackage: formValue ? NeedCreateTenderFormComponent.checkDecimalPositiveNumber(formValue.draftBudgetOfPackage) : 0,
       draftBudgetOfPackageCurrency: this.fb.group({
@@ -51,6 +52,7 @@ export class NeedCreateTenderFormEstimatedBudgetComponent implements OnInit {
       }),
       additionalNote: formValue ? formValue.additionalNote : ''
     });
+    }
   }
 
   mappingToLiveFormData(data) {

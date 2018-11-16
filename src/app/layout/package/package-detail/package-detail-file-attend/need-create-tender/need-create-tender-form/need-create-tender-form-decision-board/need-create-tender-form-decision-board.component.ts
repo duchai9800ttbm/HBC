@@ -74,22 +74,41 @@ export class NeedCreateTenderFormDecisionBoardComponent implements OnInit {
     createForm() {
         if (NeedCreateTenderFormComponent.formModel) {
             const formData =
-                NeedCreateTenderFormComponent.formModel
-                    .decisionOfBoardOfGeneralDirector;
+                NeedCreateTenderFormComponent.formModel ?
+                    NeedCreateTenderFormComponent.formModel.decisionOfBoardOfGeneralDirector : null;
             const directorData =
-                NeedCreateTenderFormComponent.formModel.tenderDirectorProposal;
+                NeedCreateTenderFormComponent.formModel ? NeedCreateTenderFormComponent.formModel.tenderDirectorProposal : null;
             this.expectedTimeStr = (directorData && directorData.expectedDate) ? directorData.expectedDate : null;
             this.decisionBoardForm = this.fb.group({
-                isAgreed: formData ? formData.isAgreed : true,
-                reason: formData ? formData.reason : '',
-                isSigned: formData ? formData.isSigned : false,
+                isAgreed: {
+                    value: formData ? formData.isAgreed : true,
+                    disabled: this.decisionBoardForm && (!this.isDirector
+                        || !(this.packageInfo && this.packageInfo.stageStatus.id === this.bidStatus.ChoDuyetDeNghiDuThau)
+                        || this.decisionBoardForm.get('isSigned').value)
+                },
+                reason: {
+                    value: formData ? formData.reason : '',
+                    disabled: this.decisionBoardForm && (!this.isDirector
+                        || !(this.packageInfo && this.packageInfo.stageStatus.id === this.bidStatus.ChoDuyetDeNghiDuThau)
+                        || this.decisionBoardForm.get('isSigned').value)
+                },
+                isSigned: {
+                    value: formData ? formData.isSigned : false,
+                    disabled: this.decisionBoardForm && (!this.isDirector
+                        || !(this.packageInfo && this.packageInfo.stageStatus.id === this.bidStatus.ChoDuyetDeNghiDuThau)
+                        || this.decisionBoardForm.get('isSigned').value)
+                },
                 // tslint:disable-next-line:max-line-length
-                expectedTime:
-                    directorData && directorData.expectedDate
+                expectedTime: {
+                    value: directorData && directorData.expectedDate
                         ? DateTimeConvertHelper.fromTimestampToDtObject(
                             directorData.expectedDate * 1000
                         )
-                        : null
+                        : null,
+                    disabled: this.decisionBoardForm && (!this.isDirector
+                        || !(this.packageInfo && this.packageInfo.stageStatus.id === this.bidStatus.ChoDuyetDeNghiDuThau)
+                        || this.decisionBoardForm.get('isSigned').value)
+                }
             });
         }
     }
@@ -192,6 +211,11 @@ export class NeedCreateTenderFormDecisionBoardComponent implements OnInit {
             .getInforPackageID(this.bidOpportunityId)
             .subscribe(data => {
                 this.packageInfo = data;
+                if (this.decisionBoardForm && (!this.isDirector
+                    || !(this.packageInfo && this.packageInfo.stageStatus.id === this.bidStatus.ChoDuyetDeNghiDuThau)
+                    || this.decisionBoardForm.get('isSigned').value)) {
+                    this.decisionBoardForm.disable();
+                }
             });
     }
 
