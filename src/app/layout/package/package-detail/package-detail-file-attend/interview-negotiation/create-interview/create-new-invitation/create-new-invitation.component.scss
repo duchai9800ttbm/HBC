@@ -1,27 +1,32 @@
-.title{
+.title {
     font-weight: bold;
     font-size: 15px;
     color: #000000;
     margin-bottom: 0px !important;
 }
-.name-field{
+
+.name-field {
     text-align: right;
     font-size: 100%;
     color: black;
     padding-left: 5%;
     align-items: center;
 }
-.pad-row{
+
+.pad-row {
     padding-top: 12px;
 }
-.boder-input-choose-file{
+
+.boder-input-choose-file {
     border-radius: 0.25rem 0rem 0rem 0.25rem;
 }
+
 .fileUpload {
     position: relative;
     overflow: hidden;
     cursor: pointer;
 }
+
 .fileUpload input.upload {
     position: absolute;
     top: 0;
@@ -33,48 +38,71 @@
     opacity: 0;
     filter: alpha(opacity=0);
 }
-.cus-button-popup{
+
+.cus-button-popup {
     text-align: center;
     padding-top: 20px;
-    .widh-butt{
+
+    .widh-butt {
         width: 80px;
     }
 }
-.close-popup{
+
+.close-popup {
     cursor: pointer;
 }
-.close-popup-X{
+
+.close-popup-X {
     zoom: 1.5;
     font-weight: bold;
     color: black;
 }
-.font-size-control{
+
+.font-size-control {
     font-size: 100% !important;
 }
+
 :host /deep/ .k-widget {
     font-size: 100% !important;
 }
-.bold-title{
-    font-weight: bold;    
+
+.bold-title {
+    font-weight: bold;
 }
-.no-resize-textarea{
+
+.no-resize-textarea {
     resize: none;
 }
-.cus-mar-hr{
+
+.cus-mar-hr {
     margin: 0px !important;
 }
-.padding-bot-x{
+
+.padding-bot-x {
     padding-bottom: 5px;
 }
-.width-name-field{
+
+.width-name-field {
     width: 27%;
 }
-.width-content-field{
+
+.width-content-field {
     width: 73%;
 }
-.width-name-file{
+
+.width-name-file {
     width: calc(100% - 120px);
 }
-.content-form-err{
+
+.content-form-err {
     float: right;
+}
+
+.control-view {
+    min-height: 2rem;
+    border: 1px solid rgba(0, 0, 0, 0.15);
+    border-radius: 0.25rem;
+    padding: 0.4rem 0.5rem;
+    font-size: 13px;
+    text-align: left;
 }

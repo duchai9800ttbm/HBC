@@ -219,7 +219,7 @@ export class EndInterviewComponent implements OnInit, OnDestroy {
     const instance = this.dialog.content.instance;
     instance.callBack = () => this.closePopuup();
     instance.reloadData = () => this.reloadData();
-    instance.interviewOfPackage = this.interviewOfPackage;
+    instance.interviewOfPackage = String(Number(this.interviewOfPackage) + 1);
     instance.versionOfPackage = 1;
   }
 

@@ -11,7 +11,7 @@ import { HoSoDuThauService } from '../../../../../../../shared/services/ho-so-du
 import { CustomerModel } from '../../../../../../../shared/models/site-survey-report/customer-list';
 import { DepartmentsFormBranches } from '../../../../../../../shared/models/user/departments-from-branches';
 import { SiteSurveyReport } from '../../../../../../../shared/models/site-survey-report/site-survey-report';
-import { ScaleOverall, ConstructionModel } from '../../../../../../../shared/models/site-survey-report/scale-overall.model';
+import { ScaleOverall, ConstructionModel, ConstructionItem } from '../../../../../../../shared/models/site-survey-report/scale-overall.model';
 import { UsefulInfo, ContentItem } from '../../../../../../../shared/models/site-survey-report/useful-info.model';
 import { ScrollToTopService } from '../../../../../../../shared/services/scroll-to-top.service';
 
@@ -147,14 +147,18 @@ export class EditComponent implements OnInit, OnDestroy {
           ];
           EditComponent.liveformData.scaleOverall.quyMoDuAn = {
             dienTichCongTruong: null,
-            tongDienTichXayDung: null,
+            tongDienTichXayDung: dataPackageInfo && (dataPackageInfo.floorArea) ?
+              dataPackageInfo.floorArea : 0,
             soTang: '',
-            tienDo: null,
-            donViTienDo: null
+            tienDo: this.dataDNDT.contractCondition && (this.dataDNDT.contractCondition.timeForCompletion) ?
+              this.dataDNDT.contractCondition.timeForCompletion : 0,
+            donViTienDo: this.dataDNDT.contractCondition && (this.dataDNDT.contractCondition.timeForCompletionUnit) ?
+              this.dataDNDT.contractCondition.timeForCompletionUnit : null
           };
-          EditComponent.liveformData.scaleOverall.quyMoDuAn.tongDienTichXayDung = dataPackageInfo && dataPackageInfo.floorArea;
-          EditComponent.liveformData.scaleOverall.quyMoDuAn.tienDo = this.dataDNDT.contractCondition.timeForCompletion;
-          EditComponent.liveformData.scaleOverall.quyMoDuAn.donViTienDo = this.dataDNDT.contractCondition.timeForCompletionUnit;
+          // EditComponent.liveformData.scaleOverall.quyMoDuAn.tongDienTichXayDung = dataPackageInfo && (dataPackageInfo.floorArea) ?
+          //   dataPackageInfo.floorArea : 0;
+          // EditComponent.liveformData.scaleOverall.quyMoDuAn.tienDo = this.dataDNDT.contractCondition.timeForCompletion;
+          // EditComponent.liveformData.scaleOverall.quyMoDuAn.donViTienDo = this.dataDNDT.contractCondition.timeForCompletionUnit;
           EditComponent.liveformData.usefulInfo = new Array<UsefulInfo>();
           if (EditComponent.liveformData && dataPackageInfo) {
             const siteSurvey$ = this.siteSurveyReportService.getListConstructionType().subscribe(ress => {
@@ -193,11 +197,8 @@ export class EditComponent implements OnInit, OnDestroy {
               foundItem.checked = true;
               constructionTypes[constructionTypes
                 .indexOf(constructionTypes.find(item => item.id == dataPackageInfo.projectType.id))] = foundItem;
-              // EditComponent.liveformData.scaleOverall.loaiCongTrinh = constructionTypes.map(x => ({
-              //   text: x.text,
-              //   value: x.value,
-              //   checked: x.checked
-              // }));
+              EditComponent.liveformData.scaleOverall.loaiCongTrinh =
+                this.mergeConstructionType(constructionTypes, EditComponent.liveformData.scaleOverall.loaiCongTrinh);
               if (EditComponent.liveformData) {
                 const phongBan = EditComponent.liveformData.phongBan;
                 this.departmentNo = (phongBan) ? phongBan.key : 'PDUTHAU';  // Default PDT
@@ -327,4 +328,21 @@ export class EditComponent implements OnInit, OnDestroy {
       this.subscription.unsubscribe();
     }
   }
+  mergeConstructionType(src, liveform) {
+    for (const construction of liveform) {
+      for (const item of src) {
+        if (item.text === construction.text) {
+          item.checked = construction.checked;
+        }
+      }
+    }
+    const result = src.map(item => ({
+      text: item.text,
+      value: item.value,
+      checked: item.checked
+    }));
+    return result;
+  }
+
 }
+

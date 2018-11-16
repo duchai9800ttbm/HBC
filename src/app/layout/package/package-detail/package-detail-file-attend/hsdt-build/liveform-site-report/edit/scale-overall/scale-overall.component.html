@@ -78,7 +78,7 @@
                             <label for="" class="col-lg-5">Tổng diện tích xây dựng/ Gross floor area (m2)</label>
                             <div class="col-lg-7">
                                 <div class="form-view w-80" [class.form-view-bg]="isViewMode">
-                                    {{ scaleOverallForm?.get('tongDienTichXayDung').value | numberAreaNoplaceholder }}
+                                    {{ (scaleOverallForm?.get('tongDienTichXayDung').value) ? (scaleOverallForm?.get('tongDienTichXayDung').value | numberAreaNoplaceholder) : 0 }}
                                 </div>
                                 
                             </div>
