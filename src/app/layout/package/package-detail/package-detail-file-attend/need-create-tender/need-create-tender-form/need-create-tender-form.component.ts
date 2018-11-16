@@ -133,7 +133,7 @@ export class NeedCreateTenderFormComponent implements OnInit, OnDestroy {
                 if (!this.XemDNDT) {
                     this.router.navigate(['not-found']);
                 }
-            }, 400);
+            }, 4000);
         });
         this.subscription.add(permission);
         // this.packageService.routerAction$.subscribe(
