@@ -39,24 +39,27 @@ export class NeedCreateTenderFormFeeTenderComponent implements OnInit {
   }
 
   createForm() {
-    const formValue = NeedCreateTenderFormComponent.formModel.feeOfTenderInvitationDocument;
-    this.feeTenderForm = this.fb.group({
-      feeOfTenderInvitationDocument: formValue ?
-        NeedCreateTenderFormComponent.checkDecimalPositiveNumber(formValue.feeOfTenderInvitationDocument) : null,
-      feeOfTenderInvitationDocumentCurrency: this.fb.group({
-        key: formValue && formValue.feeOfTenderInvitationDocumentCurrency ? formValue.feeOfTenderInvitationDocumentCurrency.key : 'VNĐ',
-        value: formValue && formValue.feeOfTenderInvitationDocumentCurrency ? formValue.feeOfTenderInvitationDocumentCurrency.value : 'VNĐ',
-        // tslint:disable-next-line:max-line-length
-        displayText: formValue && formValue.feeOfTenderInvitationDocumentCurrency ? formValue.feeOfTenderInvitationDocumentCurrency.displayText : 'VNĐ'
-      }),
-      tenderDocumentDeposit: formValue ? NeedCreateTenderFormComponent.checkDecimalPositiveNumber(formValue.tenderDocumentDeposit) : 0,
-      tenderDocumentDepositCurrency: this.fb.group({
-        key: formValue && formValue.tenderDocumentDepositCurrency ? formValue.tenderDocumentDepositCurrency.key : 'VNĐ',
-        value: formValue && formValue.tenderDocumentDepositCurrency ? formValue.tenderDocumentDepositCurrency.value : 'VNĐ',
-        // tslint:disable-next-line:max-line-length
-        displayText: formValue && formValue.tenderDocumentDepositCurrency ? formValue.tenderDocumentDepositCurrency.displayText : 'VNĐ'
-      })
-    });
+    if (NeedCreateTenderFormComponent.formModel) {
+      const formValue = NeedCreateTenderFormComponent.formModel.feeOfTenderInvitationDocument;
+      this.feeTenderForm = this.fb.group({
+        feeOfTenderInvitationDocument: formValue ?
+          NeedCreateTenderFormComponent.checkDecimalPositiveNumber(formValue.feeOfTenderInvitationDocument) : null,
+        feeOfTenderInvitationDocumentCurrency: this.fb.group({
+          key: formValue && formValue.feeOfTenderInvitationDocumentCurrency ? formValue.feeOfTenderInvitationDocumentCurrency.key : 'VNĐ',
+           // tslint:disable-next-line:max-line-length
+          value: formValue && formValue.feeOfTenderInvitationDocumentCurrency ? formValue.feeOfTenderInvitationDocumentCurrency.value : 'VNĐ',
+          // tslint:disable-next-line:max-line-length
+          displayText: formValue && formValue.feeOfTenderInvitationDocumentCurrency ? formValue.feeOfTenderInvitationDocumentCurrency.displayText : 'VNĐ'
+        }),
+        tenderDocumentDeposit: formValue ? NeedCreateTenderFormComponent.checkDecimalPositiveNumber(formValue.tenderDocumentDeposit) : 0,
+        tenderDocumentDepositCurrency: this.fb.group({
+          key: formValue && formValue.tenderDocumentDepositCurrency ? formValue.tenderDocumentDepositCurrency.key : 'VNĐ',
+          value: formValue && formValue.tenderDocumentDepositCurrency ? formValue.tenderDocumentDepositCurrency.value : 'VNĐ',
+          // tslint:disable-next-line:max-line-length
+          displayText: formValue && formValue.tenderDocumentDepositCurrency ? formValue.tenderDocumentDepositCurrency.displayText : 'VNĐ'
+        })
+      });
+    }
   }
 
   mappingToLiveFormData(data) {
