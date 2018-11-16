@@ -51,7 +51,7 @@ export class FormInComponent implements OnInit {
         break;
       }
       case 'LiveFormTomTatDieuKienDuThau': {
-          this.printingDocumentService.printTenderCondition(this.packageId, this.typeChild)
+        this.printingDocumentService.printTenderCondition(this.packageId, this.typeChild)
           .subscribe(data => {
             this.htmlContent = data;
           });
@@ -82,14 +82,13 @@ export class FormInComponent implements OnInit {
     if (!this.isOpen) {
       this.isOpen = true;
       const popupWindow = window
-        .open('', '_blank', `width=600,height=700,headers=no,footers=no,scrollbars=no,menubar=no,toolbar=no,
+        .open('about:blank', 'popup', `width=600,height=700,headers=no,footers=no,scrollbars=no,menubar=no,toolbar=no,
         location=no,status=no,titlebar=no`);
       popupWindow.document.open();
       popupWindow.document.write(`${this.htmlContent}`);
-      popupWindow.print();
-      setTimeout(() => {
-        popupWindow.document.close();
-      }, 400);
+      // popupWindow.print();
+      popupWindow.document.close();
+
     }
   }
 
