@@ -37,46 +37,67 @@ export class NeedCreateTenderFormDecisionBoardComponent implements OnInit {
 
     ngOnInit() {
         this.getPackageInfo();
+        // this.packageService
+        //     .getInforPackageID(this.bidOpportunityId)
+        //     .switchMap(data => {
+        //         this.packageInfo = data;
+        //         return
+        //     });
         this.isDirector = (this.sessionService.currentUserInfo && this.sessionService.currentUserInfo.department
             && this.sessionService.currentUserInfo.department.text === 'BAN TỔNG GIÁM ĐỐC');
         this.routerAction = this.packageService.routerAction;
         this.packageService.routerAction$.subscribe(router => {
             this.routerAction = router;
             this.createForm();
-            if (this.routerAction === 'view') {
-                this.decisionBoardForm.disable();
+            // if (this.decisionBoardForm && (!this.isDirector
+            //     || !(this.packageInfo && this.packageInfo.stageStatus.id === this.bidStatus.ChoDuyetDeNghiDuThau)
+            //     || this.decisionBoardForm.get('isSigned').value)) {
+            //     this.decisionBoardForm.disable();
+            // }
+            if (this.decisionBoardForm) {
+                this.decisionBoardForm.valueChanges.subscribe(data => this.mappingToLiveFormData(data));
             }
-            this.decisionBoardForm.valueChanges.subscribe(data => this.mappingToLiveFormData(data));
         });
         this.packageService.dataProposals$.subscribe(value => {
             this.createForm();
-            this.decisionBoardForm.valueChanges.subscribe(data => this.mappingToLiveFormData(data));
+            // if (this.decisionBoardForm && (!this.isDirector
+            //     || !(this.packageInfo && this.packageInfo.stageStatus.id === this.bidStatus.ChoDuyetDeNghiDuThau)
+            //     || this.decisionBoardForm.get('isSigned').value)) {
+            //     this.decisionBoardForm.disable();
+            // }
+            if (this.decisionBoardForm) {
+                this.decisionBoardForm.valueChanges.subscribe(data => this.mappingToLiveFormData(data));
+            }
         });
     }
 
     createForm() {
-        const formData =
-            NeedCreateTenderFormComponent.formModel
-                .decisionOfBoardOfGeneralDirector;
-        const directorData =
-            NeedCreateTenderFormComponent.formModel.tenderDirectorProposal;
-        this.expectedTimeStr = (directorData && directorData.expectedDate) ? directorData.expectedDate : null;
-        this.decisionBoardForm = this.fb.group({
-            isAgreed: formData ? formData.isAgreed : true,
-            reason: formData ? formData.reason : '',
-            isSigned: formData ? formData.isSigned : false,
-            // tslint:disable-next-line:max-line-length
-            expectedTime:
-                directorData && directorData.expectedDate
-                    ? DateTimeConvertHelper.fromTimestampToDtObject(
-                        directorData.expectedDate * 1000
-                    )
-                    : null
-        });
+        if (NeedCreateTenderFormComponent.formModel) {
+            const formData =
+                NeedCreateTenderFormComponent.formModel
+                    .decisionOfBoardOfGeneralDirector;
+            const directorData =
+                NeedCreateTenderFormComponent.formModel.tenderDirectorProposal;
+            this.expectedTimeStr = (directorData && directorData.expectedDate) ? directorData.expectedDate : null;
+            this.decisionBoardForm = this.fb.group({
+                isAgreed: formData ? formData.isAgreed : true,
+                reason: formData ? formData.reason : '',
+                isSigned: formData ? formData.isSigned : false,
+                // tslint:disable-next-line:max-line-length
+                expectedTime:
+                    directorData && directorData.expectedDate
+                        ? DateTimeConvertHelper.fromTimestampToDtObject(
+                            directorData.expectedDate * 1000
+                        )
+                        : null
+            });
+            console.log('this.isSigned()', this.decisionBoardForm.get('isSigned').value);
+        }
     }
 
     clickSigned() {
         this.decisionBoardForm.get('isSigned').patchValue(true);
+        this.decisionBoardForm.disable();
         // khi view có thể ký
         if (this.routerAction === 'view') {
             if (this.decisionBoardForm.get('isAgreed').value) {
@@ -119,14 +140,16 @@ export class NeedCreateTenderFormDecisionBoardComponent implements OnInit {
     }
 
     mappingToLiveFormData(data) {
-        NeedCreateTenderFormComponent.formModel.decisionOfBoardOfGeneralDirector = data;
-        const directorData =
-            NeedCreateTenderFormComponent.formModel.tenderDirectorProposal;
-        // tslint:disable-next-line:max-line-length
-        NeedCreateTenderFormComponent.formModel.decisionOfBoardOfGeneralDirector.expectedTime =
-            directorData && directorData.expectedDate
-                ? directorData.expectedDate
-                : 0;
+        if (NeedCreateTenderFormComponent.formModel) {
+            NeedCreateTenderFormComponent.formModel.decisionOfBoardOfGeneralDirector = data;
+            const directorData =
+                NeedCreateTenderFormComponent.formModel.tenderDirectorProposal;
+            // tslint:disable-next-line:max-line-length
+            NeedCreateTenderFormComponent.formModel.decisionOfBoardOfGeneralDirector.expectedTime =
+                directorData && directorData.expectedDate
+                    ? directorData.expectedDate
+                    : 0;
+        }
     }
 
     onSubmit() {
