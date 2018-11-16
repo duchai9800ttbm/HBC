@@ -44,12 +44,13 @@ export class CreateNewInvitationComponent implements OnInit {
 
   ngOnInit() {
     this.currentPackageId = +PackageDetailComponent.packageId;
+    this.createForm();
     this.packageService.getInforPackageID(this.currentPackageId).subscribe(result => {
       if (result.customer) {
         this.interviewInvitation.customer.customerId = result.customer.id;
         this.interviewInvitation.customer.customerName = result.customer.text;
+        this.createFormNewInvitation.get('customerName').patchValue(this.interviewInvitation.customer.customerName);
       }
-      this.createForm();
       if (this.edit) {
         this.interviewInvitationService.LoadFileCreateInterview(this.interviewInvitation.id).subscribe(response => {
           this.file = response;
