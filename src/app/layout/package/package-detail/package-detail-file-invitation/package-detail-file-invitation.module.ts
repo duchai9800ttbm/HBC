@@ -8,7 +8,6 @@ import { CKEditorModule } from 'ng2-ckeditor';
 import { UploadFileComponent } from './add-file/upload-file/upload-file.component';
 import { FilterPipeModule } from 'ngx-filter-pipe';
 import { TagInputModule } from 'ngx-chips';
-import { UploadReviewDocumentComponent } from './suggest/upload-review-document/upload-review-document.component';
 import { FullFileComponent } from './full-file/full-file.component';
 import { DetailUploadFileComponent } from './add-file/detail-upload-file/detail-upload-file.component';
 TagInputModule.withDefaults({
@@ -35,7 +34,6 @@ TagInputModule.withDefaults({
     FullFileComponent,
     AddFileComponent,
     UploadFileComponent,
-    UploadReviewDocumentComponent,
     DetailUploadFileComponent
   ]
 })
