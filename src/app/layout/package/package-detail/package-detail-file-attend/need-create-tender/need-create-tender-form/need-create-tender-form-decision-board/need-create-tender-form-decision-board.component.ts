@@ -91,7 +91,6 @@ export class NeedCreateTenderFormDecisionBoardComponent implements OnInit {
                         )
                         : null
             });
-            console.log('this.isSigned()', this.decisionBoardForm.get('isSigned').value);
         }
     }
 

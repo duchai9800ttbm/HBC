@@ -89,7 +89,6 @@ export class PackageDetailComponent implements OnInit, OnDestroy {
       }
       if (data && data.userGroup && data.userGroup.text === 'Admin') {
         const arrayPermission = AdminPermissions;
-        console.log('Admin nè');
         this.permissionService.set(arrayPermission);
         if (this.subInterval) {
           this.subInterval.unsubscribe();

@@ -73,7 +73,6 @@ export class ScaleOverallComponent implements OnInit, AfterViewInit, OnDestroy {
     const loadingData$ = this.siteSurveyReportService.watchingSignalLoad().subscribe(signal => {
       this.checkFlag();
       this.initData();
-      console.log('create-Form-subcribe');
       this.createForm();
       loadingData$.unsubscribe();
     });
@@ -88,7 +87,6 @@ export class ScaleOverallComponent implements OnInit, AfterViewInit, OnDestroy {
       this.checkFlag();
       this.initData();
       this.createForm();
-      console.log('create-Form-ngOInit');
       this.checkFlag();
     });
   }

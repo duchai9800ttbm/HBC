@@ -47,7 +47,6 @@ export class SummaryConditionFormComponent implements OnInit, OnDestroy {
       this.package = result;
     });
     const activate$ = this.activatedRoute.params.subscribe(data => {
-      console.log(data);
       switch (data.action) {
         case 'create': {
           this.isModeView = false;

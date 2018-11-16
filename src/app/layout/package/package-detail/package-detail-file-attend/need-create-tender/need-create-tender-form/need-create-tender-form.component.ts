@@ -141,7 +141,6 @@ export class NeedCreateTenderFormComponent implements OnInit, OnDestroy {
         //         this.routerAction = router;
         // const activatedRoute = this.activatedRoute.params.subscribe(
         //     router => {
-        // console.log('activatedRoute-activatedRoute', activatedRoute);
         // this.routerAction = router.action;
 
         // }
@@ -153,7 +152,6 @@ export class NeedCreateTenderFormComponent implements OnInit, OnDestroy {
     setDataDefault() {
         // ======================
         NeedCreateTenderFormComponent.formModel = new ProposeTenderParticipateRequest();
-        console.log('NeedCreateTenderFormComponent.formModel-create-1.11', NeedCreateTenderFormComponent.formModel);
         // EstimatedBudgetPackage
         NeedCreateTenderFormComponent.formModel.estimatedBudgetOfPakage = new EstimatedBudgetPackage();
         NeedCreateTenderFormComponent.formModel.estimatedBudgetOfPakage.draftBudgetOfPackageCurrency = new Currency();
@@ -335,12 +333,9 @@ export class NeedCreateTenderFormComponent implements OnInit, OnDestroy {
     }
 
     cancel() {
-        console.log('this.cancel', this.dataModelCopy, NeedCreateTenderFormComponent.formModel);
         NeedCreateTenderFormComponent.formModel = Object.assign(
             {}, this.dataModelCopy
         );
-        // NeedCreateTenderFormComponent.formModel = JSON.parse(JSON.stringify(this.dataModelCopy));
-        console.log('Clear', this.dataModelCopy, NeedCreateTenderFormComponent.formModel);
         this.packageService.setRouterAction('view');
         this.router.navigate([
             `package/detail/${

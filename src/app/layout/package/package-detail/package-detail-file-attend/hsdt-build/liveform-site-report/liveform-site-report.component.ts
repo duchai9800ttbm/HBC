@@ -140,7 +140,6 @@ export class LiveformSiteReportComponent implements OnInit, OnDestroy {
   getChangeHistory(page: number | string, pageSize: number | string) {
     this.spinner.show();
     this.siteSurveyReportService.changedHistoryTenderSiteReport(this.bidOpportunityId, page, pageSize).subscribe(respone => {
-      console.log(' this.pagedResultChangeHistoryList',  this.pagedResultChangeHistoryList);
       this.pagedResultChangeHistoryList = respone;
       this.updateInfoList = groupBy(this.pagedResultChangeHistoryList.items, [{ field: 'changedTime' }]);
       this.pagedResultChangeHistoryList.total = this.updateInfoList.length;

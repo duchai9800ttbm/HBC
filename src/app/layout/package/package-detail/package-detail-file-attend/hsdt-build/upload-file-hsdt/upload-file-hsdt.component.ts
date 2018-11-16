@@ -93,7 +93,6 @@ export class UploadFileHsdtComponent implements OnInit {
       this.listDocumentShow = this.groupDocumentType(
         responseResultDocument.items.filter(item => item.tenderDocumentType.id == typeDocId)
       );
-      console.log(this.listDocumentShow);
       if (!this.listDocumentShow[0]) {
         this.uploadForm.get('version').patchValue(1);
         this.uploadForm.get('interViewTimes').patchValue(1);

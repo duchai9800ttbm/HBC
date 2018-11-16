@@ -23,14 +23,11 @@ export class NeedCreateTenderFormAnalysisComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    // this.packageService.routerAction$
     this.activatedRoute.params.subscribe(router => {
-      console.log('params-params-analys', router, router.action);
     });
     const that = this;
     this.packageService.routerAction$.subscribe(router => {
       this.routerAction = router;
-      console.log('this.routerAction', this.routerAction);
       if (this.analysisForm && this.routerAction === 'view') {
         this.analysisForm.disable();
       }
@@ -47,7 +44,6 @@ export class NeedCreateTenderFormAnalysisComponent implements OnInit {
   }
 
   createForm() {
-    console.log('create-analysis', NeedCreateTenderFormComponent.formModel);
     const value = NeedCreateTenderFormComponent.formModel;
     this.analysisForm = this.fb.group({
       documentName: value && value.documentName ? value.documentName : '',

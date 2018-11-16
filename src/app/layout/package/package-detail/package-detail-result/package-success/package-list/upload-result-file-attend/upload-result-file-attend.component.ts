@@ -41,7 +41,6 @@ export class UploadResultFileAttendComponent implements OnInit {
     this.createForm();
   }
   createForm() {
-    console.log('this.interviewTimes', this.interviewTimes);
     this.uploadResultForm = this.fb.group({
       documentName: ['', CustomValidator.required],
       version: [this.version],

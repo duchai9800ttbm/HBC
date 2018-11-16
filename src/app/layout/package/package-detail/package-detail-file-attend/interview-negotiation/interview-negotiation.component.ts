@@ -306,22 +306,18 @@ export class InterviewNegotiationComponent implements OnInit, OnDestroy {
     switch (this.urlCurrent) {
       case 'create': {
         if (this.statusPackage && (this.statusPackage.id === this.checkStatusPackage.DaNopHSDT.id)) {
-          console.log('0');
           this.refeshSubmittedHSDT();
         } else {
           this.refreshCreateInterview();
-          console.log('1');
         }
         break;
       }
       case 'prepare': {
         this.refreshPrepareInterview();
-        console.log('2');
         break;
       }
       case 'end': {
         this.refreshEndInterview();
-        console.log('3');
         break;
       }
     }

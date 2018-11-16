@@ -183,12 +183,11 @@ export class NeedCreateTenderComponent implements OnInit, OnDestroy {
   }
 
   changeAction(data: string) {
-    console.log('chanegAciton-button', NeedCreateTenderFormComponent.formModel);
     this.packageService.setRouterAction(data);
   }
 
   downloadTemplate() {
-    this.packageService.downloadProposedTenderParticipateReport().subscribe(data => console.log());
+    this.packageService.downloadProposedTenderParticipateReport().subscribe();
   }
 
   printForm() {

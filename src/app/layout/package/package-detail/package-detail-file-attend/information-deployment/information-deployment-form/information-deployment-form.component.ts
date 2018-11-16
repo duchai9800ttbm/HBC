@@ -190,7 +190,6 @@ export class InformationDeploymentFormComponent implements OnInit, OnDestroy {
     //         .subscribe(groupmembers => {
     //             this.checkAndCreateForm();
     //             this.spinner.hide();
-    //             console.log('response-groupMenber', groupmembers);
     //         });
     //     this.subscription.add(getPackageInfo);
     // }
@@ -247,7 +246,6 @@ export class InformationDeploymentFormComponent implements OnInit, OnDestroy {
                     });
                     // res4
                     this.groupmembersList = res4;
-                    console.log('this.groupmembersList', this.groupmembersList);
                     this.mappingLiveForm(this.groupmembersList);
                     // res 1
                     this.createForm(res1, true);
@@ -386,7 +384,6 @@ export class InformationDeploymentFormComponent implements OnInit, OnDestroy {
     }
 
     createForm(planModel: TenderPreparationPlanningRequest, isCreate?) {
-        console.log('tạo mới', isCreate);
         this.tenderPlan = planModel;
         const taskArr = [];
         planModel.tasks.forEach((i, index) => taskArr.push(this.createTaskItemFG(i, index, isCreate)));
@@ -498,7 +495,6 @@ export class InformationDeploymentFormComponent implements OnInit, OnDestroy {
     }
 
     changeDirector(userId, personnelType) {
-        console.log('Value', this.tasksFA.controls[2].get('whoIsInChargeIds').value);
         if (userId) {
             if (personnelType === 0) {
                 this.mailPersonnel[0] = this.getEmailUser(userId);

@@ -610,7 +610,6 @@ export class PackageDocumentSenderComponent implements OnInit {
     this.isDataHsdt = !this.isDataHsdt;
   }
   transferofdocuments() {
-    console.log('this.docHSMTList', this.docHSMTList);
     const itemDocChooseTranfer = [];
     this.docHSMTList.forEach(itemHSMT => {
       if (itemHSMT.childDocuments && itemHSMT.childDocuments.length !== 0) {

@@ -385,8 +385,6 @@ export class PackagePermissionBidComponent implements OnInit {
     }
 
     checkOption(id, index) {
-        // console.log(this.packagePermissionReviewForm.get('PhieuDeNghiDuThau').get('permission'));
-        // console.log(id, index);
         return true;
     }
     routeToPackageInfo() {

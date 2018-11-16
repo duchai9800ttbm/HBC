@@ -72,7 +72,6 @@ export class NeedCreateTenderFormDirectorProposalComponent implements OnInit {
     }
 
     mappingToLiveFormData(data) {
-        console.log('mappingToLiveFormData- mappingToLiveFormData');
         NeedCreateTenderFormComponent.formModel.tenderDirectorProposal = data;
         NeedCreateTenderFormComponent.formModel.isAgreedParticipating =
             data.isAgreedParticipating;

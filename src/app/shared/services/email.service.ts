@@ -221,7 +221,6 @@ export class EmailService {
   sendEmailInterview(data: SendEmailModel, file: File[], arrayBidInterviewInvitationId: number[]) {
     const url = `bidopportunity/hsdt/sendmailtostakeholders`;
     const dataObj = new FormData();
-    console.log('arrayBidInterviewInvitationId', arrayBidInterviewInvitationId);
     arrayBidInterviewInvitationId.forEach((item, index) => {
       dataObj.append('InterviewInvitationIds[' + index + ']', item.toString());
     });

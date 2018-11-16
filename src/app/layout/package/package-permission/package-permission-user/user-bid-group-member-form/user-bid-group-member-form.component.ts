@@ -53,7 +53,6 @@ export class UserBidGroupMemberFormComponent implements OnInit {
                 this.listBidUserGroupMember = data;
                 this.createForm(data);
                 this.spinner.hide();
-                console.log('loadData-getBidGroupMembers');
                 this.loadingMenber.emit(false);
             });
     }

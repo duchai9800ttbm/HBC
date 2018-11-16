@@ -446,7 +446,7 @@ export class PackageService {
                 projectName: result.projectName,
                 isSubmittedHSDT: result.isSubmittedHSDT,
                 isClosedHSDT: result.isClosedHSDT,
-                isSendMailKickOff:  result.isSendMailKickOff,
+                isSendMailKickOff: result.isSendMailKickOff,
                 isChotHoSo: result.isChotHoSo,
                 interviewInvitation: result.interviewInvitation ? {
                     interviewTimes: result.interviewInvitation.interviewTimes.toString(),
@@ -1047,11 +1047,9 @@ export class PackageService {
     // get chi tiết phiếu đề nghị dự thầu
     getProposedTenderParticipateReport(bidOpportunityId: number): Observable<any> {
         const url = `${bidOpportunityId}/bidopportunity/proposedtenderparticipatinngreport`;
-        return this.apiService.get(url).map(response =>
-            {
-                console.log('response-getProposedTenderParticipateReport', response);
-                return response.result;
-            });
+        return this.apiService.get(url).map(response => {
+            return response.result;
+        });
     }
     // xóa phiếu đề nghị dự thầu
     deleteProposedTenderParticipateReport(bidOpportunityId: number): Observable<any> {
@@ -1136,7 +1134,7 @@ export class PackageService {
             element.whoIsInChargeIds = {
                 ids: a,
             };
-            element.duration = (element.totalTime && element.totalTime !== 0) ? (+element.totalTime) :  null;
+            element.duration = (element.totalTime && element.totalTime !== 0) ? (+element.totalTime) : null;
         });
         return this.apiService.post(url, data).map(response => response.result);
     }
@@ -1150,7 +1148,7 @@ export class PackageService {
             element.whoIsInChargeIds = {
                 ids: a,
             };
-            element.duration = (element.totalTime && element.totalTime !== 0) ? (+element.totalTime) :  null;
+            element.duration = (element.totalTime && element.totalTime !== 0) ? (+element.totalTime) : null;
         });
         return this.apiService.post(url, data).map(response => response.result);
     }

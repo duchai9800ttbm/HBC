@@ -544,7 +544,6 @@ export class InformationDeploymentComponent implements OnInit, OnDestroy {
           });
         });
       });
-      console.log('getChangeHistory', this.historyList);
       setTimeout(() => {
       });
     },

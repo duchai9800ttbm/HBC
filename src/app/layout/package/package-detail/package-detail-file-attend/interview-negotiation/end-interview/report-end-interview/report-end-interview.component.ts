@@ -36,7 +36,6 @@ export class ReportEndInterviewComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    console.log(this.interviewOfPackage);
     this.currentPackageId = +PackageDetailComponent.packageId;
     this.createForm();
   }

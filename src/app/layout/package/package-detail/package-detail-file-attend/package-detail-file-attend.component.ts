@@ -54,7 +54,6 @@ export class PackageDetailFileAttendComponent implements OnInit, OnDestroy {
     if (this.isNgOnInit) {
       this.checkStatusPackageFuc();
       this.activeRouter.queryParams.subscribe(value => {
-        console.log('valuevalue-', value);
         if (value && !value.direction && this.packageService.directionalTabAttend) {
           this.redirectByStatus(); // Điều hướng
         }

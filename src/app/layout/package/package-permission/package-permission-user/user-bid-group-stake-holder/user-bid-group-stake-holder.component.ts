@@ -58,7 +58,6 @@ export class UserBidGroupStakeHolderComponent implements OnInit {
           item.customers.push(obj);
         }
       });
-      console.log('loadData-loadingStake');
       this.loadingStake.emit(false);
     });
   }
