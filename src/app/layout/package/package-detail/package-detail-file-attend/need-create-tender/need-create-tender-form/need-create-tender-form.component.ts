@@ -78,11 +78,9 @@ export class NeedCreateTenderFormComponent implements OnInit, OnDestroy {
         // NeedCreateTenderFormComponent.formModel = new ProposeTenderParticipateRequest();
         this.scrollTopService.isScrollTop = false;
         this.routerAction = this.packageService.routerAction;
-        console.log('this.routerAction-this.routerAction', this.routerAction);
         if (this.routerAction === 'create') {
             this.setDataDefault();
             this.startUp();
-            console.log('NeedCreateTenderFormComponent.formModel-create', NeedCreateTenderFormComponent.formModel);
         } else {
             // if (!NeedCreateTenderFormComponent.formModel) {
             this.packageService.getProposedTenderParticipateReport(this.bidOpportunityId).subscribe(data => {
@@ -155,6 +153,7 @@ export class NeedCreateTenderFormComponent implements OnInit, OnDestroy {
     setDataDefault() {
         // ======================
         NeedCreateTenderFormComponent.formModel = new ProposeTenderParticipateRequest();
+        console.log('NeedCreateTenderFormComponent.formModel-create-1.11', NeedCreateTenderFormComponent.formModel);
         // EstimatedBudgetPackage
         NeedCreateTenderFormComponent.formModel.estimatedBudgetOfPakage = new EstimatedBudgetPackage();
         NeedCreateTenderFormComponent.formModel.estimatedBudgetOfPakage.draftBudgetOfPackageCurrency = new Currency();
@@ -417,7 +416,6 @@ export class NeedCreateTenderFormComponent implements OnInit, OnDestroy {
     }
 
     ngOnDestroy() {
-        console.log('Destroy NeedCreate');
         this.scrollTopService.isScrollTop = true;
         if (this.subscription) {
             this.subscription.unsubscribe();
