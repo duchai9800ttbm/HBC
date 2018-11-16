@@ -28,7 +28,6 @@ export class SummaryConditionFormConditionTenderComponent implements OnInit {
     constructor(
         private fb: FormBuilder,
         private hoSoDuThauService: HoSoDuThauService,
-        private packageService: PackageService,
         private router: Router,
     ) { }
 
@@ -180,10 +179,11 @@ export class SummaryConditionFormConditionTenderComponent implements OnInit {
                     hieuLucHoSo: data.theoHSMT.hieuLucHoSo,
                     tienDo: {
                         ngayKhoiCong: DateTimeConvertHelper.fromDtObjectToTimestamp(data.theoHSMT.ngayKhoiCong),
-                        thoiGianHoanThanh: data.theoHSMT.thoiGianHoanThanh,
+                        thoiGianHoanThanh: String(data.theoHSMT.thoiGianHoanThanh) + ' ' + this.unitTime.value,
                         thoiGianHoanThanhTheoNhaThau: (data.theoHSMT.thoiGianHoanThanhTheoNhaThau) ?
                             data.theoHSMT.thoiGianHoanThanhTheoNhaThau : false,
-                        thoiGianHoanThanhTheoNhaThauCount: data.theoHSMT.thoiGianHoanThanhTheoNhaThauCount
+                        thoiGianHoanThanhTheoNhaThauCount:
+                            String(data.theoHSMT.thoiGianHoanThanhTheoNhaThauCount) + ' ' + this.unitTime.value
                     },
                     cacLoaiThue: (data.theoHSMT.cacLoaiThue || []).map(x => x.thue),
                     donViTienTe: data.theoHSMT.donViTienTe
@@ -196,7 +196,7 @@ export class SummaryConditionFormConditionTenderComponent implements OnInit {
                     hieuLucHoSo: data.theoHBC.hieuLucHoSo,
                     tienDo: {
                         ngayKhoiCong: DateTimeConvertHelper.fromDtObjectToTimestamp(data.theoHBC.ngayKhoiCong),
-                        thoiGianHoanThanh: data.theoHBC.thoiGianHoanThanh,
+                        thoiGianHoanThanh: String(data.theoHBC.thoiGianHoanThanh) + ' ' + this.unitTime.value,
                         thoiGianHoanThanhTheoNhaThau: null,
                         thoiGianHoanThanhTheoNhaThauCount: null
                     },
@@ -319,7 +319,7 @@ export class SummaryConditionFormConditionTenderComponent implements OnInit {
 
     routerLink(e, link) {
         if (e.code === 'Enter') {
-          this.router.navigate([`/package/detail/${this.bidOpportunityId}/attend/build/summary/form/create/${link}`]);
+            this.router.navigate([`/package/detail/${this.bidOpportunityId}/attend/build/summary/form/create/${link}`]);
         }
-      }
+    }
 }

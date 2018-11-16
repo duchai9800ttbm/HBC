@@ -47,6 +47,10 @@ export class HoSoDuThauService {
     const regex = /^[^0-9]+|[^0-9]+$/gi;
     return Number(String(input).replace(regex, ''));
   }
+  private static removeString(input: string) {
+    const regex = /[^\d]+$/gi;
+    return Number(input.replace(regex, ''));
+  }
 
   private static toHistoryLiveForm(result: any): HistoryLiveForm {
     return {
@@ -651,8 +655,7 @@ export class HoSoDuThauService {
           tenderEfficiency: obj.dienGiaiDieuKienHSMT.theoHBC.hieuLucHoSo,
           progressStartDate: (obj.dienGiaiDieuKienHSMT.theoHBC.tienDo) ?
             obj.dienGiaiDieuKienHSMT.theoHBC.tienDo.ngayKhoiCong : '',
-          progressComletionDate: (obj.dienGiaiDieuKienHSMT.theoHBC.tienDo) ?
-            HoSoDuThauService.checkDecimalPositiveNumber(obj.dienGiaiDieuKienHSMT.theoHBC.tienDo.thoiGianHoanThanh) : '',
+          progressComletionDate: (obj.dienGiaiDieuKienHSMT.theoHBC.tienDo) ? obj.dienGiaiDieuKienHSMT.theoHBC.tienDo.thoiGianHoanThanh : '',
 
           taxTypes: (obj.dienGiaiDieuKienHSMT.theoHBC.cacLoaiThue) ?
             (obj.dienGiaiDieuKienHSMT.theoHBC.cacLoaiThue || []).map(x => ({
@@ -676,12 +679,12 @@ export class HoSoDuThauService {
           progressStartDate: (obj.dienGiaiDieuKienHSMT.theoHSMT.tienDo) ?
             obj.dienGiaiDieuKienHSMT.theoHSMT.tienDo.ngayKhoiCong : '',
           progressComletionDate: (obj.dienGiaiDieuKienHSMT.theoHSMT.tienDo) ?
-            HoSoDuThauService.checkDecimalPositiveNumber(obj.dienGiaiDieuKienHSMT.theoHSMT.tienDo.thoiGianHoanThanh) : '',
+            obj.dienGiaiDieuKienHSMT.theoHSMT.tienDo.thoiGianHoanThanh : '',
           isProgressCompletionDate: (obj.dienGiaiDieuKienHSMT.theoHSMT.tienDo) ?
             obj.dienGiaiDieuKienHSMT.theoHSMT.tienDo.thoiGianHoanThanhTheoNhaThau : false,
           progressCompletionContractorDate: (obj.dienGiaiDieuKienHSMT.theoHSMT.tienDo) ?
-            HoSoDuThauService.checkDecimalPositiveNumber(obj.dienGiaiDieuKienHSMT.theoHSMT.tienDo.thoiGianHoanThanhTheoNhaThauCount)
-            : null,
+            obj.dienGiaiDieuKienHSMT.theoHSMT.tienDo.thoiGianHoanThanhTheoNhaThauCount
+            : '',
           taxTypes: (obj.dienGiaiDieuKienHSMT.theoHSMT.cacLoaiThue) ?
             (obj.dienGiaiDieuKienHSMT.theoHSMT.cacLoaiThue || []).map(x => ({
               key: '',
@@ -913,7 +916,7 @@ export class HoSoDuThauService {
           hieuLucHoSo: model.tenderCondition.hbcTenderCondition.tenderEfficiency,
           tienDo: model.tenderCondition.hbcTenderCondition && {
             ngayKhoiCong: model.tenderCondition.hbcTenderCondition.progressStartDate,
-            thoiGianHoanThanh: model.tenderCondition.hbcTenderCondition.progressComletionDate,
+            thoiGianHoanThanh: HoSoDuThauService.removeString(model.tenderCondition.hbcTenderCondition.progressComletionDate),
             thoiGianHoanThanhTheoNhaThau: null,
             thoiGianHoanThanhTheoNhaThauCount: null
           },
@@ -930,9 +933,10 @@ export class HoSoDuThauService {
           hieuLucHoSo: model.tenderCondition.hsmtTenderCondition.tenderEfficiency,
           tienDo: model.tenderCondition.hsmtTenderCondition && {
             ngayKhoiCong: model.tenderCondition.hsmtTenderCondition.progressStartDate,
-            thoiGianHoanThanh: model.tenderCondition.hsmtTenderCondition.progressComletionDate,
+            thoiGianHoanThanh: HoSoDuThauService.removeString(model.tenderCondition.hsmtTenderCondition.progressComletionDate),
             thoiGianHoanThanhTheoNhaThau: model.tenderCondition.hsmtTenderCondition.isProgressCompletionDate,
-            thoiGianHoanThanhTheoNhaThauCount: model.tenderCondition.hsmtTenderCondition.progressCompletionContractorDate
+            thoiGianHoanThanhTheoNhaThauCount:
+              HoSoDuThauService.removeString(model.tenderCondition.hsmtTenderCondition.progressCompletionContractorDate)
           },
           cacLoaiThue: (model.tenderCondition.hsmtTenderCondition.taxTypes || []).map(x => x.displayText),
           donViTienTe: model.tenderCondition.hsmtTenderCondition.currency && model.tenderCondition.hsmtTenderCondition.currency.displayText

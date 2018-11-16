@@ -99,6 +99,14 @@ export class InformationDeploymentFormComponent implements OnInit, OnDestroy {
     checkAndSaveConditions;
     askClarificationQuestions;
     loading = false;
+    trangThaiGoiThau = [
+        'CanLapDeNghiDuThau',
+        'ChoDuyetDeNghiDuThau',
+        'ThamGiaDuThau',
+        'DaThongBaoTrienKhai',
+        'DaXacNhanPhanCong'
+    ];
+    isShowActionStage = false;
     constructor(
         private spinner: NgxSpinnerService,
         private packageService: PackageService,
@@ -231,6 +239,7 @@ export class InformationDeploymentFormComponent implements OnInit, OnDestroy {
                 .subscribe(([res1, res2, res3, res4]) => {
                     // res 2
                     this.packageInfo = res2;
+                    this.isShowActionStage = this.trangThaiGoiThau.includes(this.packageInfo.stageStatus.id);
                     this.submissionDate =
                         DateTimeConvertHelper.fromTimestampToDtObject(
                             this.packageInfo.submissionDate * 1000
@@ -254,6 +263,7 @@ export class InformationDeploymentFormComponent implements OnInit, OnDestroy {
         } else {
             this.packageService.getInforPackageID(this.bidOpportunityId).switchMap(getInforPackage => {
                 this.packageInfo = getInforPackage;
+                this.isShowActionStage = this.trangThaiGoiThau.includes(this.packageInfo.stageStatus.id);
                 this.submissionDate =
                     DateTimeConvertHelper.fromTimestampToDtObject(
                         this.packageInfo.submissionDate * 1000
@@ -264,11 +274,30 @@ export class InformationDeploymentFormComponent implements OnInit, OnDestroy {
                 .subscribe(data => {
                     if (data) {
                         this.isFormCreate = false;
-                        this.packageService.getGroupmembers(+this.bidOpportunityId).subscribe(res3 => {
-                            this.groupmembersList = res3;
-                            this.mappingLiveForm(this.groupmembersList);
-                            this.createForm(data);
-                        });
+                        forkJoin(
+                            this.packageService.getStakeHolders(this.bidOpportunityId),
+                            this.packageService.getGroupmembers(+this.bidOpportunityId)
+                        )
+                            .subscribe(([res1, res2]) => {
+                                // res 1
+                                (res1 || []).some(item => {
+                                    if (item.groupName = 'ChuDauTu') {
+                                        this.investor = item.customers;
+                                        return true;
+                                    } else {
+                                        return false;
+                                    }
+                                });
+                                // res 2
+                                this.groupmembersList = res2;
+                                this.mappingLiveForm(this.groupmembersList);
+                                this.createForm(data);
+                            });
+                        // this.packageService.getGroupmembers(+this.bidOpportunityId).subscribe(res3 => {
+                        //     this.groupmembersList = res3;
+                        //     this.mappingLiveForm(this.groupmembersList);
+                        //     this.createForm(data);
+                        // });
                         this.loading = false;
                     } else {
                         this.isFormCreate = true;

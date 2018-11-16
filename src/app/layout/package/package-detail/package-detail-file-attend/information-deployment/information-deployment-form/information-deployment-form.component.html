@@ -15,7 +15,9 @@
         <div>
             <div class="btn-toolbar mt-2 mb-2">
                 <ng-container *ngIf="TaoMoiBangPCTD || SuaBangPCTD">
-                    <button class="btn btn-primary ml-1" (click)="changeRouterAction('edit')" *ngIf="routerAction == 'view' && packageInfo?.stageStatus.id != bidStatus.DaGuiPhanCongTienDo">Sửa</button>
+                    <ng-container *ngIf="isShowActionStage">
+                        <button class="btn btn-primary ml-1" (click)="changeRouterAction('edit')" *ngIf="routerAction == 'view' && packageInfo?.stageStatus.id != bidStatus.DaGuiPhanCongTienDo">Sửa</button>
+                    </ng-container>
                     <button class="btn btn-primary ml-1" (click)="submitForm(true)" *ngIf="planForm?.get('isDraftVersion').value && routerAction != 'view'">
                         Lưu nháp
                     </button>
@@ -62,12 +64,14 @@
                 </div>
                 <div class="col-md-3 pl-0">
                     <div class="">
-                        <strong>Ngày lập (Date): </strong>{{tenderPlan?.createDate * 1000 | date: 'dd/MM/yyyy' : '+0000'}}</div>
+                        <strong>Ngày lập (Date): </strong>{{tenderPlan?.createDate * 1000 | date: 'dd/MM/yyyy' :
+                        '+0000'}}</div>
                     <div class=""></div>
                 </div>
                 <div class="col-md-3 pl-0">
                     <div class="">
-                        <strong>Ngày duyệt (Date): </strong>{{ (tenderPlan && tenderPlan.approvedDate && tenderPlan.approvedDate
+                        <strong>Ngày duyệt (Date): </strong>{{ (tenderPlan && tenderPlan.approvedDate &&
+                        tenderPlan.approvedDate
                         !== 0) ? (tenderPlan?.approvedDate * 1000 | date: 'dd/MM/yyyy' : '+0000') : ''}}</div>
                     <div class=""></div>
                 </div>
@@ -81,8 +85,10 @@
                 </div>
                 <div class="col-md-3 pl-0">
                     <ng-container *ngIf="XacNhanKyPrepared">
-                        <button class="btn btn-primary btn-sign position-absolute" *ngIf="!planForm.get('isSignedByPreparedPerson').value" [disabled]="routerAction === 'view' || planForm.get('isDraftVersion').value"
-                            [class.not-allow]="routerAction === 'view' || planForm.get('isDraftVersion').value" (click)="clickSignPrepare()">Xác nhận ký</button>
+                        <button class="btn btn-primary btn-sign position-absolute" *ngIf="!planForm.get('isSignedByPreparedPerson').value"
+                            [disabled]="routerAction === 'view' || planForm.get('isDraftVersion').value"
+                            [class.not-allow]="routerAction === 'view' || planForm.get('isDraftVersion').value" (click)="clickSignPrepare()">Xác
+                            nhận ký</button>
                     </ng-container>
 
                     <button class="btn btn-primary btn-sign position-absolute" *ngIf="planForm.get('isSignedByPreparedPerson').value">
@@ -92,8 +98,9 @@
                 <div class="col-md-3 pl-0">
                     <ng-container *ngIf="XacNhanKyApproved">
                         <button class="btn btn-primary btn-sign position-absolute" [disabled]="!planForm.get('isSignedByPreparedPerson').value || routerAction !== 'view'"
-                            [class.not-allow]="!planForm.get('isSignedByPreparedPerson').value || routerAction !== 'view'" *ngIf="!planForm.get('isSignedByApprovalPerson').value"
-                            (click)="clickSignApproved()">Xác nhận ký</button>
+                            [class.not-allow]="!planForm.get('isSignedByPreparedPerson').value || routerAction !== 'view'"
+                            *ngIf="!planForm.get('isSignedByApprovalPerson').value" (click)="clickSignApproved()">Xác
+                            nhận ký</button>
                     </ng-container>
 
                     <button class="btn btn-primary btn-sign position-absolute" *ngIf="planForm.get('isSignedByApprovalPerson').value">
@@ -137,8 +144,8 @@
                         <td>Project Director</td>
                         <td>
                             <span class="custom-dropdown w-100 b-dropdown-no-border">
-                                <select class="form-control" (change)="changeDirector($event.target.value, 0)" formControlName="projectDirectorEmployeeId"
-                                    [class.default-cusor]="routerAction === 'view'">
+                                <select class="form-control" (change)="changeDirector($event.target.value, 0)"
+                                    formControlName="projectDirectorEmployeeId" [class.default-cusor]="routerAction === 'view'">
                                     <option [ngValue]="null">--Chọn--</option>
                                     <option *ngFor="let user of userList" [value]="user.employeeId">{{user.employeeName}}</option>
                                 </select>
@@ -157,8 +164,8 @@
                         <td>Tender Dept</td>
                         <td>
                             <span class="custom-dropdown w-100 b-dropdown-no-border">
-                                <select class="form-control" (change)="changeDirector($event.target.value, 1)" formControlName="tenderDepartmentEmployeeId"
-                                    [class.default-cusor]="routerAction === 'view'">
+                                <select class="form-control" (change)="changeDirector($event.target.value, 1)"
+                                    formControlName="tenderDepartmentEmployeeId" [class.default-cusor]="routerAction === 'view'">
                                     <option [ngValue]="null">--Chọn--</option>
                                     <option *ngFor="let user of userList" [value]="user.employeeId">{{user.employeeName}}</option>
                                 </select>
@@ -177,8 +184,8 @@
                         <td>Technical Dept</td>
                         <td>
                             <span class="custom-dropdown w-100 b-dropdown-no-border">
-                                <select class="form-control" (change)="changeDirector($event.target.value, 2)" formControlName="technicalDepartmentEmployeeId"
-                                    [class.default-cusor]="routerAction === 'view'">
+                                <select class="form-control" (change)="changeDirector($event.target.value, 2)"
+                                    formControlName="technicalDepartmentEmployeeId" [class.default-cusor]="routerAction === 'view'">
                                     <option [ngValue]="null">--Chọn--</option>
                                     <option *ngFor="let user of userList" [value]="user.employeeId">{{user.employeeName}}</option>
                                 </select>
@@ -190,7 +197,8 @@
                         <td>Query's Deadline</td>
                         <td>
                             <!-- <kendo-datepicker class="form-control b-datepicker-no-border"></kendo-datepicker> -->
-                            <kendo-datepicker class="w-100" [max]="submissionDate ? submissionDate : null" formControlName="queryDeadline"></kendo-datepicker>
+                            <kendo-datepicker class="w-100" [max]="submissionDate ? submissionDate : null"
+                                formControlName="queryDeadline"></kendo-datepicker>
                             <!-- {{packageInfo?.submissionDate ? getDateStr(packageInfo?.submissionDate * 1000 - (1000 * 60 * 60 * 24 * 7)) : ''}} -->
                         </td>
                     </tr>
@@ -198,8 +206,8 @@
                         <td>BIM Dept</td>
                         <td>
                             <span class="custom-dropdown w-100 b-dropdown-no-border">
-                                <select class="form-control" (change)="changeDirector($event.target.value, 3)" formControlName="bimDepartmentEmployeeId"
-                                    [class.default-cusor]="routerAction === 'view'">
+                                <select class="form-control" (change)="changeDirector($event.target.value, 3)"
+                                    formControlName="bimDepartmentEmployeeId" [class.default-cusor]="routerAction === 'view'">
                                     <option [ngValue]="null">--Chọn--</option>
                                     <option *ngFor="let user of userList" [value]="user.employeeId">{{user.employeeName}}</option>
                                 </select>
@@ -269,7 +277,8 @@
                                     <label class="custom-control custom-checkbox z-ontop">
                                         <input type="checkbox" [attr.disabled]="(data.get('whoIsInChargeId').value && data.get('whoIsInChargeId').value !==0 && data.get('startDate').value && data.get('finishDate').value)
                                                                          || (data.get('whoIsInChargeIds').value && data.get('whoIsInChargeIds').value.length !==0 && data.get('startDate').value && data.get('finishDate').value) ?
-                                                                         null : ''" (click)="routerAction === 'view' ? checkFinishTenderPlanItem(data.get('itemId').value) : null"
+                                                                         null : ''"
+                                            (click)="routerAction === 'view' ? checkFinishTenderPlanItem(data.get('itemId').value) : null"
                                             class="custom-control-input input-checkbox" formControlName="isFinish">
                                         <span class="custom-control-indicator"></span>
                                     </label>
@@ -279,8 +288,8 @@
                                 <ng-container *ngIf="data.get('itemId').value !== 1 && data.get('itemId').value !== 5 && data.get('itemId').value !== 7 && data.get('itemId').value !== 8
                                 && data.get('itemId').value !== 12 && data.get('itemId').value !== 16 && data.get('itemId').value !== 18 && data.get('itemId').value !== 20 && data.get('itemId').value !== 23
                                 && data.get('itemId').value !== 30 && data.get('itemId').value !== 33">
-                                    <kendo-datepicker (valueChange)="calculateTotalTime(i)" [max]="data.get('finishDate').value" formControlName="startDate"
-                                        class="form-control b-datepicker-no-border b-datepicker-ic"></kendo-datepicker>
+                                    <kendo-datepicker (valueChange)="calculateTotalTime(i)" [max]="data.get('finishDate').value"
+                                        formControlName="startDate" class="form-control b-datepicker-no-border b-datepicker-ic"></kendo-datepicker>
                                 </ng-container>
                             </td>
 
@@ -288,8 +297,8 @@
                                 <ng-container *ngIf="data.get('itemId').value !== 1 && data.get('itemId').value !== 5 && data.get('itemId').value !== 7 && data.get('itemId').value !== 8
                                 && data.get('itemId').value !== 12 && data.get('itemId').value !== 16 && data.get('itemId').value !== 18 && data.get('itemId').value !== 20 && data.get('itemId').value !== 23
                                 && data.get('itemId').value !== 30 && data.get('itemId').value !== 33">
-                                    <kendo-datepicker (valueChange)="calculateTotalTime(i)" [min]="data.get('startDate').value" formControlName="finishDate"
-                                        class="form-control b-datepicker-no-border b-datepicker-ic"></kendo-datepicker>
+                                    <kendo-datepicker (valueChange)="calculateTotalTime(i)" [min]="data.get('startDate').value"
+                                        formControlName="finishDate" class="form-control b-datepicker-no-border b-datepicker-ic"></kendo-datepicker>
                                 </ng-container>
                             </td>
 
@@ -341,7 +350,8 @@
                 <div style="width: 20%;" class="d-flex justify-content-end">
                     <div>
                         <div>
-                            <img (click)="isShowGantt = false" width="15" height="15" class="cursor-pointer not-outline" src="assets\images\close.png">
+                            <img (click)="isShowGantt = false" width="15" height="15" class="cursor-pointer not-outline"
+                                src="assets\images\close.png">
                         </div>
                     </div>
                 </div>
