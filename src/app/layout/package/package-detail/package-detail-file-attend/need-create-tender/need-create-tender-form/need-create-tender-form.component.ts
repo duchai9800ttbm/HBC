@@ -77,9 +77,11 @@ export class NeedCreateTenderFormComponent implements OnInit, OnDestroy {
         this.bidOpportunityId = PackageDetailComponent.packageId;
         this.scrollTopService.isScrollTop = false;
         this.routerAction = this.packageService.routerAction;
+        console.log('this.routerAction-this.routerAction', this.routerAction);
         if (this.routerAction === 'create') {
             this.setDataDefault();
             this.startUp();
+            console.log('NeedCreateTenderFormComponent.formModel-create', NeedCreateTenderFormComponent.formModel);
         } else {
             // if (!NeedCreateTenderFormComponent.formModel) {
             this.packageService.getProposedTenderParticipateReport(this.bidOpportunityId).subscribe(data => {
@@ -414,6 +416,7 @@ export class NeedCreateTenderFormComponent implements OnInit, OnDestroy {
     }
 
     ngOnDestroy() {
+        console.log('Destroy NeedCreate');
         this.scrollTopService.isScrollTop = true;
         if (this.subscription) {
             this.subscription.unsubscribe();
