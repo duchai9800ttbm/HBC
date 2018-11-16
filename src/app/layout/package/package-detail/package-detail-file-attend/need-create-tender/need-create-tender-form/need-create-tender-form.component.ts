@@ -75,6 +75,7 @@ export class NeedCreateTenderFormComponent implements OnInit, OnDestroy {
 
     ngOnInit() {
         this.bidOpportunityId = PackageDetailComponent.packageId;
+        // NeedCreateTenderFormComponent.formModel = new ProposeTenderParticipateRequest();
         this.scrollTopService.isScrollTop = false;
         this.routerAction = this.packageService.routerAction;
         console.log('this.routerAction-this.routerAction', this.routerAction);
