@@ -15,41 +15,27 @@ import { AuthGuard, ApiService, DataService, UserService } from './services/inde
 import { SharedDirectivesModule } from './directives/shared-directives.module';
 import { NgbTooltipModule } from '@ng-bootstrap/ng-bootstrap/tooltip/tooltip.module';
 import { MomentModule } from 'angular2-moment';
-import { ActivitiesModule } from './modules/activities/activities.module';
-import { AuditsModule } from './modules/audits/audits.module';
 import { RouterModule } from '@angular/router';
 import { FormInputModule } from './modules/form-input/form-input.module';
-import { AuditsListModule } from './modules/audits-list/audits-list.module';
 import { ButtonsModule } from '@progress/kendo-angular-buttons';
 import { DialogsModule } from '@progress/kendo-angular-dialog';
 import { GridModule } from '@progress/kendo-angular-grid';
-import { WindowService } from './services/window.service';
 import { NgxSpinnerModule } from 'ngx-spinner';
-import { FengShuisInforService } from './services/feng-shuis-infor.service';
-import { PackageService } from './services/package.service';
 import { FilterPipeModule } from 'ngx-filter-pipe';
 import { TagInputModule } from 'ngx-chips';
-import { DocumentService } from './services/document.service';
-import { ScrollToTopService } from './services/scroll-to-top.service';
-import { OpportunityHsmtService } from './services/opportunity-hsmt.service';
-import { DocumentReviewService } from './services/document-review.service';
 import { DropDownsModule } from '@progress/kendo-angular-dropdowns';
-import { SettingService } from './services/setting.service';
 import { MenuModule } from '@progress/kendo-angular-menu';
 import { ModalModule } from 'ngx-bootstrap/modal';
 import { CKEditorModule } from 'ng2-ckeditor';
-import { PackageSuccessService } from './services/package-success.service';
 import { DateInputsModule } from '@progress/kendo-angular-dateinputs';
 // Imports the ComboBox module
 import { ComboBoxModule } from '@progress/kendo-angular-dropdowns';
-import { EmailService } from './services/email.service';
 // Imports the Button module
 import { ButtonModule } from '@progress/kendo-angular-buttons';
 
 // Imports the ButtonGroup module
 import { ButtonGroupModule } from '@progress/kendo-angular-buttons';
 import { PDFExportModule } from '@progress/kendo-angular-pdf-export';
-import { LayoutService } from './services/layout.service';
 import { InputsModule } from '@progress/kendo-angular-inputs';
 import { HttpClientModule } from '@angular/common/http';
 import { UploadModule } from '@progress/kendo-angular-upload';
@@ -69,7 +55,6 @@ import { NgxLoadingModule, ngxLoadingAnimationTypes } from 'ngx-loading';
         TagInputModule,
         FilterPipeModule,
         NgxSpinnerModule,
-        AuditsListModule,
         CommonModule,
         RouterModule,
         FormsModule,
@@ -88,8 +73,6 @@ import { NgxLoadingModule, ngxLoadingAnimationTypes } from 'ngx-loading';
         OwlDateTimeModule,
         OwlNativeDateTimeModule,
         CommentsModule,
-        ActivitiesModule,
-        AuditsModule,
         FormInputModule,
         SharedComponentsModule,
         SharedPipesModule,
@@ -142,8 +125,6 @@ import { NgxLoadingModule, ngxLoadingAnimationTypes } from 'ngx-loading';
         OwlDateTimeModule,
         OwlNativeDateTimeModule,
         CommentsModule,
-        ActivitiesModule,
-        AuditsModule,
         FormInputModule,
         SharedComponentsModule,
         SharedPipesModule,

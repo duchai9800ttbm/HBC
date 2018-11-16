@@ -34,35 +34,7 @@ export class LayoutComponent implements OnInit {
         if (this.router.url === '/' || this.router.url === '/#/') {
             this.router.navigate(['/dashboard']);
         }
-        // IntervalObservable.create(1 * 60 * 1000).subscribe(_ => {
-        //     if (window.localStorage["listsNotification"]) {
-        //         const list = JSON.parse(
-        //             window.localStorage["listsNotification"]
-        //         );
-        //         const that = this;
-        //         list.forEach(element => {
-        //             if (
-        //                 +element.startDate - moment().valueOf() <=
-        //                 5 * 60 * 1000 &&
-        //                 +element.startDate - moment().valueOf() > 0
-        //             ) {
-        //                 const mess = `Bạn có một ${this.translateService.instant(
-        //                     element.moduleName || "null"
-        //                 )}
-        //                  ${this.translateService.instant(
-        //                         element.moduleItemName || "null"
-        //                     )} sẽ diễn ra trong
-        //                  ${moment(+element.startDate).fromNow()}!`;
-        //                 that.alertService.success(mess);
-        //             }
-        //         });
-        //     }
-        // });
-
-        // if (window.innerWidth <= 1024) {
-        //     this.sectionOut();
-        //     this.toggleMenu();
-        // }
+        
         this.scrollToTopService.listen();
     }
 

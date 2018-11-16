@@ -2,14 +2,11 @@ import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 import { AuditItem, PagedResult } from '../../../shared/models/index';
 import {
-    AuditService,
     SessionService,
     UserService,
     AlertService
 } from '../../../shared/services/index';
 import { UserModel } from '../../../shared/models/user/user.model';
-import { CallCenterService } from '../../../shared/services/call-center.service';
-import { CallCenterHistoryService } from '../../../shared/services/call-center-history.service';
 import { slideInOut } from '../../../router.animations';
 import { LayoutService } from '../../../shared/services/layout.service';
 import { ChangeDactivitites } from '../../../shared/models/side-bar/change-dactivitites.model';
@@ -35,11 +32,7 @@ export class SidebarComponent implements OnInit {
     @Input() state;
 
     constructor(
-        private auditService: AuditService,
         private sessionService: SessionService,
-        private userService: UserService,
-        private callCenter: CallCenterService,
-        private callCenterHistory: CallCenterHistoryService,
         private layoutService: LayoutService,
         private alertService: AlertService
     ) { }
@@ -80,16 +73,10 @@ export class SidebarComponent implements OnInit {
     onResize(e) {
         const width = document.getElementById('sidebar').offsetWidth;
         if (width < 200) {
-            // document.getElementById('logo').setAttribute('Width', '55');
-            // this.toggleMenuFromSidebar.emit(false);
             this.layoutService.emitEvent(true);
-            // this.showSidebarContent = false;
         }
         if (width === 200) {
-            // this.toggleMenuFromSidebar.emit(true);
             this.layoutService.emitEvent(false);
-            // this.showSidebarContent = true;
-            // document.getElementById('logo').setAttribute('Width', '200');
         }
     }
     getDataChangeRecently() {
@@ -103,7 +90,7 @@ export class SidebarComponent implements OnInit {
 
     }
     getActivites() {
-        var self = this;
+        const self = this;
 
         setInterval(function () {
 

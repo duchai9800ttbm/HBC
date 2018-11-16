@@ -7,7 +7,6 @@ import { PackageFormComponent } from './package-form/package-form.component';
 import { PackageListComponent } from './package-list/package-list.component';
 import { PackageRoutingModule } from './package-routing.module';
 
-import { ActivityService } from '../../shared/services';
 import { ExcelService } from '../../shared/services/excel.service';
 import { DownloadTemplateService } from '../../shared/services/download-template.service';
 import { SharedModule } from '../../shared/shared.module';
@@ -45,7 +44,6 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     GroupUserFormComponent
   ],
   providers: [
-    ActivityService,
     ExcelService,
     DownloadTemplateService,
     {

@@ -3,24 +3,18 @@ import { Observable } from '../../../../../node_modules/rxjs/Observable';
 import { DictionaryItem } from '../../../shared/models/dictionary-item.model';
 import { Subject } from '../../../../../node_modules/rxjs/Subject';
 import { DATATABLE_CONFIG, DATATABLE_CONFIG2 } from '../../../shared/configs/datatable.config';
-import { ActivityFilter } from '../../../shared/models/activity/activity-filter.model';
 import { PagedResult } from '../../../shared/models';
-import { ActivityListItem } from '../../../shared/models/activity/activity-list-item.model';
 import { DATETIME_PICKER_CONFIG } from '../../../shared/configs/datepicker.config';
-import { FormGroup, FormBuilder, Validators } from '../../../../../node_modules/@angular/forms';
-import { ActivityService, AlertService, DataService, ConfirmationService, UserService, SessionService } from '../../../shared/services';
+import { FormGroup } from '../../../../../node_modules/@angular/forms';
+import { AlertService, DataService, ConfirmationService, SessionService } from '../../../shared/services';
 import { Router } from '../../../../../node_modules/@angular/router';
-import { ExcelService } from '../../../shared/services/excel.service';
-import { TranslateService } from '../../../../../node_modules/@ngx-translate/core';
 import { DownloadTemplateService } from '../../../shared/services/download-template.service';
 import { BehaviorSubject } from '../../../../../node_modules/rxjs';
 import * as moment from 'moment';
-import { routerTransition } from '../../../router.animations';
 import { PresideHBC } from '../../../shared/fake-data/presideHBC';
 import { NameProjectListPackage } from '../../../shared/fake-data/nameProject-listPackage';
 import { PackageService } from '../../../shared/services/package.service';
 import { PackageFilter } from '../../../shared/models/package/package-filter.model';
-import { UserItemModel } from '../../../shared/models/user/user-item.model';
 import { UserModel } from '../../../shared/models/user/user.model';
 import { FieldModel } from '../../../shared/models/package/field.model';
 import { LayoutService } from '../../../shared/services/layout.service';
@@ -34,7 +28,6 @@ import { environment } from '../../../../environments/environment';
     selector: 'app-package-list',
     templateUrl: './package-list.component.html',
     styleUrls: ['./package-list.component.scss'],
-    // // animations: [routerTransition()],
     providers: [NgbDropdownConfig] // add NgbDropdownConfig to the component providers
 
 })
@@ -46,7 +39,7 @@ export class PackageListComponent implements OnInit, AfterViewChecked {
     @ViewChild('tablePin') tablePin: ElementRef;
     @ViewChild('fakeScrollBar') fakeScrollBar: ElementRef;
 
-    loading: boolean = false;
+    loading = false;
     activityStatusList: Observable<DictionaryItem[]>;
     checkboxSeclectAll: boolean;
     dtOptions: any = DATATABLE_CONFIG2;
@@ -140,21 +133,13 @@ export class PackageListComponent implements OnInit, AfterViewChecked {
     closeMyDrop = true;
     dataEvaluation: EvaluationModel[];
     constructor(
-        private activityService: ActivityService,
         private alertService: AlertService,
         private dataService: DataService,
         private confirmationService: ConfirmationService,
         private router: Router,
-        private excelService: ExcelService,
-        private translateService: TranslateService,
         private downloadTemplate: DownloadTemplateService,
-        private fb: FormBuilder,
         private packageService: PackageService,
-        private userService: UserService,
         private sessionService: SessionService,
-        private layoutService: LayoutService,
-        private cdRef: ChangeDetectorRef,
-        private zone: NgZone,
         config: NgbDropdownConfig
     ) {
         config.autoClose = false;
@@ -198,9 +183,6 @@ export class PackageListComponent implements OnInit, AfterViewChecked {
         this.refreshPopupConfig();
         this.listClassifyCustomer = this.dataService.getListOpportunityClassifies();
         this.listPhasePackage = this.dataService.getListBidOpportunityStages();
-        // this.userService.getAllUser('').subscribe(data => {
-        //     this.userListItem = data;
-        // });
         this.packageService.getListGroupChaired(0, 100, '').subscribe( data => this.userListItem = data.items);
         setTimeout(() => {
             this.userModel = this.sessionService.userInfo;
@@ -366,26 +348,6 @@ export class PackageListComponent implements OnInit, AfterViewChecked {
         this.filter(true);
     }
 
-    fileChange(event) {
-        const fileList: FileList = event.target.files;
-        const that = this;
-        if (fileList.length > 0) {
-            const file = fileList[0];
-            this.activityService.importFile(file).subscribe(
-                result => {
-                    that.refresh();
-                    this.alertService.success(
-                        'Bạn đã nhập dữ liệu thành công!'
-                    );
-                },
-                err => {
-                    this.alertService.error(
-                        'Bạn đã nhập dữ liệu thất bại, vui lòng nhập đúng template!'
-                    );
-                }
-            );
-        }
-    }
 
     refresh(displayAlert: boolean = false): void {
         this.loading = true;

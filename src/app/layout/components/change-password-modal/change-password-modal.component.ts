@@ -1,13 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { slideToLeft } from '../../../router.animations';
 import { FormGroup, FormBuilder } from '@angular/forms';
-import { UserService, AlertService, SessionService } from '../../../shared/services/index';
-import { Router } from '@angular/router';
+import { UserService, AlertService } from '../../../shared/services/index';
 import ValidationHelper from '../../../shared/helpers/validation.helper';
 import { Validators } from '@angular/forms';
 import CustomValidator from '../../../shared/helpers/custom-validator.helper';
-import { NgbModal, NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
-import { ApiErrorCodes } from '../../../shared/configs/api-error-codes';
+import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'app-change-password-modal',
@@ -19,10 +16,8 @@ export class ChangePasswordModalComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private userService: UserService,
-    private sessionService: SessionService,
     public activeModal: NgbActiveModal,
     private alertService: AlertService,
-    private modalService: NgbModal,
   ) { }
   apiErrorCode: string;
   isSubmitted: boolean;
@@ -80,11 +75,6 @@ export class ChangePasswordModalComponent implements OnInit {
           this.activeModal.close('Close click');
           this.alertService.success('Cập nhật mật khẩu thành công!', true);
         }, err => {
-          // if (err.status === 400) {
-          //   if (JSON.parse(err.text()).error_code === ApiErrorCodes.WRONG_PASSWORD) {
-          //     this.formErrors.oldPassword = 'Mật khẩu cũ không đúng!';
-          //   }
-          // }
           const error = err.json();
           if (error.errorCode === 'BusinessException') {
             this.isError = true;
