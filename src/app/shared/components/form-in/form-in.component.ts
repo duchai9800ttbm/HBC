@@ -79,7 +79,7 @@ export class FormInComponent implements OnInit {
   }
 
   print() {
-    if (!this.isOpen) {
+    // if (!this.isOpen) {
       this.isOpen = true;
       const popupWindow = window
         .open('about:blank', 'popup', `width=600,height=700,headers=no,footers=no,scrollbars=no,menubar=no,toolbar=no,
@@ -90,6 +90,6 @@ export class FormInComponent implements OnInit {
       popupWindow.document.close();
 
     }
-  }
+  // }
 
 }
