@@ -37,13 +37,15 @@ export class NeedCreateTenderFormResourceEvaluationComponent implements OnInit {
   }
 
   createForm() {
-    const formValue = NeedCreateTenderFormComponent.formModel.internalResourcesEvaluation;
-    this.resourceEvaluationForm = this.fb.group({
-      currentSituation: formValue ? formValue.currentSituation : '',
-      humanResorcesAndEquipments: formValue ? formValue.humanResorcesAndEquipments : '',
-      financeCapacity: formValue ? formValue.financeCapacity : '',
-      competitor: formValue ? formValue.competitor : ''
-    });
+    if (NeedCreateTenderFormComponent.formModel) {
+      const formValue = NeedCreateTenderFormComponent.formModel.internalResourcesEvaluation;
+      this.resourceEvaluationForm = this.fb.group({
+        currentSituation: formValue ? formValue.currentSituation : '',
+        humanResorcesAndEquipments: formValue ? formValue.humanResorcesAndEquipments : '',
+        financeCapacity: formValue ? formValue.financeCapacity : '',
+        competitor: formValue ? formValue.competitor : ''
+      });
+    }
   }
 
   mappingToLiveFormData(data) {

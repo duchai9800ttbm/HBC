@@ -66,8 +66,10 @@ export class NeedCreateTenderFormAnalysisComponent implements OnInit {
   }
 
   mappingToLiveFormData(data) {
-    NeedCreateTenderFormComponent.formModel.documentName = data.documentName;
-    NeedCreateTenderFormComponent.formModel.employerAnalysis = data.employerAnalysis;
+    if (NeedCreateTenderFormComponent.formModel) {
+      NeedCreateTenderFormComponent.formModel.documentName = data.documentName;
+      NeedCreateTenderFormComponent.formModel.employerAnalysis = data.employerAnalysis;
+    }
   }
 
   routerLink(event) {

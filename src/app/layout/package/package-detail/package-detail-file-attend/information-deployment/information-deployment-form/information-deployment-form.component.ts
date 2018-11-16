@@ -159,7 +159,9 @@ export class InformationDeploymentFormComponent implements OnInit, OnDestroy {
         this.checkAndCreateForm();
     }
     ngOnDestroy() {
-        this.subscription.unsubscribe();
+        if (this.subscription) {
+            this.subscription.unsubscribe();
+        }
     }
 
     // getPackageInfo() {

@@ -90,7 +90,7 @@
         <div class="main-table">
             <div class="bot-table">
                 <!-- Start Màn hình CHƯA chuyển giao tài liệu -->
-                <table *ngIf="(statusPackage.id === checkStatusPackage.DaThongBaoCacBenLienQuan.id)" class="table-selection stripe row-border hover cell-border zui-table">
+                <table *ngIf="(statusPackage.id === checkStatusPackage.DaThongBaoCacBenLienQuan.id)" class="table-selection stripe row-border hover cell-border zui-table w-100">
                     <thead>
                         <tr>
                             <th class="stt bg-default w5">
@@ -495,7 +495,7 @@
                 <!-- End Màn hình CHƯA chuyển giao tài liệu -->
                 <!-- Start Màn hình ĐÃ chuyển giao tài liệu -->
                 <table #nameit *ngIf="(statusPackage.id >= checkStatusPackage.DaChuyenGiaoTaiLieu.id) || (statusPackage.id === checkStatusPackage.ChuaNhanTaiLieu.id)"
-                    class="table-selection stripe row-border hover cell-border zui-table">
+                    class="table-selection stripe row-border hover cell-border zui-table w-100">
                     <thead>
                         <tr>
                             <th class="stt bg-default w5">
@@ -919,7 +919,7 @@
         </div>
         <div class="modal-body">
             <div class="bot-table">
-                <table class="table-selection stripe hover cell-border zui-table">
+                <table class="table-selection stripe hover cell-border zui-table w-100">
                     <thead>
                         <tr>
                             <th class="bg-default">

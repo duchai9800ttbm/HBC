@@ -37,11 +37,13 @@ export class NeedCreateTenderFormConsultantAnalysisComponent implements OnInit {
   }
 
   createForm() {
-    const formValue = NeedCreateTenderFormComponent.formModel.consultantAnalysis;
-    this.consultantAnalysForm = this.fb.group({
-      reputation: formValue ? formValue.reputation : '',
-      pastWorkingExperience: formValue ? formValue.pastWorkingExperience : ''
-    });
+    if (NeedCreateTenderFormComponent.formModel) {
+      const formValue = NeedCreateTenderFormComponent.formModel.consultantAnalysis;
+      this.consultantAnalysForm = this.fb.group({
+        reputation: formValue ? formValue.reputation : '',
+        pastWorkingExperience: formValue ? formValue.pastWorkingExperience : ''
+      });
+    }
   }
 
   mappingToLiveFormData(data) {

@@ -75,6 +75,7 @@ export class NeedCreateTenderFormComponent implements OnInit, OnDestroy {
 
     ngOnInit() {
         this.bidOpportunityId = PackageDetailComponent.packageId;
+        // NeedCreateTenderFormComponent.formModel = new ProposeTenderParticipateRequest();
         this.scrollTopService.isScrollTop = false;
         this.routerAction = this.packageService.routerAction;
         if (this.routerAction === 'create') {
@@ -102,38 +103,38 @@ export class NeedCreateTenderFormComponent implements OnInit, OnDestroy {
         });
 
         // phân quyền
-        const permission = this.permissionService.get().concatMap(response => response.length > 0 ? Observable.of(response) :
-            Observable.throw('Error Permission')).retry(1).subscribe(data => {
-                this.listPermission = data;
-                const hsdt = this.listPermission.length &&
-                    this.listPermission.filter(x => x.bidOpportunityStage === 'HSDT')[0];
-                if (!hsdt) {
+        const permission = this.permissionService.get().subscribe(data => {
+            this.listPermission = data;
+            const hsdt = this.listPermission.length &&
+                this.listPermission.filter(x => x.bidOpportunityStage === 'HSDT')[0];
+            if (!hsdt) {
+                this.listPermissionScreen = [];
+            }
+            if (hsdt) {
+                const screen = hsdt.userPermissionDetails.length
+                    && hsdt.userPermissionDetails.filter(y => y.permissionGroup.value === 'PhieuDeNghiDuThau')[0];
+                if (!screen) {
                     this.listPermissionScreen = [];
                 }
-                if (hsdt) {
-                    const screen = hsdt.userPermissionDetails.length
-                        && hsdt.userPermissionDetails.filter(y => y.permissionGroup.value === 'PhieuDeNghiDuThau')[0];
-                    if (!screen) {
-                        this.listPermissionScreen = [];
-                    }
-                    if (screen) {
-                        this.listPermissionScreen = screen.permissions.map(z => z.value);
-                    }
+                if (screen) {
+                    this.listPermissionScreen = screen.permissions.map(z => z.value);
                 }
-                this.TaoMoiDNDT = this.listPermissionScreen.includes('TaoMoiDNDT');
-                this.XemDNDT = this.listPermissionScreen.includes('XemDNDT');
-                this.SuaDNDT = this.listPermissionScreen.includes('SuaDNDT');
-                this.XoaDNDT = this.listPermissionScreen.includes('XoaDNDT');
-                this.InDNDT = this.listPermissionScreen.includes('InDNDT');
-                this.XacNhanKy = this.listPermissionScreen.includes('XacNhanKy');
-                this.GuiDuyetDNDT = this.listPermissionScreen.includes('GuiDuyetDNDT');
-                this.ChapThuanKhongChapThuan = this.listPermissionScreen.includes('ChapThuanKhongChapThuan');
-                this.TaiTemplate = this.listPermissionScreen.includes('TaiTemplate');
+            }
+            this.TaoMoiDNDT = this.listPermissionScreen.includes('TaoMoiDNDT');
+            this.XemDNDT = this.listPermissionScreen.includes('XemDNDT');
+            this.SuaDNDT = this.listPermissionScreen.includes('SuaDNDT');
+            this.XoaDNDT = this.listPermissionScreen.includes('XoaDNDT');
+            this.InDNDT = this.listPermissionScreen.includes('InDNDT');
+            this.XacNhanKy = this.listPermissionScreen.includes('XacNhanKy');
+            this.GuiDuyetDNDT = this.listPermissionScreen.includes('GuiDuyetDNDT');
+            this.ChapThuanKhongChapThuan = this.listPermissionScreen.includes('ChapThuanKhongChapThuan');
+            this.TaiTemplate = this.listPermissionScreen.includes('TaiTemplate');
+            setTimeout(() => {
                 if (!this.XemDNDT) {
                     this.router.navigate(['not-found']);
                 }
-                console.log('F55555');
-            });
+            }, 400);
+        });
         this.subscription.add(permission);
         // this.packageService.routerAction$.subscribe(
         //     router => {
@@ -152,6 +153,7 @@ export class NeedCreateTenderFormComponent implements OnInit, OnDestroy {
     setDataDefault() {
         // ======================
         NeedCreateTenderFormComponent.formModel = new ProposeTenderParticipateRequest();
+        console.log('NeedCreateTenderFormComponent.formModel-create-1.11', NeedCreateTenderFormComponent.formModel);
         // EstimatedBudgetPackage
         NeedCreateTenderFormComponent.formModel.estimatedBudgetOfPakage = new EstimatedBudgetPackage();
         NeedCreateTenderFormComponent.formModel.estimatedBudgetOfPakage.draftBudgetOfPackageCurrency = new Currency();
