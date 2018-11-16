@@ -3,7 +3,6 @@ import { PackageDetailComponent } from '../../package-detail.component';
 import { NeedCreateTenderFormComponent } from './need-create-tender-form/need-create-tender-form.component';
 import { ProposeTenderParticipateRequest } from '../../../../../shared/models/api-request/package/propose-tender-participate-request';
 import { PackageService } from '../../../../../shared/services/package.service';
-import { NgxSpinnerService } from 'ngx-spinner';
 import { AlertService, ConfirmationService } from '../../../../../shared/services';
 import { DATATABLE_CONFIG } from '../../../../../shared/configs';
 import { Subject, Subscription, Observable } from 'rxjs';
@@ -46,9 +45,6 @@ export class NeedCreateTenderComponent implements OnInit, OnDestroy {
   historyList;
   dialog;
   indexItemHistoryChange: number;
-  // get expectedDate() {
-  //   return
-  // }
   listPermission: Array<PermissionModel>;
   listPermissionScreen = [];
   TaoMoiDNDT = false;
@@ -63,7 +59,6 @@ export class NeedCreateTenderComponent implements OnInit, OnDestroy {
   subscription: Subscription;
   constructor(
     private packageService: PackageService,
-    private spinner: NgxSpinnerService,
     private alertService: AlertService,
     private statusObservableHsdtService: StatusObservableHsdtService,
     private confirmService: ConfirmationService,
@@ -121,7 +116,6 @@ export class NeedCreateTenderComponent implements OnInit, OnDestroy {
   }
 
   getChangeHistory(page: number | string, pageSize: number | string) {
-    this.spinner.show();
     this.packageService.getChangeHistoryListProposedTender(this.bidOpportunityId, page, pageSize).subscribe(respone => {
       this.pagedResultChangeHistoryList = respone;
       this.historyList = groupBy(this.pagedResultChangeHistoryList.items, [{ field: 'changedTime' }]);
@@ -140,10 +134,8 @@ export class NeedCreateTenderComponent implements OnInit, OnDestroy {
       this.pagedResultChangeHistoryList.pageCount = Math.ceil(+this.historyList.length / +this.pagedResultChangeHistoryList.pageSize);
       this.indexItemHistoryChange = Number(this.pagedResultChangeHistoryList.total)
         - Number(this.pagedResultChangeHistoryList.pageSize) * Number(this.pagedResultChangeHistoryList.currentPage);
-      this.spinner.hide();
     },
       err => {
-        this.spinner.hide();
       });
   }
 
@@ -152,7 +144,6 @@ export class NeedCreateTenderComponent implements OnInit, OnDestroy {
   }
 
   getProposedTenderParticipateReportInfo() {
-    this.spinner.show();
     this.packageService.getProposedTenderParticipateReport(this.bidOpportunityId).subscribe(data => {
       if (data) {
         NeedCreateTenderFormComponent.formModel = data;
@@ -166,9 +157,7 @@ export class NeedCreateTenderComponent implements OnInit, OnDestroy {
         // new ProposeTenderParticipateRequest()
         NeedCreateTenderFormComponent.formModel = null;
       }
-      this.spinner.hide();
     }, err => {
-      this.spinner.hide();
       this.alertService.error('Lấy thông tin phiếu đề nghị dự thầu thất bại!');
     });
   }
@@ -178,7 +167,7 @@ export class NeedCreateTenderComponent implements OnInit, OnDestroy {
       .getInforPackageID(this.bidOpportunityId)
       .subscribe(data => {
         this.packageInfo = data;
-        this.spinner.hide();
+        console.log(this.packageInfo);
       });
   }
 
@@ -204,34 +193,28 @@ export class NeedCreateTenderComponent implements OnInit, OnDestroy {
   }
 
   sendApproveBidProposal() {
-    this.spinner.show();
     this.packageService.sendApproveBidProposal(this.bidOpportunityId, DateTimeConvertHelper.fromDtObjectToSecon(this.dateApproveBid))
       .subscribe(data => {
         this.getProposedTenderParticipateReportInfo();
         this.notificationService.change();
-        this.spinner.hide();
         this.alertService.success('Gửi duyệt đề nghị dự thầu thành công!');
         this.isShowDialog = false;
         this.getPackageInfo();
       }, err => {
-        this.spinner.hide();
         this.alertService.error('Gửi duyệt đề nghị dự thầu thất bại!');
         this.isShowDialog = false;
       });
   }
 
   approveBidProposal() {
-    this.spinner.show();
     this.packageService.approveBidProposal(this.bidOpportunityId, this.reasonApproveBid)
       .subscribe(data => {
-        this.spinner.hide();
         this.statusObservableHsdtService.change();
         this.alertService.success('Duyệt đề nghị dự thầu thành công!');
         this.isShowDialog = false;
         this.reasonApproveBid = '';
         this.getPackageInfo();
       }, err => {
-        this.spinner.hide();
         this.alertService.error('Duyệt đề nghị dự thầu thất bại!');
         this.isShowDialog = false;
         this.reasonApproveBid = '';
@@ -239,17 +222,14 @@ export class NeedCreateTenderComponent implements OnInit, OnDestroy {
   }
 
   notApproveBidProposal() {
-    this.spinner.show();
     this.packageService.notApproveBidProposal(this.bidOpportunityId, this.reasonApproveBid)
       .subscribe(data => {
-        this.spinner.hide();
         this.statusObservableHsdtService.change();
         this.alertService.success('Không duyệt đề nghị dự thầu thành công!');
         this.isShowDialog = false;
         this.reasonApproveBid = '';
         this.getPackageInfo();
       }, err => {
-        this.spinner.hide();
         this.alertService.error('Không duyệt đề nghị dự thầu thất bại!');
         this.isShowDialog = false;
         this.reasonApproveBid = '';
@@ -258,16 +238,13 @@ export class NeedCreateTenderComponent implements OnInit, OnDestroy {
 
   deleteProposedTenderParticipateReport() {
     this.confirmService.confirm('Bạn có chắc chắn muốn xóa phiếu đề nghị dự thầu này?', () => {
-      this.spinner.show();
       this.packageService.deleteProposedTenderParticipateReport(this.bidOpportunityId).subscribe(data => {
         this.alertService.success('Xóa phiếu đề nghị dự thầu thành công!');
-        this.spinner.hide();
         this.proposedTender = null;
         this.getProposedTenderParticipateReportInfo();
         this.getChangeHistory(this.pagedResultChangeHistoryList.currentPage, this.pagedResultChangeHistoryList.pageSize);
       }, err => {
         this.alertService.error('Xóa phiếu đề nghị dự thầu thất bại');
-        this.spinner.hide();
       });
     });
   }

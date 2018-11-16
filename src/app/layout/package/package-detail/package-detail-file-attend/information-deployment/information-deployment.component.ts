@@ -132,6 +132,14 @@ export class InformationDeploymentComponent implements OnInit, OnDestroy {
   GuiPCTD = false;
   TaiTemplatePCTD = false;
   BatDauLapHSDT = false;
+  trangThaiGoiThau = [
+    'CanLapDeNghiDuThau',
+    'ChoDuyetDeNghiDuThau',
+    'ThamGiaDuThau',
+    'DaThongBaoTrienKhai',
+    'DaXacNhanPhanCong'
+  ];
+  isShowActionStage = false;
   constructor(
     private modalService: BsModalService,
     private formBuilder: FormBuilder,
@@ -151,7 +159,6 @@ export class InformationDeploymentComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.bidOpportunityId = PackageDetailComponent.packageId;
     this.loading = true;
-
     this.subscription = this.permissionService.get().delay(400).subscribe(data => {
       if (this.listPermission === []) {
 
@@ -281,6 +288,7 @@ export class InformationDeploymentComponent implements OnInit, OnDestroy {
       .getInforPackageID(this.bidOpportunityId)
       .subscribe(data => {
         this.packageInfo = data;
+        this.isShowActionStage = this.trangThaiGoiThau.includes(this.packageInfo.stageStatus.id);
         const isTrienKhai = this.packageInfo.stageStatus.id === this.bidStatus.DaThongBaoTrienKhai;
         // tslint:disable-next-line:max-line-length
         this.toggleTextUpFile = isTrienKhai ? 'Hiện chưa có bảng phân công tiến độ nào' : 'Bạn cần phải thông báo triển khai trước khi phân công tiến độ thực hiện';
