@@ -1258,6 +1258,7 @@ export class PriceReviewFormComponent implements OnChanges, OnInit, AfterViewIni
         this.priceReviewService.guiDuyetTrinhDuyetGia(this.packageId).subscribe(data => {
           that.getDataDefaultMapping();
           this.isShowSendApprovalTime = true;
+          this.refresh();
           that.alertService.success('Gửi duyệt trình duyệt giá thành công!');
         }, err => {
           that.alertService.error('Gửi duyệt trình duyệt giá thất bại, vui lòng thử lại sau!');

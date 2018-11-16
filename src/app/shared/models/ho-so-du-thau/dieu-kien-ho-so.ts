@@ -6,9 +6,9 @@ export class DieuKienHoSo {
     hieuLucHoSo: string;
     tienDo: {
         ngayKhoiCong: number;
-        thoiGianHoanThanh: number;
+        thoiGianHoanThanh: string | number;
         thoiGianHoanThanhTheoNhaThau: boolean;
-        thoiGianHoanThanhTheoNhaThauCount: number;
+        thoiGianHoanThanhTheoNhaThauCount: string | number;
     };
     cacLoaiThue: string[];
     donViTienTe: string;
