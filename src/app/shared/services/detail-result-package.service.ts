@@ -637,6 +637,11 @@ export class DetailResultPackageService {
               employeeEmail: itemBidTransferDocDetails.sendEmployee.employeeEmail,
             } : null,
             isFirstTransfer: itemBidTransferDocDetails.isFirstTransfer,
+            receiveStatus: itemBidTransferDocDetails.receiveStatus ? {
+              key: itemBidTransferDocDetails.receiveStatus.key,
+              value: itemBidTransferDocDetails.receiveStatus.value,
+              displayText: itemBidTransferDocDetails.receiveStatus.displayText,
+            } : null,
           };
         }) : null,
     };

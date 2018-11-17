@@ -114,7 +114,7 @@ export class PackageDocumentReceiverComponent implements OnInit {
       .subscribe(keySearch => {
         this.filterFuc(false);
       });
-      this.getListFilter();
+    this.getListFilter();
   }
 
   // getListFilter() {
@@ -361,8 +361,29 @@ export class PackageDocumentReceiverComponent implements OnInit {
   }
 
   // Yêu cầu gửi lại tài liệu
-  requestToResubmit(bidTransferDocDetailId: number) {
+  requestToResubmit(bidTransferDocDetailId: number, style: string) {
     this.detailResultPackageService.requesstToRessubmit(bidTransferDocDetailId).subscribe(respone => {
+      switch (style) {
+        case 'docHSMTListTranferred': {
+          (this.docHSMTListTranferred || []).forEach(itemDocuments => {
+            (itemDocuments.items || []).forEach(documents => {
+              if (documents.id === bidTransferDocDetailId) {
+                documents.receiveStatus.key = 'YeuCauGuiLai';
+              }
+            });
+          });
+          break;
+        }
+        case 'docHSDTListTranferred': {
+          (this.docHSDTListTranferred || []).forEach(itemDocuments => {
+            (itemDocuments.items || []).forEach(documents => {
+              if (documents.id === bidTransferDocDetailId) {
+                documents.receiveStatus.key = 'YeuCauGuiLai';
+              }
+            });
+          });
+        }
+      }
       this.alertService.success('Yêu cầu gửi lại tài liệu thành công!');
     },
       err => {

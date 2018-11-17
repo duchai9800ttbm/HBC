@@ -186,8 +186,8 @@
                                             </ng-container>
                                             <ng-container *ngIf="documents.status && documents.status.key === 'QuaHanSuDung'">
                                                 <div class="d-flex justify-content-around">
-                                                    <div id="mr">
-                                                        <a title="Yêu cầu gửi lại" (click)="requestToResubmit(documents.id)">
+                                                    <div id="mr" *ngIf="documents.receiveStatus && documents.receiveStatus.key !== 'YeuCauGuiLai'">
+                                                        <a title="Yêu cầu gửi lại" (click)="requestToResubmit(documents.id, 'docHSMTListTranferred')">
                                                             <i class="fa fa-refresh" aria-hidden="true"></i>
                                                         </a>
                                                     </div>
@@ -281,8 +281,8 @@
                                                 </ng-container>
                                                 <ng-container *ngIf="documents.status && documents.status.key === 'QuaHanSuDung'">
                                                     <div class="d-flex justify-content-around">
-                                                        <div id="mr">
-                                                            <a title="Yêu cầu gửi lại" (click)="requestToResubmit(documents.id)">
+                                                        <div id="mr" *ngIf="documents.receiveStatus && documents.receiveStatus.key !== 'YeuCauGuiLai'">
+                                                            <a title="Yêu cầu gửi lại" (click)="requestToResubmit(documents.id, 'docHSDTListTranferred')">
                                                                 <i class="fa fa-refresh" aria-hidden="true"></i>
                                                             </a>
                                                         </div>

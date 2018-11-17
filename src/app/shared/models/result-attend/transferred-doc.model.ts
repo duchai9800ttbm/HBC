@@ -38,5 +38,10 @@ export class TransferredDoc {
             employeeEmail: string;
         };
         isFirstTransfer: boolean;
-    } [];
+        receiveStatus: {
+            key: string;
+            value: string;
+            displayText: string;
+        }
+    }[];
 }
