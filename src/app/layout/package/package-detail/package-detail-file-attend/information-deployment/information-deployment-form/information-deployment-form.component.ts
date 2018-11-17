@@ -739,6 +739,9 @@ export class InformationDeploymentFormComponent implements OnInit, OnDestroy {
                 break;
             }
         }
+        whoIsInChargeIds = whoIsInChargeIds.filter((obj, pos, arr) => {
+            return arr.map(mapObj => mapObj['employeeId']).indexOf(obj['employeeId']) === pos;
+        });
         whoIsInChargeIds.forEach(item => {
             item.employeeName = item.userName;
         });
