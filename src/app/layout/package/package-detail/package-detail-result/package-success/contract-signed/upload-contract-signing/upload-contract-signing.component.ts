@@ -41,7 +41,7 @@ export class UploadContractSigningComponent implements OnInit {
       version: [this.version],
       uploadedBy: [],
       receivedDate: [],
-      interviewTimes: [this.interviewTimes, CustomValidator.required],
+      interviewTimes: [this.interviewTimes, CustomValidator.requiredDate],
       documentDesc: [],
       link: [],
     });

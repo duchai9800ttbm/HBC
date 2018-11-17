@@ -26,7 +26,7 @@ export default class CustomValidator {
     }
 
     static requiredDate(control: AbstractControl): ValidationErrors | null {
-        return (control.value === null)
+        return (control.value === null || control.value === '')
             ? {
                 required: {
                     valid: false
