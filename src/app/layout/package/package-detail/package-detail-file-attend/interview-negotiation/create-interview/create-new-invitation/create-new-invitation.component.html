@@ -56,7 +56,7 @@
                 Địa điểm
             </div>
             <div class="width-content-field" style="padding-left: 0px">
-                <input class="font-size-control w-100" kendoTextBox formControlName="place" type="text">
+                <input [class.is-invalid]="formErrors.place" class="font-size-control w-100" kendoTextBox formControlName="place" type="text">
             </div>
         </div>
         <div class="invalid-feedback width-content-field pl-0 content-form-err" *ngIf="formErrors.place">
@@ -67,7 +67,7 @@
                 Lần phỏng vấn
             </div>
             <div class="width-content-field" style="padding-left: 0px">
-                <input appInputNumber class="font-size-control w-100" kendoTextBox formControlName="interviewTimes" type="text">
+                <input [class.is-invalid]="formErrors.interviewTimes" appInputNumber class="font-size-control w-100" kendoTextBox formControlName="interviewTimes" type="text">
             </div>
         </div>
         <div class="invalid-feedback width-content-field pl-0 content-form-err" *ngIf="formErrors.interviewTimes">
