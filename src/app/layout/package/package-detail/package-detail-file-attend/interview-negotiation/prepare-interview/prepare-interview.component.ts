@@ -138,7 +138,7 @@ export class PrepareInterviewComponent implements OnInit {
       }
       // Trình duyệt giá
       case 'TenderPriceApproval': {
-        this.router.navigate([`/package/detail/${this.packageId}/attend/price-review/summary`]);
+        this.router.navigate([`/package/detail/${this.packageId}/attend/price-review/detail`]);
         break;
       }
     }
