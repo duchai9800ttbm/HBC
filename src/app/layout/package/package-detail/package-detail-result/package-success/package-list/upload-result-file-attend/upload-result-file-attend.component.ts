@@ -18,6 +18,7 @@ export class UploadResultFileAttendComponent implements OnInit {
   @Input() version: number;
   @Input() interviewTimes: number;
   @Input() winOrLost: boolean;
+  @Input() updateStatusPackage: boolean;
   uploadResultForm: FormGroup;
   file;
   formErrors = {
@@ -75,10 +76,12 @@ export class UploadResultFileAttendComponent implements OnInit {
         this.file
       ).subscribe(response => {
         this.closePopup();
-        if (this.winOrLost) {
-          this.packageService.changeStatusPackageValue(this.checkStatusPackage.TrungThau.text);
-        } else {
-          this.packageService.changeStatusPackageValue(this.checkStatusPackage.TratThau.text);
+        if (this.updateStatusPackage) {
+          if (this.winOrLost) {
+            this.packageService.changeStatusPackageValue(this.checkStatusPackage.TrungThau.text);
+          } else {
+            this.packageService.changeStatusPackageValue(this.checkStatusPackage.TratThau.text);
+          }
         }
         this.detailResultPackageService.changeListFileResult();
         this.alertService.success('Upload kết quả dự thầu thành công!');

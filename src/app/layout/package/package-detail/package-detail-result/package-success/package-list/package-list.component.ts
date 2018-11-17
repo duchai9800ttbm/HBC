@@ -278,7 +278,7 @@ export class PackageListComponent implements OnInit, OnDestroy {
     this.textTitleSendMail = this.showBtnNotification ? 'Gửi thư thông báo đến các bên liên quan' : 'Gửi thư phản hồi đến phòng hợp đồng';
     this.alertService.success('Thông báo đến đến các bên liên quan thành công!');
   }
-  uploadkqdt() {
+  uploadkqdt(updateStatusPackage: boolean) {
     this.dialogUploadResultAttend = this.dialogService.open({
       content: UploadResultFileAttendComponent,
       width: 650,
@@ -289,6 +289,7 @@ export class PackageListComponent implements OnInit, OnDestroy {
     instance.version = this.maxVersion + 1;
     instance.interviewTimes = this.maxInterviewTimes + 1;
     instance.winOrLost = true;
+    instance.updateStatusPackage = updateStatusPackage;
   }
   closePopuup() {
     this.dialogUploadResultAttend.close();
