@@ -235,13 +235,13 @@
                                             <td class="select-filter text-center w10"></td>
                                             <td class="text-center" [ngClass]="{'w6' : isManageTransfer==true, 'w10' : isManageTransfer==false}">
                                                 <div class="d-flex justify-content-around">
-                                                    <div *ngIf="!items.documents[0].fileUrl" id="mr">
+                                                    <div *ngIf="!items.documents[0].filerUrl" id="mr">
                                                         <a title="Tải file" (click)="downloadFileItemHSMT(items.documents[0].id)">
                                                             <i class="fa fa-download color-item-down" aria-hidden="true"></i>
                                                         </a>
                                                     </div>
-                                                    <div *ngIf="items.documents[0].fileUrl">
-                                                        <a title="Mở link" [href]="items.documents[0].fileUrl" target="_blank">
+                                                    <div *ngIf="items.documents[0].filerUrl">
+                                                        <a title="Mở link" [href]="items.documents[0].filerUrl" target="_blank">
                                                             <i class="fa fa-external-link color-item-down" aria-hidden="true"></i>
                                                         </a>
                                                     </div>
@@ -291,13 +291,13 @@
                                         <td class="select-filter text-center w10"></td>
                                         <td class="text-center" [ngClass]="{'w6' : isManageTransfer==true, 'w10' : isManageTransfer==false}">
                                             <div class="d-flex justify-content-around">
-                                                <div *ngIf="!documents.fileUrl" id="mr">
+                                                <div *ngIf="!documents.filerUrl" id="mr">
                                                     <a title="Tải file" (click)="downloadFileItemHSMT(documents.id)">
                                                         <i class="fa fa-download color-item-down" aria-hidden="true"></i>
                                                     </a>
                                                 </div>
-                                                <div *ngIf="documents.fileUrl">
-                                                    <a title="Mở link" [href]="documents.fileUrl" target="_blank">
+                                                <div *ngIf="documents.filerUrl">
+                                                    <a title="Mở link" [href]="documents.filerUrl" target="_blank">
                                                         <i class="fa fa-external-link color-item-down" aria-hidden="true"></i>
                                                     </a>
                                                 </div>
@@ -461,13 +461,13 @@
                                         <td class="text-center" [ngClass]="{'w6' : isManageTransfer==true, 'w10' : isManageTransfer==false}">
                                             <div class="d-flex justify-content-around">
                                                 <ng-container *ngIf="!documents.isLiveForm">
-                                                    <div id="mr" *ngIf="!documents.fileUrl">
+                                                    <div id="mr" *ngIf="!documents.filerUrl">
                                                         <a title="Tải file" (click)="downloadFileItemHSDT(document.id)">
                                                             <i class="fa fa-download color-item-down" aria-hidden="true"></i>
                                                         </a>
                                                     </div>
-                                                    <div *ngIf="documents.fileUrl">
-                                                        <a title="Mở link" [href]="documents.fileUrl" target="_blank">
+                                                    <div *ngIf="documents.filerUrl">
+                                                        <a title="Mở link" [href]="documents.filerUrl" target="_blank">
                                                             <i class="fa fa-external-link color-item-down" aria-hidden="true"></i>
                                                         </a>
                                                     </div>
