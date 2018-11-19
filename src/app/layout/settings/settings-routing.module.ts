@@ -2,6 +2,9 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { SettingsComponent } from './settings.component';
 import { SettingLocationComponent } from './setting-location/setting-location.component';
+import { SettingContractComponent } from './setting-contract/setting-contract.component';
+import { SettingContractCreateComponent } from './setting-contract/setting-contract-create/setting-contract-create.component';
+import { SettingContractEditComponent } from './setting-contract/setting-contract-edit/setting-contract-edit.component';
 
 const routes: Routes = [
   {
@@ -31,6 +34,18 @@ const routes: Routes = [
       {
         path: 'position',
         loadChildren: './setting-position/setting-position.module#SettingPositionModule'
+      },
+      {
+        path: 'contract',
+        component: SettingContractComponent
+      },
+      {
+        path: 'contract/create',
+        component: SettingContractCreateComponent
+      },
+      {
+        path: 'contract/edit/:id',
+        component: SettingContractEditComponent
       }
     ]
   }

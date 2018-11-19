@@ -183,7 +183,7 @@ export class SiteSurveyReportService {
             siteArea: (obj.scaleOverall.quyMoDuAn.dienTichCongTruong) ? obj.scaleOverall.quyMoDuAn.dienTichCongTruong : 0,
             grossFloorArea: (obj.scaleOverall.quyMoDuAn.tongDienTichXayDung) ? obj.scaleOverall.quyMoDuAn.tongDienTichXayDung : 0,
             totalNumberOfFloor: (obj.scaleOverall.quyMoDuAn.soTang) ? obj.scaleOverall.quyMoDuAn.soTang : '',
-            constructionPeriod: (obj.scaleOverall.quyMoDuAn.tienDo) ? obj.scaleOverall.quyMoDuAn.tienDo : 0
+            constructionPeriod: (obj.scaleOverall.quyMoDuAn.tienDo) ? obj.scaleOverall.quyMoDuAn.tienDo : ''
           }
         },
         perspectiveImageOfProject: obj.scaleOverall.hinhAnhPhoiCanh && {

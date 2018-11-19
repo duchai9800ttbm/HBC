@@ -285,13 +285,15 @@ label {
 }
 
 .form-view {
+    min-height: 2rem;
     border: 1px solid #ced4da;
     border-radius: 0.25rem;
     padding: 0.375rem 0.75rem;
     font-size: 13px;
     text-align: right;
 }
-.form-view-bg{
+
+.form-view-bg {
     background-color: #EAEBE3;
 }
 

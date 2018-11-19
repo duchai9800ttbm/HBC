@@ -9,6 +9,9 @@ import { PackageDetailComponent } from '../../../../../package-detail.component'
 import { ProposeTenderParticipateRequest } from '../../../../../../../../shared/models/api-request/package/propose-tender-participate-request';
 import { Currency } from '../../../../../../../../shared/models/currency';
 import { Router } from '../../../../../../../../../../node_modules/@angular/router';
+import { SettingService } from '../../../../../../../../shared/services/setting.service';
+import { Contract } from '../../../../../../../../shared/models/setting/contract';
+import { AlertService } from '../../../../../../../../shared/services';
 
 @Component({
     selector: 'app-summary-condition-form-condition-contract',
@@ -24,6 +27,7 @@ export class SummaryConditionFormConditionContractComponent implements OnInit {
     // Thông tin Đề nghị dự thầu
     dataPTPReport: ProposeTenderParticipateRequest;
     unitTimeguarantee: Currency;
+    typeOfContracts: Contract[];
 
     get baoHiemMayMocHSMTFA(): FormArray {
         const dieuKienHSMT = this.conditionContractForm.get('dieuKienTheoHSMT') as FormGroup;
@@ -40,8 +44,9 @@ export class SummaryConditionFormConditionContractComponent implements OnInit {
     constructor(
         private fb: FormBuilder,
         private hoSoDuThauService: HoSoDuThauService,
-        private packageService: PackageService,
-        private router: Router
+        private router: Router,
+        private settingService: SettingService,
+        private alertService: AlertService
     ) { }
 
     ngOnInit() {
@@ -50,6 +55,9 @@ export class SummaryConditionFormConditionContractComponent implements OnInit {
         this.hoSoDuThauService.watchLiveformState().subscribe(data => {
             this.isModeView = data.isModeView;
         });
+        this.settingService.loadAllTypeOfContracts().subscribe(data => {
+            this.typeOfContracts = data;
+        }, err => this.alertService.error('Tải danh sách loại hợp đồng không thành công.'));
         this.loadData();
 
     }
@@ -211,7 +219,7 @@ export class SummaryConditionFormConditionContractComponent implements OnInit {
             loaiHopDong: this.fb.group({
                 name: {
                     value: this.dataStepConditionContract && this.dataStepConditionContract.loaiHopDong
-                        && this.dataStepConditionContract.loaiHopDong.name,
+                        && (this.dataStepConditionContract.loaiHopDong.name) ? this.dataStepConditionContract.loaiHopDong.name : '',
                     disabled: this.isModeView
                 },
                 desc: {
@@ -624,8 +632,8 @@ export class SummaryConditionFormConditionContractComponent implements OnInit {
 
     routerLink(e, link) {
         if (e.code === 'Enter') {
-          this.router.navigate([`/package/detail/${this.packageId}/attend/build/summary/form/create/${link}`]);
+            this.router.navigate([`/package/detail/${this.packageId}/attend/build/summary/form/create/${link}`]);
         }
-      }
+    }
 
 }

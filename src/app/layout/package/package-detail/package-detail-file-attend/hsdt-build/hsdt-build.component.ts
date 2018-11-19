@@ -88,9 +88,12 @@ export class HsdtBuildComponent implements OnInit, AfterViewChecked, OnDestroy {
     listPerTomTatDK = [];
     listPerYeuCauBaoGiaVatTu = [];
     listPerBaoCaoThamQuanCongTrinh = [];
+    listPerBangTongHopDuToan = [];
     listPerBangTinhChiPhiChung = [];
     listPerCauHoiLamRo = [];
-
+    listPerCacHSKTCoLienQuan = [];
+    listPerHoSoPhapLy = [];
+    listPerHoSoKhac = [];
 
     listPermissionScreen2 = [];
 
@@ -103,6 +106,15 @@ export class HsdtBuildComponent implements OnInit, AfterViewChecked, OnDestroy {
     BangTinhChiPhiChungTemplate = false;
     BangCauHoiLamRoTemplate = false;
 
+    BangTomTatDKDownload = false;
+    YeuCauBaoGiaVatTuDownload = false;
+    BaoCaoThamQuanCongTrinhDownload = false;
+    BangTongHopDuToanDownload = false;
+    BangTinhChiPhiChungDownload = false;
+    BangCauHoiLamRoDownload = false;
+    CacHSKTCoLienQuanDownload = false;
+    HoSoPhapLyDownload = false;
+    HoSoKhacDownload = false;
 
     constructor(
         private hoSoDuThauService: HoSoDuThauService,
@@ -113,7 +125,6 @@ export class HsdtBuildComponent implements OnInit, AfterViewChecked, OnDestroy {
         private spinner: NgxSpinnerService,
         private confirmationService: ConfirmationService,
         private permissionService: PermissionService,
-        private activatedRoute: ActivatedRoute,
         private scrollTopService: ScrollToTopService
     ) { }
 
@@ -127,34 +138,59 @@ export class HsdtBuildComponent implements OnInit, AfterViewChecked, OnDestroy {
             const hsdt = this.listPermission.length &&
                 this.listPermission.filter(x => x.bidOpportunityStage === 'HSDT')[0];
             if (!hsdt) {
-                this.listPerTomTatDK = [];
+                //   this.listPerTomTatDK = [];
                 this.listPerYeuCauBaoGiaVatTu = [];
-                this.listPerBaoCaoThamQuanCongTrinh = [];
+                //     this.listPerBaoCaoThamQuanCongTrinh = [];
+                this.listPerBangTongHopDuToan = [];
                 this.listPerBangTinhChiPhiChung = [];
                 this.listPerCauHoiLamRo = [];
+                this.listPerCacHSKTCoLienQuan = [];
+                this.listPerHoSoPhapLy = [];
+                this.listPerHoSoKhac = [];
             }
             if (hsdt) {
                 const screen = hsdt.userPermissionDetails.length
                     && hsdt.userPermissionDetails.filter(y => y.permissionGroup.value === 'LapHoSoDuThauFile')[0];
                 if (!screen) {
-                    this.listPerTomTatDK = [];
+                    //  this.listPerTomTatDK = [];
                     this.listPerYeuCauBaoGiaVatTu = [];
-                    this.listPerBaoCaoThamQuanCongTrinh = [];
+                    //  this.listPerBaoCaoThamQuanCongTrinh = [];
+                    this.listPerBangTongHopDuToan = [];
                     this.listPerBangTinhChiPhiChung = [];
                     this.listPerCauHoiLamRo = [];
+                    this.listPerCacHSKTCoLienQuan = [];
+                    this.listPerHoSoPhapLy = [];
+                    this.listPerHoSoKhac = [];
                 }
                 if (screen) {
                     this.listPerYeuCauBaoGiaVatTu = screen.permissions
                         .filter(t => t.tenderDocumentTypeId === this.documentTypeId.YeuCauBaoGiaVatTu).map(z => z.value);
+                    this.listPerBangTongHopDuToan = screen.permissions
+                        .filter(t => t.tenderDocumentTypeId === this.documentTypeId.BangTongHopDuToan).map(z => z.value);
                     this.listPerBangTinhChiPhiChung = screen.permissions
                         .filter(t => t.tenderDocumentTypeId === this.documentTypeId.BangTinhChiPhiChung).map(z => z.value);
                     this.listPerCauHoiLamRo = screen.permissions
                         .filter(t => t.tenderDocumentTypeId === this.documentTypeId.BangCauHoiLamRo).map(z => z.value);
+                    this.listPerCacHSKTCoLienQuan = screen.permissions
+                        .filter(t => t.tenderDocumentTypeId === this.documentTypeId.CacHSKTCoLienQuan).map(z => z.value);
+                    this.listPerHoSoPhapLy = screen.permissions
+                        .filter(t => t.tenderDocumentTypeId === this.documentTypeId.HoSoPhapLy).map(z => z.value);
+                    this.listPerHoSoKhac = screen.permissions
+                        .filter(t => t.tenderDocumentTypeId === this.documentTypeId.HoSoKhac).map(z => z.value);
                 }
             }
             this.YeuCauBaoGiaVatTuTemplate = this.listPerYeuCauBaoGiaVatTu.includes('TaiTemplate');
             this.BangTinhChiPhiChungTemplate = this.listPerBangTinhChiPhiChung.includes('TaiTemplate');
             this.BangCauHoiLamRoTemplate = this.listPerCauHoiLamRo.includes('TaiTemplate');
+
+            this.YeuCauBaoGiaVatTuDownload = this.listPerYeuCauBaoGiaVatTu.includes('DownloadFile');
+            this.BangTongHopDuToanDownload = this.listPerBangTongHopDuToan.includes('DownloadFile');
+            this.BangTinhChiPhiChungDownload = this.listPerBangTinhChiPhiChung.includes('DownloadFile');
+            this.BangCauHoiLamRoDownload = this.listPerCauHoiLamRo.includes('DownloadFile');
+            this.CacHSKTCoLienQuanDownload = this.listPerCacHSKTCoLienQuan.includes('DownloadFile');
+            this.HoSoPhapLyDownload = this.listPerHoSoPhapLy.includes('DownloadFile');
+            this.HoSoKhacDownload = this.listPerHoSoKhac.includes('DownloadFile');
+
 
             const hsdt2 = this.listPermission.length &&
                 this.listPermission.filter(x => x.bidOpportunityStage === 'HSDT')[0];
@@ -177,6 +213,10 @@ export class HsdtBuildComponent implements OnInit, AfterViewChecked, OnDestroy {
             }
             this.BangTomTatDKTemplate = this.listPerTomTatDK.includes('TaiTemplate');
             this.BaoCaoThamQuanCongTrinhTemplate = this.listPerBaoCaoThamQuanCongTrinh.includes('TaiTemplate');
+
+            this.BangTomTatDKDownload = this.listPerTomTatDK.includes('XemLiveForm');
+            this.BaoCaoThamQuanCongTrinhDownload = this.listPerBaoCaoThamQuanCongTrinh.includes('XemLiveForm');
+
             this.ChotHSDT = this.listPermissionScreen2.includes('ChotHSDT');
         });
 

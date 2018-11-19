@@ -139,7 +139,7 @@ export class UploadFormComponent implements OnInit, OnDestroy {
       this.BaoCaoThamQuanCongTrinhTemplate = this.listPerBaoCaoThamQuanCongTrinh.includes('TaiTemplate');
       this.BangTinhChiPhiChungTemplate = this.listPerBangTinhChiPhiChung.includes('TaiTemplate');
       this.BangCauHoiLamRoTemplate = this.listPerCauHoiLamRo.includes('TaiTemplate');
-
+      console.log(this.listPerCauHoiLamRo);
       this.XoaFile = this.listPermissionScreen3.includes('XoaFile');
       this.UploadFile = this.listPermissionScreen3.includes('UploadHSDT');
       this.DownLoadFile = this.listPermissionScreen3.includes('DownloadFile');

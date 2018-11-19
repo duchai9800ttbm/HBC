@@ -979,3 +979,9 @@ router-oulet {
 .pointer-none {
     pointer-events: none;
 }
+
+.error-text {
+    font-style: italic;
+    font-size: 11px;
+    color: #ff2a2a;
+}
