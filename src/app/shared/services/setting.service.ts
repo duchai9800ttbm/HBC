@@ -12,6 +12,8 @@ import { ConstructionCategoryListItem } from '../models/setting/construction-cat
 import { BidStatusListItem } from '../models/setting/bid-status-list-item';
 import Utils from '../helpers/utils.helper';
 import { LevelListItem } from '../models/setting/level-list-item';
+import { Contract } from '../models/setting/contract';
+import { retry } from 'rxjs/operator/retry';
 
 @Injectable()
 export class SettingService {
@@ -19,7 +21,7 @@ export class SettingService {
         private apiService: ApiService,
         private sessionService: SessionService,
         private instantSearchService: InstantSearchService
-    ) {}
+    ) { }
 
     get employeeId() {
         return this.sessionService.currentUser.employeeId;
@@ -178,10 +180,10 @@ export class SettingService {
                 typeUrl = 'bidopportunitywinreason';
                 break;
             case SETTING_REASON.Lose:
-            typeUrl = 'bidopportunitylosereason';
+                typeUrl = 'bidopportunitylosereason';
                 break;
             case SETTING_REASON.Cancel:
-            typeUrl = 'bidopportunitycancelreason';
+                typeUrl = 'bidopportunitycancelreason';
                 break;
         }
         const urlParam = Utils.createSearchParam(searchTerm);
@@ -299,10 +301,10 @@ export class SettingService {
                 typeUrl = 'bidopportunitywinreason';
                 break;
             case SETTING_REASON.Lose:
-            typeUrl = 'bidopportunitylosereason';
+                typeUrl = 'bidopportunitylosereason';
                 break;
             case SETTING_REASON.Cancel:
-            typeUrl = 'bidopportunitycancelreason';
+                typeUrl = 'bidopportunitycancelreason';
                 break;
         }
         const url = `${typeUrl}/${id}/get`;
@@ -354,10 +356,10 @@ export class SettingService {
                 typeUrl = 'bidopportunitywinreason';
                 break;
             case SETTING_REASON.Lose:
-            typeUrl = 'bidopportunitylosereason';
+                typeUrl = 'bidopportunitylosereason';
                 break;
             case SETTING_REASON.Cancel:
-            typeUrl = 'bidopportunitycancelreason';
+                typeUrl = 'bidopportunitycancelreason';
                 break;
         }
         const url = `${typeUrl}/deletemultiple`;
@@ -413,7 +415,7 @@ export class SettingService {
     }
 
     // view Vị trí, chức vụ
-      viewLevel(id: string): Observable<LevelListItem> {
+    viewLevel(id: string): Observable<LevelListItem> {
         const url = `level/${id}`;
         return this.apiService.get(url)
             .map(data => data.result);
@@ -427,4 +429,82 @@ export class SettingService {
         };
         return this.apiService.post(url, requestModel);
     }
+    // ---
+    // APIs Contract
+    createOrUpdateTypeOfContract(contract: Contract) {
+        const url = contract.id ? `bidcontracttype/edit` : `bidcontracttype/create`;
+        const contractModel = {
+            id: contract.id,
+            name: contract.contractNameVi,
+            englishName: contract.contractNameEng,
+            desc: contract.contractDesc
+        };
+        return this.apiService.post(url, contractModel).map(res => res.result);
+    }
+    deleteTypeOfContract(idContract: number) {
+        const url = `bidcontracttype/delete`;
+        return this.apiService.post(url, { id: idContract }).map(res => res.result);
+    }
+    deleteMultiTypeOfContract(idsContract: any) {
+        const url = `bidcontracttype/deletemultiple`;
+        const contractModel = {
+            ids: [...idsContract]
+        };
+        return this.apiService.post(url, contractModel).map(res => res.result);
+    }
+    detailTypeOfContract(idContract): Observable<Contract> {
+        const url = `bidcontracttype/${idContract}/get`;
+        return this.apiService
+            .get(url)
+            .map(contract => {
+                return {
+                    id: contract.result.id,
+                    contractNameVi: contract.result.name,
+                    contractNameEng: contract.result.englishName,
+                    contractDesc: contract.result.desc,
+                    checkboxSelected: false
+                };
+            });
+    }
+    loadAllTypeOfContracts(): Observable<Contract[]> {
+        const url = `bidcontracttype/getall`;
+        return this.apiService.get(url).map(res => {
+            return res.result.result.map(contract => {
+                return {
+                    contractNameVi: contract.name,
+                    contractNameEng: contract.englishName,
+                    contractDesc: contract.desc,
+                    id: contract.id
+                };
+            });
+        });
+    }
+    searchTypeOfContract(
+        searchTerm: string,
+        page: number | string,
+        pageSize: number | string
+    ): Observable<PagedResult<Contract>> {
+        const urlParam = Utils.createSearchParam(searchTerm);
+        return this.apiService
+            .get(`bidcontracttype/filter/${page}/${pageSize}`, urlParam)
+            .map(response => {
+                return {
+                    currentPage: response.result.pageIndex,
+                    pageSize: pageSize,
+                    pageCount: response.result.totalPages,
+                    total: response.result.totalCount,
+                    items: response.result.items.map(contract => {
+                        return {
+                            contractNameVi: contract.name,
+                            contractNameEng: contract.englishName,
+                            contractDesc: contract.desc,
+                            id: contract.id
+                        };
+                    })
+                };
+            })
+            .share();
+    }
+    // ---
+
 }

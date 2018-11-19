@@ -10,7 +10,7 @@ export class ScaleOverall {
         dienTichCongTruong: number;
         tongDienTichXayDung: number;
         soTang: string;
-        tienDo: number;
+        tienDo: string;
         donViTienDo: Currency;
     };
     hinhAnhPhoiCanh: Image;
