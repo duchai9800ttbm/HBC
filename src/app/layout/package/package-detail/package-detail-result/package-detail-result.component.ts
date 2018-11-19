@@ -1,9 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { PackageService } from '../../../../shared/services/package.service';
 import { slideToTop } from '../../../../router.animations';
 import { PackageDetailComponent } from '../package-detail.component';
 import { CheckStatusPackage } from '../../../../shared/constants/check-status-package';
+import { Subscription } from '../../../../../../node_modules/rxjs';
 
 @Component({
     selector: 'app-package-detail-result',
@@ -11,9 +12,10 @@ import { CheckStatusPackage } from '../../../../shared/constants/check-status-pa
     styleUrls: ['./package-detail-result.component.scss'],
     animations: [slideToTop()]
 })
-export class PackageDetailResultComponent implements OnInit {
+export class PackageDetailResultComponent implements OnInit, OnDestroy {
     public packageId;
     checkStatusPackage = CheckStatusPackage;
+    subscription: Subscription;
     constructor(
         private activatedRoute: ActivatedRoute,
         private packageService: PackageService,
@@ -23,10 +25,14 @@ export class PackageDetailResultComponent implements OnInit {
 
     ngOnInit() {
         this.packageId = +PackageDetailComponent.packageId;
-        this.packageService.directionalTabResult.subscribe( value => {
+        this.subscription = this.packageService.directionalTabResult.subscribe(value => {
             this.getInforPackageID(); // Điều hướng
         });
         this.getInforPackageID(); // Điều hướng
+    }
+
+    ngOnDestroy(): void {
+        this.subscription.unsubscribe();
     }
 
     getInforPackageID() {
