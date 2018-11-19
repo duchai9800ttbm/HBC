@@ -79,14 +79,25 @@
                 <div class="d-flex">
                     <div id="toggle-menu-item">
                         <ng-container *ngFor="let uploadform of danhSachLoaiTaiLieu; index as i">
+                            <ng-container *ngIf="(uploadform.item.id === documentTypeId.BangTomTatDK && BangTomTatDKDownload) ||
+                                                 (uploadform.item.id === documentTypeId.YeuCauBaoGiaVatTu && YeuCauBaoGiaVatTuDownload) ||
+                                                 (uploadform.item.id === documentTypeId.BaoCaoThamQuanCongTrinh && BaoCaoThamQuanCongTrinhDownload) ||
+                                                 (uploadform.item.id === documentTypeId.BangTongHopDuToan && BangTongHopDuToanDownload) ||
+                                                 (uploadform.item.id === documentTypeId.BangTinhChiPhiChung && BangTinhChiPhiChungDownload) ||
+                                                 (uploadform.item.id === documentTypeId.BangCauHoiLamRo && BangCauHoiLamRoDownload) ||
+                                                 (uploadform.item.id === documentTypeId.CacHSKTCoLienQuan && CacHSKTCoLienQuanDownload) ||
+                                                 (uploadform.item.id === documentTypeId.HoSoPhapLy && HoSoPhapLyDownload) ||
+                                                 (uploadform.item.id === documentTypeId.HoSoKhac && HoSoKhacDownload)">
                             <div class="toggle-menu-item d-flex flex-column align-items-start"
-                             [class.router-link-active]="isHighlight === i"
-                                [class.color-text-gray]="uploadform.item?.count === 0" (click)="emitData(uploadform.item?.id, uploadform.item?.isLiveForm)">
-                                <div class="text-truncate-custom" [title]="uploadform.item.name">
-                                    {{ uploadform.item?.name }}</div>
-                                <span *ngIf="!uploadform.item?.isLiveForm" class="font-italic">Upload</span>
-                                <span *ngIf="uploadform.item?.isLiveForm" class="font-italic">LiveForm</span>
-                            </div>
+                            [class.router-link-active]="isHighlight === i"
+                               [class.color-text-gray]="uploadform.item?.count === 0" (click)="emitData(uploadform.item?.id, uploadform.item?.isLiveForm)">
+                               <div class="text-truncate-custom" [title]="uploadform.item.name">
+                                   {{ uploadform.item?.name }}</div>
+                               <span *ngIf="!uploadform.item?.isLiveForm" class="font-italic">Upload</span>
+                               <span *ngIf="uploadform.item?.isLiveForm" class="font-italic">LiveForm</span>
+                           </div>
+                            </ng-container>
+                            
                         </ng-container>
                     </div>
                     <div class="button-click mb-auto" (click)="toggleClick()">
