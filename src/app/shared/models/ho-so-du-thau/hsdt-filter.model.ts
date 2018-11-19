@@ -3,4 +3,5 @@ export class HsdtFilterModel {
     uploadedEmployeeId: number | string;
     createdDate: Date = null;
     interViewTimes: number | string;
+    tenderDocumentTypeId: number;
 }

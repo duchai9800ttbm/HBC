@@ -43,48 +43,70 @@
 
 .disable {
     cursor: default;
+
     i {
         color: gray;
         cursor: default;
     }
 }
-.table-history-stt--width{
+
+.table-history-stt--width {
     width: 2rem;
 }
+
 :host /deep/ .dataTables_wrapper {
     position: inherit !important;
 }
+
 :host /deep/ .dataTables_empty {
     display: none !important;
 }
-.table-layout--fixed{
+
+.table-layout--fixed {
     table-layout: fixed
 }
-.w-5{
+
+.w-5 {
     width: 5% !important;
     width: 3rem !important;
 }
-.w-10{
+
+.w-10 {
     width: 10% !important;
 }
-.w-15{
+
+.w-15 {
     width: 15% !important;
 }
-.w-20{
+
+.w-20 {
     width: 20% !important;
 }
-.w-30{
+
+.w-30 {
     width: 30% !important;
 }
-.w-40{
+
+.w-40 {
     width: 40% !important;
 }
-.w-60{
+
+.w-60 {
     width: 60% !important;
 }
-.image-empty{
+
+.image-empty {
     width: 80px;
- }
- .w-tab{
+}
+
+.w-tab {
     width: 10rem !important;
- }
+}
+
+.overflow-scroll {
+    overflow: auto;
+}
+
+.whitespace-normal {
+    white-space: normal;
+}

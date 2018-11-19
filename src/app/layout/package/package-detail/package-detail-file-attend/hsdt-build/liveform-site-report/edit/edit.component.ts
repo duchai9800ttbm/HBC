@@ -155,10 +155,6 @@ export class EditComponent implements OnInit, OnDestroy {
             donViTienDo: this.dataDNDT.contractCondition && (this.dataDNDT.contractCondition.timeForCompletionUnit) ?
               this.dataDNDT.contractCondition.timeForCompletionUnit : null
           };
-          // EditComponent.liveformData.scaleOverall.quyMoDuAn.tongDienTichXayDung = dataPackageInfo && (dataPackageInfo.floorArea) ?
-          //   dataPackageInfo.floorArea : 0;
-          // EditComponent.liveformData.scaleOverall.quyMoDuAn.tienDo = this.dataDNDT.contractCondition.timeForCompletion;
-          // EditComponent.liveformData.scaleOverall.quyMoDuAn.donViTienDo = this.dataDNDT.contractCondition.timeForCompletionUnit;
           EditComponent.liveformData.usefulInfo = new Array<UsefulInfo>();
           if (EditComponent.liveformData && dataPackageInfo) {
             const siteSurvey$ = this.siteSurveyReportService.getListConstructionType().subscribe(ress => {

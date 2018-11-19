@@ -53,6 +53,8 @@ export class UploadFormComponent implements OnInit, OnDestroy {
   imageUrlArray = [];
   isChotHoSo: boolean;
 
+  tenderDocumentTypeId: number;
+
   listPermission: Array<PermissionModel>;
 
   listPerTomTatDK = [];
@@ -89,12 +91,14 @@ export class UploadFormComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.scrollTopService.isScrollTop = false;
 
-    this.subscription = this.hoSoDuThauService.watchChangingRouter().subscribe(data => {
+    this.subscription = this.hoSoDuThauService.watchChangingRouter().subscribe(tenderDocumentTypeId => {
+      this.tenderDocumentTypeId = +tenderDocumentTypeId;
+      this.filterModel.tenderDocumentTypeId = +tenderDocumentTypeId;
+      this.filterModel.status = '';
+      this.filterModel.uploadedEmployeeId = '';
       this.getDanhSachUser();
       this.getDanhSachLoaiHoSo();
       this.getDataDocumentOfType();
-      this.filterModel.status = '';
-      this.filterModel.uploadedEmployeeId = '';
     });
 
     const permission$ = this.permissionService.get().subscribe(data => {
@@ -190,6 +194,7 @@ export class UploadFormComponent implements OnInit, OnDestroy {
     this.getDataDocumentOfType(false);
   }
   getDataDocumentOfType(alert = false) {
+    this.filterModel.tenderDocumentTypeId = this.tenderDocumentTypeId;
     this.hoSoDuThauService
       .danhSachBoHoSoDuThauInstantSearch(this.packageId, this.searchTerm$, this.filterModel, 0, 1000)
       .subscribe(responseResultDocument => {

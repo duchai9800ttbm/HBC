@@ -83,6 +83,7 @@ export class HoSoDuThauService {
     urlFilterParams.append('uploadedEmployeeId', `${filter.uploadedEmployeeId ? filter.uploadedEmployeeId : ''}`);
     urlFilterParams.append('interViewTimes', `${filter.interViewTimes ? filter.interViewTimes : ''}`);
     urlFilterParams.append('createdDate', `${numCreatedDate ? numCreatedDate : ''}`);
+    urlFilterParams.append('tenderDocumentTypeId', `${filter.tenderDocumentTypeId ? filter.tenderDocumentTypeId : ''}`);
     return urlFilterParams;
   }
   private static toDocumentTypeItem(result: any): DanhSachBoHsdtItem {

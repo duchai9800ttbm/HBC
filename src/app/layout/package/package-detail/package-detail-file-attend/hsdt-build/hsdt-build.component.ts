@@ -46,6 +46,8 @@ export class HsdtBuildComponent implements OnInit, AfterViewChecked, OnDestroy {
     package = new PackageInfoModel();
     bidStatus = BidStatus;
     currentURL;
+    checkLiveformRefresh = true;
+    idRefresh = 1;
 
     listTemplateHSDT = [
         {
@@ -71,7 +73,7 @@ export class HsdtBuildComponent implements OnInit, AfterViewChecked, OnDestroy {
         {
             id: 5,
             key: 'BangTinhChiPhuChungVaCongTac',
-            value: 'Bảng tính chi phí chung và công tác tạm phụ vụ thi công'
+            value: 'Bảng tính chi phí chung và công tác tạm phục vụ thi công'
         },
         {
             id: 6,
@@ -310,6 +312,7 @@ export class HsdtBuildComponent implements OnInit, AfterViewChecked, OnDestroy {
 
 
     refresh(): void {
+        this.emitData(this.idRefresh, this.checkLiveformRefresh, true);
         this.packageId = +PackageDetailComponent.packageId;
         this.subscription = this.hoSoDuThauService.watchChangingUpload().subscribe(signal => {
             this.getDanhSachLoaiHoSo();
@@ -327,7 +330,6 @@ export class HsdtBuildComponent implements OnInit, AfterViewChecked, OnDestroy {
 
     onActivate(event) {
         this.routerName = event.constructor.name;
-        // this.hideActionSiteReport = (this.routerName === 'LiveformSiteReportComponent') ? true : false;
     }
     taiTemplateHSDT() {
         this.hoSoDuThauService.taiTemplateHSDT().subscribe(file => {
@@ -391,7 +393,9 @@ export class HsdtBuildComponent implements OnInit, AfterViewChecked, OnDestroy {
         }
         );
     }
-    emitData(id, checkliveform) {
+    emitData(id, checkliveform, alert?: boolean) {
+        this.idRefresh = id;
+        this.checkLiveformRefresh = checkliveform;
         if (id !== 21) {
             this.isHighlight = id - 1;
         } else {
@@ -399,12 +403,14 @@ export class HsdtBuildComponent implements OnInit, AfterViewChecked, OnDestroy {
             this.isHighlight = id - 13;
         }
         if (checkliveform) {
+            if (alert) { this.alertService.success('Dữ liệu đã được cập nhật.'); }
             if (id === 1) {
                 this.router.navigate([`/package/detail/${this.packageId}/attend/build/summary`]);
             } else {
                 this.router.navigate([`/package/detail/${this.packageId}/attend/build/liveformsite`]);
             }
         } else {
+            if (alert) { this.alertService.success('Dữ liệu đã được cập nhật.'); }
             this.hoSoDuThauService.detectChangingRouter(id);
             this.hoSoDuThauService.transporterData(id);
             this.router.navigate([`/package/detail/${this.packageId}/attend/build/uploadform`, id]);
