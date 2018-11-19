@@ -15,6 +15,7 @@ import { IntervalObservable } from '../../../../../node_modules/rxjs/observable/
 import { Subscription } from '../../../../../node_modules/rxjs';
 import { AdminPermissions } from '../../../shared/data-admin/admin.permission';
 import { BGDPermissions } from '../../../shared/data-admin/bgd.permission';
+import { BidStatus } from '../../../shared/constants/bid-status';
 
 @Component({
   selector: 'app-package-detail',
@@ -62,6 +63,7 @@ export class PackageDetailComponent implements OnInit, OnDestroy {
   isViewBidOpportunityDetail;
   isToggle = false;
   isPermision = false;
+  bidStatus = BidStatus;
   ngOnInit() {
     this.activetedRoute.params.subscribe(result => {
       this.packageId = +result.id;
@@ -244,5 +246,134 @@ export class PackageDetailComponent implements OnInit, OnDestroy {
 
   directionalTabAttendFuc() {
     this.packageService.directionalTabAttendFuc();
+    this.redirectByStatus();
   }
+
+  redirectByStatus() {
+    this.packageService.getInforPackageID(this.packageId).subscribe(result => {
+      this.packageData = result;
+      switch (this.packageData.stageStatus.id) {
+        case this.bidStatus.CanLapDeNghiDuThau: {
+          this.router.navigate([`/package/detail/${this.packageId}/attend/create-request`]);
+          break;
+        }
+        case this.bidStatus.ChoDuyetDeNghiDuThau: {
+          this.router.navigate([`/package/detail/${this.packageId}/attend/create-request`]);
+          break;
+        }
+        case this.bidStatus.ThamGiaDuThau: {
+          this.router.navigate([`/package/detail/${this.packageId}/attend/create-request`]);
+          break;
+        }
+        case this.bidStatus.TuChoiDuThau: {
+          this.router.navigate([`/package/detail/${this.packageId}/attend/create-request`]);
+          break;
+        }
+        case this.bidStatus.ChuaThongBaoTrienKhai: {
+          this.router.navigate([`/package/detail/${this.packageId}/attend/infomation-deployment`]);
+          break;
+        }
+        case this.bidStatus.DaThongBaoTrienKhai: {
+          this.router.navigate([`/package/detail/${this.packageId}/attend/infomation-deployment`]);
+          break;
+        }
+        case this.bidStatus.DaXacNhanPhanCong: {
+          this.router.navigate([`/package/detail/${this.packageId}/attend/infomation-deployment`]);
+          break;
+        }
+        case this.bidStatus.DaGuiPhanCongTienDo: {
+          this.router.navigate([`/package/detail/${this.packageId}/attend/infomation-deployment`]);
+          break;
+        }
+        case this.bidStatus.DangLapHSDT: {
+          this.router.navigate([`/package/detail/${this.packageId}/attend/build`]);
+          break;
+        }
+        case this.bidStatus.CanLapTrinhDuyetGia: {
+          this.router.navigate([`/package/detail/${this.packageId}/attend/price-review`]);
+          break;
+        }
+        case this.bidStatus.DaGuiDuyetTrinhDuyetGia: {
+          this.router.navigate([`/package/detail/${this.packageId}/attend/price-review`]);
+          break;
+        }
+        case this.bidStatus.CanDieuChinhTrinhDuyetGia: {
+          this.router.navigate([`/package/detail/${this.packageId}/attend/price-review`]);
+          break;
+        }
+        case this.bidStatus.DaDuyetTrinhDuyetGia: {
+          this.router.navigate([`/package/detail/${this.packageId}/attend/price-review`]);
+          break;
+        }
+        case this.bidStatus.ChotHoSo: {
+          this.router.navigate([`/package/detail/${this.packageId}/attend/price-review`]);
+          break;
+        }
+        case this.bidStatus.DaNopHSDT: {
+          this.router.navigate([`/package/detail/${this.packageId}/attend/price-review`]);
+          break;
+        }
+        case this.bidStatus.DaNhanLoiMoi: {
+          this.router.navigate([`/package/detail/${this.packageId}/attend/interview-negotiation/create`]);
+          break;
+        }
+        case this.bidStatus.ChuanBiPhongVan: {
+          this.router.navigate([`/package/detail/${this.packageId}/attend/interview-negotiation/prepare`]);
+          break;
+        }
+        case this.bidStatus.DaChotCongTacChuanBiPhongVan: {
+          this.router.navigate([`/package/detail/${this.packageId}/attend/interview-negotiation/end`]);
+          break;
+        }
+        case this.bidStatus.DaPhongVan: {
+          this.router.navigate([`/package/detail/${this.packageId}/attend/interview-negotiation/end`]);
+          break;
+        }
+        default: {
+          this.router.navigate([`/package/detail/${this.packageId}/attend/interview-negotiation/end`]);
+          break;
+        }
+      }
+    });
+  }
+
+  directionalTabResultFuc() {
+    this.packageService.getInforPackageID(this.packageId).subscribe(result => {
+        this.packageService.statusPackageValue2 = this.checkStatusPackage[result.stageStatus.id];
+        this.packageService.changeStatusPackageValue(result.stageStatus.id);
+        switch (this.checkStatusPackage[result.stageStatus.id].id) {
+            case (this.checkStatusPackage.ChoKetQuaDuThau.id): {
+                this.router.navigate([`/package/detail/${this.packageId}/result/wait-result`]);
+                break;
+            }
+            // case (this.checkStatusPackage.ChoKetQuaDuThau.id):
+            case (this.checkStatusPackage.TrungThau.id):
+            case (this.checkStatusPackage.DaPhanHoiDenPhongHopDong.id):
+            case (this.checkStatusPackage.DaThongBaoCacBenLienQuan.id):
+            case (this.checkStatusPackage.DaChuyenGiaoTaiLieu.id):
+            case (this.checkStatusPackage.ChuaNhanTaiLieu.id):
+            case (this.checkStatusPackage.ChuaChuyenGiaoTaiLieu.id): {
+                this.router.navigate([`/package/detail/${this.packageId}/result/package-success/package-list`]);
+                break;
+            }
+            case (this.checkStatusPackage.DaKyKetHopDong.id): {
+                this.router.navigate([`/package/detail/${this.packageId}/result/package-success/contract-signed`]);
+                break;
+            }
+            case (this.checkStatusPackage.DaThongBaoHopKickOff.id):
+            case (this.checkStatusPackage.DaNhanTaiLieu.id): {
+                this.router.navigate([`/package/detail/${this.packageId}/result/package-success/meeting-kickoff`]);
+                break;
+            }
+            case (this.checkStatusPackage.TratThau.id): {
+                this.router.navigate([`/package/detail/${this.packageId}/result/package-failed`]);
+                break;
+            }
+            case (this.checkStatusPackage.HuyThau.id): {
+                this.router.navigate([`/package/detail/${this.packageId}/result/package-cancel`]);
+                break;
+            }
+        }
+    });
+}
 }

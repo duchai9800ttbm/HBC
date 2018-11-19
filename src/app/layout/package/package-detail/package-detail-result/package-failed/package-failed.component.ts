@@ -14,11 +14,13 @@ import { DetailResultPackageService } from '../../../../../shared/services/detai
 import { UploadResultFileAttendComponent } from '../package-success/package-list/upload-result-file-attend/upload-result-file-attend.component';
 import { DialogService } from '../../../../../../../node_modules/@progress/kendo-angular-dialog';
 import { ViewDetailComponent } from '../view-detail/view-detail.component';
+import { slideToBottom, slideToTop } from '../../../../../router.animations';
 
 @Component({
   selector: 'app-package-failed',
   templateUrl: './package-failed.component.html',
-  styleUrls: ['./package-failed.component.scss']
+  styleUrls: ['./package-failed.component.scss'],
+  animations: [slideToTop()]
 })
 export class PackageFailedComponent implements OnInit, OnDestroy {
   datePickerConfig = DATETIME_PICKER_CONFIG;

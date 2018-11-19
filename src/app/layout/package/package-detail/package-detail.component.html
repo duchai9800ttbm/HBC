@@ -17,7 +17,7 @@
           <div class="set-min-width-image">
             <span class="gr-icon">
               <ng-container *ngIf="isPermision">
-                  <img class="mr-3 pointer" src="assets\images\ic_permission_set.png" [routerLink]="['/package/permission', packageId]">
+                <img class="mr-3 pointer" src="assets\images\ic_permission_set.png" [routerLink]="['/package/permission', packageId]">
               </ng-container>
               <img class="pointer" src="assets\images\ic_email_manage.png" (click)="routerEmail()">
               <!-- [routerLink]="['/package/email', packageId]" -->
@@ -41,7 +41,8 @@
       </div>
       <ng-container *ngIf="(statusPackage?.id >= checkStatusPackage.ChoKetQuaDuThau?.id)">
         <div class="set-width" [routerLinkActive]="['router-link-active']" [class.action]="statusPackage.id >= checkStatusPackage.ChoKetQuaDuThau.id"
-          [class.no-action]="!(statusPackage.id >= checkStatusPackage.ChoKetQuaDuThau.id)" [routerLink]="['/package/detail', packageId ,'result']">
+          [class.no-action]="!(statusPackage.id >= checkStatusPackage.ChoKetQuaDuThau.id)" (click)="directionalTabResultFuc()"
+          [routerLink]="['/package/detail', packageId ,'result']">
           KẾT QUẢ DỰ THẦU
         </div>
       </ng-container>

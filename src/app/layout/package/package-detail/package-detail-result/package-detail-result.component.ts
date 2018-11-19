@@ -23,7 +23,7 @@ export class PackageDetailResultComponent implements OnInit {
 
     ngOnInit() {
         this.packageId = +PackageDetailComponent.packageId;
-        this.getInforPackageID(); // Điều hướng
+        // this.getInforPackageID(); // Điều hướng
     }
 
     getInforPackageID() {
