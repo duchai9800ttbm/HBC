@@ -37,6 +37,7 @@ export class PackageDetailFileAttendComponent implements OnInit, OnDestroy {
   interview = ['DaNhanLoiMoi', 'ChuanBiPhongVan', 'DaChotCongTacChuanBiPhongVan', 'DaPhongVan'];
   listStatusPackage = [this.bidProposal, this.deployment, this.setHSDT, this.priceReview, this.interview];
   checkStatusPackage = CheckStatusPackage;
+  callAPI;
   constructor(
     private packageService: PackageService,
     private router: Router,
@@ -71,7 +72,7 @@ export class PackageDetailFileAttendComponent implements OnInit, OnDestroy {
 
   checkStatusPackageFuc() {
     if (this.activeRouter.firstChild) {
-      this.activeRouter.firstChild.url.subscribe(url => {
+      const activeRouter = this.activeRouter.firstChild.url.subscribe(url => {
         this.currentUrl = url[0].path;
         if (this.urlChirld.find(item => item === this.currentUrl)) {
           this.packageService.getInforPackageID(this.packageId).subscribe(result => {
@@ -79,23 +80,34 @@ export class PackageDetailFileAttendComponent implements OnInit, OnDestroy {
           });
         }
       });
+      if (this.isNgOnInit) {
+        activeRouter.unsubscribe();
+      }
     }
+
     this.subscription = this.router.events.subscribe((val) => {
       if (this.isComponentDetail) {
         if ((val instanceof NavigationEnd) === true) {
-          if (this.activeRouter.firstChild) {
-            this.activeRouter.firstChild.url.subscribe(url => {
-              this.currentUrl = url[0].path;
-              if (this.urlChirld.find(item => item === this.currentUrl)) {
-                this.packageService.getInforPackageID(this.packageId).subscribe(result => {
-                  this.statusPackage = this.checkStatusPackage[result.stageStatus.id];
-                });
+          this.callAPI = true;
+        }
+        if (this.activeRouter.firstChild) {
+          this.activeRouter.firstChild.url.subscribe(url => {
+            this.currentUrl = url[0].path;
+            if (this.urlChirld.find(item => item === this.currentUrl)) {
+              if ((val instanceof NavigationEnd) === true) {
+                if (this.callAPI) {
+                  this.callAPI = false;
+                  this.packageService.getInforPackageID(this.packageId).subscribe(result => {
+                    this.statusPackage = this.checkStatusPackage[result.stageStatus.id];
+                  });
+                }
               }
-            });
-          }
+            }
+          });
         }
       }
     });
+
   }
 
   redirectByStatus() {
