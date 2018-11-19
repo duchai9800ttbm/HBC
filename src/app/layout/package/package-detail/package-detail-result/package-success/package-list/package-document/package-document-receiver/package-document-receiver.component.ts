@@ -391,8 +391,30 @@ export class PackageDocumentReceiverComponent implements OnInit {
       });
   }
   // Xác nhận đã nhận
-  comfirmReceived(bidTransferDocDetailIds: number) {
+  comfirmReceived(bidTransferDocDetailIds: number, styleDoc: string) {
     this.detailResultPackageService.confirmReceiveDocs([bidTransferDocDetailIds]).subscribe(response => {
+      switch (styleDoc) {
+        case 'docHSMTListTranferred': {
+          (this.docHSMTListTranferred || []).forEach(itemDocuments => {
+            (itemDocuments.items || []).forEach(documents => {
+              if (documents.id === bidTransferDocDetailIds) {
+                documents.receiveStatus.key = 'DaNhan';
+              }
+            });
+          });
+          break;
+        }
+        case 'docHSDTListTranferred': {
+          (this.docHSDTListTranferred || []).forEach(itemDocuments => {
+            (itemDocuments.items || []).forEach(documents => {
+              if (documents.id === bidTransferDocDetailIds) {
+                documents.receiveStatus.key = 'DaNhan';
+              }
+            });
+          });
+          break;
+        }
+      }
       this.alertService.success('Xác nhận nhận tài liệu thành công!');
     },
       err => {

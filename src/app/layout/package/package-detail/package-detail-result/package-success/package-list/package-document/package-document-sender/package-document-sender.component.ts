@@ -936,6 +936,16 @@ export class PackageDocumentSenderComponent implements OnInit {
   }
   requestToreSubmitDoc(bidTransferDocDetailId: number) {
     this.detailResultPackageService.resubmitDoc(bidTransferDocDetailId).subscribe(response => {
+      (this.manageNeedTranferList || []).forEach( tranferListByDocumentTypes => {
+        (tranferListByDocumentTypes.items || []).forEach(itemsTranferListByDocumentType => {
+          (itemsTranferListByDocumentType.items || []).forEach( itemsTranferListByDepart => {
+            if (itemsTranferListByDepart.id === bidTransferDocDetailId) {
+              itemsTranferListByDepart.receiveStatus.key = 'ChuaNhan';
+              itemsTranferListByDepart.receiveStatus.value = 'Chưa nhận';
+            }
+          });
+        });
+      });
       this.alertService.success('Gửi lại tài liệu thành công!');
     },
       err => {

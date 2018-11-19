@@ -36,7 +36,7 @@ export class PackageDetailComponent implements OnInit, OnDestroy {
     stage: '',
     id: 0,
   };
- 
+
   constructor(
     private router: Router,
     private activetedRoute: ActivatedRoute,
@@ -338,42 +338,6 @@ export class PackageDetailComponent implements OnInit, OnDestroy {
   }
 
   directionalTabResultFuc() {
-    this.packageService.getInforPackageID(this.packageId).subscribe(result => {
-        this.packageService.statusPackageValue2 = this.checkStatusPackage[result.stageStatus.id];
-        this.packageService.changeStatusPackageValue(result.stageStatus.id);
-        switch (this.checkStatusPackage[result.stageStatus.id].id) {
-            case (this.checkStatusPackage.ChoKetQuaDuThau.id): {
-                this.router.navigate([`/package/detail/${this.packageId}/result/wait-result`]);
-                break;
-            }
-            // case (this.checkStatusPackage.ChoKetQuaDuThau.id):
-            case (this.checkStatusPackage.TrungThau.id):
-            case (this.checkStatusPackage.DaPhanHoiDenPhongHopDong.id):
-            case (this.checkStatusPackage.DaThongBaoCacBenLienQuan.id):
-            case (this.checkStatusPackage.DaChuyenGiaoTaiLieu.id):
-            case (this.checkStatusPackage.ChuaNhanTaiLieu.id):
-            case (this.checkStatusPackage.ChuaChuyenGiaoTaiLieu.id): {
-                this.router.navigate([`/package/detail/${this.packageId}/result/package-success/package-list`]);
-                break;
-            }
-            case (this.checkStatusPackage.DaKyKetHopDong.id): {
-                this.router.navigate([`/package/detail/${this.packageId}/result/package-success/contract-signed`]);
-                break;
-            }
-            case (this.checkStatusPackage.DaThongBaoHopKickOff.id):
-            case (this.checkStatusPackage.DaNhanTaiLieu.id): {
-                this.router.navigate([`/package/detail/${this.packageId}/result/package-success/meeting-kickoff`]);
-                break;
-            }
-            case (this.checkStatusPackage.TratThau.id): {
-                this.router.navigate([`/package/detail/${this.packageId}/result/package-failed`]);
-                break;
-            }
-            case (this.checkStatusPackage.HuyThau.id): {
-                this.router.navigate([`/package/detail/${this.packageId}/result/package-cancel`]);
-                break;
-            }
-        }
-    });
-}
+    this.packageService.directionalTabResultFuc();
+  }
 }

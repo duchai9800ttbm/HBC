@@ -164,10 +164,13 @@
                                             <ng-container *ngIf="documents.status && documents.status.key === 'DuocSuDung'">
                                                 <div class="d-flex justify-content-around">
                                                     <ng-container *ngIf="!documents.isFirstTransfer">
-                                                        <div id="mr">
-                                                            <a title="Xác nhận đã nhận" (click)="comfirmReceived(documents.id)">
+                                                        <div id="mr" *ngIf="documents.receiveStatus.key === 'ChuaNhan'">
+                                                            <a title="Xác nhận đã nhận" (click)="comfirmReceived(documents.id, 'docHSMTListTranferred')">
                                                                 <i class="fa fa-check-square-o" aria-hidden="true"></i>
                                                             </a>
+                                                        </div>
+                                                        <div id="mr" *ngIf="documents.receiveStatus.key === 'DaNhan'">
+                                                            <i class="fa fa-check-square-o" aria-hidden="true"></i>
                                                         </div>
                                                     </ng-container>
                                                     <ng-container *ngIf="documents.isFirstTransfer">
@@ -248,10 +251,13 @@
                                             <div class="d-flex justify-content-around">
                                                 <ng-container *ngIf="documents.status && documents.status.key === 'DuocSuDung'">
                                                     <ng-container *ngIf="!documents.isFirstTransfer">
-                                                        <div id="mr">
-                                                            <a title="Xác nhận đã nhận" (click)="comfirmReceived(documents.id)">
-                                                                <i class="fa fa-check-square-o" aria-hidden="true"></i>
+                                                        <div id="mr" *ngIf="documents.receiveStatus.key === 'ChuaNhan'">
+                                                            <a title="Xác nhận đã nhận" (click)="comfirmReceived(documents.id, 'docHSDTListTranferred')">
+                                                                <i class="fa fa-square-o" aria-hidden="true"></i>
                                                             </a>
+                                                        </div>
+                                                        <div id="mr" *ngIf="documents.receiveStatus.key === 'DaNhan'">
+                                                            <i class="fa fa-check-square-o" aria-hidden="true"></i>
                                                         </div>
                                                     </ng-container>
                                                     <ng-container *ngIf="documents.document && !documents.document.isLiveForm">

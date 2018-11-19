@@ -28,6 +28,8 @@ import { CustomerConsultant } from '../models/package/customer-consultant';
 export class PackageService {
     // active tab dự thầu
     public directionalTabAttend = false;
+    // directional Tab kết quả dự thầu
+    public directionalTabResult = new Subject<any>();
     // subcire data phiếu đề nghị dự thầu
     private dataProposals = new Subject<any>();
     public dataProposals$ = this.dataProposals.asObservable();
@@ -1255,5 +1257,9 @@ export class PackageService {
 
     noDirectionalTabAttendFuc() {
         this.directionalTabAttend = false;
+    }
+
+    directionalTabResultFuc() {
+        this.directionalTabResult.next();
     }
 }
