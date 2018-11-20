@@ -26,7 +26,8 @@ export class UploadResultAttendComponent implements OnInit {
   formErrors = {
     documentName: '',
     receivedDate: '',
-    interviewTimes: ''
+    interviewTimes: '',
+    version: ''
   };
   isSubmitted: boolean;
   invalidMessages: string[];
@@ -47,7 +48,7 @@ export class UploadResultAttendComponent implements OnInit {
   createForm() {
     this.uploadResultForm = this.fb.group({
       documentName: ['', CustomValidator.required],
-      version: [this.version],
+      version: [this.version, CustomValidator.requiredDate],
       uploadedBy: [],
       receivedDate: [new Date(), CustomValidator.requiredDate],
       interviewTimes: [this.interviewTimes, CustomValidator.requiredDate],

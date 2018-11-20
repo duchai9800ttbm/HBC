@@ -20,7 +20,8 @@ export class UploadContractSigningComponent implements OnInit {
   invalidMessages: string[];
   formErrors = {
     documentName: '',
-    interviewTimes: ''
+    interviewTimes: '',
+    version: ''
   };
   isSubmitted = false;
   file;
@@ -38,7 +39,7 @@ export class UploadContractSigningComponent implements OnInit {
   createForm() {
     this.uploadContractForm = this.fb.group({
       documentName: ['', CustomValidator.required],
-      version: [this.version],
+      version: [this.version, CustomValidator.requiredDate],
       uploadedBy: [],
       receivedDate: [],
       interviewTimes: [this.interviewTimes, CustomValidator.requiredDate],
@@ -72,10 +73,10 @@ export class UploadContractSigningComponent implements OnInit {
         this.detailResultPackageService.changeListContractSigning();
         this.closePopup();
         this.detailResultPackageService.changeListFileResult();
-        this.alertService.success('Upload kết quả dự thầu thành công!');
+        this.alertService.success('Upload hợp đồng ký kết thành công!');
       },
         err => {
-          this.alertService.error('Upload kết quả dự thầu không thành công!');
+          this.alertService.error('Upload hợp đồng ký kết không thành công!');
         });
     }
   }

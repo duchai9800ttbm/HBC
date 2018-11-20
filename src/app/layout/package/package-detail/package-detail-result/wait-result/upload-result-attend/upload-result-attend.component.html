@@ -76,7 +76,10 @@
                                 <tr>
                                     <td class="w-30 label no-boder bold-title">Phiên bản</td>
                                     <td class="w-70 no-boder">
-                                        <input appInputNumberInteger class="w-100" kendoTextBox tabindex="5" type="text" formControlName="version">
+                                        <input appInputNumberInteger class="w-100" kendoTextBox tabindex="5" type="text" formControlName="version" [class.is-invalid]="formErrors.version">
+                                        <div class="invalid-feedback" *ngIf="formErrors.version">
+                                            {{formErrors.version}}
+                                        </div>
                                     </td>
                                 </tr>
                                 <tr>

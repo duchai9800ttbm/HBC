@@ -33,8 +33,7 @@
                                 <tr>
                                     <td class="w-30 label no-boder bold-title">Đường dẫn link</td>
                                     <td class="w-70 no-boder">
-                                        <input class="w-100" [attr.disabled]="file ? '' : null" class="form-control"
-                                            tabindex="1" type="text" formControlName="link">
+                                        <input class="w-100" [attr.disabled]="file ? '' : null" class="form-control" tabindex="1" type="text" formControlName="link">
                                     </td>
                                 </tr>
                                 <tr>
@@ -42,11 +41,10 @@
                                     <td class="no-boder d-flex justify-content-between">
                                         <div class="fileUpload">
                                             <button class="btn btn-primary" [disabled]="uploadResultForm.get('link').value">
-                                                <i class="fa fa-cloud-upload" aria-hidden="true"></i>&nbsp;&nbsp; Chọn
-                                                File
+                                                <i class="fa fa-cloud-upload" aria-hidden="true"></i>&nbsp;&nbsp; Chọn File
                                             </button>
-                                            <input type="file" class="upload" tabindex="2" (change)="fileChange($event)"
-                                                [disabled]="uploadResultForm.get('link').value" />
+                                            <input type="file" class="upload" tabindex="2" (change)="fileChange($event)" [disabled]="uploadResultForm.get('link').value"
+                                            />
                                         </div>
                                         <div class="d-flex justify-content-between name-file--width">
                                             <div>
@@ -69,25 +67,25 @@
                                 <tr>
                                     <td class="w-30 label no-boder bold-title required">Tên</td>
                                     <td class="w-70 no-boder">
-                                        <input class="w-100" kendoTextBox tabindex="4" type="text" formControlName="documentName"
-                                            [class.is-invalid]="formErrors.documentName">
+                                        <input class="w-100" kendoTextBox tabindex="4" type="text" formControlName="documentName" [class.is-invalid]="formErrors.documentName">
                                         <div class="invalid-feedback" *ngIf="formErrors.documentName">
                                             {{formErrors.documentName}}
                                         </div>
                                     </td>
                                 </tr>
                                 <tr>
-                                    <td class="w-30 label no-boder bold-title">Phiên bản</td>
+                                    <td class="w-30 label no-boder bold-title required">Phiên bản</td>
                                     <td class="w-70 no-boder">
-                                        <input appInputNumberInteger class="w-100" kendoTextBox tabindex="5" type="text"
-                                            formControlName="version">
+                                        <input appInputNumberInteger class="w-100" kendoTextBox tabindex="5" type="text" formControlName="version" [class.is-invalid]="formErrors.version">
+                                        <div class="invalid-feedback" *ngIf="formErrors.version">
+                                            {{formErrors.version}}
+                                        </div>
                                     </td>
                                 </tr>
                                 <tr>
                                     <td class="w-30 label no-boder bold-title required">Lần phỏng vấn</td>
                                     <td class="no-boder">
-                                        <input appInputNumberInteger class="w-100" kendoTextBox tabindex="6" type="text"
-                                            formControlName="interviewTimes" [class.is-invalid]="formErrors.interviewTimes">
+                                        <input appInputNumberInteger class="w-100" kendoTextBox tabindex="6" type="text" formControlName="interviewTimes" [class.is-invalid]="formErrors.interviewTimes">
                                         <div class="invalid-feedback" *ngIf="formErrors.interviewTimes">
                                             {{formErrors.interviewTimes}}
                                         </div>
@@ -97,8 +95,7 @@
                                     <td class="w-30 label no-boder bold-title required">Ngày nhận kết quả</td>
                                     <td class="no-boder">
                                         <!-- <input appInputNumberInteger class="w-100" kendoTextBox tabindex="6" type="text" formControlName="interviewTimes"> -->
-                                        <kendo-datepicker class="w-100" tabindex="7" formControlName="receivedDate"
-                                            [class.is-invalid]="formErrors.receivedDate"></kendo-datepicker>
+                                        <kendo-datepicker class="w-100" tabindex="7" formControlName="receivedDate" [class.is-invalid]="formErrors.receivedDate"></kendo-datepicker>
                                         <div class="invalid-feedback" *ngIf="formErrors.receivedDate">
                                             {{formErrors.receivedDate}}
                                         </div>
@@ -107,8 +104,7 @@
                                 <tr>
                                     <td class="w-30 label no-boder bold-title">Mô tả/Nội dung cập nhật</td>
                                     <td class="w-70 no-boder">
-                                        <textarea kendoTextArea tabindex="8" cols="3" rows="3" class="w-100 form-control no-resize-textarea"
-                                            formControlName="documentDesc"></textarea>
+                                        <textarea kendoTextArea tabindex="8" cols="3" rows="3" class="w-100 form-control no-resize-textarea" formControlName="documentDesc"></textarea>
                                     </td>
                                 </tr>
                             </tbody>
