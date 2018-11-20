@@ -162,12 +162,14 @@ export class NeedCreateTenderFormComponent implements OnInit, OnDestroy {
         // FeeTenderInvitationDocument
         NeedCreateTenderFormComponent.formModel.feeOfTenderInvitationDocument = new FeeTenderInvitationDocument();
         // tslint:disable-next-line:max-line-length
+        NeedCreateTenderFormComponent.formModel.feeOfTenderInvitationDocument.feeOfTenderInvitationDocument = 0;
         NeedCreateTenderFormComponent.formModel.feeOfTenderInvitationDocument.feeOfTenderInvitationDocumentCurrency = new Currency();
         NeedCreateTenderFormComponent.formModel.feeOfTenderInvitationDocument.feeOfTenderInvitationDocumentCurrency.key = 'VNĐ';
         // tslint:disable-next-line:max-line-length
         NeedCreateTenderFormComponent.formModel.feeOfTenderInvitationDocument.feeOfTenderInvitationDocumentCurrency.value = 'VNĐ';
         // tslint:disable-next-line:max-line-length
         NeedCreateTenderFormComponent.formModel.feeOfTenderInvitationDocument.feeOfTenderInvitationDocumentCurrency.displayText = 'VNĐ';
+        NeedCreateTenderFormComponent.formModel.feeOfTenderInvitationDocument.tenderDocumentDeposit = 0;
         NeedCreateTenderFormComponent.formModel.feeOfTenderInvitationDocument.tenderDocumentDepositCurrency = new Currency();
         NeedCreateTenderFormComponent.formModel.feeOfTenderInvitationDocument.tenderDocumentDepositCurrency.key = 'VNĐ';
         NeedCreateTenderFormComponent.formModel.feeOfTenderInvitationDocument.tenderDocumentDepositCurrency.value = 'VNĐ';
