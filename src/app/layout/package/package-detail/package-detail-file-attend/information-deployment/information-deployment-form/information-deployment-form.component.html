@@ -250,7 +250,8 @@
                             <td class="p-0 position-relative">
                                 <ng-container *ngIf="data.get('itemId').value !== 1 && data.get('itemId').value !== 5 && data.get('itemId').value !== 7 && data.get('itemId').value !== 8
                                 && data.get('itemId').value !== 12 && data.get('itemId').value !== 16 && data.get('itemId').value !== 18 && data.get('itemId').value !== 20 && data.get('itemId').value !== 23
-                                && data.get('itemId').value !== 30 && data.get('itemId').value !== 33">
+                                 && data.get('itemId').value !== 33">
+                                 <!-- && data.get('itemId').value !== 30 -->
                                     <textarea class="form-control b-textarea h-100" formControlName="itemDesc"></textarea>
                                     <span *ngIf="!data.get('itemDesc').value" class="fake-placeholder">Nhập text</span>
                                 </ng-container>
