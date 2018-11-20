@@ -1,12 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, AfterContentChecked } from '@angular/core';
 import { FormGroup, FormBuilder, FormArray } from '@angular/forms';
 import { HoSoDuThauService } from '../../../../../../../../shared/services/ho-so-du-thau.service';
 import { DienGiaiDieuKienHopDong } from '../../../../../../../../shared/models/ho-so-du-thau/dien-giai-yeu-cau';
-import DateTimeConvertHelper from '../../../../../../../../shared/helpers/datetime-convert-helper';
-import { SummaryConditionFormComponent } from '../summary-condition-form.component';
-import { PackageService } from '../../../../../../../../shared/services/package.service';
 import { PackageDetailComponent } from '../../../../../package-detail.component';
-import { ProposeTenderParticipateRequest } from '../../../../../../../../shared/models/api-request/package/propose-tender-participate-request';
+import {
+    ProposeTenderParticipateRequest
+} from '../../../../../../../../shared/models/api-request/package/propose-tender-participate-request';
 import { Currency } from '../../../../../../../../shared/models/currency';
 import { Router } from '../../../../../../../../../../node_modules/@angular/router';
 import { SettingService } from '../../../../../../../../shared/services/setting.service';
@@ -582,7 +581,7 @@ export class SummaryConditionFormConditionContractComponent implements OnInit {
             };
             this.hoSoDuThauService.emitDataStepConditionContract(objData);
         });
-
+        this.hoSoDuThauService.scrollToView(true);
     }
 
     addFormArrayControl() {
@@ -635,5 +634,4 @@ export class SummaryConditionFormConditionContractComponent implements OnInit {
             this.router.navigate([`/package/detail/${this.packageId}/attend/build/summary/form/create/${link}`]);
         }
     }
-
 }

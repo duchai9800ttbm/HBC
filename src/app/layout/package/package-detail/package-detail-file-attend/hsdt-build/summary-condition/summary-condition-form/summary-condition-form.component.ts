@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, ViewChild } from '@angular/core';
 import { PackageService } from '../../../../../../../shared/services/package.service';
 import { TenderConditionSummaryRequest } from '../../../../../../../shared/models/api-request/package/tender-condition-summary-request';
 import { PackageDetailComponent } from '../../../../package-detail.component';
@@ -17,8 +17,8 @@ import { ThongTinDuAn } from '../../../../../../../shared/models/ho-so-du-thau/t
   styleUrls: ['./summary-condition-form.component.scss']
 })
 export class SummaryConditionFormComponent implements OnInit, OnDestroy {
-
   static formModel: TenderConditionSummaryRequest;
+  @ViewChild('scrollView') scrollView;
   packageId;
   package: PackageInfoModel;
   showPopupConfirm = false;
@@ -84,9 +84,13 @@ export class SummaryConditionFormComponent implements OnInit, OnDestroy {
         this.hoSoDuThauService.emitDataAll(obj);
       }
     });
+    const scrollView$ = this.hoSoDuThauService.emplementScroll().subscribe(() => {
+      this.scrollToView();
+    });
     this.subscription.add(getInFoPackage$);
     this.subscription.add(activate$);
     this.subscription.add(getInfoTender$);
+    this.subscription.add(scrollView$);
   }
 
   ngOnDestroy(): void {
@@ -133,12 +137,16 @@ export class SummaryConditionFormComponent implements OnInit, OnDestroy {
     this.hoSoDuThauService.emitIsModeView(false);
     this.router.navigate([`package/detail/${this.packageId}/attend/build/summary/form/edit`]);
   }
-
-  cancel() {
+  refresh() {
 
   }
 
-  refresh() { }
-
-
+  scrollToView() {
+    const position = this.scrollView.nativeElement.offsetTop - 110;
+    window.scroll({
+      top: position,
+      left: 35,
+      behavior: 'smooth'
+    });
+  }
 }

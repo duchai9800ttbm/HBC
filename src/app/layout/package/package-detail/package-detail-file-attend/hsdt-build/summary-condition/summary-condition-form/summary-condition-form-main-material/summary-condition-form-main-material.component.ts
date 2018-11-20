@@ -62,6 +62,7 @@ export class SummaryConditionFormMainMaterialComponent implements OnInit {
       }));
       this.hoSoDuThauService.emitDataStepMainMaterial(obj);
     });
+    this.hoSoDuThauService.scrollToView(true);
   }
 
   loadData() {

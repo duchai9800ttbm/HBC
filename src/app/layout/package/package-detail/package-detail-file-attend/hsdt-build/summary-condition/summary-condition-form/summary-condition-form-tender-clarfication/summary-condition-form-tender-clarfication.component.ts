@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder } from '@angular/forms';
-import { SummaryConditionFormComponent } from '../summary-condition-form.component';
 import DateTimeConvertHelper from '../../../../../../../../shared/helpers/datetime-convert-helper';
 import { DienGiaiYeuCauLamRo } from '../../../../../../../../shared/models/ho-so-du-thau/dien-giai-yeu-cau';
 import { HoSoDuThauService } from '../../../../../../../../shared/services/ho-so-du-thau.service';
@@ -174,6 +173,7 @@ export class SummaryConditionFormTenderClarficationComponent implements OnInit {
       };
       this.hoSoDuThauService.emitDataStepClarification(obj);
     });
+    this.hoSoDuThauService.scrollToView(true);
   }
 
   routerLink(e, link) {

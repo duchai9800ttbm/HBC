@@ -69,8 +69,8 @@ export class SummaryConditionFormRelatedPartiesComponent implements OnInit {
         }
 
 
+        this.hoSoDuThauService.scrollToView(true);
       });
-
     });
   }
 
@@ -95,13 +95,11 @@ export class SummaryConditionFormRelatedPartiesComponent implements OnInit {
     let dem = 0;
     if (this.stakeHolderList) {
       for (let m = 0; m < this.stakeHolderList.length; m++) {
-       for (let n = 0; n < this.stakeHolderList[m].customers.length; n++ ) {
-         dem = dem + 1;
-       }
+        for (let n = 0; n < this.stakeHolderList[m].customers.length; n++) {
+          dem = dem + 1;
+        }
       }
     }
     return dem;
   }
-
-
 }

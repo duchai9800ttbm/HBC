@@ -1,10 +1,9 @@
-import { Component, OnInit, ViewChild, AfterViewInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormGroup, FormBuilder } from '@angular/forms';
 import { HoSoDuThauService } from '../../../../../../../../shared/services/ho-so-du-thau.service';
 import { Router } from '@angular/router';
 import { AlertService } from '../../../../../../../../shared/services';
 import { ThongTinDuAn } from '../../../../../../../../shared/models/ho-so-du-thau/thong-tin-du-an';
-import { SiteSurveyReportService } from '../../../../../../../../shared/services/site-survey-report.service';
 import { PackageDetailComponent } from '../../../../../package-detail.component';
 
 @Component({
@@ -47,9 +46,6 @@ export class SummaryConditionFormInfoComponent implements OnInit {
     });
     this.loadData();
   }
-  // ngAfterViewInit() {
-  //   this.autofocus.nativeElement.focus();
-  // }
 
   createForm() {
     this.thongTinDuAnForm = this.fb.group({
@@ -77,7 +73,7 @@ export class SummaryConditionFormInfoComponent implements OnInit {
 
       this.hoSoDuThauService.emitDataStepInfo(obj);
     });
-
+    this.hoSoDuThauService.scrollToView(true);
   }
   loadData() {
     this.hoSoDuThauService.watchDataLiveForm().subscribe(data => {

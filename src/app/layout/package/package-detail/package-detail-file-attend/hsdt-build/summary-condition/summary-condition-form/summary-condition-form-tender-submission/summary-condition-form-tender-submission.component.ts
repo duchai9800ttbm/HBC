@@ -81,6 +81,7 @@ export class SummaryConditionFormTenderSubmissionComponent implements OnInit {
       };
       this.hoSoDuThauService.emitDataStepTenderSubmit(obj);
     });
+    this.hoSoDuThauService.scrollToView(true);
   }
 
   addFormArrayControl(name: string, data?: DictionaryItemText) {

@@ -167,7 +167,6 @@ export class NeedCreateTenderComponent implements OnInit, OnDestroy {
       .getInforPackageID(this.bidOpportunityId)
       .subscribe(data => {
         this.packageInfo = data;
-        console.log(this.packageInfo);
       });
   }
 

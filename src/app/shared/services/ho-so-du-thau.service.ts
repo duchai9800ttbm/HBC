@@ -38,6 +38,7 @@ export class HoSoDuThauService {
   static idTenderDocumentTypesData;
   static statusHSDT = new BehaviorSubject<boolean>(false);
   static isCloseHSDT = new BehaviorSubject<boolean>(false);
+  static scrollView = new BehaviorSubject<boolean>(false);
 
   static checkConditionApproval = new BehaviorSubject<boolean>(false);
   // Data ProposedTenderParticipateReport
@@ -120,6 +121,13 @@ export class HoSoDuThauService {
     private instantSearchService: InstantSearchService,
     private sessionService: SessionService
   ) { }
+  // Scroll TO View
+  scrollToView(scroll) {
+    HoSoDuThauService.scrollView.next(scroll);
+  }
+  emplementScroll() {
+    return HoSoDuThauService.scrollView;
+  }
   // Check Condition of approval
   watchCondition() {
     return HoSoDuThauService.checkConditionApproval;

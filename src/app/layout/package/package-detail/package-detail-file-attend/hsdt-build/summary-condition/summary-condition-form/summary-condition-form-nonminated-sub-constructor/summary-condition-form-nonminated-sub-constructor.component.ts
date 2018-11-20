@@ -1,7 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, AfterContentChecked } from '@angular/core';
 import { FormGroup, FormBuilder, FormArray } from '@angular/forms';
-import { SummaryConditionFormComponent } from '../summary-condition-form.component';
-import { TenderNonminatedSubContractor } from '../../../../../../../../shared/models/package/tender-nonminated-sub-contractor';
 import { WorkPackage } from '../../../../../../../../shared/models/package/work-package';
 import { DanhSachNhaThau } from '../../../../../../../../shared/models/ho-so-du-thau/danh-sach-nha-thau';
 import { HoSoDuThauService } from '../../../../../../../../shared/services/ho-so-du-thau.service';
@@ -36,7 +34,6 @@ export class SummaryConditionFormNonminatedSubConstructorComponent implements On
     this.loadData();
   }
 
-
   createForm() {
     this.nonminateForm = this.fb.group({
       packageWork: this.fb.array([])
@@ -61,7 +58,7 @@ export class SummaryConditionFormNonminatedSubConstructorComponent implements On
 
       this.hoSoDuThauService.emitDataStepSubContractor(obj);
     });
-
+    this.hoSoDuThauService.scrollToView(true);
   }
 
   loadData() {

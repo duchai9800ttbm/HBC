@@ -31,6 +31,7 @@ export class SummaryConditionFormSpecialRequirementComponent implements OnInit, 
   ngAfterViewInit() {
     this.swapRow();
   }
+
   createForm() {
     this.specialRequirementForm = this.fb.group({
       tenderEvaluation: {
@@ -83,6 +84,7 @@ export class SummaryConditionFormSpecialRequirementComponent implements OnInit, 
       };
       this.hoSoDuThauService.emitDataStepSpecial(obj);
     });
+    this.hoSoDuThauService.scrollToView(true);
   }
 
 

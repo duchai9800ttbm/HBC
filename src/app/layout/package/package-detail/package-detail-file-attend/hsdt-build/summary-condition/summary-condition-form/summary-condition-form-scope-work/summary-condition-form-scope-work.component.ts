@@ -1,12 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, FormArray } from '@angular/forms';
 import { DictionaryItemText } from '../../../../../../../../shared/models';
-import { SummaryConditionFormComponent } from '../summary-condition-form.component';
-import { TenderScopeOfWork } from '../../../../../../../../shared/models/package/tender-scope-of-work';
 import { HoSoDuThauService } from '../../../../../../../../shared/services/ho-so-du-thau.service';
 import { PhamViCongViec } from '../../../../../../../../shared/models/ho-so-du-thau/pham-vi-cong-viec';
-import { ThongTinDoiTac } from '../../../../../../../../shared/models/ho-so-du-thau/thong-tin-doi-tac';
-import { PhamViCongViecItem } from '../../../../../../../../shared/models/ho-so-du-thau/pham-vi-cong-viec-item';
 import { PackageDetailComponent } from '../../../../../package-detail.component';
 import { Router } from '../../../../../../../../../../node_modules/@angular/router';
 
@@ -76,6 +72,7 @@ export class SummaryConditionFormScopeWorkComponent implements OnInit {
       };
       this.hoSoDuThauService.emitDataStepScope(obj);
     });
+    this.hoSoDuThauService.scrollToView(true);
   }
 
   loadData() {
@@ -137,5 +134,4 @@ export class SummaryConditionFormScopeWorkComponent implements OnInit {
       this.router.navigate([`/package/detail/${this.bidOpportunityId}/attend/build/summary/form/create/${link}`]);
     }
   }
-
 }

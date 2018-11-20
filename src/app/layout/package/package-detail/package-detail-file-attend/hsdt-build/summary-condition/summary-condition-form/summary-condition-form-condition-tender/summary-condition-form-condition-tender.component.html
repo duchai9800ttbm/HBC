@@ -79,11 +79,9 @@
                 <div class="row">
                     <div class="col-md-6" formGroupName="theoHSMT">
 
-                        <div class="form-view pr-5" [class.form-view-bg]="isModeView">
+                        <div class="form-view" [class.form-view-bg]="isModeView">
                             {{ dieuKienHSMTForm?.get('theoHSMT')?.get('thoiGianHoanThanh').value | thousandSeparate }}
                         </div>
-                        <!-- thousandSeparate -->
-                        <!-- <input disabled formControlName="thoiGianHoanThanh" appInputNumberNegativeDecimal [decimal]="true" class="form-control pointer-none pr-5"> -->
 
                         <span *ngIf="unitTime" class="unit-value text-uppercase">{{ unitTime.value }}</span>
 
@@ -189,15 +187,6 @@
                             </select>
                         </span>
                     </div>
-                    <!-- <div class="col-md-6" formGroupName="theoHBC">
-                        <span class="custom-dropdown w-100">
-                            <select class="form-control" formControlName="donViTienTe">
-                                <option [ngValue]="null">--Chọn--</option>
-                                <option [value]="'VNĐ'">VNĐ</option>
-                                <option [value]="'USD'">USD</option>
-                            </select>
-                        </span>
-                    </div> -->
                 </div>
 
             </div>

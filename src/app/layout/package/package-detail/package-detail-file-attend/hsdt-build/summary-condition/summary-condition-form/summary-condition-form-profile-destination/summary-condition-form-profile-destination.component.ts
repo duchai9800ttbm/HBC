@@ -1,7 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, AfterContentChecked } from '@angular/core';
 import { FormGroup, FormBuilder } from '@angular/forms';
-import { SummaryConditionFormComponent } from '../summary-condition-form.component';
-import { ApiConvertHelper } from '../../../../../../../../shared/helpers/api-convert.helper';
 import DateTimeConvertHelper from '../../../../../../../../shared/helpers/datetime-convert-helper';
 import { HoSoDuThauService } from '../../../../../../../../shared/services/ho-so-du-thau.service';
 import { DienGiaiYeuCauHoSo } from '../../../../../../../../shared/models/ho-so-du-thau/danh-sach-vat-tu';
@@ -86,6 +84,7 @@ export class SummaryConditionFormProfileDestinationComponent implements OnInit {
       obj.hanNop = DateTimeConvertHelper.fromDtObjectToTimestamp(data.hanNop);
       this.hoSoDuThauService.emitDataStepDestination(obj);
     });
+    this.hoSoDuThauService.scrollToView(true);
   }
 
   routerLink(e, link) {

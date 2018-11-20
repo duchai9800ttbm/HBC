@@ -1,13 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, FormArray } from '@angular/forms';
-import { SummaryConditionFormComponent } from '../summary-condition-form.component';
 import DateTimeConvertHelper from '../../../../../../../../shared/helpers/datetime-convert-helper';
 import { DienGiaiDieuKienHSMT } from '../../../../../../../../shared/models/ho-so-du-thau/dien-giai-yeu-cau';
 import { HoSoDuThauService } from '../../../../../../../../shared/services/ho-so-du-thau.service';
 import { DictionaryItemText } from '../../../../../../../../shared/models';
 import { PackageDetailComponent } from '../../../../../package-detail.component';
-import { PackageService } from '../../../../../../../../shared/services/package.service';
-import { ProposeTenderParticipateRequest } from '../../../../../../../../shared/models/api-request/package/propose-tender-participate-request';
+import {
+    ProposeTenderParticipateRequest
+} from '../../../../../../../../shared/models/api-request/package/propose-tender-participate-request';
 import { Currency } from '../../../../../../../../shared/models/currency';
 import { Router } from '../../../../../../../../../../node_modules/@angular/router';
 
@@ -179,11 +179,12 @@ export class SummaryConditionFormConditionTenderComponent implements OnInit {
                     hieuLucHoSo: data.theoHSMT.hieuLucHoSo,
                     tienDo: {
                         ngayKhoiCong: DateTimeConvertHelper.fromDtObjectToTimestamp(data.theoHSMT.ngayKhoiCong),
-                        thoiGianHoanThanh: String(data.theoHSMT.thoiGianHoanThanh) + ' ' + this.unitTime.value,
+                        thoiGianHoanThanh: (data.theoHSMT.thoiGianHoanThanh) ?
+                            (String(data.theoHSMT.thoiGianHoanThanh) + ' ' + this.unitTime.value) : '',
                         thoiGianHoanThanhTheoNhaThau: (data.theoHSMT.thoiGianHoanThanhTheoNhaThau) ?
                             data.theoHSMT.thoiGianHoanThanhTheoNhaThau : false,
-                        thoiGianHoanThanhTheoNhaThauCount:
-                            String(data.theoHSMT.thoiGianHoanThanhTheoNhaThauCount) + ' ' + this.unitTime.value
+                        thoiGianHoanThanhTheoNhaThauCount: (data.theoHSMT.thoiGianHoanThanhTheoNhaThauCount) ?
+                            (String(data.theoHSMT.thoiGianHoanThanhTheoNhaThauCount) + ' ' + this.unitTime.value) : ''
                     },
                     cacLoaiThue: (data.theoHSMT.cacLoaiThue || []).map(x => x.thue),
                     donViTienTe: data.theoHSMT.donViTienTe
@@ -196,7 +197,8 @@ export class SummaryConditionFormConditionTenderComponent implements OnInit {
                     hieuLucHoSo: data.theoHBC.hieuLucHoSo,
                     tienDo: {
                         ngayKhoiCong: DateTimeConvertHelper.fromDtObjectToTimestamp(data.theoHBC.ngayKhoiCong),
-                        thoiGianHoanThanh: String(data.theoHBC.thoiGianHoanThanh) + ' ' + this.unitTime.value,
+                        thoiGianHoanThanh: (data.theoHBC.thoiGianHoanThanh) ?
+                            (String(data.theoHBC.thoiGianHoanThanh) + ' ' + this.unitTime.value) : '',
                         thoiGianHoanThanhTheoNhaThau: null,
                         thoiGianHoanThanhTheoNhaThauCount: null
                     },
@@ -206,6 +208,7 @@ export class SummaryConditionFormConditionTenderComponent implements OnInit {
             };
             this.hoSoDuThauService.emitDataStepConditionTender(obj);
         });
+        this.hoSoDuThauService.scrollToView(true);
     }
 
     loadData() {
