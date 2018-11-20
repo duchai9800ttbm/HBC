@@ -63,12 +63,20 @@ export class PackageSuccessComponent implements OnInit {
     //   // }
     // });
     this.packageService.getInforPackageID(this.packageId).subscribe(result => {
+      this.statusPackage = this.checkStatusPackage[result.stageStatus.id];
       if (result.isSendMailKickOff) {
         this.kickOffActive = false;
         this.arrowKickOff = true;
         this.showArrow = false;
         this.arrow = true;
         this.arrowSuccess = true;
+      } else if (result.isSignedContract) {
+        this.isActive = true;
+        this.arrow = false;
+        this.arrowSuccess = true;
+        this.showArrow = true;
+        this.arrowKickOff = false;
+        this.kickOffActive = true;
       }
     });
   }
@@ -83,6 +91,7 @@ export class PackageSuccessComponent implements OnInit {
   }
 
   onClickList() {
+    console.log('onClickList');
     this.arrow = true;
     this.arrowSuccess = false;
     this.showArrow = false;

@@ -22,7 +22,8 @@
                         <div [ngClass]="{'': showArrow == false,'arrow-down':showArrow==true}"></div>
                     </div>
                 </li>
-                <li *ngIf="arrow" class="triangle2 active" [routerLinkActive]="['active']" (click)="onClickContract();" [routerLink]="['../package-success/contract-signed']">
+                <li *ngIf="arrow" class="triangle2 active" [routerLinkActive]="['active']" (click)="onClickContract();" [ngClass]="{ 'active' : statusPackage?.id >= checkStatusPackage.DaPhanHoiDenPhongHopDong.id  }"
+                    [routerLink]="['../package-success/contract-signed']">
                     <div style="width: 100%" class="center-parent">
                         <div></div>
                     </div>
