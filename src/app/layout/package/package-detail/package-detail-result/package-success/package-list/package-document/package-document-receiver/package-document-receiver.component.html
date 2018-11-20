@@ -233,20 +233,30 @@
                                             </div>
                                         </td>
                                         <td [ngClass]="{'w12' : isManageTransfer==true, 'w15' : isManageTransfer==false}">
-                                            <div *ngIf="j === 0" class="text-truncate">
+                                            <div *ngIf="j === 0" class="text-truncate" [title]="documents.documentType?.value">
                                                 {{documents.documentType?.value}}
                                             </div>
                                         </td>
-                                        <td [ngClass]="{'w12' : isManageTransfer==true, 'w15' : isManageTransfer==false}">{{ documents.document?.name }}</td>
+                                        <td [ngClass]="{'w12' : isManageTransfer==true, 'w15' : isManageTransfer==false}">
+                                            <div [title]="documents.document?.name">
+                                                {{ documents.document?.name }}
+                                            </div>
+                                        </td>
                                         <td class="select-filter td-input w10 td--overflow">
-                                            {{documents.sendDate ? (documents.sendDate*1000 | date:'dd/MM/yyyy':'+0000') : ''}}
+                                            <div [title]="documents.sendDate ? (documents.sendDate*1000 | date:'dd/MM/yyyy':'+0000') : ''">
+                                                {{documents.sendDate ? (documents.sendDate*1000 | date:'dd/MM/yyyy':'+0000') : ''}}
+                                            </div>
                                         </td>
                                         <td class="select-filter w10">
-                                            <div class="edit-number">
+                                            <div class="edit-number" [title]="documents.useTo ? (documents.useTo*1000 | date:'dd/MM/yyyy':'+0000') : ''">
                                                 {{ documents.useTo ? (documents.useTo*1000 | date:'dd/MM/yyyy':'+0000') : '' }}
                                             </div>
                                         </td>
-                                        <td class="select-filter w10">{{ documents.status?.value }}</td>
+                                        <td class="select-filter w10">
+                                            <div [title]="documents.status?.value">
+                                                {{ documents.status?.value }}
+                                            </div>
+                                        </td>
                                         <td class="text-center" [ngClass]="{'w6' : isManageTransfer==true, 'w10' : isManageTransfer==false}">
                                             <div class="d-flex justify-content-around">
                                                 <ng-container *ngIf="documents.status && documents.status.key === 'DuocSuDung'">
