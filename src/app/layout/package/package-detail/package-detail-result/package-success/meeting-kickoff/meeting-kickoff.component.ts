@@ -20,11 +20,13 @@ import { PermissionModel } from '../../../../../../shared/models/permission/Perm
 import { PermissionService } from '../../../../../../shared/services/permission.service';
 import { EmailFilter, EmailItemModel } from '../../../../../../shared/models/email/email-item.model';
 import CustomValidator from '../../../../../../shared/helpers/custom-validator.helper';
+import { slideToLeft } from '../../../../../../router.animations';
 
 @Component({
   selector: 'app-meeting-kickoff',
   templateUrl: './meeting-kickoff.component.html',
-  styleUrls: ['./meeting-kickoff.component.scss']
+  styleUrls: ['./meeting-kickoff.component.scss'],
+  animations: [slideToLeft()]
 })
 export class MeetingKickoffComponent implements OnInit, OnDestroy {
   formUpload: FormGroup;
@@ -104,6 +106,7 @@ export class MeetingKickoffComponent implements OnInit, OnDestroy {
   ) { }
 
   ngOnInit() {
+    this.loading = true;
     this.formUpload = this.formBuilder.group({
       name: [''],
       description: [''],
@@ -114,7 +117,7 @@ export class MeetingKickoffComponent implements OnInit, OnDestroy {
       link: ['']
     });
     this.currentPackageId = +PackageDetailComponent.packageId;
-    this.subscription = this.permissionService.get().subscribe(data => {
+    this.subscription = this.permissionService.get().delay(400).subscribe(data => {
       this.listPermission = data;
       const hsdt = this.listPermission.length &&
         this.listPermission.filter(x => x.bidOpportunityStage === 'KQDT')[0];
@@ -264,7 +267,6 @@ export class MeetingKickoffComponent implements OnInit, OnDestroy {
   modelViewListData(template: TemplateRef<any>) {
     const filterModel = new EmailFilter();
     filterModel.category = 'Kick-off';
-    this.loading = true;
     this.emailService.searchWithFilter(this.currentPackageId, '', filterModel, 0, 100)
       .subscribe(result => {
         this.listEmailSended = result.items;

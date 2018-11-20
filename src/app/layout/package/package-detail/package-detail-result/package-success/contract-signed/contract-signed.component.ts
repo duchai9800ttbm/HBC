@@ -23,11 +23,13 @@ import { groupBy } from '../../../../../../../../node_modules/@progress/kendo-da
 import { CheckStatusPackage } from '../../../../../../shared/constants/check-status-package';
 import { PermissionService } from '../../../../../../shared/services/permission.service';
 import { PermissionModel } from '../../../../../../shared/models/permission/Permission.model';
+import { slideToLeft } from '../../../../../../router.animations';
 
 @Component({
   selector: 'app-contract-signed',
   templateUrl: './contract-signed.component.html',
-  styleUrls: ['./contract-signed.component.scss']
+  styleUrls: ['./contract-signed.component.scss'],
+  animations: [slideToLeft()]
 })
 export class ContractSignedComponent implements OnInit, OnDestroy {
   @Input() isContract;

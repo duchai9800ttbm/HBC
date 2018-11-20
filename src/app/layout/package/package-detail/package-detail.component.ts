@@ -98,7 +98,7 @@ export class PackageDetailComponent implements OnInit, OnDestroy {
         if (this.subFirst) {
           this.subInterval.unsubscribe();
         }
-      } else {
+      } else if (data) {
         if (this.subInterval) {
           this.subInterval.unsubscribe();
         }

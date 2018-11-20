@@ -23,10 +23,12 @@ import { PermissionModel } from '../../../../../../shared/models/permission/Perm
 import { PermissionService } from '../../../../../../shared/services/permission.service';
 import { ViewDetailComponent } from '../../view-detail/view-detail.component';
 import CustomValidator from '../../../../../../shared/helpers/custom-validator.helper';
+import { slideToLeft } from '../../../../../../router.animations';
 @Component({
   selector: 'app-package-list',
   templateUrl: './package-list.component.html',
-  styleUrls: ['./package-list.component.scss']
+  styleUrls: ['./package-list.component.scss'],
+  animations: [slideToLeft()]
 })
 export class PackageListComponent implements OnInit, OnDestroy {
   packageId: number;

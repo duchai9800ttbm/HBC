@@ -1,320 +1,326 @@
-<div *ngIf="isShow">
-    <div class="outer" id="outer" *ngIf="!isSignedContractAPI">
-        <div id="header-table-build" class=" title-list-package d-flex flex-wrap align-items-center" [hidden]="isShowMenu">
-            <div class="mr-auto d-flex align-items-end list-package mt-2 mb-2">
-                <div class="d-flex justify-content-start res-header-bar" id="res-header">
-                    <div class="rule mr-2">
+<div>
+    <!-- <div class="outer" id="outer" >
+    </div> -->
+    <div [@routerTransition] *ngIf="isShow" class="outer" id="outer">
+        <div>
+            <div *ngIf="!isSignedContractAPI">
+                <div id="header-table-build" class=" title-list-package d-flex flex-wrap align-items-center" [hidden]="isShowMenu">
+                    <div class="mr-auto d-flex align-items-end list-package mt-2 mb-2">
+                        <div class="d-flex justify-content-start res-header-bar" id="res-header">
+                            <div class="rule mr-2">
+                            </div>
+                            <div class="center-parent  mr-4 title-header">
+                                Đã phản hồi đến Phòng hợp đồng
+                            </div>
+                        </div>
                     </div>
-                    <div class="center-parent  mr-4 title-header">
-                        Đã phản hồi đến Phòng hợp đồng
+                    <div>
+                        <div class="btn-toolbar mt-2 mb-2">
+                            <div class="d-flex">
+                                <div class="ml-1">
+                                    <button (click)="refresh()" class="btn btn-primary">
+                                        <i class="fa fa-refresh" aria-hidden="true"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
+                <div id="outer-img">
+                    <img src="assets/images/kykethd.png" alt="">
+                    <h5>Bạn đã hoàn tất ký kết hợp đồng</h5>
+                    <ng-container *ngIf="ThemMoiHD">
+                        <div class="confirm-button">
+                            <button class="btn btn-primary" id="success" (click)="uploadContractSigning()">Thêm mới hợp đồng ký kết</button>
+                        </div>
+                    </ng-container>
+                </div>
             </div>
-            <div>
-                <div class="btn-toolbar mt-2 mb-2">
-                    <div class="d-flex">
-                        <div class="ml-1">
-                            <button (click)="refresh()" class="btn btn-primary">
+            <div *ngIf="isSignedContractAPI">
+                <div class=" title-list-package d-flex flex-wrap align-items-center">
+                    <div class="mr-auto d-flex align-items-end list-package mt-2 mb-2">
+                        <div class="d-flex justify-content-start">
+                            <div class="rule mr-2">
+                            </div>
+                            <div class="center-parent  mr-4">
+                                <div class="fs"> Đã ký kết hợp đồng</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div>
+                        <div class="mt-2 mb-2">
+                            <!-- <button class="btn btn-primary ml-1" (click)="downloadTemplateContractSigning()">
+                                            Tải template
+                                        </button> -->
+                            <div class="btn-group ml-1" ngbDropdown placement="bottom-right">
+                                <button type="button" class="btn btn-primary" ngbDropdownToggle data-toggle="dropdown">
+                                    Tải template
+                                </button>
+                                <div ngbDropdownMenu style="top: 33px;">
+                                    <div class="fileUpload dropdown-item" (click)="downloadTemplate('LostBid')">
+                                        <a>Thông báo kết quả trật thầu</a>
+                                    </div>
+                                    <div class="fileUpload dropdown-item" (click)="downloadTemplate('WinBid')">
+                                        <a>Thông báo kết quả trúng thầu</a>
+                                    </div>
+                                    <div class="fileUpload dropdown-item" (click)="downloadTemplate('LessonLearn')">
+                                        <a>Báo cáo đánh giá rút kinh nghiệm</a>
+                                    </div>
+                                </div>
+                            </div>
+                            <button class="btn btn-primary ml-1" (click)="uploadContractSigning()">
+                                Upload file
+                            </button>
+                            <button class="btn btn-primary ml-1" (click)="refesh()">
                                 <i class="fa fa-refresh" aria-hidden="true"></i>
                             </button>
                         </div>
                     </div>
                 </div>
-            </div>
-        </div>
-        <div id="outer-img">
-            <img src="assets/images/kykethd.png" alt="">
-            <h5>Bạn đã hoàn tất ký kết hợp đồng</h5>
-            <ng-container *ngIf="ThemMoiHD">
-                <div class="confirm-button">
-                    <button class="btn btn-primary" id="success" (click)="uploadContractSigning()">Thêm mới hợp đồng ký kết</button>
+                <div class="d-flex form-group">
+                    <div class="d-flex align-items-center mb-0 mr-auto text-dark text-uppercase pd-t title-header-chirld">Hợp đồng ký kết</div>
+                    <div class="d-flex">
+                        <div class="input-group btn-rg">
+                            <span class="input-group-addon">Tìm kiếm theo</span>
+                            <input type="text" class="form-control icon" placeholder="&#xf002; Tên tài liệu" (keyup)="searchTerm$.next($event.target.value)">
+                        </div>
+                        <ng-container *ngIf="TaiXuongHD">
+                            <!-- <button class="btn btn-primary ml-1">
+                                            Tải xuống tài liệu
+                                        </button> -->
+                        </ng-container>
+                        <ng-container *ngIf="XoaHD">
+                            <button class="btn btn-primary ml-1" (click)="deleteContractSign()">
+                                Xóa
+                            </button>
+                        </ng-container>
+                    </div>
                 </div>
-            </ng-container>
+                <div class="main-table" *ngIf="true">
+                    <div class="d-flex flex-row flex-wrap filter-bar" style="background-color: #fafbfc!important">
+                        <div class="d-flex form-inline flex-pad">
+                            <div class="form-group py-2 pl-2">
+                                <label for="" class="form-label">Ngày ký hợp đồng</label>
+                                <kendo-datepicker class="mx-sm-2" [(ngModel)]="filterModel.contractDate"></kendo-datepicker>
+                            </div>
+                            <div class="form-group py-2 pl-2">
+                                <label for="" class="form-label">Người upload</label>
+                                <span class="custom-dropdown mx-sm-2">
+                                    <select class="form-control" [(ngModel)]="filterModel.uploadedByEmployeeId">
+                                        <option [ngValue]="null">--Lựa chọn--</option>
+                                        <option *ngFor="let item of uploadList" [value]="item.employeeId">{{item.employeeName}}</option>
+                                    </select>
+                                </span>
+                            </div>
+                            <div class="form-group py-2 pl-2">
+                                <label for="" class="form-label">Ngày upload</label>
+                                <kendo-datepicker class="mx-sm-2" [(ngModel)]="filterModel.uploadedDate"></kendo-datepicker>
+                            </div>
+                            <div class="form-group py-2 pl-2">
+                                <label for="" class="form-label">Lần phỏng vấn</label>
+                                <span class="custom-dropdown mx-sm-2">
+                                    <select class="form-control" [(ngModel)]="filterModel.interviewTime">
+                                        <option [ngValue]="null">--Lựa chọn--</option>
+                                        <option *ngFor="let item of interviewTimeList">{{item}}</option>
+                                    </select>
+                                </span>
+                            </div>
 
-        </div>
-    </div>
-    <div class="outer" id="outer" *ngIf="isSignedContractAPI">
-        <div class=" title-list-package d-flex flex-wrap align-items-center">
-            <div class="mr-auto d-flex align-items-end list-package mt-2 mb-2">
-                <div class="d-flex justify-content-start">
-                    <div class="rule mr-2">
-                    </div>
-                    <div class="center-parent  mr-4">
-                        <div class="fs"> Đã ký kết hợp đồng</div>
-                    </div>
-                </div>
-            </div>
-            <div>
-                <div class="mt-2 mb-2">
-                    <!-- <button class="btn btn-primary ml-1" (click)="downloadTemplateContractSigning()">
-                    Tải template
-                </button> -->
-                    <div class="btn-group ml-1" ngbDropdown placement="bottom-right">
-                        <button type="button" class="btn btn-primary" ngbDropdownToggle data-toggle="dropdown">
-                            Tải template
-                        </button>
-                        <div ngbDropdownMenu style="top: 33px;">
-                            <div class="fileUpload dropdown-item" (click)="downloadTemplate('LostBid')">
-                                <a>Thông báo kết quả trật thầu</a>
-                            </div>
-                            <div class="fileUpload dropdown-item" (click)="downloadTemplate('WinBid')">
-                                <a>Thông báo kết quả trúng thầu</a>
-                            </div>
-                            <div class="fileUpload dropdown-item" (click)="downloadTemplate('LessonLearn')">
-                                <a>Báo cáo đánh giá rút kinh nghiệm</a>
+                            <div class="form-group py-2 pl-2 ml-auto">
+                                <button type="submit" class="btn btn-primary mr-f mr-2" (click)="filter(fasle)">
+                                    <i class="fa fa-filter" aria-hidden="true"></i>
+                                    <span class="filter-pd">Lọc </span>
+                                </button>
+                                <button class="btn btn-secondary mr-2" (click)="clearFilter()">
+                                    <i class="fa fa-times"></i>
+                                    <span class="filter-pd">Xóa lọc </span>
+                                </button>
                             </div>
                         </div>
                     </div>
-                    <button class="btn btn-primary ml-1" (click)="uploadContractSigning()">
-                        Upload file
-                    </button>
-                    <button class="btn btn-primary ml-1" (click)="refesh()">
-                        <i class="fa fa-refresh" aria-hidden="true"></i>
-                    </button>
-                </div>
-            </div>
-        </div>
-        <div class="d-flex form-group">
-            <div class="d-flex align-items-center mb-0 mr-auto text-dark text-uppercase pd-t title-header-chirld">Hợp đồng ký kết</div>
-            <div class="d-flex">
-                <div class="input-group btn-rg">
-                    <span class="input-group-addon">Tìm kiếm theo</span>
-                    <input type="text" class="form-control icon" placeholder="&#xf002; Tên tài liệu" (keyup)="searchTerm$.next($event.target.value)">
-                </div>
-                <ng-container *ngIf="TaiXuongHD">
-                    <!-- <button class="btn btn-primary ml-1">
-                    Tải xuống tài liệu
-                </button> -->
-                </ng-container>
-                <ng-container *ngIf="XoaHD">
-                    <button class="btn btn-primary ml-1" (click)="deleteContractSign()">
-                        Xóa
-                    </button>
-                </ng-container>
-            </div>
-        </div>
-        <div class="main-table" *ngIf="true">
-            <div class="d-flex flex-row flex-wrap filter-bar" style="background-color: #fafbfc!important">
-                <div class="d-flex form-inline flex-pad">
-                    <div class="form-group py-2 pl-2">
-                        <label for="" class="form-label">Ngày ký hợp đồng</label>
-                        <kendo-datepicker class="mx-sm-2" [(ngModel)]="filterModel.contractDate"></kendo-datepicker>
-                    </div>
-                    <div class="form-group py-2 pl-2">
-                        <label for="" class="form-label">Người upload</label>
-                        <span class="custom-dropdown mx-sm-2">
-                            <select class="form-control" [(ngModel)]="filterModel.uploadedByEmployeeId">
-                                <option [ngValue]="null">--Lựa chọn--</option>
-                                <option *ngFor="let item of uploadList" [value]="item.employeeId">{{item.employeeName}}</option>
-                            </select>
-                        </span>
-                    </div>
-                    <div class="form-group py-2 pl-2">
-                        <label for="" class="form-label">Ngày upload</label>
-                        <kendo-datepicker class="mx-sm-2" [(ngModel)]="filterModel.uploadedDate"></kendo-datepicker>
-                    </div>
-                    <div class="form-group py-2 pl-2">
-                        <label for="" class="form-label">Lần phỏng vấn</label>
-                        <span class="custom-dropdown mx-sm-2">
-                            <select class="form-control" [(ngModel)]="filterModel.interviewTime">
-                                <option [ngValue]="null">--Lựa chọn--</option>
-                                <option *ngFor="let item of interviewTimeList">{{item}}</option>
-                            </select>
-                        </span>
-                    </div>
 
-                    <div class="form-group py-2 pl-2 ml-auto">
-                        <button type="submit" class="btn btn-primary mr-f mr-2" (click)="filter(fasle)">
-                            <i class="fa fa-filter" aria-hidden="true"></i>
-                            <span class="filter-pd">Lọc </span>
-                        </button>
-                        <button class="btn btn-secondary mr-2" (click)="clearFilter()">
-                            <i class="fa fa-times"></i>
-                            <span class="filter-pd">Xóa lọc </span>
-                        </button>
-                    </div>
-                </div>
-            </div>
-
-            <div class="bot-table">
-                <table class="table-selection  row-border hover cell-border dataTable table-layout">
-                    <thead>
-                        <tr>
-                            <th class="set-stt--width">
-                                <div class="d-flex justify-content-around">
-                                    <div class="w-40">
-                                        <div class="center-parent">
-                                            <label class="custom-control custom-checkbox">
-                                                <input type="checkbox" class="custom-control-input" (change)="onSelectAll($event.target.checked)">
-                                                <span class="custom-control-indicator"></span>
-                                            </label>
+                    <div class="bot-table">
+                        <table class="table-selection  row-border hover cell-border dataTable table-layout">
+                            <thead>
+                                <tr>
+                                    <th class="set-stt--width">
+                                        <div class="d-flex justify-content-around">
+                                            <div class="w-40">
+                                                <div class="center-parent">
+                                                    <label class="custom-control custom-checkbox">
+                                                        <input type="checkbox" class="custom-control-input" (change)="onSelectAll($event.target.checked)">
+                                                        <span class="custom-control-indicator"></span>
+                                                    </label>
+                                                </div>
+                                            </div>
+                                            <div class="center-parent w-35">
+                                                <div>STT</div>
+                                            </div>
                                         </div>
-                                    </div>
-                                    <div class="center-parent w-35">
-                                        <div>STT</div>
-                                    </div>
-                                </div>
-                            </th>
+                                    </th>
 
-                            <th class="w-20">
-                                <div class="d-flex justify-content-between">
-                                    <div class="center-parent">
-                                        <div>Tên tài liệu</div>
-                                    </div>
-                                    <div class="center-parent ml-2">
-                                        <img *ngIf="currentFieldSort !== 'name' ||  (currentFieldSort === 'name' && statusSort === '')" class="icon-sort" src="assets/images/sort.svg"
-                                            (click)="sortField('name', 'asc')">
-                                        <img *ngIf="currentFieldSort === 'name' && statusSort === 'asc'" class="icon-sort-down-up" src="assets/images/sort-down.svg"
-                                            (click)="sortField('name', 'desc')">
-                                        <img *ngIf="currentFieldSort === 'name' && statusSort === 'desc'" class="icon-sort-down-up" src="assets/images/sort-up.svg"
-                                            (click)="sortField('name', '')">
-                                    </div>
-                                </div>
-
-                            </th>
-                            <th class="th-mark-status w-10">
-                                <div class="d-flex justify-content-center">
-                                    <div class="center-parent w-80">
-                                        <div>Phiên bản</div>
-                                    </div>
-                                    <div class="center-parent ml-2">
-                                        <img *ngIf="currentFieldSort !== 'version' ||  (currentFieldSort === 'version' && statusSort === '')" class="icon-sort" src="assets/images/sort.svg"
-                                            (click)="sortField('version', 'asc')">
-                                        <img *ngIf="currentFieldSort === 'version' && statusSort === 'asc'" class="icon-sort-down-up" src="assets/images/sort-down.svg"
-                                            (click)="sortField('version', 'desc')">
-                                        <img *ngIf="currentFieldSort === 'version' && statusSort === 'desc'" class="icon-sort-down-up" src="assets/images/sort-up.svg"
-                                            (click)="sortField('version', '')">
-                                    </div>
-                                </div>
-                            </th>
-
-                            <th class="w-10">
-                                <div class="center-parent">
-                                    <div>Mô tả</div>
-                                </div>
-                            </th>
-
-                            <th class="w-10">
-                                <div class="d-flex justify-content-center">
-                                    <div class="center-parent">
-                                        <div>Người upload</div>
-                                    </div>
-                                    <div class="center-parent ml-2">
-                                        <img *ngIf="currentFieldSort !== 'employeeName' ||  (currentFieldSort === 'employeeName' && statusSort === '')" class="icon-sort"
-                                            src="assets/images/sort.svg" (click)="sortField('employeeName', 'asc')">
-                                        <img *ngIf="currentFieldSort === 'employeeName' && statusSort === 'asc'" class="icon-sort-down-up" src="assets/images/sort-down.svg"
-                                            (click)="sortField('employeeName', 'desc')">
-                                        <img *ngIf="currentFieldSort === 'employeeName' && statusSort === 'desc'" class="icon-sort-down-up" src="assets/images/sort-up.svg"
-                                            (click)="sortField('employeeName', '')">
-                                    </div>
-                                </div>
-                            </th>
-
-                            <th class="w-15">
-                                <div class="d-flex justify-content-center">
-                                    <div class="center-parent">
-                                        <div>Ngày upload</div>
-                                    </div>
-                                    <div class="center-parent ml-2">
-                                        <img *ngIf="currentFieldSort !== 'uploadDate' ||  (currentFieldSort === 'uploadDate' && statusSort === '')" class="icon-sort"
-                                            src="assets/images/sort.svg" (click)="sortField('uploadDate', 'asc')">
-                                        <img *ngIf="currentFieldSort === 'uploadDate' && statusSort === 'asc'" class="icon-sort-down-up" src="assets/images/sort-down.svg"
-                                            (click)="sortField('uploadDate', 'desc')">
-                                        <img *ngIf="currentFieldSort === 'uploadDate' && statusSort === 'desc'" class="icon-sort-down-up" src="assets/images/sort-up.svg"
-                                            (click)="sortField('uploadDate', '')">
-                                    </div>
-                                </div>
-                            </th>
-                            <th class="w-10">
-                                <div class="d-flex justify-content-center">
-                                    <div class="center-parent">
-                                        <div>Ngày ký kết hợp đồng</div>
-                                    </div>
-                                    <div class="center-parent ml-2">
-                                        <img *ngIf="currentFieldSort !== 'contractDate' ||  (currentFieldSort === 'contractDate' && statusSort === '')" class="icon-sort"
-                                            src="assets/images/sort.svg" (click)="sortField('contractDate', 'asc')">
-                                        <img *ngIf="currentFieldSort === 'contractDate' && statusSort === 'asc'" class="icon-sort-down-up" src="assets/images/sort-down.svg"
-                                            (click)="sortField('contractDate', 'desc')">
-                                        <img *ngIf="currentFieldSort === 'contractDate' && statusSort === 'desc'" class="icon-sort-down-up" src="assets/images/sort-up.svg"
-                                            (click)="sortField('contractDate', '')">
-                                    </div>
-                                </div>
-                            </th>
-                            <th class="w-15">
-                                <div class="d-flex justify-content-center">
-                                    <div class="center-parent">
-                                        <div>Lần phỏng vấn</div>
-                                    </div>
-                                    <div class="center-parent ml-2">
-                                        <img *ngIf="currentFieldSort !== 'interviewTimes' ||  (currentFieldSort === 'interviewTimes' && statusSort === '')" class="icon-sort"
-                                            src="assets/images/sort.svg" (click)="sortField('interviewTimes', 'asc')">
-                                        <img *ngIf="currentFieldSort === 'interviewTimes' && statusSort === 'asc'" class="icon-sort-down-up" src="assets/images/sort-down.svg"
-                                            (click)="sortField('interviewTimes', 'desc')">
-                                        <img *ngIf="currentFieldSort === 'interviewTimes' && statusSort === 'desc'" class="icon-sort-down-up" src="assets/images/sort-up.svg"
-                                            (click)="sortField('interviewTimes', '')">
-                                    </div>
-                                </div>
-                            </th>
-                            <th class="table-action text-center set-manipulation--width">
-                                Thao tác
-                            </th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr *ngFor="let item of pagedResult.items; let i = index;">
-                            <td class="set-stt--width">
-                                <div class="d-flex justify-content-around">
-                                    <div class="w-40">
-                                        <div class="center-parent">
-                                            <label class="custom-control custom-checkbox">
-                                                <input type="checkbox" class="custom-control-input" [(ngModel)]="item.checkboxSelected">
-                                                <span class="custom-control-indicator"></span>
-                                            </label>
+                                    <th class="w-20">
+                                        <div class="d-flex justify-content-between">
+                                            <div class="center-parent">
+                                                <div>Tên tài liệu</div>
+                                            </div>
+                                            <div class="center-parent ml-2">
+                                                <img *ngIf="currentFieldSort !== 'name' ||  (currentFieldSort === 'name' && statusSort === '')" class="icon-sort" src="assets/images/sort.svg"
+                                                    (click)="sortField('name', 'asc')">
+                                                <img *ngIf="currentFieldSort === 'name' && statusSort === 'asc'" class="icon-sort-down-up" src="assets/images/sort-down.svg"
+                                                    (click)="sortField('name', 'desc')">
+                                                <img *ngIf="currentFieldSort === 'name' && statusSort === 'desc'" class="icon-sort-down-up" src="assets/images/sort-up.svg"
+                                                    (click)="sortField('name', '')">
+                                            </div>
                                         </div>
-                                    </div>
 
-                                    <div class="center-parent w-35">
-                                        <div>{{i+1}}</div>
-                                    </div>
-                                </div>
-                            </td>
-                            <td class="documentName" [title]="item.name">{{item.name}}</td>
-                            <td class="text-center" [title]="item.version">{{item.version}}</td>
-                            <td class="description" [title]="item.desc">{{item.desc}} </td>
-                            <td class="text-center employeeName" [title]="item.uploadByEmployee?.employeeName">{{item.uploadByEmployee?.employeeName}}</td>
-                            <td class="text-center" [title]="item.uploadDate*1000 | date:'dd/MM/yyyy HH:mm':'+0000'">{{item.uploadDate*1000 | date:'dd/MM/yyyy HH:mm':'+0000'}}</td>
-                            <td class="text-center" [title]="item.contractDate*1000 | date:'dd/MM/yyyy':'+0000'">{{item.contractDate*1000 | date:'dd/MM/yyyy':'+0000'}}</td>
-                            <td class="text-center" [title]="item.interviewTime">{{item.interviewTime}}</td>
-                            <td class="text-center">
-                                <div class="d-flex justify-content-around">
-                                    <div id="mr" *ngIf="!item.fileUrl">
-                                        <a title="Tải file" (click)="downloadFileItem(item.id)">
-                                            <i class="fa fa-download color-item-down" aria-hidden="true"></i>
-                                        </a>
-                                    </div>
-                                    <div *ngIf="item.fileUrl">
-                                        <a title="Mở link" [href]="item.fileUrl" target="_blank">
-                                            <i class="fa fa-external-link color-item-down" aria-hidden="true"></i>
-                                        </a>
-                                    </div>
-                                    <div id="mr">
-                                        <a title="Xóa file" (click)="deleteFileItem(item.id)">
-                                            <i class="fa fa-trash-o" aria-hidden="true"></i>
-                                        </a>
-                                    </div>
-                                    <!-- <div id="mr">
-                                    <a title="In">
-                                        <i class="fa fa-print color-item-print" aria-hidden="true"></i>
-                                    </a>
-                                </div> -->
-                                </div>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
-                <div *ngIf="!pagedResult.items || pagedResult.items.length === 0" class="center-parent">Không có dữ liệu</div>
+                                    </th>
+                                    <th class="th-mark-status w-10">
+                                        <div class="d-flex justify-content-center">
+                                            <div class="center-parent w-80">
+                                                <div>Phiên bản</div>
+                                            </div>
+                                            <div class="center-parent ml-2">
+                                                <img *ngIf="currentFieldSort !== 'version' ||  (currentFieldSort === 'version' && statusSort === '')" class="icon-sort" src="assets/images/sort.svg"
+                                                    (click)="sortField('version', 'asc')">
+                                                <img *ngIf="currentFieldSort === 'version' && statusSort === 'asc'" class="icon-sort-down-up" src="assets/images/sort-down.svg"
+                                                    (click)="sortField('version', 'desc')">
+                                                <img *ngIf="currentFieldSort === 'version' && statusSort === 'desc'" class="icon-sort-down-up" src="assets/images/sort-up.svg"
+                                                    (click)="sortField('version', '')">
+                                            </div>
+                                        </div>
+                                    </th>
+
+                                    <th class="w-10">
+                                        <div class="center-parent">
+                                            <div>Mô tả</div>
+                                        </div>
+                                    </th>
+
+                                    <th class="w-10">
+                                        <div class="d-flex justify-content-center">
+                                            <div class="center-parent">
+                                                <div>Người upload</div>
+                                            </div>
+                                            <div class="center-parent ml-2">
+                                                <img *ngIf="currentFieldSort !== 'employeeName' ||  (currentFieldSort === 'employeeName' && statusSort === '')" class="icon-sort"
+                                                    src="assets/images/sort.svg" (click)="sortField('employeeName', 'asc')">
+                                                <img *ngIf="currentFieldSort === 'employeeName' && statusSort === 'asc'" class="icon-sort-down-up" src="assets/images/sort-down.svg"
+                                                    (click)="sortField('employeeName', 'desc')">
+                                                <img *ngIf="currentFieldSort === 'employeeName' && statusSort === 'desc'" class="icon-sort-down-up" src="assets/images/sort-up.svg"
+                                                    (click)="sortField('employeeName', '')">
+                                            </div>
+                                        </div>
+                                    </th>
+
+                                    <th class="w-15">
+                                        <div class="d-flex justify-content-center">
+                                            <div class="center-parent">
+                                                <div>Ngày upload</div>
+                                            </div>
+                                            <div class="center-parent ml-2">
+                                                <img *ngIf="currentFieldSort !== 'uploadDate' ||  (currentFieldSort === 'uploadDate' && statusSort === '')" class="icon-sort"
+                                                    src="assets/images/sort.svg" (click)="sortField('uploadDate', 'asc')">
+                                                <img *ngIf="currentFieldSort === 'uploadDate' && statusSort === 'asc'" class="icon-sort-down-up" src="assets/images/sort-down.svg"
+                                                    (click)="sortField('uploadDate', 'desc')">
+                                                <img *ngIf="currentFieldSort === 'uploadDate' && statusSort === 'desc'" class="icon-sort-down-up" src="assets/images/sort-up.svg"
+                                                    (click)="sortField('uploadDate', '')">
+                                            </div>
+                                        </div>
+                                    </th>
+                                    <th class="w-10">
+                                        <div class="d-flex justify-content-center">
+                                            <div class="center-parent">
+                                                <div>Ngày ký kết hợp đồng</div>
+                                            </div>
+                                            <div class="center-parent ml-2">
+                                                <img *ngIf="currentFieldSort !== 'contractDate' ||  (currentFieldSort === 'contractDate' && statusSort === '')" class="icon-sort"
+                                                    src="assets/images/sort.svg" (click)="sortField('contractDate', 'asc')">
+                                                <img *ngIf="currentFieldSort === 'contractDate' && statusSort === 'asc'" class="icon-sort-down-up" src="assets/images/sort-down.svg"
+                                                    (click)="sortField('contractDate', 'desc')">
+                                                <img *ngIf="currentFieldSort === 'contractDate' && statusSort === 'desc'" class="icon-sort-down-up" src="assets/images/sort-up.svg"
+                                                    (click)="sortField('contractDate', '')">
+                                            </div>
+                                        </div>
+                                    </th>
+                                    <th class="w-15">
+                                        <div class="d-flex justify-content-center">
+                                            <div class="center-parent">
+                                                <div>Lần phỏng vấn</div>
+                                            </div>
+                                            <div class="center-parent ml-2">
+                                                <img *ngIf="currentFieldSort !== 'interviewTimes' ||  (currentFieldSort === 'interviewTimes' && statusSort === '')" class="icon-sort"
+                                                    src="assets/images/sort.svg" (click)="sortField('interviewTimes', 'asc')">
+                                                <img *ngIf="currentFieldSort === 'interviewTimes' && statusSort === 'asc'" class="icon-sort-down-up" src="assets/images/sort-down.svg"
+                                                    (click)="sortField('interviewTimes', 'desc')">
+                                                <img *ngIf="currentFieldSort === 'interviewTimes' && statusSort === 'desc'" class="icon-sort-down-up" src="assets/images/sort-up.svg"
+                                                    (click)="sortField('interviewTimes', '')">
+                                            </div>
+                                        </div>
+                                    </th>
+                                    <th class="table-action text-center set-manipulation--width">
+                                        Thao tác
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let item of pagedResult.items; let i = index;">
+                                    <td class="set-stt--width">
+                                        <div class="d-flex justify-content-around">
+                                            <div class="w-40">
+                                                <div class="center-parent">
+                                                    <label class="custom-control custom-checkbox">
+                                                        <input type="checkbox" class="custom-control-input" [(ngModel)]="item.checkboxSelected">
+                                                        <span class="custom-control-indicator"></span>
+                                                    </label>
+                                                </div>
+                                            </div>
+
+                                            <div class="center-parent w-35">
+                                                <div>{{i+1}}</div>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td class="documentName" [title]="item.name">{{item.name}}</td>
+                                    <td class="text-center" [title]="item.version">{{item.version}}</td>
+                                    <td class="description" [title]="item.desc">{{item.desc}} </td>
+                                    <td class="text-center employeeName" [title]="item.uploadByEmployee?.employeeName">{{item.uploadByEmployee?.employeeName}}</td>
+                                    <td class="text-center" [title]="item.uploadDate*1000 | date:'dd/MM/yyyy HH:mm':'+0000'">{{item.uploadDate*1000 | date:'dd/MM/yyyy HH:mm':'+0000'}}</td>
+                                    <td class="text-center" [title]="item.contractDate*1000 | date:'dd/MM/yyyy':'+0000'">{{item.contractDate*1000 | date:'dd/MM/yyyy':'+0000'}}</td>
+                                    <td class="text-center" [title]="item.interviewTime">{{item.interviewTime}}</td>
+                                    <td class="text-center">
+                                        <div class="d-flex justify-content-around">
+                                            <div id="mr" *ngIf="!item.fileUrl">
+                                                <a title="Tải file" (click)="downloadFileItem(item.id)">
+                                                    <i class="fa fa-download color-item-down" aria-hidden="true"></i>
+                                                </a>
+                                            </div>
+                                            <div *ngIf="item.fileUrl">
+                                                <a title="Mở link" [href]="item.fileUrl" target="_blank">
+                                                    <i class="fa fa-external-link color-item-down" aria-hidden="true"></i>
+                                                </a>
+                                            </div>
+                                            <div id="mr">
+                                                <a title="Xóa file" (click)="deleteFileItem(item.id)">
+                                                    <i class="fa fa-trash-o" aria-hidden="true"></i>
+                                                </a>
+                                            </div>
+                                            <!-- <div id="mr">
+                                                            <a title="In">
+                                                                <i class="fa fa-print color-item-print" aria-hidden="true"></i>
+                                                            </a>
+                                                        </div> -->
+                                        </div>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <div *ngIf="!pagedResult.items || pagedResult.items.length === 0" class="center-parent">Không có dữ liệu</div>
+                    </div>
+                </div>
             </div>
         </div>
+
     </div>
 </div>
 

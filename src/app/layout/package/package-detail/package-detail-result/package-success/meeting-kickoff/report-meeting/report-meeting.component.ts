@@ -18,11 +18,13 @@ import { NgxSpinnerService } from '../../../../../../../../../node_modules/ngx-s
 import { groupBy } from '../../../../../../../../../node_modules/@progress/kendo-data-query';
 import { PermissionModel } from '../../../../../../../shared/models/permission/Permission.model';
 import { PermissionService } from '../../../../../../../shared/services/permission.service';
+import { slideToLeft } from '../../../../../../../router.animations';
 
 @Component({
   selector: 'app-report-meeting',
   templateUrl: './report-meeting.component.html',
-  styleUrls: ['./report-meeting.component.scss']
+  styleUrls: ['./report-meeting.component.scss'],
+  animations: [slideToLeft()]
 })
 export class ReportMeetingComponent implements OnInit, OnDestroy {
   @Input() reportFile;
