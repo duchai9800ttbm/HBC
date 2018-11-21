@@ -376,8 +376,8 @@
                 <br> Bạn có muốn chấp thuận đề nghị dự thầu này?
             </div>
             <div class="mt-5 text-center mb-2">
-                <button class="btn b-btn btn-primary" (click)="approveBidProposal()">Có</button>
-                <button class="btn b-btn btn-secondary ml-1" (click)="isNotAgreeParticipating = true">Không</button>
+                <button class="btn b-btn btn-primary" (click)="approveBidProposal()">Đồng ý</button>
+                <button class="btn b-btn btn-secondary ml-1" (click)="isNotAgreeParticipating = true">Không đồng ý</button>
             </div>
         </div>
         <div *ngIf="packageInfo?.stageStatus.id == bidStatus.ChoDuyetDeNghiDuThau && isNotAgreeParticipating">

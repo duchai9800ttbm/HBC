@@ -9,7 +9,7 @@ export const environment = {
   // api_endpoint: 'http://124.158.13.136:7001/api/hbc/',
   // crm_site_domain: 'http://124.158.13.136:8002/',
 
-  // thường
+  // // thường
   api_endpoint: 'http://115.79.35.119:9004/api/hbc/',
   crm_site_domain: 'http://demo.bys.vn/hbc/crm/',
 

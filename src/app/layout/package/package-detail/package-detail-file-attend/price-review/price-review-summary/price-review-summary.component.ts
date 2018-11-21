@@ -145,6 +145,7 @@ export class PriceReviewSummaryComponent implements OnInit, OnDestroy {
           console.log('screenDocHSDT', screenDocHSDT);
           // this.uploadDocHSDT = screen.permissions
           //   .filter(t => t.tenderDocumentTypeId === this.currentDocumentTypeId).map(z => z.value);
+          // http://115.79.35.119:9004/api/hbc/bidopportunity/938/tenderdocumentmajortypes
         }
       }
       // Screen
