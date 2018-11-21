@@ -150,15 +150,15 @@
                                             <div>1</div>
                                         </div>
                                         <div class="one-col-2 d-flex align-items-center font-weight-bold">
-                                            <div class="ml-1 mr-1">Phần móng</div>
+                                            <div class="ml-1 mr-1">Phần cọc</div>
                                         </div>
                                     </div>
                                     <div class="two d-flex  align-self-stretch">
                                         <div class="two-col-1 center-parent">
                                             <div>
                                                 <label class="childcheck">
-                                                    <input type="radio" [value]=true name="phanMongCheck"
-                                                        formControlName="phanMongCheck">
+                                                    <input type="radio" [value]=true name="phanCocCheck"
+                                                        formControlName="phanCocCheck">
                                                     <span class="checkmark"></span>
                                                 </label>
                                             </div>
@@ -166,8 +166,8 @@
                                         <div class="two-col-2 center-parent">
                                             <div>
                                                 <label class="childcheck">
-                                                    <input type="radio" [value]=false name="phanMongCheck"
-                                                        formControlName="phanMongCheck">
+                                                    <input type="radio" [value]=false name="phanCocCheck"
+                                                        formControlName="phanCocCheck">
                                                     <span class="checkmark"></span>
                                                 </label>
                                             </div>
@@ -184,7 +184,7 @@
                                             <div>2</div>
                                         </div>
                                         <div class="one-col-2 d-flex align-items-center font-weight-bold">
-                                            <div class="ml-1 mr-1">Phần hầm</div>
+                                            <div class="ml-1 mr-1">Phần móng và hầm</div>
                                         </div>
                                     </div>
                                     <div class="two d-flex  align-self-stretch">
@@ -218,7 +218,7 @@
                                             <div>2.1</div>
                                         </div>
                                         <div class="one-col-2 d-flex align-items-center font-weight-bold">
-                                            <div class="ml-1 mr-1">Thi công kết cấu</div>
+                                            <div class="ml-1 mr-1">Kết cấu móng và hầm</div>
                                         </div>
                                     </div>
                                     <div class="two d-flex  align-self-stretch">
@@ -251,7 +251,7 @@
                                             <div>2.2</div>
                                         </div>
                                         <div class="one-col-2 d-flex align-items-center font-weight-bold">
-                                            <div class="ml-1 mr-1">Thi công hoàn thiện</div>
+                                            <div class="ml-1 mr-1">Hoàn thiện móng và hầm</div>
                                         </div>
                                     </div>
                                     <div class="two d-flex  align-self-stretch">
@@ -285,7 +285,7 @@
                                             <div>2.3</div>
                                         </div>
                                         <div class="one-col-2 d-flex align-items-center font-weight-bold">
-                                            <div class="ml-1 mr-1">Phần công việc khác</div>
+                                            <div class="ml-1 mr-1">Công việc khác</div>
                                         </div>
                                     </div>
                                     <div class="two d-flex  align-self-stretch">
@@ -353,7 +353,7 @@
                                             <div>3.1</div>
                                         </div>
                                         <div class="one-col-2 d-flex align-items-center font-weight-bold">
-                                            <div class="ml-1 mr-1">Thi công kết cấu</div>
+                                            <div class="ml-1 mr-1">Kết cấu</div>
                                         </div>
                                     </div>
                                     <div class="two d-flex  align-self-stretch">
@@ -387,7 +387,7 @@
                                             <div>3.2</div>
                                         </div>
                                         <div class="one-col-2 d-flex align-items-center font-weight-bold">
-                                            <div class="ml-1 mr-1">Thi công hoàn thiện</div>
+                                            <div class="ml-1 mr-1">Hoàn thiện</div>
                                         </div>
                                     </div>
                                     <div class="two d-flex  align-self-stretch">
@@ -421,7 +421,7 @@
                                             <div>3.3</div>
                                         </div>
                                         <div class="one-col-2 d-flex align-items-center font-weight-bold">
-                                            <div class="ml-1 mr-1">Phần công việc khác</div>
+                                            <div class="ml-1 mr-1">Công việc khác</div>
                                         </div>
                                     </div>
                                     <div class="two d-flex  align-self-stretch">
@@ -448,6 +448,244 @@
                                         </div>
                                     </div>
                                 </div>
+
+                                <!-- RQ -->
+                                <div class="item-2 d-flex  align-self-stretch">
+                                    <div class="one d-flex align-self-stretch">
+                                        <div class="one-col-1 center-parent font-weight-bold">
+                                            <div>4</div>
+                                        </div>
+                                        <div class="one-col-2 d-flex align-items-center font-weight-bold">
+                                            <div class="ml-1 mr-1">Nội thất</div>
+                                        </div>
+                                    </div>
+                                    <div class="two d-flex  align-self-stretch">
+                                        <div class="two-col-1 center-parent">
+                                            <div>
+                                                <label class="childcheck">
+                                                    <input type="radio" [value]=true name="phanNoiThatCheck"
+                                                        formControlName="phanNoiThatCheck">
+                                                    <span class="checkmark"></span>
+                                                </label>
+                                            </div>
+                                        </div>
+                                        <div class="two-col-2 center-parent">
+                                            <div>
+                                                <label class="childcheck">
+                                                    <input type="radio" [value]=false name="phanNoiThatCheck"
+                                                        formControlName="phanNoiThatCheck">
+                                                    <span class="checkmark"></span>
+                                                </label>
+                                            </div>
+                                        </div>
+                                        <div class="two-col-3">
+                                            <textarea rows="3" name="" id="" formControlName="phanMongDesc"></textarea>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="item-2 d-flex  align-self-stretch">
+                                    <div class="one d-flex align-self-stretch">
+                                        <div class="one-col-1 center-parent font-weight-bold">
+                                            <div>5</div>
+                                        </div>
+                                        <div class="one-col-2 d-flex align-items-center font-weight-bold">
+                                            <div class="ml-1 mr-1">Cảnh quan</div>
+                                        </div>
+                                    </div>
+                                    <div class="two d-flex  align-self-stretch">
+                                        <div class="two-col-1 center-parent">
+                                            <div>
+                                                <label class="childcheck">
+                                                    <input type="radio" [value]=true name="phanCanhQuanCheck"
+                                                        formControlName="phanCanhQuanCheck">
+                                                    <span class="checkmark"></span>
+                                                </label>
+                                            </div>
+                                        </div>
+                                        <div class="two-col-2 center-parent">
+                                            <div>
+                                                <label class="childcheck">
+                                                    <input type="radio" [value]=false name="phanCanhQuanCheck"
+                                                        formControlName="phanCanhQuanCheck">
+                                                    <span class="checkmark"></span>
+                                                </label>
+                                            </div>
+                                        </div>
+                                        <div class="two-col-3">
+                                            <textarea rows="3" name="" id="" formControlName="phanMongDesc"></textarea>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="item-2 d-flex  align-self-stretch">
+                                    <div class="one d-flex align-self-stretch">
+                                        <div class="one-col-1 center-parent font-weight-bold">
+                                            <div>6</div>
+                                        </div>
+                                        <div class="one-col-2 d-flex align-items-center font-weight-bold">
+                                            <div class="ml-1 mr-1">Cơ điện</div>
+                                        </div>
+                                    </div>
+                                    <div class="two d-flex  align-self-stretch">
+                                        <div class="two-col-1 center-parent">
+                                            <div>
+                                                <label class="childcheck">
+                                                    <input type="radio" [value]=true name="phanCoDienCheck"
+                                                        formControlName="phanCoDienCheck">
+                                                    <span class="checkmark"></span>
+                                                </label>
+                                            </div>
+                                        </div>
+                                        <div class="two-col-2 center-parent">
+                                            <div>
+                                                <label class="childcheck">
+                                                    <input type="radio" [value]=false name="phanCoDienCheck"
+                                                        formControlName="phanCoDienCheck">
+                                                    <span class="checkmark"></span>
+                                                </label>
+                                            </div>
+                                        </div>
+                                        <div class="two-col-3">
+                                            <textarea rows="3" name="" id="" formControlName="phanMongDesc"></textarea>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="item-2 d-flex  align-self-stretch">
+                                    <div class="one d-flex align-self-stretch">
+                                        <div class="one-col-1 center-parent font-weight-bold">
+                                            <div>6.1</div>
+                                        </div>
+                                        <div class="one-col-2 d-flex align-items-center font-weight-bold">
+                                            <div class="ml-1 mr-1">Điện</div>
+                                        </div>
+                                    </div>
+                                    <div class="two d-flex  align-self-stretch">
+                                        <div class="two-col-1 center-parent">
+                                            <div>
+                                                <label class="childcheck">
+                                                    <input type="radio" [value]=true name="phanDienCheck"
+                                                        formControlName="phanDienCheck">
+                                                    <span class="checkmark"></span>
+                                                </label>
+                                            </div>
+                                        </div>
+                                        <div class="two-col-2 center-parent">
+                                            <div>
+                                                <label class="childcheck">
+                                                    <input type="radio" [value]=false name="phanDienCheck"
+                                                        formControlName="phanDienCheck">
+                                                    <span class="checkmark"></span>
+                                                </label>
+                                            </div>
+                                        </div>
+                                        <div class="two-col-3">
+                                            <textarea rows="3" name="" id="" formControlName="phanMongDesc"></textarea>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="item-2 d-flex  align-self-stretch">
+                                    <div class="one d-flex align-self-stretch">
+                                        <div class="one-col-1 center-parent font-weight-bold">
+                                            <div>6.2</div>
+                                        </div>
+                                        <div class="one-col-2 d-flex align-items-center font-weight-bold">
+                                            <div class="ml-1 mr-1">Cơ</div>
+                                        </div>
+                                    </div>
+                                    <div class="two d-flex  align-self-stretch">
+                                        <div class="two-col-1 center-parent">
+                                            <div>
+                                                <label class="childcheck">
+                                                    <input type="radio" [value]=true name="phanCoCheck" formControlName="phanCoCheck">
+                                                    <span class="checkmark"></span>
+                                                </label>
+                                            </div>
+                                        </div>
+                                        <div class="two-col-2 center-parent">
+                                            <div>
+                                                <label class="childcheck">
+                                                    <input type="radio" [value]=false name="phanCoCheck"
+                                                        formControlName="phanCoCheck">
+                                                    <span class="checkmark"></span>
+                                                </label>
+                                            </div>
+                                        </div>
+                                        <div class="two-col-3">
+                                            <textarea rows="3" name="" id="" formControlName="phanMongDesc"></textarea>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="item-2 d-flex  align-self-stretch">
+                                    <div class="one d-flex align-self-stretch">
+                                        <div class="one-col-1 center-parent font-weight-bold">
+                                            <div>6.3</div>
+                                        </div>
+                                        <div class="one-col-2 d-flex align-items-center font-weight-bold">
+                                            <div class="ml-1 mr-1">Nước</div>
+                                        </div>
+                                    </div>
+                                    <div class="two d-flex  align-self-stretch">
+                                        <div class="two-col-1 center-parent">
+                                            <div>
+                                                <label class="childcheck">
+                                                    <input type="radio" [value]=true name="phanNuocCheck"
+                                                        formControlName="phanNuocCheck">
+                                                    <span class="checkmark"></span>
+                                                </label>
+                                            </div>
+                                        </div>
+                                        <div class="two-col-2 center-parent">
+                                            <div>
+                                                <label class="childcheck">
+                                                    <input type="radio" [value]=false name="phanNuocCheck"
+                                                        formControlName="phanNuocCheck">
+                                                    <span class="checkmark"></span>
+                                                </label>
+                                            </div>
+                                        </div>
+                                        <div class="two-col-3">
+                                            <textarea rows="3" name="" id="" formControlName="phanMongDesc"></textarea>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="item-2 d-flex  align-self-stretch">
+                                    <div class="one d-flex align-self-stretch">
+                                        <div class="one-col-1 center-parent font-weight-bold">
+                                            <div>6.4</div>
+                                        </div>
+                                        <div class="one-col-2 d-flex align-items-center font-weight-bold">
+                                            <div class="ml-1 mr-1">Công việc khác</div>
+                                        </div>
+                                    </div>
+                                    <div class="two d-flex  align-self-stretch">
+                                        <div class="two-col-1 center-parent">
+                                            <div>
+                                                <label class="childcheck">
+                                                    <input type="radio" [value]=true name="phanCoDienCongViecKhacCheck"
+                                                        formControlName="phanCoDienCongViecKhacCheck">
+                                                    <span class="checkmark"></span>
+                                                </label>
+                                            </div>
+                                        </div>
+                                        <div class="two-col-2 center-parent">
+                                            <div>
+                                                <label class="childcheck">
+                                                    <input type="radio" [value]=false name="phanCoDienCongViecKhacCheck"
+                                                        formControlName="phanCoDienCongViecKhacCheck">
+                                                    <span class="checkmark"></span>
+                                                </label>
+                                            </div>
+                                        </div>
+                                        <div class="two-col-3">
+                                            <textarea rows="3" name="" id="" formControlName="phanMongDesc"></textarea>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- RQ. -->
 
                             </div>
 
@@ -1055,27 +1293,25 @@
                             <div class="item-1 d-flex align-items-center">
                                 <div>
                                     <input formControlName="chiPhiBaseAmount" appInputNumberNegativeDecimal [decimal]="true"
-                                        (input)="countTotalBase($event)">
+                                        (input)="countGeneralExpensesBaseGfa($event);">
                                 </div>
                             </div>
                             <div class="item-2 d-flex align-items-center">
-                                <div>
-                                    <input formControlName="chiPhiBaseGfa" appInputNumberNegativeDecimal [decimal]="true"
-                                        (input)="countTotalGiaNopThauBase()">
+                                <div class="pl-1">
+                                    {{ priceReviewForm.get('chiPhiBaseGfa').value | truncateDecimal }}
                                 </div>
                             </div>
 
                             <div class="item-3 d-flex align-items-center">
                                 <div>
                                     <input formControlName="chiPhiAlterAmount" appInputNumberNegativeDecimal [decimal]="true"
-                                        (input)="countTotalAlter($event)">
+                                        (input)="countGeneralExpensesAlterGfa($event)">
                                 </div>
 
                             </div>
                             <div class="item-4 d-flex align-items-center">
-                                <div>
-                                    <input formControlName="chiPhiAlterGfa" appInputNumberNegativeDecimal [decimal]="true"
-                                        (input)="countTotalGiaNopThauAlter()">
+                                <div class="pl-1">
+                                    {{ priceReviewForm.get('chiPhiAlterGfa').value | truncateDecimal }}
                                 </div>
                             </div>
 
@@ -1093,7 +1329,7 @@
                             </div>
                             <div class="name d-flex align-items-center">
                                 <div class="ml-1 mr-1">
-                                    Giá trị Hòa Bình làm trực tiếp
+                                    Giá trị thi công trực tiếp
                                 </div>
                             </div>
                         </div>
@@ -1101,27 +1337,33 @@
                             <div class="item-1 d-flex align-items-center">
                                 <div>
                                     <input formControlName="giaTriBaseAmount" appInputNumberNegativeDecimal [decimal]="true"
-                                        (input)="countTotalBase($event)">
+                                        (input)="countDirectConstructionBaseGfa($event)">
                                 </div>
                             </div>
                             <div class="item-2 d-flex align-items-center">
-                                <div>
-                                    <input formControlName="giaTriBaseGfa" appInputNumberNegativeDecimal [decimal]="true">
+                                <div class="pl-1">
+                                    {{ priceReviewForm.get('giaTriBaseGfa').value | truncateDecimal }}
                                 </div>
+                                <!-- <div>
+                                    <input formControlName="giaTriBaseGfa" appInputNumberNegativeDecimal [decimal]="true">
+                                </div> -->
                             </div>
 
                             <div class="item-3 d-flex align-items-center">
                                 <div>
                                     <input formControlName="giaTriAlterAmount" appInputNumberNegativeDecimal [decimal]="true"
-                                        (input)="countTotalAlter($event)">
+                                        (input)="countDirectConstructionAlterGfa($event)">
                                 </div>
 
                             </div>
                             <div class="item-4 d-flex align-items-center">
-                                <div>
+                                <div class="pl-1">
+                                    {{ priceReviewForm.get('giaTriAlterGfa').value | truncateDecimal }}
+                                </div>
+                                <!-- <div>
                                     <input style="white-space: nowrap;" formControlName="giaTriAlterGfa"
                                         appInputNumberNegativeDecimal [decimal]="true">
-                                </div>
+                                </div> -->
                             </div>
 
                         </div>
@@ -1138,7 +1380,7 @@
                             </div>
                             <div class="name d-flex align-items-center">
                                 <div class="ml-1 mr-1">
-                                    Giá trị PC/PS
+                                    Giá trị nhà thầu chỉ định (NSC)
                                 </div>
                             </div>
                         </div>
@@ -1146,26 +1388,32 @@
                             <div class="item-1 d-flex align-items-center">
                                 <div>
                                     <input formControlName="giaTriPCBaseAmount" appInputNumberNegativeDecimal [decimal]="true"
-                                        (input)="countTotalBase($event)">
+                                        (input)="countNSCBaseGfa($event)">
                                 </div>
                             </div>
                             <div class="item-2 d-flex align-items-center">
-                                <div>
+                                    <div class="pl-1">
+                                            {{ priceReviewForm.get('giaTriPCBaseGfa').value | truncateDecimal }}
+                                        </div>
+                                <!-- <div>
                                     <input formControlName="giaTriPCBaseGfa" appInputNumberNegativeDecimal [decimal]="true">
-                                </div>
+                                </div> -->
                             </div>
 
                             <div class="item-3 d-flex align-items-center">
                                 <div>
                                     <input formControlName="giaTriPCAlterAmount" appInputNumberNegativeDecimal
-                                        [decimal]="true" (input)="countTotalAlter($event)">
+                                        [decimal]="true" (input)="countNSCAlterGfa($event)">
                                 </div>
 
                             </div>
                             <div class="item-4 d-flex align-items-center">
-                                <div>
+                                    <div class="pl-1">
+                                            {{ priceReviewForm.get('giaTriPCAlterGfa').value | truncateDecimal }}
+                                        </div>
+                                <!-- <div>
                                     <input formControlName="giaTriPCAlterGfa" appInputNumberNegativeDecimal [decimal]="true">
-                                </div>
+                                </div> -->
                             </div>
 
                         </div>
@@ -1174,6 +1422,60 @@
 
                         </div>
                     </div>
+                    <!-- RQ -->
+                    <div class="d-flex row-gia-von">
+                        <div class="one d-flex align-items-center font-weight-bold">
+                            <div class="stt center-parent">
+                                <div>4</div>
+
+                            </div>
+                            <div class="name d-flex align-items-center">
+                                <div class="ml-1 mr-1">
+                                    Giá trị nhà thầu trực tiếp
+                                </div>
+                            </div>
+                        </div>
+                        <div class="two d-flex">
+                            <div class="item-1 d-flex align-items-center">
+                                <div>
+                                    <input formControlName="giaTriNhaThauTrucTiepBaseAmount"
+                                        appInputNumberNegativeDecimal [decimal]="true" (input)="countDirectContractorBaseGfa($event)">
+                                </div>
+                            </div>
+                            <div class="item-2 d-flex align-items-center">
+                                    <div class="pl-1">
+                                            {{ priceReviewForm.get('giaTriNhaThauTrucTiepBaseGfa').value | truncateDecimal }}
+                                        </div>
+                                <!-- <div>
+                                    <input formControlName="giaTriNhaThauTrucTiepBaseGfa" appInputNumberNegativeDecimal
+                                        [decimal]="true">
+                                </div> -->
+                            </div>
+
+                            <div class="item-3 d-flex align-items-center">
+                                <div>
+                                    <input formControlName="giaTriNhaThauTrucTiepAlterAmount"
+                                        appInputNumberNegativeDecimal [decimal]="true" (input)="countDirectContractorAlterGfa($event)">
+                                </div>
+
+                            </div>
+                            <div class="item-4 d-flex align-items-center">
+                                    <div class="pl-1">
+                                            {{ priceReviewForm.get('giaTriNhaThauTrucTiepAlterGfa').value | truncateDecimal }}
+                                        </div>
+                                <!-- <div>
+                                    <input formControlName="giaTriNhaThauTrucTiepAlterGfa"
+                                        appInputNumberNegativeDecimal [decimal]="true">
+                                </div> -->
+                            </div>
+
+                        </div>
+                        <div class="three">
+                            <textarea rows="3" name="" id="" formControlName="giaTriNhaThauTrucTiepNote"></textarea>
+
+                        </div>
+                    </div>
+                    <!-- RQ. -->
                     <div class="d-flex row-gia-von">
                         <div class="one d-flex align-items-center font-weight-bold">
                             <div class="ml-1 mr-1">TOTAL GIÁ VỐN</div>
@@ -1212,12 +1514,12 @@
                     <div class="d-flex row-gia-von">
                         <div class="one d-flex align-items-center font-weight-bold">
                             <div class="stt center-parent">
-                                <div>4</div>
+                                <div>5</div>
 
                             </div>
                             <div class="name d-flex align-items-center">
                                 <div class="ml-1 mr-1">
-                                    Chi phí lợi nhuận (O&P)
+                                    Lợi nhuận gộp (O&P)
                                 </div>
                             </div>
                         </div>
@@ -1225,13 +1527,13 @@
                             <div class="border-right w-50 d-flex align-items-center">
                                 <div class="w-100">
                                     <input formControlName="chiPhiLoiNhuanAmountGfa" appInputNumberNegativeDecimal
-                                        [decimal]="true" (input)="countTotalGiaNopThauBase()">
+                                        [decimal]="true" (input)="countTotalBidPriceBaseTender()">
                                 </div>
                             </div>
                             <div class="w-50 d-flex align-items-center">
                                 <div class="w-100">
                                     <input formControlName="chiPhiLoiNhuanAlterAmountGfa" appInputNumberNegativeDecimal
-                                        [decimal]="true" (input)="countTotalGiaNopThauAlter()">
+                                        [decimal]="true" (input)="countTotalBidPriceAlterTender()">
                                 </div>
                             </div>
 
@@ -1285,7 +1587,7 @@
                     <div class="d-flex row-gia-von">
                         <div class="one d-flex align-items-center font-weight-bold">
                             <div class="stt center-parent">
-                                <div>5</div>
+                                <div>6</div>
 
                             </div>
                             <div class="name d-flex align-items-center">

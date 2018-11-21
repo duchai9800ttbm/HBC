@@ -300,7 +300,7 @@ export class PriceReviewFormComponent implements OnChanges, OnInit, AfterViewIni
       },
       createdDate: (this.model.createdDate) ? this.model.createdDate : 0,
       infoGfa: this.model.projectInformation && this.model.projectInformation.gfa,
-      phanMongCheck: {
+      phanCocCheck: {
         value: this.model.projectInformation
           && this.model.projectInformation.foudationPart
           && this.model.projectInformation.foudationPart.scopeOfWorkIsInclude,
@@ -418,6 +418,49 @@ export class PriceReviewFormComponent implements OnChanges, OnInit, AfterViewIni
         value: this.model.projectInformation
           && this.model.projectInformation.bodyPartOtherWork
           && this.model.projectInformation.bodyPartOtherWork.scopeOfWorkDesc,
+        disabled: this.isModeView
+      },
+      // TODO: Update model - mapping to form
+      phanNoiThatCheck: {
+        value: this.model.projectInformation
+          && this.model.projectInformation // TODO:
+          && this.model.projectInformation, // TODO:
+        disabled: this.isModeView
+      },
+      phanCanhQuanCheck: {
+        value: this.model.projectInformation
+          && this.model.projectInformation // TODO:
+          && this.model.projectInformation, // TODO:
+        disabled: this.isModeView
+      },
+      phanCoDienCheck: {
+        value: this.model.projectInformation
+          && this.model.projectInformation // TODO:
+          && this.model.projectInformation, // TODO:
+        disabled: this.isModeView
+      },
+      phanDienCheck: {
+        value: this.model.projectInformation
+          && this.model.projectInformation // TODO:
+          && this.model.projectInformation, // TODO:
+        disabled: this.isModeView
+      },
+      phanCoCheck: {
+        value: this.model.projectInformation
+          && this.model.projectInformation // TODO:
+          && this.model.projectInformation, // TODO:
+        disabled: this.isModeView
+      },
+      phanNuocCheck: {
+        value: this.model.projectInformation
+          && this.model.projectInformation // TODO:
+          && this.model.projectInformation, // TODO:
+        disabled: this.isModeView
+      },
+      phanCoDienCongViecKhacCheck: {
+        value: this.model.projectInformation
+          && this.model.projectInformation // TODO:
+          && this.model.projectInformation, // TODO:
         disabled: this.isModeView
       },
       // Kỹ thuật
@@ -742,6 +785,38 @@ export class PriceReviewFormComponent implements OnChanges, OnInit, AfterViewIni
           && this.model.tentativeTenderPrice.costOfCapitalPCPSValue.note,
         disabled: this.isModeView
       },
+      // RQ // TODO: Update Model vs Map to Form
+      giaTriNhaThauTrucTiepBaseAmount: {
+        value: this.model.tentativeTenderPrice
+          && this.model.tentativeTenderPrice // TODO:
+          && this.model.tentativeTenderPrice, // TODO:
+        disabled: this.isModeView
+      },
+      giaTriNhaThauTrucTiepBaseGfa: {
+        value: this.model.tentativeTenderPrice
+          && this.model.tentativeTenderPrice // TODO:
+          && this.model.tentativeTenderPrice, // TODO:
+        disabled: this.isModeView
+      },
+      giaTriNhaThauTrucTiepAlterAmount: {
+        value: this.model.tentativeTenderPrice
+          && this.model.tentativeTenderPrice // TODO:
+          && this.model.tentativeTenderPrice, // TODO:
+        disabled: this.isModeView
+      },
+      giaTriNhaThauTrucTiepAlterGfa: {
+        value: this.model.tentativeTenderPrice
+          && this.model.tentativeTenderPrice // TODO:
+          && this.model.tentativeTenderPrice, // TODO:
+        disabled: this.isModeView
+      },
+      giaTriNhaThauTrucTiepNote: {
+        value: this.model.tentativeTenderPrice
+          && this.model.tentativeTenderPrice // TODO:
+          && this.model.tentativeTenderPrice, // TODO:
+        disabled: this.isModeView
+      },
+      // RQ.
 
       totalGiaVonAmount: {
         value: this.model.tentativeTenderPrice
@@ -1156,60 +1231,9 @@ export class PriceReviewFormComponent implements OnChanges, OnInit, AfterViewIni
     });
   }
 
-  // TODO: Count Total Gía vốn
-  countTotalBase(event) {
-    const chiPhiBaseAmount = (this.priceReviewForm.get('chiPhiBaseAmount').value) ?
-      this.priceReviewForm.get('chiPhiBaseAmount').value : 0;
 
-    const giaTriBaseAmount = (this.priceReviewForm.get('giaTriBaseAmount').value) ?
-      this.priceReviewForm.get('giaTriBaseAmount').value : 0;
-
-    const giaTriPCBaseAmount = (this.priceReviewForm.get('giaTriPCBaseAmount').value) ?
-      this.priceReviewForm.get('giaTriPCBaseAmount').value : 0;
-
-    const totalValue = +chiPhiBaseAmount + +giaTriBaseAmount + +giaTriPCBaseAmount;
-    this.priceReviewForm.get('totalGiaVonAmount').patchValue(+(totalValue));
-    const totaGiaVonBaseValue = totalValue / +(this.priceReviewForm.get('infoGfa').value);
-    if (totaGiaVonBaseValue >= 0.01) {
-      this.priceReviewForm.get('totalGiaVonGfa').patchValue(+(totaGiaVonBaseValue));
-    }
-  }
-  countTotalAlter(event) {
-    const chiPhiAlterAmount = (this.priceReviewForm.get('chiPhiAlterAmount').value) ?
-      this.priceReviewForm.get('chiPhiAlterAmount').value : 0;
-
-    const giaTriAlterAmount = (this.priceReviewForm.get('giaTriAlterAmount').value) ?
-      this.priceReviewForm.get('giaTriAlterAmount').value : 0;
-
-    const giaTriPCAlterAmount = (this.priceReviewForm.get('giaTriPCAlterAmount').value) ?
-      this.priceReviewForm.get('giaTriPCAlterAmount').value : 0;
-
-    const totalAlterAmountValue = +chiPhiAlterAmount + +giaTriAlterAmount + +giaTriPCAlterAmount;
-    this.priceReviewForm.get('totalAlterAmount').patchValue(+(totalAlterAmountValue));
-    const totalGiaVonAlterValue = totalAlterAmountValue / +(this.priceReviewForm.get('infoGfa').value);
-    if (totalGiaVonAlterValue >= 0.01) {
-      this.priceReviewForm.get('totalAlterGfa').patchValue(+(totalGiaVonAlterValue));
-    }
-  }
 
   // Count Value
-  countTotalGiaNopThauBase() {
-    const gfaBaseChiPhiChung = (this.priceReviewForm.get('chiPhiBaseGfa').value) ?
-      this.priceReviewForm.get('chiPhiBaseGfa').value : 0;
-    const chiPhiLoiNhuanOnpBase = (this.priceReviewForm.get('chiPhiLoiNhuanAmountGfa').value) ?
-      this.priceReviewForm.get('chiPhiLoiNhuanAmountGfa').value : 0;
-    this.priceReviewForm.get('giaDiNopThauAmount').patchValue(+gfaBaseChiPhiChung + +chiPhiLoiNhuanOnpBase);
-    this.countRateOnPBase();
-  }
-  countTotalGiaNopThauAlter() {
-    const gfaAlterChiPhiChung = (this.priceReviewForm.get('chiPhiAlterGfa').value) ?
-      this.priceReviewForm.get('chiPhiAlterGfa').value : 0;
-    const chiPhiLoiNhuanOnpAlter = (this.priceReviewForm.get('chiPhiLoiNhuanAlterAmountGfa').value) ?
-      this.priceReviewForm.get('chiPhiLoiNhuanAlterAmountGfa').value : 0;
-    this.priceReviewForm.get('giaDiNopThauAlterAmount').patchValue(+gfaAlterChiPhiChung + +chiPhiLoiNhuanOnpAlter);
-    this.countRateOnPAlter();
-  }
-
   countRateOnPBase() {
     const chiPhiOnPBaseValue = this.priceReviewForm.get('chiPhiLoiNhuanAmountGfa').value;
     const totalGiaNopThauBaseValue = this.priceReviewForm.get('giaDiNopThauAmount').value;
@@ -1226,12 +1250,6 @@ export class PriceReviewFormComponent implements OnChanges, OnInit, AfterViewIni
       this.priceReviewForm.get('tyleAlter').patchValue(result);
     }
   }
-
-
-
-
-
-
   countRateOnP() {
     const chiPhiLoiNhuanOnp = (this.priceReviewForm.get('chiPhiLoiNhuanAmountGfa').value) ?
       this.priceReviewForm.get('chiPhiLoiNhuanAmountGfa').value : 0;
@@ -1264,6 +1282,157 @@ export class PriceReviewFormComponent implements OnChanges, OnInit, AfterViewIni
           that.alertService.error('Gửi duyệt trình duyệt giá thất bại, vui lòng thử lại sau!');
         });
       });
+    }
+  }
+
+  // RQ - Count /GFA Value = AmountValue/GFA
+  countGeneralExpensesBaseGfa(event) {
+    const value = (event.target.value) / +this.priceReviewForm.get('infoGfa').value;
+    if (Number(value.toFixed(2)) >= 0.01) {
+      this.priceReviewForm.get('chiPhiBaseGfa').patchValue(Number(value.toFixed(2)));
+    } else {
+      this.priceReviewForm.get('chiPhiBaseGfa').patchValue(0);
+    }
+    this.countTotalCostOfCapitalBaseTenderAmount();
+  }
+  countDirectConstructionBaseGfa(event) {
+    const value = (event.target.value) / +this.priceReviewForm.get('infoGfa').value;
+    if (Number(value.toFixed(2)) >= 0.01) {
+      this.priceReviewForm.get('giaTriBaseGfa').patchValue(Number(value.toFixed(2)));
+    } else {
+      this.priceReviewForm.get('giaTriBaseGfa').patchValue(0);
+    }
+    this.countTotalCostOfCapitalBaseTenderAmount();
+  }
+  countNSCBaseGfa(event) {
+    const value = (event.target.value) / +this.priceReviewForm.get('infoGfa').value;
+    if (Number(value.toFixed(2)) >= 0.01) {
+      this.priceReviewForm.get('giaTriPCBaseGfa').patchValue(Number(value.toFixed(2)));
+    } else {
+      this.priceReviewForm.get('giaTriPCBaseGfa').patchValue(0);
+    }
+    this.countTotalCostOfCapitalBaseTenderAmount();
+  }
+  countDirectContractorBaseGfa(event) {
+    const value = (event.target.value) / +this.priceReviewForm.get('infoGfa').value;
+    if (Number(value.toFixed(2)) >= 0.01) {
+      this.priceReviewForm.get('giaTriNhaThauTrucTiepBaseGfa').patchValue(Number(value.toFixed(2)));
+    } else {
+      this.priceReviewForm.get('giaTriNhaThauTrucTiepBaseGfa').patchValue(0);
+    }
+    this.countTotalCostOfCapitalBaseTenderAmount();
+  }
+
+
+
+  countGeneralExpensesAlterGfa(event) {
+    const value = (event.target.value) / +this.priceReviewForm.get('infoGfa').value;
+    if (Number(value.toFixed(2)) >= 0.01) {
+      this.priceReviewForm.get('chiPhiAlterGfa').patchValue(Number(value.toFixed(2)));
+    } else {
+      this.priceReviewForm.get('chiPhiAlterGfa').patchValue(0);
+    }
+    this.countTotalCostOfCapitalAlterTenderAmount();
+  }
+
+  countDirectConstructionAlterGfa(event) {
+    const value = (event.target.value) / +this.priceReviewForm.get('infoGfa').value;
+    if (Number(value.toFixed(2)) >= 0.01) {
+      this.priceReviewForm.get('giaTriAlterGfa').patchValue(Number(value.toFixed(2)));
+    } else {
+      this.priceReviewForm.get('giaTriAlterGfa').patchValue(0);
+    }
+    this.countTotalCostOfCapitalAlterTenderAmount();
+  }
+
+  countNSCAlterGfa(event) {
+    const value = (event.target.value) / +this.priceReviewForm.get('infoGfa').value;
+    if (Number(value.toFixed(2)) >= 0.01) {
+      this.priceReviewForm.get('giaTriPCAlterGfa').patchValue(Number(value.toFixed(2)));
+    } else {
+      this.priceReviewForm.get('giaTriPCAlterGfa').patchValue(0);
+    }
+    this.countTotalCostOfCapitalAlterTenderAmount();
+  }
+
+  countDirectContractorAlterGfa(event) {
+    const value = (event.target.value) / +this.priceReviewForm.get('infoGfa').value;
+    if (Number(value.toFixed(2)) >= 0.01) {
+      this.priceReviewForm.get('giaTriNhaThauTrucTiepAlterGfa').patchValue(Number(value.toFixed(2)));
+    } else {
+      this.priceReviewForm.get('giaTriNhaThauTrucTiepAlterGfa').patchValue(0);
+    }
+    this.countTotalCostOfCapitalAlterTenderAmount();
+  }
+
+  countTotalCostOfCapitalBaseTenderAmount() {
+    const valueGeneralExpensesAmount = this.priceReviewForm.get('chiPhiBaseAmount').value ?
+      this.priceReviewForm.get('chiPhiBaseAmount').value : 0;
+    const valueDirectConstructionAmount = this.priceReviewForm.get('giaTriBaseAmount').value ?
+      this.priceReviewForm.get('giaTriBaseAmount').value : 0;
+    const valueNSCAmount = this.priceReviewForm.get('giaTriPCBaseAmount').value ?
+      this.priceReviewForm.get('giaTriPCBaseAmount').value : 0;
+    const valueDirectContractorAmount = this.priceReviewForm.get('giaTriNhaThauTrucTiepBaseAmount').value ?
+      this.priceReviewForm.get('giaTriNhaThauTrucTiepBaseAmount').value : 0;
+    const totalValue = +valueGeneralExpensesAmount + +valueDirectConstructionAmount + +valueNSCAmount + +valueDirectContractorAmount;
+    if (Number(totalValue.toFixed(2)) >= 0.01) {
+      this.priceReviewForm.get('totalGiaVonAmount').patchValue(Number(totalValue.toFixed(2)));
+    } else {
+      this.priceReviewForm.get('totalGiaVonAmount').patchValue(0);
+    }
+    // Count /GFA
+    const totalBaseTenderGfa = totalValue / +this.priceReviewForm.get('infoGfa').value;
+    if (Number(totalBaseTenderGfa.toFixed(2)) >= 0.01) {
+      this.priceReviewForm.get('totalGiaVonGfa').patchValue(Number(totalBaseTenderGfa.toFixed(2)));
+    } else {
+      this.priceReviewForm.get('totalGiaVonGfa').patchValue(Number(totalBaseTenderGfa.toFixed(2)));
+    }
+    // Count Total Bid Price
+    this.countTotalBidPriceBaseTender();
+  }
+  countTotalCostOfCapitalAlterTenderAmount() {
+    const valueGeneralExpensesAmount = this.priceReviewForm.get('chiPhiAlterAmount').value ?
+      this.priceReviewForm.get('chiPhiAlterAmount').value : 0;
+    const valueDirectConstructionAmount = this.priceReviewForm.get('giaTriAlterAmount').value ?
+      this.priceReviewForm.get('giaTriAlterAmount').value : 0;
+    const valueNSCAmount = this.priceReviewForm.get('giaTriPCAlterAmount').value ?
+      this.priceReviewForm.get('giaTriPCAlterAmount').value : 0;
+    const valueDirectContractorAmount = this.priceReviewForm.get('giaTriNhaThauTrucTiepAlterAmount').value ?
+      this.priceReviewForm.get('giaTriNhaThauTrucTiepAlterAmount').value : 0;
+    const totalValue = +valueGeneralExpensesAmount + +valueDirectConstructionAmount + +valueNSCAmount + +valueDirectContractorAmount;
+    if (Number(totalValue.toFixed(2)) >= 0.01) {
+      this.priceReviewForm.get('totalAlterAmount').patchValue(Number(totalValue.toFixed(2)));
+    } else {
+      this.priceReviewForm.get('totalAlterAmount').patchValue(0);
+    }
+    // Count /GFA
+    const totalAlterTenderGfa = totalValue / +this.priceReviewForm.get('infoGfa').value;
+    if (Number(totalAlterTenderGfa.toFixed(2)) >= 0.01) {
+      this.priceReviewForm.get('totalAlterGfa').patchValue(Number(totalAlterTenderGfa.toFixed(2)));
+    } else {
+      this.priceReviewForm.get('totalAlterGfa').patchValue(0);
+    }
+    // Count Total Bid Price
+    this.countTotalBidPriceAlterTender();
+  }
+  countTotalBidPriceBaseTender() {
+    const value = (this.priceReviewForm.get('totalGiaVonAmount').value ? +this.priceReviewForm.get('totalGiaVonAmount').value : 0) +
+      (this.priceReviewForm.get('chiPhiLoiNhuanAmountGfa').value ? +this.priceReviewForm.get('chiPhiLoiNhuanAmountGfa').value : 0);
+    if (Number(value.toFixed(2)) >= 0.01) {
+      console.log(value, 'value');
+      this.priceReviewForm.get('giaDiNopThauAmount').patchValue(Number(value.toFixed(2)));
+    } else {
+      this.priceReviewForm.get('giaDiNopThauAmount').patchValue(0);
+    }
+  }
+  countTotalBidPriceAlterTender() {
+    const value = (this.priceReviewForm.get('totalAlterAmount').value ? +this.priceReviewForm.get('totalAlterAmount').value : 0) +
+      (this.priceReviewForm.get('chiPhiLoiNhuanAlterAmountGfa').value ?
+        +this.priceReviewForm.get('chiPhiLoiNhuanAlterAmountGfa').value : 0);
+    if (Number(value.toFixed(2)) >= 0.01) {
+      this.priceReviewForm.get('giaDiNopThauAlterAmount').patchValue(Number(value.toFixed(2)));
+    } else {
+      this.priceReviewForm.get('giaDiNopThauAlterAmount').patchValue(0);
     }
   }
 }
