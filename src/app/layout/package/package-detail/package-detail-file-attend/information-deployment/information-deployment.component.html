@@ -27,7 +27,7 @@
                     <button type="button" *ngIf="isconfirmProgress" [ngClass]="{'btn-dep':isconfirmProgress == true}" class="btn btn-up" (click)="openModeSendAssignment(SendAssignment)">{{textConfirmProgress}}</button>
                 </ng-container>
 
-                <ng-container *ngIf="ThongBaoTrienKhai">
+                <ng-container *ngIf="ThongBaoTrienKhai || (currentUserInfo?.department?.text === 'PHÒNG DỰ THẦU' && currentUserInfo?.level?.text === 'Trưởng phòng')">
                     <button type="button" *ngIf="packageInfo?.stageStatus.id == bidStatus.ChuaThongBaoTrienKhai || packageInfo?.stageStatus.id == bidStatus.ThamGiaDuThau"
                         class="btn btn-up btn-dep" (click)="openModalDeployment(informationDeployment)">Thông báo triển khai
                     </button>
@@ -164,7 +164,8 @@
                                 <div *ngFor="let liveFormSubject of changedTime.liveFormChangeds">
                                     <div *ngFor="let liveFormBySubjectItem of liveFormSubject.items">
                                         <span *ngIf="liveFormBySubjectItem.liveFormSubject === 'SignedByApprovalPerson'">
-                                            <strong>Người duyệt</strong><span>:</span>
+                                            <strong>Người duyệt</strong>
+                                            <span>:</span>
                                             <strong>Chưa ký
                                             </strong> thành
                                             <strong>Đã ký
@@ -172,7 +173,8 @@
                                         </span>
                                         <span *ngIf="liveFormBySubjectItem.liveFormSubject === 'KeyPersonnel'">
                                             <div *ngIf="liveFormBySubjectItem.liveFormTitle === 'SignedByPreparedPerson'">
-                                                <strong>Người tạo</strong><span>:</span>
+                                                <strong>Người tạo</strong>
+                                                <span>:</span>
                                                 <strong>{{liveFormBySubjectItem.oldValue ? 'Đã ký' : 'Chưa ký'}}
                                                 </strong> thành
                                                 <strong>{{liveFormBySubjectItem.newValue ? 'Đã ký' : 'Chưa ký'}}
@@ -180,7 +182,8 @@
                                             </div>
                                             <div *ngIf="liveFormBySubjectItem.liveFormTitle === 'ProjectDirectorEmployeeName' || liveFormBySubjectItem.liveFormTitle === 'TenderDepartmentEmployeeName'
                                             || liveFormBySubjectItem.liveFormTitle === 'TechnicalDepartmentEmployeeName' || liveFormBySubjectItem.liveFormTitle === 'BIMDepartmentEmployeeName'">
-                                                <strong>KEY PERSONNEL</strong><span>:</span>
+                                                <strong>KEY PERSONNEL</strong>
+                                                <span>:</span>
                                                 <div *ngIf="liveFormBySubjectItem.liveFormTitle === 'ProjectDirectorEmployeeName'">
                                                     Project Director: từ
                                                     <strong>{{liveFormBySubjectItem.oldValue ? liveFormBySubjectItem.oldValue : 'không

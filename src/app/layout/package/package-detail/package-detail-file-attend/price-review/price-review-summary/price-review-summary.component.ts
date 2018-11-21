@@ -136,15 +136,16 @@ export class PriceReviewSummaryComponent implements OnInit, OnDestroy {
             .filter(t => t.tenderDocumentTypeId === this.documentTypeId.BaoCaoThamQuanCongTrinh).map(z => z.value);
         }
         // Tài liệu HSDT
-        // const DocHSDT = hsdt.userPermissionDetails.length
-        //   && hsdt.userPermissionDetails.filter(y => y.permissionGroup.value === 'LapHoSoDuThauFile')[0];
-        // if (!DocHSDT) {
-        //   this.uploadDocHSDT = [];
-        // }
-        // if (DocHSDT) {
-        //   this.uploadDocHSDT = screen.permissions
-        //     .filter(t => t.tenderDocumentTypeId === this.currentDocumentTypeId).map(z => z.value);
-        // }
+        const screenDocHSDT = hsdt.userPermissionDetails.length
+          && hsdt.userPermissionDetails.filter(y => y.permissionGroup.value === 'LapHoSoDuThauFile')[0];
+        if (!screenDocHSDT) {
+          this.uploadDocHSDT = [];
+        }
+        if (screenDocHSDT) {
+          console.log('screenDocHSDT', screenDocHSDT);
+          // this.uploadDocHSDT = screen.permissions
+          //   .filter(t => t.tenderDocumentTypeId === this.currentDocumentTypeId).map(z => z.value);
+        }
       }
       // Screen
       this.TaoMoiTDG = this.listPermissionScreen.includes('TaoMoiTDG');

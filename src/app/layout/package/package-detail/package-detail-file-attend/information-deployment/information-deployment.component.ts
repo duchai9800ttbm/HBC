@@ -10,7 +10,7 @@ import { SortDescriptor } from '@progress/kendo-data-query';
 import { Router } from '@angular/router';
 import { DATATABLE_CONFIG } from '../../../../../shared/configs';
 import { BehaviorSubject, Subject, Subscription, Observable } from '../../../../../../../node_modules/rxjs';
-import { ConfirmationService, AlertService } from '../../../../../shared/services';
+import { ConfirmationService, AlertService, SessionService } from '../../../../../shared/services';
 import { SendEmailModel } from '../../../../../shared/models/send-email-model';
 import { EmailService } from '../../../../../shared/services/email.service';
 import { SearchEmailModel } from '../../../../../shared/models/search-email.model';
@@ -140,6 +140,7 @@ export class InformationDeploymentComponent implements OnInit, OnDestroy {
     'DaXacNhanPhanCong'
   ];
   isShowActionStage = false;
+  currentUserInfo;
   constructor(
     private modalService: BsModalService,
     private formBuilder: FormBuilder,
@@ -151,12 +152,14 @@ export class InformationDeploymentComponent implements OnInit, OnDestroy {
     private statusObservableHsdtService: StatusObservableHsdtService,
     private confirmService: ConfirmationService,
     private dialogService: DialogService,
-    private permissionService: PermissionService
+    private permissionService: PermissionService,
+    private sessionService: SessionService
   ) {
     this.loadItems();
   }
 
   ngOnInit() {
+    this.currentUserInfo = this.sessionService.currentUserInfo;
     this.bidOpportunityId = PackageDetailComponent.packageId;
     this.loading = true;
     this.subscription = this.permissionService.get().delay(400).subscribe(data => {
