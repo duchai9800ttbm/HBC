@@ -259,9 +259,9 @@ export class PriceReviewSummaryComponent implements OnInit, OnDestroy {
             groupBy(itemByChangedTimes.liveFormChangeds, [{ field: 'liveFormStep' }]);
         });
       });
-      setTimeout(() => {
-        this.dtTrigger2.next();
-      });
+      // setTimeout(() => {
+      //   this.dtTrigger2.next();
+      // });
     });
   }
 

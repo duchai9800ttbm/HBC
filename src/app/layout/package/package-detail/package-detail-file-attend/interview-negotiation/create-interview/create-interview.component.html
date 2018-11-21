@@ -187,10 +187,10 @@
                 <td [title]="item.customer ? item.customer.customerName : ''">
                   {{item.customer ? item.customer.customerName : ''}}
                 </td>
-                <td class="text-align-number">
+                <td>
                   {{ item.approvedDate !== 0 ? ((item.approvedDate)*1000 | date:'dd/MM/yyyy':'+0000') : ''}}
                 </td>
-                <td class="text-align-number">
+                <td>
                   {{ item.interviewDate !==0 ? ((item.interviewDate)*1000 | date:'dd/MM/yyyy HH:mm':'+0000') : ''}}
                 </td>
                 <td [title]="item.place">

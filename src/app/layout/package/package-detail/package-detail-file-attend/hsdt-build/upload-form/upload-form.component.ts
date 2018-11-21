@@ -210,7 +210,7 @@ export class UploadFormComponent implements OnInit, OnDestroy {
         this.pagedResult = responseResultDocument;
         this.pagedResult.total = this.dataDocumentOfType.length;
         this.pagedResult.items = this.dataDocumentOfType;
-        this.dtTrigger.next();
+        // this.dtTrigger.next();
       }, err => {
         this.alertService.error(`Đã có lỗi xảy ra. Xin vui lòng thử lại!`);
       });
@@ -269,7 +269,7 @@ export class UploadFormComponent implements OnInit, OnDestroy {
         this.pagedResult = responseResultDocument;
         this.pagedResult.total = this.dataDocumentOfType.length;
         this.pagedResult.items = this.dataDocumentOfType;
-        this.dtTrigger.next();
+        // this.dtTrigger.next();
       }, err => {
         this.alertService.error(`Đã có lỗi xảy ra. Xin vui lòng thử lại!`);
       });
@@ -341,11 +341,11 @@ export class UploadFormComponent implements OnInit, OnDestroy {
         this.pagedResult = responseResultBoHSDT;
         this.pagedResult.total = this.dataDocumentOfType.length;
         this.pagedResult.items = this.dataDocumentOfType;
-        this.dtTrigger.next();
+        // this.dtTrigger.next();
       }, err => {
         this.alertService.error(`Đã có lỗi xảy ra. Xin vui lòng thử lại!`);
       });
-    this.dtTrigger.next();
+    // this.dtTrigger.next();
   }
   clearFilter() {
     this.filterModel.status = '';
@@ -359,7 +359,7 @@ export class UploadFormComponent implements OnInit, OnDestroy {
       this.hoSoDuThauService.updateStatus(hoso.id, 'Official').subscribe(res => {
         hoso.status = 'Official';
       }, err => {
-        this.dtTrigger.next();
+        // this.dtTrigger.next();
         this.alertService.error('Đã có lỗi. Dữ liệu chưa được cập nhật!');
       });
     }
@@ -367,7 +367,7 @@ export class UploadFormComponent implements OnInit, OnDestroy {
       this.hoSoDuThauService.updateStatus(hoso.id, 'Draft').subscribe(res => {
         hoso.status = 'Draft';
       }, err => {
-        this.dtTrigger.next();
+        // this.dtTrigger.next();
         this.alertService.error('Đã có lỗi. Dữ liệu chưa được cập nhật!');
       });
     }
